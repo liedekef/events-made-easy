@@ -32,10 +32,10 @@ function eme_new_booking() {
 
 function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
     $event           = eme_get_event( $event_id );
-    $event_ids       = [ 0 => $event ];
+    $events          = [ $event ];
     $is_multibooking = 0;
     // we don't worry about the eme_register_empty_seats param, for attendance-like events it is checked later on
-    return eme_add_multibooking_form( $event_ids, 0, 0, 0, 0, 0, $is_multibooking, $only_if_not_registered );
+    return eme_add_multibooking_form( $events, 0, 0, 0, 0, 0, $is_multibooking, $only_if_not_registered );
 }
 
 function eme_add_multibooking_form( $events, $template_id_header = 0, $template_id_entry = 0, $multiprice_template_id_entry = 0, $template_id_footer = 0, $eme_register_empty_seats = 0, $is_multibooking = 1, $only_if_not_registered = 0, $only_one_event = 0, $only_one_seat = 0, $simple = 0, $all_events = 0 ) {

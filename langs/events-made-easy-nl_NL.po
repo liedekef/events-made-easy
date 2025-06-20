@@ -32,12 +32,12 @@ msgstr "in naam van %s"
 #: eme-events.php:10168
 #: eme-events.php:10562
 #: eme-events.php:10822
-#: eme-formfields.php:5047
+#: eme-formfields.php:5035
+#: eme-formfields.php:5090
+#: eme-formfields.php:5101
 #: eme-formfields.php:5102
-#: eme-formfields.php:5113
-#: eme-formfields.php:5114
-#: eme-formfields.php:5136
-#: eme-formfields.php:5137
+#: eme-formfields.php:5124
+#: eme-formfields.php:5125
 #: eme-functions.php:3408
 #: eme-functions.php:3429
 #: eme-functions.php:3430
@@ -168,7 +168,7 @@ msgstr "Elke"
 
 #: eme-attendances.php:80
 #: eme-events.php:9588
-#: eme-install.php:1704
+#: eme-install.php:1702
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -311,7 +311,7 @@ msgstr "Niet in templates gedefineerd"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:4951
+#: eme-formfields.php:4939
 #: eme-tasks.php:804
 #: eme-todos.php:221
 msgid "Remove"
@@ -399,7 +399,7 @@ msgstr "Naam"
 
 #: eme-categories.php:573
 #: eme-events.php:10278
-#: eme-formfields.php:5083
+#: eme-formfields.php:5071
 #: eme-holidays.php:293
 #: eme-locations.php:2987
 #: eme-members.php:6543
@@ -1281,7 +1281,7 @@ msgstr "Wijzig korting"
 
 #: eme-discounts.php:782
 msgid "Create discount"
-msgstr "Maar korting aan"
+msgstr "Maak korting aan"
 
 #: eme-discounts.php:812
 msgid "Discount name"
@@ -1491,19 +1491,19 @@ msgstr "Vast per plaats"
 
 #: eme-discounts.php:1611
 #: eme-discounts.php:1612
-#: eme-formfields.php:1308
-#: eme-formfields.php:1319
-#: eme-formfields.php:3030
-#: eme-formfields.php:3043
-#: eme-formfields.php:3971
-#: eme-formfields.php:3982
-#: eme-formfields.php:4609
-#: eme-formfields.php:4619
-#: eme-formfields.php:4629
-#: eme-formfields.php:5086
-#: eme-formfields.php:5088
-#: eme-formfields.php:5089
-#: eme-formfields.php:5090
+#: eme-formfields.php:1296
+#: eme-formfields.php:1307
+#: eme-formfields.php:3018
+#: eme-formfields.php:3031
+#: eme-formfields.php:3959
+#: eme-formfields.php:3970
+#: eme-formfields.php:4597
+#: eme-formfields.php:4607
+#: eme-formfields.php:4617
+#: eme-formfields.php:5074
+#: eme-formfields.php:5076
+#: eme-formfields.php:5077
+#: eme-formfields.php:5078
 #: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1532,19 +1532,19 @@ msgstr "Ja"
 
 #: eme-discounts.php:1611
 #: eme-discounts.php:1612
-#: eme-formfields.php:1309
-#: eme-formfields.php:1320
-#: eme-formfields.php:3031
-#: eme-formfields.php:3044
-#: eme-formfields.php:3972
-#: eme-formfields.php:3983
-#: eme-formfields.php:4610
-#: eme-formfields.php:4620
-#: eme-formfields.php:4630
-#: eme-formfields.php:5086
-#: eme-formfields.php:5088
-#: eme-formfields.php:5089
-#: eme-formfields.php:5090
+#: eme-formfields.php:1297
+#: eme-formfields.php:1308
+#: eme-formfields.php:3019
+#: eme-formfields.php:3032
+#: eme-formfields.php:3960
+#: eme-formfields.php:3971
+#: eme-formfields.php:4598
+#: eme-formfields.php:4608
+#: eme-formfields.php:4618
+#: eme-formfields.php:5074
+#: eme-formfields.php:5076
+#: eme-formfields.php:5077
+#: eme-formfields.php:5078
 #: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -3654,7 +3654,7 @@ msgstr "Als deze optie is ingesteld en de instelling \"Min. aantal te boeken sto
 
 #: eme-events.php:8781
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1."
-msgstr "Als deze optie is ingesteld en de instelling \"Min. aantal te boeken plaatseb\" is ingesteld op een waarde groter dan 0, dan zal het veld om het aantal te boeken plaatsen te kiezen worden verborgen en het aantal geboekte plaatsen zal op 1 ingesteld worden."
+msgstr "Als deze optie is ingesteld en de instelling \"Min. aantal te boeken plaatsen\" is ingesteld op een waarde groter dan 0, dan zal het veld om het aantal te boeken plaatsen te kiezen worden verborgen en het aantal geboekte plaatsen zal op 1 ingesteld worden."
 
 #: eme-events.php:8785
 msgid "Require WP membership for booking"
@@ -3877,7 +3877,7 @@ msgstr "Prijs evenement"
 #: eme-events.php:9685
 #: eme-events.php:9696
 #: eme-events.php:9782
-#: eme-formfields.php:5094
+#: eme-formfields.php:5082
 msgid "Copy"
 msgstr "Kopieer"
 
@@ -4030,9 +4030,9 @@ msgstr "Taak einddatum"
 
 #: eme-events.php:9652
 #: eme-events.php:9952
-#: eme-formfields.php:1200
-#: eme-formfields.php:2017
-#: eme-formfields.php:3198
+#: eme-formfields.php:1188
+#: eme-formfields.php:2005
+#: eme-formfields.php:3186
 #: eme-options.php:39
 #: eme-people.php:1084
 #: eme-people.php:1425
@@ -4066,7 +4066,7 @@ msgid "Records deleted"
 msgstr "Records verwijderd"
 
 #: eme-events.php:9673
-#: eme-formfields.php:4892
+#: eme-formfields.php:4880
 #: eme-options.php:1571
 #: events-manager.php:358
 msgid "Templates"
@@ -4192,11 +4192,11 @@ msgstr "Bewerk locatie '%s'"
 #: eme-events.php:9786
 #: eme-events.php:9820
 #: eme-events.php:9884
-#: eme-formfields.php:1261
-#: eme-formfields.php:1858
-#: eme-formfields.php:2935
-#: eme-formfields.php:3891
-#: eme-formfields.php:4538
+#: eme-formfields.php:1249
+#: eme-formfields.php:1846
+#: eme-formfields.php:2923
+#: eme-formfields.php:3879
+#: eme-formfields.php:4526
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:568
@@ -4209,11 +4209,11 @@ msgstr "Stad"
 #: eme-events.php:9787
 #: eme-events.php:9821
 #: eme-events.php:9885
-#: eme-formfields.php:1271
-#: eme-formfields.php:1880
-#: eme-formfields.php:2947
-#: eme-formfields.php:3901
-#: eme-formfields.php:4554
+#: eme-formfields.php:1259
+#: eme-formfields.php:1868
+#: eme-formfields.php:2935
+#: eme-formfields.php:3889
+#: eme-formfields.php:4542
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:576
@@ -4263,14 +4263,14 @@ msgstr "Groepen"
 
 #: eme-events.php:9816
 #: eme-events.php:9876
-#: eme-formfields.php:1153
-#: eme-formfields.php:1480
-#: eme-formfields.php:1796
-#: eme-formfields.php:2847
-#: eme-formfields.php:3429
-#: eme-formfields.php:3815
-#: eme-formfields.php:4289
-#: eme-formfields.php:4472
+#: eme-formfields.php:1141
+#: eme-formfields.php:1468
+#: eme-formfields.php:1784
+#: eme-formfields.php:2835
+#: eme-formfields.php:3417
+#: eme-formfields.php:3803
+#: eme-formfields.php:4277
+#: eme-formfields.php:4460
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4291,15 +4291,15 @@ msgstr "Achternaam"
 
 #: eme-events.php:9817
 #: eme-events.php:9877
-#: eme-formfields.php:1169
-#: eme-formfields.php:1492
-#: eme-formfields.php:1812
-#: eme-formfields.php:2874
-#: eme-formfields.php:3109
-#: eme-formfields.php:3445
-#: eme-formfields.php:3839
-#: eme-formfields.php:4303
-#: eme-formfields.php:4487
+#: eme-formfields.php:1157
+#: eme-formfields.php:1480
+#: eme-formfields.php:1800
+#: eme-formfields.php:2862
+#: eme-formfields.php:3097
+#: eme-formfields.php:3433
+#: eme-formfields.php:3827
+#: eme-formfields.php:4291
+#: eme-formfields.php:4475
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4322,14 +4322,14 @@ msgstr "Voornaam"
 #: eme-events.php:9824
 #: eme-events.php:9878
 #: eme-events.php:10020
-#: eme-formfields.php:1178
-#: eme-formfields.php:1501
-#: eme-formfields.php:1925
-#: eme-formfields.php:2998
-#: eme-formfields.php:3476
-#: eme-formfields.php:3949
-#: eme-formfields.php:4316
-#: eme-formfields.php:4583
+#: eme-formfields.php:1166
+#: eme-formfields.php:1489
+#: eme-formfields.php:1913
+#: eme-formfields.php:2986
+#: eme-formfields.php:3464
+#: eme-formfields.php:3937
+#: eme-formfields.php:4304
+#: eme-formfields.php:4571
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4352,12 +4352,12 @@ msgid "Email"
 msgstr "E-mail"
 
 #: eme-events.php:9825
-#: eme-formfields.php:1191
-#: eme-formfields.php:2008
-#: eme-formfields.php:3017
-#: eme-formfields.php:3461
-#: eme-formfields.php:3960
-#: eme-formfields.php:4597
+#: eme-formfields.php:1179
+#: eme-formfields.php:1996
+#: eme-formfields.php:3005
+#: eme-formfields.php:3449
+#: eme-formfields.php:3948
+#: eme-formfields.php:4585
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -4962,7 +4962,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Neem dit veld op in de CSV-export voor boekingen."
 
 #: eme-formfields.php:353
-#: eme-formfields.php:4891
+#: eme-formfields.php:4879
 msgid "Field condition"
 msgstr "Veld voorwaarde"
 
@@ -5222,250 +5222,250 @@ msgstr "CSV-lijst bevat"
 msgid "CSV list does not contain"
 msgstr "CSV lijst bevat niet"
 
-#: eme-formfields.php:556
+#: eme-formfields.php:544
 msgid "Generic"
 msgstr "Algemeen"
 
-#: eme-formfields.php:557
+#: eme-formfields.php:545
 msgid "Events field"
 msgstr "Evenementen-veld"
 
-#: eme-formfields.php:558
+#: eme-formfields.php:546
 msgid "Locations field"
 msgstr "Locaties-veld"
 
-#: eme-formfields.php:559
+#: eme-formfields.php:547
 msgid "RSVP field"
 msgstr "RSVP veld"
 
-#: eme-formfields.php:560
+#: eme-formfields.php:548
 msgid "People field"
 msgstr "Persoonsveld"
 
-#: eme-formfields.php:561
+#: eme-formfields.php:549
 msgid "Members field"
 msgstr "Leden veld"
 
-#: eme-formfields.php:562
+#: eme-formfields.php:550
 msgid "Memberships field"
 msgstr "Lidmaatschap veld"
 
-#: eme-formfields.php:577
+#: eme-formfields.php:565
 msgid "Text"
 msgstr "Tekst"
 
-#: eme-formfields.php:578
+#: eme-formfields.php:566
 msgid "Textarea"
 msgstr "Tekstvak"
 
-#: eme-formfields.php:579
+#: eme-formfields.php:567
 msgid "Dropdown"
 msgstr "Dropdown"
 
-#: eme-formfields.php:580
+#: eme-formfields.php:568
 msgid "Dropdown (multiple)"
 msgstr "Dropdown (meerdere keuzes)"
 
-#: eme-formfields.php:581
+#: eme-formfields.php:569
 msgid "Radiobox"
 msgstr "Radiobox"
 
-#: eme-formfields.php:582
+#: eme-formfields.php:570
 msgid "Radiobox (vertical)"
 msgstr "Radiobox (vertikaal)"
 
-#: eme-formfields.php:583
+#: eme-formfields.php:571
 msgid "Checkbox"
 msgstr "Checkbox"
 
-#: eme-formfields.php:584
+#: eme-formfields.php:572
 msgid "Checkbox (vertical)"
 msgstr "Checkbox (vertikaal)"
 
-#: eme-formfields.php:585
-#: eme-formfields.php:1996
-#: eme-formfields.php:3111
+#: eme-formfields.php:573
+#: eme-formfields.php:1984
+#: eme-formfields.php:3099
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: eme-formfields.php:586
+#: eme-formfields.php:574
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: eme-formfields.php:587
+#: eme-formfields.php:575
 msgid "Readonly"
 msgstr "Alleen lezen"
 
-#: eme-formfields.php:588
+#: eme-formfields.php:576
 msgid "File upload"
 msgstr "Bestand uploaden"
 
-#: eme-formfields.php:589
+#: eme-formfields.php:577
 msgid "Multiple files upload"
 msgstr "Meerdere bestanden uploaden"
 
-#: eme-formfields.php:590
+#: eme-formfields.php:578
 msgid "Date (Javascript)"
 msgstr "Datum (Javascript)"
 
-#: eme-formfields.php:591
+#: eme-formfields.php:579
 msgid "Date (HTML5)"
 msgstr "Datum (HTML5)"
 
-#: eme-formfields.php:592
+#: eme-formfields.php:580
 msgid "Datetime (Javascript)"
 msgstr "Datum+Tijd (Javascript)"
 
-#: eme-formfields.php:593
+#: eme-formfields.php:581
 msgid "Datetime-local (HTML5)"
 msgstr "Datum+Tijd lokaal (HTML5)"
 
-#: eme-formfields.php:594
+#: eme-formfields.php:582
 msgid "Month (HTML5)"
 msgstr "Maand (HTML5)"
 
-#: eme-formfields.php:595
+#: eme-formfields.php:583
 msgid "Week (HTML5)"
 msgstr "Week (HTML5)"
 
-#: eme-formfields.php:596
+#: eme-formfields.php:584
 msgid "Time (HTML5)"
 msgstr "Tijd (HTML5)"
 
-#: eme-formfields.php:597
+#: eme-formfields.php:585
 msgid "Time (Javascript)"
 msgstr "Tijd (Javascript)"
 
-#: eme-formfields.php:598
+#: eme-formfields.php:586
 msgid "Color (HTML5)"
 msgstr "Kleur (HTML5)"
 
-#: eme-formfields.php:599
+#: eme-formfields.php:587
 msgid "Email (HTML5)"
 msgstr "E-mail (HTML5)"
 
-#: eme-formfields.php:600
+#: eme-formfields.php:588
 msgid "Number (HTML5)"
 msgstr "Getal (HTML5)"
 
-#: eme-formfields.php:601
+#: eme-formfields.php:589
 msgid "Range (HTML5)"
 msgstr "Bereik (HTML5)"
 
-#: eme-formfields.php:602
+#: eme-formfields.php:590
 msgid "Tel (HTML5)"
 msgstr "Tel (HTML5)"
 
-#: eme-formfields.php:603
+#: eme-formfields.php:591
 msgid "Url (HTML5)"
 msgstr "Url (HTML5)"
 
-#: eme-formfields.php:713
+#: eme-formfields.php:701
 msgid "This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it"
 msgstr "Dit is een verborgen veld, maar in de backend wordt dit als tekst getoond zodat een admin de waarde kan zien en eventueel wijzigen"
 
-#: eme-formfields.php:1157
-#: eme-formfields.php:2851
+#: eme-formfields.php:1145
+#: eme-formfields.php:2839
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om deze gebeurtenis te bewerken, is het veld 'Achternaam' ook een veld voor automatisch aanvullen, zodat u desgewenst bestaande personen kunt selecteren. Of wis gewoon het veld en begin met typen."
 
-#: eme-formfields.php:1208
-#: eme-formfields.php:1959
-#: eme-formfields.php:3068
-#: eme-formfields.php:4003
-#: eme-formfields.php:4362
+#: eme-formfields.php:1196
+#: eme-formfields.php:1947
+#: eme-formfields.php:3056
+#: eme-formfields.php:3991
+#: eme-formfields.php:4350
 msgid "Remember me?"
 msgstr "Herinner mij?"
 
-#: eme-formfields.php:1219
-#: eme-formfields.php:1821
-#: eme-formfields.php:2885
-#: eme-formfields.php:3533
-#: eme-formfields.php:3850
-#: eme-formfields.php:4501
+#: eme-formfields.php:1207
+#: eme-formfields.php:1809
+#: eme-formfields.php:2873
+#: eme-formfields.php:3521
+#: eme-formfields.php:3838
+#: eme-formfields.php:4489
 #: eme-people.php:1049
 #: eme-people.php:2404
 #: eme-rsvp.php:1462
 msgid "Date of birth"
 msgstr "Geboortedatum"
 
-#: eme-formfields.php:1231
-#: eme-formfields.php:1831
-#: eme-formfields.php:2899
-#: eme-formfields.php:3517
-#: eme-formfields.php:3861
-#: eme-formfields.php:4512
+#: eme-formfields.php:1219
+#: eme-formfields.php:1819
+#: eme-formfields.php:2887
+#: eme-formfields.php:3505
+#: eme-formfields.php:3849
+#: eme-formfields.php:4500
 #: eme-people.php:1050
 #: eme-people.php:2418
 #: eme-rsvp.php:1465
 msgid "Place of birth"
 msgstr "Geboorteplaats"
 
-#: eme-formfields.php:1346
-#: eme-formfields.php:4380
+#: eme-formfields.php:1334
+#: eme-formfields.php:4368
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: eme-formfields.php:1379
-#: eme-formfields.php:1563
+#: eme-formfields.php:1367
+#: eme-formfields.php:1551
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Niet alle verplichte velden zijn aanwezig in het formulier. We hebben minimaal #_LASTNAME en #_EMAIL nodig."
 
-#: eme-formfields.php:1513
+#: eme-formfields.php:1501
 msgid "Cancel reason"
 msgstr "Annuleringsreden"
 
-#: eme-formfields.php:1672
+#: eme-formfields.php:1660
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereise velden zijn aanwezig in het formulier. We hebben minstens #_CANCEL_PAYMENT_LINE en #_SUBMIT (of gelijkaardig) placeholders nodig."
 
-#: eme-formfields.php:1972
-#: eme-formfields.php:3083
-#: eme-formfields.php:4016
+#: eme-formfields.php:1960
+#: eme-formfields.php:3071
+#: eme-formfields.php:4004
 msgid "Group is not public"
 msgstr "Groep is niet publiek"
 
-#: eme-formfields.php:1987
-#: eme-formfields.php:3098
-#: eme-formfields.php:4031
+#: eme-formfields.php:1975
+#: eme-formfields.php:3086
+#: eme-formfields.php:4019
 msgid "Group does not exist"
 msgstr "Groep bestaat niet"
 
-#: eme-formfields.php:3173
+#: eme-formfields.php:3161
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Door #_SEATS {xx} te gebruiken, gebruikt u meerdere stoelcategorieën in uw RSVP-template, maar u hebt geen prijs gedefinieerd voor elke categorie in de RSVP-instellingen van uw evenement. Corrigeer de RSVP-instellingen van het evenement."
 
-#: eme-formfields.php:3299
-#: eme-formfields.php:4047
+#: eme-formfields.php:3287
+#: eme-formfields.php:4035
 msgid "Discount code"
 msgstr "Kortingscode"
 
-#: eme-formfields.php:3305
-#: eme-formfields.php:4053
+#: eme-formfields.php:3293
+#: eme-formfields.php:4041
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Voer desgewenst een nieuwe vaste kortingswaarde in of laat deze staan om de berekende waarde %s te behouden op basis van de volgende toegepaste kortingen:"
 
-#: eme-formfields.php:3307
-#: eme-formfields.php:4055
+#: eme-formfields.php:3295
+#: eme-formfields.php:4043
 msgid "Enter a fixed discount value if wanted"
 msgstr "Geef een vaste korting in indien gewenst"
 
-#: eme-formfields.php:3312
-#: eme-formfields.php:4060
+#: eme-formfields.php:3300
+#: eme-formfields.php:4048
 #: eme-people.php:1184
 #: eme-people.php:1495
 msgid "Discountgroup %s"
 msgstr "Kortingsgroep %s"
 
-#: eme-formfields.php:3314
-#: eme-formfields.php:4062
+#: eme-formfields.php:3302
+#: eme-formfields.php:4050
 #: eme-people.php:1186
 #: eme-people.php:1497
 msgid "Applied discount group %d no longer exists"
 msgstr "Toegepaste kortingsgroep %d bestaat niet langer"
 
-#: eme-formfields.php:3324
-#: eme-formfields.php:4072
+#: eme-formfields.php:3312
+#: eme-formfields.php:4060
 #: eme-members.php:5283
 #: eme-people.php:1196
 #: eme-people.php:1507
@@ -5473,162 +5473,162 @@ msgstr "Toegepaste kortingsgroep %d bestaat niet langer"
 msgid "Applied discount %d no longer exists"
 msgstr "Toegepaste korting %d bestaat niet langer"
 
-#: eme-formfields.php:3328
-#: eme-formfields.php:4076
+#: eme-formfields.php:3316
+#: eme-formfields.php:4064
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "Enkel één kortingsveld kan in de admin backend gebruikt worden, de andere worden niet getoond"
 
-#: eme-formfields.php:3334
+#: eme-formfields.php:3322
 msgid "Update booking"
 msgstr "Werk boeking bij"
 
-#: eme-formfields.php:3382
+#: eme-formfields.php:3370
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_LASTNAME, #_EMAIL, #_SEATS en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:3385
+#: eme-formfields.php:3373
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Omdat dit evenement meerdere prijzen heeft, zorg ervoor dat je het boekingsformulier hebt aangepast zodat het #_SEAT{xx} placeholders voor iedere prijs bevat."
 
-#: eme-formfields.php:3388
+#: eme-formfields.php:3376
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Controleer of de placeholder #_PASSWORD aanwezig is in het formulier."
 
-#: eme-formfields.php:3590
+#: eme-formfields.php:3578
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Niet alle verplichte velden zijn aanwezig in het formulier. We hebben minimaal #_LASTNAME en #_FIRSTNAME nodig."
 
-#: eme-formfields.php:3819
+#: eme-formfields.php:3807
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om leden en lidmaatschappen te beheren, is het veld 'Achternaam' ook een veld voor automatisch aanvullen, zodat u desgewenst bestaande personen kunt selecteren. Of wis gewoon het veld en begin met typen."
 
-#: eme-formfields.php:4107
+#: eme-formfields.php:4095
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "In de backend kun je geen gezinslidgegevens toevoegen of bewerken, gebruik daarvoor het frontend formulier."
 
-#: eme-formfields.php:4172
+#: eme-formfields.php:4160
 msgid "Update member"
 msgstr "Pas lid aan"
 
-#: eme-formfields.php:4177
+#: eme-formfields.php:4165
 msgid "Become member"
 msgstr "Word lid"
 
-#: eme-formfields.php:4209
-#: eme-formfields.php:4727
+#: eme-formfields.php:4197
+#: eme-formfields.php:4715
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_LASTNAME, #_FIRSTNAME, #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4230
+#: eme-formfields.php:4218
 #: eme-tasks.php:460
 #: eme-templates.php:43
 msgid "All"
 msgstr "Alle"
 
-#: eme-formfields.php:4235
-#: eme-formfields.php:4331
+#: eme-formfields.php:4223
+#: eme-formfields.php:4319
 msgid "Newsletter concerning new events"
 msgstr "Nieuwsbrief betreffende nieuwe evenementen"
 
-#: eme-formfields.php:4293
-#: eme-formfields.php:4476
+#: eme-formfields.php:4281
+#: eme-formfields.php:4464
 msgid "You can change your last name in your WP profile."
 msgstr "U kunt uw achternaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4307
-#: eme-formfields.php:4491
+#: eme-formfields.php:4295
+#: eme-formfields.php:4479
 msgid "You can change your first name in your WP profile."
 msgstr "U kunt uw voornaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4320
-#: eme-formfields.php:4587
+#: eme-formfields.php:4308
+#: eme-formfields.php:4575
 msgid "You can change your email in your WP profile."
 msgstr "U kunt uw e-mailadres wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4378
+#: eme-formfields.php:4366
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: eme-formfields.php:4403
+#: eme-formfields.php:4391
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4698
+#: eme-formfields.php:4686
 msgid "Save personal info"
 msgstr "Wijzig persoonlijke gegevens"
 
-#: eme-formfields.php:4885
+#: eme-formfields.php:4873
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Toon dynamisch velden op basis van een aantal condities"
 
-#: eme-formfields.php:4890
+#: eme-formfields.php:4878
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4936
+#: eme-formfields.php:4924
 msgid "Field"
 msgstr "Veld"
 
-#: eme-formfields.php:4937
+#: eme-formfields.php:4925
 msgid "Condition"
 msgstr "Conditie"
 
-#: eme-formfields.php:4938
+#: eme-formfields.php:4926
 msgid "Condition value"
 msgstr "Conditie waarde"
 
-#: eme-formfields.php:4893
+#: eme-formfields.php:4881
 msgid "Repeat"
 msgstr "Herhaal"
 
-#: eme-formfields.php:4923
+#: eme-formfields.php:4911
 #: eme-tasks.php:767
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Herschikken"
 
-#: eme-formfields.php:4942
+#: eme-formfields.php:4930
 msgid "Header template"
 msgstr "Header template"
 
-#: eme-formfields.php:4943
+#: eme-formfields.php:4931
 msgid "Template"
 msgstr "Template"
 
-#: eme-formfields.php:4944
+#: eme-formfields.php:4932
 msgid "Footer template"
 msgstr "Footer template"
 
-#: eme-formfields.php:4951
+#: eme-formfields.php:4939
 msgid "Add new condition"
 msgstr "Voeg nieuwe voorwaarde toe"
 
-#: eme-formfields.php:4954
+#: eme-formfields.php:4942
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Waarschuwing: er zijn al antwoorden ingevoerd op basis van deze voorwaarde, het wijzigen of verwijderen van deze voorwaarde kan leiden tot ongewenste bijwerkingen."
 
-#: eme-formfields.php:4965
+#: eme-formfields.php:4953
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Hiermee wordt extra de geselecteerde template in het formulier weergegeven als aan de voorwaarde is voldaan."
 
-#: eme-formfields.php:4967
+#: eme-formfields.php:4955
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "De 'Veld' parameter moet worden ingevuld met elke geldige tijdelijke placeholder die in het formulier is toegestaan."
 
-#: eme-formfields.php:4969
+#: eme-formfields.php:4957
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "De geselecteerde template wordt meerdere keren getoond als de herhaaloptie wordt gebruikt (op basis van het aantal keren dat het veld verschilt van de waarde van de voorwaarde. Dit wordt niet gebruikt voor de voorwaarde-selector 'gelijk aan'."
 
-#: eme-formfields.php:4971
+#: eme-formfields.php:4959
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "De geselecteerde template kan html bevatten en heeft ook placeholders voor eigen aangemaakte formuliervelden (geen andere placeholders toegestaan)."
 
-#: eme-formfields.php:4972
+#: eme-formfields.php:4960
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw formulier weer te geven."
 
-#: eme-formfields.php:5123
-#: eme-formfields.php:5133
+#: eme-formfields.php:5111
+#: eme-formfields.php:5121
 #: eme-functions.php:3426
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
@@ -6136,7 +6136,7 @@ msgstr "Standaard opmaak: YYYY-MM-DD, één per regel"
 msgid "For more information about holidays, see "
 msgstr "Voor meer informative over vakanties, zie "
 
-#: eme-install.php:1705
+#: eme-install.php:1703
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Deze pagina wordt gebruikt door Events Made Easy. Verander deze niet, gebruik deze niet in een menu, verwijder deze niet. Wees er enkel zeker van dat de EME optie genoemd 'Evenementen pagina' verwijst naar deze pagina. EME gebruikt deze pagina om alle evenementen, locaties, boekingen, kaarten, ... te tonen. Als je deze wil verwijderen, maak een nieuwe aan voor gebruik in EME en pas de optie 'Evenementen pagina' aan."
 

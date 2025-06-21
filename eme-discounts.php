@@ -51,6 +51,12 @@ function eme_init_discount_props( $props ) {
 	if ( ! isset( $props['membership_ids'] ) ) {
 		$props['membership_ids'] = [];
 	}
+	if ( ! isset( $props['min_seats'] ) ) {
+		$props['min_seats'] = ''; // empty string here, since 0 is being checked later on
+	}
+	if ( ! isset( $props['max_seats'] ) ) {
+		$props['max_seats'] = ''; // empty string here, since 0 is being checked later on
+	}
 	return $props;
 }
 
@@ -903,6 +909,18 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<br><?php esc_html_e( 'The maximum number of times this discount can be applied', 'events-made-easy' ); ?>
 			</td>
 		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[min_seats]'><?php esc_html_e( 'Min #seats booked', 'events-made-easy' ); ?></label></th>
+			<td><input name='properties[min_seats]' id='properties[min_seats]' type='text' value='<?php echo eme_esc_html( $discount['properties']['min_seats'] ); ?>' size='40'></td>
+			<br><p class='eme_smaller'><?php esc_html_e( 'The minimum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit.', 'events-made-easy' ); ?></p>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[max_seats]'><?php esc_html_e( 'Max #seats booked', 'events-made-easy' ); ?></label></th>
+			<td><input name='properties[max_seats]' id='properties[max_seats]' type='text' value='<?php echo eme_esc_html( $discount['properties']['max_seats'] ); ?>' size='40'></td>
+			<br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit.', 'events-made-easy' ); ?></p>
+			</td>
+		</tr>
 	<?php if ( $discount_id ) { ?>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='count'><?php esc_html_e( 'Current usage count', 'events-made-easy' ); ?></label></th>
@@ -1312,6 +1330,15 @@ function eme_calc_booking_discount( $discount, $booking ) {
 
 	// check if logged in needed
 	if ( ! empty( $discount['properties']['wp_users_only'] ) && ! $is_user_logged_in ) {
+		return false;
+	}
+ 
+	// check min seats
+	if ( $discount['properties']['min_seats'] !== '' && ! $booking['booking_seats']<intval($discount['properties']['min_seats']) ) {
+		return false;
+	}
+	// check max seats
+	if ( $discount['properties']['max_seats'] !== '' && ! $booking['booking_seats']>intval($discount['properties']['max_seats']) ) {
 		return false;
 	}
 

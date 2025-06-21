@@ -2344,6 +2344,11 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     } else {
         $current_user = 0;
     }
+    if ( !$eme_is_admin_request && empty( $booking['booking_id'] ) ) {
+        $new_booking_in_frontend = 1;
+    } else {
+        $new_booking_in_frontend = 0;
+    }
     if ( $eme_is_admin_request && ! empty( $booking['booking_id'] ) ) {
         $editing_booking_from_backend = 1;
     } else {
@@ -3129,6 +3134,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( ! $min_allowed_is_multi && $min_allowed > 0 ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='1'>";
                 } else {
+                    if ($new_booking_in_frontend) {
+                        $entered_val = 1; // by default people attend :-)
+                    }
                     $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, "eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic" );
                 }
                 ++$seats_found;

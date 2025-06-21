@@ -914,10 +914,10 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
 
             $value = eme_esc_html( $value );
-            if ( empty( $field_attributes ) ) {
-                $field_attributes = EME_WP_DATE_FORMAT;
+            $dateformat = $formfield['field_attributes'];
+            if ( empty( $dateformat ) ) {
+                $dateformat = EME_WP_DATE_FORMAT;
             }
-            $dateformat = $field_attributes;
             $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
             $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdate $class'>";
             break;
@@ -936,8 +936,9 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             $value    = eme_esc_html( $value );
             $js_value = eme_js_datetime( $value, EME_TIMEZONE );
-            if ( empty( $field_attributes ) ) {
-                $field_attributes = EME_WP_DATE_FORMAT .' '. EME_WP_TIME_FORMAT;
+            $dateformat = $formfield['field_attributes'];
+            if ( empty( $dateformat ) ) {
+                $dateformat = EME_WP_DATE_FORMAT .' '. EME_WP_TIME_FORMAT;
             }
             $dateformat = $field_attributes;
             $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
@@ -957,10 +958,10 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value        = $eme_date_obj->getTime();
             }
             $value = eme_esc_html( $value );
-            if ( empty( $field_attributes ) ) {
-                $field_attributes = EME_WP_TIME_FORMAT;
+            $dateformat = $formfield['field_attributes'];
+            if ( empty( $dateformat ) ) {
+                $dateformat = EME_WP_TIME_FORMAT;
             }
-            $dateformat = $field_attributes;
             if ( ! empty( $value ) ) {
                 $date_obj = ExpressiveDate::createFromFormat( 'H:i:s', $value, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
                 $value    = $date_obj->format( $dateformat );

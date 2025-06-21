@@ -4320,3 +4320,31 @@ function eme_merge_classes_into_attrs($class, $attributes) {
     // Combine with other attributes
     return trim($class_att . ' ' . $attributes);
 }
+
+function eme_remove_attrs($attrs_to_remove, $attributes) {
+    // Convert single attribute to array for uniform processing
+    if (!is_array($attrs_to_remove)) {
+        $attrs_to_remove = array($attrs_to_remove);
+    }
+
+    foreach ($attrs_to_remove as $attr) {
+        // Pattern explanation:
+        // \s*            - optional whitespace before attribute
+        // \b             - word boundary
+        // $attr          - attribute name to remove
+        // (?:            - non-capturing group for:
+        //   \s*=\s*      - equals with optional whitespace
+        //   (['"])?      - optional quote (single or double)
+        //   .*?          - lazy match for value
+        //   (?(1)\1)     - backreference to quote if it was matched
+        // )?             - make the whole value part optional
+        // (?=\s|$)       - lookahead for whitespace or end of string
+        $pattern = '/\s*\b' . preg_quote($attr, '/') .
+		  '(?:\s*=\s*([\'"]).*?(?:\1))?(?=\s|$)/i';
+        $attributes = preg_replace($pattern, '', $attributes);
+    }
+
+    // Clean up any leftover spaces
+    $attributes = trim(preg_replace('/\s+/', ' ', $attributes));
+    return $attributes;
+}

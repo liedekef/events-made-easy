@@ -648,6 +648,9 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
     $field_values = '';
     $field_tags = '';
     if ( (eme_is_admin_request() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
+        // remove some attributes for backend edit (like checked)
+        $field_attributes = eme_remove_attrs('checked', $field_attributes);
+
         // fields can have a different value for front/backend for multi-fields
         if ( ! empty( $formfield['admin_values'] ) ) {
             $field_values = $formfield['admin_values'];

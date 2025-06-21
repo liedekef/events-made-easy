@@ -216,22 +216,16 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
 
 function eme_ui_select_binary( $option_value, $name, $required = 0, $class = '', $extra_attributes = '' ) {
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
     $name         = wp_strip_all_tags( $name );
-    $val          = "<select $class_att $required_att name='$name' id='$name' $extra_attributes >";
+    $val          = "<select name='$name' id='$name' $extra_attributes >";
     $selected_YES = '';
     $selected_NO  = '';
     if ( $option_value ) {
@@ -252,22 +246,16 @@ function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $class_att $required_att id='$id' name='$name' $extra_attributes >";
+    $val = "<select id='$id' name='$name' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -296,15 +284,9 @@ function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
@@ -313,7 +295,7 @@ function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $
 
     $random_id = eme_random_id();
     $datalist_id = $name."_".$random_id;
-    $val = "<input list='$datalist_id' $class_att $required_att id='$name' name='$name' value='$option_value' $extra_attributes >";
+    $val = "<input list='$datalist_id' id='$name' name='$name' value='$option_value' $extra_attributes >";
     $val .= "<datalist id='$datalist_id'>";
     foreach ( $list as $key => $value ) {
         $val .= "<option value='".eme_esc_html( $value )."'>";
@@ -329,22 +311,16 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $class_att $required_att id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='$name' name='$name' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -379,22 +355,16 @@ function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first =
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $class_att $required_att id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='$name' name='$name' $extra_attributes >";
     if ( ! empty( $add_empty_first ) ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -417,22 +387,16 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $class_att $required_att id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='$name' name='$name' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
     }
@@ -456,22 +420,15 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
     if ( $add_empty_first != '' ) {
         if ($disable_first_option) {
             $val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
@@ -514,23 +471,16 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
-    $val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
     if ( ! empty( $add_empty_first ) ) {
         if ($disable_first_option) {
             $val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
@@ -565,16 +515,9 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $val     = '';
     $counter = 0;
@@ -588,7 +531,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
             $t_value = $value;
         }
         "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-        $val                                 .= "<input $required_att type='radio' id='{$name}_{$counter}' name='$name' $class_att value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . eme_esc_html( $t_value ) . '</label>';
+        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . eme_esc_html( $t_value ) . '</label>';
         if (  $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -599,18 +542,11 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
     return $val;
 }
 
-function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 0, $class = '', $extra_attributes = '' ) {
+function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 0, $class='', $extra_attributes = '' ) {
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $option_value ? $selected = "checked='checked' " : $selected = '';
 
@@ -619,7 +555,7 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
     }
 
     $name = wp_strip_all_tags( $name );
-    $val  = "<input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
+    $val  = "<input type='checkbox' name='{$name}' id='{$name}' value='1' $selected $extra_attributes>";
     if ( ! empty( $label ) ) {
         $val .= "&nbsp;<label for='{$name}'>" . eme_esc_html_keep_br( $label ) . '</label>';
     }
@@ -627,8 +563,9 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 }
 
 function eme_nobreak_checkbox_binary( $option_value, $name, $label = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
     $val  = "<div class='eme-item'>";
-    $val .= eme_ui_checkbox_binary( $option_value, $name, $label, $required, $class, $extra_attributes);
+    $val .= eme_ui_checkbox_binary( $option_value, $name, $label, $required, $extra_attributes);
     $val .= "</div>";
     return $val;
 }
@@ -640,16 +577,9 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
     }
 
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     $val     = '';
     $counter = 0;
@@ -660,7 +590,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
         } else {
             "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
         }
-        $val .= "<input $required_att type='checkbox' name='{$name}[]' id='{$name}_{$counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html_keep_br( $value ) . '</label>';
+        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html_keep_br( $value ) . '</label>';
         if ( $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -673,22 +603,16 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 
 function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra_attributes = '' ) {
     if ( $required ) {
-        $required_att = "required='required'";
-    } else {
-        $required_att = '';
+        $extra_attributes .= " required='required'";
     }
-    if ( $class ) {
-        $class_att = "class='$class'";
-    } else {
-        $class_att = '';
-    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
 
     $name = wp_strip_all_tags( $name );
-    return "<input type='number' $required_att $class_att $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
+    return "<input type='number' $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
 }
 
 function eme_get_field_id ( $field_name, $number = 1) {

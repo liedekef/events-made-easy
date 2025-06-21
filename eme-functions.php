@@ -4297,4 +4297,26 @@ function eme_rightclickhint() {
     </span>
 <?php
 }
-?>
+
+function eme_merge_classes_into_attrs($class, $attributes) {
+    $existing_classes = [];
+    
+    // Extract existing class from attributes if present
+    // Match class attribute with either single or double quotes
+    if (preg_match('/\bclass=([\'"])(.*?)\1/', $attributes, $matches)) {
+        $existing_classes = array_filter(explode(' ', $matches[2]));
+        // Remove the class attribute from the original string
+        $attributes = preg_replace('/\s*\bclass=([\'"]).*?\1/', '', $attributes);
+    }
+    
+    // Merge with the new class
+    $new_classes = array_filter(explode(' ', $class));
+    $merged_classes = array_unique(array_merge($existing_classes, $new_classes));
+    $class_value = implode(' ', $merged_classes);
+    
+    // Build the class attribute if we have any classes
+    $class_att = !empty($merged_classes) ? "class='" . htmlspecialchars($class_value, ENT_QUOTES) . "'" : '';
+    
+    // Combine with other attributes
+    return trim($class_att . ' ' . $attributes);
+}

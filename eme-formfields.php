@@ -575,20 +575,21 @@ function eme_get_fieldtypes() {
         'readonly'          => __( 'Readonly', 'events-made-easy' ),
         'file'              => __( 'File upload', 'events-made-easy' ),
         'multifile'         => __( 'Multiple files upload', 'events-made-easy' ),
+        'date'              => __( 'Date', 'events-made-easy' ),
         'date_js'           => __( 'Date (Javascript)', 'events-made-easy' ),
-        'date'              => __( 'Date (HTML5)', 'events-made-easy' ),
         'datetime_js'       => __( 'Datetime (Javascript)', 'events-made-easy' ),
-        'datetime-local'    => __( 'Datetime-local (HTML5)', 'events-made-easy' ),
-        'month'             => __( 'Month (HTML5)', 'events-made-easy' ),
-        'week'              => __( 'Week (HTML5)', 'events-made-easy' ),
-        'time'              => __( 'Time (HTML5)', 'events-made-easy' ),
+        'datetime-local'    => __( 'Datetime-local', 'events-made-easy' ),
+        'month'             => __( 'Month', 'events-made-easy' ),
+        'week'              => __( 'Week', 'events-made-easy' ),
+        'time'              => __( 'Time', 'events-made-easy' ),
         'time_js'           => __( 'Time (Javascript)', 'events-made-easy' ),
-        'color'             => __( 'Color (HTML5)', 'events-made-easy' ),
-        'email'             => __( 'Email (HTML5)', 'events-made-easy' ),
-        'number'            => __( 'Number (HTML5)', 'events-made-easy' ),
-        'range'             => __( 'Range (HTML5)', 'events-made-easy' ),
-        'tel'               => __( 'Tel (HTML5)', 'events-made-easy' ),
-        'url'               => __( 'Url (HTML5)', 'events-made-easy' ),
+        'color'             => __( 'Color', 'events-made-easy' ),
+        'email'             => __( 'Email', 'events-made-easy' ),
+        'number'            => __( 'Number', 'events-made-easy' ),
+        'range'             => __( 'Range', 'events-made-easy' ),
+        'tel'               => __( 'Tel', 'events-made-easy' ),
+        'url'               => __( 'Url', 'events-made-easy' ),
+        'datalist'          => __( 'Datalist', 'events-made-easy' ),
     ];
     return $types;
 }
@@ -599,7 +600,7 @@ function eme_get_fieldtype( $type ) {
 }
 
 function eme_is_multifield( $type ) {
-    return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ] );
+    return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical', 'datalist' ] );
 }
 
 function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0, $force_edit = 0 ) {
@@ -636,6 +637,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
     } else {
         $class_att = '';
     }
+    $field_attributes = eme_merge_classes_into_attrs($class, $formfield['field_attributes']);
 
     if ( $required ) {
         $required_att = "required='required'";
@@ -643,6 +645,8 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
         $required_att = '';
     }
 
+    $field_values = '';
+    $field_tags = '';
     if ( (eme_is_admin_request() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
         // fields can have a different value for front/backend for multi-fields
         if ( ! empty( $formfield['admin_values'] ) ) {
@@ -660,7 +664,6 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
         $field_values = $formfield['field_values'];
         $field_tags   = $formfield['field_tags'];
     }
-    $field_attributes = $formfield['field_attributes'];
     if ( empty( $field_tags ) ) {
         $field_tags = $field_values;
     }
@@ -688,7 +691,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             $value = eme_esc_html( $value );
-            $html  = "<input $readonly $required_att type='" . $formfield['field_type'] . "' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att>";
+            $html  = "<input $readonly $required_att type='" . $formfield['field_type'] . "' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             break;
         case 'hidden':
             $value = eme_translate( $field_tags );
@@ -697,16 +700,16 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             $value = eme_esc_html( $value );
             if ( eme_is_admin_request() ) {
-                    $html  = "<input $readonly $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att><br>";
+                    $html  = "<input $readonly $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes><br>";
                     $html .= __( 'This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it', 'events-made-easy' );
             } else {
-                $html = "<input $readonly $required_att type='hidden' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att>";
+                $html = "<input $readonly $required_att type='hidden' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             }
             break;
         case 'password':
             $value = eme_esc_html( $entered_val );
-            #$html = "<input $readonly $required_att type='".$formfield['field_type']."' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att>";
-            $html = "<input $readonly $required_att type='text' class='eme_passwordfield' autocomplete='off' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att>";
+            $new_attrs = eme_merge_classes_into_attrs('eme_passwordfield', $field_attributes);
+            $html = "<input $readonly $required_att type='text' autocomplete='off' name='$field_name' id='$field_name' value='$value' $new_attrs>";
             break;
         case 'readonly':
             $value = eme_esc_html( $entered_val );
@@ -717,7 +720,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             $value = eme_esc_html( $value );
-            $html  = "<input readonly='readonly' $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att>";
+            $html  = "<input readonly='readonly' $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             break;
         case 'dropdown':
             # dropdown
@@ -733,7 +736,8 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 ];
                 $my_arr[] = $new_el;
             }
-            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
+            $new_attrs = eme_merge_classes_into_attrs('eme_select2', $field_attributes) . ' ' . $disabled;
+            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, '', $new_attrs );
             break;
         case 'dropdown_multi':
             # dropdown, multiselect
@@ -750,10 +754,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $my_arr[] = $new_el;
             }
             // force_single can be 1 (only possible case is in the filterform for now)
+            $new_attrs = eme_merge_classes_into_attrs('eme_select2', $field_attributes) . ' ' . $disabled;
             if ( $force_single == 1 ) {
-                $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
+                $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, '', $new_attrs );
             } else {
-                $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
+                $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, '', $new_attrs );
             }
             break;
         case 'textarea':
@@ -766,7 +771,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             $value = eme_esc_html( $value );
-            $html  = "<textarea $class_att $required_att name='$field_name' id='$field_name' $field_attributes $readonly>$value</textarea>";
+            $html  = "<textarea $required_att name='$field_name' id='$field_name' $field_attributes $readonly>$value</textarea>";
             break;
         case 'radiobox':
             # radiobox
@@ -777,7 +782,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $tag            = $tags[ $key ];
                 $my_arr[ $val ] = eme_translate( $tag );
             }
-            $html = eme_ui_radio( $entered_val, $field_name, $my_arr, true, $required, $class, $field_attributes . ' ' . $disabled );
+            $html = eme_ui_radio( $entered_val, $field_name, $my_arr, true, $required, '', $field_attributes . ' ' . $disabled );
             break;
         case 'radiobox_vertical':
             # radiobox, vertical
@@ -788,7 +793,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $tag            = $tags[ $key ];
                 $my_arr[ $val ] = eme_translate( $tag );
             }
-            $html = eme_ui_radio( $entered_val, $field_name, $my_arr, false, $required, $class, $field_attributes . ' ' . $disabled );
+            $html = eme_ui_radio( $entered_val, $field_name, $my_arr, false, $required, '', $field_attributes . ' ' . $disabled );
             break;
         case 'checkbox':
             # checkbox
@@ -805,7 +810,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( $required ) {
                 $html = '<div class="eme-checkbox-group-required">';
             }
-            $html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, true, 0, $class, $field_attributes . ' ' . $disabled );
+            $html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, true, 0, '', $field_attributes . ' ' . $disabled );
             if ( $required ) {
                 $html .= '</div>';
             }
@@ -825,7 +830,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( $required ) {
                 $html = '<div class="eme-checkbox-group-required">';
             }
-            $html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, false, 0, $class, $field_attributes . ' ' . $disabled );
+            $html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, false, 0, '', $field_attributes . ' ' . $disabled );
             if ( $required ) {
                 $html .= '</div>';
             }
@@ -851,7 +856,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             } else {
                 $showhide_style = '';
             }
-            $html .= "<input type='file' $disabled $class_att $required_att name='$field_name' id='$field_name' $showhide_style $field_attributes>";
+            $html .= "<input type='file' $disabled $required_att name='$field_name' id='$field_name' $showhide_style $field_attributes>";
             if ( ! empty( $entered_val ) ) {
                 foreach ( $entered_val as $file ) {
                     $html .= eme_get_uploaded_file_linkdelete( $file );
@@ -883,7 +888,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             } else {
                 $showhide_style = '';
             }
-            $html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style $field_attributes>";
+            $html .= "<input type='file' $disabled $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style $field_attributes>";
             if ( ! empty( $entered_val ) ) {
                 foreach ( $entered_val as $file ) {
                     $html .= eme_get_uploaded_file_linkdelete( $file );
@@ -961,6 +966,22 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value    = $date_obj->format( $dateformat );
             }
             $html = "<input $required_att $disabled name='$field_name' id='$field_name' value='$value' data-time-format='$dateformat' class='eme_formfield_timepicker $class'>";
+            break;
+        case 'datalist':
+            # for text fields
+            $value = $entered_val;
+            $value = eme_esc_html( $entered_val );
+            $html  = "<input $readonly $required_att type='text' list='list_$field_name' name='$field_name' id='$field_name' value='$value' $field_attributes>";
+            // now the datalist
+            $html  .= "<datalist id='list_$field_name'>";
+            $values = eme_convert_multi2array( $field_values );
+            $tags   = eme_convert_multi2array( $field_tags );
+            foreach ( $values as $key => $val ) {
+                $val  = eme_esc_html($val);
+                $tag  = eme_esc_html($tags[ $key ]);
+                $html .= "<option value='$val'>$tag</option>";
+            }
+            $html  .= "</datalist>";
             break;
     }
     return $html;
@@ -3137,7 +3158,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ($new_booking_in_frontend) {
                         $entered_val = 1; // by default people attend :-)
                     }
-                    $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, "eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic" );
+                    $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, '', "class='eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic'" );
                 }
                 ++$seats_found;
             } else {

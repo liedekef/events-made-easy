@@ -5,7 +5,8 @@ jQuery(document).ready( function($) {
         'radiobox',
         'radiobox_vertical',
         'checkbox',
-        'checkbox_vertical'
+        'checkbox_vertical',
+        'datalist'
     ];
 
     // List of field IDs

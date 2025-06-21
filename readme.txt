@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.8 (2025//) =
+* New custom field type: datalist
+
 = 2.6.7 (2025/06/16) =
 * Fix payconiq date checking
 * Jtable update to account for firefox and minimal column width

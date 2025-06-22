@@ -81,7 +81,7 @@ function eme_formfields_page() {
                 if (eme_is_empty_string($_POST['field_tags'] )) {
                     $field_tags_arr = array();
                 } else {
-                    $field_tags_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['field_tags'] ) )));
+                    $field_tags_arr = eme_kses( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['field_tags'] ) )));
                 }
                 if (eme_is_empty_string($_POST['admin_values'] )) {
                     $admin_values_arr = array();
@@ -91,7 +91,7 @@ function eme_formfields_page() {
                 if (eme_is_empty_string($_POST['admin_tags'] )) {
                     $admin_tags_arr = array();
                 } else {
-                    $admin_tags_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_tags'] ) )));
+                    $admin_tags_arr = eme_kses( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_tags'] ) )));
                 }
 
                 // some sanity checks
@@ -1221,7 +1221,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
                 $label = __('Remember me?','events-made-easy');
             }
             if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
+                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
             }
         } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
@@ -1343,7 +1343,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             }
             $fieldname = 'task_gdpr';
             if ( ! $eme_is_admin_request ) {
-                $replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
+                $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
             }
         } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
             if ( !empty($selected_captcha) && ! $captcha_set ) {
@@ -1962,7 +1962,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                 $label = '';
             }
             if ( ! $eme_is_admin_request ) {
-                $replacement = eme_nobreak_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
+                $replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
             }
         } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
@@ -1972,7 +1972,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                 $label = __('Remember me?','events-made-easy');
             }
             if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
             }
         } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
             if ( is_numeric( $matches[1] ) ) {
@@ -3074,7 +3074,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 }
                 $fieldname = 'gdpr';
                 if ( ! $eme_is_admin_request ) {
-                    $replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
+                    $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
                 }
             }
         } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
@@ -3086,7 +3086,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     $label = __('Remember me?','events-made-easy');
                 }
                 if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                    $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+                    $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
                 }
             }
         } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
@@ -4014,7 +4014,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             }
             $fieldname = 'gdpr';
             if ( ! $eme_is_admin_request ) {
-                $replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
+                $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
             }
         } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
@@ -4024,7 +4024,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                 $label = __('Remember me?','events-made-easy');
             }
             if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
             }
         } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
             if ( is_numeric( $matches[1] ) ) {
@@ -4374,7 +4374,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
             } else {
                 $label = '';
             }
-            $replacement = eme_nobreak_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
+            $replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
         } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
@@ -4383,7 +4383,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                 $label = __('Remember me?','events-made-easy');
             }
             if ( ! is_user_logged_in()) {
-                $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
             }
         } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
             if ( !empty($selected_captcha) && ! $captcha_set ) { 

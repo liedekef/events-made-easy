@@ -4348,3 +4348,10 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
     $attributes = trim(preg_replace('/\s+/', ' ', $attributes));
     return $attributes;
 }
+
+function eme_message_ok_div($message) {
+    return "<div class='updated eme-message-admin'><p>" .$message.'</p></div>';
+}
+function eme_message_error_div($message) {
+    return "<div class='error eme-message-admin'><p>" .$message.'</p></div>';
+}

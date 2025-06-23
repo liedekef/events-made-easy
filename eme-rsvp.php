@@ -5187,6 +5187,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     $scope_names['future'] = __( 'Future events', 'events-made-easy' );
 
     $categories = eme_get_categories();
+    $groups     = eme_get_static_groups();
 
     $pdftemplates     = eme_get_templates( 'pdf', 1 );
     $htmltemplates    = eme_get_templates( 'html', 1 );
@@ -5345,6 +5346,8 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="setwaitinglistBooking"><?php esc_html_e( 'Put booking on the waitinglist', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
     <option value="rsvpMails"><?php esc_html_e( 'Send booking related email to selected bookings', 'events-made-easy' ); ?></option>
+    <option value="addToGroup"><?php esc_html_e( 'Add selected persons to group', 'events-made-easy' ); ?></option>
+    <option value="removeFromGroup"><?php esc_html_e( 'Remove selected persons from group', 'events-made-easy' ); ?></option>
     <option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
     <option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
 <?php } else { ?>
@@ -5360,6 +5363,8 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="setwaitinglistBooking"><?php esc_html_e( 'Put booking on the waitinglist', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
     <option value="rsvpMails"><?php esc_html_e( 'Send booking related email to selected bookings', 'events-made-easy' ); ?></option>
+    <option value="addToGroup"><?php esc_html_e( 'Add selected persons to group', 'events-made-easy' ); ?></option>
+    <option value="removeFromGroup"><?php esc_html_e( 'Remove selected persons from group', 'events-made-easy' ); ?></option>
     <option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
     <option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
 <?php } ?>
@@ -5404,6 +5409,12 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
     <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
     <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+    </span>
+    <span id="span_addtogroup" class="eme-hidden">
+    <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+    </span>
+    <span id="span_removefromgroup" class="eme-hidden">
+    <?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
     </span>
     <button id="BookingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>

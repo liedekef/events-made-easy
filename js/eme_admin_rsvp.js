@@ -298,6 +298,16 @@ jQuery(document).ready(function ($) {
         } else {
             jQuery('span#span_htmltemplate').hide();
         }
+        if (action == 'addToGroup') {
+            $('span#span_addtogroup').show();
+        } else {
+            $('span#span_addtogroup').hide();
+        }
+        if (action == 'removeFromGroup') {
+            $('span#span_removefromgroup').show();
+        } else {
+            $('span#span_removefromgroup').hide();
+        }
     }
     $('select#eme_admin_action').on("change",updateShowHideStuff);
     updateShowHideStuff();
@@ -372,6 +382,20 @@ jQuery(document).ready(function ($) {
                     'html_templata_footer': html_template_footer,
                     'eme_admin_nonce': emersvp.translate_adminnonce };
 
+                if (do_action=='addToGroup' || do_action=='removeFromGroup') {
+                    let people_ids = [];
+                    selectedRows.each(function () {
+                        people_ids.push($(this).data('record')['person_id']);
+                    });
+                    params = {
+                        'person_id': people_ids.join(),
+                        'action': 'eme_manage_people',
+                        'do_action': do_action,
+                        'addtogroup': $('#addtogroup').val(),
+                        'removefromgroup': $('#removefromgroup').val(),
+                        'eme_admin_nonce': emersvp.translate_adminnonce 
+                    };
+                }
                 if (do_action=='sendMails') {
                     form = $('<form method="POST" action="'+emersvp.translate_admin_sendmails_url+'">');
                     params = {

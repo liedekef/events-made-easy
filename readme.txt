@@ -101,6 +101,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.6.8 (2025//) =
 * New custom field type: datalist
+* Allow some html in custom field tags for fields that have labels rendered
+* Add bulk action to make events hidden
 
 = 2.6.7 (2025/06/16) =
 * Fix payconiq date checking

@@ -6146,7 +6146,8 @@ function eme_events_table( $message = '' ) {
     <?php } else { ?>
     <option value="trashEvents"><?php esc_html_e( 'Delete selected events (move to trash bin)', 'events-made-easy' ); ?></option>
     <option value="publicEvents"><?php esc_html_e( 'Publish selected events', 'events-made-easy' ); ?></option>
-    <option value="privateEvents"><?php esc_html_e( 'Make selected events private', 'events-made-easy' ); ?></option>
+    <option value="privateEvents" title="<?php esc_html_e( 'Private events are only accessible to logged-in users', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events private', 'events-made-easy' ); ?></option>
+    <option value="hiddenEvents" title="<?php esc_html_e( 'Hidden events are accessible to everyone but not shown in events lists or calendars.', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events hidden', 'events-made-easy' ); ?></option>
     <option value="draftEvents"><?php esc_html_e( 'Make selected events draft', 'events-made-easy' ); ?></option>
     <option value="addCategory"><?php esc_html_e( 'Add selected events to category', 'events-made-easy' ); ?></option>
     <?php } ?>
@@ -10580,6 +10581,9 @@ function eme_ajax_manage_events() {
             break;
         case 'privateEvents':
             eme_ajax_action_events_status( $ids_arr, EME_EVENT_STATUS_PRIVATE );
+            break;
+        case 'hiddenEvents':
+            eme_ajax_action_events_status( $ids_arr, EME_EVENT_STATUS_UNLISTED );
             break;
         case 'draftEvents':
             eme_ajax_action_events_status( $ids_arr, EME_EVENT_STATUS_DRAFT );

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.6.7
+Stable tag: 2.6.8
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,10 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.6.8 (2025//) =
+= 2.6.8 (2025/06/24) =
 * New custom field type: datalist
 * Allow some html in custom field tags for fields that have labels rendered
 * Add bulk action to make events hidden
+* Bulk action to add people to groups has been added to the RSVP admin page too
+* Discounts can now check the number of booked seats too
 
 = 2.6.7 (2025/06/16) =
 * Fix payconiq date checking

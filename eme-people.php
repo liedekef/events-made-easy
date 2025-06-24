@@ -4538,7 +4538,7 @@ function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( eme_is_list_of_int( $person_ids ) ) {
-        $sql = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($person_ids)", $bd_email );
+        $sql = $wpdb->prepare( "UPDATE $table SET bd_email=%d WHERE person_id IN ($person_ids)", $bd_email );
         $wpdb->query( $sql );
     }
 }

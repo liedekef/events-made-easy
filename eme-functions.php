@@ -2642,6 +2642,7 @@ function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $me
 }
 
 function eme_nl2br_save_html( $string ) {
+    $htmleditor = get_option( 'eme_htmleditor' );
     // empty or no \n found: do nothing (this also allow this function to be called multiple times on the same string without doing anything on subsequent calls
     if (empty($string) || !str_contains($string, "\n")) {
         return $string;
@@ -2654,14 +2655,26 @@ function eme_nl2br_save_html( $string ) {
     // replace other lineendings
     $string = str_replace( [ "\r\n", "\r" ], "\n", $string );
 
-    // remove unwanted empty lines after tr/td tags
-    $string = preg_replace('/(<tr[^>]*>)\s+/i', '$1', $string);   // after opening <tr>
-    $string = preg_replace('/\s+(<\/tr>)/i', '$1', $string);      // before closing </tr>
-    $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
-    $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
+    // Check for HTML tags (case-insensitive)
+    if ($htmleditor != 'tinymce') {
+        if (stripos($string, '<p') !== false ||
+            stripos($string, '<table') !== false ||
+            stripos($string, '<span') !== false ||
+            stripos($string, '<br') !== false) {
+            return $string;
+        }
+    }
 
-    // if br is found, replace it by BREAK
-    $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
+    if ($htmleditor == 'tinymce') {
+        // remove unwanted empty lines after tr/td tags
+        $string = preg_replace('/(<tr[^>]*>)\s+/i', '$1', $string);   // after opening <tr>
+        $string = preg_replace('/\s+(<\/tr>)/i', '$1', $string);      // before closing </tr>
+        $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
+        $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
+
+        // if br is found, replace it by BREAK
+        $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
+    }
 
     $lines      = explode( "\n", $string );
     $last_index = count( $lines ) - 1;
@@ -2696,7 +2709,10 @@ function eme_nl2br_save_html( $string ) {
     }
     // now that we added the needed br-tags, join back together and return the modified string
     $res = implode( "\n", $lines );
-    return str_replace( 'BREAK', "<br>\n", $res );
+    if ($htmleditor == 'tinymce') {
+        $re = str_replace( 'BREAK', "<br>\n", $res );
+    }
+    return $res;
 }
 
 function eme_wp_date_format_php_to_datepicker_js( $php_format ) {

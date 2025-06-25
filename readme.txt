@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.9 (2025/06/26) =
+* Smarter br-handling if the editor is jodit 
+* Better word paste if the editor is jodit
+* The content of the reminder emails could not be entered directly per event
+
 = 2.6.8 (2025/06/24) =
 * New custom field type: datalist
 * Allow some html in custom field tags for fields that have labels rendered

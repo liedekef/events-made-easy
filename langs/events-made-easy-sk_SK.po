@@ -66,10 +66,10 @@ msgstr "v mene %s"
 #: eme-formfields.php:5135
 #: eme-formfields.php:5157
 #: eme-formfields.php:5158
-#: eme-functions.php:3408
-#: eme-functions.php:3429
-#: eme-functions.php:3430
-#: eme-functions.php:3473
+#: eme-functions.php:3424
+#: eme-functions.php:3445
+#: eme-functions.php:3446
+#: eme-functions.php:3489
 #: eme-holidays.php:275
 #: eme-holidays.php:314
 #: eme-locations.php:2905
@@ -296,7 +296,7 @@ msgstr "Filtrovať podľa dátumu ukončenia"
 msgid "Filter attendances"
 msgstr "Filtrovať podľa účasti"
 
-#: eme-functions.php:4288
+#: eme-functions.php:4304
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zobrazenie a skrytie stĺpcov"
 
@@ -1050,12 +1050,12 @@ msgid "Incorrect country selection"
 msgstr "Nesprávny výber krajiny"
 
 #: eme-countries.php:1028
-#: eme-functions.php:3455
+#: eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Aktualizácia zlyhala: "
 
 #: eme-countries.php:1030
-#: eme-functions.php:3457
+#: eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "Vloženie zlyhalo: "
 
@@ -5720,7 +5720,7 @@ msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických form
 
 #: eme-formfields.php:5144
 #: eme-formfields.php:5154
-#: eme-functions.php:3426
+#: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
@@ -6042,93 +6042,93 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Skupina"
 
-#: eme-functions.php:3011
+#: eme-functions.php:3027
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Odoslaný súbor prekračuje parameter upload_max_filesize v php.ini"
 
-#: eme-functions.php:3012
+#: eme-functions.php:3028
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Odoslaný súbor presahuje parameter MAX_FILE_SIZE, ktorý bol zadaný vo formulári HTML"
 
-#: eme-functions.php:3013
+#: eme-functions.php:3029
 msgid "The uploaded file was only partially uploaded"
 msgstr "Nahraný súbor bol nahraný len čiastočne"
 
-#: eme-functions.php:3014
+#: eme-functions.php:3030
 msgid "No file was uploaded"
 msgstr "Nebol nahratý žiadny súbor"
 
-#: eme-functions.php:3015
+#: eme-functions.php:3031
 msgid "Missing a temporary folder"
 msgstr "Chýba dočasný priečinok"
 
-#: eme-functions.php:3016
+#: eme-functions.php:3032
 msgid "Failed to write file to disk"
 msgstr "Nepodarilo sa zapísať súbor na disk"
 
-#: eme-functions.php:3017
+#: eme-functions.php:3033
 msgid "File upload stopped by extension"
 msgstr "Nahrávanie súboru sa zastavilo kvôli prípone"
 
-#: eme-functions.php:3018
+#: eme-functions.php:3034
 msgid "Unknown upload error"
 msgstr "Neznáma chyba nahrávania"
 
-#: eme-functions.php:3058
+#: eme-functions.php:3074
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Zlyhalo vytvorenie adresára pre nahrávanie, skontrolujte svoje povolenia."
 
-#: eme-functions.php:3093
-#: eme-functions.php:3154
+#: eme-functions.php:3109
+#: eme-functions.php:3170
 msgid "File upload is required."
 msgstr "Nahratie súboru je povinné."
 
-#: eme-functions.php:3101
-#: eme-functions.php:3162
+#: eme-functions.php:3117
+#: eme-functions.php:3178
 msgid "Illegal filename."
 msgstr "Neplatný názov súboru."
 
-#: eme-functions.php:3107
-#: eme-functions.php:3168
+#: eme-functions.php:3123
+#: eme-functions.php:3184
 msgid "File already exists."
 msgstr "Súbor už existuje."
 
-#: eme-functions.php:3113
-#: eme-functions.php:3174
+#: eme-functions.php:3129
+#: eme-functions.php:3190
 msgid "File too large."
 msgstr "Súbor je príliš veľký."
 
-#: eme-functions.php:3129
-#: eme-functions.php:3190
+#: eme-functions.php:3145
+#: eme-functions.php:3206
 msgid "Incorrect file type."
 msgstr "Neplatný typ súboru."
 
-#: eme-functions.php:3134
-#: eme-functions.php:3195
+#: eme-functions.php:3150
+#: eme-functions.php:3211
 msgid "Upload failed."
 msgstr "Nahrávanie zlyhalo."
 
-#: eme-functions.php:3202
+#: eme-functions.php:3218
 msgid "Errors encountered while uploading files"
 msgstr "Pri nahrávaní súborov sa vyskytli chyby"
 
-#: eme-functions.php:3442
+#: eme-functions.php:3458
 msgid "No such record"
 msgstr "Taký záznam neexistuje"
 
-#: eme-functions.php:4226
+#: eme-functions.php:4242
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4228
+#: eme-functions.php:4244
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4230
+#: eme-functions.php:4246
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: eme-functions.php:4234
+#: eme-functions.php:4250
 msgid "Basic EME Captcha"
 msgstr "Základná EME Captcha"
 
@@ -14097,7 +14097,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4232
+#: eme-functions.php:4248
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14163,7 +14163,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: eme-functions.php:4292
+#: eme-functions.php:4308
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14239,7 +14239,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4294
+#: eme-functions.php:4310
 msgid "All selected columns are used for sorting"
 msgstr ""
 
@@ -14457,16 +14457,8 @@ msgstr ""
 msgid "Min #seats booked"
 msgstr ""
 
-#: eme-discounts.php:915
-msgid "The minimum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
-
 #: eme-discounts.php:919
 msgid "Max #seats booked"
-msgstr ""
-
-#: eme-discounts.php:921
-msgid "The maximum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
 msgstr ""
 
 #: eme-events.php:6149
@@ -14529,4 +14521,12 @@ msgstr ""
 #: eme-rsvp.php:5350
 #: eme-rsvp.php:5367
 msgid "Remove selected persons from group"
+msgstr ""
+
+#: eme-discounts.php:915
+msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgstr ""
+
+#: eme-discounts.php:921
+msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
 msgstr ""

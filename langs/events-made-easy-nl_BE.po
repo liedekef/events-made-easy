@@ -38,10 +38,10 @@ msgstr "in naam van %s"
 #: eme-formfields.php:5135
 #: eme-formfields.php:5157
 #: eme-formfields.php:5158
-#: eme-functions.php:3408
-#: eme-functions.php:3429
-#: eme-functions.php:3430
-#: eme-functions.php:3473
+#: eme-functions.php:3424
+#: eme-functions.php:3445
+#: eme-functions.php:3446
+#: eme-functions.php:3489
 #: eme-holidays.php:275
 #: eme-holidays.php:314
 #: eme-locations.php:2905
@@ -252,7 +252,7 @@ msgstr "Filter op einddatum"
 msgid "Filter attendances"
 msgstr "Filter aanwezigen"
 
-#: eme-functions.php:4288
+#: eme-functions.php:4304
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
@@ -1002,12 +1002,12 @@ msgid "Incorrect country selection"
 msgstr "Ongeldige land selectie"
 
 #: eme-countries.php:1028
-#: eme-functions.php:3455
+#: eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Aanpassen mislukt: "
 
 #: eme-countries.php:1030
-#: eme-functions.php:3457
+#: eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "Invoegen mislukt: "
 
@@ -5589,7 +5589,7 @@ msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw 
 
 #: eme-formfields.php:5144
 #: eme-formfields.php:5154
-#: eme-functions.php:3426
+#: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
 
@@ -5826,77 +5826,77 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Groep"
 
-#: eme-functions.php:3011
+#: eme-functions.php:3027
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Het geüploade bestand overschrijdt de richtlijn upload_max_filesize in php.ini"
 
-#: eme-functions.php:3012
+#: eme-functions.php:3028
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Het geüploade bestand overschrijdt de MAX_FILE_SIZE-richtlijn die is opgegeven in het HTML-formulier"
 
-#: eme-functions.php:3013
+#: eme-functions.php:3029
 msgid "The uploaded file was only partially uploaded"
 msgstr "Het geüploade bestand is slechts gedeeltelijk geüpload"
 
-#: eme-functions.php:3014
+#: eme-functions.php:3030
 msgid "No file was uploaded"
 msgstr "Er is geen file ge-uploaded"
 
-#: eme-functions.php:3015
+#: eme-functions.php:3031
 msgid "Missing a temporary folder"
 msgstr "Tijdelijke folder ontbreekt"
 
-#: eme-functions.php:3016
+#: eme-functions.php:3032
 msgid "Failed to write file to disk"
 msgstr "Kan bestand niet naar schijf schrijven"
 
-#: eme-functions.php:3017
+#: eme-functions.php:3033
 msgid "File upload stopped by extension"
 msgstr "Uploaden van bestanden geweigerd door extensie"
 
-#: eme-functions.php:3018
+#: eme-functions.php:3034
 msgid "Unknown upload error"
 msgstr "Onbekende upload fout"
 
-#: eme-functions.php:3058
+#: eme-functions.php:3074
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Probleem bij het aanmaken van de upload folder, kijk de folder rechten na."
 
-#: eme-functions.php:3093
-#: eme-functions.php:3154
+#: eme-functions.php:3109
+#: eme-functions.php:3170
 msgid "File upload is required."
 msgstr "Bestand uploaden is vereist."
 
-#: eme-functions.php:3101
-#: eme-functions.php:3162
+#: eme-functions.php:3117
+#: eme-functions.php:3178
 msgid "Illegal filename."
 msgstr "Ongeldige filenaam."
 
-#: eme-functions.php:3107
-#: eme-functions.php:3168
+#: eme-functions.php:3123
+#: eme-functions.php:3184
 msgid "File already exists."
 msgstr "Bestand bestaat reeds."
 
-#: eme-functions.php:3113
-#: eme-functions.php:3174
+#: eme-functions.php:3129
+#: eme-functions.php:3190
 msgid "File too large."
 msgstr "Bestand te groot."
 
-#: eme-functions.php:3129
-#: eme-functions.php:3190
+#: eme-functions.php:3145
+#: eme-functions.php:3206
 msgid "Incorrect file type."
 msgstr "Foutief bestandstype."
 
-#: eme-functions.php:3134
-#: eme-functions.php:3195
+#: eme-functions.php:3150
+#: eme-functions.php:3211
 msgid "Upload failed."
 msgstr "Uploaden gefaald."
 
-#: eme-functions.php:3202
+#: eme-functions.php:3218
 msgid "Errors encountered while uploading files"
 msgstr "Er waren problemen bij het uploaden van bestanden"
 
-#: eme-functions.php:3442
+#: eme-functions.php:3458
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
@@ -7200,15 +7200,15 @@ msgstr "Verlenging voor actieve leden op basis van einddatum"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Laat actieve leden alleen betalen voor een verlenging als de einddatum van het lidmaatschap minder is dan het genoemde aantal dagen. Dit voorkomt dat mensen vele malen achter elkaar betalen. Voer 0 of niets in om dit uit te schakelen (de standaardinstelling)."
 
-#: eme-functions.php:4226
+#: eme-functions.php:4242
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4228
+#: eme-functions.php:4244
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4230
+#: eme-functions.php:4246
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13620,7 +13620,7 @@ msgstr "Selecteer een captcha die u wilt gebruiken"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (onbetaald)"
 
-#: eme-functions.php:4234
+#: eme-functions.php:4250
 msgid "Basic EME Captcha"
 msgstr "Basis EME-captcha"
 
@@ -14104,7 +14104,7 @@ msgstr "Verwijder ook gedefinieerde categorieën, sjablonen, feestdagen, korting
 msgid "Please check the Friendly Captcha box"
 msgstr "Vink het vakje Friendly Captcha aan"
 
-#: eme-functions.php:4232
+#: eme-functions.php:4248
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -14152,7 +14152,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] "Eén persoon heeft zich al aangemeld voor deze taak"
 msgstr[1] "%d personen hebben zich al aangemeld voor deze taak"
 
-#: eme-functions.php:4292
+#: eme-functions.php:4308
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Gebruik Ctrl-klik om op meerdere kolommen te sorteren"
 
@@ -14228,7 +14228,7 @@ msgstr "Terugbetaling is mogelijk."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Terugbetaling is mogelijk als er voldoende saldo op de rekening is."
 
-#: eme-functions.php:4294
+#: eme-functions.php:4310
 msgid "All selected columns are used for sorting"
 msgstr "Alle geselecteerde kolommen worden gebruikt voor sorteren"
 
@@ -14444,78 +14444,78 @@ msgstr "Betalingsgateway"
 
 #: eme-discounts.php:913
 msgid "Min #seats booked"
-msgstr ""
-
-#: eme-discounts.php:915
-msgid "The minimum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Min. #plaatsen geboekt"
 
 #: eme-discounts.php:919
 msgid "Max #seats booked"
-msgstr ""
-
-#: eme-discounts.php:921
-msgid "The maximum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Max. #plaatsen geboekt"
 
 #: eme-events.php:6149
 msgid "Private events are only accessible to logged-in users"
-msgstr ""
+msgstr "Privé-evenementen zijn alleen toegankelijk voor ingelogde gebruikers"
 
 #: eme-events.php:6150
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
-msgstr ""
+msgstr "Verborgen evenementen zijn voor iedereen toegankelijk, maar worden niet weergegeven in evenementenlijsten of agenda's."
 
 #: eme-events.php:6150
 msgid "Make selected events hidden"
-msgstr ""
+msgstr "Geselecteerde evenementen verbergen"
 
 #: eme-formfields.php:581
 msgid "Datetime-local"
-msgstr ""
+msgstr "Datum-tijd-lokaal"
 
 #: eme-formfields.php:582
 msgid "Month"
-msgstr ""
+msgstr "Maand"
 
 #: eme-formfields.php:583
 msgid "Week"
-msgstr ""
+msgstr "Week"
 
 #: eme-formfields.php:584
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: eme-formfields.php:586
 msgid "Color"
-msgstr ""
+msgstr "Kleur"
 
 #: eme-formfields.php:588
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: eme-formfields.php:589
 msgid "Range"
-msgstr ""
+msgstr "Bereik"
 
 #: eme-formfields.php:590
 msgid "Tel"
-msgstr ""
+msgstr "Tel"
 
 #: eme-formfields.php:591
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #: eme-formfields.php:592
 msgid "Datalist"
-msgstr ""
+msgstr "Datalijst"
 
 #: eme-rsvp.php:5349
 #: eme-rsvp.php:5366
 msgid "Add selected persons to group"
-msgstr ""
+msgstr "Geselecteerde personen aan groep toevoegen"
 
 #: eme-rsvp.php:5350
 #: eme-rsvp.php:5367
 msgid "Remove selected persons from group"
-msgstr ""
+msgstr "Geselecteerde personen uit groep verwijderen"
+
+#: eme-discounts.php:915
+msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgstr "Het minimum aantal plaatsen dat geboekt moet worden om de korting te laten gelden. Laat leeg (niet 0) voor geen limiet."
+
+#: eme-discounts.php:921
+msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgstr "Het maximum aantal plaatsen dat geboekt moet worden om de korting te laten gelden. Laat leeg (niet 0) voor geen limiet."

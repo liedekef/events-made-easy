@@ -38,10 +38,10 @@ msgstr "au nom de %s"
 #: eme-formfields.php:5135
 #: eme-formfields.php:5157
 #: eme-formfields.php:5158
-#: eme-functions.php:3408
-#: eme-functions.php:3429
-#: eme-functions.php:3430
-#: eme-functions.php:3473
+#: eme-functions.php:3424
+#: eme-functions.php:3445
+#: eme-functions.php:3446
+#: eme-functions.php:3489
 #: eme-holidays.php:275
 #: eme-holidays.php:314
 #: eme-locations.php:2905
@@ -252,7 +252,7 @@ msgstr "Filtrer sur la date de fin"
 msgid "Filter attendances"
 msgstr "Filtre des présences"
 
-#: eme-functions.php:4288
+#: eme-functions.php:4304
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Astuce : cliquez avec le bouton droit sur les en-têtes de colonne pour afficher/masquer les colonnes"
 
@@ -1002,12 +1002,12 @@ msgid "Incorrect country selection"
 msgstr "Sélection de pays incorrecte"
 
 #: eme-countries.php:1028
-#: eme-functions.php:3455
+#: eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Mise à jour a échoué : "
 
 #: eme-countries.php:1030
-#: eme-functions.php:3457
+#: eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "L'insertion a échoué : "
 
@@ -5589,7 +5589,7 @@ msgstr "Utilisez l’espace réservé #_DYNAMICDATA pour afficher un formulaire 
 
 #: eme-formfields.php:5144
 #: eme-formfields.php:5154
-#: eme-functions.php:3426
+#: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr "Enregistrements supprimés !"
 
@@ -5822,77 +5822,77 @@ msgstr "Informaitons supplémentaires"
 msgid "Group"
 msgstr "Groupe"
 
-#: eme-functions.php:3011
+#: eme-functions.php:3027
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Le fichier téléversé dépasse la limite upload_max_filesize du php.ini"
 
-#: eme-functions.php:3012
+#: eme-functions.php:3028
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Le fichier téléversé dépasse la valeur MAX_FILE_SIZE spécifiée dans le formulaire HTML"
 
-#: eme-functions.php:3013
+#: eme-functions.php:3029
 msgid "The uploaded file was only partially uploaded"
 msgstr "Le fichier téléversé n’a été que partiellement téléversé"
 
-#: eme-functions.php:3014
+#: eme-functions.php:3030
 msgid "No file was uploaded"
 msgstr "Aucun fichier n’a été téléversé"
 
-#: eme-functions.php:3015
+#: eme-functions.php:3031
 msgid "Missing a temporary folder"
 msgstr "Il manque un dossier temporaire"
 
-#: eme-functions.php:3016
+#: eme-functions.php:3032
 msgid "Failed to write file to disk"
 msgstr "Échec de l’écriture du fichier sur le disque"
 
-#: eme-functions.php:3017
+#: eme-functions.php:3033
 msgid "File upload stopped by extension"
 msgstr "Téléversement de fichier arrêté par l’extension"
 
-#: eme-functions.php:3018
+#: eme-functions.php:3034
 msgid "Unknown upload error"
 msgstr "Erreur de téléversement inconnue"
 
-#: eme-functions.php:3058
+#: eme-functions.php:3074
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Échec de la création du répertoire de téléversement, veuillez vérifiez vos droits."
 
-#: eme-functions.php:3093
-#: eme-functions.php:3154
+#: eme-functions.php:3109
+#: eme-functions.php:3170
 msgid "File upload is required."
 msgstr "Le téléversement de fichier est nécessaire."
 
-#: eme-functions.php:3101
-#: eme-functions.php:3162
+#: eme-functions.php:3117
+#: eme-functions.php:3178
 msgid "Illegal filename."
 msgstr "Nom de fichier illégal."
 
-#: eme-functions.php:3107
-#: eme-functions.php:3168
+#: eme-functions.php:3123
+#: eme-functions.php:3184
 msgid "File already exists."
 msgstr "Le fichier existe déjà."
 
-#: eme-functions.php:3113
-#: eme-functions.php:3174
+#: eme-functions.php:3129
+#: eme-functions.php:3190
 msgid "File too large."
 msgstr "Fichier trop grand."
 
-#: eme-functions.php:3129
-#: eme-functions.php:3190
+#: eme-functions.php:3145
+#: eme-functions.php:3206
 msgid "Incorrect file type."
 msgstr "Type de fichier incorrect."
 
-#: eme-functions.php:3134
-#: eme-functions.php:3195
+#: eme-functions.php:3150
+#: eme-functions.php:3211
 msgid "Upload failed."
 msgstr "Le téléversement a échoué."
 
-#: eme-functions.php:3202
+#: eme-functions.php:3218
 msgid "Errors encountered while uploading files"
 msgstr "Erreurs rencontrées lors du téléversement des fichiers"
 
-#: eme-functions.php:3442
+#: eme-functions.php:3458
 msgid "No such record"
 msgstr "Aucun enregistrement"
 
@@ -7196,15 +7196,15 @@ msgstr "Renouvellement pour les membres actifs basé sur la date de fin"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Autoriser les membres actifs à payer pour un renouvellement uniquement si la date de fin d’adhésion est inférieure au nombre de jours mentionné. Cela empêche les personnes de payer plusieurs fois de suite. Saisissez 0 ou rien pour désactiver cette option (par défaut)."
 
-#: eme-functions.php:4226
+#: eme-functions.php:4242
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4228
+#: eme-functions.php:4244
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4230
+#: eme-functions.php:4246
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13618,7 +13618,7 @@ msgstr "Sélectionner un captcha à utiliser"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (non rémunéré)"
 
-#: eme-functions.php:4234
+#: eme-functions.php:4250
 msgid "Basic EME Captcha"
 msgstr "Captcha de base de l'EME"
 
@@ -14106,7 +14106,7 @@ msgstr "Supprimez également les catégories définies, les modèles, les jours 
 msgid "Please check the Friendly Captcha box"
 msgstr "Veuillez cocher la case Captcha amical"
 
-#: eme-functions.php:4232
+#: eme-functions.php:4248
 msgid "Friendly Captcha"
 msgstr "Captcha convivial"
 
@@ -14154,7 +14154,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] "Une personne s'est déjà inscrite pour cette tâche"
 msgstr[1] "%d personnes se sont déjà inscrites pour cette tâche"
 
-#: eme-functions.php:4292
+#: eme-functions.php:4308
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Utilisez Ctrl-clic pour trier sur plusieurs colonnes"
 
@@ -14230,7 +14230,7 @@ msgstr "Le remboursement est possible."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Le remboursement est possible si des fonds sont disponibles sur le compte."
 
-#: eme-functions.php:4294
+#: eme-functions.php:4310
 msgid "All selected columns are used for sorting"
 msgstr "Toutes les colonnes sélectionnées sont utilisées pour le tri"
 
@@ -14446,78 +14446,78 @@ msgstr "Passerelle de paiement"
 
 #: eme-discounts.php:913
 msgid "Min #seats booked"
-msgstr ""
-
-#: eme-discounts.php:915
-msgid "The minimum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Min. #places réservées"
 
 #: eme-discounts.php:919
 msgid "Max #seats booked"
-msgstr ""
-
-#: eme-discounts.php:921
-msgid "The maximum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Max. #places réservées"
 
 #: eme-events.php:6149
 msgid "Private events are only accessible to logged-in users"
-msgstr ""
+msgstr "Les événements privés ne sont accessibles qu'aux utilisateurs connectés"
 
 #: eme-events.php:6150
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
-msgstr ""
+msgstr "Les événements cachés sont accessibles à tous mais ne sont pas affichés dans les listes d'événements ou les calendriers."
 
 #: eme-events.php:6150
 msgid "Make selected events hidden"
-msgstr ""
+msgstr "Rendre les événements sélectionnés cachés"
 
 #: eme-formfields.php:581
 msgid "Datetime-local"
-msgstr ""
+msgstr "Date-heure locale"
 
 #: eme-formfields.php:582
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: eme-formfields.php:583
 msgid "Week"
-msgstr ""
+msgstr "Semaine"
 
 #: eme-formfields.php:584
 msgid "Time"
-msgstr ""
+msgstr "Heure"
 
 #: eme-formfields.php:586
 msgid "Color"
-msgstr ""
+msgstr "Couleur"
 
 #: eme-formfields.php:588
 msgid "Number"
-msgstr ""
+msgstr "Nombre"
 
 #: eme-formfields.php:589
 msgid "Range"
-msgstr ""
+msgstr "Plage"
 
 #: eme-formfields.php:590
 msgid "Tel"
-msgstr ""
+msgstr "Tél"
 
 #: eme-formfields.php:591
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #: eme-formfields.php:592
 msgid "Datalist"
-msgstr ""
+msgstr "Liste de données"
 
 #: eme-rsvp.php:5349
 #: eme-rsvp.php:5366
 msgid "Add selected persons to group"
-msgstr ""
+msgstr "Ajouter les personnes sélectionnées au groupe"
 
 #: eme-rsvp.php:5350
 #: eme-rsvp.php:5367
 msgid "Remove selected persons from group"
-msgstr ""
+msgstr "Retirer les personnes sélectionnées du groupe"
+
+#: eme-discounts.php:915
+msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgstr "Le nombre minimum de places à réserver pour que la réduction s'applique. Laissez vide (pas 0) pour aucune limite."
+
+#: eme-discounts.php:921
+msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgstr "Le nombre maximum de places à réserver pour que la réduction s'applique. Laissez vide (pas 0) pour aucune limite."

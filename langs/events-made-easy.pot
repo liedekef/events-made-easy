@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.6.7\n"
+"Project-Id-Version: Events Made Easy 2.6.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-24T17:48:19+00:00\n"
+"POT-Creation-Date: 2025-06-25T22:17:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -67,10 +67,10 @@ msgstr ""
 #: eme-formfields.php:5135
 #: eme-formfields.php:5157
 #: eme-formfields.php:5158
-#: eme-functions.php:3408
-#: eme-functions.php:3429
-#: eme-functions.php:3430
-#: eme-functions.php:3473
+#: eme-functions.php:3424
+#: eme-functions.php:3445
+#: eme-functions.php:3446
+#: eme-functions.php:3489
 #: eme-holidays.php:275
 #: eme-holidays.php:314
 #: eme-locations.php:2905
@@ -1060,12 +1060,12 @@ msgid "Incorrect country selection"
 msgstr ""
 
 #: eme-countries.php:1028
-#: eme-functions.php:3455
+#: eme-functions.php:3471
 msgid "Update failed: "
 msgstr ""
 
 #: eme-countries.php:1030
-#: eme-functions.php:3457
+#: eme-functions.php:3473
 msgid "Insert failed: "
 msgstr ""
 
@@ -1531,7 +1531,7 @@ msgid "Min #seats booked"
 msgstr ""
 
 #: eme-discounts.php:915
-msgid "The minimum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
 msgstr ""
 
 #: eme-discounts.php:919
@@ -1539,7 +1539,7 @@ msgid "Max #seats booked"
 msgstr ""
 
 #: eme-discounts.php:921
-msgid "The maximum number of seatss that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
+msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
 msgstr ""
 
 #: eme-discounts.php:926
@@ -6093,7 +6093,7 @@ msgstr ""
 
 #: eme-formfields.php:5144
 #: eme-formfields.php:5154
-#: eme-functions.php:3426
+#: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr ""
 
@@ -6418,109 +6418,109 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: eme-functions.php:3011
+#: eme-functions.php:3027
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:3012
+#: eme-functions.php:3028
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: eme-functions.php:3013
+#: eme-functions.php:3029
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:3014
+#: eme-functions.php:3030
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:3015
+#: eme-functions.php:3031
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:3016
+#: eme-functions.php:3032
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:3017
+#: eme-functions.php:3033
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:3018
+#: eme-functions.php:3034
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:3058
+#: eme-functions.php:3074
 msgid "Failure creating upload dir, please check your permissions."
 msgstr ""
 
-#: eme-functions.php:3093
-#: eme-functions.php:3154
+#: eme-functions.php:3109
+#: eme-functions.php:3170
 msgid "File upload is required."
 msgstr ""
 
-#: eme-functions.php:3101
-#: eme-functions.php:3162
+#: eme-functions.php:3117
+#: eme-functions.php:3178
 msgid "Illegal filename."
 msgstr ""
 
-#: eme-functions.php:3107
-#: eme-functions.php:3168
+#: eme-functions.php:3123
+#: eme-functions.php:3184
 msgid "File already exists."
-msgstr ""
-
-#: eme-functions.php:3113
-#: eme-functions.php:3174
-msgid "File too large."
 msgstr ""
 
 #: eme-functions.php:3129
 #: eme-functions.php:3190
+msgid "File too large."
+msgstr ""
+
+#: eme-functions.php:3145
+#: eme-functions.php:3206
 msgid "Incorrect file type."
 msgstr ""
 
-#: eme-functions.php:3134
-#: eme-functions.php:3195
+#: eme-functions.php:3150
+#: eme-functions.php:3211
 msgid "Upload failed."
 msgstr ""
 
-#: eme-functions.php:3202
+#: eme-functions.php:3218
 msgid "Errors encountered while uploading files"
 msgstr ""
 
-#: eme-functions.php:3442
+#: eme-functions.php:3458
 msgid "No such record"
 msgstr ""
 
-#: eme-functions.php:4226
+#: eme-functions.php:4242
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: eme-functions.php:4228
+#: eme-functions.php:4244
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-functions.php:4230
+#: eme-functions.php:4246
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: eme-functions.php:4232
+#: eme-functions.php:4248
 msgid "Friendly Captcha"
 msgstr ""
 
-#: eme-functions.php:4234
+#: eme-functions.php:4250
 msgid "Basic EME Captcha"
 msgstr ""
 
-#: eme-functions.php:4288
+#: eme-functions.php:4304
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr ""
 
-#: eme-functions.php:4292
+#: eme-functions.php:4308
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
-#: eme-functions.php:4294
+#: eme-functions.php:4310
 msgid "All selected columns are used for sorting"
 msgstr ""
 

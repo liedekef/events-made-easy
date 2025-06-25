@@ -332,6 +332,9 @@ document.addEventListener('DOMContentLoaded', function () {
             hidePoweredByJodit: true,
             language: emejodit.translate_flanguage,
             enter: 'br',
+            askBeforePasteFromWord: true,
+            processPasteFromWord: true,
+            defaultActionOnPasteFromWord: 'insert_clear_html',
             cleanHTML: {
                 replaceNBSP: false,
                 removeEmptyElements: false,

@@ -7881,7 +7881,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0, 'eme_registration_pending_reminder_email_body' ); ?>
+    <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0, 'eme_registration_pending_reminder_email_body' ); ?>
     </div>
     <br>
 </div>
@@ -7922,7 +7922,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_reminder_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 0, 'eme_registration_reminder_email_body' ); ?>
+    <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 0, 'eme_registration_reminder_email_body' ); ?>
     </div>
 </div>
 <?php

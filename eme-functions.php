@@ -2710,7 +2710,7 @@ function eme_nl2br_save_html( $string ) {
     // now that we added the needed br-tags, join back together and return the modified string
     $res = implode( "\n", $lines );
     if ($htmleditor == 'tinymce') {
-        $re = str_replace( 'BREAK', "<br>\n", $res );
+        $res = str_replace( 'BREAK', "<br>\n", $res );
     }
     return $res;
 }

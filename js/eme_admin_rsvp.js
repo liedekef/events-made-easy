@@ -4,6 +4,8 @@ jQuery(document).ready(function ($) {
         let rsvpfields = {
             booking_id: {
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 list: false,
             },
             event_name: {
@@ -17,6 +19,8 @@ jQuery(document).ready(function ($) {
             person_id: {
                 title: emersvp.translate_person_id,
                 sorting: false,
+                width: '1%',
+                columnResizable: false,
                 visibility: 'hidden'
             },
             rsvp: {

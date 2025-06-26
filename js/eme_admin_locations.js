@@ -3,6 +3,8 @@ jQuery(document).ready(function ($) {
         let locationfields = {
             location_id: {
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 title: emelocations.translate_id,
                 visibility: 'hidden'
             },
@@ -18,6 +20,7 @@ jQuery(document).ready(function ($) {
                 title: emelocations.translate_copy,
                 sorting: false,
                 width: '2%',
+                columnResizable: false,
                 listClass: 'eme-jtable-center'
             },
             location_address1: {

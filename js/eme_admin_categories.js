@@ -22,6 +22,8 @@ jQuery(document).ready( function($) {
             fields: {
                 category_id: {
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     title: emecategories.translate_id,
                 },
                 category_name: {

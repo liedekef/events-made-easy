@@ -90,6 +90,8 @@ jQuery(document).ready( function($) {
                 field_id: {
                     key: true,
                     title: emeformfields.translate_id,
+                    width: '1%',
+                    columnResizable: false,
                     visibility: 'hidden'
                 },
                 field_name: {

@@ -28,6 +28,8 @@ jQuery(document).ready( function($) {
                 id: {
                     key: true,
                     visibility: 'hidden',
+                    width: '1%',
+                    columnResizable: false,
                     title: emeattendances.translate_id
                 },
                 creation_date: {

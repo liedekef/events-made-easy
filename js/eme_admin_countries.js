@@ -17,6 +17,8 @@ jQuery(document).ready(function ($) {
             id: {
                 title: emecountries.translate_id,
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 list: false,
             },
             name: {
@@ -58,6 +60,8 @@ jQuery(document).ready(function ($) {
             id: {
                 title: emecountries.translate_id,
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 list: false,
             },
             name: {

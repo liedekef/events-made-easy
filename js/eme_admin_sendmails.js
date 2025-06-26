@@ -494,6 +494,8 @@ jQuery(document).ready(function($) {
                 id: {
                     title: ememails.translate_id,
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     list: false,
                 },
                 fromemail: {
@@ -643,6 +645,8 @@ jQuery(document).ready(function($) {
             fields: {
                 id: {
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     list: false,
                 },
                 name: {
@@ -763,6 +767,8 @@ jQuery(document).ready(function($) {
             fields: {
                 id: {
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     list: false,
                 },
                 name: {

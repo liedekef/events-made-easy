@@ -22,6 +22,8 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     title: emeholidays.translate_id,
                 },
                 name: {

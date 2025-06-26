@@ -29,6 +29,8 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     key: true,
+                    width: '1%',
+                    columnResizable: false,
                     title: emetemplates.translate_id
                 },
                 name: {

@@ -96,6 +96,8 @@ jQuery(document).ready(function ($) {
             'people.person_id': {
                 key: true,
                 title: emepeople.translate_personid,
+                width: '1%',
+                columnResizable: false,
                 visibility: 'hidden'
             },
             'people.lastname': {

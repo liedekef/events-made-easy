@@ -482,6 +482,8 @@ jQuery(document).ready( function($) {
             event_id: {
                 key: true,
                 title: emeevents.translate_id,
+                width: '1%',
+                columnResizable: false,
                 visibility: 'hidden'
             },
             event_name: {
@@ -496,6 +498,7 @@ jQuery(document).ready( function($) {
                 title: emeevents.translate_copy,
                 sorting: false,
                 width: '2%',
+                columnResizable: false,
                 listClass: 'eme-jtable-center'
             },
             rsvp: {

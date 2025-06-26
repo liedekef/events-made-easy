@@ -4,6 +4,8 @@ jQuery(document).ready(function ($) {
         let memberfields = {
             'members.member_id': {
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 title: ememembers.translate_memberid,
                 visibility: 'hidden'
             },
@@ -210,6 +212,8 @@ jQuery(document).ready(function ($) {
             membership_id: {
                 key: true,
                 title: ememembers.translate_id,
+                width: '1%',
+                columnResizable: false,
                 visibility: 'hidden'
             },
             name: {

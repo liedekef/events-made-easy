@@ -36,6 +36,8 @@ jQuery(document).ready( function($) {
         fields: {
             id: {
                 key: true,
+                width: '1%',
+                columnResizable: false,
                 list: false,
             },
             event_name: {

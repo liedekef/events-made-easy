@@ -6134,7 +6134,7 @@ function eme_events_table( $message = '' ) {
     </form>
     </div>
 <?php
-    if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) :
+    if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_author_event' ) ) ) :
 ?>
     <div id="bulkactions">
     <form action="#" method="post">
@@ -10558,11 +10558,27 @@ function eme_ajax_manage_events() {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         $ids       = $_POST['event_id'];
         $ids_arr   = explode( ',', $ids );
-        if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+        if ( ! eme_is_numeric_array( $ids_arr ) ) {
             $ajaxResult['Result']  = 'Error';
             $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $ajaxResult );
             wp_die();
+        }
+        if ( ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+            if ( current_user_can( get_option( 'eme_cap_author_event' ) ) ) {
+                $author_event_ids = eme_get_author_event_ids( $ids );
+                if (count($ids) != count($author_event_ids)) {
+                    $ajaxResult['Result']  = 'Error';
+                    $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+                    print wp_json_encode( $ajaxResult );
+                    wp_die();
+                }
+            } else {
+                $ajaxResult['Result']  = 'Error';
+                $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+                print wp_json_encode( $ajaxResult );
+                wp_die();
+            }
         }
 
         switch ( $do_action ) {
@@ -10880,3 +10896,14 @@ function eme_get_event_location_used_capacity( $event ) {
         return $res;
     }
 }
+
+function eme_get_author_event_ids( $event_ids, $userid = 0 ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    if ( ! $user_id ) {
+        $user_id = get_current_user_id();
+    }
+    $sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($event_ids)", $user_id );
+    return $wpdb->get_col( $sql );
+}
+

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.11 (2025//) =
+* Allow event authors to also do some event bulk actions
+
 = 2.6.10 (2025/06/26) =
 * Small typo fix release
 

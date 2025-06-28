@@ -99,6 +99,12 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     $form_class = '';
     // if we require a user to be WP registered to be able to book
     // in the backend we should not check this condition
+    if ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
+        $not_allowed = __('Not allowed','events-made-easy');
+        $form_html   = "<div class='eme-message-error eme-rsvp-message-error'>" . $not_allowed . '</div>';
+        return $form_html;
+    }
+
     if ( ! eme_is_admin_request() ) {
         if ( ( $registration_wp_users_only || ! empty( $event['event_properties']['rsvp_required_group_ids']) || ! empty( $event['event_properties']['rsvp_required_membership_ids']) || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) && ! is_user_logged_in() ) {
             $form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
@@ -787,6 +793,13 @@ function eme_cancel_bookings_form( $event_id ) {
     if ( empty( $event ) || ! eme_is_event_rsvp( $event ) ) {
         return;
     }
+
+    if ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
+        $not_allowed = __('Not allowed','events-made-easy');
+        $form_html   = "<div class='eme-message-error eme-cancel-bookings-message-error'>" . $not_allowed . '</div>';
+        return $form_html;
+    }
+
     $registration_wp_users_only = $event['registration_wp_users_only'];
     if ( ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT  ) && ! is_user_logged_in() ) {
         // we require a user to be WP registered to be able to delete a booking
@@ -1346,6 +1359,12 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                 $booker_wp_id = $current_userid;
             }
         }
+
+        if ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
+            $form_html .= __('Not allowed','events-made-easy');
+            continue;
+        }
+
         if ( ( $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT  ) && ! is_user_logged_in() ) {
             $form_html .= __( 'WP membership required to continue', 'events-made-easy' );
             continue;

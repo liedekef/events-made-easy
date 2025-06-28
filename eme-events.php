@@ -1823,8 +1823,8 @@ function eme_template_redir() {
                 } else {
                     auth_redirect();
                 }
-            } elseif ( $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
-                // if the event is draft and not logged in: return not found
+            } elseif ( $event['event_status'] == EME_EVENT_STATUS_TRASH || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
+                // if the event is trashed or draft and not logged in: return not found
                 status_header( 404 );
                 eme_nocache_headers();
                 if ( '' != get_404_template() ) {

@@ -707,7 +707,7 @@ jQuery(document).ready(function ($) {
                                             $('input[name=firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true).show();
                                             $('input[name=email]').val(eme_htmlDecode(item.email)).attr('readonly', true).show();
                                             $('input[name=person_id]').val(eme_htmlDecode(item.person_id));
-                                            $('input[name=wp_id]').val(eme_htmlDecode(item.wp_id)).trigger('input');
+                                            $('input[name=wp_id]').val(eme_htmlDecode(item.wp_id));
                                             inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
@@ -735,7 +735,6 @@ jQuery(document).ready(function ($) {
                 $('input[name=firstname]').val('').attr('readonly', false);
                 $('input[name=email]').val('').attr('readonly', false);
                 $('input[name=wp_id]').val('');
-                $('input[name=wp_id]').trigger('input');
                 $(this).attr('readonly', false).removeClass('clearable');
                 $('.personal_info').show();
             }

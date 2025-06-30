@@ -128,7 +128,7 @@ function eme_discounts_page() {
 
 								// convert dgroup names to id's
 								if ( ! empty( $line['dgroup'] ) ) {
-									$dgroups    = $line['group'];
+									$dgroups    = $line['dgroup'];
 									$dgroup_arr = explode( ',', $dgroups );
                                     $selected_dgroup_arr = [];
                                     foreach ( $dgroup_arr as $dgroup_name ) {
@@ -140,6 +140,8 @@ function eme_discounts_page() {
                                     }
                                     if ( ! empty( $selected_dgroup_arr ) ) {
                                         $line['dgroup'] = join( ',', $selected_dgroup_arr );
+                                    } else {
+                                        $line['dgroup'] = '';
                                     }
 								}
 

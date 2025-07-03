@@ -93,7 +93,6 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
     if ( ! $option_value ) {
         $option_value = get_option( $name );
     }
-    $option_value = eme_nl2br_save_html( $option_value );
 ?>
     <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
     <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>

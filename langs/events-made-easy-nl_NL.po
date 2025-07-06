@@ -14526,4 +14526,4 @@ msgstr "Het maximum aantal plaatsen dat geboekt moet worden om de korting te lat
 #: eme-rsvp.php:798
 #: eme-rsvp.php:1364
 msgid "Not allowed"
-msgstr ""
+msgstr "Niet toegelaten"

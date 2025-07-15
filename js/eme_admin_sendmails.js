@@ -307,7 +307,7 @@ jQuery(document).ready(function($) {
             data: function(params) {
                 return {
                     q: params.term,
-                    search_all: $('#eventsearch_all').is(':checked') ? 1 : 0,
+                    search_all: $('#eventsearch_all').prop('checked') ? 1 : 0,
                     eme_admin_nonce: ememails.translate_adminnonce
                 };
             },
@@ -479,7 +479,7 @@ jQuery(document).ready(function($) {
             },
             listQueryParams: function () {
                 let search_failed=0;
-                if ($('#search_failed').is(":checked")) {
+                if ($('#search_failed').prop("checked")) {
                     search_failed = 1;
                 }
                 let params = {

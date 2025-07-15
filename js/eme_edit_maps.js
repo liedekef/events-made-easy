@@ -15,7 +15,7 @@ function eme_displayAddress(ignore_coord){
         eventZip = jQuery('input#location_zip').val() || '';
         eventCountry = jQuery('input#location_country').val() || '';
         map_icon = jQuery('input#eme_loc_prop_map_icon').val() || '';
-        if (ignore_coord && !jQuery('input#eme_loc_prop_override_loc').is(':checked')) {
+        if (ignore_coord && !jQuery('input#eme_loc_prop_override_loc').prop('checked')) {
             eventLat = 0;
             eventLong = 0;
         } else {
@@ -167,7 +167,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
 
 jQuery(document).ready(function($) {
     function updateOnlineOnly() {
-        if ($('input#eme_loc_prop_online_only').is(':checked')) {
+        if ($('input#eme_loc_prop_online_only').prop('checked')) {
             $('input#location_address1').val('').attr('readonly', true);
             $('input#location_address2').val('').attr('readonly', true);
             $('input#location_city').val('').attr('readonly', true);
@@ -194,7 +194,7 @@ jQuery(document).ready(function($) {
         }
     }
     function updateOverrideLoc() {
-        if ($('input#eme_loc_prop_override_loc').is(':checked')) {
+        if ($('input#eme_loc_prop_override_loc').prop('checked')) {
             $('input#location_latitude').attr('readonly', false);
             $('input#location_longitude').attr('readonly', false);
         } else {

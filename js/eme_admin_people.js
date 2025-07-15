@@ -242,7 +242,7 @@ jQuery(document).ready(function ($) {
             },
             listQueryParams: function () {
                 let exactmatch=0;
-                if ($('#search_exactmatch').is(":checked")) {
+                if ($('#search_exactmatch').prop("checked")) {
                     exactmatch = 1;
                 }
                 let params = {
@@ -447,7 +447,7 @@ jQuery(document).ready(function ($) {
     $('#StoreQuerySubmitButton').on("click",function (e) {
         e.preventDefault();
         let exactmatch=0;
-        if ($('#search_exactmatch').is(":checked")) {
+        if ($('#search_exactmatch').prop("checked")) {
             exactmatch = 1;
         }
         let params = {

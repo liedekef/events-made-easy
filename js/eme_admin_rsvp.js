@@ -479,7 +479,7 @@ jQuery(document).ready(function ($) {
             if (inputValue.length >= 2) {
                 emeadmin_chooseevent_timeout = setTimeout(function() {
                     let search_all=0;
-                    if ($('#eventsearch_all').is(':checked')) {
+                    if ($('#eventsearch_all').prop('checked')) {
                         search_all=1;
                     }
                     $.post(ajaxurl,

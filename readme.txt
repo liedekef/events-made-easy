@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.12 (2025//) =
+* javascript and jtable updates to more reliable check for checked status of checkboxes
+
 = 2.6.11 (2025/07/06) =
 * Allow event authors to also do some event bulk actions
 * Fix discount imports

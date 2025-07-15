@@ -283,7 +283,6 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.min.js', [ ], EME_VERSION );
-    wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable/extensions/jquery.jtable.toolbarsearch.min.js', [ 'eme-jquery-jtable' ], EME_VERSION );
     if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {
         wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2', 'eme-select2-locale' ], EME_VERSION );
     } else {
@@ -334,7 +333,7 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-holidays', EME_PLUGIN_URL . 'js/eme_admin_holidays.js', [ 'eme-autocomplete-form' ], EME_VERSION );
     wp_register_script( 'eme-categories', EME_PLUGIN_URL . 'js/eme_admin_categories.js', [ 'eme-autocomplete-form' ], EME_VERSION );
     wp_register_script( 'eme-sendmails', EME_PLUGIN_URL . 'js/eme_admin_sendmails.js', [], EME_VERSION );
-    wp_register_script( 'eme-discounts', EME_PLUGIN_URL . 'js/eme_admin_discounts.js', [ 'eme-jtable-search' ], EME_VERSION );
+    wp_register_script( 'eme-discounts', EME_PLUGIN_URL . 'js/eme_admin_discounts.js', [], EME_VERSION );
     wp_register_script( 'eme-countries', EME_PLUGIN_URL . 'js/eme_admin_countries.js', [], EME_VERSION );
     wp_register_script( 'eme-people', EME_PLUGIN_URL . 'js/eme_admin_people.js', [], EME_VERSION );
     wp_register_script( 'eme-templates', EME_PLUGIN_URL . 'js/eme_admin_templates.js', [], EME_VERSION );

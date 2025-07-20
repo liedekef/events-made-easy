@@ -26,13 +26,13 @@ jQuery(document).ready(function ($) {
                         });
                         $.each($('.eme_formfield_fdate.dynamicfield'), function() {
                             if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
-                                $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+                                $(this).data('fdatepicker').selectDate($(this).data('date'));
                                 // to avoid it being done multiple times
                                 $(this).removeData('date');
                                 $(this).removeAttr('date');
                             }
                             if ($(this).data('dateFormat')) {
-                                $(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+                                $(this).data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
                                 // to avoid it being done multiple times
                                 $(this).removeData('dateFormat');
                                 $(this).removeAttr('dateFormat');
@@ -54,19 +54,19 @@ jQuery(document).ready(function ($) {
                         });
                         $.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
                             if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
-                                $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+                                $(this).data('fdatepicker').selectDate($(this).data('date'));
                                 // to avoid it being done multiple times
                                 $(this).removeData('date');
                                 $(this).removeAttr('date');
                             }
                             if ($(this).data('dateFormat')) {
-                                $(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+                                $(this).data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
                                 // to avoid it being done multiple times
                                 $(this).removeData('dateFormat');
                                 $(this).removeAttr('dateFormat');
                             }
                             if ($(this).data('timeFormat')) {
-                                $(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+                                $(this).data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
                                 // to avoid it being done multiple times
                                 $(this).removeData('timeFormat');
                                 $(this).removeAttr('timeFormat');

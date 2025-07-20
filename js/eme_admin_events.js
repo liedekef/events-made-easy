@@ -46,17 +46,17 @@ jQuery(document).ready( function($) {
             $('p#recurrence-dates-explanation').hide();
             $('span#recurrence-dates-explanation-specificdates').show();
             $('#localized-rec-start-date').attr('required', true);
-            $('#localized-rec-start-date').fdatepicker().data('fdatepicker').update('multipleDates',true);
+            $('#localized-rec-start-date').data('fdatepicker').update('multipleDates',true);
         } else {
             $('div#recurrence-intervals').show();
             $('input#localized-rec-end-date').show();
             $('p#recurrence-dates-explanation').show();
             $('span#recurrence-dates-explanation-specificdates').hide();
             $('#localized-rec-start-date').attr('required', false);
-            $('#localized-rec-start-date').fdatepicker().data('fdatepicker').update('multipleDates',false);
+            $('#localized-rec-start-date').data('fdatepicker').update('multipleDates',false);
             // if the recurrence contained specific days before, clear those because that would not work upon save
             if ($('#rec-start-date-to-submit').val().indexOf(',') !== -1) {
-                $('#localized-rec-start-date').fdatepicker().data('fdatepicker').clear();
+                $('#localized-rec-start-date').data('fdatepicker').clear();
             }
         }
     }
@@ -304,12 +304,12 @@ jQuery(document).ready( function($) {
         $('#localized-start-date').fdatepicker({
             autoClose: true,
             onSelect: function(formattedDate,date,inst) {
-                //$('#localized-end-date').fdatepicker().data('fdatepicker').update('minDate',date);
+                //$('#localized-end-date').data('fdatepicker').update('minDate',date);
                 startDate_formatted = inst.formatDate('Ymd',date);
-                endDate_basic = $('#localized-end-date').fdatepicker().data('fdatepicker').selectedDates[0];
+                endDate_basic = $('#localized-end-date').data('fdatepicker').selectedDates[0];
                 endDate_formatted = inst.formatDate('Ymd',endDate_basic);
                 if (endDate_formatted<startDate_formatted) {
-                    $('#localized-end-date').fdatepicker().data('fdatepicker').selectDate(date);
+                    $('#localized-end-date').data('fdatepicker').selectDate(date);
                 }
             }
         });
@@ -318,12 +318,12 @@ jQuery(document).ready( function($) {
         $('#localized-end-date').fdatepicker({
             autoClose: true,
             onSelect: function(formattedDate,date,inst) {
-                //$('#localized-start-date').fdatepicker().data('fdatepicker').update('maxDate',date);
+                //$('#localized-start-date').data('fdatepicker').update('maxDate',date);
                 endDate_formatted = inst.formatDate('Ymd',date);
-                startDate_basic = $('#localized-start-date').fdatepicker().data('fdatepicker').selectedDates[0];
+                startDate_basic = $('#localized-start-date').data('fdatepicker').selectedDates[0];
                 startDate_formatted = inst.formatDate('Ymd',startDate_basic);
                 if (startDate_formatted>endDate_formatted) {
-                    $('#localized-start-date').fdatepicker().data('fdatepicker').selectDate(date);
+                    $('#localized-start-date').data('fdatepicker').selectDate(date);
                 }
             }
         });
@@ -335,12 +335,12 @@ jQuery(document).ready( function($) {
                 // if multiple days are selected, date is an array, and then we don't touch it for now
                 if (!Array.isArray(date)) {
                     $('#recurrence-dates-specificdates').text("");
-                    //$('#localized-rec-end-date').fdatepicker().data('fdatepicker').update('minDate',date);
+                    //$('#localized-rec-end-date').data('fdatepicker').update('minDate',date);
                     //startDate_formatted = inst.formatDate('Ymd',date);
-                    //endDate_basic = $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectedDates[0];
+                    //endDate_basic = $('#localized-rec-end-date').data('fdatepicker').selectedDates[0];
                     //endDate_formatted = inst.formatDate('Ymd',endDate_basic);
                     //if (endDate_formatted<startDate_formatted) {
-                    //	   $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectDate(date);
+                    //	   $('#localized-rec-end-date').data('fdatepicker').selectDate(date);
                     //}
                 } else {
                     $('#recurrence-dates-specificdates').html('<br>'+emeevents.translate_selecteddates+'<br>');
@@ -357,12 +357,12 @@ jQuery(document).ready( function($) {
             autoClose: true,
             onSelect: function(formattedDate,date,inst) {
                 if (!Array.isArray(date)) {
-                    //$('#localized-rec-start-date').fdatepicker().data('fdatepicker').update('maxDate',date);
+                    //$('#localized-rec-start-date').data('fdatepicker').update('maxDate',date);
                     endDate_formatted = inst.formatDate('Ymd',date);
-                    startDate_basic = $('#localized-rec-start-date').fdatepicker().data('fdatepicker').selectedDates[0];
+                    startDate_basic = $('#localized-rec-start-date').data('fdatepicker').selectedDates[0];
                     startDate_formatted = inst.formatDate('Ymd',startDate_basic);
                     if (startDate_formatted>endDate_formatted) {
-                        $('#localized-rec-start-date').fdatepicker().data('fdatepicker').selectDate(date);
+                        $('#localized-rec-start-date').data('fdatepicker').selectDate(date);
                     }
                 }
             }

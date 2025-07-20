@@ -497,7 +497,7 @@ jQuery(document).ready(function ($) {
         $('select#paid').on("change",function(){
             if ($('select#paid').val() == '1' && $('input#dp_payment_date').val() == '') {
                 let curdate=new Date();
-                $('#dp_payment_date').fdatepicker().data('fdatepicker').selectDate(curdate);
+                $('#dp_payment_date').data('fdatepicker').selectDate(curdate);
             }
         });
     }

@@ -83,12 +83,12 @@ jQuery(document).ready(function($) {
         let current_start = metaCopy.find('[name="eme_tasks['+newId+'][task_start]"]').val();
         if (current_start != '') {
             let js_start_obj = new Date(current_start);
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_start]"]').fdatepicker().data('fdatepicker').selectDate(js_start_obj);
+            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_start]"]').data('fdatepicker').selectDate(js_start_obj);
         }
         let current_end = metaCopy.find('[name="eme_tasks['+newId+'][task_end]"]').val();
         if (current_end != '') {
             let js_end_obj = new Date(current_end);
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_end]"]').fdatepicker().data('fdatepicker').selectDate(js_end_obj);
+            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_end]"]').data('fdatepicker').selectDate(js_end_obj);
         }
         $('#eme_row_task_'+newId+' .eme_add_task').on("click",function(event) {
             event.preventDefault();
@@ -369,8 +369,8 @@ jQuery(document).ready(function($) {
             let end_obj = new Date(current_end);
             start_obj.setDate(start_obj.getDate() + offset);
             end_obj.setDate(end_obj.getDate() + offset);
-            $('[name="eme_tasks['+myId+'][dp_task_start]"]').fdatepicker().data('fdatepicker').selectDate(start_obj);
-            $('[name="eme_tasks['+myId+'][dp_task_end]"]').fdatepicker().data('fdatepicker').selectDate(end_obj);
+            $('[name="eme_tasks['+myId+'][dp_task_start]"]').data('fdatepicker').selectDate(start_obj);
+            $('[name="eme_tasks['+myId+'][dp_task_end]"]').data('fdatepicker').selectDate(end_obj);
             myId = myId +1;
         }
     });

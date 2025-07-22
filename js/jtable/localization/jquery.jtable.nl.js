@@ -7,7 +7,7 @@
     $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Fout bij het communiceren met de server',
         loadingMessage: 'Laden...',
         noDataAvailable: 'Geen gegevens beschikbaar!',
-        addNewRecord: '+ Toevoegen',
+        addNewRecord: 'Toevoegen',
         editRecord: 'Bewerken',
         areYouSure: 'Weet u het zeker?',
         deleteConfirmation: 'Gegevens verwijderen?',

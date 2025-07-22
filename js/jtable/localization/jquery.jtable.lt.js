@@ -7,7 +7,7 @@
     $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Klaida bandant susisiekti su serveriu.',
         loadingMessage: 'Informacija kraunama...',
         noDataAvailable: 'Nėra duomenų!',
-        addNewRecord: '+ Pridėti naują',
+        addNewRecord: 'Pridėti naują',
         editRecord: 'Redaguoti',
         areYouSure: 'Ar tikrai?',
         deleteConfirmation: 'Įrašas bus ištrintas. Ar tęsti?',

@@ -453,8 +453,6 @@ jQuery(document).ready(function ($) {
     // we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
     $('body').on('click', '.eme_iban_button', function(e) {
         e.preventDefault();
-        // clicking selects/deselects the row too, so invert it again
-        $('#MembersTableContainer').jtable('invertRowSelection',$(this).closest('tr'));
         let params = {
             'action': 'eme_get_payconiq_iban',
             'pg_pid': $(this).data('pg_pid'),

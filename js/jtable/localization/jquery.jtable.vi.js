@@ -6,7 +6,7 @@
     $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Có lỗi khi giao tiếp với máy chủ.',
         loadingMessage: 'Đang tải dữ liệu...',
         noDataAvailable: 'Không có dữ liệu!',
-        addNewRecord: '+ Thêm dữ liệu',
+        addNewRecord: 'Thêm dữ liệu',
         editRecord: 'Chỉnh sửa',
         areYouSure: 'Bạn có chắc không?',
         deleteConfirmation: 'Dữ liệu này sẽ bị xóa! Bạn có chắc không?',

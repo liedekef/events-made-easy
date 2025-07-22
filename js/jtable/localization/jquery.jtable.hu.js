@@ -7,7 +7,7 @@
     $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Adatbázis hiba',
         loadingMessage: 'Adatok betöltése...',
         noDataAvailable: 'Nincs elérhető adat!',
-        addNewRecord: '+ Új hozzáadása',
+        addNewRecord: 'Új hozzáadása',
         editRecord: 'Módosít',
         areYouSure: 'Biztos benne?',
         deleteConfirmation: 'Az adat véglegesen törlődik. Biztos benne?',

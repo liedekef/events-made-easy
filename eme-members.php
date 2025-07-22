@@ -8,7 +8,7 @@ function eme_new_membership() {
     $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
 
-    $membership               = [
+    $membership = [
         'name'            => '',
         'description'     => '',
         'type'            => '', // fixed/rolling
@@ -6717,7 +6717,7 @@ function eme_ajax_members_list( ) {
                 $record['pg'] = 'UNKNOWN';
             }
             if ( $item['pg'] == 'payconiq' && ! empty( $item['pg_pid'] ) ) {
-                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
+                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
             }
         } else {
             $record['pg'] = '';

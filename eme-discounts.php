@@ -30,6 +30,7 @@ function eme_new_discountgroup() {
 		'name'         => '',
 		'description'  => '',
 		'maxdiscounts' => 0,
+		'maxcount_pp' => 0,
 	];
 
 	return $discountgroup;
@@ -912,6 +913,12 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			</td>
 		</tr>
 		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='maxcount'><?php esc_html_e( 'Maximum usage count per user', 'events-made-easy' ); ?></label></th>
+			<td><input name='properties[maxcount_pp]' id='properties[maxcount_pp]' type='text' value='<?php echo eme_esc_html( $discount['properties']['maxcount_pp'] ); ?>' size='40'>
+			<br><?php esc_html_e( 'The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count).', 'events-made-easy' ); ?>
+			</td>
+		</tr>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[min_seats]'><?php esc_html_e( 'Min #seats booked', 'events-made-easy' ); ?></label></th>
 			<td><input name='properties[min_seats]' id='properties[min_seats]' type='text' value='<?php echo eme_esc_html( $discount['properties']['min_seats'] ); ?>' size='40'></td>
 			<br><p class='eme_smaller'><?php esc_html_e( 'The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit.', 'events-made-easy' ); ?></p>
@@ -1302,6 +1309,18 @@ function eme_get_discount_by_name( $name ) {
 	}
 }
 
+function eme_get_person_used_discount_count( $person_id, $discount_id) {
+	global $wpdb;
+	$table    = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE person_id = %d AND FIND_IN_SET(%d, discountids)", $person_id, $discount_id );
+	$used_count = $wpdb->get_var( $sql );
+
+	$table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE person_id = %d AND FIND_IN_SET(%d, discountids)", $person_id, $discount_id );
+	$used_count += $wpdb->get_var( $sql );
+    return $used_count;
+}
+
 function eme_calc_booking_discount( $discount, $booking ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
@@ -1333,6 +1352,21 @@ function eme_calc_booking_discount( $discount, $booking ) {
 	// check if logged in needed
 	if ( ! empty( $discount['properties']['wp_users_only'] ) && ! $is_user_logged_in ) {
 		return false;
+	}
+ 
+	// check max usage count per person
+	if ( ! empty( $discount['properties']['maxcount_pp'] )) {
+        if ( ! $is_user_logged_in ) {
+            return false;
+        }
+        $person_id = eme_get_personid_by_wpid(get_current_user_id());
+        // if person not found: can be they never booked before so it's ok
+        if (!empty($person_id)) {
+            $person_used_discount_count = eme_get_person_used_discount_count($person_id, $discount['id']);
+            if ($person_used_discount_count >= $discount['properties']['maxcount_pp']) {
+                return false;
+            }
+        }
 	}
  
 	// check min seats

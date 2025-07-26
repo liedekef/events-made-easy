@@ -561,7 +561,6 @@ jQuery(document).ready(function ($) {
             }
         });
         $('select[required].select2-hidden-accessible').each(function() {
-            console.log("checking step1");
             if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
                 const $select = $(this);
                 const $select2Container = $select.next('.select2-container');

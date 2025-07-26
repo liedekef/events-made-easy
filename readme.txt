@@ -101,6 +101,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.6.12 (2025//) =
 * javascript and jtable updates to more reliable check for checked status of checkboxes
+* also fdatepicker code updates and other javascript improvements
+* Added the possibility to give a "Maximum usage count per user" for a discount (applies and requires users to be logged in).
 
 = 2.6.11 (2025/07/06) =
 * Allow event authors to also do some event bulk actions

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 414 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 415 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -690,7 +690,8 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          attend_count INT(11) DEFAULT 0,
          pending_mailid int(11) DEFAULT 0,
          UNIQUE KEY  (booking_id),
-         KEY (status)
+         KEY (status),
+         KEY (person_id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
@@ -781,6 +782,9 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			$sql = $wpdb->prepare( "UPDATE $table_name SET status=%d WHERE booking_approved=0 AND status=1", EME_RSVP_STATUS_PENDING );
 			$wpdb->query( $sql );
 			eme_maybe_drop_column( $table_name, 'booking_approved' );
+		}
+		if ( $db_version < 415 ) {
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" );
 		}
 	}
 }
@@ -1476,7 +1480,9 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          dgroupid INT(11) DEFAULT 0,
          properties text,
          UNIQUE KEY  (member_id),
-         KEY  (related_member_id)
+         KEY  (related_member_id),
+         KEY  (status),
+         KEY  (person_id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
@@ -1520,6 +1526,10 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		}
 		if ( $db_version < 306 ) {
 			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_member_id` )" );
+		}
+		if ( $db_version < 415 ) {
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" );
 		}
 	}
 

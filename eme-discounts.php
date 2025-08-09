@@ -1814,7 +1814,7 @@ function eme_ajax_manage_discounts() {
 		switch ( $do_action ) {
 			case 'deleteDiscounts':
 				eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
-				$ajaxResult['htmlmessage'] = __( 'Discounts deleted', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Discounts deleted', 'events-made-easy' );
 				break;
 			case 'changeValidFrom':
 				$date    = ( isset( $_REQUEST['new_validfrom'] ) ) ? eme_sanitize_request( $_REQUEST['new_validfrom'] ) : '';
@@ -1824,7 +1824,7 @@ function eme_ajax_manage_discounts() {
 							eme_change_discount_validfrom( $discount_id, $date );
 					}
 				}
-				$ajaxResult['htmlmessage'] = __( 'Date changed.', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Date changed.', 'events-made-easy' );
 				break;
 			case 'changeValidTo':
 				$date    = ( isset( $_REQUEST['new_validto'] ) ) ? eme_sanitize_request( $_REQUEST['new_validto'] ) : '';
@@ -1834,7 +1834,7 @@ function eme_ajax_manage_discounts() {
 						eme_change_discount_validto( $discount_id, $date );
 					}
 				}
-				$ajaxResult['htmlmessage'] = __( 'Date changed.', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Date changed.', 'events-made-easy' );
 				break;
 			case 'addToGroup':
 				$group_id = ( isset( $_REQUEST['addtogroup'] ) ) ? intval( $_REQUEST['addtogroup'] ) : 0;
@@ -1844,7 +1844,7 @@ function eme_ajax_manage_discounts() {
 						eme_add_discount_to_group( $discount_id, $group_id );
 					}
 				}
-				$ajaxResult['htmlmessage'] = __( 'Discounts added to group.', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Discounts added to group.', 'events-made-easy' );
 				break;
 			case 'removeFromGroup':
 				$group_id = ( isset( $_REQUEST['removefromgroup'] ) ) ? intval( $_REQUEST['removefromgroup'] ) : 0;
@@ -1854,7 +1854,7 @@ function eme_ajax_manage_discounts() {
 						eme_remove_discount_from_group( $discount_id, $group_id );
 					}
 				}
-				$ajaxResult['htmlmessage'] = __( 'Discounts removed from group.', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Discounts removed from group.', 'events-made-easy' );
 				break;
 
 		}
@@ -1875,7 +1875,7 @@ function eme_ajax_manage_discountgroups() {
 		switch ( $do_action ) {
 			case 'deleteDiscountGroups':
 				eme_ajax_record_delete( EME_DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );
-				$ajaxResult['htmlmessage'] = __( 'Discount groups deleted.', 'events-made-easy' );
+				$ajaxResult['Message'] = __( 'Discount groups deleted.', 'events-made-easy' );
 				break;
 		}
 	}

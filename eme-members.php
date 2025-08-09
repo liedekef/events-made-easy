@@ -6849,8 +6849,8 @@ function eme_ajax_manage_members() {
         $ids     = eme_sanitize_request($_POST['member_id']);
         $ids_arr = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            $fTableResult['Result']      = 'Error';
-            $fTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+            $fTableResult['Result']      = 'ERROR';
+            $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             print wp_json_encode( $fTableResult );
             wp_die();
         }
@@ -6929,7 +6929,7 @@ function eme_ajax_manage_memberships() {
         $ids     = eme_sanitize_request($_POST['membership_id']);
         $ids_arr = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            $ajaxResult['Result']      = 'Error';
+            $ajaxResult['Result']      = 'ERROR';
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             print wp_json_encode( $ajaxResult );
             wp_die();

@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#countries-message');
                 if (msg) {
-                    msg.textContent = emecountries.translate_deleted;
+                    msg.textContent = data.Message;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
                 }
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#states-message');
                 if (msg) {
-                    msg.textContent = emecountries.translate_deleted;
+                    msg.textContent = data.Message;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
                 }

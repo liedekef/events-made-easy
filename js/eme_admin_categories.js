@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         const msg = $('div#categories-message');
                         if (msg) {
-                            msg.textContent = emecategories.translate_deleted;
+                            msg.innerHTML = data.htmlmessage;
                             eme_toggle(msg, true);
                             setTimeout(() => eme_toggle(msg, false), 3000);
                         }

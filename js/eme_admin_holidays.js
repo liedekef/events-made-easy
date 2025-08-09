@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#holidays-message');
                 if (msg) {
-                    msg.textContent = emeholidays.translate_deleted;
+                    msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
                 }

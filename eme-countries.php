@@ -920,8 +920,9 @@ function eme_ajax_states_list() {
 }
 function eme_ajax_manage_countries() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$fTableResult['Result']  = 'Error';
+		$fTableResult['Result']  = 'ERROR';
 		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 		print wp_json_encode( $fTableResult );
 		wp_die();
@@ -938,7 +939,11 @@ function eme_ajax_manage_countries() {
 }
 function eme_ajax_manage_states() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
+		$fTableResult['Result']  = 'ERROR';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
 	if ( isset( $_REQUEST['do_action'] ) ) {

@@ -5311,8 +5311,8 @@ function eme_ajax_manage_people() {
         $ids       = eme_sanitize_request( $_POST['person_id'] );
         $ids_arr   = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $fTableResult['Result']  = 'Error';
-            $fTableResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
+            $fTableResult['Result']  = 'ERROR';
+            $fTableResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
@@ -5407,8 +5407,8 @@ function eme_ajax_manage_groups() {
         $ids_arr   = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             $ajaxResult            = [];
-            $ajaxResult['Result']  = 'Error';
-            $ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
+            $ajaxResult['Result']  = 'ERROR';
+            $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy' ));
             print wp_json_encode( $ajaxResult );
             wp_die();
         }

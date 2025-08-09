@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#discounts-message');
                 if (msg) {
-                    msg.textContent = emediscounts.translate_deleted;
+                    msg.textContent = data.Message;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
                 }
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#discountgroups-message');
                 if (msg) {
-                    msg.textContent = emediscounts.translate_deleted;
+                    msg.textContent = data.Message;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
                 }

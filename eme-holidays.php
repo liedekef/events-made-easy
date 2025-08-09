@@ -310,7 +310,7 @@ function eme_ajax_action_manage_holidays() {
 
     $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_holidays' ) )) {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $fTableResult );
         wp_die();

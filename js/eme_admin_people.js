@@ -227,11 +227,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateShowHideStuff() {
         const action = $('#eme_admin_action')?.value || '';
         eme_toggle($('#span_language'), action === 'changeLanguage');
-        eme_toggle($('#span_addtogroup'), action === 'addtogroup');
-        eme_toggle($('#span_removefromgroup'), action === 'removefromgroup');
-        eme_toggle($('#span_pdf_template'), action === 'pdf');
-        eme_toggle($('#span_html_template'), action === 'html');
-        eme_toggle($('#span_sendmails'), ['changeLanguage', 'addtogroup', 'removefromgroup', 'pdf', 'html'].includes(action));
+        eme_toggle($('#span_addtogroup'), action === 'addToGroup');
+        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
+        eme_toggle($('#span_pdftemplate'), action === 'pdf');
+        eme_toggle($('#span_htmltemplate'), action === 'html');
+        eme_toggle($('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
     }
 
     $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
@@ -408,81 +408,80 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            let proceed = true;
             if (['trashPeople', 'deletePeople'].includes(doAction) && !confirm(emepeople.translate_areyousuretodeleteselected)) {
-                proceed = false;
+                return;
             }
 
-            if (proceed) {
-                peopleButton.textContent = emepeople.translate_pleasewait;
-                peopleButton.disabled = true;
+            peopleButton.textContent = emepeople.translate_pleasewait;
+            peopleButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('person_id', idsJoined);
-                formData.append('action', 'eme_manage_people');
-                formData.append('do_action', doAction);
-                formData.append('chooseperson', $('#chooseperson')?.value || '');
-                formData.append('transferto_id', $('#transferto_id')?.value || '');
-                formData.append('language', $('#language')?.value || '');
-                formData.append('pdf_template', $('#pdf_template')?.value || '');
-                formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
-                formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
-                formData.append('html_template', $('#html_template')?.value || '');
-                formData.append('html_template_header', $('#html_template_header')?.value || '');
-                formData.append('html_template_footer', $('#html_template_footer')?.value || '');
-                formData.append('addtogroup', $('#addtogroup')?.value || '');
-                formData.append('removefromgroup', $('#removefromgroup')?.value || '');
-                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('person_id', idsJoined);
+            formData.append('action', 'eme_manage_people');
+            formData.append('do_action', doAction);
+            formData.append('chooseperson', $('#chooseperson')?.value || '');
+            formData.append('transferto_id', $('#transferto_id')?.value || '');
+            formData.append('language', $('#language')?.value || '');
+            formData.append('pdf_template', $('#pdf_template')?.value || '');
+            formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
+            formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
+            formData.append('html_template', $('#html_template')?.value || '');
+            formData.append('html_template_header', $('#html_template_header')?.value || '');
+            formData.append('html_template_footer', $('#html_template_footer')?.value || '');
+            formData.append('addtogroup', $('#addtogroup')?.value || '');
+            formData.append('removefromgroup', $('#removefromgroup')?.value || '');
+            formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
 
-                if (doAction === 'sendMails') {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = emepeople.translate_admin_sendmails_url;
-                    ['person_ids', 'eme_admin_action'].forEach(key => {
-                        const val = key === 'person_ids' ? idsJoined : 'new_mailing';
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = val;
-                        form.appendChild(input);
-                    });
-                    document.body.appendChild(form);
-                    form.submit();
-                    return;
-                }
-
-                if (['pdf', 'html'].includes(doAction)) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = ajaxurl;
-                    for (const [key, value] of formData.entries()) {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = value;
-                        form.appendChild(input);
-                    }
-                    document.body.appendChild(form);
-                    form.submit();
-                    return;
-                }
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    PeopleTable.load();
-                    peopleButton.textContent = emepeople.translate_apply;
-                    peopleButton.disabled = false;
-
-                    const msg = $('div#people-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
+            if (doAction === 'sendMails') {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = emepeople.translate_admin_sendmails_url;
+                ['person_ids', 'eme_admin_action'].forEach(key => {
+                    const val = key === 'person_ids' ? idsJoined : 'new_mailing';
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = val;
+                    form.appendChild(input);
                 });
+                document.body.appendChild(form);
+                form.submit();
+                return;
             }
+
+            if (['pdf', 'html'].includes(doAction)) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = ajaxurl;
+                for (const [key, value] of formData.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.appendChild(input);
+                }
+                document.body.appendChild(form);
+                form.submit();
+                peopleButton.textContent = emepeople.translate_apply;
+                peopleButton.disabled = false;
+                return;
+            }
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                PeopleTable.load();
+                peopleButton.textContent = emepeople.translate_apply;
+                peopleButton.disabled = false;
+
+                const msg = $('div#people-message');
+                if (msg) {
+                    msg.innerHTML = data.htmlmessage;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
         });
     }
 
@@ -517,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#groups-message');
                 if (msg) {
-                    msg.textContent = emepeople.translate_deleted;
+                    msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 5000);
                 }

@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#memberships-message');
                 if (msg) {
-                    msg.textContent = ememembers.translate_deleted;
+                    msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 5000);
                 }
@@ -302,9 +302,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Conditional UI: Show/hide mail options ---
     function updateShowHideStuff() {
         const action = $('#eme_admin_action')?.value || '';
-        const show = ['approveMembers', 'rejectMembers', 'renewMembers', 'trashMembers', 'deleteMembers'].includes(action);
-        ['span_sendmails', 'span_trash_person', 'span_membermail_template', 'span_membermail_template_subject']
-            .forEach(id => eme_toggle($(`#${id}`), show));
+        const sendMailsSpan = $('#span_sendmails');
+        eme_toggle($('#span_pdftemplate'), action === 'pdf');
+        eme_toggle($('#span_htmltemplate'), action === 'html');
+        eme_toggle($('span#span_membermailtemplate'), action === 'memberMails');
+        eme_toggle($('span#span_trashperson'), action === 'deleteMembers');
+        eme_toggle($('#span_addtogroup'), action === 'addToGroup');
+        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
+        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
+
+
+        if (['acceptPayment', 'stopMembership'].includes(action)) {
+            $('#send_mail').value = 1;
+        }
+        if (['markUnpaid'].includes(action)) {
+            $('#send_mail').value = 0;
+        }
+        eme_toggle(sendMailsSpan, ['acceptPayment', 'stopMembership', 'markUnpaid'].includes(action));
     }
 
     $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
@@ -317,12 +331,12 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const selectedRows = MembersTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
-            const sendMail = $('#send_mail')?.value || 'no';
-            const trashPerson = $('#trash_person')?.value || 'no';
-            const memberMailTemplate = $('#membermail_template')?.value || '';
-            const memberMailTemplateSubject = $('#membermail_template_subject')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;
+
+            if (['deleteMembers'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) {
+                return;
+            }
 
             membersButton.textContent = ememembers.translate_pleasewait;
             membersButton.disabled = true;
@@ -334,10 +348,16 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('member_id', idsJoined);
             formData.append('action', 'eme_manage_members');
             formData.append('do_action', doAction);
-            formData.append('send_mail', sendMail);
-            formData.append('trash_person', trashPerson);
-            formData.append('membermail_template', memberMailTemplate);
-            formData.append('membermail_template_subject', memberMailTemplateSubject);
+            formData.append('send_mail', $('#send_mail').value);
+            formData.append('trash_person', $('#trash_person').value);
+            formData.append('membermail_template', $('#membermail_template').value);
+            formData.append('membermail_template_subject', $('#membermail_template_subject').value);
+            formData.append('pdf_template', $('#pdf_template')?.value || '');
+            formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
+            formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
+            formData.append('html_template', $('#html_template')?.value || '');
+            formData.append('html_template_header', $('#html_template_header')?.value || '');
+            formData.append('html_template_footer', $('#html_template_footer')?.value || '');
             formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
 
             if (doAction === 'sendMails') {
@@ -357,6 +377,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            if (['pdf', 'html'].includes(doAction)) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = ajaxurl;
+                // Add FormData entries as hidden inputs
+                for (const [key, value] of formData.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.appendChild(input);
+                }
+                document.body.appendChild(form);
+                form.submit();
+                membersButton.textContent = ememembers.translate_apply;
+                membersButton.disabled = false;
+                return;
+            }
+
             eme_postJSON(ajaxurl, formData, (data) => {
                 MembersTable.load();
                 membersButton.textContent = ememembers.translate_apply;
@@ -364,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const msg = $('div#members-message');
                 if (msg) {
-                    msg.textContent = data.Message;
+                    msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 5000);
                 }

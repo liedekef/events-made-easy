@@ -1,88 +1,93 @@
-jQuery(document).ready( function($) {
-    if ($('#HolidaysTableContainer').length) {
-        $('#HolidaysTableContainer').jtable({
+document.addEventListener('DOMContentLoaded', function () {
+    const HolidaysTableContainer = $('#HolidaysTableContainer');
+    let HolidaysTable;
+
+    if (HolidaysTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'holidaystablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        HolidaysTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        HolidaysTable = new FTable('#HolidaysTableContainer', {
             title: emeholidays.translate_holidaylists,
             paging: true,
             sorting: true,
             multiSorting: true,
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
-            defaultSorting: '',
+            defaultSorting: 'name ASC',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl,
+                listAction: ajaxurl
             },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_holidays_list",
-                    'eme_admin_nonce': emeholidays.translate_adminnonce,
-                }
-                return params;
-            },
+            listQueryParams: () => ({
+                action: 'eme_holidays_list',
+                eme_admin_nonce: emeholidays.translate_adminnonce
+            }),
             fields: {
                 id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
                     title: emeholidays.translate_id,
+                    list: false
                 },
                 name: {
-                    title: emeholidays.translate_name,
-                },
+                    title: emeholidays.translate_name
+                }
             },
             sortingInfoSelector: '#holidaystablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
-        });
-        $('#HolidaysTableContainer').jtable('load');
-        $('<div id="holidaystablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#HolidaysTableContainer');
-
-        // Actions button
-        $('#HolidaysActionsButton').on("click",function (e) {
-            e.preventDefault();
-            let selectedRows = $('#HolidaysTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='deleteHolidays') && !confirm(emeholidays.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
-                }
-                if (action_ok==1) {
-                    $('#HolidaysActionsButton').text(emeholidays.translate_pleasewait);
-                    $('#HolidaysActionsButton').prop('disabled', true);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
-                    });
-
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    let params = {
-                        'holidays_ids': idsjoined,
-                        'action': 'eme_manage_holidays',
-                        'do_action': do_action,
-                        'eme_admin_nonce': emeholidays.translate_adminnonce };
-
-                    $.post(ajaxurl, params, function(data) {
-                        $('#HolidaysTableContainer').jtable('reload');
-                        $('#HolidaysActionsButton').text(emeholidays.translate_apply);
-                        $('#HolidaysActionsButton').prop('disabled', false);
-                        $('div#holidays-message').html(data.htmlmessage);
-                        $('div#holidays-message').show();
-                        $('div#holidays-message').delay(3000).fadeOut('slow');
-                    }, 'json');
-                }
-            }
-            // return false to make sure the real form doesn't submit
-            return false;
+            messages: { sortingInfoNone: '' }
         });
 
-        // Re-load records when user click 'load records' button.
-        $('#HolidaysLoadRecordsButton').on("click",function (e) {
+        HolidaysTable.load();
+    }
+
+    // --- Bulk Actions ---
+    const actionsButton = $('#HolidaysActionsButton');
+    if (actionsButton) {
+        actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
-            $('#HolidaysTableContainer').jtable('load');
-            // return false to make sure the real form doesn't submit
-            return false;
+            const selectedRows = HolidaysTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+
+            if (selectedRows.length === 0 || doAction !== 'deleteHolidays') return;
+
+            if (!confirm(emeholidays.translate_areyousuretodeleteselected)) return;
+
+            actionsButton.textContent = emeholidays.translate_pleasewait;
+            actionsButton.disabled = true;
+
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
+
+            const formData = new FormData();
+            formData.append('id', idsJoined);
+            formData.append('action', 'eme_manage_holidays');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emeholidays.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                HolidaysTable.load();
+                actionsButton.textContent = emeholidays.translate_apply;
+                actionsButton.disabled = false;
+
+                const msg = $('div#holidays-message');
+                if (msg) {
+                    msg.textContent = emeholidays.translate_deleted;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 3000);
+                }
+            });
+        });
+    }
+
+    // --- Reload Button ---
+    const loadButton = $('#HolidaysLoadRecordsButton');
+    if (loadButton) {
+        loadButton.addEventListener('click', e => {
+            e.preventDefault();
+            HolidaysTable.load();
         });
     }
 });

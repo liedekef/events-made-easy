@@ -1,4 +1,8 @@
-jQuery(document).ready( function($) {
+document.addEventListener('DOMContentLoaded', function () {
+    const FormfieldsTableContainer = $('#FormfieldsTableContainer');
+    let FormfieldsTable;
+
+    // --- Field Type Groups ---
     const multiValueTypes = [
         'dropdown',
         'dropdown_multi',
@@ -9,7 +13,7 @@ jQuery(document).ready( function($) {
         'datalist'
     ];
 
-    // List of field IDs
+    // List of fields that change format based on type
     const fields = [
         'field_values',
         'field_tags',
@@ -17,75 +21,145 @@ jQuery(document).ready( function($) {
         'admin_tags'
     ];
 
+    // --- Format Helpers ---
     function formatToTextarea(value) {
-        let converted = value.replace(/^\|\|/, '\n').replace(/\|\|/g, '\n');
-        if (value.startsWith('||')) {
+        let converted = (value || '').replace(/^\|\|/, '\n').replace(/\|\|/g, '\n');
+        if (value?.startsWith('||')) {
             converted = '\n' + converted;
         }
         return converted;
     }
 
     function formatToInput(value) {
-        return value.replace(/\r\n|\r|\n/g, '||');
+        return (value || '').replace(/\r\n|\r|\n/g, '||');
     }
 
-    function updateAllFields() {
-        const selectedType = $('#field_type').val();
+    // --- Update Field Inputs Based on Type ---
+    function updateFieldInputs() {
+        const fieldTypeSelect = $('#field_type');
+        if (!fieldTypeSelect) return;
+
+        const selectedType = fieldTypeSelect.value;
         const isMulti = multiValueTypes.includes(selectedType);
 
-        fields.forEach(function (fieldId) {
-            const field = $('#' + fieldId);
-            const container = $('#' + fieldId + '_container');
-            const value = field.val() || '';
+        fields.forEach(fieldId => {
+            const container = $(`#${fieldId}_container`);
+            if (!container) return;
 
+            const existingInput = container.querySelector('input, textarea');
+            const currentValue = existingInput ? existingInput.value : '';
+
+            // Re-render the input
             if (isMulti) {
-                const textareaVal = formatToTextarea(value);
-                container.html(
-                    `<textarea name="${fieldId}" id="${fieldId}" rows="5" cols="40">${textareaVal}</textarea>`
-                );
+                const textareaVal = formatToTextarea(currentValue);
+                container.innerHTML = `
+                    <textarea name="${fieldId}" id="${fieldId}" rows="5" cols="40">${textareaVal}</textarea>
+                `;
             } else {
-                const inputVal = formatToInput(value);
-                container.html(
-                    `<input type="text" name="${fieldId}" id="${fieldId}" size="40" value="${inputVal}" />`
-                );
+                const inputVal = formatToInput(currentValue);
+                container.innerHTML = `
+                    <input type="text" name="${fieldId}" id="${fieldId}" size="40" value="${inputVal}" />
+                `;
             }
         });
     }
 
-    // Trigger update when dropdown changes
-    $('#field_type').change(updateAllFields);
+    // --- Conditional Row Visibility ---
+    function updateRowVisibility() {
+        const fieldTypeSelect = $('#field_type');
+        const fieldPurposeSelect = $('#field_purpose') || $('#field_purpose_hidden');
+        if (!fieldTypeSelect || !fieldPurposeSelect) return;
 
-    // Initial setup on page load
-    updateAllFields();
+        const fieldType = fieldTypeSelect.value;
+        const fieldPurpose = fieldPurposeSelect.value;
 
-    if ($('#FormfieldsTableContainer').length) {
-        $('#FormfieldsTableContainer').jtable({
+        // Hide all conditional rows first
+        const rows = {
+            extra_charge: $('#tr_extra_charge'),
+            field_tags: $('#tr_field_tags'),
+            admin_tags: $('#tr_admin_tags'),
+            field_values: $('#tr_field_values'),
+            admin_values: $('#tr_admin_values'),
+            searchable: $('#tr_searchable'),
+            field_condition: $('#tr_field_condition'),
+            export: $('#tr_export')
+        };
+
+        // Reset display
+        Object.values(rows).forEach(row => {
+            if (row) eme_toggle(row,true);
+        });
+
+        // Apply rules
+        if (fieldType === 'file') {
+            eme_toggle(rows.extra_charge, false);
+            eme_toggle(rows.field_tags, false);
+            eme_toggle(rows.admin_tags, false);
+            eme_toggle(rows.field_values, false);
+            eme_toggle(rows.admin_values, false);
+            eme_toggle(rows.searchable, false);
+        } else {
+            if (fieldPurpose === 'people') {
+                eme_toggle(rows.extra_charge, false);
+            }
+            // Otherwise, default visibility applies
+        }
+
+        if (fieldPurpose === 'people') {
+            eme_toggle(rows.field_condition,true);
+            eme_toggle(rows.export, true);
+        } else {
+            eme_toggle(rows.field_condition, false);
+            eme_toggle(rows.export, false);
+        }
+    }
+
+    // --- Initialize Dynamic Field Behavior ---
+    const fieldTypeSelect = $('#field_type');
+    const fieldPurposeSelect = $('#field_purpose') || $('#field_purpose_hidden');
+
+    if (fieldTypeSelect) {
+        fieldTypeSelect.addEventListener('change', () => {
+            updateFieldInputs();
+            updateRowVisibility();
+        });
+    }
+
+    if (fieldPurposeSelect) {
+        fieldPurposeSelect.addEventListener('change', updateRowVisibility);
+    }
+
+    // Initial setup
+    updateFieldInputs();
+    updateRowVisibility();
+
+    // --- Initialize Form Fields Table ---
+    if (FormfieldsTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'fieldstablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        FormfieldsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        FormfieldsTable = new FTable('#FormfieldsTableContainer', {
             title: emeformfields.translate_formfields,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'field_name ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
-            deleteConfirmation: function(data) {
-                data.deleteConfirmMessage = emeformfields.translate_pressdeletetoremove + ' "' + data.record.field_name + '"';
-            },
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_formfields&do_action=deleteFormfield&eme_admin_nonce='+emeformfields.translate_adminnonce
+                deleteAction: ajaxurl + '?action=eme_manage_formfields&do_action=deleteFormfield&eme_admin_nonce=' + emeformfields.translate_adminnonce
             },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_formfields_list",
-                    'eme_admin_nonce': emeformfields.translate_adminnonce,
-                    'search_name': $('#search_name').val(),
-                    'search_type': $('#search_type').val(),
-                    'search_purpose': $('#search_purpose').val()
-                }
-                return params;
-            },
-
+            listQueryParams: () => ({
+                action: 'eme_formfields_list',
+                search_name: $('#search_name')?.value || '',
+                search_type: $('#search_type')?.value || '',
+                search_purpose: $('#search_purpose')?.value || '',
+                eme_admin_nonce: emeformfields.translate_adminnonce
+            }),
             fields: {
                 field_id: {
                     key: true,
@@ -128,95 +202,54 @@ jQuery(document).ready( function($) {
                     width: '2%'
                 }
             },
-            sortingInfoSelector: '#formfieldstablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            sortingInfoSelector: '#fieldstablesortingInfo',
+            messages: { sortingInfoNone: '' }
         });
+        FormfieldsTable.load();
+    }
 
-        $('#FormfieldsTableContainer').jtable('load');
-        $('<div id="formfieldstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#FormfieldsTableContainer');
-
-        // Actions button
-        $('#FormfieldsActionsButton').on("click",function (e) {
+    // --- Bulk Actions ---
+    const actionsButton = $('#FormfieldsActionsButton');
+    if (actionsButton) {
+        actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
-            let selectedRows = $('#FormfieldsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='deleteFormfields') && !confirm(emeformfields.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
-                }
-                if (action_ok==1) {
-                    $('#FormfieldsActionsButton').text(emeformfields.translate_pleasewait);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
-                    });
+            const selectedRows = FormfieldsTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+            if (!selectedRows.length || doAction !== 'deleteFormfields') return;
+            if (!confirm(emeformfields.translate_areyousuretodeleteselected)) return;
 
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    $.post(ajaxurl, {'field_id': idsjoined, 'action': 'eme_manage_formfields', 'do_action': do_action, 'eme_admin_nonce': emeformfields.translate_adminnonce }, function(data) {
-                        $('#FormfieldsTableContainer').jtable('reload');
-                        $('#FormfieldsActionsButton').text(emeformfields.translate_apply);
-                        $('div#formfields-message').html(data.htmlmessage);
-                        $('div#formfields-message').show();
-                        $('div#formfields-message').delay(3000).fadeOut('slow');
-                    },'json');
+            actionsButton.textContent = emeformfields.translate_pleasewait;
+            actionsButton.disabled = true;
+
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
+
+            const formData = new FormData();
+            formData.append('field_id', idsJoined);
+            formData.append('action', 'eme_manage_formfields');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emeformfields.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                FormfieldsTable.load();
+                actionsButton.textContent = emeformfields.translate_apply;
+                actionsButton.disabled = false;
+                const msg = $('div#formfields-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 3000);
                 }
-            }
-            // return false to make sure the real form doesn't submit
-            return false;
+            });
         });
-        //
-        // Re-load records when user click 'load records' button.
-        $('#FormfieldsLoadRecordsButton').on("click",function (e) {
+    }
+
+    // --- Reload Button ---
+    const loadButton = $('#FormfieldsLoadRecordsButton');
+    if (loadButton) {
+        loadButton.addEventListener('click', e => {
             e.preventDefault();
-            $('#FormfieldsTableContainer').jtable('load');
-            // return false to make sure the real form doesn't submit
-            return false;
+            FormfieldsTable.load();
         });
     }
-
-    function updateShowHideFormfields_type () {
-        if (jQuery('select#field_type').val() == 'file') {
-            $('tr#tr_extra_charge').hide();
-            $('tr#tr_field_tags').hide();
-            $('tr#tr_admin_tags').hide();
-            $('tr#tr_field_values').hide();
-            $('tr#tr_admin_values').hide();
-            $('tr#tr_searchable').hide();
-        } else {
-            // field_purpose can be a select or hidden field
-            if (jQuery('#field_purpose').val() == 'people') {
-                $('tr#tr_extra_charge').hide();
-            } else {
-                $('tr#tr_extra_charge').show();
-            }
-            $('tr#tr_field_tags').show();
-            $('tr#tr_admin_tags').show();
-            $('tr#tr_field_values').show();
-            $('tr#tr_admin_values').show();
-            $('tr#tr_searchable').show();
-        }
-    }
-    function updateShowHideFormfields_purpose () {
-        // field_purpose can be a select or hidden field
-        if (jQuery('#field_purpose').val() == 'people') {
-            $('tr#tr_extra_charge').hide();
-            $('tr#tr_field_condition').show();
-            $('tr#tr_export').show();
-        } else {
-            if (jQuery('select#field_type').val() == 'file') {
-                $('tr#tr_extra_charge').hide();
-            } else {
-                $('tr#tr_extra_charge').show();
-            }
-            $('tr#tr_field_condition').hide();
-            $('tr#tr_export').hide();
-        }
-    }
-    $('select#field_purpose').on("change",updateShowHideFormfields_purpose);
-    $('select#field_type').on("change",updateShowHideFormfields_type);
-    updateShowHideFormfields_purpose();
-    updateShowHideFormfields_type();
 });

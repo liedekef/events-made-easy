@@ -1,88 +1,96 @@
-jQuery(document).ready( function($) {
-    if ($('#CategoriesTableContainer').length) {
-        $('#CategoriesTableContainer').jtable({
+document.addEventListener('DOMContentLoaded', function () {
+    const CategoriesTableContainer = $('#CategoriesTableContainer');
+    let CategoriesTable;
+
+    if (CategoriesTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'categoriestablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        CategoriesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        CategoriesTable = new FTable('#CategoriesTableContainer', {
             title: emecategories.translate_categories,
             paging: true,
             sorting: true,
             multiSorting: true,
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
-            defaultSorting: '',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl,
+                listAction: ajaxurl
             },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_categories_list",
-                    'eme_admin_nonce': emecategories.translate_adminnonce,
-                }
-                return params;
-            },
+            listQueryParams: () => ({
+                action: 'eme_categories_list',
+                eme_admin_nonce: emecategories.translate_adminnonce
+            }),
             fields: {
                 category_id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emecategories.translate_id,
+                    title: emecategories.translate_id
                 },
                 category_name: {
-                    title: emecategories.translate_name,
-                },
+                    title: emecategories.translate_name
+                }
             },
             sortingInfoSelector: '#categoriestablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            messages: { sortingInfoNone: '' }
         });
-        $('#CategoriesTableContainer').jtable('load');
-        $('<div id="categoriestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#CategoriesTableContainer');
 
-        // Actions button
-        $('#CategoriesActionsButton').on("click",function (e) {
-            e.preventDefault();
-            let selectedRows = $('#CategoriesTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='deleteCategories') && !confirm(emecategories.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
+        CategoriesTable.load();
+
+        // --- Bulk Actions ---
+        const actionsButton = $('#CategoriesActionsButton');
+        if (actionsButton) {
+            actionsButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                const selectedRows = CategoriesTable.getSelectedRows();
+                const doAction = $('#eme_admin_action').value;
+
+                if (selectedRows.length === 0 || !doAction) return;
+
+                let proceed = true;
+                if (doAction === 'deleteCategories' && !confirm(emecategories.translate_areyousuretodeleteselected)) {
+                    proceed = false;
                 }
-                if (action_ok==1) {
-                    $('#CategoriesActionsButton').text(emecategories.translate_pleasewait);
-                    $('#CategoriesActionsButton').prop('disabled', true);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
+
+                if (proceed) {
+                    actionsButton.textContent = emecategories.translate_pleasewait;
+                    actionsButton.disabled = true;
+
+                    const ids = selectedRows.map(row => row.dataset.recordKey);
+                    const idsJoined = ids.join(',');
+
+                    const formData = new FormData();
+                    formData.append('category_ids', idsJoined);
+                    formData.append('action', 'eme_manage_categories');
+                    formData.append('do_action', doAction);
+                    formData.append('eme_admin_nonce', emecategories.translate_adminnonce);
+
+                    eme_postJSON(ajaxurl, formData, (data) => {
+                        CategoriesTable.load();
+                        actionsButton.textContent = emecategories.translate_apply;
+                        actionsButton.disabled = false;
+
+                        const msg = $('div#categories-message');
+                        if (msg) {
+                            msg.textContent = emecategories.translate_deleted;
+                            eme_toggle(msg, true);
+                            setTimeout(() => eme_toggle(msg, false), 3000);
+                        }
                     });
-
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    let params = {
-                        'category_ids': idsjoined,
-                        'action': 'eme_manage_categories',
-                        'do_action': do_action,
-                        'eme_admin_nonce': emecategories.translate_adminnonce };
-
-                    $.post(ajaxurl, params, function(data) {
-                        $('#CategoriesTableContainer').jtable('reload');
-                        $('#CategoriesActionsButton').text(emecategories.translate_apply);
-                        $('#CategoriesActionsButton').prop('disabled', false);
-                        $('div#categories-message').html(data.htmlmessage);
-                        $('div#categories-message').show();
-                        $('div#categories-message').delay(3000).fadeOut('slow');
-                    }, 'json');
                 }
-            }
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
+            });
+        }
 
-        // Re-load records when user click 'load records' button.
-        $('#CategoriesLoadRecordsButton').on("click",function (e) {
-            e.preventDefault();
-            $('#CategoriesTableContainer').jtable('load');
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
+        // --- Reload Button ---
+        const loadButton = $('#CategoriesLoadRecordsButton');
+        if (loadButton) {
+            loadButton.addEventListener('click', e => {
+                e.preventDefault();
+                CategoriesTable.load();
+            });
+        }
     }
 });

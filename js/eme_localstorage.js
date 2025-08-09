@@ -1,67 +1,76 @@
-jQuery(document).ready( function($) {
-	if ($("form.eme-rememberme input#eme_rememberme").length) {
-		let eme_rememberme_checked = localStorage.getItem('eme_rememberme');
-		if (eme_rememberme_checked == 1) {
-			$("form.eme-rememberme input#eme_rememberme").prop("checked",true);
-		}
-	}
-        if ($('form.eme-rememberme input[name=lastname]').length && $('form.eme-rememberme input[name=lastname]').val() == '') {
-                $('form.eme-rememberme input[name=lastname]').val(localStorage.getItem('eme_lastname'));
+document.addEventListener('DOMContentLoaded', function() {
+    const rememberMeCheckbox = document.querySelector("form.eme-rememberme input#eme_rememberme");
+    if (rememberMeCheckbox) {
+        let eme_rememberme_checked = localStorage.getItem('eme_rememberme');
+        if (eme_rememberme_checked == 1) {
+            rememberMeCheckbox.checked = true;
         }
-        if ($('form.eme-rememberme input[name=firstname]').length && $('form.eme-rememberme input[name=firstname]').val() == '') {
-                $('form.eme-rememberme input[name=firstname]').val(localStorage.getItem('eme_firstname'));
+    }
+    
+    // Helper function to set field value from localStorage if field exists and is empty
+    function setFieldFromStorage(selector, storageKey) {
+        const field = document.querySelector(`form.eme-rememberme input[name=${selector}]`);
+        if (field && field.value === '') {
+            field.value = localStorage.getItem(storageKey) || '';
         }
-        if ($('form.eme-rememberme input[name=email]').length && $('form.eme-rememberme input[name=email]').val() == '') {
-                $('form.eme-rememberme input[name=email]').val(localStorage.getItem('eme_email'));
+    }
+    
+    // Helper function to set field value from localStorage (for task fields)
+    function setTaskFieldFromStorage(selector, storageKey) {
+        const field = document.querySelector(`form.eme-rememberme input[name=${selector}]`);
+        if (field) {
+            field.value = localStorage.getItem(storageKey) || '';
         }
-        if ($('form.eme-rememberme input[name=phone]').length && $('form.eme-rememberme input[name=phone]').val() == '') {
-                $('form.eme-rememberme input[name=phone]').val(localStorage.getItem('eme_phone'));
-        }
-	if ($('form.eme-rememberme input[name=task_lastname]').length) {
-		$('form.eme-rememberme input[name=task_lastname]').val(localStorage.getItem('eme_lastname'));
-	}
-	if ($('form.eme-rememberme input[name=task_firstname]').length) {
-		$('form.eme-rememberme input[name=task_firstname]').val(localStorage.getItem('eme_firstname'));
-	}
-	if ($('form.eme-rememberme input[name=task_email]').length) {
-		$('form.eme-rememberme input[name=task_email]').val(localStorage.getItem('eme_email'));
-	}
-	if ($('form.eme-rememberme input[name=task_phone]').length) {
-		$('form.eme-rememberme input[name=task_phone]').val(localStorage.getItem('eme_phone'));
-	}
-	$('form.eme-rememberme').on('submit',function(){
-		if ($('input#eme_rememberme', this).prop('checked')) {
-			localStorage.setItem('eme_rememberme',1);
-			if ($('input[name=lastname]', this).length) {
-				localStorage.setItem('eme_lastname',$('input[name=lastname]', this).val());
-			}
-			if ($('input[name=firstname]', this).length) {
-				localStorage.setItem('eme_firstname',$('input[name=firstname]', this).val());
-			}
-			if ($('input[name=email]', this).length) {
-				localStorage.setItem('eme_email',$('input[name=email]', this).val());
-			}
-			if ($('input[name=phone]', this).length) {
-				localStorage.setItem('eme_phone',$('input[name=phone]', this).val());
-			}
-			if ($('input[name=task_lastname]', this).length) {
-				localStorage.setItem('eme_lastname',$('input[name=task_lastname]', this).val());
-			}
-			if ($('input[name=task_firstname]', this).length) {
-				localStorage.setItem('eme_firstname',$('input[name=task_firstname]', this).val());
-			}
-			if ($('input[name=task_email]', this).length) {
-				localStorage.setItem('eme_email',$('input[name=task_email]', this).val());
-			}
-			if ($('input[name=task_phone]', this).length) {
-				localStorage.setItem('eme_phone',$('input[name=task_phone]', this).val());
-			}
-		} else {
-			localStorage.removeItem('eme_lastname');
-			localStorage.removeItem('eme_firstname');
-			localStorage.removeItem('eme_email');
-			localStorage.removeItem('eme_phone');
-			localStorage.removeItem('eme_rememberme');
-		}
-	});
+    }
+    
+    // Set form fields from localStorage
+    setFieldFromStorage('lastname', 'eme_lastname');
+    setFieldFromStorage('firstname', 'eme_firstname');
+    setFieldFromStorage('email', 'eme_email');
+    setFieldFromStorage('phone', 'eme_phone');
+    
+    // Set task fields from localStorage
+    setTaskFieldFromStorage('task_lastname', 'eme_lastname');
+    setTaskFieldFromStorage('task_firstname', 'eme_firstname');
+    setTaskFieldFromStorage('task_email', 'eme_email');
+    setTaskFieldFromStorage('task_phone', 'eme_phone');
+    
+    // Handle form submission
+    const rememberMeForms = document.querySelectorAll('form.eme-rememberme');
+    rememberMeForms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const rememberCheckbox = this.querySelector('input#eme_rememberme');
+            
+            if (rememberCheckbox && rememberCheckbox.checked) {
+                localStorage.setItem('eme_rememberme', 1);
+                
+                // Helper function to save field to localStorage
+                function saveFieldToStorage(selector, storageKey) {
+                    const field = form.querySelector(`input[name=${selector}]`);
+                    if (field) {
+                        localStorage.setItem(storageKey, field.value);
+                    }
+                }
+                
+                // Save regular fields
+                saveFieldToStorage('lastname', 'eme_lastname');
+                saveFieldToStorage('firstname', 'eme_firstname');
+                saveFieldToStorage('email', 'eme_email');
+                saveFieldToStorage('phone', 'eme_phone');
+                
+                // Save task fields
+                saveFieldToStorage('task_lastname', 'eme_lastname');
+                saveFieldToStorage('task_firstname', 'eme_firstname');
+                saveFieldToStorage('task_email', 'eme_email');
+                saveFieldToStorage('task_phone', 'eme_phone');
+            } else {
+                // Remove from localStorage if not checked
+                localStorage.removeItem('eme_lastname');
+                localStorage.removeItem('eme_firstname');
+                localStorage.removeItem('eme_email');
+                localStorage.removeItem('eme_phone');
+                localStorage.removeItem('eme_rememberme');
+            }
+        });
+    });
 });

@@ -243,10 +243,13 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            jQuery(document).ready( function($) {
-                                setTimeout(function () {
-                                    $( "#eme_' . $pg . '_form" ).submit();
-                                }, ' . $waitperiod . ');
+                            document.addEventListener("DOMContentLoaded", function() {
+                                setTimeout(function() {
+                                    const form = document.getElementById("eme_' . $pg . '_form");
+                                    if (form) {
+                                        form.submit();
+                                    }
+                                }, ' . (int)$waitperiod . ');
                             });</script>';
                     }
                 }
@@ -386,12 +389,14 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            jQuery(document).ready( function($) {
-                                setTimeout(function () {
-                                    $( "#eme_' . $pg . '_form" ).submit();
-                                }, ' . $waitperiod . ');
-                            });</script>;';
-                        //$ret_string .= '<script type="text/javascript">jQuery(document).ready( function($) {$( "#eme_'.$pg.'_form" ).submit();});</script>;';
+                            document.addEventListener("DOMContentLoaded", function() {
+                                setTimeout(function() {
+                                    const form = document.getElementById("eme_' . $pg . '_form");
+                                    if (form) {
+                                        form.submit();
+                                    }
+                                }, ' . (int)$waitperiod . ');
+                            });</script>';
                     }
                 }
             }
@@ -503,12 +508,14 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
                     if ( $eme_pg_submit_immediately ) {
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            jQuery(document).ready( function($) {
-                                setTimeout(function () {
-                                    $( "#eme_' . $pg . '_form" ).submit();
-                                }, ' . $waitperiod . ');
-                            });</script>;';
-                        //$ret_string .= '<script type="text/javascript">jQuery(document).ready( function($) {$( "#eme_'.$pg.'_form" ).submit();});</script>;';
+                            document.addEventListener("DOMContentLoaded", function() {
+                                setTimeout(function() {
+                                    const form = document.getElementById("eme_' . $pg . '_form");
+                                    if (form) {
+                                        form.submit();
+                                    }
+                                }, ' . (int)$waitperiod . ');
+                            });</script>';
                     }
                 }
             }
@@ -925,34 +932,67 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
         $form_html .= "<input type='button' value='$button_label' id='braintree_submit_button' class='button-primary eme_submit_button'><br>";
     }
     $form_html .= '</form>
-        <script>
-        jQuery(document).ready(function ($) {
-            $.getScript("https://js.braintreegateway.com/web/dropin/1.33.0/js/dropin.min.js",function () {
-                var clientToken = "' . $clientToken . '";
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load Braintree Drop-in SDK dynamically
+            const script = document.createElement("script");
+            script.src = "https://js.braintreegateway.com/web/dropin/1.33.0/js/dropin.min.js";
+            script.async = true;
+            script.onload = function () {
+                const clientToken = "' . eme_esc_html($clientToken) . '";
+                const container = document.getElementById("braintree-payment-form-div");
+    
+                if (!container) {
+                    console.error("Braintree container #braintree-payment-form-div not found");
+                    return;
+                }
+    
                 braintree.dropin.create({
                     authorization: clientToken,
-                    container: "#braintree-payment-form-div",
+                    container: container
                 }, function (createErr, instance) {
                     if (createErr) {
-                        console.log("Create Error", createErr);
+                        console.error("Braintree create error:", createErr);
                         return;
                     }
-                    $("#braintree_submit_button").on("click", function() {
+    
+                    const submitButton = document.getElementById("braintree_submit_button");
+                    if (!submitButton) {
+                        console.error("Submit button #braintree_submit_button not found");
+                        return;
+                    }
+    
+                    submitButton.addEventListener("click", function (event) {
+                        event.preventDefault(); // Prevent accidental form submission
+    
                         instance.requestPaymentMethod(function (err, payload) {
                             if (err) {
-                                console.log("Request Payment Method Error", err);
+                                console.error("Request payment method error:", err);
                                 return;
                             }
-                            // Add the nonce to the form and submit
-                            $("#braintree_nonce").val(payload.nonce);
-                            $("#eme_braintree_form").submit();
+    
+                            // Insert nonce and submit form
+                            const nonceInput = document.getElementById("braintree_nonce");
+                            if (nonceInput) {
+                                nonceInput.value = payload.nonce;
+                            }
+    
+                            const form = document.getElementById("eme_braintree_form");
+                            if (form) {
+                                form.submit();
+                            } else {
+                                console.error("Form #eme_braintree_form not found");
+                            }
                         });
                     });
                 });
-            });
+            };
+            script.onerror = function () {
+                console.error("Failed to load Braintree Drop-in SDK");
+            };
+            document.head.appendChild(script);
         });
-        </script>
-   ';
+    </script>';
     $form_html .= $button_below;
     return $form_html;
 }

@@ -29,28 +29,6 @@
     max-width: 300px;
 }
 
-/* select2 class */
-.select2-search__field {
-    min-height: unset;
-    margin-bottom: 5px;
-    field-sizing: content;
-    max-width: 100%;
-    line-height: normal;
-}
-
-.select2-selection--multiple ul li {
-    line-height: initial !important;
-}
-
-.select2-results__message {
-  padding: 8px 12px;
-  color: #666;
-  font-size: 0.9em;
-  background-color: #f8f9fa;
-  border-top: 1px solid #ddd;
-  font-style: italic;
-}
-
 .eme_admin_button_middle {
     vertical-align: middle !important;
 }
@@ -140,7 +118,7 @@ div.eme-message-error {
 }
 
 .eme-hidden {
-    display: none; /* by default hidden, we'll show it via ajax when needed */
+    display: none !important; /* by default hidden, we'll show it via ajax when needed */
 }
 
 /* Printable stuff */
@@ -216,7 +194,6 @@ table#eme-location-data th {
 div.eme-adminedit-location-map {
     width: 400px;
     height: 300px;
-    display: none;
     margin-right: 8px;
 }
 /* for google maps to work ok in IE, we need at least 690px as max-width for the images */
@@ -514,6 +491,11 @@ input[type="checkbox"] {
     opacity: 1 !important;
     max-width: 100%;
 }
+.eme_formfield_fdatetime, .eme_formfield_fdate, .eme_formfield_ftime {
+    background: #FCFFAA !important;
+    field-sizing: content;
+    min-inline-size: 10ch;
+}
 
 /* for task section header */
 .eme_task_section_header {
@@ -595,7 +577,6 @@ form[name=eme-fs-form] span.error {
 form[name=eme-fs-form] div.eme-frontendedit-location-map {
     width: 96%;
     height: 400px;
-    display: none;
 }
 
 /* accordeon */
@@ -768,3 +749,23 @@ div#eme_div_import {
     min-width: fit-content;
   }
 }
+
+.eme-yesno-check-text:before {
+  content: attr(data-no);
+}
+
+.eme-yesno-check-input:checked ~ .eme-yesno-check-text:before {
+  content: attr(data-yes);
+}
+
+.ts-wrapper {
+    display: inline-block;
+}
+.ts-wrapper .ts-dropdown {
+    white-space: nowrap;
+    min-width: max-content !important;
+}
+.eme-ftable-center {
+    text-align: center;
+}
+

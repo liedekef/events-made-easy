@@ -1,98 +1,17 @@
-jQuery(document).ready(function ($) { 
-    function eme_dynamic_people_data_json(form_id) {
-        if ($('div#eme_dynpersondata').length) {
-            let alldata = new FormData($('#'+form_id)[0]);
-            alldata.append('action', 'eme_people_dyndata');
-            alldata.append('eme_admin_nonce', emepeople.translate_adminnonce);
-            $('div#eme_dynpersondata').html('<img src="'+emepeople.translate_plugin_url+'images/spinner.gif">');
-            $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-                .done(function(data){
-                    $('div#eme_dynpersondata').html(data.Result);
-                    // make sure to init select2 for dynamic added fields
-                    if ($('.eme_select2.dynamicfield').length) {
-                        $('.eme_select2.dynamicfield').select2({dropdownAutoWidth: true, width: 'style'});
-                    }
-                    if ($('.eme_select2_width50_class.dynamicfield').length) {
-                        $('.eme_select2_width50_class.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
-                    }
-                    if ($('.eme_formfield_fdate.dynamicfield').length) {
-                        $('.eme_formfield_fdate.dynamicfield').fdatepicker({ 
-                            todayButton: new Date(),
-                            clearButton: true,
-                            language: emepeople.translate_flanguage,
-                            firstDay: parseInt(emepeople.translate_firstDayOfWeek),
-                            altFieldDateFormat: 'Y-m-d',
-                            dateFormat: emepeople.translate_fdateformat
-                        });
-                        $.each($('.eme_formfield_fdate.dynamicfield'), function() {
-                            if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
-                                $(this).data('fdatepicker').selectDate($(this).data('date'));
-                                // to avoid it being done multiple times
-                                $(this).removeData('date');
-                                $(this).removeAttr('date');
-                            }
-                            if ($(this).data('dateFormat')) {
-                                $(this).data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
-                                // to avoid it being done multiple times
-                                $(this).removeData('dateFormat');
-                                $(this).removeAttr('dateFormat');
-                            }
-                        });
-                    }
-                    if ($('.eme_formfield_fdatetime.dynamicfield').length) {
-                        $('.eme_formfield_fdatetime.dynamicfield').fdatepicker({
-                            todayButton: new Date(),
-                            clearButton: true,
-                            closeButton: true,
-                            timepicker: true,
-                            minutesStep: parseInt(emepeople.translate_minutesStep),
-                            language: emepeople.translate_flanguage,
-                            firstDay: parseInt(emepeople.translate_firstDayOfWeek),
-                            altFieldDateFormat: 'Y-m-d H:i:00',
-                            dateFormat: emepeople.translate_fdateformat,
-                            timeFormat: emepeople.translate_ftimeformat
-                        });
-                        $.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
-                            if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
-                                $(this).data('fdatepicker').selectDate($(this).data('date'));
-                                // to avoid it being done multiple times
-                                $(this).removeData('date');
-                                $(this).removeAttr('date');
-                            }
-                            if ($(this).data('dateFormat')) {
-                                $(this).data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
-                                // to avoid it being done multiple times
-                                $(this).removeData('dateFormat');
-                                $(this).removeAttr('dateFormat');
-                            }
-                            if ($(this).data('timeFormat')) {
-                                $(this).data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
-                                // to avoid it being done multiple times
-                                $(this).removeData('timeFormat');
-                                $(this).removeAttr('timeFormat');
-                            }
-                        });
-                    }
-                    if ($('.eme_formfield_timepicker.dynamicfield').length) {
-                        $('.eme_formfield_timepicker.dynamicfield').timepicker({
-                            timeFormat: emepeople.translate_ftimeformat
-                        });
-                        $.each($('.eme_formfield_timepicker'), function() {
-                            if ($(this).data('timeFormat')) {
-                                $(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
-                                // to avoid it being done multiple times
-                                $(this).removeData('timeFormat');
-                                $(this).removeAttr('timeFormat');
-                            }
-                        });
-                    }
-                });
-        }
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const PeopleTableContainer = $('#PeopleTableContainer');
+    let PeopleTable;
+    const GroupsTableContainer = $('#GroupsTableContainer');
+    let GroupsTable;
 
+    // --- Initialize People Table ---
+    if (PeopleTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'peopletablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        PeopleTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
 
-    if ($('#PeopleTableContainer').length) {
-        let personfields = {
+        let personFields = {
             'people.person_id': {
                 key: true,
                 title: emepeople.translate_personid,
@@ -102,7 +21,6 @@ jQuery(document).ready(function ($) {
             },
             'people.lastname': {
                 title: emepeople.translate_lastname,
-                inputClass: 'validate[required]'
             },
             'people.firstname': {
                 title: emepeople.translate_firstname
@@ -133,7 +51,6 @@ jQuery(document).ready(function ($) {
             },
             'people.email': {
                 title: emepeople.translate_email,
-                inputClass: 'validate[required]'
             },
             'people.phone': {
                 title: emepeople.translate_phone,
@@ -203,83 +120,75 @@ jQuery(document).ready(function ($) {
                     return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emepeople.translate_showallbookings + '</a>';
                 }
             }
-        }
-        let extrafields=$('#PeopleTableContainer').data('extrafields').toString().split(',');
-        let extrafieldnames=$('#PeopleTableContainer').data('extrafieldnames').toString().split(',');
-        let extrafieldsearchable=$('#PeopleTableContainer').data('extrafieldsearchable').toString().split(',');
-        $.each(extrafields, function( index, value ) {
-            if (value != '') {
-                let fieldindex='FIELD_'+value;
-                let extrafield = {}
-                if (extrafieldsearchable[index]=='1') {
-                    sorting=true;
-                } else {
-                    sorting=false;
-                }
-                extrafield[fieldindex] = {
-                    title: extrafieldnames[index],
-                    sorting: sorting,
-                    visibility: 'hidden'
-                };
-                $.extend(personfields,extrafield);
-            }
-        });
+        };
 
-        //Prepare jtable plugin
-        $('#PeopleTableContainer').jtable({
+        // Add extra fields
+        const extraFieldsAttr = PeopleTableContainer.dataset.extrafields;
+        const extraFieldNamesAttr = PeopleTableContainer.dataset.extrafieldnames;
+        const extrafieldsearchableAttr = PeopleTableContainer.dataset.extrafieldsearchable;
+        if (extraFieldsAttr && extraFieldNamesAttr) {
+            const extraFields = extraFieldsAttr.split(',');
+            const extraNames = extraFieldNamesAttr.split(',');
+            const extraSearches = extrafieldsearchableAttr.split(',');
+            extraFields.forEach((field, index) => {
+                if (field == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+index;
+                    personFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
+                } else if (field) {
+                    let fieldindex = 'FIELD_'+index;
+                    personFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index]=='1', visibility: 'hidden' };
+                }
+            });
+        }
+
+        PeopleTable = new FTable('#PeopleTableContainer', {
             title: emepeople.translate_people,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             csvExport: true,
             printTable: true,
-            actions: {
-                listAction: ajaxurl
-            },
-            listQueryParams: function () {
-                let exactmatch=0;
-                if ($('#search_exactmatch').prop("checked")) {
-                    exactmatch = 1;
-                }
-                let params = {
-                    'action': "eme_people_list",
-                    'eme_admin_nonce': emepeople.translate_adminnonce,
-                    'trash': $_GET['trash'],
-                    'search_person': $('#search_person').val(),
-                    'search_groups': $('#search_groups').val(),
-                    'search_memberstatus': $('#search_memberstatus').val(),
-                    'search_membershipids': $('#search_membershipids').val(),
-                    'search_customfields': $('#search_customfields').val(),
-                    'search_customfieldids': $('#search_customfieldids').val(),
-                    'search_exactmatch': exactmatch
-                }
-                return params;
-            },
-
-            fields: personfields,
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_people_list',
+                eme_admin_nonce: emepeople.translate_adminnonce,
+                trash: new URLSearchParams(window.location.search).get('trash') || '',
+                search_person: eme_getValue($('#search_person')),
+                search_groups: eme_getValue($('#search_groups')),
+                search_memberstatus: eme_getValue($('#search_memberstatus')),
+                search_membershipids: eme_getValue($('#search_membershipids')),
+                search_customfields: eme_getValue($('#search_customfields')),
+                search_customfieldids: eme_getValue($('#search_customfieldids')),
+                search_exactmatch: $('#search_exactmatch')?.checked ? 1 : 0
+            }),
+            fields: personFields,
             sortingInfoSelector: '#peopletablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            messages: { sortingInfoNone: '' }
         });
-        $('#PeopleTableContainer').jtable('load');
-        $('<div id="peopletablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#PeopleTableContainer');
+
+        PeopleTable.load();
     }
 
-    if ($('#GroupsTableContainer').length) {
-        $('#GroupsTableContainer').jtable({
+    // --- Initialize Groups Table ---
+    if (GroupsTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'groupstablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        GroupsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        GroupsTable = new FTable('#GroupsTableContainer', {
             title: emepeople.translate_groups,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             actions: {
                 listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
                 deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,
@@ -294,7 +203,6 @@ jQuery(document).ready(function ($) {
                 },
                 'name': {
                     title: emepeople.translate_name,
-                    inputClass: 'validate[required]'
                 },
                 'description': {
                     title: emepeople.translate_description
@@ -307,351 +215,386 @@ jQuery(document).ready(function ($) {
                     title: emepeople.translate_groupcount,
                     sorting: false
                 }
-            }
+            },
+            sortingInfoSelector: '#groupstablesortingInfo',
+            messages: { sortingInfoNone: '' }
         });
 
-        $('#GroupsTableContainer').jtable('load');
-
-        // Actions button
-        $('#GroupsActionsButton').on("click",function (e) {
-            e.preventDefault();
-            let selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='deleteGroups') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
-                }
-                if (action_ok==1) {
-                    $('#GroupsActionsButton').text(emepeople.translate_pleasewait);
-                    $('#GroupsActionsButton').prop('disabled', true);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
-                    });
-
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                        $('#GroupsTableContainer').jtable('reload');
-                        $('#GroupsActionsButton').text(emepeople.translate_apply);
-                        $('#GroupsActionsButton').prop('disabled', false);
-                        if (do_action=='deleteGroups') {
-                            $('div#groups-message').html(data.htmlmessage);
-                            $('div#groups-message').show();
-                            $('div#groups-message').delay(5000).fadeOut('slow');
-                        }
-                    }, 'json');
-                }
-            }
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
+        GroupsTable.load();
     }
 
-    // Actions button
-    $('#PeopleActionsButton').on("click",function (e) {
-        e.preventDefault();
-        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
-        let do_action = $('#eme_admin_action').val();
-
-        let action_ok=1;
-        if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='trashPeople' || do_action=='deletePeople') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
-                action_ok=0;
-            }
-            if (action_ok==1) {
-                $('#PeopleActionsButton').text(emepeople.translate_pleasewait);
-                $('#PeopleActionsButton').prop('disabled', true);
-                let ids = [];
-                selectedRows.each(function () {
-                    ids.push($(this).attr('data-record-key'));
-                });
-
-                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                let form;
-                let params = {
-                    'person_id': idsjoined,
-                    'action': 'eme_manage_people',
-                    'do_action': do_action,
-                    'chooseperson': $('#chooseperson').val(),
-                    'transferto_id': $('#transferto_id').val(),
-                    'language': $('#language').val(),
-                    'pdf_template': $('#pdf_template').val(),
-                    'pdf_template_header': $('#pdf_template_header').val(),
-                    'pdf_template_footer': $('#pdf_template_footer').val(),
-                    'html_template': $('#html_template').val(),
-                    'html_template_header': $('#html_template_header').val(),
-                    'html_templata_footer': $('#html_template_footer').val(),
-                    'addtogroup': $('#addtogroup').val(),
-                    'removefromgroup': $('#removefromgroup').val(),
-                    'eme_admin_nonce': emepeople.translate_adminnonce };
-
-                if (do_action=='sendMails') {
-                    form = $('<form method="POST" action="'+emepeople.translate_admin_sendmails_url+'">');
-                    params = {
-                        'person_ids': idsjoined,
-                        'eme_admin_action': 'new_mailing'
-                    };
-                    $.each(params, function(k, v) {
-                        form.append($('<input type="hidden" name="' + k + '" value="' + v + '">'));
-                    });
-                    $('body').append(form);
-                    form.trigger("submit");
-                    return false;
-                }
-                if (do_action=='pdf' || do_action=='html') {
-                    form = $('<form method="POST" action="' + ajaxurl + '">');
-                    $.each(params, function(k, v) {
-                        form.append($('<input type="hidden" name="' + k + '" value="' + v + '">'));
-                    });
-                    $('body').append(form);
-                    form.trigger("submit");
-                    $('#PeopleActionsButton').text(emepeople.translate_apply);
-                    $('#PeopleActionsButton').prop('disabled', false);
-                    return false;
-                }
-                $.post(ajaxurl, params, function(data) {
-                    $('#PeopleTableContainer').jtable('reload');
-                    $('#PeopleActionsButton').text(emepeople.translate_apply);
-                    $('#PeopleActionsButton').prop('disabled', false);
-                    $('div#people-message').html(data.htmlmessage);
-                    $('div#people-message').show();
-                    $('div#people-message').delay(5000).fadeOut('slow');
-                }, 'json');
-            }
-        }
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-    // Re-load records when user click 'load records' button.
-    $('#PeopleLoadRecordsButton').on("click",function (e) {
-        e.preventDefault();
-        $('#PeopleTableContainer').jtable('load');
-        if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
-            $('#StoreQueryButton').show();
-        } else {
-            $('#StoreQueryButton').hide();
-        }
-        $('#StoreQueryDiv').hide();
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-    $('#StoreQueryButton').on("click",function (e) {
-        e.preventDefault();
-        $('#StoreQueryButton').hide();
-        $('#StoreQueryDiv').show();
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-    $('#StoreQuerySubmitButton').on("click",function (e) {
-        e.preventDefault();
-        let exactmatch=0;
-        if ($('#search_exactmatch').prop("checked")) {
-            exactmatch = 1;
-        }
-        let params = {
-            'search_person': $('#search_person').val(),
-            'search_groups': $('#search_groups').val(),
-            'search_memberstatus': $('#search_memberstatus').val(),
-            'search_membershipids': $('#search_membershipids').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val(),
-            'search_exactmatch': exactmatch,
-            'action': 'eme_store_people_query',
-            'eme_admin_nonce': emepeople.translate_adminnonce,
-            'dynamicgroupname': $('#dynamicgroupname').val()
-        };
-        $.post(ajaxurl, params, function(data) {
-            $('#StoreQueryButton').hide();
-            $('#StoreQueryDiv').hide();
-            $('div#people-message').html(data.htmlmessage);
-            $('div#people-message').show();
-            $('div#people-message').delay(5000).fadeOut('slow');
-        }, 'json');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-    $('#StoreQueryButton').hide();
-    $('#StoreQueryDiv').hide();
-
-    function updateShowHideStuff () {
-        let action=$('select#eme_admin_action').val();
-
-        if (action == 'changeLanguage') {
-            $('span#span_language').show();
-        } else {
-            $('span#span_language').hide();
-        }
-        if (action == 'trashPeople' || action == 'deletePeople') {
-            $('span#span_transferto').show();
-        } else {
-            $('span#span_transferto').hide();
-        }
-        if (action == 'addToGroup') {
-            $('span#span_addtogroup').show();
-        } else {
-            $('span#span_addtogroup').hide();
-        }
-        if (action == 'removeFromGroup') {
-            $('span#span_removefromgroup').show();
-        } else {
-            $('span#span_removefromgroup').hide();
-        }
-        if (action == 'pdf') {
-            $('span#span_pdftemplate').show();
-        } else {
-            $('span#span_pdftemplate').hide();
-        }
-        if (action == 'html') {
-            $('span#span_htmltemplate').show();
-        } else {
-            $('span#span_htmltemplate').hide();
-        }
+    // --- Conditional UI: Show/hide based on action ---
+    function updateShowHideStuff() {
+        const action = $('#eme_admin_action')?.value || '';
+        eme_toggle($('#span_language'), action === 'changeLanguage');
+        eme_toggle($('#span_addtogroup'), action === 'addtogroup');
+        eme_toggle($('#span_removefromgroup'), action === 'removefromgroup');
+        eme_toggle($('#span_pdf_template'), action === 'pdf');
+        eme_toggle($('#span_html_template'), action === 'html');
+        eme_toggle($('#span_sendmails'), ['changeLanguage', 'addtogroup', 'removefromgroup', 'pdf', 'html'].includes(action));
     }
+
+    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
-    $('select#eme_admin_action').on("change",updateShowHideStuff);
 
-    if ($('#editperson').length) {
-        $('#editperson').on('change','select.dyngroups', function() {
-            eme_dynamic_people_data_json('editperson');
+    // --- Dynamic People Data (for dyngroups) ---
+    function eme_dynamic_people_data_json(formId) {
+        const form = $(`#${formId}`);
+        if (!form) return;
+
+        const formData = new FormData(form);
+        formData.append('action', 'eme_people_dyndata');
+        formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+
+        eme_postJSON(ajaxurl, formData, (data) => {
+            if (data && data.Result) {
+                $('#eme_dynpersondata').innerHTML = data.Result;
+                eme_init_widgets(true);
+            }
+        });
+    }
+
+    // Attach to dyngroups change
+    if ($('#editperson')) {
+        $('#editperson').addEventListener('change', function (e) {
+            if (e.target.matches('select.dyngroups')) {
+                eme_dynamic_people_data_json('editperson');
+            }
         });
         eme_dynamic_people_data_json('editperson');
     }
 
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($('input[name=chooserelatedperson]').length) {
-        let emeadmin_chooserelatedperson_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=chooserelatedperson]").on("input", function(e) {
-            clearTimeout(emeadmin_chooserelatedperson_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_chooserelatedperson_timeout = setTimeout(function() {
-                    $.post(ajaxurl,
-                        { 
-                            'lastname': inputValue,
-                            'eme_admin_nonce': emepeople.translate_adminnonce,
-                            'action': 'eme_autocomplete_people',
-                            'eme_searchlimit': 'people',
-                            'exclude_personids': $('input[name=person_id]').val()
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.person_id) {
-                                            $('input[name=related_person_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.email)+')  ').attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+emepeople.translate_nomatchperson+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
-            }
-        });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
-        });
+    // --- Autocomplete: chooseperson ---
+    if ($('input[name="chooseperson"]')) {
+        let timeout;
+        const input = $('input[name="chooseperson"]');
+        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
-        // if manual input: set the hidden field empty again
-        $('input[name=chooserelatedperson]').on("keyup",function() {
-            $('input[name=related_person_id]').val('');
-        }).change(function() {
-            if ($(this).val()=='') {
-                $('input[name=related_person_id]').val('');
-                $(this).attr('readonly', false).removeClass('clearable');
-            }
-        });
-    }
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($('input[name=chooseperson]').length) {
-        let emeadmin_chooseperson_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=chooseperson]").on("input", function(e) {
-            clearTimeout(emeadmin_chooseperson_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_chooseperson_timeout = setTimeout(function() {
-                    let idsjoined = "";
-                    // let's get the list if selected people, so we can exclude these
-                    if ($('#PeopleTableContainer').length) {
-                        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
-                        if (selectedRows.length > 0) {
-                            let ids = [];
-                            selectedRows.each(function () {
-                                ids.push($(this).data('record')['people.person_id']);
-                            });
-                            idsjoined = ids.join(); //will be such a string '2,5,7'
-                        }
+            const value = this.value.trim();
+            if (value.length < 2) return;
+
+            // Exclude selected person IDs
+            let excludeIds = '';
+            if (PeopleTableContainer) {
+                const selectedRows = PeopleTable.getSelectedRows();
+                if (selectedRows.length > 0) {
+                    const ids = selectedRows.map(row => row.dataset.record['people.person_id']);
+                    excludeIds = ids.join(',');
+                }
+            }
+
+            timeout = setTimeout(() => {
+                const formData = new FormData();
+                formData.append('lastname', value);
+                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+                formData.append('action', 'eme_autocomplete_people');
+                formData.append('eme_searchlimit', 'people');
+                if (excludeIds) formData.append('exclude_personids', excludeIds);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'eme-autocomplete-suggestions';
+
+                    data.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'eme-autocomplete-suggestion';
+                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
+                        suggestion.addEventListener('click', e => {
+                            e.preventDefault();
+                            $('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
+                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
+                            input.readOnly = true;
+                            input.classList.add('clearable', 'x');
+                        });
+                        suggestions.appendChild(suggestion);
+                    });
+
+                    if (data.length === 0) {
+                        const noMatch = document.createElement('div');
+                        noMatch.className = 'eme-autocomplete-suggestion';
+                        noMatch.textContent = emepeople.translate_nomatchperson;
+                        suggestions.appendChild(noMatch);
                     }
-                    $.post(ajaxurl,
-                        { 
-                            'lastname': inputValue,
-                            'eme_admin_nonce': emepeople.translate_adminnonce,
-                            'action': 'eme_autocomplete_people',
-                            'eme_searchlimit': 'people',
-                            'exclude_personids': idsjoined
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.person_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')  ').attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+emepeople.translate_nomatchperson+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
-            }
-        });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
+
+                    input.insertAdjacentElement('afterend', suggestions);
+                });
+            }, 500);
         });
 
-        // if manual input: set the hidden field empty again
-        $('input[name=chooseperson]').on("keyup",function() {
-            $('input[name=transferto_id]').val('');
-        }).change(function() {
-            if ($(this).val()=='') {
-                $('input[name=transferto_id]').val('');
-                $(this).attr('readonly', false).removeClass('clearable');
+        input.addEventListener('keyup', () => {
+            $('input[name="person_id"]').value = '';
+        });
+
+        input.addEventListener('change', () => {
+            if (input.value === '') {
+                $('input[name="person_id"]').value = '';
+                input.readOnly = false;
+                input.classList.remove('clearable', 'x');
             }
         });
     }
+
+    // --- Autocomplete: chooserelatedperson ---
+    if ($('input[name="chooserelatedperson"]')) {
+        let timeout;
+        const input = $('input[name="chooserelatedperson"]');
+        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+
+            const value = this.value.trim();
+            if (value.length < 2) return;
+
+            timeout = setTimeout(() => {
+                const formData = new FormData();
+                formData.append('lastname', value);
+                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+                formData.append('action', 'eme_autocomplete_people');
+                formData.append('eme_searchlimit', 'people');
+                formData.append('exclude_personids', $('input[name="person_id"]').value);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'eme-autocomplete-suggestions';
+
+                    data.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'eme-autocomplete-suggestion';
+                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
+                        suggestion.addEventListener('click', e => {
+                            e.preventDefault();
+                            $('input[name="related_person_id"]').value = eme_htmlDecode(item.person_id);
+                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
+                            input.readOnly = true;
+                            input.classList.add('clearable', 'x');
+                        });
+                        suggestions.appendChild(suggestion);
+                    });
+
+                    if (data.length === 0) {
+                        const noMatch = document.createElement('div');
+                        noMatch.className = 'eme-autocomplete-suggestion';
+                        noMatch.textContent = emepeople.translate_nomatchperson;
+                        suggestions.appendChild(noMatch);
+                    }
+
+                    input.insertAdjacentElement('afterend', suggestions);
+                });
+            }, 500);
+        });
+
+        input.addEventListener('change', () => {
+            if (input.value === '') {
+                $('input[name="related_person_id"]').value = '';
+                input.readOnly = false;
+                input.classList.remove('clearable', 'x');
+            }
+        });
+    }
+
+    // --- People Bulk Actions ---
+    const peopleButton = $('#PeopleActionsButton');
+    if (peopleButton) {
+        peopleButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = PeopleTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+
+            if (selectedRows.length === 0 || !doAction) return;
+
+            let proceed = true;
+            if (['trashPeople', 'deletePeople'].includes(doAction) && !confirm(emepeople.translate_areyousuretodeleteselected)) {
+                proceed = false;
+            }
+
+            if (proceed) {
+                peopleButton.textContent = emepeople.translate_pleasewait;
+                peopleButton.disabled = true;
+
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('person_id', idsJoined);
+                formData.append('action', 'eme_manage_people');
+                formData.append('do_action', doAction);
+                formData.append('chooseperson', $('#chooseperson')?.value || '');
+                formData.append('transferto_id', $('#transferto_id')?.value || '');
+                formData.append('language', $('#language')?.value || '');
+                formData.append('pdf_template', $('#pdf_template')?.value || '');
+                formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
+                formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
+                formData.append('html_template', $('#html_template')?.value || '');
+                formData.append('html_template_header', $('#html_template_header')?.value || '');
+                formData.append('html_template_footer', $('#html_template_footer')?.value || '');
+                formData.append('addtogroup', $('#addtogroup')?.value || '');
+                formData.append('removefromgroup', $('#removefromgroup')?.value || '');
+                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+
+                if (doAction === 'sendMails') {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = emepeople.translate_admin_sendmails_url;
+                    ['person_ids', 'eme_admin_action'].forEach(key => {
+                        const val = key === 'person_ids' ? idsJoined : 'new_mailing';
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = val;
+                        form.appendChild(input);
+                    });
+                    document.body.appendChild(form);
+                    form.submit();
+                    return;
+                }
+
+                if (['pdf', 'html'].includes(doAction)) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = ajaxurl;
+                    for (const [key, value] of formData.entries()) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = value;
+                        form.appendChild(input);
+                    }
+                    document.body.appendChild(form);
+                    form.submit();
+                    return;
+                }
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    PeopleTable.load();
+                    peopleButton.textContent = emepeople.translate_apply;
+                    peopleButton.disabled = false;
+
+                    const msg = $('div#people-message');
+                    if (msg) {
+                        msg.textContent = data.Message;
+                        eme_toggle(msg, true);
+                        setTimeout(() => eme_toggle(msg, false), 5000);
+                    }
+                });
+            }
+        });
+    }
+
+    // --- Groups Bulk Actions ---
+    const groupsButton = $('#GroupsActionsButton');
+    if (groupsButton) {
+        groupsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = GroupsTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+
+            if (selectedRows.length === 0 || doAction !== 'deleteGroups') return;
+
+            if (!confirm(emepeople.translate_areyousuretodeleteselected)) return;
+
+            groupsButton.textContent = emepeople.translate_pleasewait;
+            groupsButton.disabled = true;
+
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
+
+            const formData = new FormData();
+            formData.append('group_id', idsJoined);
+            formData.append('action', 'eme_manage_groups');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                GroupsTable.load();
+                groupsButton.textContent = emepeople.translate_apply;
+                groupsButton.disabled = false;
+
+                const msg = $('div#groups-message');
+                if (msg) {
+                    msg.textContent = emepeople.translate_deleted;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
+        });
+    }
+
+    const storeQueryButton = $('#StoreQueryButton');
+    const storeQueryDiv = $('#StoreQueryDiv');
+    $('#PeopleLoadRecordsButton')?.addEventListener('click', e => {
+        e.preventDefault();
+        if (eme_getValue($('#search_person')).length ||
+            eme_getValue($('#search_groups')).length ||
+            eme_getValue($('#search_memberstatus')).length ||
+            eme_getValue($('#search_membershipids')).length ||
+            eme_getValue($('#search_customfields')).length ||
+            eme_getValue($('#search_customfieldids')).length ) {
+            if (storeQueryButton) {
+                eme_toggle(storeQueryButton, true);
+            }
+        } else {
+            if (storeQueryButton) {
+                eme_toggle(storeQueryButton, false);
+            }
+        }
+        if (storeQueryDiv) {
+            eme_toggle(storeQueryDiv, false);
+        }
+        PeopleTable.load();
+    });
+
+    if (storeQueryButton) {
+        storeQueryButton.addEventListener('click', e => {
+            e.preventDefault();
+            eme_toggle(storeQueryButton, false);
+            eme_toggle(storeQueryDiv, true);
+        });
+        eme_toggle(storeQueryButton, false);
+        eme_toggle(storeQueryDiv, false);
+    }
+
+    $('#StoreQuerySubmitButton')?.addEventListener("click", function (e) {
+        e.preventDefault();
+        let exactmatch = 0;
+        if ($('#search_exactmatch').checked) {
+            exactmatch = 1;
+        }
+        let params = {
+            'search_person': eme_getValue($('#search_person')),
+            'search_groups': eme_getValue($('#search_groups')),
+            'search_memberstatus': eme_getValue($('#search_memberstatus')),
+            'search_membershipids': eme_getValue($('#search_membershipids')),
+            'search_customfields': eme_getValue($('#search_customfields')),
+            'search_customfieldids': eme_getValue($('#search_customfieldids')),
+            'search_exactmatch': exactmatch,
+            'action': 'eme_store_people_query',
+            'eme_admin_nonce': emepeople.translate_adminnonce,
+            'dynamicgroupname': $('#dynamicgroupname').value
+        };
+
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(params)) {
+            formData.append(key, value);
+        }
+
+        eme_postJSON(ajaxurl, formData, (data) => {
+            eme_toggle(storeQueryButton, false);
+            eme_toggle(storeQueryDiv, false);
+            const msg = $('div#people-message');
+            if (msg) {
+                msg.innerHTML = data.htmlmessage;
+                eme_toggle(msg, true);
+                setTimeout(() => eme_toggle(msg, false), 5000);
+            }
+        });
+
+        // return false to make sure the real form doesn't submit
+        return false;
+    });
 });

@@ -217,7 +217,7 @@ function eme_add_event_form_shortcode( $atts ) {
     $form_id = uniqid();
     $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
     $form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-fs-message-ok-$form_id' class='eme-message-success eme-fs-message eme-fs-message-success eme-hidden'></div><div id='eme-fs-message-error-$form_id' class='eme-message-error eme-fs-message eme-fs-message-error eme-hidden'></div><div id='div_eme-fs-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-fs-form' method='post' action='#'>
+        <div id='eme-fs-message-ok-$form_id' class='eme-message-success eme-fs-message eme-fs-message-success eme-hidden'></div><div id='eme-fs-message-error-$form_id' class='eme-message-error eme-fs-message eme-fs-message-error eme-hidden'></div><div id='div_eme-fs-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-fs-form' method='post' action='#'>
         $nonce
         <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 ";
@@ -381,7 +381,7 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
             } else {
                 $label = __( 'Create event', 'events-made-easy' );
             }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -438,20 +438,20 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
             $type = 'hidden';
             break;
         case 'event_start_time':
-            //$localized_field_id='localized-start-time';
-            //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
-            //$type = 'localized_datetime';
-            $field = 'event[localized_start_time]';
-            $more .= " size=8 class='eme_formfield_timepicker'";
-            $type = 'localized_time';
+            $localized_field_id='localized-start-time';
+            $more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
+            $type = 'localized_datetime';
+            //$field = 'event[localized_start_time]';
+            //$more .= " size=8 class='eme_formfield_timepicker'";
+            //$type = 'localized_time';
             break;
         case 'event_end_time':
-            //$localized_field_id='localized-end-time';
-            //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
-            //$type = 'localized_datetime';
-            $field = 'event[localized_end_time]';
-            $more .= " size=8 class='eme_formfield_timepicker'";
-            $type = 'localized_time';
+            $localized_field_id='localized-end-time';
+            $more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
+            $type = 'localized_datetime';
+            //$field = 'event[localized_end_time]';
+            //$more .= " size=8 class='eme_formfield_timepicker'";
+            //$type = 'localized_time';
             break;
         case 'event_start_date':
             $localized_field_id='localized-start-date';

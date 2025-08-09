@@ -270,33 +270,19 @@ add_action( 'wp_footer', 'eme_general_footer' );
 
 function eme_admin_register_scripts() {
     $eme_plugin_dir  = eme_plugin_dir();
-    wp_register_script( 'eme-select2', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/js/select2.min.js', 'jquery', EME_VERSION );
-    // for english, no translation code is needed)
-    $language = eme_detect_lang();
-    if ( $language != 'en' ) {
-        $locale_file     = $eme_plugin_dir . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
-        $locale_file_url = EME_PLUGIN_URL . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
-        if ( file_exists( $locale_file ) ) {
-            wp_register_script( 'eme-select2-locale', $locale_file_url, [ 'eme-select2' ], EME_VERSION );
-        }
-    }
-    wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
-    wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
-    wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.min.js', [ ], EME_VERSION );
-    if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {
-        wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2', 'eme-select2-locale' ], EME_VERSION );
-    } else {
-        wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2' ], EME_VERSION );
-    }
-    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jquery-validate', 'eme-sortable' ], EME_VERSION );
+    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/tomselect/tom-select.complete.min.js', [], EME_VERSION );
+    wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION );
+    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'eme-ftable', 'eme-sortable' ], EME_VERSION );
 
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
-    wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
-    wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
-    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'jquery' ], EME_VERSION );
-    wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION );
-    wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ 'jquery' ], EME_VERSION );
-    wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'jquery' ], EME_VERSION );
+    wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION, true );
+    wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ ], EME_VERSION );
 
     // jodit stuff
     //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
@@ -305,26 +291,19 @@ function eme_admin_register_scripts() {
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
 
-    // summernote stuff
-    //wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
-    //wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
-    //wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
-    //wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
-    //wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
-
     $locale_code     = determine_locale();
     $locale_code     = preg_replace( '/_/', '-', $locale_code );
-    $locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
-    $locale_file_url = EME_PLUGIN_URL . "js/jtable/localization/jquery.jtable.$locale_code.js";
+    $locale_file     = $eme_plugin_dir . "js/ftable/localization/ftable.$locale_code.js";
+    $locale_file_url = EME_PLUGIN_URL . "js/ftable/localization/ftable.$locale_code.js";
     // for english, no translation code is needed)
     if ( $locale_code != 'en-US' ) {
         if ( ! file_exists( $locale_file ) ) {
             $locale_code     = substr( $locale_code, 0, 2 );
-            $locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
-            $locale_file_url = EME_PLUGIN_URL . "js/jtable/localization/jquery.jtable.$locale_code.js";
+            $locale_file     = $eme_plugin_dir . "js/ftable/localization/ftable.$locale_code.js";
+            $locale_file_url = EME_PLUGIN_URL . "js/ftable/localization/ftable.$locale_code.js";
         }
         if ( file_exists( $locale_file ) ) {
-            wp_register_script( 'eme-jtable-locale', $locale_file_url, '', EME_VERSION );
+            wp_register_script( 'eme-ftable-locale', $locale_file_url, '', EME_VERSION );
         }
     }
 
@@ -348,9 +327,9 @@ function eme_admin_register_scripts() {
     if ( file_exists( $eme_css_name ) ) {
         wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
     }
-    wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable/themes/lightcolor/gray/jtable.min.css' );
-    wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
-    wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css', [], EME_VERSION );
+    wp_register_style( 'eme-ftable-css', EME_PLUGIN_URL . 'js/ftable/themes/lightcolor/gray/ftable.min.css' );
+    wp_register_style( 'eme-select-css', EME_PLUGIN_URL . 'js/tomselect/tom-select.min.css' );
+    wp_register_style( 'eme-ftables-css', EME_PLUGIN_URL . 'css/ftables.css', [], EME_VERSION );
     eme_admin_enqueue_js();
 }
 add_action( 'admin_enqueue_scripts', 'eme_admin_register_scripts' );
@@ -364,21 +343,8 @@ function eme_register_scripts() {
     }
     $language = eme_detect_lang();
 
-    // if on the payment page and we need to submit immediately, we need jquery loaded in the header
-    // so our jquery code to submit the payment form works
-    if (get_option( 'eme_pg_submit_immediately' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-        wp_enqueue_script( 'jquery' );
-    }
-    wp_register_script( 'eme-select2', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/js/select2.min.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
-    if ( $language != 'en' ) {
-        $eme_plugin_dir  = eme_plugin_dir();
-        $locale_file     = $eme_plugin_dir . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
-        $locale_file_url = EME_PLUGIN_URL . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
-        if ( file_exists( $locale_file ) ) {
-            wp_register_script( 'eme-select2-locale', $locale_file_url, [ 'eme-select2' ], EME_VERSION, $load_js_in_footer );
-        }
-    }
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
+    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/tomselect/tom-select.complete.min.js', [], EME_VERSION );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, $load_js_in_footer );
     $eme_fs_options = get_option('eme_fs');
     $translation_array = [
         'translate_plugin_url'         => EME_PLUGIN_URL,
@@ -403,7 +369,7 @@ function eme_register_scripts() {
         $translation_array = [
             'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
         ];
-        wp_register_script( 'eme-client_clock_submit', EME_PLUGIN_URL . 'js/client-clock.js', [ 'jquery' ], EME_VERSION );
+        wp_register_script( 'eme-client_clock_submit', EME_PLUGIN_URL . 'js/client-clock.js', [ ], EME_VERSION );
         wp_localize_script( 'eme-client_clock_submit', 'emeclock', $translation_array );
         wp_enqueue_script( 'eme-client_clock_submit' );
     }
@@ -413,27 +379,27 @@ function eme_register_scripts() {
     if ( $search_tables != 'none' && is_user_logged_in() ) {
         wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION, $load_js_in_footer );
     }
-    wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
+    wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ ], EME_VERSION, $load_js_in_footer );
 
     $eme_map_is_active = get_option( 'eme_map_is_active' );
     if ( $eme_map_is_active) {
-        wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
-        wp_register_script( 'eme-leaflet-gestures', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION, true );
+        wp_register_script( 'eme-leaflet-gestures', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
         wp_register_script( 'eme-leaflet-markercluster', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/leaflet.markercluster.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
         wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
         wp_register_style( 'eme-markercluster-css1', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.css', [], EME_VERSION );
         wp_register_style( 'eme-markercluster-css2', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.Default.css', [], EME_VERSION );
         wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
-        wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
-        wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
         $translation_array = [
             'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
             'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
         ];
         wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
-        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'eme-edit-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-leaflet-maps', 'eme-edit-maps' ], EME_VERSION, true );
     } else {
-        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery' ], EME_VERSION, true );
+        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ ], EME_VERSION, true );
     }
     $map_is_active = $eme_map_is_active ? 'true' : 'false';
     $translation_array = [
@@ -466,23 +432,6 @@ function eme_register_scripts() {
 	];
     wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
 
-
-    // summernote stuff
-    wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
-    wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
-    wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
-    wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
-    wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
-    $translation_array = [
-	    'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-	    'translate_flanguage'       => eme_detect_lang(),
-	    'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-	    'translate_preview'         => __('Preview', 'events-made-easy' ),
-	    'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-	];
-    wp_localize_script( 'eme-summernote', 'emesummernote', $translation_array );
-
-
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
         //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
@@ -504,13 +453,10 @@ add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
 function eme_enqueue_frontend() {
     if ( ! wp_script_is( 'eme-basic', 'enqueued' ) ) {
         eme_enqueue_datetimepicker();
-        wp_enqueue_script( 'eme-select2' );
-        if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {
-            wp_enqueue_script( 'eme-select2-locale' );
-        }
+        wp_enqueue_script( 'eme-select' );
         // for english, no translation code is needed)
         wp_enqueue_script( 'eme-basic' );
-        wp_enqueue_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css', [], EME_VERSION );
+        wp_enqueue_style( 'eme-select-css', EME_PLUGIN_URL . 'js/tomselect/tom-select.min.css', [], EME_VERSION );
 
         wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );
         wp_enqueue_style( 'eme_stylesheet', EME_PLUGIN_URL . 'css/eme.css', [], EME_VERSION );
@@ -690,10 +636,8 @@ function eme_enqueue_datetimepicker() {
     }
     $eme_plugin_dir = eme_plugin_dir();
 
-    wp_enqueue_script( 'eme-jquery-timepicker', EME_PLUGIN_URL . 'js/jquery-timepicker/jquery.timepicker.min.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
-    wp_enqueue_style( 'eme-jquery-timepicker', EME_PLUGIN_URL . 'js/jquery-timepicker/jquery.timepicker.min.css', [], EME_VERSION );
-    wp_enqueue_script( 'eme-jquery-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/js/fdatepicker.min.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
-    wp_enqueue_style( 'eme-jquery-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/css/fdatepicker.min.css', [], EME_VERSION );
+    wp_enqueue_script( 'eme-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/js/fdatepicker.min.js', [ ], EME_VERSION, $load_js_in_footer );
+    wp_enqueue_style( 'eme-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/css/fdatepicker.min.css', [], EME_VERSION );
     // fdatepicker only needs the language (for now)
     $language = eme_detect_lang();
     // for english, no translation code is needed)
@@ -701,7 +645,7 @@ function eme_enqueue_datetimepicker() {
         $locale_file     = $eme_plugin_dir . "js/fdatepicker/js/i18n/fdatepicker.$language.js";
         $locale_file_url = EME_PLUGIN_URL . "js/fdatepicker/js/i18n/fdatepicker.$language.js";
         if ( file_exists( $locale_file ) ) {
-            wp_enqueue_script( 'eme-jquery-fdatepick-locale', $locale_file_url, [ 'eme-jquery-fdatepicker' ], EME_VERSION, $load_js_in_footer );
+            wp_enqueue_script( 'eme-fdatepick-locale', $locale_file_url, [ 'eme-fdatepicker' ], EME_VERSION, $load_js_in_footer );
         }
     }
 }

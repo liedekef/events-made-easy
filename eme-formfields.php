@@ -256,7 +256,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
     $field_purposes                   = eme_get_fieldpurpose();
     $groups                           = eme_get_static_groups();
     $peoplefieldconditions            = [];
-    $peoplefieldconditions['group:0'] = __( 'Show for all people', 'events-made-easy' );
+ 
+    //$peoplefieldconditions['group:0'] = __( 'Show for all people', 'events-made-easy' );
     foreach ( $groups as $group ) {
         $peoplefieldconditions[ 'group:' . $group['group_id'] ] = $group['name'];
     }
@@ -321,7 +322,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <th scope='row' style='vertical-align:top'><label for='field_purpose'>" . __( 'Field purpose', 'events-made-easy' ) . '</label></th>
                ';
     if ( ! $used || in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'members' ] ) ) {
-        if ( in_array( $formfield['field_purpose'], [ 'rsvp', 'members' ] ) ) {
+        if ( $used && in_array( $formfield['field_purpose'], [ 'rsvp', 'members' ] ) ) {
             // for members or rsvp field: allow to change between those and generic
             unset( $field_purposes['events'] );
             unset( $field_purposes['locations'] );
@@ -808,7 +809,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $my_arr[ $val ] = eme_translate( $tag );
             }
             // checkboxes can't be made required in the frontend, since that would require all checkboxes to be checked
-            // so we use a div+jquery to accomplish this
+            // so we use a div+js to accomplish this
             $html = '';
             if ( $required ) {
                 $html = '<div class="eme-checkbox-group-required">';
@@ -828,7 +829,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $my_arr[ $val ] = eme_translate( $tag );
             }
             // checkboxes can't be made required in the frontend, since that would require all checkboxes to be checked
-            // so we use a div+jquery to accomplish this
+            // so we use a div+js to accomplish this
             $html = '';
             if ( $required ) {
                 $html = '<div class="eme-checkbox-group-required">';
@@ -855,7 +856,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             // if the entered_val is not empty it means the file is already uploaded, so we don't show the form
             $html = '<span>';
             if ( ! empty( $entered_val ) ) {
-                $showhide_style = 'style="display:none;"';
+                $showhide_style = "class='eme-hidden'";
             } else {
                 $showhide_style = '';
             }
@@ -887,7 +888,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             // if the entered_val is not empty it means the file is already uploaded, so we don't show the form
             $html = '<span>';
             if ( ! empty( $entered_val ) ) {
-                $showhide_style = 'style="display:none;"';
+                $showhide_style = "class='eme-hidden'";
             } else {
                 $showhide_style = '';
             }
@@ -922,7 +923,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $dateformat = EME_WP_DATE_FORMAT;
             }
             $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdate $class'>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield_fdate $class'>";
             break;
         case 'datetime_js':
             # for datetime JS field
@@ -945,7 +946,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             $dateformat = $field_attributes;
             $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdatetime $class'>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield_fdatetime $class'>";
             break;
         case 'time_js':
             # for time JS field
@@ -1233,7 +1234,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             }
             $fieldname    = 'task_birthdate';
             $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $fieldname = 'task_birthplace';
             if ( isset( $matches[1] ) ) {
@@ -1358,7 +1359,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             } else {
                 $label = __( 'Subscribe', 'events-made-easy' );
             }
-            $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -1539,7 +1540,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             } else {
                 $label = get_option( 'eme_rsvp_delbooking_submit_string' );
             }
-            $replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -1657,7 +1658,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
             } else {
                 $label = get_option( 'eme_rsvp_delbooking_submit_string' );
             }
-            $replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -1834,7 +1835,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
             $replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-alt-field='#birthdate' data-view='years' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
@@ -2043,7 +2044,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             } else {
                 $label = get_option( 'eme_rsvp_addbooking_submit_string' );
             }
-            $replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
             $replacement = "<span id='eme_calc_bookingprice'></span>";
         } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/', $result ) ) {
@@ -2904,7 +2905,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 }
                 $fieldname    = 'birthdate';
                 $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-                $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+                $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
             }
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             if ( ! $is_multibooking ) {
@@ -3359,7 +3360,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 } else {
                     $label = get_option( 'eme_rsvp_addbooking_submit_string' );
                 }
-                $replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+                $replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
             }
         } else {
             $found = 0;
@@ -3554,7 +3555,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
             $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$entered_val'>";
-            $replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
+            $replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
             $required     = 1;
         } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
             $field_key = $matches[1];
@@ -3871,7 +3872,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
             $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $fieldname = 'birthplace';
             if ( isset( $matches[1] ) ) {
@@ -4197,7 +4198,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             } else {
                 $label = __( 'Become member', 'events-made-easy' );
             }
-            $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -4400,7 +4401,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
             } else {
                 $label = __( 'Subscribe', 'events-made-easy' );
             }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -4522,7 +4523,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
             $replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
             if ( isset( $matches[1] ) ) {
@@ -4718,7 +4719,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             } else {
                 $label = __( 'Save personal info', 'events-made-easy' );
             }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
         } else {
             $found = 0;
         }
@@ -4969,7 +4970,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
                 <?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); ?>
                     </td>
                     <td>
-                        <a href="#" class='eme_remove_dyndatacondition'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
+                        <a href="#" class='eme_remove_dyndatacondition'><?php echo "<img class='eme_remove_dyndatacondition' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img class='eme_dyndata_add_tag' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
                 <?php
                 if ( $grouping_used ) {
                     echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects.', 'events-made-easy' ) . "'>";
@@ -5072,7 +5073,7 @@ function eme_ajax_formfields_list() {
 
     $table              = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
     $used_formfield_ids = eme_get_used_formfield_ids();
-    $jTableResult       = [];
+    $fTableResult       = [];
     $search_type        = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
     $search_purpose     = isset( $_POST['search_purpose'] ) ? esc_sql( eme_sanitize_request( $_POST['search_purpose'] ) ) : '';
     $search_name        = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
@@ -5112,27 +5113,26 @@ function eme_ajax_formfields_list() {
             $rows[ $key ]['field_name']     = "<a href='" . admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=edit_formfield&amp;field_id=' . $formfield['field_id'] ) . "'>" . $formfield['field_name'] . '</a>';
 
             $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=copy_formfield&amp;field_id=' . $formfield['field_id'] ).'";';
-            $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Copy', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+            $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Copy', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
 
         }
-        $jTableResult['Result']           = 'OK';
-        $jTableResult['Records']          = $rows;
-        $jTableResult['TotalRecordCount'] = $recordCount;
+        $fTableResult['Result']           = 'OK';
+        $fTableResult['Records']          = $rows;
+        $fTableResult['TotalRecordCount'] = $recordCount;
     } else {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
 function eme_ajax_manage_formfields() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    $jTableResult=[];
+    $fTableResult=[];
     if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_REQUEST['field_id'] ) ) {
-        $jTableResult['Result']      = 'Error';
-        $jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
-        $jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']      = 'Error';
+        $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
     }
     if ( isset( $_REQUEST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
@@ -5140,9 +5140,9 @@ function eme_ajax_manage_formfields() {
             case 'deleteFormfield':
                 // validation happens in the eme_delete_formfields function
                 eme_delete_formfields( [ intval($_REQUEST['field_id']) ] );
-                $jTableResult['Result']      = 'OK';
-                $jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
-                print wp_json_encode( $jTableResult );
+                $fTableResult['Result']      = 'OK';
+                $fTableResult['Message'] = __( 'Records deleted!', 'events-made-easy' );
+                print wp_json_encode( $fTableResult );
                 wp_die();
                 break;
             case 'deleteFormfields':
@@ -5150,14 +5150,13 @@ function eme_ajax_manage_formfields() {
                 if (eme_is_numeric_array( $field_ids)) {
                     // validation happens in the eme_delete_formfields function
                     eme_delete_formfields( $field_ids );
-                    $jTableResult['Result']      = 'OK';
-                    $jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
+                    $fTableResult['Result']      = 'OK';
+                    $fTableResult['Message'] = __( 'Records deleted!', 'events-made-easy' );
                 } else {
-                    $jTableResult['Result']      = 'Error';
-                    $jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
-                    $jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+                    $fTableResult['Result']      = 'Error';
+                    $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
                 }
-                print wp_json_encode( $jTableResult );
+                print wp_json_encode( $fTableResult );
                 wp_die();
                 break;
         }

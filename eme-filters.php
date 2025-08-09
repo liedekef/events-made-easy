@@ -391,7 +391,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			if ( $scope_fieldcount == 0 ) {
 				$select_scope = __( 'Select a daterange', 'events-made-easy' );
 				$replacement  = "<input type='hidden' id='$scope_post_name' name='$scope_post_name'>";
-				$replacement .= "<input type='text' id='$localized_scope_post_name' name='$localized_scope_post_name' placeholder='$select_scope' readonly='readonly' data-alt-field='$scope_post_name' data-autoclose='false' data-range='true' data-multiple-dates-separator=' -- ' data-alt-field-multiple-dates-separator='--' data-date='' style='width: 30ch;' class='eme_formfield_fdate' >";
+				$replacement .= "<input type='text' id='$localized_scope_post_name' name='$localized_scope_post_name' placeholder='$select_scope' readonly='readonly' data-alt-field='$scope_post_name' data-autoclose='false' data-range='true' data-multiple-separator=' -- ' data-alt-field-multiple-separator='--' data-date='' style='width: 30ch;' class='eme_formfield_fdate' >";
 				eme_enqueue_datetimepicker();
 				++$scope_fieldcount;
 			}

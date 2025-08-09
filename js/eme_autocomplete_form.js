@@ -1,117 +1,181 @@
-jQuery(document).ready( function($) {
-    function eme_tasklastname_clearable() {
-        if ($('input[name=task_lastname]').val()=='') {
-            $('input[name=task_lastname]').attr('readonly', false).removeClass('clearable');
-            $('input[name=task_firstname]').val('').attr('readonly', false);
-            $('input[name=task_address1]').val('').attr('readonly', false);
-            $('input[name=task_address2]').val('').attr('readonly', false);
-            $('input[name=task_city]').val('').attr('readonly', false);
-            $('input[name=task_state]').val('').attr('readonly', false);
-            $('input[name=task_zip]').val('').attr('readonly', false);
-            $('input[name=task_country]').val('').attr('readonly', false);
-            $('input[name=task_email]').val('').attr('readonly', false);
-            $('input[name=task_phone]').val('').attr('readonly', false);
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Utility shortcuts ---
+    const $ = (selector, context = document) => context.querySelector(selector);
+    const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+
+    // --- Utility: Collect form data as key-value pairs ---
+    function serializeForm(form) {
+        const formData = new FormData(form);
+        const obj = {};
+        for (const [key, value] of formData.entries()) {
+            obj[key] = value;
         }
-        if ($('input[name=task_lastname]').val()!='') {
-            $('input[name=task_lastname]').addClass('clearable x');
-        }
+        return obj;
     }
 
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($("input[name=lastname]").length) {
-        let frontend_lastname_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=lastname]").on("input", function() {
-            clearTimeout(frontend_lastname_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                let requestData = inputField.parents('form:first').serializeArray();
-                requestData.push({name: 'eme_ajax_action', value: 'rsvp_autocomplete_people'});
-                frontend_lastname_timeout = setTimeout(function() {
-                    $.post(self.location.href, requestData, function(data) {
-                        suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+    // --- Clearable UI Handler ---
+    function setupClearable(inputName, dependentFields = []) {
+        const input = $(`input[name="${inputName}"]`);
+        if (!input) return;
 
-                        $.each(data, function(index, item) {
-                            suggestions.append(
-                                $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
-                                .on("click", function(e) {
-                                    e.preventDefault();
-                                    $('input[name=lastname]').val(item.lastname).prop('readonly', true);
-                                    $('input[name=firstname]').val(item.firstname).prop('readonly', true);
-                                    $('input[name=address1]').val(item.address1).prop('readonly', true).prop('required',false);
-                                    $('input[name=address2]').val(item.address2).prop('readonly', true).prop('required',false);
-                                    $('input[name=city]').val(item.city).prop('readonly', true).prop('required',false);
-                                    $('input[name=state]').val(item.state).prop('readonly', true).prop('required',false);
-                                    $('input[name=zip]').val(item.zip).prop('readonly', true).prop('required',false);
-                                    $('input[name=country]').val(item.country).prop('readonly', true).prop('required',false);
-                                    $('input[name=email]').val(item.email).prop('readonly', true).prop('required',false);
-                                    $('input[name=phone]').val(item.phone).prop('readonly', true).prop('required',false);
-                                    $('input[name=wp_id]').val(item.wp_id).prop('readonly', true);
-                                    $('input[name=person_id]').val(item.person_id).prop('readonly', true);
-                                })
-                            );
-                        });
-                        $(".eme-autocomplete-suggestions").remove();
-                        inputField.after(suggestions);
-                    }, "json");
-                }, 500); // Delay of 0.5 second
+        function updateClearable() {
+            if (input.value === '') {
+                input.readOnly = false;
+                input.classList.remove('clearable', 'x');
+                dependentFields.forEach(fieldName => {
+                    const field = $(`input[name="${fieldName}"]`);
+                    if (field) {
+                        field.value = '';
+                        field.readOnly = false;
+                    }
+                });
+            } else {
+                input.classList.add('clearable', 'x');
             }
-        });
+        }
 
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
-        });
-
-        // if this js gets loaded, the lastname is always clearable, so call those functions
-        $('input[name=lastname]').on("change",eme_lastname_clearable);
-        eme_lastname_clearable();
+        input.addEventListener('input', updateClearable);
+        input.addEventListener('change', updateClearable);
+        updateClearable(); // Initial call
     }
 
-    if ($("input[name=task_lastname]").length) {
-        let frontend_tasklastname_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=task_lastname]").on("input", function() {
-            clearTimeout(frontend_tasklastname_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                let requestData = inputField.parents('form:first').serializeArray();
-                requestData.push({name: 'eme_ajax_action', value: 'task_autocomplete_people'});
-                frontend_tasklastname_timeout = setTimeout(function() {
-                    $.post(self.location.href, requestData, function(data) {
-                        suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+    // --- Autocomplete Core Function ---
+    function initAutocomplete(inputSelector, fieldMap, requestDataKeys = []) {
+        const input = $(inputSelector);
+        if (!input) return;
 
-                        $.each(data, function(index, item) {
-                            suggestions.append(
-                                $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br><small>" + eme_htmlDecode(item.email) + "</small>")
-                                .on("click", function(e) {
-                                    e.preventDefault();
-                                    $('input[name=task_lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true);
-                                    $('input[name=task_firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true);
-                                    $('input[name=task_email]').val(eme_htmlDecode(item.email)).attr('readonly', true);
-                                    $('input[name=task_phone]').val(eme_htmlDecode(item.phone)).attr('readonly', true);
-                                })
-                            );
+        let timeout;
+
+        // Remove suggestions on outside click
+        document.addEventListener('click', () => {
+            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+        });
+
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+
+            const value = this.value.trim();
+            if (value.length < 2) return;
+
+            const form = this.closest('form');
+            if (!form) return;
+
+            // Build request data
+            const data = {};
+            requestDataKeys.forEach(key => {
+                const field = form.querySelector(`[name="${key}"]`);
+                if (field) data[key] = field.value;
+            });
+            data.eme_ajax_action = 'rsvp_autocomplete_people';
+
+            timeout = setTimeout(() => {
+                fetch(window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams(data)
+                })
+                .then(r => r.json())
+                .then(results => {
+                    if (!results || !Array.isArray(results) || results.length === 0) return;
+
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'eme-autocomplete-suggestions';
+
+                    results.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'eme-autocomplete-suggestion';
+                        suggestion.innerHTML = `
+                            <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
+                            <br><small>${eme_htmlDecode(item.email)} - ${eme_htmlDecode(item.phone)}</small>
+                        `;
+                        suggestion.addEventListener('click', e => {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            // Set values and make readonly
+                            Object.keys(fieldMap).forEach(formKey => {
+                                const target = $(`input[name="${formKey}"]`);
+                                if (target) {
+                                    const value = item[fieldMap[formKey]];
+                                    if (value !== undefined) {
+                                        target.value = eme_htmlDecode(value);
+                                        target.readOnly = true;
+                                        if (formKey !== 'wp_id' && formKey !== 'person_id') {
+                                            target.required = false;
+                                        }
+                                    }
+                                }
+                            });
+
+                            // Trigger change to update UI (e.g., clearable)
+                            input.dispatchEvent(new Event('change'));
                         });
-                        $('.eme-autocomplete-suggestions').remove();
-                        inputField.after(suggestions);
-                    }, "json");
-                }, 500); // Delay of 0.5 second
-            }
+                        suggestions.appendChild(suggestion);
+                    });
+
+                    input.insertAdjacentElement('afterend', suggestions);
+                })
+                .catch(err => console.warn('Autocomplete fetch error:', err));
+            }, 500);
         });
 
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
+        // Reapply clearable logic
+        input.addEventListener('change', () => {
+            const event = new Event('input', { bubbles: true });
+            input.dispatchEvent(event);
         });
+    }
 
-        // if this js gets loaded, the lastname is always clearable, so call those functions
-        $('input[name=task_lastname]').on("change",eme_tasklastname_clearable);
-        eme_tasklastname_clearable();
+    // --- Initialize Autocomplete for RSVP Form ---
+    if ($("input[name='lastname']")) {
+        initAutocomplete("input[name='lastname']", {
+            lastname: 'lastname',
+            firstname: 'firstname',
+            address1: 'address1',
+            address2: 'address2',
+            city: 'city',
+            state: 'state',
+            zip: 'zip',
+            country: 'country',
+            email: 'email',
+            phone: 'phone',
+            wp_id: 'wp_id',
+            person_id: 'person_id'
+        }, [
+            'lastname',
+            'event_id',
+            'eme_form_id',
+            'eme_frontendform_id'
+        ]);
+    }
+
+    // --- Initialize Autocomplete for Task Form ---
+    if ($("input[name='task_lastname']")) {
+        initAutocomplete("input[name='task_lastname']", {
+            task_lastname: 'lastname',
+            task_firstname: 'firstname',
+            task_email: 'email',
+            task_phone: 'phone'
+        }, [
+            'task_lastname',
+            'eme_form_id',
+            'eme_frontendform_id'
+        ]);
+
+        // Setup clearable behavior for task_lastname
+        setupClearable('task_lastname', [
+            'task_firstname',
+            'task_address1',
+            'task_address2',
+            'task_city',
+            'task_state',
+            'task_zip',
+            'task_country',
+            'task_email',
+            'task_phone'
+        ]);
     }
 });

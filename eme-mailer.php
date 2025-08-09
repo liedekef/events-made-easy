@@ -1524,12 +1524,12 @@ function eme_mailingreport_list() {
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
-        $jTableResult            = [];
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult            = [];
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -1591,10 +1591,10 @@ function eme_mailingreport_list() {
         }
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -1618,11 +1618,11 @@ function eme_ajax_mailings_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ){
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -1706,21 +1706,21 @@ function eme_ajax_mailings_list() {
         $records[] = $record;
     }
 
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
 function eme_ajax_manage_mailings() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     if ( isset( $_POST['do_action'] ) ) {
@@ -1733,8 +1733,8 @@ function eme_ajax_manage_mailings() {
                         eme_archive_mailing( $mailing_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings archived','events-made-easy')."</div>";
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings archived','events-made-easy')."</div>";
+                $fTableResult['Result'] = 'OK';
                 break;
             case 'deleteMailings':
                 $mailing_ids = explode( ',', eme_sanitize_request($_POST['mailing_ids']) );
@@ -1743,12 +1743,12 @@ function eme_ajax_manage_mailings() {
                         eme_delete_mailing( $mailing_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
+                $fTableResult['Result'] = 'OK';
                 break;
         }
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -1759,11 +1759,11 @@ function eme_ajax_archivedmailings_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -1805,10 +1805,10 @@ function eme_ajax_archivedmailings_list() {
         $records[] = $record;
     }
 
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -1816,11 +1816,11 @@ function eme_ajax_manage_archivedmailings() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     if ( isset( $_POST['do_action'] ) ) {
@@ -1833,12 +1833,12 @@ function eme_ajax_manage_archivedmailings() {
                         eme_delete_mailing( $mailing_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
+                $fTableResult['Result'] = 'OK';
                 break;
         }
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -1848,11 +1848,11 @@ function eme_ajax_mails_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -1926,21 +1926,21 @@ function eme_ajax_mails_list() {
         }
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
 function eme_ajax_manage_mails() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    $jTableResult = [];
+    $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     if ( isset( $_POST['do_action'] ) ) {
@@ -1953,8 +1953,8 @@ function eme_ajax_manage_mails() {
                         eme_resend_mail( $mail_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails scheduled to be resend','events-made-easy')."</div>";
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails scheduled to be resend','events-made-easy')."</div>";
+                $fTableResult['Result'] = 'OK';
                 break;
             case 'deleteMails':
                 $mail_ids = explode( ',', eme_sanitize_request($_POST['mail_ids']) );
@@ -1963,12 +1963,12 @@ function eme_ajax_manage_mails() {
                         eme_delete_mail( $mail_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails deleted','events-made-easy')."</div>";
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails deleted','events-made-easy')."</div>";
+                $fTableResult['Result'] = 'OK';
                 break;
         }
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -2908,7 +2908,7 @@ function eme_emails_page() {
                 <label for='eventmail_mailing_name'><?php esc_html_e( 'Mailing name: ', 'events-made-easy' ); ?></label> <input type='text' name='eventmail_mailing_name' id='eventmail_mailing_name' value='' required='required'><br>
                 <?php esc_html_e( 'Start date and time: ', 'events-made-easy' ); ?>
         <input type='hidden' name='eventmail_actualstartdate' id='eventmail_actualstartdate' value=''>
-                <input type='text' readonly='readonly' name='eventmail_startdate' id='eventmail_startdate' data-date='' data-alt-field='eventmail_actualstartdate' data-multiple-dates="true" style="background: #FCFFAA;"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
+                <input type='text' readonly='readonly' name='eventmail_startdate' id='eventmail_startdate' data-date='' data-alt-field='eventmail_actualstartdate' data-multiple="true" data-multiple-display-selector='#eventmail-specificdates' class="eme_formfield_fdatetime"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
         <span id='eventmail-specificdates' class="eme_smaller"></span>
         <span id='eventmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>
@@ -3087,8 +3087,8 @@ function eme_emails_page() {
                 <label for='genericmail_mailing_name'><?php esc_html_e( 'Mailing name: ', 'events-made-easy' ); ?></label> <input type='text' name='genericmail_mailing_name' id='genericmail_mailing_name' value='' required='required'><br>
                 <?php esc_html_e( 'Start date and time: ', 'events-made-easy' ); ?>
         <input type='hidden' name='genericmail_actualstartdate' id='genericmail_actualstartdate' value=''>
-                <input type='text' readonly='readonly' name='genericmail_startdate' id='genericmail_startdate' data-date='' data-alt-field='genericmail_actualstartdate' data-multiple-dates="true" style="background: #FCFFAA;"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
-        <span id='genericmail-specificdates' class="eme_smaller"></span>
+                <input type='text' readonly='readonly' name='genericmail_startdate' id='genericmail_startdate' data-date='' data-alt-field='genericmail_actualstartdate' data-multiple="true" data-multiple-display-selector='#genericmail-specificdates' class="eme_formfield_fdatetime"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
+        <span id='genericmail-specificdates' class="eme_smaller"></span><br>
         <span id='genericmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>
         </div>

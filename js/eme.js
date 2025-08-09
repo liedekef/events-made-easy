@@ -1,10 +1,13 @@
-// Events Made Easy – Modernized, Shortened, and Readable JS
+// Events Made Easy – Plain JavaScript Version
 // All AJAX "action" params and logic match the original PHP backend.
+
+const $ = (selector, context = document) => context.querySelector(selector);
+const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
 
 function eme_debounce(func, wait = 300) {
     let timeout;
-    return function(...args) { // Use a regular function (not arrow) to preserve `this`
-        const context = this; // Capture `this` from the caller
+    return function(...args) {
+        const context = this;
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);
     };
@@ -14,6 +17,23 @@ function eme_htmlDecode(inputStr) {
     const textarea = document.createElement('textarea');
     textarea.innerHTML = inputStr;
     return textarea.value;
+}
+
+function eme_getValue(element) {
+    if (!element) return null;
+    if (!element.multiple) return element.value;
+    return Array.from(element.selectedOptions).map(option => option.value);
+}
+
+function eme_postJSON(url, data, callback) {
+    fetch(url, {
+        method: 'POST',
+        body: data,
+        credentials: 'same-origin'
+    })
+        .then(r => r.json())
+        .then(callback)
+        .catch(err => console.error('AJAX Error:', err));
 }
 
 function eme_getQueryParams(qs) {
@@ -26,183 +46,294 @@ function eme_getQueryParams(qs) {
 }
 const $_GET = eme_getQueryParams(document.location.search);
 
-function eme_tog(v) { return v ? 'addClass' : 'removeClass'; }
+function eme_toggle(el, show) {
+    if (el) el.classList.toggle('eme-hidden', !show);
+    //if (el) el.style.display = show ? '' : 'none';
+}
 
-function eme_lastname_clearable() {
-    const $ln = jQuery('input[name=lastname]');
-    const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
-    if ($ln.val() == '') {
-        $ln.attr('readonly', false).removeClass('clearable x');
-        fields.forEach(f => jQuery(`input[name=${f}]`).val('').prop('readonly', false));
-        jQuery('input[name=wp_id], input[name=person_id]').val('');
+function setTomSelectChWidth(tomselect, extraChars = 0) {
+    const control = tomselect.control;
+    const placeholder = tomselect.settings.placeholder || 'Select...';
+    let text = placeholder;
+
+    // If something is selected, use that instead
+    if (tomselect.items.length > 0) {
+        const item = tomselect.options[tomselect.items[0]];
+        if (item && item.text) {
+            text = item.text;
+        }
     }
-    if ($ln.val() != '') {
-        $ln.addClass('clearable x');
+
+    // Add extra chars for dropdown arrow, padding, etc.
+    const chWidth = Math.max(text.length + extraChars, 8); // at least 8ch
+
+    // Apply via CSS variable or direct style
+    control.style.minWidth = `${chWidth}ch`;
+}
+
+function initTomSelect(selector, options = {}) {
+    // Convert selector to elements array
+    const elements = typeof selector === 'string'
+        ? $$(selector)
+        : [selector];
+
+    if (!elements.length) return [];
+
+    // Default configuration
+    const defaults = {
+        plugins: ['remove_button'],
+        placeholder: null,
+        hidePlaceholder: true,
+    };
+
+    // Merge options
+    // const settings = Object.assign({}, defaults, options);
+    // Destructure to separate plugin options
+    const { plugins, extraPlugins = [], ...userOptions } = options;
+
+    // Merge plugin arrays (with deduplication)
+    const mergedPlugins = [
+        ...new Set([
+            ...(plugins || defaults.plugins),       // User's plugins or defaults
+            ...(Array.isArray(extraPlugins) ? extraPlugins : [])  // extraPlugins if provided
+        ])
+    ];
+
+    // Final settings
+    const settings = {
+        ...defaults,
+        ...userOptions,
+        plugins: mergedPlugins,
+
+    };
+
+    return Array.from(elements).map(el => {
+        if (el.tomselectInitialized || (el.tomselect && !el.tomselect.destroyed)) {
+            return el.tomselect; // Return existing instance
+        }
+        if (!el.id) {
+            el.id = 'tom-select-' + Math.random().toString(36).slice(2, 11);
+        }
+
+        const config = {
+            plugins: settings.plugins,
+            placeholder: settings.placeholder,
+            render: {
+                item: function(data, escape) {
+                    if (!data.optgroup) {
+                        return `<div>${escape(data.text)}</div>`;
+                    }
+                    const groupHeader = this.dropdown_content.querySelector(
+                        `.optgroup[data-group="${data.optgroup}"] .optgroup-header`
+                    );
+                    const groupLabel = groupHeader?.textContent || '';
+
+                    return groupLabel
+                        ? `<div>${escape(groupLabel)} > ${escape(data.text)}</div>`
+                        : `<div>${escape(data.text)}</div>`;
+                }
+            },
+            // Parse standard data-attributes
+            ...Object.entries(el.dataset).reduce((acc, [key, value]) => {
+                //if (key.startsWith('ts')) {
+                   // const optName = key.replace('ts', '').replace(/([A-Z])/, g => g[0].toLowerCase());
+                    // Try parsing JSON for complex values
+                  //  try { acc[optName] = JSON.parse(value); }
+                   // catch { acc[optName] = value; }
+                //}
+                try { acc[key] = JSON.parse(value); }
+                catch { acc[key] = value; }
+                return acc;
+            }, {})
+        }
+        const tomselect = new TomSelect(el, config);
+        setTomSelectChWidth(tomselect);
+
+        el.tomselectInitialized = true;
+        el.tomselect = tomselect;
+        return tomselect;
+    });
+}
+
+function initTomSelectRemote(selector, options = {}) {
+    // Convert selector to elements array
+    const elements = typeof selector === 'string'
+        ? $$(selector)
+        : [selector];
+
+    if (!elements.length) return [];
+
+    // Default configuration
+    const defaults = {
+        plugins: ['virtual_scroll', 'dropdown_input', 'remove_button'],
+        valueField: 'id',
+        labelField: 'text',
+        searchField: ['text'],
+        maxOptions: 500,
+        preload: 'focus',
+        placeholder: null,
+        hidePlaceholder: true,
+        pagesize: 10,
+        action: 'default_select_action',
+        url: emebasic.translate_ajax_url,
+        ajaxParams: { }
+    };
+
+    // Merge options
+    // const settings = Object.assign({}, defaults, options);
+    // Destructure to separate plugin options
+    const { plugins, extraPlugins = [], ...userOptions } = options;
+
+    // Merge plugin arrays (with deduplication)
+    const mergedPlugins = [
+        ...new Set([
+            ...(plugins || defaults.plugins),       // User's plugins or defaults
+            ...(Array.isArray(extraPlugins) ? extraPlugins : [])  // extraPlugins if provided
+        ])
+    ];
+
+    // Final settings
+    const settings = {
+        ...defaults,
+        ...userOptions,
+        plugins: mergedPlugins
+    };
+
+    return Array.from(elements).map(el => {
+        if (el.tomselectInitialized || (el.tomselect && !el.tomselect.destroyed)) {
+            return el.tomselect; // Return existing instance
+        }
+        if (!el.id) {
+            el.id = 'tom-select-' + Math.random().toString(36).slice(2, 11);
+        }
+
+        const config = {
+            plugins: settings.plugins,
+            valueField: settings.valueField,
+            labelField: settings.labelField,
+            searchField: settings.searchField,
+            maxOptions: settings.maxOptions,
+            preload: settings.preload,
+            placeholder: settings.placeholder,
+            firstUrl: settings.firstUrl || function(query) {
+                const params = new URLSearchParams({
+                    q: query || '',
+                    page: 1,
+                    pagesize: settings.pagesize,
+                    action: settings.action,
+                    ...settings.ajaxParams
+                });
+                return settings.url + '?' + params.toString();
+            },
+            load: settings.load || function(query, callback) {
+                const url = this.getUrl(query);
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        const urlParams = new URLSearchParams(url.split('?')[1] || '');
+                        const cur_page = parseInt(urlParams.get('page')) || 1;
+
+                        if (json.TotalRecordCount > cur_page * settings.pagesize) {
+                            const nextParams = new URLSearchParams({
+                                q: query,
+                                page: cur_page + 1,
+                                pagesize: settings.pagesize,
+                                action: settings.action,
+                                ...settings.ajaxParams
+                            });
+                            this.setNextUrl(query, url + '?' + nextParams.toString());
+                        }
+                        callback(json.Records || json);
+                    })
+                    .catch(() => callback());
+            },
+            // Copy all other settings except those already handled
+            ...Object.entries(settings).reduce((acc, [key, value]) => {
+                if (!['plugins', 'valueField', 'labelField', 'searchField', 'maxOptions', 'preload', 'placeholder', 'url', 'action', 'pagesize', 'ajaxParams', 'firstUrl', 'load'].includes(key)) {
+                    acc[key] = value;
+                }
+                return acc;
+            }, {}),
+            // Parse standard data-attributes
+            ...Object.entries(el.dataset).reduce((acc, [key, value]) => {
+                //if (key.startsWith('ts')) {
+                 //   const optName = key.replace('ts', '').replace(/([A-Z])/, g => g[0].toLowerCase());
+                    // Try parsing JSON for complex values
+                 //   try { acc[optName] = JSON.parse(value); }
+                 //   catch { acc[optName] = value; }
+                //}
+                // Try parsing JSON for complex values
+                try { acc[key] = JSON.parse(value); }
+                catch { acc[key] = value; }
+                return acc;
+            }, {})
+        };
+
+        const tomselect = new TomSelect(el, config);
+        setTomSelectChWidth(tomselect);
+
+        el.tomselectInitialized = true;
+        el.tomselect = tomselect;
+        return tomselect;
+    });
+}
+
+// Helper functions for class manipulation
+function eme_addClass(el, className) {
+    if (el.classList) {
+        el.classList.add(className);
+    } else {
+        el.className += ' ' + className;
     }
 }
 
-jQuery(document).ready(function ($) {
-    $('.eme-showifjs').show();
-
-    // --- Unified AJAX Handler for Booking/Member/Generic forms ---
-    function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
-        const $form = $('#' + form_id);
-        $form.find(':submit').hide();
-        if (loadingSel) $form.find(loadingSel).show();
-        let alldata = new FormData($form[0]);
-        alldata.append('action', action);
-        Object.entries(extraParams).forEach(([k, v]) => alldata.append(k, v));
-        jQuery.ajax({
-            url: emebasic.translate_ajax_url,
-            data: alldata,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: 'json'
-        }).done(function (data) {
-            if (loadingSel) $form.find(loadingSel).hide();
-            $form.find(':submit').show();
-            if (data.Result === "OK" || data.Result === "REDIRECT_IMM") {
-                if (okSel) $(okSel).html(data.htmlmessage).show();
-                if (errSel) $(errSel).hide();
-                if (data.keep_form == 1) {
-                    $form.trigger('reset');
-                    eme_refresh_captcha(form_id);
-                } else {
-                    $form.closest('[id^=div_eme-]').hide();
-                }
-                if (data.paymentform) $(`#div_eme-payment-form-${form_id}`).html(data.paymentform).show();
-                if (data.paymentredirect) setTimeout(() => window.location.href = data.paymentredirect, parseInt(data.waitperiod));
-                eme_scrollToMsg(okSel);
-            } else {
-                if (errSel) $(errSel).html(data.htmlmessage).show();
-                if (okSel) $(okSel).hide();
-                eme_scrollToMsg(errSel);
-            }
-        }).fail(function (xhr, textStatus, error) {
-            if (errSel) $(errSel).html(emebasic.translate_error + (xhr?.responseText ? '<br>' + xhr.responseText : '')).show();
-            if (okSel) $(okSel).hide();
-            if (loadingSel) $form.find(loadingSel).hide();
-            $form.find(':submit').show();
-            eme_scrollToMsg(errSel);
-        });
+function eme_removeClass(el, className) {
+    if (el.classList) {
+        el.classList.remove(className);
+    } else {
+        el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
+}
 
-    function eme_refresh_captcha(form_id) {
-        const $captcha = $(`#${form_id}`).find('#eme_captcha_img');
-        if ($captcha.length) {
-            let src = $captcha.attr('src').replace(/&ts=.*/, '');
-            $captcha.attr('src', src + '&ts=' + Date.now());
-        }
-    }
+function eme_hasClass(el, className) {
+    return el.classList ? el.classList.contains(className) : new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+}
 
-    function eme_scrollToMsg(sel) {
-        const $msg = $(sel);
-        if ($msg.length) {
-            $(document).scrollTop($msg.offset().top - $(window).height() / 2 + $msg.height() / 2);
-        }
-    }
-
-    // --- Unified Dynamic Data/Price AJAX ---
-    function eme_dynamic_price_json(form_id, isBooking = true) {
-        const $form = $('#' + form_id);
-        $form.find(':submit').hide();
-        let alldata = new FormData($form[0]);
-        const priceSpans = isBooking
-            ? [{ sel: 'span#eme_calc_bookingprice', action: 'eme_calc_bookingprice' }, { sel: 'span#eme_calc_bookingprice_detail', action: 'eme_calc_bookingprice_detail' }]
-            : [{ sel: 'span#eme_calc_memberprice', action: 'eme_calc_memberprice' }, { sel: 'span#eme_calc_memberprice_detail', action: 'eme_calc_memberprice_detail' }];
-        let found = false;
-        priceSpans.forEach(({ sel, action }) => {
-            const $span = $form.find(sel);
-            if ($span.length) {
-                found = true;
-                $span.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-                alldata.set('action', action);
-                alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
-                jQuery.ajax({
-                    url: emebasic.translate_ajax_url,
-                    data: alldata,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    type: 'POST',
-                    dataType: 'json'
-                }).done(data => {
-                    $form.find(':submit').show();
-                    $span.html(data.total);
-                }).fail(() => {
-                    $form.find(':submit').show();
-                    $span.html('Invalid reply');
-                });
+function eme_lastname_clearable() {
+    const ln = $('input[name=lastname]');
+    if (!ln) return;
+    
+    const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
+    if (ln.value == '') {
+        ln.readOnly = false;
+        eme_removeClass(ln, 'clearable');
+        eme_removeClass(ln, 'x');
+        fields.forEach(f => {
+            const field = $(`input[name=${f}]`);
+            if (field) {
+                field.value = '';
+                field.readOnly = false;
             }
         });
-        if (!found) $form.find(':submit').show();
+        const wpIdField = $('input[name=wp_id]');
+        const personIdField = $('input[name=person_id]');
+        if (wpIdField) wpIdField.value = '';
+        if (personIdField) personIdField.value = '';
     }
-
-    function eme_dynamic_data_json(form_id, isBooking = true) {
-        const $form = $('#' + form_id);
-        $form.find(':submit').hide();
-        let alldata = new FormData($form[0]);
-        const dataDivSel = 'div#eme_dyndata';
-        const action = isBooking ? 'eme_dyndata_rsvp' : 'eme_dyndata_member';
-        const $dataDiv = $form.find(dataDivSel);
-        if ($dataDiv.length) {
-            $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-            alldata.set('action', action);
-            alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
-            jQuery.ajax({
-                url: emebasic.translate_ajax_url,
-                data: alldata,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: 'json'
-            }).done(data => {
-                $form.find(':submit').show();
-                $dataDiv.html(data.Result);
-                eme_init_widgets(true);
-                eme_dynamic_price_json(form_id, isBooking);
-            }).fail(() => $form.find(':submit').show());
-        } else {
-            eme_dynamic_price_json(form_id, isBooking);
-        }
+    if (ln.value != '') {
+        eme_addClass(ln, 'clearable');
+        eme_addClass(ln, 'x');
     }
+}
 
-    function eme_dynamic_familymemberdata_json(form_id) {
-        const $form = $('#' + form_id);
-        $form.find(':submit').hide();
-        let alldata = new FormData($form[0]);
-        const $dataDiv = $form.find('div#eme_dyndata_family');
-        if ($dataDiv.length) {
-            $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-            alldata.set('action', 'eme_dyndata_familymember');
-            alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
-            jQuery.ajax({
-                url: emebasic.translate_ajax_url,
-                data: alldata,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                dataType: 'json'
-            }).done(data => {
-                $form.find(':submit').show();
-                $dataDiv.html(data.Result);
-                eme_init_widgets(true);
-            }).fail(() => $form.find(':submit').show());
-        } else {
-            $form.find(':submit').show();
-        }
-    }
+// --- Widget Initialization ---
+function eme_init_widgets(dynamicOnly = false) {
+    const dynamicSelector = dynamicOnly ? '.dynamicfield' : '';
 
-    // --- Widget Initialization ---
-    function eme_init_widgets(dynamicOnly = false) {
-        const dynamicSelector = dynamicOnly ? '.dynamicfield' : '';
-
-        if ($('.eme_formfield_fdatetime' + dynamicSelector).length) {
-            $('.eme_formfield_fdatetime' + dynamicSelector).fdatepicker({
+    // Initialize fdatepicker for datetime fields
+    $$('.eme_formfield_fdatetime' + dynamicSelector).forEach(el => {
+        if (typeof FDatepicker !== 'undefined') {
+            new FDatepicker(el, {
                 todayButton: new Date(),
                 clearButton: true,
                 closeButton: true,
@@ -211,29 +342,17 @@ jQuery(document).ready(function ($) {
                 minutesStep: parseInt(emebasic.translate_minutesStep),
                 language: emebasic.translate_flanguage,
                 firstDay: parseInt(emebasic.translate_firstDayOfWeek),
-                altFieldDateFormat: 'Y-m-d H:i:00',
-                multipleDatesSeparator: ", ",
-                dateFormat: emebasic.translate_fdateformat,
-                timeFormat: emebasic.translate_ftimeformat
-            }).each(function () {
-                const $this = $(this);
-                if ($this.data('date') && $this.data('date') != '0000-00-00 00:00:00') {
-                    $this.data('fdatepicker').selectDate($this.data('date'));
-                    $this.removeData('date').removeAttr('date');
-                }
-                if ($this.data('dateFormat')) {
-                    $this.data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
-                    $this.removeData('dateFormat').removeAttr('dateFormat');
-                }
-                if ($this.data('timeFormat')) {
-                    $this.data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
-                    $this.removeData('timeFormat').removeAttr('timeFormat');
-                }
+                altFormat: 'Y-m-d H:i:00',
+                multipleSeparator: ", ",
+                format: emebasic.translate_fdatetimeformat,
             });
         }
+    });
 
-        if ($('.eme_formfield_fdate' + dynamicSelector).length) {
-            $('.eme_formfield_fdate' + dynamicSelector).fdatepicker({
+    // Initialize fdatepicker for date fields
+    $$('.eme_formfield_fdate' + dynamicSelector).forEach(el => {
+        if (typeof FDatepicker !== 'undefined') {
+            new FDatepicker(el, {
                 todayButton: new Date(),
                 clearButton: true,
                 closeButton: true,
@@ -241,229 +360,542 @@ jQuery(document).ready(function ($) {
                 fieldSizing: true,
                 language: emebasic.translate_flanguage,
                 firstDay: parseInt(emebasic.translate_firstDayOfWeek),
-                altFieldDateFormat: 'Y-m-d',
-                multipleDatesSeparator: ", ",
-                dateFormat: emebasic.translate_fdateformat
-            }).each(function () {
-                const $this = $(this);
-                if ($this.data('date') && $this.data('date') != '0000-00-00') {
-                    $this.data('fdatepicker').selectDate($this.data('date'));
-                    $this.removeData('date').removeAttr('date');
-                }
-                if ($this.data('dateFormat')) {
-                    $this.data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
-                    $this.removeData('dateFormat').removeAttr('dateFormat');
-                }
+                altFormat: 'Y-m-d',
+                multipleSeparator: ", ",
+                format: emebasic.translate_fdateformat
             });
         }
+    });
 
-        if ($('.eme_formfield_ftime' + dynamicSelector).length) {
-            $('.eme_formfield_ftime' + dynamicSelector).fdatepicker({
+    // Initialize fdatepicker for time fields
+    $$('.eme_formfield_ftime' + dynamicSelector).forEach(el => {
+        if (typeof FDatepicker !== 'undefined') {
+            new FDatepicker(el, {
                 timepicker: true,
-                onlyTimepicker: true,
+                timeOnly: true,
                 clearButton: true,
                 closeButton: true,
                 minutesStep: parseInt(emebasic.translate_minutesStep),
                 language: emebasic.translate_flanguage,
-                altFieldDateFormat: 'H:i:00',
-                timeFormat: emebasic.translate_ftimeformat
-            }).each(function () {
-                const $this = $(this);
-                if ($this.data('date') && $this.data('date') != '00:00:00') {
-                    $this.data('fdatepicker').selectDate($this.data('date'));
-                    $this.removeData('date').removeAttr('date');
-                }
-                if ($this.data('timeFormat')) {
-                    $this.data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
-                    $this.removeData('timeFormat').removeAttr('timeFormat');
-                }
+                altFormat: 'H:i:00',
+                format: emebasic.translate_ftimeformat
             });
         }
-
-        if ($('.eme_formfield_timepicker' + dynamicSelector).length) {
-            $('.eme_formfield_timepicker' + dynamicSelector).timepicker({
-                timeFormat: emebasic.translate_ftimeformat
-            }).each(function () {
-                const $this = $(this);
-                if ($this.data('timeFormat')) {
-                    $this.timepicker('option', { 'timeFormat': $this.data('timeFormat') });
-                    $this.removeData('timeFormat').removeAttr('timeFormat');
-                }
-            });
-        }
-
-        if ($('.eme_select2' + dynamicSelector).length) {
-            $('.eme_select2' + dynamicSelector).select2({
-                dropdownAutoWidth: true,
-                width: 'style',
-                templateSelection: function (data) {
-                    if (!data.id) return data.text;
-                    const $option = $(data.element), $optgroup = $option.closest('optgroup');
-                    if ($optgroup.length) return $optgroup.attr('label') + ' > ' + data.text;
-                    return data.text;
-                }
-            });
-        }
-
-        if ($('.eme_select2_width50_class' + dynamicSelector).length) {
-            $('.eme_select2_width50_class' + dynamicSelector).select2({ dropdownAutoWidth: true, width: '50%' });
-        }
-
-        if ($('.eme_select2_country_class' + dynamicSelector).length) {
-            $('.eme_select2_country_class' + dynamicSelector).select2({
-                width: '100%',
-                ajax: {
-                    url: emebasic.translate_ajax_url,
-                    type: 'POST',
-                    dataType: 'json',
-                    delay: 500,
-                    data: params => ({
-                        q: params.term,
-                        page: params.page || 1,
-                        pagesize: 30,
-                        action: 'eme_select_country',
-                        eme_frontend_nonce: emebasic.translate_frontendnonce
-                    }),
-                    processResults: (data, params) => ({
-                        results: data.Records,
-                        pagination: { more: (params.page * 30) < data.TotalRecordCount }
-                    }),
-                    cache: true
-                },
-                allowClear: true,
-                placeholder: emebasic.translate_selectcountry
-            }).on('change', function () {
-                let statefield = $(this).closest("form").find('[name=state_code]');
-                if (statefield.length) statefield.val(null).trigger('change');
-            });
-        }
-
-        if ($('.eme_select2_state_class' + dynamicSelector).length) {
-            $('.eme_select2_state_class' + dynamicSelector).select2({
-                width: '100%',
-                ajax: {
-                    url: emebasic.translate_ajax_url,
-                    type: 'POST',
-                    dataType: 'json',
-                    delay: 500,
-                    data: function (params) {
-                        return {
-                            q: params.term,
-                            page: params.page || 1,
-                            pagesize: 30,
-                            country_code: $(this).closest("form").find('[name=country_code]').val(),
-                            action: 'eme_select_state',
-                            eme_frontend_nonce: emebasic.translate_frontendnonce
-                        };
-                    },
-                    processResults: (data, params) => ({
-                        results: data.Records,
-                        pagination: { more: (params.page * 30) < data.TotalRecordCount }
-                    }),
-                    cache: true
-                },
-                allowClear: true,
-                placeholder: emebasic.translate_selectstate
-            });
-        }
-
-        if ($('.eme_select2_filter' + dynamicSelector).length) {
-            $('.eme_select2_filter' + dynamicSelector).select2();
-        }
-
-        if ($('.eme_select2_fitcontent' + dynamicSelector).length) {
-            $('.eme_select2_fitcontent' + dynamicSelector).select2({ dropdownAutoWidth: true, width: 'fit-content' });
-        }
-    }
-
-    // Calendar navigation
-    function loadCalendar(
-        tableDiv, fullcalendar = 0, htmltable, htmldiv, showlong_events = 0,
-        month = 0, year = 0, cat_chosen = '', author_chosen = '', contact_person_chosen = '',
-        location_chosen = '', not_cat_chosen = '', template_chosen = 0, holiday_chosen = 0,
-        weekdays = '', language = ''
-    ) {
-        $.post(emebasic.translate_ajax_url, {
-            'eme_frontend_nonce': emebasic.translate_frontendnonce,
-            'action': 'eme_calendar',
-            'calmonth': parseInt(month, 10),
-            'calyear': parseInt(year, 10),
-            'full': fullcalendar,
-            'long_events': showlong_events,
-            'htmltable': htmltable,
-            'htmldiv': htmldiv,
-            'category': cat_chosen,
-            'notcategory': not_cat_chosen,
-            'author': author_chosen,
-            'contact_person': contact_person_chosen,
-            'location_id': location_chosen,
-            'template_id': template_chosen,
-            'holiday_id': holiday_chosen,
-            'weekdays': weekdays,
-            'lang': language
-        }, function (data) {
-            $(`#${tableDiv}`).replaceWith(data);
-            // Re-attach event handlers after DOM replacement
-            $('a.eme-cal-prev-month, a.eme-cal-next-month').on('click', function (e) {
-                e.preventDefault();
-                $(this).html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-                loadCalendar(
-                    $(this).data('calendar_divid'),
-                    $(this).data('full'),
-                    $(this).data('htmltable'),
-                    $(this).data('htmldiv'),
-                    $(this).data('long_events'),
-                    $(this).data('month'),
-                    $(this).data('year'),
-                    $(this).data('category'),
-                    $(this).data('author'),
-                    $(this).data('contact_person'),
-                    $(this).data('location_id'),
-                    $(this).data('notcategory'),
-                    $(this).data('template_id'),
-                    $(this).data('holiday_id'),
-                    $(this).data('weekdays'),
-                    $(this).data('language')
-                );
-            });
-        });
-    }
-    $('a.eme-cal-prev-month, a.eme-cal-next-month').on('click', function (e) {
-        e.preventDefault();
-        $(this).html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-        loadCalendar(
-            $(this).data('calendar_divid'),
-            $(this).data('full'),
-            $(this).data('htmltable'),
-            $(this).data('htmldiv'),
-            $(this).data('long_events'),
-            $(this).data('month'),
-            $(this).data('year'),
-            $(this).data('category'),
-            $(this).data('author'),
-            $(this).data('contact_person'),
-            $(this).data('location_id'),
-            $(this).data('notcategory'),
-            $(this).data('template_id'),
-            $(this).data('holiday_id'),
-            $(this).data('weekdays'),
-            $(this).data('language')
-        );
     });
 
+    // Initialize timepicker for legacy time fields
+    $$('.eme_formfield_timepicker' + dynamicSelector).forEach(el => {
+        if (typeof timepicker !== 'undefined') {
+            timepicker(el, {
+                timeFormat: emebasic.translate_ftimeformat
+            });
+
+            if (el.dataset.timeFormat) {
+                el.timepicker.option({'timeFormat': el.dataset.timeFormat});
+                delete el.dataset.timeFormat;
+            }
+        }
+    });
+
+    // Basic select2 replacement
+    initTomSelect('.eme_select2' + dynamicSelector);
+    initTomSelect('.eme_select2_width50_class' + dynamicSelector);
+    initTomSelectRemote('.eme_select2_country_class' + dynamicSelector, {
+        valueField: 'id',
+        labelField: 'text',
+        searchField: ['text'],
+        placeholder: emebasic.translate_selectcountry,
+        action: 'eme_select_country',
+        pagesize: 30,
+        ajaxParams: {
+            eme_frontend_nonce: emebasic.translate_frontendnonce
+        },
+        onItemAdd: function(value, $item) {
+            // Clear corresponding state field when country changes
+            const form = this.input.closest('form');
+            const stateField = form?.querySelector('.eme_select2_state_class');
+            if (stateField && stateField.tomselect) {
+                stateField.tomselect.clear();
+                stateField.tomselect.clearOptions();
+                stateField.tomselect.load();
+            }
+        },
+        onItemRemove: function(value) {
+            const form = this.input.closest('form');
+            const stateField = form?.querySelector('.eme_select2_state_class');
+            if (stateField && stateField.tomselect) {
+                stateField.tomselect.clear();
+                stateField.tomselect.clearOptions();
+                stateField.tomselect.load();
+            }
+        }
+    });
+
+    initTomSelectRemote('.eme_select2_state_class' + dynamicSelector, {
+        valueField: 'id',
+        labelField: 'text',
+        searchField: ['text'],
+        placeholder: emebasic.translate_selectstate,
+        action: 'eme_select_state',
+        pagesize: 30,
+        firstUrl: function(query) {
+            const form = this.input.closest('form');
+            const countryField = form?.querySelector('[name=country_code]');
+            const countryCode = countryField?.value || '';
+            const params = new URLSearchParams({
+                q: query || '',
+                page: 1,
+                pagesize: 30,
+                action: 'eme_select_state',
+                eme_frontend_nonce: emebasic.translate_frontendnonce,
+                country_code: countryCode
+            });
+            return emebasic.translate_ajax_url + '?' + params.toString();
+        }
+    });
+
+    initTomSelect('.eme_select2_filter' + dynamicSelector);
+    initTomSelect('.eme_select2_fitcontent' + dynamicSelector);
+
+}
+
+// --- Unified AJAX Handler for Booking/Member/Generic forms ---
+function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
+    const form = document.getElementById(form_id);
+    if (!form) return;
+    const loadingEl = form.querySelector(loadingSel);
+    const okEl = $(okSel);
+    const errEl = $(errSel);
+
+    // Hide submit buttons
+    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+
+    // Show loading
+    if (loadingSel) {
+        if (loadingEl) eme_toggle(loadingEl, true);
+    }
+
+    let alldata = new FormData(form);
+    alldata.append('action', action);
+    Object.entries(extraParams).forEach(([k, v]) => alldata.append(k, v));
+
+    fetch(emebasic.translate_ajax_url, {
+        method: 'POST',
+        body: alldata
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading
+            if (loadingSel) {
+                const loadingEl = form.querySelector(loadingSel);
+                if (loadingEl) eme_toggle(loadingEl, false);
+            }
+
+            // Show submit buttons
+            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+
+            if (data.Result === "OK" || data.Result === "REDIRECT_IMM") {
+                if (okSel) {
+                    if (okEl) {
+                        okEl.innerHTML = data.htmlmessage;
+                        eme_toggle(okEl, true);
+                    }
+                }
+                if (errSel) {
+                    if (errEl) eme_toggle(errEl, false);
+                }
+                if (data.keep_form == 1) {
+                    form.reset();
+                    eme_refresh_captcha(form_id);
+                } else {
+                    const parentDiv = form.closest('[id^=div_eme-]');
+                    if (parentDiv) eme_toggle(parentDiv, false);
+                }
+                if (data.paymentform) {
+                    const paymentDiv = $(`#div_eme-payment-form-${form_id}`);
+                    if (paymentDiv) {
+                        paymentDiv.innerHTML = data.paymentform;
+                        eme_toggle(paymentDiv, true);
+                    }
+                }
+                if (data.paymentredirect) {
+                    setTimeout(() => window.location.href = data.paymentredirect, parseInt(data.waitperiod));
+                }
+                eme_scrollToEl(okSel);
+            } else {
+                if (errSel) {
+                    if (errEl) {
+                        errEl.innerHTML = data.htmlmessage;
+                        eme_toggle(errEl, true);
+                    }
+                }
+                if (okSel) {
+                    if (okEl) eme_toggle(okEl, false);
+                }
+                eme_scrollToEl(errSel);
+            }
+        })
+        .catch(error => {
+            if (errSel) {
+                if (errEl) {
+                    errEl.innerHTML = emebasic.translate_error + (error?.message ? '<br>' + error.message : '');
+                    eme_toggle(errEl, true);
+                }
+            }
+            if (okSel) {
+                if (okEl) eme_toggle(okEl, false);
+            }
+            if (loadingSel) {
+                const loadingEl = form.querySelector(loadingSel);
+                if (loadingEl) eme_toggle(loadingEl, false);
+            }
+            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+            eme_scrollToEl(errSel);
+        });
+}
+
+function eme_refresh_captcha(form_id) {
+    const captcha = $(`#${form_id} #eme_captcha_img`);
+    if (captcha) {
+        let src = captcha.src.replace(/&ts=.*/, '');
+        captcha.src = src + '&ts=' + Date.now();
+    }
+}
+
+function eme_scrollToEl(sel) {
+    if (sel) {
+        const offsetTop = sel.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+            top: offsetTop - window.innerHeight / 2 + sel.offsetHeight / 2,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// --- Unified Dynamic Data/Price AJAX ---
+function eme_dynamic_price_json(form_id, isBooking = true) {
+    const form = document.getElementById(form_id);
+    if (!form) return;
+
+    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+    let alldata = new FormData(form);
+
+    const priceSpans = isBooking
+        ? [{ sel: 'span#eme_calc_bookingprice', action: 'eme_calc_bookingprice' }, { sel: 'span#eme_calc_bookingprice_detail', action: 'eme_calc_bookingprice_detail' }]
+        : [{ sel: 'span#eme_calc_memberprice', action: 'eme_calc_memberprice' }, { sel: 'span#eme_calc_memberprice_detail', action: 'eme_calc_memberprice_detail' }];
+
+    let found = false;
+    priceSpans.forEach(({ sel, action }) => {
+        const span = form.querySelector(sel);
+        if (span) {
+            found = true;
+            span.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+            alldata.set('action', action);
+            alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
+
+            fetch(emebasic.translate_ajax_url, {
+                method: 'POST',
+                body: alldata
+            })
+                .then(response => response.json())
+                .then(data => {
+                    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+                    span.innerHTML = data.total;
+                })
+                .catch(() => {
+                    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+                    span.innerHTML = 'Invalid reply';
+                });
+        }
+    });
+
+    if (!found) {
+        form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+    }
+}
+
+function eme_dynamic_data_json(form_id, isBooking = true) {
+    const form = document.getElementById(form_id);
+    if (!form) return;
+
+    form.querySelectorAll('input[type="submit"], button[type="submit"]').forEach(btn => eme_toggle(btn, false));
+    let alldata = new FormData(form);
+
+    const dataDivSel = 'div#eme_dyndata';
+    const action = isBooking ? 'eme_dyndata_rsvp' : 'eme_dyndata_member';
+    const dataDiv = form.querySelector(dataDivSel);
+
+    if (dataDiv) {
+        dataDiv.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+        alldata.set('action', action);
+        alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
+
+        fetch(emebasic.translate_ajax_url, {
+            method: 'POST',
+            body: alldata
+        })
+            .then(response => response.json())
+            .then(data => {
+                form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+                dataDiv.innerHTML = data.Result;
+                eme_init_widgets(true);
+                eme_dynamic_price_json(form_id, isBooking);
+            })
+            .catch(() => {
+                form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+            });
+    } else {
+        eme_dynamic_price_json(form_id, isBooking);
+    }
+}
+
+function eme_dynamic_familymemberdata_json(form_id) {
+    const form = document.getElementById(form_id);
+    if (!form) return;
+
+    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+    let alldata = new FormData(form);
+    const dataDiv = form.querySelector('div#eme_dyndata_family');
+
+    if (dataDiv) {
+        dataDiv.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+        alldata.set('action', 'eme_dyndata_familymember');
+        alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
+
+        fetch(emebasic.translate_ajax_url, {
+            method: 'POST',
+            body: alldata
+        })
+            .then(response => response.json())
+            .then(data => {
+                form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+                dataDiv.innerHTML = data.Result;
+                eme_init_widgets(true);
+            })
+            .catch(() => {
+                form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+            });
+    } else {
+        form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+    }
+}
+
+// Calendar navigation
+function loadCalendar(
+    tableDiv, fullcalendar = 0, htmltable, htmldiv, showlong_events = 0,
+    month = 0, year = 0, cat_chosen = '', author_chosen = '', contact_person_chosen = '',
+    location_chosen = '', not_cat_chosen = '', template_chosen = 0, holiday_chosen = 0,
+    weekdays = '', language = ''
+) {
+    const formData = new FormData();
+    formData.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
+    formData.append('action', 'eme_calendar');
+    formData.append('calmonth', parseInt(month, 10));
+    formData.append('calyear', parseInt(year, 10));
+    formData.append('full', fullcalendar);
+    formData.append('long_events', showlong_events);
+    formData.append('htmltable', htmltable);
+    formData.append('htmldiv', htmldiv);
+    formData.append('category', cat_chosen);
+    formData.append('notcategory', not_cat_chosen);
+    formData.append('author', author_chosen);
+    formData.append('contact_person', contact_person_chosen);
+    formData.append('location_id', location_chosen);
+    formData.append('template_id', template_chosen);
+    formData.append('holiday_id', holiday_chosen);
+    formData.append('weekdays', weekdays);
+    formData.append('lang', language);
+
+    fetch(emebasic.translate_ajax_url, {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            const tableEl = document.getElementById(tableDiv);
+            if (tableEl) {
+                tableEl.outerHTML = data;
+                // Re-attach event handlers after DOM replacement
+                attachCalendarHandlers();
+            }
+        });
+}
+
+function attachCalendarHandlers() {
+    $$('a.eme-cal-prev-month, a.eme-cal-next-month').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+            loadCalendar(
+                this.dataset.calendar_divid,
+                this.dataset.full,
+                this.dataset.htmltable,
+                this.dataset.htmldiv,
+                this.dataset.long_events,
+                this.dataset.month,
+                this.dataset.year,
+                this.dataset.category,
+                this.dataset.author,
+                this.dataset.contact_person,
+                this.dataset.location_id,
+                this.dataset.notcategory,
+                this.dataset.template_id,
+                this.dataset.holiday_id,
+                this.dataset.weekdays,
+                this.dataset.language
+            );
+        });
+    });
+}
+
+// --- Booking/Member form handlers with confirmation ---
+function eme_handle_massmail(form_id, callback) {
+    const form = document.getElementById(form_id);
+    const massmailField = form.querySelector('#massmail');
+    const massmailDialog = $('#MassMailDialog');
+
+    if (massmailField && massmailField.value != 1 && massmailDialog) {
+        massmailDialog.showModal();
+
+        const confirmBtn = $('#dialog-confirm');
+        const cancelBtn = $('#dialog-cancel');
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                massmailDialog.close();
+                callback(form_id);
+            }, { once: true });
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                massmailDialog.close();
+            }, { once: true });
+        }
+    } else {
+        callback(form_id);
+    }
+}
+
+// --- Dynamic fields AJAX debounce handlers ---
+function eme_attach_dynamic_handlers(selector, isBooking) {
+    $$(selector).forEach(form => {
+        const form_id = form.id;
+        const debounced_data = eme_debounce(() => eme_dynamic_data_json(form_id, isBooking), 500);
+        const debounced_price = eme_debounce(() => eme_dynamic_price_json(form_id, isBooking), 500);
+        const debounced_family = !isBooking ? eme_debounce(() => eme_dynamic_familymemberdata_json(form_id), 500) : null;
+
+        form.addEventListener('input', function(event) {
+            if (debounced_family && event.target.id === 'familycount') {
+                debounced_family();
+            }
+            if (eme_hasClass(event.target, 'nodynamicupdates')) {
+                if (eme_hasClass(event.target, 'dynamicprice')) {
+                    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+                    debounced_price();
+                }
+                return;
+            }
+            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+            debounced_data();
+        });
+
+        if (debounced_family) debounced_family();
+        debounced_data();
+    });
+}
+    
+function eme_scrollToInvalidInput(el) { 
+    // First check if field is in a tab
+    const tabPane = el.closest('.eme-tab-content');
+    if (tabPane) {
+        const tabId = tabPane.id;
+        const isVisible = tabPane.classList.contains('active') ||
+            window.getComputedStyle(tabPane).display !== 'none';
+
+        if (!isVisible && typeof eme_activateTab === 'function') {
+            // Activate the tab containing the invalid field
+            eme_activateTab(tabId);
+            // Small delay to ensure tab is visible before scrolling
+            setTimeout(() => {
+                if (typeof el.reportValidity === 'function') {
+                    el.reportValidity();
+                } else {
+                    eme_addClass(el, 'eme_required');
+                    eme_scrollToEl(el);
+                }
+            }, 300);
+            return; // Exit, scrolling happens after timeout
+        }
+    }
+
+    // If not in tab or tab is already active, scroll normally
+    if (typeof el.reportValidity === 'function') {
+        el.reportValidity();
+    } else {
+        eme_addClass(el, 'eme_required');
+        eme_scrollToEl(el);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Show elements that should be visible with JS
+    $$('.eme-showifjs').forEach(el => {
+        eme_toggle(el, true);
+    });
+
+    
+    // Initial calendar handler attachment
+    attachCalendarHandlers();
+
     // Clearable input with 'x'
-    $(document).on('input', '.clearable', function () {
-        $(this)[eme_tog(this.value)]('x');
-    }).on('mousemove', '.x', function (e) {
-        $(this)[eme_tog(this.offsetWidth - 18 < e.clientX - this.getBoundingClientRect().left)]('onX');
-    }).on('touchstart click', '.onX', function (ev) {
-        ev.preventDefault();
-        $(this).removeClass('x onX').val('').change();
+    document.addEventListener('input', function(e) {
+        if (eme_hasClass(e.target, 'clearable')) {
+            if (e.target.value) {
+                eme_addClass(e.target, 'x');
+            } else {
+                eme_removeClass(e.target, 'x');
+            }
+        }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (eme_hasClass(e.target, 'x')) {
+            const rect = e.target.getBoundingClientRect();
+            if (e.target.offsetWidth - 18 < e.clientX - rect.left) {
+                eme_addClass(e.target, 'onX');
+            } else {
+                eme_removeClass(e.target, 'onX');
+            }
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (eme_hasClass(e.target, 'onX')) {
+            e.preventDefault();
+            eme_removeClass(e.target, 'x');
+            eme_removeClass(e.target, 'onX');
+            e.target.value = '';
+            e.target.dispatchEvent(new Event('change'));
+        }
+    });
+
+    document.addEventListener('touchstart', function(e) {
+        if (eme_hasClass(e.target, 'onX')) {
+            e.preventDefault();
+            eme_removeClass(e.target, 'x');
+            eme_removeClass(e.target, 'onX');
+            e.target.value = '';
+            e.target.dispatchEvent(new Event('change'));
+        }
     });
 
     // Lastname clearable
-    if ($("input[name=lastname]").length && $("input[name=lastname]").data('clearable')) {
-        $('input[name=lastname]').on("change", eme_lastname_clearable);
+    const lastnameField = $("input[name=lastname]");
+    if (lastnameField && lastnameField.dataset.clearable) {
+        lastnameField.addEventListener('change', eme_lastname_clearable);
         eme_lastname_clearable();
     }
 
@@ -480,200 +912,156 @@ jQuery(document).ready(function ($) {
         { sel: '[name=eme-tasks-form]', action: 'eme_tasks', ok: 'div#eme-tasks-message-ok-', err: 'div#eme-tasks-message-error-', loading: '#loading_gif' },
         { sel: '[name=eme-fs-form]', action: 'eme_frontend_submit', ok: 'div#eme-fs-message-ok-', err: 'div#eme-fs-message-error-', loading: '#loading_gif', isFS: true }
     ];
+    
     genericForms.forEach(({ sel, action, ok, err, loading, isFS }) => {
-        $(sel).on('submit', function (event) {
-            event.preventDefault();
-            const form_id = $(this).attr('id');
-            if (isFS && emebasic.translate_htmleditor === "tinemce" && emebasic.translate_fs_wysiwyg === "true") {
-                if (typeof tinymce !== "undefined") {
-                    tinymce.get('event_notes')?.save();
-                    tinymce.get('location_description')?.save();
+        $$(sel).forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const form_id = this.id;
+                if (isFS && emebasic.translate_htmleditor === "tinemce" && emebasic.translate_fs_wysiwyg === "true") {
+                    if (typeof tinymce !== "undefined") {
+                        const eventNotesEditor = tinymce.get('event_notes');
+                        const locationDescEditor = tinymce.get('location_description');
+                        if (eventNotesEditor) eventNotesEditor.save();
+                        if (locationDescEditor) locationDescEditor.save();
+                    }
                 }
-            }
-            eme_ajax_form(form_id, action, ok + form_id, err + form_id, loading);
+                eme_ajax_form(form_id, action, ok + form_id, err + form_id, loading);
+            });
         });
     });
 
-    // --- Booking/Member form handlers with confirmation ---
-    function eme_handle_massmail(form_id, callback) {
-        let $form = $('#' + form_id);
-        if ($form.find('#massmail').length && $form.find('#massmail').val() != 1 && $form.find('#MassMailDialog').length) {
-            let dialog = $('#MassMailDialog')[0];
-            dialog.showModal();
-            $('#dialog-confirm').on('click', function (e) {
-                e.preventDefault();
-                dialog.close();
-                callback(form_id);
+    $$('[name=eme-rsvp-form]').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            eme_handle_massmail(this.id, function(form_id) {
+                let extra = {};
+                ['eme_invite', 'eme_email', 'eme_ln', 'eme_fn'].forEach(k => { 
+                    if ($_GET[k]) extra[k] = $_GET[k]; 
+                });
+                eme_ajax_form(form_id, 'eme_add_bookings', 'div#eme-rsvp-addmessage-ok-' + form_id, 'div#eme-rsvp-addmessage-error-' + form_id, '#rsvp_add_loading_gif', extra);
+                eme_dynamic_data_json(form_id, true);
             });
-            $('#dialog-cancel').on('click', function (e) {
-                e.preventDefault();
-                dialog.close();
-            });
-        } else {
-            callback(form_id);
-        }
-    }
-
-    $('[name=eme-rsvp-form]').on('submit', function (event) {
-        event.preventDefault();
-        eme_handle_massmail($(this).attr('id'), function (form_id) {
-            let extra = {};
-            ['eme_invite', 'eme_email', 'eme_ln', 'eme_fn'].forEach(k => { if ($_GET[k]) extra[k] = $_GET[k]; });
-            eme_ajax_form(form_id, 'eme_add_bookings', 'div#eme-rsvp-addmessage-ok-' + form_id, 'div#eme-rsvp-addmessage-error-' + form_id, '#rsvp_add_loading_gif', extra);
-            eme_dynamic_data_json(form_id, true);
         });
     });
 
-    $('[name=eme-member-form]').on('submit', function (event) {
-        event.preventDefault();
-        eme_handle_massmail($(this).attr('id'), function (form_id) {
-            eme_ajax_form(form_id, 'eme_add_member', 'div#eme-member-addmessage-ok-' + form_id, 'div#eme-member-addmessage-error-' + form_id, '#member_loading_gif');
-            eme_dynamic_data_json(form_id, false);
+    $$('[name=eme-member-form]').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            eme_handle_massmail(this.id, function(form_id) {
+                eme_ajax_form(form_id, 'eme_add_member', 'div#eme-member-addmessage-ok-' + form_id, 'div#eme-member-addmessage-error-' + form_id, '#member_loading_gif');
+                eme_dynamic_data_json(form_id, false);
+            });
         });
     });
 
     // --- Validation for submit buttons ---
-    $('.eme_submit_button').on('click', function (event) {
-        let valid = true, parent_form_id = $(this.form).attr('id');
-        function scrollToInvalid($el) { $(document).scrollTop($el.offset().top - $(window).height() / 2); }
-        $('input:text[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').each(function () {
-            if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
-                let val = $(this).val();
-                if (val.match(/^\s*$/)) {
-                    $(this).addClass('eme_required');
-                    scrollToInvalid($(this));
-                    valid = false;
-                } else {
-                    $(this).removeClass('eme_required');
-                }
-            }
-        });
-        $('.eme-checkbox-group-required').each(function () {
-            if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
-                let checked = $(this).children("input:checkbox:checked").length;
-                if (!checked) {
-                    $(this).addClass('eme_required');
-                    scrollToInvalid($(this));
-                    valid = false;
-                } else {
-                    $(this).removeClass('eme_required');
-                }
-            }
-        });
-        $('select[required].select2-hidden-accessible').each(function() {
-            if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
-                const $select = $(this);
-                const $select2Container = $select.next('.select2-container');
-                const isMultiSelect = $select.prop('multiple');
-                let isEmpty = false;
-
-                // Check if field is empty
-                if (isMultiSelect) {
-                    isEmpty = $select.val() === null || $select.val().length === 0;
-                } else {
-                    isEmpty = !$select.val();
-                }
-
-                if (isEmpty) {
-                    // Add error class to the visible Select2 element
-                    if (isMultiSelect) {
-                        $select2Container.find('.select2-selection--multiple').addClass('eme_required');
+    $$('.eme_submit_button').forEach(btn => {
+        btn.addEventListener('click', function(event) {
+            let valid = true;
+            const parent_form_id = this.form.id;
+            
+            // Check required text inputs and date fields
+            $$('input:text[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
+                if (input.offsetParent !== null && input.closest("form").id === parent_form_id) {
+                    const val = input.value;
+                    if (val.match(/^\s*$/)) {
+                        eme_addClass(input, 'eme_required');
+                        eme_scrollToInvalidInput(input);
+                        valid = false;
                     } else {
-                        $select2Container.find('.select2-selection--single').addClass('eme_required');
-                    }
-
-
-                    scrollToInvalid($select2Container);
-
-                    // Focus the Select2 dropdown
-                    $select2Container.find('.select2-selection').focus();
-
-                    valid = false;
-                } else {
-                    // Remove error class
-                    if (isMultiSelect) {
-                        $select2Container.find('.select2-selection--multiple').removeClass('eme_required');
-                    } else {
-                        $select2Container.find('.select2-selection--single').removeClass('eme_required');
+                        eme_removeClass(input, 'eme_required');
                     }
                 }
-
-            }
+            });
+            
+            // Check required checkbox groups
+            $$('.eme-checkbox-group-required').forEach(group => {
+                if (group.offsetParent !== null && group.closest("form").id === parent_form_id) {
+                    const checked = group.querySelectorAll("input:checkbox:checked").length;
+                    if (!checked) {
+                        eme_addClass(group, 'eme_required');
+                        eme_scrollToInvalidInput(group);
+                        valid = false;
+                    } else {
+                        eme_removeClass(group, 'eme_required');
+                    }
+                }
+            });
+            
+            if (!valid) return false;
         });
-
-        if (!valid) return false;
     });
 
-    // --- Dynamic fields AJAX debounce handlers ---
-    function eme_attach_dynamic_handlers(selector, isBooking) {
-        $(selector).each(function () {
-            let form_id = $(this).attr('id');
-            let debounced_data = eme_debounce(() => eme_dynamic_data_json(form_id, isBooking), 500);
-            let debounced_price = eme_debounce(() => eme_dynamic_price_json(form_id, isBooking), 500);
-            let debounced_family = !isBooking ? eme_debounce(() => eme_dynamic_familymemberdata_json(form_id), 500) : null;
-            $(this).on('input', function (event) {
-                if (debounced_family && $(event.target).attr('id') === 'familycount') debounced_family();
-                if ($(event.target).hasClass('nodynamicupdates')) {
-                    if ($(event.target).hasClass('dynamicprice')) {
-                        $(this).find(':submit').hide();
-                        debounced_price();
-                    }
-                    return;
-                }
-                $(this).find(':submit').hide();
-                debounced_data();
-            });
-            if (debounced_family) debounced_family();
-            debounced_data();
-        });
-    }
     eme_attach_dynamic_handlers('[name=eme-rsvp-form]', true);
     eme_attach_dynamic_handlers('#eme-rsvp-adminform', true);
     eme_attach_dynamic_handlers('[name=eme-member-form]', false);
     eme_attach_dynamic_handlers('#eme-member-adminform', false);
 
     // Person image upload widget
-    if ($('#eme_person_image_button').length) {
-        $('#eme_person_remove_old_image').on("click", function () {
-            $('#eme_person_image_id').val('');
-            $('#eme_person_image_example').attr('src', '');
-            $('#eme_person_current_image').hide();
-            $('#eme_person_no_image').show();
-            $('#eme_person_remove_old_image').hide();
-            $('#eme_person_image_button').prop("value", emebasic.translate_chooseimg);
-        });
-        $('#eme_person_image_button').on("click", function (e) {
+    const personImageButton = document.getElementById('eme_person_image_button');
+    if (personImageButton) {
+        const removeButton = document.getElementById('eme_person_remove_old_image');
+        const imageIdField = document.getElementById('eme_person_image_id');
+        const imageExample = document.getElementById('eme_person_image_example');
+        const currentImageDiv = document.getElementById('eme_person_current_image');
+        const noImageDiv = document.getElementById('eme_person_no_image');
+        
+        if (removeButton) {
+            removeButton.addEventListener('click', function() {
+                imageIdField.value = '';
+                imageExample.src = '';
+                eme_toggle(currentImageDiv, false);
+                eme_toggle(noImageDiv, true);
+                eme_toggle(removeButton, false);
+                personImageButton.value = emebasic.translate_chooseimg;
+            });
+        }
+        
+        personImageButton.addEventListener('click', function(e) {
             e.preventDefault();
-            let custom_uploader = wp.media({
-                title: emebasic.translate_selectimg,
-                button: { text: emebasic.translate_setimg },
-                library: { type: 'image' },
-                multiple: false
-            }).on('select', function () {
-                let attachment = custom_uploader.state().get('selection').first().toJSON();
-                $('#eme_person_image_id').val(attachment.id);
-                $('#eme_person_image_example').attr('src', attachment.url);
-                $('#eme_person_current_image').show();
-                $('#eme_person_no_image').hide();
-                $('#eme_person_remove_old_image').show();
-                $('#eme_person_image_button').prop("value", emebasic.translate_replaceimg);
-            }).open();
+            if (typeof wp !== 'undefined' && wp.media) {
+                const custom_uploader = wp.media({
+                    title: emebasic.translate_selectimg,
+                    button: { text: emebasic.translate_setimg },
+                    library: { type: 'image' },
+                    multiple: false
+                }).on('select', function() {
+                    const attachment = custom_uploader.state().get('selection').first().toJSON();
+                    imageIdField.value = attachment.id;
+                    imageExample.src = attachment.url;
+                    eme_toggle(currentImageDiv, true);
+                    eme_toggle(noImageDiv, false);
+                    eme_toggle(removeButton, true);
+                    personImageButton.value = emebasic.translate_replaceimg;
+                }).open();
+            }
         });
-        if (parseInt($('#eme_person_image_id').val()) > 0) {
-            $('#eme_person_no_image').hide();
-            $('#eme_person_current_image').show();
-            $('#eme_person_remove_old_image').show();
-            $('#eme_person_image_button').prop("value", emebasic.translate_replaceimg);
+        
+        // Initialize display state
+        if (parseInt(imageIdField.value) > 0) {
+            eme_toggle(noImageDiv, false);
+            eme_toggle(currentImageDiv, true);
+            eme_toggle(removeButton, true);
+            personImageButton.value = emebasic.translate_replaceimg;
         } else {
-            $('#eme_person_no_image').show();
-            $('#eme_person_current_image').hide();
-            $('#eme_person_remove_old_image').hide();
-            $('#eme_person_image_button').prop("value", emebasic.translate_chooseimg);
+            eme_toggle(noImageDiv, true);
+            eme_toggle(currentImageDiv, false);
+            eme_toggle(removeButton, false);
+            personImageButton.value = emebasic.translate_chooseimg;
         }
     }
-    if ($('#eme-payment-form').length) {
-        $(document).scrollTop($('div#eme-payment-form').offset().top - $(window).height() / 2 + $('div#eme-payment-form').height() / 2);
+    
+    // Scroll to payment form if present
+    const paymentForm = document.getElementById('eme-payment-form');
+    if (paymentForm) {
+        const offsetTop = paymentForm.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+            top: offsetTop - window.innerHeight / 2 + paymentForm.offsetHeight / 2,
+            behavior: 'smooth'
+        });
     }
 
+    // Initialize widgets
     eme_init_widgets();
 });

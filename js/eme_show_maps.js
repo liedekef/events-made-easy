@@ -1,10 +1,11 @@
-jQuery(document).ready(function($) {
+document.addEventListener('DOMContentLoaded', function() {
     // first the global map (if present)
     let divs = document.getElementsByTagName('div');
     // create the tile layer with correct attribution
     let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     let osmAttrib='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     let div_arr_map = new Array();
+    
     for (let i = 0; i < divs.length; i++) {
         let div_id = divs[i].id; 
         if (div_id.indexOf("eme_global_map_") === 0) { 
@@ -33,7 +34,7 @@ jQuery(document).ready(function($) {
                 gestures = true;
             }
 
-            $.each(locations, function(i, item) {
+            locations.forEach(function(item, index) {
                 if (parseFloat(item.location_latitude) > max_latitude) {
                     max_latitude = parseFloat(item.location_latitude);
                 }
@@ -48,13 +49,13 @@ jQuery(document).ready(function($) {
                 }
             });
 
-            center_lat = min_latitude + (max_latitude - min_latitude)/2;
-            center_lon = min_longitude + (max_longitude - min_longitude)/2;
+            let center_lat = min_latitude + (max_latitude - min_latitude)/2;
+            let center_lon = min_longitude + (max_longitude - min_longitude)/2;
 
-            lat_interval = max_latitude - min_latitude;
+            let lat_interval = max_latitude - min_latitude;
 
             //vertical compensation to fit in the markers
-            vertical_compensation = lat_interval * 0.1;
+            let vertical_compensation = lat_interval * 0.1;
 
             // we don't use an initial zoom level, later on we zoom using fitbounds to show all locations at max allowed zoom level
             let myOptions = {
@@ -73,9 +74,13 @@ jQuery(document).ready(function($) {
             // if a popup contains an image, the size might be wrong, try to rectify with a popup update
             // based on https://stackoverflow.com/questions/38170366/leaflet-adjust-popup-to-picture-size
             div_arr_map[i].on("popupopen", function(e) {
-                $(".leaflet-popup-content img").last().on("load", function() {
-                    e.popup.update();
-                });
+                const popupImages = document.querySelectorAll(".leaflet-popup-content img");
+                if (popupImages.length > 0) {
+                    const lastImage = popupImages[popupImages.length - 1];
+                    lastImage.addEventListener("load", function() {
+                        e.popup.update();
+                    });
+                }
             });
 
             let markers;
@@ -83,13 +88,13 @@ jQuery(document).ready(function($) {
                 markers = L.markerClusterGroup();
             }
 
-            $.each(locations, function(index, item) {
+            locations.forEach(function(item, index) {
                 let letter;
                 let myIcon;
-                if (index>25) {
-                    let rest=index%26;
-                    let firstindex=Math.floor(index/26)-1;
-                    letter = String.fromCharCode("A".charCodeAt(0) + firstindex)+String.fromCharCode("A".charCodeAt(0) + rest);
+                if (index > 25) {
+                    let rest = index % 26;
+                    let firstindex = Math.floor(index/26) - 1;
+                    letter = String.fromCharCode("A".charCodeAt(0) + firstindex) + String.fromCharCode("A".charCodeAt(0) + rest);
                 } else {
                     letter = String.fromCharCode("A".charCodeAt(0) + index);
                 }
@@ -98,9 +103,9 @@ jQuery(document).ready(function($) {
                 if (letter_icons) {
                     myIcon = L.divIcon({className: 'eme-map-marker', iconSize: [28,28], html: letter});
                 } else {
-                    if (item.map_icon!='') {
+                    if (item.map_icon != '') {
                         myIcon = L.icon({iconUrl: item.map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-                    } else if (default_map_icon!='') {
+                    } else if (default_map_icon != '') {
                         myIcon = L.icon({iconUrl: default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                     } else {
                         myIcon = new L.Icon.Default();
@@ -108,8 +113,8 @@ jQuery(document).ready(function($) {
                 }
 
                 let point = L.latLng(parseFloat(item.location_latitude), parseFloat(item.location_longitude));
-                let balloon_content = "<div class='eme-location-balloon'>"+eme_htmlDecode(item.location_balloon)+"</div>";
-                let marker = L.marker(point,{icon: myIcon});
+                let balloon_content = "<div class='eme-location-balloon'>" + eme_htmlDecode(item.location_balloon) + "</div>";
+                let marker = L.marker(point, {icon: myIcon});
                 marker.bindPopup(balloon_content, { maxWidth: 1600 });
                 if (marker_clustering == 'true' ) {
                     markers.addLayer(marker);
@@ -118,20 +123,29 @@ jQuery(document).ready(function($) {
                 }
                 // Add to list of markers
                 markersList[item.location_id] = marker;
-                if ($('li#location-'+item.location_id+"_"+map_id).length) {
-                    $('li#location-'+item.location_id+"_"+map_id+' a').on('click',function() {
-                        $(document).scrollTop( $('div#eme_global_map_'+map_id).offset().top - $(window).height()/2 + $('div#eme_global_map_'+map_id).height()/2);
-                        if (marker_clustering == 'true' ) {
-                            let m = markersList[item.location_id];
-                            markers.zoomToShowLayer(m, function() {
-                                m.openPopup();
-                            });
-                        } else {
-                            marker.openPopup();
-                        }
-                    });
+                
+                const locationLink = document.getElementById('location-' + item.location_id + "_" + map_id);
+                if (locationLink) {
+                    const linkElement = locationLink.querySelector('a');
+                    if (linkElement) {
+                        linkElement.addEventListener('click', function() {
+                            const mapDiv = document.getElementById('eme_global_map_' + map_id);
+                            const scrollTop = mapDiv.offsetTop - window.innerHeight/2 + mapDiv.offsetHeight/2;
+                            document.documentElement.scrollTop = scrollTop;
+                            
+                            if (marker_clustering == 'true' ) {
+                                let m = markersList[item.location_id];
+                                markers.zoomToShowLayer(m, function() {
+                                    m.openPopup();
+                                });
+                            } else {
+                                marker.openPopup();
+                            }
+                        });
+                    }
                 }
             });
+            
             if (marker_clustering == 'true') {
                 markers.addTo(div_arr_map[i]);
             }
@@ -144,21 +158,24 @@ jQuery(document).ready(function($) {
 
         // and now for the normal maps (if any)
         if(div_id.indexOf("eme-location-map_") === 0) { 
-            lat_id=parseFloat($(divs[i]).data('lat'));
-            lon_id=parseFloat($(divs[i]).data('lon'));
-            map_icon=$(divs[i]).data('map_icon');
-            default_map_icon=$(divs[i]).data('default_map_icon');
-            let mapCenter= L.latLng(lat_id+0.005,lon_id-0.003);
+            const currentDiv = divs[i];
+            let lat_id = parseFloat(currentDiv.dataset.lat);
+            let lon_id = parseFloat(currentDiv.dataset.lon);
+            let map_icon = currentDiv.dataset.map_icon;
+            let default_map_icon = currentDiv.dataset.default_map_icon;
+            let mapCenter = L.latLng(lat_id + 0.005, lon_id - 0.003);
             let myOptions = {
-                zoom: $(divs[i]).data('zoom_factor'),
+                zoom: parseInt(currentDiv.dataset.zoom_factor),
                 center: mapCenter,
                 doubleClickZoom: false,
-                scrollWheelZoom: $(divs[i]).data('enable_zooming'),
-                gestureHandling: $(divs[i]).data('gestures')
+                scrollWheelZoom: currentDiv.dataset.enable_zooming === 'true',
+                gestureHandling: currentDiv.dataset.gestures === 'true'
             };
-            if (map_icon!='') {
+            
+            let myIcon;
+            if (map_icon != '') {
                 myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-            } else if (default_map_icon!='') {
+            } else if (default_map_icon != '') {
                 myIcon = L.icon({iconUrl: default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
             } else {
                 myIcon = new L.Icon.Default();
@@ -173,12 +190,16 @@ jQuery(document).ready(function($) {
             // if a popup contains an image, the size might be wrong, try to rectify with a popup update
             // based on https://stackoverflow.com/questions/38170366/leaflet-adjust-popup-to-picture-size
             div_arr_map[i].on("popupopen", function(e) {
-                $(".leaflet-popup-content img").last().on("load", function() {
-                    e.popup.update();
-                });
+                const popupImages = document.querySelectorAll(".leaflet-popup-content img");
+                if (popupImages.length > 0) {
+                    const lastImage = popupImages[popupImages.length - 1];
+                    lastImage.addEventListener("load", function() {
+                        e.popup.update();
+                    });
+                }
             });
             // define the popup and marker
-            let s_popcontent = "<div class='eme-location-balloon'>"+$(divs[i]).data('map_text')+"</div>";
+            let s_popcontent = "<div class='eme-location-balloon'>" + currentDiv.dataset.map_text + "</div>";
             let s_marker = L.marker(L.latLng(lat_id, lon_id), {icon: myIcon}).addTo(div_arr_map[i]);
             // now show the markter and popup
             s_marker.bindPopup(s_popcontent, { maxWidth: 1600 }).openPopup();

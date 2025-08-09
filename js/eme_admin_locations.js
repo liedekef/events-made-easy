@@ -1,6 +1,15 @@
-jQuery(document).ready(function ($) { 
-    if ($('#LocationsTableContainer').length) {
-        let locationfields = {
+document.addEventListener('DOMContentLoaded', function () {
+    const LocationsTableContainer = $('#LocationsTableContainer');
+    let LocationsTable;
+
+    // --- Initialize Locations Table ---
+    if (LocationsTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'locationstablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        LocationsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        let locationFields = {
             location_id: {
                 key: true,
                 width: '1%',
@@ -14,14 +23,14 @@ jQuery(document).ready(function ($) {
             view: {
                 title: emelocations.translate_view,
                 sorting: false,
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center'
             },
             copy: {
                 title: emelocations.translate_copy,
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center'
             },
             location_address1: {
                 title: emelocations.translate_address1,
@@ -64,264 +73,190 @@ jQuery(document).ready(function ($) {
                 title: emelocations.translate_online_only,
                 visibility: 'hidden'
             }
+        };
+
+        // Add extra fields if present
+        const extraFieldsAttr = LocationsTableContainer.dataset.extrafields;
+        const extraFieldNamesAttr = LocationsTableContainer.dataset.extrafieldnames;
+        const extraFieldSearchableAttr = LocationsTableContainer.dataset.extrafieldsearchable;
+        if (extraFieldsAttr && extraFieldNamesAttr) {
+            const extraFields = extraFieldsAttr.split(',');
+            const extraNames = extraFieldNamesAttr.split(',');
+            const extraSearches = extraFieldSearchableAttr.split(',');
+            extraFields.forEach((field, index) => {
+                if (field == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+index;
+                    locationFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
+                } else if (field) {
+                    let fieldindex = 'FIELD_'+index;
+                    locationFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index] == '1', visibility: 'hidden' };
+                }
+            });
         }
 
-        let extrafields=$('#LocationsTableContainer').data('extrafields').toString().split(',');
-        let extrafieldnames=$('#LocationsTableContainer').data('extrafieldnames').toString().split(',');
-        let extrafieldsearchable=$('#LocationsTableContainer').data('extrafieldsearchable').toString().split(',');
-        $.each(extrafields, function( index, value ) {
-            if (value != '') {
-                let fieldindex='FIELD_'+value;
-                let extrafield = {};
-                if (extrafieldsearchable[index]=='1') {
-                    sorting=true;
-                } else {
-                    sorting=false;
-                }
-                extrafield[fieldindex] = {
-                    title: extrafieldnames[index],
-                    sorting: sorting,
-                    visibility: 'hidden'
-                };
-                $.extend(locationfields,extrafield);
-            }
-        });
-
-        //Prepare jtable plugin
-        $('#LocationsTableContainer').jtable({
+        LocationsTable = new FTable('#LocationsTableContainer', {
             title: emelocations.translate_locations,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'location_name ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             csvExport: true,
             printTable: true,
             actions: {
                 listAction: ajaxurl
             },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_locations_list",
-                    'eme_admin_nonce': emelocations.translate_adminnonce,
-                    'search_name': $('#search_name').val(),
-                    'search_customfields': $('#search_customfields').val(),
-                    'search_customfieldids': $('#search_customfieldids').val()
-                }
-                return params;
-            },
-            fields: locationfields,
+            listQueryParams: () => ({
+                action: 'eme_locations_list',
+                eme_admin_nonce: emelocations.translate_adminnonce,
+                search_name: $('#search_name')?.value || '',
+                search_customfields: $('#search_customfields')?.value || '',
+                search_customfieldids: eme_getValue($('#search_customfieldids'))
+            }),
+            fields: locationFields,
             sortingInfoSelector: '#locationstablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            messages: { sortingInfoNone: '' }
         });
 
-        $('#LocationsTableContainer').jtable('load');
-        $('<div id="locationstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#LocationsTableContainer');
+        LocationsTable.load();
     }
 
-    function updateShowHideStuff () {
-        let $action=$('select#eme_admin_action').val();
-        if ($action == 'deleteLocations') {
-            $('span#span_transferto').show();
-        } else {
-            $('span#span_transferto').hide();
-        }
-        // online locations don't need an address or map icon
-	// other stuff for online_only is done in updateOnlineOnly function in eme_edit_maps.js
-        if ($('input#eme_loc_prop_online_only').prop('checked')) {
-            $('div#loc_address').hide();
-            $('div#loc_map_icon').hide();
-        } else {
-            $('div#loc_address').show();
-            $('div#loc_map_icon').show();
-        }
+    // --- Conditional UI: Show/hide transfer field ---
+    function updateShowHideStuff() {
+        const action = $('#eme_admin_action')?.value || '';
+        eme_toggle($('#span_transferto'), ['trashLocations', 'deleteLocations'].includes(action));
     }
+
+    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
-    $('select#eme_admin_action').on("change",updateShowHideStuff);
-    $('input#eme_loc_prop_online_only').on("change",updateShowHideStuff);
 
-    function changeLocationAdminPageTitle() {
-        let locationame=$('input[name=location_name]').val();
-        if (!locationame) {
-            title=emelocations.translate_insertnewlocation;
-        } else {
-            title=emelocations.translate_editlocationstring;
-            title=title.replace(/%s/g, locationame);
-        }
-        jQuery(document).prop('title', eme_htmlDecode(title));
-    }
-    if ($('input[name=location_name]').length) {
-        changeLocationAdminPageTitle();
-        $('input[name=location_name]').on("keyup",changeLocationAdminPageTitle);
-    }
+    // --- Bulk Actions ---
+    const actionsButton = $('#LocationsActionsButton');
+    if (actionsButton) {
+        actionsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = LocationsTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+            const transfertoId = $('#transferto_id')?.value || '';
 
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($('input[name=chooselocation]').length) {
-        let emeadmin_chooselocation_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=chooselocation]").on("input", function(e) {
-            clearTimeout(emeadmin_chooselocation_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_chooselocation_timeoutsetTimeout(function() {
-                    $.post(ajaxurl,
-                        { 
-                            'name': inputValue,
-                            'eme_admin_nonce': emelocations.translate_adminnonce,
-                            'action': 'eme_autocomplete_locations'
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>#"+eme_htmlDecode(item.location_id)+' '+eme_htmlDecode(item.name)+'</strong><br><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+'</small>')
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.person_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+emelocations.translate_nomatchlocation+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
+            if (selectedRows.length === 0 || !doAction) return;
+
+            let proceed = true;
+            if (['trashLocations', 'deleteLocations'].includes(doAction) && !confirm(emelocations.translate_areyousuretodeleteselected)) {
+                proceed = false;
             }
-        });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
-        });
 
-        // if manual input: set the hidden field empty again
-        $('input[name=chooselocation]').on("keyup",function() {
-            $('input[name=transferto_id]').val('');
-        }).on("change",function() {
-            if ($(this).val()=='') {
-                $(this).attr('readonly', false).removeClass('clearable');
-                $('input[name=transferto_id]').val('');
-            }
-        });
-    }
+            if (proceed) {
+                actionsButton.textContent = emelocations.translate_pleasewait;
+                actionsButton.disabled = true;
 
-    // Actions button
-    $('#LocationsActionsButton').on("click",function (e) {
-        e.preventDefault();
-        let selectedRows = $('#LocationsTableContainer').jtable('selectedRows');
-        let do_action = $('#eme_admin_action').val();
-        let nonce = $('#eme_admin_nonce').val();
-        let action_ok=1;
-        if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='deleteLocations') && !confirm(emelocations.translate_areyousuretodeleteselected)) {
-                action_ok=0;
-            }
-            if (action_ok==1) {
-                $('#LocationsActionsButton').text(emelocations.translate_pleasewait);
-                let ids = [];
-                selectedRows.each(function () {
-                    ids.push($(this).attr('data-record-key'));
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('location_id', idsJoined);
+                formData.append('action', 'eme_manage_locations');
+                formData.append('do_action', doAction);
+                formData.append('transferto_id', transfertoId);
+                formData.append('eme_admin_nonce', emelocations.translate_adminnonce);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    LocationsTable.load();
+                    actionsButton.textContent = emelocations.translate_apply;
+                    actionsButton.disabled = false;
+
+                    const msg = $('div#locations-message');
+                    if (msg) {
+                        msg.textContent = data.Message;
+                        eme_toggle(msg, true);
+                        setTimeout(() => eme_toggle(msg, false), 5000);
+                    }
                 });
+            }
+        });
+    }
 
-                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                $.post(ajaxurl, {
-                    'location_id': idsjoined,
-                    'action': 'eme_manage_locations',
-                    'do_action': do_action,
-                    'transferto_id': $('#transferto_id').val(),
-                    'eme_admin_nonce': nonce },
-                    function() {
-                        $('#LocationsTableContainer').jtable('reload');
-                        $('#LocationsActionsButton').text(emelocations.translate_apply);
+    // --- Reload Button ---
+    $('#LocationsLoadRecordsButton')?.addEventListener('click', e => {
+        e.preventDefault();
+        LocationsTable.load();
+    });
+
+    $('#locationForm')?.addEventListener('submit', function(event) {
+        const form = this.form;
+        // Manually trigger HTML5 validation
+        if (!form.checkValidity()) {
+            event.preventDefault(); // Stop submission
+
+            // Find the first invalid field
+            const invalidField = form.querySelector(':invalid');
+            if (invalidField) {
+                eme_scrollToInvalidInput(invalidField); // this switches to the correct tab
+            }
+            return;
+        }
+    });
+
+    // Image handling
+    const imageButton = $('#location_image_button');
+    const removeImageBtn = $('#location_remove_image_button');
+    const imageUrl = $('#location_image_url');
+    const imageExample = $('#eme_location_image_example');
+    const imageId = $('#location_image_id');
+    if (removeImageBtn) {
+        removeImageBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (imageUrl) imageUrl.value = '';
+            if (imageId) imageId.value = '';
+            if (imageExample) {
+                imageExample.src = '';
+                eme_toggle(imageExample, false);
+            }
+            if (imageButton) eme_toggle(imageButton, true);
+            eme_toggle(removeImageBtn, false);
+        });
+    }
+
+    if (imageButton) {
+        imageButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.wp && window.wp.media) {
+                const customUploader = window.wp.media({
+                    title: emelocations.translate_selectfeaturedimg || 'Select Featured Image',
+                    button: { text: emelocations.translate_setfeaturedimg || 'Set Featured Image' },
+                    library: { type: 'image' },
+                    multiple: false
+                }).on('select', function() {
+                    const selection = customUploader.state().get('selection');
+                    selection.map(function(attach) {
+                        const attachment = attach.toJSON();
+                        
+                        if (imageUrl) imageUrl.value = attachment.url;
+                        if (imageId) imageId.value = attachment.id;
+                        if (imageExample) {
+                            imageExample.src = attachment.url;
+                            eme_toggle(imageExample, true);
+                        }
+                        eme_toggle(imageButton, false);
+                        if (removeBtn) eme_toggle(removeImageBtn, true);
                     });
-            }
-        }
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-    // Re-load records when user click 'load records' button.
-    $('#LocationsLoadRecordsButton').on("click",function (e) {
-        e.preventDefault();
-        $('#LocationsTableContainer').jtable('load');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-    $('#location_remove_image_button').on("click",function(e) {
-        $('#location_image_url').val('');
-        $('#location_image_id').val('');
-        $('#eme_location_image_example' ).attr("src",'').hide();
-        $('#location_image_button' ).show();
-        $('#location_remove_image_button' ).hide();
-    });
-    $('#location_image_button').on("click",function(e) {
-        e.preventDefault();
-
-        let custom_uploader = wp.media({
-            title: emelocations.translate_selectfeaturedimage,
-            button: {
-                text: emelocations.translate_setfeaturedimage
-            },
-            // Tell the modal to show only images.
-            library: {
-                type: 'image'
-            },
-            multiple: false  // Set this to true to allow multiple files to be selected
-        }).on('select', function() {
-            let selection = custom_uploader.state().get('selection');
-            // using map is not really needed, but this way we can reuse the code if multiple=true
-            // let attachment = custom_uploader.state().get('selection').first().toJSON();
-            selection.map( function(attach) {
-                attachment = attach.toJSON();
-                $('#location_image_url').val(attachment.url);
-                $('#location_image_id').val(attachment.id);
-                $('#eme_location_image_example' ).attr("src",attachment.url).show();
-                $('#location_image_button' ).hide();
-                $('#location_remove_image_button' ).show();
-            });
-        }).open();
-    });
-    if ($('#location_image_url').val() != '') {
-        $('#location_image_button' ).hide();
-        $('#location_remove_image_button' ).show();
-        $('#eme_location_image_example' ).show();
-    } else {
-        $('#location_image_button' ).show();
-        $('#location_remove_image_button' ).hide();
-        $('#eme_location_image_example' ).hide();
-    }
-    if ($('#locationForm').length) {
-        // the validate plugin can take other tabs/hidden fields into account
-        $('#locationForm').validate({
-            // ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
-            ignore: false,
-            focusCleanup: true,
-            errorClass: "eme_required",
-            invalidHandler: function(e,validator) {
-                $.each(validator.invalid, function(key, value) {
-                    // get the closest tabname
-                    let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    eme_activateTab(tabname);
-                    // break the loop, we only want to switch to the first tab with the error
-                    return false;
-                });
+                }).open();
             }
         });
     }
 
+    if (imageUrl) {
+        if (imageUrl.value !== '') {
+            if (imageButton) eme_toggle(imageButton, false);
+            if (removeImageBtn) eme_toggle(removeImageBtn, true);
+            if (imageExample) eme_toggle(imageExample, true);
+        } else {
+            if (imageButton) eme_toggle(imageButton, true);
+            if (removeImageBtn) eme_toggle(removeImageBtn, false);
+            if (imageExample) eme_toggle(imageExample, false);
+        }
+    }
 });

@@ -1753,7 +1753,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
     }
     if ( ! $from_backend ) {
         $form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-            <div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' style='display: none' class='eme-showifjs'><form name='eme-member-form' id='$form_id' method='post' $form_class action='#'>";
+            <div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' class='eme-showifjs eme-hidden'><form name='eme-member-form' id='$form_id' method='post' $form_class action='#'>";
         $form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
         $form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
     }
@@ -2051,7 +2051,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_form_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['member_form_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2083,7 +2083,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_familymember_form_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['familymember_form_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2101,7 +2101,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['member_added_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2119,7 +2119,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['payment_form_header_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2137,7 +2137,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['payment_form_footer_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2155,7 +2155,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['payment_success_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2199,7 +2199,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2268,7 +2268,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_new_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['new_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2338,7 +2338,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_new_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['contact_new_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2375,7 +2375,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_updated_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['updated_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2412,7 +2412,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_extended_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['extended_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2491,7 +2491,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['paid_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2561,7 +2561,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['contact_paid_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2601,7 +2601,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_reminder_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['reminder_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2641,7 +2641,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['stop_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2672,7 +2672,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['contact_stop_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2709,7 +2709,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_deleted_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['contact_deleted_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -2745,7 +2745,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_ipn_body_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
     if ( eme_is_empty_string( $membership['properties']['contact_ipn_body_text'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -3225,7 +3225,7 @@ function eme_manage_members_layout( $message ) {
     <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
     </span>
-    <div id='eme_div_import' style='display:none;'>
+    <div id='eme_div_import' class='eme-hidden'>
     <form id='member-import' method='post' enctype='multipart/form-data' action='#'>
     <?php echo $nonce_field; ?>
     <input type="file" name="eme_csv">
@@ -6770,7 +6770,7 @@ function eme_ajax_members_select2() {
     $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    $jTableResult      = [];
+    $fTableResult      = [];
     $q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     if ( ! empty( $q ) ) {
         $where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
@@ -6801,9 +6801,9 @@ function eme_ajax_members_select2() {
         $record['text'] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] ) . ' (' . $member['membership_name'] . ')';
         $records[]      = $record;
     }
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -6828,14 +6828,14 @@ function eme_ajax_store_members_query() {
         $group['search_terms'] = eme_serialize( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
-            $jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
         } else {
-            $jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
         }
     } else {
-        $jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
+        $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -6849,9 +6849,9 @@ function eme_ajax_manage_members() {
         $ids     = eme_sanitize_request($_POST['member_id']);
         $ids_arr = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            $jTableResult['Result']      = 'Error';
-            $jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-            print wp_json_encode( $jTableResult );
+            $fTableResult['Result']      = 'Error';
+            $fTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+            print wp_json_encode( $fTableResult );
             wp_die();
         }
 

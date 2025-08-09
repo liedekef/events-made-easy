@@ -2192,7 +2192,7 @@ function eme_manage_people_layout( $message = '' ) {
             <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
         </span>
-        <div id='eme_div_import' style='display:none;'>
+        <div id='eme_div_import' class='eme-hidden'>
         <form id='people-import' method='post' enctype='multipart/form-data' action='#'>
             <?php echo $nonce_field; ?>
         <input type="file" name="eme_csv">
@@ -2401,17 +2401,20 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td></td>
         </tr>
         <tr>
-        <td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
+        <td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
+        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
+        <td></td>
         </tr>
         <tr>
-        <td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
+        <td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
+        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
+        <td></td>
         </tr>
         <tr>
         <td><label for="dp_birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
-        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo eme_esc_html( $person['birthdate'] ); ?>' data-date-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='#birthdate' class='eme_formfield_fdate'>
+        <td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
+        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo eme_esc_html( $person['birthdate'] ); ?>' data-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
+        <td></td>
         </tr>
         <tr>
         <td><label for="bd_email"><?php esc_html_e( 'Birthday email', 'events-made-easy' ); ?></label></td>
@@ -4693,7 +4696,7 @@ function eme_subform_shortcode( $atts ) {
     usleep( 2 );
     $form_id    = uniqid();
     $form_html  = "<noscript><div class='eme-noscriptmsg'>" . esc_html__( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-subscribe-message-ok-$form_id' class='eme-message-success eme-subscribe-message eme-subscribe-message-success eme-hidden'></div><div id='eme-subscribe-message-error-$form_id' class='eme-message-error eme-subscribe-message eme-subscribe-message-error eme-hidden'></div><div id='div_eme-subscribe-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-subscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><br>";
+        <div id='eme-subscribe-message-ok-$form_id' class='eme-message-success eme-subscribe-message eme-subscribe-message-success eme-hidden'></div><div id='eme-subscribe-message-error-$form_id' class='eme-message-error eme-subscribe-message eme-subscribe-message-error eme-hidden'></div><div id='div_eme-subscribe-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-subscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>";
     $form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
     $form_html .= eme_replace_subscribeform_placeholders( $format );
     $form_html .= '</form></div>';
@@ -4778,7 +4781,7 @@ function eme_unsubform_shortcode( $atts = [] ) {
     usleep( 2 );
     $form_id     = uniqid();
     $form_html   = "<noscript><div class='eme-noscriptmsg'>" . esc_html__( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-unsubscribe-message-ok-$form_id' class='eme-message-success eme-unsubscribe-message eme-unsubscribe-message-success eme-hidden'></div><div id='eme-unsubscribe-message-error-$form_id' class='eme-message-error eme-unsubscribe-message eme-unsubscribe-message-error eme-hidden'></div><div id='div_eme-unsubscribe-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-unsubscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><br>";
+        <div id='eme-unsubscribe-message-ok-$form_id' class='eme-message-success eme-unsubscribe-message eme-unsubscribe-message-success eme-hidden'></div><div id='eme-unsubscribe-message-error-$form_id' class='eme-message-error eme-unsubscribe-message eme-unsubscribe-message-error eme-hidden'></div><div id='div_eme-unsubscribe-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-unsubscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>";
     $form_html  .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
     $unsubscribe = 1;
     $form_html  .= eme_replace_subscribeform_placeholders( $format, $unsubscribe );
@@ -5059,7 +5062,7 @@ function eme_ajax_people_list( ) {
 
     $formfields = eme_get_formfields( '', 'people' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     $limit        = eme_get_datatables_limit();
     $orderby      = eme_get_datatables_orderby();
     $search_terms = eme_unserialize(eme_sanitize_request($_POST));
@@ -5142,10 +5145,10 @@ function eme_ajax_people_list( ) {
         }
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -5162,7 +5165,7 @@ function eme_ajax_groups_list() {
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
-    $jTableResult = [];
+    $fTableResult = [];
     $sql          = "SELECT COUNT(*) FROM $table";
     $recordCount  = $wpdb->get_var( $sql );
 
@@ -5216,10 +5219,10 @@ function eme_ajax_groups_list() {
         }
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -5237,7 +5240,7 @@ function eme_ajax_people_select2() {
 
     $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
-    $jTableResult = [];
+    $fTableResult = [];
     $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     if ( ! empty( $q ) ) {
         $where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
@@ -5259,9 +5262,9 @@ function eme_ajax_people_select2() {
         $record['text'] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')';
         $records[]      = $record;
     }
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -5289,14 +5292,14 @@ function eme_ajax_store_people_query() {
         $group['search_terms'] = eme_serialize( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
-            $jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
         } else {
-            $jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
         }
     } else {
-        $jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
+        $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -5308,8 +5311,8 @@ function eme_ajax_manage_people() {
         $ids       = eme_sanitize_request( $_POST['person_id'] );
         $ids_arr   = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $jTableResult['Result']  = 'Error';
-            $jTableResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
+            $fTableResult['Result']  = 'Error';
+            $fTableResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $ajaxResult );
             wp_die();
         }

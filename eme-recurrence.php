@@ -719,7 +719,7 @@ function eme_ajax_recurrences_list() {
 		$record['recurrence_id'] = $recurrence['recurrence_id'];
 		$record['event_name']    = "<strong><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $recurrence['recurrence_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . __( 'Edit recurrence', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
         $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_recurrence&amp;recurrence_id=' . $recurrence['recurrence_id'] ).'";';
-        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this recurrence', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this recurrence', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
 		if ( $event['event_rsvp'] ) {
 			$total_seats = eme_get_total( $event['event_seats'] );
 			if ( eme_is_multi( $event['event_seats'] ) ) {

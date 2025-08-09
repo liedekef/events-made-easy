@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
         joditDiv.id = `joditdiv_${textarea.id}`; // this allows us to use editor.id with a predictable name in the preview code
         joditParentDiv.append(joditDiv);
 
-        textarea.style.display = 'none';
+        eme_toggle(textarea, false);
         textarea.style.width = '100%';
         textarea.rows = 10;  // sets visible rows to 10
         textarea.style.boxSizing = 'border-box';
@@ -392,8 +392,8 @@ document.addEventListener('DOMContentLoaded', function () {
             visualBtn.setAttribute('aria-pressed', 'false');
             textBtn.setAttribute('aria-pressed', 'true');
             textarea.value = initialValue;
-            textarea.style.display = 'block';
-            joditParentDiv.style.display = 'none';
+            eme_toggle(textarea, true);
+            eme_toggle(joditParentDiv, false);
         }
 
         visualBtn.addEventListener('click', () => {
@@ -402,8 +402,8 @@ document.addEventListener('DOMContentLoaded', function () {
             visualBtn.setAttribute('aria-pressed', 'true');
             textBtn.setAttribute('aria-pressed', 'false');
             editor.value = textarea.value;
-            joditParentDiv.style.display = 'block';
-            textarea.style.display = 'none';
+            eme_toggle(joditParentDiv, true);
+            eme_toggle(textarea, false);
         });
 
         textBtn.addEventListener('click', () => {
@@ -412,8 +412,8 @@ document.addEventListener('DOMContentLoaded', function () {
             textBtn.setAttribute('aria-pressed', 'true');
             visualBtn.classList.remove('active');
             textarea.value = editor.value;
-            textarea.style.display = 'block';
-            joditParentDiv.style.display = 'none';
+            eme_toggle(textarea, true);
+            eme_toggle(joditParentDiv, false);
         });
 
         // textarea._joditInstance = editor; // store jodit instance on the dom (works, but we use Jodit.instances)

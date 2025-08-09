@@ -269,11 +269,11 @@ function eme_ajax_action_holidays_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_holidays' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -296,10 +296,10 @@ function eme_ajax_action_holidays_list() {
         $record['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-holidays&amp;eme_admin_action=edit_holidays&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . eme_trans_esc_html( $row['name'] ) . '</a>';
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -308,11 +308,11 @@ function eme_ajax_action_manage_holidays() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_holidays' ) )) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
 
@@ -325,11 +325,11 @@ function eme_ajax_action_manage_holidays() {
             if (eme_is_list_of_int($ids_list)) {
                 $wpdb->query( "DELETE FROM $table WHERE id IN ( $ids_list )");
             }
-            $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Holiday lists deleted','events-made-easy')."</div>";
-            $jTableResult['Result'] = 'OK';
+            $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Holiday lists deleted','events-made-easy')."</div>";
+            $fTableResult['Result'] = 'OK';
             break;
         }
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }

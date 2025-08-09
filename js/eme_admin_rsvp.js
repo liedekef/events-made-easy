@@ -1,7 +1,15 @@
-jQuery(document).ready(function ($) { 
-    //Prepare jtable plugin
-    if ($('#BookingsTableContainer').length) {
-        let rsvpfields = {
+document.addEventListener('DOMContentLoaded', function () {
+    const BookingsTableContainer = $('#BookingsTableContainer');
+    let BookingsTable;
+
+    // --- Initialize Bookings Table ---
+    if (BookingsTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'bookingsrsvptablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        BookingsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        let bookingFields = {
             booking_id: {
                 key: true,
                 width: '1%',
@@ -27,7 +35,7 @@ jQuery(document).ready(function ($) {
                 title: emersvp.translate_rsvp,
                 sorting: false,
                 width: '2%',
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center'
             },
             event_start: {
                 title: emersvp.translate_eventstart,
@@ -41,7 +49,7 @@ jQuery(document).ready(function ($) {
             seats: {
                 title: emersvp.translate_seats,
                 sorting: false,
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center'
             },
             eventprice: {
                 title: emersvp.translate_eventprice,
@@ -118,413 +126,222 @@ jQuery(document).ready(function ($) {
                 sorting: false,
                 visibility: 'hidden'
             }
-        }
-        let editfield = {
-            edit_link: {
-                title: emersvp.translate_edit,
-                sorting: false,
-                visibility: 'fixed',
-                listClassEntry: 'jtable-command-column eme-jtable-center',
-                listClassHeader: 'jtable-command-column-header eme-jtable-center',
-                width: '1%',
-            }
-        }
-        let extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');
-        let extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
-        let extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
-        $.each(extrafields, function( index, value ) {
-            if (value == 'SEPARATOR') {
-                let fieldindex='SEPARATOR_'+index;
-                let extrafield = {};
-                extrafield[fieldindex] = {
-                    title: extrafieldnames[index],
-                    sorting: false,
-                    visibility: 'separator'
-                };
-                $.extend(rsvpfields,extrafield);
-            } else if (value != '') {
-                let fieldindex='FIELD_'+value;
-                let extrafield = {};
-                if (extrafieldsearchable[index]=='1') {
-                    sorting=true;
-                } else {
-                    sorting=false;
+        };
+
+        // Add extra fields
+        const extraFieldsAttr = BookingsTableContainer.dataset.extrafields;
+        const extraFieldNamesAttr = BookingsTableContainer.dataset.extrafieldnames;
+        const extrafieldsearchableAttr = BookingsTableContainer.dataset.extrafieldsearchable;
+        if (extraFieldsAttr && extraFieldNamesAttr) {
+            const extraFields = extraFieldsAttr.split(',');
+            const extraNames = extraFieldNamesAttr.split(',');
+            const extraSearches = extrafieldsearchableAttr.split(',');
+            extraFields.forEach((field, index) => {
+                if (field == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+index;
+                    bookingFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
+                } else if (field) {
+                    let fieldindex = 'FIELD_'+index;
+                    bookingFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index]=='1', visibility: 'hidden' };
                 }
-                extrafield[fieldindex] = {
-                    title: extrafieldnames[index],
-                    sorting: sorting,
-                    visibility: 'hidden'
-                };
-                $.extend(rsvpfields,extrafield);
-            }
-        });
-        if (typeof $_GET['trash']==='undefined' || $_GET['trash']==0) {
-            $.extend(rsvpfields,editfield);
+            });
         }
 
-        $('#BookingsTableContainer').jtable({
+        // Add edit link field
+        bookingFields.edit_link = {
+            title: emersvp.translate_edit,
+            sorting: false,
+            visibility: 'fixed',
+            width: '1%',
+            listClass: 'ftable-command-column eme-ftable-center',
+            value: record => {
+                const a = document.createElement('a');
+                a.href = record.edit_link_url;
+                a.textContent = emersvp.translate_edit;
+                a.className = 'button';
+                return a;
+            }
+        };
+
+        BookingsTable = new FTable('#BookingsTableContainer', {
             title: emersvp.translate_bookings,
             paging: true,
             sorting: true,
             multiSorting: true,
-            defaultSorting: 'creation_date ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            defaultSorting: 'booking_date DESC',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             csvExport: true,
             printTable: true,
-            toolbar: {
-                items: [
-                    {
-                        text: emersvp.translate_markpaidandapprove,
-                        cssClass: 'eme_jtable_button_for_pending_only',
-                        click: function () {
-                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-                            let do_action = 'markpaidandapprove';
-                            if (selectedRows.length > 0) {
-                                let ids = [];
-                                selectedRows.each(function () {
-                                    ids.push($(this).attr('data-record-key'));
-                                });
-                                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                                $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
-                                $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
-                                    if (data.Result!='OK') {
-                                        $('div#bookings-message').html(data.htmlmessage);
-                                        $('div#bookings-message').show();
-                                        $('div#bookings-message').delay(5000).fadeOut('slow');
-                                    }
-
-                                    $('#BookingsTableContainer').jtable('reload');
-                                    $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
-                                }, 'json');
-                            }
-                        }
-                    },
-                    {
-                        text: emersvp.translate_markpaid,
-                        cssClass: 'eme_jtable_button_for_approved_only',
-                        click: function () {
-                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-                            let do_action = 'markPaid';
-                            if (selectedRows.length > 0) {
-                                let ids = [];
-                                selectedRows.each(function () {
-                                    ids.push($(this).attr('data-record-key'));
-                                });
-                                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                                $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
-                                $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
-                                    if (data.Result!='OK') {
-                                        $('div#bookings-message').html(data.htmlmessage);
-                                        $('div#bookings-message').show();
-                                        $('div#bookings-message').delay(5000).fadeOut('slow');
-                                    }
-
-                                    $('#BookingsTableContainer').jtable('reload');
-                                    $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
-                                }, 'json');
-                            }
-                        }
-                    }
-                ]
-            },
-            actions: {
-                listAction: ajaxurl
-            },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_bookings_list",
-                    'eme_admin_nonce': emersvp.translate_adminnonce,
-                    'trash': $_GET['trash'],
-                    'scope': $('#scope').val(),
-                    'category': $('#category').val(),
-                    'booking_status': $('#booking_status').val(),
-                    'search_event': $('#search_event').val(),
-                    'search_person': $('#search_person').val(),
-                    'search_customfields': $('#search_customfields').val(),
-                    'search_unique': $('#search_unique').val(),
-                    'search_paymentid': $('#search_paymentid').val(),
-                    'search_pg_pid': $('#search_pg_pid').val(),
-                    'search_start_date': $('#search_start_date').val(),
-                    'search_end_date': $('#search_end_date').val(),
-                    'event_id': $('#event_id').val(),
-                    'person_id': $_GET['person_id']
-                }
-                return params;
-            },
-            fields: rsvpfields,
-            sortingInfoSelector: '#bookingstablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_bookings_list',
+                eme_admin_nonce: emersvp.translate_adminnonce,
+                trash: new URLSearchParams(window.location.search).get('trash') || '',
+                scope: eme_getValue($('#scope')),
+                category: eme_getValue($('#category')).value || '',
+                booking_status: eme_getValue($('#booking_status')),
+                search_event: eme_getValue($('#search_event')),
+                search_person: eme_getValue($('#search_person')),
+                search_customfields: eme_getValue($('#search_customfields')),
+                search_unique: eme_getValue($('#search_unique')),
+                search_paymentid: eme_getValue($('#search_paymentid')),
+                search_pg_pid: eme_getValue($('#search_pg_pid')),
+                search_start_date: eme_getValue($('#search_start_date')),
+                search_end_date: eme_getValue($('#search_end_date')),
+                event_id: $('#event_id')?.value || '',
+                person_id: $_GET['person_id']
+            }),
+            fields: bookingFields,
+            sortingInfoSelector: '#bookingsrsvptablesortingInfo',
+            messages: { sortingInfoNone: '' }
         });
 
-        $('#BookingsTableContainer').jtable('load');
-        $('<div id="bookingstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#BookingsTableContainer');
-
+        BookingsTable.load();
     }
 
+    // --- Conditional UI for Actions ---
     function updateShowHideStuff() {
-        let action=$('select#eme_admin_action').val();
-        if ($.inArray(action,['resendApprovedBooking']) >= 0) {
-            $('span#span_sendtocontact').show();
-        } else {
-            $('span#span_sendtocontact').hide();
-        }
-        if ($.inArray(action,['trashBooking','approveBooking','pendingBooking','unsetwaitinglistBooking','setwaitinglistBooking','markPaid','markUnpaid']) >= 0) {
-            $('span#span_sendmails').show();
-        } else {
-            $('span#span_sendmails').hide();
-        }
-        if (($.inArray(action,['trashBooking','pendingBooking','setwaitinglistBooking','markUnpaid']) >= 0) && (typeof $_GET['trash']==='undefined' || $_GET['trash']==0)) {
-            $('span#span_refund').show();
-        } else {
-            $('span#span_refund').hide();
-        }
-        if ($.inArray(action,['partialPayment']) >= 0) {
-            $('span#span_partialpayment').show();
-        } else {
-            $('span#span_partialpayment').hide();
-        }
-        if (action == 'rsvpMails') {
-            jQuery('span#span_rsvpmailtemplate').show();
-        } else {
-            jQuery('span#span_rsvpmailtemplate').hide();
-        }
-        if (action == 'pdf') {
-            jQuery('span#span_pdftemplate').show();
-        } else {
-            jQuery('span#span_pdftemplate').hide();
-        }
-        if (action == 'html') {
-            jQuery('span#span_htmltemplate').show();
-        } else {
-            jQuery('span#span_htmltemplate').hide();
-        }
-        if (action == 'addToGroup') {
-            $('span#span_addtogroup').show();
-        } else {
-            $('span#span_addtogroup').hide();
-        }
-        if (action == 'removeFromGroup') {
-            $('span#span_removefromgroup').show();
-        } else {
-            $('span#span_removefromgroup').hide();
+        const action = $('#eme_admin_action')?.value || '';
+        const sendMailsSpan = $('#span_sendmails');
+        if (sendMailsSpan) {
+            eme_toggle(sendMailsSpan, ['approveBookings', 'rejectBookings', 'trashBookings'].includes(action));
         }
     }
-    $('select#eme_admin_action').on("change",updateShowHideStuff);
+
+    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
-    // hide one toolbar button if not on pending approval and trash=0 (or not set)
-    function showhideButtonPaidApprove() {
-        if ($('#booking_status').val() == "PENDING" && (typeof $_GET['trash']==='undefined' || $_GET['trash']==0)) {
-            $('.eme_jtable_button_for_pending_only').show();
-        } else {
-            $('.eme_jtable_button_for_pending_only').hide();
-        }
-        if ($('#booking_status').val() == "APPROVED" && (typeof $_GET['trash']==='undefined' || $_GET['trash']==0)) {
-            $('.eme_jtable_button_for_approved_only').show();
-        } else {
-            $('.eme_jtable_button_for_approved_only').hide();
-        }
-    }
-    showhideButtonPaidApprove();
+    // --- Bulk Actions ---
+    const actionsButton = $('#BookingsActionsButton');
+    if (actionsButton) {
+        actionsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = BookingsTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+            const sendMail = $('#send_mail')?.value || 'no';
 
-    // Actions button
-    $('#BookingsActionsButton').on("click",function (e) {
-        e.preventDefault();
-        let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-        let do_action = $('#eme_admin_action').val();
-        let send_to_contact_too = $('#send_to_contact_too').val();
-        let send_mail = $('#send_mail').val();
-        let refund = $('#refund').val();
-        let partial_amount = $('#partial_amount').val();
-        let rsvpmail_template = $('#rsvpmail_template').val();
-        let rsvpmail_template_subject = $('#rsvpmail_template_subject').val();
-        let pdf_template = $('#pdf_template').val();
-        let pdf_template_header = $('#pdf_template_header').val();
-        let pdf_template_footer = $('#pdf_template_footer').val();
-        let html_template = $('#html_template').val();
-        let html_template_header = $('#html_template_header').val();
-        let html_template_footer = $('#html_template_footer').val();
+            if (selectedRows.length === 0 || !doAction) return;
 
-        let action_ok=1;
-        if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='trashBooking' || do_action=='deleteBooking') && !confirm(emersvp.translate_areyousuretodeleteselected)) {
-                action_ok=0;
+            let proceed = true;
+            if (['trashBookings', 'deleteBookings'].includes(doAction) && !confirm(emersvp.translate_areyousuretodeleteselected)) {
+                proceed = false;
             }
-            if ((do_action=='partialPayment') && selectedRows.length > 1) {
-                alert(emersvp.translate_selectonerowonlyforpartial);
-                action_ok=0;
-            }
-            if (action_ok==1) {
-                $('#BookingsActionsButton').text(emersvp.translate_pleasewait);
-                $('#BookingsActionsButton').prop('disabled', true);
-                let ids = [];
-                let form;
-                selectedRows.each(function () {
-                    ids.push($(this).attr('data-record-key'));
-                });
 
-                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                let params = {
-                    'booking_ids': idsjoined,
-                    'action': 'eme_manage_bookings',
-                    'do_action': do_action,
-                    'send_to_contact_too': send_to_contact_too,
-                    'send_mail': send_mail,
-                    'refund': refund,
-                    'partial_amount': partial_amount,
-                    'rsvpmail_template': rsvpmail_template,
-                    'rsvpmail_template_subject': rsvpmail_template_subject,
-                    'pdf_template': pdf_template,
-                    'pdf_template_header': pdf_template_header,
-                    'pdf_template_footer': pdf_template_footer,
-                    'html_template': html_template,
-                    'html_template_header': html_template_header,
-                    'html_templata_footer': html_template_footer,
-                    'eme_admin_nonce': emersvp.translate_adminnonce };
+            if (proceed) {
+                actionsButton.textContent = emersvp.translate_pleasewait;
+                actionsButton.disabled = true;
 
-                if (do_action=='addToGroup' || do_action=='removeFromGroup') {
-                    let people_ids = [];
-                    selectedRows.each(function () {
-                        people_ids.push($(this).data('record')['person_id']);
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('booking_ids', idsJoined);
+                formData.append('action', 'eme_manage_bookings');
+                formData.append('do_action', doAction);
+                formData.append('send_mail', sendMail);
+                formData.append('eme_admin_nonce', emersvp.translate_adminnonce);
+
+                if (doAction === 'sendMails') {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = emersvp.translate_admin_sendmails_url;
+                    ['booking_ids', 'eme_admin_action'].forEach(key => {
+                        const val = key === 'booking_ids' ? idsJoined : 'new_mailing';
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = val;
+                        form.appendChild(input);
                     });
-                    params = {
-                        'person_id': people_ids.join(),
-                        'action': 'eme_manage_people',
-                        'do_action': do_action,
-                        'addtogroup': $('#addtogroup').val(),
-                        'removefromgroup': $('#removefromgroup').val(),
-                        'eme_admin_nonce': emersvp.translate_adminnonce 
-                    };
-                }
-                if (do_action=='sendMails') {
-                    form = $('<form method="POST" action="'+emersvp.translate_admin_sendmails_url+'">');
-                    params = {
-                        'booking_ids': idsjoined,
-                        'eme_admin_action': 'new_mailing'
-                    };
-                    $.each(params, function(k, v) {
-                        form.append($('<input type="hidden" name="' + k + '" value="' + v + '">'));
-                    });
-                    $('body').append(form);
-                    form.trigger("submit");
-                    return false;
+                    document.body.appendChild(form);
+                    form.submit();
+                    return;
                 }
 
-                if (do_action=='pdf' || do_action=='html') {
-                    form = $('<form method="POST" action="' + ajaxurl + '">');
-                    $.each(params, function(k, v) {
-                        form.append($('<input type="hidden" name="' + k + '" value="' + v + '">'));
-                    });
-                    $('body').append(form);
-                    form.trigger("submit");
-                    $('#BookingsActionsButton').text(emersvp.translate_apply);
-                    $('#BookingsActionsButton').prop('disabled', false);
-                    return false;
-                }
-                $.post(ajaxurl, params, function(data) {
-                    $('#BookingsTableContainer').jtable('reload');
-                    $('#BookingsActionsButton').text(emersvp.translate_apply);
-                    $('#BookingsActionsButton').prop('disabled', false);
-                    $('div#bookings-message').html(data.htmlmessage);
-                    $('div#bookings-message').show();
-                    $('div#bookings-message').delay(5000).fadeOut('slow');
-                }, 'json');
-            }
-        }
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-    // Re-load records when user click 'load records' button.
-    $('#BookingsLoadRecordsButton').on("click",function (e) {
-        e.preventDefault();
-        $('#BookingsTableContainer').jtable('load');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-    // we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
-    $('body').on('click', '.eme_iban_button', function(e) {
-        e.preventDefault();
-        let params = {
-            'action': 'eme_get_payconiq_iban',
-            'pg_pid': $(this).data('pg_pid'),
-            'eme_admin_nonce': emersvp.translate_adminnonce
-        };
-        $.post(ajaxurl, params, function(data) {
-            $('#button_'+data.payment_id).hide();
-            $('span#payconiq_'+data.payment_id).html(data.iban);
-        }, 'json');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-
-
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($('input[name=chooseevent]').length) {
-        let emeadmin_chooseevent_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=chooseevent]").on("input", function(e) {
-            clearTimeout(emeadmin_chooseevent_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_chooseevent_timeout = setTimeout(function() {
-                    let search_all=0;
-                    if ($('#eventsearch_all').prop('checked')) {
-                        search_all=1;
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    if (data.Result !== 'OK') {
+                        const msg = $('div#bookings-message');
+                        if (msg) {
+                            msg.textContent = data.htmlmessage;
+                            eme_toggle(msg, true);
+                            setTimeout(() => eme_toggle(msg, false), 5000);
+                        }
                     }
-                    $.post(ajaxurl,
-                        { 
-                            'q': inputValue,
-                            'exclude_id': $('#event_id').val(),
-                            'only_rsvp': 1,
-                            'search_all': search_all,
-                            'eme_admin_nonce': emersvp.translate_adminnonce,
-                            'action': 'eme_autocomplete_event'
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.eventinfo)+"</strong>")
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.event_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.event_id));
-                                            inputField.val(eme_htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+emersvp.translate_nomatchevent+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
+                    BookingsTable.load();
+                    actionsButton.textContent = emersvp.translate_apply;
+                    actionsButton.disabled = false;
+                });
             }
         });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
+    }
+
+    // --- Reload Button ---
+    const loadButton = $('#BookingsLoadRecordsButton');
+    if (loadButton) {
+        loadButton.addEventListener('click', e => {
+            e.preventDefault();
+            BookingsTable.load();
+        });
+    }
+
+    // --- Autocomplete: chooseevent ---
+    if ($('input[name="chooseevent"]')) {
+        let timeout;
+        const input = $('input[name="chooseevent"]');
+        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            const value = this.value.trim();
+            if (value.length < 2) return;
+
+            timeout = setTimeout(() => {
+                const searchAll = $('#eventsearch_all')?.checked ? 1 : 0;
+                const formData = new FormData();
+                formData.append('q', value);
+                formData.append('exclude_id', $('#event_id')?.value || '');
+                formData.append('only_rsvp', 1);
+                formData.append('search_all', searchAll);
+                formData.append('eme_admin_nonce', emersvp.translate_adminnonce);
+                formData.append('action', 'eme_autocomplete_event');
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'eme-autocomplete-suggestions';
+                    data.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'eme-autocomplete-suggestion';
+                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.eventinfo)}</strong>`;
+                        suggestion.addEventListener('click', e => {
+                            e.preventDefault();
+                            if (item.event_id) {
+                                $('input[name="transferto_id"]').value = eme_htmlDecode(item.event_id);
+                                input.value = `${eme_htmlDecode(item.eventinfo)} `;
+                                input.readOnly = true;
+                                input.classList.add('clearable', 'x');
+                            }
+                        });
+                        suggestions.appendChild(suggestion);
+                    });
+                    if (data.length === 0) {
+                        const noMatch = document.createElement('div');
+                        noMatch.className = 'eme-autocomplete-suggestion';
+                        noMatch.textContent = emersvp.translate_nomatchevent;
+                        suggestions.appendChild(noMatch);
+                    }
+                    input.insertAdjacentElement('afterend', suggestions);
+                });
+            }, 500);
         });
 
-        // if manual input: set the hidden field empty again
-        $('input[name=chooseevent]').on("change",function() {
-            if ($(this).val()=='') {
-                $(this).attr('readonly', false).removeClass('clearable');
-                $('input[name=transferto_id]').val('');
+        input.addEventListener('change', () => {
+            if (input.value === '') {
+                $('input[name="transferto_id"]').value = '';
+                input.readOnly = false;
+                input.classList.remove('clearable', 'x');
             }
         });
     }

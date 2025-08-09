@@ -851,7 +851,7 @@ function eme_locations_table( $message = '' ) {
             <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
         </span>
-        <div id='eme_div_import' style='display:none;'>
+        <div id='eme_div_import' class='eme-hidden'>
         <form id='location-import' method='post' enctype='multipart/form-data' action='#'>
             <?php echo $nonce_field; ?>
         <input type="file" name="eme_csv">
@@ -2936,7 +2936,7 @@ function eme_ajax_locations_list() {
     $formfields_searchable = eme_get_searchable_formfields( 'locations' );
     $formfields            = eme_get_formfields( '', 'locations' );
 
-    $jTableResult = [];
+    $fTableResult = [];
     $limit    = eme_get_datatables_limit();
     $orderby  = eme_get_datatables_orderby();
 
@@ -3024,7 +3024,7 @@ function eme_ajax_locations_list() {
         $location_url                 = eme_location_url( $location );
         $record['view']               = "<a href='$location_url'>" . __( 'View location', 'events-made-easy' ) . '</a>';
         $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=copy_location&amp;location_id=' . $location['location_id'] ).'";';
-        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         $location_cf_values           = eme_get_location_answers( $location['location_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $location_cf_values as $val ) {
@@ -3048,10 +3048,10 @@ function eme_ajax_locations_list() {
 
         $records[] = $record;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $records;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $records;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -3059,7 +3059,7 @@ function eme_ajax_manage_locations() {
     $current_userid = get_current_user_id();
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
-    $jTableResult = [];
+    $fTableResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
@@ -3073,11 +3073,11 @@ function eme_ajax_manage_locations() {
                         eme_delete_location( intval( $location_id ), $to_id );
                     }
                 }
-                $jTableResult['Result'] = 'OK';
+                $fTableResult['Result'] = 'OK';
                 break;
         }
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 

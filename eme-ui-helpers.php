@@ -108,6 +108,35 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
 <?php
 }
 
+function eme_options_toggle($title, $name, $description = '', $option_value = false) {
+    $name = wp_strip_all_tags($name);
+    if (!$option_value) {
+        $option_value = get_option($name);
+    }
+
+    $id = esc_attr(sanitize_html_class($name));
+    $checked = $option_value ? 'checked' : '';
+    $yes_label = esc_attr_x('Yes', 'Toggle label', 'events-made-easy');
+    $no_label  = esc_attr_x('No', 'Toggle label', 'events-made-easy');
+?>
+<tr style="vertical-align:top" id="<?php echo $id; ?>_row">
+    <th scope="row"><?php echo esc_html($title); ?></th>
+    <td>
+        <input type="checkbox" class="eme-yesno-check-input"
+            name="<?php echo esc_attr($name); ?>" 
+            id="<?php echo $id; ?>" 
+            value="1" 
+            <?php echo $checked; ?>
+        >
+        <label for="<?php echo $id; ?>" class="eme-yesno-check-text" data-yes="<?php echo $yes_label; ?>" data-no="<?php echo $no_label; ?>"></label>
+        <?php if (!empty($description)): ?>
+            <div class="eme-toggle-description"><?php echo $description; ?></div>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php
+}
+
 function eme_options_radio_binary( $title, $name, $description, $option_value = false ) {
     $name = wp_strip_all_tags( $name );
     if ( ! $option_value ) {

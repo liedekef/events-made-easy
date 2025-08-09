@@ -468,17 +468,13 @@ function eme_events_page() {
         } else {
             $event_end_date = $eme_date_obj->endOfDay()->getDate();
         }
-        if ( ! empty( $_POST['localized_start_time'] ) ) {
-            //$event_start_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_start_time'])." ".EME_TIMEZONE)->format("H:i:00");
-            $start_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $_POST['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
-            $event_start_time = $start_date_obj->format( 'H:i:00' );
+        if ( ! empty( $_POST['event_start_time'] ) ) {
+            $event_start_time = eme_sanitize_request( $_POST['event_start_time'] );
         } else {
             $event_start_time = '00:00:00';
         }
-        if ( ! empty( $_POST['localized_end_time'] ) ) {
-            //$event_end_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_end_time'])." ".EME_TIMEZONE)->format("H:i:00");
-            $end_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $_POST['localized_end_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
-            $event_end_time = $end_date_obj->format( 'H:i:00' );
+        if ( ! empty( $_POST['event_end_time'] ) ) {
+            $event_end_time = eme_sanitize_request( $_POST['event_end_time'] );
         } else {
             $event_end_time = '23:59:59';
         }
@@ -6052,7 +6048,7 @@ function eme_events_table( $message = '' ) {
             <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
         </span>
-        <div id='eme_div_import' style='display:none;'>
+        <div id='eme_div_import' class='eme-hidden'>
         <form id='event-import' method='post' enctype='multipart/form-data' action='#'>
             <?php echo $nonce_field; ?>
         <input type="file" name="eme_csv">
@@ -6092,11 +6088,11 @@ function eme_events_table( $message = '' ) {
     </select>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class='eme_searchfilter'>
     <input id="search_start_date" type="hidden" name="search_start_date" value="" size=10>
-    <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
+    <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
     <input id="search_end_date" type="hidden" name="search_end_date" value="">
-    <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
+    <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
     <a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
-    <div id="extra_searchfields" style="display:none;">
+    <div id="extra_searchfields" class='eme-hidden'>
     <select id="status" name="status">
         <option value="0"><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></option>
 <?php
@@ -6239,9 +6235,9 @@ function eme_recurrences_table( $message = '' ) {
     </select>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
     <input id="search_start_date" type="hidden" name="search_start_date" value="">
-    <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
+    <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
     <input id="search_end_date" type="hidden" name="search_end_date" value="">
-    <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
+    <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
     <button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
     </form>
     <br>
@@ -6257,9 +6253,9 @@ function eme_recurrences_table( $message = '' ) {
     </select>
     <span id="span_extendrecurrences" class="eme-hidden">
     <input id="rec_new_start_date" type="hidden" name="rec_new_start_date" value="">
-    <input id="eme_localized_rec_new_start_date" type="text" name="eme_localized_rec_new_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_start_date' class='eme_formfield_fdate'>
+    <input id="eme_localized_rec_new_start_date" type="text" name="eme_localized_rec_new_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_start_date' class='eme_formfield_fdate'>
     <input id="rec_new_end_date" type="hidden" name="rec_new_end_date" value="">
-    <input id="eme_localized_rec_new_end_date" type="text" name="eme_localized_rec_new_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_end_date' class='eme_formfield_fdate'>
+    <input id="eme_localized_rec_new_end_date" type="text" name="eme_localized_rec_new_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_end_date' class='eme_formfield_fdate'>
     </span>
     <button id="RecurrencesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -6527,7 +6523,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         <?php  esc_html_e( "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task.", 'events-made-easy' ); ?>
         </p>
     </div>
-    <div class="eme-tab-content" id="tab-tasks-container">
+    <div id="tab-tasks-container">
     <h3><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></h3>
     <details name="eme_details_tasks" class="eme_accordion">
     <summary><?php esc_html_e( 'List of tasks', 'events-made-easy' ); ?></summary><div>
@@ -6781,7 +6777,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         <div class="postbox" id="eme_authordiv">
         <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span></h2>
         <div class="inside">
-        <p><?php esc_html_e( 'Author of this event: ', 'events-made-easy' ); ?>
+        <p><?php esc_html_e( 'Author of this event: ', 'events-made-easy' ); ?><br>
 <?php
         $eme_wp_user_arr = [];
         if ( $event_author > 0 ) {
@@ -6799,7 +6795,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         <div class="postbox" id="eme_contactdiv">
         <h2 class='hndle'><span><?php esc_html_e( 'Contact Person', 'events-made-easy' ); ?></span></h2>
         <div class="inside">
-        <p><?php esc_html_e( 'If you leave this empty, the author will be used as contact person.', 'events-made-easy' ); ?>
+        <p><?php esc_html_e( 'If you leave this empty, the author will be used as contact person.', 'events-made-easy' ); ?><br>
 <?php
         $eme_wp_user_arr = [];
         #$eme_wp_user_arr[-1]=__ ( "Event author", 'events-made-easy');
@@ -7088,9 +7084,9 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
         <div id="div_event_date">
         <b><?php esc_html_e( 'Event date', 'events-made-easy' ); ?></b>
         <input id="start-date-to-submit" type="hidden" name="event_start_date" value="">
-        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
         <input id="end-date-to-submit" type="hidden" name="event_end_date" value="">
-        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
+        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
         <p class="eme_smaller">
         <?php esc_html_e( 'The event beginning and end date.', 'events-made-easy' ); ?>
         </p>
@@ -7103,9 +7099,11 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 <?php
     echo '<b>' . esc_html__( 'Event time', 'events-made-easy' ) . '</b>';
 ?>
-        <input id="localized_start_time" type="text" size="8" name="localized_start_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo $start_date_obj->format( EME_WP_TIME_FORMAT );} ?>" class='eme_formfield_timepicker' >
+        <input id="start-time-to-submit" type="hidden" name="event_start_time" value="">
+        <input id="localized-start-time" type="text" name="localized_event_start_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-time-to-submit' class='eme_formfield_ftime' required="required">
         -
-        <input id="localized_end_time" type="text" size="8" name="localized_end_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo $end_date_obj->format( EME_WP_TIME_FORMAT );} ?>" class='eme_formfield_timepicker' >
+        <input id="end-time-to-submit" type="hidden" name="event_end_time" value="">
+        <input id="localized-end-time" type="text" name="localized_event_end_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-time-to-submit' class='eme_formfield_ftime' required="required">
         <p class="eme_smaller">
         <?php esc_html_e( 'The time of the event beginning and end', 'events-made-easy' ); ?>
         </p>
@@ -7172,22 +7170,26 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
     $holidays_array_by_id = eme_get_holidays_array_by_id();
     if ( $edit_recurrence && $recurrence['recurrence_freq'] == 'specific' ) {
         $recurrence_start_date = $recurrence['specific_days'];
+        $data_multiple = "data-multiple='true'";
     } else {
         $recurrence_start_date = $recurrence['recurrence_start_date'];
+        $data_multiple = "";
     }
 ?>
 <div id="div_recurrence_date" style="background-color: lightgrey; padding: 5px;">
     <b><?php esc_html_e( 'Recurrence dates', 'events-made-easy' ); ?></b>
+    <div style="display: flex;">
     <input id="rec-start-date-to-submit" type="hidden" name="recurrence_start_date" value="">
-    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence_start_date ); ?>' data-alt-field='rec-start-date-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence_start_date ); ?>' data-alt-field='rec-start-date-to-submit' <?php echo $data_multiple; ?> data-multiple-display-selector='#recurrence-dates-specificdates' class='eme_formfield_fdate'>
     <input id="rec-end-date-to-submit" type="hidden" name="recurrence_end_date" value="">
-    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence['recurrence_end_date'] ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence['recurrence_end_date'] ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
+    </div>
     <p class="eme_smaller" id='recurrence-dates-explanation'>
     <?php esc_html_e( 'The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one.', 'events-made-easy' ); ?>
     </p>
     <span id='recurrence-dates-explanation-specificdates'>
     <?php esc_html_e( 'Select all the dates you want the event to begin on.', 'events-made-easy' ); ?>
-    </span>
+    </span><br>
     <span id='recurrence-dates-specificdates'>
     </span>
     <div id="event_recurrence_pattern">
@@ -7245,7 +7247,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
         <br>
     <?php esc_html_e( 'Excluded days:', 'events-made-easy' ); ?> 
     <input id="rec-excludedays-to-submit" type="hidden" name="recurrence_exclude_days" value="">
-    <input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" style="background: #FCFFAA;" readonly="readonly" data-multiple-dates='true' data-date='<?php echo eme_js_datetime( $recurrence['exclude_days'] ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" readonly="readonly" data-multiple='true' data-date='<?php echo eme_js_datetime( $recurrence['exclude_days'] ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
             <p class="eme_smaller">
 <?php
     esc_html_e( 'No events will be created on excluded days.', 'events-made-easy' );
@@ -7272,7 +7274,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 
 function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_page_title_format'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7300,7 +7302,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
 
 function eme_meta_box_div_event_single_event_format( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_single_event_format'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7341,7 +7343,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
 
 function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_ipn_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7365,7 +7367,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_ipn_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7405,7 +7407,7 @@ function eme_meta_box_div_event_dyndata_allfields( $dyndata_all_fields, $templat
 
 function eme_meta_box_div_event_registration_recorded_ok_html( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_registration_recorded_ok_html'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7437,7 +7439,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 function eme_meta_box_div_event_registration_approved_email( $event, $templates_array, $pdf_templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_respondent_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7473,7 +7475,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_respondent_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7498,7 +7500,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_contactperson_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7521,7 +7523,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_contactperson_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7587,7 +7589,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 function eme_meta_box_div_event_registration_userpending_email( $event, $templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7616,7 +7618,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7644,7 +7646,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 function eme_meta_box_div_event_registration_pending_email( $event, $templates_array, $pdf_templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7674,7 +7676,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_pending_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7699,7 +7701,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_pending_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7722,7 +7724,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_pending_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7788,7 +7790,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 function eme_meta_box_div_event_registration_updated_email( $event, $templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_updated_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7811,7 +7813,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_updated_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7839,7 +7841,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 function eme_meta_box_div_event_registration_reminder_email( $event, $templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7862,7 +7864,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7903,7 +7905,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_reminder_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7931,7 +7933,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 function eme_meta_box_div_event_registration_cancelled_email( $event, $templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7954,7 +7956,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_cancelled_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -7979,7 +7981,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_cancelled_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8002,7 +8004,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_cancelled_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8030,7 +8032,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 function eme_meta_box_div_event_registration_paid_email( $event, $templates_array, $pdf_templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8058,7 +8060,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_paid_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8083,7 +8085,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <br >
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_paid_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8106,7 +8108,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_paid_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8172,7 +8174,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 function eme_meta_box_div_event_registration_trashed_email( $event, $templates_array ) {
     $use_html_editor = get_option( 'eme_mail_send_html' );
     if ( eme_is_empty_string( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8195,7 +8197,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_trashed_email_body'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8222,7 +8224,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 
 function eme_meta_box_div_event_registration_form_format( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_registration_form_format'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8250,7 +8252,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
 
 function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
     if ( eme_is_empty_string( $event['event_cancel_form_format'] ) ) {
-        $showhide_style = 'style="display:none; width:100%;"';
+        $showhide_style = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style = 'style="width:100%;"';
     }
@@ -8581,12 +8583,12 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array ) {
     $eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
     if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
-        $showhide_style_unauth = 'style="display:none; width:100%;"';
+        $showhide_style_unauth = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style_unauth = 'style="width:100%;"';
     }
     if ( eme_is_empty_string( $event['event_properties']['attendance_auth_scan_tpl'] ) ) {
-        $showhide_style_auth = 'style="display:none; width:100%;"';
+        $showhide_style_auth = 'class="eme-hidden" style="width:100%;"';
     } else {
         $showhide_style_auth = 'style="width:100%;"';
     }
@@ -9526,11 +9528,11 @@ function eme_admin_enqueue_js() {
         ];
         wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
         wp_enqueue_script( 'eme-admin' );
-        wp_enqueue_style( 'eme-jquery-jtable-css' );
-        wp_enqueue_style( 'eme-jtables-css' );
-        wp_enqueue_style( 'eme-jquery-select2-css' );
-        if ( wp_script_is( 'eme-jtable-locale', 'registered' ) ) {
-            wp_enqueue_script( 'eme-jtable-locale' );
+        wp_enqueue_style( 'eme-ftable-css' );
+        wp_enqueue_style( 'eme-ftables-css' );
+        wp_enqueue_style( 'eme-select-css' );
+        if ( wp_script_is( 'eme-ftable-locale', 'registered' ) ) {
+            wp_enqueue_script( 'eme-ftable-locale' );
         }
 
         if (get_option( 'eme_htmleditor' ) == 'jodit') {
@@ -9611,7 +9613,6 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_selectfeaturedimg'          => __( 'Select the image to be used as featured image', 'events-made-easy' ),
             'translate_setfeaturedimg'             => __( 'Set featured image', 'events-made-easy' ),
-            'translate_pressdeletetoremove'        => __( 'Press the delete button to remove', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure you want to delete the selected records?', 'events-made-easy' ),
             'translate_enddate_required'           => __( 'Since the event is repeated, you must specify an end date', 'events-made-easy' ),
             'translate_startenddate_identical'     => __( "In a recurrence, start and end date can't be identical", 'events-made-easy' ),
@@ -9658,7 +9659,6 @@ function eme_admin_enqueue_js() {
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
-            'translate_pressdeletetoremove'        => __( 'Press the delete button to remove this record', 'events-made-easy' ),
             'translate_deleted'                    => __( 'Records deleted', 'events-made-easy' ),
             'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
@@ -9705,7 +9705,6 @@ function eme_admin_enqueue_js() {
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
-            'translate_pressdeletetoremove'        => __( 'Press the delete button to remove', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
         ];
         wp_localize_script( 'eme-formfields', 'emeformfields', $translation_array );
@@ -9739,7 +9738,6 @@ function eme_admin_enqueue_js() {
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
-            'translate_pressdeletetoremove'        => __( 'Press the delete button to remove', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
         ];
         wp_localize_script( 'eme-discounts', 'emediscounts', $translation_array );
@@ -10135,7 +10133,7 @@ function eme_ajax_wpuser_select2() {
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
         wp_die();
     }
-    $jTableResult = [];
+    $fTableResult = [];
     $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     $pagesize     = intval( $_REQUEST['pagesize'] );
     $start        = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
@@ -10149,9 +10147,9 @@ function eme_ajax_wpuser_select2() {
         $record['text'] = $wp_user->display_name;
         $records[]      = $record;
     }
-    $jTableResult['TotalRecordCount'] = $total;
-    $jTableResult['Records']          = $records;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['TotalRecordCount'] = $total;
+    $fTableResult['Records']          = $records;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -10165,9 +10163,9 @@ function eme_ajax_events_list() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     $wp_id = get_current_user_id();
@@ -10440,7 +10438,7 @@ function eme_ajax_events_list() {
 
         if (current_user_can(get_option('eme_cap_add_event'))) {
             $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ).'";';
-            $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+            $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         } else {
             $record['copy'] = "";
         }
@@ -10838,9 +10836,9 @@ function eme_ajax_events_select2() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     $current_userid = get_current_user_id();
@@ -10864,9 +10862,9 @@ function eme_ajax_events_select2() {
             ++$recordCount;
         }
     }
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    $jTableResult['Records']          = $records;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    $fTableResult['Records']          = $records;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 

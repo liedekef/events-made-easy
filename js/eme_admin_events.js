@@ -1,484 +1,723 @@
-jQuery(document).ready( function($) {
-    function updateIntervalDescriptor () { 
-        $('.interval-desc').hide();
+document.addEventListener('DOMContentLoaded', function () {
+    const EventsTableContainer = $('#EventsTableContainer');
+    let EventsTable;
+    const RecurrencesTableContainer = $('#RecurrencesTableContainer');
+    let RecurrencesTable;
+
+    function updateIntervalDescriptor() {
+        $$('.interval-desc').forEach(el => eme_toggle(el, false));
+        
         // for specific months, we just hide and return
-        if ($('select#recurrence-frequency').val() == 'specific_months') {
-            $('input#recurrence-interval').hide();
-            $('span#specific_months_span').show();
+        if ($('select#recurrence-frequency')?.value === 'specific_months') {
+            const intervalInput = $('input#recurrence-interval');
+            const specificSpan = $('span#specific_months_span');
+            if (intervalInput) eme_toggle(intervalInput, false);
+            if (specificSpan) eme_toggle(specificSpan, true);
             return;
         } else {
-            $('input#recurrence-interval').show();
-            $('span#specific_months_span').hide();
+            const intervalInput = $('input#recurrence-interval');
+            const specificSpan = $('span#specific_months_span');
+            if (intervalInput) eme_toggle(intervalInput, true);
+            if (specificSpan) eme_toggle(specificSpan, false);
         }
+        
         let number = '-plural';
-        if ($('input#recurrence-interval').val() == 1 || $('input#recurrence-interval').val() == '') {
+        const intervalVal = $('input#recurrence-interval')?.value;
+        if (intervalVal === '1' || intervalVal === '') {
             number = '-singular';
         }
-        let descriptor = 'span#interval-'+$('select#recurrence-frequency').val()+number;
-        $(descriptor).show();
+        
+        const frequency = $('select#recurrence-frequency')?.value;
+        const descriptor = $(`span#interval-${frequency}${number}`);
+        if (descriptor) eme_toggle(descriptor, true);
     }
 
-    function updateIntervalSelectors () {
-        $('span.alternate-selector').hide();
-        $('span#'+ $('select#recurrence-frequency').val() + '-selector').show();
-        //$('p.recurrence-tip').hide();
-        //$('p#'+ $(this).val() + '-tip').show();
+    function updateIntervalSelectors() {
+        $$('span.alternate-selector').forEach(el => eme_toggle(el, false));
+        const frequency = $('select#recurrence-frequency')?.value;
+        const selector = $(`span#${frequency}-selector`);
+        if (selector) eme_toggle(selector, true);
     }
 
-    function updateShowHideRecurrence () {
-        if($('input#event-recurrence').prop('checked')) {
-            $('#event_recurrence_pattern').fadeIn();
-            $('div#div_recurrence_event_duration').show();
-            $('div#div_recurrence_date').show();
-            $('div#div_event_date').hide();
+    function updateShowHideRecurrence() {
+        const recurrenceChecked = $('input#event-recurrence')?.checked;
+        const patternEl = $('#event_recurrence_pattern');
+        const durationDiv = $('div#div_recurrence_event_duration');
+        const recDateDiv = $('div#div_recurrence_date');
+        const eventDateDiv = $('div#div_event_date');
+        
+        if (recurrenceChecked) {
+            if (patternEl) {
+                patternEl.style.opacity = '0';
+                eme_toggle(patternEl, true);
+                patternEl.style.transition = 'opacity 300ms';
+                requestAnimationFrame(() => patternEl.style.opacity = '1');
+            }
+            if (durationDiv) eme_toggle(durationDiv, true);
+            if (recDateDiv) eme_toggle(recDateDiv, true);
+            if (eventDateDiv) eme_toggle(eventDateDiv, false);
         } else {
-            $('#event_recurrence_pattern').hide();
-            $('div#div_recurrence_event_duration').hide();
-            $('div#div_recurrence_date').hide();
-            $('div#div_event_date').show();
+            if (patternEl) eme_toggle(patternEl, false);
+            if (durationDiv) eme_toggle(durationDiv, false);
+            if (recDateDiv) eme_toggle(recDateDiv, false);
+            if (eventDateDiv) eme_toggle(eventDateDiv, true);
         }
     }
 
-    function updateShowHideRecurrenceSpecificDays () {
-        if ($('select#recurrence-frequency').val() == 'specific') {
-            $('div#recurrence-intervals').hide();
-            $('input#localized-rec-end-date').hide();
-            $('p#recurrence-dates-explanation').hide();
-            $('span#recurrence-dates-explanation-specificdates').show();
-            $('#localized-rec-start-date').attr('required', true);
-            $('#localized-rec-start-date').data('fdatepicker').update('multipleDates',true);
+    function updateShowHideRecurrenceSpecificDays() {
+        const frequency = $('select#recurrence-frequency')?.value;
+        const intervalsDiv = $('div#recurrence-intervals');
+        const endDateInput = $('input#localized-rec-end-date');
+        const explanationP = $('p#recurrence-dates-explanation');
+        const specificSpan = $('span#recurrence-dates-explanation-specificdates');
+        const startDateInput = $('#localized-rec-start-date');
+        
+        if (frequency === 'specific') {
+            if (intervalsDiv) eme_toggle(intervalsDiv, false);
+            if (endDateInput) eme_toggle(endDateInput, false);
+            if (explanationP) eme_toggle(explanationP, false);
+            if (specificSpan) eme_toggle(specificSpan, true);
+            if (startDateInput) {
+                startDateInput.setAttribute('required', 'true');
+                if (startDateInput._fdatepicker) {
+                    startDateInput._fdatepicker.setOption('multiple', true);
+                }
+            }
         } else {
-            $('div#recurrence-intervals').show();
-            $('input#localized-rec-end-date').show();
-            $('p#recurrence-dates-explanation').show();
-            $('span#recurrence-dates-explanation-specificdates').hide();
-            $('#localized-rec-start-date').attr('required', false);
-            $('#localized-rec-start-date').data('fdatepicker').update('multipleDates',false);
-            // if the recurrence contained specific days before, clear those because that would not work upon save
-            if ($('#rec-start-date-to-submit').val().indexOf(',') !== -1) {
-                $('#localized-rec-start-date').data('fdatepicker').clear();
+            if (intervalsDiv) eme_toggle(intervalsDiv, true);
+            if (endDateInput) eme_toggle(endDateInput, true);
+            if (explanationP) eme_toggle(explanationP, true);
+            if (specificSpan) eme_toggle(specificSpan, false);
+            if (startDateInput) {
+                startDateInput.removeAttribute('required');
+                if (startDateInput._fdatepicker) {
+                    startDateInput._fdatepicker.setOption('multiple', false);
+                }
+                // if the recurrence contained specific days before, clear those
+                const submitInput = $('#rec-start-date-to-submit');
+                if (submitInput?.value.includes(',')) {
+                    startDateInput._fdatepicker.clear();
+                }
             }
         }
     }
 
     function updateShowHideRsvp() {
-        if ($('input#event_rsvp').prop('checked')) {
-            $('div#rsvp-details').fadeIn();
-            $('div#div_event_rsvp').fadeIn();
-            $('div#div_dyndata').fadeIn();
-            $('div#div_event_dyndata_allfields').fadeIn();
-            $('div#div_event_payment_methods').fadeIn();
-            $('div#div_event_registration_form_format').fadeIn();
-            $('div#div_event_cancel_form_format').fadeIn();
-            $('div#div_event_registration_recorded_ok_html').fadeIn();
-            $('div#div_event_attendance_info').fadeIn();
-        } else {
-            $('div#rsvp-details').fadeOut();
-        }
+        const rsvpChecked = $('input#event_rsvp')?.checked;
+        const elements = [
+            $('div#rsvp-details'),
+            $('div#div_event_rsvp'),
+            $('div#div_dyndata'),
+            $('div#div_event_dyndata_allfields'),
+            $('div#div_event_payment_methods'),
+            $('div#div_event_registration_form_format'),
+            $('div#div_event_cancel_form_format'),
+            $('div#div_event_registration_recorded_ok_html'),
+            $('div#div_event_attendance_info')
+        ];
+        
+        elements.forEach(el => {
+            if (el) {
+                if (rsvpChecked) {
+                    el.style.opacity = '0';
+                    eme_toggle(el, true);
+                    el.style.transition = 'opacity 300ms';
+                    requestAnimationFrame(() => el.style.opacity = '1');
+                } else {
+                    el.style.transition = 'opacity 300ms';
+                    el.style.opacity = '0';
+                    setTimeout(() => eme_toggle(el, false), 300);
+                }
+            }
+        });
     }
+
     function updateShowHideTasks() {
-        if ($('input#event_tasks').prop('checked')) {
-            $('div#tab-tasks-container').fadeIn();
-        } else {
-            $('div#tab-tasks-container').fadeOut();
+        const tasksChecked = $('input#event_tasks')?.checked;
+        const container = $('div#tab-tasks-container');
+        if (container) {
+            if (tasksChecked) {
+                container.style.opacity = '0';
+                eme_toggle(container, true);
+                container.style.transition = 'opacity 300ms';
+                requestAnimationFrame(() => container.style.opacity = '1');
+            } else {
+                container.style.transition = 'opacity 300ms';
+                container.style.opacity = '0';
+                setTimeout(() => eme_toggle(container, false), 300);
+            }
         }
     }
+
     function updateShowHideTodos() {
-        if ($('input#event_todos').prop('checked')) {
-            $('div#tab-todos-container').fadeIn();
-        } else {
-            $('div#tab-todos-container').fadeOut();
+        const todosChecked = $('input#event_todos')?.checked;
+        const container = $('div#tab-todos-container');
+        if (container) {
+            if (todosChecked) {
+                container.style.opacity = '0';
+                eme_toggle(container, true);
+                container.style.transition = 'opacity 300ms';
+                requestAnimationFrame(() => container.style.opacity = '1');
+            } else {
+                container.style.transition = 'opacity 300ms';
+                container.style.opacity = '0';
+                setTimeout(() => eme_toggle(container, false), 300);
+            }
         }
     }
 
     function updateShowHideRsvpAutoApprove() {
-        if ($('input#approval_required-checkbox').prop('checked')) {
-            $('span#span_approval_required_mail_warning').fadeIn();
-            $('#p_approve_settings').fadeIn();
-            $('#details_pending').show();
-            $('#div_event_registration_pending_reminder_email').show();
+        const approvalChecked = $('input#approval_required-checkbox')?.checked;
+        const warningSpan = $('span#span_approval_required_mail_warning');
+        const settingsP = $('#p_approve_settings');
+        const pendingDetails = $('#details_pending');
+        const reminderDiv = $('#div_event_registration_pending_reminder_email');
+        
+        if (approvalChecked) {
+            if (warningSpan) {
+                warningSpan.style.opacity = '0';
+                eme_toggle(warningSpan, true);
+                warningSpan.style.transition = 'opacity 300ms';
+                requestAnimationFrame(() => warningSpan.style.opacity = '1');
+            }
+            if (settingsP) {
+                settingsP.style.opacity = '0';
+                eme_toggle(settingsP, true);
+                settingsP.style.transition = 'opacity 300ms';
+                requestAnimationFrame(() => settingsP.style.opacity = '1');
+            }
+            if (pendingDetails) eme_toggle(pendingDetails, true);
+            if (reminderDiv) eme_toggle(reminderDiv, true);
         } else {
-            $('span#span_approval_required_mail_warning').hide();
-            $('#p_approve_settings').fadeOut();
-            $('#details_pending').hide();
-            $('#div_event_registration_pending_reminder_email').hide();
+            if (warningSpan) eme_toggle(warningSpan, false);
+            if (settingsP) {
+                settingsP.style.transition = 'opacity 300ms';
+                settingsP.style.opacity = '0';
+                setTimeout(() => eme_toggle(settingsP, false), 300);
+            }
+            if (pendingDetails) eme_toggle(pendingDetails, false);
+            if (reminderDiv) eme_toggle(reminderDiv, false);
         }
     }
 
     function updateShowHideRsvpRequireUserConfirmation() {
-        if ($('input#eme_prop_require_user_confirmation').prop('checked')) {
-            $('#details_userconfirm').show();
-        } else {
-            $('#details_userconfirm').hide();
+        const confirmChecked = $('input#eme_prop_require_user_confirmation')?.checked;
+        const details = $('#details_userconfirm');
+        if (details) {
+            eme_toggle(details, confirmChecked);
         }
     }
 
     function updateShowHideTime() {
-        if ($('input#eme_prop_all_day').prop('checked')) {
-            $('div#time-selector').hide();
-        } else {
-            $('div#time-selector').show();
+        const allDayChecked = $('input#eme_prop_all_day')?.checked;
+        const timeSelector = $('div#time-selector');
+        if (timeSelector) {
+            eme_toggle(timeSelector, !allDayChecked);
         }
     }
 
     function updateShowHideMultiPriceDescription() {
-        if ($('input#price').length) {
-            if ($('input#price').val().indexOf('||') !== -1) {
-                $('tr#row_multiprice_desc').show();
-                $('tr#row_price_desc').hide();
+        const priceInput = $('input#price');
+        if (priceInput) {
+            const multiPriceRow = $('tr#row_multiprice_desc');
+            const priceRow = $('tr#row_price_desc');
+            
+            if (priceInput.value.includes('||')) {
+                if (multiPriceRow) eme_toggle(multiPriceRow, true);
+                if (priceRow) eme_toggle(priceRow, false);
             } else {
-                $('tr#row_multiprice_desc').hide();
-                $('tr#row_price_desc').show();
+                if (multiPriceRow) eme_toggle(multiPriceRow, false);
+                if (priceRow) eme_toggle(priceRow, true);
             }
         }
     }
 
     function updateShowHideLocMaxCapWarning() {
-        if (parseInt($('input#eme_loc_prop_max_capacity').val()) >0 ) {
-            $('#loc_max_cap_warning').show();
-        } else {
-            $('#loc_max_cap_warning').hide();
+        const capacityInput = $('input#eme_loc_prop_max_capacity');
+        const warning = $('#loc_max_cap_warning');
+        if (capacityInput && warning) {
+            const capacity = parseInt(capacityInput.value) || 0;
+            eme_toggle(warning, capacity > 0);
         }
     }
 
     function eme_event_location_autocomplete() {
-        // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-        // we check for that using length
-        if ($('input#location_name').length) {
-            let emeadmin_locationname_timeout; // Declare a variable to hold the timeout ID
-            $("input#location_name").on("input", function() {
-                clearTimeout(emeadmin_locationname_timeout); // Clear the previous timeout
-                let suggestions;
-                let inputField = $(this);
-                let inputValue = inputField.val();
-                $(".eme-autocomplete-suggestions").remove();
+        const locationNameInput = $('input#location_name');
+        if (locationNameInput) {
+            let timeout;
+            
+            document.addEventListener('click', () => {
+                $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            });
+
+            locationNameInput.addEventListener('input', function() {
+                clearTimeout(timeout);
+                $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                
+                const inputValue = this.value;
                 if (inputValue.length >= 2) {
-                    emeadmin_locationname_timeout = setTimeout(function() {
-                        $.post(ajaxurl,
-                            { eme_admin_nonce: emeevents.translate_adminnonce, name: inputValue, action: 'eme_autocomplete_locations'},
-                            function(data) {
-                                suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                                $.each(data, function(index, item) {
-                                    suggestions.append(
-                                        $("<div class='eme-autocomplete-suggestion'></div>")
-                                        .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
-                                        .on("click", function(e) {
-                                            // we stop bubbling events, so other "onchange" events won't trigger anymore (like the one in eme_edit_maps for the name change, which might cause a wrong display depending on who wins :-)
-                                            e.preventDefault();
-                                            $('input#location_id').val(eme_htmlDecode(item.location_id)).attr("readonly", true);
-                                            $('input#location_name').val(eme_htmlDecode(item.name)).attr("readonly", true);
-                                            $('input#location_address1').val(eme_htmlDecode(item.address1)).attr("readonly", true);
-                                            $('input#location_address2').val(eme_htmlDecode(item.address2)).attr("readonly", true);
-                                            $('input#location_city').val(eme_htmlDecode(item.city)).attr("readonly", true);
-                                            $('input#location_state').val(eme_htmlDecode(item.state)).attr("readonly", true);
-                                            $('input#location_zip').val(eme_htmlDecode(item.zip)).attr("readonly", true);
-                                            $('input#location_country').val(eme_htmlDecode(item.country)).attr("readonly", true);
-                                            $('input#location_latitude').val(eme_htmlDecode(item.latitude)).attr("readonly", true);
-                                            $('input#location_longitude').val(eme_htmlDecode(item.longitude)).attr("readonly", true);
-                                            $('input#location_url').val(eme_htmlDecode(item.location_url)).attr("readonly", true);
-                                            $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(item.map_icon)).attr("readonly", true);
-                                            $('input#eme_loc_prop_max_capacity').val(eme_htmlDecode(item.max_capacity)).attr("readonly", true);
-                                            $('input#eme_loc_prop_online_only').val(eme_htmlDecode(item.online_only)).attr("disabled", true);
-                                            $('#img_edit_location').show();
-                                            if (typeof L !== 'undefined' && emeevents.translate_map_is_active==="true") {
-                                                eme_displayAddress(0);
-                                            }
-                                        })
-                                    );
+                    timeout = setTimeout(() => {
+                        const formData = new URLSearchParams({
+                            eme_admin_nonce: emeevents.translate_adminnonce || '',
+                            name: inputValue,
+                            action: 'eme_autocomplete_locations'
+                        });
+
+                        fetch(window.ajaxurl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: formData.toString()
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            const suggestions = document.createElement('div');
+                            suggestions.className = 'eme-autocomplete-suggestions';
+
+                            data.forEach(item => {
+                                const suggestion = document.createElement('div');
+                                suggestion.className = 'eme-autocomplete-suggestion';
+                                suggestion.innerHTML = `<strong>${eme_htmlDecode(item.name)}</strong><br><small>${eme_htmlDecode(item.address1)} - ${eme_htmlDecode(item.city)}</small>`;
+                                
+                                suggestion.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    $('input#location_id').value = eme_htmlDecode(item.location_id);
+                                    $('input#location_name').value = eme_htmlDecode(item.name);
+                                    $('input#location_address1').value = eme_htmlDecode(item.address1);
+                                    $('input#location_address2').value = eme_htmlDecode(item.address2);
+                                    $('input#location_city').value = eme_htmlDecode(item.city);
+                                    $('input#location_state').value = eme_htmlDecode(item.state);
+                                    $('input#location_zip').value = eme_htmlDecode(item.zip);
+                                    $('input#location_country').value = eme_htmlDecode(item.country);
+                                    $('input#location_latitude').value = eme_htmlDecode(item.latitude);
+                                    $('input#location_longitude').value = eme_htmlDecode(item.longitude);
+                                    $('input#location_url').value = eme_htmlDecode(item.location_url);
+                                    $('input#eme_loc_prop_map_icon').value = eme_htmlDecode(item.map_icon);
+                                    $('input#eme_loc_prop_max_capacity').value = eme_htmlDecode(item.max_capacity);
+                                    $('input#eme_loc_prop_online_only').value = eme_htmlDecode(item.online_only);
+                                    
+                                    // Set all fields to readonly
+                                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
+                                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
+                                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
+                                        const field = $(`input#${fieldName}`);
+                                        if (field) field.readOnly = true;
+                                    });
+                                    
+                                    const onlineField = $('input#eme_loc_prop_online_only');
+                                    if (onlineField) onlineField.disabled = true;
+                                    
+                                    const editImg = $('#img_edit_location');
+                                    if (editImg) eme_toggle(editImg, true);
+                                    
+                                    if (typeof L !== 'undefined' && emeevents.translate_map_is_active === "true") {
+                                        eme_displayAddress(0);
+                                    }
                                 });
-                                if (!data.length) {
-                                    suggestions.append(
-                                        $("<div class='eme-autocomplete-suggestion'></div>")
-                                        .html("<strong>"+emeevents.translate_nomatchlocation+'</strong>')
-                                    );
-                                }
-                                $('.eme-autocomplete-suggestions').remove();
-                                inputField.after(suggestions);
-                            }, "json");
-                    }, 500); // Delay of 0.5 second
+                                
+                                suggestions.appendChild(suggestion);
+                            });
+
+                            if (!data.length) {
+                                const noMatch = document.createElement('div');
+                                noMatch.className = 'eme-autocomplete-suggestion';
+                                noMatch.innerHTML = `<strong>${emeevents.translate_nomatchlocation || 'No matches found'}</strong>`;
+                                suggestions.appendChild(noMatch);
+                            }
+
+                            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                            locationNameInput.insertAdjacentElement('afterend', suggestions);
+                        });
+                    }, 500);
                 }
             });
 
-            $(document).on("click", function() {
-                $(".eme-autocomplete-suggestions").remove();
-            });
-
-            $("input#location_name").change(function(){
-                if ($("input#location_name").val()=='') {
-                    $('input#location_id').val('');
-                    $('input#location_name').val('').attr("readonly", false);
-                    $('input#location_address1').val('').attr("readonly", false);
-                    $('input#location_address2').val('').attr("readonly", false);
-                    $('input#location_city').val('').attr("readonly", false);
-                    $('input#location_state').val('').attr("readonly", false);
-                    $('input#location_zip').val('').attr("readonly", false);
-                    $('input#location_country').val('').attr("readonly", false);
-                    $('input#location_latitude').val('').attr("readonly", false);
-                    $('input#location_longitude').val('').attr("readonly", false);
-                    $('input#eme_loc_prop_map_icon').attr('readonly', false);
-                    $('input#eme_loc_prop_max_capacity').val('').attr('readonly', false);
-                    $('input#eme_loc_prop_online_only').attr('disabled',false);
-                    $('input#location_url').val('').attr('readonly', false);
-                    $('#img_edit_location').hide();
+            locationNameInput.addEventListener('change', function() {
+                if (this.value === '') {
+                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
+                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
+                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
+                        const field = $(`input#${fieldName}`);
+                        if (field) {
+                            field.value = '';
+                            field.readOnly = false;
+                        }
+                    });
+                    
+                    const onlineField = $('input#eme_loc_prop_online_only');
+                    if (onlineField) onlineField.disabled = false;
+                    
+                    const editImg = $('#img_edit_location');
+                    if (editImg) eme_toggle(editImg, false);
                 }
             });
 
-            $('#img_edit_location').on("click",function(e) {
-                e.preventDefault();
-                $('input#location_id').val('');
-                $('input#location_name').attr('readonly', false);
-                $('input#location_address1').attr('readonly', false);
-                $('input#location_address2').attr('readonly', false);
-                $('input#location_city').attr('readonly', false);
-                $('input#location_state').attr('readonly', false);
-                $('input#location_zip').attr('readonly', false);
-                $('input#location_country').attr('readonly', false);
-                $('input#location_latitude').attr('readonly', false);
-                $('input#location_longitude').attr('readonly', false);
-                $('input#eme_loc_prop_map_icon').attr('readonly', false);
-                $('input#eme_loc_prop_max_capacity').attr('readonly', false);
-                $('input#eme_loc_prop_online_only').attr('disabled',false);
-                $('input#location_url').attr('readonly', false);
-                $('#img_edit_location').hide();
-            });
-            if ($('input#location_id').val()=='0') {
-                $('input[name=location_name]').attr('readonly', false);
-                $('input#location_address1').attr('readonly', false);
-                $('input#location_address2').attr('readonly', false);
-                $('input#location_city').attr('readonly', false);
-                $('input#location_state').attr('readonly', false);
-                $('input#location_zip').attr('readonly', false);
-                $('input#location_country').attr('readonly', false);
-                $('input#location_latitude').attr('readonly', false);
-                $('input#location_longitude').attr('readonly', false);
-                $('input#eme_loc_prop_map_icon').attr('readonly', false);
-                $('input#eme_loc_prop_max_capacity').attr('readonly', false);
-                $('input#eme_loc_prop_online_only').attr('disabled',false);
-                $('input#location_url').attr('readonly', false);
-                $('#img_edit_location').hide();
-            } else {
-                $('input[name=location_name]').attr('readonly', true);
-                $('input#location_address1').attr('readonly', true);
-                $('input#location_address2').attr('readonly', true);
-                $('input#location_city').attr('readonly', true);
-                $('input#location_state').attr('readonly', true);
-                $('input#location_zip').attr('readonly', true);
-                $('input#location_country').attr('readonly', true);
-                $('input#location_latitude').attr('readonly', true);
-                $('input#location_longitude').attr('readonly', true);
-                $('input#eme_loc_prop_map_icon').attr('readonly', true);
-                $('input#eme_loc_prop_max_capacity').attr('readonly', true);
-                $('input#eme_loc_prop_online_only').attr('disabled',true);
-                $('input#location_url').attr('readonly', true);
-                $('#img_edit_location').show();
+            const editImg = $('#img_edit_location');
+            if (editImg) {
+                editImg.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
+                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
+                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
+                        const field = $(`input#${fieldName}`);
+                        if (field) field.readOnly = false;
+                    });
+                    
+                    const onlineField = $('input#eme_loc_prop_online_only');
+                    if (onlineField) onlineField.disabled = false;
+                    
+                    $('input#location_id').value = '';
+                    eme_toggle(editImg, false);
+                });
             }
-            $('input#location_id').on("change",function(){
-                if ($('input#location_id').val()=='') {
-                    $('#img_edit_location').hide();
-                } else {
-                    $('#img_edit_location').show();
-                }
-            });
 
-        } else if ($('input[name="location-select-name"]').length) {
-            $('#location-select-id').on("change",function() {
-                $.getJSON(self.location.href,{'eme_admin_action': 'autocomplete_locations', 'eme_admin_nonce': emeevents.translate_adminnonce, id: $(this).val()}, function(item){
-                    $('input[name="location-select-name"]').val(item.name);
-                    $('input[name="location-select-address1"]').val(item.address1);
-                    $('input[name="location-select-address2"]').val(item.address2);
-                    $('input[name="location-select-city"]').val(item.city);
-                    $('input[name="location-select-state"]').val(item.state);
-                    $('input[name="location-select-zip"]').val(item.zip);
-                    $('input[name="location-select-country"]').val(item.country);
-                    $('input[name="location-select-latitude"]').val(item.latitude);
-                    $('input[name="location-select-longitude"]').val(item.longitude);
-                    if(emeevents.translate_map_is_active === 'true') {
-                        loadMapLatLong(item.name,item.address1,item.address2,item.city,item.state,item.zip,item.country,item.latitude,item.longitude);
+            // Set initial state
+            const locationIdInput = $('input#location_id');
+            if (locationIdInput) {
+                if (locationIdInput.value === '0' || locationIdInput.value === '') {
+                    ['location_name', 'location_address1', 'location_address2', 'location_city', 
+                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
+                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
+                        const field = $(`input#${fieldName}`);
+                        if (field) field.readOnly = false;
+                    });
+                    
+                    const onlineField = $('input#eme_loc_prop_online_only');
+                    if (onlineField) onlineField.disabled = false;
+                    
+                    if (editImg) eme_toggle(editImg, false);
+                } else {
+                    ['location_name', 'location_address1', 'location_address2', 'location_city', 
+                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
+                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
+                        const field = $(`input#${fieldName}`);
+                        if (field) field.readOnly = true;
+                    });
+                    
+                    const onlineField = $('input#eme_loc_prop_online_only');
+                    if (onlineField) onlineField.disabled = true;
+                    
+                    if (editImg) eme_toggle(editImg, true);
+                }
+
+                locationIdInput.addEventListener('change', function() {
+                    const editImg = $('#img_edit_location');
+                    if (editImg) {
+                        eme_toggle(editImg, this.value);
                     }
-                })
-            });
+                });
+            }
+        } else {
+            // Handle location select dropdown
+            const locationSelect = $('#location-select-id');
+            if (locationSelect) {
+                locationSelect.addEventListener('change', function() {
+                    const formData = new URLSearchParams({
+                        eme_admin_action: 'autocomplete_locations',
+                        eme_admin_nonce: emeevents.translate_adminnonce || '',
+                        id: this.value
+                    });
+
+                    fetch(window.location.href + '?' + formData.toString())
+                        .then(response => response.json())
+                        .then(item => {
+                            console.log(item);
+                            $('input[name="location-select-name"]').value = item.name;
+                            $('input[name="location-select-address1"]').value = item.address1;
+                            $('input[name="location-select-address2"]').value = item.address2;
+                            $('input[name="location-select-city"]').value = item.city;
+                            $('input[name="location-select-state"]').value = item.state;
+                            $('input[name="location-select-zip"]').value = item.zip;
+                            $('input[name="location-select-country"]').value = item.country;
+                            $('input[name="location-select-latitude"]').value = item.latitude;
+                            $('input[name="location-select-longitude"]').value = item.longitude;
+                            
+                            if (emeevents.translate_map_is_active === 'true') {
+                                loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
+                            }
+                        });
+                });
+            }
         }
     }
 
-    if ($('#localized-start-date').length) {
-        $('#localized-start-date').fdatepicker({
-            autoClose: true,
-            onSelect: function(formattedDate,date,inst) {
-                //$('#localized-end-date').data('fdatepicker').update('minDate',date);
-                startDate_formatted = inst.formatDate('Ymd',date);
-                endDate_basic = $('#localized-end-date').data('fdatepicker').selectedDates[0];
-                endDate_formatted = inst.formatDate('Ymd',endDate_basic);
-                if (endDate_formatted<startDate_formatted) {
-                    $('#localized-end-date').data('fdatepicker').selectDate(date);
-                }
-            }
-        });
-    }
-    if ($('#localized-end-date').length) {
-        $('#localized-end-date').fdatepicker({
-            autoClose: true,
-            onSelect: function(formattedDate,date,inst) {
-                //$('#localized-start-date').data('fdatepicker').update('maxDate',date);
-                endDate_formatted = inst.formatDate('Ymd',date);
-                startDate_basic = $('#localized-start-date').data('fdatepicker').selectedDates[0];
-                startDate_formatted = inst.formatDate('Ymd',startDate_basic);
-                if (startDate_formatted>endDate_formatted) {
-                    $('#localized-start-date').data('fdatepicker').selectDate(date);
-                }
-            }
-        });
-    }
-    if ($('#localized-rec-start-date').length) {
-        $('#localized-rec-start-date').fdatepicker({
-            autoClose: true,
-            onSelect: function(formattedDate,date,inst) {
-                // if multiple days are selected, date is an array, and then we don't touch it for now
-                if (!Array.isArray(date)) {
-                    $('#recurrence-dates-specificdates').text("");
-                    //$('#localized-rec-end-date').data('fdatepicker').update('minDate',date);
-                    //startDate_formatted = inst.formatDate('Ymd',date);
-                    //endDate_basic = $('#localized-rec-end-date').data('fdatepicker').selectedDates[0];
-                    //endDate_formatted = inst.formatDate('Ymd',endDate_basic);
-                    //if (endDate_formatted<startDate_formatted) {
-                    //	   $('#localized-rec-end-date').data('fdatepicker').selectDate(date);
-                    //}
-                } else {
-                    $('#recurrence-dates-specificdates').html('<br>'+emeevents.translate_selecteddates+'<br>');
-                    $.each(date, function( index, value ) {
-                        date_formatted = inst.formatDate(emeevents.translate_fdateformat,value);
-                        $('#recurrence-dates-specificdates').append(date_formatted+'<br>');
-                    });
-                }
-            }
-        });
-    }
-    if ($('#localized-rec-end-date').length) {
-        $('#localized-rec-end-date').fdatepicker({
-            autoClose: true,
-            onSelect: function(formattedDate,date,inst) {
-                if (!Array.isArray(date)) {
-                    //$('#localized-rec-start-date').data('fdatepicker').update('maxDate',date);
-                    endDate_formatted = inst.formatDate('Ymd',date);
-                    startDate_basic = $('#localized-rec-start-date').data('fdatepicker').selectedDates[0];
-                    startDate_formatted = inst.formatDate('Ymd',startDate_basic);
-                    if (startDate_formatted>endDate_formatted) {
-                        $('#localized-rec-start-date').data('fdatepicker').selectDate(date);
-                    }
-                }
-            }
-        });
-    }
-
-    $('#div_recurrence_date').hide();
-
-    // if any of event_single_event_format,event_page_title_format,event_contactperson_email_body,event_respondent_email_body,event_registration_pending_email_body, event_registration_form_format, event_registration_updated_email_body
-    // is empty: display default value on focus, and if the value hasn't changed from the default: empty it on blur
-
     function applyDefaultOnFocusBlur() {
-        $('input[data-default]').each(function () {
-            const $el = $(this);
-            const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
-            // Fallback for plain textarea
-            $el.on('focus', function () {
-                if ($el.val().trim() === '') {
-                    $el.val(defaultValue);
+        $$('input[data-default]').forEach(el => {
+            const defaultValue = el.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
+            
+            el.addEventListener('focus', function() {
+                if (this.value.trim() === '') {
+                    this.value = defaultValue;
                 }
             });
 
-            $el.on('blur', function () {
-                if ($el.val().trim() === defaultValue) {
-                    $el.val('');
-                }
-            });
-        }); 
-        // the span-default is for regular textarea and jodit
-        $('span[data-default]').each(function () {
-            const $el = $(this);
-            const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
-            const targetid = $el.data('targetid');
-            const target = $('#'+targetid);
-            target.on('focus', function () {
-                if (target.val().trim() === '') {
-                    target.val(defaultValue);
-                }
-            });
-
-            target.on('blur', function () {
-                if (target.val().trim() === defaultValue) {
-                    target.val('');
+            el.addEventListener('blur', function() {
+                if (this.value.trim() === defaultValue) {
+                    this.value = '';
                 }
             });
         });
-    }
-    applyDefaultOnFocusBlur();
 
-    if ($('#eventForm').length) {
-        // initialize the code for auto-complete of location info
-        eme_event_location_autocomplete();
-        // the validate plugin can take other tabs/hidden fields into account
-        $('#eventForm').validate({
-            // ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
-            ignore: false,
-            focusCleanup: true,
-            errorClass: "eme_required",
-            invalidHandler: function(e,validator) {
-                $.each(validator.invalid, function(key, value) {
-                    // get the closest tabname
-                    let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    eme_activateTab(tabname);
-                    // break the loop, we only want to switch to the first tab with the error
-                    return false;
+        $$('span[data-default]').forEach(span => {
+            const defaultValue = span.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
+            const targetId = span.getAttribute('data-targetid');
+            const target = $(`#${targetId}`);
+            
+            if (target) {
+                target.addEventListener('focus', function() {
+                    if (this.value.trim() === '') {
+                        this.value = defaultValue;
+                    }
+                });
+
+                target.addEventListener('blur', function() {
+                    if (this.value.trim() === defaultValue) {
+                        this.value = '';
+                    }
                 });
             }
         });
     }
 
-    updateShowHideRecurrence();
-    updateShowHideRsvp();
-    updateShowHideTasks();
-    updateShowHideTodos();
-    updateShowHideRsvpAutoApprove();
-    if ($('select#recurrence-frequency').length) {
-        updateIntervalDescriptor(); 
-        updateIntervalSelectors();
-        updateShowHideRecurrenceSpecificDays();
-    }
-    updateShowHideTime();
-    updateShowHideMultiPriceDescription();
-    updateShowHideLocMaxCapWarning();
-    updateShowHideRsvpRequireUserConfirmation();
-    $('input#event-recurrence').on("change",updateShowHideRecurrence);
-    $('input#event_tasks').on("change",updateShowHideTasks);
-    $('input#event_todos').on("change",updateShowHideTodos);
-    $('input#event_rsvp').on("change",updateShowHideRsvp);
-    $('input#eme_prop_all_day').on("change",updateShowHideTime);
-    $('input#price').on("change",updateShowHideMultiPriceDescription);
-    $('input#eme_loc_prop_max_capacity').on("change",updateShowHideLocMaxCapWarning);
-    $('input#approval_required-checkbox').on("change",updateShowHideRsvpAutoApprove);
-    $('input#eme_prop_require_user_confirmation').on("change",updateShowHideRsvpRequireUserConfirmation);
-    // recurrency elements
-    $('input#recurrence-interval').on("keyup",updateIntervalDescriptor);
-    $('select#recurrence-frequency').on("change",updateIntervalDescriptor);
-    $('select#recurrence-frequency').on("change",updateIntervalSelectors);
-    $('select#recurrence-frequency').on("change",updateShowHideRecurrenceSpecificDays);
-
     function validateEventForm() {
-        // users cannot submit the event form unless some fields are filled
-        if ($('input#event-recurrence').prop('checked') && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
-            alert (emeevents.translate_startenddate_identical); 
-            $('input#localized-rec-end-date').css('border','2px solid red');
+        const recurrenceChecked = $('input#event-recurrence')?.checked;
+        const startDate = $('input#localized-rec-start-date')?.value;
+        const endDate = $('input#localized-rec-end-date')?.value;
+        const endDateField = $('input#localized-rec-end-date');
+        
+        if (recurrenceChecked && startDate === endDate) {
+            alert(emeevents.translate_startenddate_identical || 'Start and end dates cannot be identical');
+            if (endDateField) endDateField.style.border = '2px solid red';
             return false;
         } else {
-            $('input#localized-rec-end-date').css('border','1px solid #DFDFDF');
+            if (endDateField) endDateField.style.border = '1px solid #DFDFDF';
         }
-        // just before we return true, also set the disabled checkbox online_only to enabled, otherwise it won't submit if disabled
-        $('input#eme_loc_prop_online_only').attr('disabled',false);
+        
+        // Enable online_only checkbox before submit
+        const onlineField = $('input#eme_loc_prop_online_only');
+        if (onlineField) onlineField.disabled = false;
+        
         return true;
     }
-    $('#eventForm').bind('submit', validateEventForm);
 
-    if ($('#EventsTableContainer').length) {
-        let eventfields = {
+    function changeEventAdminPageTitle(eventName) {
+        let title;
+        if (!eventName) {
+            title = emeevents.translate_insertnewevent || 'Insert New Event';
+        } else {
+            title = emeevents.translate_editeventstring || 'Edit Event: %s';
+            title = title.replace(/%s/g, eventName);
+        }
+        document.title = eme_htmlDecode(title);
+    }
+
+    function updateShowHideStuff() {
+        const action = $('#eme_admin_action')?.value || '';
+        const categorySpan = $('span#span_addtocategory');
+        const trashSpan = $('span#span_sendtrashmails');
+        const extendSpan = $('span#span_extendrecurrences');
+        
+        if (categorySpan) eme_toggle(categorySpan,action === 'addCategory');
+        if (trashSpan) eme_toggle(trashSpan,action === 'trashEvents');
+        if (extendSpan) eme_toggle(extendSpan,action === 'extendRecurrences');
+    }
+
+    // Initialize date pickers
+    if ($('#localized-start-date')) {
+        new FDatepicker('#localized-start-date',{
+            format: emeevents.translate_fdateformat,
+            onSelect: function(formattedDate, date, inst) {
+                const endDatePicker = $('#localized-end-date');
+                if (endDatePicker && endDatePicker._fdatepicker) {
+                    const endDate = endDatePicker._fdatepicker.selectedDate;
+                    if (endDate) {
+                        if (endDate.getTime() < date.getTime()) {
+                            endDatePicker._fdatepicker.setDate(date);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    if ($('#localized-end-date')) {
+        new FDatepicker('#localized-end-date',{
+            format: emeevents.translate_fdateformat,
+            onSelect: function(formattedDate, date, inst) {
+                const startDatePicker = $('#localized-start-date');
+                if (startDatePicker && startDatePicker._fdatepicker) {
+                    const startDate = startDatePicker._fdatepicker.selectedDate;
+                    if (startDate) {
+                        if (startDate.getTime() > date.getTime()) {
+                            startDatePicker._fdatepicker.setDate(date);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    if ($('#localized-rec-start-date')) {
+        new FDatepicker('#localized-rec-start-date',{
+            format: emeevents.translate_fdateformat
+        });
+    }
+
+    if ($('#localized-rec-end-date')) {
+        new FDatepicker('#localized-rec-end-date',{
+            format: emeevents.translate_fdateformat,
+            onSelect: function(formattedDate, date, inst) {
+                if (!Array.isArray(date)) {
+                    const startDatePicker = $('#localized-rec-start-date');
+                    if (startDatePicker && startDatePicker._fdatepicker) {
+                        const startDate = startDatePicker._fdatepicker.selectedDate;
+                        if (startDate) {
+                            if (startDate.getTime() > date.getTime()) {
+                                startDatePicker._fdatepicker.setDate(date);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Bind event listeners
+    const eventRecurrence = $('input#event-recurrence');
+    if (eventRecurrence) eventRecurrence.addEventListener('change', updateShowHideRecurrence);
+    
+    const eventTasks = $('input#event_tasks');
+    if (eventTasks) eventTasks.addEventListener('change', updateShowHideTasks);
+    
+    const eventTodos = $('input#event_todos');
+    if (eventTodos) eventTodos.addEventListener('change', updateShowHideTodos);
+    
+    const eventRsvp = $('input#event_rsvp');
+    if (eventRsvp) eventRsvp.addEventListener('change', updateShowHideRsvp);
+    
+    const allDay = $('input#eme_prop_all_day');
+    if (allDay) allDay.addEventListener('change', updateShowHideTime);
+    
+    const price = $('input#price');
+    if (price) price.addEventListener('change', updateShowHideMultiPriceDescription);
+    
+    const maxCapacity = $('input#eme_loc_prop_max_capacity');
+    if (maxCapacity) maxCapacity.addEventListener('change', updateShowHideLocMaxCapWarning);
+    
+    const approvalRequired = $('input#approval_required-checkbox');
+    if (approvalRequired) approvalRequired.addEventListener('change', updateShowHideRsvpAutoApprove);
+    
+    const userConfirmation = $('input#eme_prop_require_user_confirmation');
+    if (userConfirmation) userConfirmation.addEventListener('change', updateShowHideRsvpRequireUserConfirmation);
+
+    // Recurrence elements
+    const recurrenceInterval = $('input#recurrence-interval');
+    if (recurrenceInterval) recurrenceInterval.addEventListener('keyup', updateIntervalDescriptor);
+    
+    const recurrenceFrequency = $('select#recurrence-frequency');
+    if (recurrenceFrequency) {
+        recurrenceFrequency.addEventListener('change', updateIntervalDescriptor);
+        recurrenceFrequency.addEventListener('change', updateIntervalSelectors);
+        recurrenceFrequency.addEventListener('change', updateShowHideRecurrenceSpecificDays);
+    }
+
+    // Event name title update
+    const eventNameInput = $('input[name=event_name]');
+    if (eventNameInput) {
+        changeEventAdminPageTitle(eventNameInput.value);
+        eventNameInput.addEventListener('keyup', changeEventAdminPageTitle);
+    }
+
+    // Image handling
+    const imageButton = $('#event_image_button');
+    const removeImageBtn = $('#event_remove_image_button');
+    const imageUrl = $('#event_image_url');
+    const imageExample = $('#eme_event_image_example');
+    const imageId = $('#event_image_id');
+    if (removeImageBtn) {
+        removeImageBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (imageUrl) imageUrl.value = '';
+            if (imageId) imageId.value = '';
+            if (imageExample) {
+                imageExample.src = '';
+                eme_toggle(imageExample, false);
+            }
+            if (imageButton) eme_toggle(imageButton, true);
+            eme_toggle(removeImageBtn, false);
+        });
+    }
+
+    if (imageButton) {
+        imageButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.wp && window.wp.media) {
+                const customUploader = window.wp.media({
+                    title: emeevents.translate_selectfeaturedimg || 'Select Featured Image',
+                    button: { text: emeevents.translate_setfeaturedimg || 'Set Featured Image' },
+                    library: { type: 'image' },
+                    multiple: false
+                }).on('select', function() {
+                    const selection = customUploader.state().get('selection');
+                    selection.map(function(attach) {
+                        const attachment = attach.toJSON();
+                        
+                        if (imageUrl) imageUrl.value = attachment.url;
+                        if (imageId) imageId.value = attachment.id;
+                        if (imageExample) {
+                            imageExample.src = attachment.url;
+                            eme_toggle(imageExample, true);
+                        }
+                        eme_toggle(imageButton, false);
+                        if (removeBtn) eme_toggle(removeImageBtn, true);
+                    });
+                }).open();
+            }
+        });
+    }
+
+    if (imageUrl) {
+        if (imageUrl.value !== '') {
+            if (imageButton) eme_toggle(imageButton, false);
+            if (removeImageBtn) eme_toggle(removeImageBtn, true);
+            if (imageExample) eme_toggle(imageExample, true);
+        } else {
+            if (imageButton) eme_toggle(imageButton, true);
+            if (removeImageBtn) eme_toggle(removeImageBtn, false);
+            if (imageExample) eme_toggle(imageExample, false);
+        }
+    }
+
+    initTomSelectRemote('#event_author.eme_select2_wpuser_class', {
+        action: 'eme_wpuser_select2',
+        ajaxParams: {
+            eme_admin_nonce: emeevents.translate_adminnonce
+        }
+    });
+    initTomSelectRemote('#event_contactperson_id.eme_select2_wpuser_class', {
+        action: 'eme_wpuser_select2',
+        extraPlugins: ['clear_button'],
+        placeholder: emeevents.translate_selectcontact,
+        ajaxParams: {
+            eme_admin_nonce: emeevents.translate_adminnonce
+        }
+    });
+
+    // Admin action change handler
+    const adminAction = $('#eme_admin_action');
+    if (adminAction) {
+        updateShowHideStuff();
+        adminAction.addEventListener('change', updateShowHideStuff);
+    }
+
+    // --- Initialize Events Table ---
+    if (EventsTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'eventstablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        EventsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        let eventFields = {
             event_id: {
                 key: true,
                 title: emeevents.translate_id,
@@ -499,13 +738,13 @@ jQuery(document).ready( function($) {
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center',
             },
             rsvp: {
                 title: emeevents.translate_rsvp,
                 sorting: false,
                 width: '2%',
-                listClass: 'eme-jtable-center'
+                listClass: 'eme-ftable-center'
             },
             eventprice: {
                 title: emeevents.translate_eventprice,
@@ -532,408 +771,294 @@ jQuery(document).ready( function($) {
                 title: emeevents.translate_recinfo,
                 sorting: false
             }
-        }
-        let extrafields=$('#EventsTableContainer').data('extrafields').toString().split(',');
-        let extrafieldnames=$('#EventsTableContainer').data('extrafieldnames').toString().split(',');
-        let extrafieldsearchable=$('#EventsTableContainer').data('extrafieldsearchable').toString().split(',');
-        $.each(extrafields, function( index, value ) {
-            if (value != '') {
-                let fieldindex='FIELD_'+value;
-                let extrafield = {};
-                if (extrafieldsearchable[index]=='1') {
-                    sorting=true;
-                } else {
-                    sorting=false;
-                }
-                extrafield[fieldindex] = {
-                    title: extrafieldnames[index],
-                    sorting: sorting,
-                    visibility: 'hidden'
-                };
-                $.extend(eventfields,extrafield);
-            }
-        });
+        };
 
-        //Prepare jtable plugin
-        $('#EventsTableContainer').jtable({
+        // Add extra fields
+        const extraFieldsAttr = EventsTableContainer.dataset.extrafields;
+        const extraFieldNamesAttr = EventsTableContainer.dataset.extrafieldnames;
+        const extrafieldsearchableAttr = EventsTableContainer.dataset.extrafieldsearchable;
+        if (extraFieldsAttr && extraFieldNamesAttr) {
+            const extraFields = extraFieldsAttr.split(',');
+            const extraNames = extraFieldNamesAttr.split(',');
+            const extraSearches = extrafieldsearchableAttr.split(',');
+            extraFields.forEach((field, index) => {
+                if (field == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+index;
+                    eventFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
+                } else if (field) {
+                    let fieldindex = 'FIELD_'+index;
+                    eventFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index]=='1', visibility: 'hidden' };
+                }
+            });
+        }
+
+        EventsTable = new FTable('#EventsTableContainer', {
             title: emeevents.translate_events,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'event_start ASC, event_name ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             csvExport: true,
             printTable: true,
-            actions: {
-                listAction: ajaxurl
-            },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_events_list",
-                    'eme_admin_nonce': emeevents.translate_adminnonce,
-                    'trash': $_GET['trash'],
-                    'scope': $('#scope').val(),
-                    'status': $('#status').val(),
-                    'category': $('#category').val(),
-                    'search_name': $('#search_name').val(),
-                    'search_location': $('#search_location').val(),
-                    'search_start_date': $('#search_start_date').val(),
-                    'search_end_date': $('#search_end_date').val(),
-                    'search_customfields': $('#search_customfields').val(),
-                    'search_customfieldids': $('#search_customfieldids').val()
-                }
-                return params;
-            },
-            fields: eventfields,
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_events_list',
+                eme_admin_nonce: emeevents.translate_adminnonce,
+                trash: $_GET['trash'] || '',
+                scope: $('#scope')?.value || '',
+                status: $('#status')?.value || '',
+                category: $('#category')?.value || '',
+                search_name: $('#search_name')?.value || '',
+                search_location: $('#search_location')?.value || '',
+                search_start_date: $('#search_start_date')?.value || '',
+                search_end_date: $('#search_end_date')?.value || '',
+                search_customfields: eme_getValue($('#search_customfields')),
+                search_customfieldids: eme_getValue($('#search_customfieldids'))
+            }),
+            fields: eventFields,
             sortingInfoSelector: '#eventstablesortingInfo',
-            messages: {
-                'sortingInfoNone': ''
-            }
+            messages: { sortingInfoNone: '' }
         });
 
-        // Load list from server
-        $('#EventsTableContainer').jtable('load');
-        $('<div id="eventstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#EventsTableContainer');
-
-        // Actions button
-        $('#EventsActionsButton').on("click",function (e) {
-            e.preventDefault();
-            let selectedRows = $('#EventsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let send_trashmails = $('#send_trashmails').val();
-            let addtocategory = $('#addtocategory').val();
-
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='trashEvents' || do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(emeevents.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
-                }
-                if (action_ok==1) {
-                    $('#EventsActionsButton').text(emeevents.translate_pleasewait);
-                    $('#EventsActionsButton').prop('disabled', true);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
-                    });
-
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    let params = {
-                        'event_id': idsjoined,
-                        'action': 'eme_manage_events',
-                        'do_action': do_action,
-                        'send_trashmails': send_trashmails,
-                        'addtocategory': addtocategory,
-                        'eme_admin_nonce': emeevents.translate_adminnonce };
-
-                    $.post(ajaxurl, params, function(data) {
-                        $('#EventsTableContainer').jtable('reload');
-                        $('#EventsActionsButton').text(emeevents.translate_apply);
-                        $('#EventsActionsButton').prop('disabled', false);
-                        $('div#events-message').html(data.Message);
-                        $('div#events-message').show();
-                        $('div#events-message').delay(3000).fadeOut('slow');
-                    }, 'json');
-                }
-            }
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
-
-        // Re-load records when user click 'load records' button.
-        $('#EventsLoadRecordsButton').on("click",function (e) {
-            e.preventDefault();
-            $('#EventsTableContainer').jtable('load');
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
+        EventsTable.load();
     }
 
-    if ($('#RecurrencesTableContainer').length) {
-        let recurrencefields = {
-            recurrence_id: {
-                key: true,
-                title: emeevents.translate_id,
-                visibility: 'hidden'
-            },
-            event_name: {
-                title: emeevents.translate_name,
-                sorting: false,
-                visibility: 'fixed'
-            },
-            event_status: {
-                title: emeevents.translate_status,
-                sorting: false,
-                width: '5%'
-            },
-            copy: {
-                title: emeevents.translate_copy,
-                sorting: false,
-                width: '2%',
-                listClass: 'eme-jtable-center'
-            },
-            eventprice: {
-                title: emeevents.translate_eventprice,
-                sorting: false
-            },
-            location_name: {
-                title: emeevents.translate_location,
-                sorting: false,
-            },
-            creation_date: {
-                title: emeevents.translate_created_on,
-                visibility: 'hidden',
-                width: '5%'
-            },
-            modif_date: {
-                title: emeevents.translate_modified_on,
-                visibility: 'hidden',
-                width: '5%'
-            },
-            recinfo: {
-                title: emeevents.translate_recinfo,
-                sorting: false
-            },
-            rec_singledur: {
-                title: emeevents.translate_rec_singledur,
-                sorting: false
-            }
-        }
-        //Prepare jtable plugin
-        $('#RecurrencesTableContainer').jtable({
+    // --- Initialize Recurrences Table ---
+    if (RecurrencesTableContainer) {
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'recurrencetablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        RecurrencesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        RecurrencesTable = new FTable('#RecurrencesTableContainer', {
             title: emeevents.translate_recurrences,
             paging: true,
             sorting: true,
             multiSorting: true,
-            defaultSorting: '',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
-            csvExport: true,
-            printTable: true,
-            actions: {
-                listAction: ajaxurl
-            },
-            listQueryParams: function () {
-                let params = {
-                    'action': "eme_recurrences_list",
-                    'eme_admin_nonce': emeevents.translate_adminnonce,
-                    'trash': $_GET['trash'],
-                    'scope': $('#scope').val(),
-                    'status': $('#status').val(),
-                    'category': $('#category').val(),
-                    'search_name': $('#search_name').val(),
-                    'search_location': $('#search_location').val(),
-                    'search_start_date': $('#search_start_date').val(),
-                    'search_end_date': $('#search_end_date').val(),
-                    'search_customfields': $('#search_customfields').val(),
-                    'search_customfieldids': $('#search_customfieldids').val()
+            defaultSorting: 'event_name ASC',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_recurrences_list',
+                eme_admin_nonce: emeevents.translate_adminnonce,
+                trash: $_GET['trash'] || '',
+                scope: $('#scope')?.value || '',
+                search_name: $('#search_name')?.value || '',
+                search_start_date: $('#search_start_date')?.value || '',
+                search_end_date: $('#search_end_date')?.value || '',
+            }),
+            fields: {
+                recurrence_id: {
+                    key: true,
+                    title: emeevents.translate_id,
+                    width: '1%',
+                    columnResizable: false
+                },
+                event_name: {
+                    title: emeevents.translate_name,
+                    sorting: false,
+                    visibility: 'fixed'
+                },
+                event_status: {
+                    title: emeevents.translate_status,
+                    sorting: false,
+                    width: '5%'
+                },
+                copy: {
+                    title: emeevents.translate_copy,
+                    sorting: false,
+                    width: '2%',
+                    listClass: 'eme-ftable-center'
+                },
+                eventprice: {
+                    title: emeevents.translate_eventprice,
+                    sorting: false
+                },
+                location_name: {
+                    title: emeevents.translate_location,
+                    sorting: false,
+                },
+                creation_date: {
+                    title: emeevents.translate_created_on,
+                    visibility: 'hidden',
+                    width: '5%'
+                },
+                modif_date: {
+                    title: emeevents.translate_modified_on,
+                    visibility: 'hidden',
+                    width: '5%'
+                },
+                recinfo: {
+                    title: emeevents.translate_recinfo,
+                    sorting: false
+                },
+                rec_singledur: {
+                    title: emeevents.translate_rec_singledur,
+                    sorting: false
                 }
-                return params;
             },
-            fields: recurrencefields
+            sortingInfoSelector: '#recurrencetablesortingInfo',
+            messages: { sortingInfoNone: '' }
         });
 
-        // Load list from server
-        $('#RecurrencesTableContainer').jtable('load');
+        RecurrencesTable.load();
+    }
 
-        // Actions button
-        $('#RecurrencesActionsButton').on("click",function (e) {
+    // --- Events Bulk Actions ---
+    const eventsButton = $('#EventsActionsButton');
+    if (eventsButton) {
+        eventsButton.addEventListener('click', function (e) {
             e.preventDefault();
-            let selectedRows = $('#RecurrencesTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
-            let rec_new_start_date = $('#rec_new_start_date').val();
-            let rec_new_end_date = $('#rec_new_end_date').val();
+            const selectedRows = EventsTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+            const sendTrashMails = $('#send_trashmails')?.value || 'no';
+            const addCategory = $('#addtocategory')?.value || '';
 
-            let action_ok=1;
-            if (selectedRows.length > 0 && do_action != '') {
-                if (do_action=='deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) {
-                    action_ok=0;
-                }
-                if (action_ok==1) {
-                    $('#RecurrencesActionsButton').text(emeevents.translate_pleasewait);
-                    $('#RecurrencesActionsButton').prop('disabled', true);
-                    let ids = [];
-                    selectedRows.each(function () {
-                        ids.push($(this).attr('data-record-key'));
-                    });
+            if (selectedRows.length === 0 || !doAction) return;
 
-                    let idsjoined = ids.join(); //will be such a string '2,5,7'
-                    let params = {
-                        'recurrence_id': idsjoined,
-                        'action': 'eme_manage_recurrences',
-                        'do_action': do_action,
-                        'rec_new_start_date': rec_new_start_date,
-                        'rec_new_end_date': rec_new_end_date,
-                        'eme_admin_nonce': emeevents.translate_adminnonce };
-
-                    $.post(ajaxurl, params, function(data) {
-                        $('#RecurrencesTableContainer').jtable('reload');
-                        $('#RecurrencesActionsButton').text(emeevents.translate_apply);
-                        $('#RecurrencesActionsButton').prop('disabled', false);
-                        $('div#events-message').html(data.Message);
-                        $('div#events-message').show();
-                        $('div#events-message').delay(3000).fadeOut('slow');
-                    }, 'json');
-                }
+            let proceed = true;
+            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction) && !confirm(emeevents.translate_areyousuretodeleteselected)) {
+                proceed = false;
             }
-            // return false to make sure the real form doesn't submit
-            return false;
-        });
 
-        // Re-load records when user click 'load records' button.
-        $('#RecurrencesLoadRecordsButton').on("click",function (e) {
+            if (proceed) {
+                eventsButton.textContent = emeevents.translate_pleasewait;
+                eventsButton.disabled = true;
+
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('event_id', idsJoined);
+                formData.append('action', 'eme_manage_events');
+                formData.append('do_action', doAction);
+                formData.append('send_trashmails', sendTrashMails);
+                formData.append('addtocategory', addCategory);
+                formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    EventsTable.load();
+                    eventsButton.textContent = emeevents.translate_apply;
+                    eventsButton.disabled = false;
+
+                    const msg = $('div#events-message');
+                    if (msg) {
+                        msg.textContent = data.Message;
+                        eme_toggle(msg, true);
+                        setTimeout(() => eme_toggle(msg, false), 5000);
+                    }
+                });
+            }
+        });
+    }
+
+    // --- Recurrences Bulk Actions ---
+    const recurrencesButton = $('#RecurrencesActionsButton');
+    if (recurrencesButton) {
+        recurrencesButton.addEventListener('click', function (e) {
             e.preventDefault();
-            $('#RecurrencesTableContainer').jtable('load');
-            // return false to make sure the real form doesn't submit
-            return false;
+            const selectedRows = RecurrencesTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
+            const recNewStartDate = $('#rec_new_start_date')?.value || '';
+            const recNewEndDate = $('#rec_new_end_date')?.value || '';
+
+            if (selectedRows.length === 0 || !doAction) return;
+
+            let proceed = true;
+            if (doAction === 'deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) {
+                proceed = false;
+            }
+
+            if (proceed) {
+                recurrencesButton.textContent = emeevents.translate_pleasewait;
+                recurrencesButton.disabled = true;
+
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('recurrence_id', idsJoined);
+                formData.append('action', 'eme_manage_recurrences');
+                formData.append('do_action', doAction);
+                formData.append('rec_new_start_date', recNewStartDate);
+                formData.append('rec_new_end_date', recNewEndDate);
+                formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    RecurrencesTable.load();
+                    recurrencesButton.textContent = emeevents.translate_apply;
+                    recurrencesButton.disabled = false;
+
+                    const msg = $('div#recurrences-message');
+                    if (msg) {
+                        msg.textContent = data.Message;
+                        eme_toggle(msg, true);
+                        setTimeout(() => eme_toggle(msg, false), 5000);
+                    }
+                });
+            }
         });
     }
 
-    function updateShowHideStuff () {
-        let action=$('select#eme_admin_action').val();
-        if (action == 'addCategory') {
-            jQuery('span#span_addtocategory').show();
-        } else {
-            jQuery('span#span_addtocategory').hide();
-        }
-        if (action == 'trashEvents') {
-            $('span#span_sendtrashmails').show();
-        } else {
-            $('span#span_sendtrashmails').hide();
-        }
-        if (action == 'extendRecurrences') {
-            $('span#span_extendrecurrences').show();
-        } else {
-            $('span#span_extendrecurrences').hide();
-        }
-    }
-    updateShowHideStuff();
-    $('select#eme_admin_action').on("change",updateShowHideStuff);
-
-    function changeEventAdminPageTitle() {
-        let eventname=$('input[name=event_name]').val();
-        if (!eventname) {
-            title=emeevents.translate_insertnewevent;
-        } else {
-            title=emeevents.translate_editeventstring;
-            title=title.replace(/%s/g, eventname);
-        }
-        jQuery(document).prop('title', eme_htmlDecode(title));
-    }
-    if ($('input[name=event_name]').length) {
-        changeEventAdminPageTitle();
-        $('input[name=event_name]').on("keyup",changeEventAdminPageTitle);
-    }
-
-    // for the image 
-    $('#event_remove_image_button').on("click",function(e) {
-        $('#event_image_url').val('');
-        $('#event_image_id').val('');
-        $('#eme_event_image_example' ).attr('src','').hide();
-        $('#event_image_button' ).show();
-        $('#event_remove_image_button' ).hide();
-    });
-    $('#event_image_button').on("click",function(e) {
+    // --- Reload Buttons ---
+    $('#EventsLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
-        let custom_uploader = wp.media({
-            title: emeevents.translate_selectfeaturedimg,
-            button: {
-                text: emeevents.translate_setfeaturedimg
-            },
-            // Tell the modal to show only images.
-            library: {
-                type: 'image'
-            },
-            multiple: false  // Set this to true to allow multiple files to be selected
-        }).on('select', function() {
-            let selection = custom_uploader.state().get('selection');
-            // using map is not really needed, but this way we can reuse the code if multiple=true
-            // let attachment = custom_uploader.state().get('selection').first().toJSON();
-            selection.map( function(attach) {
-                attachment = attach.toJSON();
-                $('#event_image_url').val(attachment.url);
-                $('#event_image_id').val(attachment.id);
-                $('#eme_event_image_example' ).attr('src',attachment.url).show();
-                $('#event_image_button' ).hide();
-                $('#event_remove_image_button' ).show();
-            });
-        }).open();
+        EventsTable.load();
     });
-    if ($('#event_image_url').val() != '') {
-        $('#event_image_button' ).hide();
-        $('#event_remove_image_button' ).show();
-        $('#eme_event_image_example' ).show();
-    } else {
-        $('#event_image_button' ).show();
-        $('#event_remove_image_button' ).hide();
-        $('#eme_event_image_example' ).hide();
-    }
 
-    $('#event_author.eme_select2_wpuser_class').select2({
-        width: '100%',
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term, // search term
-                    page: params.page || 1,
-                    pagesize: 10,
-                    action: 'eme_wpuser_select2',
-                    eme_admin_nonce: emeevents.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                params.page = params.page || 1;
-                return {
-                    results: data.Records,
-                    pagination: {
-                        more: (params.page * 10) < data.TotalRecordCount
-                    }
-                };
-            },
-            cache: true
+    $('#RecurrencesLoadRecordsButton')?.addEventListener('click', e => {
+        e.preventDefault();
+        RecurrencesTable.load();
+    });
+
+    $('#eventForm')?.addEventListener('submit', function(event) {
+        const form = this.form;
+        // Manually trigger HTML5 validation
+        if (!form.checkValidity()) {
+            event.preventDefault(); // Stop submission
+
+            // Find the first invalid field
+            const invalidField = form.querySelector(':invalid');
+            if (invalidField) {
+                eme_scrollToInvalidInput(invalidField); // this switches to the correct tab
+            }
+            return;
         }
     });
-    $('#event_contactperson_id.eme_select2_wpuser_class').select2({
-        width: '100%',
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term, // search term
-                    page: params.page || 1,
-                    pagesize: 10,
-                    action: 'eme_wpuser_select2',
-                    eme_admin_nonce: emeevents.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                params.page = params.page || 1;
-                return {
-                    results: data.Records,
-                    pagination: {
-                        more: (params.page * 10) < data.TotalRecordCount
-                    }
-                };
-            },
-            cache: true
-        },
-        allowClear: true,
-        placeholder: emeevents.translate_selectcontact
-    });
 
+    setTimeout(() => {
+        // Hide recurrence date div initially
+        const recDateDiv = $('#div_recurrence_date');
+        if (recDateDiv) eme_toggle(recDateDiv, false);
+
+        // Apply default focus/blur behavior
+        applyDefaultOnFocusBlur();
+
+        eme_event_location_autocomplete();
+
+        // Initialize all show/hide functions
+        updateShowHideStuff();
+        updateShowHideRecurrence();
+        updateShowHideRsvp();
+        updateShowHideTasks();
+        updateShowHideTodos();
+        updateShowHideRsvpAutoApprove();
+        updateShowHideRsvpRequireUserConfirmation();
+        updateShowHideTime();
+        updateShowHideMultiPriceDescription();
+        updateShowHideLocMaxCapWarning();
+
+        if ($('select#recurrence-frequency')) {
+            updateIntervalDescriptor();
+            updateIntervalSelectors();
+            updateShowHideRecurrenceSpecificDays();
+        }
+
+        changeEventAdminPageTitle();
+    }, 100);
 });

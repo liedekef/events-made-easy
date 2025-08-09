@@ -3391,7 +3391,7 @@ function eme_text_split_newlines( $text ) {
 function eme_ajax_record_list( $tablename, $cap ) {
     global $wpdb;
     $table        = EME_DB_PREFIX . $tablename;
-    $jTableResult = [];
+    $fTableResult = [];
     // The toolbar search input
     $q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
     $opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
@@ -3412,25 +3412,25 @@ function eme_ajax_record_list( $tablename, $cap ) {
 
         $sql                    = "SELECT * FROM $table $where $orderby $limit";
         $rows                   = $wpdb->get_results( $sql, ARRAY_A );
-        $jTableResult['Result'] = 'OK';
+        $fTableResult['Result'] = 'OK';
         if ( isset( $_REQUEST['options_list'] ) ) {
-            $jTableResult['Options'] = $rows;
+            $fTableResult['Options'] = $rows;
         } else {
-            $jTableResult['Records']          = $rows;
-            $jTableResult['TotalRecordCount'] = $recordCount;
+            $fTableResult['Records']          = $rows;
+            $fTableResult['TotalRecordCount'] = $recordCount;
         }
     } else {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
 function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
     global $wpdb;
     $table        = EME_DB_PREFIX . $tablename;
-    $jTableResult = [];
+    $fTableResult = [];
 
     if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
         // check the POST var
@@ -3438,25 +3438,25 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         if ( eme_is_numeric_array( $ids_arr ) ) {
             $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' );
         }
-        $jTableResult['Result']      = 'OK';
-        $jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
+        $fTableResult['Result']      = 'OK';
+        $fTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
     } else {
-        $jTableResult['Result']      = 'Error';
-        $jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
-        $jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']      = 'Error';
+        $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
 function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_function = '', $update = 0 ) {
     global $wpdb;
     $table        = EME_DB_PREFIX . $tablename;
-    $jTableResult = [];
+    $fTableResult = [];
     if ( ! $record ) {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'No such record', 'events-made-easy' );
-        print wp_json_encode( $jTableResult );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'No such record', 'events-made-easy' );
+        print wp_json_encode( $fTableResult );
         wp_die();
     }
     if ( current_user_can( get_option( $cap ) ) ) {
@@ -3466,14 +3466,14 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
             $wpdb->insert( $table, $record );
         }
         if ( $wpdb->last_error !== '' ) {
-            $jTableResult['Result'] = 'Error';
+            $fTableResult['Result'] = 'Error';
             if ( $update ) {
-                $jTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' ) . $wpdb->last_error;
+                $fTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' ) . $wpdb->last_error;
             } else {
-                $jTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' ) . $wpdb->last_error;
+                $fTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' ) . $wpdb->last_error;
             }
         } else {
-            $jTableResult['Result'] = 'OK';
+            $fTableResult['Result'] = 'OK';
             if ( ! $update ) {
                 $record_id = $wpdb->insert_id;
                 if ( $record_function ) {
@@ -3481,16 +3481,16 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
                 } else {
                     $record[ $id_column ] = $record_id;
                 }
-                $jTableResult['Record'] = eme_esc_html( $record );
+                $fTableResult['Record'] = eme_esc_html( $record );
             }
         }
     } else {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
 
     //Return result to jTable
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -4276,16 +4276,16 @@ function eme_get_selected_captcha($properties) {
 
 function eme_get_datatables_limit() {
     $limit = '';
-    if ( isset( $_POST['jtStartIndex'] ) && ! empty( $_POST['jtPageSize'] ) ) {
-        $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ) . ',' . intval( $_POST['jtPageSize'] );
+    if ( isset( $_REQUEST['jtStartIndex'] ) && ! empty( $_REQUEST['jtPageSize'] ) ) {
+        $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
     }
     return $limit;
 }
 
 function eme_get_datatables_orderby($preferred_sorting='') {
-    if ( ! empty( $_POST['jtSorting'] ) ) {
+    if ( ! empty( $_REQUEST['jtSorting'] ) ) {
         $orderby = '';
-        $sanitized_sorting = eme_verify_sql_orderby( $_POST['jtSorting'] );
+        $sanitized_sorting = eme_verify_sql_orderby( $_REQUEST['jtSorting'] );
         if ( ! empty( $sanitized_sorting ) ) {
             if ( ! empty( $preferred_sorting ) ) {
                 $orderby = "ORDER BY $preferred_sorting, " . esc_sql($sanitized_sorting);

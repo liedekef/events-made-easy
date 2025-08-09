@@ -1,0 +1,608 @@
+﻿// Base styles for fTable.
+// All themes must inherit from ftable_theme_base.
+
+// GENERAL MIXINGS ////////////////////////////////////////////////////////////
+
+.centered()
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.clear-list-styles()
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.border-radius(@radius)
+{
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.text-shadow(@shadow)
+{
+    -webkit-text-shadow: @shadow;
+    text-shadow: @shadow;
+}
+
+.box-shadow(@shadow)
+{
+    -webkit-box-shadow: @shadow;
+    -moz-box-shadow: @shadow;
+    box-shadow: @shadow;
+}
+
+.opacity(@value)
+{
+    opacity: @value;
+    //for IE8 and earlier
+    @ieValue: @value * 100;
+    filter: alpha(opacity=@ieValue);
+}
+
+.vertical-gradient(@top_color, @bottom_color)
+{
+    background: @top_color; // Old browsers
+    background: -moz-linear-gradient(top, @top_color 0%, @bottom_color 100%); // FF3.6+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@top_color), color-stop(100%,@bottom_color)); // Chrome,Safari4+
+    background: -webkit-linear-gradient(top, @top_color 0%,@bottom_color 100%); // Chrome10+,Safari5.1+
+    background: -o-linear-gradient(top, @top_color 0%,@bottom_color 100%); // Opera 11.10+
+    background: -ms-linear-gradient(top, @top_color 0%,@bottom_color 100%); // IE10+
+    background: linear-gradient(to bottom, @top_color 0%,@bottom_color 100%); // W3C
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{top_color}', endColorstr='@{bottom_color}',GradientType=0 ); // IE6-9
+}
+
+// Docking
+
+@default-dock-margin: 0px;
+
+.dock(top, @margin: @default-dock-margin)
+{
+    left: @margin;
+    top: @margin;
+    right: @margin;
+}
+
+.dock(right, @margin: @default-dock-margin)
+{
+    right: @margin;
+    top: @margin;
+    bottom: @margin;
+}
+
+.dock(bottom, @margin: @default-dock-margin)
+{
+    left: @margin;
+    right: @margin;
+    bottom: @margin;
+}
+
+.dock(left, @margin: @default-dock-margin)
+{
+    left: @margin;
+    top: @margin;
+    bottom: @margin;
+}
+
+.dock(top-left, @margin: @default-dock-margin)
+{
+    left: @margin;
+    top: @margin;
+}
+
+.dock(top-right, @margin: @default-dock-margin)
+{
+    top: @margin;
+    right: @margin;
+}
+
+.dock(bottom-right, @margin: @default-dock-margin)
+{
+    bottom: @margin;
+    right: @margin;
+}
+
+.dock(bottom-left, @margin: @default-dock-margin)
+{
+    bottom: @margin;
+    left: @margin;
+}
+
+.dock(@direction, @margin: @default-dock-margin)
+{
+    position: absolute;
+}
+
+// JTABLE THEME BASE STYLES ///////////////////////////////////////////////////
+
+.ftable_theme_base()
+{
+    div.ftable-main-container
+    {
+        position: relative;
+
+        div.ftable-title
+        {
+            position: relative;
+            text-align: left;
+
+            .ftable-close-button
+            {
+                .dock(right);
+            }
+
+			// Toolbar -------------------------------------------------------------
+
+			div.ftable-toolbar
+			{
+				.dock(bottom-right);
+
+				display: inline-block;
+				margin-right: 5px;
+
+				.ftable-toolbar-item
+				{
+					position: relative;
+					display: inline-block;
+					margin: 0px 0px 0px 5px;
+					cursor: pointer;
+					font-size: 0.9em;
+					padding: 2px;
+					vertical-align: bottom;
+
+					span.ftable-toolbar-item-icon
+					{
+						display: inline-block;
+						margin: 2px;
+						vertical-align: middle;
+						width: 16px;
+						height: 16px;
+					}
+
+					span.ftable-toolbar-item-text
+					{
+						display: inline-block;
+						margin: 2px;
+						vertical-align: middle;
+					}
+				}
+			}
+
+			.ftable-close-button+div.ftable-toolbar
+			{
+				margin-right: 30px;
+			}
+        }
+
+        table.ftable
+        {
+            width: 100%;
+
+            thead
+            {
+                th
+                {
+                    padding: 0px 3px 0px 6px;
+                    vertical-align: middle;
+                    text-align: left;
+
+                    &.ftable-column-header
+                    {
+                        height: 1px; /* this is so the heigth of the div inside can be set to 100% */
+
+                        div.ftable-column-header-container
+                        {
+                            position: relative;
+                            display: table; /* display table so the inside elements can be easily aligned vertically */
+                            width: 100%;    /* width=100% is redundant for regular div, but for display table it is needed */
+                            height: 100% !important; /* height at 100% so the resize bar in it will have full height too */
+
+                            span.ftable-column-header-text
+                            {
+                                display: table-cell;
+                                vertical-align: middle; /* this works since we have display=table-cell */
+                                padding-top: 4px;
+                                padding-bottom: 3px;
+                            }
+
+                            div.ftable-column-resize-handler
+                            {
+                                position: absolute;
+                                display: table-cell;
+                                vertical-align: middle;
+                                height: 100%; /* so the resize bar fills the whole height */
+                                width: 8px;
+                                right: -8px;
+                                z-index: 2;
+                                cursor: col-resize;
+                            }
+                        }
+                    }
+
+                    &.ftable-command-column-header
+                    {
+                        text-align: center;
+                    }
+
+                    &.ftable-column-header-select
+                    {
+                        text-align: center;
+                        width: 1%;
+
+                        input
+                        {
+                            cursor: pointer;
+                        }
+                    }
+
+                    &.ftable-column-header-sortable
+                    {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            tbody
+            {
+                tr
+                {
+                    > td
+                    {
+                        .ftable-command-button
+                        {
+                            margin: 5px;
+                            padding: 0px;
+                            cursor: pointer;
+                            border: none;
+                            display: inline;
+
+                            span
+                            {
+                                display: none;
+                            }
+                        }
+
+                        &.ftable-command-column
+                        {
+                            .centered;
+                        }
+
+                        &.ftable-selecting-column
+                        {
+                            .centered;
+
+                            input
+                            {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    &.ftable-no-data-row
+                    {
+                        text-align: center;
+                    }
+
+                    &.ftable-row-created
+                    {
+                    }
+
+                    &.ftable-row-updated
+                    {
+                    }
+
+                    &.ftable-row-deleting
+                    {
+                    }
+                }
+            }
+        }
+
+        > div.ftable-bottom-panel
+        {
+            position: relative;
+            min-height: 24px;
+			text-align: left;
+
+            div.ftable-right-area
+            {
+                .dock(right);
+            }
+
+            .ftable-page-list
+            {
+                display: inline-block;
+
+                .ftable-page-number,
+                .ftable-page-number-space,
+                .ftable-page-number-first,
+                .ftable-page-number-last,
+                .ftable-page-number-previous,
+                .ftable-page-number-next,
+                .ftable-page-number-active
+                {
+                    padding: 2px 5px;
+                    display: inline-block;
+                    cursor: pointer;
+                }
+
+                .ftable-page-number-space,
+                .ftable-page-number-active,
+				.ftable-page-number-disabled
+                {
+                    cursor: default;
+                }
+            }
+
+            span.ftable-page-size-change
+            {
+                margin-left: 5px;
+            }
+
+			span.ftable-goto-page
+			{
+                margin-left: 5px;
+
+				input[type=text]
+				{
+					width:22px;
+				}
+			}
+
+			span.ftable-page-info
+			{
+				vertical-align: middle;
+			}
+        }
+
+        div.ftable-column-resize-bar
+        {
+            .opacity(0.5);
+            position: absolute;
+            width: 1px;
+            background-color: #000;
+        }
+
+    }
+
+    form.ftable-dialog-form
+    {
+        div.ftable-input-field-container
+        {
+            padding: 2px 0px 3px 0px;
+            border-bottom: 1px solid #ddd;
+
+            &:last-child
+            {
+                border: none;
+            }
+        }
+
+        div.ftable-input-label
+        {
+            padding: 2px 3px;
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        div.ftable-input
+        {
+            padding: 2px;
+        }
+
+        div.ftable-date-input
+        {
+            /* No additional style */
+        }
+
+        div.ftable-text-input
+        {
+            /* No additional style */
+        }
+
+        span.ftable-option-text-clickable
+        {
+            position: relative;
+            top: -2px;
+        }
+
+        div.ftable-textarea-input textarea
+        {
+            width: 300px;
+            min-height: 60px;
+        }
+
+        div.ftable-password-input
+        {
+        }
+
+        div.ftable-dropdown-input
+        {
+        }
+
+        div.ftable-radiobuttonlist-input
+        {
+        }
+
+        div.ftable-checkbox-input span,
+        div.ftable-radio-input span
+        {
+            padding-left: 4px;
+        }
+
+        div.ftable-radio-input input,
+        div.ftable-checkbox-input input,
+        span.ftable-option-text-clickable
+        {
+            cursor: pointer;
+        }
+    }
+
+    form.ftable-create-form
+    {
+    }
+
+    form.ftable-edit-form
+    {
+    }
+
+    .ftable-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+    }
+
+    .ftable-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        max-width: 90%;
+        max-height: 90vh;
+        overflow: auto;
+    }
+
+    .ftable-modal-header {
+        margin-bottom: 15px;
+        margin-top: 0px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .ftable-modal-footer {
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+        text-align: right;
+    }
+
+    .ftable-modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 28px;
+        font-weight: bold;
+        color: #aaa;
+    }
+
+    .ftable-busy-modal {
+        padding: 0px;
+    }
+
+    .ftable-dialog-button {
+        opacity: 0.8;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .ftable-dialog-button:hover {
+        background-color: #dedede;
+    }
+
+    div.ftable-busy-message
+    {
+        cursor: wait;
+        margin: 0px;
+    }
+
+    div.ftable-contextmenu-overlay
+    {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+    }
+
+    .ftable-table-div {
+        display: block;
+        overflow-x:auto;
+    }
+
+    .ftable-table-div > table {
+        overflow:hidden;
+    }
+
+    .ftable-delete-confirm-message
+    {
+    }
+
+    .ftable-row-ready-to-remove
+    {
+    }
+
+    .ftable-toolbarsearch {
+        width: 90%;
+        min-width: fit-content;
+    }
+    th.ftable-toolbarsearch-reset {
+        text-align: center !important;
+    }
+
+    div.ftable-column-selection-container
+    {
+        position: absolute;
+        border: 1px solid #C8C8C8;
+        background: #fff;
+        color: #000;
+        z-index: 101;
+        padding: 5px;
+
+        ul.ftable-column-select-list
+        {
+            .clear-list-styles;
+
+            li
+            {
+                margin: 0px;
+                padding: 2px 0px;
+
+                label
+                {
+                    span
+                    {
+                        position: relative;
+                        top: -1px;
+                        margin-left: 4px;
+                    }
+                }
+
+                input[type="checkbox"]
+                {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .ftable-yesno-check-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .ftable-yesno-check-text:before {
+        content: attr(data-no);
+    }
+
+    .ftable-yesno-check-input:checked ~ .ftable-yesno-check-text:before {
+        content: attr(data-yes);
+    }
+
+}

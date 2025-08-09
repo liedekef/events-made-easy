@@ -447,7 +447,7 @@ function eme_ajax_templates_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     $table          = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     $template_types = eme_template_types();
-    $jTableResult   = [];
+    $fTableResult   = [];
     $search_type    = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
     $search_name    = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
 
@@ -482,18 +482,18 @@ function eme_ajax_templates_list() {
             $row[ 'type'] = $template_types[ $val['type'] ];
             $row[ 'name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $val['id'] ) . "'>" . $val['name'] . '</a>';
             $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $val['id'] ).'";';
-            $row[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+            $row[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
             $rows[] = $row;
         }
 
-        $jTableResult['Result']           = 'OK';
-        $jTableResult['Records']          = $rows;
-        $jTableResult['TotalRecordCount'] = $recordCount;
+        $fTableResult['Result']           = 'OK';
+        $fTableResult['Records']          = $rows;
+        $fTableResult['TotalRecordCount'] = $recordCount;
     } else {
-        $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']  = 'Error';
+        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
-    print wp_json_encode( $jTableResult );
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 
@@ -514,13 +514,13 @@ function eme_ajax_manage_templates() {
 }
 
 //function eme_ajax_get_template_plain() {
-//   $return=array();
+//   $ajaxResult=array();
 //   if (isset($_REQUEST['template_id']) && intval($_REQUEST['template_id'])>0) {
-//     $return['htmlmessage']=eme_get_template_format_plain($_REQUEST['template_id']);
+//     $ajaxResult['htmlmessage']=eme_get_template_format_plain($_REQUEST['template_id']);
 //   } else {
-//     $return['htmlmessage']='';
+//     $ajaxResult['htmlmessage']='';
 //   }
-//   echo wp_json_encode($return);
+//   echo wp_json_encode($ajaxResult);
 //   wp_die();
 //}
 
@@ -535,13 +535,13 @@ function eme_ajax_get_template() {
     ) ) {
     wp_die();
     }
-    $return = [];
+    $ajaxResult = [];
     if ( isset( $_POST['template_id'] ) && intval( $_POST['template_id'] ) > 0 ) {
-        $return['htmlmessage'] = eme_get_template_format( $_POST['template_id'] );
+        $ajaxResult['htmlmessage'] = eme_get_template_format( $_POST['template_id'] );
     } else {
-        $return['htmlmessage'] = '';
+        $ajaxResult['htmlmessage'] = '';
     }
-    echo wp_json_encode( $return );
+    echo wp_json_encode( $ajaxResult );
     wp_die();
 }
 

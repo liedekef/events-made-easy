@@ -1,2 +1,0 @@
-Source: https://github.com/jonthornton/jquery-timepicker
-version: 1.14.0

@@ -468,9 +468,9 @@ function eme_task_signups_table_layout( $message = '' ) {
 		?>
 
 		<input id="search_start_date" type="hidden" name="search_start_date" value="">
-		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
+		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
 		<input id="search_end_date" type="hidden" name="search_end_date" value="">
-		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
+		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 		<button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
 	<?php } ?>
 	</form>
@@ -788,11 +788,11 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 				</td>
 				<td>
 				<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_start]' id='eme_tasks[<?php echo $count; ?>][task_start]'>
-				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_start]' id='eme_tasks[<?php echo $count; ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo eme_js_datetime( $task['task_start'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_start]' class='eme_formfield_fdatetime'>
+				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_start]' id='eme_tasks[<?php echo $count; ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo eme_js_datetime( $task['task_start'] );} ?>' data-alt-field='eme_tasks[<?php echo $count; ?>][task_start]' class='eme_formfield_fdatetime'>
 				</td>
 				<td>
 				<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_end]' id='eme_tasks[<?php echo $count; ?>][task_end]'>
-				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_end]' id='eme_tasks[<?php echo $count; ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo eme_js_datetime( $task['task_end'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_end]' class='eme_formfield_fdatetime'>
+				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_end]' id='eme_tasks[<?php echo $count; ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo eme_js_datetime( $task['task_end'] );} ?>' data-alt-field='eme_tasks[<?php echo $count; ?>][task_end]' class='eme_formfield_fdatetime'>
 				</td>
 				<td>
 				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][spaces]" name="eme_tasks[<?php echo $count; ?>][spaces]" size="12" aria-label="spaces" value="<?php echo $task['spaces']; ?>">
@@ -801,7 +801,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 				<textarea class="eme_fullresizable" id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
 				</td>
 				<td>
-				<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
+				<a href="#" class='eme_remove_task'><?php echo "<img class='eme_remove_task' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img class='eme_add_task' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
 				</td>
 				</tr>
 				<?php
@@ -1354,7 +1354,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	$nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	$form_id = uniqid();
 	$result .= "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-tasks-message-ok-$form_id' class='eme-message-success eme-tasks-message eme-tasks-message-success eme-hidden'></div><div id='eme-tasks-message-error-$form_id' class='eme-message-error eme-tasks-message eme-tasks-message-error eme-hidden'></div><div id='div_eme-tasks-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-tasks-form' method='post' $form_class action='#'>
+        <div id='eme-tasks-message-ok-$form_id' class='eme-message-success eme-tasks-message eme-tasks-message-success eme-hidden'></div><div id='eme-tasks-message-error-$form_id' class='eme-message-error eme-tasks-message eme-tasks-message-error eme-hidden'></div><div id='div_eme-tasks-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-tasks-form' method='post' $form_class action='#'>
                 $nonce
                 <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
                 ";
@@ -1868,7 +1868,7 @@ function eme_ajax_task_signups_list() {
 	$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$tasks_table       = EME_DB_PREFIX . EME_TASKS_TBNAME;
 	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$jTableResult      = [];
+	$fTableResult      = [];
 	if (!empty($_REQUEST['search_eventid'] )) {
 		$search_eventid    = intval( $_REQUEST['search_eventid'] );
 		$search_name       = "";
@@ -1958,14 +1958,14 @@ function eme_ajax_task_signups_list() {
 			$rows[ $key ]['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>';
 		}
 
-		$jTableResult['Result']           = 'OK';
-		$jTableResult['Records']          = $rows;
-		$jTableResult['TotalRecordCount'] = $recordCount;
+		$fTableResult['Result']           = 'OK';
+		$fTableResult['Records']          = $rows;
+		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 

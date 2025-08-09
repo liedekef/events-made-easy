@@ -350,7 +350,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
 	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
-	<div id='eme_div_import' style='display:none;'>
+	<div id='eme_div_import' class='eme-hidden'>
 	<form id='countries-import' method='post' enctype='multipart/form-data' action='#'>
 		<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
@@ -419,7 +419,7 @@ function eme_manage_states_layout( $message = '' ) {
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
 	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
-	<div id='eme_div_import' style='display:none;'>
+	<div id='eme_div_import' class='eme-hidden'>
 	<form id='states-import' method='post' enctype='multipart/form-data' action='#'>
 		<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
@@ -856,7 +856,7 @@ function eme_ajax_countries_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$jTableResult = [];
+	$fTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
 	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
@@ -879,14 +879,14 @@ function eme_ajax_countries_list() {
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_country&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
-		$jTableResult['Result']           = 'OK';
-		$jTableResult['Records']          = $rows;
-		$jTableResult['TotalRecordCount'] = $recordCount;
+		$fTableResult['Result']           = 'OK';
+		$fTableResult['Records']          = $rows;
+		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -896,7 +896,7 @@ function eme_ajax_states_list() {
     header( 'Content-type: application/json; charset=utf-8' );
 	$table           = EME_DB_PREFIX . EME_STATES_TBNAME;
 	$countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$jTableResult    = [];
+	$fTableResult    = [];
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
 		$recordCount = $wpdb->get_var( $sql );
@@ -908,22 +908,22 @@ function eme_ajax_states_list() {
 			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_state&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 
-		$jTableResult['Result']           = 'OK';
-		$jTableResult['Records']          = $rows;
-		$jTableResult['TotalRecordCount'] = $recordCount;
+		$fTableResult['Result']           = 'OK';
+		$fTableResult['Records']          = $rows;
+		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 function eme_ajax_manage_countries() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-		print wp_json_encode( $jTableResult );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
 	if ( isset( $_REQUEST['do_action'] ) ) {
@@ -958,9 +958,9 @@ function eme_ajax_country_delete() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-		print wp_json_encode( $jTableResult );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
 	$ids_list = eme_sanitize_request($_POST['id']);
@@ -968,29 +968,29 @@ function eme_ajax_country_delete() {
 		$wpdb->query( "DELETE FROM $countries_table WHERE id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( "UPDATE $states_table SET country_id=0 where country_id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
-	$jTableResult['Result']  = 'OK';
-	$jTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );
-	print wp_json_encode( $jTableResult );
+	$fTableResult['Result']  = 'OK';
+	$fTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
 function eme_ajax_state_edit() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-		print wp_json_encode( $jTableResult );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
-	$jTableResult = [];
+	$fTableResult = [];
 
 	if ( isset( $_POST['id'] ) ) {
 		$state  = eme_get_state( intval( $_POST['id'] ) );
 		$update = 1;
 		if ( ! $state ) {
-			$jTableResult['Result']  = 'Error';
-			$jTableResult['Message'] = __( 'No such state', 'events-made-easy' );
-			print wp_json_encode( $jTableResult );
+			$fTableResult['Result']  = 'Error';
+			$fTableResult['Message'] = __( 'No such state', 'events-made-easy' );
+			print wp_json_encode( $fTableResult );
 			wp_die();
 		}
 	} else {
@@ -1003,17 +1003,17 @@ function eme_ajax_state_edit() {
 		}
 	}
 	if ( strlen( $state['code'] ) != 2 ) {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Incorrect state code', 'events-made-easy' );
-		print wp_json_encode( $jTableResult );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Incorrect state code', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	} else {
 		$state['code'] = strtoupper( $state['code'] );
 	}
 	if ( empty( $state['country_id'] ) ) {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Incorrect country selection', 'events-made-easy' );
-		print wp_json_encode( $jTableResult );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Incorrect country selection', 'events-made-easy' );
+		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
 
@@ -1023,24 +1023,24 @@ function eme_ajax_state_edit() {
 		$res = eme_db_insert_state( $state );
 	}
 	if ( ! $res ) {
-		$jTableResult['Result'] = 'Error';
+		$fTableResult['Result'] = 'Error';
 		if ( $update ) {
-			$jTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' );
+			$fTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' );
 		} else {
-			$jTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' );
+			$fTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' );
 		}
 	} else {
-		$jTableResult['Result'] = 'OK';
+		$fTableResult['Result'] = 'OK';
 		if ( ! $update ) {
 			$record = eme_get_state( $res );
 			// for the new record, we also need to provide the lang (as done in eme_get_states)
 			$record['lang']         = eme_get_state_lang( $res );
-			$jTableResult['Record'] = eme_esc_html( $record );
+			$fTableResult['Record'] = eme_esc_html( $record );
 		}
 	}
 
 	//Return result to jTable
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -1063,9 +1063,9 @@ function eme_select_state_ajax() {
 		$record['text'] = $state['name'];
 		$records[]      = $record;
 	}
-	$jTableResult['TotalRecordCount'] = count( $records );
-	$jTableResult['Records']          = $records;
-	print wp_json_encode( $jTableResult );
+	$fTableResult['TotalRecordCount'] = count( $records );
+	$fTableResult['Records']          = $records;
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -1086,9 +1086,9 @@ function eme_select_country_ajax() {
 		$record['text'] = $country['name'];
 		$records[]      = $record;
 	}
-	$jTableResult['TotalRecordCount'] = count( $records );
-	$jTableResult['Records']          = $records;
-	print wp_json_encode( $jTableResult );
+	$fTableResult['TotalRecordCount'] = count( $records );
+	$fTableResult['Records']          = $records;
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 

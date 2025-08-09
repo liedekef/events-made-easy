@@ -30,7 +30,6 @@ function eme_new_discountgroup() {
 		'name'         => '',
 		'description'  => '',
 		'maxdiscounts' => 0,
-		'maxcount_pp' => 0,
 	];
 
 	return $discountgroup;
@@ -42,6 +41,9 @@ function eme_init_discount_props( $props ) {
 	}
 	if ( ! isset( $props['wp_users_only'] ) ) {
 		$props['wp_users_only'] = 0;
+	}
+	if ( ! isset( $props['maxcount_pp'] ) ) {
+		$props['maxcount_pp'] = 0;
 	}
 	if ( ! isset( $props['wp_role'] ) ) {
 		$props['wp_role'] = '';
@@ -427,7 +429,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
 	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
-	<div id='eme_div_import' style='display:none;'>
+	<div id='eme_div_import' class='eme-hidden'>
 	<form id='discount-import' method='post' enctype='multipart/form-data' action='#'>
 		<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
@@ -460,11 +462,11 @@ function eme_manage_discounts_layout( $message = '' ) {
 	</span>
 	<span id="span_newvalidfrom" class="eme-hidden">
 	<input id="new_validfrom" type="hidden" name="new_validfrom" value="">
-	<input id="eme_localized_new_validfrom" type="text" name="eme_localized_new_validfrom" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validfrom' class='eme_formfield_fdatetime'>
+	<input id="eme_localized_new_validfrom" type="text" name="eme_localized_new_validfrom" value="" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validfrom' class='eme_formfield_fdatetime'>
 	</span>
 	<span id="span_newvalidto" class="eme-hidden">
 	<input id="new_validto" type="hidden" name="new_validto" value="">
-	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
+	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
 	</span>
 	<button id="DiscountsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -510,7 +512,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
 	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
-	<div id='eme_div_import' style='display:none;'>
+	<div id='eme_div_import' class='eme-hidden'>
 	<form id='discountgroups-import' method='post' enctype='multipart/form-data' action='#'>
 		<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
@@ -854,14 +856,14 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='dp_valid_from'><?php esc_html_e( 'Valid from', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_from' id='valid_from'>
-			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo eme_js_datetime( $discount['valid_from'] );} ?>' data-alt-field='#valid_from' class='eme_formfield_fdatetime'>
+			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo eme_js_datetime( $discount['valid_from'] );} ?>' data-alt-field='valid_from' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon start date and time, if entered the coupon is not valid before this date and time.', 'events-made-easy' ); ?>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='dp_valid_to'><?php esc_html_e( 'Valid until', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_to' id='valid_to'>
-			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo eme_js_datetime( $discount['valid_to'] );} ?>' data-alt-field='#valid_to' class='eme_formfield_fdatetime'>
+			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo eme_js_datetime( $discount['valid_to'] );} ?>' data-alt-field='valid_to' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon expiration date and time, if entered the coupon is not valid after this date and time.', 'events-made-easy' ); ?>
 			</td>
 		</tr>
@@ -1626,7 +1628,7 @@ function eme_ajax_discounts_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
-	$jTableResult = [];
+	$fTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
 	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
@@ -1675,14 +1677,14 @@ function eme_ajax_discounts_list() {
 				$rows[ $key ]['use_per_seat'] = ( $row['use_per_seat'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 				$rows[ $key ]['name']         = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_discount&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
-		$jTableResult['Result']           = 'OK';
-		$jTableResult['Records']          = $rows;
-		$jTableResult['TotalRecordCount'] = $recordCount;
+		$fTableResult['Result']           = 'OK';
+		$fTableResult['Records']          = $rows;
+		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -1691,7 +1693,7 @@ function eme_ajax_discountgroups_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
-	$jTableResult = [];
+	$fTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
 	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
@@ -1715,14 +1717,14 @@ function eme_ajax_discountgroups_list() {
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_dgroup&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
-		$jTableResult['Result']           = 'OK';
-		$jTableResult['Records']          = $rows;
-		$jTableResult['TotalRecordCount'] = $recordCount;
+		$fTableResult['Result']           = 'OK';
+		$fTableResult['Records']          = $rows;
+		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']  = 'Error';
+		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	print wp_json_encode( $jTableResult );
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -1734,7 +1736,7 @@ function eme_ajax_discounts_select2() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
-	$jTableResult = [];
+	$fTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1757,9 +1759,9 @@ function eme_ajax_discounts_select2() {
 		$record['text'] = $discount['name'];
 		$records[]      = $record;
 	}
-	$jTableResult['TotalRecordCount'] = $recordCount;
-	$jTableResult['Records']          = $records;
-	print wp_json_encode( $jTableResult );
+	$fTableResult['TotalRecordCount'] = $recordCount;
+	$fTableResult['Records']          = $records;
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 
@@ -1771,7 +1773,7 @@ function eme_ajax_dgroups_select2() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
-	$jTableResult = [];
+	$fTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1794,9 +1796,9 @@ function eme_ajax_dgroups_select2() {
 		$record['text'] = $dgroup['name'];
 		$records[]      = $record;
 	}
-	$jTableResult['TotalRecordCount'] = $recordCount;
-	$jTableResult['Records']          = $records;
-	print wp_json_encode( $jTableResult );
+	$fTableResult['TotalRecordCount'] = $recordCount;
+	$fTableResult['Records']          = $records;
+	print wp_json_encode( $fTableResult );
 	wp_die();
 }
 

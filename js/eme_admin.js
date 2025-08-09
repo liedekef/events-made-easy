@@ -1,74 +1,105 @@
+// Main functions
 function eme_activateTab(target) {
-    jQuery('.eme-tab').removeClass('active');
-    jQuery('.eme-tab-content').removeClass('active');
+    $$('.eme-tab').forEach(tab => tab.classList.remove('active'));
+    $$('.eme-tab-content').forEach(content => content.classList.remove('active'));
 
-    jQuery(`.eme-tab[data-tab="${target}"]`).addClass('active');
-    jQuery(`#${target}`).addClass('active');
+    const targetTab = $(`.eme-tab[data-tab="${target}"]`);
+    const targetContent = $(`#${target}`);
 
-    if (target == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
-        // do this only when the tab is active, so leaflet knows the visible width and height of the map
-        // Delay the display to ensure the tab content is fully rendered
-        setTimeout(function() {
+    if (targetTab) targetTab.classList.add('active');
+    if (targetContent) targetContent.classList.add('active');
+
+    if (target === "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
+        setTimeout(() => {
             eme_SelectdisplayAddress();
             eme_displayAddress(0);
-        }, 100); // Adjust the delay as necessary
+        }, 100);
     }
-    if (target == "tab-mailings" ) {
-        // do this only when the tab is active, to avoid doing mail lookups if not needed
-        // Delay the trigger to ensure the tab content is fully rendered
-        setTimeout(function() {
-            jQuery('#MailingsTableContainer').jtable('recalcColumnWidthsOnce');
-            jQuery('#MailingsLoadRecordsButton').trigger('click');
-        }, 100); // Adjust the delay as necessary
+
+    if (target === "tab-mailings") {
+        setTimeout(() => {
+            const container = $('#MailingsTableContainer');
+            if (container && container.ftableInstance) {
+                //container.ftableInstance.recalcColumnWidthsOnce();
+                const loadButton = $('#MailingsLoadRecordsButton');
+                if (loadButton) loadButton.click();
+            }
+        }, 100);
     }
-    if (target == "tab-mailingsarchive" ) {
-        // do this only when the tab is active, to avoid doing mail lookups if not needed
-        // Delay the trigger to ensure the tab content is fully rendered
-        setTimeout(function() {
-            jQuery('#ArchivedMailingsTableContainer').jtable('recalcColumnWidthsOnce');
-            jQuery('#ArchivedMailingsLoadRecordsButton').trigger('click');
-        }, 100); // Adjust the delay as necessary
+
+    if (target === "tab-mailingsarchive") {
+        setTimeout(() => {
+            const container = $('#ArchivedMailingsTableContainer');
+            if (container && container.ftableInstance) {
+                //container.ftableInstance.recalcColumnWidthsOnce();
+                const loadButton = $('#ArchivedMailingsLoadRecordsButton');
+                if (loadButton) loadButton.click();
+            }
+        }, 100);
     }
-    if (target == "tab-allmail" ) {
-        // do this only when the tab is active, to avoid doing mail lookups if not needed
-        // Delay the trigger to ensure the tab content is fully rendered
-        setTimeout(function() {
-            jQuery('#MailsTableContainer').jtable('recalcColumnWidthsOnce');
-            jQuery('#MailsLoadRecordsButton').trigger('click');
-        }, 100); // Adjust the delay as necessary
+
+    if (target === "tab-allmail") {
+        setTimeout(() => {
+            const container = $('#MailsTableContainer');
+            if (container && container.ftableInstance) {
+                //container.ftableInstance.recalcColumnWidthsOnce();
+                const loadButton = $('#MailsLoadRecordsButton');
+                if (loadButton) loadButton.click();
+            }
+        }, 100);
     }
 }
 
-jQuery(document).ready(function($) {
-    // --- Tasks Add/Remove (from previous version) ---
-    function eme_add_task_function(myel) {
-        let selectedItem = $(myel.parent().parent().get(0));
-        let metaCopy = selectedItem.clone(false);
-        let newId = 0;
-        while ($('#eme_row_task_'+newId).length) newId++;
-        let currentId = metaCopy.attr('id').replace('eme_row_task_','');
-        metaCopy.attr('id', 'eme_row_task_'+newId);
-        metaCopy.find('a').attr('rel', newId);
-        metaCopy.find('[name="eme_tasks['+currentId+'][signup_count]"]').remove();
-        let metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
-        metafields.forEach(f => {
-            metaCopy.find('[name="eme_tasks['+currentId+']['+f+']"]').attr({
-                'name':'eme_tasks['+newId+']['+f+']',
-                'id':'eme_tasks['+newId+']['+f+']'
-            });
-        });
-        metaCopy.find('[name="eme_tasks['+newId+'][dp_task_start]"]').attr({
-            'data-alt-field':'#eme_tasks['+newId+'][task_start]'
-        });
-        metaCopy.find('[name="eme_tasks['+newId+'][dp_task_end]"]').attr({
-            'data-alt-field':'#eme_tasks['+newId+'][task_end]'
-        });
-        metaCopy.find('[name="eme_tasks['+newId+'][name]"]').val('');
-        metaCopy.find('[name="eme_tasks['+newId+'][spaces]"]').val('1');
-        metaCopy.find('[name="eme_tasks['+newId+'][description]"]').val('');
-        metaCopy.find('[name="eme_tasks['+newId+'][task_id]"]').parent().html('');
-        $('#eme_tasks_tbody').append(metaCopy);
-        $('#eme_row_task_'+newId+' .eme_formfield_fdatetime').fdatepicker({
+// Task management functions
+function eme_add_task_function(element) {
+    const selectedItem = element.closest('tr');
+    const metaCopy = selectedItem.cloneNode(true);
+    let newId = 0;
+    while ($(`#eme_row_task_${newId}`)) newId++;
+
+    const currentId = metaCopy.id.replace('eme_row_task_', '');
+    metaCopy.id = `eme_row_task_${newId}`;
+
+    const relElements = metaCopy.querySelectorAll('a');
+    relElements.forEach(a => a.setAttribute('rel', newId));
+
+    // Remove signup_count field
+    const signupCount = metaCopy.querySelector(`[name="eme_tasks[${currentId}][signup_count]"]`);
+    if (signupCount) signupCount.remove();
+
+    const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'dp_task_start', 'dp_task_end', 'description'];
+    metafields.forEach(f => {
+        const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
+        if (field) {
+            field.name = `eme_tasks[${newId}][${f}]`;
+            field.id = `eme_tasks[${newId}][${f}]`;
+        }
+    });
+
+    // Update data-alt-field attributes
+    const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
+    const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
+    if (dpStart) dpStart.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_start]`);
+    if (dpEnd) dpEnd.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_end]`);
+
+    // Clear values
+    const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
+    const spacesField = metaCopy.querySelector(`[name="eme_tasks[${newId}][spaces]"]`);
+    const descField = metaCopy.querySelector(`[name="eme_tasks[${newId}][description]"]`);
+    const taskIdField = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_id]"]`);
+
+    if (nameField) nameField.value = '';
+    if (spacesField) spacesField.value = '1';
+    if (descField) descField.value = '';
+    if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
+
+    const tbody = $('#eme_tasks_tbody');
+    if (tbody) tbody.appendChild(metaCopy);
+
+    // Initialize date picker for new row
+    const newDateFields = metaCopy.querySelectorAll('.eme_formfield_fdatetime');
+    newDateFields.forEach(field => {
+        field.fdatepicker({
             todayButton: new Date(),
             clearButton: true,
             closeButton: true,
@@ -76,488 +107,688 @@ jQuery(document).ready(function($) {
             minutesStep: parseInt(emeadmin.translate_minutesStep),
             language: emeadmin.translate_flanguage,
             firstDay: parseInt(emeadmin.translate_firstDayOfWeek),
-            altFieldDateFormat: 'Y-m-d H:i:00',
-            dateFormat: emeadmin.translate_fdateformat,
-            timeFormat: emeadmin.translate_ftimeformat
+            altFormat: 'Y-m-d H:i:00',
+            format: emeadmin.translate_fdateformat,
         });
-        let current_start = metaCopy.find('[name="eme_tasks['+newId+'][task_start]"]').val();
-        if (current_start != '') {
-            let js_start_obj = new Date(current_start);
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_start]"]').data('fdatepicker').selectDate(js_start_obj);
-        }
-        let current_end = metaCopy.find('[name="eme_tasks['+newId+'][task_end]"]').val();
-        if (current_end != '') {
-            let js_end_obj = new Date(current_end);
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_end]"]').data('fdatepicker').selectDate(js_end_obj);
-        }
-        $('#eme_row_task_'+newId+' .eme_add_task').on("click",function(event) {
-            event.preventDefault();
-            eme_add_task_function($(this));
-        });
-        $('#eme_row_task_'+newId+' .eme_remove_task').on("click",function(event) {
-            event.preventDefault();
-            eme_remove_task_function($(this));
-        });
-    }
-
-    function eme_remove_task_function(myel) {
-        let metas = $('#eme_tasks_tbody').children();
-        if(metas.length > 1){
-            $(myel.parent().parent().get(0)).remove();
-        } else {
-            let metaCopy = $(myel.parent().parent().get(0));
-            let newId = 0;
-            while ($('#eme_row_task_'+newId).length) newId++;
-            let currentId = metaCopy.attr('id').replace('eme_row_task_','');
-            metaCopy.attr('id', 'eme_row_task_'+newId);
-            metaCopy.find('a').attr('rel', newId);
-            let metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_tasks['+currentId+']['+f+']"]').attr({
-                    'name':'eme_tasks['+newId+']['+f+']',
-                    'id':'eme_tasks['+newId+']['+f+']'
-                });
-            });
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_start]"]').attr({
-                'data-alt-field':'#eme_tasks['+newId+'][task_start]'
-            });
-            metaCopy.find('[name="eme_tasks['+newId+'][dp_task_end]"]').attr({
-                'data-alt-field':'#eme_tasks['+newId+'][task_end]'
-            });
-            metaCopy.find('[name="eme_tasks['+newId+'][name]"]').val('');
-            metaCopy.find('[name="eme_tasks['+newId+'][spaces]"]').val('1');
-            metaCopy.find('[name="eme_tasks['+newId+'][description]"]').val('');
-            metaCopy.find('[name="eme_tasks['+newId+'][task_id]"]').parent().html('');
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_tasks['+newId+']['+f+']"]').prop('required',false);
-            });
-        }
-    }
-
-    function eme_add_todo_function(myel) {
-        let selectedItem = $(myel.parent().parent().get(0));
-        let metaCopy = selectedItem.clone(false);
-        let newId = 0;
-        while ($('#eme_row_todo_'+newId).length) newId++;
-        let currentId = metaCopy.attr('id').replace('eme_row_todo_','');
-        metaCopy.attr('id', 'eme_row_todo_'+newId);
-        metaCopy.find('a').attr('rel', newId);
-        let metafields=['todo_id','name','todo_offset','description'];
-        metafields.forEach(f => {
-            metaCopy.find('[name="eme_todos['+currentId+']['+f+']"]').attr({
-                'name':'eme_todos['+newId+']['+f+']',
-                'id':'eme_todos['+newId+']['+f+']'
-            });
-        });
-        metaCopy.find('[name="eme_todos['+newId+'][name]"]').val('');
-        metaCopy.find('[name="eme_todos['+newId+'][todo_offset]"]').val('0');
-        metaCopy.find('[name="eme_todos['+newId+'][description]"]').val('');
-        metaCopy.find('[name="eme_todos['+newId+'][todo_id]"]').parent().html('');
-        $('#eme_todos_tbody').append(metaCopy);
-        $('#eme_row_todo_'+newId+' .eme_add_todo').on("click",function(event) {
-            event.preventDefault();
-            eme_add_todo_function($(this));
-        });
-        $('#eme_row_todo_'+newId+' .eme_remove_todo').on("click",function(event) {
-            event.preventDefault();
-            eme_remove_todo_function($(this));
-        });
-    }
-
-    function eme_remove_todo_function(myel) {
-        let metas = $('#eme_todos_tbody').children();
-        if(metas.length > 1){
-            $(myel.parent().parent().get(0)).remove();
-        } else {
-            let metaCopy = $(myel.parent().parent().get(0));
-            let newId = 0;
-            while ($('#eme_row_todo_'+newId).length) newId++;
-            let currentId = metaCopy.attr('id').replace('eme_row_todo_','');
-            metaCopy.attr('id', 'eme_row_todo_'+newId);
-            metaCopy.find('a').attr('rel', newId);
-            let metafields=['todo_id','name','todo_offset','description'];
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_todos['+currentId+']['+f+']"]').attr({
-                    'name':'eme_todos['+newId+']['+f+']',
-                    'id':'eme_todos['+newId+']['+f+']'
-                });
-            });
-            metaCopy.find('[name="eme_todos['+newId+'][name]"]').val('');
-            metaCopy.find('[name="eme_todos['+newId+'][todo_offset]"]').val('0');
-            metaCopy.find('[name="eme_todos['+newId+'][description]"]').val('');
-            metaCopy.find('[name="eme_todos['+newId+'][todo_id]"]').parent().html('');
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_todos['+newId+']['+f+']"]').prop('required',false);
-            });
-        }
-    }
-
-    // --- Tab Binding and Default Activation ---
-    $('.eme-tab').on('click', function(e) {
-        let target = $(this).data('tab');
-        eme_activateTab(target);
     });
-    if ($('.eme-tabs').length) {
-        const preferredtab = $('.eme-tabs').data('showtab');
-        if (preferredtab) {
-            eme_activateTab(preferredtab);
+
+    // Set existing dates
+    const currentStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_start]"]`)?.value;
+    if (currentStart) {
+        const jsStartObj = new Date(currentStart);
+        const dpStartField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
+        if (dpStartField && dpStartField.fdatepicker) {
+            dpStartField.fdatepicker.selectDate(jsStartObj);
+        }
+    }
+
+    const currentEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_end]"]`)?.value;
+    if (currentEnd) {
+        const jsEndObj = new Date(currentEnd);
+        const dpEndField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
+        if (dpEndField && dpEndField.fdatepicker) {
+            dpEndField.fdatepicker.selectDate(jsEndObj);
+        }
+    }
+}
+
+function eme_remove_task_function(element) {
+    const tbody = $('#eme_tasks_tbody');
+    const rows = tbody ? tbody.children : [];
+
+    if (rows.length > 1) {
+        element.closest('tr').remove();
+    } else {
+        const metaCopy = element.closest('tr');
+        let newId = 0;
+        while ($(`#eme_row_task_${newId}`)) newId++;
+
+        const currentId = metaCopy.id.replace('eme_row_task_', '');
+        metaCopy.id = `eme_row_task_${newId}`;
+
+        const relElements = metaCopy.querySelectorAll('a');
+        relElements.forEach(a => a.setAttribute('rel', newId));
+
+        const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'dp_task_start', 'dp_task_end', 'description'];
+        metafields.forEach(f => {
+            const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
+            if (field) {
+                field.name = `eme_tasks[${newId}][${f}]`;
+                field.id = `eme_tasks[${newId}][${f}]`;
+            }
+        });
+
+        // Update data-alt-field attributes
+        const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
+        const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
+        if (dpStart) dpStart.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_start]`);
+        if (dpEnd) dpEnd.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_end]`);
+
+        // Clear values
+        const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
+        const spacesField = metaCopy.querySelector(`[name="eme_tasks[${newId}][spaces]"]`);
+        const descField = metaCopy.querySelector(`[name="eme_tasks[${newId}][description]"]`);
+        const taskIdField = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_id]"]`);
+
+        if (nameField) nameField.value = '';
+        if (spacesField) spacesField.value = '1';
+        if (descField) descField.value = '';
+        if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
+
+        // Remove required attributes
+        metafields.forEach(f => {
+            const field = metaCopy.querySelector(`[name="eme_tasks[${newId}][${f}]"]`);
+            if (field) field.removeAttribute('required');
+        });
+    }
+}
+
+// Todo management functions
+function eme_add_todo_function(element) {
+    const selectedItem = element.closest('tr');
+    const metaCopy = selectedItem.cloneNode(true);
+    let newId = 0;
+    while ($(`#eme_row_todo_${newId}`)) newId++;
+
+    const currentId = metaCopy.id.replace('eme_row_todo_', '');
+    metaCopy.id = `eme_row_todo_${newId}`;
+
+    const relElements = metaCopy.querySelectorAll('a');
+    relElements.forEach(a => a.setAttribute('rel', newId));
+
+    const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
+    metafields.forEach(f => {
+        const field = metaCopy.querySelector(`[name="eme_todos[${currentId}][${f}]"]`);
+        if (field) {
+            field.name = `eme_todos[${newId}][${f}]`;
+            field.id = `eme_todos[${newId}][${f}]`;
+        }
+    });
+
+    // Clear values
+    const nameField = metaCopy.querySelector(`[name="eme_todos[${newId}][name]"]`);
+    const offsetField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_offset]"]`);
+    const descField = metaCopy.querySelector(`[name="eme_todos[${newId}][description]"]`);
+    const todoIdField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_id]"]`);
+
+    if (nameField) nameField.value = '';
+    if (offsetField) offsetField.value = '0';
+    if (descField) descField.value = '';
+    if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
+
+    const tbody = $('#eme_todos_tbody');
+    if (tbody) tbody.appendChild(metaCopy);
+}
+
+function eme_remove_todo_function(element) {
+    const tbody = $('#eme_todos_tbody');
+    const rows = tbody ? tbody.children : [];
+
+    if (rows.length > 1) {
+        element.closest('tr').remove();
+    } else {
+        const metaCopy = element.closest('tr');
+        let newId = 0;
+        while ($(`#eme_row_todo_${newId}`)) newId++;
+
+        const currentId = metaCopy.id.replace('eme_row_todo_', '');
+        metaCopy.id = `eme_row_todo_${newId}`;
+
+        const relElements = metaCopy.querySelectorAll('a');
+        relElements.forEach(a => a.setAttribute('rel', newId));
+
+        const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
+        metafields.forEach(f => {
+            const field = metaCopy.querySelector(`[name="eme_todos[${currentId}][${f}]"]`);
+            if (field) {
+                field.name = `eme_todos[${newId}][${f}]`;
+                field.id = `eme_todos[${newId}][${f}]`;
+            }
+        });
+
+        // Clear values
+        const nameField = metaCopy.querySelector(`[name="eme_todos[${newId}][name]"]`);
+        const offsetField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_offset]"]`);
+        const descField = metaCopy.querySelector(`[name="eme_todos[${newId}][description]"]`);
+        const todoIdField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_id]"]`);
+
+        if (nameField) nameField.value = '';
+        if (offsetField) offsetField.value = '0';
+        if (descField) descField.value = '';
+        if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
+
+        // Remove required attributes
+        metafields.forEach(f => {
+            const field = metaCopy.querySelector(`[name="eme_todos[${newId}][${f}]"]`);
+            if (field) field.removeAttribute('required');
+        });
+    }
+}
+
+// Attachment UI initialization function
+function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, removeBtnSelector) {
+    const btn = $(btnSelector);
+    const links = $(linksSelector);
+    const ids = $(idsSelector);
+    const removeBtn = $(removeBtnSelector);
+
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.wp && window.wp.media) {
+                const customUploader = window.wp.media({
+                    title: emeadmin.translate_addattachments || 'Add attachments',
+                    button: { text: emeadmin.translate_addattachments || 'Add attachments' },
+                    multiple: true
+                }).on('select', function() {
+                    const selection = customUploader.state().get('selection');
+                    selection.map(function(attach) {
+                        const attachment = attach.toJSON();
+                        if (links) {
+                            links.innerHTML += `<a target='_blank' href='${attachment.url}'>${attachment.title}</a><br>`;
+                        }
+                        if (ids) {
+                            const idsArr = ids.value ? ids.value.split(',') : [];
+                            idsArr.push(attachment.id);
+                            ids.value = idsArr.join(',');
+                        }
+                        if (removeBtn) {
+                            eme_toggle(removeBtn, true);
+                        }
+                    });
+                }).open();
+            }
+        });
+    }
+
+    if (removeBtn) {
+        removeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (links) links.innerHTML = '';
+            if (ids) ids.value = '';
+            eme_toggle(removeBtn, false);
+        });
+
+        // Set initial visibility
+        if (ids) {
+            eme_toggle(removeBtn, ids.value !== '');
+        }
+    }
+}
+
+// Main initialization
+document.addEventListener('DOMContentLoaded', function () {
+    // Tab binding and default activation
+    $$('.eme-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            const target = e.target.getAttribute('data-tab');
+            eme_activateTab(target);
+        });
+    });
+
+    const tabsContainer = $('.eme-tabs');
+    if (tabsContainer) {
+        const preferredTab = tabsContainer.getAttribute('data-showtab');
+        if (preferredTab) {
+            eme_activateTab(preferredTab);
         } else if ($_GET['page'] && $_GET['page']=='eme-emails') {
             eme_activateTab('tab-genericmails');
         } else {
-            eme_activateTab($('.eme-tab').first().data('tab'));
+            const firstTab = $('.eme-tab');
+            if (firstTab) {
+                eme_activateTab(firstTab.getAttribute('data-tab'));
+            }
         }
     }
 
-    // --- Input Placeholder Sizing ---
-    $("input[placeholder]").each(function () {
-        if ($(this).attr('placeholder').length > $(this).attr('size')) {
-            $(this).attr('size', $(this).attr('placeholder').length);
+    // Input placeholder sizing
+    $$("input[placeholder]").forEach(input => {
+        const placeholder = input.getAttribute('placeholder');
+        const size = parseInt(input.getAttribute('size')) || 0;
+        if (placeholder && placeholder.length > size) {
+            input.setAttribute('size', placeholder.length);
         }
     });
 
-    $(document).on('click', '.eme-dismiss-notice', function(e) {
-        e.preventDefault();
-        var notice = $(this).data('notice');
-        var noticeDiv = $(this).closest('.notice');
-        
-        $.post(ajaxurl, {
-            action: 'eme_dismiss_notice',
-            notice: notice,
-            eme_admin_nonce: emeadmin.translate_adminnonce
-        }, function(response) {
-            if (response.success) {
-                noticeDiv.fadeOut();
+    // Dismiss notice functionality
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('eme-dismiss-notice')) {
+            e.preventDefault();
+            const notice = e.target.getAttribute('data-notice');
+            const noticeDiv = e.target.closest('.notice');
+
+            const formData = new URLSearchParams({
+                action: 'eme_dismiss_notice',
+                notice: notice,
+                eme_admin_nonce: emeadmin.translate_adminnonce || ''
+            });
+
+            fetch(ajaxurl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            }).then(response => response.json()).then(response => {
+                if (response.success && noticeDiv) {
+                    noticeDiv.style.transition = 'opacity 300ms';
+                    noticeDiv.style.opacity = '0';
+                    setTimeout(() => eme_toggle(noticeDiv, false), 300);
+                }
+            });
+        }
+    });
+
+    // Attribute metabox add/remove
+    const attrAddBtn = $('#eme_attr_add_tag');
+    if (attrAddBtn) {
+        attrAddBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const body = $('#eme_attr_body');
+            const metas = body.children;
+            const metaCopy = metas[0].cloneNode(true);
+            const newId = metas.length + 1;
+
+            metaCopy.id = `eme_attr_${newId}`;
+            const relElements = metaCopy.querySelectorAll('a');
+            relElements.forEach(a => a.setAttribute('rel', newId));
+
+            const refField = metaCopy.querySelector('[name=eme_attr_1_ref]');
+            const contentField = metaCopy.querySelector('[name=eme_attr_1_content]');
+            const nameField = metaCopy.querySelector('[name=eme_attr_1_name]');
+
+            if (refField) {
+                refField.name = `eme_attr_${newId}_ref`;
+                refField.value = '';
+            }
+            if (contentField) {
+                contentField.name = `eme_attr_${newId}_content`;
+                contentField.value = '';
+            }
+            if (nameField) {
+                nameField.name = `eme_attr_${newId}_name`;
+                nameField.value = '';
+            }
+
+            body.appendChild(metaCopy);
+        });
+    }
+
+    // Attribute removal
+    const attrBody = $('#eme_attr_body');
+    if (attrBody) {
+        attrBody.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const body = $('#eme_attr_body');
+                const children = Array.from(body.children);
+
+                if (children.length > 1) {
+                    e.target.closest('tr').remove();
+                    // Renumber remaining items
+                    Array.from(body.children).forEach((child, id) => {
+                        const newId = id + 1;
+                        const oldId = child.id.replace('eme_attr_', '');
+                        child.id = `eme_attr_${newId}`;
+
+                        const relElements = child.querySelectorAll('a');
+                        relElements.forEach(a => a.setAttribute('rel', newId));
+
+                        const refField = child.querySelector(`[name=eme_attr_${oldId}_ref]`);
+                        const contentField = child.querySelector(`[name=eme_attr_${oldId}_content]`);
+                        const nameField = child.querySelector(`[name=eme_attr_${oldId}_name]`);
+
+                        if (refField) refField.name = `eme_attr_${newId}_ref`;
+                        if (contentField) contentField.name = `eme_attr_${newId}_content`;
+                        if (nameField) nameField.name = `eme_attr_${newId}_name`;
+                    });
+                } else {
+                    const metaCopy = e.target.closest('tr');
+                    const refField = metaCopy.querySelector('[name=eme_attr_1_ref]');
+                    const contentField = metaCopy.querySelector('[name=eme_attr_1_content]');
+                    const nameField = metaCopy.querySelector('[name=eme_attr_1_name]');
+
+                    if (refField) refField.value = '';
+                    if (contentField) contentField.value = '';
+                    if (nameField) nameField.value = '';
+                }
+            }
+        });
+    }
+
+    // DynData sortable initialization
+    const dyndataTbody = $('#eme_dyndata_tbody');
+    if (dyndataTbody && window.Sortable) {
+        new Sortable(dyndataTbody, {
+            handle: '.eme-sortable-handle',
+            onStart: (evt) => { evt.from.style.opacity = '0.6'; },
+            onEnd: (evt) => { evt.from.style.opacity = '1'; }
+        });
+    }
+
+    document.addEventListener('click', function(event) {
+        if (event.target.matches('.eme_add_todo')) {
+            event.preventDefault();
+            eme_add_todo_function(event.target);
+        }
+        if (event.target.matches('.eme_remove_todo')) {
+            event.preventDefault();
+            eme_remove_todo_function(event.target);
+        }
+        if (event.target.matches('.eme_add_task')) {
+            event.preventDefault();
+            eme_add_task_function(event.target);
+        }
+        if (event.target.matches('.eme_remove_task')) {
+            event.preventDefault();
+            eme_remove_task_function(event.target);
+        }
+        if (event.target.matches('.eme_dyndata_add_tag')) {
+            event.preventDefault();
+            const tbody = $('#eme_dyndata_tbody');
+            const metas = tbody.children;
+            const metaCopy = metas[0].cloneNode(true);
+            let newId = 0;
+            while ($(`#eme_dyndata_${newId}`)) newId++;
+
+            const currentId = metaCopy.id.replace('eme_dyndata_', '');
+            metaCopy.id = `eme_dyndata_${newId}`;
+
+            const relElements = metaCopy.querySelectorAll('a');
+            relElements.forEach(a => a.setAttribute('rel', newId));
+
+            const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
+            metafields.forEach(f => {
+                const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
+                if (field) {
+                    field.name = `eme_dyndata[${newId}][${f}]`;
+                    field.id = `eme_dyndata[${newId}][${f}]`;
+                }
+            });
+
+            // Set default values
+            const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
+            const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
+            const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
+            const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
+            const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
+            const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
+            const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
+            const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
+
+            if (fieldField) fieldField.value = '';
+            if (conditionField) conditionField.value = 'eq';
+            if (condvalField) condvalField.value = '';
+            if (headerField) headerField.value = '0';
+            if (templateField) templateField.value = '0';
+            if (footerField) footerField.value = '0';
+            if (repeatField) repeatField.value = '0';
+            if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
+
+            tbody.appendChild(metaCopy);
+        }
+ 
+        // DynData remove functionality
+        if (event.target.matches('.eme_remove_dyndatacondition')) {
+            event.preventDefault();
+            const tbody = $('#eme_dyndata_tbody');
+            const rows = tbody.children;
+
+            if (rows.length > 1) {
+                event.target.closest('tr').remove();
+            } else {
+                const metaCopy = e.target.closest('tr');
+                let newId = 0;
+                while ($(`#eme_dyndata_${newId}`)) newId++;
+
+                const currentId = metaCopy.id.replace('eme_dyndata_', '');
+                metaCopy.id = `eme_dyndata_${newId}`;
+
+                const relElements = metaCopy.querySelectorAll('a');
+                relElements.forEach(a => a.setAttribute('rel', newId));
+
+                const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
+                metafields.forEach(f => {
+                    const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
+                    if (field) {
+                        field.name = `eme_dyndata[${newId}][${f}]`;
+                        field.id = `eme_dyndata[${newId}][${f}]`;
+                    }
+                });
+
+                // Clear values and remove required attributes
+                const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
+                const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
+                const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
+                const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
+                const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
+                const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
+                const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
+                const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
+
+                if (fieldField) fieldField.value = '';
+                if (conditionField) conditionField.value = 'eq';
+                if (condvalField) condvalField.value = '';
+                if (headerField) headerField.value = '0';
+                if (templateField) templateField.value = '0';
+                if (footerField) footerField.value = '0';
+                if (repeatField) repeatField.value = '0';
+                if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
+
+                metafields.forEach(f => {
+                    const field = metaCopy.querySelector(`[name="eme_dyndata[${newId}][${f}]"]`);
+                    if (field) field.removeAttribute('required');
+                });
+            }
+        }
+    });
+
+    // Tasks & Todos sortable
+    const tasksTbody = $('#eme_tasks_tbody');
+    if (tasksTbody && window.Sortable) {
+        new Sortable(tasksTbody, {
+            handle: '.eme-sortable-handle',
+            onStart: (evt) => { evt.from.style.opacity = '0.6'; },
+            onEnd: (evt) => { evt.from.style.opacity = '1'; }
+        });
+    }
+
+    const todosTbody = $('#eme_todos_tbody');
+    if (todosTbody && window.Sortable) {
+        new Sortable(todosTbody, {
+            handle: '.eme-sortable-handle',
+            onStart: (evt) => { evt.from.style.opacity = '0.6'; },
+            onEnd: (evt) => { evt.from.style.opacity = '1'; }
+        });
+    }
+
+    const changeTaskDaysBtn = $('#change_task_days');
+    if (changeTaskDaysBtn) {
+        changeTaskDaysBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const offset = parseInt($('#task_offset').value);
+            let myId = 0;
+
+            while (document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`)) {
+                const currentStart = document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`).value;
+                const currentEnd = document.querySelector(`[name="eme_tasks[${myId}][task_end]"]`).value;
+                const startObj = new Date(currentStart);
+                const endObj = new Date(currentEnd);
+
+                startObj.setDate(startObj.getDate() + offset);
+                endObj.setDate(endObj.getDate() + offset);
+
+                const dpStartField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_start]"]`);
+                const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
+
+                if (dpStartField && dpStartField.fdatepicker) {
+                    dpStartField.fdatepicker.selectDate(startObj);
+                }
+                if (dpEndField && dpEndField.fdatepicker) {
+                    dpEndField.fdatepicker.selectDate(endObj);
+                }
+
+                myId++;
+            }
+        });
+    }
+
+    // Show/Hide Elements
+    $$('.showhidebutton').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const elname = e.target.getAttribute('data-showhide');
+            const targetEl = $(`#${elname}`);
+            if (targetEl) {
+                targetEl.classList.toggle('eme-hidden');
             }
         });
     });
 
-    // --- Attribute metabox add/remove ---
-    $('#eme_attr_add_tag').on("click",function(event) {
-        event.preventDefault();
-        let metas = $('#eme_attr_body').children();
-        let metaCopy = $(metas[0]).clone(true);
-        let newId = metas.length + 1;
-        metaCopy.attr('id', 'eme_attr_'+newId);
-        metaCopy.find('a').attr('rel', newId);
-        metaCopy.find('[name=eme_attr_1_ref]').attr({ name:'eme_attr_'+newId+'_ref', value:'' });
-        metaCopy.find('[name=eme_attr_1_content]').attr({ name:'eme_attr_'+newId+'_content', value:'' });
-        metaCopy.find('[name=eme_attr_1_name]').attr({ name:'eme_attr_'+newId+'_name', value:'' });
-        $('#eme_attr_body').append(metaCopy);
+    initTomSelectRemote('.eme_select2_members_class', {
+        action: 'eme_members_select2',
+	    placeholder: emeadmin.translate_selectmembers,
+	    extraPlugins: ['remove_button'],
+	    ajaxParams: {
+		    pagesize: 30,
+		    eme_admin_nonce: emeadmin.translate_adminnonce,
+	    }
     });
-
-    $('#eme_attr_body').on("click", "a", function(event) {
-        event.preventDefault();
-        let $body = $('#eme_attr_body');
-        if($body.children().length > 1){
-            $($(this).parent().parent().get(0)).remove();
-            $body.children().each(function(id){
-                let metaCopy = $(this);
-                let oldId = metaCopy.attr('id').replace('eme_attr_','');
-                let newId = id+1;
-                metaCopy.attr('id', 'eme_attr_'+newId);
-                metaCopy.find('a').attr('rel', newId);
-                metaCopy.find('[name=eme_attr_'+ oldId +'_ref]').attr('name', 'eme_attr_'+newId+'_ref');
-                metaCopy.find('[name=eme_attr_'+ oldId +'_content]').attr('name', 'eme_attr_'+newId+'_content');
-                metaCopy.find('[name=eme_attr_'+ oldId +'_name]').attr( 'name', 'eme_attr_'+newId+'_name');
-            });
-        } else {
-            let metaCopy = $($(this).parent().parent().get(0));
-            metaCopy.find('[name=eme_attr_1_ref]').attr('value', '');
-            metaCopy.find('[name=eme_attr_1_content]').attr('value', '');
-            metaCopy.find('[name=eme_attr_1_name]').attr('value', '');
-        }
+    initTomSelectRemote('.eme_select2_people_class', {
+        action: 'eme_people_select2',
+        placeholder: emeadmin.translate_selectpersons,
+	    extraPlugins: ['remove_button'],
+	    ajaxParams: {
+		    pagesize: 30,
+		    eme_admin_nonce: emeadmin.translate_adminnonce,
+	    }
     });
-
-    // --- DynData add/remove and sortable ---
-    if ($('#eme_dyndata_tbody').length) {
-        new Sortable(document.getElementById('eme_dyndata_tbody'), {
-            handle: '.eme-sortable-handle',
-            onStart: function (evt) { evt.from.style.opacity = '0.6'; },
-            onEnd: function (evt) { evt.from.style.opacity = '1'; }
-        });
-    }
-    $('.eme_dyndata_add_tag').on("click",function(event) {
-        event.preventDefault();
-        let metas = $('#eme_dyndata_tbody').children();
-        let metaCopy = $(metas[0]).clone(true);
-        let newId = 0; while ($('#eme_dyndata_'+newId).length) newId++;
-        let currentId = metaCopy.attr('id').replace('eme_dyndata_','');
-        metaCopy.attr('id', 'eme_dyndata_'+newId);
-        metaCopy.find('a').attr('rel', newId);
-        let metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
-        metafields.forEach(f => {
-            metaCopy.find('[name="eme_dyndata['+currentId+']['+f+']"]').attr({
-                'name':'eme_dyndata['+newId+']['+f+']' ,
-                'id':'eme_dyndata['+newId+']['+f+']'
-            });
-        });
-        metaCopy.find('[name="eme_dyndata['+newId+'][field]"]').val('');
-        metaCopy.find('[name="eme_dyndata['+newId+'][condition]"]').val('eq');
-        metaCopy.find('[name="eme_dyndata['+newId+'][condval]"]').val('');
-        metaCopy.find('[name="eme_dyndata['+newId+'][template_id_header]"]').val('0');
-        metaCopy.find('[name="eme_dyndata['+newId+'][template_id]"]').val('0');
-        metaCopy.find('[name="eme_dyndata['+newId+'][template_id_footer]"]').val('0');
-        metaCopy.find('[name="eme_dyndata['+newId+'][repeat]"]').val('0');
-        metaCopy.find('[name="eme_dyndata['+newId+'][grouping]"]').parent().html('');
-        $('#eme_dyndata_tbody').append(metaCopy);
+    initTomSelectRemote('.eme_select2_discounts_class', {
+        action: 'eme_discounts_select2',
+	    extraPlugins: ['remove_button'],
+	    ajaxParams: {
+		    pagesize: 30,
+		    eme_admin_nonce: emeadmin.translate_adminnonce,
+	    }
     });
-    $('.eme_remove_dyndatacondition').on("click",function(event) {
-        event.preventDefault();
-        let metas = $('#eme_dyndata_tbody').children();
-        if(metas.length > 1){
-            $($(this).parent().parent().get(0)).remove();
-        } else {
-            let metaCopy = $($(this).parent().parent().get(0));
-            let newId = 0; while ($('#eme_dyndata_'+newId).length) newId++;
-            let currentId = metaCopy.attr('id').replace('eme_dyndata_','');
-            metaCopy.attr('id', 'eme_dyndata_'+newId);
-            metaCopy.find('a').attr('rel', newId);
-            let metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_dyndata['+currentId+']['+f+']"]').attr({
-                    'name':'eme_dyndata['+newId+']['+f+']' ,
-                    'id':'eme_dyndata['+newId+']['+f+']'
-                });
-            });
-            metaCopy.find('[name="eme_dyndata['+newId+'][field]"]').val('');
-            metaCopy.find('[name="eme_dyndata['+newId+'][condition]"]').val('eq');
-            metaCopy.find('[name="eme_dyndata['+newId+'][condval]"]').val('');
-            metaCopy.find('[name="eme_dyndata['+newId+'][template_id_header]"]').val('0');
-            metaCopy.find('[name="eme_dyndata['+newId+'][template_id]"]').val('0');
-            metaCopy.find('[name="eme_dyndata['+newId+'][template_id_footer]"]').val('0');
-            metaCopy.find('[name="eme_dyndata['+newId+'][repeat]"]').val('0');
-            metaCopy.find('[name="eme_dyndata['+newId+'][grouping]"]').parent().html('');
-            metafields.forEach(f => {
-                metaCopy.find('[name="eme_dyndata['+newId+']['+f+']"]').prop('required',false);
-            });
-        }
+    initTomSelectRemote('.eme_select2_dgroups_class', {
+        action: 'eme_dgroups_select2',
+	    extraPlugins: ['remove_button'],
+	    ajaxParams: {
+		    pagesize: 30,
+		    eme_admin_nonce: emeadmin.translate_adminnonce,
+	    }
     });
-
-    // --- Tasks & Todos sortable ---
-    if ($('#eme_tasks_tbody').length) {
-        new Sortable(document.getElementById('eme_tasks_tbody'), {
-            handle: '.eme-sortable-handle',
-            onStart: function (evt) { evt.from.style.opacity = '0.6'; },
-            onEnd: function (evt) { evt.from.style.opacity = '1'; }
-        });
-    }
-    if ($('#eme_todos_tbody').length) {
-        new Sortable(document.getElementById('eme_todos_tbody'), {
-            handle: '.eme-sortable-handle',
-            onStart: function (evt) { evt.from.style.opacity = '0.6'; },
-            onEnd: function (evt) { evt.from.style.opacity = '1'; }
-        });
-    }
-
-    // --- Tasks Add/Remove ---
-    $('.eme_add_task').on("click",function(event) {
-        event.preventDefault();
-        eme_add_task_function($(this));
-    });
-    $('.eme_remove_task').on("click",function(event) {
-        event.preventDefault();
-        eme_remove_task_function($(this));
-    });
-    $('#change_task_days').on("click",function (e) {
-        e.preventDefault();
-        let offset= parseInt($('#task_offset').val());
-        let myId=0;
-        while ($('[name="eme_tasks['+myId+'][task_start]"]').length) {
-            let current_start=$('[name="eme_tasks['+myId+'][task_start]"]').val();
-            let current_end=$('[name="eme_tasks['+myId+'][task_end]"]').val();
-            let start_obj = new Date(current_start);
-            let end_obj = new Date(current_end);
-            start_obj.setDate(start_obj.getDate() + offset);
-            end_obj.setDate(end_obj.getDate() + offset);
-            $('[name="eme_tasks['+myId+'][dp_task_start]"]').data('fdatepicker').selectDate(start_obj);
-            $('[name="eme_tasks['+myId+'][dp_task_end]"]').data('fdatepicker').selectDate(end_obj);
-            myId = myId +1;
-        }
-    });
-
-    // --- Todos Add/Remove ---
-    $('.eme_add_todo').on("click",function(event) {
-        event.preventDefault();
-        eme_add_todo_function($(this));
-    });
-    $('.eme_remove_todo').on("click",function(event) {
-        event.preventDefault();
-        eme_remove_todo_function($(this));
-    });
-
-    // --- Show/Hide Elements ---
-    $('.showhidebutton').on("click",function (e) {
-        e.preventDefault();
-        let elname= $(this).data( 'showhide' );
-        $('#'+elname).toggle();
-    });
-
-    // --- Select2 Initialization ---
-    $('.eme_select2_members_class').select2({
-        width: '100%',
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term,
-                    page: params.page || 1,
-                    pagesize: 30,
-                    action: 'eme_members_select2',
-                    eme_admin_nonce: emeadmin.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return { results: data.Records, pagination: { more: (params.page * 30) < data.TotalRecordCount } };
-            },
-            cache: true
-        },
-        placeholder: emeadmin.translate_selectmembers
-    });
-    $('.eme_select2_people_class').select2({
-        width: '100%',
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term,
-                    page: params.page || 1,
-                    pagesize: 30,
-                    action: 'eme_people_select2',
-                    eme_admin_nonce: emeadmin.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return { results: data.Records, pagination: { more: (params.page * 30) < data.TotalRecordCount } };
-            },
-            cache: true
-        },
-        placeholder: emeadmin.translate_selectpersons
-    });
-    $('.eme_select2_groups_class').select2({ placeholder: emeadmin.translate_selectgroups, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_people_groups_class').select2({ placeholder: emeadmin.translate_anygroup, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_memberstatus_class').select2({ placeholder: emeadmin.translate_selectmemberstatus, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_memberships_class').select2({ placeholder: emeadmin.translate_selectmemberships, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_discounts_class').select2({
-        width: '100%', allowClear: true, placeholder: emeadmin.translate_selectdiscount,
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term,
-                    page: params.page || 1,
-                    pagesize: 30,
-                    action: 'eme_discounts_select2',
-                    eme_admin_nonce: emeadmin.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return { results: data.Records, pagination: { more: (params.page * 30) < data.TotalRecordCount } };
-            },
-            cache: true
-        }
-    });
-    $('.eme_select2_dgroups_class').select2({
-        width: '100%', allowClear: true, placeholder: emeadmin.translate_selectdiscountgroup,
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 500,
-            data: function (params) {
-                return {
-                    q: params.term,
-                    page: params.page || 1,
-                    pagesize: 30,
-                    action: 'eme_dgroups_select2',
-                    eme_admin_nonce: emeadmin.translate_adminnonce
-                };
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return { results: data.Records, pagination: { more: (params.page * 30) < data.TotalRecordCount } };
-            },
-            cache: true
-        }
-    });
-    $('.select2-search--inline, .select2-search__field').css('width', '100%');
-
-    // --- File Upload/Delete for Extra Fields ---
-    $('body').on('click', '.eme_del_upload-button', function() {
-        event.preventDefault();
-        if (confirm(emeadmin.translate_areyousuretodeletefile)) {
-            let id = $(this).data('id');
-            let name = $(this).data('name');
-            let type = $(this).data('type');
-            let random_id = $(this).data('random_id');
-            let field_id = $(this).data('field_id');
-            let extra_id = $(this).data('extra_id');
-            $.post(ajaxurl, {'id': id, 'name': name, 'type': type, 'field_id': field_id, 'random_id': random_id, 'extra_id': extra_id, 'action': 'eme_del_upload', 'eme_admin_nonce': emeadmin.translate_adminnonce}, function() {
-                if ($('span#span_'+random_id).parent().children().length == 2) {
-                    $('span#span_'+random_id).siblings("input").show();
-                }
-                $('span#span_'+random_id).remove();
-            });
-        }
-    });
-
-    // --- Attachment UI for bookings/etc ---
-    function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, removeBtnSelector) {
-        $(btnSelector).on("click", function(e) {
+    initTomSelect('.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
+    initTomSelect('.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
+    initTomSelect('.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
+    initTomSelect('.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
+   
+    // File Upload/Delete for Extra Fields
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('eme_del_upload-button')) {
             e.preventDefault();
-            let custom_uploader = wp.media({
-                title: emeadmin.translate_addattachments,
-                button: { text: emeadmin.translate_addattachments },
-                multiple: true
-            }).on('select', function() {
-                let selection = custom_uploader.state().get('selection');
-                selection.map(function(attach) {
-                    let attachment = attach.toJSON();
-                    $(linksSelector).append(
-                        `<a target='_blank' href='${attachment.url}'>${attachment.title}</a><br>`
-                    );
-                    let idsArr = $(idsSelector).val() ? $(idsSelector).val().split(',') : [];
-                    idsArr.push(attachment.id);
-                    $(idsSelector).val(idsArr.join(','));
-                    $(removeBtnSelector).show();
+            if (confirm(emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
+                const id = e.target.getAttribute('data-id');
+                const name = e.target.getAttribute('data-name');
+                const type = e.target.getAttribute('data-type');
+                const randomId = e.target.getAttribute('data-random_id');
+                const fieldId = e.target.getAttribute('data-field_id');
+                const extraId = e.target.getAttribute('data-extra_id');
+
+                const formData = new URLSearchParams({
+                    id: id,
+                    name: name,
+                    type: type,
+                    field_id: fieldId,
+                    random_id: randomId,
+                    extra_id: extraId,
+                    action: 'eme_del_upload',
+                    eme_admin_nonce: emeadmin.translate_adminnonce || ''
                 });
-            }).open();
-        });
-        $(removeBtnSelector).on("click", function(e) {
-            e.preventDefault();
-            $(linksSelector).html('');
-            $(idsSelector).val('');
-            $(removeBtnSelector).hide();
-        });
-        $(removeBtnSelector).toggle($(idsSelector).val() !== '');
-    }
+
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData.toString()
+                }).then(() => {
+                    const span = $(`span#span_${randomId}`);
+                    if (span) {
+                        if (span.parentNode.children.length === 2) {
+                            const sibling = span.parentNode.querySelector('input');
+                            if (sibling) eme_toggle(sibling, true);
+                        }
+                        span.remove();
+                    }
+                });
+            }
+        }
+    });
+
+    // Initialize attachment UIs
     eme_admin_init_attachment_ui('#booking_attach_button', '#booking_attach_links', '#eme_booking_attach_ids', '#booking_remove_attach_button');
     eme_admin_init_attachment_ui('#pending_attach_button', '#pending_attach_links', '#eme_pending_attach_ids', '#pending_remove_attach_button');
     eme_admin_init_attachment_ui('#paid_attach_button', '#paid_attach_links', '#eme_paid_attach_ids', '#paid_remove_attach_button');
     eme_admin_init_attachment_ui('#subscribe_attach_button', '#subscribe_attach_links', '#eme_subscribe_attach_ids', '#subscribe_remove_attach_button');
     eme_admin_init_attachment_ui('#fs_ipn_attach_button', '#fs_ipn_attach_links', '#eme_fs_ipn_attach_ids', '#fs_ipn_remove_attach_button');
 
-    // --- Animate details/summary blocks ---
-    $('details summary').each(function() {
-        let $Wrapper = $(this).nextAll().wrapAll('<div></div>').parent();
-        if(!$(this).parent('details').attr('open')) $Wrapper.hide();
-        $(this).click(function(e) {
+    // Animate details/summary blocks
+    $$('details summary').forEach(summary => {
+        const details = summary.parentNode;
+        const wrapper = document.createElement('div');
+
+        // Wrap all content after summary in a div
+        let nextSibling = summary.nextSibling;
+        while (nextSibling) {
+            const current = nextSibling;
+            nextSibling = nextSibling.nextSibling;
+            if (current !== summary) {
+                wrapper.appendChild(current);
+            }
+        }
+        details.appendChild(wrapper);
+
+        if (!details.hasAttribute('open')) {
+            eme_toggle(wrapper, false);
+        }
+
+        summary.addEventListener('click', (e) => {
             e.preventDefault();
-            if($(this).parent('details').attr('open')) {
-                $Wrapper.slideUp(function() { $(this).parent('details').removeAttr('open'); });
+            if (details.hasAttribute('open')) {
+                wrapper.style.transition = `height 300ms ease`;
+                wrapper.style.overflow = 'hidden';
+                wrapper.style.height = wrapper.offsetHeight + 'px';
+                
+                requestAnimationFrame(() => {
+                    wrapper.style.height = '0';
+                });
+                
+                setTimeout(() => {
+                    eme_toggle(wrapper, false);
+                    details.removeAttribute('open');
+                }, 300);
             } else {
-                $(this).parent('details').attr('open', true);
-                $Wrapper.hide().css('opacity', 0).slideDown('slow').animate({ opacity: 1 }, { queue: false, duration: 'slow' });
+                details.setAttribute('open', 'true');
+                eme_toggle(wrapper, true);
+                const height = wrapper.scrollHeight;
+                wrapper.style.height = '0';
+                wrapper.style.overflow = 'hidden';
+                wrapper.style.transition = `height 300ms ease, opacity 300ms`;
+                wrapper.style.opacity = '0';
+
+                requestAnimationFrame(() => {
+                    wrapper.style.height = height + 'px';
+                    wrapper.style.opacity = '1';
+                });
+
+                setTimeout(() => {
+                    wrapper.style.height = '';
+                    wrapper.style.overflow = '';
+                    wrapper.style.transition = '';
+                }, 300);
             }
         });
     });
-
-    // END ready
 });

@@ -162,7 +162,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     usleep( 2 );
     $form_id   = uniqid();
     $form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-rsvp-addmessage-ok-$form_id' class='eme-message-success eme-rsvp-message eme-rsvp-message-success eme-hidden'></div><div id='eme-rsvp-addmessage-error-$form_id' class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form eme-hidden'></div><div id='div_eme-rsvp-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-rsvp-form' method='post' $form_class action='#' >";
+        <div id='eme-rsvp-addmessage-ok-$form_id' class='eme-message-success eme-rsvp-message eme-rsvp-message-success eme-hidden'></div><div id='eme-rsvp-addmessage-error-$form_id' class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form eme-hidden'></div><div id='div_eme-rsvp-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-rsvp-form' method='post' $form_class action='#' >";
     // add a nonce for extra security
     $form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
     // also add a honeypot field: if it gets completed with data,
@@ -819,7 +819,7 @@ function eme_cancel_bookings_form( $event_id ) {
         $nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 
         $form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-            <div id='eme-cancel-bookings-message-ok-$form_id' class='eme-message-success eme-cancel-bookings-message eme-cancel-bookings-message-success eme-hidden'></div><div id='eme-cancel-bookings-message-error-$form_id' class='eme-message-error eme-cancel-bookings-message eme-cancel-bookings-message-error eme-hidden'></div><div id='div_eme-cancel-bookings-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-cancel-bookings-form' method='post' action='#'>";
+            <div id='eme-cancel-bookings-message-ok-$form_id' class='eme-message-success eme-cancel-bookings-message eme-cancel-bookings-message-success eme-hidden'></div><div id='eme-cancel-bookings-message-error-$form_id' class='eme-message-error eme-cancel-bookings-message eme-cancel-bookings-message-error eme-hidden'></div><div id='div_eme-cancel-bookings-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-cancel-bookings-form' method='post' action='#'>";
         $form_html .= $nonce;
         $form_html .= "<input type='hidden' name='event_id' value='$event_id'>";
         $form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
@@ -5267,7 +5267,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         <?php esc_html_e( 'Click on the icon to show the import form to import payments', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
         </span>
-        <div id='eme_div_import' style='display:none;'>
+        <div id='eme_div_import' class='eme-hidden'>
         <form id='payment-import' method='post' enctype='multipart/form-data' action='#'>
         <?php echo $nonce_field; ?>
         <input type="file" name="eme_csv">
@@ -5319,12 +5319,12 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         </select>
 
         <input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Filter on event', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
-        <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
+        <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
         <input id="search_start_date" type="hidden" name="search_start_date" value="">
-        <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
+        <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
         <input id="search_end_date" type="hidden" name="search_end_date" value="">
         <a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
-        <div id="extra_searchfields" style="display:none;">
+        <div id="extra_searchfields" class='eme-hidden'>
 <?php
     } else {
 ?>
@@ -5703,9 +5703,9 @@ function eme_ajax_bookings_list() {
     if ( $booking_status == 'PENDING' ) {
         if ( ! ( current_user_can( get_option( 'eme_cap_approve' ) ) ||
             current_user_can( get_option( 'eme_cap_author_approve' ) ) ) ) {
-            $jTableResult['Result']  = 'Error';
-            $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-            print wp_json_encode( $jTableResult );
+            $fTableResult['Result']  = 'Error';
+            $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+            print wp_json_encode( $fTableResult );
             wp_die();
         }
         // in case the person only has author rights
@@ -5713,10 +5713,10 @@ function eme_ajax_bookings_list() {
             $current_userid = get_current_user_id();
             $event_ids_arr  = eme_get_eventids_by_author( $current_userid, $scope, $event_id );
             if ( empty( $event_ids_arr ) ) {
-                $jTableResult['Result']           = 'OK';
-                $jTableResult['Records']          = [];
-                $jTableResult['TotalRecordCount'] = 0;
-                print wp_json_encode( $jTableResult );
+                $fTableResult['Result']           = 'OK';
+                $fTableResult['Records']          = [];
+                $fTableResult['TotalRecordCount'] = 0;
+                print wp_json_encode( $fTableResult );
                 wp_die();
             } else {
                 $where_arr[] = '(bookings.event_id IN (' . join( ',', $event_ids_arr ) . '))';
@@ -5725,9 +5725,9 @@ function eme_ajax_bookings_list() {
     } elseif ( $booking_status == 'APPROVED' ) {
         if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
             current_user_can( get_option( 'eme_cap_author_registrations' ) ) ) ) {
-            $jTableResult['Result']  = 'Error';
-            $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-            print wp_json_encode( $jTableResult );
+            $fTableResult['Result']  = 'Error';
+            $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+            print wp_json_encode( $fTableResult );
             wp_die();
         }
         // in case the person only has author rights
@@ -5735,10 +5735,10 @@ function eme_ajax_bookings_list() {
             $current_userid = get_current_user_id();
             $event_ids_arr  = eme_get_eventids_by_author( $current_userid, $scope, $event_id );
             if ( empty( $event_ids_arr ) ) {
-                $jTableResult['Result']           = 'OK';
-                $jTableResult['Records']          = [];
-                $jTableResult['TotalRecordCount'] = 0;
-                print wp_json_encode( $jTableResult );
+                $fTableResult['Result']           = 'OK';
+                $fTableResult['Records']          = [];
+                $fTableResult['TotalRecordCount'] = 0;
+                print wp_json_encode( $fTableResult );
                 wp_die();
             } else {
                 $where_arr[] = '(bookings.event_id IN (' . join( ',', $event_ids_arr ) . '))';
@@ -6133,10 +6133,10 @@ function eme_ajax_bookings_list() {
         }
         $rows[] = $line;
     }
-    $jTableResult['Result']           = 'OK';
-    $jTableResult['Records']          = $rows;
-    $jTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $jTableResult );
+    $fTableResult['Result']           = 'OK';
+    $fTableResult['Records']          = $rows;
+    $fTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $fTableResult );
     wp_die();
 }
 

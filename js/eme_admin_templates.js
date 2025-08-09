@@ -1,34 +1,43 @@
-jQuery(document).ready( function($) {
-    if ($('#TemplatesTableContainer').length) {
-        $('#TemplatesTableContainer').jtable({
+document.addEventListener('DOMContentLoaded', function () {
+    const TemplatesTableContainer = $('#TemplatesTableContainer');
+    let TemplatesTable;
+
+    // --- ftable: Initialize Templates Table ---
+    if (TemplatesTableContainer) {
+        // Insert sorting info element before table container
+        const sortingInfo = document.createElement('div');
+        sortingInfo.id = 'templatestablesortingInfo';
+        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
+        TemplatesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
+
+        TemplatesTable = new FTable('#TemplatesTableContainer', {
             title: emetemplates.translate_templates,
             paging: true,
             sorting: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
-            selecting: true, // Enable selecting
-            multiselect: true, // Allow multiple selecting
-            selectingCheckboxes: true, // Show checkboxes on first column
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
             deleteConfirmation: function(data) {
-                data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"';
+                data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"'
             },
             actions: {
                 listAction: ajaxurl,
                 deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce,
             },
             listQueryParams: function () {
-                let params = {
-                    'action': "eme_templates_list",
-                    'eme_admin_nonce': emetemplates.translate_adminnonce,
-                    'search_name': $('#search_name').val(),
-                    'search_type': $('#search_type').val(),
-                }
-                return params;
+                return {
+                    action: 'eme_templates_list',
+                    eme_admin_nonce: emetemplates.translate_adminnonce,
+                    search_name: $('#search_name')?.value || '',
+                    search_type: $('#search_type')?.value || ''
+                };
             },
-
             fields: {
                 id: {
                     key: true,
+                    list: true,
                     width: '1%',
                     columnResizable: false,
                     title: emetemplates.translate_id
@@ -53,70 +62,97 @@ jQuery(document).ready( function($) {
             },
             sortingInfoSelector: '#templatestablesortingInfo',
             messages: {
-                'sortingInfoNone': ''
+                sortingInfoNone: ''
             }
         });
 
-        $('#TemplatesTableContainer').jtable('load');
-        $('<div id="templatestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#TemplatesTableContainer');
+        // Load the table data
+        TemplatesTable.load();
     }
 
-    // Actions button
-    $('#TemplatesActionsButton').on("click",function (e) {
-        e.preventDefault();
-        let selectedRows = $('#TemplatesTableContainer').jtable('selectedRows');
-        let do_action = $('#eme_admin_action').val();
-        let action_ok=1;
-        if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='deleteTemplates') && !confirm(emetemplates.translate_areyousuretodeleteselected)) {
-                action_ok=0;
-            }
-            if (action_ok==1) {
-                $('#TemplatesActionsButton').text(emetemplates.translate_pleasewait);
-                let ids = [];
-                selectedRows.each(function () {
-                    ids.push($(this).attr('data-record-key'));
-                });
+    // --- Templates Actions Button (Bulk Actions) ---
+    const actionsButton = $('#TemplatesActionsButton');
+    if (actionsButton) {
+        actionsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = TemplatesTable.getSelectedRows();
+            const doAction = $('#eme_admin_action').value;
 
-                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
-                    $('#TemplatesTableContainer').jtable('reload');
-                    $('#TemplatesActionsButton').text(emetemplates.translate_apply);
-                    if (do_action=='deleteTemplates') {
-                        $('div#templates-message').html(emetemplates.translate_deleted);
-                        $('div#templates-message').show();
-                        $('div#templates-message').delay(5000).fadeOut('slow');
+            if (selectedRows.length === 0 || !doAction) return;
+
+            let proceed = true;
+            if (doAction === 'deleteTemplates' && !confirm(emetemplates.translate_areyousuretodeleteselected)) {
+                proceed = false;
+            }
+
+            if (proceed) {
+                actionsButton.textContent = emetemplates.translate_pleasewait;
+                actionsButton.disabled = true;
+
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
+
+                const formData = new FormData();
+                formData.append('id', idsJoined);
+                formData.append('action', 'eme_manage_templates');
+                formData.append('do_action', doAction);
+                formData.append('eme_admin_nonce', emetemplates.translate_adminnonce);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    TemplatesTable.load();
+                    actionsButton.textContent = emetemplates.translate_apply;
+                    actionsButton.disabled = false;
+
+                    const messageDiv = $('div#templates-message');
+                    if (messageDiv) {
+                        messageDiv.textContent = data.htmlmessage || emetemplates.translate_action_completed;
+                        eme_toggle(messageDiv, true);
+                        if (doAction === 'deleteTemplates') {
+                            setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
+                        }
                     }
                 });
             }
-        }
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
-    //
-    // Re-load records when user click 'load records' button.
-    $('#TemplatesLoadRecordsButton').on("click",function (e) {
-        e.preventDefault();
-        $('#TemplatesTableContainer').jtable('load');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
+        });
+    }
 
-    let pdfsize_name = 'properties[pdf_size]';
-    function updateShowHideStuff () {
-        if ($('select#type').val() == 'pdf') {
-            $('table#pdf_properties').show();
-        } else {
-            $('table#pdf_properties').hide();
+    // --- Reload Button ---
+    const loadRecordsButton = $('#TemplatesLoadRecordsButton');
+    if (loadRecordsButton) {
+        loadRecordsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            TemplatesTable.load();
+        });
+    }
+
+    // --- Conditional UI: Show/hide PDF properties ---
+    const pdfsizeName = 'properties[pdf_size]';
+    function updateShowHideStuff() {
+        const typeSelect = $('select#type');
+        const pdfSizeSelect = $(`select[name="${pdfsizeName}"]`);
+        const pdfPropertiesTable = $('table#pdf_properties');
+        const customPdfRow = $('tr.template-pdf-custom');
+
+        if (typeSelect && pdfPropertiesTable) {
+            eme_toggle(pdfPropertiesTable, typeSelect.value === 'pdf');
         }
-        // because the fieldname contains a '[' we do it a bit differently
-        if ($('select[name="' + pdfsize_name + '"]').val() == 'custom') {
-            $('tr.template-pdf-custom').show();
-        } else {
-            $('tr.template-pdf-custom').hide();
+
+        if (pdfSizeSelect && customPdfRow) {
+            eme_toggle(customPdfRow, pdfSizeSelect.value === 'custom');
         }
     }
-    $('select#type').on("change",updateShowHideStuff);
-    $('select[name="' + pdfsize_name + '"]').on("change",updateShowHideStuff);
+
+    // Attach event listeners
+    const typeSelect = $('select#type');
+    if (typeSelect) {
+        typeSelect.addEventListener('change', updateShowHideStuff);
+    }
+
+    const pdfSizeSelect = $(`select[name="${pdfsizeName}"]`);
+    if (pdfSizeSelect) {
+        pdfSizeSelect.addEventListener('change', updateShowHideStuff);
+    }
+
+    // Initial call
     updateShowHideStuff();
 });

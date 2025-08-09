@@ -1,122 +1,190 @@
-jQuery(document).ready( function($) {
-	function updateShowHideCaptcha () {
-		if ($('input[name=eme_recaptcha_for_forms]').prop('checked')) {
-			$('tr#eme_recaptcha_site_key_row').show();
-			$('tr#eme_recaptcha_secret_key_row').show(); 
-			$('#eme_recaptcha_site_key').prop('required',true);
-			$('#eme_recaptcha_secret_key').prop('required',true);
-		} else {
-			$('tr#eme_recaptcha_site_key_row').hide();
-			$('tr#eme_recaptcha_secret_key_row').hide(); 
-			$('#eme_recaptcha_site_key').prop('required',false);
-			$('#eme_recaptcha_secret_key').prop('required',false);
-		}
-		if ($('input[name=eme_cfcaptcha_for_forms]').prop('checked')) {
-			$('tr#eme_cfcaptcha_site_key_row').show();
-			$('tr#eme_cfcaptcha_secret_key_row').show(); 
-			$('#eme_cfcaptcha_site_key').prop('required',true);
-			$('#eme_cfcaptcha_secret_key').prop('required',true);
-		} else {
-			$('tr#eme_cfcaptcha_site_key_row').hide();
-			$('tr#eme_cfcaptcha_secret_key_row').hide(); 
-			$('#eme_cfcaptcha_site_key').prop('required',false);
-			$('#eme_cfcaptcha_secret_key').prop('required',false);
-		}
-		if ($('input[name=eme_hcaptcha_for_forms]').prop('checked')) {
-			$('tr#eme_hcaptcha_site_key_row').show();
-			$('tr#eme_hcaptcha_secret_key_row').show(); 
-			$('#eme_hcaptcha_site_key').prop('required',true);
-			$('#eme_hcaptcha_secret_key').prop('required',true);
-		} else {
-			$('tr#eme_hcaptcha_site_key_row').hide();
-			$('tr#eme_hcaptcha_secret_key_row').hide(); 
-			$('#eme_hcaptcha_site_key').prop('required',false);
-			$('#eme_hcaptcha_secret_key').prop('required',false);
-		}
-		if ($('input[name=eme_friendlycaptcha_for_forms]').prop('checked')) {
-			$('tr#eme_friendlycaptcha_site_key_row').show();
-			$('tr#eme_friendlycaptcha_secret_key_row').show(); 
-			$('#eme_friendlycaptcha_site_key').prop('required',true);
-			$('#eme_friendlycaptcha_secret_key').prop('required',true);
-		} else {
-			$('tr#eme_friendlycaptcha_site_key_row').hide();
-			$('tr#eme_friendlycaptcha_secret_key_row').hide(); 
-			$('#eme_friendlycaptcha_site_key').prop('required',false);
-			$('#eme_friendlycaptcha_secret_key').prop('required',false);
-		}
-	}
-	function updateShowHideMailQueueOptions () {
-		if ($('input[name=eme_queue_mails]').prop('checked')) {
-			$('tr#eme_queued_mails_options_row').show();
-			$('tr#eme_mail_sleep_row').show();
-		} else {
-			$('tr#eme_queued_mails_options_row').hide();
-			$('tr#eme_mail_sleep_row').hide();
-		}
-	}
-	function updateShowHideRsvpMailNotify () {
-		if ($('input[name=eme_rsvp_mail_notify_is_active]').prop('checked')) {
-			$('table#rsvp_mail_notify-data').show();
-		} else {
-			$('table#rsvp_mail_notify-data').hide();
-		}
-	}
+document.addEventListener('DOMContentLoaded', function() {
+    function updateShowHideCaptcha() {
+        const recaptchaEl = $('input[name=eme_recaptcha_for_forms]');
+        if (recaptchaEl) {
+            if (recaptchaEl.checked) {
+                eme_toggle($('tr#eme_recaptcha_site_key_row'), true);
+                eme_toggle($('tr#eme_recaptcha_secret_key_row'), true);
+                const siteKeyEl = $('#eme_recaptcha_site_key');
+                const secretKeyEl = $('#eme_recaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = true;
+                if (secretKeyEl) secretKeyEl.required = true;
+            } else {
+                eme_toggle($('tr#eme_recaptcha_site_key_row'), false);
+                eme_toggle($('tr#eme_recaptcha_secret_key_row'), false);
+                const siteKeyEl = $('#eme_recaptcha_site_key');
+                const secretKeyEl = $('#eme_recaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = false;
+                if (secretKeyEl) secretKeyEl.required = false;
+            }
+        }
+        
+        const cfcaptchaEl = $('input[name=eme_cfcaptcha_for_forms]');
+        if (cfcaptchaEl) {
+            if (cfcaptchaEl.checked) {
+                eme_toggle($('tr#eme_cfcaptcha_site_key_row'), true);
+                eme_toggle($('tr#eme_cfcaptcha_secret_key_row'), true);
+                const siteKeyEl = $('#eme_cfcaptcha_site_key');
+                const secretKeyEl = $('#eme_cfcaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = true;
+                if (secretKeyEl) secretKeyEl.required = true;
+            } else {
+                eme_toggle($('tr#eme_cfcaptcha_site_key_row'), false);
+                eme_toggle($('tr#eme_cfcaptcha_secret_key_row'), false);
+                const siteKeyEl = $('#eme_cfcaptcha_site_key');
+                const secretKeyEl = $('#eme_cfcaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = false;
+                if (secretKeyEl) secretKeyEl.required = false;
+            }
+        }
+        
+        const hcaptchaEl = $('input[name=eme_hcaptcha_for_forms]');
+        if (hcaptchaEl) {
+            if (hcaptchaEl.checked) {
+                eme_toggle($('tr#eme_hcaptcha_site_key_row'), true);
+                eme_toggle($('tr#eme_hcaptcha_secret_key_row'), true);
+                const siteKeyEl = $('#eme_hcaptcha_site_key');
+                const secretKeyEl = $('#eme_hcaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = true;
+                if (secretKeyEl) secretKeyEl.required = true;
+            } else {
+                eme_toggle($('tr#eme_hcaptcha_site_key_row'), false);
+                eme_toggle($('tr#eme_hcaptcha_secret_key_row'), false);
+                const siteKeyEl = $('#eme_hcaptcha_site_key');
+                const secretKeyEl = $('#eme_hcaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = false;
+                if (secretKeyEl) secretKeyEl.required = false;
+            }
+        }
+        
+        const friendlycaptchaEl = $('input[name=eme_friendlycaptcha_for_forms]');
+        if (friendlycaptchaEl) {
+            if (friendlycaptchaEl.checked) {
+                eme_toggle($('tr#eme_friendlycaptcha_site_key_row'), true);
+                eme_toggle($('tr#eme_friendlycaptcha_secret_key_row'), true);
+                const siteKeyEl = $('#eme_friendlycaptcha_site_key');
+                const secretKeyEl = $('#eme_friendlycaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = true;
+                if (secretKeyEl) secretKeyEl.required = true;
+            } else {
+                eme_toggle($('tr#eme_friendlycaptcha_site_key_row'), false);
+                eme_toggle($('tr#eme_friendlycaptcha_secret_key_row'), false);
+                const siteKeyEl = $('#eme_friendlycaptcha_site_key');
+                const secretKeyEl = $('#eme_friendlycaptcha_secret_key');
+                if (siteKeyEl) siteKeyEl.required = false;
+                if (secretKeyEl) secretKeyEl.required = false;
+            }
+        }
+    }
+    
+    function updateShowHideMailQueueOptions() {
+        const queueMailsEl = $('input[name=eme_queue_mails]');
+        if (!queueMailsEl) return;
+        
+        if (queueMailsEl.checked) {
+            eme_toggle($('tr#eme_queued_mails_options_row'), true);
+            eme_toggle($('tr#eme_mail_sleep_row'), true);
+        } else {
+            eme_toggle($('tr#eme_queued_mails_options_row'), false);
+            eme_toggle($('tr#eme_mail_sleep_row'), false);
+        }
+    }
+    
+    function updateShowHideRsvpMailNotify() {
+        const checkedEl = $('input[name=eme_rsvp_mail_notify_is_active]');
+        if (!checkedEl) return; // Exit early if element doesn't exist
+        
+        if (checkedEl.checked) {
+            eme_toggle($('table#rsvp_mail_notify-data'), true);
+        } else {
+            eme_toggle($('table#rsvp_mail_notify-data'), false);
+        }
+    }
 
-	function updateShowHideMailSendMethod () {
-		if ($('select[name=eme_mail_send_method]').val() == 'smtp') {
-			$('tr#eme_smtp_host_row').show();
-			$('tr#eme_smtp_port_row').show(); 
-			$('tr#eme_smtp_auth_row').show();
-			$('tr#eme_smtp_username_row').show(); 
-			$('tr#eme_smtp_password_row').show(); 
-			$('tr#eme_smtp_encryption_row').show(); 
-			$('tr#eme_smtp_debug_row').show(); 
-			$('tr#eme_smtp_verify_cert_row').show(); 
-		} else {
-			$('tr#eme_smtp_host_row').hide();
-			$('tr#eme_smtp_port_row').hide(); 
-			$('tr#eme_smtp_auth_row').hide();
-			$('tr#eme_smtp_username_row').hide(); 
-			$('tr#eme_smtp_password_row').hide();
-			$('tr#eme_smtp_encryption_row').hide(); 
-			$('tr#eme_smtp_debug_row').hide(); 
-			$('tr#eme_smtp_verify_cert_row').hide(); 
-		}
-	}
+    function updateShowHideMailSendMethod() {
+        const mailMethodEl = $('select[name=eme_mail_send_method]');
+        if (!mailMethodEl) return;
+        
+        if (mailMethodEl.value == 'smtp') {
+            eme_toggle($('tr#eme_smtp_host_row'), true);
+            eme_toggle($('tr#eme_smtp_port_row'), true);
+            eme_toggle($('tr#eme_smtp_auth_row'), true);
+            eme_toggle($('tr#eme_smtp_username_row'), true);
+            eme_toggle($('tr#eme_smtp_password_row'), true);
+            eme_toggle($('tr#eme_smtp_encryption_row'), true);
+            eme_toggle($('tr#eme_smtp_debug_row'), true);
+            eme_toggle($('tr#eme_smtp_verify_cert_row'), true);
+        } else {
+            eme_toggle($('tr#eme_smtp_host_row'), false);
+            eme_toggle($('tr#eme_smtp_port_row'), false);
+            eme_toggle($('tr#eme_smtp_auth_row'), false);
+            eme_toggle($('tr#eme_smtp_username_row'), false);
+            eme_toggle($('tr#eme_smtp_password_row'), false);
+            eme_toggle($('tr#eme_smtp_encryption_row'), false);
+            eme_toggle($('tr#eme_smtp_debug_row'), false);
+            eme_toggle($('tr#eme_smtp_verify_cert_row'), false);
+        }
+    }
 
-	function updateShowHideSMTPAuth () {
-		if ($('input[name=eme_smtp_auth]').prop('checked') && $('select[name=eme_mail_send_method]').val() == 'smtp') {
-			$('tr#eme_smtp_username_row').show(); 
-			$('tr#eme_smtp_password_row').show(); 
-		} else {
-			$('tr#eme_smtp_username_row').hide(); 
-			$('tr#eme_smtp_password_row').hide();
-		}
-	}
+    function updateShowHideSMTPAuth() {
+        const smtpAuthEl = $('input[name=eme_smtp_auth]');
+        const mailMethodEl = $('select[name=eme_mail_send_method]');
+        if (!smtpAuthEl || !mailMethodEl) return;
+        
+        if (smtpAuthEl.checked && mailMethodEl.value == 'smtp') {
+            eme_toggle($('tr#eme_smtp_username_row'), true);
+            eme_toggle($('tr#eme_smtp_password_row'), true);
+        } else {
+            eme_toggle($('tr#eme_smtp_username_row'), false);
+            eme_toggle($('tr#eme_smtp_password_row'), false);
+        }
+    }
 
-	function updateShowHideSMTPCert () {
-                if ($('select[name=eme_smtp_encryption]').val() != 'none' && $('select[name=eme_mail_send_method]').val() == 'smtp') {
-                        $('tr#eme_smtp_verify_cert_row').show();
-                } else {
-                        $('tr#eme_smtp_verify_cert_row').hide();
-                }
-	}
+    function updateShowHideSMTPCert() {
+        const smtpEncryptionEl = $('select[name=eme_smtp_encryption]');
+        const mailMethodEl = $('select[name=eme_mail_send_method]');
+        if (!smtpEncryptionEl || !mailMethodEl) return;
+        
+        if (smtpEncryptionEl.value != 'none' && mailMethodEl.value == 'smtp') {
+            eme_toggle($('tr#eme_smtp_verify_cert_row'), true);
+        } else {
+            eme_toggle($('tr#eme_smtp_verify_cert_row'), false);
+        }
+    }
 
-	// for the eme-options pages
-	updateShowHideCaptcha();
-	updateShowHideRsvpMailNotify();
-	updateShowHideMailSendMethod();
-	updateShowHideSMTPAuth();
-	updateShowHideSMTPCert();
-	updateShowHideMailQueueOptions();
-	$('input[name=eme_recaptcha_for_forms]').on("change",updateShowHideCaptcha);
-	$('input[name=eme_hcaptcha_for_forms]').on("change",updateShowHideCaptcha);
-	$('input[name=eme_cfcaptcha_for_forms]').on("change",updateShowHideCaptcha);
-	$('input[name=eme_friendlycaptcha_for_forms]').on("change",updateShowHideCaptcha);
-	$('input[name=eme_rsvp_mail_notify_is_active]').on("change",updateShowHideRsvpMailNotify);
-	$('select[name=eme_mail_send_method]').on("change",updateShowHideMailSendMethod);
-	$('input[name=eme_smtp_auth]').on("change",updateShowHideSMTPAuth);
-	$('select[name=eme_smtp_encryption]').on("change",updateShowHideSMTPCert);
-	$('input[name=eme_queue_mails]').on("change",updateShowHideMailQueueOptions);
+    // for the eme-options pages
+    updateShowHideCaptcha();
+    updateShowHideRsvpMailNotify();
+    updateShowHideMailSendMethod();
+    updateShowHideSMTPAuth();
+    updateShowHideSMTPCert();
+    updateShowHideMailQueueOptions();
+    
+    // Add event listeners with null checks
+    const recaptchaEl = $('input[name=eme_recaptcha_for_forms]');
+    if (recaptchaEl) recaptchaEl.addEventListener("change", updateShowHideCaptcha);
+    
+    const hcaptchaEl = $('input[name=eme_hcaptcha_for_forms]');
+    if (hcaptchaEl) hcaptchaEl.addEventListener("change", updateShowHideCaptcha);
+    
+    const cfcaptchaEl = $('input[name=eme_cfcaptcha_for_forms]');
+    if (cfcaptchaEl) cfcaptchaEl.addEventListener("change", updateShowHideCaptcha);
+    
+    const friendlycaptchaEl = $('input[name=eme_friendlycaptcha_for_forms]');
+    if (friendlycaptchaEl) friendlycaptchaEl.addEventListener("change", updateShowHideCaptcha);
+    
+    const rsvpMailEl = $('input[name=eme_rsvp_mail_notify_is_active]');
+    if (rsvpMailEl) rsvpMailEl.addEventListener("change", updateShowHideRsvpMailNotify);
+    
+    const mailMethodEl = $('select[name=eme_mail_send_method]');
+    if (mailMethodEl) mailMethodEl.addEventListener("change", updateShowHideMailSendMethod);
+    
+    const smtpAuthEl = $('input[name=eme_smtp_auth]');
+    if (smtpAuthEl) smtpAuthEl.addEventListener("change", updateShowHideSMTPAuth);
+    
+    const smtpEncryptionEl = $('select[name=eme_smtp_encryption]');
+    if (smtpEncryptionEl) smtpEncryptionEl.addEventListener("change", updateShowHideSMTPCert);
+    
+    const queueMailsEl = $('input[name=eme_queue_mails]');
+    if (queueMailsEl) queueMailsEl.addEventListener("change", updateShowHideMailQueueOptions);
 });
-

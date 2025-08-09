@@ -1,1 +1,0 @@
-rm -rf CHANGES.md jquery.jtable.js screenshot*.png themes/basic themes/jqueryui  themes/lightcolor/green themes/lightcolor/red themes/lightcolor/orange themes/lightcolor/blue  themes/metro extensions

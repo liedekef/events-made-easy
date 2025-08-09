@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.0  (2025//) =
+* Huge code rewrite to remove jquery dependency
+
 = 2.6.12 (2025//) =
 * javascript and jtable updates to more reliable check for checked status of checkboxes
 * also fdatepicker code updates and other javascript improvements

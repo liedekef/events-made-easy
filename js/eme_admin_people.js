@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = GroupsTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteGroups') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emepeople.translate_areyousuretodeleteselected)) return;
 

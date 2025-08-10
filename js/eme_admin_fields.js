@@ -215,7 +215,9 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const selectedRows = FormfieldsTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
-            if (!selectedRows.length || doAction !== 'deleteFormfields') return;
+            if (selectedRows.length === 0 || !doAction) return;
+
+            // only one action
             if (!confirm(emeformfields.translate_areyousuretodeleteselected)) return;
 
             actionsButton.textContent = emeformfields.translate_pleasewait;

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = MembershipsTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteMemberships') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(ememembers.translate_areyousuretodeleteselected)) return;
 

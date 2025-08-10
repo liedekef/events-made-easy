@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = CountriesTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteCountries') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = StatesTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteStates') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emecountries.translate_areyousuretodeleteselected)) return;
 

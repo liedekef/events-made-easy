@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = HolidaysTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteHolidays') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emeholidays.translate_areyousuretodeleteselected)) return;
 

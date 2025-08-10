@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = DiscountTableContainer.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteDiscounts') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emediscounts.translate_areyousuretodeleteselected)) return;
 
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedRows = DiscountGroupsTable.getSelectedRows();
             const doAction = $('#eme_admin_action').value;
 
-            if (selectedRows.length === 0 || doAction !== 'deleteDiscountGroups') return;
+            if (selectedRows.length === 0 || !doAction) return;
 
             if (!confirm(emediscounts.translate_areyousuretodeleteselected)) return;
 

@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emeformfields.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                FormfieldsTable.load();
+                FormfieldsTable.reload();
                 actionsButton.textContent = emeformfields.translate_apply;
                 actionsButton.disabled = false;
                 const msg = $('div#formfields-message');

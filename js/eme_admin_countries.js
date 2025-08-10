@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emecountries.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                CountriesTable.load();
+                CountriesTable.reload();
                 countriesButton.textContent = emecountries.translate_apply;
                 countriesButton.disabled = false;
 
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emecountries.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                StatesTable.load();
+                StatesTable.reload();
                 statesButton.textContent = emecountries.translate_apply;
                 statesButton.disabled = false;
 

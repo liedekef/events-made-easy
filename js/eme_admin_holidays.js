@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emeholidays.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                HolidaysTable.load();
+                HolidaysTable.reload();
                 actionsButton.textContent = emeholidays.translate_apply;
                 actionsButton.disabled = false;
 

@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    MailsTable.load();
+                    MailsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
                     const msg = $('div#mails-message');
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    ArchivedMailingsTable.load();
+                    ArchivedMailingsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
                     const msg = $('div#archivedmailings-message');

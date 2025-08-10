@@ -3087,7 +3087,7 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $where_arr[]          = "(members.membership_id IN ($search_membershipids))";
     }
     // search_status can be 0 too, for pending
-    if ( ! empty( $search_terms['search_memberstatus'] ) ) {
+    if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_numeric_array( $search_terms['search_memberstatus'] ) ) {
         $search_memberstatus = join( ',', $search_terms['search_memberstatus'] );
         $where_arr[]         = "(members.status IN ($search_memberstatus))";
     }

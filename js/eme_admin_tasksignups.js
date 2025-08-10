@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', emetasks.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    TaskSignupsTable.load();
+                    TaskSignupsTable.reload();
                     actionsButton.textContent = emetasks.translate_apply;
                     actionsButton.disabled = false;
 

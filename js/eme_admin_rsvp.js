@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         setTimeout(() => eme_toggle(msg, false), 5000);
                     }
                 }
-                BookingsTable.load();
+                BookingsTable.reload();
                 actionsButton.textContent = emersvp.translate_apply;
                 actionsButton.disabled = false;
             });

@@ -941,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    EventsTable.load();
+                    EventsTable.reload();
                     eventsButton.textContent = emeevents.translate_apply;
                     eventsButton.disabled = false;
 
@@ -989,7 +989,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    RecurrencesTable.load();
+                    RecurrencesTable.reload();
                     recurrencesButton.textContent = emeevents.translate_apply;
                     recurrencesButton.disabled = false;
 

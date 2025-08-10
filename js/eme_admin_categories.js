@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     formData.append('eme_admin_nonce', emecategories.translate_adminnonce);
 
                     eme_postJSON(ajaxurl, formData, (data) => {
-                        CategoriesTable.load();
+                        CategoriesTable.reload();
                         actionsButton.textContent = emecategories.translate_apply;
                         actionsButton.disabled = false;
 

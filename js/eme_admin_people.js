@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                PeopleTable.load();
+                PeopleTable.reload();
                 peopleButton.textContent = emepeople.translate_apply;
                 peopleButton.disabled = false;
 
@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                GroupsTable.load();
+                GroupsTable.reload();
                 groupsButton.textContent = emepeople.translate_apply;
                 groupsButton.disabled = false;
 

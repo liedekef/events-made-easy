@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                DiscountsTable.load();
+                DiscountsTable.reload();
                 discountsButton.textContent = emediscounts.translate_apply;
                 discountsButton.disabled = false;
 
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                DiscountGroupsTable.load();
+                DiscountGroupsTable.reload();
                 groupsButton.textContent = emediscounts.translate_apply;
                 groupsButton.disabled = false;
 

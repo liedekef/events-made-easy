@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', emelocations.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
-                    LocationsTable.load();
+                    LocationsTable.reload();
                     actionsButton.textContent = emelocations.translate_apply;
                     actionsButton.disabled = false;
 

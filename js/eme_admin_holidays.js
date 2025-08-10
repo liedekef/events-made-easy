@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emeholidays.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteHolidays' && !confirm(emeholidays.translate_areyousuretodeleteselected)) return;
 
             actionsButton.textContent = emeholidays.translate_pleasewait;
             actionsButton.disabled = true;

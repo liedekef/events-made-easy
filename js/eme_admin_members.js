@@ -311,10 +311,6 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle($('#span_htmltemplate'), action === 'html');
         eme_toggle($('span#span_membermailtemplate'), action === 'memberMails');
         eme_toggle($('span#span_trashperson'), action === 'deleteMembers');
-        eme_toggle($('#span_addtogroup'), action === 'addToGroup');
-        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
-        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
-
 
         if (['acceptPayment', 'stopMembership'].includes(action)) {
             $('#send_mail').value = 1;

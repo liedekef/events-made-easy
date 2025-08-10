@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteCountries' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
             countriesButton.textContent = emecountries.translate_pleasewait;
             countriesButton.disabled = true;
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteStates' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
             statesButton.textContent = emecountries.translate_pleasewait;
             statesButton.disabled = true;

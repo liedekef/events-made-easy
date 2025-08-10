@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emepeople.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteGroups' && !confirm(emepeople.translate_areyousuretodeleteselected)) return;
 
             groupsButton.textContent = emepeople.translate_pleasewait;
             groupsButton.disabled = true;

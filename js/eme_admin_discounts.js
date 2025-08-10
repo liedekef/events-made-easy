@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
             selecting: true,
             multiselect: true,
             selectingCheckboxes: true,
-            deleteConfirmation: () => confirm(emediscounts.translate_areyousuretodeleteselected),
             actions: {
                 listAction: ajaxurl+'?action=eme_discountgroups_list&eme_admin_nonce='+emediscounts.translate_adminnonce,
                 deleteAction: ajaxurl+'?action=eme_manage_discountgroups&do_action=deleteDiscountGroups&eme_admin_nonce='+emediscounts.translate_adminnonce
@@ -119,6 +118,20 @@ document.addEventListener('DOMContentLoaded', function () {
         DiscountGroupsTable.load();
     }
 
+        // --- Conditional UI: Show/hide based on action ---
+    function updateShowHideStuff() {
+        const action = $('#eme_admin_action')?.value || '';
+        eme_toggle($('span#span_newvalidfrom'), action === 'changeValidFrom');
+        eme_toggle($('span#span_newvalidto'), action === 'changeValidTo');
+        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
+        eme_toggle($('#span_pdftemplate'), action === 'pdf');
+        eme_toggle($('#span_htmltemplate'), action === 'html');
+        eme_toggle($('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
+    }
+
+    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    updateShowHideStuff();
+
     // --- Discounts Bulk Actions ---
     const discountsButton = $('#DiscountsActionsButton');
     if (discountsButton) {
@@ -129,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emediscounts.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteDiscounts' && !confirm(emediscounts.translate_areyousuretodeleteselected)) {
 
             discountsButton.textContent = emediscounts.translate_pleasewait;
             discountsButton.disabled = true;
@@ -168,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(emediscounts.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteDiscountGroups' && !confirm(emediscounts.translate_areyousuretodeleteselected)) {
 
             groupsButton.textContent = emediscounts.translate_pleasewait;
             groupsButton.disabled = true;

@@ -846,11 +846,10 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_recurrences_list',
                 eme_admin_nonce: emeevents.translate_adminnonce,
-                trash: $_GET['trash'] || '',
                 scope: $('#scope')?.value || '',
                 search_name: $('#search_name')?.value || '',
                 search_start_date: $('#search_start_date')?.value || '',
-                search_end_date: $('#search_end_date')?.value || '',
+                search_end_date: $('#search_end_date')?.value || ''
             }),
             fields: {
                 recurrence_id: {

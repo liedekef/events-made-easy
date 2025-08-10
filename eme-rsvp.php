@@ -5262,7 +5262,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         <a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=0$event_q_string" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
     <?php } else { ?>
         <a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=1$event_q_string" ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
-        <div id="bookings-message" style="display: none;"></div>
+        <div id="bookings-message" class="eme-hidden"></div>
         <span class="eme_import_form_img">
         <?php esc_html_e( 'Click on the icon to show the import form to import payments', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">

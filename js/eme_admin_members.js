@@ -70,7 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (!confirm(ememembers.translate_areyousuretodeleteselected)) return;
+            if (['deleteMemberships'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) {
+                return;
+            }
 
             membershipsButton.textContent = ememembers.translate_pleasewait;
             membershipsButton.disabled = true;
@@ -93,7 +95,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
+                    if (doAction !== 'showMembershipStats') {
+                        setTimeout(() => eme_toggle(msg, false), 5000);
+                    }
                 }
             });
         });

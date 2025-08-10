@@ -362,7 +362,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
         <p><?php echo $message; ?></p>
         </div>
     <?php } ?>
-        <div id="eme-location-changed" class='notice is-dismissible eme-message-admin' style="display:none;">
+        <div id="eme-location-changed" class='notice is-dismissible eme-message-admin eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
         </div>
     <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">

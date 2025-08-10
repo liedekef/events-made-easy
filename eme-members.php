@@ -3184,7 +3184,7 @@ function eme_manage_members_layout( $message ) {
     $nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
     if ( empty( $message ) ) {
-        $style_class = "style='display:none;'";
+        $style_class = "class='eme-hidden'";
     } else {
         $style_class = "class='notice is-dismissible eme-message-admin'";
     }
@@ -3275,7 +3275,7 @@ function eme_manage_memberships_layout( $message ) {
         print '<div class="notice is-dismissible eme-message-admin"><p>'.$message.'</p></div>';
     }
 ?>
-    <div id="memberships-message" style="display:none;">
+    <div id="memberships-message" class="eme-hidden">
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>

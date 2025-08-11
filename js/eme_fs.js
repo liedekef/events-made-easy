@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const inputValue = inputField.value;
             
             // Remove existing suggestions
-            document.querySelectorAll(".eme-autocomplete-suggestions").forEach(el => el.remove());
+            $$(".eme-autocomplete-suggestions").forEach(el => el.remove());
             
             if (inputValue.length >= 2) {
                 frontend_submit_timeout = setTimeout(function() {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         
                         // Remove any existing suggestions and add new ones
-                        document.querySelectorAll('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                        $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
                         inputField.parentNode.insertBefore(suggestions, inputField.nextSibling);
                     })
                     .catch(error => {
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove suggestions when clicking outside
         document.addEventListener("click", function(e) {
             if (!e.target.closest('.eme-autocomplete-suggestions') && !e.target.closest('input#location_name')) {
-                document.querySelectorAll(".eme-autocomplete-suggestions").forEach(el => el.remove());
+                $$(".eme-autocomplete-suggestions").forEach(el => el.remove());
             }
         });
 
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.value === '') {
                 // Helper function to clear field and remove readonly status
                 function clearField(selector, readonly = false, disabled = false) {
-                    const field = document.querySelector(selector);
+                    const field = $(selector);
                     if (field) {
                         field.value = '';
                         field.readOnly = readonly;

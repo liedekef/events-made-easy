@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 Plugin Name: Events Made Easy
-Version: 2.6.11
+Version: 3.0.0
 Plugin URI: https://www.e-dynamics.be/wordpress
 Update URI: https://github.com/liedekef/events-made-easy/
 Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, 2Checkout and others.

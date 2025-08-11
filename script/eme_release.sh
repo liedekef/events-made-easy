@@ -44,6 +44,6 @@ mv $plugin.zip $basedir/dist
 
 # move 
 cd $basedir
-git commit -m "release $release" -a
-git push
-gh release create "v${release}" --generate-notes ./dist/*.zip
+#git commit -m "release $release" -a
+#git push
+#gh release create "v${release}" --generate-notes ./dist/*.zip

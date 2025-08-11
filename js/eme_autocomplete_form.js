@@ -1,46 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // --- Utility shortcuts ---
-    const $ = (selector, context = document) => context.querySelector(selector);
-    const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+    function eme_tasklastname_clearable() {
+        const taskLastnameInput = $('input[name=task_lastname]');
+        if (!taskLastnameInput) return;
 
-    // --- Utility: Collect form data as key-value pairs ---
-    function serializeForm(form) {
-        const formData = new FormData(form);
-        const obj = {};
-        for (const [key, value] of formData.entries()) {
-            obj[key] = value;
+        if (taskLastnameInput.value === '') {
+            taskLastnameInput.readOnly = false;
+            taskLastnameInput.classList.remove('clearable');
+            // Clear and make all dependent fields editable
+            const dependentFields = [
+                'task_firstname', 'task_address1', 'task_address2', 'task_city',
+                'task_state', 'task_zip', 'task_country', 'task_email', 'task_phone'
+            ];
+            dependentFields.forEach(fieldName => {
+                const field = $(`input[name=${fieldName}]`);
+                if (field) {
+                    field.value = '';
+                    field.readOnly = false;
+                }
+            });
         }
-        return obj;
-    }
-
-    // --- Clearable UI Handler ---
-    function setupClearable(inputName, dependentFields = []) {
-        const input = $(`input[name="${inputName}"]`);
-        if (!input) return;
-
-        function updateClearable() {
-            if (input.value === '') {
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
-                dependentFields.forEach(fieldName => {
-                    const field = $(`input[name="${fieldName}"]`);
-                    if (field) {
-                        field.value = '';
-                        field.readOnly = false;
-                    }
-                });
-            } else {
-                input.classList.add('clearable', 'x');
-            }
+        if (taskLastnameInput.value !== '') {
+            taskLastnameInput.classList.add('clearable', 'x');
         }
-
-        input.addEventListener('input', updateClearable);
-        input.addEventListener('change', updateClearable);
-        updateClearable(); // Initial call
     }
 
     // --- Autocomplete Core Function ---
-    function initAutocomplete(inputSelector, fieldMap, requestDataKeys = []) {
+    function initAutocomplete(inputSelector, autocompleteAction, fieldMap) {
         const input = $(inputSelector);
         if (!input) return;
 
@@ -61,13 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = this.closest('form');
             if (!form) return;
 
-            // Build request data
+            // Build request data from entire form (like jQuery's serializeArray)
+            const formData = new FormData(form);
             const data = {};
-            requestDataKeys.forEach(key => {
-                const field = form.querySelector(`[name="${key}"]`);
-                if (field) data[key] = field.value;
-            });
-            data.eme_ajax_action = 'rsvp_autocomplete_people';
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            data.eme_ajax_action = autocompleteAction;
 
             timeout = setTimeout(() => {
                 fetch(window.location.href, {
@@ -85,17 +70,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     suggestions.className = 'eme-autocomplete-suggestions';
 
                     results.forEach(item => {
-                        const suggestion = document.createElement('div');
+			const suggestion = document.createElement('div');
                         suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `
-                            <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
-                            <br><small>${eme_htmlDecode(item.email)} - ${eme_htmlDecode(item.phone)}</small>
-                        `;
+
+                        // Different HTML for RSVP vs Task forms
+                        if (autocompleteAction === 'rsvp_autocomplete_people') {
+                            suggestion.innerHTML = `
+                                <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
+                                <br><small>${eme_htmlDecode(item.email)} - ${eme_htmlDecode(item.phone)}</small>
+                            `;
+                        } else {
+                            suggestion.innerHTML = `
+                                <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
+                                <br><small>${eme_htmlDecode(item.email)}</small>
+                            `;
+                        }
+
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
                             e.stopPropagation();
 
-                            // Set values and make readonly
+                            // Set values and make readonly/required based on form type
                             Object.keys(fieldMap).forEach(formKey => {
                                 const target = $(`input[name="${formKey}"]`);
                                 if (target) {
@@ -103,14 +98,21 @@ document.addEventListener('DOMContentLoaded', function () {
                                     if (value !== undefined) {
                                         target.value = eme_htmlDecode(value);
                                         target.readOnly = true;
-                                        if (formKey !== 'wp_id' && formKey !== 'person_id') {
+                                        
+                                        // Handle required property for RSVP form fields
+                                        if (autocompleteAction === 'rsvp_autocomplete_people' && 
+                                            formKey !== 'lastname' && formKey !== 'firstname' && 
+                                            formKey !== 'wp_id' && formKey !== 'person_id') {
                                             target.required = false;
                                         }
                                     }
                                 }
                             });
 
-                            // Trigger change to update UI (e.g., clearable)
+                            // Remove suggestions
+                            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+
+                            // Trigger change event for clearable functionality
                             input.dispatchEvent(new Event('change'));
                         });
                         suggestions.appendChild(suggestion);
@@ -121,17 +123,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(err => console.warn('Autocomplete fetch error:', err));
             }, 500);
         });
-
-        // Reapply clearable logic
-        input.addEventListener('change', () => {
-            const event = new Event('input', { bubbles: true });
-            input.dispatchEvent(event);
-        });
     }
 
     // --- Initialize Autocomplete for RSVP Form ---
     if ($("input[name='lastname']")) {
-        initAutocomplete("input[name='lastname']", {
+        initAutocomplete("input[name='lastname']", 'rsvp_autocomplete_people', {
             lastname: 'lastname',
             firstname: 'firstname',
             address1: 'address1',
@@ -144,38 +140,23 @@ document.addEventListener('DOMContentLoaded', function () {
             phone: 'phone',
             wp_id: 'wp_id',
             person_id: 'person_id'
-        }, [
-            'lastname',
-            'event_id',
-            'eme_form_id',
-            'eme_frontendform_id'
-        ]);
+        });
     }
 
     // --- Initialize Autocomplete for Task Form ---
     if ($("input[name='task_lastname']")) {
-        initAutocomplete("input[name='task_lastname']", {
+        initAutocomplete("input[name='task_lastname']", 'task_autocomplete_people', {
             task_lastname: 'lastname',
             task_firstname: 'firstname',
             task_email: 'email',
             task_phone: 'phone'
-        }, [
-            'task_lastname',
-            'eme_form_id',
-            'eme_frontendform_id'
-        ]);
+        });
 
         // Setup clearable behavior for task_lastname
-        setupClearable('task_lastname', [
-            'task_firstname',
-            'task_address1',
-            'task_address2',
-            'task_city',
-            'task_state',
-            'task_zip',
-            'task_country',
-            'task_email',
-            'task_phone'
-        ]);
+        const taskLastnameInput = $('input[name=task_lastname]');
+        if (taskLastnameInput) {
+            taskLastnameInput.addEventListener('change', eme_tasklastname_clearable);
+            eme_tasklastname_clearable(); // Initial call
+        }
     }
 });

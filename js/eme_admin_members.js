@@ -348,10 +348,10 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('member_id', idsJoined);
             formData.append('action', 'eme_manage_members');
             formData.append('do_action', doAction);
-            formData.append('send_mail', $('#send_mail').value);
-            formData.append('trash_person', $('#trash_person').value);
-            formData.append('membermail_template', $('#membermail_template').value);
-            formData.append('membermail_template_subject', $('#membermail_template_subject').value);
+            formData.append('send_mail', $('#send_mail')?.value);
+            formData.append('trash_person', $('#trash_person')?.value);
+            formData.append('membermail_template', $('#membermail_template')?.value);
+            formData.append('membermail_template_subject', $('#membermail_template_subject')?.value);
             formData.append('pdf_template', $('#pdf_template')?.value || '');
             formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
             formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');

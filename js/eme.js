@@ -521,7 +521,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                 if (data.paymentredirect) {
                     setTimeout(() => window.location.href = data.paymentredirect, parseInt(data.waitperiod));
                 }
-                eme_scrollToEl(okSel);
+                eme_scrollToEl(okEl);
             } else {
                 if (errSel) {
                     if (errEl) {
@@ -532,7 +532,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                 if (okSel) {
                     if (okEl) eme_toggle(okEl, false);
                 }
-                eme_scrollToEl(errSel);
+                eme_scrollToEl(errEl);
             }
         })
         .catch(error => {
@@ -550,7 +550,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                 if (loadingEl) eme_toggle(loadingEl, false);
             }
             form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
-            eme_scrollToEl(errSel);
+            eme_scrollToEl(errEl);
         });
 }
 

@@ -249,8 +249,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('person_id', idsJoined);
                 formData.append('action', 'eme_manage_people');
                 formData.append('do_action', doAction);
-                formData.append('addtogroup', $('#addtogroup').value);
-                formData.append('removefromgroup', $('#removefromgroup').value);
+                formData.append('addtogroup', $('#addtogroup')?.value);
+                formData.append('removefromgroup', $('#removefromgroup')?.value);
             } else { 
                 const ids = selectedRows.map(row => row.dataset.recordKey);
                 const idsJoined = ids.join(',');
@@ -258,11 +258,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('action', 'eme_manage_bookings');
                 formData.append('do_action', doAction);
                 formData.append('send_mail', sendMail);
-                formData.append('send_to_contact_too', $('#send_to_contact_too').value);
-                formData.append('refund', $('#refund').value);
-                formData.append('partial_amount', $('#partial_amount').value);
-                formData.append('rsvpmail_template', $('#rsvpmail_template').value);
-                formData.append('rsvpmail_template_subject', $('#rsvpmail_template_subject').value);
+                formData.append('send_to_contact_too', $('#send_to_contact_too')?.value);
+                formData.append('refund', $('#refund')?.value);
+                formData.append('partial_amount', $('#partial_amount')?.value);
+                formData.append('rsvpmail_template', $('#rsvpmail_template')?.value);
+                formData.append('rsvpmail_template_subject', $('#rsvpmail_template_subject')?.value);
                 formData.append('pdf_template', $('#pdf_template')?.value || '');
                 formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
                 formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');

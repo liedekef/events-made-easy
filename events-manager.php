@@ -73,7 +73,7 @@ if ( ! class_exists( 'ExpressiveDate' ) ) {
 }
 
 // Setting constants, no calls to "__" here!!!
-define( 'EME_VERSION', '2.6.11' );
+define( 'EME_VERSION', '3.0.0' );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
 define( 'DEFAULT_CAP_AUTHOR_EVENT', 'publish_posts' );

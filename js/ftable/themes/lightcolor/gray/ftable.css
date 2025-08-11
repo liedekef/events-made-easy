@@ -85,6 +85,7 @@ div.ftable-main-container table.ftable thead th.ftable-column-header div.ftable-
 }
 div.ftable-main-container table.ftable thead th.ftable-command-column-header {
   text-align: center;
+  width: 1%;
 }
 div.ftable-main-container table.ftable thead th.ftable-column-header-select {
   text-align: center;

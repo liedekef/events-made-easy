@@ -4394,11 +4394,18 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
             $next_text   = __( 'Next day', 'events-made-easy' );
         }
     }
+
+    // for the custom fields: we need to tell eme_get_events to actually do it
+    $include_customformfields = 0;
+    if (!empty($customfield_ids) || !empty($customfield_value)) {
+        $include_customformfields = 1;
+    }
+
     // We request $limit+1 events, so we know if we need to show the pagination link or not.
     if ( $limit == 0 ) {
-        $events = eme_get_events( scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
+        $events = eme_get_events( scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_customformfields: $include_customformfields, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
     } else {
-        $events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
+        $events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_customformfields: $include_customformfields, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
     }
     $events_count = count( $events );
 

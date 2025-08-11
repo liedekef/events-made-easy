@@ -174,6 +174,102 @@ document.addEventListener('DOMContentLoaded', function () {
             selectingCheckboxes: true,
             csvExport: true,
             printTable: true,
+            toolbar: {
+                items: [
+                    {
+                        text: emersvp.translate_markpaidandapprove,
+                        buttonClass: 'eme_ftable_button_for_pending_only',
+                        click: function() {
+                            const selectedRows = BookingsTable.getSelectedRows();
+                            if (selectedRows.length === 0) return;
+
+                            const ids = selectedRows.map(row => row.dataset.recordKey);
+                            const idsjoined = ids.join(',');
+
+                            const button = $('.eme_ftable_button_for_pending_only .ftable-toolbar-item-text');
+                            if (button) button.textContent = emersvp.translate_pleasewait;
+
+                            fetch(ajaxurl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: new URLSearchParams({
+                                    'booking_ids': idsjoined,
+                                    'action': 'eme_manage_bookings',
+                                    'do_action': 'markpaidandapprove',
+                                    'eme_admin_nonce': emersvp.translate_adminnonce
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.Result !== 'OK') {
+                                        const messageBox = document.getElementById('bookings-message');
+                                        if (messageBox) {
+                                            messageBox.innerHTML = data.htmlmessage;
+                                            messageBox.style.display = 'block';
+                                            setTimeout(() => messageBox.style.display = 'none', 5000);
+                                        }
+                                    }
+                                    BookingsTable.reload();
+                                })
+                                .catch(error => {
+                                    console.error('AJAX error:', error);
+                                    BookingsTable.reload();
+                                })
+                                .finally(() => {
+                                    if (button) button.textContent = emersvp.translate_markpaidandapprove;
+                                });
+                        }
+                    },
+                    {
+                        text: emersvp.translate_markpaid,
+                        buttonClass: 'eme_ftable_button_for_approved_only',
+                        click: function() {
+                            const selectedRows = BookingsTable.getSelectedRows();
+                            if (selectedRows.length === 0) return;
+
+                            const ids = selectedRows.map(row => row.dataset.recordKey);
+                            const idsjoined = ids.join();
+
+                            const button = $('.eme_ftable_button_for_approved_only .ftable-toolbar-item-text');
+                            if (button) button.textContent = emersvp.translate_pleasewait;
+
+                            fetch(ajaxurl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: new URLSearchParams({
+                                    'booking_ids': idsjoined,
+                                    'action': 'eme_manage_bookings',
+                                    'do_action': 'markPaid',
+                                    'eme_admin_nonce': emersvp.translate_adminnonce
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.Result !== 'OK') {
+                                        const messageBox = document.getElementById('bookings-message');
+                                        if (messageBox) {
+                                            messageBox.innerHTML = data.htmlmessage;
+                                            messageBox.style.display = 'block';
+                                            setTimeout(() => messageBox.style.display = 'none', 5000);
+                                        }
+                                    }
+                                    BookingsTable.reload();
+                                })
+                                .catch(error => {
+                                    console.error('AJAX error:', error);
+                                    BookingsTable.reload();
+                                })
+                                .finally(() => {
+                                    if (button) button.textContent = emersvp.translate_markpaid;
+                                });
+                        }
+                    }
+                ]
+            },
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_bookings_list',
@@ -219,6 +315,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
+
+    // hide one toolbar button if not on pending approval and trash=0 (or not set)
+    function showhideButtonPaidApprove() {
+        const bookingStatus = $('#booking_status');
+        eme_toggle($('.eme_ftable_button_for_pending_only'), bookingStatus.value == "PENDING" && !$_GET['trash']);
+        eme_toggle($('.eme_ftable_button_for_approved_only'), bookingStatus.value == "APPROVED" && !$_GET['trash']);
+    }
+    showhideButtonPaidApprove();
 
     // --- Bulk Actions ---
     const actionsButton = $('#BookingsActionsButton');

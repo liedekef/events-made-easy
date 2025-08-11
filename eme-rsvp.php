@@ -5454,7 +5454,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     $formfields               = eme_get_formfields( '', 'events' );
     if ( ! empty( $formfields ) ) {
         $extrafields_arr[]          = 'SEPARATOR';
-        $extrafieldnames_arr[]      = '<b>'.__('Event fields','events-made-easy').'</b>';
+        $extrafieldnames_arr[]      = __('Event fields','events-made-easy');
         $extrafieldsearchable_arr[] = 0;
         foreach ( $formfields as $formfield ) {
             $extrafields_arr[]          = $formfield['field_id'];

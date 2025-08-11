@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     const messageDiv = $('div#templates-message');
                     if (messageDiv) {
-                        messageDiv.textContent = data.htmlmessage || emetemplates.translate_action_completed;
+                        messageDiv.innerHTML = data.htmlmessage;
                         eme_toggle(messageDiv, true);
                         if (doAction === 'deleteTemplates') {
                             setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);

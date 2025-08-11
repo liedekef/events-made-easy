@@ -309,13 +309,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                if (data.Result !== 'OK') {
-                    const msg = $('div#bookings-message');
-                    if (msg) {
-                        msg.textContent = data.htmlmessage;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
+                const msg = $('div#bookings-message');
+                if (msg) {
+                    msg.innerHTML = data.htmlmessage;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
                 }
                 BookingsTable.reload();
                 actionsButton.textContent = emersvp.translate_apply;

@@ -14496,18 +14496,8 @@ msgstr "Niet toegelaten"
 
 #: eme-discounts.php:918
 msgid "Maximum usage count per user"
-msgstr ""
+msgstr "Maximaal gebruiksaantal per persoon"
 
 #: eme-discounts.php:920
 msgid "The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count)."
-msgstr ""
-
-#: eme-ui-helpers.php:119
-msgctxt "Toggle label"
-msgid "Yes"
-msgstr ""
-
-#: eme-ui-helpers.php:120
-msgctxt "Toggle label"
-msgid "No"
-msgstr ""
+msgstr "Het maximale aantal keren dat deze korting per gebruiker kan worden toegepast (dit houdt in dat de persoon moet zijn ingelogd). Dit controleert alle boekingen en leden, dus het kan zwaar zijn voor de database (en verwijderde boekingen hebben natuurlijk invloed op de telling)."

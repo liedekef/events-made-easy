@@ -14578,13 +14578,3 @@ msgstr ""
 #: eme-discounts.php:920
 msgid "The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count)."
 msgstr ""
-
-#: eme-ui-helpers.php:119
-msgctxt "Toggle label"
-msgid "Yes"
-msgstr ""
-
-#: eme-ui-helpers.php:120
-msgctxt "Toggle label"
-msgid "No"
-msgstr ""

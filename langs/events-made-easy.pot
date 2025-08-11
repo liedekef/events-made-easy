@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.6.11\n"
+"Project-Id-Version: Events Made Easy 3.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T08:38:37+00:00\n"
+"POT-Creation-Date: 2025-08-11T09:58:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -14379,16 +14379,6 @@ msgstr ""
 
 #: eme-todos.php:221
 msgid "Add new todo"
-msgstr ""
-
-#: eme-ui-helpers.php:119
-msgctxt "Toggle label"
-msgid "Yes"
-msgstr ""
-
-#: eme-ui-helpers.php:120
-msgctxt "Toggle label"
-msgid "No"
 msgstr ""
 
 #: eme-widgets.php:17

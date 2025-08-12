@@ -5394,6 +5394,8 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $authinfo = get_user_by( 'login', $author );
             if ( ! empty( $authinfo->ID ) ) {
                 $conditions[] = 'event_author = ' . $authinfo->ID;
+            } else {
+                return []; // invalid username, return empty
             }
         }
     } elseif ( preg_match( '/,/', $author ) ) {
@@ -5412,6 +5414,9 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                 }
             }
         }
+        if (empty($author_conditions)) {
+            return []; // no valid conditions found, return empty
+        }
         $conditions[] = '(' . implode( ' OR ', $author_conditions ) . ')';
     }
 
@@ -5427,6 +5432,8 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             if ( ! empty( $authinfo->ID ) ) {
                 $userid       = $authinfo->ID;
                 $conditions[] = "(event_contactperson_id = $userid OR (event_contactperson_id=-1 AND event_author=$userid))";
+            } else {
+                return []; // invalid username, return empty
             }
         }
     } elseif ( preg_match( '/,/', $contact_person ) ) {
@@ -5445,6 +5452,9 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     $contact_person_conditions[] = "(event_contactperson_id = $userid OR (event_contactperson_id=-1 AND event_author=$userid))";
                 }
             }
+        }
+        if (empty($contact_person_conditions)) {
+            return []; // no valid conditions found, return empty
         }
         $conditions[] = '(' . implode( ' OR ', $contact_person_conditions ) . ')';
     }
@@ -5471,6 +5481,9 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     }
                 }
             }
+            if (empty($category_conditions)) {
+                return []; // no valid conditions found, return empty
+            }
             $conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
         } elseif ( preg_match( '/\+| /', $category ) ) {
             $category_arr        = preg_split( '/\+| /', $category, 0, PREG_SPLIT_NO_EMPTY );
@@ -5485,11 +5498,16 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     }
                 }
             }
+            if (empty($category_conditions)) {
+                return []; // no valid conditions found, return empty
+            }
             $conditions[] = '(' . implode( ' AND ', $category_conditions ) . ')';
         } else {
             $cat_id = eme_get_category_id_by_name_slug($category);
             if (!empty($cat_id)) {
                 $category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
+            } else {
+                return []; // no valid name
             }
         }
 
@@ -5514,6 +5532,9 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     }
                 }
             }
+            if (empty($category_conditions)) {
+                return []; // no valid conditions found, return empty
+            }
             $conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
         } elseif ( preg_match( '/\+| /', $notcategory ) ) {
             // url decoding of '+' is ' '
@@ -5529,11 +5550,16 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     }
                 }
             }
+            if (empty($category_conditions)) {
+                return []; // no valid conditions found, return empty
+            }
             $conditions[] = '(' . implode( ' AND ', $category_conditions ) . ')';
         } else {
             $cat_id = eme_get_category_id_by_name_slug($notcategory);
             if (!empty($cat_id)) {
                 $category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
+            } else {
+                return []; // no valid name
             }
         }
     }

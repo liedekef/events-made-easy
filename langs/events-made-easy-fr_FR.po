@@ -30,11 +30,11 @@ msgstr "au nom de %s"
 #: eme-countries.php:986
 #: eme-discounts.php:1685
 #: eme-discounts.php:1725
-#: eme-events.php:10157
-#: eme-events.php:10551
-#: eme-events.php:10560
-#: eme-events.php:10566
-#: eme-events.php:10830
+#: eme-events.php:10194
+#: eme-events.php:10588
+#: eme-events.php:10597
+#: eme-events.php:10603
+#: eme-events.php:10867
 #: eme-formfields.php:5069
 #: eme-formfields.php:5124
 #: eme-formfields.php:5135
@@ -89,26 +89,26 @@ msgid "Access denied!"
 msgstr "Accès refusé!"
 
 #: eme-actions.php:239
-#: eme-events.php:6401
-#: eme-events.php:9655
+#: eme-events.php:6438
+#: eme-events.php:9692
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Évènement"
 
 #: eme-actions.php:248
-#: eme-events.php:6402
-#: eme-events.php:8342
-#: eme-events.php:9604
+#: eme-events.php:6439
+#: eme-events.php:8379
+#: eme-events.php:9641
 #: eme-locations.php:390
 msgid "Location"
 msgstr "Lieu"
 
 #: eme-actions.php:352
-#: eme-events.php:9488
-#: eme-events.php:9749
-#: eme-events.php:9779
-#: eme-events.php:9813
-#: eme-events.php:9875
+#: eme-events.php:9525
+#: eme-events.php:9786
+#: eme-events.php:9816
+#: eme-events.php:9850
+#: eme-events.php:9912
 #: eme-gdpr.php:433
 #: eme-gdpr.php:578
 #: eme-locations.php:572
@@ -120,11 +120,11 @@ msgstr "État"
 
 #: eme-actions.php:353
 #: eme-countries.php:513
-#: eme-events.php:9489
-#: eme-events.php:9748
-#: eme-events.php:9780
-#: eme-events.php:9814
-#: eme-events.php:9876
+#: eme-events.php:9526
+#: eme-events.php:9785
+#: eme-events.php:9817
+#: eme-events.php:9851
+#: eme-events.php:9913
 #: eme-gdpr.php:434
 #: eme-gdpr.php:582
 #: eme-locations.php:580
@@ -135,7 +135,7 @@ msgid "Country"
 msgstr "Pays"
 
 #: eme-actions.php:355
-#: eme-events.php:9491
+#: eme-events.php:9528
 msgid "An error has occurred"
 msgstr "Une erreur est survenue"
 
@@ -144,12 +144,12 @@ msgid "Clear"
 msgstr "Vider"
 
 #: eme-actions.php:357
-#: eme-events.php:9492
+#: eme-events.php:9529
 msgid "Mailing preferences"
 msgstr "Préférences d’envoi"
 
 #: eme-actions.php:358
-#: eme-events.php:9493
+#: eme-events.php:9530
 msgid "Yes, I'm sure"
 msgstr "Oui, je suis sûr"
 
@@ -168,7 +168,7 @@ msgid "Any"
 msgstr "Tout"
 
 #: eme-attendances.php:80
-#: eme-events.php:9591
+#: eme-events.php:9628
 #: eme-install.php:1712
 #: eme-options.php:130
 #: eme-options.php:151
@@ -180,7 +180,7 @@ msgid "Events"
 msgstr "Évènements"
 
 #: eme-attendances.php:81
-#: eme-events.php:9857
+#: eme-events.php:9894
 #: eme-gdpr.php:460
 #: eme-options.php:1604
 #: events-manager.php:371
@@ -234,16 +234,16 @@ msgid "If a RSVP or member QRCODE is scanned by someone with sufficent rights, a
 msgstr "Si un RSVP ou un QRCODE de membre est scanné par une personne ayant des droits suffisants, un fiche de présence sera ajoutée dans cette table."
 
 #: eme-attendances.php:134
-#: eme-events.php:6091
-#: eme-events.php:6238
+#: eme-events.php:6128
+#: eme-events.php:6275
 #: eme-rsvp.php:5322
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr "Filtrer sur la date de début"
 
 #: eme-attendances.php:136
-#: eme-events.php:6093
-#: eme-events.php:6240
+#: eme-events.php:6130
+#: eme-events.php:6277
 #: eme-rsvp.php:5324
 #: eme-tasks.php:473
 msgid "Filter on end date"
@@ -279,7 +279,7 @@ msgid "Edit person"
 msgstr "Editer une personne"
 
 #: eme-attendances.php:216
-#: eme-events.php:10473
+#: eme-events.php:10510
 #: eme-rsvp.php:6053
 msgid "All day"
 msgstr "Toute la journée"
@@ -289,7 +289,7 @@ msgid "Manual entry"
 msgstr "Entrée manuelle"
 
 #: eme-attendances.php:263
-#: eme-events.php:10612
+#: eme-events.php:10649
 msgid "Events deleted"
 msgstr "Événements supprimés"
 
@@ -302,7 +302,7 @@ msgid "Attribute Name"
 msgstr "Nom de l’attribut"
 
 #: eme-attributes.php:98
-#: eme-events.php:9721
+#: eme-events.php:9758
 msgid "Value"
 msgstr "Valeur"
 
@@ -355,19 +355,19 @@ msgstr "Gérer les catégories"
 msgid "Add category"
 msgstr "Ajouter une catégorie"
 
-#: eme-events.php:9596
-#: eme-events.php:9632
-#: eme-events.php:9649
-#: eme-events.php:9672
-#: eme-events.php:9693
-#: eme-events.php:9715
-#: eme-events.php:9744
-#: eme-events.php:9769
-#: eme-events.php:9860
-#: eme-events.php:9915
-#: eme-events.php:9960
-#: eme-events.php:9974
-#: eme-events.php:9988
+#: eme-events.php:9633
+#: eme-events.php:9669
+#: eme-events.php:9686
+#: eme-events.php:9709
+#: eme-events.php:9730
+#: eme-events.php:9752
+#: eme-events.php:9781
+#: eme-events.php:9806
+#: eme-events.php:9897
+#: eme-events.php:9952
+#: eme-events.php:9997
+#: eme-events.php:10011
+#: eme-events.php:10025
 #: eme-gdpr.php:425
 #: eme-gdpr.php:465
 #: eme-people.php:1045
@@ -378,18 +378,18 @@ msgstr "Ajouter une catégorie"
 msgid "ID"
 msgstr "ID"
 
-#: eme-events.php:9597
-#: eme-events.php:9674
-#: eme-events.php:9694
-#: eme-events.php:9714
-#: eme-events.php:9745
-#: eme-events.php:9770
-#: eme-events.php:9806
-#: eme-events.php:9864
-#: eme-events.php:9965
-#: eme-events.php:9979
-#: eme-events.php:10007
-#: eme-events.php:10008
+#: eme-events.php:9634
+#: eme-events.php:9711
+#: eme-events.php:9731
+#: eme-events.php:9751
+#: eme-events.php:9782
+#: eme-events.php:9807
+#: eme-events.php:9843
+#: eme-events.php:9901
+#: eme-events.php:10002
+#: eme-events.php:10016
+#: eme-events.php:10044
+#: eme-events.php:10045
 #: eme-members.php:1898
 #: eme-people.php:2597
 #: eme-tasks.php:745
@@ -399,7 +399,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: eme-categories.php:573
-#: eme-events.php:10267
+#: eme-events.php:10304
 #: eme-formfields.php:5105
 #: eme-holidays.php:293
 #: eme-locations.php:2987
@@ -416,7 +416,7 @@ msgstr "Aucun nom"
 msgid "Delete"
 msgstr "Effacer"
 
-#: eme-events.php:6825
+#: eme-events.php:6862
 #: eme-locations.php:455
 msgid "No categories defined."
 msgstr "Aucune catégorie définie."
@@ -430,7 +430,7 @@ msgid "Update category"
 msgstr "Mise à jour de la catégorie"
 
 #: eme-categories.php:131
-#: eme-events.php:7018
+#: eme-events.php:7055
 #: eme-locations.php:500
 msgid "Permalink: "
 msgstr "Permalien: "
@@ -440,7 +440,7 @@ msgid "Create category"
 msgstr "Créer une catégorie"
 
 #: eme-categories.php:138
-#: eme-events.php:7020
+#: eme-events.php:7057
 #: eme-locations.php:502
 msgid "Permalink prefix: "
 msgstr "Préfixe du permalien : "
@@ -546,21 +546,21 @@ msgstr "Mois"
 #: eme-cron.php:465
 #: eme-discounts.php:471
 #: eme-discounts.php:536
-#: eme-events.php:6160
-#: eme-events.php:6260
-#: eme-events.php:9613
-#: eme-events.php:9660
-#: eme-events.php:9679
-#: eme-events.php:9704
-#: eme-events.php:9734
-#: eme-events.php:9758
-#: eme-events.php:9786
-#: eme-events.php:9822
-#: eme-events.php:9878
-#: eme-events.php:9946
-#: eme-events.php:9963
-#: eme-events.php:9977
-#: eme-events.php:9990
+#: eme-events.php:6197
+#: eme-events.php:6297
+#: eme-events.php:9650
+#: eme-events.php:9697
+#: eme-events.php:9716
+#: eme-events.php:9741
+#: eme-events.php:9771
+#: eme-events.php:9795
+#: eme-events.php:9823
+#: eme-events.php:9859
+#: eme-events.php:9915
+#: eme-events.php:9983
+#: eme-events.php:10000
+#: eme-events.php:10014
+#: eme-events.php:10027
 #: eme-formfields.php:242
 #: eme-holidays.php:101
 #: eme-locations.php:904
@@ -634,7 +634,7 @@ msgstr "Vous n’avez pas le droit de gérer les remises !"
 #: eme-countries.php:107
 #: eme-discounts.php:88
 #: eme-discounts.php:181
-#: eme-events.php:5828
+#: eme-events.php:5865
 #: eme-locations.php:229
 #: eme-members.php:6057
 #: eme-members.php:6243
@@ -647,7 +647,7 @@ msgstr "Problème d’accès au fichier téléversé, peut-être un problème de
 #: eme-countries.php:132
 #: eme-discounts.php:113
 #: eme-discounts.php:206
-#: eme-events.php:5855
+#: eme-events.php:5892
 #: eme-locations.php:256
 #: eme-members.php:6083
 #: eme-members.php:6269
@@ -675,7 +675,7 @@ msgstr "Importation terminée : %d ajoutés, %d erreurs"
 #: eme-countries.php:152
 #: eme-discounts.php:167
 #: eme-discounts.php:226
-#: eme-events.php:5820
+#: eme-events.php:5857
 #: eme-locations.php:221
 #: eme-members.php:6049
 #: eme-members.php:6236
@@ -688,7 +688,7 @@ msgstr "Problème détecté lors du téléversement du fichier"
 #: eme-countries.php:155
 #: eme-discounts.php:170
 #: eme-discounts.php:229
-#: eme-events.php:5817
+#: eme-events.php:5854
 #: eme-locations.php:218
 #: eme-members.php:6046
 #: eme-members.php:6233
@@ -779,7 +779,7 @@ msgstr "Ajouter un pays"
 #: eme-countries.php:419
 #: eme-discounts.php:429
 #: eme-discounts.php:512
-#: eme-events.php:6048
+#: eme-events.php:6085
 #: eme-locations.php:851
 #: eme-members.php:3225
 #: eme-people.php:2192
@@ -790,7 +790,7 @@ msgstr "Cliquez sur l’icône pour afficher le formulaire d’importation"
 #: eme-countries.php:426
 #: eme-discounts.php:436
 #: eme-discounts.php:519
-#: eme-events.php:6055
+#: eme-events.php:6092
 #: eme-locations.php:858
 #: eme-members.php:3232
 #: eme-members.php:3243
@@ -803,7 +803,7 @@ msgstr "Délimiteur :"
 #: eme-countries.php:428
 #: eme-discounts.php:438
 #: eme-discounts.php:521
-#: eme-events.php:6057
+#: eme-events.php:6094
 #: eme-locations.php:860
 #: eme-members.php:3234
 #: eme-members.php:3245
@@ -816,7 +816,7 @@ msgstr "Enceinte :"
 #: eme-countries.php:431
 #: eme-discounts.php:441
 #: eme-discounts.php:524
-#: eme-events.php:6060
+#: eme-events.php:6097
 #: eme-locations.php:863
 #: eme-people.php:2204
 #: eme-rsvp.php:5279
@@ -842,8 +842,8 @@ msgstr "La langue doit correspondre à l’une des langues de WordPress que vous
 #: eme-countries.php:444
 #: eme-discounts.php:450
 #: eme-discounts.php:533
-#: eme-events.php:6138
-#: eme-events.php:6247
+#: eme-events.php:6175
+#: eme-events.php:6284
 #: eme-formfields.php:239
 #: eme-holidays.php:98
 #: eme-locations.php:896
@@ -916,9 +916,9 @@ msgstr "Le nom de l'état"
 #: eme-actions.php:430
 #: eme-countries.php:506
 #: eme-discounts.php:1606
-#: eme-events.php:9548
-#: eme-events.php:9732
-#: eme-events.php:9753
+#: eme-events.php:9585
+#: eme-events.php:9769
+#: eme-events.php:9790
 msgid "Code"
 msgstr "Code"
 
@@ -945,23 +945,23 @@ msgid "The name of the country"
 msgstr "Le nom du pays"
 
 #: eme-countries.php:572
-#: eme-events.php:9754
+#: eme-events.php:9791
 msgid "Alpha-2"
 msgstr "Alpha 2"
 
 #: eme-countries.php:576
-#: eme-events.php:9755
+#: eme-events.php:9792
 msgid "Alpha-3"
 msgstr "Alpha 3"
 
 #: eme-countries.php:580
-#: eme-events.php:9756
+#: eme-events.php:9793
 msgid "Num-3"
 msgstr "Numéro 3"
 
 #: eme-countries.php:584
-#: eme-events.php:9750
-#: eme-events.php:9819
+#: eme-events.php:9787
+#: eme-events.php:9856
 #: eme-people.php:2433
 msgid "Language"
 msgstr "Langue"
@@ -1116,9 +1116,9 @@ msgid "Send a mail to all EME registered people for upcoming events that will ha
 msgstr "Envoyez un courrier à tous les membres enregistrés sur EME pour les prochains évènements qui auront lieu dans les prochains"
 
 #: eme-cron.php:425
-#: eme-events.php:7208
-#: eme-events.php:8836
-#: eme-events.php:8848
+#: eme-events.php:7245
+#: eme-events.php:8873
+#: eme-events.php:8885
 #: eme-options.php:1839
 #: eme-options.php:1855
 #: eme-recurrence.php:708
@@ -1296,10 +1296,10 @@ msgstr "Le nom de la réduction"
 
 #: eme-discounts.php:828
 #: eme-discounts.php:996
-#: eme-events.php:9675
-#: eme-events.php:9716
-#: eme-events.php:9805
-#: eme-events.php:9859
+#: eme-events.php:9712
+#: eme-events.php:9753
+#: eme-events.php:9842
+#: eme-events.php:9896
 #: eme-members.php:1902
 #: eme-people.php:2601
 #: eme-tasks.php:749
@@ -1309,10 +1309,10 @@ msgid "Description"
 msgstr "Description"
 
 #: eme-discounts.php:832
-#: eme-events.php:9633
-#: eme-events.php:9676
-#: eme-events.php:9696
-#: eme-events.php:9722
+#: eme-events.php:9670
+#: eme-events.php:9713
+#: eme-events.php:9733
+#: eme-events.php:9759
 #: eme-members.php:1906
 #: eme-templates.php:280
 msgid "Type"
@@ -1347,7 +1347,7 @@ msgid "If you leave the coupon code empty but set a discount expiration date, yo
 msgstr "Si vous laissez le code promo vide mais définissez une date d’expiration de la remise, vous pouvez l’utiliser comme une « remise anticipée »"
 
 #: eme-discounts.php:851
-#: eme-events.php:9717
+#: eme-events.php:9754
 msgid "Discount groups"
 msgstr "Remises de groupes"
 
@@ -1356,7 +1356,7 @@ msgid "If wanted, you can make this discount a part of one or more discount grou
 msgstr "Si vous le souhaitez, vous pouvez intégrer ce rabais à un rabais de groupe, puis appliquer le rabais de groupe à votre évènement"
 
 #: eme-discounts.php:857
-#: eme-events.php:9725
+#: eme-events.php:9762
 msgid "Valid from"
 msgstr "Valide à partir de"
 
@@ -1365,7 +1365,7 @@ msgid "An optional coupon start date and time, if entered the coupon is not vali
 msgstr "Une date et une heure de début de code promo optionnelles, si elles sont saisies, le code promo n’est pas valide avant cette date et cette heure."
 
 #: eme-discounts.php:864
-#: eme-events.php:9726
+#: eme-events.php:9763
 msgid "Valid until"
 msgstr "Valide jusqu’à"
 
@@ -1391,7 +1391,7 @@ msgid "Require users to be logged-in for this discount to apply."
 msgstr "Nécessite que les utilisateurs soient connectés pour que cette réduction soit appliquée."
 
 #: eme-discounts.php:883
-#: eme-events.php:8794
+#: eme-events.php:8831
 msgid "Require EME groups"
 msgstr "Groupes EME nécessaire(s)"
 
@@ -1400,7 +1400,7 @@ msgid "Require logged-in user to be in of one of the selected EME groups for thi
 msgstr "Exigez que l’utilisateur connecté appartienne à l’un des groupes EME sélectionnés pour que cette remise soit appliquée."
 
 #: eme-discounts.php:889
-#: eme-events.php:8799
+#: eme-events.php:8836
 msgid "Require EME membership"
 msgstr "Exige d’être un membre d’EME"
 
@@ -1478,17 +1478,17 @@ msgid "A discount group exists of several discounts, and you can ask for several
 msgstr "Un groupe de remises est constitué de plusieurs remises, et vous pouvez demander plusieurs codes de remise en utilisant #_DISCOUNT à plusieurs reprises. Ce paramètre fixe alors une limite au nombre de remises valides qui peuvent être appliquées. Ainsi, même si vous entrez par exemple 5 codes promo valides, vous pouvez limiter leur utilisation à uniquement 3 par exemple."
 
 #: eme-discounts.php:1604
-#: eme-events.php:9729
+#: eme-events.php:9766
 msgid "Fixed"
 msgstr "Fixe"
 
 #: eme-discounts.php:1605
-#: eme-events.php:9731
+#: eme-events.php:9768
 msgid "Percentage"
 msgstr "Pourcentage"
 
 #: eme-discounts.php:1607
-#: eme-events.php:9730
+#: eme-events.php:9767
 msgid "Fixed per seat"
 msgstr "Fixe par siège"
 
@@ -1607,7 +1607,7 @@ msgstr "Appuyez sur le bouton précédent de votre navigateur pour revenir à l'
 #: eme-events.php:852
 #: eme-events.php:1049
 #: eme-events.php:1261
-#: eme-events.php:4803
+#: eme-events.php:4810
 #: eme-mailer.php:2310
 #: eme-payments.php:152
 #: eme-payments.php:2033
@@ -1644,8 +1644,8 @@ msgstr "Nouvelle répétition insérée contenant des évènements %d"
 #: eme-events.php:688
 #: eme-events.php:715
 #: eme-events.php:858
-#: eme-events.php:6385
-#: eme-events.php:10493
+#: eme-events.php:6422
+#: eme-events.php:10530
 msgid "Edit Recurrence"
 msgstr "Modifier la périodicité"
 
@@ -1661,7 +1661,7 @@ msgstr "Nouvel évènement inséré !"
 #: eme-events.php:667
 #: eme-events.php:737
 #: eme-events.php:796
-#: eme-events.php:9599
+#: eme-events.php:9636
 msgid "Edit Event '%s'"
 msgstr "Modifier l'évènement '%s'"
 
@@ -1697,7 +1697,7 @@ msgid "Failed to update '%s'"
 msgstr "Échec de mise à jour '%s'"
 
 #: eme-events.php:767
-#: eme-events.php:9598
+#: eme-events.php:9635
 msgid "Insert New Event"
 msgstr "Insérer un nouvel événement"
 
@@ -1913,7 +1913,7 @@ msgid "GDPR approval"
 msgstr "Approbation RGPD"
 
 #: eme-events.php:1634
-#: eme-events.php:9831
+#: eme-events.php:9868
 msgid "GDPR"
 msgstr "RGPD"
 
@@ -1926,12 +1926,12 @@ msgid "Events Made Easy plugin page"
 msgstr "Page de l’extension Events Made Easy"
 
 #: eme-events.php:2487
-#: eme-events.php:9677
-#: eme-events.php:9702
-#: eme-events.php:9728
-#: eme-events.php:9751
-#: eme-events.php:9883
-#: eme-events.php:9938
+#: eme-events.php:9714
+#: eme-events.php:9739
+#: eme-events.php:9765
+#: eme-events.php:9788
+#: eme-events.php:9920
+#: eme-events.php:9975
 #: eme-locations.php:2416
 #: eme-rsvp.php:5928
 msgid "Edit"
@@ -2039,18 +2039,18 @@ msgstr "Page précédente"
 msgid "Next page"
 msgstr "Page suivante"
 
-#: eme-events.php:4431
-#: eme-events.php:4442
+#: eme-events.php:4438
+#: eme-events.php:4449
 msgid "Page %d"
 msgstr "Page %d"
 
-#: eme-events.php:5883
-#: eme-events.php:5889
+#: eme-events.php:5920
+#: eme-events.php:5926
 msgid "Location not imported: %s"
 msgstr "Emplacement non importé : %s"
 
-#: eme-events.php:5913
-#: eme-events.php:5916
+#: eme-events.php:5950
+#: eme-events.php:5953
 #: eme-members.php:6114
 #: eme-members.php:6119
 #: eme-members.php:6124
@@ -2059,115 +2059,115 @@ msgstr "Emplacement non importé : %s"
 msgid "Not imported (field %s not valid): %s"
 msgstr "Non importé (champ %s non valide) : %s"
 
-#: eme-events.php:5958
+#: eme-events.php:5995
 msgid "Not imported (problem updating the event in the db): %s"
 msgstr "Non importé (problème de mise à jour de l’évènement dans la base de données) : %s"
 
-#: eme-events.php:5966
+#: eme-events.php:6003
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr "Non importé (problème d’insertion de l’évènement dans la base de données) : %s"
 
-#: eme-events.php:5988
+#: eme-events.php:6025
 #: eme-locations.php:337
 #: eme-members.php:6109
 #: eme-members.php:6297
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Non importé (tous les champs obligatoires ne sont pas présents) : %s"
 
-#: eme-events.php:5991
+#: eme-events.php:6028
 #: eme-locations.php:340
 #: eme-members.php:6214
 #: eme-people.php:990
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr "Importation terminée : %d insertion, %d mises à jour, %d erreurs"
 
-#: eme-events.php:6010
+#: eme-events.php:6047
 #: eme-rsvp.php:5204
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr "Évènements passés"
 
-#: eme-events.php:6011
+#: eme-events.php:6048
 #: eme-rsvp.php:5205
 #: eme-tasks.php:447
 #: events-manager.php:351
 msgid "All events"
 msgstr "Tous les événements"
 
-#: eme-events.php:6012
+#: eme-events.php:6049
 #: eme-rsvp.php:5206
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr "Évènements à venir"
 
-#: eme-events.php:6029
+#: eme-events.php:6066
 msgid "Add a new event"
 msgstr "Ajouter un nouvel évènement"
 
-#: eme-events.php:6033
+#: eme-events.php:6070
 #: eme-options.php:1528
 msgid "Add event"
 msgstr "Ajouter un évènement"
 
-#: eme-events.php:6038
-#: eme-events.php:6221
+#: eme-events.php:6075
+#: eme-events.php:6258
 msgid "Manage events"
 msgstr "Gérer les évènements"
 
-#: eme-events.php:6039
-#: eme-events.php:6220
+#: eme-events.php:6076
+#: eme-events.php:6257
 msgid "Manage recurrences"
 msgstr "Gérer les récurrences"
 
-#: eme-events.php:6043
+#: eme-events.php:6080
 #: eme-people.php:2187
 #: eme-rsvp.php:5262
 msgid "Show regular content"
 msgstr "Afficher le contenu normal"
 
-#: eme-events.php:6045
+#: eme-events.php:6082
 #: eme-people.php:2189
 #: eme-rsvp.php:5264
 msgid "Show trash content"
 msgstr "Afficher le contenu de la corbeille"
 
-#: eme-events.php:6061
+#: eme-events.php:6098
 msgid "If you want, use this to import events into the database"
 msgstr "Si vous voulez, utilisez ceci pour importer des évènements dans la base de données"
 
-#: eme-events.php:6081
+#: eme-events.php:6118
 #: eme-rsvp.php:5312
 msgid "All categories"
 msgstr "Toutes catégories"
 
-#: eme-events.php:6082
+#: eme-events.php:6119
 #: eme-rsvp.php:5313
 msgid "Events without category"
 msgstr "Événements sans catégorie"
 
-#: eme-events.php:6089
-#: eme-events.php:6236
-#: eme-events.php:7013
+#: eme-events.php:6126
+#: eme-events.php:6273
+#: eme-events.php:7050
 #: eme-tasks.php:441
 msgid "Event name"
 msgstr "Évènement"
 
-#: eme-events.php:6094
+#: eme-events.php:6131
 #: eme-rsvp.php:5326
 msgid "Show/hide extra filters"
 msgstr "Afficher/masquer les filtres supplémentaires"
 
-#: eme-events.php:6097
-#: eme-events.php:6641
+#: eme-events.php:6134
+#: eme-events.php:6678
 #: eme-fs.php:607
 msgid "Event Status"
 msgstr "Satus événement"
 
-#: eme-events.php:6109
+#: eme-events.php:6146
 msgid "Filter on location"
 msgstr "Filtrer selon l’emplacement"
 
-#: eme-events.php:6113
+#: eme-events.php:6150
 #: eme-locations.php:874
 #: eme-members.php:3002
 #: eme-members.php:3009
@@ -2176,150 +2176,150 @@ msgstr "Filtrer selon l’emplacement"
 msgid "Custom field value to search"
 msgstr "Valeur du champ personnalisé à rechercher"
 
-#: eme-events.php:6114
+#: eme-events.php:6151
 #: eme-locations.php:875
 #: eme-members.php:3018
 #: eme-people.php:1996
 msgid "Custom fields to filter on"
 msgstr "Champs personnalisés sur lesquels filtrer"
 
-#: eme-events.php:6120
+#: eme-events.php:6157
 msgid "Filter events"
 msgstr "Filtrer les  événements"
 
-#: eme-events.php:6125
+#: eme-events.php:6162
 #: eme-locations.php:885
 #: eme-members.php:2857
 #: eme-people.php:1826
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr "Astuce : lors de la recherche de valeurs de champs personnalisés, vous pouvez éventuellement limiter les champs personnalisés dans lesquels vous souhaitez rechercher dans la zone de sélection « Champs personnalisés à filtrer » affichée."
 
-#: eme-events.php:6140
+#: eme-events.php:6177
 msgid "Restore selected events (to draft status)"
 msgstr "Restaurer les évènements sélectionnés (à l'état de brouillon)"
 
-#: eme-events.php:6141
+#: eme-events.php:6178
 msgid "Permanently delete selected events"
 msgstr "Supprimer définitivement les évènements sélectionnés"
 
-#: eme-events.php:6144
+#: eme-events.php:6181
 msgid "Publish selected events"
 msgstr "Publier des évènements sélectionnés"
 
-#: eme-events.php:6145
+#: eme-events.php:6182
 msgid "Make selected events private"
 msgstr "Rendre les évènements sélectionnés privés"
 
-#: eme-events.php:6147
+#: eme-events.php:6184
 msgid "Make selected events draft"
 msgstr "Faire un brouillon des évènements sélectionnés"
 
-#: eme-events.php:6148
+#: eme-events.php:6185
 msgid "Add selected events to category"
 msgstr "Ajouter les événements sélectionnés à la catégorie"
 
-#: eme-events.php:6153
+#: eme-events.php:6190
 msgid "Send emails for cancelled bookings too?"
 msgstr "Envoyer des courriers pour les réservations annulées aussi ?"
 
-#: eme-events.php:6158
+#: eme-events.php:6195
 msgid "Please select a category"
 msgstr "Veuillez sélectionner une catégorie"
 
-#: eme-events.php:6196
+#: eme-events.php:6233
 msgid "Past recurrences"
 msgstr "Récurrences passées"
 
-#: eme-events.php:6197
+#: eme-events.php:6234
 msgid "All recurrences"
 msgstr "Toutes les récurrences"
 
-#: eme-events.php:6198
+#: eme-events.php:6235
 msgid "Ongoing recurrences"
 msgstr "Récurrences en cours"
 
-#: eme-events.php:6211
+#: eme-events.php:6248
 msgid "Add a new recurrence"
 msgstr "Ajouter une nouvelle récurrence"
 
-#: eme-events.php:6215
+#: eme-events.php:6252
 msgid "Add recurrence"
 msgstr "Ajouter la récurrence"
 
-#: eme-events.php:6241
+#: eme-events.php:6278
 msgid "Filter recurrences"
 msgstr "Filtrer les récurrences"
 
-#: eme-events.php:6249
+#: eme-events.php:6286
 msgid "Publish selected recurrences"
 msgstr "Publier les récurrences sélectionnées"
 
-#: eme-events.php:6250
+#: eme-events.php:6287
 msgid "Make selected recurrences private"
 msgstr "Rendre privées les récurrences sélectionnées"
 
-#: eme-events.php:6251
+#: eme-events.php:6288
 msgid "Make selected recurrences draft"
 msgstr "Créer un brouillon des récurrences sélectionnées"
 
-#: eme-events.php:6252
+#: eme-events.php:6289
 msgid "Set new start/end date for selected recurrences"
 msgstr "Définir une nouvelle date de départ ou de fin pour les récurrences sélectionnées"
 
-#: eme-events.php:6256
+#: eme-events.php:6293
 msgid "Select new start date"
 msgstr "Sélectionner une nouvelle date de départ"
 
-#: eme-events.php:6258
+#: eme-events.php:6295
 msgid "Select new end date"
 msgstr "Sélectionnez une nouvelle date de fin"
 
-#: eme-events.php:6288
+#: eme-events.php:6325
 #: eme-formfields.php:56
 #: eme-locations.php:86
 #: eme-templates.php:82
 msgid " (Copy)"
 msgstr " (Copie)"
 
-#: eme-events.php:6376
+#: eme-events.php:6413
 msgid "WARNING: This is a recurrence."
 msgstr "ATTENTION: c'est une récurrence."
 
-#: eme-events.php:6378
+#: eme-events.php:6415
 msgid "If you change this recurrence, events with a start day no longer matching the defined days will be removed while missing events will get added. Existing events with a start day that still match the defined days will get updated but you will not lose bookings."
 msgstr "Si vous modifiez cette récurrence, les évènements dont le jour de début ne correspond plus aux jours définis seront supprimés, tandis que les évènements manquants seront ajoutés. Les évènements existants dont le jour de début correspond toujours aux jours définis seront mis à jour mais vous ne perdrez pas de réservations."
 
-#: eme-events.php:6381
+#: eme-events.php:6418
 msgid "WARNING: This event is part of a recurrence."
 msgstr "AVERTISSEMENT: cet évènement fait partie d’une récurrence."
 
-#: eme-events.php:6383
+#: eme-events.php:6420
 msgid "If you change this event, it will become an independent event and be removed from the recurrence."
 msgstr "Si vous modifiez cet évènement, il deviendra un évènement indépendant et sera supprimé de la récurrence."
 
-#: eme-events.php:6404
-#: eme-events.php:9593
-#: eme-events.php:9918
-#: eme-events.php:10443
+#: eme-events.php:6441
+#: eme-events.php:9630
+#: eme-events.php:9955
+#: eme-events.php:10480
 #: eme-options.php:1297
 #: eme-rsvp.php:6012
 msgid "RSVP"
 msgstr "RSVP"
 
-#: eme-events.php:6407
-#: eme-events.php:6527
+#: eme-events.php:6444
+#: eme-events.php:6564
 msgid "Tasks"
 msgstr "Tâches"
 
-#: eme-events.php:6411
-#: eme-events.php:8449
+#: eme-events.php:6448
+#: eme-events.php:8486
 #: eme-locations.php:392
 #: eme-locations.php:744
 msgid "Attributes"
 msgstr "Attributs"
 
-#: eme-events.php:6413
-#: eme-events.php:8463
+#: eme-events.php:6450
+#: eme-events.php:8500
 #: eme-locations.php:394
 #: eme-locations.php:758
 #: eme-members.php:1849
@@ -2328,152 +2328,152 @@ msgstr "Attributs"
 msgid "Custom fields"
 msgstr "Champs personnalisés"
 
-#: eme-events.php:6439
+#: eme-events.php:6476
 msgid "Generic RSVP info"
 msgstr "Info RSVP générique"
 
-#: eme-events.php:6443
+#: eme-events.php:6480
 #: eme-members.php:2179
 #: eme-options.php:3130
 msgid "Payment methods"
 msgstr "Méthodes de payement"
 
-#: eme-events.php:6447
+#: eme-events.php:6484
 msgid "Dynamic data"
 msgstr "Données dynamiques"
 
-#: eme-events.php:6458
+#: eme-events.php:6495
 msgid "RSVP form format"
 msgstr "Format du formulaire RSVP"
 
-#: eme-events.php:6465
+#: eme-events.php:6502
 msgid "Attendance settings"
 msgstr "Réglages de présence"
 
-#: eme-events.php:6469
+#: eme-events.php:6506
 msgid "RSVP Email format settings"
 msgstr "Réglages du format des e-mails RSVP"
 
-#: eme-events.php:6474
+#: eme-events.php:6511
 #: eme-options.php:2060
 msgid "Booking Made or Approved Email"
 msgstr "E-mail de réservation effectué ou approuvé"
 
-#: eme-events.php:6478
+#: eme-events.php:6515
 msgid "Booking Awaiting User Confirmation Email"
 msgstr "Réservation en attente de l’e-mail de confirmation de l’utilisateur/utilisatrice"
 
-#: eme-events.php:6482
+#: eme-events.php:6519
 #: eme-options.php:2125
 msgid "Booking Pending Email"
 msgstr "E-mail de réservation en attente"
 
-#: eme-events.php:6486
+#: eme-events.php:6523
 #: eme-options.php:2185
 msgid "Booking Updated Email"
 msgstr "E-mail de réservation mise à jour"
 
-#: eme-events.php:6490
+#: eme-events.php:6527
 #: eme-options.php:2200
 msgid "Booking Reminder Email"
 msgstr "E-mail de rappel de réservation"
 
-#: eme-events.php:6494
+#: eme-events.php:6531
 #: eme-options.php:2217
 msgid "Booking Cancelled Email"
 msgstr "E-mail de réservation annulée"
 
-#: eme-events.php:6498
+#: eme-events.php:6535
 #: eme-options.php:2234
 msgid "Booking Deleted Email"
 msgstr "E-mail de réservation supprimée"
 
-#: eme-events.php:6502
+#: eme-events.php:6539
 #: eme-options.php:2249
 msgid "Booking Paid Email"
 msgstr "E-mail de réservation payée"
 
-#: eme-events.php:6506
+#: eme-events.php:6543
 #: eme-options.php:2305
 msgid "Booking Payment Gateway Notification Email"
 msgstr "E-mail de notification de passerelle de paiement"
 
-#: eme-events.php:6520
+#: eme-events.php:6557
 msgid "Enable tasks for this event"
 msgstr "Activer les tâches pour cet évènement"
 
-#: eme-events.php:6529
+#: eme-events.php:6566
 msgid "List of tasks"
 msgstr "Liste des tâches"
 
-#: eme-events.php:6533
+#: eme-events.php:6570
 msgid "Tasks settings"
 msgstr "Réglages des tâches"
 
-#: eme-events.php:6535
+#: eme-events.php:6572
 msgid "Tasks generic settings"
 msgstr "Réglages génériques des tâches"
 
-#: eme-events.php:6539
+#: eme-events.php:6576
 msgid "Tasks form format"
 msgstr "Format du formulaire des tâches"
 
-#: eme-events.php:6545
+#: eme-events.php:6582
 msgid "Tasks Email format settings"
 msgstr "Réglages du format des e-mails de tâches"
 
-#: eme-events.php:6549
+#: eme-events.php:6586
 #: eme-options.php:2413
 msgid "Task Signup Pending Email"
 msgstr "E-mail d’inscription à une tâche, en attente"
 
-#: eme-events.php:6553
+#: eme-events.php:6590
 #: eme-options.php:2428
 msgid "Task Signup Made Email"
 msgstr "E-mail d’Inscription aux tâches"
 
-#: eme-events.php:6557
+#: eme-events.php:6594
 #: eme-options.php:2443
 msgid "Task Signup Reminder Email"
 msgstr "E-mail de rappel de l’inscription à une tâche"
 
-#: eme-events.php:6561
+#: eme-events.php:6598
 #: eme-options.php:2455
 msgid "Task Signup Cancelled Email"
 msgstr "E-mail d’une inscription à une tâche annulée"
 
-#: eme-events.php:6565
+#: eme-events.php:6602
 #: eme-options.php:2469
 msgid "Task Signup Deleted Email"
 msgstr "E-mail d’une inscription à une tâche supprimée"
 
-#: eme-events.php:6606
+#: eme-events.php:6643
 msgid "Save"
 msgstr "Enregistrer"
 
-#: eme-events.php:6611
+#: eme-events.php:6648
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "Confirmez-vous vouloir supprimer cette récurrence ?"
 
-#: eme-events.php:6613
+#: eme-events.php:6650
 msgid "Update"
 msgstr "Mise à jour"
 
-#: eme-events.php:6617
-#: eme-events.php:9774
+#: eme-events.php:6654
+#: eme-events.php:9811
 msgid "View"
 msgstr "Vue"
 
-#: eme-events.php:6629
+#: eme-events.php:6666
 msgid "Delete Recurrence"
 msgstr "Supprimer la récurrence"
 
-#: eme-events.php:6643
-#: eme-events.php:9600
-#: eme-events.php:9664
-#: eme-events.php:9885
-#: eme-events.php:9899
-#: eme-events.php:10011
+#: eme-events.php:6680
+#: eme-events.php:9637
+#: eme-events.php:9701
+#: eme-events.php:9922
+#: eme-events.php:9936
+#: eme-events.php:10048
 #: eme-members.php:1768
 #: eme-members.php:1910
 #: eme-people.php:1081
@@ -2481,32 +2481,32 @@ msgstr "Supprimer la récurrence"
 msgid "Status"
 msgstr "Statut"
 
-#: eme-events.php:6778
+#: eme-events.php:6815
 #: eme-locations.php:433
 #: eme-widgets.php:206
 #: eme-widgets.php:370
 msgid "Author"
 msgstr "Auteur"
 
-#: eme-events.php:6780
+#: eme-events.php:6817
 msgid "Author of this event: "
 msgstr "Auteur de cet événement : "
 
-#: eme-events.php:6796
+#: eme-events.php:6833
 msgid "Contact Person"
 msgstr "Interlocuteur"
 
-#: eme-events.php:6798
+#: eme-events.php:6835
 msgid "If you leave this empty, the author will be used as contact person."
 msgstr "Si vous laissez ce champ vide, l’auteur/autrice sera utilisé comme personne de contact."
 
-#: eme-events.php:6811
+#: eme-events.php:6848
 msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info."
 msgstr "Puisque l'auteur n'est pas défini pour cet évènement, toute référence à la personne de contact (comme lors de l'utilisation de #_CONTACTPERSON lors de l'envoi d'e-mails) utilisera les informations de l'utilisateur admin ."
 
-#: eme-events.php:6819
-#: eme-events.php:9926
-#: eme-events.php:10278
+#: eme-events.php:6856
+#: eme-events.php:9963
+#: eme-events.php:10315
 #: eme-locations.php:449
 #: eme-locations.php:2997
 #: eme-recurrence.php:742
@@ -2515,315 +2515,315 @@ msgstr "Puisque l'auteur n'est pas défini pour cet évènement, toute référen
 msgid "Category"
 msgstr "Catégorie"
 
-#: eme-events.php:6844
+#: eme-events.php:6881
 msgid "WP Page template"
 msgstr "Modèle de page WP"
 
-#: eme-events.php:6849
+#: eme-events.php:6886
 msgid "By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted."
 msgstr "Par défaut, l’évènement utilise le même modèle de page WP que la page d’évènements spéciaux définie. Si votre thème propose plusieurs modèles de page différents, choisissez-en un autre si vous le souhaitez."
 
-#: eme-events.php:6867
+#: eme-events.php:6904
 msgid "The event name"
 msgstr "Le nom de l'évènement"
 
-#: eme-events.php:6868
+#: eme-events.php:6905
 msgid "The start date"
 msgstr "La date de début"
 
-#: eme-events.php:6872
-#: eme-events.php:6875
+#: eme-events.php:6909
+#: eme-events.php:6912
 #: eme-locations.php:1347
 #: eme-locations.php:1351
 #: eme-locations.php:1354
 msgid "%s is missing!"
 msgstr "%s est manquant !"
 
-#: eme-events.php:6880
+#: eme-events.php:6917
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the price per category (multiprice) as well."
 msgstr "Étant donné que l'évènement contient plusieurs catégories de sièges (multisiège), vous devez également spécifier le prix par catégorie (multiprix)."
 
-#: eme-events.php:6886
+#: eme-events.php:6923
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the exact same amount of prices (multiprice) as well."
 msgstr "Étant donné que l'évènement contient plusieurs catégories de sièges (multiplace), vous devez également spécifier le même montant de prix (multiprix)."
 
-#: eme-events.php:6922
+#: eme-events.php:6959
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "Votre évènement semble avoir plusieurs catégories de prix, vous ne pouvez donc pas utiliser #_SEATS (ou #_SPACES) dans le format de formulaire de votre évènement RSVP. Veuillez corriger le format du formulaire RSVP pour utiliser la notation #_SEATS{xx}."
 
-#: eme-events.php:6949
+#: eme-events.php:6986
 msgid "Please correct the RSVP form format to use #_EMAIL."
 msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_EMAIL."
 
-#: eme-events.php:6952
+#: eme-events.php:6989
 msgid "Please correct the RSVP form format to use #_LASTNAME."
 msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_LASTNAME."
 
-#: eme-events.php:6962
+#: eme-events.php:6999
 msgid "You have indicated you want to use a password but your event RSVP form format doesn't contain #_PASSWORD. Please correct the RSVP form format to use #_PASSWORD."
 msgstr "Vous avez indiqué que vous souhaitiez utiliser un mot de passe, mais le format du formulaire de votre évènement RSVP ne contient pas #_PASSWORD. Veuillez corriger le format du formulaire RSVP pour utiliser #_PASSWORD."
 
-#: eme-events.php:6966
+#: eme-events.php:7003
 msgid "The min amount of seats to book should not be bigger than the max amount of seats to book."
 msgstr "Le nombre minimal de sièges à réserver ne doit pas être supérieur au nombre maximal de sièges à réserver."
 
-#: eme-events.php:6973
+#: eme-events.php:7010
 msgid "If specified, the max amount of seats to book should consist of integers only."
 msgstr "Si spécifié, le nombre maximum de places à réserver doit être composé uniquement de nombres entiers ."
 
-#: eme-events.php:6976
+#: eme-events.php:7013
 msgid "Since this is a multiprice event and you decided to limit the max amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"max seats to book\" as you did for the prices."
 msgstr "Comme il s’agit d’un évènement multi-prix et que vous avez décidé de limiter le nombre maximal de places à réserver (pour une réservation) par catégorie de prix, vous devez spécifier exactement le même nombre de « nombre maximal de places à réserver » que pour les prix."
 
-#: eme-events.php:6979
+#: eme-events.php:7016
 msgid "If specified, the max amount of seats to book should be an integer."
 msgstr "Si spécifié, le nombre maximal de places à réserver doit être un entier."
 
-#: eme-events.php:6986
+#: eme-events.php:7023
 msgid "If specified, the min amount of seats to book should consist of integers only."
 msgstr "Si spécifié, le nombre minimum de places à réserver doit être composé uniquement de nombres entiers ."
 
-#: eme-events.php:6989
+#: eme-events.php:7026
 msgid "Since this is a multiprice event and you decided to limit the min amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"min seats to book\" as you did for the prices."
 msgstr "Comme il s’agit d’un évènement multi-prix et que vous avez décidé de limiter le nombre minimum de places à réserver (pour une réservation) par catégorie de prix, vous devez spécifier le même nombre de « places minimum à réserver » que vous avez indiqué pour les prix."
 
-#: eme-events.php:6992
+#: eme-events.php:7029
 msgid "If specified, the min amount of seats to book should be an integer."
 msgstr "Si spécifié, le nombre minimum de sièges à réserver doit être un entier."
 
-#: eme-events.php:7004
+#: eme-events.php:7041
 #: eme-locations.php:1361
 msgid "Ach, some problems here:"
 msgstr "Là, il y a des  problèmes:"
 
-#: eme-events.php:7085
+#: eme-events.php:7122
 msgid "Event date"
 msgstr "Date de l'événement"
 
-#: eme-events.php:7091
+#: eme-events.php:7128
 msgid "The event beginning and end date."
 msgstr "La date de début et de fin de l’évènement."
 
-#: eme-events.php:7095
+#: eme-events.php:7132
 msgid "Event duration (in days)"
 msgstr "Durée de l’évènement (en jours)"
 
-#: eme-events.php:7096
+#: eme-events.php:7133
 msgid "day(s)"
 msgstr "jour(s)"
 
-#: eme-events.php:7100
+#: eme-events.php:7137
 msgid "Event time"
 msgstr "Heure de l’évènement"
 
-#: eme-events.php:7108
+#: eme-events.php:7145
 msgid "The time of the event beginning and end"
 msgstr "L'heure du début et de la fin de l'événement"
 
-#: eme-events.php:7112
+#: eme-events.php:7149
 msgid "This event lasts all day"
 msgstr "Cet évènement dure toute la journée"
 
-#: eme-events.php:7118
+#: eme-events.php:7155
 msgid "Check if your event happens more than once."
 msgstr "Vérifiez si votre évènement se produit plus d'une fois."
 
-#: eme-events.php:7122
+#: eme-events.php:7159
 msgid "Bookings found for this event, so not possible to convert to a recurring event."
 msgstr "Des réservations existent pour cet évènement, il ne peut donc pas être converti en évènement récurrent."
 
-#: eme-events.php:7132
+#: eme-events.php:7169
 #: eme-widgets.php:163
 msgid "Daily"
 msgstr "Journalier"
 
-#: eme-events.php:7133
+#: eme-events.php:7170
 msgid "Weekly"
 msgstr "Hebdomadaire"
 
-#: eme-events.php:7134
+#: eme-events.php:7171
 #: eme-widgets.php:164
 msgid "Monthly"
 msgstr "Mensuel"
 
-#: eme-events.php:7135
+#: eme-events.php:7172
 msgid "Specific days"
 msgstr "Jours spécifiques"
 
-#: eme-events.php:7136
+#: eme-events.php:7173
 msgid "Specific months"
 msgstr "Mois spécifiques"
 
-#: eme-events.php:7162
+#: eme-events.php:7199
 msgid "first"
 msgstr "premier"
 
-#: eme-events.php:7163
+#: eme-events.php:7200
 msgid "second"
 msgstr "deuxième"
 
-#: eme-events.php:7164
+#: eme-events.php:7201
 msgid "third"
 msgstr "troisième"
 
-#: eme-events.php:7165
+#: eme-events.php:7202
 msgid "fourth"
 msgstr "quatrième"
 
-#: eme-events.php:7166
+#: eme-events.php:7203
 msgid "fifth"
 msgstr "cinquième"
 
-#: eme-events.php:7167
+#: eme-events.php:7204
 msgid "last"
 msgstr "dernier"
 
-#: eme-events.php:7168
+#: eme-events.php:7205
 msgid "Start day"
 msgstr "Premier jour"
 
-#: eme-events.php:7180
+#: eme-events.php:7217
 msgid "Recurrence dates"
 msgstr "Dates de récurrence"
 
-#: eme-events.php:7191
+#: eme-events.php:7228
 msgid "Select all the dates you want the event to begin on."
 msgstr "Sélectionner toutes les dates auxquelles vous souhaitez que l’évènement commence."
 
-#: eme-events.php:7196
+#: eme-events.php:7233
 msgid "Frequency:"
 msgstr "Fréquence :"
 
-#: eme-events.php:7202
-#: eme-events.php:7220
-#: eme-events.php:7233
+#: eme-events.php:7239
+#: eme-events.php:7257
+#: eme-events.php:7270
 msgid "Every"
 msgstr "Chaque"
 
-#: eme-events.php:7207
+#: eme-events.php:7244
 #: eme-recurrence.php:710
 msgid "day"
 msgstr "jour"
 
-#: eme-events.php:7209
+#: eme-events.php:7246
 msgid "week"
 msgstr "semaine"
 
-#: eme-events.php:7210
+#: eme-events.php:7247
 msgid "weeks"
 msgstr "semaines"
 
-#: eme-events.php:7211
+#: eme-events.php:7248
 msgid "month"
 msgstr "mois"
 
-#: eme-events.php:7212
+#: eme-events.php:7249
 msgid "months"
 msgstr "mois"
 
-#: eme-events.php:7217
+#: eme-events.php:7254
 msgid "If you leave this empty, the recurrence start date will be used as a reference."
 msgstr "Si vous laissez ce champ vide, la date de début de la récurrence sera utilisée comme référence."
 
-#: eme-events.php:7227
-#: eme-events.php:7240
+#: eme-events.php:7264
+#: eme-events.php:7277
 msgid "Day of month"
 msgstr "Jour du mois"
 
-#: eme-events.php:7229
-#: eme-events.php:7242
+#: eme-events.php:7266
+#: eme-events.php:7279
 msgid "If you use \"Start day\" as day of the month, the recurrence start date will be used as a reference."
 msgstr "Si vous utilisez « Jour de début » comme jour du mois, la date de début de la récurrence sera utilisée comme référence."
 
-#: eme-events.php:7259
+#: eme-events.php:7296
 msgid "Holidays: "
 msgstr "Vacances : "
 
-#: eme-events.php:7264
+#: eme-events.php:7301
 msgid "No events will be created on days matching an entry in the holidays list"
 msgstr "Aucun évènement ne sera créé les jours correspondant à une entrée dans la liste des jours fériés."
 
-#: eme-events.php:7284
+#: eme-events.php:7321
 msgid "Single Event Title"
 msgstr "Titre d'évènement unique"
 
-#: eme-events.php:7286
-#: eme-events.php:7318
-#: eme-events.php:7356
-#: eme-events.php:7378
-#: eme-events.php:7422
-#: eme-events.php:7464
-#: eme-events.php:7486
-#: eme-events.php:7512
-#: eme-events.php:7534
-#: eme-events.php:7572
-#: eme-events.php:7580
-#: eme-events.php:7607
-#: eme-events.php:7629
-#: eme-events.php:7665
-#: eme-events.php:7687
-#: eme-events.php:7713
-#: eme-events.php:7735
-#: eme-events.php:7773
-#: eme-events.php:7781
-#: eme-events.php:7802
-#: eme-events.php:7824
-#: eme-events.php:7853
-#: eme-events.php:7875
-#: eme-events.php:7894
-#: eme-events.php:7916
-#: eme-events.php:7945
-#: eme-events.php:7967
-#: eme-events.php:7993
-#: eme-events.php:8015
-#: eme-events.php:8049
-#: eme-events.php:8071
-#: eme-events.php:8097
-#: eme-events.php:8119
-#: eme-events.php:8157
-#: eme-events.php:8165
-#: eme-events.php:8186
-#: eme-events.php:8208
-#: eme-events.php:8236
-#: eme-events.php:8265
+#: eme-events.php:7323
+#: eme-events.php:7355
+#: eme-events.php:7393
+#: eme-events.php:7415
+#: eme-events.php:7459
+#: eme-events.php:7501
+#: eme-events.php:7523
+#: eme-events.php:7549
+#: eme-events.php:7571
+#: eme-events.php:7609
+#: eme-events.php:7617
+#: eme-events.php:7644
+#: eme-events.php:7666
+#: eme-events.php:7702
+#: eme-events.php:7724
+#: eme-events.php:7750
+#: eme-events.php:7772
+#: eme-events.php:7810
+#: eme-events.php:7818
+#: eme-events.php:7839
+#: eme-events.php:7861
+#: eme-events.php:7890
+#: eme-events.php:7912
+#: eme-events.php:7931
+#: eme-events.php:7953
+#: eme-events.php:7982
+#: eme-events.php:8004
+#: eme-events.php:8030
+#: eme-events.php:8052
+#: eme-events.php:8086
+#: eme-events.php:8108
+#: eme-events.php:8134
+#: eme-events.php:8156
+#: eme-events.php:8194
+#: eme-events.php:8202
+#: eme-events.php:8223
+#: eme-events.php:8245
+#: eme-events.php:8273
+#: eme-events.php:8302
 msgid "Only fill this in if you want to override the default settings."
 msgstr "Ne remplissez ce champ que si vous souhaitez modifier les paramètres par défaut."
 
-#: eme-events.php:7289
-#: eme-events.php:7323
-#: eme-events.php:7359
-#: eme-events.php:7381
-#: eme-events.php:7425
-#: eme-events.php:7467
-#: eme-events.php:7489
-#: eme-events.php:7515
-#: eme-events.php:7537
-#: eme-events.php:7610
-#: eme-events.php:7632
-#: eme-events.php:7668
-#: eme-events.php:7690
-#: eme-events.php:7716
-#: eme-events.php:7738
-#: eme-events.php:7805
-#: eme-events.php:7827
-#: eme-events.php:7856
-#: eme-events.php:7878
-#: eme-events.php:7897
-#: eme-events.php:7919
-#: eme-events.php:7948
-#: eme-events.php:7970
-#: eme-events.php:7996
-#: eme-events.php:8018
-#: eme-events.php:8052
-#: eme-events.php:8074
-#: eme-events.php:8100
-#: eme-events.php:8122
-#: eme-events.php:8189
-#: eme-events.php:8211
-#: eme-events.php:8239
-#: eme-events.php:8268
-#: eme-events.php:8614
-#: eme-events.php:8629
+#: eme-events.php:7326
+#: eme-events.php:7360
+#: eme-events.php:7396
+#: eme-events.php:7418
+#: eme-events.php:7462
+#: eme-events.php:7504
+#: eme-events.php:7526
+#: eme-events.php:7552
+#: eme-events.php:7574
+#: eme-events.php:7647
+#: eme-events.php:7669
+#: eme-events.php:7705
+#: eme-events.php:7727
+#: eme-events.php:7753
+#: eme-events.php:7775
+#: eme-events.php:7842
+#: eme-events.php:7864
+#: eme-events.php:7893
+#: eme-events.php:7915
+#: eme-events.php:7934
+#: eme-events.php:7956
+#: eme-events.php:7985
+#: eme-events.php:8007
+#: eme-events.php:8033
+#: eme-events.php:8055
+#: eme-events.php:8089
+#: eme-events.php:8111
+#: eme-events.php:8137
+#: eme-events.php:8159
+#: eme-events.php:8226
+#: eme-events.php:8248
+#: eme-events.php:8276
+#: eme-events.php:8305
+#: eme-events.php:8651
+#: eme-events.php:8666
 #: eme-mailer.php:2848
 #: eme-mailer.php:2858
 #: eme-mailer.php:3040
@@ -2831,41 +2831,41 @@ msgstr "Ne remplissez ce champ que si vous souhaitez modifier les paramètres pa
 msgid "Either choose from a template: "
 msgstr "Soit choisissez parmi un modèle : "
 
-#: eme-events.php:7293
-#: eme-events.php:7327
-#: eme-events.php:7363
-#: eme-events.php:7385
-#: eme-events.php:7429
-#: eme-events.php:7471
-#: eme-events.php:7493
-#: eme-events.php:7519
-#: eme-events.php:7541
-#: eme-events.php:7614
-#: eme-events.php:7636
-#: eme-events.php:7672
-#: eme-events.php:7694
-#: eme-events.php:7720
-#: eme-events.php:7742
-#: eme-events.php:7809
-#: eme-events.php:7831
-#: eme-events.php:7860
-#: eme-events.php:7882
-#: eme-events.php:7901
-#: eme-events.php:7923
-#: eme-events.php:7952
-#: eme-events.php:7974
-#: eme-events.php:8000
-#: eme-events.php:8022
-#: eme-events.php:8056
-#: eme-events.php:8078
-#: eme-events.php:8104
-#: eme-events.php:8126
-#: eme-events.php:8193
-#: eme-events.php:8215
-#: eme-events.php:8243
-#: eme-events.php:8272
-#: eme-events.php:8618
-#: eme-events.php:8633
+#: eme-events.php:7330
+#: eme-events.php:7364
+#: eme-events.php:7400
+#: eme-events.php:7422
+#: eme-events.php:7466
+#: eme-events.php:7508
+#: eme-events.php:7530
+#: eme-events.php:7556
+#: eme-events.php:7578
+#: eme-events.php:7651
+#: eme-events.php:7673
+#: eme-events.php:7709
+#: eme-events.php:7731
+#: eme-events.php:7757
+#: eme-events.php:7779
+#: eme-events.php:7846
+#: eme-events.php:7868
+#: eme-events.php:7897
+#: eme-events.php:7919
+#: eme-events.php:7938
+#: eme-events.php:7960
+#: eme-events.php:7989
+#: eme-events.php:8011
+#: eme-events.php:8037
+#: eme-events.php:8059
+#: eme-events.php:8093
+#: eme-events.php:8115
+#: eme-events.php:8141
+#: eme-events.php:8163
+#: eme-events.php:8230
+#: eme-events.php:8252
+#: eme-events.php:8280
+#: eme-events.php:8309
+#: eme-events.php:8655
+#: eme-events.php:8670
 #: eme-members.php:2050
 #: eme-members.php:2082
 #: eme-members.php:2100
@@ -2888,21 +2888,21 @@ msgstr "Soit choisissez parmi un modèle : "
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr "Ou saisissez le vôtre (si quelque chose est saisi ici, il a priorité sur le modèle sélectionné) : "
 
-#: eme-events.php:7313
+#: eme-events.php:7350
 msgid "Single Event"
 msgstr "Évènement unique"
 
-#: eme-events.php:7316
+#: eme-events.php:7353
 msgid "The format of the single event page."
 msgstr "Format pour la page d'un événement particulier."
 
-#: eme-events.php:7320
+#: eme-events.php:7357
 msgid "This defines the layout of your event (where the event description goes, the RSVP form, the map, ... ."
 msgstr "Il définit la mise en page de votre évènement (où se trouve la description de l’évènement, le formulaire RSVP, la carte...)."
 
-#: eme-events.php:7335
-#: eme-events.php:8403
-#: eme-events.php:8471
+#: eme-events.php:7372
+#: eme-events.php:8440
+#: eme-events.php:8508
 #: eme-locations.php:666
 #: eme-locations.php:765
 #: eme-mailer.php:2872
@@ -2912,55 +2912,55 @@ msgstr "Il définit la mise en page de votre évènement (où se trouve la descr
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr "Votre compte a la possibilité de publier ici du contenu HTML sans restriction, à l’exception du javascript."
 
-#: eme-events.php:7353
+#: eme-events.php:7390
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Objet de l’e-mail de la notification de la passerelle de paiement vers la personne qui a payé"
 
-#: eme-events.php:7354
+#: eme-events.php:7391
 #: eme-members.php:2733
 #: eme-options.php:2312
 #: eme-options.php:2328
 msgid "The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne de contact lors de la réception d'une notification de paiement via une passerelle de paiement."
 
-#: eme-events.php:7374
+#: eme-events.php:7411
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Corps de l'e-mail de la notification de la passerelle de paiement vers la personne qui a payé"
 
-#: eme-events.php:7376
+#: eme-events.php:7413
 #: eme-members.php:2740
 #: eme-options.php:2313
 #: eme-options.php:2329
 msgid "The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne de contact lors de la réception d'une notification de paiement via une passerelle de paiement."
 
-#: eme-events.php:7400
+#: eme-events.php:7437
 #: eme-members.php:2235
 msgid "Dynamic data check on every field"
 msgstr "Vérification dynamique des données sur chaque champ"
 
-#: eme-events.php:7402
+#: eme-events.php:7439
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your RSVP form definition. Using this option, you can use all booking placeholders, even if not defined in your RSVP form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr "Par défaut, la vérification des données dynamiques n’est effectuée que pour les champs mentionnés dans vos conditions de données dynamiques s’ils sont présents dans la définition de formulaire RSVP. En utilisant cette option, vous pouvez utiliser tous les espaces réservés de réservation, même s'ils ne sont pas définis dans votre formulaire de confirmation de présence. Le petit inconvénient est que plus de demandes seront faites dans le backend, donc à n'utilisez que lorsque cela est absolument nécessaire."
 
-#: eme-events.php:7403
+#: eme-events.php:7440
 msgid "If your event uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr "Si votre évènement utilise une remise de type code et que vous souhaitez que le prix dynamique (en utilisant #_DYNAMICPRICE) soit mis à jour en tenant compte de cette remise également, cochez aussi cette option."
 
-#: eme-events.php:7418
+#: eme-events.php:7455
 #: eme-options.php:1893
 msgid "Booking recorded message"
 msgstr "Message de réservation enregistrée"
 
-#: eme-events.php:7420
+#: eme-events.php:7457
 #: eme-options.php:1893
 msgid "The text (html allowed) shown to the user when the booking has been made successfully."
 msgstr "Le texte (HTML autorisé) affiché à l’utilisateur lorsque la réservation a été bien effectuée."
 
-#: eme-events.php:7447
-#: eme-events.php:7597
-#: eme-events.php:7654
-#: eme-events.php:8040
+#: eme-events.php:7484
+#: eme-events.php:7634
+#: eme-events.php:7691
+#: eme-events.php:8077
 #: eme-options.php:2064
 #: eme-options.php:2129
 #: eme-options.php:2190
@@ -2972,62 +2972,62 @@ msgstr "Le texte (HTML autorisé) affiché à l’utilisateur lorsque la réserv
 msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées, donc ces e-mails ne seront pas envoyés. Allez dans les réglages d’e-mail pour l’activer si vous le souhaitez."
 
-#: eme-events.php:7450
+#: eme-events.php:7487
 #: eme-options.php:2067
 msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations effectuées ou approuvées, donc ces e-mails ne seront pas envoyés. Allez dans les réglages d’e-mail pour l’activer si vous le souhaitez."
 
-#: eme-events.php:7461
+#: eme-events.php:7498
 #: eme-options.php:2079
 msgid "Booking Made Email Subject"
 msgstr "Sujet de l'e-mail de réservation effectué"
 
-#: eme-events.php:7462
+#: eme-events.php:7499
 #: eme-options.php:2079
 msgid "The subject of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Objet de l'e-mail envoyé au réservataire lorsqu'une réservation est faite (pas en attente) ou approuvée."
 
-#: eme-events.php:7483
+#: eme-events.php:7520
 #: eme-options.php:2080
 msgid "Booking Made Email Body"
 msgstr "Corps de l'e-mail de réservation faite"
 
-#: eme-events.php:7484
+#: eme-events.php:7521
 #: eme-options.php:2080
 msgid "The body of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Le corps de l'e-mail envoyé au réservataire lorsqu'une réservation est faite (pas en attente ) ou approuvée."
 
-#: eme-events.php:7509
+#: eme-events.php:7546
 #: eme-options.php:2081
 msgid "Contact Person Booking Made Email Subject"
 msgstr "Sujet de l'e-mail à la personne de contact pour une réservation effectuée"
 
-#: eme-events.php:7510
+#: eme-events.php:7547
 #: eme-options.php:2081
 msgid "The subject of the email that will be sent to the contact person when a booking is made."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne de contact quand une réservation est faite."
 
-#: eme-events.php:7531
+#: eme-events.php:7568
 #: eme-options.php:2082
 msgid "Contact Person Booking Made Email Body"
 msgstr "Corps de l’e-mail envoyé à la personne de contact lors d’une réservation"
 
-#: eme-events.php:7532
+#: eme-events.php:7569
 #: eme-options.php:2082
 msgid "The body of the email that will be sent to the contact person when a booking is made."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est faite."
 
-#: eme-events.php:7550
+#: eme-events.php:7587
 #: eme-options.php:2085
 msgid "Booking made mail attachments"
 msgstr "Fichiers joints a l'e-mail de réservation"
 
-#: eme-events.php:7569
-#: eme-events.php:7770
-#: eme-events.php:8154
-#: eme-events.php:9515
-#: eme-events.php:9902
-#: eme-events.php:10022
+#: eme-events.php:7606
+#: eme-events.php:7807
+#: eme-events.php:8191
+#: eme-events.php:9552
+#: eme-events.php:9939
+#: eme-events.php:10059
 #: eme-mailer.php:2897
 #: eme-mailer.php:3076
 #: eme-members.php:2301
@@ -3041,9 +3041,9 @@ msgstr "Fichiers joints a l'e-mail de réservation"
 msgid "Add attachments"
 msgstr "Ajouter des pièces jointes"
 
-#: eme-events.php:7570
-#: eme-events.php:7771
-#: eme-events.php:8155
+#: eme-events.php:7607
+#: eme-events.php:7808
+#: eme-events.php:8192
 #: eme-mailer.php:2898
 #: eme-mailer.php:3077
 #: eme-members.php:2302
@@ -3057,273 +3057,273 @@ msgstr "Ajouter des pièces jointes"
 msgid "Remove attachments"
 msgstr "Retirer des fichiers joints"
 
-#: eme-events.php:7571
+#: eme-events.php:7608
 #: eme-options.php:2107
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr "Ajoutez éventuellement des fichiers joints à l’e-mail lors d'une nouvelle réservation."
 
-#: eme-events.php:7599
-#: eme-events.php:7656
-#: eme-events.php:8684
+#: eme-events.php:7636
+#: eme-events.php:7693
+#: eme-events.php:8721
 #: eme-options.php:2131
 msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations en attente, donc ces e-mails ne seront pas envoyés. Allez dans les réglages d’e-mail pour l’activer si vous le souhaitez."
 
-#: eme-events.php:7604
+#: eme-events.php:7641
 #: eme-options.php:2137
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr "Objet de l’e-mail de confirmation de la réservation en attente de l’utilisateur/utilisatrice"
 
-#: eme-events.php:7605
+#: eme-events.php:7642
 #: eme-options.php:2137
 msgid "The subject of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "L’objet de l’e-mail qui sera envoyé au concerné si la réservation nécessite une confirmation de l’utilisateur/utilisatrice."
 
-#: eme-events.php:7625
+#: eme-events.php:7662
 #: eme-options.php:2138
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr "Corps de l’e-mail de confirmation de la réservation en attente de l’utilisateur/utilisatrice"
 
-#: eme-events.php:7627
+#: eme-events.php:7664
 #: eme-options.php:2138
 msgid "The body of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "Le corps de l’e-mail qui sera envoyé au concerné si la réservation nécessite une confirmation de l’utilisateur/utilisatrice."
 
-#: eme-events.php:7662
+#: eme-events.php:7699
 #: eme-options.php:2139
 msgid "Booking Pending Email Subject"
 msgstr "Sujet de l'e-mail d'attente de réservation"
 
-#: eme-events.php:7663
+#: eme-events.php:7700
 #: eme-options.php:2139
 msgid "The subject of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Le sujet de l'e-mail qui sera envoyé au réservataire si la réservation nécessite une approbation."
 
-#: eme-events.php:7683
+#: eme-events.php:7720
 #: eme-options.php:2140
 msgid "Booking Pending Email Body"
 msgstr "Corps de l’e-mail de mise en attente de réservation"
 
-#: eme-events.php:7685
+#: eme-events.php:7722
 #: eme-options.php:2140
 msgid "The body of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Le corps de l’e-mail qui sera envoyé au réservataire si la réservation nécessite une approbation."
 
-#: eme-events.php:7710
+#: eme-events.php:7747
 #: eme-options.php:2141
 msgid "Contact Person Pending Booking Email Subject"
 msgstr "Sujet de l’e-mail de réservation en attente à la personne de contact"
 
-#: eme-events.php:7711
+#: eme-events.php:7748
 #: eme-options.php:2141
 msgid "The subject of the email that will be sent to the contact person if a booking requires approval."
 msgstr "L'objet de l' e-mail qui sera envoyé au responsable si une réservation nécessite une approbation."
 
-#: eme-events.php:7732
+#: eme-events.php:7769
 #: eme-options.php:2142
 msgid "Contact Person Pending Booking Email Body"
 msgstr "Corps de l'e-mail d'une réservation en attente à la personne de contact"
 
-#: eme-events.php:7733
+#: eme-events.php:7770
 #: eme-options.php:2142
 msgid "The body of the email that will be sent to the contact person if a booking requires approval."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne de contact si une réservation nécessite une approbation."
 
-#: eme-events.php:7751
+#: eme-events.php:7788
 #: eme-options.php:2145
 msgid "Pending mail attachments"
 msgstr "Fichiers joints des e-mails en attente"
 
-#: eme-events.php:7799
+#: eme-events.php:7836
 #: eme-options.php:2192
 msgid "Booking Updated Email Subject"
 msgstr "Sujet de l'e-mail de mise à jour de la réservation"
 
-#: eme-events.php:7800
+#: eme-events.php:7837
 #: eme-options.php:2192
 msgid "The subject of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Le sujet de l'e-mail qui sera envoyé au réservataire si la réservation a été mise à jour par un administrateur."
 
-#: eme-events.php:7821
+#: eme-events.php:7858
 #: eme-options.php:2193
 msgid "Booking Updated Email Body"
 msgstr "Corps de l’e-mail de mise à jour de la réservation"
 
-#: eme-events.php:7822
+#: eme-events.php:7859
 #: eme-options.php:2193
 msgid "The body of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Le corps de l'e-mail qui sera envoyé au réservataire si la réservation a été mise à jour par un administrateur."
 
-#: eme-events.php:7850
+#: eme-events.php:7887
 #: eme-options.php:2207
 msgid "Pending Booking Reminder Email Subject"
 msgstr "Objet de l’e-mail de rappel de réservation en attente"
 
-#: eme-events.php:7851
+#: eme-events.php:7888
 #: eme-options.php:2207
 msgid "The subject of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler que sa réservation est en attente."
 
-#: eme-events.php:7872
+#: eme-events.php:7909
 #: eme-options.php:2208
 msgid "Pending Booking Reminder Email Body"
 msgstr "Corps de l’e-mail de rappel aux réservations en attente"
 
-#: eme-events.php:7873
+#: eme-events.php:7910
 #: eme-options.php:2208
 msgid "The body of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler que sa réservation est en attente."
 
-#: eme-events.php:7891
+#: eme-events.php:7928
 #: eme-options.php:2209
 msgid "Accepted Booking Reminder Email Subject"
 msgstr "Objet de l’e-mail de rappel de réservation acceptée"
 
-#: eme-events.php:7892
+#: eme-events.php:7929
 #: eme-options.php:2209
 msgid "The subject of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler sa réservation approuvée (et non en attente)."
 
-#: eme-events.php:7913
+#: eme-events.php:7950
 #: eme-options.php:2210
 msgid "Accepted Booking Reminder Email Body"
 msgstr "Corps de l’e-mail de rappel de réservation acceptée"
 
-#: eme-events.php:7914
+#: eme-events.php:7951
 #: eme-options.php:2210
 msgid "The body of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler sa réservation approuvée (et non en attente)."
 
-#: eme-events.php:7942
+#: eme-events.php:7979
 #: eme-options.php:2224
 msgid "Booking Cancelled Email Subject"
 msgstr "Objet de l’e-mail d’annulation de réservation"
 
-#: eme-events.php:7943
+#: eme-events.php:7980
 #: eme-options.php:2224
 msgid "The subject of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "L'objet de l'e-mail qui sera envoyé au réservataire lorsqu'il annule toutes ses réservations pour un évènement."
 
-#: eme-events.php:7964
+#: eme-events.php:8001
 #: eme-options.php:2225
 msgid "Booking Cancelled Email Body"
 msgstr "Corps de l’e-mail d’annulation de réservation"
 
-#: eme-events.php:7965
+#: eme-events.php:8002
 #: eme-options.php:2225
 msgid "The body of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "Le corps du courrier électronique qui sera envoyé au réservataire lorsqu'il annulera toutes ses réservations pour un événement ."
 
-#: eme-events.php:7990
+#: eme-events.php:8027
 #: eme-options.php:2226
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr "Sujet de l'e-mail d'annulation au responsable réservation"
 
-#: eme-events.php:7991
+#: eme-events.php:8028
 #: eme-options.php:2226
 msgid "The subject of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "L'objet de l'e-mail qui sera envoyé au responsable lorsqu'un réservataire annule toutes ses réservations pour un évènement."
 
-#: eme-events.php:8012
+#: eme-events.php:8049
 #: eme-options.php:2227
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr "Corps de l'e-mail d'annulation au responsable réservation"
 
-#: eme-events.php:8013
+#: eme-events.php:8050
 #: eme-options.php:2227
 msgid "The body of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "Le corps de l'e-mail qui sera envoyé au responsable lorsqu'un répondant annule toutes ses réservations pour un évènement."
 
-#: eme-events.php:8042
+#: eme-events.php:8079
 #: eme-options.php:2255
 msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations payantes, donc ces courriers ne seront pas envoyés. Allez dans les réglages d’e-mail pour l’activer si vous le souhaitez."
 
-#: eme-events.php:8046
+#: eme-events.php:8083
 #: eme-options.php:2260
 msgid "Booking Paid Email Subject"
 msgstr "Sujet de l' e-mail : Réservation payée"
 
-#: eme-events.php:8047
+#: eme-events.php:8084
 #: eme-options.php:2260
 msgid "The subject of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "L'objet du courrier électronique qui sera envoyé au réservataire lorsqu'une réservation est marquée comme payée."
 
-#: eme-events.php:8068
+#: eme-events.php:8105
 #: eme-options.php:2261
 msgid "Booking Paid Email Body"
 msgstr "Corps de l’e-mail : Réservation payée"
 
-#: eme-events.php:8069
+#: eme-events.php:8106
 #: eme-options.php:2261
 msgid "The body of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "Le corps du courrier électronique qui sera envoyé au réservataire lorsqu’une réservation est marquée comme payée."
 
-#: eme-events.php:8094
+#: eme-events.php:8131
 msgid "Contact Person Booking Paid Email Subject"
 msgstr "Objet de l'e-mail pour la personne qui a réservé"
 
-#: eme-events.php:8095
+#: eme-events.php:8132
 #: eme-options.php:2262
 msgid "The subject of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est marquée comme payée (et non via une passerelle de paiement)."
 
-#: eme-events.php:8115
+#: eme-events.php:8152
 msgid "Contact Person Booking Paid Email Body"
 msgstr "Corps de l'e-mail pour la personne qui a réservé"
 
-#: eme-events.php:8117
+#: eme-events.php:8154
 #: eme-options.php:2263
 msgid "The body of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est marquée comme payée (et non via une passerelle de paiement)."
 
-#: eme-events.php:8135
+#: eme-events.php:8172
 #: eme-options.php:2265
 msgid "Booking paid mail attachments"
 msgstr "Fichiers joints a l'e-mail de paiement de la réservation"
 
-#: eme-events.php:8156
+#: eme-events.php:8193
 #: eme-options.php:2287
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr "Ajoutez éventuellement des pièces jointes à l'e-mail lorsqu'une réservation est payée."
 
-#: eme-events.php:8183
+#: eme-events.php:8220
 #: eme-options.php:2241
 msgid "Booking Deleted Email Subject"
 msgstr "Objet de l'e-mail de réservation supprimé"
 
-#: eme-events.php:8184
+#: eme-events.php:8221
 #: eme-options.php:2241
 msgid "The subject of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "L'objet de l'e-mail qui sera envoyé au répondant si la réservation est supprimée par un administrateur."
 
-#: eme-events.php:8205
+#: eme-events.php:8242
 #: eme-options.php:2242
 msgid "Booking Deleted Email Body"
 msgstr "Corps de l' e-mail de réservation supprimé"
 
-#: eme-events.php:8206
+#: eme-events.php:8243
 #: eme-options.php:2242
 msgid "The body of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "Le corps de l'e-mail qui sera envoyé au répondant si la réservation est supprimée par un administrateur."
 
-#: eme-events.php:8233
+#: eme-events.php:8270
 msgid "Booking Form"
 msgstr "Formulaire de réservation"
 
-#: eme-events.php:8234
+#: eme-events.php:8271
 msgid "The booking form format."
 msgstr "Le format du formulaire de réservation ."
 
-#: eme-events.php:8262
+#: eme-events.php:8299
 msgid "Cancel Booking Form"
 msgstr "Annuler le formulaire de réservation"
 
-#: eme-events.php:8263
+#: eme-events.php:8300
 msgid "The cancel booking form format."
 msgstr "Le format du formulaire de réservation d'annulation ."
 
-#: eme-events.php:8289
+#: eme-events.php:8326
 msgid "Captcha settings"
 msgstr "Réglages CAPTCHA"
 
@@ -3343,175 +3343,175 @@ msgstr "Utiliser Cloudflare Turnstile pour les formulaires ?"
 msgid "Use EME captcha for forms?"
 msgstr "Utiliser EME captcha pour les formulaires ?"
 
-#: eme-events.php:8299
+#: eme-events.php:8336
 #: eme-members.php:1978
 #: eme-options.php:1471
 msgid "Only use captcha for logged out users?"
 msgstr "Utiliser captcha uniquement pour les utilisateurs déconnectés ?"
 
-#: eme-events.php:8300
+#: eme-events.php:8337
 #: eme-members.php:1980
 #: eme-options.php:1471
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr "Si cette option est cochée, le captcha ne sera utilisé que pour les utilisateurs déconnectés."
 
-#: eme-events.php:8394
+#: eme-events.php:8431
 msgid "Event description"
 msgstr "Description de l’évènement"
 
-#: eme-events.php:8396
+#: eme-events.php:8433
 msgid "The event description. This is also used in html meta tags and google tags to show the event info."
 msgstr "La description de l’évènement. Elle est également utilisée dans les métabalises HTML et les balises Google pour afficher les informations sur l’évènement."
 
-#: eme-events.php:8419
-#: eme-events.php:8423
-#: eme-events.php:8427
+#: eme-events.php:8456
+#: eme-events.php:8460
+#: eme-events.php:8464
 msgid "Event image"
 msgstr "Image de l'évènement"
 
-#: eme-events.php:8437
+#: eme-events.php:8474
 #: eme-locations.php:704
 msgid "Set a featured image"
 msgstr "Définir une image mise en avant"
 
-#: eme-events.php:8438
+#: eme-events.php:8475
 #: eme-locations.php:705
 msgid "Unset featured image"
 msgstr "Image mise en avant non définie"
 
-#: eme-events.php:8464
+#: eme-events.php:8501
 msgid "Here custom fields of type 'events' are shown."
 msgstr "Ici, les champs personnalisés de type « évènements » sont affichés."
 
-#: eme-events.php:8465
+#: eme-events.php:8502
 msgid "The difference with event attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom."
 msgstr "La différence avec les attributs d'évènement est que les attributs doivent d'abord être définis dans votre format et ne peuvent être que du texte ; ici, vous pouvez d'abord créer des champs personnalisés de tout type permettant davantage de liberté."
 
-#: eme-events.php:8466
+#: eme-events.php:8503
 msgid "If a custom field with name 'performer' exists, it's value here will be used for the google 'performer' header when showing the event in google search results."
 msgstr "Si un champ personnalisé avec le nom « performer » existe, sa valeur sera utilisée pour l’en-tête « performer » de Google lors de l’affichage de l’évènement dans les résultats de recherche de Google."
 
-#: eme-events.php:8518
+#: eme-events.php:8555
 #: eme-locations.php:809
 #: eme-members.php:2817
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr "Les champs personnalisés de type 'caché' sont inutiles ici et ne seront bien sûr pas affichés."
 
-#: eme-events.php:8534
-#: eme-events.php:9783
+#: eme-events.php:8571
+#: eme-events.php:9820
 #: eme-locations.php:723
 msgid "External URL"
 msgstr "URL externe"
 
-#: eme-events.php:8538
+#: eme-events.php:8575
 msgid "If this is filled in, the single event URL will point to this url instead of the standard event page."
 msgstr "Si ceci est rempli, l'URL de l'événement unique  pointera vers cette url au lieu de la page de l'événement standard."
 
-#: eme-events.php:8547
+#: eme-events.php:8584
 msgid "Enable bookings for this event"
 msgstr "Activer les réservations pour cet événement"
 
-#: eme-events.php:8559
+#: eme-events.php:8596
 msgid "If no payment method is selected, the \"Booking Recorded Message\" (defined in the RSVP Form format settings) will be shown. Otherwise the \"Booking Recorded Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr "Si aucun mode de paiement n’est sélectionné, le « Message de réservation enregistrée » (défini dans les réglages du formulaire RSVP) s’affiche. Sinon, le « Message de réservation enregistrée » s’affiche et, après quelques secondes l’utilisateur/utilisatrice est redirigé vers la page de paiement (voir les réglages génériques d’EME sur le délai de redirection et d’autres réglages de paiement)."
 
-#: eme-events.php:8567
+#: eme-events.php:8604
 #: eme-members.php:2188
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr "Aucune méthode de paiement n’est encore configurée. Allez dans les réglages de paiement EME et configurez-en quelques-uns."
 
-#: eme-events.php:8575
+#: eme-events.php:8612
 msgid "Skip payment methods after booking"
 msgstr "Passer les modes de paiement après la réservation"
 
-#: eme-events.php:8577
+#: eme-events.php:8614
 msgid "If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message."
 msgstr "Si vous souhaitez passer la possibilité de payer immédiatement après la réservation, sélectionnez cette option. Cela peut être utile si vous voulez par exemple approuver des réservations non payées et uniquement ensuite leur envoyer le lien de paiement en utilisant #_PAYMENT_URL dans l’e-mail réservé."
 
-#: eme-events.php:8602
+#: eme-events.php:8639
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr "L’URL de présence (générée par #_ATTENDANCE_URL) est valide à partir de "
 
-#: eme-events.php:8604
+#: eme-events.php:8641
 msgid "hours before the event starts until "
 msgstr "heures avant le début de l'événement jusqu'à "
 
-#: eme-events.php:8606
+#: eme-events.php:8643
 msgid "hours after the event ends."
 msgstr "heures après la fin de l'événement."
 
-#: eme-events.php:8607
+#: eme-events.php:8644
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats."
 msgstr "Lors de l’analyse de l'URL générée par #_QRCODE ou #_ATTENDANCE_URL, vous pouvez également décider de l’utiliser comme ticket d'entrée. Cette option permet alors de définir à partir de quel point les personnes sont autorisées à entrer. EME comptera également le nombre de fois que le code est scanné par un utilisateur autorisé et émettra un avertissement si ce nombre est supérieur au nombre de places réservées."
 
-#: eme-events.php:8611
+#: eme-events.php:8648
 msgid "Extra attendance info for not authorized users"
 msgstr "Informations supplémentaires sur les présences pour les utilisateurs non autorisés"
 
-#: eme-events.php:8612
+#: eme-events.php:8649
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not authorized user, only info concerning the payment status is shown. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "Lorsque l’URL générée par #_QRCODE ou #_ATTENDANCE_URL est scannée par un utilisateur non autorisé, seules les informations concernant l’état du paiement sont affichées. Si vous souhaitez afficher des informations supplémentaires (comme le nom de l’évènement ou des informations de réservation), vous pouvez les définir dans ce modèle. Tous les espaces réservés « événement » et RSVP sont autorisés."
 
-#: eme-events.php:8626
+#: eme-events.php:8663
 msgid "Extra attendance info for authorized users"
 msgstr "Informations supplémentaires sur les présences pour les utilisateurs autorisés"
 
-#: eme-events.php:8627
+#: eme-events.php:8664
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a authorized user, only info concerning the payment status is shown, next to attendance count info if configured to do so. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "Lorsque l’URL générée par #_QRCODE ou #_ATTENDANCE_URL est scannée par un utilisateur autorisé, seules les informations relatives à l’état du paiement sont affichées, à côté des informations relatives au nombre de participants si elles sont configurées pour le faire. Si vous souhaitez afficher des informations supplémentaires (comme le nom de l’évènement ou des informations de réservation), vous pouvez les définir dans ce modèle. Tous les espaces réservés « évènements » et RSVP sont autorisés."
 
-#: eme-events.php:8680
+#: eme-events.php:8717
 msgid "Require booking approval"
 msgstr "Exiger l'approbation de la réservation"
 
-#: eme-events.php:8675
+#: eme-events.php:8712
 msgid "Require user confirmation after booking"
 msgstr "Exiger la confirmation de l’utilisateur/utilisatrice après la réservation"
 
-#: eme-events.php:8676
+#: eme-events.php:8713
 msgid "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker."
 msgstr "Si l’option est active, n’oubliez pas d’utiliser #_BOOKING_CONFIRM_URL dans l’e-mail envoyé à la personne ayant réservé."
 
-#: eme-events.php:8691
+#: eme-events.php:8728
 msgid "Auto-approve booking upon payment"
 msgstr "Approuver automatiquement la réservation lors du paiement"
 
-#: eme-events.php:8693
+#: eme-events.php:8730
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr "Considérez les réservations en attente comme des places disponibles pour les nouvelles réservations"
 
-#: eme-events.php:8693
+#: eme-events.php:8730
 msgid "In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments."
 msgstr "Dans le cas où les paiements en ligne sont possibles, les réservations en attente de moins de 5 minutes seront également considérées comme occupées, afin de pouvoir autoriser les personnes à terminer les paiements en ligne."
 
-#: eme-events.php:8696
+#: eme-events.php:8733
 #: eme-options.php:1822
 msgid "Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Définissez le nombre de jours avant la date de début de l’évènement pour l’envoi des e-mails de rappel pour les réservations en attente. Si vous souhaitez envoyer plusieurs rappels, séparez les jours par des virgules. Laissez vide pour n’envoyer aucun e-mails de rappel."
 
-#: eme-events.php:8700
+#: eme-events.php:8737
 #: eme-options.php:1823
 msgid "Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Définissez le nombre de jours avant l’envoi des e-mails de rappel pour les réservations approuvées (à compter de la date de début de l’évènement). Si vous souhaitez envoyer plusieurs rappels, séparez les jours par des virgules. Laissez vide pour ne pas envoyer d’e-mails de rappel."
 
-#: eme-events.php:8703
+#: eme-events.php:8740
 msgid "Create WP user after succesful booking"
 msgstr "Créer un utilisateur WP après une réservation réussie"
 
-#: eme-events.php:8704
+#: eme-events.php:8741
 msgid "This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user."
 msgstr "Cela créera un utilisateur WP une fois la réservation terminée, comme si la personne s'était inscrite dans WP elle-même. Cela ne créera un utilisateur que si l'utilisateur n'est pas déjà connecté et que l'e-mail n'a pas encore été pris par un autre utilisateur de WP."
 
-#: eme-events.php:8707
+#: eme-events.php:8744
 msgid "Allow only 1 booking per unique email address"
 msgstr "Autoriser  uniquement une réservation par adresse email unique"
 
-#: eme-events.php:8710
+#: eme-events.php:8747
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "Autoriser uniquement une réservation par personne (combo e-mail/nom de famille/prénom)"
 
-#: eme-events.php:8714
-#: eme-events.php:9924
+#: eme-events.php:8751
+#: eme-events.php:9961
 #: eme-options.php:38
 #: eme-people.php:1079
 #: eme-people.php:1388
@@ -3519,26 +3519,26 @@ msgstr "Autoriser uniquement une réservation par personne (combo e-mail/nom de 
 msgid "Seats"
 msgstr "Places"
 
-#: eme-events.php:8715
+#: eme-events.php:8752
 #: eme-options.php:1826
 msgid "Enter 0 for no limit"
 msgstr "Entrez 0 pour aucune limite"
 
-#: eme-events.php:8716
+#: eme-events.php:8753
 msgid "The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by '||'"
 msgstr "Le nombre maximum de places disponibles pour cet évènement. Saisissez 0 pour aucune limite. Pour les évènements à plusieurs places, séparez les valeurs par « || »."
 
-#: eme-events.php:8721
+#: eme-events.php:8758
 #: eme-people.php:1334
 msgid "Price: "
 msgstr "Prix: "
 
-#: eme-events.php:8722
-#: eme-events.php:8737
+#: eme-events.php:8759
+#: eme-events.php:8774
 msgid "For multiprice events, separate the values by '||'"
 msgstr "Pour les évènements multiprix, séparez les valeurs par '||'"
 
-#: eme-events.php:8738
+#: eme-events.php:8775
 #: eme-members.php:1992
 #: eme-members.php:1998
 #: eme-options.php:2558
@@ -3546,491 +3546,491 @@ msgstr "Pour les évènements multiprix, séparez les valeurs par '||'"
 msgid "Use the point as decimal separator"
 msgstr "Utiliser le point comme séparateur décimal"
 
-#: eme-events.php:8742
+#: eme-events.php:8779
 msgid "Price description"
 msgstr "Description du prix"
 
-#: eme-events.php:8743
+#: eme-events.php:8780
 msgid "Add an optional description for the price (which can be used in templates)."
 msgstr "Ajoutez une description facultative du prix (pouvant être utilisée dans les modèles)."
 
-#: eme-events.php:8746
+#: eme-events.php:8783
 msgid "Price Categories descriptions"
 msgstr "Description des catégories de prix"
 
-#: eme-events.php:8747
+#: eme-events.php:8784
 msgid "Add an optional description for each price category (one price description per line)."
 msgstr "Ajoutez une description facultative pour chaque catégorie de prix (une description de prix par ligne)."
 
-#: eme-events.php:8750
+#: eme-events.php:8787
 msgid "VAT percentage: "
 msgstr "Pourcentage de TVA : "
 
-#: eme-events.php:8751
+#: eme-events.php:8788
 #: eme-members.php:2006
 msgid "VAT percentage"
 msgstr "Pourcentage de TVA"
 
-#: eme-events.php:8752
+#: eme-events.php:8789
 msgid "The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr "Le prix que vous indiquez pour les évènements est TVA comprise, des espaces réservés spéciaux sont prévus pour indiquer le prix sans TVA."
 
-#: eme-events.php:8756
+#: eme-events.php:8793
 #: eme-members.php:2012
 msgid "Discount to apply"
 msgstr "Remise à appliquer"
 
-#: eme-events.php:8757
+#: eme-events.php:8794
 #: eme-members.php:2013
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr "Le nom de la remise que vous souhaitez appliquer (sera remplacée par la remise de groupe si elle existe)."
 
-#: eme-events.php:8760
+#: eme-events.php:8797
 #: eme-members.php:2016
 msgid "Discount group to apply"
 msgstr "Remise de groupe à appliquer"
 
-#: eme-events.php:8761
+#: eme-events.php:8798
 #: eme-members.php:2017
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "Le nom de remise de groupe à appliquer (remplace la remise)."
 
-#: eme-events.php:8764
+#: eme-events.php:8801
 msgid "Waitinglist seats"
 msgstr "Sièges en liste d’attente"
 
-#: eme-events.php:8765
+#: eme-events.php:8802
 msgid "The number of seats considered to be a waiting list."
 msgstr "Le nombre de sièges considérés comme une liste d’attente."
 
-#: eme-events.php:8768
+#: eme-events.php:8805
 #: eme-options.php:1891
 msgid "Check waitinglist when seats become available"
 msgstr "Contrôler la liste d’attente lorsque des places se libèrent"
 
-#: eme-events.php:8770
+#: eme-events.php:8807
 #: eme-options.php:1891
 msgid "Automatically take a booking from the waiting list when seats become available again"
 msgstr "Transférer automatiquement une réservation de la liste d’attente lorsque des places se libèrent"
 
-#: eme-events.php:8773
+#: eme-events.php:8810
 #: eme-options.php:1828
 msgid "Max number of seats to book"
 msgstr "Nombre maximum de places à réserver"
 
-#: eme-events.php:8774
+#: eme-events.php:8811
 #: eme-options.php:1828
 msgid "The maximum number of seats a person can book in one go."
 msgstr "Le nombre maximum de places qu'une personne peut réserver en une fois."
 
-#: eme-events.php:8774
-#: eme-events.php:8778
+#: eme-events.php:8811
+#: eme-events.php:8815
 msgid "(is multi-compatible)"
 msgstr "(est multi-compatible)"
 
-#: eme-events.php:8774
-#: eme-events.php:8778
+#: eme-events.php:8811
+#: eme-events.php:8815
 msgid "If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden."
 msgstr "Si le nombre minimal et maximal de sièges à réserver est identique, le champ permettant de choisir le nombre de sièges à réserver sera masqué."
 
-#: eme-events.php:8777
+#: eme-events.php:8814
 #: eme-options.php:1827
 msgid "Min number of seats to book"
 msgstr "Nombre de places minimum à réserver"
 
-#: eme-events.php:8778
+#: eme-events.php:8815
 #: eme-options.php:1827
 msgid "The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list)."
 msgstr "Le nombre minimal de places qu'une personne peut réserver en une seule fois (il peut être 0 pour juste une liste de participants, par exemple)."
 
-#: eme-events.php:8781
+#: eme-events.php:8818
 msgid "Attendance-only event?"
 msgstr "Évènement uniquement sur réservation ?"
 
-#: eme-events.php:8782
+#: eme-events.php:8819
 msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "Uniquement en présence (0 ou 1 place) pour cet évènement"
 
-#: eme-events.php:8783
+#: eme-events.php:8820
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox."
 msgstr "Si cette option est activée et que le paramètre « Nombre minimal de sièges à réserver » est défini sur 0, le champ permettant de choisir le nombre de sièges à réserver sera transformé en case à cocher."
 
-#: eme-events.php:8784
+#: eme-events.php:8821
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1."
 msgstr "Si cette option est activée et que le paramètre « Nombre minimal de sièges à réserver » a une valeur supérieure à 0, le champ permettant de choisir le nombre de sièges à réserver sera masqué et le nombre de sièges réservés sera forcé à 1."
 
-#: eme-events.php:8788
+#: eme-events.php:8825
 msgid "Require WP membership for booking"
 msgstr "Exiger un abonnement WP pour la réservation"
 
-#: eme-events.php:8790
+#: eme-events.php:8827
 msgid "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only."
 msgstr "Ceci affichera uniquement le formulaire de réservation pour les utilisateurs connectés et pré-remplira le formulaire avec les données personnelles de leur profil WordPress. Ces données ne peuvent pas être modifiées dans le formulaire, aussi si vous ne le souhaitez pas, vous pouvez désactiver cette option et utiliser #_ADDBOOKINGFORM_IF_LOGGED_IN pour afficher le formulaire uniquement aux utilisateurs connectés."
 
-#: eme-events.php:8795
+#: eme-events.php:8832
 msgid "Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event."
 msgstr "Exiger que l'utilisateur connecté fasse partie de l'un des groupes EME sélectionnés afin de pouvoir réserver pour cet événement."
 
-#: eme-events.php:8800
+#: eme-events.php:8837
 msgid "Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event."
 msgstr "L'utilisateur connecté doit être membre de l'une des associations EME sélectionnées pour pouvoir effectuer une réservation pour cet événement."
 
-#: eme-events.php:8804
+#: eme-events.php:8841
 #: eme-members.php:2169
 #: eme-tasks.php:842
 msgid "Group to add people to"
 msgstr "Groupe pour ajouter des personnes à"
 
-#: eme-events.php:8805
+#: eme-events.php:8842
 #: eme-members.php:2170
 #: eme-tasks.php:843
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Le groupe auquel vous voulez que les personnes deviennent automatiquement membres quand elles s’abonnent."
 
-#: eme-events.php:8808
+#: eme-events.php:8845
 msgid "RSVP Password"
 msgstr "Mot de passe RSVP"
 
-#: eme-events.php:8809
+#: eme-events.php:8846
 msgid "A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too."
 msgstr "Un mot de passe est nécessaire pour réussir à soumettre RSVP. S’il est utilisé, #_PASSWORD est également nécessaire dans le formulaire RSVP."
 
-#: eme-events.php:8812
+#: eme-events.php:8849
 msgid "Invite-only event?"
 msgstr "Évènement sur invitation uniquement ?"
 
-#: eme-events.php:8813
+#: eme-events.php:8850
 msgid "Require an invitation"
 msgstr "Nécessite une invitation"
 
-#: eme-events.php:8814
+#: eme-events.php:8851
 msgid "Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL."
 msgstr "Autoriser uniquement les réservations effectuées si une personne visite l’évènement via l’URL d’invitation générée par #_INVITEURL."
 
-#: eme-events.php:8819
+#: eme-events.php:8856
 msgid "Ticket PDF template"
 msgstr "Modèle PDF de ticket"
 
-#: eme-events.php:8821
+#: eme-events.php:8858
 msgid "This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included)."
 msgstr "Ce modèle facultatif est utilisé pour envoyer un fichier joint au format PDF par courrier électronique lorsque la réservation est approuvée ou payée (voir le paramétrage suivant pour configurer le moment où le fichier joint doit être inclus)."
 
-#: eme-events.php:8822
+#: eme-events.php:8859
 msgid "No template shown in the list? Then go in the section Templates and create a PDF template."
 msgstr "Aucun modèle affiché dans la liste ? Alors, allez dans la section Modèles et créez un modèle PDF."
 
-#: eme-events.php:8826
+#: eme-events.php:8863
 msgid "Ticket mail preference"
 msgstr "Préférence billet par Email"
 
-#: eme-events.php:8827
+#: eme-events.php:8864
 msgid "At booking time"
 msgstr "Au moment de la réservation"
 
-#: eme-events.php:8827
+#: eme-events.php:8864
 msgid "Upon approval"
 msgstr "Sur approbation"
 
-#: eme-events.php:8827
+#: eme-events.php:8864
 msgid "Upon payment"
 msgstr "Sur paiement"
 
-#: eme-events.php:8827
+#: eme-events.php:8864
 msgid "All of the above"
 msgstr "Tout ce qui précède"
 
-#: eme-events.php:8828
+#: eme-events.php:8865
 msgid "Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for."
 msgstr "Configure dans quel mail vous voulez que le fichier PDF joint soit inclus : soit quand la réservation est faite, soit quand elle est approuvée, soit quand elle est payée."
 
-#: eme-events.php:8834
+#: eme-events.php:8871
 msgid "Allow RSVP from "
 msgstr "Autoriser RSVP à partir de "
 
-#: eme-events.php:8838
-#: eme-events.php:8850
+#: eme-events.php:8875
+#: eme-events.php:8887
 #: eme-options.php:1840
 #: eme-options.php:1856
 msgid "hours"
 msgstr "heures"
 
-#: eme-events.php:8840
-#: eme-events.php:8852
+#: eme-events.php:8877
+#: eme-events.php:8889
 #: eme-options.php:1846
 #: eme-options.php:1862
 msgid "before the event "
 msgstr "avant l'évènement "
 
-#: eme-events.php:8840
-#: eme-events.php:8852
+#: eme-events.php:8877
+#: eme-events.php:8889
 #: eme-options.php:1843
 #: eme-options.php:1859
 msgid "starts"
 msgstr "départs"
 
-#: eme-events.php:8840
-#: eme-events.php:8852
+#: eme-events.php:8877
+#: eme-events.php:8889
 #: eme-options.php:1844
 #: eme-options.php:1860
 msgid "ends"
 msgstr "la fin"
 
-#: eme-events.php:8843
+#: eme-events.php:8880
 msgid "(Leave empty or 0 to disable this limit)"
 msgstr "(Laisser vide ou 0 pour désactiver cette limite)"
 
-#: eme-events.php:8846
+#: eme-events.php:8883
 msgid "Allow RSVP until "
 msgstr "Autoriser RSVP jusqu'à "
 
-#: eme-events.php:8857
+#: eme-events.php:8894
 #: eme-options.php:1869
 msgid "RSVP cancel cutoff before event starts"
 msgstr "Limite d’annulation avant le début de l’évènement"
 
-#: eme-events.php:8859
+#: eme-events.php:8896
 #: eme-options.php:1869
 msgid "Allow RSVP cancellation until this many days before the event starts."
 msgstr "Autoriser l'annulation de réservation RSVP jusqu'à ce nombre de jours avant le début de l'évènement."
 
-#: eme-events.php:8861
+#: eme-events.php:8898
 #: eme-options.php:1870
 msgid "RSVP cancel cutoff booking age"
 msgstr "Limite d’annulation après la date de réservation"
 
-#: eme-events.php:8863
+#: eme-events.php:8900
 #: eme-options.php:1870
 msgid "Allow RSVP cancellation until this many days after the booking has been made."
 msgstr "Autoriser l'annulation des réservations jusqu'à combien de jours après que la réservation ait été faite."
 
-#: eme-events.php:9499
+#: eme-events.php:9536
 msgid "Select the image to be used as person image"
 msgstr "Sélectionnez l’image à utiliser comme image de personne"
 
-#: eme-events.php:9500
+#: eme-events.php:9537
 msgid "Set image"
 msgstr "Définir une image"
 
-#: eme-events.php:9501
+#: eme-events.php:9538
 #: eme-people.php:2713
 #: eme-people.php:2753
 msgid "Choose image"
 msgstr "Choisir l’image"
 
-#: eme-events.php:9502
+#: eme-events.php:9539
 msgid "Replace image"
 msgstr "Remplacer l’image"
 
-#: eme-events.php:9507
-#: eme-events.php:9616
-#: eme-events.php:9787
+#: eme-events.php:9544
+#: eme-events.php:9653
+#: eme-events.php:9824
 msgid "Are you sure you want to delete the selected records?"
 msgstr "Êtes-vous sûr de vouloir supprimer les enregistrements sélectionnés ?"
 
-#: eme-events.php:9508
+#: eme-events.php:9545
 msgid "Are you sure you want to delete this file?"
 msgstr "Confirmez-vous vouloir supprimer ce fichier ?"
 
-#: eme-events.php:9509
+#: eme-events.php:9546
 msgid "Select one or more persons"
 msgstr "Sélectionnez une ou plusieurs personnes"
 
-#: eme-events.php:9510
+#: eme-events.php:9547
 msgid "Select one or more members"
 msgstr "Sélectionnez un ou plusieurs membres"
 
-#: eme-events.php:9511
+#: eme-events.php:9548
 msgid "Select one or more groups"
 msgstr "Sélectionnez un ou plusieurs groupes"
 
-#: eme-events.php:9512
+#: eme-events.php:9549
 msgid "Any group"
 msgstr "N’importe quel groupe"
 
-#: eme-events.php:9513
+#: eme-events.php:9550
 msgid "Filter on membership"
 msgstr "Filtrer sur l'adhésion"
 
-#: eme-events.php:9514
+#: eme-events.php:9551
 msgid "Filter on member status"
 msgstr "Filtrer sur le statut du membre"
 
-#: eme-events.php:9516
+#: eme-events.php:9553
 msgid "Select a discount"
 msgstr "Sélectionnez une réduction"
 
-#: eme-events.php:9517
+#: eme-events.php:9554
 msgid "Select a discountgroup"
 msgstr "Sélectionnez un groupe de réduction"
 
-#: eme-events.php:9913
+#: eme-events.php:9950
 msgid "No matching event found"
 msgstr "Aucun évènement correspondant trouvé"
 
-#: eme-events.php:9592
+#: eme-events.php:9629
 msgid "Recurrences"
 msgstr "Récurrences"
 
-#: eme-events.php:9594
-#: eme-events.php:9925
+#: eme-events.php:9631
+#: eme-events.php:9962
 msgid "Event price"
 msgstr "Prix de l’évènement"
 
-#: eme-events.php:9601
-#: eme-events.php:9684
-#: eme-events.php:9695
-#: eme-events.php:9773
+#: eme-events.php:9638
+#: eme-events.php:9721
+#: eme-events.php:9732
+#: eme-events.php:9810
 #: eme-formfields.php:5116
 msgid "Copy"
 msgstr "Copier"
 
-#: eme-events.php:9602
-#: eme-events.php:9638
-#: eme-events.php:9657
-#: eme-events.php:9680
-#: eme-events.php:9788
-#: eme-events.php:9828
-#: eme-events.php:9880
-#: eme-events.php:9939
+#: eme-events.php:9639
+#: eme-events.php:9675
+#: eme-events.php:9694
+#: eme-events.php:9717
+#: eme-events.php:9825
+#: eme-events.php:9865
+#: eme-events.php:9917
+#: eme-events.php:9976
 msgid "CSV"
 msgstr "CSV"
 
-#: eme-events.php:9603
-#: eme-events.php:9639
-#: eme-events.php:9658
-#: eme-events.php:9681
-#: eme-events.php:9789
-#: eme-events.php:9829
-#: eme-events.php:9881
-#: eme-events.php:9940
+#: eme-events.php:9640
+#: eme-events.php:9676
+#: eme-events.php:9695
+#: eme-events.php:9718
+#: eme-events.php:9826
+#: eme-events.php:9866
+#: eme-events.php:9918
+#: eme-events.php:9977
 msgid "Print"
 msgstr "Impression"
 
-#: eme-events.php:9605
+#: eme-events.php:9642
 msgid "Recurrence info"
 msgstr "Informations de récurrence"
 
-#: eme-events.php:9606
+#: eme-events.php:9643
 msgid "Single event duration"
 msgstr "Durée d’un évènement unique"
 
-#: eme-events.php:9607
+#: eme-events.php:9644
 #: eme-formfields.php:579
 msgid "Date"
 msgstr "Date"
 
-#: eme-events.php:9595
-#: eme-events.php:9920
+#: eme-events.php:9632
+#: eme-events.php:9957
 msgid "Date and time"
 msgstr "Date et heure"
 
-#: eme-events.php:9609
-#: eme-events.php:10023
+#: eme-events.php:9646
+#: eme-events.php:10060
 msgid "Selected dates:"
 msgstr "Dates sélectionnées :"
 
-#: eme-events.php:9610
-#: eme-events.php:9833
+#: eme-events.php:9647
+#: eme-events.php:9870
 msgid "Created on"
 msgstr "Créé le"
 
-#: eme-events.php:9611
-#: eme-events.php:9834
+#: eme-events.php:9648
+#: eme-events.php:9871
 msgid "Modified on"
 msgstr "Modifié le"
 
-#: eme-events.php:9612
-#: eme-events.php:9659
-#: eme-events.php:9678
-#: eme-events.php:9703
-#: eme-events.php:9733
-#: eme-events.php:9757
-#: eme-events.php:9785
-#: eme-events.php:9821
-#: eme-events.php:9877
-#: eme-events.php:9945
-#: eme-events.php:9962
-#: eme-events.php:9976
-#: eme-events.php:9989
+#: eme-events.php:9649
+#: eme-events.php:9696
+#: eme-events.php:9715
+#: eme-events.php:9740
+#: eme-events.php:9770
+#: eme-events.php:9794
+#: eme-events.php:9822
+#: eme-events.php:9858
+#: eme-events.php:9914
+#: eme-events.php:9982
+#: eme-events.php:9999
+#: eme-events.php:10013
+#: eme-events.php:10026
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: eme-events.php:9614
-#: eme-events.php:9790
+#: eme-events.php:9651
+#: eme-events.php:9827
 msgid "Select the image to be used as featured image"
 msgstr "Sélectionnez l'image à utiliser comme image mise en avant"
 
-#: eme-events.php:9615
-#: eme-events.php:9791
+#: eme-events.php:9652
+#: eme-events.php:9828
 msgid "Set featured image"
 msgstr "Définir l'image mise en avant"
 
-#: eme-events.php:9683
+#: eme-events.php:9720
 msgid "Press the delete button to remove"
 msgstr "Appuyez sur le bouton supprimer pour supprimer"
 
-#: eme-events.php:9617
+#: eme-events.php:9654
 msgid "Since the event is repeated, you must specify an end date"
 msgstr "Comme l'événement est récurrant, vous devez spécifier une date de fin pour cet événement"
 
-#: eme-events.php:9618
+#: eme-events.php:9655
 msgid "In a recurrence, start and end date can't be identical"
 msgstr "Dans une répétition, les dates de début et de fin ne peuvent pas être identiques"
 
-#: eme-events.php:9620
+#: eme-events.php:9657
 #: eme-filters.php:451
 #: eme-options.php:1816
 msgid "Event author"
 msgstr "Auteur de l'évènement"
 
-#: eme-events.php:9634
+#: eme-events.php:9671
 msgid "Recorded on"
 msgstr "Enregistré le"
 
-#: eme-events.php:9635
-#: eme-events.php:9656
+#: eme-events.php:9672
+#: eme-events.php:9693
 msgid "Person"
 msgstr "Personne"
 
-#: eme-events.php:9636
+#: eme-events.php:9673
 msgid "Event/Membership name"
 msgstr "Nom de l'événement/de l'adhésion"
 
-#: eme-events.php:9637
+#: eme-events.php:9674
 msgid "Attendance reports"
 msgstr "Rapports de présence"
 
-#: eme-events.php:9640
+#: eme-events.php:9677
 msgid "Are you sure to delete this record?"
 msgstr "Êtes-vous sûr de supprimer cet enregistrement ?"
 
-#: eme-events.php:9641
-#: eme-events.php:9799
-#: eme-events.php:9853
-#: eme-events.php:10002
+#: eme-events.php:9678
+#: eme-events.php:9836
+#: eme-events.php:9890
+#: eme-events.php:10039
 msgid "No matching person found"
 msgstr "Aucune personne correspondante trouvée"
 
-#: eme-events.php:9650
+#: eme-events.php:9687
 #: events-manager.php:365
 msgid "Task signups"
 msgstr "Inscription aux tâches"
 
-#: eme-events.php:9651
+#: eme-events.php:9688
 #: eme-tasks.php:440
 msgid "Task name"
 msgstr "Nom de la tâche"
 
-#: eme-events.php:9652
+#: eme-events.php:9689
 msgid "Task start date"
 msgstr "Date de début de la tâche"
 
-#: eme-events.php:9653
+#: eme-events.php:9690
 msgid "Task end date"
 msgstr "Date de fin de la tâche"
 
-#: eme-events.php:9654
-#: eme-events.php:9941
+#: eme-events.php:9691
+#: eme-events.php:9978
 #: eme-formfields.php:1214
 #: eme-formfields.php:2031
 #: eme-formfields.php:3220
@@ -4041,28 +4041,28 @@ msgstr "Date de fin de la tâche"
 msgid "Comment"
 msgstr "Commentaire"
 
-#: eme-events.php:9661
-#: eme-events.php:9682
-#: eme-events.php:9705
-#: eme-events.php:9735
-#: eme-events.php:9759
-#: eme-events.php:9823
-#: eme-events.php:9879
-#: eme-events.php:9947
-#: eme-events.php:9964
-#: eme-events.php:9978
-#: eme-events.php:9991
+#: eme-events.php:9698
+#: eme-events.php:9719
+#: eme-events.php:9742
+#: eme-events.php:9772
+#: eme-events.php:9796
+#: eme-events.php:9860
+#: eme-events.php:9916
+#: eme-events.php:9984
+#: eme-events.php:10001
+#: eme-events.php:10015
+#: eme-events.php:10028
 msgid "Are you sure to delete the selected records?"
 msgstr "Confirmez-vous vouloir supprimer les enregistrements sélectionnés ?"
 
-#: eme-events.php:9673
+#: eme-events.php:9710
 #: eme-formfields.php:4914
 #: eme-options.php:1571
 #: events-manager.php:358
 msgid "Templates"
 msgstr "Modèles"
 
-#: eme-events.php:9697
+#: eme-events.php:9734
 #: eme-formfields.php:373
 #: eme-options.php:2589
 #: eme-options.php:2619
@@ -4082,94 +4082,94 @@ msgstr "Modèles"
 msgid "Extra charge"
 msgstr "Supplément"
 
-#: eme-events.php:9698
+#: eme-events.php:9735
 msgid "Searchable"
 msgstr "Consultable"
 
-#: eme-events.php:9699
+#: eme-events.php:9736
 msgid "Purpose"
 msgstr "Objectif"
 
-#: eme-events.php:9700
+#: eme-events.php:9737
 msgid "Used in replies"
 msgstr "Utilisé dans les réponses"
 
-#: eme-events.php:9701
+#: eme-events.php:9738
 msgid "Required"
 msgstr "Obligatoire"
 
-#: eme-events.php:9713
+#: eme-events.php:9750
 #: eme-options.php:1581
 #: events-manager.php:360
 msgid "Discounts"
 msgstr "Remises"
 
-#: eme-events.php:9718
+#: eme-events.php:9755
 msgid "Coupon"
 msgstr "Bon de reduction"
 
-#: eme-events.php:9719
+#: eme-events.php:9756
 msgid "Case sensitive"
 msgstr "Sensible à la casse"
 
-#: eme-events.php:9720
+#: eme-events.php:9757
 msgid "Track discount usage per booked seat"
 msgstr "Suivre l’utilisation des remises par siège réservé"
 
-#: eme-events.php:9723
+#: eme-events.php:9760
 msgid "Max Usage"
 msgstr "Usage maximum"
 
-#: eme-events.php:9724
+#: eme-events.php:9761
 msgid "Usage"
 msgstr "Usage"
 
-#: eme-events.php:9727
+#: eme-events.php:9764
 msgid "Max Discounts"
 msgstr "Remises maximales"
 
-#: eme-events.php:9743
+#: eme-events.php:9780
 msgid "Countries"
 msgstr "Pays"
 
-#: eme-events.php:9746
+#: eme-events.php:9783
 msgid "Country ID"
 msgstr "ID pays"
 
-#: eme-events.php:9747
+#: eme-events.php:9784
 msgid "States"
 msgstr "États"
 
-#: eme-events.php:9752
+#: eme-events.php:9789
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Aucun pays associé à cet état, il n'apparaîtra pas dans les listes déroulantes. Veuillez éditer cet état et corriger les informations sur le pays."
 
 #: eme-actions.php:410
-#: eme-events.php:9589
-#: eme-events.php:9767
+#: eme-events.php:9626
+#: eme-events.php:9804
 msgid "No matching location found"
 msgstr "Aucun emplacement correspondant trouvé"
 
-#: eme-events.php:9768
+#: eme-events.php:9805
 #: eme-options.php:1293
 #: eme-options.php:1538
 #: events-manager.php:352
 msgid "Locations"
 msgstr "Lieux"
 
-#: eme-events.php:9771
+#: eme-events.php:9808
 #: eme-locations.php:379
 msgid "Insert New Location"
 msgstr "Insérer un nouvel emplacement"
 
-#: eme-events.php:9772
+#: eme-events.php:9809
 #: eme-locations.php:381
 msgid "Edit Location '%s'"
 msgstr "Modifier l’emplacement '%s'."
 
-#: eme-events.php:9777
-#: eme-events.php:9811
-#: eme-events.php:9873
+#: eme-events.php:9814
+#: eme-events.php:9848
+#: eme-events.php:9910
 #: eme-formfields.php:1275
 #: eme-formfields.php:1872
 #: eme-formfields.php:2954
@@ -4184,9 +4184,9 @@ msgstr "Modifier l’emplacement '%s'."
 msgid "City"
 msgstr "Ville"
 
-#: eme-events.php:9778
-#: eme-events.php:9812
-#: eme-events.php:9874
+#: eme-events.php:9815
+#: eme-events.php:9849
+#: eme-events.php:9911
 #: eme-formfields.php:1285
 #: eme-formfields.php:1894
 #: eme-formfields.php:2966
@@ -4201,46 +4201,46 @@ msgstr "Ville"
 msgid "Postal code"
 msgstr "Code postal"
 
-#: eme-events.php:9781
+#: eme-events.php:9818
 #: eme-locations.php:593
 msgid "Latitude"
 msgstr "Latitude"
 
-#: eme-events.php:9782
+#: eme-events.php:9819
 #: eme-locations.php:597
 msgid "Longitude"
 msgstr "Longitude"
 
-#: eme-events.php:9784
+#: eme-events.php:9821
 msgid "Online only"
 msgstr "En ligne uniquement"
 
-#: eme-events.php:9801
-#: eme-events.php:9917
+#: eme-events.php:9838
+#: eme-events.php:9954
 #: eme-gdpr.php:546
 #: eme-people.php:1046
 msgid "Person ID"
 msgstr "ID de la personne"
 
-#: eme-events.php:9802
+#: eme-events.php:9839
 msgid "Group ID"
 msgstr "Identifiant du Groupe"
 
-#: eme-events.php:9803
+#: eme-events.php:9840
 #: eme-people.php:2618
 #: events-manager.php:367
 msgid "People"
 msgstr "Personnes"
 
-#: eme-events.php:9804
-#: eme-events.php:9826
+#: eme-events.php:9841
+#: eme-events.php:9863
 #: eme-people.php:2450
 #: events-manager.php:368
 msgid "Groups"
 msgstr "Groupes"
 
-#: eme-events.php:9807
-#: eme-events.php:9865
+#: eme-events.php:9844
+#: eme-events.php:9902
 #: eme-formfields.php:1167
 #: eme-formfields.php:1494
 #: eme-formfields.php:1810
@@ -4267,8 +4267,8 @@ msgstr "Groupes"
 msgid "Last name"
 msgstr "Nom de famille"
 
-#: eme-events.php:9808
-#: eme-events.php:9866
+#: eme-events.php:9845
+#: eme-events.php:9903
 #: eme-formfields.php:1183
 #: eme-formfields.php:1506
 #: eme-formfields.php:1826
@@ -4297,9 +4297,9 @@ msgstr "Nom de famille"
 msgid "First name"
 msgstr "Prénom"
 
-#: eme-events.php:9815
-#: eme-events.php:9867
-#: eme-events.php:10009
+#: eme-events.php:9852
+#: eme-events.php:9904
+#: eme-events.php:10046
 #: eme-formfields.php:588
 #: eme-formfields.php:1192
 #: eme-formfields.php:1515
@@ -4330,7 +4330,7 @@ msgstr "Prénom"
 msgid "Email"
 msgstr "E-mail"
 
-#: eme-events.php:9816
+#: eme-events.php:9853
 #: eme-formfields.php:1205
 #: eme-formfields.php:2022
 #: eme-formfields.php:3036
@@ -4347,51 +4347,51 @@ msgstr "E-mail"
 msgid "Phone number"
 msgstr "Téléphone"
 
-#: eme-events.php:9817
-#: eme-events.php:9871
+#: eme-events.php:9854
+#: eme-events.php:9908
 msgid "Birth date"
 msgstr "Date de naissance"
 
-#: eme-events.php:9818
-#: eme-events.php:9872
+#: eme-events.php:9855
+#: eme-events.php:9909
 msgid "Birth place"
 msgstr "Lieu de naissance"
 
-#: eme-events.php:9820
-#: eme-events.php:9862
-#: eme-events.php:9922
+#: eme-events.php:9857
+#: eme-events.php:9899
+#: eme-events.php:9959
 #: eme-people.php:1674
 #: eme-people.php:2472
 msgid "Linked WP user"
 msgstr "Utilisateur WP lié"
 
-#: eme-events.php:9824
+#: eme-events.php:9861
 msgid "Show all bookings"
 msgstr "Afficher toutes les réservations"
 
-#: eme-events.php:9825
+#: eme-events.php:9862
 msgid "Member of"
 msgstr "Membre de"
 
-#: eme-events.php:9827
+#: eme-events.php:9864
 msgid "Bookings made"
 msgstr "Réservations faites"
 
-#: eme-events.php:9830
-#: eme-events.php:9882
+#: eme-events.php:9867
+#: eme-events.php:9919
 msgid "Answers"
 msgstr "Réponses"
 
-#: eme-events.php:9832
+#: eme-events.php:9869
 msgid "GDPR modification date"
 msgstr "Date de modification de RGPD"
 
-#: eme-events.php:9835
-#: eme-events.php:9868
+#: eme-events.php:9872
+#: eme-events.php:9905
 msgid "Related to"
 msgstr "En rapport avec"
 
-#: eme-events.php:9836
+#: eme-events.php:9873
 #: eme-gdpr.php:436
 #: eme-gdpr.php:590
 #: eme-options.php:1991
@@ -4400,292 +4400,292 @@ msgstr "En rapport avec"
 msgid "MassMail"
 msgstr "Envoi massif d’e-mail"
 
-#: eme-events.php:9837
+#: eme-events.php:9874
 #: eme-options.php:2481
 msgid "Birthday Email"
 msgstr "E-mail d’anniversaire"
 
-#: eme-events.php:9838
+#: eme-events.php:9875
 msgid "Public group"
 msgstr "Groupe public"
 
-#: eme-events.php:9839
+#: eme-events.php:9876
 msgid "Nbr People"
 msgstr "Nbr de personnes"
 
-#: eme-events.php:9854
+#: eme-events.php:9891
 msgid "No matching member found"
 msgstr "Aucun membre correspondant trouvé"
 
-#: eme-events.php:9856
+#: eme-events.php:9893
 #: eme-options.php:1294
 #: events-manager.php:370
 msgid "Members"
 msgstr "Membres"
 
-#: eme-events.php:9858
+#: eme-events.php:9895
 #: eme-gdpr.php:466
 #: eme-gdpr.php:650
 #: eme-members.php:1597
 msgid "Membership"
 msgstr "Adhésion"
 
-#: eme-events.php:9861
+#: eme-events.php:9898
 #: eme-gdpr.php:646
 msgid "Member ID"
 msgstr "ID membre"
 
-#: eme-events.php:9863
+#: eme-events.php:9900
 msgid "Contact"
 msgstr "Contact"
 
-#: eme-events.php:9884
+#: eme-events.php:9921
 msgid "Nbr Active Members"
 msgstr "Nbr de membres actifs"
 
-#: eme-events.php:9886
+#: eme-events.php:9923
 #: eme-gdpr.php:467
 #: eme-gdpr.php:654
 msgid "Start"
 msgstr "Début"
 
-#: eme-events.php:9887
+#: eme-events.php:9924
 #: eme-gdpr.php:468
 #: eme-gdpr.php:658
 #: eme-tasks.php:747
 msgid "End"
 msgstr "Fin"
 
-#: eme-events.php:9888
+#: eme-events.php:9925
 #: eme-members.php:1663
 msgid "Usage count"
 msgstr "Nombre d'utilisation"
 
-#: eme-events.php:9889
+#: eme-events.php:9926
 msgid "Registered on"
 msgstr "Enregistré le"
 
-#: eme-events.php:9890
+#: eme-events.php:9927
 msgid "Last seen on"
 msgstr "Vu pour la dernière fois le"
 
-#: eme-events.php:9891
+#: eme-events.php:9928
 msgid "Paid on"
 msgstr "Payé le"
 
-#: eme-events.php:9892
-#: eme-events.php:9928
+#: eme-events.php:9929
+#: eme-events.php:9965
 #: eme-people.php:1090
 msgid "Unique nbr"
 msgstr "Numéro unique"
 
-#: eme-events.php:9893
-#: eme-events.php:9929
+#: eme-events.php:9930
+#: eme-events.php:9966
 msgid "Payment ID"
 msgstr "ID de paiement"
 
-#: eme-events.php:9894
-#: eme-events.php:9930
+#: eme-events.php:9931
+#: eme-events.php:9967
 #: eme-people.php:1082
 #: eme-people.php:1409
 msgid "Paid"
 msgstr "Payé"
 
-#: eme-events.php:9895
-#: eme-events.php:9933
+#: eme-events.php:9932
+#: eme-events.php:9970
 msgid "Payment GW"
 msgstr "Paiement GW"
 
-#: eme-events.php:9896
-#: eme-events.php:9934
+#: eme-events.php:9933
+#: eme-events.php:9971
 msgid "Payment GW ID"
 msgstr "ID de paiement GW"
 
-#: eme-events.php:9897
-#: eme-events.php:9942
+#: eme-events.php:9934
+#: eme-events.php:9979
 msgid "Last reminder"
 msgstr "Dernier rappel"
 
-#: eme-events.php:9898
+#: eme-events.php:9935
 msgid "Reminders sent"
 msgstr "Rappels envoyés"
 
-#: eme-events.php:9903
-#: eme-events.php:9943
+#: eme-events.php:9940
+#: eme-events.php:9980
 #: eme-people.php:1087
 #: eme-people.php:1421
 msgid "Discount"
 msgstr "Remise"
 
-#: eme-events.php:9904
-#: eme-events.php:9944
+#: eme-events.php:9941
+#: eme-events.php:9981
 msgid "Used discount codes"
 msgstr "Codes de remise utilisés"
 
-#: eme-events.php:9905
-#: eme-events.php:9927
+#: eme-events.php:9942
+#: eme-events.php:9964
 #: eme-people.php:1086
 #: eme-people.php:1427
 msgid "Total price"
 msgstr "Prix total"
 
-#: eme-events.php:9906
+#: eme-events.php:9943
 msgid "Membership price"
 msgstr "Prix de l’adhésion"
 
-#: eme-events.php:9914
+#: eme-events.php:9951
 #: eme-options.php:1618
 msgid "Bookings"
 msgstr "Les réservations"
 
-#: eme-events.php:9916
+#: eme-events.php:9953
 msgid "Event ID"
 msgstr "ID de l’évènement"
 
-#: eme-events.php:9919
+#: eme-events.php:9956
 msgid "Event info"
 msgstr "Informations sur l'évènement"
 
-#: eme-events.php:9921
+#: eme-events.php:9958
 msgid "Booker"
 msgstr "Client"
 
-#: eme-events.php:9923
+#: eme-events.php:9960
 #: eme-people.php:1085
 #: eme-people.php:1415
 msgid "Booking date"
 msgstr "Date de la réservation"
 
-#: eme-events.php:9931
+#: eme-events.php:9968
 #: eme-people.php:1084
 msgid "Remaining"
 msgstr "Restant"
 
-#: eme-events.php:9932
+#: eme-events.php:9969
 #: eme-people.php:1083
 msgid "Received"
 msgstr "Reçu"
 
-#: eme-events.php:9935
+#: eme-events.php:9972
 msgid "Payment date"
 msgstr "Date de paiement"
 
-#: eme-events.php:9936
+#: eme-events.php:9973
 msgid "Mark paid and approve"
 msgstr "Marque de paiement et d’approbation"
 
-#: eme-events.php:9937
+#: eme-events.php:9974
 #: eme-rsvp.php:5361
 #: eme-rsvp.php:5378
 msgid "Mark paid"
 msgstr "Marquer comme payé"
 
-#: eme-events.php:9951
+#: eme-events.php:9988
 #: eme-people.php:1091
 msgid "Attendance count"
 msgstr "Décompte des présences"
 
-#: eme-events.php:9952
+#: eme-events.php:9989
 msgid "Please select only one record in order to do partial payments"
 msgstr "Veuillez ne sélectionner qu’un seul enregistrement afin d’effectuer des paiements partiels"
 
-#: eme-events.php:9992
+#: eme-events.php:10029
 #: eme-mailer.php:2932
 #: eme-mailer.php:3111
 msgid "Send email"
 msgstr "Envoyer un email"
 
-#: eme-events.php:9993
+#: eme-events.php:10030
 msgid "Queue email"
 msgstr "Mettre l’e-mail en file d’attente"
 
-#: eme-events.php:9996
+#: eme-events.php:10033
 msgid "Sent on"
 msgstr "Envoyé sur"
 
-#: eme-events.php:9997
+#: eme-events.php:10034
 msgid "First read on"
 msgstr "Première lecture sur"
 
-#: eme-events.php:9998
+#: eme-events.php:10035
 msgid "Last read on"
 msgstr "Dernière lecture sur"
 
-#: eme-events.php:10000
+#: eme-events.php:10037
 msgid "Read count"
 msgstr "Compteur de vue"
 
-#: eme-events.php:10001
+#: eme-events.php:10038
 msgid "Error message"
 msgstr "Message d’erreur"
 
-#: eme-events.php:10012
+#: eme-events.php:10049
 msgid "Action"
 msgstr "Action"
 
-#: eme-events.php:10015
+#: eme-events.php:10052
 #: eme-mailer.php:2704
 msgid "Mailing report"
 msgstr "Rapport d’envoi"
 
-#: eme-events.php:10019
+#: eme-events.php:10056
 msgid "Select one or more events"
 msgstr "Sélectionner un ou plusieurs évènements"
 
-#: eme-events.php:10274
+#: eme-events.php:10311
 #: eme-rsvp.php:5937
 #: eme-tasks.php:1947
 msgid "Edit event"
 msgstr "Modifier l'évènement"
 
-#: eme-events.php:6676
-#: eme-events.php:10290
+#: eme-events.php:6713
+#: eme-events.php:10327
 #: eme-rsvp.php:5941
 msgid "RSVP Info: "
 msgstr "RSVP-information : "
 
-#: eme-events.php:6704
-#: eme-events.php:10318
+#: eme-events.php:6741
+#: eme-events.php:10355
 #: eme-rsvp.php:5970
 msgid "Free:"
 msgstr "Places libres :"
 
-#: eme-events.php:6705
-#: eme-events.php:6708
-#: eme-events.php:6760
-#: eme-events.php:10320
-#: eme-events.php:10322
-#: eme-events.php:10327
-#: eme-events.php:10329
-#: eme-events.php:10391
-#: eme-events.php:10393
+#: eme-events.php:6742
+#: eme-events.php:6745
+#: eme-events.php:6797
+#: eme-events.php:10357
+#: eme-events.php:10359
+#: eme-events.php:10364
+#: eme-events.php:10366
+#: eme-events.php:10428
+#: eme-events.php:10430
 #: eme-rsvp.php:5944
 #: eme-rsvp.php:6039
 msgid "Approved:"
 msgstr "Approuvé :"
 
-#: eme-events.php:6712
-#: eme-events.php:6758
-#: eme-events.php:10335
-#: eme-events.php:10337
-#: eme-events.php:10385
-#: eme-events.php:10387
+#: eme-events.php:6749
+#: eme-events.php:6795
+#: eme-events.php:10372
+#: eme-events.php:10374
+#: eme-events.php:10422
+#: eme-events.php:10424
 #: eme-rsvp.php:5978
 #: eme-rsvp.php:6037
 msgid "Pending:"
 msgstr "En attente :"
 
-#: eme-events.php:6717
-#: eme-events.php:10344
-#: eme-events.php:10346
+#: eme-events.php:6754
+#: eme-events.php:10381
+#: eme-events.php:10383
 #: eme-rsvp.php:5983
 msgid "Absent:"
 msgstr "Absent :"
 
-#: eme-events.php:6722
-#: eme-events.php:6725
-#: eme-events.php:10351
-#: eme-events.php:10354
+#: eme-events.php:6759
+#: eme-events.php:6762
+#: eme-events.php:10388
+#: eme-events.php:10391
 #: eme-members.php:6690
 #: eme-recurrence.php:730
 #: eme-rsvp.php:5987
@@ -4693,84 +4693,84 @@ msgstr "Absent :"
 msgid "Max:"
 msgstr "Max :"
 
-#: eme-events.php:6729
-#: eme-events.php:10358
+#: eme-events.php:6766
+#: eme-events.php:10395
 #: eme-rsvp.php:5995
 msgid "(%d waiting list seats included)"
 msgstr "(%d sièges sur liste d’attente inclus)"
 
-#: eme-events.php:6734
-#: eme-events.php:10363
+#: eme-events.php:6771
+#: eme-events.php:10400
 #: eme-rsvp.php:6001
 msgid "Printable view"
 msgstr "Version à imprimer"
 
-#: eme-events.php:6735
-#: eme-events.php:10364
+#: eme-events.php:6772
+#: eme-events.php:10401
 #: eme-rsvp.php:6002
 msgid "CSV export"
 msgstr "Export CSV"
 
-#: eme-events.php:6756
-#: eme-events.php:10382
+#: eme-events.php:6793
+#: eme-events.php:10419
 #: eme-rsvp.php:6035
 msgid "Task Info: %d tasks"
 msgstr "Info sur les tâches : %d tâches"
 
-#: eme-events.php:10401
+#: eme-events.php:10438
 #: eme-locations.php:534
 #: eme-locations.php:2991
 #: eme-recurrence.php:760
 msgid "Edit location"
 msgstr "Editer le lieu"
 
-#: eme-events.php:10403
+#: eme-events.php:10440
 #: eme-locations.php:2993
 #: eme-recurrence.php:762
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Les coordonnées de la carte de localisation sont vides ! Veuillez modifier l’emplacement pour corriger ceci, sinon il ne s’affichera pas correctement sur votre site Web."
 
-#: eme-events.php:10422
+#: eme-events.php:10459
 msgid "Preview event"
 msgstr "Aperçu de l'évènement"
 
-#: eme-events.php:10424
+#: eme-events.php:10461
 msgid "View event"
 msgstr "Voir l’évènement"
 
-#: eme-events.php:10431
+#: eme-events.php:10468
 msgid "Duplicate this event"
 msgstr "Dupliquer cet évènement"
 
-#: eme-events.php:10443
+#: eme-events.php:10480
 #: eme-rsvp.php:6012
 msgid "Add booking for this event"
 msgstr "Ajouter une réservation pour cet événement"
 
-#: eme-events.php:10445
+#: eme-events.php:10482
 #: eme-rsvp.php:6014
 msgid "Password protected"
 msgstr "Mot de passe protégé"
 
-#: eme-events.php:10453
+#: eme-events.php:10490
 #: eme-recurrence.php:732
 msgid "Free"
 msgstr "Gratuit"
 
-#: eme-events.php:10602
+#: eme-events.php:10639
 #: eme-recurrence.php:827
 msgid "No action defined!"
 msgstr "Aucune action définie !"
 
-#: eme-events.php:10628
+#: eme-events.php:10665
 msgid "Restored selected events to draft status"
 msgstr "Mettre les évènements sélectionnés à l'état de brouillon"
 
-#: eme-events.php:10636
+#: eme-events.php:10673
 msgid "Events status updated"
 msgstr "État des évènements mis à jour"
 
-#: eme-events.php:10649
+#: eme-events.php:10686
 msgid "Events added to category"
 msgstr "Événements ajoutés à la catégorie"
 
@@ -5784,7 +5784,7 @@ msgstr "Franc CFP (Franc Pacifique)"
 msgid "South African Rand"
 msgstr "Rand Sud-africain"
 
-#: eme-events.php:10013
+#: eme-events.php:10050
 #: eme-functions.php:2314
 msgid "Extra info"
 msgstr "Informaitons supplémentaires"
@@ -6329,28 +6329,28 @@ msgstr "Ignoré"
 msgid "Reuse"
 msgstr "Réutiliser"
 
-#: eme-events.php:10003
+#: eme-events.php:10040
 #: eme-mailer.php:3020
 msgid "Sender name"
 msgstr "Nom de l’expéditeur"
 
-#: eme-events.php:10004
+#: eme-events.php:10041
 #: eme-mailer.php:3024
 msgid "Sender email"
 msgstr "E-mail de l’expéditeur"
 
-#: eme-events.php:10010
+#: eme-events.php:10047
 #: eme-mailer.php:2846
 #: eme-mailer.php:3031
 msgid "Subject"
 msgstr "Sujet"
 
-#: eme-events.php:9995
+#: eme-events.php:10032
 msgid "Queued on"
 msgstr "En file d’attente"
 
 #: eme-actions.php:426
-#: eme-events.php:9544
+#: eme-events.php:9581
 #: eme-mailer.php:1661
 #: eme-mailer.php:1671
 #: eme-mailer.php:1675
@@ -6451,7 +6451,7 @@ msgstr "E-mail lié à un évènement"
 msgid "Generic email"
 msgstr "E-mail générique"
 
-#: eme-events.php:10017
+#: eme-events.php:10054
 #: eme-mailer.php:2729
 msgid "Mailings"
 msgstr "Mailings"
@@ -6720,15 +6720,15 @@ msgstr "Supprimer les envois sélectionnés"
 msgid "Archive selected mailings"
 msgstr "Archiver les envois sélectionnés"
 
-#: eme-events.php:9994
+#: eme-events.php:10031
 msgid "Planned execution time"
 msgstr "Temps d'exécution prévu"
 
-#: eme-events.php:9999
+#: eme-events.php:10036
 msgid "Unique read count"
 msgstr "Nombre de lectures unique"
 
-#: eme-events.php:10014
+#: eme-events.php:10051
 #: eme-mailer.php:1703
 msgid "Report"
 msgstr "Rapport"
@@ -8620,7 +8620,7 @@ msgstr "Cochez cette option pour afficher une case à cocher qui autorise les ut
 msgid "Autocomplete sources"
 msgstr "Sources de saisie semi-automatique"
 
-#: eme-events.php:8293
+#: eme-events.php:8330
 #: eme-members.php:1975
 #: eme-options.php:1477
 #: eme-options.php:2017
@@ -8841,7 +8841,7 @@ msgstr "Modifier les emplacements"
 msgid "Permission needed to edit all locations. Default: %s"
 msgstr "Permission nécessaire pour modifier tous les lieux. Par défaut: %s"
 
-#: eme-events.php:9961
+#: eme-events.php:9998
 #: eme-options.php:1551
 #: events-manager.php:354
 msgid "Categories"
@@ -13173,7 +13173,7 @@ msgid_plural "%d pending members"
 msgstr[0] "%d membres en attente"
 msgstr[1] "%d membres en attente"
 
-#: eme-events.php:9692
+#: eme-events.php:9729
 #: events-manager.php:357
 msgid "Custom Fields"
 msgstr "Champs personnalisés"
@@ -13238,17 +13238,17 @@ msgstr "Le prix d'adhésion n'est pas valide et a été remis à 0"
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
 msgstr "Le supplément pour l'adhésion n'est pas un prix valide et a été remis à 0"
 
-#: eme-events.php:6671
+#: eme-events.php:6708
 msgid "Bookings and tasks"
 msgstr "Inscriptions et tâches"
 
-#: eme-events.php:9665
+#: eme-events.php:9702
 msgid "Signup date"
 msgstr "Date d'inscription"
 
-#: eme-events.php:7573
-#: eme-events.php:7774
-#: eme-events.php:8158
+#: eme-events.php:7610
+#: eme-events.php:7811
+#: eme-events.php:8195
 #: eme-members.php:2307
 #: eme-members.php:2451
 #: eme-members.php:2530
@@ -13259,9 +13259,9 @@ msgstr "Date d'inscription"
 msgid "PDF templates as attachments"
 msgstr "Modèles PDF en pièces jointes"
 
-#: eme-events.php:7578
-#: eme-events.php:7779
-#: eme-events.php:8163
+#: eme-events.php:7615
+#: eme-events.php:7816
+#: eme-events.php:8200
 #: eme-members.php:2313
 #: eme-members.php:2316
 #: eme-members.php:2457
@@ -13275,9 +13275,9 @@ msgstr "Modèles PDF en pièces jointes"
 msgid "Optionally add PDF templates as attachments to the mail."
 msgstr "Il est possible d'ajouter des modèles PDF en tant que pièces jointes aux e-mails."
 
-#: eme-events.php:7582
-#: eme-events.php:7783
-#: eme-events.php:8167
+#: eme-events.php:7619
+#: eme-events.php:7820
+#: eme-events.php:8204
 #: eme-members.php:2318
 #: eme-members.php:2462
 #: eme-members.php:2541
@@ -13288,7 +13288,7 @@ msgstr "Il est possible d'ajouter des modèles PDF en tant que pièces jointes a
 msgid "No PDF templates defined yet."
 msgstr "Aucun modèle PDF n'a encore été défini."
 
-#: eme-events.php:7772
+#: eme-events.php:7809
 #: eme-options.php:2167
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr "Possibilité d'ajouter des pièces jointes aux e-mails lorsqu'une réservation est en attente."
@@ -13364,7 +13364,7 @@ msgstr "Non importé (l'email et le nom de famille sont vides) : %s"
 msgid "Not imported (no matching person found): %s"
 msgstr "Non importé (aucune personne correspondante n'a été trouvée) : %s"
 
-#: eme-events.php:7188
+#: eme-events.php:7225
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr "La date de début et de fin de la récurrence (considérée comme le jour du premier événement de la série et le jour du dernier événement de la série). Si vous laissez la date de fin vide, la récurrence sera permanente et les 10 prochains événements seront automatiquement planifiés (vérifiés quotidiennement), tandis que les événements plus anciens seront supprimés, à l'exception du plus récent."
 
@@ -13579,7 +13579,7 @@ msgstr "Le paiement a échoué pour la soumission de votre évènement"
 msgid "Event submit payment page"
 msgstr "Page de paiement de l’évènement soumis"
 
-#: eme-events.php:8295
+#: eme-events.php:8332
 #: eme-members.php:1975
 #: eme-options.php:3147
 msgid "Select a captcha to use"
@@ -13741,23 +13741,23 @@ msgstr "N'autoriser qu'une seule inscription à des tâches par événement pour
 msgid "Only one signup allowed"
 msgstr "Une seule inscription autorisée"
 
-#: eme-events.php:6409
+#: eme-events.php:6446
 msgid "Todos"
 msgstr "Tâches"
 
-#: eme-events.php:6523
+#: eme-events.php:6560
 msgid "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task."
 msgstr "Les tâches peuvent être utilisées pour rallier des bénévoles à un événement (par exemple, 5 personnes derrière le bar par équipe, service de nettoyage, ...) ou pour permettre à des personnes de s'inscrire pour une certaine période de temps pour un événement (comme un rendez-vous). Bien que vous puissiez imposer des limites et demander une confirmation pour les tâches, il n'y a pas de prix par tâche et aucun paiement n'est donc possible lors de l'inscription à une tâche."
 
-#: eme-events.php:6576
+#: eme-events.php:6613
 msgid "Enable todos for this event"
 msgstr "Permettre des tâches pour cet événement"
 
-#: eme-events.php:6579
+#: eme-events.php:6616
 msgid "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started."
 msgstr "Chaque tâche dont la date se situe dans le passé enverra un e-mail à la personne de contact, ce qui vous permettra de planifier votre événement et de ne rien oublier. La date de la tâche est basée sur la date de début de l'événement et sur le paramètre de décalage de la tâche en jours : un décalage de 5 signifie 5 jours avant le début de l'événement, un décalage de -2 signifie 2 jours après le début de l'événement."
 
-#: eme-events.php:6583
+#: eme-events.php:6620
 msgid "List of todos"
 msgstr "Liste des tâches"
 
@@ -13769,7 +13769,7 @@ msgstr "Décalage par rapport à la date de début de l’événement (jours)"
 msgid "Add new todo"
 msgstr "Ajouter une nouvelle tâche"
 
-#: eme-events.php:6657
+#: eme-events.php:6694
 msgid "Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form."
 msgstr "Les événements privés ne sont visibles que pour les utilisateurs connectés. Les projets d'événements ne sont pas visibles depuis la page d'accueil. Les événements non répertoriés (cachés) n'apparaissent dans aucune liste ni aucun calendrier. La version préliminaire est normalement l'état des événements soumis via le formulaire de soumission de la version frontale."
 
@@ -13794,7 +13794,7 @@ msgid "Could not create the new location for this event: either you don't have t
 msgstr "Impossible de créer le nouvel emplacement pour cet événement: vous n'avez pas le droit d'insérer des emplacements ou il y a un problème de base de données."
 
 #. translators: Accessibility text.
-#: eme-events.php:6622
+#: eme-events.php:6659
 msgid "(opens in a new tab)"
 msgstr "(s’ouvre dans un nouvel onglet)"
 
@@ -13806,15 +13806,15 @@ msgstr "La liste des participants/réservations ignore les participants/réserva
 msgid "Whether or not to ignore pending bookings when using the <code>#_ATTENDEES</code> or <code>#_BOOKINGS</code> placeholders."
 msgstr "Ignorer ou non les réservations en attente lors de l'utilisation des espaces réservés <code>#_ATTENDEES</code> ou <code>#_BOOKINGS</code>."
 
-#: eme-events.php:8642
+#: eme-events.php:8679
 msgid "Attendance PDF proof"
 msgstr "Preuve de présence PDF"
 
-#: eme-events.php:8643
+#: eme-events.php:8680
 msgid "When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed."
 msgstr "Lorsque l'URL générée par #_ATTENDANCEPROOF_URL est visitée, le modèle PDF sélectionné est utilisé pour générer un PDF pour l'utilisateur qui peut servir de preuve de présence. Tous les caractères génériques d'événement et de RSVP sont autorisés."
 
-#: eme-events.php:8645
+#: eme-events.php:8682
 msgid "Choose from a template: "
 msgstr "Choisissez un modèle : "
 
@@ -13851,7 +13851,7 @@ msgstr "%s une vérification sera effectuée pour savoir si de nouveaux événem
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr "%s une vérification sera effectuée pour savoir si de nouveaux événements doivent être envoyés aux personnes enregistrées EME (ces événements seront alors mis en file d'attente et envoyés en une seule fois à chaque fois que la file d'attente est traitée via l'appel à l'API REST)"
 
-#: eme-events.php:8599
+#: eme-events.php:8636
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
 msgstr "Sélectionnez cette option si vous souhaitez qu'un enregistrement de présence soit conservé chaque fois que le QRCODE de présence RSVP est scanné par un utilisateur autorisé."
 
@@ -13901,19 +13901,19 @@ msgstr "Sélectionner l’(les) évènement(s)"
 msgid "Get IBAN"
 msgstr "Obtenir l’IBAN"
 
-#: eme-events.php:6607
+#: eme-events.php:6644
 msgid "If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr "Si le fait d'appuyer sur Enregistrer ne semble rien donner, vérifiez alors tous les autres onglets pour vous assurer que tous les champs obligatoires sont remplis."
 
-#: eme-events.php:6626
+#: eme-events.php:6663
 msgid "If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr "Si le fait d'appuyer sur Update ne semble rien faire, vérifiez alors tous les autres onglets pour vous assurer que tous les champs obligatoires sont remplis."
 
-#: eme-events.php:7253
+#: eme-events.php:7290
 msgid "No events will be created on excluded days."
 msgstr "Aucun événement ne sera créé les jours exclus."
 
-#: eme-events.php:8570
+#: eme-events.php:8607
 msgid "Select a payment method"
 msgstr "Sélectionnez un mode de paiement"
 
@@ -13925,11 +13925,11 @@ msgstr "Archivé"
 msgid "\"60\" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course."
 msgstr "\"60\" signifie que le script peut fonctionner au maximum pendant 55 secondes (=60-5, 5 étant une mesure de sécurité). Bien entendu, cette valeur ne doit jamais être supérieure à la récurrence de votre cron."
 
-#: eme-events.php:7248
+#: eme-events.php:7285
 msgid "Excluded days:"
 msgstr "Jours exclus :"
 
-#: eme-events.php:8689
+#: eme-events.php:8726
 msgid "Extra approval settings (also check out the mail templates)"
 msgstr "Paramètres d'approbation supplémentaires (voir aussi les modèles de mail)"
 
@@ -13949,15 +13949,15 @@ msgstr "Supprimer les catégories sélectionnées"
 msgid "Categories deleted"
 msgstr "Catégories effacées"
 
-#: eme-events.php:9975
+#: eme-events.php:10012
 msgid "Holiday lists"
 msgstr "Listes de vacances"
 
-#: eme-events.php:10016
+#: eme-events.php:10053
 msgid "Mails"
 msgstr "E-mails"
 
-#: eme-events.php:10018
+#: eme-events.php:10055
 #: eme-mailer.php:3257
 msgid "Archived mailings"
 msgstr "Mailings archivés"
@@ -14049,23 +14049,23 @@ msgstr "Saisir une adresse électronique valide"
 msgid "Event moved to the trash bin"
 msgstr "Évènement déplacé vers la corbeille"
 
-#: eme-events.php:6143
+#: eme-events.php:6180
 msgid "Delete selected events (move to trash bin)"
 msgstr "Supprimer les événements sélectionnés (déplacer dans la corbeille)"
 
-#: eme-events.php:6248
+#: eme-events.php:6285
 msgid "Delete selected recurrences (and move events to trash bin)"
 msgstr "Supprimer les récurrences sélectionnées (et déplacer les événements dans la corbeille)"
 
-#: eme-events.php:6610
+#: eme-events.php:6647
 msgid "Are you sure you want to move this event to the trash bin?"
 msgstr "Êtes-vous sûr de vouloir déplacer cet événement dans la corbeille ?"
 
-#: eme-events.php:6615
+#: eme-events.php:6652
 msgid "Move event to trash bin"
 msgstr "Déplacer l’évènement vers la corbeille"
 
-#: eme-events.php:10620
+#: eme-events.php:10657
 msgid "Events moved to the trash bin"
 msgstr "Évènements déplacés vers la corbeille"
 
@@ -14097,25 +14097,25 @@ msgstr "Clé de site Friendly Captcha"
 msgid "Friendly Captcha API key"
 msgstr "Clé API pour le Captcha amical"
 
-#: eme-events.php:6931
+#: eme-events.php:6968
 msgid "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES)."
 msgstr "Votre événement semble n'avoir qu'un seul prix, vous ne pouvez donc pas utiliser #_SEATS{xx} dans le format du formulaire RSVP de votre événement. Veuillez corriger le format du formulaire RSVP pour utiliser #_SEATS (ou #_SPACES)."
 
-#: eme-events.php:6956
+#: eme-events.php:6993
 msgid "Please correct the RSVP form format to use #_SEATS."
 msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_SEATS."
 
-#: eme-events.php:6958
+#: eme-events.php:6995
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
 msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_SEATS{xx} pour toutes les catégories de prix."
 
-#: eme-events.php:6723
-#: eme-events.php:10352
+#: eme-events.php:6760
+#: eme-events.php:10389
 #: eme-rsvp.php:5988
 msgid "Max (from location):"
 msgstr "Max (depuis le lieu) :"
 
-#: eme-events.php:8717
+#: eme-events.php:8754
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr "Une capacité maximale de lieu est définie. Si le maximum de votre événement dépasse cette capacité, la capacité du lieu prendra le dessus."
 
@@ -14245,7 +14245,7 @@ msgstr "À la corbeille"
 msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
 msgstr "Remarque : si, pour certains e-mails, l'adresse de réponse est identique à l'adresse de départ, la valeur de l'adresse de réponse sera également forcée."
 
-#: eme-events.php:7658
+#: eme-events.php:7695
 #: eme-options.php:2133
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr "Lorsque ce courriel n'est pas encore envoyé (dans la file d'attente) et que la réservation est approuvée ou payée pendant cette période et qu'un courriel est prévu pour cette action, ce courriel est supprimé de la file d'attente afin que les personnes ne reçoivent pas deux courriels en même temps."
@@ -14270,21 +14270,21 @@ msgstr "E-mails supprimés"
 msgid "Resend selected emails"
 msgstr "Renvoyer les e-mails sélectionnés"
 
-#: eme-events.php:7453
+#: eme-events.php:7490
 #: eme-options.php:2070
 msgid "When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for)."
 msgstr "Lorsqu'un événement est configuré pour approuver automatiquement les réservations après paiement et que le montant total à payer est égal à 0, cet e-mail sera envoyé lorsqu'une réservation en attente est marquée comme payée (et non l'e-mail payé, puisqu'il n'y avait rien à payer)."
 
-#: eme-events.php:7455
+#: eme-events.php:7492
 #: eme-options.php:2072
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
 msgstr "Étant donné que les notifications RSVP après paiement ne sont pas actives, cet e-mail sera également envoyé lorsqu'une réservation est marquée comme payée."
 
-#: eme-events.php:10005
+#: eme-events.php:10042
 msgid "Recipient name"
 msgstr "Nom du destinataire"
 
-#: eme-events.php:10006
+#: eme-events.php:10043
 msgid "Recipient email"
 msgstr "E-mail du destinataire"
 
@@ -14305,32 +14305,32 @@ msgid "Use membership feature?"
 msgstr "Utiliser la fonctionnalité d'adhésion ?"
 
 #: eme-actions.php:424
-#: eme-events.php:9542
+#: eme-events.php:9579
 msgid "Insert image"
 msgstr "Insérer une image"
 
 #: eme-actions.php:425
-#: eme-events.php:9543
+#: eme-events.php:9580
 msgid "Insert"
 msgstr "Insérer"
 
 #: eme-actions.php:427
-#: eme-events.php:9545
+#: eme-events.php:9582
 msgid "Insert from Media Library"
 msgstr "Insérer depuis la médiathèque"
 
 #: eme-actions.php:428
-#: eme-events.php:9546
+#: eme-events.php:9583
 msgid "Preview"
 msgstr "Aperçu"
 
 #: eme-actions.php:429
-#: eme-events.php:9547
+#: eme-events.php:9584
 msgid "Visual"
 msgstr "Visuel"
 
 #: eme-actions.php:431
-#: eme-events.php:9549
+#: eme-events.php:9586
 msgid "Insert non-breaking space"
 msgstr "Insérer une espace insécable"
 
@@ -14420,15 +14420,15 @@ msgstr "Min. #places réservées"
 msgid "Max #seats booked"
 msgstr "Max. #places réservées"
 
-#: eme-events.php:6145
+#: eme-events.php:6182
 msgid "Private events are only accessible to logged-in users"
 msgstr "Les événements privés ne sont accessibles qu'aux utilisateurs connectés"
 
-#: eme-events.php:6146
+#: eme-events.php:6183
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
 msgstr "Les événements cachés sont accessibles à tous mais ne sont pas affichés dans les listes d'événements ou les calendriers."
 
-#: eme-events.php:6146
+#: eme-events.php:6183
 msgid "Make selected events hidden"
 msgstr "Rendre les événements sélectionnés cachés"
 

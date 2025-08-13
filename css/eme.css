@@ -769,3 +769,7 @@ div#eme_div_import {
     text-align: center;
 }
 
+/* fix a WP issue on the navbar for options, causing tabs on the next line to appear too much to the right */
+a.nav-tab.nav-tab-active {
+    border-bottom: none;
+}

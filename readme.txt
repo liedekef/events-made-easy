@@ -99,8 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.0  (2025//) =
-* Huge code rewrite to remove jquery dependency
+= 3.0.0  (2025/08/13) =
+* Huge JS code rewrite to remove jquery dependency from EME, fdatepicker and ftable
+* Added the possibility to give a "Maximum usage count per user" for a discount (applies and requires users to be logged in).
+* Mollie update
+* Updater-code update to account for php 8.4
 
 = 2.6.12 (2025//) =
 * javascript and jtable updates to more reliable check for checked status of checkboxes

@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emetemplates.translate_copy,
                     sorting: false,
                     width: '1%',
-                    listClass: 'eme-jtable-center',
+                    listClass: 'eme-ftable-center',
                     columnResizable: false
                 }
             },

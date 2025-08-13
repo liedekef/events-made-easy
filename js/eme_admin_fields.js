@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emeformfields.translate_copy,
                     sorting: false,
                     width: '2%',
-                    listClass: 'eme-jtable-center'
+                    listClass: 'eme-ftable-center'
                 },
                 field_type: {
                     title: emeformfields.translate_type

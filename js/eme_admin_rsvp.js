@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 eme_admin_nonce: emersvp.translate_adminnonce,
                 trash: new URLSearchParams(window.location.search).get('trash') || '',
                 scope: eme_getValue($('#scope')),
-                category: eme_getValue($('#category')).value || '',
+                category: eme_getValue($('#category')),
                 booking_status: eme_getValue($('#booking_status')),
                 search_event: eme_getValue($('#search_event')),
                 search_person: eme_getValue($('#search_person')),

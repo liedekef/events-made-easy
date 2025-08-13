@@ -133,6 +133,11 @@ function initTomSelect(selector, options = {}) {
                         : `<div>${escape(data.text)}</div>`;
                 }
             },
+            onItemAdd: function() {
+                if (!this.settings.mode || this.settings.mode === 'single') {
+                    this.blur(); // Remove focus after selection
+                }
+            },
             // Parse standard data-attributes
             ...Object.entries(el.dataset).reduce((acc, [key, value]) => {
                 //if (key.startsWith('ts')) {
@@ -246,6 +251,11 @@ function initTomSelectRemote(selector, options = {}) {
                         callback(json.Records || json);
                     })
                     .catch(() => callback());
+            },
+            onItemAdd: function() {
+                if (!this.settings.mode || this.settings.mode === 'single') {
+                    this.blur(); // Remove focus after selection
+                }
             },
             // Copy all other settings except those already handled
             ...Object.entries(settings).reduce((acc, [key, value]) => {

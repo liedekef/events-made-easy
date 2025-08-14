@@ -5513,7 +5513,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             }
         }
 
-        if (!empty($category)) {
+        if (!empty($notcategory)) {
             if ( is_numeric( $notcategory ) ) {
                 if ( $notcategory > 0 ) {
                     $conditions[] = "(NOT FIND_IN_SET($notcategory,event_category_ids) OR event_category_ids IS NULL)";

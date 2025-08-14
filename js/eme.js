@@ -393,20 +393,6 @@ function eme_init_widgets(dynamicOnly = false) {
         }
     });
 
-    // Initialize timepicker for legacy time fields
-    $$('.eme_formfield_timepicker' + dynamicSelector).forEach(el => {
-        if (typeof timepicker !== 'undefined') {
-            timepicker(el, {
-                timeFormat: emebasic.translate_ftimeformat
-            });
-
-            if (el.dataset.timeFormat) {
-                el.timepicker.option({'timeFormat': el.dataset.timeFormat});
-                delete el.dataset.timeFormat;
-            }
-        }
-    });
-
     // Basic select2 replacement
     initTomSelect('.eme_select2' + dynamicSelector);
     initTomSelect('.eme_select2_width50_class' + dynamicSelector);

@@ -9533,6 +9533,7 @@ function eme_admin_enqueue_js() {
             'translate_minutesStep'        => get_option( 'eme_timepicker_minutesstep' ),
             'translate_fdateformat'        => EME_WP_DATE_FORMAT,
             'translate_ftimeformat'        => EME_WP_TIME_FORMAT,
+            'translate_fdatetimeformat'    => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
             'translate_selectimg'          => __( 'Select the image to be used as person image', 'events-made-easy' ),
             'translate_setimg'             => __( 'Set image', 'events-made-easy' ),
             'translate_chooseimg'          => __( 'Choose image', 'events-made-easy' ),
@@ -9558,7 +9559,6 @@ function eme_admin_enqueue_js() {
             'translate_flanguage'                  => $language,
             'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
             'translate_fdateformat'                => EME_WP_DATE_FORMAT,
-            'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
@@ -9655,7 +9655,6 @@ function eme_admin_enqueue_js() {
             'translate_startenddate_identical'     => __( "In a recurrence, start and end date can't be identical", 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_selectcontact'              => __( 'Event author', 'events-made-easy' ),
-            'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
         ];
         wp_localize_script( 'eme-events', 'emeevents', $translation_array );
@@ -9876,11 +9875,6 @@ function eme_admin_enqueue_js() {
             'translate_groupcount'                 => __( 'Nbr People', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
-            'translate_firstDayOfWeek'	       => get_option( 'start_of_week' ),
-            'translate_flanguage'                  => $language,
-            'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
-            'translate_fdateformat'                => EME_WP_DATE_FORMAT,
-            'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
         ];
         wp_localize_script( 'eme-people', 'emepeople', $translation_array );
         wp_enqueue_script( 'eme-people' );
@@ -9983,7 +9977,6 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
             'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
             'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
             'translate_selectonerowonlyforpartial' => __( 'Please select only one record in order to do partial payments', 'events-made-easy' ),
@@ -10058,12 +10051,6 @@ function eme_admin_enqueue_js() {
             'translate_htmleditor'      => get_option( 'eme_htmleditor' ),
             'translate_addatachments'   => __( 'Add attachments', 'events-made-easy' ),
             'translate_selecteddates'   => __( 'Selected dates:', 'events-made-easy' ),
-            'translate_firstDayOfWeek'  => get_option( 'start_of_week' ),
-            'translate_flanguage'       => $language,
-            'translate_minutesStep'     => get_option( 'eme_timepicker_minutesstep' ),
-            'translate_fdateformat'     => EME_WP_DATE_FORMAT,
-            'translate_ftimeformat'     => EME_WP_TIME_FORMAT,
-            'translate_fdatetimeformat' => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
             'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
             'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
         ];

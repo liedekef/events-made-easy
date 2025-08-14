@@ -970,7 +970,8 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $date_obj = ExpressiveDate::createFromFormat( 'H:i:s', $value, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
                 $value    = $date_obj->format( $dateformat );
             }
-            $html = "<input $required_att $disabled name='$field_name' id='$field_name' value='$value' data-time-format='$dateformat' class='eme_formfield_timepicker $class'>";
+            $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield_ftime $class'>";
             break;
         case 'datalist':
             # for text fields

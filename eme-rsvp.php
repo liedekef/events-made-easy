@@ -4020,33 +4020,25 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                 $found = 0;
             }
         } elseif ( $payment && preg_match( '/#_MULTIBOOKING_SEATS$/', $result ) ) {
-            if ( $is_multibooking ) {
-                // returns the total of all seats for all bookings in the payment id related to this booking
-                $replacement = eme_get_payment_seats( $payment );
-            }
+            // returns the total of all seats for all bookings in the payment id related to this booking
+            $replacement = eme_get_payment_seats( $payment );
         } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE$/', $result ) ) {
-            if ( $is_multibooking ) {
-                // returns the price for all bookings in the payment id related to this booking
-                $price       = eme_get_payment_price( $payment_id );
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
+            // returns the price for all bookings in the payment id related to this booking
+            $price       = eme_get_payment_price( $payment_id );
+            $replacement = eme_localized_price( $price, $event['currency'], $target );
         } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_NO_VAT$/', $result ) ) {
-            if ( $is_multibooking ) {
-                // returns the price for all bookings in the payment id related to this booking
-                $price       = eme_get_payment_price_novat( $payment_id );
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
+            // returns the price for all bookings in the payment id related to this booking
+            $price       = eme_get_payment_price_novat( $payment_id );
+            $replacement = eme_localized_price( $price, $event['currency'], $target );
         } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_VAT_ONLY$/', $result ) ) {
-            if ( $is_multibooking ) {
-                // returns the price for all bookings in the payment id related to this booking
-                $price       = eme_get_payment_price_vatonly( $payment_id );
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
+            // returns the price for all bookings in the payment id related to this booking
+            $price       = eme_get_payment_price_vatonly( $payment_id );
+            $replacement = eme_localized_price( $price, $event['currency'], $target );
         } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_DETAILS_TEMPLATE\{(\d+)\}$/', $result, $matches ) ) {
             $template_id = intval( $matches[1] );
             $template    = eme_get_template_format( $template_id );
             $res         = '';
-            if ( $template && $is_multibooking ) {
+            if ( $template) {
                 $bookings = eme_get_bookings_by_paymentid( $payment_id );
                 foreach ( $bookings as $tmp_booking ) {
                     $tmp_event = eme_get_event( $tmp_booking['event_id'] );

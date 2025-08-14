@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.2  (2025/08/14) =
+* time_js custom field fix
+* datetime format was set to default, not user preferences
+* datepicker update to prevent paste/drop but allow people to tab in/out for keyboard users
+
 = 3.0.1  (2025/08/14) =
 * Small JS typo fix when wanting to see the bookings via the event list
 * Improvement for the select-boxes (if not multiple: lose focus after selection)

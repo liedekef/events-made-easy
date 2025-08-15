@@ -131,18 +131,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add extra fields
         const extraFieldsAttr = BookingsTableContainer.dataset.extrafields;
         const extraFieldNamesAttr = BookingsTableContainer.dataset.extrafieldnames;
-        const extrafieldsearchableAttr = BookingsTableContainer.dataset.extrafieldsearchable;
+        const extraFieldSearchableAttr = BookingsTableContainer.dataset.extrafieldsearchable;
         if (extraFieldsAttr && extraFieldNamesAttr) {
             const extraFields = extraFieldsAttr.split(',');
             const extraNames = extraFieldNamesAttr.split(',');
-            const extraSearches = extrafieldsearchableAttr.split(',');
-            extraFields.forEach((field, index) => {
-                if (field == 'SEPARATOR') {
-                    let fieldindex = 'SEPARATOR_'+index;
-                    bookingFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
-                } else if (field) {
-                    let fieldindex = 'FIELD_'+index;
-                    bookingFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index]=='1', visibility: 'hidden' };
+            const extraSearches = extraFieldSearchableAttr.split(',');
+            extraFields.forEach((value, index) => {
+                if (value == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+value;
+                    memberFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
+                } else {
+                    let fieldindex = 'FIELD_'+value;
+                    memberFields[fieldindex] = { title: extraNames[index], sorting: extraSearches[index]=='1', visibility: 'hidden' };
                 }
             });
         }

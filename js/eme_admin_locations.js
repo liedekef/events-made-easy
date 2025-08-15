@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const extraFields = extraFieldsAttr.split(',');
             const extraNames = extraFieldNamesAttr.split(',');
             const extraSearches = extraFieldSearchableAttr.split(',');
-            extraFields.forEach((field, index) => {
-                if (field == 'SEPARATOR') {
-                    let fieldindex = 'SEPARATOR_'+index;
-                    locationFields[fieldindex] = { title: extraNames[index] || field, sorting: false, visibility: 'separator' };
-                } else if (field) {
-                    let fieldindex = 'FIELD_'+index;
-                    locationFields[fieldindex] = { title: extraNames[index] || field, sorting: extraSearches[index] == '1', visibility: 'hidden' };
+            extraFields.forEach((value, index) => {
+                if (value == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+value;
+                    memberFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
+                } else {
+                    let fieldindex = 'FIELD_'+value;
+                    memberFields[fieldindex] = { title: extraNames[index], sorting: extraSearches[index]=='1', visibility: 'hidden' };
                 }
             });
         }

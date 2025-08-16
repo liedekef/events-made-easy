@@ -1,50 +1,50 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const EventsTableContainer = $('#EventsTableContainer');
+    const EventsTableContainer = EME.$('#EventsTableContainer');
     let EventsTable;
-    const RecurrencesTableContainer = $('#RecurrencesTableContainer');
+    const RecurrencesTableContainer = EME.$('#RecurrencesTableContainer');
     let RecurrencesTable;
 
     function updateIntervalDescriptor() {
-        $$('.interval-desc').forEach(el => eme_toggle(el, false));
+        EME.$$('.interval-desc').forEach(el => eme_toggle(el, false));
         
         // for specific months, we just hide and return
-        if ($('select#recurrence-frequency')?.value === 'specific_months') {
-            const intervalInput = $('input#recurrence-interval');
-            const specificSpan = $('span#specific_months_span');
+        if (EME.$('select#recurrence-frequency')?.value === 'specific_months') {
+            const intervalInput = EME.$('input#recurrence-interval');
+            const specificSpan = EME.$('span#specific_months_span');
             if (intervalInput) eme_toggle(intervalInput, false);
             if (specificSpan) eme_toggle(specificSpan, true);
             return;
         } else {
-            const intervalInput = $('input#recurrence-interval');
-            const specificSpan = $('span#specific_months_span');
+            const intervalInput = EME.$('input#recurrence-interval');
+            const specificSpan = EME.$('span#specific_months_span');
             if (intervalInput) eme_toggle(intervalInput, true);
             if (specificSpan) eme_toggle(specificSpan, false);
         }
         
         let number = '-plural';
-        const intervalVal = $('input#recurrence-interval')?.value;
+        const intervalVal = EME.$('input#recurrence-interval')?.value;
         if (intervalVal === '1' || intervalVal === '') {
             number = '-singular';
         }
         
-        const frequency = $('select#recurrence-frequency')?.value;
-        const descriptor = $(`span#interval-${frequency}${number}`);
+        const frequency = EME.$('select#recurrence-frequency')?.value;
+        const descriptor = EME.$(`span#interval-${frequency}${number}`);
         if (descriptor) eme_toggle(descriptor, true);
     }
 
     function updateIntervalSelectors() {
-        $$('span.alternate-selector').forEach(el => eme_toggle(el, false));
-        const frequency = $('select#recurrence-frequency')?.value;
-        const selector = $(`span#${frequency}-selector`);
+        EME.$$('span.alternate-selector').forEach(el => eme_toggle(el, false));
+        const frequency = EME.$('select#recurrence-frequency')?.value;
+        const selector = EME.$(`span#${frequency}-selector`);
         if (selector) eme_toggle(selector, true);
     }
 
     function updateShowHideRecurrence() {
-        const recurrenceChecked = $('input#event-recurrence')?.checked;
-        const patternEl = $('#event_recurrence_pattern');
-        const durationDiv = $('div#div_recurrence_event_duration');
-        const recDateDiv = $('div#div_recurrence_date');
-        const eventDateDiv = $('div#div_event_date');
+        const recurrenceChecked = EME.$('input#event-recurrence')?.checked;
+        const patternEl = EME.$('#event_recurrence_pattern');
+        const durationDiv = EME.$('div#div_recurrence_event_duration');
+        const recDateDiv = EME.$('div#div_recurrence_date');
+        const eventDateDiv = EME.$('div#div_event_date');
         
         if (recurrenceChecked) {
             if (patternEl) {
@@ -65,12 +65,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideRecurrenceSpecificDays() {
-        const frequency = $('select#recurrence-frequency')?.value;
-        const intervalsDiv = $('div#recurrence-intervals');
-        const endDateInput = $('input#localized-rec-end-date');
-        const explanationP = $('p#recurrence-dates-explanation');
-        const specificSpan = $('span#recurrence-dates-explanation-specificdates');
-        const startDateInput = $('#localized-rec-start-date');
+        const frequency = EME.$('select#recurrence-frequency')?.value;
+        const intervalsDiv = EME.$('div#recurrence-intervals');
+        const endDateInput = EME.$('input#localized-rec-end-date');
+        const explanationP = EME.$('p#recurrence-dates-explanation');
+        const specificSpan = EME.$('span#recurrence-dates-explanation-specificdates');
+        const startDateInput = EME.$('#localized-rec-start-date');
         
         if (frequency === 'specific') {
             if (intervalsDiv) eme_toggle(intervalsDiv, false);
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     startDateInput._fdatepicker.setOption('multiple', false);
                 }
                 // if the recurrence contained specific days before, clear those
-                const submitInput = $('#rec-start-date-to-submit');
+                const submitInput = EME.$('#rec-start-date-to-submit');
                 if (submitInput?.value.includes(',')) {
                     startDateInput._fdatepicker.clear();
                 }
@@ -103,17 +103,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideRsvp() {
-        const rsvpChecked = $('input#event_rsvp')?.checked;
+        const rsvpChecked = EME.$('input#event_rsvp')?.checked;
         const elements = [
-            $('div#rsvp-details'),
-            $('div#div_event_rsvp'),
-            $('div#div_dyndata'),
-            $('div#div_event_dyndata_allfields'),
-            $('div#div_event_payment_methods'),
-            $('div#div_event_registration_form_format'),
-            $('div#div_event_cancel_form_format'),
-            $('div#div_event_registration_recorded_ok_html'),
-            $('div#div_event_attendance_info')
+            EME.$('div#rsvp-details'),
+            EME.$('div#div_event_rsvp'),
+            EME.$('div#div_dyndata'),
+            EME.$('div#div_event_dyndata_allfields'),
+            EME.$('div#div_event_payment_methods'),
+            EME.$('div#div_event_registration_form_format'),
+            EME.$('div#div_event_cancel_form_format'),
+            EME.$('div#div_event_registration_recorded_ok_html'),
+            EME.$('div#div_event_attendance_info')
         ];
         
         elements.forEach(el => {
@@ -133,8 +133,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideTasks() {
-        const tasksChecked = $('input#event_tasks')?.checked;
-        const container = $('div#tab-tasks-container');
+        const tasksChecked = EME.$('input#event_tasks')?.checked;
+        const container = EME.$('div#tab-tasks-container');
         if (container) {
             if (tasksChecked) {
                 container.style.opacity = '0';
@@ -150,8 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideTodos() {
-        const todosChecked = $('input#event_todos')?.checked;
-        const container = $('div#tab-todos-container');
+        const todosChecked = EME.$('input#event_todos')?.checked;
+        const container = EME.$('div#tab-todos-container');
         if (container) {
             if (todosChecked) {
                 container.style.opacity = '0';
@@ -167,11 +167,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideRsvpAutoApprove() {
-        const approvalChecked = $('input#approval_required-checkbox')?.checked;
-        const warningSpan = $('span#span_approval_required_mail_warning');
-        const settingsP = $('#p_approve_settings');
-        const pendingDetails = $('#details_pending');
-        const reminderDiv = $('#div_event_registration_pending_reminder_email');
+        const approvalChecked = EME.$('input#approval_required-checkbox')?.checked;
+        const warningSpan = EME.$('span#span_approval_required_mail_warning');
+        const settingsP = EME.$('#p_approve_settings');
+        const pendingDetails = EME.$('#details_pending');
+        const reminderDiv = EME.$('#div_event_registration_pending_reminder_email');
         
         if (approvalChecked) {
             if (warningSpan) {
@@ -201,26 +201,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideRsvpRequireUserConfirmation() {
-        const confirmChecked = $('input#eme_prop_require_user_confirmation')?.checked;
-        const details = $('#details_userconfirm');
+        const confirmChecked = EME.$('input#eme_prop_require_user_confirmation')?.checked;
+        const details = EME.$('#details_userconfirm');
         if (details) {
             eme_toggle(details, confirmChecked);
         }
     }
 
     function updateShowHideTime() {
-        const allDayChecked = $('input#eme_prop_all_day')?.checked;
-        const timeSelector = $('div#time-selector');
+        const allDayChecked = EME.$('input#eme_prop_all_day')?.checked;
+        const timeSelector = EME.$('div#time-selector');
         if (timeSelector) {
             eme_toggle(timeSelector, !allDayChecked);
         }
     }
 
     function updateShowHideMultiPriceDescription() {
-        const priceInput = $('input#price');
+        const priceInput = EME.$('input#price');
         if (priceInput) {
-            const multiPriceRow = $('tr#row_multiprice_desc');
-            const priceRow = $('tr#row_price_desc');
+            const multiPriceRow = EME.$('tr#row_multiprice_desc');
+            const priceRow = EME.$('tr#row_price_desc');
             
             if (priceInput.value.includes('||')) {
                 if (multiPriceRow) eme_toggle(multiPriceRow, true);
@@ -233,8 +233,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideLocMaxCapWarning() {
-        const capacityInput = $('input#eme_loc_prop_max_capacity');
-        const warning = $('#loc_max_cap_warning');
+        const capacityInput = EME.$('input#eme_loc_prop_max_capacity');
+        const warning = EME.$('#loc_max_cap_warning');
         if (capacityInput && warning) {
             const capacity = parseInt(capacityInput.value) || 0;
             eme_toggle(warning, capacity > 0);
@@ -242,17 +242,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function eme_event_location_autocomplete() {
-        const locationNameInput = $('input#location_name');
+        const locationNameInput = EME.$('input#location_name');
         if (locationNameInput) {
             let timeout;
             
             document.addEventListener('click', () => {
-                $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
             });
 
             locationNameInput.addEventListener('input', function() {
                 clearTimeout(timeout);
-                $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
                 
                 const inputValue = this.value;
                 if (inputValue.length >= 2) {
@@ -280,33 +280,33 @@ document.addEventListener('DOMContentLoaded', function () {
                                 
                                 suggestion.addEventListener('click', (e) => {
                                     e.preventDefault();
-                                    $('input#location_id').value = eme_htmlDecode(item.location_id);
-                                    $('input#location_name').value = eme_htmlDecode(item.name);
-                                    $('input#location_address1').value = eme_htmlDecode(item.address1);
-                                    $('input#location_address2').value = eme_htmlDecode(item.address2);
-                                    $('input#location_city').value = eme_htmlDecode(item.city);
-                                    $('input#location_state').value = eme_htmlDecode(item.state);
-                                    $('input#location_zip').value = eme_htmlDecode(item.zip);
-                                    $('input#location_country').value = eme_htmlDecode(item.country);
-                                    $('input#location_latitude').value = eme_htmlDecode(item.latitude);
-                                    $('input#location_longitude').value = eme_htmlDecode(item.longitude);
-                                    $('input#location_url').value = eme_htmlDecode(item.location_url);
-                                    $('input#eme_loc_prop_map_icon').value = eme_htmlDecode(item.map_icon);
-                                    $('input#eme_loc_prop_max_capacity').value = eme_htmlDecode(item.max_capacity);
-                                    $('input#eme_loc_prop_online_only').value = eme_htmlDecode(item.online_only);
+                                    EME.$('input#location_id').value = eme_htmlDecode(item.location_id);
+                                    EME.$('input#location_name').value = eme_htmlDecode(item.name);
+                                    EME.$('input#location_address1').value = eme_htmlDecode(item.address1);
+                                    EME.$('input#location_address2').value = eme_htmlDecode(item.address2);
+                                    EME.$('input#location_city').value = eme_htmlDecode(item.city);
+                                    EME.$('input#location_state').value = eme_htmlDecode(item.state);
+                                    EME.$('input#location_zip').value = eme_htmlDecode(item.zip);
+                                    EME.$('input#location_country').value = eme_htmlDecode(item.country);
+                                    EME.$('input#location_latitude').value = eme_htmlDecode(item.latitude);
+                                    EME.$('input#location_longitude').value = eme_htmlDecode(item.longitude);
+                                    EME.$('input#location_url').value = eme_htmlDecode(item.location_url);
+                                    EME.$('input#eme_loc_prop_map_icon').value = eme_htmlDecode(item.map_icon);
+                                    EME.$('input#eme_loc_prop_max_capacity').value = eme_htmlDecode(item.max_capacity);
+                                    EME.$('input#eme_loc_prop_online_only').value = eme_htmlDecode(item.online_only);
                                     
                                     // Set all fields to readonly
                                     ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
                                      'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
                                      'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                                        const field = $(`input#${fieldName}`);
+                                        const field = EME.$(`input#${fieldName}`);
                                         if (field) field.readOnly = true;
                                     });
                                     
-                                    const onlineField = $('input#eme_loc_prop_online_only');
+                                    const onlineField = EME.$('input#eme_loc_prop_online_only');
                                     if (onlineField) onlineField.disabled = true;
                                     
-                                    const editImg = $('#img_edit_location');
+                                    const editImg = EME.$('#img_edit_location');
                                     if (editImg) eme_toggle(editImg, true);
                                     
                                     if (typeof L !== 'undefined' && emeevents.translate_map_is_active === "true") {
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 suggestions.appendChild(noMatch);
                             }
 
-                            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
                             locationNameInput.insertAdjacentElement('afterend', suggestions);
                         });
                     }, 500);
@@ -336,52 +336,52 @@ document.addEventListener('DOMContentLoaded', function () {
                     ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
                      'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
                      'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = $(`input#${fieldName}`);
+                        const field = EME.$(`input#${fieldName}`);
                         if (field) {
                             field.value = '';
                             field.readOnly = false;
                         }
                     });
                     
-                    const onlineField = $('input#eme_loc_prop_online_only');
+                    const onlineField = EME.$('input#eme_loc_prop_online_only');
                     if (onlineField) onlineField.disabled = false;
                     
-                    const editImg = $('#img_edit_location');
+                    const editImg = EME.$('#img_edit_location');
                     if (editImg) eme_toggle(editImg, false);
                 }
             });
 
-            const editImg = $('#img_edit_location');
+            const editImg = EME.$('#img_edit_location');
             if (editImg) {
                 editImg.addEventListener('click', (e) => {
                     e.preventDefault();
                     ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
                      'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
                      'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = $(`input#${fieldName}`);
+                        const field = EME.$(`input#${fieldName}`);
                         if (field) field.readOnly = false;
                     });
                     
-                    const onlineField = $('input#eme_loc_prop_online_only');
+                    const onlineField = EME.$('input#eme_loc_prop_online_only');
                     if (onlineField) onlineField.disabled = false;
                     
-                    $('input#location_id').value = '';
+                    EME.$('input#location_id').value = '';
                     eme_toggle(editImg, false);
                 });
             }
 
             // Set initial state
-            const locationIdInput = $('input#location_id');
+            const locationIdInput = EME.$('input#location_id');
             if (locationIdInput) {
                 if (locationIdInput.value === '0' || locationIdInput.value === '') {
                     ['location_name', 'location_address1', 'location_address2', 'location_city', 
                      'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
                      'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = $(`input#${fieldName}`);
+                        const field = EME.$(`input#${fieldName}`);
                         if (field) field.readOnly = false;
                     });
                     
-                    const onlineField = $('input#eme_loc_prop_online_only');
+                    const onlineField = EME.$('input#eme_loc_prop_online_only');
                     if (onlineField) onlineField.disabled = false;
                     
                     if (editImg) eme_toggle(editImg, false);
@@ -389,18 +389,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     ['location_name', 'location_address1', 'location_address2', 'location_city', 
                      'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
                      'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = $(`input#${fieldName}`);
+                        const field = EME.$(`input#${fieldName}`);
                         if (field) field.readOnly = true;
                     });
                     
-                    const onlineField = $('input#eme_loc_prop_online_only');
+                    const onlineField = EME.$('input#eme_loc_prop_online_only');
                     if (onlineField) onlineField.disabled = true;
                     
                     if (editImg) eme_toggle(editImg, true);
                 }
 
                 locationIdInput.addEventListener('change', function() {
-                    const editImg = $('#img_edit_location');
+                    const editImg = EME.$('#img_edit_location');
                     if (editImg) {
                         eme_toggle(editImg, this.value);
                     }
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } else {
             // Handle location select dropdown
-            const locationSelect = $('#location-select-id');
+            const locationSelect = EME.$('#location-select-id');
             if (locationSelect) {
                 locationSelect.addEventListener('change', function() {
                     const formData = new URLSearchParams({
@@ -421,15 +421,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         .then(response => response.json())
                         .then(item => {
                             console.log(item);
-                            $('input[name="location-select-name"]').value = item.name;
-                            $('input[name="location-select-address1"]').value = item.address1;
-                            $('input[name="location-select-address2"]').value = item.address2;
-                            $('input[name="location-select-city"]').value = item.city;
-                            $('input[name="location-select-state"]').value = item.state;
-                            $('input[name="location-select-zip"]').value = item.zip;
-                            $('input[name="location-select-country"]').value = item.country;
-                            $('input[name="location-select-latitude"]').value = item.latitude;
-                            $('input[name="location-select-longitude"]').value = item.longitude;
+                            EME.$('input[name="location-select-name"]').value = item.name;
+                            EME.$('input[name="location-select-address1"]').value = item.address1;
+                            EME.$('input[name="location-select-address2"]').value = item.address2;
+                            EME.$('input[name="location-select-city"]').value = item.city;
+                            EME.$('input[name="location-select-state"]').value = item.state;
+                            EME.$('input[name="location-select-zip"]').value = item.zip;
+                            EME.$('input[name="location-select-country"]').value = item.country;
+                            EME.$('input[name="location-select-latitude"]').value = item.latitude;
+                            EME.$('input[name="location-select-longitude"]').value = item.longitude;
                             
                             if (emeevents.translate_map_is_active === 'true') {
                                 loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function applyDefaultOnFocusBlur() {
-        $$('input[data-default]').forEach(el => {
+        EME.$$('input[data-default]').forEach(el => {
             const defaultValue = el.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
             
             el.addEventListener('focus', function() {
@@ -457,10 +457,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        $$('span[data-default]').forEach(span => {
+        EME.$$('span[data-default]').forEach(span => {
             const defaultValue = span.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
             const targetId = span.getAttribute('data-targetid');
-            const target = $(`#${targetId}`);
+            const target = EME.$(`#${targetId}`);
             
             if (target) {
                 target.addEventListener('focus', function() {
@@ -479,10 +479,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validateEventForm() {
-        const recurrenceChecked = $('input#event-recurrence')?.checked;
-        const startDate = $('input#localized-rec-start-date')?.value;
-        const endDate = $('input#localized-rec-end-date')?.value;
-        const endDateField = $('input#localized-rec-end-date');
+        const recurrenceChecked = EME.$('input#event-recurrence')?.checked;
+        const startDate = EME.$('input#localized-rec-start-date')?.value;
+        const endDate = EME.$('input#localized-rec-end-date')?.value;
+        const endDateField = EME.$('input#localized-rec-end-date');
         
         if (recurrenceChecked && startDate === endDate) {
             alert(emeevents.translate_startenddate_identical || 'Start and end dates cannot be identical');
@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         
         // Enable online_only checkbox before submit
-        const onlineField = $('input#eme_loc_prop_online_only');
+        const onlineField = EME.$('input#eme_loc_prop_online_only');
         if (onlineField) onlineField.disabled = false;
         
         return true;
@@ -511,10 +511,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideStuff() {
-        const action = $('#eme_admin_action')?.value || '';
-        const categorySpan = $('span#span_addtocategory');
-        const trashSpan = $('span#span_sendtrashmails');
-        const extendSpan = $('span#span_extendrecurrences');
+        const action = EME.$('#eme_admin_action')?.value || '';
+        const categorySpan = EME.$('span#span_addtocategory');
+        const trashSpan = EME.$('span#span_sendtrashmails');
+        const extendSpan = EME.$('span#span_extendrecurrences');
         
         if (categorySpan) eme_toggle(categorySpan,action === 'addCategory');
         if (trashSpan) eme_toggle(trashSpan,action === 'trashEvents');
@@ -522,11 +522,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Initialize date pickers
-    if ($('#localized-start-date')) {
+    if (EME.$('#localized-start-date')) {
         new FDatepicker('#localized-start-date',{
             format: emeevents.translate_fdateformat,
             onSelect: function(formattedDate, date, inst) {
-                const endDatePicker = $('#localized-end-date');
+                const endDatePicker = EME.$('#localized-end-date');
                 if (endDatePicker && endDatePicker._fdatepicker) {
                     const endDate = endDatePicker._fdatepicker.selectedDate;
                     if (endDate) {
@@ -539,11 +539,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if ($('#localized-end-date')) {
+    if (EME.$('#localized-end-date')) {
         new FDatepicker('#localized-end-date',{
             format: emeevents.translate_fdateformat,
             onSelect: function(formattedDate, date, inst) {
-                const startDatePicker = $('#localized-start-date');
+                const startDatePicker = EME.$('#localized-start-date');
                 if (startDatePicker && startDatePicker._fdatepicker) {
                     const startDate = startDatePicker._fdatepicker.selectedDate;
                     if (startDate) {
@@ -556,18 +556,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if ($('#localized-rec-start-date')) {
+    if (EME.$('#localized-rec-start-date')) {
         new FDatepicker('#localized-rec-start-date',{
             format: emeevents.translate_fdateformat
         });
     }
 
-    if ($('#localized-rec-end-date')) {
+    if (EME.$('#localized-rec-end-date')) {
         new FDatepicker('#localized-rec-end-date',{
             format: emeevents.translate_fdateformat,
             onSelect: function(formattedDate, date, inst) {
                 if (!Array.isArray(date)) {
-                    const startDatePicker = $('#localized-rec-start-date');
+                    const startDatePicker = EME.$('#localized-rec-start-date');
                     if (startDatePicker && startDatePicker._fdatepicker) {
                         const startDate = startDatePicker._fdatepicker.selectedDate;
                         if (startDate) {
@@ -582,38 +582,38 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Bind event listeners
-    const eventRecurrence = $('input#event-recurrence');
+    const eventRecurrence = EME.$('input#event-recurrence');
     if (eventRecurrence) eventRecurrence.addEventListener('change', updateShowHideRecurrence);
     
-    const eventTasks = $('input#event_tasks');
+    const eventTasks = EME.$('input#event_tasks');
     if (eventTasks) eventTasks.addEventListener('change', updateShowHideTasks);
     
-    const eventTodos = $('input#event_todos');
+    const eventTodos = EME.$('input#event_todos');
     if (eventTodos) eventTodos.addEventListener('change', updateShowHideTodos);
     
-    const eventRsvp = $('input#event_rsvp');
+    const eventRsvp = EME.$('input#event_rsvp');
     if (eventRsvp) eventRsvp.addEventListener('change', updateShowHideRsvp);
     
-    const allDay = $('input#eme_prop_all_day');
+    const allDay = EME.$('input#eme_prop_all_day');
     if (allDay) allDay.addEventListener('change', updateShowHideTime);
     
-    const price = $('input#price');
+    const price = EME.$('input#price');
     if (price) price.addEventListener('change', updateShowHideMultiPriceDescription);
     
-    const maxCapacity = $('input#eme_loc_prop_max_capacity');
+    const maxCapacity = EME.$('input#eme_loc_prop_max_capacity');
     if (maxCapacity) maxCapacity.addEventListener('change', updateShowHideLocMaxCapWarning);
     
-    const approvalRequired = $('input#approval_required-checkbox');
+    const approvalRequired = EME.$('input#approval_required-checkbox');
     if (approvalRequired) approvalRequired.addEventListener('change', updateShowHideRsvpAutoApprove);
     
-    const userConfirmation = $('input#eme_prop_require_user_confirmation');
+    const userConfirmation = EME.$('input#eme_prop_require_user_confirmation');
     if (userConfirmation) userConfirmation.addEventListener('change', updateShowHideRsvpRequireUserConfirmation);
 
     // Recurrence elements
-    const recurrenceInterval = $('input#recurrence-interval');
+    const recurrenceInterval = EME.$('input#recurrence-interval');
     if (recurrenceInterval) recurrenceInterval.addEventListener('keyup', updateIntervalDescriptor);
     
-    const recurrenceFrequency = $('select#recurrence-frequency');
+    const recurrenceFrequency = EME.$('select#recurrence-frequency');
     if (recurrenceFrequency) {
         recurrenceFrequency.addEventListener('change', updateIntervalDescriptor);
         recurrenceFrequency.addEventListener('change', updateIntervalSelectors);
@@ -621,18 +621,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event name title update
-    const eventNameInput = $('input[name=event_name]');
+    const eventNameInput = EME.$('input[name=event_name]');
     if (eventNameInput) {
         changeEventAdminPageTitle(eventNameInput.value);
         eventNameInput.addEventListener('keyup', changeEventAdminPageTitle);
     }
 
     // Image handling
-    const imageButton = $('#event_image_button');
-    const removeImageBtn = $('#event_remove_image_button');
-    const imageUrl = $('#event_image_url');
-    const imageExample = $('#eme_event_image_example');
-    const imageId = $('#event_image_id');
+    const imageButton = EME.$('#event_image_button');
+    const removeImageBtn = EME.$('#event_remove_image_button');
+    const imageUrl = EME.$('#event_image_url');
+    const imageExample = EME.$('#eme_event_image_example');
+    const imageId = EME.$('#event_image_id');
     if (removeImageBtn) {
         removeImageBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -704,7 +704,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Admin action change handler
-    const adminAction = $('#eme_admin_action');
+    const adminAction = EME.$('#eme_admin_action');
     if (adminAction) {
         updateShowHideStuff();
         adminAction.addEventListener('change', updateShowHideStuff);
@@ -808,15 +808,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 action: 'eme_events_list',
                 eme_admin_nonce: emeevents.translate_adminnonce,
                 trash: $_GET['trash'] || '',
-                scope: $('#scope')?.value || '',
-                status: $('#status')?.value || '',
-                category: $('#category')?.value || '',
-                search_name: $('#search_name')?.value || '',
-                search_location: $('#search_location')?.value || '',
-                search_start_date: $('#search_start_date')?.value || '',
-                search_end_date: $('#search_end_date')?.value || '',
-                search_customfields: eme_getValue($('#search_customfields')),
-                search_customfieldids: eme_getValue($('#search_customfieldids'))
+                scope: EME.$('#scope')?.value || '',
+                status: EME.$('#status')?.value || '',
+                category: EME.$('#category')?.value || '',
+                search_name: EME.$('#search_name')?.value || '',
+                search_location: EME.$('#search_location')?.value || '',
+                search_start_date: EME.$('#search_start_date')?.value || '',
+                search_end_date: EME.$('#search_end_date')?.value || '',
+                search_customfields: eme_getValue(EME.$('#search_customfields')),
+                search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
             }),
             fields: eventFields,
             sortingInfoSelector: '#eventstablesortingInfo',
@@ -846,10 +846,10 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_recurrences_list',
                 eme_admin_nonce: emeevents.translate_adminnonce,
-                scope: $('#scope')?.value || '',
-                search_name: $('#search_name')?.value || '',
-                search_start_date: $('#search_start_date')?.value || '',
-                search_end_date: $('#search_end_date')?.value || ''
+                scope: EME.$('#scope')?.value || '',
+                search_name: EME.$('#search_name')?.value || '',
+                search_start_date: EME.$('#search_start_date')?.value || '',
+                search_end_date: EME.$('#search_end_date')?.value || ''
             }),
             fields: {
                 recurrence_id: {
@@ -909,14 +909,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Events Bulk Actions ---
-    const eventsButton = $('#EventsActionsButton');
+    const eventsButton = EME.$('#EventsActionsButton');
     if (eventsButton) {
         eventsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = EventsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
-            const sendTrashMails = $('#send_trashmails')?.value || 'no';
-            const addCategory = $('#addtocategory')?.value || '';
+            const doAction = EME.$('#eme_admin_action').value;
+            const sendTrashMails = EME.$('#send_trashmails')?.value || 'no';
+            const addCategory = EME.$('#addtocategory')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -945,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     eventsButton.textContent = emeevents.translate_apply;
                     eventsButton.disabled = false;
 
-                    const msg = $('div#events-message');
+                    const msg = EME.$('div#events-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);
@@ -957,14 +957,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Recurrences Bulk Actions ---
-    const recurrencesButton = $('#RecurrencesActionsButton');
+    const recurrencesButton = EME.$('#RecurrencesActionsButton');
     if (recurrencesButton) {
         recurrencesButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = RecurrencesTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
-            const recNewStartDate = $('#rec_new_start_date')?.value || '';
-            const recNewEndDate = $('#rec_new_end_date')?.value || '';
+            const doAction = EME.$('#eme_admin_action').value;
+            const recNewStartDate = EME.$('#rec_new_start_date')?.value || '';
+            const recNewEndDate = EME.$('#rec_new_end_date')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     recurrencesButton.textContent = emeevents.translate_apply;
                     recurrencesButton.disabled = false;
 
-                    const msg = $('div#recurrences-message');
+                    const msg = EME.$('div#recurrences-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);
@@ -1005,17 +1005,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Buttons ---
-    $('#EventsLoadRecordsButton')?.addEventListener('click', e => {
+    EME.$('#EventsLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
         EventsTable.load();
     });
 
-    $('#RecurrencesLoadRecordsButton')?.addEventListener('click', e => {
+    EME.$('#RecurrencesLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
         RecurrencesTable.load();
     });
 
-    $('#eventForm')?.addEventListener('submit', function(event) {
+    EME.$('#eventForm')?.addEventListener('submit', function(event) {
         const form = this.form;
         // Manually trigger HTML5 validation
         if (!form.checkValidity()) {
@@ -1032,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(() => {
         // Hide recurrence date div initially
-        const recDateDiv = $('#div_recurrence_date');
+        const recDateDiv = EME.$('#div_recurrence_date');
         if (recDateDiv) eme_toggle(recDateDiv, false);
 
         // Apply default focus/blur behavior
@@ -1052,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateShowHideMultiPriceDescription();
         updateShowHideLocMaxCapWarning();
 
-        if ($('select#recurrence-frequency')) {
+        if (EME.$('select#recurrence-frequency')) {
             updateIntervalDescriptor();
             updateIntervalSelectors();
             updateShowHideRecurrenceSpecificDays();

@@ -94,14 +94,14 @@ document.addEventListener('DOMContentLoaded', function () {
     Jodit.defaultOptions.controls.insertFromMediaLibrary2 = {
         template: () => '<span style="display: flex; align-items: center;"><span style="font-size: 1.1em;">🎵 🖼️ 📎</span></span>',
         exec: (editor) => {
-            const escapeHtml = (text) => $('<div>').text(text).html();
+            const escapeHtml = (text) => EME.$('<div>').text(text).html();
             // Store original handler per editor instance
             if (!editor.mediaHandlers) {
                 editor.mediaHandlers = {
                     originalSend: wp.media.editor.send.attachment,
                     cleanup: function() {
                         wp.media.editor.send.attachment = editor.mediaHandlers.originalSend;
-                        $(document).off('click', editor.mediaHandlers.closeHandler);
+                        EME.$(document).off('click', editor.mediaHandlers.closeHandler);
                     }
                 }
             }
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
             wp.media.editor.open(editor.id);
 
             // Restore original send.attachment when modal closes
-            $(document).on('click', '.media-modal-close, .media-modal-backdrop', editor.mediaHandlers.cleanup);
+            EME.$(document).on('click', '.media-modal-close, .media-modal-backdrop', editor.mediaHandlers.cleanup);
         },
         tooltip: emejodit.translate_insertfrommedia,
     };

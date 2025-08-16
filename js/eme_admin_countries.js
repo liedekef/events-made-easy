@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const CountriesTableContainer = $('#CountriesTableContainer');
+    const CountriesTableContainer = EME.$('#CountriesTableContainer');
     let CountriesTable;
-    const StatesTableContainer = $('#StatesTableContainer');
+    const StatesTableContainer = EME.$('#StatesTableContainer');
     let StatesTable;
 
     // --- Initialize Countries Table ---
@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Countries Bulk Actions ---
-    const countriesButton = $('#CountriesActionsButton');
+    const countriesButton = EME.$('#CountriesActionsButton');
     if (countriesButton) {
         countriesButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = CountriesTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 countriesButton.textContent = emecountries.translate_apply;
                 countriesButton.disabled = false;
 
-                const msg = $('div#countries-message');
+                const msg = EME.$('div#countries-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);
@@ -134,12 +134,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- States Bulk Actions ---
-    const statesButton = $('#StatesActionsButton');
+    const statesButton = EME.$('#StatesActionsButton');
     if (statesButton) {
         statesButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = StatesTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 statesButton.textContent = emecountries.translate_apply;
                 statesButton.disabled = false;
 
-                const msg = $('div#states-message');
+                const msg = EME.$('div#states-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);

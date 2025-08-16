@@ -1,10 +1,10 @@
 // Main functions
 function eme_activateTab(target) {
-    $$('.eme-tab').forEach(tab => tab.classList.remove('active'));
-    $$('.eme-tab-content').forEach(content => content.classList.remove('active'));
+    EME.$$('.eme-tab').forEach(tab => tab.classList.remove('active'));
+    EME.$$('.eme-tab-content').forEach(content => content.classList.remove('active'));
 
-    const targetTab = $(`.eme-tab[data-tab="${target}"]`);
-    const targetContent = $(`#${target}`);
+    const targetTab = EME.$(`.eme-tab[data-tab="${target}"]`);
+    const targetContent = EME.$(`#${target}`);
 
     if (targetTab) targetTab.classList.add('active');
     if (targetContent) targetContent.classList.add('active');
@@ -18,10 +18,10 @@ function eme_activateTab(target) {
 
     if (target === "tab-mailings") {
         setTimeout(() => {
-            const container = $('#MailingsTableContainer');
+            const container = EME.$('#MailingsTableContainer');
             if (container && container.ftableInstance) {
                 //container.ftableInstance.recalcColumnWidthsOnce();
-                const loadButton = $('#MailingsLoadRecordsButton');
+                const loadButton = EME.$('#MailingsLoadRecordsButton');
                 if (loadButton) loadButton.click();
             }
         }, 100);
@@ -29,10 +29,10 @@ function eme_activateTab(target) {
 
     if (target === "tab-mailingsarchive") {
         setTimeout(() => {
-            const container = $('#ArchivedMailingsTableContainer');
+            const container = EME.$('#ArchivedMailingsTableContainer');
             if (container && container.ftableInstance) {
                 //container.ftableInstance.recalcColumnWidthsOnce();
-                const loadButton = $('#ArchivedMailingsLoadRecordsButton');
+                const loadButton = EME.$('#ArchivedMailingsLoadRecordsButton');
                 if (loadButton) loadButton.click();
             }
         }, 100);
@@ -40,10 +40,10 @@ function eme_activateTab(target) {
 
     if (target === "tab-allmail") {
         setTimeout(() => {
-            const container = $('#MailsTableContainer');
+            const container = EME.$('#MailsTableContainer');
             if (container && container.ftableInstance) {
                 //container.ftableInstance.recalcColumnWidthsOnce();
-                const loadButton = $('#MailsLoadRecordsButton');
+                const loadButton = EME.$('#MailsLoadRecordsButton');
                 if (loadButton) loadButton.click();
             }
         }, 100);
@@ -55,7 +55,7 @@ function eme_add_task_function(element) {
     const selectedItem = element.closest('tr');
     const metaCopy = selectedItem.cloneNode(true);
     let newId = 0;
-    while ($(`#eme_row_task_${newId}`)) newId++;
+    while (EME.$(`#eme_row_task_${newId}`)) newId++;
 
     const currentId = metaCopy.id.replace('eme_row_task_', '');
     metaCopy.id = `eme_row_task_${newId}`;
@@ -93,7 +93,7 @@ function eme_add_task_function(element) {
     if (descField) descField.value = '';
     if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
 
-    const tbody = $('#eme_tasks_tbody');
+    const tbody = EME.$('#eme_tasks_tbody');
     if (tbody) tbody.appendChild(metaCopy);
 
     // Initialize date picker for new row
@@ -133,7 +133,7 @@ function eme_add_task_function(element) {
 }
 
 function eme_remove_task_function(element) {
-    const tbody = $('#eme_tasks_tbody');
+    const tbody = EME.$('#eme_tasks_tbody');
     const rows = tbody ? tbody.children : [];
 
     if (rows.length > 1) {
@@ -141,7 +141,7 @@ function eme_remove_task_function(element) {
     } else {
         const metaCopy = element.closest('tr');
         let newId = 0;
-        while ($(`#eme_row_task_${newId}`)) newId++;
+        while (EME.$(`#eme_row_task_${newId}`)) newId++;
 
         const currentId = metaCopy.id.replace('eme_row_task_', '');
         metaCopy.id = `eme_row_task_${newId}`;
@@ -188,7 +188,7 @@ function eme_add_todo_function(element) {
     const selectedItem = element.closest('tr');
     const metaCopy = selectedItem.cloneNode(true);
     let newId = 0;
-    while ($(`#eme_row_todo_${newId}`)) newId++;
+    while (EME.$(`#eme_row_todo_${newId}`)) newId++;
 
     const currentId = metaCopy.id.replace('eme_row_todo_', '');
     metaCopy.id = `eme_row_todo_${newId}`;
@@ -216,12 +216,12 @@ function eme_add_todo_function(element) {
     if (descField) descField.value = '';
     if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
 
-    const tbody = $('#eme_todos_tbody');
+    const tbody = EME.$('#eme_todos_tbody');
     if (tbody) tbody.appendChild(metaCopy);
 }
 
 function eme_remove_todo_function(element) {
-    const tbody = $('#eme_todos_tbody');
+    const tbody = EME.$('#eme_todos_tbody');
     const rows = tbody ? tbody.children : [];
 
     if (rows.length > 1) {
@@ -229,7 +229,7 @@ function eme_remove_todo_function(element) {
     } else {
         const metaCopy = element.closest('tr');
         let newId = 0;
-        while ($(`#eme_row_todo_${newId}`)) newId++;
+        while (EME.$(`#eme_row_todo_${newId}`)) newId++;
 
         const currentId = metaCopy.id.replace('eme_row_todo_', '');
         metaCopy.id = `eme_row_todo_${newId}`;
@@ -267,10 +267,10 @@ function eme_remove_todo_function(element) {
 
 // Attachment UI initialization function
 function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, removeBtnSelector) {
-    const btn = $(btnSelector);
-    const links = $(linksSelector);
-    const ids = $(idsSelector);
-    const removeBtn = $(removeBtnSelector);
+    const btn = EME.$(btnSelector);
+    const links = EME.$(linksSelector);
+    const ids = EME.$(idsSelector);
+    const removeBtn = EME.$(removeBtnSelector);
 
     if (btn) {
         btn.addEventListener('click', (e) => {
@@ -319,14 +319,14 @@ function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, r
 // Main initialization
 document.addEventListener('DOMContentLoaded', function () {
     // Tab binding and default activation
-    $$('.eme-tab').forEach(tab => {
+    EME.$$('.eme-tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
             const target = e.target.getAttribute('data-tab');
             eme_activateTab(target);
         });
     });
 
-    const tabsContainer = $('.eme-tabs');
+    const tabsContainer = EME.$('.eme-tabs');
     if (tabsContainer) {
         const preferredTab = tabsContainer.getAttribute('data-showtab');
         if (preferredTab) {
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if ($_GET['page'] && $_GET['page']=='eme-emails') {
             eme_activateTab('tab-genericmails');
         } else {
-            const firstTab = $('.eme-tab');
+            const firstTab = EME.$('.eme-tab');
             if (firstTab) {
                 eme_activateTab(firstTab.getAttribute('data-tab'));
             }
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Input placeholder sizing
-    $$("input[placeholder]").forEach(input => {
+    EME.$$("input[placeholder]").forEach(input => {
         const placeholder = input.getAttribute('placeholder');
         const size = parseInt(input.getAttribute('size')) || 0;
         if (placeholder && placeholder.length > size) {
@@ -380,11 +380,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Attribute metabox add/remove
-    const attrAddBtn = $('#eme_attr_add_tag');
+    const attrAddBtn = EME.$('#eme_attr_add_tag');
     if (attrAddBtn) {
         attrAddBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const body = $('#eme_attr_body');
+            const body = EME.$('#eme_attr_body');
             const metas = body.children;
             const metaCopy = metas[0].cloneNode(true);
             const newId = metas.length + 1;
@@ -415,12 +415,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attribute removal
-    const attrBody = $('#eme_attr_body');
+    const attrBody = EME.$('#eme_attr_body');
     if (attrBody) {
         attrBody.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
-                const body = $('#eme_attr_body');
+                const body = EME.$('#eme_attr_body');
                 const children = Array.from(body.children);
 
                 if (children.length > 1) {
@@ -457,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // DynData sortable initialization
-    const dyndataTbody = $('#eme_dyndata_tbody');
+    const dyndataTbody = EME.$('#eme_dyndata_tbody');
     if (dyndataTbody && window.Sortable) {
         new Sortable(dyndataTbody, {
             handle: '.eme-sortable-handle',
@@ -485,11 +485,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (event.target.matches('.eme_dyndata_add_tag')) {
             event.preventDefault();
-            const tbody = $('#eme_dyndata_tbody');
+            const tbody = EME.$('#eme_dyndata_tbody');
             const metas = tbody.children;
             const metaCopy = metas[0].cloneNode(true);
             let newId = 0;
-            while ($(`#eme_dyndata_${newId}`)) newId++;
+            while (EME.$(`#eme_dyndata_${newId}`)) newId++;
 
             const currentId = metaCopy.id.replace('eme_dyndata_', '');
             metaCopy.id = `eme_dyndata_${newId}`;
@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // DynData remove functionality
         if (event.target.matches('.eme_remove_dyndatacondition')) {
             event.preventDefault();
-            const tbody = $('#eme_dyndata_tbody');
+            const tbody = EME.$('#eme_dyndata_tbody');
             const rows = tbody.children;
 
             if (rows.length > 1) {
@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 const metaCopy = e.target.closest('tr');
                 let newId = 0;
-                while ($(`#eme_dyndata_${newId}`)) newId++;
+                while (EME.$(`#eme_dyndata_${newId}`)) newId++;
 
                 const currentId = metaCopy.id.replace('eme_dyndata_', '');
                 metaCopy.id = `eme_dyndata_${newId}`;
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Tasks & Todos sortable
-    const tasksTbody = $('#eme_tasks_tbody');
+    const tasksTbody = EME.$('#eme_tasks_tbody');
     if (tasksTbody && window.Sortable) {
         new Sortable(tasksTbody, {
             handle: '.eme-sortable-handle',
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const todosTbody = $('#eme_todos_tbody');
+    const todosTbody = EME.$('#eme_todos_tbody');
     if (todosTbody && window.Sortable) {
         new Sortable(todosTbody, {
             handle: '.eme-sortable-handle',
@@ -602,11 +602,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const changeTaskDaysBtn = $('#change_task_days');
+    const changeTaskDaysBtn = EME.$('#change_task_days');
     if (changeTaskDaysBtn) {
         changeTaskDaysBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const offset = parseInt($('#task_offset').value);
+            const offset = parseInt(EME.$('#task_offset').value);
             let myId = 0;
 
             while (document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`)) {
@@ -634,11 +634,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Show/Hide Elements
-    $$('.showhidebutton').forEach(btn => {
+    EME.$$('.showhidebutton').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const elname = e.target.getAttribute('data-showhide');
-            const targetEl = $(`#${elname}`);
+            const targetEl = EME.$(`#${elname}`);
             if (targetEl) {
                 targetEl.classList.toggle('eme-hidden');
             }
@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: formData.toString()
                 }).then(() => {
-                    const span = $(`span#span_${randomId}`);
+                    const span = EME.$(`span#span_${randomId}`);
                     if (span) {
                         if (span.parentNode.children.length === 2) {
                             const sibling = span.parentNode.querySelector('input');
@@ -735,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function () {
     eme_admin_init_attachment_ui('#fs_ipn_attach_button', '#fs_ipn_attach_links', '#eme_fs_ipn_attach_ids', '#fs_ipn_remove_attach_button');
 
     // Animate details/summary blocks
-    $$('details summary').forEach(summary => {
+    EME.$$('details summary').forEach(summary => {
         const details = summary.parentNode;
         const wrapper = document.createElement('div');
 

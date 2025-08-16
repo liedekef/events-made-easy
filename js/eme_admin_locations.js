@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const LocationsTableContainer = $('#LocationsTableContainer');
+    const LocationsTableContainer = EME.$('#LocationsTableContainer');
     let LocationsTable;
 
     // --- Initialize Locations Table ---
@@ -111,9 +111,9 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_locations_list',
                 eme_admin_nonce: emelocations.translate_adminnonce,
-                search_name: $('#search_name')?.value || '',
-                search_customfields: $('#search_customfields')?.value || '',
-                search_customfieldids: eme_getValue($('#search_customfieldids'))
+                search_name: EME.$('#search_name')?.value || '',
+                search_customfields: EME.$('#search_customfields')?.value || '',
+                search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
             }),
             fields: locationFields,
             sortingInfoSelector: '#locationstablesortingInfo',
@@ -125,21 +125,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide transfer field ---
     function updateShowHideStuff() {
-        const action = $('#eme_admin_action')?.value || '';
-        eme_toggle($('#span_transferto'), ['trashLocations', 'deleteLocations'].includes(action));
+        const action = EME.$('#eme_admin_action')?.value || '';
+        eme_toggle(EME.$('#span_transferto'), ['trashLocations', 'deleteLocations'].includes(action));
     }
 
-    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Bulk Actions ---
-    const actionsButton = $('#LocationsActionsButton');
+    const actionsButton = EME.$('#LocationsActionsButton');
     if (actionsButton) {
         actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = LocationsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
-            const transfertoId = $('#transferto_id')?.value || '';
+            const doAction = EME.$('#eme_admin_action').value;
+            const transfertoId = EME.$('#transferto_id')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emelocations.translate_apply;
                     actionsButton.disabled = false;
 
-                    const msg = $('div#locations-message');
+                    const msg = EME.$('div#locations-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);
@@ -179,12 +179,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    $('#LocationsLoadRecordsButton')?.addEventListener('click', e => {
+    EME.$('#LocationsLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
         LocationsTable.load();
     });
 
-    $('#locationForm')?.addEventListener('submit', function(event) {
+    EME.$('#locationForm')?.addEventListener('submit', function(event) {
         const form = this.form;
         // Manually trigger HTML5 validation
         if (!form.checkValidity()) {
@@ -200,11 +200,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Image handling
-    const imageButton = $('#location_image_button');
-    const removeImageBtn = $('#location_remove_image_button');
-    const imageUrl = $('#location_image_url');
-    const imageExample = $('#eme_location_image_example');
-    const imageId = $('#location_image_id');
+    const imageButton = EME.$('#location_image_button');
+    const removeImageBtn = EME.$('#location_remove_image_button');
+    const imageUrl = EME.$('#location_image_url');
+    const imageExample = EME.$('#eme_location_image_example');
+    const imageId = EME.$('#location_image_id');
     if (removeImageBtn) {
         removeImageBtn.addEventListener('click', (e) => {
             e.preventDefault();

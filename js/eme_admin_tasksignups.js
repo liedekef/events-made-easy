@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const TaskSignupsTableContainer = $('#TaskSignupsTableContainer');
+    const TaskSignupsTableContainer = EME.$('#TaskSignupsTableContainer');
     let TaskSignupsTable;
 
     // --- Initialize Task Signups Table with ftable ---
@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 return {
                     action: 'eme_task_signups_list',
                     eme_admin_nonce: emetasks.translate_adminnonce,
-                    search_name: eme_getValue($('#search_name')),
-                    search_event: eme_getValue($('#search_event')),
-                    search_eventid: eme_getValue($('#search_eventid')),
-                    search_person: eme_getValue($('#search_person')),
-                    search_scope: eme_getValue($('#search_scope')),
-                    search_start_date: $('#search_start_date')?.value || '',
-                    search_end_date: $('#search_end_date')?.value || '',
-                    search_signup_status: eme_getValue($('#search_signup_status'))
+                    search_name: eme_getValue(EME.$('#search_name')),
+                    search_event: eme_getValue(EME.$('#search_event')),
+                    search_eventid: eme_getValue(EME.$('#search_eventid')),
+                    search_person: eme_getValue(EME.$('#search_person')),
+                    search_scope: eme_getValue(EME.$('#search_scope')),
+                    search_start_date: EME.$('#search_start_date')?.value || '',
+                    search_end_date: EME.$('#search_end_date')?.value || '',
+                    search_signup_status: eme_getValue(EME.$('#search_signup_status'))
                 };
             },
             fields: {
@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide "Send mails" based on selected action ---
     function updateShowHideStuff() {
-        const actionSelect = $('#eme_admin_action');
-        const sendMailSpan = $('#span_sendmails');
+        const actionSelect = EME.$('#eme_admin_action');
+        const sendMailSpan = EME.$('#span_sendmails');
         if (!actionSelect || !sendMailSpan) return;
 
         const action = actionSelect.value;
@@ -99,20 +99,20 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(sendMailSpan, show);
     }
 
-    const actionSelect = $('#eme_admin_action');
+    const actionSelect = EME.$('#eme_admin_action');
     if (actionSelect) {
         actionSelect.addEventListener('change', updateShowHideStuff);
         updateShowHideStuff(); // Initial call
     }
 
     // --- Bulk Actions Button ---
-    const actionsButton = $('#TaskSignupsActionsButton');
+    const actionsButton = EME.$('#TaskSignupsActionsButton');
     if (actionsButton) {
         actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = TaskSignupsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action')?.value;
-            const sendMail = $('#send_mail')?.value || 'no';
+            const doAction = EME.$('#eme_admin_action')?.value;
+            const sendMail = EME.$('#send_mail')?.value || 'no';
 
             if (!selectedRows.length || !doAction) return;
 
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emetasks.translate_apply;
                     actionsButton.disabled = false;
 
-                    const messageDiv = $('div#tasksignups-message');
+                    const messageDiv = EME.$('div#tasksignups-message');
                     if (messageDiv) {
                         messageDiv.innerHTML = data.htmlmessage;
                         eme_toggle(messageDiv, true);
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    const loadRecordsButton = $('#TaskSignupsLoadRecordsButton');
+    const loadRecordsButton = EME.$('#TaskSignupsLoadRecordsButton');
     if (loadRecordsButton) {
         loadRecordsButton.addEventListener('click', function (e) {
             e.preventDefault();

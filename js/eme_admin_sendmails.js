@@ -1,22 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const MailingReportTableContainer = $('#MailingReportTableContainer');
+    const MailingReportTableContainer = EME.$('#MailingReportTableContainer');
     let MailingReportTable;
-    const MailsTableContainer = $('#MailsTableContainer');
+    const MailsTableContainer = EME.$('#MailsTableContainer');
     let MailsTable;
-    const MailingsTableContainer = $('#MailingsTableContainer');
+    const MailingsTableContainer = EME.$('#MailingsTableContainer');
     let MailingsTable;
-    const ArchivedMailingsTableContainer = $('#ArchivedMailingsTableContainer');
+    const ArchivedMailingsTableContainer = EME.$('#ArchivedMailingsTableContainer');
     let ArchivedMailingsTable;
 
     // --- Autocomplete: chooseperson ---
     function setupAutocomplete(inputSelector, hiddenIdSelector, noMatchText) {
-        const input = $(inputSelector);
+        const input = EME.$(inputSelector);
         if (!input) return;
 
         let timeout;
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(s => s.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(s => s.remove());
             const value = this.value;
             if (value.length >= 2) {
                 timeout = setTimeout(() => {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 suggestion.addEventListener('click', e => {
                                     e.preventDefault();
                                     if (item.person_id) {
-                                        $(hiddenIdSelector).value = eme_htmlDecode(item.person_id);
+                                        EME.$(hiddenIdSelector).value = eme_htmlDecode(item.person_id);
                                         input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
                                         input.setAttribute('readonly', true);
                                         input.classList.add('clearable', 'x');
@@ -66,16 +66,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.addEventListener('click', () => {
-            $$('.eme-autocomplete-suggestions').forEach(s => s.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(s => s.remove());
         });
 
         input.addEventListener('keyup', () => {
-            $(hiddenIdSelector).value = '';
+            EME.$(hiddenIdSelector).value = '';
         });
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $(hiddenIdSelector).value = '';
+                EME.$(hiddenIdSelector).value = '';
                 input.removeAttribute('readonly');
                 input.classList.remove('clearable', 'x');
             }
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Mail Form Submission Handler ---
     function ajaxMailButtonHandler(buttonSelector, action, editorTarget, messageDivSelector, resetSelectors = [], extraReset = null) {
-        const button = $(buttonSelector);
+        const button = EME.$(buttonSelector);
         if (!button) return;
 
         button.addEventListener('click', function (e) {
@@ -108,14 +108,14 @@ document.addEventListener('DOMContentLoaded', function () {
             button.disabled = true;
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const messageDiv = $(messageDivSelector);
+                const messageDiv = EME.$(messageDivSelector);
                 messageDiv.innerHTML = data.htmlmessage;
                 eme_toggle(messageDiv, true);
 
                 if (data.Result === 'OK') {
                     form.reset();
                     resetSelectors.forEach(sel => {
-                        const el = $(sel);
+                        const el = EME.$(sel);
                         if (el && el.tomselect) {
                             el.tomselect.clear();
                         }
@@ -159,13 +159,13 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_send_memberships"
         ],
         function () {
-            $('input#eme_send_all_people').dispatchEvent(new Event('change'));
+            EME.$('input#eme_send_all_people').dispatchEvent(new Event('change'));
         }
     );
 
     // --- Mail Preview Handler ---
     function mailPreviewHandler(buttonSelector, action, messageDivSelector, inputSelectors) {
-        const button = $(buttonSelector);
+        const button = EME.$(buttonSelector);
         if (!button) return;
 
         button.addEventListener('click', function (e) {
@@ -184,14 +184,14 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const messageDiv = $(messageDivSelector);
+                const messageDiv = EME.$(messageDivSelector);
                 messageDiv.innerHTML = data.htmlmessage;
                 eme_toggle(messageDiv, true);
                 setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
 
                 if (data.Result === 'OK') {
                     inputSelectors.forEach(sel => {
-                        const el = $(sel);
+                        const el = EME.$(sel);
                         if (el) {
                             el.value = '';
                             if (sel.includes('chooseperson')) {
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     // --- Test Mail Handler ---
-    const testmailButton = $('#testmailButton');
+    const testmailButton = EME.$('#testmailButton');
     if (testmailButton) {
         testmailButton.addEventListener('click', function (e) {
             e.preventDefault();
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
             testmailButton.disabled = true;
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const msg = $('div#testmail-message');
+                const msg = EME.$('div#testmail-message');
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);
                 if (data.Result === 'OK') form.reset();
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Template Select Handler ---
     function setEditorContent(targetSelector, editorType, editorTarget, value) {
-        const textarea = $(targetSelector);
+        const textarea = EME.$(targetSelector);
         if (!textarea) return;
         textarea.value = value;
 
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function templateSelectHandler({ selectSelector, targetSelector, editorType, editorTarget }) {
-        const select = $(selectSelector);
+        const select = EME.$(selectSelector);
         if (!select) return;
 
         select.addEventListener('change', function () {
@@ -300,12 +300,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Show/Hide Groups ---
     function updateShowSendGroups() {
-        const checked = $('#eme_send_all_people').checked;
-        eme_toggle($('#div_eme_send_groups'), !checked);
-        eme_toggle($('#div_eme_send_all_people'), checked);
+        const checked = EME.$('#eme_send_all_people').checked;
+        eme_toggle(EME.$('#div_eme_send_groups'), !checked);
+        eme_toggle(EME.$('#div_eme_send_all_people'), checked);
     }
 
-    const sendAllPeople = $('#eme_send_all_people');
+    const sendAllPeople = EME.$('#eme_send_all_people');
     if (sendAllPeople) {
         sendAllPeople.addEventListener('change', updateShowSendGroups);
         updateShowSendGroups();
@@ -313,26 +313,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Show/Hide Mail Types ---
     function updateShowMailTypes() {
-        const mailType = $('select[name="eme_mail_type"]').value;
+        const mailType = EME.$('select[name="eme_mail_type"]').value;
         const isAttendeesOrBookings = ['attendees', 'bookings'].includes(mailType);
         const isPeopleAndGroups = mailType === 'people_and_groups';
 
-        eme_toggle($('#eme_pending_approved_row'), isAttendeesOrBookings);
-        eme_toggle($('#eme_only_unpaid_row'), isAttendeesOrBookings);
-        eme_toggle($('#eme_exclude_registered_row'), mailType !== '');
-        eme_toggle($('#eme_rsvp_status_row'), isAttendeesOrBookings);
+        eme_toggle(EME.$('#eme_pending_approved_row'), isAttendeesOrBookings);
+        eme_toggle(EME.$('#eme_only_unpaid_row'), isAttendeesOrBookings);
+        eme_toggle(EME.$('#eme_exclude_registered_row'), mailType !== '');
+        eme_toggle(EME.$('#eme_rsvp_status_row'), isAttendeesOrBookings);
 
-        $$('span[id^="span_unpaid_"]').forEach(el => eme_toggle(el, false));
-        if (mailType === 'attendees') eme_toggle($('#span_unpaid_attendees'),true);
-        if (mailType === 'bookings') eme_toggle($('#span_unpaid_bookings'),true);
+        EME.$$('span[id^="span_unpaid_"]').forEach(el => eme_toggle(el, false));
+        if (mailType === 'attendees') eme_toggle(EME.$('#span_unpaid_attendees'),true);
+        if (mailType === 'bookings') eme_toggle(EME.$('#span_unpaid_bookings'),true);
 
         const showPeopleRows = isPeopleAndGroups;
-        $$('tr[id^="eme_people_row"], tr[id^="eme_groups_row"], tr[id^="eme_members_row"]').forEach(el => {
+        EME.$$('tr[id^="eme_people_row"], tr[id^="eme_groups_row"], tr[id^="eme_members_row"]').forEach(el => {
             eme_toggle(el, showPeopleRows);
         });
     }
 
-    const mailTypeSelect = $('select[name="eme_mail_type"]');
+    const mailTypeSelect = EME.$('select[name="eme_mail_type"]');
     if (mailTypeSelect) {
         mailTypeSelect.addEventListener('change', updateShowMailTypes);
         updateShowMailTypes();
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 action: "eme_mailingreport_list",
                 eme_admin_nonce: ememails.translate_adminnonce,
                 mailing_id: parseInt($_GET['id']),
-                search_name: $('#search_name')?.value || ''
+                search_name: EME.$('#search_name')?.value || ''
             }),
             fields: {
                 receiveremail: { title: ememails.translate_email, visibility: 'hidden' },
@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         MailingReportTable.load();
         // --- Reload Button ---
-        const loadRecordsButton = $('#ReportLoadRecordsButton');
+        const loadRecordsButton = EME.$('#ReportLoadRecordsButton');
         if (loadRecordsButton) {
             loadRecordsButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -411,8 +411,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: "eme_mails_list",
-                search_text: $('#search_text')?.value || '',
-                search_failed: $('#search_failed')?.checked ? 1 : 0,
+                search_text: EME.$('#search_text')?.value || '',
+                search_failed: EME.$('#search_failed')?.checked ? 1 : 0,
                 eme_admin_nonce: ememails.translate_adminnonce
             }),
             fields: {
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //MailsTable.load();
         // --- Reload Button ---
-        const loadRecordsButton = $('#MailsLoadRecordsButton');
+        const loadRecordsButton = EME.$('#MailsLoadRecordsButton');
         if (loadRecordsButton) {
             loadRecordsButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -445,10 +445,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        $('#MailsActionsButton')?.addEventListener('click', function (e) {
+        EME.$('#MailsActionsButton')?.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = MailsTable.getSelectedRows();
-            const do_action = $('#eme_admin_action_mails').value;
+            const do_action = EME.$('#eme_admin_action_mails').value;
             if (!selectedRows.length || !do_action) return;
 
             let action_ok = 1;
@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     MailsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
-                    const msg = $('div#mails-message');
+                    const msg = EME.$('div#mails-message');
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: "eme_mailings_list",
-                search_text: $('#search_mailingstext')?.value || '',
+                search_text: EME.$('#search_mailingstext')?.value || '',
                 eme_admin_nonce: ememails.translate_adminnonce
             }),
             fields: {
@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //MailingsTable.load();
         // --- Reload Button ---
-        const loadRecordsButton = $('#MailingsLoadRecordsButton');
+        const loadRecordsButton = EME.$('#MailingsLoadRecordsButton');
         if (loadRecordsButton) {
             loadRecordsButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -605,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: "eme_archivedmailings_list",
-                search_text: $('#search_archivedmailingstext')?.value || '',
+                search_text: EME.$('#search_archivedmailingstext')?.value || '',
                 eme_admin_nonce: ememails.translate_adminnonce
             }),
             fields: {
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //ArchivedMailingsTable.load();
         // --- Reload Button ---
-        const loadRecordsButton = $('#ArchivedMailingsLoadRecordsButton');
+        const loadRecordsButton = EME.$('#ArchivedMailingsLoadRecordsButton');
         if (loadRecordsButton) {
             loadRecordsButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -656,10 +656,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        $('#ArchivedMailingsActionsButton')?.addEventListener('click', function (e) {
+        EME.$('#ArchivedMailingsActionsButton')?.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = ArchivedMailingsTable.getSelectedRows();
-            const do_action = $('#eme_admin_action_archivedmailings').value;
+            const do_action = EME.$('#eme_admin_action_archivedmailings').value;
             if (!selectedRows.length || !do_action) return;
 
             let action_ok = 1;
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ArchivedMailingsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
-                    const msg = $('div#archivedmailings-message');
+                    const msg = EME.$('div#archivedmailings-message');
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 5000);
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
         pagesize: 30,
         action: 'eme_events_select2',
             ajaxParams: {
-                search_all: $('#eventsearch_all')?.checked ? 1 : 0,
+                search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
                 eme_admin_nonce: ememails.translate_adminnonce
             }
     });

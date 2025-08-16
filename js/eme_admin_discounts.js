@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const DiscountsTableContainer = $('#DiscountsTableContainer');
+    const DiscountsTableContainer = EME.$('#DiscountsTableContainer');
     let DiscountsTable;
-    const DiscountGroupsTableContainer = $('#DiscountGroupsTableContainer');
+    const DiscountGroupsTableContainer = EME.$('#DiscountGroupsTableContainer');
     let DiscountGroupsTable;
 
     // --- Initialize Discounts Table ---
@@ -120,25 +120,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // --- Conditional UI: Show/hide based on action ---
     function updateShowHideStuff() {
-        const action = $('#eme_admin_action')?.value || '';
-        eme_toggle($('span#span_newvalidfrom'), action === 'changeValidFrom');
-        eme_toggle($('span#span_newvalidto'), action === 'changeValidTo');
-        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
-        eme_toggle($('#span_pdftemplate'), action === 'pdf');
-        eme_toggle($('#span_htmltemplate'), action === 'html');
-        eme_toggle($('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
+        const action = EME.$('#eme_admin_action')?.value || '';
+        eme_toggle(EME.$('span#span_newvalidfrom'), action === 'changeValidFrom');
+        eme_toggle(EME.$('span#span_newvalidto'), action === 'changeValidTo');
+        eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
+        eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
+        eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
+        eme_toggle(EME.$('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
     }
 
-    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Discounts Bulk Actions ---
-    const discountsButton = $('#DiscountsActionsButton');
+    const discountsButton = EME.$('#DiscountsActionsButton');
     if (discountsButton) {
         discountsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = DiscountTableContainer.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     discountsButton.textContent = emediscounts.translate_apply;
                     discountsButton.disabled = false;
 
-                    const msg = $('div#discounts-message');
+                    const msg = EME.$('div#discounts-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);
@@ -173,12 +173,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Discount Groups Bulk Actions ---
-    const groupsButton = $('#DiscountGroupsActionsButton');
+    const groupsButton = EME.$('#DiscountGroupsActionsButton');
     if (groupsButton) {
         groupsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = DiscountGroupsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     groupsButton.textContent = emediscounts.translate_apply;
                     groupsButton.disabled = false;
 
-                    const msg = $('div#discountgroups-message');
+                    const msg = EME.$('div#discountgroups-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);

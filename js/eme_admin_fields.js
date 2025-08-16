@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const FormfieldsTableContainer = $('#FormfieldsTableContainer');
+    const FormfieldsTableContainer = EME.$('#FormfieldsTableContainer');
     let FormfieldsTable;
 
     // --- Field Type Groups ---
@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Update Field Inputs Based on Type ---
     function updateFieldInputs() {
-        const fieldTypeSelect = $('#field_type');
+        const fieldTypeSelect = EME.$('#field_type');
         if (!fieldTypeSelect) return;
 
         const selectedType = fieldTypeSelect.value;
         const isMulti = multiValueTypes.includes(selectedType);
 
         fields.forEach(fieldId => {
-            const container = $(`#${fieldId}_container`);
+            const container = EME.$(`#${fieldId}_container`);
             if (!container) return;
 
             const existingInput = container.querySelector('input, textarea');
@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional Row Visibility ---
     function updateRowVisibility() {
-        const fieldTypeSelect = $('#field_type');
-        const fieldPurposeSelect = $('#field_purpose') || $('#field_purpose_hidden');
+        const fieldTypeSelect = EME.$('#field_type');
+        const fieldPurposeSelect = EME.$('#field_purpose') || EME.$('#field_purpose_hidden');
         if (!fieldTypeSelect || !fieldPurposeSelect) return;
 
         const fieldType = fieldTypeSelect.value;
@@ -75,14 +75,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Hide all conditional rows first
         const rows = {
-            extra_charge: $('#tr_extra_charge'),
-            field_tags: $('#tr_field_tags'),
-            admin_tags: $('#tr_admin_tags'),
-            field_values: $('#tr_field_values'),
-            admin_values: $('#tr_admin_values'),
-            searchable: $('#tr_searchable'),
-            field_condition: $('#tr_field_condition'),
-            export: $('#tr_export')
+            extra_charge: EME.$('#tr_extra_charge'),
+            field_tags: EME.$('#tr_field_tags'),
+            admin_tags: EME.$('#tr_admin_tags'),
+            field_values: EME.$('#tr_field_values'),
+            admin_values: EME.$('#tr_admin_values'),
+            searchable: EME.$('#tr_searchable'),
+            field_condition: EME.$('#tr_field_condition'),
+            export: EME.$('#tr_export')
         };
 
         // Reset display
@@ -115,8 +115,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Initialize Dynamic Field Behavior ---
-    const fieldTypeSelect = $('#field_type');
-    const fieldPurposeSelect = $('#field_purpose') || $('#field_purpose_hidden');
+    const fieldTypeSelect = EME.$('#field_type');
+    const fieldPurposeSelect = EME.$('#field_purpose') || EME.$('#field_purpose_hidden');
 
     if (fieldTypeSelect) {
         fieldTypeSelect.addEventListener('change', () => {
@@ -155,9 +155,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: 'eme_formfields_list',
-                search_name: $('#search_name')?.value || '',
-                search_type: $('#search_type')?.value || '',
-                search_purpose: $('#search_purpose')?.value || '',
+                search_name: EME.$('#search_name')?.value || '',
+                search_type: EME.$('#search_type')?.value || '',
+                search_purpose: EME.$('#search_purpose')?.value || '',
                 eme_admin_nonce: emeformfields.translate_adminnonce
             }),
             fields: {
@@ -209,12 +209,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Bulk Actions ---
-    const actionsButton = $('#FormfieldsActionsButton');
+    const actionsButton = EME.$('#FormfieldsActionsButton');
     if (actionsButton) {
         actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = FormfieldsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
             if (selectedRows.length === 0 || !doAction) return;
 
             if (doAction==='deleteFormfields' && !confirm(emeformfields.translate_areyousuretodeleteselected)) return;
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 FormfieldsTable.reload();
                 actionsButton.textContent = emeformfields.translate_apply;
                 actionsButton.disabled = false;
-                const msg = $('div#formfields-message');
+                const msg = EME.$('div#formfields-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    const loadButton = $('#FormfieldsLoadRecordsButton');
+    const loadButton = EME.$('#FormfieldsLoadRecordsButton');
     if (loadButton) {
         loadButton.addEventListener('click', e => {
             e.preventDefault();

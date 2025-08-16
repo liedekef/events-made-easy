@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const PeopleTableContainer = $('#PeopleTableContainer');
+    const PeopleTableContainer = EME.$('#PeopleTableContainer');
     let PeopleTable;
-    const GroupsTableContainer = $('#GroupsTableContainer');
+    const GroupsTableContainer = EME.$('#GroupsTableContainer');
     let GroupsTable;
 
     // --- Initialize People Table ---
@@ -157,13 +157,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 action: 'eme_people_list',
                 eme_admin_nonce: emepeople.translate_adminnonce,
                 trash: new URLSearchParams(window.location.search).get('trash') || '',
-                search_person: eme_getValue($('#search_person')),
-                search_groups: eme_getValue($('#search_groups')),
-                search_memberstatus: eme_getValue($('#search_memberstatus')),
-                search_membershipids: eme_getValue($('#search_membershipids')),
-                search_customfields: eme_getValue($('#search_customfields')),
-                search_customfieldids: eme_getValue($('#search_customfieldids')),
-                search_exactmatch: $('#search_exactmatch')?.checked ? 1 : 0
+                search_person: eme_getValue(EME.$('#search_person')),
+                search_groups: eme_getValue(EME.$('#search_groups')),
+                search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),
+                search_membershipids: eme_getValue(EME.$('#search_membershipids')),
+                search_customfields: eme_getValue(EME.$('#search_customfields')),
+                search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
+                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
             }),
             fields: personFields,
             sortingInfoSelector: '#peopletablesortingInfo',
@@ -225,21 +225,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide based on action ---
     function updateShowHideStuff() {
-        const action = $('#eme_admin_action')?.value || '';
-        eme_toggle($('#span_language'), action === 'changeLanguage');
-        eme_toggle($('#span_addtogroup'), action === 'addToGroup');
-        eme_toggle($('#span_removefromgroup'), action === 'removeFromGroup');
-        eme_toggle($('#span_pdftemplate'), action === 'pdf');
-        eme_toggle($('#span_htmltemplate'), action === 'html');
-        eme_toggle($('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
+        const action = EME.$('#eme_admin_action')?.value || '';
+        eme_toggle(EME.$('#span_language'), action === 'changeLanguage');
+        eme_toggle(EME.$('#span_addtogroup'), action === 'addToGroup');
+        eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
+        eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
+        eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
+        eme_toggle(EME.$('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
     }
 
-    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Dynamic People Data (for dyngroups) ---
     function eme_dynamic_people_data_json(formId) {
-        const form = $(`#${formId}`);
+        const form = EME.$(`#${formId}`);
         if (!form) return;
 
         const formData = new FormData(form);
@@ -248,15 +248,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         eme_postJSON(ajaxurl, formData, (data) => {
             if (data && data.Result) {
-                $('#eme_dynpersondata').innerHTML = data.Result;
+                EME.$('#eme_dynpersondata').innerHTML = data.Result;
                 eme_init_widgets(true);
             }
         });
     }
 
     // Attach to dyngroups change
-    if ($('#editperson')) {
-        $('#editperson').addEventListener('change', function (e) {
+    if (EME.$('#editperson')) {
+        EME.$('#editperson').addEventListener('change', function (e) {
             if (e.target.matches('select.dyngroups')) {
                 eme_dynamic_people_data_json('editperson');
             }
@@ -265,14 +265,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Autocomplete: chooseperson ---
-    if ($('input[name="chooseperson"]')) {
+    if (EME.$('input[name="chooseperson"]')) {
         let timeout;
-        const input = $('input[name="chooseperson"]');
-        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+        const input = EME.$('input[name="chooseperson"]');
+        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
             const value = this.value.trim();
             if (value.length < 2) return;
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
-                            $('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
+                            EME.$('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
                             input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
                             input.readOnly = true;
                             input.classList.add('clearable', 'x');
@@ -326,12 +326,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         input.addEventListener('keyup', () => {
-            $('input[name="person_id"]').value = '';
+            EME.$('input[name="person_id"]').value = '';
         });
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $('input[name="person_id"]').value = '';
+                EME.$('input[name="person_id"]').value = '';
                 input.readOnly = false;
                 input.classList.remove('clearable', 'x');
             }
@@ -339,14 +339,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Autocomplete: chooserelatedperson ---
-    if ($('input[name="chooserelatedperson"]')) {
+    if (EME.$('input[name="chooserelatedperson"]')) {
         let timeout;
-        const input = $('input[name="chooserelatedperson"]');
-        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+        const input = EME.$('input[name="chooserelatedperson"]');
+        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
             const value = this.value.trim();
             if (value.length < 2) return;
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
                 formData.append('action', 'eme_autocomplete_people');
                 formData.append('eme_searchlimit', 'people');
-                formData.append('exclude_personids', $('input[name="person_id"]').value);
+                formData.append('exclude_personids', EME.$('input[name="person_id"]').value);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
                     const suggestions = document.createElement('div');
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
-                            $('input[name="related_person_id"]').value = eme_htmlDecode(item.person_id);
+                            EME.$('input[name="related_person_id"]').value = eme_htmlDecode(item.person_id);
                             input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
                             input.readOnly = true;
                             input.classList.add('clearable', 'x');
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $('input[name="related_person_id"]').value = '';
+                EME.$('input[name="related_person_id"]').value = '';
                 input.readOnly = false;
                 input.classList.remove('clearable', 'x');
             }
@@ -399,12 +399,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- People Bulk Actions ---
-    const peopleButton = $('#PeopleActionsButton');
+    const peopleButton = EME.$('#PeopleActionsButton');
     if (peopleButton) {
         peopleButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = PeopleTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -422,17 +422,17 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('person_id', idsJoined);
             formData.append('action', 'eme_manage_people');
             formData.append('do_action', doAction);
-            formData.append('chooseperson', $('#chooseperson')?.value || '');
-            formData.append('transferto_id', $('#transferto_id')?.value || '');
-            formData.append('language', $('#language')?.value || '');
-            formData.append('pdf_template', $('#pdf_template')?.value || '');
-            formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
-            formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
-            formData.append('html_template', $('#html_template')?.value || '');
-            formData.append('html_template_header', $('#html_template_header')?.value || '');
-            formData.append('html_template_footer', $('#html_template_footer')?.value || '');
-            formData.append('addtogroup', $('#addtogroup')?.value || '');
-            formData.append('removefromgroup', $('#removefromgroup')?.value || '');
+            formData.append('chooseperson', EME.$('#chooseperson')?.value || '');
+            formData.append('transferto_id', EME.$('#transferto_id')?.value || '');
+            formData.append('language', EME.$('#language')?.value || '');
+            formData.append('pdf_template', EME.$('#pdf_template')?.value || '');
+            formData.append('pdf_template_header', EME.$('#pdf_template_header')?.value || '');
+            formData.append('pdf_template_footer', EME.$('#pdf_template_footer')?.value || '');
+            formData.append('html_template', EME.$('#html_template')?.value || '');
+            formData.append('html_template_header', EME.$('#html_template_header')?.value || '');
+            formData.append('html_template_footer', EME.$('#html_template_footer')?.value || '');
+            formData.append('addtogroup', EME.$('#addtogroup')?.value || '');
+            formData.append('removefromgroup', EME.$('#removefromgroup')?.value || '');
             formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
 
             if (doAction === 'sendMails') {
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 peopleButton.textContent = emepeople.translate_apply;
                 peopleButton.disabled = false;
 
-                const msg = $('div#people-message');
+                const msg = EME.$('div#people-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -486,12 +486,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Groups Bulk Actions ---
-    const groupsButton = $('#GroupsActionsButton');
+    const groupsButton = EME.$('#GroupsActionsButton');
     if (groupsButton) {
         groupsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = GroupsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 groupsButton.textContent = emepeople.translate_apply;
                 groupsButton.disabled = false;
 
-                const msg = $('div#groups-message');
+                const msg = EME.$('div#groups-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -524,16 +524,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const storeQueryButton = $('#StoreQueryButton');
-    const storeQueryDiv = $('#StoreQueryDiv');
-    $('#PeopleLoadRecordsButton')?.addEventListener('click', e => {
+    const storeQueryButton = EME.$('#StoreQueryButton');
+    const storeQueryDiv = EME.$('#StoreQueryDiv');
+    EME.$('#PeopleLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
-        if (eme_getValue($('#search_person')).length ||
-            eme_getValue($('#search_groups')).length ||
-            eme_getValue($('#search_memberstatus')).length ||
-            eme_getValue($('#search_membershipids')).length ||
-            eme_getValue($('#search_customfields')).length ||
-            eme_getValue($('#search_customfieldids')).length ) {
+        if (eme_getValue(EME.$('#search_person')).length ||
+            eme_getValue(EME.$('#search_groups')).length ||
+            eme_getValue(EME.$('#search_memberstatus')).length ||
+            eme_getValue(EME.$('#search_membershipids')).length ||
+            eme_getValue(EME.$('#search_customfields')).length ||
+            eme_getValue(EME.$('#search_customfieldids')).length ) {
             if (storeQueryButton) {
                 eme_toggle(storeQueryButton, true);
             }
@@ -558,23 +558,23 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(storeQueryDiv, false);
     }
 
-    $('#StoreQuerySubmitButton')?.addEventListener("click", function (e) {
+    EME.$('#StoreQuerySubmitButton')?.addEventListener("click", function (e) {
         e.preventDefault();
         let exactmatch = 0;
-        if ($('#search_exactmatch').checked) {
+        if (EME.$('#search_exactmatch').checked) {
             exactmatch = 1;
         }
         let params = {
-            'search_person': eme_getValue($('#search_person')),
-            'search_groups': eme_getValue($('#search_groups')),
-            'search_memberstatus': eme_getValue($('#search_memberstatus')),
-            'search_membershipids': eme_getValue($('#search_membershipids')),
-            'search_customfields': eme_getValue($('#search_customfields')),
-            'search_customfieldids': eme_getValue($('#search_customfieldids')),
+            'search_person': eme_getValue(EME.$('#search_person')),
+            'search_groups': eme_getValue(EME.$('#search_groups')),
+            'search_memberstatus': eme_getValue(EME.$('#search_memberstatus')),
+            'search_membershipids': eme_getValue(EME.$('#search_membershipids')),
+            'search_customfields': eme_getValue(EME.$('#search_customfields')),
+            'search_customfieldids': eme_getValue(EME.$('#search_customfieldids')),
             'search_exactmatch': exactmatch,
             'action': 'eme_store_people_query',
             'eme_admin_nonce': emepeople.translate_adminnonce,
-            'dynamicgroupname': $('#dynamicgroupname').value
+            'dynamicgroupname': EME.$('#dynamicgroupname').value
         };
 
         const formData = new FormData();
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_postJSON(ajaxurl, formData, (data) => {
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
-            const msg = $('div#people-message');
+            const msg = EME.$('div#people-message');
             if (msg) {
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);

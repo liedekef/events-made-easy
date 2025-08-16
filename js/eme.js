@@ -1,8 +1,12 @@
 // Events Made Easy – Plain JavaScript Version
 // All AJAX "action" params and logic match the original PHP backend.
 
-const $ = (selector, context = document) => context.querySelector(selector);
-const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+if (typeof window.EME === 'undefined') {
+    window.EME = {
+        $: (selector, context = document) => context.querySelector(selector),
+        $$: (selector, context = document) => Array.from(context.querySelectorAll(selector))
+    };
+}
 
 function eme_debounce(func, wait = 300) {
     let timeout;
@@ -74,7 +78,7 @@ function setTomSelectChWidth(tomselect, extraChars = 0) {
 function initTomSelect(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'
-        ? $$(selector)
+        ? EME.$$(selector)
         : [selector];
 
     if (!elements.length) return [];
@@ -163,7 +167,7 @@ function initTomSelect(selector, options = {}) {
 function initTomSelectRemote(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'
-        ? $$(selector)
+        ? EME.$$(selector)
         : [selector];
 
     if (!elements.length) return [];
@@ -310,7 +314,7 @@ function eme_hasClass(el, className) {
 }
 
 function eme_lastname_clearable() {
-    const ln = $('input[name=lastname]');
+    const ln = EME.$('input[name=lastname]');
     if (!ln) return;
     
     const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
@@ -319,14 +323,14 @@ function eme_lastname_clearable() {
         eme_removeClass(ln, 'clearable');
         eme_removeClass(ln, 'x');
         fields.forEach(f => {
-            const field = $(`input[name=${f}]`);
+            const field = EME.$(`input[name=${f}]`);
             if (field) {
                 field.value = '';
                 field.readOnly = false;
             }
         });
-        const wpIdField = $('input[name=wp_id]');
-        const personIdField = $('input[name=person_id]');
+        const wpIdField = EME.$('input[name=wp_id]');
+        const personIdField = EME.$('input[name=person_id]');
         if (wpIdField) wpIdField.value = '';
         if (personIdField) personIdField.value = '';
     }
@@ -341,7 +345,7 @@ function eme_init_widgets(dynamicOnly = false) {
     const dynamicSelector = dynamicOnly ? '.dynamicfield' : '';
 
     // Initialize fdatepicker for datetime fields
-    $$('.eme_formfield_fdatetime' + dynamicSelector).forEach(el => {
+    EME.$$('.eme_formfield_fdatetime' + dynamicSelector).forEach(el => {
         if (typeof FDatepicker !== 'undefined') {
             new FDatepicker(el, {
                 todayButton: new Date(),
@@ -360,7 +364,7 @@ function eme_init_widgets(dynamicOnly = false) {
     });
 
     // Initialize fdatepicker for date fields
-    $$('.eme_formfield_fdate' + dynamicSelector).forEach(el => {
+    EME.$$('.eme_formfield_fdate' + dynamicSelector).forEach(el => {
         if (typeof FDatepicker !== 'undefined') {
             new FDatepicker(el, {
                 todayButton: new Date(),
@@ -378,7 +382,7 @@ function eme_init_widgets(dynamicOnly = false) {
     });
 
     // Initialize fdatepicker for time fields
-    $$('.eme_formfield_ftime' + dynamicSelector).forEach(el => {
+    EME.$$('.eme_formfield_ftime' + dynamicSelector).forEach(el => {
         if (typeof FDatepicker !== 'undefined') {
             new FDatepicker(el, {
                 timepicker: true,
@@ -460,8 +464,8 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
     const form = document.getElementById(form_id);
     if (!form) return;
     const loadingEl = form.querySelector(loadingSel);
-    const okEl = $(okSel);
-    const errEl = $(errSel);
+    const okEl = EME.$(okSel);
+    const errEl = EME.$(errSel);
 
     // Hide submit buttons
     form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
@@ -508,7 +512,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                     if (parentDiv) eme_toggle(parentDiv, false);
                 }
                 if (data.paymentform) {
-                    const paymentDiv = $(`#div_eme-payment-form-${form_id}`);
+                    const paymentDiv = EME.$(`#div_eme-payment-form-${form_id}`);
                     if (paymentDiv) {
                         paymentDiv.innerHTML = data.paymentform;
                         eme_toggle(paymentDiv, true);
@@ -551,7 +555,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
 }
 
 function eme_refresh_captcha(form_id) {
-    const captcha = $(`#${form_id} #eme_captcha_img`);
+    const captcha = EME.$(`#${form_id} .eme-captcha-img`);
     if (captcha) {
         let src = captcha.src.replace(/&ts=.*/, '');
         captcha.src = src + '&ts=' + Date.now();
@@ -718,7 +722,7 @@ function loadCalendar(
 }
 
 function attachCalendarHandlers() {
-    $$('a.eme-cal-prev-month, a.eme-cal-next-month').forEach(link => {
+    EME.$$('a.eme-cal-prev-month, a.eme-cal-next-month').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             this.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
@@ -748,13 +752,13 @@ function attachCalendarHandlers() {
 function eme_handle_massmail(form_id, callback) {
     const form = document.getElementById(form_id);
     const massmailField = form.querySelector('#massmail');
-    const massmailDialog = $('#MassMailDialog');
+    const massmailDialog = EME.$('#MassMailDialog');
 
     if (massmailField && massmailField.value != 1 && massmailDialog) {
         massmailDialog.showModal();
 
-        const confirmBtn = $('#dialog-confirm');
-        const cancelBtn = $('#dialog-cancel');
+        const confirmBtn = EME.$('#dialog-confirm');
+        const cancelBtn = EME.$('#dialog-cancel');
 
         if (confirmBtn) {
             confirmBtn.addEventListener('click', function(e) {
@@ -777,7 +781,7 @@ function eme_handle_massmail(form_id, callback) {
 
 // --- Dynamic fields AJAX debounce handlers ---
 function eme_attach_dynamic_handlers(selector, isBooking) {
-    $$(selector).forEach(form => {
+    EME.$$(selector).forEach(form => {
         const form_id = form.id;
         const debounced_data = eme_debounce(() => eme_dynamic_data_json(form_id, isBooking), 500);
         const debounced_price = eme_debounce(() => eme_dynamic_price_json(form_id, isBooking), 500);
@@ -838,7 +842,7 @@ function eme_scrollToInvalidInput(el) {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Show elements that should be visible with JS
-    $$('.eme-showifjs').forEach(el => {
+    EME.$$('.eme-showifjs').forEach(el => {
         eme_toggle(el, true);
     });
 
@@ -889,7 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Lastname clearable
-    const lastnameField = $("input[name=lastname]");
+    const lastnameField = EME.$("input[name=lastname]");
     if (lastnameField && lastnameField.dataset.clearable) {
         lastnameField.addEventListener('change', eme_lastname_clearable);
         eme_lastname_clearable();
@@ -910,7 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     genericForms.forEach(({ sel, action, ok, err, loading, isFS }) => {
-        $$(sel).forEach(form => {
+        EME.$$(sel).forEach(form => {
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const form_id = this.id;
@@ -927,7 +931,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    $$('[name=eme-rsvp-form]').forEach(form => {
+    EME.$$('[name=eme-rsvp-form]').forEach(form => {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             eme_handle_massmail(this.id, function(form_id) {
@@ -941,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    $$('[name=eme-member-form]').forEach(form => {
+    EME.$$('[name=eme-member-form]').forEach(form => {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             eme_handle_massmail(this.id, function(form_id) {
@@ -952,13 +956,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- Validation for submit buttons ---
-    $$('.eme_submit_button').forEach(btn => {
+    EME.$$('.eme_submit_button').forEach(btn => {
         btn.addEventListener('click', function(event) {
             let valid = true;
             const parent_form_id = this.form.id;
             
             // Check required text inputs and date fields
-            $$('input:text[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
+            EME.$$('input:text[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
                 if (input.offsetParent !== null && input.closest("form").id === parent_form_id) {
                     const val = input.value;
                     if (val.match(/^\s*$/)) {
@@ -972,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Check required checkbox groups
-            $$('.eme-checkbox-group-required').forEach(group => {
+            EME.$$('.eme-checkbox-group-required').forEach(group => {
                 if (group.offsetParent !== null && group.closest("form").id === parent_form_id) {
                     const checked = group.querySelectorAll("input:checkbox:checked").length;
                     if (!checked) {

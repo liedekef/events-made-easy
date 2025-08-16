@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const HolidaysTableContainer = $('#HolidaysTableContainer');
+    const HolidaysTableContainer = EME.$('#HolidaysTableContainer');
     let HolidaysTable;
 
     if (HolidaysTableContainer) {
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Bulk Actions ---
-    const actionsButton = $('#HolidaysActionsButton');
+    const actionsButton = EME.$('#HolidaysActionsButton');
     if (actionsButton) {
         actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = HolidaysTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 actionsButton.textContent = emeholidays.translate_apply;
                 actionsButton.disabled = false;
 
-                const msg = $('div#holidays-message');
+                const msg = EME.$('div#holidays-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    const loadButton = $('#HolidaysLoadRecordsButton');
+    const loadButton = EME.$('#HolidaysLoadRecordsButton');
     if (loadButton) {
         loadButton.addEventListener('click', e => {
             e.preventDefault();

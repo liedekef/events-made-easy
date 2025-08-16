@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     function eme_tasklastname_clearable() {
-        const taskLastnameInput = $('input[name=task_lastname]');
+        const taskLastnameInput = EME.$('input[name=task_lastname]');
         if (!taskLastnameInput) return;
 
         if (taskLastnameInput.value === '') {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'task_state', 'task_zip', 'task_country', 'task_email', 'task_phone'
             ];
             dependentFields.forEach(fieldName => {
-                const field = $(`input[name=${fieldName}]`);
+                const field = EME.$(`input[name=${fieldName}]`);
                 if (field) {
                     field.value = '';
                     field.readOnly = false;
@@ -26,19 +26,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Autocomplete Core Function ---
     function initAutocomplete(inputSelector, autocompleteAction, fieldMap) {
-        const input = $(inputSelector);
+        const input = EME.$(inputSelector);
         if (!input) return;
 
         let timeout;
 
         // Remove suggestions on outside click
         document.addEventListener('click', () => {
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
         });
 
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
             const value = this.value.trim();
             if (value.length < 2) return;
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             // Set values and make readonly/required based on form type
                             Object.keys(fieldMap).forEach(formKey => {
-                                const target = $(`input[name="${formKey}"]`);
+                                const target = EME.$(`input[name="${formKey}"]`);
                                 if (target) {
                                     const value = item[fieldMap[formKey]];
                                     if (value !== undefined) {
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             });
 
                             // Remove suggestions
-                            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+                            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
                             // Trigger change event for clearable functionality
                             input.dispatchEvent(new Event('change'));
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Initialize Autocomplete for RSVP Form ---
-    if ($("input[name='lastname']")) {
+    if (EME.$("input[name='lastname']")) {
         initAutocomplete("input[name='lastname']", 'rsvp_autocomplete_people', {
             lastname: 'lastname',
             firstname: 'firstname',
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Initialize Autocomplete for Task Form ---
-    if ($("input[name='task_lastname']")) {
+    if (EME.$("input[name='task_lastname']")) {
         initAutocomplete("input[name='task_lastname']", 'task_autocomplete_people', {
             task_lastname: 'lastname',
             task_firstname: 'firstname',
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Setup clearable behavior for task_lastname
-        const taskLastnameInput = $('input[name=task_lastname]');
+        const taskLastnameInput = EME.$('input[name=task_lastname]');
         if (taskLastnameInput) {
             taskLastnameInput.addEventListener('change', eme_tasklastname_clearable);
             eme_tasklastname_clearable(); // Initial call

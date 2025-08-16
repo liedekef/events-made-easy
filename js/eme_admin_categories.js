@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const CategoriesTableContainer = $('#CategoriesTableContainer');
+    const CategoriesTableContainer = EME.$('#CategoriesTableContainer');
     let CategoriesTable;
 
     if (CategoriesTableContainer) {
@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
         CategoriesTable.load();
 
         // --- Bulk Actions ---
-        const actionsButton = $('#CategoriesActionsButton');
+        const actionsButton = EME.$('#CategoriesActionsButton');
         if (actionsButton) {
             actionsButton.addEventListener('click', function (e) {
                 e.preventDefault();
                 const selectedRows = CategoriesTable.getSelectedRows();
-                const doAction = $('#eme_admin_action').value;
+                const doAction = EME.$('#eme_admin_action').value;
 
                 if (selectedRows.length === 0 || !doAction) return;
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         actionsButton.textContent = emecategories.translate_apply;
                         actionsButton.disabled = false;
 
-                        const msg = $('div#categories-message');
+                        const msg = EME.$('div#categories-message');
                         if (msg) {
                             msg.innerHTML = data.htmlmessage;
                             eme_toggle(msg, true);
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // --- Reload Button ---
-        const loadButton = $('#CategoriesLoadRecordsButton');
+        const loadButton = EME.$('#CategoriesLoadRecordsButton');
         if (loadButton) {
             loadButton.addEventListener('click', e => {
                 e.preventDefault();

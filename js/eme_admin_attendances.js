@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const AttendancesTableContainer = $('#AttendancesTableContainer');
+    const AttendancesTableContainer = EME.$('#AttendancesTableContainer');
     let AttendancesTable;
 
     // --- Initialize Attendances Table ---
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_attendances_list',
                 eme_admin_nonce: emeattendances.translate_adminnonce,
-                search_type: $('#search_type')?.value || '',
-                search_start_date: $('#search_start_date')?.value || '',
-                search_end_date: $('#search_end_date')?.value || ''
+                search_type: EME.$('#search_type')?.value || '',
+                search_start_date: EME.$('#search_start_date')?.value || '',
+                search_end_date: EME.$('#search_end_date')?.value || ''
             }),
             fields: {
                 id: {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    const loadButton = $('#AttendancesLoadRecordsButton');
+    const loadButton = EME.$('#AttendancesLoadRecordsButton');
     if (loadButton) {
         loadButton.addEventListener('click', e => {
             e.preventDefault();
@@ -68,17 +68,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Autocomplete for Person ---
-    if ($('input[name="chooseperson"]')) {
+    if (EME.$('input[name="chooseperson"]')) {
         let timeout;
 
         document.addEventListener('click', () => {
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
         });
 
-        const input = $('input[name="chooseperson"]');
+        const input = EME.$('input[name="chooseperson"]');
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
 
             const value = this.value.trim();
             if (value.length < 2) return;
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             suggestion.addEventListener('click', e => {
                                 e.preventDefault();
                                 if (item.person_id) {
-                                    $('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
+                                    EME.$('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
                                     input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)} (${eme_htmlDecode(item.person_id)})  `;
                                     input.readOnly = true;
                                     input.classList.add('clearable', 'x');
@@ -126,12 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         input.addEventListener('keyup', () => {
-            $('input[name="person_id"]').value = '';
+            EME.$('input[name="person_id"]').value = '';
         });
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $('input[name="person_id"]').value = '';
+                EME.$('input[name="person_id"]').value = '';
                 input.readOnly = false;
                 input.classList.remove('clearable', 'x');
             }

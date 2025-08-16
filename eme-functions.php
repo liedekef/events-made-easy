@@ -214,7 +214,7 @@ function eme_load_captcha_html() {
     $captcha_id  = eme_random_id();
     $captcha_url = eme_captcha_url( $captcha_id );
     if ( $captcha_url ) {
-        $replacement = "<input type='hidden' name='eme_captcha_id' value='$captcha_id'><img id='eme_captcha_img' src='$captcha_url'><br><input required='required' type='text' name='captcha_check' id='captcha_check' autocomplete='off' class='nodynamicupdates'>";
+        $replacement = "<input type='hidden' name='eme_captcha_id' value='$captcha_id'><img class='eme-captcha-img' src='$captcha_url'><br><input required='required' type='text' name='captcha_check' id='captcha_check' autocomplete='off' class='nodynamicupdates'>";
     } else {
         $replacement = __( 'Problem while generating the captcha, please check with the site administrator', 'events-made-easy' );
     }

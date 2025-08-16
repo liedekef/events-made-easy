@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const TemplatesTableContainer = $('#TemplatesTableContainer');
+    const TemplatesTableContainer = EME.$('#TemplatesTableContainer');
     let TemplatesTable;
 
     // --- ftable: Initialize Templates Table ---
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return {
                     action: 'eme_templates_list',
                     eme_admin_nonce: emetemplates.translate_adminnonce,
-                    search_name: $('#search_name')?.value || '',
-                    search_type: $('#search_type')?.value || ''
+                    search_name: EME.$('#search_name')?.value || '',
+                    search_type: EME.$('#search_type')?.value || ''
                 };
             },
             fields: {
@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Templates Actions Button (Bulk Actions) ---
-    const actionsButton = $('#TemplatesActionsButton');
+    const actionsButton = EME.$('#TemplatesActionsButton');
     if (actionsButton) {
         actionsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = TemplatesTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emetemplates.translate_apply;
                     actionsButton.disabled = false;
 
-                    const messageDiv = $('div#templates-message');
+                    const messageDiv = EME.$('div#templates-message');
                     if (messageDiv) {
                         messageDiv.innerHTML = data.htmlmessage;
                         eme_toggle(messageDiv, true);
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Reload Button ---
-    const loadRecordsButton = $('#TemplatesLoadRecordsButton');
+    const loadRecordsButton = EME.$('#TemplatesLoadRecordsButton');
     if (loadRecordsButton) {
         loadRecordsButton.addEventListener('click', function (e) {
             e.preventDefault();
@@ -128,10 +128,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Conditional UI: Show/hide PDF properties ---
     const pdfsizeName = 'properties[pdf_size]';
     function updateShowHideStuff() {
-        const typeSelect = $('select#type');
-        const pdfSizeSelect = $(`select[name="${pdfsizeName}"]`);
-        const pdfPropertiesTable = $('table#pdf_properties');
-        const customPdfRow = $('tr.template-pdf-custom');
+        const typeSelect = EME.$('select#type');
+        const pdfSizeSelect = EME.$(`select[name="${pdfsizeName}"]`);
+        const pdfPropertiesTable = EME.$('table#pdf_properties');
+        const customPdfRow = EME.$('tr.template-pdf-custom');
 
         if (typeSelect && pdfPropertiesTable) {
             eme_toggle(pdfPropertiesTable, typeSelect.value === 'pdf');
@@ -143,12 +143,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach event listeners
-    const typeSelect = $('select#type');
+    const typeSelect = EME.$('select#type');
     if (typeSelect) {
         typeSelect.addEventListener('change', updateShowHideStuff);
     }
 
-    const pdfSizeSelect = $(`select[name="${pdfsizeName}"]`);
+    const pdfSizeSelect = EME.$(`select[name="${pdfsizeName}"]`);
     if (pdfSizeSelect) {
         pdfSizeSelect.addEventListener('change', updateShowHideStuff);
     }

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const MembershipsTableContainer = $('#MembershipsTableContainer');
+    const MembershipsTableContainer = EME.$('#MembershipsTableContainer');
     let MembershipsTable;
-    const MembersTableContainer = $('#MembersTableContainer');
+    const MembersTableContainer = EME.$('#MembersTableContainer');
     let MembersTable;
 
     // --- Initialize Memberships Table ---
@@ -61,12 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Memberships Bulk Actions ---
-    const membershipsButton = $('#MembershipsActionsButton');
+    const membershipsButton = EME.$('#MembershipsActionsButton');
     if (membershipsButton) {
         membershipsButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = MembershipsTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 membershipsButton.textContent = ememembers.translate_apply;
                 membershipsButton.disabled = false;
 
-                const msg = $('div#memberships-message');
+                const msg = EME.$('div#memberships-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -285,15 +285,15 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_members_list',
                 eme_admin_nonce: ememembers.translate_adminnonce,
-                search_person: eme_getValue($('#search_person')),
-                search_memberstatus: eme_getValue($('#search_memberstatus')),
-                search_membershipids: eme_getValue($('#search_membershipids')),
-                search_memberid: eme_getValue($('#search_memberid')),
-                search_paymentid: eme_getValue($('#search_paymentid')),
-                search_pg_pid: eme_getValue($('#search_pg_pid')),
-                search_customfields: eme_getValue($('#search_customfields')),
-                search_customfieldids: eme_getValue($('#search_customfieldids')),
-                search_exactmatch: $('#search_exactmatch')?.checked ? 1 : 0
+                search_person: eme_getValue(EME.$('#search_person')),
+                search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),
+                search_membershipids: eme_getValue(EME.$('#search_membershipids')),
+                search_memberid: eme_getValue(EME.$('#search_memberid')),
+                search_paymentid: eme_getValue(EME.$('#search_paymentid')),
+                search_pg_pid: eme_getValue(EME.$('#search_pg_pid')),
+                search_customfields: eme_getValue(EME.$('#search_customfields')),
+                search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
+                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
             }),
             fields: memberFields,
             sortingInfoSelector: '#membersmemberstablesortingInfo',
@@ -305,32 +305,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide mail options ---
     function updateShowHideStuff() {
-        const action = $('#eme_admin_action')?.value || '';
-        const sendMailsSpan = $('#span_sendmails');
-        eme_toggle($('#span_pdftemplate'), action === 'pdf');
-        eme_toggle($('#span_htmltemplate'), action === 'html');
-        eme_toggle($('span#span_membermailtemplate'), action === 'memberMails');
-        eme_toggle($('span#span_trashperson'), action === 'deleteMembers');
+        const action = EME.$('#eme_admin_action')?.value || '';
+        const sendMailsSpan = EME.$('#span_sendmails');
+        eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
+        eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
+        eme_toggle(EME.$('span#span_membermailtemplate'), action === 'memberMails');
+        eme_toggle(EME.$('span#span_trashperson'), action === 'deleteMembers');
 
         if (['acceptPayment', 'stopMembership'].includes(action)) {
-            $('#send_mail').value = 1;
+            EME.$('#send_mail').value = 1;
         }
         if (['markUnpaid'].includes(action)) {
-            $('#send_mail').value = 0;
+            EME.$('#send_mail').value = 0;
         }
         eme_toggle(sendMailsSpan, ['acceptPayment', 'stopMembership', 'markUnpaid'].includes(action));
     }
 
-    $('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Bulk Actions ---
-    const membersButton = $('#MembersActionsButton');
+    const membersButton = EME.$('#MembersActionsButton');
     if (membersButton) {
         membersButton.addEventListener('click', function (e) {
             e.preventDefault();
             const selectedRows = MembersTable.getSelectedRows();
-            const doAction = $('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -348,16 +348,16 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('member_id', idsJoined);
             formData.append('action', 'eme_manage_members');
             formData.append('do_action', doAction);
-            formData.append('send_mail', $('#send_mail')?.value);
-            formData.append('trash_person', $('#trash_person')?.value);
-            formData.append('membermail_template', $('#membermail_template')?.value);
-            formData.append('membermail_template_subject', $('#membermail_template_subject')?.value);
-            formData.append('pdf_template', $('#pdf_template')?.value || '');
-            formData.append('pdf_template_header', $('#pdf_template_header')?.value || '');
-            formData.append('pdf_template_footer', $('#pdf_template_footer')?.value || '');
-            formData.append('html_template', $('#html_template')?.value || '');
-            formData.append('html_template_header', $('#html_template_header')?.value || '');
-            formData.append('html_template_footer', $('#html_template_footer')?.value || '');
+            formData.append('send_mail', EME.$('#send_mail')?.value);
+            formData.append('trash_person', EME.$('#trash_person')?.value);
+            formData.append('membermail_template', EME.$('#membermail_template')?.value);
+            formData.append('membermail_template_subject', EME.$('#membermail_template_subject')?.value);
+            formData.append('pdf_template', EME.$('#pdf_template')?.value || '');
+            formData.append('pdf_template_header', EME.$('#pdf_template_header')?.value || '');
+            formData.append('pdf_template_footer', EME.$('#pdf_template_footer')?.value || '');
+            formData.append('html_template', EME.$('#html_template')?.value || '');
+            formData.append('html_template_header', EME.$('#html_template_header')?.value || '');
+            formData.append('html_template_footer', EME.$('#html_template_footer')?.value || '');
             formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
 
             if (doAction === 'sendMails') {
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 membersButton.textContent = ememembers.translate_apply;
                 membersButton.disabled = false;
 
-                const msg = $('div#members-message');
+                const msg = EME.$('div#members-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    $('#membershipForm')?.addEventListener('submit', function(event) {
+    EME.$('#membershipForm')?.addEventListener('submit', function(event) {
         const form = this.form;
         // Manually trigger HTML5 validation
         if (!form.checkValidity()) {
@@ -427,14 +427,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // --- Autocomplete: transferperson ---
-    if ($('input[name="transferperson"]')) {
+    if (EME.$('input[name="transferperson"]')) {
         let timeout;
-        const input = $('input[name="transferperson"]');
-        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+        const input = EME.$('input[name="transferperson"]');
+        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
             const value = this.value.trim();
             if (value.length < 2) return;
 
@@ -443,9 +443,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('q', value);
                 formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
                 formData.append('action', 'eme_autocomplete_memberperson');
-                formData.append('exclude_personid', $('input[name="person_id"]').value);
-                formData.append('membership_id', $('#membership_id')?.value || '');
-                formData.append('related_member_id', $('#related_member_id')?.value || '');
+                formData.append('exclude_personid', EME.$('input[name="person_id"]').value);
+                formData.append('membership_id', EME.$('#membership_id')?.value || '');
+                formData.append('related_member_id', EME.$('#related_member_id')?.value || '');
 
                 eme_postJSON(ajaxurl, formData, (data) => {
                     const suggestions = document.createElement('div');
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
-                            $('input[name="transfer_person_id"]').value = eme_htmlDecode(item.person_id);
+                            EME.$('input[name="transfer_person_id"]').value = eme_htmlDecode(item.person_id);
                             input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
                             input.readOnly = true;
                             input.classList.add('clearable', 'x');
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $('input[name="transfer_person_id"]').value = '';
+                EME.$('input[name="transfer_person_id"]').value = '';
                 input.readOnly = false;
                 input.classList.remove('clearable', 'x');
             }
@@ -484,22 +484,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Autocomplete: chooserelatedmember ---
-    if ($('input[name="chooserelatedmember"]')) {
+    if (EME.$('input[name="chooserelatedmember"]')) {
         let timeout;
-        const input = $('input[name="chooserelatedmember"]');
-        document.addEventListener('click', () => $$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+        const input = EME.$('input[name="chooserelatedmember"]');
+        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
         input.addEventListener('input', function () {
             clearTimeout(timeout);
-            $$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
             const value = this.value.trim();
             if (value.length < 2) return;
 
             timeout = setTimeout(() => {
                 const formData = new FormData();
                 formData.append('q', value);
-                formData.append('member_id', $('#member_id')?.value || '');
-                formData.append('membership_id', $('#membership_id')?.value || '');
+                formData.append('member_id', EME.$('#member_id')?.value || '');
+                formData.append('membership_id', EME.$('#membership_id')?.value || '');
                 formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
                 formData.append('action', 'eme_autocomplete_membermainaccount');
 
@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
-                            $('input[name="related_member_id"]').value = eme_htmlDecode(item.member_id);
+                            EME.$('input[name="related_member_id"]').value = eme_htmlDecode(item.member_id);
                             input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
                             input.readOnly = true;
                             input.classList.add('clearable', 'x');
@@ -532,23 +532,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         input.addEventListener('change', () => {
             if (input.value === '') {
-                $('input[name="related_member_id"]').value = '';
+                EME.$('input[name="related_member_id"]').value = '';
                 input.readOnly = false;
                 input.classList.remove('clearable', 'x');
             }
         });
     }
 
-    const storeQueryButton = $('#StoreQueryButton');
-    const storeQueryDiv = $('#StoreQueryDiv');
-    $('#MembersLoadRecordsButton')?.addEventListener('click', e => {
+    const storeQueryButton = EME.$('#StoreQueryButton');
+    const storeQueryDiv = EME.$('#StoreQueryDiv');
+    EME.$('#MembersLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
-        if (eme_getValue($('#search_person')).length ||
-            eme_getValue($('#search_memberstatus')).length ||
-            eme_getValue($('#search_memberid')).length ||
-            eme_getValue($('#search_membershipids')).length ||
-            eme_getValue($('#search_customfields')).length ||
-            eme_getValue($('#search_customfieldids')).length ) {
+        if (eme_getValue(EME.$('#search_person')).length ||
+            eme_getValue(EME.$('#search_memberstatus')).length ||
+            eme_getValue(EME.$('#search_memberid')).length ||
+            eme_getValue(EME.$('#search_membershipids')).length ||
+            eme_getValue(EME.$('#search_customfields')).length ||
+            eme_getValue(EME.$('#search_customfieldids')).length ) {
             if (storeQueryButton) {
                 eme_toggle(storeQueryButton, true);
             }
@@ -573,23 +573,23 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(storeQueryDiv, false);
     }
 
-    $('#StoreQuerySubmitButton')?.addEventListener("click", function (e) {
+    EME.$('#StoreQuerySubmitButton')?.addEventListener("click", function (e) {
         e.preventDefault();
         let exactmatch = 0;
-        if ($('#search_exactmatch').checked) {
+        if (EME.$('#search_exactmatch').checked) {
             exactmatch = 1;
         }
         let params = {
-            'search_person': eme_getValue($('#search_person')),
-            'search_memberstatus': eme_getValue($('#search_memberstatus')),
-            'search_membershipids': eme_getValue($('#search_membershipids')),
-            'search_memberid': eme_getValue($('#search_memberid')),
-            'search_customfields': eme_getValue($('#search_customfields')),
-            'search_customfieldids': eme_getValue($('#search_customfieldids')),
+            'search_person': eme_getValue(EME.$('#search_person')),
+            'search_memberstatus': eme_getValue(EME.$('#search_memberstatus')),
+            'search_membershipids': eme_getValue(EME.$('#search_membershipids')),
+            'search_memberid': eme_getValue(EME.$('#search_memberid')),
+            'search_customfields': eme_getValue(EME.$('#search_customfields')),
+            'search_customfieldids': eme_getValue(EME.$('#search_customfieldids')),
             'search_exactmatch': exactmatch,
             'action': 'eme_store_members_query',
             'eme_admin_nonce': ememembers.translate_adminnonce,
-            'dynamicgroupname': $('#dynamicgroupname').value
+            'dynamicgroupname': EME.$('#dynamicgroupname').value
         };
 
         const formData = new FormData();
@@ -600,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_postJSON(ajaxurl, formData, (data) => {
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
-            const msg = $('div#people-message');
+            const msg = EME.$('div#people-message');
             if (msg) {
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);
@@ -612,17 +612,17 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     });
 
-    const inputFamilyMembership = $('input#family_membership');
+    const inputFamilyMembership = EME.$('input#family_membership');
     if (inputFamilyMembership) {
         function updateShowHideFamilytpl () {
             if (inputFamilyMembership.checked) {
-                eme_toggle($('tr#tr_family_maxmembers'), true);
-                eme_toggle($('tr#tr_familymember_form_tpl'), true);
-                $('select[name="properties[familymember_form_tpl]"]').required = true;
+                eme_toggle(EME.$('tr#tr_family_maxmembers'), true);
+                eme_toggle(EME.$('tr#tr_familymember_form_tpl'), true);
+                EME.$('select[name="properties[familymember_form_tpl]"]').required = true;
             } else {
-                eme_toggle($('tr#tr_family_maxmembers'), false);
-                eme_toggle($('tr#tr_familymember_form_tpl'), false);
-                $('select[name="properties[familymember_form_tpl]"]').required = false;
+                eme_toggle(EME.$('tr#tr_family_maxmembers'), false);
+                eme_toggle(EME.$('tr#tr_familymember_form_tpl'), false);
+                EME.$('select[name="properties[familymember_form_tpl]"]').required = false;
             }
         }
         inputFamilyMembership.addEventListener('change', updateShowHideFamilytpl);

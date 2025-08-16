@@ -555,10 +555,13 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
 }
 
 function eme_refresh_captcha(form_id) {
-    const captcha = EME.$(`#${form_id} .eme-captcha-img`);
+    const form = EME.$(`#${form_id}`);
+    if (!form) return;
+
+    const captcha = form.querySelector('.eme-captcha-img');
     if (captcha) {
-        let src = captcha.src.replace(/&ts=.*/, '');
-        captcha.src = src + '&ts=' + Date.now();
+        const src = captcha.src.replace(/&ts=[^&]*/, '');
+        captcha.src = `${src}&ts=${Date.now()}`;
     }
 }
 

@@ -6240,7 +6240,7 @@ function eme_recurrences_table( $message = '' ) {
 <div id="poststuff">
     <div id="icon-edit" class="icon32"></div>
 
-    <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
+    <div id="recurrences-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
         <p><?php echo $message; ?></p>
     </div>
 

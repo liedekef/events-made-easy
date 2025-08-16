@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         actionsButton.textContent = emecategories.translate_apply;
                         actionsButton.disabled = false;
 
-                        const msg = EME.$('div#categories-message');
+                        const msg = EME.$('#categories-message');
                         if (msg) {
                             msg.innerHTML = data.htmlmessage;
                             eme_toggle(msg, true);

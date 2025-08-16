@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emetasks.translate_apply;
                     actionsButton.disabled = false;
 
-                    const messageDiv = EME.$('div#tasksignups-message');
+                    const messageDiv = EME.$('#tasksignups-message');
                     if (messageDiv) {
                         messageDiv.innerHTML = data.htmlmessage;
                         eme_toggle(messageDiv, true);

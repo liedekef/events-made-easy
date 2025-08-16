@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 actionsButton.textContent = emeholidays.translate_apply;
                 actionsButton.disabled = false;
 
-                const msg = EME.$('div#holidays-message');
+                const msg = EME.$('#holidays-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);

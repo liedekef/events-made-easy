@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '#eventmailButton',
         'eme_eventmail',
         'event_mail_message',
-        'div#eventmail-message',
+        '#eventmail-message',
         [
             '#event_ids',
             "#eme_eventmail_send_persons",
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '#genericmailButton',
         'eme_genericmail',
         'generic_mail_message',
-        'div#genericmail-message',
+        '#genericmail-message',
         [
             "#eme_genericmail_send_persons",
             "#eme_genericmail_send_peoplegroups",
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_send_memberships"
         ],
         function () {
-            EME.$('input#eme_send_all_people').dispatchEvent(new Event('change'));
+            EME.$('#eme_send_all_people').dispatchEvent(new Event('change'));
         }
     );
 
@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    mailPreviewHandler('#previeweventmailButton', 'eme_previeweventmail', 'div#previeweventmail-message', [
+    mailPreviewHandler('#previeweventmailButton', 'eme_previeweventmail', '#previeweventmail-message', [
         'input[name="eventmail_chooseperson"]',
         'input[name="send_previeweventmailto_id"]'
     ]);
 
-    mailPreviewHandler('#previewmailButton', 'eme_previewmail', 'div#previewmail-message', [
+    mailPreviewHandler('#previewmailButton', 'eme_previewmail', '#previewmail-message', [
         'input[name="chooseperson"]',
         'input[name="send_previewmailto_id"]'
     ]);
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
             testmailButton.disabled = true;
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const msg = EME.$('div#testmail-message');
+                const msg = EME.$('#testmail-message');
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);
                 if (data.Result === 'OK') form.reset();
@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     MailsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
-                    const msg = EME.$('div#mails-message');
+                    const msg = EME.$('#mails-message');
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 3000);
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ArchivedMailingsTable.reload();
                     this.textContent = ememails.translate_apply;
                     this.disabled = false;
-                    const msg = EME.$('div#archivedmailings-message');
+                    const msg = EME.$('#archivedmailings-message');
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
                     setTimeout(() => eme_toggle(msg, false), 5000);

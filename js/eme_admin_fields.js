@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 FormfieldsTable.reload();
                 actionsButton.textContent = emeformfields.translate_apply;
                 actionsButton.disabled = false;
-                const msg = EME.$('div#formfields-message');
+                const msg = EME.$('#formfields-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);

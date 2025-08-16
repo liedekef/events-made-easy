@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 membershipsButton.textContent = ememembers.translate_apply;
                 membershipsButton.disabled = false;
 
-                const msg = EME.$('div#memberships-message');
+                const msg = EME.$('#memberships-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 membersButton.textContent = ememembers.translate_apply;
                 membersButton.disabled = false;
 
-                const msg = EME.$('div#members-message');
+                const msg = EME.$('#members-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -600,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_postJSON(ajaxurl, formData, (data) => {
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
-            const msg = EME.$('div#people-message');
+            const msg = EME.$('#members-message');
             if (msg) {
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);
@@ -612,16 +612,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     });
 
-    const inputFamilyMembership = EME.$('input#family_membership');
+    const inputFamilyMembership = EME.$('#family_membership');
     if (inputFamilyMembership) {
         function updateShowHideFamilytpl () {
             if (inputFamilyMembership.checked) {
-                eme_toggle(EME.$('tr#tr_family_maxmembers'), true);
-                eme_toggle(EME.$('tr#tr_familymember_form_tpl'), true);
+                eme_toggle(EME.$('#tr_family_maxmembers'), true);
+                eme_toggle(EME.$('#tr_familymember_form_tpl'), true);
                 EME.$('select[name="properties[familymember_form_tpl]"]').required = true;
             } else {
-                eme_toggle(EME.$('tr#tr_family_maxmembers'), false);
-                eme_toggle(EME.$('tr#tr_familymember_form_tpl'), false);
+                eme_toggle(EME.$('#tr_family_maxmembers'), false);
+                eme_toggle(EME.$('#tr_familymember_form_tpl'), false);
                 EME.$('select[name="properties[familymember_form_tpl]"]').required = false;
             }
         }

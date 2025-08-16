@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emetemplates.translate_apply;
                     actionsButton.disabled = false;
 
-                    const messageDiv = EME.$('div#templates-message');
+                    const messageDiv = EME.$('#templates-message');
                     if (messageDiv) {
                         messageDiv.innerHTML = data.htmlmessage;
                         eme_toggle(messageDiv, true);
@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide PDF properties ---
     const pdfsizeName = 'properties[pdf_size]';
+    const typeSelect = EME.$('#type');
+    const pdfSizeSelect = EME.$(`select[name="${pdfsizeName}"]`);
     function updateShowHideStuff() {
-        const typeSelect = EME.$('select#type');
-        const pdfSizeSelect = EME.$(`select[name="${pdfsizeName}"]`);
-        const pdfPropertiesTable = EME.$('table#pdf_properties');
+        const pdfPropertiesTable = EME.$('#pdf_properties');
         const customPdfRow = EME.$('tr.template-pdf-custom');
 
         if (typeSelect && pdfPropertiesTable) {
@@ -143,12 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach event listeners
-    const typeSelect = EME.$('select#type');
     if (typeSelect) {
         typeSelect.addEventListener('change', updateShowHideStuff);
     }
 
-    const pdfSizeSelect = EME.$(`select[name="${pdfsizeName}"]`);
     if (pdfSizeSelect) {
         pdfSizeSelect.addEventListener('change', updateShowHideStuff);
     }

@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.5  (2025/08/16) =
+* Avoid clashing of $ with other scripts, using own namespace now
+* Fix a small issue with captcha image selector
+
+= 3.0.4  (2025/08/15) =
 = 3.0.3  (2025/08/15) =
 * the custom fields overview in tables was not correct, fixed (due to jquery migration)
 

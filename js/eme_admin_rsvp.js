@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const msg = EME.$('div#bookings-message');
+                const msg = EME.$('#bookings-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);

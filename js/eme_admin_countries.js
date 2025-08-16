@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 countriesButton.textContent = emecountries.translate_apply;
                 countriesButton.disabled = false;
 
-                const msg = EME.$('div#countries-message');
+                const msg = EME.$('#countries-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 statesButton.textContent = emecountries.translate_apply;
                 statesButton.disabled = false;
 
-                const msg = EME.$('div#states-message');
+                const msg = EME.$('#states-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);

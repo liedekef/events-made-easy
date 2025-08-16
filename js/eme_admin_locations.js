@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     actionsButton.textContent = emelocations.translate_apply;
                     actionsButton.disabled = false;
 
-                    const msg = EME.$('div#locations-message');
+                    const msg = EME.$('#locations-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);

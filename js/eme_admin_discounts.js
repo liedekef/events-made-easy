@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     discountsButton.textContent = emediscounts.translate_apply;
                     discountsButton.disabled = false;
 
-                    const msg = EME.$('div#discounts-message');
+                    const msg = EME.$('#discounts-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     groupsButton.textContent = emediscounts.translate_apply;
                     groupsButton.disabled = false;
 
-                    const msg = EME.$('div#discountgroups-message');
+                    const msg = EME.$('#discountgroups-message');
                     if (msg) {
                         msg.textContent = data.Message;
                         eme_toggle(msg, true);

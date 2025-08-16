@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 peopleButton.textContent = emepeople.translate_apply;
                 peopleButton.disabled = false;
 
-                const msg = EME.$('div#people-message');
+                const msg = EME.$('#people-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 groupsButton.textContent = emepeople.translate_apply;
                 groupsButton.disabled = false;
 
-                const msg = EME.$('div#groups-message');
+                const msg = EME.$('#groups-message');
                 if (msg) {
                     msg.innerHTML = data.htmlmessage;
                     eme_toggle(msg, true);
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_postJSON(ajaxurl, formData, (data) => {
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
-            const msg = EME.$('div#people-message');
+            const msg = EME.$('#people-message');
             if (msg) {
                 msg.innerHTML = data.htmlmessage;
                 eme_toggle(msg, true);

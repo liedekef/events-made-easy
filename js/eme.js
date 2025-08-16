@@ -1,6 +1,4 @@
-// Events Made Easy – Plain JavaScript Version
-// All AJAX "action" params and logic match the original PHP backend.
-
+// namespace EME variables
 if (typeof window.EME === 'undefined') {
     window.EME = {
         $: (selector, context = document) => context.querySelector(selector),
@@ -49,6 +47,10 @@ function eme_getQueryParams(qs) {
     return params;
 }
 const $_GET = eme_getQueryParams(document.location.search);
+
+function eme_isFalsey(paramValue) {
+    return paramValue === undefined || paramValue === null || paramValue === '0' || paramValue === '';
+}
 
 function eme_toggle(el, show) {
     if (el) el.classList.toggle('eme-hidden', !show);

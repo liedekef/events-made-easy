@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const extraSearches = extraFieldSearchableAttr.split(',');
             extraFields.forEach((value, index) => {
                 if (value == 'SEPARATOR') {
-                    let fieldindex = 'SEPARATOR_'+value;
+                    let fieldindex = 'SEPARATOR_'+index;
                     bookingFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
                 } else {
                     let fieldindex = 'FIELD_'+value;
@@ -147,21 +147,23 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Add edit link field
-        bookingFields.edit_link = {
-            title: emersvp.translate_edit,
-            sorting: false,
-            visibility: 'fixed',
-            width: '1%',
-            listClass: 'ftable-command-column eme-ftable-center',
-            value: record => {
-                const a = document.createElement('a');
-                a.href = record.edit_link_url;
-                a.textContent = emersvp.translate_edit;
-                a.className = 'button';
-                return a;
-            }
-        };
+        // Add edit link field if not trash
+        if (eme_isFalsey($_GET['trash'])) {
+            bookingFields.edit_link = {
+                title: emersvp.translate_edit,
+                sorting: false,
+                visibility: 'fixed',
+                width: '1%',
+                listClass: 'ftable-command-column eme-ftable-center',
+                value: record => {
+                    const a = document.createElement('a');
+                    a.href = record.edit_link_url;
+                    a.textContent = emersvp.translate_edit;
+                    a.className = 'button';
+                    return a;
+                }
+            };
+        }
 
         BookingsTable = new FTable('#BookingsTableContainer', {
             title: emersvp.translate_bookings,
@@ -274,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_bookings_list',
                 eme_admin_nonce: emersvp.translate_adminnonce,
-                trash: new URLSearchParams(window.location.search).get('trash') || '',
+                trash: $_GET['trash'] || '',
                 scope: eme_getValue(EME.$('#scope')),
                 category: eme_getValue(EME.$('#category')),
                 booking_status: eme_getValue(EME.$('#booking_status')),
@@ -305,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
         eme_toggle(EME.$('span#span_sendtocontact'), action === 'resendApprovedBooking');
         eme_toggle(EME.$('#span_sendmails'), ['trashBooking','approveBooking','pendingBooking','unsetwaitinglistBooking','setwaitinglistBooking','markPaid','markUnpaid'].includes(action));
-        eme_toggle(EME.$('span#span_refund'), ['trashBooking','pendingBooking','setwaitinglistBooking','markUnpaid'].includes(action) && !$_GET['trash']);
+        eme_toggle(EME.$('span#span_refund'), ['trashBooking','pendingBooking','setwaitinglistBooking','markUnpaid'].includes(action) && eme_isFalsey($_GET['trash']));
         eme_toggle(EME.$('#span_addtogroup'), action === 'addToGroup');
         eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
         eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
@@ -319,8 +321,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // hide one toolbar button if not on pending approval and trash=0 (or not set)
     function showhideButtonPaidApprove() {
         const bookingStatus = EME.$('#booking_status');
-        eme_toggle(EME.$('.eme_ftable_button_for_pending_only'), bookingStatus.value == "PENDING" && !$_GET['trash']);
-        eme_toggle(EME.$('.eme_ftable_button_for_approved_only'), bookingStatus.value == "APPROVED" && !$_GET['trash']);
+        eme_toggle(EME.$('.eme_ftable_button_for_pending_only'), bookingStatus.value == "PENDING" && eme_isFalsey($_GET['trash']));
+        eme_toggle(EME.$('.eme_ftable_button_for_approved_only'), bookingStatus.value == "APPROVED" && eme_isFalsey($_GET['trash']));
     }
     showhideButtonPaidApprove();
 

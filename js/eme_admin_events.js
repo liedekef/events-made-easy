@@ -783,7 +783,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const extraSearches = extraFieldSearchableAttr.split(',');
             extraFields.forEach((value, index) => {
                 if (value == 'SEPARATOR') {
-                    let fieldindex = 'SEPARATOR_'+value;
+                    let fieldindex = 'SEPARATOR_'+index;
                     eventFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
                 } else {
                     let fieldindex = 'FIELD_'+value;

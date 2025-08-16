@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: {
                 listAction: ajaxurl+'?action=eme_countries_list&eme_admin_nonce='+emecountries.translate_adminnonce,
                 deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&eme_admin_nonce='+emecountries.translate_adminnonce
-                }
             },
             fields: {
                 id: {

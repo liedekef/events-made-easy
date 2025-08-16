@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const extraSearches = extraFieldSearchableAttr.split(',');
             extraFields.forEach((value, index) => {
                 if (value == 'SEPARATOR') {
-                    let fieldindex = 'SEPARATOR_'+value;
+                    let fieldindex = 'SEPARATOR_'+index;
                     personFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
                 } else {
                     let fieldindex = 'FIELD_'+value;
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_people_list',
                 eme_admin_nonce: emepeople.translate_adminnonce,
-                trash: new URLSearchParams(window.location.search).get('trash') || '',
+                trash: $_GET['trash'] || '',
                 search_person: eme_getValue(EME.$('#search_person')),
                 search_groups: eme_getValue(EME.$('#search_groups')),
                 search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),

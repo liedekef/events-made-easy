@@ -400,9 +400,9 @@ function eme_init_widgets(dynamicOnly = false) {
     });
 
     // Basic select2 replacement
-    initTomSelect('.eme_select2' + dynamicSelector);
-    initTomSelect('.eme_select2_width50_class' + dynamicSelector);
-    initTomSelectRemote('.eme_select2_country_class' + dynamicSelector, {
+    initTomSelect('select.eme_select2' + dynamicSelector);
+    initTomSelect('select.eme_select2_width50_class' + dynamicSelector);
+    initTomSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
         valueField: 'id',
         labelField: 'text',
         searchField: ['text'],
@@ -433,7 +433,7 @@ function eme_init_widgets(dynamicOnly = false) {
         }
     });
 
-    initTomSelectRemote('.eme_select2_state_class' + dynamicSelector, {
+    initTomSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
         valueField: 'id',
         labelField: 'text',
         searchField: ['text'],
@@ -456,8 +456,8 @@ function eme_init_widgets(dynamicOnly = false) {
         }
     });
 
-    initTomSelect('.eme_select2_filter' + dynamicSelector);
-    initTomSelect('.eme_select2_fitcontent' + dynamicSelector);
+    initTomSelect('select.eme_select2_filter' + dynamicSelector);
+    initTomSelect('select.eme_select2_fitcontent' + dynamicSelector);
 
 }
 

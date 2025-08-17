@@ -79,8 +79,8 @@ function eme_add_task_function(element) {
     // Update data-alt-field attributes
     const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
     const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-    if (dpStart) dpStart.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_start]`);
-    if (dpEnd) dpEnd.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_end]`);
+    if (dpStart) dpStart.setAttribute('data-alt-field', `eme_tasks[${newId}][task_start]`);
+    if (dpEnd) dpEnd.setAttribute('data-alt-field', `eme_tasks[${newId}][task_end]`);
 
     // Clear values
     const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
@@ -96,29 +96,16 @@ function eme_add_task_function(element) {
     const tbody = EME.$('#eme_tasks_tbody');
     if (tbody) tbody.appendChild(metaCopy);
 
-    // Initialize date picker for new row
-    const newDateFields = metaCopy.querySelectorAll('.eme_formfield_fdatetime');
-    newDateFields.forEach(field => {
-        field.fdatepicker({
-            todayButton: new Date(),
-            clearButton: true,
-            closeButton: true,
-            timepicker: true,
-            minutesStep: parseInt(emeadmin.translate_minutesStep),
-            language: emeadmin.translate_flanguage,
-            firstDay: parseInt(emeadmin.translate_firstDayOfWeek),
-            altFormat: 'Y-m-d H:i:00',
-            format: emeadmin.translate_fdateformat,
-        });
-    });
+    // Initialize date picker for added row
+    eme_init_widgets();
 
     // Set existing dates
     const currentStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_start]"]`)?.value;
     if (currentStart) {
         const jsStartObj = new Date(currentStart);
         const dpStartField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
-        if (dpStartField && dpStartField.fdatepicker) {
-            dpStartField.fdatepicker.selectDate(jsStartObj);
+        if (dpStartField && dpStartField._fdatepicker) {
+            dpStartField._fdatepicker.setDate(jsStartObj);
         }
     }
 
@@ -126,8 +113,8 @@ function eme_add_task_function(element) {
     if (currentEnd) {
         const jsEndObj = new Date(currentEnd);
         const dpEndField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-        if (dpEndField && dpEndField.fdatepicker) {
-            dpEndField.fdatepicker.selectDate(jsEndObj);
+        if (dpEndField && dpEndField._fdatepicker) {
+            dpEndField._fdatepicker.setDate(jsEndObj);
         }
     }
 }
@@ -161,8 +148,8 @@ function eme_remove_task_function(element) {
         // Update data-alt-field attributes
         const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
         const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-        if (dpStart) dpStart.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_start]`);
-        if (dpEnd) dpEnd.setAttribute('data-alt-field', `#eme_tasks[${newId}][task_end]`);
+        if (dpStart) dpStart.setAttribute('data-alt-field', `eme_tasks[${newId}][task_start]`);
+        if (dpEnd) dpEnd.setAttribute('data-alt-field', `eme_tasks[${newId}][task_end]`);
 
         // Clear values
         const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
@@ -621,11 +608,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const dpStartField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_start]"]`);
                 const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
 
-                if (dpStartField && dpStartField.fdatepicker) {
-                    dpStartField.fdatepicker.selectDate(startObj);
+                if (dpStartField && dpStartField._fdatepicker) {
+                    dpStartField._fdatepicker.setDate(startObj);
                 }
-                if (dpEndField && dpEndField.fdatepicker) {
-                    dpEndField.fdatepicker.selectDate(endObj);
+                if (dpEndField && dpEndField._fdatepicker) {
+                    dpEndField._fdatepicker.setDate(endObj);
                 }
 
                 myId++;
@@ -645,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    initTomSelectRemote('.eme_select2_members_class', {
+    initTomSelectRemote('select.eme_select2_members_class', {
         action: 'eme_members_select2',
 	    placeholder: emeadmin.translate_selectmembers,
 	    extraPlugins: ['remove_button'],
@@ -654,7 +641,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		    eme_admin_nonce: emeadmin.translate_adminnonce,
 	    }
     });
-    initTomSelectRemote('.eme_select2_people_class', {
+    initTomSelectRemote('select.eme_select2_people_class', {
         action: 'eme_people_select2',
         placeholder: emeadmin.translate_selectpersons,
 	    extraPlugins: ['remove_button'],
@@ -663,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		    eme_admin_nonce: emeadmin.translate_adminnonce,
 	    }
     });
-    initTomSelectRemote('.eme_select2_discounts_class', {
+    initTomSelectRemote('select.eme_select2_discounts_class', {
         action: 'eme_discounts_select2',
 	    extraPlugins: ['remove_button'],
 	    ajaxParams: {
@@ -671,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		    eme_admin_nonce: emeadmin.translate_adminnonce,
 	    }
     });
-    initTomSelectRemote('.eme_select2_dgroups_class', {
+    initTomSelectRemote('select.eme_select2_dgroups_class', {
         action: 'eme_dgroups_select2',
 	    extraPlugins: ['remove_button'],
 	    ajaxParams: {
@@ -679,10 +666,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		    eme_admin_nonce: emeadmin.translate_adminnonce,
 	    }
     });
-    initTomSelect('.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
-    initTomSelect('.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
-    initTomSelect('.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
-    initTomSelect('.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
+    initTomSelect('select.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
+    initTomSelect('select.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
+    initTomSelect('select.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
+    initTomSelect('select.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
    
     // File Upload/Delete for Extra Fields
     document.addEventListener('click', (e) => {

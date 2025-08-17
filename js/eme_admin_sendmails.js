@@ -693,7 +693,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initTomSelectRemote('.eme_select2_events_class', {
+    initTomSelectRemote('select.eme_select2_events_class', {
         placeholder: ememails.translate_selectevents,
         extraPlugins: ['remove_button'],
         pagesize: 30,

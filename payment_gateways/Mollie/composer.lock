@@ -84,16 +84,16 @@
         },
         {
             "name": "mollie/mollie-api-php",
-            "version": "v3.3.2",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mollie/mollie-api-php.git",
-                "reference": "fa01e95b079d09f6088c36d14f3c0c5be45eefea"
+                "reference": "674ddbb22dd2985c66ca504d4a8d6ecdc089236f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/fa01e95b079d09f6088c36d14f3c0c5be45eefea",
-                "reference": "fa01e95b079d09f6088c36d14f3c0c5be45eefea",
+                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/674ddbb22dd2985c66ca504d4a8d6ecdc089236f",
+                "reference": "674ddbb22dd2985c66ca504d4a8d6ecdc089236f",
                 "shasum": ""
             },
             "require": {
@@ -174,9 +174,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mollie/mollie-api-php/issues",
-                "source": "https://github.com/mollie/mollie-api-php/tree/v3.3.2"
+                "source": "https://github.com/mollie/mollie-api-php/tree/v3.4.0"
             },
-            "time": "2025-07-25T09:43:59+00:00"
+            "time": "2025-08-13T12:23:30+00:00"
         },
         {
             "name": "nyholm/psr7",

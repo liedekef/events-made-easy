@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.7  (2025//) =
+* Braintree API update
+* Mollie API update
+
 = 3.0.6  (2025/08/17) =
 * CSV button fix (it exported too much columns)
 * Make sure datepicker works for newly added tasks too

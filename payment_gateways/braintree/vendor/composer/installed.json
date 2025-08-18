@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "6.26.0",
-            "version_normalized": "6.26.0.0",
+            "version": "6.28.0",
+            "version_normalized": "6.28.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "602bfe7876cc2f6c6c24bd68fef4c6de8c3a8195"
+                "reference": "f8693ee85b232c6fe4599100cdaba2c07ca34b79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/602bfe7876cc2f6c6c24bd68fef4c6de8c3a8195",
-                "reference": "602bfe7876cc2f6c6c24bd68fef4c6de8c3a8195",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/f8693ee85b232c6fe4599100cdaba2c07ca34b79",
+                "reference": "f8693ee85b232c6fe4599100cdaba2c07ca34b79",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
                 "phpunit/phpunit": "^9.0",
                 "squizlabs/php_codesniffer": "^3.0"
             },
-            "time": "2025-05-28T19:18:19+00:00",
+            "time": "2025-08-05T18:53:15+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -48,7 +48,7 @@
             "description": "Braintree PHP Client Library",
             "support": {
                 "issues": "https://github.com/braintree/braintree_php/issues",
-                "source": "https://github.com/braintree/braintree_php/tree/6.26.0"
+                "source": "https://github.com/braintree/braintree_php/tree/6.28.0"
             },
             "install-path": "../braintree/braintree_php"
         }

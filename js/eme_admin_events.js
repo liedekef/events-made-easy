@@ -744,6 +744,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: emeevents.translate_rsvp,
                 sorting: false,
                 width: '2%',
+                columnResizable: false,
                 listClass: 'eme-ftable-center'
             },
             eventprice: {

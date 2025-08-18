@@ -566,6 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: ememails.translate_action,
                     listClass: 'eme-wsnobreak',
                     visibility: 'fixed',
+                    columnResizable: false,
                     sorting: false
                 }
             },
@@ -639,6 +640,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: ememails.translate_action,
                     listClass: 'eme-wsnobreak',
                     visibility: 'fixed',
+                    columnResizable: false,
                     sorting: false
                 }
             },

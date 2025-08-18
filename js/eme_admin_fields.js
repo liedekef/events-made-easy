@@ -175,6 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 copy: {
                     title: emeformfields.translate_copy,
                     sorting: false,
+                    columnResizable: false,
                     width: '2%',
                     listClass: 'eme-ftable-center'
                 },

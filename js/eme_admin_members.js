@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fields: {
                 membership_id: {
                     key: true,
-                    title: ememembers.translate_membershipid,
+                    title: ememembers.translate_id,
                     width: '1%',
                     columnResizable: false,
                     visibility: 'hidden'
@@ -39,18 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 description: {
                     title: ememembers.translate_description
                 },
-                public: {
-                    title: ememembers.translate_publicmembership,
-                    visibility: 'hidden'
-                },
                 membercount: {
                     title: ememembers.translate_membercount,
                     sorting: false
-                },
-                action: {
-                    title: ememembers.translate_action,
-                    sorting: false,
-                    visibility: 'fixed'
                 }
             },
             sortingInfoSelector: '#memberstablesortingInfo',

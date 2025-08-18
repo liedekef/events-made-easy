@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: emersvp.translate_rsvp,
                 sorting: false,
                 width: '2%',
+                columnResizable: false,
                 listClass: 'eme-ftable-center'
             },
             event_start: {
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: emersvp.translate_edit,
                 sorting: false,
                 visibility: 'fixed',
+                columnResizable: false,
                 width: '1%',
                 listClass: 'ftable-command-column eme-ftable-center',
                 value: record => {

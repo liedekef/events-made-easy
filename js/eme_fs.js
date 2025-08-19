@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const locationNameInput = document.querySelector("input#location_name");
+    const locationNameInput = EME.$("input#location_name");
     
     if (locationNameInput) {
         let frontend_submit_timeout; // Declare a variable to hold the timeout ID
@@ -8,8 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             clearTimeout(frontend_submit_timeout); // Clear the previous timeout
             
-            const inputField = this;
-            const inputValue = inputField.value;
+            const inputValue = locationNameInput.value;
             
             // Remove existing suggestions
             EME.$$(".eme-autocomplete-suggestions").forEach(el => el.remove());
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Remove any existing suggestions and add new ones
                         EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-                        inputField.parentNode.insertBefore(suggestions, inputField.nextSibling);
+                        locationNameInput.insertAdjacentElement('afterend', suggestions);
                     })
                     .catch(error => {
                         console.error('Error fetching location autocomplete:', error);

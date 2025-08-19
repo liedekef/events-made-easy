@@ -323,8 +323,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // hide one toolbar button if not on pending approval and trash=0 (or not set)
     function showhideButtonPaidApprove() {
         const bookingStatus = EME.$('#booking_status');
-        eme_toggle(EME.$('.eme_ftable_button_for_pending_only'), bookingStatus.value == "PENDING" && eme_isFalsey($_GET['trash']));
-        eme_toggle(EME.$('.eme_ftable_button_for_approved_only'), bookingStatus.value == "APPROVED" && eme_isFalsey($_GET['trash']));
+        if (bookingStatus) {
+            eme_toggle(EME.$('.eme_ftable_button_for_pending_only'), bookingStatus.value == "PENDING" && eme_isFalsey($_GET['trash']));
+            eme_toggle(EME.$('.eme_ftable_button_for_approved_only'), bookingStatus.value == "APPROVED" && eme_isFalsey($_GET['trash']));
+        }
     }
     showhideButtonPaidApprove();
 
@@ -440,12 +442,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Autocomplete: chooseevent ---
-    if (EME.$('input[name="chooseevent"]')) {
+    const chooseevent = EME.$('input[name="chooseevent"]');
+    if (chooseevent) {
         let timeout;
-        const input = EME.$('input[name="chooseevent"]');
         document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
 
-        input.addEventListener('input', function () {
+        chooseevent.addEventListener('input', function () {
             clearTimeout(timeout);
             EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
             const value = this.value.trim();
@@ -472,9 +474,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             e.preventDefault();
                             if (item.event_id) {
                                 EME.$('input[name="transferto_id"]').value = eme_htmlDecode(item.event_id);
-                                input.value = `${eme_htmlDecode(item.eventinfo)} `;
-                                input.readOnly = true;
-                                input.classList.add('clearable', 'x');
+                                chooseevent.value = `${eme_htmlDecode(item.eventinfo)} `;
+                                chooseevent.readOnly = true;
+                                chooseevent.classList.add('clearable', 'x');
                             }
                         });
                         suggestions.appendChild(suggestion);
@@ -485,16 +487,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         noMatch.textContent = emersvp.translate_nomatchevent;
                         suggestions.appendChild(noMatch);
                     }
-                    input.insertAdjacentElement('afterend', suggestions);
+                    chooseevent.insertAdjacentElement('afterend', suggestions);
                 });
             }, 500);
         });
 
-        input.addEventListener('change', () => {
-            if (input.value === '') {
+        chooseevent.addEventListener('change', () => {
+            if (chooseevent.value === '') {
                 EME.$('input[name="transferto_id"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
+                chooseevent.readOnly = false;
+                chooseevent.classList.remove('clearable', 'x');
             }
         });
     }

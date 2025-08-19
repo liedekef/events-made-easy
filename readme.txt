@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,9 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.7  (2025//) =
+= 3.0.7  (2025/08/19) =
 * Braintree API update
 * Mollie API update
+* Fix when editing a booking (javascript error blocked certain actions)
 
 = 3.0.6  (2025/08/17) =
 * CSV button fix (it exported too much columns)

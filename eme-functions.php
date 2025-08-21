@@ -211,7 +211,7 @@ function eme_captcha_generate( $file ) {
 }
 
 function eme_load_captcha_html() {
-    $captcha_id  = eme_random_id();
+    $captcha_id  = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $captcha_url = eme_captcha_url( $captcha_id );
     if ( $captcha_url ) {
         $replacement = "<input type='hidden' name='eme_captcha_id' value='$captcha_id'><img class='eme-captcha-img' src='$captcha_url'><br><input required='required' type='text' name='captcha_check' id='captcha_check' autocomplete='off' class='nodynamicupdates'>";

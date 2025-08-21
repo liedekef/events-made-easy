@@ -968,7 +968,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check required text inputs and date fields
             EME.$$('input[type="text"][required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
-                if (input.offsetParent !== null && input.closest("form").id === parent_form_id) {
+                if (valid && input.closest("form").id === parent_form_id) {
                     const val = input.value;
                     if (val.match(/^\s*$/)) {
                         eme_addClass(input, 'eme_required');
@@ -982,7 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check required checkbox groups
             EME.$$('.eme-checkbox-group-required').forEach(group => {
-                if (group.offsetParent !== null && group.closest("form").id === parent_form_id) {
+                if (valid && group.closest("form").id === parent_form_id) {
                     const checked = group.querySelectorAll('input[type="checkbox"]:checked').length;
                     if (!checked) {
                         eme_addClass(group, 'eme_required');

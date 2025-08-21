@@ -1857,7 +1857,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
                 <div class="eme-tab-content" id="tab-customfields">
                     <?php eme_meta_box_div_membershipcustomfields( $membership ); ?>
                 </div>
-                <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $is_new_membership == 1 ) { esc_html_e( 'Add membership', 'events-made-easy' ); } else { esc_html_e( 'Update membership', 'events-made-easy' ); } ?>"></p>
+                <p class="submit"><input type="submit" class="button-primary eme_submit_button" name="submit" value="<?php if ( $is_new_membership == 1 ) { esc_html_e( 'Add membership', 'events-made-easy' ); } else { esc_html_e( 'Update membership', 'events-made-easy' ); } ?>"></p>
             </div>
         </div>
         </div>

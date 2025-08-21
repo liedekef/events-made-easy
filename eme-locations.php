@@ -415,7 +415,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 ?>
     </div>
 
-<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>"></p>
+<p class="submit"><input type="submit" class="button-primary eme_submit_button" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>"></p>
 </div>
 <!-- END OF MAIN -->
 <!-- SIDEBAR -->

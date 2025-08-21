@@ -6640,14 +6640,14 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
     <p class="submit">
         <?php if ( $is_new_event ) { ?>
-                  <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Save', 'events-made-easy' ); ?> &raquo;">
+                  <input type="submit" class="button-primary eme_submit_button" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Save', 'events-made-easy' ); ?> &raquo;">
                   <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 <?php
     } else {
         $trash_button_text           = esc_html__( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
         $deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
 ?>
-                  <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
+                  <input type="submit" class="button-primary eme_submit_button" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
                 <?php if ( ! $edit_recurrence ) { ?>
                         <input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo $trash_button_text; ?>');">
 <?php

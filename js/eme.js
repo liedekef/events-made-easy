@@ -461,6 +461,25 @@ function eme_init_widgets(dynamicOnly = false) {
 
 }
 
+// function to execute the injected javascript via ajax to force payment button click
+function eme_executeScriptsInElement(element) {
+    const scripts = element.querySelectorAll('script');
+    scripts.forEach(oldScript => {
+        const newScript = document.createElement('script');
+
+        // Copy all attributes from old script to new script
+        Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+        });
+
+        // Copy the script content
+        newScript.textContent = oldScript.textContent;
+
+        // Replace the old script with the new one to trigger execution
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+}
+
 // --- Unified AJAX Handler for Booking/Member/Generic forms ---
 function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
     const form = document.getElementById(form_id);
@@ -518,6 +537,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                     if (paymentDiv) {
                         paymentDiv.innerHTML = data.paymentform;
                         eme_toggle(paymentDiv, true);
+                        eme_executeScriptsInElement(paymentDiv);
                     }
                 }
                 if (data.paymentredirect) {

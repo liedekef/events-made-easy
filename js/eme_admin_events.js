@@ -420,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     fetch(window.location.href + '?' + formData.toString())
                         .then(response => response.json())
                         .then(item => {
-                            console.log(item);
                             EME.$('input[name="location-select-name"]').value = item.name;
                             EME.$('input[name="location-select-address1"]').value = item.address1;
                             EME.$('input[name="location-select-address2"]').value = item.address2;

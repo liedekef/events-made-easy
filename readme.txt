@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.9  (2025/08/21) =
+* ftable and fdatepicker updates
+* fix JS selectors for form ids too
+
 = 3.0.8  (2025/08/21) =
 * better admin feedback for missing input
 * fix JS selectors and a possible case with captcha id

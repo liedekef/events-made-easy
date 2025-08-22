@@ -697,9 +697,11 @@ div#eme_div_import {
 }
 
 .eme-copy-button {
-    background: url('../images/copy_16.png') no-repeat;
-    width: 16px;
-    height: 16px;
+    background: transparent;
+}
+.eme-copy-button::before {
+    content: "⧉";
+    font-size: 16px;
 }
 
 .eme_fs_wysiwig_editor_width {

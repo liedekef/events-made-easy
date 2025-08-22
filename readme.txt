@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.9  (2025/08/21) =
+= 3.0.9  (2025/08/22) =
 * ftable and fdatepicker updates
 * fix JS selectors for form ids too
 

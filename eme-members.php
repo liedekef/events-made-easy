@@ -1714,7 +1714,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 
     // we sleep for 2 microseconds, to be sure that uniqid gives another value
     usleep( 2 );
-    $form_id = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 
     if ( empty( $membership ) ) {
         $form_html  = "<div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message-error'>";

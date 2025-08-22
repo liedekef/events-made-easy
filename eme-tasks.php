@@ -1352,7 +1352,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	}
 
 	$nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
-	$form_id = uniqid();
+    $form_id = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$result .= "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-tasks-message-ok-$form_id' class='eme-message-success eme-tasks-message eme-tasks-message-success eme-hidden'></div><div id='eme-tasks-message-error-$form_id' class='eme-message-error eme-tasks-message eme-tasks-message-error eme-hidden'></div><div id='div_eme-tasks-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-tasks-form' method='post' $form_class action='#'>
                 $nonce

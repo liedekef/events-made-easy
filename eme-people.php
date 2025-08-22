@@ -4694,7 +4694,7 @@ function eme_subform_shortcode( $atts ) {
     }
 
     usleep( 2 );
-    $form_id    = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $form_html  = "<noscript><div class='eme-noscriptmsg'>" . esc_html__( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-subscribe-message-ok-$form_id' class='eme-message-success eme-subscribe-message eme-subscribe-message-success eme-hidden'></div><div id='eme-subscribe-message-error-$form_id' class='eme-message-error eme-subscribe-message eme-subscribe-message-error eme-hidden'></div><div id='div_eme-subscribe-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-subscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>";
     $form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
@@ -4779,7 +4779,7 @@ function eme_unsubform_shortcode( $atts = [] ) {
     }
 
     usleep( 2 );
-    $form_id     = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $form_html   = "<noscript><div class='eme-noscriptmsg'>" . esc_html__( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-unsubscribe-message-ok-$form_id' class='eme-message-success eme-unsubscribe-message eme-unsubscribe-message-success eme-hidden'></div><div id='eme-unsubscribe-message-error-$form_id' class='eme-message-error eme-unsubscribe-message eme-unsubscribe-message-error eme-hidden'></div><div id='div_eme-unsubscribe-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-unsubscribe-form' method='post' action='#'><span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span><img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>";
     $form_html  .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );

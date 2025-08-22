@@ -120,7 +120,7 @@ function eme_rpi_shortcode( $atts ) {
 	$captcha_html = eme_generate_captchas_html();
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
-	$form_id   = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
 	<div id='eme-rpi-message-ok-$form_id' class='eme-message-success eme-rpi-message eme-rpi-message-success eme-hidden'></div><div id='eme-rpi-message-error-$form_id' class='eme-message-error eme-rpi-message eme-rpi-message-error eme-hidden'></div><div id='div_eme-rpi-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-rpi-form' method='post' action='#'>
 		$nonce
@@ -194,7 +194,7 @@ function eme_gdpr_approve_shortcode() {
 	$captcha_html = eme_generate_captchas_html();
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
-	$form_id   = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
 	<div id='eme-gdpr-approve-message-ok-$form_id' class='eme-message-success eme-gdpr-approve-message eme-gdpr-approve-message-success eme-hidden'></div><div id='eme-gdpr-approve-message-error-$form_id' class='eme-message-error eme-gdpr-approve-message eme-gdpr-approve-message-error eme-hidden'></div><div id='div_eme-gdpr-approve-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-gdpr-approve-form' method='post' action='#'>
 		$nonce
@@ -310,7 +310,7 @@ function eme_cpi_shortcode( $atts ) {
 	$captcha_html = eme_generate_captchas_html();
 
 	usleep( 2 );
-	$form_id = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-cpi-request-message-ok-$form_id' class='eme-message-success eme-cpi-request-message eme-cpi-request-message-success eme-hidden'></div><div id='eme-cpi-request-message-error-$form_id' class='eme-message-error eme-cpi-request-message eme-cpi-request-message-error eme-hidden'></div><div id='div_eme-cpi-request-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-cpi-request-form' method='post' action='#'>
 		$nonce
@@ -391,7 +391,7 @@ function eme_cpi_form( $person_id ) {
 	$format         = eme_nl2br_save_html( get_option( 'eme_cpi_form', $format_default ) );
 
 	usleep( 2 );
-	$form_id = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-cpi-message-ok-$form_id' class='eme-message-success eme-cpi-message eme-cpi-message-success eme-hidden'></div><div id='eme-cpi-message-error-$form_id' class='eme-message-error eme-cpi-message eme-cpi-message-error eme-hidden'></div><div id='div_eme-cpi-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-cpi-form' method='post' action='#'>
 		$nonce

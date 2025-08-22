@@ -214,7 +214,7 @@ function eme_add_event_form_shortcode( $atts ) {
     if ( $atts['startdatetime'] != 'now' )
         $atts['startdatetime'] = '';
 
-    $form_id = uniqid();
+    $form_id = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
     $form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-fs-message-ok-$form_id' class='eme-message-success eme-fs-message eme-fs-message-success eme-hidden'></div><div id='eme-fs-message-error-$form_id' class='eme-message-error eme-fs-message eme-fs-message-error eme-hidden'></div><div id='div_eme-fs-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-fs-form' method='post' action='#'>

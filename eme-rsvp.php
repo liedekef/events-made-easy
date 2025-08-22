@@ -160,7 +160,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     }
 
     usleep( 2 );
-    $form_id   = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-rsvp-addmessage-ok-$form_id' class='eme-message-success eme-rsvp-message eme-rsvp-message-success eme-hidden'></div><div id='eme-rsvp-addmessage-error-$form_id' class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form eme-hidden'></div><div id='div_eme-rsvp-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-rsvp-form' method='post' $form_class action='#' >";
     // add a nonce for extra security
@@ -815,7 +815,7 @@ function eme_cancel_bookings_form( $event_id ) {
         $form_html         = "<div class='eme-message-error eme-cancel-bookings-message-error'>" . $no_longer_allowed . '</div>';
     } else {
         usleep( 2 );
-        $form_id = uniqid();
+        $form_id = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
         $nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 
         $form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>

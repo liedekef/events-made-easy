@@ -3993,7 +3993,7 @@ function eme_cancel_payment_form( $payment_randomid ) {
     $person_ids = eme_get_booking_personids( $booking_ids );
     $person     = eme_get_person( $person_ids[0] );
 
-    $form_id = uniqid();
+	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $nonce   = wp_nonce_field( "cancel payment $payment_randomid", 'eme_frontend_nonce', false, false );
 
     $output  = "<div id='eme-cancel-payment-message-ok-$form_id' class='eme-message-success eme-cancel-payment-message eme-cancel-payment-message-success eme-hidden'></div><div id='eme-cancel-payment-message-error-$form_id' class='eme-message-error eme-cancel-payment-message eme-cancel-payment-message-error eme-hidden'></div><div id='div_eme-cancel-payment-form-$form_id'><form id='$form_id' name='eme-cancel-payment-form' method='post' action='#'>

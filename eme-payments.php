@@ -243,14 +243,13 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            document.addEventListener("DOMContentLoaded", function() {
                                 setTimeout(function() {
                                     const form = document.getElementById("eme_' . $pg . '_form");
                                     if (form) {
                                         form.submit();
                                     }
                                 }, ' . (int)$waitperiod . ');
-                            });</script>';
+                            </script>';
                     }
                 }
             }

@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Dynamic People Data (for dyngroups) ---
     function eme_dynamic_people_data_json(formId) {
-        const form = EME.$(`#${formId}`);
+        const form = document.getElementById(formId);
         if (!form) return;
 
         const formData = new FormData(form);

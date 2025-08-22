@@ -557,7 +557,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
 }
 
 function eme_refresh_captcha(form_id) {
-    const form = EME.$(`#${form_id}`);
+    const form = document.getElementById(form_id);
     if (!form) return;
 
     const captcha = form.querySelector('.eme-captcha-img');

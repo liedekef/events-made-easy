@@ -63,7 +63,7 @@ msgstr "im Namen von %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4126
+#: eme-payments.php:4121
 #: eme-people.php:4053
 #: eme-people.php:5058
 #: eme-people.php:5164
@@ -1611,7 +1611,7 @@ msgstr "Klicke den Zurück-Schalter Deines Browsers um zum vorherigen Bildschirm
 #: eme-events.php:4810
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2033
+#: eme-payments.php:2028
 #: eme-rsvp.php:5230
 msgid "No such event"
 msgstr "Keine solche Veranstaltung"
@@ -1768,7 +1768,7 @@ msgstr "Dieser Link ist nicht mehr gültig, bitte frage einen neuen Link an."
 #: eme-events.php:1164
 #: eme-events.php:1265
 #: eme-events.php:1278
-#: eme-payments.php:434
+#: eme-payments.php:432
 msgid "Nothing linked to this payment id"
 msgstr "Keine Verknüpfung zu dieser Zahlungs-ID"
 
@@ -5865,7 +5865,7 @@ msgstr "Kein solcher Eintrag"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4016
+#: eme-payments.php:4011
 #: eme-people.php:4625
 #: eme-people.php:4711
 #: eme-rsvp.php:854
@@ -5883,7 +5883,7 @@ msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlich
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4026
+#: eme-payments.php:4021
 #: eme-people.php:4635
 #: eme-people.php:4722
 #: eme-rsvp.php:865
@@ -11764,27 +11764,27 @@ msgid "Payment failed for your booking for #_EVENTNAME, please try again."
 msgstr "Die Zahlung für Deine Buchung für #_EVENTNAME ist fehlgeschlagen, bitte versuche es erneut."
 
 #: eme-payments.php:207
-#: eme-payments.php:348
-#: eme-payments.php:476
+#: eme-payments.php:347
+#: eme-payments.php:474
 msgid "Payment handling"
 msgstr "Bezahlarten"
 
 #: eme-payments.php:209
-#: eme-payments.php:350
-#: eme-payments.php:478
+#: eme-payments.php:349
+#: eme-payments.php:476
 msgid "The amount to pay is %s"
 msgstr "Der zu zahlende Betrag beträgt %s"
 
-#: eme-payments.php:280
-#: eme-payments.php:427
+#: eme-payments.php:279
+#: eme-payments.php:425
 msgid "Payment failed for your membership for #_MEMBERSHIPNAME, please try again."
 msgstr "Zahlung für Deine Mitgliedschaft für #_MEMBERSHIPNAME fehlgeschlagen, bitte versuche es erneut."
 
-#: eme-payments.php:305
+#: eme-payments.php:304
 msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
 msgstr "Deine Mitgliedschaft ist derzeit bis %s aktiv. Wenn du den Mitgliedsbeitrag erneut bezahlst, wird deine Mitgliedschaft bis %s verlängert"
 
-#: eme-payments.php:311
+#: eme-payments.php:310
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
 msgstr "Deine Mitgliedschaft ist abgelaufen. Wenn Du den Mitgliedsbeitrag erneut bezahlst, wird Deine Mitgliedschaft reaktiviert, bis %s"
 
@@ -11800,39 +11800,39 @@ msgstr "Mehrfachbuchung Anfragen"
 msgid "Booking for '%s'"
 msgstr "Buchung für '%s'"
 
-#: eme-payments.php:1518
+#: eme-payments.php:1513
 msgid "Pay %s"
 msgstr "Zahle %s"
 
-#: eme-payments.php:1539
+#: eme-payments.php:1534
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API gab einen Fehler zurück: "
 
-#: eme-payments.php:1969
-#: eme-payments.php:2053
+#: eme-payments.php:1964
+#: eme-payments.php:2048
 msgid "Hash Incorrect"
 msgstr "Hash ist nicht korrekt"
 
-#: eme-payments.php:2021
-#: eme-payments.php:2039
+#: eme-payments.php:2016
+#: eme-payments.php:2034
 msgid "Incorrect payment id."
 msgstr "Ungültige Zahlungs ID."
 
-#: eme-payments.php:2189
+#: eme-payments.php:2184
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "da es sich um eine Website handelt, die auf localhost läuft, wird kein Webhook erstellt"
 
-#: eme-payments.php:2847
+#: eme-payments.php:2842
 msgid "Booking refunded"
 msgstr "Buchung erstattet"
 
-#: eme-payments.php:3984
-#: eme-payments.php:4045
+#: eme-payments.php:3979
+#: eme-payments.php:4040
 msgid "Nothing found or booking already cancelled"
 msgstr "Nichts gefunden oder Buchung bereits storniert"
 
-#: eme-payments.php:3987
-#: eme-payments.php:4048
+#: eme-payments.php:3982
+#: eme-payments.php:4043
 msgid "Booking already cancelled"
 msgstr "Buchung bereits storniert"
 
@@ -13361,7 +13361,7 @@ msgstr "Exakt?"
 msgid "Renewed"
 msgstr "Erneuert"
 
-#: eme-payments.php:289
+#: eme-payments.php:288
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Kein Mitglied zu dieser Zahlung gefunden. Wenn Sie glauben, diese Nachricht irrtümlich erhalten zu haben, kontaktieren Sie bitte den Website-Betreiber."
 
@@ -13704,11 +13704,11 @@ msgstr "Die Nachricht, die nach erfolgreicher Einreichung eines neuen Ereignisse
 msgid "Event submission '%s'"
 msgstr "Ereigniseinreichung '%s'"
 
-#: eme-payments.php:439
+#: eme-payments.php:437
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Kein Ereignis zu dieser Zahlung gefunden. Wenn Sie glauben, diese Nachricht irrtümlich erhalten zu haben, kontaktieren Sie bitte den Website-Betreiber."
 
-#: eme-payments.php:2044
+#: eme-payments.php:2039
 msgid "Incorrect currency."
 msgstr "Falsche Währung."
 
@@ -13724,7 +13724,7 @@ msgstr "Die Währung, die verwendet wird, wenn eingereichte Ereignisse bezahlt w
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Die Zahlungsmethode(n), die verwendet werden soll(en), wenn eingereichte Ereignisse bezahlt werden müssen. Dies hat nichts mit den RSVP-Einstellungen im eingereichten Ereignis selbst zu tun!"
 
-#: eme-payments.php:4161
+#: eme-payments.php:4156
 msgid "Configured"
 msgstr "Konfiguriert"
 
@@ -14383,8 +14383,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3247
-#: eme-payments.php:3261
+#: eme-payments.php:3242
+#: eme-payments.php:3256
 msgid "Booking cancelled and refunded"
 msgstr ""
 

@@ -91,7 +91,7 @@ msgstr "v mene %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4126
+#: eme-payments.php:4121
 #: eme-people.php:4053
 #: eme-people.php:5058
 #: eme-people.php:5164
@@ -1658,7 +1658,7 @@ msgstr "Stlačením tlačidla Späť v prehliadači sa vráťte na predchádzaj�
 #: eme-events.php:4810
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2033
+#: eme-payments.php:2028
 #: eme-rsvp.php:5230
 msgid "No such event"
 msgstr "Žiadne takéto podujatie"
@@ -1815,7 +1815,7 @@ msgstr "Tento odkaz už nie je platný, požiadajte prosím o nový odkaz."
 #: eme-events.php:1164
 #: eme-events.php:1265
 #: eme-events.php:1278
-#: eme-payments.php:434
+#: eme-payments.php:432
 msgid "Nothing linked to this payment id"
 msgstr "S týmto identifikačným číslom platby nie je nič prepojené"
 
@@ -5749,7 +5749,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4016
+#: eme-payments.php:4011
 #: eme-people.php:4625
 #: eme-people.php:4711
 #: eme-rsvp.php:854
@@ -5767,7 +5767,7 @@ msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omy
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4026
+#: eme-payments.php:4021
 #: eme-people.php:4635
 #: eme-people.php:4722
 #: eme-rsvp.php:865
@@ -12293,79 +12293,79 @@ msgid "Payment failed for your booking for #_EVENTNAME, please try again."
 msgstr "Platba za vašu rezerváciu na #_EVENTNAME zlyhala, prosím skúste to znova."
 
 #: eme-payments.php:207
-#: eme-payments.php:348
-#: eme-payments.php:476
+#: eme-payments.php:347
+#: eme-payments.php:474
 msgid "Payment handling"
 msgstr "Informácie o platbe"
 
 #: eme-payments.php:209
-#: eme-payments.php:350
-#: eme-payments.php:478
+#: eme-payments.php:349
+#: eme-payments.php:476
 msgid "The amount to pay is %s"
 msgstr "Suma na platbu je %s"
 
-#: eme-payments.php:280
-#: eme-payments.php:427
+#: eme-payments.php:279
+#: eme-payments.php:425
 msgid "Payment failed for your membership for #_MEMBERSHIPNAME, please try again."
 msgstr "Platba za členstvo #_MEMBERSHIPNAME zlyhala, skúste to prosím znova."
 
-#: eme-payments.php:289
+#: eme-payments.php:288
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Nenašiel sa žiadny člen spojený s touto platbou. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte prosím majiteľa stránky."
 
-#: eme-payments.php:305
+#: eme-payments.php:304
 msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
 msgstr "Vaše členstvo je momentálne aktívne do %s. Ak znova zaplatíte členský poplatok, vaše členstvo bude predĺžené do %s"
 
-#: eme-payments.php:311
+#: eme-payments.php:310
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
 msgstr "Platnosť vášho členstva vypršala. Ak znova zaplatíte členský poplatok, vaše členstvo bude znova aktivované do %s"
 
-#: eme-payments.php:439
+#: eme-payments.php:437
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "K tejto platbe sa nenašlo žiadne podujatie. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte prosím majiteľa stránky."
 
-#: eme-payments.php:1518
+#: eme-payments.php:1513
 msgid "Pay %s"
 msgstr "Zaplatiť cez %s"
 
-#: eme-payments.php:1539
+#: eme-payments.php:1534
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API vrátilo chybu: "
 
-#: eme-payments.php:1969
-#: eme-payments.php:2053
+#: eme-payments.php:1964
+#: eme-payments.php:2048
 msgid "Hash Incorrect"
 msgstr "Nesprávna hash suma"
 
-#: eme-payments.php:2021
-#: eme-payments.php:2039
+#: eme-payments.php:2016
+#: eme-payments.php:2034
 msgid "Incorrect payment id."
 msgstr "Nesprávne ID platby."
 
-#: eme-payments.php:2044
+#: eme-payments.php:2039
 msgid "Incorrect currency."
 msgstr "Nesprávna mena."
 
-#: eme-payments.php:2189
+#: eme-payments.php:2184
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "pretože tento web beží na localhost-e, nebude vytvorený žiadny webhook"
 
-#: eme-payments.php:2847
+#: eme-payments.php:2842
 msgid "Booking refunded"
 msgstr "Platba za rezerváciu vrátená"
 
-#: eme-payments.php:3984
-#: eme-payments.php:4045
+#: eme-payments.php:3979
+#: eme-payments.php:4040
 msgid "Nothing found or booking already cancelled"
 msgstr "Nič sa nenašlo alebo rezervácia už bola zrušená"
 
-#: eme-payments.php:3987
-#: eme-payments.php:4048
+#: eme-payments.php:3982
+#: eme-payments.php:4043
 msgid "Booking already cancelled"
 msgstr "Rezervácia už bola zrušená"
 
-#: eme-payments.php:4161
+#: eme-payments.php:4156
 msgid "Configured"
 msgstr "Nastavené"
 
@@ -14364,8 +14364,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3247
-#: eme-payments.php:3261
+#: eme-payments.php:3242
+#: eme-payments.php:3256
 msgid "Booking cancelled and refunded"
 msgstr ""
 

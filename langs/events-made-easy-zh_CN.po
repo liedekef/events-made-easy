@@ -63,7 +63,7 @@ msgstr ""
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4126
+#: eme-payments.php:4121
 #: eme-people.php:4053
 #: eme-people.php:5058
 #: eme-people.php:5164
@@ -1618,7 +1618,7 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 #: eme-events.php:4810
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2033
+#: eme-payments.php:2028
 #: eme-rsvp.php:5230
 msgid "No such event"
 msgstr "没有此活动"
@@ -1775,7 +1775,7 @@ msgstr "该链接不再有效，请申请新的链接。"
 #: eme-events.php:1164
 #: eme-events.php:1265
 #: eme-events.php:1278
-#: eme-payments.php:434
+#: eme-payments.php:432
 msgid "Nothing linked to this payment id"
 msgstr "没有任何与该支付 ID 相关的内容"
 
@@ -5881,7 +5881,7 @@ msgstr "没有这样的记录"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4016
+#: eme-payments.php:4011
 #: eme-people.php:4625
 #: eme-people.php:4711
 #: eme-rsvp.php:854
@@ -5899,7 +5899,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4026
+#: eme-payments.php:4021
 #: eme-people.php:4635
 #: eme-people.php:4722
 #: eme-rsvp.php:865
@@ -11805,28 +11805,28 @@ msgid "Payment failed for your booking for #_EVENTNAME, please try again."
 msgstr "您对 #_EVENTNAME 预订的付款失败，请重试。"
 
 #: eme-payments.php:207
-#: eme-payments.php:348
-#: eme-payments.php:476
+#: eme-payments.php:347
+#: eme-payments.php:474
 msgid "Payment handling"
 msgstr "付款处理"
 
 #: eme-payments.php:209
-#: eme-payments.php:350
-#: eme-payments.php:478
+#: eme-payments.php:349
+#: eme-payments.php:476
 msgid "The amount to pay is %s"
 msgstr "要支付的金额是 %s"
 
-#: eme-payments.php:280
-#: eme-payments.php:427
+#: eme-payments.php:279
+#: eme-payments.php:425
 msgid "Payment failed for your membership for #_MEMBERSHIPNAME, please try again."
 msgstr "您的会籍 #_MEMBERSHIPNAME 付款失败，请重试。"
 
-#: eme-payments.php:305
+#: eme-payments.php:304
 #, fuzzy
 msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
 msgstr "您的会籍已经过期。如果您再次支付会员费，您的会籍将被重新激活，直到 %s"
 
-#: eme-payments.php:311
+#: eme-payments.php:310
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
 msgstr "您的会籍已经过期。如果您再次支付会员费，您的会籍将被重新激活，直到 %s"
 
@@ -11842,39 +11842,39 @@ msgstr "多个预订请求"
 msgid "Booking for '%s'"
 msgstr "为 “%s” 预订"
 
-#: eme-payments.php:1518
+#: eme-payments.php:1513
 msgid "Pay %s"
 msgstr "支付 %s"
 
-#: eme-payments.php:1539
+#: eme-payments.php:1534
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API 回复一个错误："
 
-#: eme-payments.php:1969
-#: eme-payments.php:2053
+#: eme-payments.php:1964
+#: eme-payments.php:2048
 msgid "Hash Incorrect"
 msgstr "Hash 值不正确"
 
-#: eme-payments.php:2021
-#: eme-payments.php:2039
+#: eme-payments.php:2016
+#: eme-payments.php:2034
 msgid "Incorrect payment id."
 msgstr "支付 ID 不正确。"
 
-#: eme-payments.php:2189
+#: eme-payments.php:2184
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "因为这是一个运行在 localhost 上的网站，所以不会创建网络钩子。"
 
-#: eme-payments.php:2847
+#: eme-payments.php:2842
 msgid "Booking refunded"
 msgstr "预订已退款"
 
-#: eme-payments.php:3984
-#: eme-payments.php:4045
+#: eme-payments.php:3979
+#: eme-payments.php:4040
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:3987
-#: eme-payments.php:4048
+#: eme-payments.php:3982
+#: eme-payments.php:4043
 msgid "Booking already cancelled"
 msgstr ""
 
@@ -13409,7 +13409,7 @@ msgstr ""
 msgid "Renewed"
 msgstr ""
 
-#: eme-payments.php:289
+#: eme-payments.php:288
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
@@ -13752,11 +13752,11 @@ msgstr ""
 msgid "Event submission '%s'"
 msgstr ""
 
-#: eme-payments.php:439
+#: eme-payments.php:437
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-payments.php:2044
+#: eme-payments.php:2039
 msgid "Incorrect currency."
 msgstr ""
 
@@ -13772,7 +13772,7 @@ msgstr ""
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: eme-payments.php:4161
+#: eme-payments.php:4156
 msgid "Configured"
 msgstr ""
 
@@ -14430,8 +14430,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3247
-#: eme-payments.php:3261
+#: eme-payments.php:3242
+#: eme-payments.php:3256
 msgid "Booking cancelled and refunded"
 msgstr ""
 

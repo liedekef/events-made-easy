@@ -388,14 +388,13 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            document.addEventListener("DOMContentLoaded", function() {
                                 setTimeout(function() {
                                     const form = document.getElementById("eme_' . $pg . '_form");
                                     if (form) {
                                         form.submit();
                                     }
                                 }, ' . (int)$waitperiod . ');
-                            });</script>';
+                            </script>';
                     }
                 }
             }
@@ -507,14 +506,13 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
                     if ( $eme_pg_submit_immediately ) {
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
-                            document.addEventListener("DOMContentLoaded", function() {
                                 setTimeout(function() {
                                     const form = document.getElementById("eme_' . $pg . '_form");
                                     if (form) {
                                         form.submit();
                                     }
                                 }, ' . (int)$waitperiod . ');
-                            });</script>';
+                            </script>';
                     }
                 }
             }
@@ -932,7 +930,6 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
     }
     $form_html .= '</form>
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
             // Load Braintree Drop-in SDK dynamically
             const script = document.createElement("script");
             script.src = "https://js.braintreegateway.com/web/dropin/1.33.0/js/dropin.min.js";
@@ -990,7 +987,6 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
                 console.error("Failed to load Braintree Drop-in SDK");
             };
             document.head.appendChild(script);
-        });
     </script>';
     $form_html .= $button_below;
     return $form_html;

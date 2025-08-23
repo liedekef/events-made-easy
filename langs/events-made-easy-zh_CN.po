@@ -1658,7 +1658,7 @@ msgid "Edit Recurrence"
 msgstr "编辑循环"
 
 #: eme-events.php:656
-#: eme-fs.php:768
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr "数据库插入失败!"
 
@@ -5875,7 +5875,7 @@ msgstr "上传文件时遇到的错误"
 msgid "No such record"
 msgstr "没有这样的记录"
 
-#: eme-fs.php:828
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5890,7 +5890,7 @@ msgstr "没有这样的记录"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
-#: eme-fs.php:838
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -13540,7 +13540,7 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr ""
 
 #: eme-fs.php:188
-#: eme-fs.php:851
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -13569,7 +13569,7 @@ msgstr ""
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:694
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 

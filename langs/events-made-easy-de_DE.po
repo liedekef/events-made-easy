@@ -1651,7 +1651,7 @@ msgid "Edit Recurrence"
 msgstr "Veranstaltungsserie bearbeiten"
 
 #: eme-events.php:656
-#: eme-fs.php:768
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr "Eintrag in die Datenbank fehlgeschlagen!"
 
@@ -5859,7 +5859,7 @@ msgstr "Fehler beim Hochladen von Dateien aufgetreten"
 msgid "No such record"
 msgstr "Kein solcher Eintrag"
 
-#: eme-fs.php:828
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5874,7 +5874,7 @@ msgstr "Kein solcher Eintrag"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlicherweise angezeigt wird, kontaktiere bitte den Seitenbetreiber."
 
-#: eme-fs.php:838
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -13492,7 +13492,7 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr "Diese Option aktivieren, wenn Sie den Bild-Upload im Frontend-WYSIWYG-Editor für die Ereignisnotizen erlauben möchten."
 
 #: eme-fs.php:188
-#: eme-fs.php:851
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Entschuldigung, aber Sie dürfen keine neuen Ereignisse einreichen."
 
@@ -13521,7 +13521,7 @@ msgstr "Bitte geben Sie eine Standortbeschreibung ein"
 msgid "Enter the event's start date"
 msgstr "Geben Sie das Startdatum des Ereignisses ein"
 
-#: eme-fs.php:694
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Das Enddatum/-zeit muss <strong>nach</strong> dem Startdatum/-zeit liegen"
 

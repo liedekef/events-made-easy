@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.12\n"
+"Project-Id-Version: Events Made Easy 3.0.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-23T15:06:13+00:00\n"
+"POT-Creation-Date: 2025-08-23T22:06:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -1773,7 +1773,7 @@ msgid "Edit Recurrence"
 msgstr ""
 
 #: eme-events.php:656
-#: eme-fs.php:768
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr ""
 
@@ -6074,7 +6074,7 @@ msgid "Records deleted!"
 msgstr ""
 
 #: eme-fs.php:188
-#: eme-fs.php:851
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -6117,11 +6117,11 @@ msgstr ""
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:694
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: eme-fs.php:828
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -6136,7 +6136,7 @@ msgstr ""
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-fs.php:838
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225

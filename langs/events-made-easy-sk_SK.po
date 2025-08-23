@@ -1698,7 +1698,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: eme-events.php:656
-#: eme-fs.php:768
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -5696,7 +5696,7 @@ msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
 #: eme-fs.php:188
-#: eme-fs.php:851
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 
@@ -5739,11 +5739,11 @@ msgstr "Zadajte prosím popis miesta podujatia"
 msgid "Enter the event's start date"
 msgstr "Zadajte dátum začiatku podujatia"
 
-#: eme-fs.php:694
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase začiatku"
 
-#: eme-fs.php:828
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5758,7 +5758,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: eme-fs.php:838
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225

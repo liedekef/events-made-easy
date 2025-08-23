@@ -674,15 +674,13 @@ function eme_fs_process_newevent() {
         $event_start_time = '00:00';
         $event_end_time = "23:59";
     } else {
-        if ( ! empty( $event_data['localized_start_time'] ) ) {
-            $start_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $event_data['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
-            $event_start_time = $start_date_obj->format( 'H:i:00' );
+        if ( ! empty( $event_data['event_start_time'] ) ) {
+            $event_start_time = $event_data['event_start_time'];
         } else {
             $event_start_time = '00:00:00';
         }
-        if ( ! empty( $event_data['localized_end_time'] ) ) {
-            $end_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $event_data['localized_end_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
-            $event_end_time = $end_date_obj->format( 'H:i:00' );
+        if ( ! empty( $event_data['event_end_time'] ) ) {
+            $event_end_time = $event_data['event_end_time'];
         } else {
             $event_end_time = '23:59:59';
         }

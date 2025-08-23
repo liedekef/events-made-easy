@@ -153,11 +153,11 @@ msgstr "Mailing voorkeuren"
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
-#: eme-actions.php:498
+#: eme-actions.php:500
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
-#: eme-actions.php:533
+#: eme-actions.php:535
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -913,7 +913,7 @@ msgstr "Staat/provincie naam"
 msgid "The name of the state"
 msgstr "De staat/provincie naam"
 
-#: eme-actions.php:430
+#: eme-actions.php:432
 #: eme-countries.php:506
 #: eme-discounts.php:1606
 #: eme-events.php:9585
@@ -1507,7 +1507,7 @@ msgstr "Vast per plaats"
 #: eme-formfields.php:5108
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
-#: eme-fs.php:624
+#: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1548,7 +1548,7 @@ msgstr "Ja"
 #: eme-formfields.php:5108
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
-#: eme-fs.php:623
+#: eme-fs.php:622
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1650,7 +1650,7 @@ msgid "Edit Recurrence"
 msgstr "Bewerk terugkerend item"
 
 #: eme-events.php:656
-#: eme-fs.php:769
+#: eme-fs.php:768
 msgid "Database insert failed!"
 msgstr "Database insert is mislukt!"
 
@@ -2159,7 +2159,7 @@ msgstr "Toon/verberg extra filters"
 
 #: eme-events.php:6134
 #: eme-events.php:6678
-#: eme-fs.php:607
+#: eme-fs.php:606
 msgid "Event Status"
 msgstr "Status evenement"
 
@@ -4144,7 +4144,7 @@ msgstr "Provincies/staten"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Geen land geassocieerd met deze provincie, deze zal niet getoond worden in dropdown lijsten. Pas deze provincie aan met de correcte land info."
 
-#: eme-actions.php:410
+#: eme-actions.php:412
 #: eme-events.php:9626
 #: eme-events.php:9803
 msgid "No matching location found"
@@ -5871,7 +5871,7 @@ msgstr "Er waren problemen bij het uploaden van bestanden"
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
-#: eme-fs.php:829
+#: eme-fs.php:828
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5886,7 +5886,7 @@ msgstr "Geen gegevens gevonden"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvangt, contacteer dan de websitebeheerder."
 
-#: eme-fs.php:839
+#: eme-fs.php:838
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -6001,7 +6001,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:688
+#: eme-actions.php:690
 #: eme-gdpr.php:520
 #: events-manager.php:348
 msgid "Events Made Easy"
@@ -6353,7 +6353,7 @@ msgstr "Onderwerp"
 msgid "Queued on"
 msgstr "In de wachtrij gezet op"
 
-#: eme-actions.php:426
+#: eme-actions.php:428
 #: eme-events.php:9581
 #: eme-mailer.php:1661
 #: eme-mailer.php:1671
@@ -13378,15 +13378,15 @@ msgstr "Vanaf %s (automatisch verlengd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Als het aantal plaatsen voor een taak 0 is, wordt de taakbeschrijving behandeld als sectiehoofd voor de volgende reeks taken."
 
-#: eme-actions.php:530
+#: eme-actions.php:532
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: eme-actions.php:531
+#: eme-actions.php:533
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
-#: eme-actions.php:541
+#: eme-actions.php:543
 msgid "Dismiss"
 msgstr "Negeren"
 
@@ -13414,7 +13414,7 @@ msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: eme-actions.php:693
+#: eme-actions.php:695
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
@@ -13483,7 +13483,7 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr "Selecteer deze optie als u het uploaden van afbeeldingen in de frontend wysiwyg-editor voor de evenementomschrijving wilt toestaan."
 
 #: eme-fs.php:188
-#: eme-fs.php:852
+#: eme-fs.php:851
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Helaas, u mag geen nieuwe evenementen indienen."
 
@@ -13491,28 +13491,28 @@ msgstr "Helaas, u mag geen nieuwe evenementen indienen."
 msgid "Create event"
 msgstr "Maak evenement aan"
 
-#: eme-fs.php:634
+#: eme-fs.php:633
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr "Nieuw evenement succesvol aangemaakt."
 
-#: eme-fs.php:654
+#: eme-fs.php:653
 msgid "Please enter a name for the event"
 msgstr "Voer een naam in voor het evenement"
 
-#: eme-fs.php:658
+#: eme-fs.php:657
 msgid "Please enter an event description"
 msgstr "Voer een evenementbeschrijving in"
 
-#: eme-fs.php:661
+#: eme-fs.php:660
 msgid "Please enter a location description"
 msgstr "Voer een locatiebeschrijving in"
 
-#: eme-fs.php:664
+#: eme-fs.php:663
 msgid "Enter the event's start date"
 msgstr "Geef een startdatum in voor het evenement"
 
-#: eme-fs.php:695
+#: eme-fs.php:694
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "De einddatum/-tijd moet <strong>na</strong> de begindatum/-tijd vallen"
 
@@ -14302,32 +14302,32 @@ msgstr "Schakel deze optie in als u de betaalde e-mails zo snel mogelijk wilt ve
 msgid "Use membership feature?"
 msgstr "Lidmaatschapsfunctie gebruiken?"
 
-#: eme-actions.php:424
+#: eme-actions.php:426
 #: eme-events.php:9579
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
 
-#: eme-actions.php:425
+#: eme-actions.php:427
 #: eme-events.php:9580
 msgid "Insert"
 msgstr "Invoegen"
 
-#: eme-actions.php:427
+#: eme-actions.php:429
 #: eme-events.php:9582
 msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
-#: eme-actions.php:428
+#: eme-actions.php:430
 #: eme-events.php:9583
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: eme-actions.php:429
+#: eme-actions.php:431
 #: eme-events.php:9584
 msgid "Visual"
 msgstr "Visueel"
 
-#: eme-actions.php:431
+#: eme-actions.php:433
 #: eme-events.php:9586
 msgid "Insert non-breaking space"
 msgstr "Vaste spatie invoegen"
@@ -14374,7 +14374,7 @@ msgstr "Voor velden die meerdere waarden ondersteunen (zoals keuzelijst of check
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
 msgstr "Voor de types 'Datum (Javascript)', 'Datumtijd (Javascript)' en 'Tijd (Javascript)' kun je optioneel het woord 'NOW' invoeren om automatisch de huidige datum en/of tijd te gebruiken wanneer het veld wordt weergegeven."
 
-#: eme-actions.php:522
+#: eme-actions.php:524
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo, <strong>%s</strong>, welkom bij <strong>Events Made Easy</strong>! We hopen dat je het hier naar je zin hebt.</p><p>Nu is het tijd om evenementenlijsten toe te voegen via <a href='%s' title='Widgets pagina'>widgets</a>, <a href='%s' title='Documentatie over template tags'>template tags</a> of <a href='%s' title='Documentatie over shortcodes'>shortcodes</a>.</p><p>Trouwens, heb je al een kijkje genomen op de <a href='%s' title='Instellingen wijzigen'>Instellingenpagina</a>? Daar pas je aan hoe evenementen en locaties worden weergegeven.</p><p>Wat? Ben je het zat om dit advies te zien? Ik snap het, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Laat dit advies niet meer zien\">klik hier</a> en je zult dit niet meer zien!</p>"
 

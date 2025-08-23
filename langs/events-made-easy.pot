@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.10\n"
+"Project-Id-Version: Events Made Easy 3.0.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-22T20:27:59+00:00\n"
+"POT-Creation-Date: 2025-08-23T11:48:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:688
+#: eme-actions.php:690
 #: eme-gdpr.php:520
 #: events-manager.php:348
 msgid "Events Made Easy"
@@ -182,23 +182,23 @@ msgstr ""
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: eme-actions.php:410
+#: eme-actions.php:412
 #: eme-events.php:9626
 #: eme-events.php:9803
 msgid "No matching location found"
 msgstr ""
 
-#: eme-actions.php:424
+#: eme-actions.php:426
 #: eme-events.php:9579
 msgid "Insert image"
 msgstr ""
 
-#: eme-actions.php:425
+#: eme-actions.php:427
 #: eme-events.php:9580
 msgid "Insert"
 msgstr ""
 
-#: eme-actions.php:426
+#: eme-actions.php:428
 #: eme-events.php:9581
 #: eme-mailer.php:1661
 #: eme-mailer.php:1671
@@ -207,22 +207,22 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: eme-actions.php:427
+#: eme-actions.php:429
 #: eme-events.php:9582
 msgid "Insert from Media Library"
 msgstr ""
 
-#: eme-actions.php:428
+#: eme-actions.php:430
 #: eme-events.php:9583
 msgid "Preview"
 msgstr ""
 
-#: eme-actions.php:429
+#: eme-actions.php:431
 #: eme-events.php:9584
 msgid "Visual"
 msgstr ""
 
-#: eme-actions.php:430
+#: eme-actions.php:432
 #: eme-countries.php:506
 #: eme-discounts.php:1606
 #: eme-events.php:9585
@@ -231,36 +231,36 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: eme-actions.php:431
+#: eme-actions.php:433
 #: eme-events.php:9586
 msgid "Insert non-breaking space"
 msgstr ""
 
-#: eme-actions.php:498
+#: eme-actions.php:500
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr ""
 
-#: eme-actions.php:522
+#: eme-actions.php:524
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:530
+#: eme-actions.php:532
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:531
+#: eme-actions.php:533
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:533
+#: eme-actions.php:535
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr ""
 
-#: eme-actions.php:541
+#: eme-actions.php:543
 msgid "Dismiss"
 msgstr ""
 
-#: eme-actions.php:693
+#: eme-actions.php:695
 msgid "List of next 10 events"
 msgstr ""
 
@@ -1622,7 +1622,7 @@ msgstr ""
 #: eme-formfields.php:5108
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
-#: eme-fs.php:624
+#: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1663,7 +1663,7 @@ msgstr ""
 #: eme-formfields.php:5108
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
-#: eme-fs.php:623
+#: eme-fs.php:622
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1773,7 +1773,7 @@ msgid "Edit Recurrence"
 msgstr ""
 
 #: eme-events.php:656
-#: eme-fs.php:769
+#: eme-fs.php:768
 msgid "Database insert failed!"
 msgstr ""
 
@@ -2295,7 +2295,7 @@ msgstr ""
 
 #: eme-events.php:6134
 #: eme-events.php:6678
-#: eme-fs.php:607
+#: eme-fs.php:606
 msgid "Event Status"
 msgstr ""
 
@@ -6074,7 +6074,7 @@ msgid "Records deleted!"
 msgstr ""
 
 #: eme-fs.php:188
-#: eme-fs.php:852
+#: eme-fs.php:851
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -6096,32 +6096,32 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-#: eme-fs.php:634
+#: eme-fs.php:633
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr ""
 
-#: eme-fs.php:654
+#: eme-fs.php:653
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: eme-fs.php:658
+#: eme-fs.php:657
 msgid "Please enter an event description"
 msgstr ""
 
-#: eme-fs.php:661
+#: eme-fs.php:660
 msgid "Please enter a location description"
 msgstr ""
 
-#: eme-fs.php:664
+#: eme-fs.php:663
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:695
+#: eme-fs.php:694
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: eme-fs.php:829
+#: eme-fs.php:828
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -6136,7 +6136,7 @@ msgstr ""
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-fs.php:839
+#: eme-fs.php:838
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225

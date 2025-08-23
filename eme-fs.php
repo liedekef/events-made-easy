@@ -532,8 +532,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
 	}
         break;
     case 'localized_datetime':
-        //echo sprintf($html_by_type['hidden'], $field_id, $field, '', $more);
-        $res = sprintf($html_by_type['hidden'], $field_id, $field, $more);
+        $res = sprintf($html_by_type['hidden'], $field_id, $field, '');
         $res .= sprintf($html_by_type[$type], $localized_field_id, "event[$localized_field_id]", $more);
         break;
     case 'status_select':

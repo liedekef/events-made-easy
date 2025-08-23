@@ -359,8 +359,10 @@ function eme_register_scripts() {
         'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
         'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg']? 'true': 'false',
         'translate_flanguage'          => $language,
+        'translate_minutesStep'        => intval(get_option( 'eme_timepicker_minutesstep' )),
         'translate_fdateformat'        => EME_WP_DATE_FORMAT,
         'translate_ftimeformat'        => EME_WP_TIME_FORMAT,
+        'translate_fdatetimeformat'    => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT
     ];
     wp_localize_script( 'eme-basic', 'emebasic', $translation_array );
 

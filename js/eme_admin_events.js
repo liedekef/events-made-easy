@@ -498,15 +498,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
-    function changeEventAdminPageTitle(eventName) {
+    function changeEventAdminPageTitle() {
         let title;
-        if (!eventName) {
-            title = emeevents.translate_insertnewevent || 'Insert New Event';
-        } else {
-            title = emeevents.translate_editeventstring || 'Edit Event: %s';
-            title = title.replace(/%s/g, eventName);
+        const eventNameInput = EME.$('input[name=event_name]');
+        if (eventNameInput) {
+            const eventName = eventNameInput.value;
+            if (!eventName) {
+                title = emeevents.translate_insertnewevent || 'Insert New Event';
+            } else {
+                title = emeevents.translate_editeventstring || 'Edit Event: %s';
+                title = title.replace(/%s/g, eventName);
+            }
+            document.title = eme_htmlDecode(title);
         }
-        document.title = eme_htmlDecode(title);
     }
 
     function updateShowHideStuff() {
@@ -617,13 +621,6 @@ document.addEventListener('DOMContentLoaded', function () {
         recurrenceFrequency.addEventListener('change', updateIntervalDescriptor);
         recurrenceFrequency.addEventListener('change', updateIntervalSelectors);
         recurrenceFrequency.addEventListener('change', updateShowHideRecurrenceSpecificDays);
-    }
-
-    // Event name title update
-    const eventNameInput = EME.$('input[name=event_name]');
-    if (eventNameInput) {
-        changeEventAdminPageTitle(eventNameInput.value);
-        eventNameInput.addEventListener('keyup', changeEventAdminPageTitle);
     }
 
     // Image handling
@@ -1058,6 +1055,12 @@ document.addEventListener('DOMContentLoaded', function () {
             updateShowHideRecurrenceSpecificDays();
         }
 
-        changeEventAdminPageTitle();
+        // Event name title update
+        const eventNameInput = EME.$('input[name=event_name]');
+        if (eventNameInput) {
+            changeEventAdminPageTitle();
+            eventNameInput.addEventListener('keyup', changeEventAdminPageTitle);
+        }
+
     }, 100);
 });

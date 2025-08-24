@@ -357,7 +357,7 @@ function eme_init_widgets(dynamicOnly = false) {
                 timepicker: true,
                 minutesStep: parseInt(emebasic.translate_minutesStep),
                 language: emebasic.translate_flanguage,
-                firstDay: parseInt(emebasic.translate_firstDayOfWeek),
+                firstDayOfWeek: parseInt(emebasic.translate_firstDayOfWeek),
                 altFormat: 'Y-m-d H:i:00',
                 multipleSeparator: ", ",
                 format: emebasic.translate_fdatetimeformat,
@@ -375,7 +375,7 @@ function eme_init_widgets(dynamicOnly = false) {
                 autoClose: true,
                 fieldSizing: true,
                 language: emebasic.translate_flanguage,
-                firstDay: parseInt(emebasic.translate_firstDayOfWeek),
+                firstDayOfWeek: parseInt(emebasic.translate_firstDayOfWeek),
                 altFormat: 'Y-m-d',
                 multipleSeparator: ", ",
                 format: emebasic.translate_fdateformat

@@ -102,6 +102,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 3.0.15  (2025//) =
 * typo fix for first day of the week when using the JS datepicker
 * code correction for title in admin backend when editing event
+* remove unused images
+* ftable update to increase pageSizes
+* fdatepicker update to correct weekend coloring
 
 = 3.0.14  (2025/08/24) =
 * fix frontend submit start/end time

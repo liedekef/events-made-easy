@@ -137,7 +137,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
         if ( $event['event_properties']['invite_only'] ) {
             if ( ! eme_check_invite_url( $event['event_id'] ) ) {
-                $form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
+                $form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-rsvp-invite-required'>";
                 $format     = get_option( 'eme_rsvp_invitation_required_string' );
                 $form_html .= eme_replace_event_placeholders( $format, $event );
                 $form_html .= '</div>';
@@ -223,7 +223,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
                     $mess = get_option( 'eme_rsvp_no_longer_allowed_string' );
                 }
                 $mess = eme_translate( $mess );
-                return "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>" . $mess . '</div>';
+                return "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-rsvp-not-allowed'>" . $mess . '</div>';
             } else {
                 continue;
             }
@@ -233,7 +233,11 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
         if ( ! $seats_available ) {
             if ( ! $is_multibooking ) {
                 $eme_rsvp_full_text = get_option( 'eme_rsvp_full_string' );
-                $form_html         .= "<div class='eme-message-error eme-rsvp-message-error'>$eme_rsvp_full_text</div>";
+                if ( ! eme_is_empty_string($eme_rsvp_full_text) ) {
+                    return "<div class='eme-message-error eme-rsvp-message-error eme-rsvp-full'>$eme_rsvp_full_text</div>";
+                } else {
+                    return ""; // no text to show, then don't show the surrounding div either
+                }
             }
         } else {
             $new_booking = eme_new_booking();

@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.15  (2025/08/26) =
+= 3.0.15  (2025/08/30) =
 * typo fix for first day of the week when using the JS datepicker
 * code correction for title of page in admin backend when editing event
 * remove unused images

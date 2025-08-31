@@ -73,14 +73,14 @@ msgstr ""
 #: eme-people.php:5411
 #: eme-recurrence.php:634
 #: eme-recurrence.php:803
-#: eme-rsvp.php:1274
-#: eme-rsvp.php:4790
-#: eme-rsvp.php:4797
-#: eme-rsvp.php:4828
-#: eme-rsvp.php:4835
-#: eme-rsvp.php:4883
-#: eme-rsvp.php:5699
-#: eme-rsvp.php:5721
+#: eme-rsvp.php:1278
+#: eme-rsvp.php:4794
+#: eme-rsvp.php:4801
+#: eme-rsvp.php:4832
+#: eme-rsvp.php:4839
+#: eme-rsvp.php:4887
+#: eme-rsvp.php:5703
+#: eme-rsvp.php:5725
 #: eme-tasks.php:1862
 #: eme-tasks.php:1966
 #: eme-tasks.php:1977
@@ -114,7 +114,7 @@ msgstr "地点"
 #: eme-locations.php:572
 #: eme-people.php:1053
 #: eme-people.php:2409
-#: eme-rsvp.php:1489
+#: eme-rsvp.php:1493
 msgid "State"
 msgstr "州/省"
 
@@ -130,7 +130,7 @@ msgstr "州/省"
 #: eme-locations.php:580
 #: eme-people.php:1054
 #: eme-people.php:2404
-#: eme-rsvp.php:1494
+#: eme-rsvp.php:1498
 msgid "Country"
 msgstr "国家"
 
@@ -236,7 +236,7 @@ msgstr "如果 RSVP 或会员 QRCODE 被有足够权限的人扫描，出席记�
 #: eme-attendances.php:134
 #: eme-events.php:6128
 #: eme-events.php:6275
-#: eme-rsvp.php:5314
+#: eme-rsvp.php:5318
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr "过滤开始日期"
@@ -244,7 +244,7 @@ msgstr "过滤开始日期"
 #: eme-attendances.php:136
 #: eme-events.php:6130
 #: eme-events.php:6277
-#: eme-rsvp.php:5316
+#: eme-rsvp.php:5320
 #: eme-tasks.php:473
 msgid "Filter on end date"
 msgstr "按结束日期过滤"
@@ -280,7 +280,7 @@ msgstr "编辑人员"
 
 #: eme-attendances.php:216
 #: eme-events.php:10497
-#: eme-rsvp.php:6045
+#: eme-rsvp.php:6049
 msgid "All day"
 msgstr "全天"
 
@@ -574,7 +574,7 @@ msgstr "月"
 #: eme-members.php:3304
 #: eme-people.php:1887
 #: eme-people.php:2694
-#: eme-rsvp.php:5430
+#: eme-rsvp.php:5434
 #: eme-tasks.php:494
 #: eme-templates.php:192
 msgid "Apply"
@@ -643,7 +643,7 @@ msgstr "您无权管理折扣!"
 #: eme-members.php:6057
 #: eme-members.php:6243
 #: eme-people.php:870
-#: eme-rsvp.php:5093
+#: eme-rsvp.php:5097
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr "在访问上传的文件时出现问题，也许是一些安保问题？"
 
@@ -656,7 +656,7 @@ msgstr "在访问上传的文件时出现问题，也许是一些安保问题？
 #: eme-members.php:6083
 #: eme-members.php:6269
 #: eme-people.php:897
-#: eme-rsvp.php:5120
+#: eme-rsvp.php:5124
 msgid "Not all required fields present."
 msgstr "不是所有的必填字段都存在。"
 
@@ -684,7 +684,7 @@ msgstr ""
 #: eme-members.php:6049
 #: eme-members.php:6236
 #: eme-people.php:861
-#: eme-rsvp.php:5084
+#: eme-rsvp.php:5088
 msgid "Problem detected while uploading the file"
 msgstr "上传文件时发现问题"
 
@@ -697,7 +697,7 @@ msgstr "上传文件时发现问题"
 #: eme-members.php:6046
 #: eme-members.php:6233
 #: eme-people.php:858
-#: eme-rsvp.php:5081
+#: eme-rsvp.php:5085
 msgid "No CSV file detected: %s"
 msgstr "没有检测到 CSV 文件：%s"
 
@@ -799,7 +799,7 @@ msgstr "点击图标，显示导入表格"
 #: eme-members.php:3232
 #: eme-members.php:3243
 #: eme-people.php:2199
-#: eme-rsvp.php:5266
+#: eme-rsvp.php:5270
 msgid "Delimiter:"
 msgstr "定界符："
 
@@ -812,7 +812,7 @@ msgstr "定界符："
 #: eme-members.php:3234
 #: eme-members.php:3245
 #: eme-people.php:2201
-#: eme-rsvp.php:5268
+#: eme-rsvp.php:5272
 msgid "Enclosure:"
 msgstr "附件："
 
@@ -823,7 +823,7 @@ msgstr "附件："
 #: eme-events.php:6097
 #: eme-locations.php:863
 #: eme-people.php:2204
-#: eme-rsvp.php:5271
+#: eme-rsvp.php:5275
 msgid "Import"
 msgstr "导入"
 
@@ -858,7 +858,7 @@ msgstr ""
 #: eme-members.php:3298
 #: eme-people.php:1837
 #: eme-people.php:2689
-#: eme-rsvp.php:5341
+#: eme-rsvp.php:5345
 #: eme-tasks.php:482
 #: eme-templates.php:189
 msgid "Bulk Actions"
@@ -1246,8 +1246,8 @@ msgstr "更改 \"有效期至\" 的日期"
 #: eme-discounts.php:461
 #: eme-people.php:1872
 #: eme-people.php:1875
-#: eme-rsvp.php:5425
-#: eme-rsvp.php:5428
+#: eme-rsvp.php:5429
+#: eme-rsvp.php:5432
 msgid "Select a group"
 msgstr "选择一个群组"
 
@@ -1534,8 +1534,8 @@ msgstr "每个座位固定"
 #: eme-people.php:5119
 #: eme-people.php:5120
 #: eme-people.php:5190
-#: eme-rsvp.php:3912
-#: eme-rsvp.php:6082
+#: eme-rsvp.php:3916
+#: eme-rsvp.php:6086
 #: eme-ui-helpers.php:149
 #: eme-ui-helpers.php:265
 msgid "Yes"
@@ -1575,8 +1575,8 @@ msgstr "是的"
 #: eme-people.php:5119
 #: eme-people.php:5120
 #: eme-people.php:5190
-#: eme-rsvp.php:3912
-#: eme-rsvp.php:6082
+#: eme-rsvp.php:3916
+#: eme-rsvp.php:6086
 #: eme-ui-helpers.php:150
 #: eme-ui-helpers.php:264
 msgid "No"
@@ -1619,7 +1619,7 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 #: eme-mailer.php:2310
 #: eme-payments.php:152
 #: eme-payments.php:2028
-#: eme-rsvp.php:5230
+#: eme-rsvp.php:5234
 msgid "No such event"
 msgstr "没有此活动"
 
@@ -1898,8 +1898,8 @@ msgstr ""
 
 #: eme-events.php:1535
 #: eme-events.php:1638
-#: eme-rsvp.php:3857
-#: eme-rsvp.php:3871
+#: eme-rsvp.php:3861
+#: eme-rsvp.php:3875
 msgid "Cancel booking"
 msgstr "取消预订"
 
@@ -1943,7 +1943,7 @@ msgstr "Events Made Easy 的插件页面"
 #: eme-events.php:9914
 #: eme-events.php:9969
 #: eme-locations.php:2416
-#: eme-rsvp.php:5920
+#: eme-rsvp.php:5924
 msgid "Edit"
 msgstr "编辑"
 
@@ -2087,20 +2087,20 @@ msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
 
 #: eme-events.php:6047
-#: eme-rsvp.php:5196
+#: eme-rsvp.php:5200
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr "过去的活动"
 
 #: eme-events.php:6048
-#: eme-rsvp.php:5197
+#: eme-rsvp.php:5201
 #: eme-tasks.php:447
 #: events-manager.php:351
 msgid "All events"
 msgstr "所有活动"
 
 #: eme-events.php:6049
-#: eme-rsvp.php:5198
+#: eme-rsvp.php:5202
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr "未来的活动"
@@ -2126,13 +2126,13 @@ msgstr "管理循环"
 
 #: eme-events.php:6080
 #: eme-people.php:2187
-#: eme-rsvp.php:5254
+#: eme-rsvp.php:5258
 msgid "Show regular content"
 msgstr "显示常规内容"
 
 #: eme-events.php:6082
 #: eme-people.php:2189
-#: eme-rsvp.php:5256
+#: eme-rsvp.php:5260
 msgid "Show trash content"
 msgstr "显示回收站内容"
 
@@ -2141,12 +2141,12 @@ msgid "If you want, use this to import events into the database"
 msgstr "如果您愿意，可以用这个将活动导入数据库"
 
 #: eme-events.php:6118
-#: eme-rsvp.php:5304
+#: eme-rsvp.php:5308
 msgid "All categories"
 msgstr "所有分类"
 
 #: eme-events.php:6119
-#: eme-rsvp.php:5305
+#: eme-rsvp.php:5309
 msgid "Events without category"
 msgstr "无分类的活动"
 
@@ -2158,7 +2158,7 @@ msgid "Event name"
 msgstr "活动名称"
 
 #: eme-events.php:6131
-#: eme-rsvp.php:5318
+#: eme-rsvp.php:5322
 msgid "Show/hide extra filters"
 msgstr "显示或隐藏额外的筛选"
 
@@ -2308,7 +2308,7 @@ msgstr "如果您改变这个活动，它将成为一个独立的活动，并从
 #: eme-events.php:9949
 #: eme-events.php:10467
 #: eme-options.php:1297
-#: eme-rsvp.php:6004
+#: eme-rsvp.php:6008
 msgid "RSVP"
 msgstr "RSVP"
 
@@ -4053,7 +4053,7 @@ msgstr "任务结束日期"
 #: eme-options.php:39
 #: eme-people.php:1092
 #: eme-people.php:1433
-#: eme-rsvp.php:1498
+#: eme-rsvp.php:1502
 msgid "Comment"
 msgstr "评论"
 
@@ -4196,7 +4196,7 @@ msgstr "编辑地点 “%s”。"
 #: eme-locations.php:568
 #: eme-people.php:1051
 #: eme-people.php:2399
-#: eme-rsvp.php:1475
+#: eme-rsvp.php:1479
 msgid "City"
 msgstr "城市"
 
@@ -4213,7 +4213,7 @@ msgstr "城市"
 #: eme-locations.php:576
 #: eme-people.php:1052
 #: eme-people.php:2394
-#: eme-rsvp.php:1478
+#: eme-rsvp.php:1482
 msgid "Postal code"
 msgstr "邮政编码"
 
@@ -4309,7 +4309,7 @@ msgstr "姓氏"
 #: eme-people.php:1764
 #: eme-people.php:2318
 #: eme-rsvp.php:71
-#: eme-rsvp.php:1461
+#: eme-rsvp.php:1465
 msgid "First name"
 msgstr "名字"
 
@@ -4359,7 +4359,7 @@ msgstr "电子邮件"
 #: eme-people.php:1056
 #: eme-people.php:1380
 #: eme-people.php:4416
-#: eme-rsvp.php:1454
+#: eme-rsvp.php:1458
 msgid "Phone number"
 msgstr "电话号码"
 
@@ -4593,8 +4593,8 @@ msgid "Mark paid and approve"
 msgstr "标记已支付并已批准"
 
 #: eme-events.php:9968
-#: eme-rsvp.php:5353
-#: eme-rsvp.php:5370
+#: eme-rsvp.php:5357
+#: eme-rsvp.php:5374
 msgid "Mark paid"
 msgstr "标记为已支付"
 
@@ -4651,14 +4651,14 @@ msgid "Select one or more events"
 msgstr "选择一个或多个活动"
 
 #: eme-events.php:10298
-#: eme-rsvp.php:5929
+#: eme-rsvp.php:5933
 #: eme-tasks.php:1947
 msgid "Edit event"
 msgstr "编辑活动"
 
 #: eme-events.php:6713
 #: eme-events.php:10314
-#: eme-rsvp.php:5933
+#: eme-rsvp.php:5937
 msgid "RSVP Info: "
 msgstr "RSVP 的信息："
 
@@ -4671,8 +4671,8 @@ msgstr "RSVP 的信息："
 #: eme-events.php:10353
 #: eme-events.php:10415
 #: eme-events.php:10417
-#: eme-rsvp.php:5936
-#: eme-rsvp.php:6031
+#: eme-rsvp.php:5940
+#: eme-rsvp.php:6035
 msgid "Approved:"
 msgstr "已批准："
 
@@ -4682,39 +4682,39 @@ msgstr "已批准："
 #: eme-events.php:10361
 #: eme-events.php:10409
 #: eme-events.php:10411
-#: eme-rsvp.php:5970
-#: eme-rsvp.php:6029
+#: eme-rsvp.php:5974
+#: eme-rsvp.php:6033
 msgid "Pending:"
 msgstr "待订："
 
 #: eme-events.php:6754
 #: eme-events.php:10368
 #: eme-events.php:10370
-#: eme-rsvp.php:5975
+#: eme-rsvp.php:5979
 msgid "Absent:"
 msgstr "缺席："
 
 #: eme-events.php:6766
 #: eme-events.php:10382
-#: eme-rsvp.php:5987
+#: eme-rsvp.php:5991
 msgid "(%d waiting list seats included)"
 msgstr "(包括 %d 个等待名单的席位)"
 
 #: eme-events.php:6771
 #: eme-events.php:10387
-#: eme-rsvp.php:5993
+#: eme-rsvp.php:5997
 msgid "Printable view"
 msgstr "可打印的视图"
 
 #: eme-events.php:6772
 #: eme-events.php:10388
-#: eme-rsvp.php:5994
+#: eme-rsvp.php:5998
 msgid "CSV export"
 msgstr "CSV 导出"
 
 #: eme-events.php:6793
 #: eme-events.php:10406
-#: eme-rsvp.php:6027
+#: eme-rsvp.php:6031
 msgid "Task Info: %d tasks"
 msgstr ""
 
@@ -4744,12 +4744,12 @@ msgid "Duplicate this event"
 msgstr "复制此活动"
 
 #: eme-events.php:10467
-#: eme-rsvp.php:6004
+#: eme-rsvp.php:6008
 msgid "Add booking for this event"
 msgstr "为该活动添加预订"
 
 #: eme-events.php:10469
-#: eme-rsvp.php:6006
+#: eme-rsvp.php:6010
 msgid "Password protected"
 msgstr "被密码保护"
 
@@ -5323,7 +5323,7 @@ msgstr "新会员的电子邮件"
 #: eme-formfields.php:4521
 #: eme-people.php:1057
 #: eme-people.php:2414
-#: eme-rsvp.php:1481
+#: eme-rsvp.php:1485
 msgid "Date of birth"
 msgstr "出生日期"
 
@@ -5335,7 +5335,7 @@ msgstr "出生日期"
 #: eme-formfields.php:4532
 #: eme-people.php:1058
 #: eme-people.php:2429
-#: eme-rsvp.php:1484
+#: eme-rsvp.php:1488
 msgid "Place of birth"
 msgstr "出生地点"
 
@@ -5407,7 +5407,7 @@ msgstr "应用的折扣群组 %d 已不存在"
 #: eme-members.php:5283
 #: eme-people.php:1204
 #: eme-people.php:1515
-#: eme-rsvp.php:3682
+#: eme-rsvp.php:3686
 msgid "Applied discount %d no longer exists"
 msgstr "已应用的折扣 %d 不复存在"
 
@@ -5884,8 +5884,8 @@ msgstr "没有这样的记录"
 #: eme-payments.php:4011
 #: eme-people.php:4625
 #: eme-people.php:4711
-#: eme-rsvp.php:854
-#: eme-rsvp.php:1152
+#: eme-rsvp.php:858
+#: eme-rsvp.php:1156
 #: eme-tasks.php:1653
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
@@ -5902,8 +5902,8 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-payments.php:4021
 #: eme-people.php:4635
 #: eme-people.php:4722
-#: eme-rsvp.php:865
-#: eme-rsvp.php:1163
+#: eme-rsvp.php:869
+#: eme-rsvp.php:1167
 #: eme-tasks.php:1664
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到表格被篡改。如果您认为您收到这个消息是错误的，请联系网站所有者。"
@@ -5923,7 +5923,7 @@ msgstr "谢谢您的请求，我们将发送电子邮件提供进一步信息。
 #: eme-people.php:4698
 #: eme-people.php:4783
 #: eme-rsvp.php:164
-#: eme-rsvp.php:821
+#: eme-rsvp.php:825
 #: eme-tasks.php:1356
 msgid "Javascript is required for this form to work properly"
 msgstr "为使本表正常工作，需要使用 Javascript"
@@ -6289,10 +6289,10 @@ msgstr "复制这个地点"
 #: eme-members.php:6991
 #: eme-members.php:7070
 #: eme-members.php:7189
-#: eme-rsvp.php:1244
-#: eme-rsvp.php:5054
-#: eme-rsvp.php:6674
-#: eme-rsvp.php:6694
+#: eme-rsvp.php:1248
+#: eme-rsvp.php:5058
+#: eme-rsvp.php:6678
+#: eme-rsvp.php:6698
 msgid "There were some problems while sending mail."
 msgstr "在发送邮件时出现了一些问题。"
 
@@ -6377,7 +6377,7 @@ msgstr "取消"
 #: eme-people.php:4375
 #: eme-people.php:4669
 #: eme-people.php:4754
-#: eme-rsvp.php:1405
+#: eme-rsvp.php:1409
 msgid "Please enter a valid email address"
 msgstr "请输入有效的电子邮件地址"
 
@@ -6387,8 +6387,8 @@ msgstr "请输入有效的电子邮件地址"
 #: eme-mailer.php:2303
 #: eme-mailer.php:2397
 #: eme-members.php:6988
-#: eme-rsvp.php:6671
-#: eme-rsvp.php:6691
+#: eme-rsvp.php:6675
+#: eme-rsvp.php:6695
 msgid "The mail has been sent."
 msgstr "邮件已经发送。"
 
@@ -6425,8 +6425,8 @@ msgid "Email to the following persons has not been sent:"
 msgstr ""
 
 #: eme-mailer.php:2256
-#: eme-rsvp.php:875
-#: eme-rsvp.php:890
+#: eme-rsvp.php:879
+#: eme-rsvp.php:894
 msgid "Please select at least one event."
 msgstr "请选择至少一项活动。"
 
@@ -6483,7 +6483,7 @@ msgid "Send event related emails"
 msgstr "发送与活动相关的电子邮件"
 
 #: eme-mailer.php:2756
-#: eme-rsvp.php:4856
+#: eme-rsvp.php:4860
 msgid "Check this box to search through all events and not just future ones."
 msgstr "勾选此框可搜索所有活动，而不仅仅是未来的活动。"
 
@@ -6983,7 +6983,7 @@ msgid "Edit member"
 msgstr "编辑会员"
 
 #: eme-members.php:1520
-#: eme-rsvp.php:4843
+#: eme-rsvp.php:4847
 msgid "Click on this link to edit the corresponding person info"
 msgstr "点击此链接以编辑相应的人员信息"
 
@@ -7247,8 +7247,8 @@ msgstr "会员表格："
 #: eme-members.php:2906
 #: eme-people.php:1879
 #: eme-people.php:1884
-#: eme-rsvp.php:5416
-#: eme-rsvp.php:5421
+#: eme-rsvp.php:5420
+#: eme-rsvp.php:5425
 msgid "Please select a template"
 msgstr "请选择一个模板"
 
@@ -7774,8 +7774,8 @@ msgstr "重新发送过期提醒邮件"
 #: eme-mailer.php:3182
 #: eme-members.php:2877
 #: eme-people.php:1842
-#: eme-rsvp.php:5358
-#: eme-rsvp.php:5375
+#: eme-rsvp.php:5362
+#: eme-rsvp.php:5379
 #: eme-tasks.php:483
 msgid "Send generic email to selected persons"
 msgstr "向选定的人们发送通用的电子邮件"
@@ -7786,15 +7786,15 @@ msgstr "向选定的会员发送会员相关的电子邮件"
 
 #: eme-members.php:2880
 #: eme-people.php:1858
-#: eme-rsvp.php:5362
-#: eme-rsvp.php:5379
+#: eme-rsvp.php:5366
+#: eme-rsvp.php:5383
 msgid "PDF output"
 msgstr "PDF 输出"
 
 #: eme-members.php:2881
 #: eme-people.php:1859
-#: eme-rsvp.php:5363
-#: eme-rsvp.php:5380
+#: eme-rsvp.php:5367
+#: eme-rsvp.php:5384
 msgid "HTML output"
 msgstr "HTML 输出"
 
@@ -7807,12 +7807,12 @@ msgid "Move corresponding persons to the trash bin?"
 msgstr "把相应的人员移到回收站里？"
 
 #: eme-members.php:2896
-#: eme-rsvp.php:5411
+#: eme-rsvp.php:5415
 msgid "Select a subject template"
 msgstr "选择一个主题模板"
 
 #: eme-members.php:2897
-#: eme-rsvp.php:5412
+#: eme-rsvp.php:5416
 msgid "Please select a body template"
 msgstr "请选择一个主体模板"
 
@@ -7820,8 +7820,8 @@ msgstr "请选择一个主体模板"
 #: eme-members.php:2905
 #: eme-people.php:1878
 #: eme-people.php:1883
-#: eme-rsvp.php:5415
-#: eme-rsvp.php:5420
+#: eme-rsvp.php:5419
+#: eme-rsvp.php:5424
 msgid "Select an optional header template"
 msgstr "选择一个可选的页头模板"
 
@@ -7829,8 +7829,8 @@ msgstr "选择一个可选的页头模板"
 #: eme-members.php:2907
 #: eme-people.php:1880
 #: eme-people.php:1885
-#: eme-rsvp.php:5417
-#: eme-rsvp.php:5422
+#: eme-rsvp.php:5421
+#: eme-rsvp.php:5426
 msgid "Select an optional footer template"
 msgstr "选择一个可选的页脚模板"
 
@@ -7848,7 +7848,7 @@ msgstr "选择会员状态"
 #: eme-members.php:2985
 #: eme-people.php:1933
 #: eme-people.php:1940
-#: eme-rsvp.php:5328
+#: eme-rsvp.php:5332
 msgid "Filter on person"
 msgstr "过滤人员"
 
@@ -7858,12 +7858,12 @@ msgid "Filter on member ID"
 msgstr "过滤会员 ID"
 
 #: eme-members.php:2996
-#: eme-rsvp.php:5332
+#: eme-rsvp.php:5336
 msgid "Filter on payment id"
 msgstr "筛选支付 ID"
 
 #: eme-members.php:2997
-#: eme-rsvp.php:5333
+#: eme-rsvp.php:5337
 msgid "Filter on payment GW id"
 msgstr "筛选支付 GW ID"
 
@@ -7942,12 +7942,12 @@ msgid "No membership selected"
 msgstr "没有选择会籍"
 
 #: eme-members.php:5089
-#: eme-rsvp.php:1543
+#: eme-rsvp.php:1547
 msgid "You did not enter a valid discount code"
 msgstr "您没有输入有效的折扣代码"
 
 #: eme-members.php:5355
-#: eme-rsvp.php:6074
+#: eme-rsvp.php:6078
 msgid "Never"
 msgstr "从未"
 
@@ -8063,17 +8063,17 @@ msgstr "已删除会员。"
 #: eme-members.php:7161
 #: eme-members.php:7186
 #: eme-members.php:7203
-#: eme-rsvp.php:6307
-#: eme-rsvp.php:6341
-#: eme-rsvp.php:6385
-#: eme-rsvp.php:6425
-#: eme-rsvp.php:6447
-#: eme-rsvp.php:6489
-#: eme-rsvp.php:6550
-#: eme-rsvp.php:6592
-#: eme-rsvp.php:6641
-#: eme-rsvp.php:6703
-#: eme-rsvp.php:6754
+#: eme-rsvp.php:6311
+#: eme-rsvp.php:6345
+#: eme-rsvp.php:6389
+#: eme-rsvp.php:6429
+#: eme-rsvp.php:6451
+#: eme-rsvp.php:6493
+#: eme-rsvp.php:6554
+#: eme-rsvp.php:6596
+#: eme-rsvp.php:6645
+#: eme-rsvp.php:6707
+#: eme-rsvp.php:6758
 #: eme-tasks.php:2011
 #: eme-tasks.php:2037
 #: eme-tasks.php:2061
@@ -8082,30 +8082,30 @@ msgstr "该行动已成功执行。"
 
 #: eme-members.php:7044
 #: eme-members.php:7164
-#: eme-rsvp.php:6310
-#: eme-rsvp.php:6344
-#: eme-rsvp.php:6388
-#: eme-rsvp.php:6428
-#: eme-rsvp.php:6492
-#: eme-rsvp.php:6553
-#: eme-rsvp.php:6595
-#: eme-rsvp.php:6638
-#: eme-rsvp.php:6757
+#: eme-rsvp.php:6314
+#: eme-rsvp.php:6348
+#: eme-rsvp.php:6392
+#: eme-rsvp.php:6432
+#: eme-rsvp.php:6496
+#: eme-rsvp.php:6557
+#: eme-rsvp.php:6599
+#: eme-rsvp.php:6642
+#: eme-rsvp.php:6761
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。"
 
 #: eme-members.php:7047
 #: eme-members.php:7167
-#: eme-rsvp.php:6313
-#: eme-rsvp.php:6347
-#: eme-rsvp.php:6382
-#: eme-rsvp.php:6431
-#: eme-rsvp.php:6450
-#: eme-rsvp.php:6486
-#: eme-rsvp.php:6556
-#: eme-rsvp.php:6598
-#: eme-rsvp.php:6634
-#: eme-rsvp.php:6751
+#: eme-rsvp.php:6317
+#: eme-rsvp.php:6351
+#: eme-rsvp.php:6386
+#: eme-rsvp.php:6435
+#: eme-rsvp.php:6454
+#: eme-rsvp.php:6490
+#: eme-rsvp.php:6560
+#: eme-rsvp.php:6602
+#: eme-rsvp.php:6638
+#: eme-rsvp.php:6755
 #: eme-tasks.php:2014
 #: eme-tasks.php:2040
 #: eme-tasks.php:2064
@@ -12500,344 +12500,344 @@ msgstr "循环情况更新"
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr ""
 
-#: eme-rsvp.php:566
+#: eme-rsvp.php:570
 msgid "Attendees CSV"
 msgstr "出席者 CSV"
 
-#: eme-rsvp.php:605
+#: eme-rsvp.php:609
 msgid "Bookings CSV"
 msgstr "预订 CSV"
 
-#: eme-rsvp.php:733
+#: eme-rsvp.php:737
 msgid "Title\\Date"
 msgstr "标题/日期"
 
-#: eme-rsvp.php:943
+#: eme-rsvp.php:947
 #, fuzzy
 msgid "No valid membership found."
 msgstr "没有选择有效的会籍"
 
-#: eme-rsvp.php:1175
-#: eme-rsvp.php:1187
+#: eme-rsvp.php:1179
+#: eme-rsvp.php:1191
 msgid "No event id detected"
 msgstr "没有检测到活动 ID"
 
-#: eme-rsvp.php:1242
+#: eme-rsvp.php:1246
 msgid "Booking deleted"
 msgstr "预订已删除"
 
-#: eme-rsvp.php:1247
+#: eme-rsvp.php:1251
 msgid "There are no bookings associated to this name and email"
 msgstr "这个名字和电子邮件没有相关的预订。"
 
-#: eme-rsvp.php:1284
+#: eme-rsvp.php:1288
 msgid "Password is missing"
 msgstr "没有密码"
 
-#: eme-rsvp.php:1290
+#: eme-rsvp.php:1294
 msgid "Incorrect password given"
 msgstr "给出的密码不正确"
 
-#: eme-rsvp.php:1333
+#: eme-rsvp.php:1337
 msgid "Please select at least one seat."
 msgstr "请至少选择一个座位。"
 
-#: eme-rsvp.php:1369
-#: eme-rsvp.php:1377
+#: eme-rsvp.php:1373
+#: eme-rsvp.php:1381
 msgid "WP membership required to continue"
 msgstr "需要成为 WP 会员才能继续"
 
-#: eme-rsvp.php:1381
+#: eme-rsvp.php:1385
 msgid "Please select a WP member from the lastname autocomplete selection"
 msgstr "请从自动完成的姓氏选择中选择一位 WP 会员。"
 
-#: eme-rsvp.php:1395
+#: eme-rsvp.php:1399
 msgid "Please fill out your last name"
 msgstr "请填写您的姓氏"
 
-#: eme-rsvp.php:1503
+#: eme-rsvp.php:1507
 msgid "Massmail"
 msgstr "群发邮件"
 
-#: eme-rsvp.php:1533
+#: eme-rsvp.php:1537
 msgid "Please make sure all of the following required fields are filled out: %s"
 msgstr "请确保以下所有必填字段都已填写：%s"
 
-#: eme-rsvp.php:1559
-#: eme-rsvp.php:1561
-#: eme-rsvp.php:1564
+#: eme-rsvp.php:1563
+#: eme-rsvp.php:1565
 #: eme-rsvp.php:1568
+#: eme-rsvp.php:1572
 msgid "Please enter a correct number of seats to reserve"
 msgstr "请输入正确的预订座位数"
 
-#: eme-rsvp.php:1583
+#: eme-rsvp.php:1587
 msgid "Booking cannot be made: not enough seats available!"
 msgstr "不能预订：没有足够的座位!"
 
-#: eme-rsvp.php:1625
+#: eme-rsvp.php:1629
 msgid "The location does not allow this many people to be present at the same time."
 msgstr ""
 
-#: eme-rsvp.php:1710
-#: eme-rsvp.php:1737
+#: eme-rsvp.php:1714
+#: eme-rsvp.php:1741
 msgid "Warning: there was a problem sending you the booking mail, please contact the site administrator to sort this out."
 msgstr "警告：向您发送预订邮件时出现了问题，请联系网站管理员解决。"
 
-#: eme-rsvp.php:3349
-#: eme-rsvp.php:3400
+#: eme-rsvp.php:3353
+#: eme-rsvp.php:3404
 msgid "No responses yet!"
 msgstr "还没有回应！"
 
-#: eme-rsvp.php:3447
+#: eme-rsvp.php:3451
 msgid "No bookings found."
 msgstr "找不到预订。"
 
-#: eme-rsvp.php:4803
+#: eme-rsvp.php:4807
 msgid "Add booking"
 msgstr "添加预订"
 
-#: eme-rsvp.php:4805
+#: eme-rsvp.php:4809
 msgid "Be aware: the overbooking option is set."
 msgstr "请注意：超额订票选项已被设定。"
 
-#: eme-rsvp.php:4809
+#: eme-rsvp.php:4813
 msgid "Send emails for new booking?"
 msgstr "为新的预订发送邮件？"
 
-#: eme-rsvp.php:4842
+#: eme-rsvp.php:4846
 msgid "Edit booking"
 msgstr "编辑预订"
 
-#: eme-rsvp.php:4851
+#: eme-rsvp.php:4855
 msgid "Send emails for changed booking?"
 msgstr "为已改变的预订而发送邮件？"
 
-#: eme-rsvp.php:4852
+#: eme-rsvp.php:4856
 msgid "Move booking to event"
 msgstr "将预订移至活动"
 
-#: eme-rsvp.php:4855
+#: eme-rsvp.php:4859
 msgid "Start typing an event name"
 msgstr "开始键入一个活动的名称"
 
-#: eme-rsvp.php:4857
+#: eme-rsvp.php:4861
 msgid "Has the booking been paid?"
 msgstr "预定的费用是否已经支付？"
 
-#: eme-rsvp.php:4860
+#: eme-rsvp.php:4864
 msgid "Warning: the event related to this booking has been removed, editing is no longer allowed!"
 msgstr "警告：与此预订有关的活动已被删除，不再允许编辑！"
 
-#: eme-rsvp.php:4862
+#: eme-rsvp.php:4866
 msgid "Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!"
 msgstr "警告：与本次预订相比，活动的价格发生了变化，新的价格将被纳入考虑范围内的变化"
 
-#: eme-rsvp.php:5039
+#: eme-rsvp.php:5043
 msgid "Booking updated"
 msgstr "预订已更新"
 
-#: eme-rsvp.php:5058
+#: eme-rsvp.php:5062
 msgid "During the time of your change, some free seats were taken leaving not enough free seats available anymore"
 msgstr "在您更换的时候，一些免费座位被占用了，已经没有足够的免费座位了。"
 
-#: eme-rsvp.php:5159
+#: eme-rsvp.php:5163
 msgid "No linked payment found: %s"
 msgstr ""
 
-#: eme-rsvp.php:5162
-#: eme-rsvp.php:5165
+#: eme-rsvp.php:5166
+#: eme-rsvp.php:5169
 msgid "Field %s not valid: %s"
 msgstr ""
 
-#: eme-rsvp.php:5170
+#: eme-rsvp.php:5174
 msgid "Already paid in full: %s"
 msgstr ""
 
-#: eme-rsvp.php:5176
+#: eme-rsvp.php:5180
 msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
 msgstr ""
 
-#: eme-rsvp.php:5180
+#: eme-rsvp.php:5184
 msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
 msgstr ""
 
-#: eme-rsvp.php:5182
+#: eme-rsvp.php:5186
 msgid "Ignored entries"
 msgstr ""
 
-#: eme-rsvp.php:5185
+#: eme-rsvp.php:5189
 msgid "Erronous entries"
 msgstr ""
 
-#: eme-rsvp.php:5235
+#: eme-rsvp.php:5239
 msgid "Manage pending bookings for %s"
 msgstr "管理 %s 待订"
 
-#: eme-rsvp.php:5237
+#: eme-rsvp.php:5241
 msgid "Manage approved bookings for %s"
 msgstr "管理 %s 已批准的预订"
 
-#: eme-rsvp.php:5244
+#: eme-rsvp.php:5248
 msgid "Manage trashed bookings"
 msgstr ""
 
-#: eme-rsvp.php:5246
+#: eme-rsvp.php:5250
 msgid "Manage pending bookings"
 msgstr "管理待订"
 
-#: eme-rsvp.php:5248
+#: eme-rsvp.php:5252
 msgid "Manage approved bookings"
 msgstr "管理已批准的预订"
 
-#: eme-rsvp.php:5259
+#: eme-rsvp.php:5263
 msgid "Click on the icon to show the import form to import payments"
 msgstr ""
 
-#: eme-rsvp.php:5272
+#: eme-rsvp.php:5276
 msgid "If you want, use this to import booking payments"
 msgstr ""
 
-#: eme-rsvp.php:5313
+#: eme-rsvp.php:5317
 msgid "Filter on event"
 msgstr "过滤活动"
 
-#: eme-rsvp.php:5330
+#: eme-rsvp.php:5334
 msgid "Filter on custom field answer"
 msgstr "过滤自定义字段的答案"
 
-#: eme-rsvp.php:5331
+#: eme-rsvp.php:5335
 msgid "Filter on unique nbr"
 msgstr "过滤特殊 nbr"
 
-#: eme-rsvp.php:5335
+#: eme-rsvp.php:5339
 msgid "Filter bookings"
 msgstr "筛选预订"
 
-#: eme-rsvp.php:5343
+#: eme-rsvp.php:5347
 msgid "Permanently delete booking"
 msgstr "永久性地删除预订"
 
-#: eme-rsvp.php:5344
+#: eme-rsvp.php:5348
 msgid "Restore booking and mark pending and awaiting user confirmation"
 msgstr "恢复预订并标记为待订和等待用户的确认中"
 
-#: eme-rsvp.php:5345
+#: eme-rsvp.php:5349
 msgid "Restore booking and mark pending"
 msgstr "恢复预订并标记为待订"
 
-#: eme-rsvp.php:5346
+#: eme-rsvp.php:5350
 msgid "Restore booking and mark approved"
 msgstr "恢复预订并标记为已批准"
 
-#: eme-rsvp.php:5348
+#: eme-rsvp.php:5352
 msgid "Approve booking"
 msgstr "批准预订"
 
-#: eme-rsvp.php:5349
-#: eme-rsvp.php:5366
+#: eme-rsvp.php:5353
+#: eme-rsvp.php:5370
 msgid "Delete booking (move to trash)"
 msgstr "删除预订（移至回收站）"
 
-#: eme-rsvp.php:5351
+#: eme-rsvp.php:5355
 msgid "Resend the mail for pending booking"
 msgstr "重新发送待订的邮件"
 
-#: eme-rsvp.php:5354
-#: eme-rsvp.php:5371
+#: eme-rsvp.php:5358
+#: eme-rsvp.php:5375
 msgid "Mark unpaid"
 msgstr "标记为未支付"
 
-#: eme-rsvp.php:5355
-#: eme-rsvp.php:5372
+#: eme-rsvp.php:5359
+#: eme-rsvp.php:5376
 msgid "Partial payment"
 msgstr "部分付款"
 
-#: eme-rsvp.php:5356
+#: eme-rsvp.php:5360
 msgid "Move booking off the waitinglist"
 msgstr "将预订从等候名单中移出"
 
-#: eme-rsvp.php:5357
-#: eme-rsvp.php:5374
+#: eme-rsvp.php:5361
+#: eme-rsvp.php:5378
 msgid "Put booking on the waitinglist"
 msgstr "将预订列入等待名单"
 
-#: eme-rsvp.php:5359
-#: eme-rsvp.php:5376
+#: eme-rsvp.php:5363
+#: eme-rsvp.php:5380
 msgid "Send booking related email to selected bookings"
 msgstr "向选定的预订发送预订相关的电子邮件"
 
-#: eme-rsvp.php:5365
+#: eme-rsvp.php:5369
 msgid "Make booking pending"
 msgstr "使预订待订"
 
-#: eme-rsvp.php:5368
+#: eme-rsvp.php:5372
 msgid "Resend the mail for approved booking"
 msgstr "重新发送已批准的预订邮件"
 
-#: eme-rsvp.php:5385
+#: eme-rsvp.php:5389
 #, fuzzy
 msgid "Send emails to contact person too?"
 msgstr "默认联系人"
 
-#: eme-rsvp.php:5391
+#: eme-rsvp.php:5395
 msgid "Send emails to attendees upon changes being made?"
 msgstr "在进行修改时向出席者发送邮件？"
 
-#: eme-rsvp.php:5398
+#: eme-rsvp.php:5402
 msgid "Refund if possible?"
 msgstr "如果可能的话，可以退款吗？"
 
-#: eme-rsvp.php:5405
+#: eme-rsvp.php:5409
 msgid "Partial payment amount"
 msgstr "部分付款金额"
 
-#: eme-rsvp.php:5449
+#: eme-rsvp.php:5453
 #, fuzzy
 msgid "Event fields"
 msgstr "活动字段"
 
-#: eme-rsvp.php:5888
+#: eme-rsvp.php:5892
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr "点击预订者的名字，以查看和/或编辑预订者的详细信息。"
 
-#: eme-rsvp.php:5891
+#: eme-rsvp.php:5895
 msgid "Anonymous"
 msgstr "匿名"
 
-#: eme-rsvp.php:5920
+#: eme-rsvp.php:5924
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "点击这里查看和/或编辑预订的细节。"
 
-#: eme-rsvp.php:6066
+#: eme-rsvp.php:6070
 msgid "(On waitinglist)"
 msgstr "(在等待名单上)"
 
-#: eme-rsvp.php:6069
+#: eme-rsvp.php:6073
 msgid "(Awaiting user confirmation)"
 msgstr "(等待用户的确认中)"
 
-#: eme-rsvp.php:6081
+#: eme-rsvp.php:6085
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "这是基于预订的付款 ID：%d"
 
-#: eme-rsvp.php:6313
-#: eme-rsvp.php:6431
+#: eme-rsvp.php:6317
+#: eme-rsvp.php:6435
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "提示：对于等待名单上的预订，唯一允许的行动是将其移出等待名单。"
 
-#: eme-rsvp.php:6391
-#: eme-rsvp.php:6495
-#: eme-rsvp.php:6760
+#: eme-rsvp.php:6395
+#: eme-rsvp.php:6499
+#: eme-rsvp.php:6764
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr "该行动已成功执行，但在退还款项时出现了一些问题。"
 
-#: eme-rsvp.php:6394
-#: eme-rsvp.php:6498
-#: eme-rsvp.php:6763
+#: eme-rsvp.php:6398
+#: eme-rsvp.php:6502
+#: eme-rsvp.php:6767
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr "该行动已成功执行，但在发送邮件和退还款项方面出现了一些问题。"
 
-#: eme-rsvp.php:6632
+#: eme-rsvp.php:6636
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "退款时出现了问题，请检查您的日志。"
 
@@ -13877,11 +13877,11 @@ msgstr ""
 msgid "Choose from a template: "
 msgstr ""
 
-#: eme-rsvp.php:5373
+#: eme-rsvp.php:5377
 msgid "Mark person as present (attendance record)"
 msgstr ""
 
-#: eme-rsvp.php:6718
+#: eme-rsvp.php:6722
 msgid "Attendance noted."
 msgstr ""
 
@@ -13956,7 +13956,7 @@ msgstr ""
 msgid "Select the event(s)"
 msgstr ""
 
-#: eme-rsvp.php:6096
+#: eme-rsvp.php:6100
 msgid "Get IBAN"
 msgstr ""
 
@@ -14170,7 +14170,7 @@ msgstr ""
 
 #: eme-events.php:6741
 #: eme-events.php:10342
-#: eme-rsvp.php:5962
+#: eme-rsvp.php:5966
 msgid "Free:"
 msgstr ""
 
@@ -14180,14 +14180,14 @@ msgstr ""
 #: eme-events.php:10378
 #: eme-members.php:6690
 #: eme-recurrence.php:730
-#: eme-rsvp.php:5979
-#: eme-rsvp.php:5982
+#: eme-rsvp.php:5983
+#: eme-rsvp.php:5986
 msgid "Max:"
 msgstr ""
 
 #: eme-events.php:6760
 #: eme-events.php:10376
-#: eme-rsvp.php:5980
+#: eme-rsvp.php:5984
 msgid "Max (from location):"
 msgstr ""
 
@@ -14547,13 +14547,13 @@ msgstr ""
 msgid "Datalist"
 msgstr ""
 
-#: eme-rsvp.php:5360
-#: eme-rsvp.php:5377
+#: eme-rsvp.php:5364
+#: eme-rsvp.php:5381
 msgid "Add selected persons to group"
 msgstr ""
 
-#: eme-rsvp.php:5361
-#: eme-rsvp.php:5378
+#: eme-rsvp.php:5365
+#: eme-rsvp.php:5382
 msgid "Remove selected persons from group"
 msgstr ""
 
@@ -14566,8 +14566,8 @@ msgid "The maximum number of seats that need to be booked for the discount to ap
 msgstr ""
 
 #: eme-rsvp.php:103
-#: eme-rsvp.php:798
-#: eme-rsvp.php:1364
+#: eme-rsvp.php:802
+#: eme-rsvp.php:1368
 msgid "Not allowed"
 msgstr ""
 

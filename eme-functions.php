@@ -28,7 +28,7 @@ function eme_client_clock_ajax() {
     $valid = true;
     $ret   = '0';
     // Set php clock values in an array
-    $phptime_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $phptime_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // if clock data not set
     if ( ! isset( $_COOKIE['eme_client_time'] ) ) {
         // no valid data received
@@ -1507,7 +1507,7 @@ function eme_js_datetime( $mydate, $timezone = '' ) {
         $dates   = explode( ',', $mydate );
         $res_arr = [];
         foreach ( $dates as $date ) {
-            $eme_date_obj = new ExpressiveDate( $date, $timezone );
+            $eme_date_obj = new emeExpressiveDate( $date, $timezone );
             //if ($safari)
             //     $res_arr[]=$eme_date_obj->format('U')*1000;
             //  else
@@ -1515,7 +1515,7 @@ function eme_js_datetime( $mydate, $timezone = '' ) {
         }
         return join( ',', $res_arr );
     } else {
-        $eme_date_obj = new ExpressiveDate( $mydate, $timezone );
+        $eme_date_obj = new emeExpressiveDate( $mydate, $timezone );
         //if ($safari)
         //     return $eme_date_obj->format('U')*1000;
         //  else
@@ -1564,7 +1564,7 @@ function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
     // catch possible issues with invalid/unparseable dates etc ...
     try {
         // $mydate contains the timezone, but in case it doesn't we provide it
-        $eme_date_obj = new ExpressiveDate( $mydate, $timezone );
+        $eme_date_obj = new emeExpressiveDate( $mydate, $timezone );
     } catch ( Exception $error ) {
         return $mydate;
     }
@@ -1606,14 +1606,14 @@ function eme_convert_localized_time( $time_format, $mytime ) {
     if ( empty ( $mytime ) ) {
         return '';
     }
-    $date_obj = ExpressiveDate::createfromformat( $time_format, $mytime, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+    $date_obj = emeExpressiveDate::createfromformat( $time_format, $mytime, emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
     return $date_obj->format( 'H:i:00' );
 }
 
 // the following is the same as eme_localized_date, but for rfc822 format
 function eme_rfc822_date( $mydate, $tz ) {
     //$result = date('r', strtotime($mydate));
-    $eme_date_obj = new ExpressiveDate( $mydate, $tz );
+    $eme_date_obj = new emeExpressiveDate( $mydate, $tz );
     return $eme_date_obj->format( 'r' );
 }
 
@@ -3745,8 +3745,8 @@ function eme_extra_event_headers( $event ) {
 
         // allow rsvp from rsvp_start_number_days:rsvp_start_number_hours before the event starts/ends (rsvp_start_target)
         if ( ( $event['event_properties']['rsvp_start_number_days'] > 0 || $event['event_properties']['rsvp_start_number_hours'] > 0 ) ) {
-            $event_rsvp_startdatetime = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            $event_rsvp_enddatetime   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+            $event_rsvp_startdatetime = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+            $event_rsvp_enddatetime   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
                 $event_rsvp_start = $event_rsvp_enddatetime->copy();
             } else {
@@ -3758,7 +3758,7 @@ function eme_extra_event_headers( $event ) {
         } elseif ( eme_is_empty_datetime( $event['creation_date'] ) ) {
             $validfrom = '#_STARTDATETIME_8601';
         } else {
-            $eme_date_obj = new ExpressiveDate( $event['creation_date'], EME_TIMEZONE );
+            $eme_date_obj = new emeExpressiveDate( $event['creation_date'], EME_TIMEZONE );
             $validfrom    = $eme_date_obj->format( 'c' );
         }
         $offers['validFrom'] = $validfrom;
@@ -3959,11 +3959,11 @@ function eme_check_access( $post_id ) {
                             // if we need to drip content, get the member and check the payment date
                             $person_id        = eme_get_personid_by_wpid( $wp_id );
                             $show_content     = 0;
-                            $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+                            $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
                             foreach ( $res_intersect as $membership_id ) {
                                 $member = eme_get_active_member_by_personid_membershipid( $person_id, $membership_id );
                                 if ( ! empty( $member ) ) {
-                                    $payment_obj = new ExpressiveDate( $member['payment_date'], EME_TIMEZONE );
+                                    $payment_obj = new emeExpressiveDate( $member['payment_date'], EME_TIMEZONE );
                                     if ( $member['paid'] && $eme_date_obj_now >= $payment_obj->modifyDays( $eme_drip_counter ) ) {
                                         $show_content = 1;
                                         break;

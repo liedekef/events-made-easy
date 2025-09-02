@@ -4055,7 +4055,7 @@ function eme_cancel_payment_ajax() {
     $person           = eme_get_person( $person_ids[0] );
     $tmp_format       = get_option( 'eme_cancel_payment_line_format' );
     $replacement      = '';
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     foreach ( $booking_ids as $booking_id ) {
         $booking = eme_get_booking( $booking_id );
         $event   = eme_get_event( $booking['event_id'] );
@@ -4063,7 +4063,7 @@ function eme_cancel_payment_ajax() {
             continue;
         }
         // first the rsvp cutoff based on event start date
-        $cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $cancel_cutofftime    = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
         $eme_cancel_rsvp_days = -1 * $event['event_properties']['cancel_rsvp_days'];
         $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
         if ( $cancel_cutofftime < $eme_date_obj_now ) {
@@ -4071,7 +4071,7 @@ function eme_cancel_payment_ajax() {
             continue;
         }
         // second the rsvp cutoff based on booking age
-        $cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
+        $cancel_cutofftime    = new emeExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
         $eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_age'];
         $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
         if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {

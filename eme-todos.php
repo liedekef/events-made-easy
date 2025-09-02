@@ -234,7 +234,7 @@ function eme_get_past_unsent_todos() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$search_date  = $eme_date_obj_now->getDate();
 	$sql   = $wpdb->prepare("SELECT $table.* FROM $table LEFT JOIN $events_table ON $table.event_id=$events_table.event_id WHERE reminder_sent=0 AND DATE_SUB($events_table.event_start,INTERVAL $table.todo_offset DAY) < %s", $search_date . ' 23:59:00');
 	return $wpdb->get_results( $sql, ARRAY_A );

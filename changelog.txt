@@ -714,7 +714,7 @@
 * Added booking mailfilters userconfirmation_pending_subject/body
 
 = 2.2.78 (2022/05/16) =
-* Fix leftover php issue in ExpressiveDate.php so it works with php 8.1 and older
+* Fix leftover php issue in emeExpressiveDate.php so it works with php 8.1 and older
 
 = 2.2.77 (2022/05/15) =
 * Fix some php issues (trying to be ok with php 8.1 seems more daunting than expected)
@@ -1038,7 +1038,7 @@ Older changes can be found in changelog.txt
 * The chosen setting for 'Check waitinglist when seats become available' was not being saved in the global options
 * Added payment gateway placeholders #_PRICE_INCLUDING_CHARGES_NO_VAT and #_PRICE_INCLUDING_CHARGES_VAT_ONLY, #_EXTRACHARGE_NO_VAT and #_EXTRACHARGE_VAT_ONLY
 * Allow all payment gateway placeholders to be used as booking and member placeholders too
-* Fix 12:00 AM times for events (old bug in ExpressiveDate.php lib)
+* Fix 12:00 AM times for events (old bug in emeExpressiveDate.php lib)
 * Use more resilient placeholder replacement regex
 * For Belgium: added Payconiq support
 * Added filter eme_insert_event_filter (there's already eme_preinsert_event_filter, but this name is more logical)

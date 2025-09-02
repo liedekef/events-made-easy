@@ -767,7 +767,7 @@ function eme_process_queue( $force_interval = 0 ) {
     // we use $now as an argument for eme_get_passed_planned_mailingids and eme_get_queued
     // Reason: since eme_check_mailing_receivers can take some time, we want to make sure that
     // both eme_get_passed_planned_mailingids and eme_get_queued are talking about the same 'past'
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $now              = $eme_date_obj_now->getDateTime();
     // for all planned mailings in the passed: re-evaluate the receivers
     // since we mark the mailing as ongoing afterwards, this re-evalution only happens once
@@ -929,7 +929,7 @@ function eme_archive_old_mailings() {
     } else {
         $archive_old_mailings_days = abs( $archive_old_mailings_days );
     }
-    $eme_date_obj   = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj   = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date       = $eme_date_obj->minusDays( $archive_old_mailings_days )->getDateTime();
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $sql            = "SELECT id FROM $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
@@ -1127,11 +1127,11 @@ function eme_mail_track( $random_id ) {
         $queued_mail = eme_get_mail_by_rid( $random_id );
         if ( $queued_mail ) {
             // update the queue table when the mail was read for the first time
-            $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+            $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
             // ignore if the same track arrives within the firt 2 minutes
             $ignore = 0;
             if ( ! eme_is_empty_datetime( $queued_mail['last_read_on'] ) ) {
-                $eme_date_obj_lastread = new ExpressiveDate( $queued_mail['last_read_on'], EME_TIMEZONE );
+                $eme_date_obj_lastread = new emeExpressiveDate( $queued_mail['last_read_on'], EME_TIMEZONE );
                 if ( $eme_date_obj_lastread->getDifferenceInMinutes( $eme_date_obj_now ) < 2 ) {
                     $ignore = 1;
                 }
@@ -2024,7 +2024,7 @@ function eme_send_mails_ajax_actions( $action ) {
     }
     $ajaxResult       = [];
     $conditions       = [];
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
     if ( $action == 'testmail' ) {
         $testmail_to = eme_sanitize_email( $_POST['testmail_to'] );

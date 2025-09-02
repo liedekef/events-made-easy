@@ -98,7 +98,7 @@ function _eme_install() {
 	}
 
 	// some cron we want
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	// midnight
 	$timestamp = $eme_date_obj->addOneDay()->setTime( 0, 0, 0 )->getTimestamp();
 	// to make sure summer/winter starts at the same day, we add one hour (WP "daily" uses 24 hours/day fixed)
@@ -353,7 +353,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_create_table( $table_name, $sql );
 		// insert a few events in the new table
 		// get the current timestamp into an array
-		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_date_obj->addDays( 7 );
 		$in_one_week = $eme_date_obj->getDate();
 		$eme_date_obj->minusDays( 7 );

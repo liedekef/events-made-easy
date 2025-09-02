@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_event() {
-    $eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $this_datetime = $eme_date_obj->getDateTime();
     $event         = [
         'event_name'                              => '',
@@ -451,7 +451,7 @@ function eme_events_page() {
                 $event['event_status'] = EME_EVENT_STATUS_DRAFT;
         }
 
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         // we do event_start_date and event_end_date differently
         if ( !empty( $_POST['event_start_date'] ) && eme_is_date( $_POST['event_start_date'] ) ) {
             $event_start_date = eme_sanitize_request( $_POST['event_start_date'] );
@@ -461,7 +461,7 @@ function eme_events_page() {
         $recurrence['event_duration'] = isset( $_POST['event_duration'] ) ? intval( $_POST['event_duration'] ) : 1;
         if ( $action == 'insert_recurrence' || $action == 'update_recurrence' ) {
             $duration       = $recurrence['event_duration'] - 1;
-            $end_date_obj   = new ExpressiveDate( $event_start_date, EME_TIMEZONE );
+            $end_date_obj   = new emeExpressiveDate( $event_start_date, EME_TIMEZONE );
             $event_end_date = $end_date_obj->addDays( $duration )->getDate();
         } elseif ( !empty( $_POST['event_end_date'] ) && eme_is_date( $_POST['event_end_date'] ) ) {
             $event_end_date = eme_sanitize_request( $_POST['event_end_date'] );
@@ -1085,9 +1085,9 @@ function eme_events_page_content() {
             return $format;
         }
 
-        $eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
-        $eme_start_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-        $eme_end_date_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+        $eme_date_obj_now   = new emeExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_start_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $eme_end_date_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
         $begin_difference   = $eme_date_obj_now->getDifferenceInHours( $eme_start_date_obj );
         $end_difference     = $eme_end_date_obj->getDifferenceInHours( $eme_date_obj_now );
         if ( $begin_difference > $event['event_properties']['attendance_begin'] ) {
@@ -1938,7 +1938,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
         $target = 'html';
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $wp_id            = get_current_user_id();
     $is_admin_request = eme_is_admin_request();
     // if in the admin interface, use the wp id of the person being edited, where possible
@@ -2452,7 +2452,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
     $author           = null;
     $author_person    = null;
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     if ($event && preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE )) {
         $needle_offset    = 0;
         foreach ( $placeholders[0] as $orig_result ) {
@@ -2563,8 +2563,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
 
             } elseif ( preg_match( '/#_PAST_FUTURE_CLASS/', $result ) ) {
-                $eme_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-                $eme_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 if ( $eme_start_obj > $eme_date_obj_now ) {
                     $replacement = 'eme-future-event';
                 } elseif ( $eme_start_obj <= $eme_date_obj_now && $eme_end_obj >= $eme_date_obj_now ) {
@@ -3191,7 +3191,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 
             } elseif ( preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/', $result, $matches ) ) {
                 $date_key = ($matches[2] === 'START') ? 'event_start' : 'event_end';
-                $eme_date_obj = new ExpressiveDate($event[$date_key], EME_TIMEZONE);
+                $eme_date_obj = new emeExpressiveDate($event[$date_key], EME_TIMEZONE);
 
                 $diff = $eme_date_obj_now->diff($eme_date_obj);
                 $is_future = $diff->invert === 0;
@@ -3223,9 +3223,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 }
             } elseif ( preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/', $result, $matches ) ) {
                 if ( $matches[2] == 'START' ) {
-                    $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                    $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 } else {
-                    $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                    $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 }
                 $replacement = $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
 
@@ -3235,40 +3235,40 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 } else {
                     $diff_format = '%d';
                 }
-                $eme_date_obj_start = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-                $eme_date_obj_end   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_date_obj_start = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj_end   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 $replacement        = $eme_date_obj_start->diff( $eme_date_obj_end )->format( $diff_format );
 
             } elseif ( preg_match( '/#_DAYS_TILL_START$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
 
             } elseif ( preg_match( '/#_NIGHTS_TILL_START$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
 
             } elseif ( preg_match( '/#_DAYS_FROM_START$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $replacement  = $eme_date_obj->getDifferenceInDays( $eme_date_obj_now );
 
             } elseif ( preg_match( '/#_DAYS_TILL_END$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 $replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
 
             } elseif ( preg_match( '/#_NIGHTS_TILL_END$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 $replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
 
             } elseif ( preg_match( '/#_HOURS_TILL_START$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $replacement  = round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
 
             } elseif ( preg_match( '/#_HOURS_FROM_START$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $replacement  = round( $eme_date_obj->getDifferenceInHours( $eme_date_obj_now ) );
 
             } elseif ( preg_match( '/#_HOURS_TILL_END$/', $result ) ) {
-                $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 $replacement  = round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
 
             } elseif ( preg_match( '/#_DISCOUNT_VALID_(TILL|FROM)\{(\d+)\}\{(.+?)\}$/', $result, $matches ) ) {
@@ -3292,9 +3292,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( $valid_discount ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $matches[1] == 'TILL' ) {
-                        $eme_date_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
+                        $eme_date_obj = new emeExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
                     } else {
-                        $eme_date_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
+                        $eme_date_obj = new emeExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
                     }
                     $replacement = $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
                 }
@@ -3806,9 +3806,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $rsvp_start_number_days  = $event['event_properties']['rsvp_start_number_days'];
                     $rsvp_start_number_hours = $event['event_properties']['rsvp_start_number_hours'];
                     if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
-                        $rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                        $rsvp_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                     } else {
-                        $rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                        $rsvp_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                     }
                     $rsvp_date_obj->minusDays( $rsvp_start_number_days )->minusHours( $rsvp_start_number_hours );
                     $replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE, $date_format );
@@ -3823,9 +3823,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 // show the end date+time for which a user can rsvp for an event
                 if ( eme_is_event_rsvp( $event ) ) {
                     if ( $event['event_properties']['rsvp_end_target'] == 'start' ) {
-                        $rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                        $rsvp_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                     } else {
-                        $rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                        $rsvp_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                     }
                     $rsvp_end_number_days  = $event['event_properties']['rsvp_end_number_days'];
                     $rsvp_end_number_hours = $event['event_properties']['rsvp_end_number_hours'];
@@ -3836,7 +3836,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 // show the end date+time for which a user can cancel an rsvp for an event
                 if ( eme_is_event_rsvp( $event ) ) {
                     $eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_days'];
-                    $cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                    $cancel_cutofftime    = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                     $cancel_cutofftime->minusDays( $eme_cancel_rsvp_days );
                     $replacement = eme_localized_datetime( $cancel_cutofftime->getDateTime(), EME_TIMEZONE );
                 }
@@ -3892,8 +3892,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $replacement = 0;
                 }
             } elseif ( preg_match( '/#_IS_ONGOING_EVENT/', $result ) ) {
-                $eme_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-                $eme_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $eme_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 if ( $eme_start_obj <= $eme_date_obj_now &&
                     $eme_end_obj >= $eme_date_obj_now ) {
                     $replacement = 1;
@@ -3901,7 +3901,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $replacement = 0;
                 }
             } elseif ( preg_match( '/#_IS_ENDED_EVENT/', $result ) ) {
-                $eme_end_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+                $eme_end_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 if ( $eme_end_obj < $eme_date_obj_now ) {
                     $replacement = 1;
                 } else {
@@ -4336,7 +4336,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     }
 
     if ( $paging == 1 && $limit == 0 ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $scope_offset = 0;
         $scope_text   = '';
         if ( isset( $_GET['eme_offset'] ) ) {
@@ -4506,8 +4506,8 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
             if ( $limit > 0 && $event_counter > $limit ) {
                 break;
             }
-            $eme_date_obj_tmp = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            $eme_date_obj_end = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+            $eme_date_obj_tmp = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+            $eme_date_obj_end = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             if ( $eme_date_obj_end < $eme_date_obj_tmp ) {
                 $eme_date_obj_end = $eme_date_obj_tmp->copy();
             }
@@ -4539,7 +4539,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
         $curmonth      = '';
         $curday        = '';
         foreach ( $eventful_days as $day_key => $day_events ) {
-            $eme_date_obj                  = new ExpressiveDate( $day_key, EME_TIMEZONE );
+            $eme_date_obj                  = new emeExpressiveDate( $day_key, EME_TIMEZONE );
             [$theyear, $themonth, $theday] = explode( '-', $eme_date_obj->getDate() );
             if ( $showperiod == 'yearly' && $theyear != $curyear ) {
                 $output .= "<li class='eme_period'>" . eme_localized_date( $day_key, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) ) . '</li>';
@@ -4873,7 +4873,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
 function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0 ) {
     global $wpdb;
     $table         = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $start_of_week = get_option( 'start_of_week' );
     $eme_date_obj->setWeekStartDay( $start_of_week );
     $now = $eme_date_obj->getDateTime();
@@ -4954,7 +4954,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         }
     }
 
-    $eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $start_of_week = get_option( 'start_of_week' );
     $eme_date_obj->setWeekStartDay( $start_of_week );
     $today         = $eme_date_obj->getDate();
@@ -5708,7 +5708,7 @@ function eme_get_events_assoc( $event_ids_arr = []) {
 function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
     global $wpdb;
     $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $this_datetime    = $eme_date_obj_now->getDateTime();
     $where_arr        = [];
 
@@ -6359,8 +6359,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 ";
         if ( ! $recurrence['event_duration'] ) {
             // old recurrences didn't have this, so we take the event start/end date and calc the difference
-            $event_start_obj              = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            $event_end_obj                = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+            $event_start_obj              = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+            $event_end_obj                = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             $recurrence['event_duration'] = abs( $event_end_obj->getDifferenceInDays( $event_start_obj ) ) + 1;
         }
     } elseif ( $edit_recurrence && $action == 'duplicate_recurrence' && $recurrence_ID > 0 ) {
@@ -6369,8 +6369,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         $hidden_fields = "<input type='hidden' name='eme_admin_action' id='eme_admin_action' value='insert_recurrence'> ";
         if ( ! $recurrence['event_duration'] ) {
             // old recurrences didn't have this, so we take the event start/end date and calc the difference
-            $event_start_obj              = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            $event_end_obj                = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+            $event_start_obj              = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+            $event_end_obj                = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             $recurrence['event_duration'] = abs( $event_end_obj->getDifferenceInDays( $event_start_obj ) ) + 1;
         }
     } else {
@@ -7087,8 +7087,8 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
 function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence = 0 ) {
     // check if the user wants AM/PM or 24 hour notation
     // make sure that escaped characters are filtered out first
-    $start_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-    $end_date_obj           = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+    $start_date_obj         = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+    $end_date_obj           = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
     $eme_recurrence_checked = '';
     if ( $edit_recurrence ) {
         $show_recurrent_form = 1;
@@ -9171,8 +9171,8 @@ function eme_sanitize_event( $event ) {
         unset( $event['event_id'] );
     }
 
-    $eme_date_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-    $eme_date_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+    $eme_date_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+    $eme_date_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
     if ( ! empty( $event['event_properties'] ) ) {
         $event_properties = $event['event_properties'];
         if ( isset( $event_properties['all_day'] ) && $event_properties['all_day'] ) {
@@ -9458,7 +9458,7 @@ function eme_delete_old_events() {
         $remove_old_events_days = abs( $remove_old_events_days );
     }
 
-    $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date     = $eme_date_obj->minusDays( $remove_old_events_days )->getDateTime();
 
     $sql       = "SELECT event_id FROM $events_table WHERE $events_table.event_end <'$old_date'";
@@ -10099,8 +10099,8 @@ function eme_countdown_shortcode( $atts ) {
         }
     }
     if ( ! empty( $event ) ) {
-        $eme_date_obj     = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-        $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj     = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
         return intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
     } else {
         return 0;
@@ -10274,7 +10274,7 @@ function eme_ajax_events_list() {
 
     $events  = eme_get_events( limit: $PageSize, scope: $scope, order: $orderby, offset: $StartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
     $event_status_array = eme_status_array();
-    $eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now   = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
     // no searchable formfields yet, so we use eme_get_formfields here
     $formfields = eme_get_formfields( '', 'events' );
@@ -10290,7 +10290,7 @@ function eme_ajax_events_list() {
         if ( empty( $event['event_name'] ) ) {
             $event['event_name'] = __( 'No name', 'events-made-easy' );
         }
-        $date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 
         if ($no_edit_links==1) {
             $record['event_name'] = "<strong>" . eme_trans_esc_html( $event['event_name'] ) . '</strong>';

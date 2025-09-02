@@ -27,7 +27,7 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	switch ( $eme_period ) {
 		case 'day':
 			$eme_date_obj->minusDays( $eme_number );
@@ -56,7 +56,7 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	switch ( $eme_period ) {
 		case 'day':
 			$eme_date_obj->minusDays( $eme_number );
@@ -83,7 +83,7 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 	$members_table  = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$events_table   = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
 	// the min is 5 minutes, but if 0 we won't do anything either, to be safe
 	if ( ! $eme_number ) {
@@ -104,8 +104,8 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 			eme_trash_booking( $booking_id );
 			eme_manage_waitinglist( $event );
 		}
-		$eme_date_obj_booking_created = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
-		$eme_date_obj_person_modified = new ExpressiveDate( $person['modif_date'], EME_TIMEZONE );
+		$eme_date_obj_booking_created = new emeExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
+		$eme_date_obj_person_modified = new emeExpressiveDate( $person['modif_date'], EME_TIMEZONE );
 		$diff                         = abs( $eme_date_obj_booking_created->getDifferenceInMinutes( $eme_date_obj_person_modified ) );
 		// if the person was modified at most 2 minutes after booking creation (meaning in fact never), we also delete the person if no other bookings or members match that person
 		if ( $diff < 2 ) {
@@ -124,7 +124,7 @@ function eme_cleanup_unpaid( $eme_number ) {
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$events_table   = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
 	// the min is 5 minutes, but if 0 we won't do anything either, to be safe
 	if ( ! $eme_number ) {
@@ -160,7 +160,7 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	switch ( $eme_period ) {
 		case 'day':
 			$eme_date_obj->minusDays( $eme_number );

@@ -108,7 +108,7 @@ function eme_cron_send_new_events_function() {
     $contact_name         = $contact->display_name;
 
     // we'll create a mailing for the newsletter, so we can delete/cancel if easily while ongoing too
-    $eme_date_obj     = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj     = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $mailing_datetime = $eme_date_obj->getDateTime();
     $mailing_name     = "newsletter $mailing_datetime";
     $conditions       = [ 'action' => 'newsletter' ];

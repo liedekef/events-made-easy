@@ -68,7 +68,7 @@ require_once 'eme-tasks.php';
 require_once 'eme-todos.php';
 require_once 'eme-translate.php';
 require_once 'eme-fs.php';
-if ( ! class_exists( 'ExpressiveDate' ) ) {
+if ( ! class_exists( 'emeExpressiveDate' ) ) {
     require_once 'class-expressivedate.php';
 }
 

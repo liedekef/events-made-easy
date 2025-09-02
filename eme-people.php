@@ -3083,7 +3083,7 @@ function eme_people_birthday_emails() {
 
     $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $year_month_day   = $eme_date_obj_now->format( 'Y-m-d' );
     $month_day        = $eme_date_obj_now->format( 'm-d' );
     $month            = $eme_date_obj_now->format( 'm' );

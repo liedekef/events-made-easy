@@ -235,14 +235,14 @@ function eme_holidays_shortcode( $atts ) {
 
 	$list             = preg_replace( '/\r\n|\n\r/', "\n", $holiday_list['list'] );
 	$days             = explode( "\n", $list );
-	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	print '<div id="eme_holidays_list">';
 	foreach ( $days as $day_info ) {
 		[$day, $name, $class] = array_pad( explode( ',', $day_info ), 3, '' );
 		if ( empty( $day ) ) {
 			continue;
 		}
-		$eme_date_obj = new ExpressiveDate( $day, EME_TIMEZONE );
+		$eme_date_obj = new emeExpressiveDate( $day, EME_TIMEZONE );
 		if ( $scope === 'future' && $eme_date_obj < $eme_date_obj_now ) {
 			continue;
 		}

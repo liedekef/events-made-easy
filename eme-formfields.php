@@ -913,7 +913,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             if ( $value == 'NOW' ) {
-                $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $value        = $eme_date_obj->getDate();
             }
 
@@ -935,7 +935,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             if ( $value == 'NOW' ) {
-                $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $value        = $eme_date_obj->getDateTime();
             }
             $value    = eme_esc_html( $value );
@@ -958,7 +958,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value = $field_values;
             }
             if ( $value == 'NOW' ) {
-                $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+                $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $value        = $eme_date_obj->getTime();
             }
             $value    = eme_esc_html( $value );
@@ -995,8 +995,8 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
     $free_spaces = $task['spaces'] - $used_spaces;
 
     $task_ended       = 0;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-    $task_end_obj     = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $task_end_obj     = emeExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
     if ( $task_end_obj < $eme_date_obj_now ) {
         $task_ended = 1;
     }
@@ -1618,7 +1618,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
         if ( preg_match( '/#_CANCEL_PAYMENT_LINE$/', $result ) ) {
             $tmp_format = get_option( 'eme_cancel_payment_line_format' );
             ++$line_found;
-            $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+            $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
             foreach ( $booking_ids as $booking_id ) {
                 $booking = eme_get_booking( $booking_id );
                 $event   = eme_get_event( $booking['event_id'] );
@@ -1626,7 +1626,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
                     continue;
                 }
                 // first the rsvp cutoff based on event start date
-                $cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+                $cancel_cutofftime    = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $eme_cancel_rsvp_days = -1 * $event['event_properties']['cancel_rsvp_days'];
                 $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
                 if ( $cancel_cutofftime < $eme_date_obj_now ) {
@@ -1634,7 +1634,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
                     return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
                 }
                 // second the rsvp cutoff based on booking age
-                $cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
+                $cancel_cutofftime    = new emeExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
                 $eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_age'];
                 $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
                 if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {

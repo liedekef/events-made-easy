@@ -1816,11 +1816,11 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
     }
 
     if ( $scope == 1 || $scope == 'future' ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $now          = $eme_date_obj->getDateTime();
         $sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$people_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $wp_id, $now );
     } elseif ( $scope == 'past' ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $now          = $eme_date_obj->getDateTime();
         $sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$people_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $wp_id, $now );
     } elseif ( $scope == 0 || $scope == 'all' ) {
@@ -1866,11 +1866,11 @@ function eme_get_bookings_by_person_id( $person_id, $scope, $rsvp_status = 0, $p
     }
 
     if ( $scope == 1 || $scope == 'future' ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $now          = $eme_date_obj->getDateTime();
         $sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events WHERE $extra_condition bookings.person_id= %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $person_id, $now );
     } elseif ( $scope == 'past' ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $now          = $eme_date_obj->getDateTime();
         $sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events WHERE $extra_condition bookings.person_id= %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $person_id, $now );
     } elseif ( $scope == 0 || $scope == 'all' ) {
@@ -2381,7 +2381,7 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
     global $wpdb;
     $bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today        = $eme_date_obj_now->getDateTime();
     if (eme_is_list_of_int( $person_ids ) ) {
         $sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $today );
@@ -2939,7 +2939,7 @@ function eme_get_approved_multiseats( $event_id ) {
 }
 
 function eme_get_young_pending_seats( $event_id, $exclude_booking_id = 0 ) {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date         = $eme_date_obj_now->minusMinutes( 5 )->getDateTime();
     return eme_get_pending_seats( $event_id, $old_date, $exclude_booking_id );
 }
@@ -2977,7 +2977,7 @@ function eme_get_total_seats( $event_id ) {
 }
 
 function eme_get_young_pending_multiseats( $event_id, $exclude_booking_id = 0 ) {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date         = $eme_date_obj_now->minusMinutes( 5 )->getDateTime();
     return eme_get_pending_multiseats( $event_id, $old_date, $exclude_booking_id );
 }
@@ -5076,7 +5076,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 function eme_import_csv_payments() {
     global $wpdb;
     $bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today        = $eme_date_obj_now->getDate();
 
     //validate whether uploaded file is a csv file
@@ -5590,8 +5590,8 @@ function eme_event_rsvp_status( $event ) {
         return 0;
     }
 
-    $event_rsvp_startdatetime = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-    $event_rsvp_enddatetime   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+    $event_rsvp_startdatetime = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+    $event_rsvp_enddatetime   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
     if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
         $event_rsvp_start = $event_rsvp_enddatetime->copy();
     } else {
@@ -5603,7 +5603,7 @@ function eme_event_rsvp_status( $event ) {
         $event_rsvp_end = $event_rsvp_enddatetime->copy();
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // allow rsvp from rsvp_start_number_days:rsvp_start_number_hours before the event starts/ends (rsvp_start_target)
     if ( $event['event_properties']['rsvp_start_number_days'] > 0 || $event['event_properties']['rsvp_start_number_hours'] > 0 ) {
         if ( $event_rsvp_start->minusDays( $event['event_properties']['rsvp_start_number_days'] )->minusHours( $event['event_properties']['rsvp_start_number_hours'] ) > $eme_date_obj_now ) {
@@ -5637,8 +5637,8 @@ function eme_is_event_rsvp_ended( $event ) {
 }
 
 function eme_is_event_cancelrsvp_ended( $event ) {
-    $eme_date_obj_now     = new ExpressiveDate( 'now', EME_TIMEZONE );
-    $cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+    $eme_date_obj_now     = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $cancel_cutofftime    = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
     $cancel_cutofftime->minusDays( $event['event_properties']['cancel_rsvp_days'] );
     if ( eme_is_event_rsvp_ended( $event ) || $cancel_cutofftime < $eme_date_obj_now ) {
         return 1;
@@ -5793,8 +5793,8 @@ function eme_ajax_bookings_list() {
     $orderby = str_replace( 'booker ASC', 'lastname ASC, firstname ASC', $orderby );
     $orderby = str_replace( 'booker DESC', 'lastname DESC, firstname DESC', $orderby );
 
-    $eme_date_obj_reminder = new ExpressiveDate( 'now', EME_TIMEZONE );
-    $eme_date_obj_now      = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_reminder = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now      = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today                 = $eme_date_obj_now->getDateTime();
     if ( ! empty( $search_person ) ) {
         $where_arr[] = "(lastname like '%$search_person%' OR firstname like '%$search_person%' OR email like '%$search_person%')";
@@ -5897,7 +5897,7 @@ function eme_ajax_bookings_list() {
             $line['person_id'] = '';
         }
 
-        $date_obj             = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $date_obj             = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
         $localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
         $localized_start_time = eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 );
         $localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
@@ -6805,11 +6805,11 @@ function eme_generate_booking_pdf( $booking, $event, $template_id, $stream_direc
         // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
         if ( ! empty( $pdf_path ) ) {
             $pdf_mtime      = filemtime( $pdf_path );
-            $pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
+            $pdf_mtime_obj      = new emeExpressiveDate( 'now', EME_TIMEZONE );
             $pdf_mtime_obj->setTimestamp($pdf_mtime);
-            $booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
-            $event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
-            $template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+            $booking_mtime_obj  = new emeExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+            $event_mtime_obj    = new emeExpressiveDate( $event['modif_date'], EME_TIMEZONE );
+            $template_mtime_obj = new emeExpressiveDate( $template['modif_date'], EME_TIMEZONE );
             if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
                 return [ $pdf_attach_name, $pdf_path ];
             }
@@ -6970,7 +6970,7 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 
 // for CRON
 function eme_rsvp_send_pending_reminders() {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // this gets us future and ongoing events with rsvp enabled
     $events = eme_get_events( extra_conditions: 'event_rsvp=1' );
     foreach ( $events as $event ) {
@@ -6982,7 +6982,7 @@ function eme_rsvp_send_pending_reminders() {
             continue;
         }
         $bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_PENDING );
-        $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
         $days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
         foreach ( $bookings as $booking ) {
             foreach ( $reminder_days as $reminder_day ) {
@@ -6997,7 +6997,7 @@ function eme_rsvp_send_pending_reminders() {
 }
 
 function eme_rsvp_send_approved_reminders() {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // this gets us future and ongoing events with tasks enabled
     $events = eme_get_events( extra_conditions: 'event_rsvp=1' );
     foreach ( $events as $event ) {
@@ -7009,7 +7009,7 @@ function eme_rsvp_send_approved_reminders() {
             continue;
         }
         $bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_APPROVED );
-        $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
         $days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
         foreach ( $bookings as $booking ) {
             foreach ( $reminder_days as $reminder_day ) {
@@ -7035,7 +7035,7 @@ function eme_rsvp_anonymize_old_bookings() {
         $anonymize_old_bookings_days = abs( $anonymize_old_bookings_days );
     }
 
-    $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $now          = $eme_date_obj->getDateTime();
     $old_date     = $eme_date_obj->minusDays( $anonymize_old_bookings_days )->getDateTime();
 
@@ -7048,7 +7048,7 @@ function eme_count_pending_bookings() {
     global $wpdb;
     $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $now              = $eme_date_obj_now->getDateTime();
     $sql              = $wpdb->prepare( "SELECT COUNT(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );
     return $wpdb->get_var( $sql );

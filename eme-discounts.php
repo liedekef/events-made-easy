@@ -1326,15 +1326,15 @@ function eme_get_person_used_discount_count( $person_id, $discount_id) {
 function eme_calc_booking_discount( $discount, $booking ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
-		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
+		$eme_date_obj_now   = new emeExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_from_obj = new emeExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
 	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
+		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_to_obj = new emeExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
 			return false;
 		}
@@ -1489,15 +1489,15 @@ function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
 function eme_calc_member_discount( $discount, $member ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
-		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
+		$eme_date_obj_now   = new emeExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_from_obj = new emeExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
 	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
+		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_to_obj = new emeExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
 			return false;
 		}

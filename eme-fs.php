@@ -96,11 +96,11 @@ function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
     // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
     if ( !empty( $pdf_path ) ) {
         $pdf_mtime      = filemtime( $pdf_path );
-        $pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $pdf_mtime_obj      = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $pdf_mtime_obj->setTimestamp($pdf_mtime);
-        $booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
-        $event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
-        $template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+        $booking_mtime_obj  = new emeExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+        $event_mtime_obj    = new emeExpressiveDate( $event['modif_date'], EME_TIMEZONE );
+        $template_mtime_obj = new emeExpressiveDate( $template['modif_date'], EME_TIMEZONE );
         if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
             return $pdf_path;
         }
@@ -247,7 +247,7 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
     $data_time = '';
     if ($startdatetime == 'now') {
         $data_date = "data-date='" . eme_js_datetime('now')."'";
-        $eme_date_obj_now = new ExpressiveDate( 'now' );
+        $eme_date_obj_now = new emeExpressiveDate( 'now' );
         $data_time = "value='".$eme_date_obj_now->format( EME_WP_TIME_FORMAT )."'";
     }
 
@@ -626,7 +626,7 @@ function eme_fs_getbinaryselect( $name, $field_id, $default ) {
 }
 
 function eme_fs_process_newevent() {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $eme_fs_options = get_option('eme_fs');
     $captcha_res = eme_check_captcha( $eme_fs_options );
     if (empty($eme_fs_options['success_message']))

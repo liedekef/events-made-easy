@@ -324,7 +324,7 @@ function eme_get_category_eventids( $category_id, $future_only = 1 ) {
 	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$extra_condition = '';
 	if ( $future_only ) {
-		$eme_date_obj    = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj    = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$today           = $eme_date_obj->getDateTime();
 		$extra_condition = "AND event_start > '$today'";
 	}

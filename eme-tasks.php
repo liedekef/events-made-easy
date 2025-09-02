@@ -41,8 +41,8 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 			continue;
 		}
 		if ( $day_difference != 0 ) {
-			$eme_date_obj_start     = new ExpressiveDate( $eme_task['task_start'], EME_TIMEZONE );
-			$eme_date_obj_end       = new ExpressiveDate( $eme_task['task_end'], EME_TIMEZONE );
+			$eme_date_obj_start     = new emeExpressiveDate( $eme_task['task_start'], EME_TIMEZONE );
+			$eme_date_obj_end       = new emeExpressiveDate( $eme_task['task_end'], EME_TIMEZONE );
 			$eme_task['task_start'] = $eme_date_obj_start->addDays( $day_difference )->getDateTime();
 			$eme_task['task_end']   = $eme_date_obj_end->addDays( $day_difference )->getDateTime();
 		}
@@ -296,11 +296,11 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 	$where_arr = [ "$people_table.wp_id=$wp_id" ];
 	if ( empty( $event_id ) ) {
 		if ( $scope == 'future' ) {
-			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+			$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 			$search_end_date  = $eme_date_obj_now->getDateTime();
 			$where_arr[]      = "$events_table.event_end >= '$search_end_date'";
 		} elseif ( $scope == 'past' ) {
-			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+			$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 			$search_end_date  = $eme_date_obj_now->getDateTime();
 			$where_arr[]      = "$events_table.event_end <= '$search_end_date'";
 		}
@@ -360,7 +360,7 @@ function eme_check_task_signup_overlap( $task, $person_id ) {
 
 // for CRON
 function eme_tasks_send_signup_reminders() {
-	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
 	$events = eme_get_events( extra_conditions: 'event_tasks=1' );
 	foreach ( $events as $event ) {
@@ -373,7 +373,7 @@ function eme_tasks_send_signup_reminders() {
 		}
 		$tasks = eme_get_event_tasks( $event['event_id'] );
 		foreach ( $tasks as $task ) {
-			$eme_date_obj = new ExpressiveDate( $task['task_start'], EME_TIMEZONE );
+			$eme_date_obj = new emeExpressiveDate( $task['task_start'], EME_TIMEZONE );
 			$days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 			foreach ( $task_reminder_days as $reminder_day ) {
 				$reminder_day = intval( $reminder_day );
@@ -400,7 +400,7 @@ function eme_tasks_remove_old_signups() {
 		$remove_old_signups_days = abs( intval($remove_old_signups_days) );
 	}
 
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date     = $eme_date_obj->minusDays( $remove_old_signups_days )->getDateTime();
 
 	// we don't remove old bookings, just anonymize them
@@ -1360,7 +1360,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
                 ";
 
 	$open_tasks_found = 0;
-	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$lang = eme_detect_lang();
 	foreach ( $events as $event ) {
 		// we add the event ids for the autocomplete check, not used for anything else
@@ -1387,7 +1387,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			}
 
 			$task_ended   = 0;
-			$task_end_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+			$task_end_obj = emeExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 			if ( $task_end_obj < $eme_date_obj_now ) {
 				$task_ended = 1;
 			}
@@ -1914,11 +1914,11 @@ function eme_ajax_task_signups_list() {
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "events.event_end LIKE '$search_end_date%'";
 	} elseif ( $search_scope == 'future' ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$search_end_date  = $eme_date_obj_now->getDateTime();
 		$where_arr[]      = "events.event_end >= '$search_end_date'";
 	} elseif ( $search_scope == 'past' ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$search_end_date  = $eme_date_obj_now->getDateTime();
 		$where_arr[]      = "events.event_end <= '$search_end_date'";
 	}

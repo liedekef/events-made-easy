@@ -197,7 +197,7 @@ add_filter('doing_it_wrong_trigger_error',
 
 function eme_actions_admin_init() {
     global $current_user, $plugin_page;
-    $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     eme_options_register();
 
     $user_id = $current_user->ID;
@@ -493,7 +493,7 @@ function eme_admin_notices() {
     global $pagenow, $plugin_page;
     $current_user = wp_get_current_user();
     $user_id      = $current_user->ID;
-    $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
     $events_page_id = eme_get_events_page_id();
     if ( $pagenow == 'post.php' && isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) && $_GET['post'] == "$events_page_id" ) {
@@ -568,7 +568,7 @@ function eme_handle_dismiss_notice() {
 
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
-    $eme_date_obj = new ExpressiveDate('now', EME_TIMEZONE);
+    $eme_date_obj = new emeExpressiveDate('now', EME_TIMEZONE);
 
     $notice = sanitize_text_field($_POST['notice']);
 

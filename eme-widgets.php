@@ -280,9 +280,9 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		// the month shown depends on the calendar day clicked
 		// make sure it is a valid date though ...
 		if ( get_query_var( 'calendar_day' ) && eme_is_date( get_query_var( 'calendar_day' ) ) ) {
-			$eme_date_obj = new ExpressiveDate( get_query_var( 'calendar_day' ), EME_TIMEZONE );
+			$eme_date_obj = new emeExpressiveDate( get_query_var( 'calendar_day' ), EME_TIMEZONE );
 		} else {
-			$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+			$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		}
 		$month = $eme_date_obj->format( 'm' );
 		$year  = $eme_date_obj->format( 'Y' );

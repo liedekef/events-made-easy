@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_membership() {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
 
     $membership = [
@@ -501,8 +501,8 @@ function eme_get_membership_stats( $ids ) {
         return false;
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-    $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
     if ( ! empty( $remove_expired_days ) ) {
         $eme_date_obj->minusDays( $remove_expired_days )->startOfMonth()->addOneMonth();
@@ -1324,8 +1324,8 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
         } else {
             $too_soon_to_pay = 0;
             if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && ! empty( $membership['properties']['renewal_cutoff_days'] ) ) {
-                $end_date_obj     = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
-                $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+                $end_date_obj     = emeExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+                $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $diff             = $eme_date_obj_now->getDifferenceInDays( $end_date_obj );
                 if ( $diff > $membership['properties']['renewal_cutoff_days'] ) {
                     $too_soon_to_pay = 1;
@@ -3922,7 +3922,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
         return;
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     if ( $membership['type'] == 'rolling' ) {
         if ( $renew_expired ) {
             // expired members that want a renewal? Base it on today
@@ -3933,7 +3933,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
             if ( empty( $member['creation_date'] ) ) {
                 return $eme_date_obj_now->getDate();
             } else {
-                $eme_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $member['creation_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+                $eme_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $member['creation_date'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
                 // check the return code to make sure we can return something sensible
                 if ( $eme_date_obj !== false ) {
                     return $eme_date_obj->getDate();
@@ -3943,7 +3943,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
             }
         }
     } else {
-        $base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $membership['start_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+        $base_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d', $membership['start_date'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
         if ( $membership['duration_period'] == 'forever' ) {
             $start_date_obj = $eme_date_obj_now->copy();
         } else {
@@ -3973,10 +3973,10 @@ function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
         return '';
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // set at midnight from today
     $eme_date_obj_now->today();
-    $base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+    $base_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d', $start_date, emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
     $interval      = DateInterval::createFromDateString( $membership['duration_count'] . ' ' . $membership['duration_period'] );
     $base_date_obj->add( $interval );
     while ( $base_date_obj < $eme_date_obj_now ) {
@@ -4045,11 +4045,11 @@ function eme_member_remove_pending() {
     $table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $sql              = $wpdb->prepare( "SELECT member_id,membership_id,creation_date from $table WHERE status=%d", EME_MEMBER_STATUS_PENDING );
     $members          = $wpdb->get_results( $sql, ARRAY_A );
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     foreach ( $members as $member ) {
         $membership = eme_get_membership( $member['membership_id'] );
         if ( ! empty( $membership['properties']['remove_pending_days'] ) ) {
-            $datetime = new ExpressiveDate( $member['creation_date'], EME_TIMEZONE );
+            $datetime = new emeExpressiveDate( $member['creation_date'], EME_TIMEZONE );
             $diff     = $datetime->getDifferenceInDays( $eme_date_obj_now );
             if ( $diff > $membership['properties']['remove_pending_days'] ) {
                 eme_delete_member( $member['member_id'] );
@@ -4067,7 +4067,7 @@ function eme_member_anonymize_expired() {
         return;
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
 
     $sql        = $wpdb->prepare( "UPDATE $table SET person_id=0 WHERE status=%d AND DATEDIFF(%s,end_date)>%d", EME_MEMBER_STATUS_EXPIRED, $today, $anonymize_expired_days );
@@ -4087,7 +4087,7 @@ function eme_member_remove_expired() {
             $remove_expired_days = $anonymize_expired_days+1;
     }
 
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
 
     $sql        = $wpdb->prepare( "SELECT member_id from $table WHERE status=%d AND DATEDIFF(%s,end_date)>%d", EME_MEMBER_STATUS_EXPIRED, $today, $remove_expired_days );
@@ -4102,7 +4102,7 @@ function eme_member_send_expiration_reminders() {
     global $wpdb;
     $table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships      = eme_get_memberships();
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
     foreach ( $memberships as $membership ) {
         $membership_id = $membership['membership_id'];
@@ -4134,7 +4134,7 @@ function eme_count_pending_members() {
 function eme_member_send_expiration_reminder( $member_id ) {
     global $wpdb;
     $table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today            = $eme_date_obj_now->getDate();
     $member           = eme_get_member( $member_id );
     eme_email_member_action( $member, 'expiration_reminder' );
@@ -4143,10 +4143,10 @@ function eme_member_send_expiration_reminder( $member_id ) {
 }
 
 function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_period = 0 ) {
-    $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // set at midnight from today
     $eme_date_obj_now->today();
-    $start_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+    $start_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d', $start_date, emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
     if ( $start_date_obj === false ) {
         // a default return
         return EME_MEMBER_STATUS_PENDING;
@@ -4158,7 +4158,7 @@ function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_
     }
 
     if ( ! empty( $end_date ) ) {
-        $end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $end_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+        $end_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d', $end_date, emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
         if ( $end_date_obj === false ) {
             // a default return
             return EME_MEMBER_STATUS_PENDING;
@@ -4402,10 +4402,10 @@ function eme_stop_member( $member_id ) {
     // when we stop the member, make sure the end date reflects this too
     // this is more relevant when manually marking a member as stopped
     if ( ! eme_is_empty_date( $member['end_date'] ) ) {
-        $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
         // set at midnight from today
         $eme_date_obj_now->today();
-        $end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+        $end_date_obj = emeExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
         if ( $end_date_obj > $eme_date_obj_now ) {
             $fields['end_date'] = $eme_date_obj_now->getDate();
         }
@@ -7235,11 +7235,11 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
     // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
     if ( ! empty( $pdf_path ) ) {
         $pdf_mtime      = filemtime( $pdf_path );
-        $pdf_mtime_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $pdf_mtime_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $pdf_mtime_obj->setTimestamp($pdf_mtime);
-        $member_mtime_obj     = new ExpressiveDate( $member['modif_date'], EME_TIMEZONE );
-        $membership_mtime_obj = new ExpressiveDate( $membership['modif_date'], EME_TIMEZONE );
-        $template_mtime_obj   = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+        $member_mtime_obj     = new emeExpressiveDate( $member['modif_date'], EME_TIMEZONE );
+        $membership_mtime_obj = new emeExpressiveDate( $membership['modif_date'], EME_TIMEZONE );
+        $template_mtime_obj   = new emeExpressiveDate( $template['modif_date'], EME_TIMEZONE );
         if ($member_mtime_obj<$pdf_mtime_obj && $membership_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
             return [ $pdf_attach_name, $pdf_path ];
         }

@@ -1563,7 +1563,7 @@ function eme_global_map_shortcode( $atts ) {
     $scope_offset     = 0;
 
     if ( $eventful && $atts['paging'] == 1 ) {
-        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
         if ( isset( $_GET['eme_offset'] ) ) {
             $scope_offset = intval( $_GET['eme_offset'] );

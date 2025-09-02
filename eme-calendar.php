@@ -58,7 +58,7 @@ function eme_get_calendar_shortcode( $atts ) {
 		$month = intval($month);
 	}
 	if ($month == 'this_month') {
-		$eme_date_obj_tmp = new ExpressiveDate('now', EME_TIMEZONE);
+		$eme_date_obj_tmp = new emeExpressiveDate('now', EME_TIMEZONE);
 		$eme_date_obj_tmp->startOfMonth();
 		$month = $eme_date_obj_tmp->format('m');
 	}
@@ -173,12 +173,12 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 
 	// allow month=next_month
 	if ( $month == 'next_month' ) {
-		$eme_date_obj_tmp = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj_tmp = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_date_obj_tmp->startOfMonth()->addOneMonth();
 		$month = $eme_date_obj_tmp->format( 'm' );
 		$year  = $eme_date_obj_tmp->format( 'Y' );
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
 	if ( get_option( 'eme_use_client_clock' ) && !empty( $_COOKIE['eme_client_time'] ) ) {
 		try {
@@ -301,7 +301,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	$iNextMonth = sprintf( '%02d', $iNextMonth );
 
 	// Get number of days of previous month
-	$eme_date_obj2 = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj2 = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj2->setDay( 1 );
 	$eme_date_obj2->setMonth( $iPrevMonth );
 	$eme_date_obj2->setYear( $iPrevYear );
@@ -335,8 +335,8 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 			if ( $event['event_status'] == EME_EVENT_STATUS_PRIVATE && ! is_user_logged_in() ) {
 				continue;
 			}
-			$eme_date_obj_end = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
-			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+			$eme_date_obj_end = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
+			$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 			// when hiding past events, we hide those which end date is lower than today
 			if ( get_option( 'eme_cal_hide_past_events' ) && $eme_date_obj_end < $eme_date_obj_now ) {
 				continue;
@@ -344,7 +344,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 
 			// if $long_events is set then show a date as eventful if there is an multi-day event which runs during that day
 			if ( $long_events ) {
-				$eme_date_obj_tmp = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+				$eme_date_obj_tmp = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				// just to be safe we need a reasonable end datetime too
 				if ( $eme_date_obj_end < $eme_date_obj_tmp ) {
 					$eme_date_obj_end = $eme_date_obj_tmp->copy();
@@ -521,7 +521,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 			}
 
 			// each day in the calendar has the name of the day as a class by default
-			$eme_date_obj = new ExpressiveDate( $calstring, EME_TIMEZONE );
+			$eme_date_obj = new emeExpressiveDate( $calstring, EME_TIMEZONE );
 			$sClass       = $eme_date_obj->format( 'D' );
 			if ( isset( $holidays[ $calstring ] ) ) {
 					$sClass .= ' holiday';

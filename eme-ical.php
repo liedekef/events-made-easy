@@ -38,7 +38,7 @@ function eme_ical_single_event( $event ) {
 	$contact_email = $contact->user_email;
 	$contact_name  = $contact->display_name;
 
-	$startstring = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+	$startstring = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 	// in case of all day, we need the day alone, so we'll get it before switching to GMT since that might change the day
 	$allday_dtstartdate = $startstring->format( 'Ymd' );
 	// now switch to GMT
@@ -49,7 +49,7 @@ function eme_ical_single_event( $event ) {
 	if ( eme_is_empty_datetime( $event['event_end'] ) ) {
 		$event['event_end'] = $event['event_start'];
 	}
-	$endstring = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+	$endstring = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
 	// in case of all day, we need the day alone, so we'll get it before switching to GMT since that might change the day
 	// an 'all day' event is flagged as starting at the beginning of one day and lasting until the beginning of the next
 	// so it is the same as adding "T000000" as time spec to the start/end datestring

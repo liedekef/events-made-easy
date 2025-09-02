@@ -52,9 +52,9 @@ function eme_get_recurrence_days( $recurrence ) {
 		return $matching_days;
 	}
 
-	$start_date_obj     = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
+	$start_date_obj     = new emeExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
 	// we'll need to compare to the beginning of today
-	$eme_date_obj_today = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_today = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj_today->startOfDay();
 
 	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
@@ -63,7 +63,7 @@ function eme_get_recurrence_days( $recurrence ) {
 		$end_date_obj     = $start_date_obj->copy()->addYears(11);
 		$only_the_next_10 = 1;
 	} else {
-		$end_date_obj     = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
+		$end_date_obj     = new emeExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
 		$only_the_next_10 = 0;
 	}
 
@@ -255,8 +255,8 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 			$matching_days = eme_get_recurrence_days( $recurrence );
 			$recurrence['recurrence_start_date'] = $matching_days[0];
 		} else {
-			$eme_date_obj1 = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
-			$eme_date_obj2 = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
+			$eme_date_obj1 = new emeExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
+			$eme_date_obj2 = new emeExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
 			if ( $eme_date_obj2 < $eme_date_obj1 ) {
 				$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 			}
@@ -302,13 +302,13 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 	$matching_days = eme_get_recurrence_days( $recurrence );
 	$count = 0;
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
-	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$eme_date_obj_orig = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+	$eme_date_obj_now  = new emeExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_orig = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 	$event_start_time  = eme_get_time_from_dt( $event['event_start'] );
 	$event_end_time    = eme_get_time_from_dt( $event['event_end'] );
 	foreach ( $matching_days as $day ) {
 		$event['event_start'] = "$day $event_start_time";
-		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		$eme_date_obj         = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		// no past events will be created, unless for specific days
 		if ( $recurrence['recurrence_freq'] != 'specific' && $eme_date_obj < $eme_date_obj_now ) {
                         continue;
@@ -344,8 +344,8 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 			$matching_days = eme_get_recurrence_days( $recurrence );
 			$recurrence['recurrence_start_date'] = $matching_days[0];
 		} else {
-			$eme_date_obj1 = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
-			$eme_date_obj2 = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
+			$eme_date_obj1 = new emeExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
+			$eme_date_obj2 = new emeExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
 			if ( $eme_date_obj2 < $eme_date_obj1 ) {
 				$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 			}
@@ -401,8 +401,8 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	$events = $wpdb->get_results( $sql, ARRAY_A );
 
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
-	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$eme_date_obj_orig = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+	$eme_date_obj_now  = new emeExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_orig = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 	$event_start_time  = eme_get_time_from_dt( $event['event_start'] );
 	$event_end_time    = eme_get_time_from_dt( $event['event_end'] );
 	// we'll return the number of events in the recurrence at the end
@@ -411,7 +411,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	foreach ( $events as $existing_event ) {
 		$day       = eme_get_date_from_dt( $existing_event['event_start'] );
 		$array_key = array_search( $day, $matching_days );
-		$existing_event_start_obj = new ExpressiveDate( $existing_event['event_start'], EME_TIMEZONE );
+		$existing_event_start_obj = new emeExpressiveDate( $existing_event['event_start'], EME_TIMEZONE );
 		// if future events in the recurrence have bookings, we won't delete those but keep them in the recurrence series
 		if ( $existing_event_start_obj >= $eme_date_obj_now ) {
 			$bookings_count = eme_count_bookings_for( $existing_event['event_id'] );
@@ -421,7 +421,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 		if ( $array_key !== false || $bookings_count > 0 ) {
 			if ( ! $only_change_recdates ) {
 				$event['event_start'] = "$day $event_start_time";
-				$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+				$eme_date_obj         = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				$day_difference       = $eme_date_obj_orig->getDifferenceInDays( $eme_date_obj );
 				$eme_date_obj->addDays( $recurrence['event_duration'] - 1 );
 				$event_end_date     = $eme_date_obj->getDate();
@@ -442,7 +442,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	// Doing step 2
 	foreach ( $matching_days as $day ) {
 		$event['event_start'] = "$day $event_start_time";
-		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		$eme_date_obj         = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		// no past events will be created
 		if ($eme_date_obj < $eme_date_obj_now) {
 			continue;
@@ -496,7 +496,7 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 	global $wpdb;
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	if ( $future_only ) {
-		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$today        = $eme_date_obj->format( 'Y-m-d' );
 		$sql          = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d AND event_start > %s ORDER BY event_start ASC", $recurrence_id, $today );
 	} else {
@@ -590,9 +590,9 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
 		$specific_days    = eme_get_recurrence_days( $recurrence );
 		$natural_days     = [];
-		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		foreach ( $specific_days as $day ) {
-			$date_obj = new ExpressiveDate( $day, EME_TIMEZONE );
+			$date_obj = new emeExpressiveDate( $day, EME_TIMEZONE );
 			if ( $date_obj < $eme_date_obj_now ) {
 				$natural_days[] = '<s>' . eme_localized_date( $day, EME_TIMEZONE ) . '</s>';
 			} else {
@@ -636,7 +636,7 @@ function eme_ajax_recurrences_list() {
 			wp_die();
 	}
 
-	$eme_date_obj       = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj       = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$today              = $eme_date_obj->getDate();
 	$event_status_array = eme_status_array();
 
@@ -698,8 +698,8 @@ function eme_ajax_recurrences_list() {
 		}
 		if ( ! $recurrence['event_duration'] ) {
 			// older recurrences did not have event_duration
-			$event_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-			$event_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+			$event_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$event_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$duration_days   = abs( $event_end_obj->getDifferenceInDays( $event_start_obj ) ) + 1;
 		} else {
 			$duration_days = $recurrence['event_duration'];

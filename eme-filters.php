@@ -60,7 +60,7 @@ function eme_filter_form_shortcode( $atts ) {
 
 function eme_create_week_scope( $past_count, $future_count, $eventful = 0 ) {
 	$start_of_week = get_option( 'start_of_week' );
-	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	if ($past_count) {
 		$eme_date_obj->minusWeeks($past_count);
 	}
@@ -90,7 +90,7 @@ function eme_create_week_scope( $past_count, $future_count, $eventful = 0 ) {
 function eme_create_month_scope( $past_count, $future_count, $eventful = 0 ) {
 	$scope        = [];
 	$scope[0]     = __( 'Select Month', 'events-made-easy' );
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	if ($past_count) {
 		$eme_date_obj->minusMonths($past_count);
 	}
@@ -120,7 +120,7 @@ function eme_create_year_scope( $past_count, $future_count, $eventful = 0 ) {
 	$scope    = [];
 	$scope[0] = __( 'Select Year', 'events-made-easy' );
 
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	if ($past_count) {
 		$eme_date_obj->minusYears($past_count);
 	}

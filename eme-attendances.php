@@ -28,7 +28,7 @@ function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $re
 function eme_delete_old_attendances() {
 	global $wpdb;
 	$table_name                  = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	$eme_date_obj                = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj                = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$remove_old_attendances_days = get_option( 'eme_gdpr_remove_old_attendances_days' );
 	if ( empty( $remove_old_attendances_days ) ) {
 		return;

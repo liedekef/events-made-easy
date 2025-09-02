@@ -5869,11 +5869,15 @@ function eme_ajax_bookings_list() {
     // the array $event_name_info will be used to store the event info for bookings, so we don't need to recalculate that for each booking
     $event_name_info = [];
     foreach ( $bookings as $booking ) {
-        $line     = [];
-        $event_id = $booking['event_id'];
+        $line      = [];
+        $event_id  = $booking['event_id'];
         $person_id = $booking['person_id'];
-        $event    = eme_get_event( $event_id );
-	$location = eme_get_location( $event['location_id'] );
+        $event     = eme_get_event( $event_id );
+        if (!empty($event) && !empty($event['location_id'])) {
+            $location = eme_get_location( $event['location_id'] );
+        } else {
+            $location = [];
+        }
         $answers  = eme_get_event_answers( $event_id );
         $answers  = array_merge($answers,eme_get_booking_answers( $booking['booking_id'] ));
         if ( ! empty( $booking['person_id'] ) ) {
@@ -5897,11 +5901,19 @@ function eme_ajax_bookings_list() {
             $line['person_id'] = '';
         }
 
-        $date_obj             = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-        $localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
-        $localized_start_time = eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 );
-        $localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
-        $localized_end_time   = eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
+        if (!empty($event)) {
+            $date_obj             = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
+            $localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
+            $localized_start_time = eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 );
+            $localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
+            $localized_end_time   = eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
+        } else {
+            $date_obj             = null;
+            $localized_start_date = '';
+            $localized_start_time = '';
+            $localized_end_date   = '';
+            $localized_end_time   = '';
+        }
         $localized_booking_datetime = eme_localized_datetime( $booking['creation_date'], EME_TIMEZONE, 1 );
         $localized_payment_datetime = eme_localized_datetime( $booking['payment_date'], EME_TIMEZONE, 1 );
         if ( $booking['reminder'] > 0 ) {
@@ -5979,12 +5991,12 @@ function eme_ajax_bookings_list() {
                         $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
-		if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
-			$event_name_info[ $event_id ] .= ', <s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
-			$event_name_info[ $event_id ] .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
-		} else {
-			$event_name_info[ $event_id ] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
-		}
+                if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+                    $event_name_info[ $event_id ] .= ', <s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
+                    $event_name_info[ $event_id ] .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
+                } else {
+                    $event_name_info[ $event_id ] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
+                }
 
                 $waitinglist_seats            = $event['event_properties']['waitinglist_seats'];
                 if ( $waitinglist_seats > 0 ) {
@@ -6050,8 +6062,8 @@ function eme_ajax_bookings_list() {
         } else {
             $line['event_start'] .= esc_html("$localized_start_time - $localized_end_time");
         }
-        if ( $date_obj < $eme_date_obj_now ) {
-            $line['event_start'] = "<span style='text-decoration: line-through;'>" . $line['event_start'] . '</span>';
+        if ( $date_obj && $date_obj < $eme_date_obj_now ) {
+            $line['event_start'] = "<s>" . $line['event_start'] . '</s>';
         }
 
         $line['creation_date'] = esc_html($localized_booking_datetime);

@@ -227,18 +227,14 @@ function eme_holidays_shortcode( $atts ) {
 
 	$id = intval($atts['id']);
 	$scope = eme_sanitize_request($atts['scope']);
-	if ( ! empty( $id ) ) {
-		$holiday_list = eme_get_holiday_list( $id );
-	} else {
+	if ( empty( $id ) ) {
 		return;
 	}
 
-	$list             = preg_replace( '/\r\n|\n\r/', "\n", $holiday_list['list'] );
-	$days             = explode( "\n", $list );
 	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	print '<div id="eme_holidays_list">';
-	foreach ( $days as $day_info ) {
-		[$day, $name, $class] = array_pad( explode( ',', $day_info ), 3, '' );
+    $days = eme_get_holiday_listinfo($id);
+	foreach ( $days as $day=>$rest ) {
 		if ( empty( $day ) ) {
 			continue;
 		}
@@ -258,7 +254,6 @@ function eme_holidays_shortcode( $atts ) {
 	}
 	print '</div>';
 }
-
 
 add_action( 'wp_ajax_eme_holidays_list', 'eme_ajax_action_holidays_list' );
 add_action( 'wp_ajax_eme_manage_holidays', 'eme_ajax_action_manage_holidays' );

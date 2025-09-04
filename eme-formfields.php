@@ -3170,7 +3170,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 } else {
                     $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
                 }
-                if ( $waitinglist ) {
+                if ( $waitinglist && !$editing_booking_from_backend ) {
                     $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
                 }
                 ++$seats_found;

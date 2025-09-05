@@ -7105,6 +7105,10 @@ function eme_manage_waitinglist( $event, $send_mail = 1 ) {
                         eme_email_booking_action( $booking, 'pendingBooking' );
                     }
                 }
+                // execute action after the booking is removed from the waitinglist
+                if ( has_action( 'eme_move_from_waitinglist_rsvp_action' ) ) {
+                    do_action( 'eme_move_from_waitinglist_rsvp_action', $booking );
+                }
             }
         }
     }

@@ -623,7 +623,7 @@ function eme_task_signups_table_layout( $message = '' ) {
     </form>
     </div>
 <?php
-    $formfields               = eme_get_formfields( '', 'tasksignup' );
+    $formfields               = eme_get_formfields( '', 'generic,tasksignup' );
     $extrafields_arr          = [];
     $extrafieldnames_arr      = [];
     $extrafieldsearchable_arr = [];

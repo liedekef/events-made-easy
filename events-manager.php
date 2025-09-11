@@ -315,13 +315,16 @@ function eme_create_events_submenu() {
 		if ( $db_version == EME_DB_VERSION ) {
 			$pending_bookings_count = eme_count_pending_bookings();
 			$pending_members_count  = eme_count_pending_members();
+			$pending_tasksignups_count  = eme_count_pending_tasksignups();
 		} else {
 			$pending_bookings_count = 0;
 			$pending_members_count  = 0;
+			$pending_tasksignups_count  = 0;
 		}
-		$pending_count          = $pending_bookings_count + $pending_members_count;
+		$pending_count          = $pending_bookings_count + $pending_members_count + $pending_tasksignups_count;
 		$pending_bookings_title = esc_attr( sprintf(_n( '%d pending booking', '%d pending bookings', $pending_bookings_count, 'events-made-easy' ), number_format_i18n($pending_bookings_count ) ));
 		$pending_members_title  = esc_attr( sprintf(_n( '%d pending member', '%d pending members', $pending_members_count, 'events-made-easy' ), number_format_i18n($pending_members_count ) ));
+		$pending_signups_title  = esc_attr( sprintf(_n( '%d pending task signup', '%d pending task signups', $pending_tasksignups_count, 'events-made-easy' ), number_format_i18n($pending_tasksignups_count ) ));
 		// we can't use the global var $plugin_page yet, so we check using _GET
 		if ( !empty($_GET['page']) && preg_match( '/^eme-/', eme_sanitize_request($_GET['page']) ) ) {
 			$main_menu_label = '';
@@ -343,6 +346,11 @@ function eme_create_events_submenu() {
 		} else {
 			$members_menu_label = '';
 		}
+		if ( $pending_tasksignups_count ) {
+			$signups_menu_label = " <span class='update-plugins' title='$pending_signups_title'>" . number_format_i18n( $pending_tasksignups_count ) . '</span>';
+		} else {
+			$signups_menu_label = '';
+		}
 
 		// location 40: Above the appearance menu
 		add_menu_page( __( 'Events Made Easy', 'events-made-easy' ), __( 'Events Made Easy', 'events-made-easy' ) . $main_menu_label, get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page', EME_PLUGIN_URL . 'images/calendar-16.png', 40 );
@@ -362,7 +370,7 @@ function eme_create_events_submenu() {
 			add_submenu_page( 'eme-manager', __( 'Approved Bookings', 'events-made-easy' ), __( 'Approved Bookings', 'events-made-easy' ), get_option( 'eme_cap_list_registrations' ), 'eme-registration-seats', 'eme_registration_seats_page' );
 		}
 		if ( get_option( 'eme_tasks_enabled' ) ) {
-			add_submenu_page( 'eme-manager', __( 'Task signups', 'events-made-easy' ), __( 'Task signups', 'events-made-easy' ), get_option( 'eme_cap_manage_task_signups' ), 'eme-task-signups', 'eme_task_signups_page' );
+			add_submenu_page( 'eme-manager', __( 'Task signups', 'events-made-easy' ), __( 'Task signups', 'events-made-easy' ) . $signups_menu_label, get_option( 'eme_cap_manage_task_signups' ), 'eme-task-signups', 'eme_task_signups_page' );
 		}
 		add_submenu_page( 'eme-manager', __( 'People', 'events-made-easy' ), __( 'People', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-people', 'eme_people_page' );
 		add_submenu_page( 'eme-manager', __( 'Groups', 'events-made-easy' ), __( 'Groups', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-groups', 'eme_groups_page' );

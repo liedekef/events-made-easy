@@ -10,6 +10,64 @@ document.addEventListener('DOMContentLoaded', function () {
         sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
         TaskSignupsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
 
+        let taskSignupFields = {
+            id: {
+                key: true,
+                width: '1%',
+                columnResizable: false,
+                list: false
+            },
+            event_name: {
+                visibility: 'fixed',
+                title: emetasks.translate_event
+            },
+            task_name: {
+                visibility: 'fixed',
+                title: emetasks.translate_taskname
+            },
+            task_start: {
+                title: emetasks.translate_taskstart
+            },
+            task_end: {
+                title: emetasks.translate_taskend
+            },
+            signup_status: {
+                visibility: 'hidden',
+                title: emetasks.translate_tasksignup_status
+            },
+            signup_date: {
+                visibility: 'hidden',
+                title: emetasks.translate_tasksignup_date
+            },
+            comment: {
+                title: emetasks.translate_comment,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            person_info: {
+                sorting: false,
+                title: emetasks.translate_person
+            }
+        }
+        // Add extra fields
+        const extraFieldsAttr = TaskSignupsTableContainer.dataset.extrafields;
+        const extraFieldNamesAttr = TaskSignupsTableContainer.dataset.extrafieldnames;
+        const extraFieldSearchableAttr = TaskSignupsTableContainer.dataset.extrafieldsearchable;
+        if (extraFieldsAttr && extraFieldNamesAttr) {
+            const extraFields = extraFieldsAttr.split(',');
+            const extraNames = extraFieldNamesAttr.split(',');
+            const extraSearches = extraFieldSearchableAttr.split(',');
+            extraFields.forEach((value, index) => {
+                if (value == 'SEPARATOR') {
+                    let fieldindex = 'SEPARATOR_'+index;
+                    taskSignupFields[fieldindex] = { title: extraNames[index], sorting: false, visibility: 'separator' };
+                } else {
+                    let fieldindex = 'FIELD_'+value;
+                    taskSignupFields[fieldindex] = { title: extraNames[index], sorting: extraSearches[index]=='1', visibility: 'hidden' };
+                }
+            });
+        }
+
         TaskSignupsTable = new FTable('#TaskSignupsTableContainer', {
             title: emetasks.translate_signups,
             paging: true,
@@ -39,45 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_signup_status: eme_getValue(EME.$('#search_signup_status'))
                 };
             },
-            fields: {
-                id: {
-                    key: true,
-                    width: '1%',
-                    columnResizable: false,
-                    list: false
-                },
-                event_name: {
-                    visibility: 'fixed',
-                    title: emetasks.translate_event
-                },
-                task_name: {
-                    visibility: 'fixed',
-                    title: emetasks.translate_taskname
-                },
-                task_start: {
-                    title: emetasks.translate_taskstart
-                },
-                task_end: {
-                    title: emetasks.translate_taskend
-                },
-                signup_status: {
-                    visibility: 'hidden',
-                    title: emetasks.translate_tasksignup_status
-                },
-                signup_date: {
-                    visibility: 'hidden',
-                    title: emetasks.translate_tasksignup_date
-                },
-                comment: {
-                    title: emetasks.translate_comment,
-                    sorting: false,
-                    visibility: 'hidden'
-                },
-                person_info: {
-                    sorting: false,
-                    title: emetasks.translate_person
-                }
-            },
+            fields: taskSignupFields,
             sortingInfoSelector: '#tasksignupstablesortingInfo',
             messages: {
                 sortingInfoNone: ''

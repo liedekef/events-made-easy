@@ -147,6 +147,10 @@ function eme_actions_init() {
             eme_csv_booking_report( intval( $_GET['event_id'] ) );
             exit();
         }
+        if ( $_GET['eme_admin_action'] == 'tasksignups_csv' && isset( $_GET['event_id'] ) ) {
+            eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
+            exit();
+        }
     }
 
     # payment notifications can apply filters in eme_get_configured_pgs(), so these need to be in eme_actions_init, not in eme_actions_early_init

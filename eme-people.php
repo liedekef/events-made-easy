@@ -999,6 +999,165 @@ function eme_import_csv_people() {
     return $result;
 }
 
+function eme_csv_tasksignups_report( $event_id ) {
+    $event = eme_get_event( $event_id );
+    if ( empty( $event ) ) {
+        return;
+    }
+    $current_userid = get_current_user_id();
+    if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
+        ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
+        echo 'No access';
+        die;
+    }
+
+    $delimiter = get_option( 'eme_csv_delimiter' );
+    if ( eme_is_empty_string( $delimiter ) ) {
+        $delimiter = ';';
+    }
+
+    //header("Content-type: application/octet-stream");
+    header( 'Content-type: text/csv; charset=UTF-8' );
+    header( 'Content-Encoding: UTF-8' );
+    header( 'Content-Disposition: attachment; filename="export.csv"' );
+    eme_nocache_headers();
+
+    $signups     = eme_get_event_task_signups( $event_id );
+    $people_answer_fieldids = eme_get_people_export_fieldids();
+    $tasksignup_answer_fieldids = eme_get_tasksignups_answers_fieldids( array_keys($signups) );
+
+    // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    $out = fopen( 'php://output', 'w' );
+    fwrite($out, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
+
+    if ( has_filter( 'eme_csv_header_filter' ) ) {
+        $line = apply_filters( 'eme_csv_header_filter', $event );
+        eme_fputcsv( $out, $line, $delimiter );
+    }
+    $line   = [];
+    $line[] = __( 'ID', 'events-made-easy' );
+    $line[] = __( 'Person ID', 'events-made-easy' );
+    $line[] = __( 'Last name', 'events-made-easy' );
+    $line[] = __( 'First name', 'events-made-easy' );
+    $line[] = get_option( 'eme_address1_string' );
+    $line[] = get_option( 'eme_address2_string' );
+    $line[] = __( 'City', 'events-made-easy' );
+    $line[] = __( 'Postal code', 'events-made-easy' );
+    $line[] = __( 'State', 'events-made-easy' );
+    $line[] = __( 'Country', 'events-made-easy' );
+    $line[] = __( 'Email', 'events-made-easy' );
+    $line[] = __( 'Phone number', 'events-made-easy' );
+    $line[] = __( 'Date of birth', 'events-made-easy' );
+    $line[] = __( 'Place of birth', 'events-made-easy' );
+    $line[] = __( 'MassMail', 'events-made-easy' );
+    $line[] = __( 'Newsletter', 'events-made-easy' );
+    $line[] = __( 'Birthday email', 'events-made-easy' );
+    foreach ( $people_answer_fieldids as $field_id ) {
+        $tmp_formfield = eme_get_formfield( $field_id );
+        if ( ! empty( $tmp_formfield ) ) {
+            $line[] = $tmp_formfield['field_name'];
+        }
+    }
+    $line[] = __( 'Status', 'events-made-easy' );
+    $line[] = __( 'Comment', 'events-made-easy' );
+    foreach ( $tasksignup_answer_fieldids as $field_id ) {
+        $tmp_formfield = eme_get_formfield( $field_id );
+        if ( ! empty( $tmp_formfield ) ) {
+            $line[] = $tmp_formfield['field_name'];
+        }
+    }
+    $line_nbr = 1;
+    if ( has_filter( 'eme_csv_column_filter' ) ) {
+        $line = apply_filters( 'eme_csv_column_filter', $line, $event, $line_nbr );
+    }
+
+    eme_fputcsv( $out, $line, $delimiter );
+    foreach ( $signups as $signup) {
+        $localized_booking_datetime = eme_localized_datetime( $signup['signup_date'], EME_TIMEZONE, 1 );
+        $person                     = eme_get_person( $signup['person_id'] );
+        // if the person no longer exists, use an empty one
+        if ( ! $person ) {
+            $person = eme_new_person();
+        }
+        $person_answers = eme_get_person_answers( $signup['person_id'] );
+        $line           = [];
+        $status_string  = '';
+        if ( $signup['signup_status'] == 0 ) {
+            $status_string = __( 'Pending', 'events-made-easy' );
+        } else {
+            $status_string = __( 'Approved', 'events-made-easy' );
+        }
+
+        $line[] = $signup['id'];
+        $line[] = $signup['person_id'];
+        $line[] = $person['lastname'];
+        $line[] = $person['firstname'];
+        $line[] = $person['address1'];
+        $line[] = $person['address2'];
+        $line[] = $person['city'];
+        $line[] = $person['zip'];
+        $line[] = eme_get_state_name( $person['state_code'], $person['country_code'] );
+        $line[] = eme_get_country_name( $person['country_code'] );
+        $line[] = $person['email'];
+        $line[] = $person['phone'];
+        $line[] = $person['birthdate'];
+        $line[] = $person['birthplace'];
+        $line[] = $person['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+        $line[] = $person['newsletter'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+        $line[] = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+        foreach ( $people_answer_fieldids as $field_id ) {
+            $found = 0;
+            foreach ( $person_answers as $answer ) {
+                if ( $answer['field_id'] == $field_id ) {
+                    $tmp_formfield = eme_get_formfield( $answer['field_id'] );
+                    if ( ! empty( $tmp_formfield ) ) {
+                        $line[] = eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', 'text', 1 );
+                    }
+                    $found = 1;
+                    break;
+                }
+            }
+            # to make sure the number of columns are correct, we add an empty answer if none was found
+            if ( ! $found ) {
+                $line[] = '';
+            }
+        }
+        $line[] = $status_string;
+        $line[] = $signup['comment'];
+        $answers = eme_get_tasksignup_answers( $signup['id'] );
+        foreach ( $tasksignup_answer_fieldids as $field_id ) {
+            $found = 0;
+            foreach ( $answers as $answer ) {
+                if ( $answer['field_id'] == $field_id ) {
+                    $tmp_formfield = eme_get_formfield( $answer['field_id'] );
+                    if ( ! empty( $tmp_formfield ) ) {
+                        $line[] = eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', 'text', 1 );
+                    }
+                    $found = 1;
+                    break;
+                }
+            }
+            # to make sure the number of columns are correct, we add an empty answer if none was found
+            if ( ! $found ) {
+                $line[] = '';
+            }
+        }
+
+        ++$line_nbr;
+        if ( has_filter( 'eme_csv_column_filter' ) ) {
+            $line = apply_filters( 'eme_csv_column_filter', $line, $event, $line_nbr );
+        }
+        eme_fputcsv( $out, $line, $delimiter );
+    }
+
+    if ( has_filter( 'eme_csv_footer_filter' ) ) {
+        $line = apply_filters( 'eme_csv_footer_filter', $event );
+        eme_fputcsv( $out, $line, $delimiter );
+    }
+    fclose( $out );
+    die();
+}
+
 function eme_csv_booking_report( $event_id ) {
     $event = eme_get_event( $event_id );
     $pgs   = eme_payment_gateways();

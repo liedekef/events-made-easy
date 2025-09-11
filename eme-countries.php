@@ -806,7 +806,7 @@ function eme_get_country_name( $code, $lang = '' ) {
 		$sql = $wpdb->prepare( "SELECT name FROM $table WHERE alpha_2 = %s AND lang='' LIMIT 1", $code );
 		$res = $wpdb->get_var( $sql );
 	}
-	return $res;
+	return $res || '';
 }
 
 function eme_get_state( $id ) {
@@ -836,7 +836,7 @@ function eme_get_state_name( $code, $country_code, $lang = '' ) {
 	} else {
 		$sql = $wpdb->prepare( "SELECT state.name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.code=%s and country.alpha_2=%s AND (country.lang='' OR country.lang=%s) LIMIT 1", $code, $country_code, $lang );
 	}
-	return $wpdb->get_var( $sql );
+	return $wpdb->get_var( $sql ) || '';
 }
 
 function eme_get_countries_lang() {

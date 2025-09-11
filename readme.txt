@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Fix waiting list visual warning when editing booking in the backend
 * Added eme_move_from_waitinglist_rsvp_action action hook, executed after a booking has been moved from the waiting list to pending or approved.
   One argument: the updated booking
+* Allow custom fields in the task signup form
 
 = 3.0.16  (2025/09/03) =
 * payconiq API switch is rescheduled to Oct 19

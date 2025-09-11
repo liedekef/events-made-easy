@@ -1145,6 +1145,8 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         $required           = 0;
         $required_att       = '';
         $replacement        = '';
+        $var_prefix  = '';
+        $var_postfix = '';
         if ( strstr( $result, '#REQ' ) ) {
             $result       = str_replace( '#REQ', '#', $result );
             $required     = 1;
@@ -1358,6 +1360,28 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
                 $label = __( 'Subscribe', 'events-made-easy' );
             }
             $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
+            $field_key = $matches[1];
+            $formfield = eme_get_formfield( $field_key );
+            if ( ! empty( $formfield ) ) {
+                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+            } else {
+                $found = 0;
+            }
+        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
+            $field_key = $matches[1];
+            $formfield = eme_get_formfield( $field_key );
+            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'tasksignup', 'people' ] ) ) {
+                $field_id       = $formfield['field_id'];
+                $fieldname      = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+                $entered_val    = '';
+                if ( $formfield['field_required'] ) {
+                    $required = 1;
+                }
+                $replacement = eme_get_formfield_html( $formfield, $fieldname, '', $required );
+            } else {
+                $found = 0;
+            }
         } else {
             $found = 0;
         }
@@ -4885,6 +4909,18 @@ function eme_get_booking_answers_fieldids( $ids_arr ) {
     if (!empty($ids_arr) &&  eme_is_numeric_array( $ids_arr ) ) {
         $ids_list = implode(',', $ids_arr);
         return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    } else {
+        return [];
+    }
+}
+
+function eme_get_tasksignups_answers_fieldids( $ids_arr ) {
+    global $wpdb;
+    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    # use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
+    if (!empty($ids_arr) &&  eme_is_numeric_array( $ids_arr ) ) {
+        $ids_list = implode(',', $ids_arr);
+        return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='tasksignup' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return [];
     }

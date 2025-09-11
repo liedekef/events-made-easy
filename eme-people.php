@@ -3576,11 +3576,45 @@ function eme_update_persongroups( $person_id, $group_ids ) {
 function eme_update_grouppersons( $group_id, $person_ids ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
-    $sql   = $wpdb->prepare( "DELETE from $table WHERE group_id = %d", $group_id );
-    $wpdb->query( $sql );
-    foreach ( $person_ids as $person_id ) {
-        $sql = $wpdb->prepare( "INSERT INTO $table (person_id,group_id) VALUES (%d,%d)", $person_id, $group_id );
-        $wpdb->query( $sql );
+
+    // Get current person IDs in the group
+    $current_person_ids = $wpdb->get_col(
+        $wpdb->prepare( "SELECT person_id FROM $table WHERE group_id = %d", $group_id )
+    );
+
+    // Convert to arrays for easier comparison
+    $current_ids = array_map('intval', $current_person_ids);
+    $new_ids = array_map('intval', $person_ids);
+
+    // Find IDs to add and remove
+    $ids_to_add = array_diff($new_ids, $current_ids);
+    $ids_to_remove = array_diff($current_ids, $new_ids);
+
+    // Remove people no longer in the group
+    if (!empty($ids_to_remove)) {
+        $placeholders = implode(',', array_fill(0, count($ids_to_remove), '%d'));
+        $sql = $wpdb->prepare(
+            "DELETE FROM $table WHERE group_id = %d AND person_id IN ($placeholders)",
+            array_merge([$group_id], $ids_to_remove)
+        );
+        $wpdb->query($sql);
+    }
+
+    // Add new people to the group
+    if (!empty($ids_to_add)) {
+        $values = [];
+        $placeholders = [];
+        foreach ($ids_to_add as $person_id) {
+            $values[] = $person_id;
+            $values[] = $group_id;
+            $placeholders[] = '(%d,%d)';
+        }
+
+        $sql = $wpdb->prepare(
+            "INSERT INTO $table (person_id, group_id) VALUES " . implode(',', $placeholders),
+            $values
+        );
+        $wpdb->query($sql);
     }
 }
 

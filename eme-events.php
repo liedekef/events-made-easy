@@ -6575,13 +6575,14 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     <details name="eme_details_tasks" class="eme_accordion">
     <summary><?php esc_html_e( 'Tasks form format', 'events-made-easy' ); ?></summary><div>
 <?php
-        eme_meta_box_div_event_task_signup_form_format( $event, $templates_array );
+    $templates_array = eme_get_templates_array_by_id( 'taskform' );
+    eme_meta_box_div_event_task_signup_form_format( $event, $templates_array );
     eme_meta_box_div_event_task_signup_recorded_ok_html( $event, $templates_array );
 ?>
     </div></details>
     <h3><?php esc_html_e( 'Tasks Email format settings', 'events-made-easy' ); ?></h3>
 <?php
-    $templates_array = eme_get_templates_array_by_id( 'task' );
+    $templates_array = eme_get_templates_array_by_id( 'taskmail' );
     echo '<details name="eme_details_tasks" class="eme_accordion">';
     echo '<summary>' . esc_html__( 'Task Signup Pending Email', 'events-made-easy' ) . '</summary><div>';
     eme_meta_box_div_event_task_signup_pending_email( $event, $templates_array );

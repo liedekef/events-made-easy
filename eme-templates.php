@@ -44,6 +44,8 @@ function eme_template_types() {
         'event'          => __( 'Event', 'events-made-easy' ),
         'rsvpform'       => __( 'RSVP form', 'events-made-easy' ),
         'rsvpmail'       => __( 'RSVP related mail', 'events-made-easy' ),
+        'taskform'       => __( 'Task form', 'events-made-easy' ),
+        'taskmail'       => __( 'Task related mail', 'events-made-easy' ),
         'membershipform' => __( 'Membership form', 'events-made-easy' ),
         'membershipmail' => __( 'Membership related mail', 'events-made-easy' ),
         'mail'           => __( 'Generic mail', 'events-made-easy' ),

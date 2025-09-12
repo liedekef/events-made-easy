@@ -132,16 +132,31 @@ function eme_db_delete_task( $task_id ) {
 
 function eme_delete_event_tasks( $event_id ) {
     global $wpdb;
-    $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id );
+    // First get all task IDs for this event
+    $tasks_table = EME_DB_PREFIX . EME_TASKS_TBNAME;
+    $task_ids = $wpdb->get_col( 
+        $wpdb->prepare( "SELECT task_id FROM $tasks_table WHERE event_id = %d", $event_id ) 
+    );
+    
+    // Delete answers for each task
+    if (!empty($task_ids)) {
+        $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+        $placeholders = implode(',', array_fill(0, count($task_ids), '%d'));
+        
+        $sql = $wpdb->prepare( 
+            "DELETE FROM $answers_table WHERE related_id IN ($placeholders) AND type = 'tasksignup'", 
+            $task_ids 
+        );
+        $wpdb->query( $sql );
+    }
+    
+    // Delete the tasks
+    $sql = $wpdb->prepare( "DELETE FROM $tasks_table WHERE event_id = %d", $event_id );
     $wpdb->query( $sql );
-
+    
+    // Delete the task signups
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id );
-    $wpdb->query( $sql );
-
-    $table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND type='tasksignup'", $event_id );
+    $sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id = %d", $event_id );
     $wpdb->query( $sql );
 }
 

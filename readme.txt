@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.16
+Stable tag: 3.0.17
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.17  (2025/09/) =
+= 3.0.17  (2025/09/14) =
 * Add tom-select maps for js and css
 * Fix waiting list visual warning when editing booking in the backend
 * Added eme_move_from_waitinglist_rsvp_action action hook, executed after a booking has been moved from the waiting list to pending or approved.

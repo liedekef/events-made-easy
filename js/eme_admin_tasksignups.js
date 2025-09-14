@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: emetasks.translate_taskend
             },
             signup_status: {
-                visibility: 'hidden',
                 title: emetasks.translate_tasksignup_status
             },
             signup_date: {

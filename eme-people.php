@@ -1037,6 +1037,7 @@ function eme_csv_tasksignups_report( $event_id ) {
     $line   = [];
     $line[] = __( 'ID', 'events-made-easy' );
     $line[] = __( 'Person ID', 'events-made-easy' );
+    $line[] = __( 'Signup date', 'events-made-easy' );
     $line[] = __( 'Last name', 'events-made-easy' );
     $line[] = __( 'First name', 'events-made-easy' );
     $line[] = get_option( 'eme_address1_string' );
@@ -1090,6 +1091,7 @@ function eme_csv_tasksignups_report( $event_id ) {
 
         $line[] = $signup['id'];
         $line[] = $signup['person_id'];
+        $line[] = eme_localized_datetime( $signup['signup_date'], EME_TIMEZONE, 1 );
         $line[] = $person['lastname'];
         $line[] = $person['firstname'];
         $line[] = $person['address1'];

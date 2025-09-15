@@ -64,6 +64,9 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
     if ( ! isset( $props['ignore_pending'] ) ) {
         $props['ignore_pending'] = 0;
     }
+    if ( ! isset( $props['ignore_pending_tasksignups'] ) ) {
+        $props['ignore_pending_tasksignups'] = 0;
+    }
     if ( ! isset( $props['email_only_once'] ) ) {
         $props['email_only_once'] = 0;
     }
@@ -259,7 +262,7 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
     }
 
     // for sure integers
-    $numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_only_one_signup_pp', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats', 'check_free_waiting', 'ticket_template_id', 'skippaymentoptions' ];
+    $numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'ignore_pending_tasksignups', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_only_one_signup_pp', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats', 'check_free_waiting', 'ticket_template_id', 'skippaymentoptions' ];
     foreach ( $numbers as $opt ) {
         $props[$opt]=intval($props[$opt]);
     }

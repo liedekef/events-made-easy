@@ -995,23 +995,25 @@ function eme_meta_box_div_event_task_settings( $event ) {
         <label for="eme_prop_task_registered_users_only"><?php esc_html_e( 'Require WP membership to be able to sign up for tasks?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_addpersontogroup'>
-                <label for='eme_prop_task_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-                <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['task_addpersontogroup'], 'eme_prop_task_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p>
+            <label for='eme_prop_task_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
+            <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['task_addpersontogroup'], 'eme_prop_task_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p>
         <p id='p_task_requires_approval'>
             <input id="eme_prop_task_requires_approval" name='eme_prop_task_requires_approval' value='1' type='checkbox' <?php echo $eme_prop_task_requires_approval; ?>>
-        <label for="eme_prop_task_requires_approval"><?php esc_html_e( 'Require approval for task signups?', 'events-made-easy' ); ?></label>
+            <label for="eme_prop_task_requires_approval"><?php esc_html_e( 'Require approval for task signups?', 'events-made-easy' ); ?></label>
+            <br><?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending_tasksignups'], 'eme_prop_ignore_pending_tasksignups', __( 'Consider pending (unapproved) task signups as available for new signups', 'events-made-easy' ) ); ?>
         </p>
+
         <p id='p_task_only_one_signup_pp'>
             <input id="eme_prop_task_only_one_signup_pp" name='eme_prop_task_only_one_signup_pp' value='1' type='checkbox' <?php echo $eme_prop_task_only_one_signup_pp; ?>>
-        <label for="eme_prop_task_only_one_signup_pp"><?php esc_html_e( 'Allow only one sign up for tasks per event for a person?', 'events-made-easy' ); ?></label>
+            <label for="eme_prop_task_only_one_signup_pp"><?php esc_html_e( 'Allow only one sign up for tasks per event for a person?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_allow_overlap'>
             <input id="eme_prop_task_allow_overlap" name='eme_prop_task_allow_overlap' value='1' type='checkbox' <?php echo $eme_prop_task_allow_overlap; ?>>
-        <label for="eme_prop_task_allow_overlap"><?php esc_html_e( 'Allow overlap for task signups?', 'events-made-easy' ); ?></label>
+            <label for="eme_prop_task_allow_overlap"><?php esc_html_e( 'Allow overlap for task signups?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_reminder_days'>
             <input id="eme_prop_task_reminder_days" name='eme_prop_task_reminder_days' type='text' value="<?php echo $eme_prop_task_reminder_days; ?>">
-        <label for="eme_prop_task_reminder_days"><?php esc_html_e( 'Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
+            <label for="eme_prop_task_reminder_days"><?php esc_html_e( 'Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
         </p>
     </div>
     <?php

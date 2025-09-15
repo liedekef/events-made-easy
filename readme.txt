@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.18  (2025//) =
+* Mercado API update to 3.7.0
+
 = 3.0.17  (2025/09/14) =
 * Add tom-select maps for js and css
 * Fix waiting list visual warning when editing booking in the backend

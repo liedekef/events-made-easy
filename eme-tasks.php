@@ -469,7 +469,7 @@ function eme_count_event_task_signups( $event_id ) {
 function eme_get_event_task_signups( $event_id ) {
     global $wpdb;
     $table      = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d GROUP BY task_id", $event_id );
+    $sql        = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d", $event_id );
     $res        = $wpdb->get_results( $sql, ARRAY_A );
     $return_arr = [];
     foreach ( $res as $row ) {
@@ -2115,7 +2115,8 @@ function eme_ajax_task_signups_list() {
             } else {
                 $row['signup_status'] = __('Pending', 'events-made-easy');
             }
-            $row['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>';
+            $row['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>' . ' (' . eme_esc_html( $row['email'] ) . ')';
+
             foreach ( $formfields as $formfield ) {
                 foreach ( $answers as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id'] && $answer['answer'] != '' ) {

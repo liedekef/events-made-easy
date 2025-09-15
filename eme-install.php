@@ -1628,20 +1628,20 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          task_nbr smallint DEFAULT 1,
          name varchar(50) DEFAULT NULL,
          spaces smallint DEFAULT 1,
-	 description text,
+         description text,
          UNIQUE KEY  (task_id)
          ) $charset $collate;";
-		maybe_create_table( $table_name, $sql );
+         maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id mediumint(9) NOT NULL;" );
-		maybe_add_column( $table_name, 'task_seq', "ALTER TABLE $table_name ADD task_seq smallint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
+        maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id mediumint(9) NOT NULL;" );
+        maybe_add_column( $table_name, 'task_seq', "ALTER TABLE $table_name ADD task_seq smallint DEFAULT 1;" );
+        maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
 	}
 
 	$table_name = $db_prefix . EME_TASK_SIGNUPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
-	 id int(11) NOT NULL auto_increment,
+         id int(11) NOT NULL auto_increment,
          task_id mediumint(9) NOT NULL,
          person_id mediumint(9) NOT NULL,
          event_id mediumint(9) NOT NULL,

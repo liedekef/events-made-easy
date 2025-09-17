@@ -1038,6 +1038,9 @@ function eme_csv_tasksignups_report( $event_id ) {
     $line[] = __( 'ID', 'events-made-easy' );
     $line[] = __( 'Person ID', 'events-made-easy' );
     $line[] = __( 'Signup date', 'events-made-easy' );
+    $line[] = __( 'Task name', 'events-made-easy' );
+    $line[] = __( 'Task start date', 'events-made-easy' );
+    $line[] = __( 'Task end date', 'events-made-easy' );
     $line[] = __( 'Last name', 'events-made-easy' );
     $line[] = __( 'First name', 'events-made-easy' );
     $line[] = get_option( 'eme_address1_string' );
@@ -1074,7 +1077,9 @@ function eme_csv_tasksignups_report( $event_id ) {
 
     eme_fputcsv( $out, $line, $delimiter );
     foreach ( $signups as $signup) {
-        $localized_booking_datetime = eme_localized_datetime( $signup['signup_date'], EME_TIMEZONE, 1 );
+        $localized_signup_datetime  = eme_localized_datetime( $signup['signup_date'], EME_TIMEZONE, 1 );
+        $localized_taskstart_date   = eme_localized_datetime( $signup['task_start'], EME_TIMEZONE, 1 );
+        $localized_taskend_date     = eme_localized_datetime( $signup['task_end'], EME_TIMEZONE, 1 );
         $person                     = eme_get_person( $signup['person_id'] );
         // if the person no longer exists, use an empty one
         if ( ! $person ) {
@@ -1091,7 +1096,10 @@ function eme_csv_tasksignups_report( $event_id ) {
 
         $line[] = $signup['id'];
         $line[] = $signup['person_id'];
-        $line[] = eme_localized_datetime( $signup['signup_date'], EME_TIMEZONE, 1 );
+        $line[] = $localized_signup_datetime;
+        $line[] = $signup['name'];
+        $line[] = $localized_taskstart_date;
+        $line[] = $localized_taskend_date;
         $line[] = $person['lastname'];
         $line[] = $person['firstname'];
         $line[] = $person['address1'];

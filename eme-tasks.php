@@ -468,10 +468,11 @@ function eme_count_event_task_signups( $event_id ) {
 
 function eme_get_event_task_signups( $event_id ) {
     global $wpdb;
-    $table      = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d", $event_id );
-    $res        = $wpdb->get_results( $sql, ARRAY_A );
-    $return_arr = [];
+    $tasks_table = EME_DB_PREFIX . EME_TASKS_TBNAME;
+    $table       = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+    $sql         = $wpdb->prepare( "SELECT * FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.event_id=%d", $event_id );
+    $res         = $wpdb->get_results( $sql, ARRAY_A );
+    $return_arr  = [];
     foreach ( $res as $row ) {
         $return_arr[ $row['id'] ] = $row;
     }

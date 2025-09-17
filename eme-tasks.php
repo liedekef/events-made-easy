@@ -1278,7 +1278,6 @@ function eme_tasks_signups_shortcode( $atts ) {
         }
         $result .= "<div class='eme_event_tasks'>";
         $result .= eme_replace_event_placeholders( $header, $event );
-        $result .= '<br>';
         foreach ( $tasks as $task ) {
             if ( $task['spaces'] == 0 ) {
                 $result .= '<br><span class="eme_task_section_header">'.eme_trans_esc_html( $task['name'], $lang ).'</span><br>';
@@ -1290,7 +1289,6 @@ function eme_tasks_signups_shortcode( $atts ) {
                 }
             }
         }
-        $result .= '<br>';
         $result .= eme_replace_event_placeholders( $footer, $event );
         $result .= '</div>';
     }
@@ -1534,7 +1532,6 @@ function eme_tasks_signupform_shortcode( $atts ) {
         }
         $result .= "<div class='eme_event_tasks'>";
         $result .= eme_replace_event_placeholders( $header, $event );
-        $result .= '<br>';
         foreach ( $tasks as $task ) {
             $used_spaces = eme_count_task_signups( $task['task_id'] );
             $free_spaces = $task['spaces'] - $used_spaces;
@@ -1560,7 +1557,6 @@ function eme_tasks_signupform_shortcode( $atts ) {
                 $result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
             }
         }
-        $result .= '<br>';
         $result .= eme_replace_event_placeholders( $footer, $event );
         $result .= '</div>';
     }

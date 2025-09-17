@@ -1,3 +1,99 @@
+function calculateRsvpStart() {
+    // Get the target (start or end)
+    const targetSelect = document.getElementById('eme_prop_rsvp_start_target');
+    const target = targetSelect.value; // "start" or "end"
+    const displayElement = document.getElementById('rsvp-start-display');
+
+    // Get hidden date and time values
+    const dateField = target === 'start'
+        ? document.getElementById('start-date-to-submit')
+        : document.getElementById('end-date-to-submit');
+    const timeField = target === 'start'
+        ? document.getElementById('start-time-to-submit')
+        : document.getElementById('end-time-to-submit');
+
+    if (!dateField || !timeField) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    const eventDateStr = dateField.value; // e.g. "2025-06-15"
+    const eventTimeStr = timeField.value; // e.g. "14:30:00"
+    if (!eventDateStr || !eventTimeStr) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Combine into ISO string and create Date object
+    const eventDateTime = new Date(eventDateStr + 'T' + eventTimeStr);
+    if (isNaN(eventDateTime)) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Get offset values
+    const daysOffset = parseInt(document.getElementById('eme_prop_rsvp_start_number_days').value) || 0;
+    const hoursOffset = parseInt(document.getElementById('eme_prop_rsvp_start_number_hours').value) || 0;
+    if (!daysOffset && !hoursOffset) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Calculate start by subtracting offset
+    const totalOffsetMs = (daysOffset * 24 + hoursOffset) * 60 * 60 * 1000;
+    const startDateTime = new Date(eventDateTime.getTime() - totalOffsetMs);
+    const formattedStart = startDateTime.toLocaleString();
+
+    // Display it
+    displayElement.textContent = formattedStart;
+}
+
+function calculateRsvpEnd() {
+    // Get the target (start or end)
+    const targetSelect = document.getElementById('eme_prop_rsvp_end_target');
+    const target = targetSelect.value; // "start" or "end"
+    const displayElement = document.getElementById('rsvp-end-display');
+
+    // Get hidden date and time values
+    const dateField = target === 'start'
+        ? document.getElementById('start-date-to-submit')
+        : document.getElementById('end-date-to-submit');
+    const timeField = target === 'start'
+        ? document.getElementById('start-time-to-submit')
+        : document.getElementById('end-time-to-submit');
+
+    if (!dateField || !timeField) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    const eventDateStr = dateField.value; // e.g. "2025-06-15"
+    const eventTimeStr = timeField.value; // e.g. "14:30:00"
+    if (!eventDateStr || !eventTimeStr) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Combine into ISO string and create Date object
+    const eventDateTime = new Date(eventDateStr + 'T' + eventTimeStr);
+    if (isNaN(eventDateTime)) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Get offset values
+    const daysOffset = parseInt(document.getElementById('eme_prop_rsvp_end_number_days').value) || 0;
+    const hoursOffset = parseInt(document.getElementById('eme_prop_rsvp_end_number_hours').value) || 0;
+
+    // Calculate start by subtracting offset
+    const totalOffsetMs = (daysOffset * 24 + hoursOffset) * 60 * 60 * 1000;
+    const endDateTime = new Date(eventDateTime.getTime() - totalOffsetMs);
+    const formattedEnd = endDateTime.toLocaleString();
+
+    // Display it
+    displayElement.textContent = formattedEnd;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const EventsTableContainer = EME.$('#EventsTableContainer');
     let EventsTable;
@@ -1027,6 +1123,43 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // calc RSVP cutoff date
+    const rsvpstartinputs = [
+        'eme_prop_rsvp_start_target',
+        'eme_prop_rsvp_start_number_days',
+        'eme_prop_rsvp_start_number_hours'
+    ];
+    rsvpstartinputs.forEach(selector => {
+        const el = document.getElementById(selector);
+        if (el) {
+            el.addEventListener('input', calculateRsvpStart);
+        }
+    });
+    const rsvpendinputs = [
+        'eme_prop_rsvp_end_target',
+        'eme_prop_rsvp_end_number_days',
+        'eme_prop_rsvp_end_number_hours'
+    ];
+    rsvpendinputs.forEach(selector => {
+        const el = document.getElementById(selector);
+        if (el) {
+            el.addEventListener('input', calculateRsvpEnd);
+        }
+    });
+    const rsvpstartendinputs = [
+        'start-date-to-submit',
+        'end-date-to-submit',
+        'start-time-to-submit',
+        'end-time-to-submit',
+    ];
+    rsvpstartendinputs.forEach(selector => {
+        const el = document.getElementById(selector);
+        if (el) {
+            el.addEventListener('change', calculateRsvpStart);
+            el.addEventListener('change', calculateRsvpEnd);
+        }
+    });
+
     setTimeout(() => {
         // Hide recurrence date div initially
         const recDateDiv = EME.$('#div_recurrence_date');
@@ -1048,6 +1181,8 @@ document.addEventListener('DOMContentLoaded', function () {
         updateShowHideTime();
         updateShowHideMultiPriceDescription();
         updateShowHideLocMaxCapWarning();
+        calculateRsvpStart();
+        calculateRsvpEnd();
 
         if (EME.$('#recurrence-frequency')) {
             updateIntervalDescriptor();

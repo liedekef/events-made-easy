@@ -33,7 +33,7 @@ function calculateRsvpStart() {
 
     // Get offset values
     const daysOffset = parseInt(document.getElementById('eme_prop_rsvp_start_number_days').value) || 0;
-    const hoursOffset = parseInt(document.getElementById('eme_prop_rsvp_start_number_hours').value) || 0;
+    const hoursOffset = parseFloat(document.getElementById('eme_prop_rsvp_start_number_hours').value) || 0;
     if (!daysOffset && !hoursOffset) {
         displayElement.textContent = '';
         return;
@@ -83,7 +83,7 @@ function calculateRsvpEnd() {
 
     // Get offset values
     const daysOffset = parseInt(document.getElementById('eme_prop_rsvp_end_number_days').value) || 0;
-    const hoursOffset = parseInt(document.getElementById('eme_prop_rsvp_end_number_hours').value) || 0;
+    const hoursOffset = parseFloat(document.getElementById('eme_prop_rsvp_end_number_hours').value) || 0;
 
     // Calculate start by subtracting offset
     const totalOffsetMs = (daysOffset * 24 + hoursOffset) * 60 * 60 * 1000;

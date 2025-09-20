@@ -683,7 +683,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const paymentbutton = EME.$('#button_'+response.payment_id);
                 if (paymentbutton) eme_toggle(paymentbutton, false);
                 const paymentspan = EME.$('span#payconiq_'+response.payment_id);
-                if (paymentspan) payment_span.innerHTML=response.iban;
+                if (paymentspan) paymentspan.innerHTML=response.iban;
             });
             // return false to make sure the real form doesn't submit
             return false;

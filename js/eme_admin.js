@@ -337,35 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Dismiss notice functionality
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('eme-dismiss-notice')) {
-            e.preventDefault();
-            const notice = e.target.getAttribute('data-notice');
-            const noticeDiv = e.target.closest('.notice');
-
-            const formData = new URLSearchParams({
-                action: 'eme_dismiss_notice',
-                notice: notice,
-                eme_admin_nonce: emeadmin.translate_adminnonce || ''
-            });
-
-            fetch(ajaxurl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData.toString()
-            }).then(response => response.json()).then(response => {
-                if (response.success && noticeDiv) {
-                    noticeDiv.style.transition = 'opacity 300ms';
-                    noticeDiv.style.opacity = '0';
-                    setTimeout(() => eme_toggle(noticeDiv, false), 300);
-                }
-            });
-        }
-    });
-
     // Attribute metabox add/remove
     const attrAddBtn = EME.$('#eme_attr_add_tag');
     if (attrAddBtn) {
@@ -452,123 +423,6 @@ document.addEventListener('DOMContentLoaded', function () {
             onEnd: (evt) => { evt.from.style.opacity = '1'; }
         });
     }
-
-    document.addEventListener('click', function(event) {
-        if (event.target.matches('.eme_add_todo')) {
-            event.preventDefault();
-            eme_add_todo_function(event.target);
-        }
-        if (event.target.matches('.eme_remove_todo')) {
-            event.preventDefault();
-            eme_remove_todo_function(event.target);
-        }
-        if (event.target.matches('.eme_add_task')) {
-            event.preventDefault();
-            eme_add_task_function(event.target);
-        }
-        if (event.target.matches('.eme_remove_task')) {
-            event.preventDefault();
-            eme_remove_task_function(event.target);
-        }
-        if (event.target.matches('.eme_dyndata_add_tag')) {
-            event.preventDefault();
-            const tbody = EME.$('#eme_dyndata_tbody');
-            const metas = tbody.children;
-            const metaCopy = metas[0].cloneNode(true);
-            let newId = 0;
-            while (EME.$(`#eme_dyndata_${newId}`)) newId++;
-
-            const currentId = metaCopy.id.replace('eme_dyndata_', '');
-            metaCopy.id = `eme_dyndata_${newId}`;
-
-            const relElements = metaCopy.querySelectorAll('a');
-            relElements.forEach(a => a.setAttribute('rel', newId));
-
-            const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
-            metafields.forEach(f => {
-                const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
-                if (field) {
-                    field.name = `eme_dyndata[${newId}][${f}]`;
-                    field.id = `eme_dyndata[${newId}][${f}]`;
-                }
-            });
-
-            // Set default values
-            const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
-            const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
-            const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
-            const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
-            const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
-            const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
-            const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
-            const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
-
-            if (fieldField) fieldField.value = '';
-            if (conditionField) conditionField.value = 'eq';
-            if (condvalField) condvalField.value = '';
-            if (headerField) headerField.value = '0';
-            if (templateField) templateField.value = '0';
-            if (footerField) footerField.value = '0';
-            if (repeatField) repeatField.value = '0';
-            if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
-
-            tbody.appendChild(metaCopy);
-        }
- 
-        // DynData remove functionality
-        if (event.target.matches('.eme_remove_dyndatacondition')) {
-            event.preventDefault();
-            const tbody = EME.$('#eme_dyndata_tbody');
-            const rows = tbody.children;
-
-            if (rows.length > 1) {
-                event.target.closest('tr').remove();
-            } else {
-                const metaCopy = e.target.closest('tr');
-                let newId = 0;
-                while (EME.$(`#eme_dyndata_${newId}`)) newId++;
-
-                const currentId = metaCopy.id.replace('eme_dyndata_', '');
-                metaCopy.id = `eme_dyndata_${newId}`;
-
-                const relElements = metaCopy.querySelectorAll('a');
-                relElements.forEach(a => a.setAttribute('rel', newId));
-
-                const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
-                metafields.forEach(f => {
-                    const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
-                    if (field) {
-                        field.name = `eme_dyndata[${newId}][${f}]`;
-                        field.id = `eme_dyndata[${newId}][${f}]`;
-                    }
-                });
-
-                // Clear values and remove required attributes
-                const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
-                const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
-                const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
-                const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
-                const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
-                const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
-                const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
-                const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
-
-                if (fieldField) fieldField.value = '';
-                if (conditionField) conditionField.value = 'eq';
-                if (condvalField) condvalField.value = '';
-                if (headerField) headerField.value = '0';
-                if (templateField) templateField.value = '0';
-                if (footerField) footerField.value = '0';
-                if (repeatField) repeatField.value = '0';
-                if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
-
-                metafields.forEach(f => {
-                    const field = metaCopy.querySelector(`[name="eme_dyndata[${newId}][${f}]"]`);
-                    if (field) field.removeAttribute('required');
-                });
-            }
-        }
-    });
 
     // Tasks & Todos sortable
     const tasksTbody = EME.$('#eme_tasks_tbody');
@@ -671,9 +525,170 @@ document.addEventListener('DOMContentLoaded', function () {
     initTomSelect('select.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
     initTomSelect('select.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
    
-    // File Upload/Delete for Extra Fields
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('eme_del_upload-button')) {
+        if (e.target.matches('.eme-dismiss-notice')) {
+            e.preventDefault();
+            const notice = e.target.getAttribute('data-notice');
+            const noticeDiv = e.target.closest('.notice');
+
+            const formData = new URLSearchParams({
+                action: 'eme_dismiss_notice',
+                notice: notice,
+                eme_admin_nonce: emeadmin.translate_adminnonce || ''
+            });
+
+            fetch(ajaxurl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            }).then(response => response.json()).then(response => {
+                if (response.success && noticeDiv) {
+                    noticeDiv.style.transition = 'opacity 300ms';
+                    noticeDiv.style.opacity = '0';
+                    setTimeout(() => eme_toggle(noticeDiv, false), 300);
+                }
+            });
+        }
+        if (e.target.matches('.eme_add_todo')) {
+            e.preventDefault();
+            eme_add_todo_function(e.target);
+        }
+        if (e.target.matches('.eme_remove_todo')) {
+            e.preventDefault();
+            eme_remove_todo_function(e.target);
+        }
+        if (e.target.matches('.eme_add_task')) {
+            e.preventDefault();
+            eme_add_task_function(e.target);
+        }
+        if (e.target.matches('.eme_remove_task')) {
+            e.preventDefault();
+            eme_remove_task_function(e.target);
+        }
+        if (e.target.matches('.eme_dyndata_add_tag')) {
+            e.preventDefault();
+            const tbody = EME.$('#eme_dyndata_tbody');
+            const metas = tbody.children;
+            const metaCopy = metas[0].cloneNode(true);
+            let newId = 0;
+            while (EME.$(`#eme_dyndata_${newId}`)) newId++;
+
+            const currentId = metaCopy.id.replace('eme_dyndata_', '');
+            metaCopy.id = `eme_dyndata_${newId}`;
+
+            const relElements = metaCopy.querySelectorAll('a');
+            relElements.forEach(a => a.setAttribute('rel', newId));
+
+            const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
+            metafields.forEach(f => {
+                const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
+                if (field) {
+                    field.name = `eme_dyndata[${newId}][${f}]`;
+                    field.id = `eme_dyndata[${newId}][${f}]`;
+                }
+            });
+
+            // Set default values
+            const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
+            const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
+            const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
+            const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
+            const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
+            const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
+            const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
+            const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
+
+            if (fieldField) fieldField.value = '';
+            if (conditionField) conditionField.value = 'eq';
+            if (condvalField) condvalField.value = '';
+            if (headerField) headerField.value = '0';
+            if (templateField) templateField.value = '0';
+            if (footerField) footerField.value = '0';
+            if (repeatField) repeatField.value = '0';
+            if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
+
+            tbody.appendChild(metaCopy);
+        }
+ 
+        // DynData remove functionality
+        if (e.target.matches('.eme_remove_dyndatacondition')) {
+            e.preventDefault();
+            const tbody = EME.$('#eme_dyndata_tbody');
+            const rows = tbody.children;
+
+            if (rows.length > 1) {
+                e.target.closest('tr').remove();
+            } else {
+                const metaCopy = e.target.closest('tr');
+                let newId = 0;
+                while (EME.$(`#eme_dyndata_${newId}`)) newId++;
+
+                const currentId = metaCopy.id.replace('eme_dyndata_', '');
+                metaCopy.id = `eme_dyndata_${newId}`;
+
+                const relElements = metaCopy.querySelectorAll('a');
+                relElements.forEach(a => a.setAttribute('rel', newId));
+
+                const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
+                metafields.forEach(f => {
+                    const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
+                    if (field) {
+                        field.name = `eme_dyndata[${newId}][${f}]`;
+                        field.id = `eme_dyndata[${newId}][${f}]`;
+                    }
+                });
+
+                // Clear values and remove required attributes
+                const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
+                const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
+                const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
+                const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
+                const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
+                const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
+                const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
+                const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
+
+                if (fieldField) fieldField.value = '';
+                if (conditionField) conditionField.value = 'eq';
+                if (condvalField) condvalField.value = '';
+                if (headerField) headerField.value = '0';
+                if (templateField) templateField.value = '0';
+                if (footerField) footerField.value = '0';
+                if (repeatField) repeatField.value = '0';
+                if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
+
+                metafields.forEach(f => {
+                    const field = metaCopy.querySelector(`[name="eme_dyndata[${newId}][${f}]"]`);
+                    if (field) field.removeAttribute('required');
+                });
+            }
+        }
+
+        if (e.target.matches('.eme_iban_button')) {
+            e.preventDefault();
+            const formData = new URLSearchParams({
+                action: 'eme_get_payconiq_iban',
+                pg_pid: e.target.getAttribute('data-pg_pid'),
+                eme_admin_nonce: emeadmin.translate_adminnonce
+            });
+            fetch(ajaxurl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            }).then(response => response.json()).then(response => {
+                const paymentbutton = EME.$('#button_'+response.payment_id);
+                if (paymentbutton) eme_toggle(paymentbutton, false);
+                const paymentspan = EME.$('span#payconiq_'+response.payment_id);
+                if (paymentspan) payment_span.innerHTML=response.iban;
+            });
+            // return false to make sure the real form doesn't submit
+            return false;
+        }
+        if (e.target.matches('.eme_del_upload-button')) {
             e.preventDefault();
             if (confirm(emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
                 const id = e.target.getAttribute('data-id');
@@ -691,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     random_id: randomId,
                     extra_id: extraId,
                     action: 'eme_del_upload',
-                    eme_admin_nonce: emeadmin.translate_adminnonce || ''
+                    eme_admin_nonce: emeadmin.translate_adminnonce
                 });
 
                 fetch(ajaxurl, {

@@ -1483,22 +1483,20 @@ function eme_tasks_signupform_shortcode( $atts ) {
     $footer = '';
     if ( ! empty( $template_id ) ) {
         $format = eme_get_template_format( $template_id );
+    } elseif ($event_id) {
+        $event = eme_get_event($event_id);
+        if (!empty($event['event_properties']['task_form_entry_format_tpl'])) {
+            $format = eme_get_template_format( $event['event_properties']['task_form_entry_format_tpl'] );
+        }
+    } elseif (eme_is_single_event_page()) {
+        $event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
+        $event = eme_get_event($event_id);
+        if (!empty($event['event_properties']['task_form_entry_format_tpl'])) {
+            $format = eme_get_template_format( $event['event_properties']['task_form_entry_format_tpl'] );
+        }
     }
     if ( empty( $format ) ) {
-        if ($event_id) {
-            $event = eme_get_event($event_id);
-            if (!empty($event['event_properties']['task_form_entry_format_tpl'])) {
-                $format = eme_get_template_format( $event['event_properties']['task_form_entry_format_tpl'] );
-            }
-        } elseif (eme_is_single_event_page()) {
-            $event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
-            $event = eme_get_event($event_id);
-            if (!empty($event['event_properties']['task_form_entry_format_tpl'])) {
-                $format = eme_get_template_format( $event['event_properties']['task_form_entry_format_tpl'] );
-            }
-        } else {
-            $format = get_option( 'eme_task_form_taskentry_format' );
-        }
+        $format = get_option( 'eme_task_form_taskentry_format' );
     }
 
     if ( ! strstr( $format, '#_TASKSIGNUPCHECKBOX' ) ) {

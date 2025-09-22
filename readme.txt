@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Mercado API update to 3.7.0
 * More fields added to task csv export
 * Show RSVP start/end calculated date
+* DomPDF update to 3.1.1
 
 = 3.0.17  (2025/09/14) =
 * Add tom-select maps for js and css

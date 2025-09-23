@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * More fields added to task csv export
 * Show RSVP start/end calculated date
 * DomPDF update to 3.1.1
+* Add notasks_template_id to shortcode eme_tasks_signupform
 
 = 3.0.17  (2025/09/14) =
 * Add tom-select maps for js and css

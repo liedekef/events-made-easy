@@ -1326,6 +1326,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
                 'template_id_header'         => 0,
                 'template_id_footer'         => 0,
                 'signupform_template_id'     => 0,
+                'notasks_template_id'        => 0,
                 'skip_full'                  => 0,
                 'ignore_filter'              => 0,
             ],
@@ -1351,6 +1352,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
     $template_id_header = intval($atts['template_id_header']);
     $template_id_footer = intval($atts['template_id_footer']);
     $signupform_template_id = intval($atts['signupform_template_id']);
+    $notasks_template_id = intval($atts['notasks_template_id']);
     $skip_full = intval($atts['skip_full']);
     $ignore_filter = intval($atts['ignore_filter']);
 
@@ -1474,8 +1476,12 @@ function eme_tasks_signupform_shortcode( $atts ) {
 
     $events = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_unlisted: $include_unlisted);
     if ( empty( $events ) ) {
-        $result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
-        return $result;
+        if ( ! empty( $notasks_template_id ) ) {
+            $notasks_text = eme_get_template_format( $notasks_template_id );
+        } else {
+            $notasks_text = __( 'There are no tasks to sign up for right now', 'events-made-easy' );
+        }
+        return "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . $notasks_text . '</div>';
     }
 
     // per event, the header and footer are repeated, the template_id itself is repeated per task
@@ -1603,7 +1609,11 @@ function eme_tasks_signupform_shortcode( $atts ) {
         }
         $result .= eme_replace_task_signupformfields_placeholders( $form_id, $signupform_format );
     } else {
-        $result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
+        if ( ! empty( $notasks_template_id ) ) {
+            $result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . eme_get_template_format( $notasks_template_id ) . '</div>';
+        } else {
+            $result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
+        }
     }
 
     $result .= '</form></div>';

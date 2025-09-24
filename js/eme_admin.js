@@ -451,24 +451,20 @@ document.addEventListener('DOMContentLoaded', function () {
             let myId = 0;
 
             while (document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`)) {
-                const currentStart = document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`).value;
-                const currentEnd = document.querySelector(`[name="eme_tasks[${myId}][task_end]"]`).value;
-                const startObj = new Date(currentStart);
-                const endObj = new Date(currentEnd);
-
-                startObj.setDate(startObj.getDate() + offset);
-                endObj.setDate(endObj.getDate() + offset);
-
                 const dpStartField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_start]"]`);
-                const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
-
                 if (dpStartField && dpStartField._fdatepicker) {
+                    const startObj = dpStartField._fdatepicker.selectedDate;
+                    startObj.setDate(startObj.getDate() + offset);
                     dpStartField._fdatepicker.setDate(startObj);
                 }
+
+                console.log("eee");
+                const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
                 if (dpEndField && dpEndField._fdatepicker) {
+                    const endObj = dpEndField._fdatepicker.selectedDate;
+                    endObj.setDate(endObj.getDate() + offset);
                     dpEndField._fdatepicker.setDate(endObj);
                 }
-
                 myId++;
             }
         });

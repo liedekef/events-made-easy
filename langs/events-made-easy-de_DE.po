@@ -81,9 +81,9 @@ msgstr "im Namen von %s"
 #: eme-rsvp.php:4887
 #: eme-rsvp.php:5703
 #: eme-rsvp.php:5725
-#: eme-tasks.php:2017
-#: eme-tasks.php:2141
-#: eme-tasks.php:2152
+#: eme-tasks.php:2051
+#: eme-tasks.php:2175
+#: eme-tasks.php:2186
 #: eme-templates.php:496
 msgid "Access denied!"
 msgstr "Zugriff verweigert!"
@@ -276,7 +276,7 @@ msgstr "Hinweis: Rechtsklick auf die Spaltenüberschriften um Spalten ein/auszub
 #: eme-people.php:5300
 #: eme-people.php:5301
 #: eme-people.php:5302
-#: eme-tasks.php:2117
+#: eme-tasks.php:2151
 msgid "Edit person"
 msgstr "Bearbeite Person"
 
@@ -315,7 +315,7 @@ msgstr "Dies ist in den Vorlagen nicht definiert"
 #: eme-attributes.php:123
 #: eme-attributes.php:143
 #: eme-formfields.php:5012
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 #: eme-todos.php:221
 msgid "Remove"
 msgstr "Löschen"
@@ -395,7 +395,7 @@ msgstr "ID"
 #: eme-events.php:10044
 #: eme-members.php:1898
 #: eme-people.php:2766
-#: eme-tasks.php:902
+#: eme-tasks.php:910
 #: eme-templates.php:261
 #: eme-todos.php:183
 msgid "Name"
@@ -1307,7 +1307,7 @@ msgstr "Der Name des Rabatts"
 #: eme-events.php:9896
 #: eme-members.php:1902
 #: eme-people.php:2770
-#: eme-tasks.php:906
+#: eme-tasks.php:914
 #: eme-templates.php:265
 #: eme-todos.php:185
 msgid "Description"
@@ -1907,7 +1907,7 @@ msgstr "Buchung stornieren"
 
 #: eme-events.php:1540
 #: eme-events.php:1643
-#: eme-tasks.php:1765
+#: eme-tasks.php:1799
 msgid "Cancel task signup"
 msgstr "Aufgabenanmeldung abbrechen"
 
@@ -3693,13 +3693,13 @@ msgstr "Der eingeloggte Benutzer muss Mitglied einer der ausgewählten EME-Mitgl
 
 #: eme-events.php:8845
 #: eme-members.php:2169
-#: eme-tasks.php:999
+#: eme-tasks.php:1007
 msgid "Group to add people to"
 msgstr "Gruppe, zu der Personen hinzugefügt werden sollen"
 
 #: eme-events.php:8846
 #: eme-members.php:2170
-#: eme-tasks.php:1000
+#: eme-tasks.php:1008
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Die Gruppe, zu der Personen automatisch hinzugefügt werden sollen, wenn diese Mitglied werden oder sich einschreiben."
 
@@ -4481,7 +4481,7 @@ msgstr "Beginn"
 #: eme-events.php:9924
 #: eme-gdpr.php:468
 #: eme-gdpr.php:658
-#: eme-tasks.php:904
+#: eme-tasks.php:912
 msgid "End"
 msgstr "Ende"
 
@@ -4663,7 +4663,7 @@ msgstr "Wähle eine oder mehrere Veranstaltungen"
 
 #: eme-events.php:10304
 #: eme-rsvp.php:5945
-#: eme-tasks.php:2104
+#: eme-tasks.php:2138
 msgid "Edit event"
 msgstr "Veranstaltung bearbeiten"
 
@@ -4720,7 +4720,7 @@ msgstr "Druckansicht"
 #: eme-events.php:6776
 #: eme-events.php:10394
 #: eme-rsvp.php:6010
-#: eme-tasks.php:2106
+#: eme-tasks.php:2140
 msgid "CSV export"
 msgstr "CSV export"
 
@@ -5531,7 +5531,7 @@ msgid "Repeat"
 msgstr "Wiederholen"
 
 #: eme-formfields.php:4984
-#: eme-tasks.php:924
+#: eme-tasks.php:932
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Umordnen"
@@ -5624,7 +5624,7 @@ msgstr "Entwurf"
 #: eme-people.php:1629
 #: eme-people.php:1768
 #: eme-tasks.php:604
-#: eme-tasks.php:2115
+#: eme-tasks.php:2149
 msgid "Pending"
 msgstr "Ausstehend"
 
@@ -5897,7 +5897,7 @@ msgstr "Kein solcher Eintrag"
 #: eme-people.php:4914
 #: eme-rsvp.php:858
 #: eme-rsvp.php:1156
-#: eme-tasks.php:1808
+#: eme-tasks.php:1842
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlicherweise angezeigt wird, kontaktiere bitte den Seitenbetreiber."
 
@@ -5915,7 +5915,7 @@ msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlich
 #: eme-people.php:4925
 #: eme-rsvp.php:869
 #: eme-rsvp.php:1167
-#: eme-tasks.php:1819
+#: eme-tasks.php:1853
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Unerlaubter Formularzugriff festgestellt. Falls Du der Meinung bist, dass diese Nachricht fälschlicherweise angezeigt wird, kontaktiere bitte den Seitenbetreiber."
 
@@ -5935,7 +5935,7 @@ msgstr "Vielen Dank für deine Anfrage, es wird eine E-Mail mit weiteren Informa
 #: eme-people.php:4986
 #: eme-rsvp.php:164
 #: eme-rsvp.php:825
-#: eme-tasks.php:1513
+#: eme-tasks.php:1538
 msgid "Javascript is required for this form to work properly"
 msgstr "Javascript ist erforderlich, damit dieses Formular ordnungsgemäß funktioniert"
 
@@ -8072,9 +8072,9 @@ msgstr "Mitglieder gelöscht."
 #: eme-rsvp.php:6657
 #: eme-rsvp.php:6719
 #: eme-rsvp.php:6770
-#: eme-tasks.php:2186
-#: eme-tasks.php:2212
-#: eme-tasks.php:2236
+#: eme-tasks.php:2220
+#: eme-tasks.php:2246
+#: eme-tasks.php:2270
 msgid "The action has been executed successfully."
 msgstr "Die Aktion wurde erfolgreich ausgeführt."
 
@@ -8104,9 +8104,9 @@ msgstr "Die Aktion wurde erfolgreich ausgeführt, dennoch gab es Probleme beim V
 #: eme-rsvp.php:6614
 #: eme-rsvp.php:6650
 #: eme-rsvp.php:6767
-#: eme-tasks.php:2189
-#: eme-tasks.php:2215
-#: eme-tasks.php:2239
+#: eme-tasks.php:2223
+#: eme-tasks.php:2249
+#: eme-tasks.php:2273
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "Es gab Probleme bei der Ausführung der gewünschten Aktion bitte überprüfe Deine Logdateien."
 
@@ -9882,7 +9882,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "Aktiviere diese Option, wenn du möchtest, dass Anmeldungen für Aufgaben standardmäßig genehmigt werden müssen."
 
 #: eme-options.php:1920
-#: eme-tasks.php:1013
+#: eme-tasks.php:1021
 msgid "Allow overlap for task signups?"
 msgstr "Überschneidungen bei Aufgabenanmeldungen zulassen?"
 
@@ -9927,12 +9927,12 @@ msgid "This setting is used in the shortcode eme_tasks_signups if the option \"t
 msgstr "Diese Einstellung wird im Shortcode eme_tasks_signups verwendet, wenn die Option \"template_id\" für diesen Shortcode nicht verwendet wird."
 
 #: eme-options.php:1924
-#: eme-tasks.php:872
+#: eme-tasks.php:880
 msgid "Signup recorded message"
 msgstr "Aufgezeichnete Nachricht zur Anmeldung"
 
 #: eme-options.php:1924
-#: eme-tasks.php:873
+#: eme-tasks.php:881
 msgid "The text (html allowed) shown to the user when the task signup has been made successfully."
 msgstr "Der Text ( HTML erlaubt), der dem Benutzer angezeigt wird, wenn die Aufgabenanmeldung erfolgreich durchgeführt wurde."
 
@@ -9941,7 +9941,7 @@ msgid "Send out reminder emails"
 msgstr "Erinnerungs-E-Mails verschicken"
 
 #: eme-options.php:1926
-#: eme-tasks.php:1017
+#: eme-tasks.php:1025
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Legen die Anzahl der Tage fest, bevor Erinnerungs-E-Mails zur Aufgabenanmeldung verschickt werden sollen (vom Startdatum der Aufgabe an gerechnet). Wenn mehrere Erinnerungen verschicken werden sollen, trenne die Tage hier durch Kommas. Lasse das Feld leer, um keine Erinnerungs-E-Mails zu versenden."
 
@@ -11943,7 +11943,7 @@ msgstr "(erwartet die Bestätigung durch den Benutzer)"
 #: eme-people.php:1633
 #: eme-people.php:1753
 #: eme-tasks.php:605
-#: eme-tasks.php:2113
+#: eme-tasks.php:2147
 msgid "Approved"
 msgstr "Freigegeben"
 
@@ -12860,7 +12860,8 @@ msgstr "E-Mails an Personen senden, wenn Änderungen vorgenommen werden?"
 #: eme-tasks.php:840
 #: eme-tasks.php:849
 #: eme-tasks.php:862
-#: eme-tasks.php:875
+#: eme-tasks.php:869
+#: eme-tasks.php:883
 msgid "Only choose a template if you want to override the default settings:"
 msgstr "Wähle nur dann eine Vorlage aus, falls du die Standardeinstellungen außer Kraft setzen möchtest:"
 
@@ -12872,80 +12873,77 @@ msgstr "Aufgabenanmeldung aktualisiert E-Mail-Betreff"
 msgid "Task Signup Updated Email Body"
 msgstr "Aufgabenanmeldung aktualisiert E-Mail Haupttext"
 
-#: eme-tasks.php:859
-msgid "Task Signup Form"
-msgstr "Formular für Aufgabenanmeldung"
-
-#: eme-tasks.php:860
+#: eme-tasks.php:867
 msgid "The layout of the task signup form."
 msgstr "Das Layout des Aufgabenanmeldeformulars."
 
 #: eme-tasks.php:863
+#: eme-tasks.php:870
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
 msgstr ""
 
-#: eme-tasks.php:893
+#: eme-tasks.php:901
 msgid "Change the date of the listed tasks by this many days"
 msgstr "Das Datum der aufgelisteten Aufgaben um so viele Tage ändern"
 
-#: eme-tasks.php:894
+#: eme-tasks.php:902
 msgid "Change"
 msgstr "Ändern"
 
-#: eme-tasks.php:903
+#: eme-tasks.php:911
 msgid "Begin"
 msgstr "Start"
 
-#: eme-tasks.php:905
+#: eme-tasks.php:913
 msgid "Spaces"
 msgstr "Max. Anzahl Teilnehmer"
 
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 msgid "Add new task"
 msgstr "Neue Aufgabe hinzufügen"
 
-#: eme-tasks.php:969
+#: eme-tasks.php:977
 msgid "If name, start date or end date of a task is empty, it will be ignored."
 msgstr "Wenn der Name, das Startdatum oder das Enddatum einer Aufgabe leer ist, wird sie ignoriert."
 
-#: eme-tasks.php:974
+#: eme-tasks.php:982
 msgid "For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly."
 msgstr "Bei wiederkehrenden Veranstaltungen gebe das Start- und Enddatum der Aufgabe so ein, als ob es für die erste Veranstaltung der Serie gilt. Die Aufgaben für die anderen Veranstaltungen werden entsprechend angepasst."
 
-#: eme-tasks.php:977
+#: eme-tasks.php:985
 msgid "The start date of the first event in the series was initially %s"
 msgstr "Das Startdatum der ersten Veranstaltung in der Reihe war ursprünglich %s"
 
-#: eme-tasks.php:996
+#: eme-tasks.php:1004
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "Ist eine WP-Mitgliedschaft erforderlich, um sich für Aufgaben anmelden zu können?"
 
-#: eme-tasks.php:1003
+#: eme-tasks.php:1011
 msgid "Require approval for task signups?"
 msgstr "Eine Genehmigung für die Anmeldung von Aufgaben verlangen?"
 
-#: eme-tasks.php:1469
-#: eme-tasks.php:1582
+#: eme-tasks.php:1482
+#: eme-tasks.php:1615
 msgid "There are no tasks to sign up for right now"
 msgstr "Im Moment gibt es keine Aufgaben, für die man sich anmelden kann"
 
-#: eme-tasks.php:1829
+#: eme-tasks.php:1863
 msgid "Please select at least one task."
 msgstr "Bitte wähle mindestens 1 Aufgabe aus."
 
-#: eme-tasks.php:1900
+#: eme-tasks.php:1934
 msgid "No more open spaces for this task"
 msgstr "Keine offenen Plätze mehr für diese Aufgabe"
 
-#: eme-tasks.php:1915
+#: eme-tasks.php:1949
 msgid "Duplicate signup detected"
 msgstr "Doppelte Anmeldung entdeckt"
 
-#: eme-tasks.php:1922
+#: eme-tasks.php:1956
 msgid "Signup overlap with another task detected"
 msgstr "Überschneidung der Anmeldung mit einer anderen Aufgabe erkannt"
 
-#: eme-tasks.php:1959
+#: eme-tasks.php:1993
 #, fuzzy
 msgid "Signup failed"
 msgstr "Anmeldung erfolgt"
@@ -13413,7 +13411,7 @@ msgstr "Anfangs- und Enddatum der Wiederholung (betrachten Sie es als den Tag de
 msgid "From %s onwards (automatically extended)"
 msgstr "Ab %s (automatisch verlängert)"
 
-#: eme-tasks.php:970
+#: eme-tasks.php:978
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Wenn die Anzahl der Plätze für eine Aufgabe 0 ist, wird die Aufgabenbeschreibung als Abschnittsüberschrift für den nächsten Satz von Aufgaben behandelt."
 
@@ -13774,11 +13772,11 @@ msgstr "CSV-Trennzeichen"
 msgid "Set the delimiter used in CSV exports."
 msgstr "Trennzeichen für CSV-Exporte festlegen."
 
-#: eme-tasks.php:1009
+#: eme-tasks.php:1017
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "Nur eine Anmeldung für Aufgaben pro Ereignis für eine Person erlauben?"
 
-#: eme-tasks.php:1888
+#: eme-tasks.php:1922
 msgid "Only one signup allowed"
 msgstr "Nur eine Anmeldung erlaubt"
 
@@ -14177,7 +14175,7 @@ msgstr "Max (vom Standort):"
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr "Eine maximale Kapazität für den Standort ist festgelegt. Wenn das Maximum Ihres Ereignisses diese Kapazität überschreitet, hat die Standortkapazität Vorrang."
 
-#: eme-tasks.php:940
+#: eme-tasks.php:948
 msgid "One person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] "Eine Person hat sich bereits für diese Aufgabe angemeldet"
@@ -14576,6 +14574,18 @@ msgid_plural "%d pending task signups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-tasks.php:1004
+#: eme-tasks.php:1012
 msgid "Consider pending (unapproved) task signups as available for new signups"
+msgstr ""
+
+#: eme-tasks.php:859
+msgid "Task Signup Form (task entry section)"
+msgstr ""
+
+#: eme-tasks.php:860
+msgid "The layout of the task entry section in the signup form."
+msgstr ""
+
+#: eme-tasks.php:866
+msgid "Task Signup Form (personal info section)"
 msgstr ""

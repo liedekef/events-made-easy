@@ -81,9 +81,9 @@ msgstr ""
 #: eme-rsvp.php:4887
 #: eme-rsvp.php:5703
 #: eme-rsvp.php:5725
-#: eme-tasks.php:2017
-#: eme-tasks.php:2141
-#: eme-tasks.php:2152
+#: eme-tasks.php:2051
+#: eme-tasks.php:2175
+#: eme-tasks.php:2186
 #: eme-templates.php:496
 msgid "Access denied!"
 msgstr "拒绝访问!"
@@ -276,7 +276,7 @@ msgstr "提示：右键单击列标题以显示或隐藏列"
 #: eme-people.php:5300
 #: eme-people.php:5301
 #: eme-people.php:5302
-#: eme-tasks.php:2117
+#: eme-tasks.php:2151
 msgid "Edit person"
 msgstr "编辑人员"
 
@@ -316,7 +316,7 @@ msgstr "模板中没有定义"
 #: eme-attributes.php:123
 #: eme-attributes.php:143
 #: eme-formfields.php:5012
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 #: eme-todos.php:221
 msgid "Remove"
 msgstr "移除"
@@ -396,7 +396,7 @@ msgstr "ID"
 #: eme-events.php:10044
 #: eme-members.php:1898
 #: eme-people.php:2766
-#: eme-tasks.php:902
+#: eme-tasks.php:910
 #: eme-templates.php:261
 #: eme-todos.php:183
 msgid "Name"
@@ -1312,7 +1312,7 @@ msgstr "折扣的名称"
 #: eme-events.php:9896
 #: eme-members.php:1902
 #: eme-people.php:2770
-#: eme-tasks.php:906
+#: eme-tasks.php:914
 #: eme-templates.php:265
 #: eme-todos.php:185
 msgid "Description"
@@ -1915,7 +1915,7 @@ msgstr "取消预订"
 
 #: eme-events.php:1540
 #: eme-events.php:1643
-#: eme-tasks.php:1765
+#: eme-tasks.php:1799
 msgid "Cancel task signup"
 msgstr "取消任务报名"
 
@@ -3702,13 +3702,13 @@ msgstr "需要登录的用户必须是选定的 EME 会籍之一，才能使用�
 
 #: eme-events.php:8845
 #: eme-members.php:2169
-#: eme-tasks.php:999
+#: eme-tasks.php:1007
 msgid "Group to add people to"
 msgstr "添加人员到此群组"
 
 #: eme-events.php:8846
 #: eme-members.php:2170
-#: eme-tasks.php:1000
+#: eme-tasks.php:1008
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "您希望人们在订阅时自动成为该群组的会员。"
 
@@ -4491,7 +4491,7 @@ msgstr "开始"
 #: eme-events.php:9924
 #: eme-gdpr.php:468
 #: eme-gdpr.php:658
-#: eme-tasks.php:904
+#: eme-tasks.php:912
 msgid "End"
 msgstr "结束"
 
@@ -4675,7 +4675,7 @@ msgstr "选择一个或多个活动"
 
 #: eme-events.php:10304
 #: eme-rsvp.php:5945
-#: eme-tasks.php:2104
+#: eme-tasks.php:2138
 msgid "Edit event"
 msgstr "编辑活动"
 
@@ -4732,7 +4732,7 @@ msgstr "可打印的视图"
 #: eme-events.php:6776
 #: eme-events.php:10394
 #: eme-rsvp.php:6010
-#: eme-tasks.php:2106
+#: eme-tasks.php:2140
 msgid "CSV export"
 msgstr "CSV 导出"
 
@@ -5546,7 +5546,7 @@ msgid "Repeat"
 msgstr "重复"
 
 #: eme-formfields.php:4984
-#: eme-tasks.php:924
+#: eme-tasks.php:932
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "重新排序"
@@ -5640,7 +5640,7 @@ msgstr "草稿"
 #: eme-people.php:1629
 #: eme-people.php:1768
 #: eme-tasks.php:604
-#: eme-tasks.php:2115
+#: eme-tasks.php:2149
 msgid "Pending"
 msgstr "待订"
 
@@ -5913,7 +5913,7 @@ msgstr "没有这样的记录"
 #: eme-people.php:4914
 #: eme-rsvp.php:858
 #: eme-rsvp.php:1156
-#: eme-tasks.php:1808
+#: eme-tasks.php:1842
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -5931,7 +5931,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-people.php:4925
 #: eme-rsvp.php:869
 #: eme-rsvp.php:1167
-#: eme-tasks.php:1819
+#: eme-tasks.php:1853
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到表格被篡改。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -5951,7 +5951,7 @@ msgstr "谢谢您的请求，我们将发送电子邮件提供进一步信息。
 #: eme-people.php:4986
 #: eme-rsvp.php:164
 #: eme-rsvp.php:825
-#: eme-tasks.php:1513
+#: eme-tasks.php:1538
 msgid "Javascript is required for this form to work properly"
 msgstr "为使本表正常工作，需要使用 Javascript"
 
@@ -8101,9 +8101,9 @@ msgstr "已删除会员。"
 #: eme-rsvp.php:6657
 #: eme-rsvp.php:6719
 #: eme-rsvp.php:6770
-#: eme-tasks.php:2186
-#: eme-tasks.php:2212
-#: eme-tasks.php:2236
+#: eme-tasks.php:2220
+#: eme-tasks.php:2246
+#: eme-tasks.php:2270
 msgid "The action has been executed successfully."
 msgstr "该行动已成功执行。"
 
@@ -8133,9 +8133,9 @@ msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。
 #: eme-rsvp.php:6614
 #: eme-rsvp.php:6650
 #: eme-rsvp.php:6767
-#: eme-tasks.php:2189
-#: eme-tasks.php:2215
-#: eme-tasks.php:2239
+#: eme-tasks.php:2223
+#: eme-tasks.php:2249
+#: eme-tasks.php:2273
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "在执行所需的操作时出现了问题，请检查您的日志。"
 
@@ -9915,7 +9915,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "如果您想在默认情况下，新的注册需要批准，请选中该选项。"
 
 #: eme-options.php:1920
-#: eme-tasks.php:1013
+#: eme-tasks.php:1021
 msgid "Allow overlap for task signups?"
 msgstr "允许任务报名时有重叠？"
 
@@ -9960,12 +9960,12 @@ msgid "This setting is used in the shortcode eme_tasks_signups if the option \"t
 msgstr "如果 \"template_id\" 选项没有被用于该简码，该设置将被用于简码 eme_tasks_signups。"
 
 #: eme-options.php:1924
-#: eme-tasks.php:872
+#: eme-tasks.php:880
 msgid "Signup recorded message"
 msgstr "报名的记录信息"
 
 #: eme-options.php:1924
-#: eme-tasks.php:873
+#: eme-tasks.php:881
 msgid "The text (html allowed) shown to the user when the task signup has been made successfully."
 msgstr "当任务报名成功后显示给用户的文本（允许使用 html）。"
 
@@ -9974,7 +9974,7 @@ msgid "Send out reminder emails"
 msgstr "发出提醒的电子邮件"
 
 #: eme-options.php:1926
-#: eme-tasks.php:1017
+#: eme-tasks.php:1025
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "设置任务报名提醒邮件发送前的天数（从任务的开始日期算起）。如果您想发送多封提醒邮件，请用逗号将这些天数隔开。留空表示不发送提醒邮件。"
 
@@ -11985,7 +11985,7 @@ msgstr "等待用户的确认中"
 #: eme-people.php:1633
 #: eme-people.php:1753
 #: eme-tasks.php:605
-#: eme-tasks.php:2113
+#: eme-tasks.php:2147
 msgid "Approved"
 msgstr "已批准"
 
@@ -12907,7 +12907,8 @@ msgstr "做出改变后向会员发送邮件？"
 #: eme-tasks.php:840
 #: eme-tasks.php:849
 #: eme-tasks.php:862
-#: eme-tasks.php:875
+#: eme-tasks.php:869
+#: eme-tasks.php:883
 msgid "Only choose a template if you want to override the default settings:"
 msgstr "只有当您想覆盖默认设置时，才选择一个模板。"
 
@@ -12919,81 +12920,78 @@ msgstr "任务报名更新的电子邮件主题"
 msgid "Task Signup Updated Email Body"
 msgstr "任务报名更新的电子邮件正文"
 
-#: eme-tasks.php:859
-msgid "Task Signup Form"
-msgstr "任务报名表格"
-
-#: eme-tasks.php:860
+#: eme-tasks.php:867
 msgid "The layout of the task signup form."
 msgstr "任务报名表的布局。"
 
 #: eme-tasks.php:863
+#: eme-tasks.php:870
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
 msgstr ""
 
-#: eme-tasks.php:893
+#: eme-tasks.php:901
 msgid "Change the date of the listed tasks by this many days"
 msgstr ""
 
-#: eme-tasks.php:894
+#: eme-tasks.php:902
 msgid "Change"
 msgstr ""
 
-#: eme-tasks.php:903
+#: eme-tasks.php:911
 msgid "Begin"
 msgstr "开始"
 
-#: eme-tasks.php:905
+#: eme-tasks.php:913
 msgid "Spaces"
 msgstr "空位"
 
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 msgid "Add new task"
 msgstr "添加新任务"
 
-#: eme-tasks.php:969
+#: eme-tasks.php:977
 msgid "If name, start date or end date of a task is empty, it will be ignored."
 msgstr "如果一个任务的名称、开始日期或结束日期是空的，它将被忽略。"
 
-#: eme-tasks.php:974
+#: eme-tasks.php:982
 msgid "For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly."
 msgstr "对于循环性的活动，输入任务的开始和结束日期，就像您为系列中的第一个活动做的那样。其他活动的任务将被相应地调整。"
 
-#: eme-tasks.php:977
+#: eme-tasks.php:985
 msgid "The start date of the first event in the series was initially %s"
 msgstr "系列中第一个活动的开始日期最初为 %s"
 
-#: eme-tasks.php:996
+#: eme-tasks.php:1004
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "要求是 WP 会员才可以报名参加任务？"
 
-#: eme-tasks.php:1003
+#: eme-tasks.php:1011
 #, fuzzy
 msgid "Require approval for task signups?"
 msgstr "允许任务报名时有重叠？"
 
-#: eme-tasks.php:1469
-#: eme-tasks.php:1582
+#: eme-tasks.php:1482
+#: eme-tasks.php:1615
 msgid "There are no tasks to sign up for right now"
 msgstr "现在没有任何任务可以报名参加"
 
-#: eme-tasks.php:1829
+#: eme-tasks.php:1863
 msgid "Please select at least one task."
 msgstr "请至少选择一项任务。"
 
-#: eme-tasks.php:1900
+#: eme-tasks.php:1934
 msgid "No more open spaces for this task"
 msgstr "这项任务没有更多的空隙"
 
-#: eme-tasks.php:1915
+#: eme-tasks.php:1949
 msgid "Duplicate signup detected"
 msgstr "检测到重复的报名"
 
-#: eme-tasks.php:1922
+#: eme-tasks.php:1956
 msgid "Signup overlap with another task detected"
 msgstr "检测到与另一项任务重叠的报名"
 
-#: eme-tasks.php:1959
+#: eme-tasks.php:1993
 #, fuzzy
 msgid "Signup failed"
 msgstr "报名完成"
@@ -13461,7 +13459,7 @@ msgstr ""
 msgid "From %s onwards (automatically extended)"
 msgstr ""
 
-#: eme-tasks.php:970
+#: eme-tasks.php:978
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
@@ -13822,11 +13820,11 @@ msgstr ""
 msgid "Set the delimiter used in CSV exports."
 msgstr ""
 
-#: eme-tasks.php:1009
+#: eme-tasks.php:1017
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr ""
 
-#: eme-tasks.php:1888
+#: eme-tasks.php:1922
 msgid "Only one signup allowed"
 msgstr ""
 
@@ -14225,7 +14223,7 @@ msgstr ""
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr ""
 
-#: eme-tasks.php:940
+#: eme-tasks.php:948
 msgid "One person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
@@ -14622,6 +14620,18 @@ msgid "%d pending task signup"
 msgid_plural "%d pending task signups"
 msgstr[0] ""
 
-#: eme-tasks.php:1004
+#: eme-tasks.php:1012
 msgid "Consider pending (unapproved) task signups as available for new signups"
+msgstr ""
+
+#: eme-tasks.php:859
+msgid "Task Signup Form (task entry section)"
+msgstr ""
+
+#: eme-tasks.php:860
+msgid "The layout of the task entry section in the signup form."
+msgstr ""
+
+#: eme-tasks.php:866
+msgid "Task Signup Form (personal info section)"
 msgstr ""

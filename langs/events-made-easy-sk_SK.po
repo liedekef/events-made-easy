@@ -109,9 +109,9 @@ msgstr "v mene %s"
 #: eme-rsvp.php:4887
 #: eme-rsvp.php:5703
 #: eme-rsvp.php:5725
-#: eme-tasks.php:2017
-#: eme-tasks.php:2141
-#: eme-tasks.php:2152
+#: eme-tasks.php:2051
+#: eme-tasks.php:2175
+#: eme-tasks.php:2186
 #: eme-templates.php:496
 msgid "Access denied!"
 msgstr "Prístup zamietnutý!"
@@ -320,7 +320,7 @@ msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zo
 #: eme-people.php:5300
 #: eme-people.php:5301
 #: eme-people.php:5302
-#: eme-tasks.php:2117
+#: eme-tasks.php:2151
 msgid "Edit person"
 msgstr "Upraviť osobu"
 
@@ -359,7 +359,7 @@ msgstr "Nie je definované v šablónach"
 #: eme-attributes.php:123
 #: eme-attributes.php:143
 #: eme-formfields.php:5012
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 #: eme-todos.php:221
 msgid "Remove"
 msgstr "Odstrániť"
@@ -439,7 +439,7 @@ msgstr "ID záznamu"
 #: eme-events.php:10044
 #: eme-members.php:1898
 #: eme-people.php:2766
-#: eme-tasks.php:902
+#: eme-tasks.php:910
 #: eme-templates.php:261
 #: eme-todos.php:183
 msgid "Name"
@@ -1354,7 +1354,7 @@ msgstr "Názov zľavy"
 #: eme-events.php:9896
 #: eme-members.php:1902
 #: eme-people.php:2770
-#: eme-tasks.php:906
+#: eme-tasks.php:914
 #: eme-templates.php:265
 #: eme-todos.php:185
 msgid "Description"
@@ -1966,7 +1966,7 @@ msgstr "Zrušiť rezerváciu"
 
 #: eme-events.php:1540
 #: eme-events.php:1643
-#: eme-tasks.php:1765
+#: eme-tasks.php:1799
 msgid "Cancel task signup"
 msgstr "Zrušiť prihlásenie na úlohu"
 
@@ -2635,7 +2635,7 @@ msgstr "Tlačiteľné zobrazenie"
 #: eme-events.php:6776
 #: eme-events.php:10394
 #: eme-rsvp.php:6010
-#: eme-tasks.php:2106
+#: eme-tasks.php:2140
 msgid "CSV export"
 msgstr "CSV export"
 
@@ -3890,13 +3890,13 @@ msgstr "Vyžadovať od prihláseného používateľa, aby bol členom jednej z v
 
 #: eme-events.php:8845
 #: eme-members.php:2169
-#: eme-tasks.php:999
+#: eme-tasks.php:1007
 msgid "Group to add people to"
 msgstr "Skupina, do ktorej majú byť ľudia pridaní"
 
 #: eme-events.php:8846
 #: eme-members.php:2170
-#: eme-tasks.php:1000
+#: eme-tasks.php:1008
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Skupina, do ktorej sa majú byť ľudia automaticky prihlásení, keď sa prihlásia na odber."
 
@@ -4687,7 +4687,7 @@ msgstr "Začiatok"
 #: eme-events.php:9924
 #: eme-gdpr.php:468
 #: eme-gdpr.php:658
-#: eme-tasks.php:904
+#: eme-tasks.php:912
 msgid "End"
 msgstr "Koniec"
 
@@ -4869,7 +4869,7 @@ msgstr "Vybrať jedno alebo viac podujatí"
 
 #: eme-events.php:10304
 #: eme-rsvp.php:5945
-#: eme-tasks.php:2104
+#: eme-tasks.php:2138
 msgid "Edit event"
 msgstr "Upraviť podujatie"
 
@@ -5671,7 +5671,7 @@ msgid "Repeat"
 msgstr "Opakovať"
 
 #: eme-formfields.php:4984
-#: eme-tasks.php:924
+#: eme-tasks.php:932
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Zmeniť poradie"
@@ -5737,7 +5737,7 @@ msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 #: eme-people.php:4986
 #: eme-rsvp.php:164
 #: eme-rsvp.php:825
-#: eme-tasks.php:1513
+#: eme-tasks.php:1538
 msgid "Javascript is required for this form to work properly"
 msgstr "Na správne fungovanie tohto formulára je potrebný Javascript"
 
@@ -5781,7 +5781,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 #: eme-people.php:4914
 #: eme-rsvp.php:858
 #: eme-rsvp.php:1156
-#: eme-tasks.php:1808
+#: eme-tasks.php:1842
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
@@ -5799,7 +5799,7 @@ msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omy
 #: eme-people.php:4925
 #: eme-rsvp.php:869
 #: eme-rsvp.php:1167
-#: eme-tasks.php:1819
+#: eme-tasks.php:1853
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Zistila sa manipulácia s formulárom. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
@@ -5853,7 +5853,7 @@ msgstr "Návrh v klientskom rozhraní (nezaplatený)"
 #: eme-people.php:1629
 #: eme-people.php:1768
 #: eme-tasks.php:604
-#: eme-tasks.php:2115
+#: eme-tasks.php:2149
 msgid "Pending"
 msgstr "Nevybavené"
 
@@ -8338,9 +8338,9 @@ msgstr "Členovia vymazaní."
 #: eme-rsvp.php:6657
 #: eme-rsvp.php:6719
 #: eme-rsvp.php:6770
-#: eme-tasks.php:2186
-#: eme-tasks.php:2212
-#: eme-tasks.php:2236
+#: eme-tasks.php:2220
+#: eme-tasks.php:2246
+#: eme-tasks.php:2270
 msgid "The action has been executed successfully."
 msgstr "Akcia bola úspešne vykonaná."
 
@@ -8370,9 +8370,9 @@ msgstr "Akcia bola úspešne vykonaná, ale pri odosielaní pošty sa vyskytli p
 #: eme-rsvp.php:6614
 #: eme-rsvp.php:6650
 #: eme-rsvp.php:6767
-#: eme-tasks.php:2189
-#: eme-tasks.php:2215
-#: eme-tasks.php:2239
+#: eme-tasks.php:2223
+#: eme-tasks.php:2249
+#: eme-tasks.php:2273
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "Pri vykonávaní požadovanej akcie sa vyskytol problém. Skontrolujte prosím vaše záznamy."
 
@@ -10180,7 +10180,7 @@ msgid "Check this option if you want by default that a person can only signup fo
 msgstr "Označte túto možnosť, ak chcete, aby sa osoba mohla predvolene prihlásiť len na jednu úlohu na jedno podujatie."
 
 #: eme-options.php:1920
-#: eme-tasks.php:1013
+#: eme-tasks.php:1021
 msgid "Allow overlap for task signups?"
 msgstr "Umožniť prekrývanie pre prihlasovania úloh?"
 
@@ -10225,12 +10225,12 @@ msgid "This setting is used in the shortcode eme_tasks_signups if the option \"t
 msgstr "Toto nastavenie sa používa v skrátenom kóde eme_tasks_signups, ak pre tento skrátený kód nie je použitá možnosť \"template_id\"."
 
 #: eme-options.php:1924
-#: eme-tasks.php:872
+#: eme-tasks.php:880
 msgid "Signup recorded message"
 msgstr "Správa o uložení registrácie"
 
 #: eme-options.php:1924
-#: eme-tasks.php:873
+#: eme-tasks.php:881
 msgid "The text (html allowed) shown to the user when the task signup has been made successfully."
 msgstr "Text (povolené html), ktorý sa zobrazí používateľovi po úspešnom prihlásení na úlohu."
 
@@ -10239,7 +10239,7 @@ msgid "Send out reminder emails"
 msgstr "Odoslať emaily s pripomienkami"
 
 #: eme-options.php:1926
-#: eme-tasks.php:1017
+#: eme-tasks.php:1025
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Nastavte počet dní pred odoslaním e-mailov s pripomenutím prihlásenia na úlohu (počítajúc od dátumu začiatku úlohy). Ak chcete odoslať viacero pripomienok, oddeľte tu dni čiarkami. Ak nechcete žiadne emaily s pripomienkami, ponechajte prázdne."
 
@@ -12483,7 +12483,7 @@ msgstr "Čaká sa na potvrdenie používateľa"
 #: eme-people.php:1633
 #: eme-people.php:1753
 #: eme-tasks.php:605
-#: eme-tasks.php:2113
+#: eme-tasks.php:2147
 msgid "Approved"
 msgstr "Schválené"
 
@@ -13395,7 +13395,8 @@ msgstr "Poslať členom správy po vykonaní zmien?"
 #: eme-tasks.php:840
 #: eme-tasks.php:849
 #: eme-tasks.php:862
-#: eme-tasks.php:875
+#: eme-tasks.php:869
+#: eme-tasks.php:883
 msgid "Only choose a template if you want to override the default settings:"
 msgstr "Šablónu vyberte len vtedy, ak chcete prepísať predvolené nastavenia:"
 
@@ -13407,92 +13408,89 @@ msgstr "Predmet emailu o aktualizovanom prihlásení na úlohu"
 msgid "Task Signup Updated Email Body"
 msgstr "Telo emailu o aktualizovanom prihlásení na úlohu"
 
-#: eme-tasks.php:859
-msgid "Task Signup Form"
-msgstr "Formulár na prihlásenie na úlohu"
-
-#: eme-tasks.php:860
+#: eme-tasks.php:867
 msgid "The layout of the task signup form."
 msgstr "Rozloženie formulára na prihlásenie na úlohy."
 
 #: eme-tasks.php:863
+#: eme-tasks.php:870
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
 msgstr "Upozornenie: Toto prepísanie sa použije len v prípade, že sa nachádza vnútri jednej udalosti, inak sa vždy použije všeobecné nastavenie!"
 
-#: eme-tasks.php:893
+#: eme-tasks.php:901
 msgid "Change the date of the listed tasks by this many days"
 msgstr "Zmeniť dátum uvedených úloh o tento počet dní"
 
-#: eme-tasks.php:894
+#: eme-tasks.php:902
 msgid "Change"
 msgstr "Zmeniť"
 
-#: eme-tasks.php:903
+#: eme-tasks.php:911
 msgid "Begin"
 msgstr "Začať"
 
-#: eme-tasks.php:905
+#: eme-tasks.php:913
 msgid "Spaces"
 msgstr "Voľné miesta"
 
-#: eme-tasks.php:961
+#: eme-tasks.php:969
 msgid "Add new task"
 msgstr "Pridať novú úlohu"
 
-#: eme-tasks.php:969
+#: eme-tasks.php:977
 msgid "If name, start date or end date of a task is empty, it will be ignored."
 msgstr "Ak je názov, dátum začiatku alebo konca úlohy prázdny, bude sa ignorovať."
 
-#: eme-tasks.php:970
+#: eme-tasks.php:978
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Ak je počet miest pre úlohu je 0, popis úlohy sa bude považovať za hlavičku sekcie pre ďalšiu sadu úloh."
 
-#: eme-tasks.php:974
+#: eme-tasks.php:982
 msgid "For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly."
 msgstr "V prípade opakujúcich sa podujatí zadajte dátum začiatku a konca úlohy, ako keby ste ju vykonávali pre prvé podujatie v sérii. Úlohy pre ďalšie podujatia sa zodpovedajúcim spôsobom upravia."
 
-#: eme-tasks.php:977
+#: eme-tasks.php:985
 msgid "The start date of the first event in the series was initially %s"
 msgstr "Dátum začiatku prvého podujatia v sérii bol pôvodne %s"
 
-#: eme-tasks.php:996
+#: eme-tasks.php:1004
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "Vyžadovať členstvo vo WP, aby sa mohli prihlásiť na úlohy?"
 
-#: eme-tasks.php:1003
+#: eme-tasks.php:1011
 msgid "Require approval for task signups?"
 msgstr "Vyžadovať schválenie pri registrácii na úlohy?"
 
-#: eme-tasks.php:1009
+#: eme-tasks.php:1017
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "Povoliť len jednu registráciu na úlohy na jedno podujatie pre jednu osobu?"
 
-#: eme-tasks.php:1469
-#: eme-tasks.php:1582
+#: eme-tasks.php:1482
+#: eme-tasks.php:1615
 msgid "There are no tasks to sign up for right now"
 msgstr "Momentálne nie sú k dispozícii žiadne úlohy, na ktoré by ste sa mohli prihlásiť"
 
-#: eme-tasks.php:1829
+#: eme-tasks.php:1863
 msgid "Please select at least one task."
 msgstr "Prosím vyberte aspoň jednu úlohu."
 
-#: eme-tasks.php:1888
+#: eme-tasks.php:1922
 msgid "Only one signup allowed"
 msgstr "Povolená je len jedna registrácia"
 
-#: eme-tasks.php:1900
+#: eme-tasks.php:1934
 msgid "No more open spaces for this task"
 msgstr "Žiadne ďalšie voľné miesta pre túto úlohu"
 
-#: eme-tasks.php:1915
+#: eme-tasks.php:1949
 msgid "Duplicate signup detected"
 msgstr "Zistené duplicitné prihlásenie"
 
-#: eme-tasks.php:1922
+#: eme-tasks.php:1956
 msgid "Signup overlap with another task detected"
 msgstr "Zistené prekrývanie prihlásenia s inou úlohou"
 
-#: eme-tasks.php:1959
+#: eme-tasks.php:1993
 msgid "Signup failed"
 msgstr "Prihlásenie zlyhalo"
 
@@ -14157,7 +14155,7 @@ msgstr ""
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr ""
 
-#: eme-tasks.php:940
+#: eme-tasks.php:948
 msgid "One person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
@@ -14558,6 +14556,18 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: eme-tasks.php:1004
+#: eme-tasks.php:1012
 msgid "Consider pending (unapproved) task signups as available for new signups"
+msgstr ""
+
+#: eme-tasks.php:859
+msgid "Task Signup Form (task entry section)"
+msgstr ""
+
+#: eme-tasks.php:860
+msgid "The layout of the task entry section in the signup form."
+msgstr ""
+
+#: eme-tasks.php:866
+msgid "Task Signup Form (personal info section)"
 msgstr ""

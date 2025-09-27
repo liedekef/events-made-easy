@@ -579,6 +579,9 @@ function eme_task_signups_table_layout( $message = '' ) {
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>
         <input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']);?>">
+        <?php if (isset($_GET['status'])) { ?>
+            <input type="hidden" name="search_signup_status" id="search_signup_status" value="<?php echo intval($_GET['status']);?>">
+        <?php } ?>
     <?php } else { ?>
         <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
         <input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
@@ -2066,7 +2069,7 @@ function eme_ajax_task_signups_list() {
         $search_person     = "";
         $search_start_date = "";
         $search_end_date   = "";
-        $search_status     = -1;
+        $search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
     } else {
         $search_eventid    = 0;
         $search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';

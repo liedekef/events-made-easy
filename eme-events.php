@@ -8881,7 +8881,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
               esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
               echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
         ?>
-        &nbsp;<?php esc_html_e( '(Leave empty or 0 to disable this limit)', 'events-made-easy' ); ?>
+        &nbsp;<?php esc_html_e( '(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)', 'events-made-easy' ); ?>
         <span id="rsvp-start-display" style="background-color: lightgrey;"></span>
     </p>
     <p id='span_rsvp_allowed_until'>
@@ -8900,6 +8900,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <?php esc_html_e( 'RSVP cancel cutoff before event starts', 'events-made-easy' ); ?>
         <input id="eme_prop_cancel_rsvp_days" type="text" name="eme_prop_cancel_rsvp_days" size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_days'] ); ?>">
         <span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days before the event starts.', 'events-made-easy' ); ?></span>
+        <span id="rsvp-cancel-end-display" style="background-color: lightgrey;"></span>
         <br>
         <?php esc_html_e( 'RSVP cancel cutoff booking age', 'events-made-easy' ); ?>
         <input id="eme_prop_cancel_rsvp_age" type="text" name="eme_prop_cancel_rsvp_age" size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_age'] ); ?>">

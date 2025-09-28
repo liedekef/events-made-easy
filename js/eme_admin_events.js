@@ -94,6 +94,48 @@ function calculateRsvpEnd() {
     displayElement.textContent = formattedEnd;
 }
 
+function calculateRsvpCutoffDisplay() {
+    const displayElement = document.getElementById('rsvp-cancel-end-display');
+
+    // Get hidden date and time values
+    const dateField = document.getElementById('start-date-to-submit');
+    const timeField = document.getElementById('start-time-to-submit');
+
+    if (!dateField || !timeField) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    const eventDateStr = dateField.value; // e.g. "2025-06-15"
+    const eventTimeStr = timeField.value; // e.g. "14:30:00"
+    if (!eventDateStr || !eventTimeStr) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Combine into ISO string and create Date object
+    const eventDateTime = new Date(eventDateStr + 'T' + eventTimeStr);
+    if (isNaN(eventDateTime)) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Get offset values
+    const daysOffset = parseInt(document.getElementById('eme_prop_cancel_rsvp_days').value) || 0;
+    if (!daysOffset) {
+        displayElement.textContent = '';
+        return;
+    }
+
+    // Calculate start by subtracting offset
+    const totalOffsetMs = daysOffset * 24 * 60 * 60 * 1000;
+    const startDateTime = new Date(eventDateTime.getTime() - totalOffsetMs);
+    const formattedStart = startDateTime.toLocaleString();
+
+    // Display it
+    displayElement.textContent = formattedStart;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const EventsTableContainer = EME.$('#EventsTableContainer');
     let EventsTable;
@@ -1146,6 +1188,15 @@ document.addEventListener('DOMContentLoaded', function () {
             el.addEventListener('input', calculateRsvpEnd);
         }
     });
+    const rsvpcutoffinputs = [
+        'eme_prop_cancel_rsvp_days'
+    ];
+    rsvpcutoffinputs.forEach(selector => {
+        const el = document.getElementById(selector);
+        if (el) {
+            el.addEventListener('input', calculateRsvpCutoffDisplay);
+        }
+    });
     const rsvpstartendinputs = [
         'start-date-to-submit',
         'end-date-to-submit',
@@ -1155,8 +1206,11 @@ document.addEventListener('DOMContentLoaded', function () {
     rsvpstartendinputs.forEach(selector => {
         const el = document.getElementById(selector);
         if (el) {
-            el.addEventListener('change', calculateRsvpStart);
-            el.addEventListener('change', calculateRsvpEnd);
+            el.addEventListener('change', () => {
+                calculateRsvpStart();
+                calculateRsvpEnd();
+                calculateRsvpCutoffDisplay();
+            });
         }
     });
 

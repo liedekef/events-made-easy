@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     suggestions.className = 'eme-autocomplete-suggestions';
 
                     results.forEach(item => {
-			const suggestion = document.createElement('div');
+                        const suggestion = document.createElement('div');
                         suggestion.className = 'eme-autocomplete-suggestion';
 
                         // Different HTML for RSVP vs Task forms
@@ -104,6 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                             formKey !== 'lastname' && formKey !== 'firstname' && 
                                             formKey !== 'wp_id' && formKey !== 'person_id') {
                                             target.required = false;
+                                        }
+                                        if (formKey == 'birthdate') {
+                                            const target2 = EME.$('input[name="dp_birthdate"]');
+                                            if (target2._fdatepicker) {
+                                                const startObj = new Date(value);
+                                                target2._fdatepicker.setDate(startObj);
+                                            }
                                         }
                                     }
                                 }
@@ -139,7 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
             email: 'email',
             phone: 'phone',
             wp_id: 'wp_id',
-            person_id: 'person_id'
+            person_id: 'person_id',
+            birthdate: 'birthdate'
         });
     }
 

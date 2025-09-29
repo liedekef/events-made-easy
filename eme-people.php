@@ -5205,6 +5205,7 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
             $record['wp_id']     = intval( $item['wp_id'] );
             $record['massmail']  = intval( $item['massmail'] );
             $record['gdpr']      = intval( $item['gdpr'] );
+            $record['birthdate'] = $item['birthdate'];
             $return[]            = $record;
             if (!empty($record['wp_id'] )) {
                 $wp_ids_seen[]=$record['wp_id'];

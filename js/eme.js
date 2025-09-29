@@ -319,7 +319,7 @@ function eme_lastname_clearable() {
     const ln = EME.$('input[name=lastname]');
     if (!ln) return;
     
-    const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
+    const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone', 'birthdate','dp_birthdate'];
     if (ln.value == '') {
         ln.readOnly = false;
         eme_removeClass(ln, 'clearable');
@@ -328,7 +328,9 @@ function eme_lastname_clearable() {
             const field = EME.$(`input[name=${f}]`);
             if (field) {
                 field.value = '';
-                field.readOnly = false;
+                if (f != 'dp_birthdate') {
+                    field.readOnly = false;
+                }
             }
         });
         const wpIdField = EME.$('input[name=wp_id]');

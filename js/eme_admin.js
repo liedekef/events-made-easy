@@ -458,7 +458,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     dpStartField._fdatepicker.setDate(startObj);
                 }
 
-                console.log("eee");
                 const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
                 if (dpEndField && dpEndField._fdatepicker) {
                     const endObj = dpEndField._fdatepicker.selectedDate;

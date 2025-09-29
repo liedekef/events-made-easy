@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.20  (2025/09/29) =
+* DomPDF update to 3.1.2
+* Show RSVP cutoff calculated date
+
 = 3.0.19  (2025/09/25) =
 * DomPDF update to 3.1.1
 * More task template choices added per event

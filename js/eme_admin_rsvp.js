@@ -353,9 +353,10 @@ document.addEventListener('DOMContentLoaded', function () {
             actionsButton.disabled = true;
 
             const formData = new FormData();
+            let idsJoined;
             if (doAction=='addToGroup' || doAction=='removeFromGroup') {
                 const ids = selectedRows.map(row => row.recordData.person_id);
-                const idsJoined = ids.join(',');
+                idsJoined = ids.join(',');
                 formData.append('person_id', idsJoined);
                 formData.append('action', 'eme_manage_people');
                 formData.append('do_action', doAction);
@@ -363,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('removefromgroup', EME.$('#removefromgroup')?.value);
             } else { 
                 const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+                idsJoined = ids.join(',');
                 formData.append('booking_ids', idsJoined);
                 formData.append('action', 'eme_manage_bookings');
                 formData.append('do_action', doAction);

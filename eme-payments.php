@@ -3248,6 +3248,7 @@ function eme_refund_booking_mollie( $booking ) {
                     );
                 } else {
                     // V2: Use legacy array-style
+                    //$refund = $mollie_payment->refund([
                     $refund = $mollie->payments->refund($mollie_payment, [
                         'amount' => [
                             'currency' => $cur,

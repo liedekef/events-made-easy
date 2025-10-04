@@ -3248,7 +3248,7 @@ function eme_refund_booking_mollie( $booking ) {
                     );
                 } else {
                     // V2: Use legacy array-style
-                    $refund = $mollie->payments->refund($mollie_payment->id, [
+                    $refund = $mollie->payments->refund($mollie_payment, [
                         'amount' => [
                             'currency' => $cur,
                             'value'    => sprintf('%01.2f', $price),

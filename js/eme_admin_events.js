@@ -1,8 +1,11 @@
 function calculateRsvpStart() {
     // Get the target (start or end)
     const targetSelect = document.getElementById('eme_prop_rsvp_start_target');
-    const target = targetSelect.value; // "start" or "end"
     const displayElement = document.getElementById('rsvp-start-display');
+    if (!targetSelect || !displayElement) {
+        return;
+    }
+    const target = targetSelect.value; // "start" or "end"
 
     // Get hidden date and time values
     const dateField = target === 'start'
@@ -51,8 +54,11 @@ function calculateRsvpStart() {
 function calculateRsvpEnd() {
     // Get the target (start or end)
     const targetSelect = document.getElementById('eme_prop_rsvp_end_target');
-    const target = targetSelect.value; // "start" or "end"
     const displayElement = document.getElementById('rsvp-end-display');
+    if (!targetSelect || !displayElement) {
+        return;
+    }
+    const target = targetSelect.value; // "start" or "end"
 
     // Get hidden date and time values
     const dateField = target === 'start'
@@ -96,6 +102,9 @@ function calculateRsvpEnd() {
 
 function calculateRsvpCutoffDisplay() {
     const displayElement = document.getElementById('rsvp-cancel-end-display');
+    if (!displayElement) {
+        return;
+    }
 
     // Get hidden date and time values
     const dateField = document.getElementById('start-date-to-submit');

@@ -63,14 +63,14 @@ msgstr ""
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4121
+#: eme-payments.php:4122
 #: eme-people.php:4256
-#: eme-people.php:5261
-#: eme-people.php:5367
-#: eme-people.php:5439
-#: eme-people.php:5479
-#: eme-people.php:5518
-#: eme-people.php:5614
+#: eme-people.php:5262
+#: eme-people.php:5368
+#: eme-people.php:5440
+#: eme-people.php:5480
+#: eme-people.php:5519
+#: eme-people.php:5615
 #: eme-recurrence.php:634
 #: eme-recurrence.php:803
 #: eme-rsvp.php:1278
@@ -272,10 +272,10 @@ msgstr "提示：右键单击列标题以显示或隐藏列"
 #: eme-people.php:2459
 #: eme-people.php:2524
 #: eme-people.php:2539
-#: eme-people.php:5286
-#: eme-people.php:5300
+#: eme-people.php:5287
 #: eme-people.php:5301
 #: eme-people.php:5302
+#: eme-people.php:5303
 #: eme-tasks.php:2154
 msgid "Edit person"
 msgstr "编辑人员"
@@ -408,7 +408,7 @@ msgstr "名字"
 #: eme-holidays.php:288
 #: eme-locations.php:2987
 #: eme-members.php:6543
-#: eme-people.php:5390
+#: eme-people.php:5391
 #: eme-templates.php:478
 msgid "No name"
 msgstr "没有名字"
@@ -1537,10 +1537,10 @@ msgstr "每个座位固定"
 #: eme-people.php:1310
 #: eme-people.php:1345
 #: eme-people.php:1659
-#: eme-people.php:5305
-#: eme-people.php:5322
+#: eme-people.php:5306
 #: eme-people.php:5323
-#: eme-people.php:5393
+#: eme-people.php:5324
+#: eme-people.php:5394
 #: eme-rsvp.php:3916
 #: eme-rsvp.php:6098
 #: eme-ui-helpers.php:149
@@ -1581,10 +1581,10 @@ msgstr "是的"
 #: eme-people.php:1310
 #: eme-people.php:1345
 #: eme-people.php:1661
-#: eme-people.php:5305
-#: eme-people.php:5322
+#: eme-people.php:5306
 #: eme-people.php:5323
-#: eme-people.php:5393
+#: eme-people.php:5324
+#: eme-people.php:5394
 #: eme-rsvp.php:3916
 #: eme-rsvp.php:6098
 #: eme-ui-helpers.php:150
@@ -5903,7 +5903,7 @@ msgstr "没有这样的记录"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4011
+#: eme-payments.php:4012
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5921,7 +5921,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4021
+#: eme-payments.php:4022
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -8025,7 +8025,7 @@ msgid "%d head of the family accounts + %d family members"
 msgstr "“一家之主” 账户"
 
 #: eme-members.php:6651
-#: eme-people.php:5287
+#: eme-people.php:5288
 msgid "(family member)"
 msgstr "(家庭成员)"
 
@@ -8042,23 +8042,23 @@ msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
 #: eme-members.php:6819
-#: eme-people.php:5486
+#: eme-people.php:5487
 msgid "(Dynamic)"
 msgstr "(动态)"
 
 #: eme-members.php:6831
-#: eme-people.php:5498
+#: eme-people.php:5499
 msgid "Dynamic group added"
 msgstr "已添加动态群组"
 
 #: eme-members.php:6833
-#: eme-people.php:5500
+#: eme-people.php:5501
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "添加字段时出现了问题"
 
 #: eme-members.php:6836
-#: eme-people.php:5503
+#: eme-people.php:5504
 msgid "Please enter a name for the group"
 msgstr "请为该群组输入名称"
 
@@ -11890,13 +11890,13 @@ msgstr "因为这是一个运行在 localhost 上的网站，所以不会创建�
 msgid "Booking refunded"
 msgstr "预订已退款"
 
-#: eme-payments.php:3979
-#: eme-payments.php:4040
+#: eme-payments.php:3980
+#: eme-payments.php:4041
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:3982
-#: eme-payments.php:4043
+#: eme-payments.php:3983
+#: eme-payments.php:4044
 msgid "Booking already cancelled"
 msgstr ""
 
@@ -12246,7 +12246,7 @@ msgid "Edit dynamic group of members"
 msgstr "动态的会员群组"
 
 #: eme-people.php:2739
-#: eme-people.php:5395
+#: eme-people.php:5396
 msgid "Edit group"
 msgstr "编辑群组"
 
@@ -12367,81 +12367,81 @@ msgstr "如果您想退订未来的邮寄，请在此输入您的电子邮件。
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "请选择您想退订的群组。"
 
-#: eme-people.php:5281
+#: eme-people.php:5282
 msgid "No surname"
 msgstr "没有姓氏"
 
-#: eme-people.php:5401
+#: eme-people.php:5402
 msgid "Dynamic group of people"
 msgstr "动态的人们群组"
 
-#: eme-people.php:5407
+#: eme-people.php:5408
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "（%d 个人）"
 
-#: eme-people.php:5411
+#: eme-people.php:5412
 msgid "Dynamic group of members"
 msgstr "动态的会员群组"
 
-#: eme-people.php:5417
+#: eme-people.php:5418
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "（%d 名成员）"
 
-#: eme-people.php:5631
+#: eme-people.php:5632
 msgid "People recovered from trash bin."
 msgstr "人员已从回收站里回收了。"
 
-#: eme-people.php:5643
+#: eme-people.php:5644
 msgid "People moved to trash bin."
 msgstr "人员移至回收站。"
 
-#: eme-people.php:5651
+#: eme-people.php:5652
 msgid "Personal data removed and moved to trash bin."
 msgstr "个人数据已被删除并移至回收站。"
 
-#: eme-people.php:5659
+#: eme-people.php:5660
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5667
+#: eme-people.php:5668
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5675
+#: eme-people.php:5676
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5683
+#: eme-people.php:5684
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5691
+#: eme-people.php:5692
 msgid "Birthday email set to \"Yes\"."
 msgstr "生日电子邮件设置为 ‘是’。"
 
-#: eme-people.php:5699
+#: eme-people.php:5700
 msgid "Birthday email set to \"No\"."
 msgstr "生日电子邮件设置为 ‘否’。"
 
-#: eme-people.php:5708
+#: eme-people.php:5709
 msgid "Language updated."
 msgstr "语言已更新。"
 
-#: eme-people.php:5721
+#: eme-people.php:5722
 msgid "People deleted."
 msgstr "人们已删除。"
 
-#: eme-people.php:5731
+#: eme-people.php:5732
 msgid "People added to group."
 msgstr "人们添加到群组。"
 
-#: eme-people.php:5742
+#: eme-people.php:5743
 msgid "People removed from group."
 msgstr "从群组中删除的人。"
 
-#: eme-people.php:5751
+#: eme-people.php:5752
 msgid "Groups deleted."
 msgstr "已删掉的群组。"
 
@@ -13795,7 +13795,7 @@ msgstr ""
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: eme-payments.php:4156
+#: eme-payments.php:4157
 msgid "Configured"
 msgstr ""
 
@@ -14454,7 +14454,7 @@ msgid "The HTML editor used by the plugin."
 msgstr ""
 
 #: eme-payments.php:3242
-#: eme-payments.php:3256
+#: eme-payments.php:3257
 msgid "Booking cancelled and refunded"
 msgstr ""
 

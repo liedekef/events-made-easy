@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.20
+Stable tag: 3.0.21
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.21  (2025//) =
+= 3.0.21  (2025/10/05) =
 * Autocomplete in frontend now includes birthday
 * fix sending mail from within bookings overview
 

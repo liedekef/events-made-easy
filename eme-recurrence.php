@@ -244,7 +244,7 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 	if ( isset( $recurrence['recurrence_id'] ) ) {
 		unset( $recurrence['recurrence_id'] );
 	}
-    if (empty($recurrence['recurrence_end_date'])) {
+    if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
         $recurrence['recurrence_end_date'] = null;
     }
 
@@ -338,6 +338,9 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	global $wpdb;
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 
+    if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+        $recurrence['recurrence_end_date'] = null;
+    }
 	// some sanity checks
 	// if the end date is set, it should be a sensible end date
 	if ( $recurrence['recurrence_freq'] != 'specific' ) {

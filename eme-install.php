@@ -573,6 +573,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		}
 		if ( $db_version < 416 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_end_date date DEFAULT NULL;" );
+			$wpdb->query( "UPDATE $table_name SET recurrence_end_date = NULL where recurrence_end_date = '';" );
 		}
 	}
 }

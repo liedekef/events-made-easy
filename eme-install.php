@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 415 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 416 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -526,7 +526,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		$sql = 'CREATE TABLE ' . $table_name . " (
 			recurrence_id mediumint(9) NOT NULL AUTO_INCREMENT,
 			recurrence_start_date date NOT NULL,
-			recurrence_end_date date NOT NULL,
+			recurrence_end_date date DEFAULT NULL,
 			recurrence_interval tinyint NOT NULL, 
 			recurrence_freq tinytext NOT NULL,
 			recurrence_byday tinytext NOT NULL,
@@ -570,6 +570,9 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 			} else {
 				maybe_add_column( $table_name, 'specific_days', "ALTER TABLE $table_name ADD specific_days text;" );
 			}
+		}
+		if ( $db_version < 416 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_end_date date DEFAULT NULL;" );
 		}
 	}
 }

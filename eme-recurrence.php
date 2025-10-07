@@ -244,12 +244,15 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 	if ( isset( $recurrence['recurrence_id'] ) ) {
 		unset( $recurrence['recurrence_id'] );
 	}
+    if (empty($recurrence['recurrence_end_date'])) {
+        $recurrence['recurrence_end_date'] = null;
+    }
 
 	// some sanity checks
 	$recurrence['recurrence_interval'] = intval( $recurrence['recurrence_interval'] );
 	// if the end date is set, it should be a sensible end date
 	if ( $recurrence['recurrence_freq'] != 'specific' ) {
-	       	if ( eme_is_empty_date($recurrence['recurrence_end_date']) ) {
+        if ( eme_is_empty_date($recurrence['recurrence_end_date']) ) {
 			// if the end date is empty, we set the start date to the first occurence
 			// (which is 1 event in the past), this allows for cleanup
 			$matching_days = eme_get_recurrence_days( $recurrence );
@@ -654,14 +657,14 @@ function eme_ajax_recurrences_list() {
 	}
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
 		$where_arr[] = "recurrence_start_date >= '$search_start_date'";
-		$where_arr[] = "(recurrence_end_date <= '$search_end_date' OR recurrence_end_date = '') ";
+		$where_arr[] = "(recurrence_end_date <= '$search_end_date' OR recurrence_end_date IS NULL)";
 	} elseif ( ! empty( $search_start_date ) ) {
 		$where_arr[] = "recurrence_start_date = '$search_start_date'";
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "recurrence_end_date = '$search_end_date'";
 	} elseif ( ! empty( $scope ) ) {
 		if ( $scope == 'ongoing' ) {
-			$where_arr[] = "(recurrence_end_date >= '$today' OR recurrence_end_date = '')";
+			$where_arr[] = "(recurrence_end_date >= '$today' OR recurrence_end_date IS NULL)";
 		} elseif ( $scope == 'past' ) {
 			$where_arr[] = "recurrence_end_date < '$today'";
 		}

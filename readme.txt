@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.22  (2025/10/) =
+* Make bulk actions for mailings work again
+
 = 3.0.21  (2025/10/05) =
 * Autocomplete in frontend now includes birthday
 * fix sending mail from within bookings overview

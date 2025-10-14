@@ -583,6 +583,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 MailingsTable.load();
             });
         }
+        EME.$('#MailingsActionsButton')?.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selectedRows = MailingsTable.getSelectedRows();
+            const do_action = EME.$('#eme_admin_action_mailings').value;
+            if (!selectedRows.length || !do_action) return;
+
+            let action_ok = 1;
+            if (do_action === 'deleteMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) {
+                action_ok = 0;
+            }
+
+            if (action_ok === 1) {
+                this.textContent = ememails.translate_pleasewait;
+                this.disabled = true;
+
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsjoined = ids.join();
+
+                const formData = new FormData();
+                formData.append('mailing_ids', idsjoined);
+                formData.append('action', 'eme_manage_mailings');
+                formData.append('do_action', do_action);
+                formData.append('eme_admin_nonce', ememails.translate_adminnonce);
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    MailingsTable.reload();
+                    this.textContent = ememails.translate_apply;
+                    this.disabled = false;
+                    const msg = EME.$('#mailings-message');
+                    msg.innerHTML = data.htmlmessage;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                });
+            }
+        });
     }
 
     // --- ftable: Archived Mailings Table ---

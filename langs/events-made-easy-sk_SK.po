@@ -99,8 +99,8 @@ msgstr "v mene %s"
 #: eme-people.php:5480
 #: eme-people.php:5519
 #: eme-people.php:5615
-#: eme-recurrence.php:634
-#: eme-recurrence.php:803
+#: eme-recurrence.php:640
+#: eme-recurrence.php:809
 #: eme-rsvp.php:1278
 #: eme-rsvp.php:4794
 #: eme-rsvp.php:4801
@@ -215,7 +215,7 @@ msgstr "Akékoľvek"
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1712
+#: eme-install.php:1716
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1173,7 +1173,7 @@ msgstr "Pošlite e-mail všetkým ľuďom zaregistrovaným v EME na nadchádzaj�
 #: eme-events.php:8890
 #: eme-options.php:1839
 #: eme-options.php:1855
-#: eme-recurrence.php:708
+#: eme-recurrence.php:714
 msgid "days"
 msgstr "dní"
 
@@ -2673,7 +2673,7 @@ msgstr "Keďže autor nie je pre toto podujatie definovaný, pri akýkoľvek odk
 #: eme-events.php:10309
 #: eme-locations.php:449
 #: eme-locations.php:2997
-#: eme-recurrence.php:742
+#: eme-recurrence.php:748
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
@@ -2869,7 +2869,7 @@ msgid "Every"
 msgstr "Každý"
 
 #: eme-events.php:7248
-#: eme-recurrence.php:710
+#: eme-recurrence.php:716
 msgid "day"
 msgstr "deň"
 
@@ -4872,13 +4872,13 @@ msgstr "Upraviť podujatie"
 #: eme-events.php:10432
 #: eme-locations.php:534
 #: eme-locations.php:2991
-#: eme-recurrence.php:760
+#: eme-recurrence.php:766
 msgid "Edit location"
 msgstr "Upraviť polohu"
 
 #: eme-events.php:10434
 #: eme-locations.php:2993
-#: eme-recurrence.php:762
+#: eme-recurrence.php:768
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Súradnice mapy polohy sú prázdne! Upravte toto miesto, aby ste to opravili, inak sa na vašom webe nezobrazí správne."
 
@@ -4905,12 +4905,12 @@ msgid "Password protected"
 msgstr "Chránené heslom"
 
 #: eme-events.php:10484
-#: eme-recurrence.php:732
+#: eme-recurrence.php:738
 msgid "Free"
 msgstr "Zadarmo"
 
 #: eme-events.php:10633
-#: eme-recurrence.php:827
+#: eme-recurrence.php:833
 msgid "No action defined!"
 msgstr "Žiadna akcia nebola definovaná!"
 
@@ -6268,7 +6268,7 @@ msgstr "Základný formát: RRRR-MM-DD, jeden na riadok"
 msgid "For more information about holidays, see "
 msgstr "Viac informácií o sviatkoch nájdete na stránke "
 
-#: eme-install.php:1713
+#: eme-install.php:1717
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Táto stránka je používaná pluginom Events Made Easy. Nemeňte ju, nepoužívajte ju v ponuke, neodstraňujte ju. Len sa uistite, že nastavenie EME s názvom „Stránka podujatí“ ukazuje na túto stránku. EME používa túto stránku na vykreslenie všetkých podujatí, miest, rezervácií, máp, atď. Ak chcete túto stránku odstrániť, vytvorte novú, ktorú môže EME používať a podľa toho aktualizujte nastavenie EME „Stránka podujatí“."
 
@@ -12932,85 +12932,85 @@ msgstr "Ľudia odstránení zo skupiny."
 msgid "Groups deleted."
 msgstr "Skupiny vymazané."
 
-#: eme-recurrence.php:517
+#: eme-recurrence.php:523
 msgid "the first %s of the month"
 msgstr "prvý %s mesiaca"
 
-#: eme-recurrence.php:518
+#: eme-recurrence.php:524
 msgid "the second %s of the month"
 msgstr "druhý %s mesiaca"
 
-#: eme-recurrence.php:519
+#: eme-recurrence.php:525
 msgid "the third %s of the month"
 msgstr "tretí %s mesiaca"
 
-#: eme-recurrence.php:520
+#: eme-recurrence.php:526
 msgid "the fourth %s of the month"
 msgstr "štvrtý %s mesiaca"
 
-#: eme-recurrence.php:521
+#: eme-recurrence.php:527
 msgid "the fifth %s of the month"
 msgstr "piaty %s mesiaca"
 
-#: eme-recurrence.php:522
+#: eme-recurrence.php:528
 msgid "the last %s of the month"
 msgstr "posledný %s mesiaca"
 
-#: eme-recurrence.php:525
+#: eme-recurrence.php:531
 msgid "From %s onwards (automatically extended)"
 msgstr "Od %s ďalej (automaticky predĺžené)"
 
-#: eme-recurrence.php:527
+#: eme-recurrence.php:533
 msgid "From %s to %s"
 msgstr "Od %s do %s"
 
-#: eme-recurrence.php:530
+#: eme-recurrence.php:536
 msgid "everyday"
 msgstr "každý deň"
 
-#: eme-recurrence.php:532
+#: eme-recurrence.php:538
 msgid "every %s days"
 msgstr "každých %s dní"
 
-#: eme-recurrence.php:549
-#: eme-recurrence.php:566
-#: eme-recurrence.php:584
+#: eme-recurrence.php:555
+#: eme-recurrence.php:572
+#: eme-recurrence.php:590
 msgid " and "
 msgstr " a "
 
-#: eme-recurrence.php:551
+#: eme-recurrence.php:557
 msgid "every week"
 msgstr "každý týždeň"
 
-#: eme-recurrence.php:553
+#: eme-recurrence.php:559
 msgid "every %s weeks"
 msgstr "každý %s týždeň"
 
-#: eme-recurrence.php:569
+#: eme-recurrence.php:575
 msgid "every %s months"
 msgstr "každý %s mesiac"
 
-#: eme-recurrence.php:571
+#: eme-recurrence.php:577
 msgid "every month"
 msgstr "každý mesiac"
 
-#: eme-recurrence.php:720
+#: eme-recurrence.php:726
 msgid "Edit recurrence"
 msgstr "Upraviť opakovanie"
 
-#: eme-recurrence.php:722
+#: eme-recurrence.php:728
 msgid "Duplicate this recurrence"
 msgstr "Duplikovať toto opakovanie"
 
-#: eme-recurrence.php:839
+#: eme-recurrence.php:845
 msgid "Recurrences deleted and events moved to trash"
 msgstr "Opakovania vymazané a podujatia presunuté do koša"
 
-#: eme-recurrence.php:850
+#: eme-recurrence.php:856
 msgid "Recurrences status updated"
 msgstr "Stav opakovania aktualizovaný"
 
-#: eme-recurrence.php:883
+#: eme-recurrence.php:889
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr "Dátum začiatku a ukončenia bol upravený pre vybrané opakovania"
 
@@ -14135,7 +14135,7 @@ msgstr ""
 #: eme-events.php:10382
 #: eme-events.php:10385
 #: eme-members.php:6690
-#: eme-recurrence.php:730
+#: eme-recurrence.php:736
 #: eme-rsvp.php:5995
 #: eme-rsvp.php:5998
 msgid "Max:"

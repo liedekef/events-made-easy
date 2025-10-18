@@ -71,8 +71,8 @@ msgstr ""
 #: eme-people.php:5480
 #: eme-people.php:5519
 #: eme-people.php:5615
-#: eme-recurrence.php:634
-#: eme-recurrence.php:803
+#: eme-recurrence.php:640
+#: eme-recurrence.php:809
 #: eme-rsvp.php:1278
 #: eme-rsvp.php:4794
 #: eme-rsvp.php:4801
@@ -171,7 +171,7 @@ msgstr "任何"
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1712
+#: eme-install.php:1716
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1131,7 +1131,7 @@ msgstr "向所有 EME 的注册者发送邮件，介绍即将在接下来发生�
 #: eme-events.php:8890
 #: eme-options.php:1839
 #: eme-options.php:1855
-#: eme-recurrence.php:708
+#: eme-recurrence.php:714
 msgid "days"
 msgstr "天"
 
@@ -2528,7 +2528,7 @@ msgstr "由于该活动的作者未被定义，任何对联系人的引用（比
 #: eme-events.php:10309
 #: eme-locations.php:449
 #: eme-locations.php:2997
-#: eme-recurrence.php:742
+#: eme-recurrence.php:748
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
@@ -2721,7 +2721,7 @@ msgid "Every"
 msgstr "每"
 
 #: eme-events.php:7248
-#: eme-recurrence.php:710
+#: eme-recurrence.php:716
 msgid "day"
 msgstr "天"
 
@@ -4740,13 +4740,13 @@ msgstr ""
 #: eme-events.php:10432
 #: eme-locations.php:534
 #: eme-locations.php:2991
-#: eme-recurrence.php:760
+#: eme-recurrence.php:766
 msgid "Edit location"
 msgstr "编辑地点"
 
 #: eme-events.php:10434
 #: eme-locations.php:2993
-#: eme-recurrence.php:762
+#: eme-recurrence.php:768
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "地点地图坐标为空! 请编辑位置以纠正这一点，否则它将无法在您的网站上正确显示。"
 
@@ -4773,12 +4773,12 @@ msgid "Password protected"
 msgstr "被密码保护"
 
 #: eme-events.php:10484
-#: eme-recurrence.php:732
+#: eme-recurrence.php:738
 msgid "Free"
 msgstr "免费"
 
 #: eme-events.php:10633
-#: eme-recurrence.php:827
+#: eme-recurrence.php:833
 msgid "No action defined!"
 msgstr "没有定义行动!"
 
@@ -6093,7 +6093,7 @@ msgstr "基本格式：YYYY-MM-DD，每行一个"
 msgid "For more information about holidays, see "
 msgstr "关于假期的更多信息，请参见"
 
-#: eme-install.php:1713
+#: eme-install.php:1717
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "本页由 Events Made Easy 使用。不要改变它，不要在您的菜单中使用它，不要删除它。只要确保 EME 的设置称为 \"活动页面\"，指向这个页面。EME 使用这个页面来呈现任何和所有的事件、地点、预订、地图、......任何东西。如果您确实想删除这个页面，创建一个 EME 可以使用的新页面，并相应地更新 EME 设置中的 \"活动页面\"。"
 
@@ -12445,82 +12445,82 @@ msgstr "从群组中删除的人。"
 msgid "Groups deleted."
 msgstr "已删掉的群组。"
 
-#: eme-recurrence.php:517
+#: eme-recurrence.php:523
 msgid "the first %s of the month"
 msgstr "该月的第一个 %s"
 
-#: eme-recurrence.php:518
+#: eme-recurrence.php:524
 msgid "the second %s of the month"
 msgstr "该月的第二个 %s"
 
-#: eme-recurrence.php:519
+#: eme-recurrence.php:525
 msgid "the third %s of the month"
 msgstr "该月的第三个 %s"
 
-#: eme-recurrence.php:520
+#: eme-recurrence.php:526
 msgid "the fourth %s of the month"
 msgstr "该月的第四个 %s"
 
-#: eme-recurrence.php:521
+#: eme-recurrence.php:527
 msgid "the fifth %s of the month"
 msgstr "该月的第五个 %s"
 
-#: eme-recurrence.php:522
+#: eme-recurrence.php:528
 msgid "the last %s of the month"
 msgstr "该月的最后 %s"
 
-#: eme-recurrence.php:527
+#: eme-recurrence.php:533
 #, fuzzy
 msgid "From %s to %s"
 msgstr "从 %1$s 到 %2$s"
 
-#: eme-recurrence.php:530
+#: eme-recurrence.php:536
 msgid "everyday"
 msgstr "每天"
 
-#: eme-recurrence.php:532
+#: eme-recurrence.php:538
 msgid "every %s days"
 msgstr "每 %s 天"
 
-#: eme-recurrence.php:549
-#: eme-recurrence.php:566
-#: eme-recurrence.php:584
+#: eme-recurrence.php:555
+#: eme-recurrence.php:572
+#: eme-recurrence.php:590
 msgid " and "
 msgstr " 和 "
 
-#: eme-recurrence.php:551
+#: eme-recurrence.php:557
 msgid "every week"
 msgstr "每星期"
 
-#: eme-recurrence.php:553
+#: eme-recurrence.php:559
 msgid "every %s weeks"
 msgstr "每 %s 个星期"
 
-#: eme-recurrence.php:569
+#: eme-recurrence.php:575
 msgid "every %s months"
 msgstr "每 %s 个月"
 
-#: eme-recurrence.php:571
+#: eme-recurrence.php:577
 msgid "every month"
 msgstr "每个月"
 
-#: eme-recurrence.php:720
+#: eme-recurrence.php:726
 msgid "Edit recurrence"
 msgstr "编辑循环"
 
-#: eme-recurrence.php:722
+#: eme-recurrence.php:728
 msgid "Duplicate this recurrence"
 msgstr "复制此循环"
 
-#: eme-recurrence.php:839
+#: eme-recurrence.php:845
 msgid "Recurrences deleted and events moved to trash"
 msgstr "循环被删除，活动被移至回收站"
 
-#: eme-recurrence.php:850
+#: eme-recurrence.php:856
 msgid "Recurrences status updated"
 msgstr "循环情况更新"
 
-#: eme-recurrence.php:883
+#: eme-recurrence.php:889
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr ""
 
@@ -13450,7 +13450,7 @@ msgstr ""
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr ""
 
-#: eme-recurrence.php:525
+#: eme-recurrence.php:531
 msgid "From %s onwards (automatically extended)"
 msgstr ""
 
@@ -14202,7 +14202,7 @@ msgstr ""
 #: eme-events.php:10382
 #: eme-events.php:10385
 #: eme-members.php:6690
-#: eme-recurrence.php:730
+#: eme-recurrence.php:736
 #: eme-rsvp.php:5995
 #: eme-rsvp.php:5998
 msgid "Max:"

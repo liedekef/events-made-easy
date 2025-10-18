@@ -71,8 +71,8 @@ msgstr "in naam van %s"
 #: eme-people.php:5480
 #: eme-people.php:5519
 #: eme-people.php:5615
-#: eme-recurrence.php:634
-#: eme-recurrence.php:803
+#: eme-recurrence.php:640
+#: eme-recurrence.php:809
 #: eme-rsvp.php:1278
 #: eme-rsvp.php:4794
 #: eme-rsvp.php:4801
@@ -171,7 +171,7 @@ msgstr "Elke"
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1712
+#: eme-install.php:1716
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1125,7 +1125,7 @@ msgstr "Verstuur een e-mail naar alle in EME-geregistreerde personen ivm eveneme
 #: eme-events.php:8890
 #: eme-options.php:1839
 #: eme-options.php:1855
-#: eme-recurrence.php:708
+#: eme-recurrence.php:714
 msgid "days"
 msgstr "dagen"
 
@@ -2520,7 +2520,7 @@ msgstr "Omdat er geen auteur is aangegeven voor dit evenement, zal elke verwijzi
 #: eme-events.php:10309
 #: eme-locations.php:449
 #: eme-locations.php:2997
-#: eme-recurrence.php:742
+#: eme-recurrence.php:748
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
@@ -2712,7 +2712,7 @@ msgid "Every"
 msgstr "Iedere"
 
 #: eme-events.php:7248
-#: eme-recurrence.php:710
+#: eme-recurrence.php:716
 msgid "day"
 msgstr "dag"
 
@@ -4706,7 +4706,7 @@ msgstr "Afwezig:"
 #: eme-events.php:10382
 #: eme-events.php:10385
 #: eme-members.php:6690
-#: eme-recurrence.php:730
+#: eme-recurrence.php:736
 #: eme-rsvp.php:5995
 #: eme-rsvp.php:5998
 msgid "Max:"
@@ -4740,13 +4740,13 @@ msgstr "Taak Info: %d taken"
 #: eme-events.php:10432
 #: eme-locations.php:534
 #: eme-locations.php:2991
-#: eme-recurrence.php:760
+#: eme-recurrence.php:766
 msgid "Edit location"
 msgstr "Wijzig locatie"
 
 #: eme-events.php:10434
 #: eme-locations.php:2993
-#: eme-recurrence.php:762
+#: eme-recurrence.php:768
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Geen geo-coördinaten aanwezig! Corrigeer dit voor deze locatie, anders is de data op je site incorrect."
 
@@ -4773,12 +4773,12 @@ msgid "Password protected"
 msgstr "Beschermd met wachtwoord"
 
 #: eme-events.php:10484
-#: eme-recurrence.php:732
+#: eme-recurrence.php:738
 msgid "Free"
 msgstr "Gratis"
 
 #: eme-events.php:10633
-#: eme-recurrence.php:827
+#: eme-recurrence.php:833
 msgid "No action defined!"
 msgstr "Geen actie gedefineerd!"
 
@@ -6090,7 +6090,7 @@ msgstr "Standaard opmaak: YYYY-MM-DD, één per regel"
 msgid "For more information about holidays, see "
 msgstr "Voor meer informative over vakanties, zie "
 
-#: eme-install.php:1713
+#: eme-install.php:1717
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Deze pagina wordt gebruikt door Events Made Easy. Verander deze niet, gebruik deze niet in een menu, verwijder deze niet. Wees er enkel zeker van dat de EME optie genoemd 'Evenementen pagina' verwijst naar deze pagina. EME gebruikt deze pagina om alle evenementen, locaties, boekingen, kaarten, ... te tonen. Als je deze wil verwijderen, maak een nieuwe aan voor gebruik in EME en pas de optie 'Evenementen pagina' aan."
 
@@ -12397,81 +12397,81 @@ msgstr "Personen verwijderd uit groep."
 msgid "Groups deleted."
 msgstr "Groepen verwijderd."
 
-#: eme-recurrence.php:517
+#: eme-recurrence.php:523
 msgid "the first %s of the month"
 msgstr "de eerste %s van de maand"
 
-#: eme-recurrence.php:518
+#: eme-recurrence.php:524
 msgid "the second %s of the month"
 msgstr "de tweede %s van de maand"
 
-#: eme-recurrence.php:519
+#: eme-recurrence.php:525
 msgid "the third %s of the month"
 msgstr "de derde %s van de maand"
 
-#: eme-recurrence.php:520
+#: eme-recurrence.php:526
 msgid "the fourth %s of the month"
 msgstr "de vierde %s van de maand"
 
-#: eme-recurrence.php:521
+#: eme-recurrence.php:527
 msgid "the fifth %s of the month"
 msgstr "de vijfde %s van de maand"
 
-#: eme-recurrence.php:522
+#: eme-recurrence.php:528
 msgid "the last %s of the month"
 msgstr "de laatste %s van de maand"
 
-#: eme-recurrence.php:527
+#: eme-recurrence.php:533
 msgid "From %s to %s"
 msgstr "Van %s tot %s"
 
-#: eme-recurrence.php:530
+#: eme-recurrence.php:536
 msgid "everyday"
 msgstr "elke dag"
 
-#: eme-recurrence.php:532
+#: eme-recurrence.php:538
 msgid "every %s days"
 msgstr "elke %s dagen"
 
-#: eme-recurrence.php:549
-#: eme-recurrence.php:566
-#: eme-recurrence.php:584
+#: eme-recurrence.php:555
+#: eme-recurrence.php:572
+#: eme-recurrence.php:590
 msgid " and "
 msgstr " en "
 
-#: eme-recurrence.php:551
+#: eme-recurrence.php:557
 msgid "every week"
 msgstr "elke week"
 
-#: eme-recurrence.php:553
+#: eme-recurrence.php:559
 msgid "every %s weeks"
 msgstr "elke %s weken"
 
-#: eme-recurrence.php:569
+#: eme-recurrence.php:575
 msgid "every %s months"
 msgstr "elke %s maanden"
 
-#: eme-recurrence.php:571
+#: eme-recurrence.php:577
 msgid "every month"
 msgstr "elke maand"
 
-#: eme-recurrence.php:720
+#: eme-recurrence.php:726
 msgid "Edit recurrence"
 msgstr "Herhaling bewerken"
 
-#: eme-recurrence.php:722
+#: eme-recurrence.php:728
 msgid "Duplicate this recurrence"
 msgstr "Dupliceer deze herhaling"
 
-#: eme-recurrence.php:839
+#: eme-recurrence.php:845
 msgid "Recurrences deleted and events moved to trash"
 msgstr "Herhalingen verwijderd en evenementen verplaatst naar prullenbak"
 
-#: eme-recurrence.php:850
+#: eme-recurrence.php:856
 msgid "Recurrences status updated"
 msgstr "Status herhalingen bijgewerkt"
 
-#: eme-recurrence.php:883
+#: eme-recurrence.php:889
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr "Start- en einddatum aangepast voor de geselecteerde herhalingen"
 
@@ -13394,7 +13394,7 @@ msgstr "Niet geïmporteerd (geen overeenkomstige persoon gevonden): %s"
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr "De begin- en einddatum van de herhaling (beschouw dit als de dag van de eerste gebeurtenis in de reeks en de dag van de laatste gebeurtenis in de reeks). Als u de einddatum leeg laat, loopt de herhaling voor altijd door en worden de volgende 10 evenementen automatisch gepland (dagelijks gecontroleerd), terwijl oudere evenementen worden verwijderd, behalve de meest recente."
 
-#: eme-recurrence.php:525
+#: eme-recurrence.php:531
 msgid "From %s onwards (automatically extended)"
 msgstr "Vanaf %s (automatisch verlengd)"
 

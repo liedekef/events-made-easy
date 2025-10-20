@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 3.0.23  (2025/10/) =
 * DomPDF update to 3.1.3
+* Braintree API update to 6.29.0
 
 = 3.0.22  (2025/10/18) =
 * Make bulk actions for mailings work again

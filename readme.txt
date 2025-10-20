@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.23  (2025/10/) =
+* DomPDF update to 3.1.3
+
 = 3.0.22  (2025/10/18) =
 * Make bulk actions for mailings work again
 * FTable and FDatepicker updates

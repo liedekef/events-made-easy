@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.22
+Stable tag: 3.0.23
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,9 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.23  (2025/10/) =
+= 3.0.23  (2025/10/25) =
 * DomPDF update to 3.1.3
 * Braintree API update to 6.29.0
+* Fix tinymce using templates
 
 = 3.0.22  (2025/10/18) =
 * Make bulk actions for mailings work again

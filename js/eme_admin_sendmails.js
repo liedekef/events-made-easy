@@ -93,14 +93,15 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             const form = this.form;
-            const formData = new FormData(form);
 
+            // the tinymce save needs to happen before the FormData-call, as it changes the form content
             if (ememails.translate_htmleditor === 'tinymce' && ememails.translate_htmlmail === 'yes') {
                 if (typeof tinymce !== 'undefined' && tinymce.get(editorTarget)) {
                     tinymce.get(editorTarget).save();
                 }
             }
 
+            const formData = new FormData(form);
             formData.append('action', action);
             formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
@@ -171,8 +172,8 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             const form = this.form;
-            const formData = new FormData(form);
-
+ 
+            // the tinymce save needs to happen before the FormData-call, as it changes the form content
             if (ememails.translate_htmleditor === 'tinymce' && ememails.translate_htmlmail === 'yes') {
                 const editorField = form.querySelector('textarea');
                 if (editorField && tinymce.get(editorField.id)) {
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
+            const formData = new FormData(form);
             formData.append('action', action);
             formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.24  (2025//) =
+* Update jodit to 4.7.4
+
 = 3.0.23  (2025/10/25) =
 * DomPDF update to 3.1.3
 * Braintree API update to 6.29.0

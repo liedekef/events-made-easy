@@ -2632,14 +2632,14 @@ case 'payments':
 $webhook_id = get_option('eme_paypal_webhook_id');
 if (!empty($webhook_id)) {
     echo "<tr><td colspan='2' class='notice notice-success'>" .
-         esc_html__('Info: a webhook has been successfully created.', 'events-made-easy') .
+         esc_html__('Info: a webhook to the mentioned link has been successfully created.', 'events-made-easy') .
          '</td></tr>';
 } else {
-    $err = get_option('eme_paypal_webhook_error');
-    if (!empty($err)) {
+    $err_txt = get_option('eme_paypal_webhook_error');
+    if (!empty($err_txt)) {
         echo "<tr><td colspan='2' class='notice notice-warning'>" .
-             sprintf(esc_html__('WARNING: webhook not created. Reason: %s', 'events-made-easy'), esc_html($err)) .
-             '</td></tr>';
+            sprintf( esc_html__( 'WARNING: webhook has not been created. Reason: %s', 'events-made-easy' ), esc_html($err_txt) ) .
+            '</td></tr>';
     } else {
         echo "<tr><td colspan='2' class='notice notice-warning'>" .
              esc_html__('WARNING: no webhook has been created. Press save to attempt to create one.', 'events-made-easy') .
@@ -2965,7 +2965,7 @@ if (!empty($webhook_id)) {
         if ( empty( $stripe_webhookid ) ) {
             $err_txt = get_option( 'eme_stripe_webhook_error' );
             if ( ! empty( $err_txt ) ) {
-                echo "<tr><td colspan='2' class='notice notice-warning'>" . sprintf( esc_html__( 'WARNING: webhook has not been created. Reason: %s', 'events-made-easy' ), $err_txt ) . '</td></tr>';
+                echo "<tr><td colspan='2' class='notice notice-warning'>" . sprintf( esc_html__( 'WARNING: webhook has not been created. Reason: %s', 'events-made-easy' ), esc_html($err_txt) ) . '</td></tr>';
             } else {
                 echo "<tr><td colspan='2' class='notice notice-warning'>" . esc_html__( 'WARNING: no webhook has been created. Press save to attempt to create one.', 'events-made-easy' ) . '</td></tr>';
             }

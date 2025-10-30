@@ -2280,7 +2280,7 @@ function eme_paypal_webhook() {
 
     // Skip if localhost
     if (strpos($events_page_link, 'localhost') !== false) {
-        update_option('eme_paypal_webhook_error', __('Webhook not created: site is on localhost.', 'events-made-easy'));
+        update_option( 'eme_paypal_webhook_error', __( 'since this is a site running on localhost, no webhook will be created', 'events-made-easy' ) );
         return;
     }
 

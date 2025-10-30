@@ -1085,6 +1085,7 @@ function eme_options_postsave_actions() {
     // if we saved settings on the payments tab, certain webhooks need to be created
     if ( $tab == 'payments' ) {
         eme_stripe_webhook();
+        eme_paypal_webhook();
     }
 
     // make sure the permalink settings are ok
@@ -2596,12 +2597,12 @@ case 'payments':
 </details>
 
 <details name='eme_details_options' class="eme_accordion">
-<summary><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?> <b>Deprecated, use Braintree</b></summary>
+<summary><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?></summary>
 <div>
 <table class='form-table'>
 <?php
     $gateway = 'paypal';
-    echo "<tr><td colspan='2' class='notice notice-warning'>" . esc_html__( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'PayPal live or test', 'events-made-easy' ),
         'eme_paypal_url',
@@ -2624,8 +2625,28 @@ case 'payments':
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<?php
+$webhook_id = get_option('eme_paypal_webhook_id');
+if (!empty($webhook_id)) {
+    echo "<tr><td colspan='2' class='notice notice-success'>" .
+         esc_html__('Info: a webhook has been successfully created.', 'events-made-easy') .
+         '</td></tr>';
+} else {
+    $err = get_option('eme_paypal_webhook_error');
+    if (!empty($err)) {
+        echo "<tr><td colspan='2' class='notice notice-warning'>" .
+             sprintf(esc_html__('WARNING: webhook not created. Reason: %s', 'events-made-easy'), esc_html($err)) .
+             '</td></tr>';
+    } else {
+        echo "<tr><td colspan='2' class='notice notice-warning'>" .
+             esc_html__('WARNING: no webhook has been created. Press save to attempt to create one.', 'events-made-easy') .
+             '</td></tr>';
+    }
+}
+?>
 </table>
 </div>
 </details>

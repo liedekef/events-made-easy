@@ -2652,7 +2652,7 @@ if (!empty($webhook_id)) {
 </details>
 
 <details name='eme_details_options' class="eme_accordion">
-<summary><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated, use Braintree</b></summary>
+<summary><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated</b></summary>
 <div>
 <table class='form-table'>
 <?php

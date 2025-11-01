@@ -146,16 +146,10 @@ class EME_PayPal_Client {
             throw new Exception( 'Webhook ID not configured' );
         }
 
-        // Validate cert URL
-        $cert_url = $headers['Paypal-Cert-Url'];
-        if ( ! preg_match( '#^https://api\.paypal\.(com|sandbox\.com)/#', $cert_url ) ) {
-            throw new Exception( 'Invalid cert URL' );
-        }
-
         $verify_data = [
             'transmission_id'   => $headers['Paypal-Transmission-Id'],
             'transmission_time' => $headers['Paypal-Transmission-Time'],
-            'cert_url'          => $cert_url,
+            'cert_url'          => $headers['Paypal-Cert-Url'],
             'auth_algo'         => $headers['Paypal-Auth-Algo'],
             'transmission_sig'  => $headers['Paypal-Transmission-Sig'],
             'webhook_id'        => $webhook_id,

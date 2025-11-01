@@ -1718,6 +1718,9 @@ function eme_complete_transaction_paypal($payment) {
 }
 
 function eme_notification_paypal() {
+    // require POST
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') return 0;
+
     if ( ! class_exists( 'EME_PayPal_Client' ) ) {
         require_once 'payment_gateways/paypal/class_eme_paypal.php';
     }

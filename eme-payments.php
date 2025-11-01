@@ -1698,138 +1698,56 @@ function eme_complete_transaction_stripe( $payment ) {
 }
 
 function eme_complete_transaction_paypal($payment) {
-    $gateway = 'paypal';
-    $paypal_orderid = $payment['pg_pid'];
-    $clientId = get_option('eme_paypal_clientid');
-    $clientSecret = get_option('eme_paypal_secret');
-    $is_sandbox = get_option('eme_paypal_url') === 'sandbox';
-    $auth_url = $is_sandbox ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com';
-
-    // Get access token
-    $auth_resp = wp_remote_post("$auth_url/v1/oauth2/token", [
-        'headers' => ['Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret")],
-        'body' => 'grant_type=client_credentials',
-    ]);
-    $auth = json_decode(wp_remote_retrieve_body($auth_resp), true);
-    if (!isset($auth['access_token'])) return 0;
-
-    // Capture order
-    $capture_resp = wp_remote_post("$auth_url/v2/checkout/orders/$paypal_orderid/capture", [
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $auth['access_token'],
-        ],
-    ]);
-
-    $result = json_decode(wp_remote_retrieve_body($capture_resp), true);
-    if ($result && ($result['status'] ?? '') === 'COMPLETED') {
-        $capture_id = $result['purchase_units'][0]['payments']['captures'][0]['id'] ?? $paypal_orderid;
-        eme_mark_payment_paid($payment['id'], 1, $gateway, $capture_id);
-        return 1;
+    if ( ! class_exists( 'EME_PayPal_Client' ) ) {
+        require_once 'payment_gateways/paypal/class_eme_paypal.php';
+    }
+    $client = new EME_PayPal_Client();
+    if ( ! $client->is_configured() ) return 0;
+    try {
+        $paypal_orderid = $payment['pg_pid'];
+        $response = $client->capture_order( $paypal_orderid );
+        if ( $response['status'] === 'COMPLETED' ) {
+            $capture_id = $response['purchase_units'][0]['payments']['captures'][0]['id'] ?? $paypal_orderid;
+            eme_mark_payment_paid( $payment['id'], 1, 'paypal', $capture_id );
+            return 1;
+        }
+    } catch ( Exception $e ) {
+        error_log( 'PayPal capture error: ' . $e->getMessage() );
     }
     return 0;
 }
 
 function eme_notification_paypal() {
+    if ( ! class_exists( 'EME_PayPal_Client' ) ) {
+        require_once 'payment_gateways/paypal/class_eme_paypal.php';
+    }
+    $client = new EME_PayPal_Client();
+    if ( ! $client->is_configured() ) return 0;
+
     $payload = file_get_contents('php://input');
     $headers = getallheaders();
 
-    // Required headers
-    $required = ['Paypal-Transmission-Id', 'Paypal-Transmission-Time', 'Paypal-Transmission-Sig', 'Paypal-Cert-Url', 'Paypal-Auth-Algo'];
-    foreach ($required as $h) {
-        if (!isset($headers[$h])) {
-            http_response_code(400);
+    try {
+        if ( ! $client->verify_webhook_signature( $payload, $headers ) ) {
+            http_response_code( 401 );
             exit;
         }
-    }
-
-    $webhook_id = get_option('eme_paypal_webhook_id');
-    if (!$webhook_id) {
-        error_log('PayPal: Webhook ID not found');
-        http_response_code(400);
+    } catch ( Exception $e ) {
+        error_log( 'PayPal webhook verification error: ' . $e->getMessage() );
+        http_response_code( 400 );
         exit;
     }
 
-    $data = json_decode($payload, true);
-    if (!$data) {
-        error_log('PayPal: Invalid JSON payload');
-        http_response_code(400);
-        exit;
-    }
-
-    // Get PayPal credentials
-    $clientId = get_option('eme_paypal_clientid');
-    $clientSecret = get_option('eme_paypal_secret');
-    $is_sandbox = get_option('eme_paypal_url') === 'sandbox';
-    $auth_url = $is_sandbox ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com';
-
-    // Step 1: Get access token
-    $auth_resp = wp_remote_post("$auth_url/v1/oauth2/token", [
-        'headers' => [
-            'Accept'        => 'application/json',
-            'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret"),
-        ],
-        'body' => 'grant_type=client_credentials',
-        'timeout' => 10,
-    ]);
-
-    if (is_wp_error($auth_resp)) {
-        error_log('PayPal auth error: ' . $auth_resp->get_error_message());
-        http_response_code(500);
-        exit;
-    }
-
-    $auth_body = json_decode(wp_remote_retrieve_body($auth_resp), true);
-    $access_token = $auth_body['access_token'] ?? null;
-    if (!$access_token) {
-        error_log('PayPal: Failed to get access token');
-        http_response_code(500);
-        exit;
-    }
-
-    // Step 2: Verify webhook signature via PayPal API
-    $verify_data = [
-        'transmission_id'   => $headers['Paypal-Transmission-Id'],
-        'transmission_time' => $headers['Paypal-Transmission-Time'],
-        'cert_url'          => $headers['Paypal-Cert-Url'],
-        'auth_algo'         => $headers['Paypal-Auth-Algo'],
-        'transmission_sig'  => $headers['Paypal-Transmission-Sig'],
-        'webhook_id'        => $webhook_id,
-        'webhook_event'     => $data,
-    ];
-
-    $verify_resp = wp_remote_post("$auth_url/v1/notifications/verify-webhook-signature", [
-        'headers' => [
-            'Content-Type'  => 'application/json',
-            'Authorization' => "Bearer $access_token",
-        ],
-        'body'    => json_encode($verify_data),
-        'timeout' => 10,
-    ]);
-
-    if (is_wp_error($verify_resp)) {
-        error_log('PayPal verification error: ' . $verify_resp->get_error_message());
-        http_response_code(500);
-        exit;
-    }
-
-    $verify_result = json_decode(wp_remote_retrieve_body($verify_resp), true);
-    if (($verify_result['verification_status'] ?? '') !== 'SUCCESS') {
-        error_log('PayPal webhook verification failed: ' . print_r($verify_result, true));
-        http_response_code(401);
-        exit;
-    }
-
-    // Signature verified — now process the event
-    if ($data['event_type'] === 'CHECKOUT.ORDER.APPROVED') {
+    $data = json_decode( $payload, true );
+    if ( $data && $data['event_type'] === 'CHECKOUT.ORDER.APPROVED' ) {
         $order_id = $data['resource']['id'];
-        $payment = eme_get_payment_by_pg_pid($order_id);
-        if ($payment) {
-            eme_complete_transaction_paypal($payment);
+        $payment = eme_get_payment_by_pg_pid( $order_id );
+        if ( $payment ) {
+            eme_complete_transaction_paypal( $payment );
         }
     }
 
-    http_response_code(200);
+    http_response_code( 200 );
     exit;
 }
 
@@ -2268,97 +2186,26 @@ function eme_notification_fondy() {
 }
 
 function eme_paypal_webhook() {
-    $gateway = "paypal";
-    $clientId = get_option('eme_paypal_clientid');
-    $clientSecret = get_option('eme_paypal_secret');
-    if (empty($clientId) || empty($clientSecret)) {
-        return;
+    if ( ! class_exists( 'EME_PayPal_Client' ) ) {
+        require_once 'payment_gateways/paypal/class_eme_paypal.php';
     }
+    $client = new EME_PayPal_Client();
+    if ( ! $client->is_configured() ) return 0;
 
     $events_page_link = eme_get_events_page();
-    $notification_link = add_query_arg(['eme_eventAction' => "{$gateway}_notification"], $events_page_link);
+    $notification_link = add_query_arg( [ 'eme_eventAction' => 'paypal_notification' ], $events_page_link );
 
-    // Skip if localhost
-    if (strpos($events_page_link, 'localhost') !== false) {
-        update_option( 'eme_paypal_webhook_error', __( 'since this is a site running on localhost, no webhook will be created', 'events-made-easy' ) );
+    if ( strpos( $events_page_link, 'localhost' ) !== false ) {
+        update_option( 'eme_paypal_webhook_error', __( 'Webhook not created: localhost not allowed.', 'events-made-easy' ) );
         return;
     }
 
-    $is_sandbox = get_option('eme_paypal_url') === 'sandbox';
-    $auth_url = $is_sandbox ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com';
-
-    // Step 1: Get access token
-    $auth_response = wp_remote_post("$auth_url/v1/oauth2/token", [
-        'headers' => [
-            'Accept' => 'application/json',
-            'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret"),
-        ],
-        'body' => 'grant_type=client_credentials',
-    ]);
-
-    if (is_wp_error($auth_response)) {
-        update_option('eme_paypal_webhook_error', $auth_response->get_error_message());
-        return;
-    }
-
-    $auth_data = json_decode(wp_remote_retrieve_body($auth_response), true);
-    if (!isset($auth_data['access_token'])) {
-        update_option('eme_paypal_webhook_error', 'Failed to obtain PayPal access token.');
-        return;
-    }
-    $access_token = $auth_data['access_token'];
-
-    // Step 2: List existing webhooks and delete any matching our URL
-    $list_response = wp_remote_get("$auth_url/v1/notifications/webhooks", [
-        'headers' => [
-            'Authorization' => "Bearer $access_token",
-            'Content-Type' => 'application/json',
-        ],
-    ]);
-
-    if (!is_wp_error($list_response)) {
-        $list_data = json_decode(wp_remote_retrieve_body($list_response), true);
-        if (!empty($list_data['webhooks'])) {
-            foreach ($list_data['webhooks'] as $hook) {
-                if (isset($hook['url']) && $hook['url'] === $notification_link) {
-                    wp_remote_request("$auth_url/v1/notifications/webhooks/{$hook['id']}", [
-                        'method' => 'DELETE',
-                        'headers' => ['Authorization' => "Bearer $access_token"],
-                    ]);
-                }
-            }
-        }
-    }
-
-    // Step 3: Create new webhook
-    $webhook_data = [
-        'url' => $notification_link,
-        'event_types' => [
-            ['name' => 'CHECKOUT.ORDER.APPROVED'],
-            // Add more if needed: 'PAYMENT.CAPTURE.REFUNDED', etc.
-        ],
-    ];
-
-    $create_response = wp_remote_post("$auth_url/v1/notifications/webhooks", [
-        'headers' => [
-            'Authorization' => "Bearer $access_token",
-            'Content-Type' => 'application/json',
-        ],
-        'body' => json_encode($webhook_data),
-    ]);
-
-    if (is_wp_error($create_response)) {
-        update_option('eme_paypal_webhook_error', $create_response->get_error_message());
-        return;
-    }
-
-    $result = json_decode(wp_remote_retrieve_body($create_response), true);
-    if (isset($result['id'])) {
-        update_option('eme_paypal_webhook_id', $result['id']);
-        update_option('eme_paypal_webhook_error', '');
-    } else {
-        $error = isset($result['message']) ? $result['message'] : print_r($result, true);
-        update_option('eme_paypal_webhook_error', $error);
+    try {
+        $result = $client->register_webhook( $notification_link );
+        update_option( 'eme_paypal_webhook_id', $result['id'] );
+        update_option( 'eme_paypal_webhook_error', '' );
+    } catch ( Exception $e ) {
+        update_option( 'eme_paypal_webhook_error', $e->getMessage() );
     }
 }
 
@@ -2415,10 +2262,11 @@ function eme_stripe_webhook() {
 
 function eme_charge_paypal() {
     $gateway = "paypal";
-    $clientId = get_option('eme_paypal_clientid');
-    $clientSecret = get_option('eme_paypal_secret');
-    $mode = get_option('eme_paypal_url');
-    $is_sandbox = $mode === 'sandbox';
+    if ( ! class_exists( 'EME_PayPal_Client' ) ) {
+        require_once 'payment_gateways/paypal/class_eme_paypal.php';
+    }
+    $client = new EME_PayPal_Client();
+    if ( ! $client->is_configured() ) return 0;
 
     $payment_id = intval($_POST['payment_id']);
     $price = eme_sanitize_request($_POST['price']);
@@ -2426,84 +2274,25 @@ function eme_charge_paypal() {
     $description = eme_sanitize_request($_POST['description']);
     $payment = eme_get_payment($payment_id);
 
-    $success_link = eme_payment_return_url($payment, $gateway);
-    $cancel_link = eme_payment_url($payment);
-
-    // Validate nonce, etc.
+    // Validate nonce
     if (empty($_POST["eme_{$gateway}_nonce"]) || !wp_verify_nonce($_POST["eme_{$gateway}_nonce"], "$price$cur")) {
         wp_redirect(eme_payment_return_url($payment, 1));
         exit;
     }
 
-    // Get access token
-    $auth_url = $is_sandbox ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com';
-    $response = wp_remote_post("$auth_url/v1/oauth2/token", [
-        'headers' => [
-            'Accept' => 'application/json',
-            'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret"),
-        ],
-        'body' => 'grant_type=client_credentials',
-    ]);
-
-    if (is_wp_error($response)) {
-        error_log('PayPal Auth Error: ' . $response->get_error_message());
-        return;
-    }
-
-    $auth_data = json_decode(wp_remote_retrieve_body($response), true);
-    if (!isset($auth_data['access_token'])) {
-        error_log('PayPal Auth Failed: ' . print_r($auth_data, true));
-        return;
-    }
-
-    // Create order
-    $order_data = [
-        'intent' => 'CAPTURE',
-        'purchase_units' => [[
-            'reference_id' => (string)$payment_id,
-            'description' => $description,
-            'amount' => [
-                'currency_code' => $cur,
-                'value' => number_format($price, 2, '.', ''),
-            ],
-        ]],
-        'application_context' => [
-            'cancel_url' => $cancel_link,
-            'return_url' => $success_link,
-            'brand_name' => get_bloginfo('name'),
-            'landing_page' => 'LOGIN',
-            'user_action' => 'PAY_NOW',
-        ],
-    ];
-
-    $order_response = wp_remote_post("$auth_url/v2/checkout/orders", [
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $auth_data['access_token'],
-        ],
-        'body' => json_encode($order_data),
-    ]);
-
-    if (is_wp_error($order_response)) {
-        error_log('PayPal Order Error: ' . $order_response->get_error_message());
-        return;
-    }
-
-    $order_result = json_decode(wp_remote_retrieve_body($order_response), true);
-    if (!isset($order_result['id'])) {
-        error_log('PayPal Order Failed: ' . print_r($order_result, true));
-        return;
-    }
-
-    // Save order ID (pg_pid) for later capture
-    eme_update_payment_pg_pid($payment_id, $order_result['id']);
-
-    // Redirect to approval URL
-    foreach ($order_result['links'] as $link) {
-        if ($link['rel'] === 'approve') {
-            wp_redirect($link['href']);
-            exit;
+    $success_link = eme_payment_return_url($payment, $gateway);
+    $cancel_link = eme_payment_url($payment);
+    try {
+        $order = $client->create_order( $price, $cur, $description, $payment_id, $success_link, $cancel_link );
+        eme_update_payment_pg_pid( $payment_id, $order['id'] );
+        foreach ( $order['links'] as $link ) {
+            if ( $link['rel'] === 'approve' ) {
+                wp_redirect( $link['href'] );
+                exit;
+            }
         }
+    } catch ( Exception $e ) {
+        error_log( 'PayPal create_order error: ' . $e->getMessage() );
     }
 }
 
@@ -2912,89 +2701,32 @@ function eme_charge_fondy() {
 }
 
 function eme_refund_booking_paypal($booking) {
-    $gateway = 'paypal';
-    $clientId = get_option('eme_paypal_clientid');
-    $clientSecret = get_option('eme_paypal_secret');
-    if (empty($clientId) || empty($clientSecret)) {
-        return false;
+    if ( ! class_exists( 'EME_PayPal_Client' ) ) {
+        require_once 'payment_gateways/paypal/class_eme_paypal.php';
     }
+    $client = new EME_PayPal_Client();
+    if ( ! $client->is_configured() ) return 0;
 
-    $event = eme_get_event($booking['event_id']);
-    $cur = $event ? $event['currency'] : 'EUR';
-    $price = eme_get_total_booking_price($booking);
-
-    $is_sandbox = get_option('eme_paypal_url') === 'sandbox';
-    $auth_url = $is_sandbox ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com';
-
-    // Step 1: Get access token
-    $auth_response = wp_remote_post("$auth_url/v1/oauth2/token", [
-        'headers' => [
-            'Authorization' => 'Basic ' . base64_encode("$clientId:$clientSecret"),
-        ],
-        'body' => 'grant_type=client_credentials',
-    ]);
-
-    if (is_wp_error($auth_response)) {
-        error_log("PayPal refund auth error: " . $auth_response->get_error_message());
-        return false;
-    }
-
-    $auth_data = json_decode(wp_remote_retrieve_body($auth_response), true);
-    if (!isset($auth_data['access_token'])) {
-        error_log("PayPal refund: failed to get access token");
-        return false;
-    }
-    $access_token = $auth_data['access_token'];
-
-    // Step 2: Issue refund
-    $refund_data = [
-        'amount' => [
-            'value' => number_format($price, 2, '.', ''),
-            'currency_code' => $cur,
-        ],
-        'note_to_payer' => __('Booking cancelled and refunded', 'events-made-easy'),
-    ];
-
-    $refund_response = wp_remote_post("$auth_url/v2/payments/captures/{$booking['pg_pid']}/refund", [
-        'headers' => [
-            'Authorization' => "Bearer $access_token",
-            'Content-Type' => 'application/json',
-        ],
-        'body' => json_encode($refund_data),
-    ]);
-
-    if (is_wp_error($refund_response)) {
-        error_log("PayPal refund API error: " . $refund_response->get_error_message());
-        return false;
-    }
-
-    $result = json_decode(wp_remote_retrieve_body($refund_response), true);
-    $status_code = wp_remote_retrieve_response_code($refund_response);
-
-    if ($status_code === 201 || ($result && !empty($result['id']))) {
+    try {
+        $event = eme_get_event( $booking['event_id'] );
+        $cur = $event ? $event['currency'] : 'EUR';
+        $price = eme_get_total_booking_price( $booking );
+        $client->refund_capture( $booking['pg_pid'], $price, $cur );
         return true;
-    } else {
-        error_log("PayPal refund failed: " . print_r($result, true));
+    } catch ( Exception $e ) {
+        error_log( 'PayPal refund error: ' . $e->getMessage() );
         return false;
     }
 }
 
 function eme_refund_booking_payconiq( $booking ) {
-    $price = eme_get_total_booking_price( $booking );
-    $event = eme_get_event( $booking['event_id'] );
-    if ( ! empty( $event ) ) {
-        $cur = $event['currency'];
-    } else {
-        $cur = 'EUR';
-    }
-
     $api_key = get_option( "eme_payconiq_api_key" );
     if ( ! $api_key ) {
         return;
     }
     if ( ! class_exists( 'Payconiq\Client' ) ) {
-                require_once 'payment_gateways/payconiq/src/Client.php';
-        }
+        require_once 'payment_gateways/payconiq/src/Client.php';
+    }
 
     $mode     = get_option( 'eme_payconiq_env' );
     $payconiq = new \Payconiq\Client( $api_key );
@@ -3002,12 +2734,17 @@ function eme_refund_booking_payconiq( $booking ) {
         $payconiq->setEndpointTest();
     }
     try {
+        $event = eme_get_event( $booking['event_id'] );
+        $cur = $event ? $event['currency'] : 'EUR';
+        $price = eme_get_total_booking_price( $booking );
         // currently no description
         $description = '';
         $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
+        return true;
     } catch ( Exception $e ) {
         $url = '';
         print 'Payconiq API call failed: ' . htmlspecialchars( $e->getMessage() );
+        return false;
     }
 }
 

@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 == Changelog ==
 = 3.0.24  (2025//) =
+* DomPDF update to 3.1.4
 * Update jodit to 4.7.4
 * Braintree API update to 6.30.0
 * Update Paypal API to use direct API calls, no more dependency on any SDK

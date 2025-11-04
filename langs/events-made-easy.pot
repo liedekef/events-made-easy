@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-30T12:20:31+00:00\n"
+"POT-Creation-Date: 2025-11-04T08:09:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -92,7 +92,7 @@ msgstr ""
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4342
+#: eme-payments.php:4088
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -274,7 +274,7 @@ msgstr ""
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1716
+#: eme-install.php:1719
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1734,7 +1734,7 @@ msgstr ""
 #: eme-events.php:4813
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2124
+#: eme-payments.php:2051
 #: eme-rsvp.php:5234
 msgid "No such event"
 msgstr ""
@@ -6154,7 +6154,7 @@ msgstr ""
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4232
+#: eme-payments.php:3978
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -6172,7 +6172,7 @@ msgstr ""
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4242
+#: eme-payments.php:3988
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -6689,7 +6689,7 @@ msgstr ""
 msgid "Holiday lists deleted"
 msgstr ""
 
-#: eme-install.php:1717
+#: eme-install.php:1720
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr ""
 
@@ -13034,46 +13034,49 @@ msgstr ""
 msgid "Mercado Pago API returned an error: "
 msgstr ""
 
-#: eme-payments.php:2060
-#: eme-payments.php:2144
+#: eme-payments.php:1987
+#: eme-payments.php:2071
 msgid "Hash Incorrect"
 msgstr ""
 
-#: eme-payments.php:2112
-#: eme-payments.php:2130
+#: eme-payments.php:2039
+#: eme-payments.php:2057
 msgid "Incorrect payment id."
 msgstr ""
 
-#: eme-payments.php:2135
+#: eme-payments.php:2062
 msgid "Incorrect currency."
 msgstr ""
 
-#: eme-payments.php:2283
-#: eme-payments.php:2375
+#: eme-payments.php:2208
+msgid "Webhook not created: localhost not allowed."
+msgstr ""
+
+#: eme-payments.php:2231
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr ""
 
-#: eme-payments.php:2955
-#: eme-payments.php:3462
-#: eme-payments.php:3477
-msgid "Booking cancelled and refunded"
-msgstr ""
-
-#: eme-payments.php:3062
+#: eme-payments.php:2808
 msgid "Booking refunded"
 msgstr ""
 
-#: eme-payments.php:4200
-#: eme-payments.php:4261
+#: eme-payments.php:3208
+#: eme-payments.php:3223
+#: payment_gateways/paypal/class_eme_paypal.php:105
+msgid "Booking cancelled and refunded"
+msgstr ""
+
+#: eme-payments.php:3946
+#: eme-payments.php:4007
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:4203
-#: eme-payments.php:4264
+#: eme-payments.php:3949
+#: eme-payments.php:4010
 msgid "Booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:4377
+#: eme-payments.php:4123
 msgid "Configured"
 msgstr ""
 

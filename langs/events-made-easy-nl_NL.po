@@ -63,7 +63,7 @@ msgstr "in naam van %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4342
+#: eme-payments.php:4088
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -171,7 +171,7 @@ msgstr "Elke"
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1716
+#: eme-install.php:1719
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1620,7 +1620,7 @@ msgstr "Druk op de Back-knop in je browser om naar het vorige scherm terug te ke
 #: eme-events.php:4813
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2124
+#: eme-payments.php:2051
 #: eme-rsvp.php:5234
 msgid "No such event"
 msgstr "Geen dergelijk evenement"
@@ -5900,7 +5900,7 @@ msgstr "Geen gegevens gevonden"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4232
+#: eme-payments.php:3978
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5918,7 +5918,7 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4242
+#: eme-payments.php:3988
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -6090,7 +6090,7 @@ msgstr "Standaard opmaak: YYYY-MM-DD, één per regel"
 msgid "For more information about holidays, see "
 msgstr "Voor meer informative over vakanties, zie "
 
-#: eme-install.php:1717
+#: eme-install.php:1720
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Deze pagina wordt gebruikt door Events Made Easy. Verander deze niet, gebruik deze niet in een menu, verwijder deze niet. Wees er enkel zeker van dat de EME optie genoemd 'Evenementen pagina' verwijst naar deze pagina. EME gebruikt deze pagina om alle evenementen, locaties, boekingen, kaarten, ... te tonen. Als je deze wil verwijderen, maak een nieuwe aan voor gebruik in EME en pas de optie 'Evenementen pagina' aan."
 
@@ -11831,32 +11831,31 @@ msgstr "Betaal %s"
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API heeft een foutmelding teruggegeven: "
 
-#: eme-payments.php:2060
-#: eme-payments.php:2144
+#: eme-payments.php:1987
+#: eme-payments.php:2071
 msgid "Hash Incorrect"
 msgstr "Foutieve hash"
 
-#: eme-payments.php:2112
-#: eme-payments.php:2130
+#: eme-payments.php:2039
+#: eme-payments.php:2057
 msgid "Incorrect payment id."
 msgstr "Foutief betalings-ID."
 
-#: eme-payments.php:2283
-#: eme-payments.php:2375
+#: eme-payments.php:2231
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "aangezien dit een site is die op localhost draait, zal er geen webhook aangemaakt worden"
 
-#: eme-payments.php:3062
+#: eme-payments.php:2808
 msgid "Booking refunded"
 msgstr "Boeking terugbetaald"
 
-#: eme-payments.php:4200
-#: eme-payments.php:4261
+#: eme-payments.php:3946
+#: eme-payments.php:4007
 msgid "Nothing found or booking already cancelled"
 msgstr "Niks gevonden of boeking reeds geannuleerd"
 
-#: eme-payments.php:4203
-#: eme-payments.php:4264
+#: eme-payments.php:3949
+#: eme-payments.php:4010
 msgid "Booking already cancelled"
 msgstr "De boeking is al geannuleerd"
 
@@ -13723,7 +13722,7 @@ msgstr "Evenementinzending '%s'"
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Geen gebeurtenis gevonden die verband houdt met deze betaling. Als u denkt dat u dit bericht ten onrechte heeft ontvangen, neem dan contact op met de site-eigenaar."
 
-#: eme-payments.php:2135
+#: eme-payments.php:2062
 msgid "Incorrect currency."
 msgstr "Onjuiste valuta."
 
@@ -13739,7 +13738,7 @@ msgstr "De valuta die wordt gebruikt wanneer ingediende evenementen moeten worde
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "De betaalmethode(n) die moet(en) worden gebruikt wanneer ingediende evenementen moeten worden betaald. Dit heeft niets te maken met RSVP-instellingen in het ingediende evenement zelf!"
 
-#: eme-payments.php:4377
+#: eme-payments.php:4123
 msgid "Configured"
 msgstr "Geconfigureerd"
 
@@ -14378,9 +14377,9 @@ msgstr "Jodit"
 msgid "The HTML editor used by the plugin."
 msgstr "De HTML-editor die door de plugin wordt gebruikt."
 
-#: eme-payments.php:2955
-#: eme-payments.php:3462
-#: eme-payments.php:3477
+#: eme-payments.php:3208
+#: eme-payments.php:3223
+#: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr "Boeking geannuleerd en terugbetaald"
 
@@ -14561,3 +14560,7 @@ msgstr "Aanmeldformulier voor taken (sectie persoonlijke gegevens)"
 #: eme-events.php:8884
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
 msgstr "(Laat leeg of vul 0 in om deze limiet uit te schakelen. Negatieve getallen zijn toegestaan en voor uren kunt u ook decimalen gebruiken.)"
+
+#: eme-payments.php:2208
+msgid "Webhook not created: localhost not allowed."
+msgstr ""

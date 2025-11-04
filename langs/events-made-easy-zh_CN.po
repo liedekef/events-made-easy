@@ -63,7 +63,7 @@ msgstr ""
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4342
+#: eme-payments.php:4088
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -171,7 +171,7 @@ msgstr "任何"
 
 #: eme-attendances.php:80
 #: eme-events.php:9635
-#: eme-install.php:1716
+#: eme-install.php:1719
 #: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
@@ -1628,7 +1628,7 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 #: eme-events.php:4813
 #: eme-mailer.php:2310
 #: eme-payments.php:152
-#: eme-payments.php:2124
+#: eme-payments.php:2051
 #: eme-rsvp.php:5234
 msgid "No such event"
 msgstr "没有此活动"
@@ -5903,7 +5903,7 @@ msgstr "没有这样的记录"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4232
+#: eme-payments.php:3978
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5921,7 +5921,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4242
+#: eme-payments.php:3988
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -6093,7 +6093,7 @@ msgstr "基本格式：YYYY-MM-DD，每行一个"
 msgid "For more information about holidays, see "
 msgstr "关于假期的更多信息，请参见"
 
-#: eme-install.php:1717
+#: eme-install.php:1720
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "本页由 Events Made Easy 使用。不要改变它，不要在您的菜单中使用它，不要删除它。只要确保 EME 的设置称为 \"活动页面\"，指向这个页面。EME 使用这个页面来呈现任何和所有的事件、地点、预订、地图、......任何东西。如果您确实想删除这个页面，创建一个 EME 可以使用的新页面，并相应地更新 EME 设置中的 \"活动页面\"。"
 
@@ -11871,32 +11871,31 @@ msgstr "支付 %s"
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API 回复一个错误："
 
-#: eme-payments.php:2060
-#: eme-payments.php:2144
+#: eme-payments.php:1987
+#: eme-payments.php:2071
 msgid "Hash Incorrect"
 msgstr "Hash 值不正确"
 
-#: eme-payments.php:2112
-#: eme-payments.php:2130
+#: eme-payments.php:2039
+#: eme-payments.php:2057
 msgid "Incorrect payment id."
 msgstr "支付 ID 不正确。"
 
-#: eme-payments.php:2283
-#: eme-payments.php:2375
+#: eme-payments.php:2231
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "因为这是一个运行在 localhost 上的网站，所以不会创建网络钩子。"
 
-#: eme-payments.php:3062
+#: eme-payments.php:2808
 msgid "Booking refunded"
 msgstr "预订已退款"
 
-#: eme-payments.php:4200
-#: eme-payments.php:4261
+#: eme-payments.php:3946
+#: eme-payments.php:4007
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:4203
-#: eme-payments.php:4264
+#: eme-payments.php:3949
+#: eme-payments.php:4010
 msgid "Booking already cancelled"
 msgstr ""
 
@@ -13779,7 +13778,7 @@ msgstr ""
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-payments.php:2135
+#: eme-payments.php:2062
 msgid "Incorrect currency."
 msgstr ""
 
@@ -13795,7 +13794,7 @@ msgstr ""
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: eme-payments.php:4377
+#: eme-payments.php:4123
 msgid "Configured"
 msgstr ""
 
@@ -14454,9 +14453,9 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:2955
-#: eme-payments.php:3462
-#: eme-payments.php:3477
+#: eme-payments.php:3208
+#: eme-payments.php:3223
+#: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""
 
@@ -14635,4 +14634,8 @@ msgstr ""
 
 #: eme-events.php:8884
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
+msgstr ""
+
+#: eme-payments.php:2208
+msgid "Webhook not created: localhost not allowed."
 msgstr ""

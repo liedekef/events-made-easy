@@ -57,7 +57,7 @@ class Client {
      * @return self
      */
     public function setEndpointTest() {
-        $this->endpoint = 'https://api.ext.payconiq.com/v3';
+        $this->endpoint = 'https://merchant.api.preprod.bancontact.net/v3';
 
         return $this;
     }

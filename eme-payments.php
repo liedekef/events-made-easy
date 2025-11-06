@@ -3082,10 +3082,6 @@ function eme_charge_payconiq() {
             returnUrl: $return_link
         );
         $url = $payconiq_payment->_links->checkout->href;
-        // fix a payconiq api bug where the href-links in sandbox point to prod too
-        if ( preg_match( '/sandbox/', $mode ) ) {
-            $url = str_replace( 'https://payconiq.com', 'https://ext.payconiq.com', $url );
-        }
     } catch ( Exception $e ) {
         $url = '';
         print 'Payconiq API call failed: ' . htmlspecialchars( $e->getMessage() );
@@ -3111,17 +3107,13 @@ function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
         return;
     }
 
-    //$display_errors = ini_get( 'display_errors' );
-    //@ini_set( 'display_errors', '0' );
-
     // if no payment id is provided, it is a real notification from payconiq, so get the payment id from the input
     if ( ! $payconiq_paymentid ) {
         $payload            = @file_get_contents( 'php://input' );
         $data               = json_decode( $payload );
         $payconiq_paymentid = $data->paymentId;
     }
-    //error_log("EME saw payconiq payment id $payconiq_paymentid");
-    // We won't verify the signature, but we'll get the current payment from EME and compare all that
+
     if ( ! class_exists( 'Payconiq\Client' ) ) {
         require_once 'payment_gateways/payconiq/src/Client.php';
     }
@@ -3133,15 +3125,13 @@ function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
-        //error_log("EME payconiq error getting payment id $payconiq_paymentid");
-        //@ini_set( 'display_errors', $display_errors );
+        error_log("EME payconiq error getting payment id $payconiq_paymentid");
         return;
     }
 
     $payconiq_merchantid = $payconiq_payment->creditor->merchantId;
     if ( $payconiq_merchantid != $merchant_id ) {
-        //error_log("EME payconiq wrong merchant id $payconiq_merchantid");
-        //@ini_set( 'display_errors', $display_errors );
+        error_log("EME payconiq wrong merchant id $payconiq_merchantid");
         return;
     }
 
@@ -3153,16 +3143,14 @@ function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
         return;
     }
     if ( $payment['pg_pid'] != $payconiq_paymentid ) {
-        //error_log("EME payment id $payment_id does not match payconiq payment id $payconiq_paymentid");
-        //@ini_set( 'display_errors', $display_errors );
+        error_log("EME payment id $payment_id does not match payconiq payment id $payconiq_paymentid");
         return;
     }
     // The payment is paid and to be sure we also check the paid amount
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->totalAmount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
     } else {
-        //error_log("EME payment id $payment_id, ignored payconiq notification with payment id $payconiq_paymentid");
-        //@ini_set( 'display_errors', $display_errors );
+        error_log("EME payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->totalAmount );
     }
 }
 

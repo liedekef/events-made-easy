@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.25  (2025/11/09) =
+* Payconiq fix
+
 = 3.0.24  (2025/11/04) =
 * Mollie update to 3.5.0
 * mercadopago update to 3.7.1

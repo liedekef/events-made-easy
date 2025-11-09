@@ -3141,10 +3141,10 @@ function eme_complete_transaction_payconiq( $payment ) {
         return;
     }
     // The payment is paid and to be sure we also check the paid amount
-    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->totalAmount / 100 >= $eme_price ) {
+    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
     } else {
-        error_log("EME payconiq error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->totalAmount );
+        error_log("EME payconiq error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }
 }
 
@@ -3197,10 +3197,10 @@ function eme_notification_payconiq() {
         exit;
     }
     // The payment is paid and to be sure we also check the paid amount
-    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->totalAmount / 100 >= $eme_price ) {
+    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
     } else {
-        error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->totalAmount );
+        error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
         http_response_code( 400 );
         exit;
     }

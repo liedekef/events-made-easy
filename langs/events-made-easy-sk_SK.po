@@ -91,7 +91,7 @@ msgstr "v mene %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4088
+#: eme-payments.php:4128
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -5772,7 +5772,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:3978
+#: eme-payments.php:4018
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5790,7 +5790,7 @@ msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omy
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:3988
+#: eme-payments.php:4028
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -12378,17 +12378,17 @@ msgstr "pretože tento web beží na localhost-e, nebude vytvorený žiadny webh
 msgid "Booking refunded"
 msgstr "Platba za rezerváciu vrátená"
 
-#: eme-payments.php:3946
-#: eme-payments.php:4007
+#: eme-payments.php:3986
+#: eme-payments.php:4047
 msgid "Nothing found or booking already cancelled"
 msgstr "Nič sa nenašlo alebo rezervácia už bola zrušená"
 
-#: eme-payments.php:3949
-#: eme-payments.php:4010
+#: eme-payments.php:3989
+#: eme-payments.php:4050
 msgid "Booking already cancelled"
 msgstr "Rezervácia už bola zrušená"
 
-#: eme-payments.php:4123
+#: eme-payments.php:4163
 msgid "Configured"
 msgstr "Nastavené"
 
@@ -14388,8 +14388,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3208
-#: eme-payments.php:3223
+#: eme-payments.php:3248
+#: eme-payments.php:3263
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""

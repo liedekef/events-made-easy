@@ -63,7 +63,7 @@ msgstr "in naam van %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4088
+#: eme-payments.php:4128
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -5900,7 +5900,7 @@ msgstr "Geen gegevens gevonden"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:3978
+#: eme-payments.php:4018
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5918,7 +5918,7 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:3988
+#: eme-payments.php:4028
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -11849,13 +11849,13 @@ msgstr "aangezien dit een site is die op localhost draait, zal er geen webhook a
 msgid "Booking refunded"
 msgstr "Boeking terugbetaald"
 
-#: eme-payments.php:3946
-#: eme-payments.php:4007
+#: eme-payments.php:3986
+#: eme-payments.php:4047
 msgid "Nothing found or booking already cancelled"
 msgstr "Niks gevonden of boeking reeds geannuleerd"
 
-#: eme-payments.php:3949
-#: eme-payments.php:4010
+#: eme-payments.php:3989
+#: eme-payments.php:4050
 msgid "Booking already cancelled"
 msgstr "De boeking is al geannuleerd"
 
@@ -13738,7 +13738,7 @@ msgstr "De valuta die wordt gebruikt wanneer ingediende evenementen moeten worde
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "De betaalmethode(n) die moet(en) worden gebruikt wanneer ingediende evenementen moeten worden betaald. Dit heeft niets te maken met RSVP-instellingen in het ingediende evenement zelf!"
 
-#: eme-payments.php:4123
+#: eme-payments.php:4163
 msgid "Configured"
 msgstr "Geconfigureerd"
 
@@ -14377,8 +14377,8 @@ msgstr "Jodit"
 msgid "The HTML editor used by the plugin."
 msgstr "De HTML-editor die door de plugin wordt gebruikt."
 
-#: eme-payments.php:3208
-#: eme-payments.php:3223
+#: eme-payments.php:3248
+#: eme-payments.php:3263
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr "Boeking geannuleerd en terugbetaald"

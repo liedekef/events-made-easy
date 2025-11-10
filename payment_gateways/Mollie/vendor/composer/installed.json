@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.8",
-            "version_normalized": "1.5.8.0",
+            "version": "1.5.9",
+            "version_normalized": "1.5.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "719026bb30813accb68271fee7e39552a58e9f65"
+                "reference": "1905981ee626e6f852448b7aaa978f8666c5bc54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/719026bb30813accb68271fee7e39552a58e9f65",
-                "reference": "719026bb30813accb68271fee7e39552a58e9f65",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/1905981ee626e6f852448b7aaa978f8666c5bc54",
+                "reference": "1905981ee626e6f852448b7aaa978f8666c5bc54",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "symfony/process": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
-            "time": "2025-08-20T18:49:47+00:00",
+            "time": "2025-11-06T11:46:17+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -61,7 +61,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.8"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.9"
             },
             "funding": [
                 {
@@ -77,17 +77,17 @@
         },
         {
             "name": "mollie/mollie-api-php",
-            "version": "v3.5.0",
-            "version_normalized": "3.5.0.0",
+            "version": "v3.6.0",
+            "version_normalized": "3.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mollie/mollie-api-php.git",
-                "reference": "a4e7f483dc884e8c421f3ab9acd59fa4f2b374ed"
+                "reference": "7df3a41fe95ac736d1470e158d7115085adbcafe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/a4e7f483dc884e8c421f3ab9acd59fa4f2b374ed",
-                "reference": "a4e7f483dc884e8c421f3ab9acd59fa4f2b374ed",
+                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/7df3a41fe95ac736d1470e158d7115085adbcafe",
+                "reference": "7df3a41fe95ac736d1470e158d7115085adbcafe",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
             "suggest": {
                 "mollie/oauth2-mollie-php": "Use OAuth to authenticate with the Mollie API. This is needed for some endpoints. Visit https://docs.mollie.com/ for more information."
             },
-            "time": "2025-10-28T10:41:21+00:00",
+            "time": "2025-11-05T15:04:54+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -170,7 +170,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mollie/mollie-api-php/issues",
-                "source": "https://github.com/mollie/mollie-api-php/tree/v3.5.0"
+                "source": "https://github.com/mollie/mollie-api-php/tree/v3.6.0"
             },
             "install-path": "../mollie/mollie-api-php"
         },

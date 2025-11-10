@@ -5263,6 +5263,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
         }
     } elseif ( $scope == 'this_year--today' ) {
+        $year        = $eme_date_obj->getYear();
         $limit_start = "$year-01-01 00:00:00";
         $limit_end   = $today . ' 23:59:59';
         if ( $show_ongoing ) {
@@ -5271,6 +5272,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
         }
     } elseif ( $scope == 'this_year--yesterday' ) {
+        $year        = $eme_date_obj->getYear();
         $limit_start = "$year-01-01 00:00:00";
         $limit_end   = $eme_date_obj->minusDays( 1 )->endOfDay()->getDateTime();
         if ( $show_ongoing ) {

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.26  (2025/11/) =
+* Fix event scopes this_year--today and this_year--yesterday
+
 = 3.0.25  (2025/11/09) =
 * Payconiq fix
 

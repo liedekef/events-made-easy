@@ -207,12 +207,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    mailPreviewHandler('#previeweventmailButton', 'eme_previeweventmail', '#previeweventmail-message', [
+    mailPreviewHandler('#previeweventmailButton', 'eme_previeweventmail', '#previeweventmail-result', [
         'input[name="eventmail_chooseperson"]',
         'input[name="send_previeweventmailto_id"]'
     ]);
 
-    mailPreviewHandler('#previewmailButton', 'eme_previewmail', '#previewmail-message', [
+    mailPreviewHandler('#previewmailButton', 'eme_previewmail', '#previewmail-result', [
         'input[name="chooseperson"]',
         'input[name="send_previewmailto_id"]'
     ]);

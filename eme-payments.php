@@ -3203,9 +3203,9 @@ function eme_notification_payconiq() {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
     } else {
         error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
-        http_response_code( 400 );
-        exit;
     }
+    http_response_code( 200 );
+    exit;
 }
 
 function eme_refund_booking_mollie( $booking ) {

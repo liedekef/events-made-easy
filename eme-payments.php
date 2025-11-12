@@ -3136,8 +3136,8 @@ function eme_complete_transaction_payconiq( $payment ) {
         // notif for payment that doesn't exist, let's quit
         return;
     }
-    if ( $payment['pg_pid'] != $payconiq_paymentid ) {
-        error_log("EME payconiq error: payment id $payment_id does not match payconiq payment id $payconiq_paymentid");
+    if (eme_get_payment_paid($payment)) {
+        // Payment is already processed, just return success
         return;
     }
     // The payment is paid and to be sure we also check the paid amount
@@ -3168,6 +3168,8 @@ function eme_notification_payconiq() {
     if ( preg_match( '/sandbox/', $mode ) ) {
         $payconiq->setEndpointTest();
     }
+
+    // we don't trust the notification (and don't bother with the signature), easiest is to retrieve the payment from payconiq and check it
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
@@ -3191,9 +3193,9 @@ function eme_notification_payconiq() {
         http_response_code( 403 );
         exit;
     }
-    if ( $payment['pg_pid'] != $payconiq_paymentid ) {
-        error_log("EME payconiq notif error: payment id $payment_id does not match payconiq payment id $payconiq_paymentid");
-        http_response_code( 400 );
+    if (eme_get_payment_paid($payment)) {
+        // Payment is already processed, just return success
+        http_response_code( 200 );
         exit;
     }
     // The payment is paid and to be sure we also check the paid amount

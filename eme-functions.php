@@ -161,9 +161,9 @@ function eme_captcha_generate( $file ) {
     $white             = imagecolorallocate( $im, 255, 255, 255 );
     $grey              = imagecolorallocate( $im, 128, 128, 128 );
     $black             = imagecolorallocate( $im, 0, 0, 0 );
-    $red               = imagecolorallocate( $im, 255, 0, 0 );
-    $blue              = imagecolorallocate( $im, 0, 0, 255 );
-    $green             = imagecolorallocate( $im, 0, 255, 0 );
+    $red               = imagecolorallocate( $im, 200, 0, 0 );
+    $blue              = imagecolorallocate( $im, 0, 0, 200 );
+    $green             = imagecolorallocate( $im, 0, 200, 0 );
     $background_colors = [ $red, $blue, $green, $black ];
 
     // draw rectangle in random color

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 3.0.25
+Stable tag: 3.0.26
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,9 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 3.0.26  (2025/11/) =
+= 3.0.26  (2025/11/14) =
 * Fix event scopes this_year--today and this_year--yesterday
 * Mollie update to 3.6.0
+* ftable update
+* small payconiq code simplification
 
 = 3.0.25  (2025/11/09) =
 * Payconiq fix

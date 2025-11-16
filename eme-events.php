@@ -7562,7 +7562,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_contactperson_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_contactperson_email_subject" id="eme_prop_event_contactperson_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_contactperson_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_email_subject')); ?>>
+    <input type="text" maxlength="250" name="eme_prop_event_contactperson_email_subject" id="eme_prop_event_contactperson_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_contactperson_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_contactperson_email_body'] ) ) {

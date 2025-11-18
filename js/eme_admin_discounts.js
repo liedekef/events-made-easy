@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (discountsButton) {
         discountsButton.addEventListener('click', function (e) {
             e.preventDefault();
-            const selectedRows = DiscountTableContainer.getSelectedRows();
+            const selectedRows = DiscountsTableContainer.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;

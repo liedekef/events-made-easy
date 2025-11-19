@@ -397,8 +397,17 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
     }
     $template = eme_get_template( $template_id );
     // in the case the template wasn't found ...
-    if ( ! $template || ! isset( $template['format'] ) ) {
+    if ( ! $template || ! empty( $template['format'] ) ) {
         return '';
+    }
+
+    // for mail related templates, override the nl2br_wanted param
+    if ( preg_match( '/mail/', $template['type'] ) ) {
+        if ( get_option( 'eme_mail_send_html' ) ) {
+            $nl2br_wanted = 1;
+        } else {
+            $nl2br_wanted = 0;
+        }
     }
 
     // translate possible language tags
@@ -421,16 +430,7 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
     if ( $nl2br_wanted == 0 || empty( $format ) ) {
         return $format;
     }
-
-    if ( preg_match( '/mail/', $template['type'] ) ) {
-        if ( get_option( 'eme_mail_send_html' ) ) {
-            return eme_nl2br_save_html( $format );
-        } else {
-            return $format;
-        }
-    } else {
-        return eme_nl2br_save_html( $format );
-    }
+    return eme_nl2br_save_html( $format );
 }
 
 // use the next call to get a template format for mail sending

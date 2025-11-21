@@ -533,7 +533,7 @@ function eme_ajax_get_template() {
         current_user_can( get_option( 'eme_cap_send_mails' ) ) || 
         current_user_can( get_option( 'eme_cap_send_other_mails' ) ) || 
         current_user_can( get_option( 'eme_cap_send_generic_mails' ) ) || 
-        current_user_can( get_option( 'eme_cap_send_manage_mails' ) )
+        current_user_can( get_option( 'eme_cap_manage_mails' ) )
     ) ) {
     wp_die();
     }

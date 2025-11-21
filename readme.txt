@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.27  (2025/11/) =
+* Fix bulk actions for discounts
+* Small color improv for eme captcha
+* Fix an access setting not being saved
+
 = 3.0.26  (2025/11/14) =
 * Fix event scopes this_year--today and this_year--yesterday
 * Mollie update to 3.6.0

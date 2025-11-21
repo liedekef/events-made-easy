@@ -6150,119 +6150,140 @@ function eme_ajax_bookings_list() {
 
 function eme_ajax_manage_bookings() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if (empty( $_POST['do_action'] ) ) {
+        wp_die();
+    }
+    $do_action   = eme_sanitize_request( $_POST['do_action'] );
     if ( ! (
         current_user_can( get_option( 'eme_cap_registrations' ) ) ||
         current_user_can( get_option( 'eme_cap_author_registrations' ) ) ||
         current_user_can( get_option( 'eme_cap_approve' ) ) ||
-        current_user_can( get_option( 'eme_cap_author_approve' ) )
-    ) ) {
-    wp_die();
+        current_user_can( get_option( 'eme_cap_author_approve' ) ) )
+        ||
+        ! ( 
+            $do_action == "rsvpMails" &&
+            ( current_user_can( get_option( 'eme_cap_send_mails' ) ) || current_user_can( get_option( 'eme_cap_send_other_mails' ) ))
+        )
+    ) {
+        wp_die();
     }
 
-    if ( isset( $_POST['do_action'] ) ) {
-        $booking_ids = eme_sanitize_request( $_POST['booking_ids'] );
-        $ids_arr     = explode( ',', $booking_ids );
-        $do_action   = eme_sanitize_request( $_POST['do_action'] );
-        $send_mail   = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
-        $refund      = ( isset( $_POST['refund'] ) ) ? intval( $_POST['refund'] ) : 0;
-        // to be sure
-        if ( ! get_option( 'eme_payment_refund_ok' ) ) {
-            $refund = 0;
-        }
+    $booking_ids = eme_sanitize_request( $_POST['booking_ids'] );
+    $ids_arr     = explode( ',', $booking_ids );
+    $send_mail   = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
+    $refund      = ( isset( $_POST['refund'] ) ) ? intval( $_POST['refund'] ) : 0;
+    // to be sure
+    if ( ! get_option( 'eme_payment_refund_ok' ) ) {
+        $refund = 0;
+    }
 
-        if ( eme_is_numeric_array( $ids_arr ) ) {
-            switch ( $do_action ) {
-            case 'markpaidandapprove':
-                // shortcut button to do 2 things at once, mail will always be sent
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_rsvp_markpaidandapprove( $ids_arr );
-                break;
-            case 'approveBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_rsvp_approve( $ids_arr, $do_action, $send_mail );
-                break;
-            case 'deleteBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_rsvp_delete( $ids_arr );
-                break;
-            case 'trashBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_rsvp_trash( $ids_arr, $do_action, $send_mail, $refund );
-                break;
-            case 'partialPayment':
-                header( 'Content-type: application/json; charset=utf-8' );
-                $amount = ( isset( $_POST['partial_amount'] ) ) ? eme_sanitize_request($_POST['partial_amount']) : 0;
-                if ( count( $ids_arr ) == 1 && is_numeric( $amount ) ) {
-                    $booking_id = $ids_arr[0];
-                    eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_mail );
-                }
-                break;
-            case 'markPaid':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_mark_booking_paid( $ids_arr, 'paidBooking', $send_mail );
-                break;
-            case 'markUnpaid':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_mark_booking_unpaid( $ids_arr, 'updateBooking', $send_mail, $refund );
-                break;
-            case 'resendApprovedBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                $send_to_contact_too = ( isset( $_POST['send_to_contact_too'] ) ) ? intval( $_POST['send_to_contact_too'] ) : 0;
-                if ($send_to_contact_too) {
-                    eme_ajax_action_resend_booking_mail( $ids_arr, 'approvedBooking' );
-                } else {
-                    eme_ajax_action_resend_booking_mail( $ids_arr, $do_action );
-                }
-                break;
-            case 'resendPendingBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_resend_booking_mail( $ids_arr, 'pendingBooking' );
-                break;
-            case 'userConfirmBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_mark_userconfirm( $booking_ids, $do_action );
-                break;
-            case 'pendingBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_mark_pending( $ids_arr, $do_action, $send_mail, $refund );
-                break;
-            case 'noteAttendance':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_mark_attendance( $ids_arr, $do_action );
-                break;
-            case 'unsetwaitinglistBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_remove_waitinglist( $ids_arr, $do_action, $send_mail );
-                break;
-            case 'setwaitinglistBooking':
-                header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_move_waitinglist( $ids_arr, $do_action, $send_mail, $refund );
-                break;
-            case 'rsvpMails':
-                header( 'Content-type: application/json; charset=utf-8' );
-                $template_id_subject = ( isset( $_POST['rsvpmail_template_subject'] ) ) ? intval( $_POST['rsvpmail_template_subject'] ) : 0;
-                $template_id         = ( isset( $_POST['rsvpmail_template'] ) ) ? intval( $_POST['rsvpmail_template'] ) : 0;
-                if ( $template_id_subject && $template_id ) {
-                    eme_ajax_action_send_booking_mails( $ids_arr, $template_id_subject, $template_id );
-                }
-                break;
-            case 'pdf':
-                $template_id        = ( isset( $_POST['pdf_template'] ) ) ? intval( $_POST['pdf_template'] ) : 0;
-                $template_id_header = ( isset( $_POST['pdf_template_header'] ) ) ? intval( $_POST['pdf_template_header'] ) : 0;
-                $template_id_footer = ( isset( $_POST['pdf_template_footer'] ) ) ? intval( $_POST['pdf_template_footer'] ) : 0;
-                if ( $template_id ) {
-                    eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header, $template_id_footer );
-                }
-                break;
-            case 'html':
-                $template_id        = ( isset( $_POST['html_template'] ) ) ? intval( $_POST['html_template'] ) : 0;
-                $template_id_header = ( isset( $_POST['html_template_header'] ) ) ? intval( $_POST['html_template_header'] ) : 0;
-                $template_id_footer = ( isset( $_POST['html_template_footer'] ) ) ? intval( $_POST['html_template_footer'] ) : 0;
-                if ( $template_id ) {
-                    eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
-                }
-                break;
+    if ( eme_is_numeric_array( $ids_arr ) ) {
+        switch ( $do_action ) {
+        case 'markpaidandapprove':
+            // shortcut button to do 2 things at once, mail will always be sent
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_rsvp_markpaidandapprove( $ids_arr );
+            break;
+        case 'approveBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_rsvp_approve( $ids_arr, $do_action, $send_mail );
+            break;
+        case 'deleteBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_rsvp_delete( $ids_arr );
+            break;
+        case 'trashBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_rsvp_trash( $ids_arr, $do_action, $send_mail, $refund );
+            break;
+        case 'partialPayment':
+            header( 'Content-type: application/json; charset=utf-8' );
+            $amount = ( isset( $_POST['partial_amount'] ) ) ? eme_sanitize_request($_POST['partial_amount']) : 0;
+            if ( count( $ids_arr ) == 1 && is_numeric( $amount ) ) {
+                $booking_id = $ids_arr[0];
+                eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_mail );
             }
+            break;
+        case 'markPaid':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_mark_booking_paid( $ids_arr, 'paidBooking', $send_mail );
+            break;
+        case 'markUnpaid':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_mark_booking_unpaid( $ids_arr, 'updateBooking', $send_mail, $refund );
+            break;
+        case 'resendApprovedBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            $send_to_contact_too = ( isset( $_POST['send_to_contact_too'] ) ) ? intval( $_POST['send_to_contact_too'] ) : 0;
+            if ($send_to_contact_too) {
+                eme_ajax_action_resend_booking_mail( $ids_arr, 'approvedBooking' );
+            } else {
+                eme_ajax_action_resend_booking_mail( $ids_arr, $do_action );
+            }
+            break;
+        case 'resendPendingBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_resend_booking_mail( $ids_arr, 'pendingBooking' );
+            break;
+        case 'userConfirmBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_mark_userconfirm( $booking_ids, $do_action );
+            break;
+        case 'pendingBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_mark_pending( $ids_arr, $do_action, $send_mail, $refund );
+            break;
+        case 'noteAttendance':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_mark_attendance( $ids_arr, $do_action );
+            break;
+        case 'unsetwaitinglistBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_remove_waitinglist( $ids_arr, $do_action, $send_mail );
+            break;
+        case 'setwaitinglistBooking':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_move_waitinglist( $ids_arr, $do_action, $send_mail, $refund );
+            break;
+        case 'rsvpMails':
+            header( 'Content-type: application/json; charset=utf-8' );
+            $template_id_subject = ( isset( $_POST['rsvpmail_template_subject'] ) ) ? intval( $_POST['rsvpmail_template_subject'] ) : 0;
+            $template_id         = ( isset( $_POST['rsvpmail_template'] ) ) ? intval( $_POST['rsvpmail_template'] ) : 0;
+            if ( $template_id_subject && $template_id ) {
+                eme_ajax_action_send_booking_mails( $ids_arr, $template_id_subject, $template_id );
+            } else {
+                $ajaxResult = [];
+                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['Result']      = 'ERROR';
+                print wp_json_encode( $ajaxResult );
+            }
+            break;
+        case 'pdf':
+            $template_id        = ( isset( $_POST['pdf_template'] ) ) ? intval( $_POST['pdf_template'] ) : 0;
+            $template_id_header = ( isset( $_POST['pdf_template_header'] ) ) ? intval( $_POST['pdf_template_header'] ) : 0;
+            $template_id_footer = ( isset( $_POST['pdf_template_footer'] ) ) ? intval( $_POST['pdf_template_footer'] ) : 0;
+            if ( $template_id ) {
+                eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header, $template_id_footer );
+            } else {
+                $ajaxResult = [];
+                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['Result']      = 'ERROR';
+                print wp_json_encode( $ajaxResult );
+            }
+            break;
+        case 'html':
+            $template_id        = ( isset( $_POST['html_template'] ) ) ? intval( $_POST['html_template'] ) : 0;
+            $template_id_header = ( isset( $_POST['html_template_header'] ) ) ? intval( $_POST['html_template_header'] ) : 0;
+            $template_id_footer = ( isset( $_POST['html_template_footer'] ) ) ? intval( $_POST['html_template_footer'] ) : 0;
+            if ( $template_id ) {
+                eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
+            } else {
+                $ajaxResult = [];
+                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['Result']      = 'ERROR';
+                print wp_json_encode( $ajaxResult );
+            }
+            break;
         }
     }
     wp_die();

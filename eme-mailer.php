@@ -2020,11 +2020,6 @@ function eme_send_mails_ajax_actions( $action ) {
         wp_die();
     }
      */
-    if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $actions_allowed = 1;
-    } else {
-        $actions_allowed = 0;
-    }
     $ajaxResult       = [];
     $conditions       = [];
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );

@@ -2011,12 +2011,15 @@ function eme_send_mails_ajax_actions( $action ) {
     global $wpdb;
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    // the access check is done when the function is invoked, not needed here
+    /*
     if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
         print "<div class='error eme-message-admin'>";
         esc_html_e( 'Access denied!', 'events-made-easy' );
         print "</div>";
         wp_die();
     }
+     */
     if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $actions_allowed = 1;
     } else {

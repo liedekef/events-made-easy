@@ -737,9 +737,11 @@ document.addEventListener('DOMContentLoaded', function () {
         extraPlugins: ['remove_button'],
         pagesize: 30,
         action: 'eme_events_select2',
-            ajaxParams: {
-                search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
-                eme_admin_nonce: ememails.translate_adminnonce
+            ajaxParams: function() {
+                return {
+                    search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
+                    eme_admin_nonce: ememails.translate_adminnonce
+                };
             }
     });
 

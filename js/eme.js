@@ -227,12 +227,16 @@ function initTomSelectRemote(selector, options = {}) {
             preload: settings.preload,
             placeholder: settings.placeholder,
             firstUrl: settings.firstUrl || function(query) {
+                const ajaxParams = typeof settings.ajaxParams === 'function'
+                ? settings.ajaxParams()
+                : settings.ajaxParams;
+
                 const params = new URLSearchParams({
                     q: query || '',
                     page: 1,
                     pagesize: settings.pagesize,
                     action: settings.action,
-                    ...settings.ajaxParams
+                    ...ajaxParams
                 });
                 return settings.url + '?' + params.toString();
             },
@@ -245,12 +249,16 @@ function initTomSelectRemote(selector, options = {}) {
                         const cur_page = parseInt(urlParams.get('page')) || 1;
 
                         if (json.TotalRecordCount > cur_page * settings.pagesize) {
+                            const ajaxParams = typeof settings.ajaxParams === 'function'
+                            ? settings.ajaxParams()
+                            : settings.ajaxParams;
+
                             const nextParams = new URLSearchParams({
                                 q: query,
                                 page: cur_page + 1,
                                 pagesize: settings.pagesize,
                                 action: settings.action,
-                                ...settings.ajaxParams
+                                ...ajaxParams
                             });
                             this.setNextUrl(query, url + '?' + nextParams.toString());
                         }

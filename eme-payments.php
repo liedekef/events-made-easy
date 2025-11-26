@@ -2189,7 +2189,7 @@ function eme_notification_fondy() {
 
         http_response_code( 200 );
     } catch ( \Exception $e ) {
-        // error_log("EME Fondy Notification Error: {$e->getMessage()}");
+        error_log("EME Fondy Notification Error: {$e->getMessage()}");
         http_response_code( 400 );
     }
 }
@@ -2703,7 +2703,7 @@ function eme_charge_fondy() {
 
         $response->toCheckout();
     } catch ( \Exception $e ) {
-        //error_log("Fondy API error: {$e->getMessage()}");
+        error_log("Fondy API error: {$e->getMessage()}");
         wp_redirect($fail_link);
         exit;
     }
@@ -2751,8 +2751,7 @@ function eme_refund_booking_payconiq( $booking ) {
         $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
-        $url = '';
-        print 'Payconiq API call failed: ' . htmlspecialchars( $e->getMessage() );
+        error_log("Payconiq refund API error: {$e->getMessage()}");
         return false;
     }
 }
@@ -2843,7 +2842,7 @@ function eme_refund_booking_fondy( $booking ) {
         $response    = \Cloudipsp\Order::reverse( $refund_data );
         return $response->isReversed();
     } catch ( \Exception $e ) {
-        //error_log("Fondy refund API error: {$e->getMessage()}");
+        error_log("Fondy refund API error: {$e->getMessage()}");
         return false;
     }
 }

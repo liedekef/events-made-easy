@@ -2728,6 +2728,7 @@ function eme_refund_booking_paypal($booking) {
     }
 }
 
+/* payconiq refund code needs to be completed 
 function eme_refund_booking_payconiq( $booking ) {
     $api_key = get_option( "eme_payconiq_api_key" );
     if ( ! $api_key ) {
@@ -2755,6 +2756,7 @@ function eme_refund_booking_payconiq( $booking ) {
         return false;
     }
 }
+ */
 
 function eme_refund_booking_mercadopago( $booking ) {
     if ( get_option( 'eme_mercadopago_demo' ) == 1 ) {

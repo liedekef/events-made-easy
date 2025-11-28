@@ -2955,7 +2955,7 @@ function eme_sanitize_attach_filename( $filename, $use_simple_sanitize=0 ) {
     // if use_simple_sanitize=0: check if pcre has utf-8 support and if fileame then seems utf8, we do our own function
     // to check if pcre has utf-8 support: do a small pcre check with the u-flag, hide the warning and catch the result
     $utf8_pcre = @preg_match( '/^./u', 'a' ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-    if (!$use_simple_sanitize && $utf8_pcre && seems_utf8( $filename ) ) {
+    if (!$use_simple_sanitize && $utf8_pcre && ((function_exists('wp_is_valid_utf8') && wp_is_valid_utf8( $filename ) ) || seems_utf8($filename) ) ) {
         $filename = preg_replace(
             '~
             [<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words

@@ -3767,16 +3767,19 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
         $payment['pg_handled'] = 0;
     }
 
-    // in case of payment via payment gateway, don't allow to be paid twice for the same pg_pid
-    if ( $is_ipn && $payment['pg_handled'] == 1 ) {
-        return;
+    if ($is_ipn) {
+        // in case of payment via payment gateway, don't allow to be paid twice for the same pg_pid
+        if ( $payment['pg_handled'] == 1 ) {
+            return;
+        }
+
+        // ok, it hasn't been paid for yet, so mark that we handled it
+        // we do this as soon as possible, so other payments arriving won't trigger another payment
+        eme_update_payment_pg_handled( $payment_id );
+        // log it, so we have a trace
+        error_log("Handling $pg payment notification for id $$payment_id");
     }
 
-    // ok, it hasn't been paid for yet, so mark that we handled it
-    // we do this as soon as possible, so other payments arriving won't trigger another payment
-    if ( $is_ipn && $payment['pg_handled'] == 0 ) {
-        eme_update_payment_pg_handled( $payment_id );
-    }
     if ( $payment['target'] == 'member' ) {
         eme_accept_member_payment( $payment_id, $pg, $pg_pid );
         if ( $is_ipn ) {

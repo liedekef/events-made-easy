@@ -8,20 +8,24 @@
     "packages": [
         {
             "name": "sumup/sumup-ecom-php-sdk",
-            "version": "1.2.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
-                "reference": "37719156316316f839b7c1ad6d34f458a121de97"
+                "reference": "8d51db9cb202b2889a48612b4fe3dce8cb7d9c87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/37719156316316f839b7c1ad6d34f458a121de97",
-                "reference": "37719156316316f839b7c1ad6d34f458a121de97",
+                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/8d51db9cb202b2889a48612b4fe3dce8cb7d9c87",
+                "reference": "8d51db9cb202b2889a48612b4fe3dce8cb7d9c87",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6|^7.0|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpunit/phpunit": "^9.6"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
@@ -34,7 +38,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "Apache-2.0"
             ],
             "authors": [
                 {
@@ -43,7 +47,7 @@
                     "homepage": "https://github.com/sumup"
                 }
             ],
-            "description": "SumUp eCom SDK for PHP",
+            "description": "SumUp PHP SDK",
             "homepage": "https://developer.sumup.com",
             "keywords": [
                 "checkout",
@@ -55,9 +59,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumup/sumup-ecom-php-sdk/issues",
-                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/1.2.0"
+                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/v1.4.0"
             },
-            "time": "2023-12-19T08:49:39+00:00"
+            "time": "2025-11-12T21:19:44+00:00"
         }
     ],
     "packages-dev": [],

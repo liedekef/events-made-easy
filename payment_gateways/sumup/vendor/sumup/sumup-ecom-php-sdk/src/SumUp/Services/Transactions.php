@@ -4,7 +4,7 @@ namespace SumUp\Services;
 
 use SumUp\HttpClients\SumUpHttpClientInterface;
 use SumUp\Authentication\AccessToken;
-USE SumUp\Exceptions\SumUpArgumentException;
+use SumUp\Exceptions\SumUpArgumentException;
 use SumUp\Utils\ExceptionMessages;
 use SumUp\Utils\Headers;
 
@@ -83,6 +83,29 @@ class Transactions implements SumUpService
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('internal id'));
         }
         $path = '/v0.1/me/transactions?internal_id=' . $internalId;
+        $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
+        return $this->client->send('GET', $path, [], $headers);
+    }
+
+    /**
+     * Get single transaction by foreign transaction id.
+     *
+     * @param $foreignId
+     *
+     * @return \SumUp\HttpClients\Response
+     *
+     * @throws SumUpArgumentException
+     * @throws \SumUp\Exceptions\SumUpConnectionException
+     * @throws \SumUp\Exceptions\SumUpResponseException
+     * @throws \SumUp\Exceptions\SumUpAuthenticationException
+     * @throws \SumUp\Exceptions\SumUpSDKException
+     */
+    public function findByForeignId($foreignId)
+    {
+        if (empty($foreignId)) {
+            throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('foreign transaction id'));
+        }
+        $path = '/v0.1/me/transactions?foreign_transaction_id=' . $foreignId;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }

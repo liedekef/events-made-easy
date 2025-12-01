@@ -2,3 +2,7 @@ composer.phar
 composer.lock
 /vendor/
 **/coverage
+.php_cs
+.php_cs.cache
+.php-cs-fixer.cache
+.phpunit.result.cache

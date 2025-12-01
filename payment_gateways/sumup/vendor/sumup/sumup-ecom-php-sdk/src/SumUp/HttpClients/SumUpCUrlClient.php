@@ -27,15 +27,24 @@ class SumUpCUrlClient implements SumUpHttpClientInterface
     private $customHeaders;
 
     /**
+     * The CA bundle path used to verify HTTPS calls.
+     *
+     * @var string|null
+     */
+    private $caBundlePath;
+
+    /**
      * SumUpCUrlClient constructor.
      *
-     * @param string $baseUrl
-     * @param array  $customHeaders
+     * @param string      $baseUrl
+     * @param array       $customHeaders
+     * @param string|null $caBundlePath
      */
-    public function __construct($baseUrl, $customHeaders)
+    public function __construct($baseUrl, $customHeaders, $caBundlePath = null)
     {
         $this->baseUrl = $baseUrl;
         $this->customHeaders = $customHeaders;
+        $this->caBundlePath = $caBundlePath;
     }
 
     /**
@@ -59,10 +68,14 @@ class SumUpCUrlClient implements SumUpHttpClientInterface
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($ch, CURLOPT_URL, $this->baseUrl . $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->formatHeaders($reqHeaders));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         if (!empty($body)) {
             $payload = json_encode($body);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        }
+
+        if (!empty($this->caBundlePath)) {
+            curl_setopt($ch, CURLOPT_CAINFO, $this->caBundlePath);
         }
 
         $response = curl_exec($ch);
@@ -70,11 +83,11 @@ class SumUpCUrlClient implements SumUpHttpClientInterface
 
         $error = curl_error($ch);
         if ($error) {
-            curl_close ($ch);
+            curl_close($ch);
             throw new SumUpConnectionException($error, $code);
         }
 
-        curl_close ($ch);
+        curl_close($ch);
         return new Response($code, $this->parseBody($response));
     }
 
@@ -93,7 +106,7 @@ class SumUpCUrlClient implements SumUpHttpClientInterface
 
         $keys = array_keys($headers);
         $formattedHeaders = [];
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $formattedHeaders[] = $key . ': ' . $headers[$key];
         }
         return $formattedHeaders;

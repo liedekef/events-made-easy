@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34b73aeda945a610c62aa7d0d9c1f75a",
+    "content-hash": "13c7c42d6fa2eaf2519128f53c23e133",
     "packages": [
         {
             "name": "sumup/sumup-ecom-php-sdk",
@@ -72,5 +72,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

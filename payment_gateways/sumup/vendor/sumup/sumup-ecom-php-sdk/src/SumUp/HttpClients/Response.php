@@ -106,9 +106,9 @@ class Response
 
     /**
      * Return error message.
-     * 
+     *
      * @param string $defaultMessage
-     * 
+     *
      * @return string
      */
     protected function parseErrorMessage($defaultMessage = '')
@@ -123,6 +123,14 @@ class Response
 
         if (isset($this->body->error_message)) {
             return $this->body->error_message;
+        }
+
+        if (isset($this->body->error_description)) {
+            return $this->body->error_description;
+        }
+
+        if (isset($this->body->error)) {
+            return $this->body->error;
         }
 
         return $defaultMessage;

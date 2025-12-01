@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1
 {
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'SumUp\\' => 6,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'SumUp\\' => 
+        'SumUp\\' =>
         array (
             0 => __DIR__ . '/..' . '/sumup/sumup-ecom-php-sdk/src/SumUp',
         ),

@@ -675,6 +675,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (EME.$('#localized-start-date')) {
         new FDatepicker('#localized-start-date',{
             format: emeevents.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 const endDatePicker = EME.$('#localized-end-date');
                 if (endDatePicker && endDatePicker._fdatepicker) {
@@ -692,6 +693,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (EME.$('#localized-end-date')) {
         new FDatepicker('#localized-end-date',{
             format: emeevents.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 const startDatePicker = EME.$('#localized-start-date');
                 if (startDatePicker && startDatePicker._fdatepicker) {
@@ -708,13 +710,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (EME.$('#localized-rec-start-date')) {
         new FDatepicker('#localized-rec-start-date',{
-            format: emeevents.translate_fdateformat
+            format: emeevents.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek)
         });
     }
 
     if (EME.$('#localized-rec-end-date')) {
         new FDatepicker('#localized-rec-end-date',{
             format: emeevents.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!Array.isArray(date)) {
                     const startDatePicker = EME.$('#localized-rec-start-date');

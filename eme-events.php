@@ -9665,6 +9665,7 @@ function eme_admin_enqueue_js() {
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_selectcontact'              => __( 'Event author', 'events-made-easy' ),
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
+            'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
         ];
         wp_localize_script( 'eme-events', 'emeevents', $translation_array );
         wp_enqueue_script( 'eme-events' );

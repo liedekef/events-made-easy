@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.28  (2025/12/) =
+* Make sure that bookings moving from waiting list are still in PENDING, not DELETED status
+* Fix bulk actions for bookings
+
 = 3.0.27  (2025/12/03) =
 * Fix bulk actions for discounts
 * Small color improv for eme captcha

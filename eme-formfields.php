@@ -4274,20 +4274,6 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         $format = eme_add_captcha_submit( $format, $selected_captcha );
     }
 
-    $tmp_groups = eme_get_subscribable_groups();
-    $eme_cron_send_new_events = wp_next_scheduled( 'eme_cron_send_new_events');
-    if ( ! empty( $tmp_groups ) && (count( $tmp_groups)>1 || $eme_cron_send_new_events ) ) {
-        $subscribable_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
-    } else {
-        $subscribable_groups = [];
-    }
-    if ( $eme_cron_send_new_events ) {
-        $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
-    }
-    foreach ( $tmp_groups as $group ) {
-        $subscribable_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
-    }
-
     $bookerLastName  = '';
     $bookerFirstName = '';
     $bookerEmail     = '';
@@ -4388,12 +4374,28 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                         $replacement = eme_ui_multiselect_key_value( '', 'email_groups', $groups, 'group_id', 'name', 5, '', 1 );
                     }
                 }
-            } elseif ( ! empty( $subscribable_groups ) ) {
-                if ( count( $subscribable_groups ) == 1 ) {
-                    $selected_value = $subscribable_groups[0];
-                    $replacement    = eme_ui_select( '', 'email_group', $subscribable_groups, '', 1 );
+            } else {
+                $tmp_groups = eme_get_subscribable_groups();
+                $eme_cron_send_new_events = wp_next_scheduled( 'eme_cron_send_new_events');
+                if ( ! empty( $tmp_groups ) && (count( $tmp_groups)>1 || $eme_cron_send_new_events ) ) {
+                    $subscribable_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
                 } else {
-                    $replacement = eme_ui_multiselect( '', 'email_groups', $subscribable_groups, 5, '', 1 );
+                    $subscribable_groups = [];
+                }
+                if ( $eme_cron_send_new_events ) {
+                    $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
+                }
+                foreach ( $tmp_groups as $group ) {
+                    $subscribable_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
+                }
+
+                if ( ! empty( $subscribable_groups ) ) {
+                    if ( count( $subscribable_groups ) == 1 ) {
+                        $selected_value = $subscribable_groups[0];
+                        $replacement    = eme_ui_select( '', 'email_group', $subscribable_groups, '', 1 );
+                    } else {
+                        $replacement = eme_ui_multiselect( '', 'email_groups', $subscribable_groups, 5, '', 1 );
+                    }
                 }
             }
         } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {

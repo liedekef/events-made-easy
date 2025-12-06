@@ -4275,12 +4275,13 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
     }
 
     $tmp_groups = eme_get_subscribable_groups();
-    if ( ! empty( $tmp_groups ) ) {
+    $eme_cron_send_new_events = wp_next_scheduled( 'eme_cron_send_new_events');
+    if ( ! empty( $tmp_groups ) && (count( $tmp_groups)>1 || $eme_cron_send_new_events ) ) {
         $subscribable_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
     } else {
         $subscribable_groups = [];
     }
-    if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+    if ( $eme_cron_send_new_events ) {
         $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
     }
     foreach ( $tmp_groups as $group ) {

@@ -45,22 +45,25 @@ function eme_is_offline_pg( $pg ) {
     }
 }
 
-function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking ) {
+function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking, $remove_accents=false ) {
     if ( $payment['target'] == 'member' ) {
-        $description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
+        $description = sprintf( __( "Member signup for %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_member_paymentform_description_filter';
     } elseif ( $payment['target'] == 'fs_event' ) {
-        $description = sprintf( __( "Event submission '%s'", 'events-made-easy' ), $item_name );
+        $description = sprintf( __( "Event submission %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_fs_event_paymentform_description_filter';
     } elseif ( $multi_booking ) {
         $description = __( 'Multiple booking request', 'events-made-easy' );
         $filtername  = 'eme_rsvp_paymentform_description_filter';
     } else {
-        $description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
+        $description = sprintf( __( "Booking for %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_rsvp_paymentform_description_filter';
     }
     if ( has_filter( $filtername ) ) {
         $description = apply_filters( $filtername, $description, $payment, $gateway );
+    }
+    if ($remove_accents) {
+        $description = remove_accents($description);
     }
     return $description;
 }
@@ -1292,7 +1295,7 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
         return;
     }
 
-    $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
+    $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking, true );
 
     // gateway doesn't like the single quotes
     $description = str_replace( "'", '', $description );

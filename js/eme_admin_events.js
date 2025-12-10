@@ -677,6 +677,9 @@ document.addEventListener('DOMContentLoaded', function () {
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
+                if (!date) {
+                    return;
+                }
                 const endDatePicker = EME.$('#localized-end-date');
                 if (endDatePicker && endDatePicker._fdatepicker) {
                     const endDate = endDatePicker._fdatepicker.selectedDate;
@@ -695,6 +698,9 @@ document.addEventListener('DOMContentLoaded', function () {
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
+                if (!date) {
+                    return;
+                }
                 const startDatePicker = EME.$('#localized-start-date');
                 if (startDatePicker && startDatePicker._fdatepicker) {
                     const startDate = startDatePicker._fdatepicker.selectedDate;
@@ -720,6 +726,9 @@ document.addEventListener('DOMContentLoaded', function () {
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
+                if (!date) {
+                    return;
+                }
                 if (!Array.isArray(date)) {
                     const startDatePicker = EME.$('#localized-rec-start-date');
                     if (startDatePicker && startDatePicker._fdatepicker) {

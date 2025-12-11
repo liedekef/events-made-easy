@@ -685,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const endDate = endDatePicker._fdatepicker.selectedDate;
                     if (endDate) {
                         if (endDate.getTime() < date.getTime()) {
-                            endDatePicker._fdatepicker.setDate(date, false); // the false causes the onSelect on the other element to not be triggered
+                            endDatePicker._fdatepicker.setDate(date);
                         }
                     }
                 }
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const startDate = startDatePicker._fdatepicker.selectedDate;
                     if (startDate) {
                         if (startDate.getTime() > date.getTime()) {
-                            startDatePicker._fdatepicker.setDate(date, false); // the false causes the onSelect on the other element to not be triggered
+                            startDatePicker._fdatepicker.setDate(date);
                         }
                     }
                 }
@@ -735,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const startDate = startDatePicker._fdatepicker.selectedDate;
                         if (startDate) {
                             if (startDate.getTime() > date.getTime()) {
-                                startDatePicker._fdatepicker.setDate(date, false); // the false causes the onSelect on the other element to not be triggered
+                                startDatePicker._fdatepicker.setDate(date);
                             }
                         }
                     }

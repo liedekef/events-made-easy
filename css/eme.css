@@ -639,7 +639,7 @@ details.eme_accordion > div, details.eme_accordion > p {
     border-top: 0px;
     padding: 10px;
     display: none;
-    overflow: auto;
+    overflow: visible;
 }
 .eme-tab-content.active {
     display: block;

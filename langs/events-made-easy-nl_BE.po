@@ -35,10 +35,10 @@ msgstr "in naam van %s"
 #: eme-events.php:10594
 #: eme-events.php:10600
 #: eme-events.php:10864
-#: eme-formfields.php:5108
-#: eme-formfields.php:5163
-#: eme-formfields.php:5174
-#: eme-formfields.php:5196
+#: eme-formfields.php:5111
+#: eme-formfields.php:5166
+#: eme-formfields.php:5177
+#: eme-formfields.php:5199
 #: eme-functions.php:3424
 #: eme-functions.php:3445
 #: eme-functions.php:3446
@@ -62,7 +62,7 @@ msgstr "in naam van %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4134
+#: eme-payments.php:4137
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -313,7 +313,7 @@ msgstr "Niet in templates gedefineerd"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:5012
+#: eme-formfields.php:5015
 #: eme-tasks.php:972
 #: eme-todos.php:221
 msgid "Remove"
@@ -402,7 +402,7 @@ msgstr "Naam"
 
 #: eme-categories.php:573
 #: eme-events.php:10301
-#: eme-formfields.php:5144
+#: eme-formfields.php:5147
 #: eme-holidays.php:288
 #: eme-locations.php:2987
 #: eme-members.php:6543
@@ -1503,13 +1503,13 @@ msgstr "Vast per plaats"
 #: eme-formfields.php:3089
 #: eme-formfields.php:4020
 #: eme-formfields.php:4031
-#: eme-formfields.php:4658
-#: eme-formfields.php:4668
-#: eme-formfields.php:4678
-#: eme-formfields.php:5147
-#: eme-formfields.php:5149
+#: eme-formfields.php:4661
+#: eme-formfields.php:4671
+#: eme-formfields.php:4681
 #: eme-formfields.php:5150
-#: eme-formfields.php:5151
+#: eme-formfields.php:5152
+#: eme-formfields.php:5153
+#: eme-formfields.php:5154
 #: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1547,13 +1547,13 @@ msgstr "Ja"
 #: eme-formfields.php:3090
 #: eme-formfields.php:4021
 #: eme-formfields.php:4032
-#: eme-formfields.php:4659
-#: eme-formfields.php:4669
-#: eme-formfields.php:4679
-#: eme-formfields.php:5147
-#: eme-formfields.php:5149
+#: eme-formfields.php:4662
+#: eme-formfields.php:4672
+#: eme-formfields.php:4682
 #: eme-formfields.php:5150
-#: eme-formfields.php:5151
+#: eme-formfields.php:5152
+#: eme-formfields.php:5153
+#: eme-formfields.php:5154
 #: eme-fs.php:622
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1618,8 +1618,8 @@ msgstr "Druk op de Back-knop in je browser om naar het vorige scherm terug te ke
 #: eme-events.php:1264
 #: eme-events.php:4813
 #: eme-mailer.php:2308
-#: eme-payments.php:152
-#: eme-payments.php:2051
+#: eme-payments.php:155
+#: eme-payments.php:2054
 #: eme-rsvp.php:5234
 msgid "No such event"
 msgstr "Geen dergelijk evenement"
@@ -1776,7 +1776,7 @@ msgstr "Deze link is niet langer geldig, vraag een nieuwe link aan."
 #: eme-events.php:1167
 #: eme-events.php:1268
 #: eme-events.php:1281
-#: eme-payments.php:432
+#: eme-payments.php:435
 msgid "Nothing linked to this payment id"
 msgstr "Niks verbonden aan dit betalingsnummer"
 
@@ -3886,7 +3886,7 @@ msgstr "Prijs evenement"
 #: eme-events.php:9730
 #: eme-events.php:9741
 #: eme-events.php:9819
-#: eme-formfields.php:5155
+#: eme-formfields.php:5158
 msgid "Copy"
 msgstr "Kopieer"
 
@@ -4066,7 +4066,7 @@ msgid "Are you sure to delete the selected records?"
 msgstr "Bent u zeker dat u de geselecteerde records wil verwijderen?"
 
 #: eme-events.php:9719
-#: eme-formfields.php:4953
+#: eme-formfields.php:4956
 #: eme-options.php:1572
 #: events-manager.php:366
 msgid "Templates"
@@ -4184,7 +4184,7 @@ msgstr "Bewerk locatie '%s'"
 #: eme-formfields.php:1899
 #: eme-formfields.php:2981
 #: eme-formfields.php:3940
-#: eme-formfields.php:4587
+#: eme-formfields.php:4590
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:568
@@ -4202,7 +4202,7 @@ msgstr "Stad"
 #: eme-formfields.php:1921
 #: eme-formfields.php:2993
 #: eme-formfields.php:3950
-#: eme-formfields.php:4603
+#: eme-formfields.php:4606
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:576
@@ -4260,8 +4260,8 @@ msgstr "Groepen"
 #: eme-formfields.php:2893
 #: eme-formfields.php:3478
 #: eme-formfields.php:3864
-#: eme-formfields.php:4338
-#: eme-formfields.php:4521
+#: eme-formfields.php:4325
+#: eme-formfields.php:4524
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4290,8 +4290,8 @@ msgstr "Achternaam"
 #: eme-formfields.php:3155
 #: eme-formfields.php:3494
 #: eme-formfields.php:3888
-#: eme-formfields.php:4352
-#: eme-formfields.php:4536
+#: eme-formfields.php:4339
+#: eme-formfields.php:4539
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4322,8 +4322,8 @@ msgstr "Voornaam"
 #: eme-formfields.php:3044
 #: eme-formfields.php:3525
 #: eme-formfields.php:3998
-#: eme-formfields.php:4365
-#: eme-formfields.php:4632
+#: eme-formfields.php:4352
+#: eme-formfields.php:4635
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4352,7 +4352,7 @@ msgstr "E-mail"
 #: eme-formfields.php:3063
 #: eme-formfields.php:3510
 #: eme-formfields.php:4009
-#: eme-formfields.php:4646
+#: eme-formfields.php:4649
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -4956,7 +4956,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Neem dit veld op in de CSV-export voor boekingen."
 
 #: eme-formfields.php:354
-#: eme-formfields.php:4952
+#: eme-formfields.php:4955
 msgid "Field condition"
 msgstr "Veld voorwaarde"
 
@@ -5323,7 +5323,7 @@ msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om d
 #: eme-formfields.php:2000
 #: eme-formfields.php:3114
 #: eme-formfields.php:4052
-#: eme-formfields.php:4411
+#: eme-formfields.php:4414
 msgid "Remember me?"
 msgstr "Herinner mij?"
 
@@ -5332,7 +5332,7 @@ msgstr "Herinner mij?"
 #: eme-formfields.php:2931
 #: eme-formfields.php:3582
 #: eme-formfields.php:3899
-#: eme-formfields.php:4550
+#: eme-formfields.php:4553
 #: eme-people.php:1054
 #: eme-people.php:1226
 #: eme-people.php:2583
@@ -5345,7 +5345,7 @@ msgstr "Geboortedatum"
 #: eme-formfields.php:2945
 #: eme-formfields.php:3566
 #: eme-formfields.php:3910
-#: eme-formfields.php:4561
+#: eme-formfields.php:4564
 #: eme-people.php:1055
 #: eme-people.php:1227
 #: eme-people.php:2598
@@ -5354,7 +5354,7 @@ msgid "Place of birth"
 msgstr "Geboorteplaats"
 
 #: eme-formfields.php:1365
-#: eme-formfields.php:4429
+#: eme-formfields.php:4432
 msgid "Subscribe"
 msgstr "Inschrijven"
 
@@ -5467,120 +5467,120 @@ msgid "Become member"
 msgstr "Word lid"
 
 #: eme-formfields.php:4258
-#: eme-formfields.php:4776
+#: eme-formfields.php:4779
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_LASTNAME, #_FIRSTNAME, #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4279
+#: eme-formfields.php:4381
 #: eme-tasks.php:606
 #: eme-templates.php:43
 msgid "All"
 msgstr "Alle"
 
-#: eme-formfields.php:4284
-#: eme-formfields.php:4380
+#: eme-formfields.php:4367
+#: eme-formfields.php:4386
 msgid "Newsletter concerning new events"
 msgstr "Nieuwsbrief betreffende nieuwe evenementen"
 
-#: eme-formfields.php:4342
-#: eme-formfields.php:4525
+#: eme-formfields.php:4329
+#: eme-formfields.php:4528
 msgid "You can change your last name in your WP profile."
 msgstr "U kunt uw achternaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4356
-#: eme-formfields.php:4540
+#: eme-formfields.php:4343
+#: eme-formfields.php:4543
 msgid "You can change your first name in your WP profile."
 msgstr "U kunt uw voornaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4369
-#: eme-formfields.php:4636
+#: eme-formfields.php:4356
+#: eme-formfields.php:4639
 msgid "You can change your email in your WP profile."
 msgstr "U kunt uw e-mailadres wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4427
+#: eme-formfields.php:4430
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: eme-formfields.php:4452
+#: eme-formfields.php:4455
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4747
+#: eme-formfields.php:4750
 msgid "Save personal info"
 msgstr "Wijzig persoonlijke gegevens"
 
-#: eme-formfields.php:4946
+#: eme-formfields.php:4949
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Toon dynamisch velden op basis van een aantal condities"
 
-#: eme-formfields.php:4951
+#: eme-formfields.php:4954
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4997
+#: eme-formfields.php:5000
 msgid "Field"
 msgstr "Veld"
 
-#: eme-formfields.php:4998
+#: eme-formfields.php:5001
 msgid "Condition"
 msgstr "Conditie"
 
-#: eme-formfields.php:4999
+#: eme-formfields.php:5002
 msgid "Condition value"
 msgstr "Conditie waarde"
 
-#: eme-formfields.php:4954
+#: eme-formfields.php:4957
 msgid "Repeat"
 msgstr "Herhaal"
 
-#: eme-formfields.php:4984
+#: eme-formfields.php:4987
 #: eme-tasks.php:935
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Herschikken"
 
-#: eme-formfields.php:5003
+#: eme-formfields.php:5006
 msgid "Header template"
 msgstr "Header template"
 
-#: eme-formfields.php:5004
+#: eme-formfields.php:5007
 msgid "Template"
 msgstr "Template"
 
-#: eme-formfields.php:5005
+#: eme-formfields.php:5008
 msgid "Footer template"
 msgstr "Footer template"
 
-#: eme-formfields.php:5012
+#: eme-formfields.php:5015
 msgid "Add new condition"
 msgstr "Voeg nieuwe voorwaarde toe"
 
-#: eme-formfields.php:5015
+#: eme-formfields.php:5018
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Waarschuwing: er zijn al antwoorden ingevoerd op basis van deze voorwaarde, het wijzigen of verwijderen van deze voorwaarde kan leiden tot ongewenste bijwerkingen."
 
-#: eme-formfields.php:5026
+#: eme-formfields.php:5029
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Hiermee wordt extra de geselecteerde template in het formulier weergegeven als aan de voorwaarde is voldaan."
 
-#: eme-formfields.php:5028
+#: eme-formfields.php:5031
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "De 'Veld' parameter moet worden ingevuld met elke geldige tijdelijke placeholder die in het formulier is toegestaan."
 
-#: eme-formfields.php:5030
+#: eme-formfields.php:5033
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "De geselecteerde template wordt meerdere keren getoond als de herhaaloptie wordt gebruikt (op basis van het aantal keren dat het veld verschilt van de waarde van de voorwaarde. Dit wordt niet gebruikt voor de voorwaarde-selector 'gelijk aan'."
 
-#: eme-formfields.php:5032
+#: eme-formfields.php:5035
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "De geselecteerde template kan html bevatten en heeft ook placeholders voor eigen aangemaakte formuliervelden (geen andere placeholders toegestaan)."
 
-#: eme-formfields.php:5033
+#: eme-formfields.php:5036
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw formulier weer te geven."
 
-#: eme-formfields.php:5183
-#: eme-formfields.php:5193
+#: eme-formfields.php:5186
+#: eme-formfields.php:5196
 #: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
@@ -5899,7 +5899,7 @@ msgstr "Geen gegevens gevonden"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4024
+#: eme-payments.php:4027
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5917,7 +5917,7 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4034
+#: eme-payments.php:4037
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -11767,94 +11767,86 @@ msgstr "Indien geselecteerd en WordPress multisite is actief, zal deze EME-insta
 msgid "Save Changes"
 msgstr "Wijzigingen opslaan"
 
-#: eme-payments.php:130
-#: eme-payments.php:137
+#: eme-payments.php:133
+#: eme-payments.php:140
 msgid "Thank you for confirming these bookings."
 msgstr "Bedankt om deze boekingen te bevestigen."
 
-#: eme-payments.php:132
-#: eme-payments.php:139
+#: eme-payments.php:135
+#: eme-payments.php:142
 msgid "Thank you for confirming this booking."
 msgstr "Bedankt om deze boeking te bevestigen."
 
-#: eme-payments.php:172
+#: eme-payments.php:175
 msgid "Between the time of booking and the payment, all available seats have unfortunately all been taken already"
 msgstr "Tussen het moment van boeken en de betaling zijn helaas alle beschikbare plaatsen al bezet"
 
-#: eme-payments.php:191
+#: eme-payments.php:194
 msgid "Payment failed for your booking for #_EVENTNAME, please try again."
 msgstr "Betaling mislukt voor uw boeking voor #_EVENTNAME, probeer het opnieuw."
 
-#: eme-payments.php:207
-#: eme-payments.php:347
-#: eme-payments.php:474
+#: eme-payments.php:210
+#: eme-payments.php:350
+#: eme-payments.php:477
 msgid "Payment handling"
 msgstr "Afhandelen betaling"
 
-#: eme-payments.php:209
-#: eme-payments.php:349
-#: eme-payments.php:476
+#: eme-payments.php:212
+#: eme-payments.php:352
+#: eme-payments.php:479
 msgid "The amount to pay is %s"
 msgstr "Het te betalen bedrag is %s"
 
-#: eme-payments.php:279
-#: eme-payments.php:425
+#: eme-payments.php:282
+#: eme-payments.php:428
 msgid "Payment failed for your membership for #_MEMBERSHIPNAME, please try again."
 msgstr "Betaling mislukt voor uw lidmaatschap voor #_MEMBERSHIPNAME, probeer het opnieuw."
 
-#: eme-payments.php:304
+#: eme-payments.php:307
 msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
 msgstr "Uw lidmaatschap is momenteel actief tot %s. Als u het lidmaatschap weer betaalt, wordt uw lidmaatschap verlengd tot %s"
 
-#: eme-payments.php:310
+#: eme-payments.php:313
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
 msgstr "Uw lidmaatschap is verlopen. Als u het lidmaatschapsgeld opnieuw betaalt, wordt uw lidmaatschap opnieuw geactiveerd tot %s"
-
-#: eme-payments.php:50
-msgid "Member signup for '%s'"
-msgstr "Ledenaanmelding voor '%s'"
 
 #: eme-payments.php:56
 msgid "Multiple booking request"
 msgstr "Meerdere boekingsaanvraag"
 
-#: eme-payments.php:59
-msgid "Booking for '%s'"
-msgstr "Reservering voor '%s'"
-
-#: eme-payments.php:1513
+#: eme-payments.php:1516
 msgid "Pay %s"
 msgstr "Betaal %s"
 
-#: eme-payments.php:1534
+#: eme-payments.php:1537
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API heeft een foutmelding teruggegeven: "
 
-#: eme-payments.php:1987
-#: eme-payments.php:2071
+#: eme-payments.php:1990
+#: eme-payments.php:2074
 msgid "Hash Incorrect"
 msgstr "Foutieve hash"
 
-#: eme-payments.php:2039
-#: eme-payments.php:2057
+#: eme-payments.php:2042
+#: eme-payments.php:2060
 msgid "Incorrect payment id."
 msgstr "Foutief betalings-ID."
 
-#: eme-payments.php:2231
+#: eme-payments.php:2234
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "aangezien dit een site is die op localhost draait, zal er geen webhook aangemaakt worden"
 
-#: eme-payments.php:2809
+#: eme-payments.php:2812
 msgid "Booking refunded"
 msgstr "Boeking terugbetaald"
 
-#: eme-payments.php:3992
-#: eme-payments.php:4053
+#: eme-payments.php:3995
+#: eme-payments.php:4056
 msgid "Nothing found or booking already cancelled"
 msgstr "Niks gevonden of boeking reeds geannuleerd"
 
-#: eme-payments.php:3995
-#: eme-payments.php:4056
+#: eme-payments.php:3998
+#: eme-payments.php:4059
 msgid "Booking already cancelled"
 msgstr "De boeking is al geannuleerd"
 
@@ -13374,7 +13366,7 @@ msgstr "Exact?"
 msgid "Renewed"
 msgstr "Hernieuwd"
 
-#: eme-payments.php:288
+#: eme-payments.php:291
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Er is geen lid gevonden dat aan deze betaling is gekoppeld. Als u denkt dat u dit bericht ten onrechte heeft ontvangen, neem dan contact op met de site-eigenaar."
 
@@ -13713,15 +13705,11 @@ msgstr "Geen contact"
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "Het bericht dat wordt weergegeven na het succesvol indienen van een nieuw evenement als de persoon die het evenement indient geen recht heeft om het nieuw ingediende evenement te zien. Het bericht wordt ook weergegeven als er betaald moet worden voor het indienen van het evenement en de wachttijd voor omleiding (instelling hieronder) niet 0 is. Dit bericht kan alle evenement placeholders bevatten."
 
-#: eme-payments.php:53
-msgid "Event submission '%s'"
-msgstr "Evenementinzending '%s'"
-
-#: eme-payments.php:437
+#: eme-payments.php:440
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Geen gebeurtenis gevonden die verband houdt met deze betaling. Als u denkt dat u dit bericht ten onrechte heeft ontvangen, neem dan contact op met de site-eigenaar."
 
-#: eme-payments.php:2062
+#: eme-payments.php:2065
 msgid "Incorrect currency."
 msgstr "Onjuiste valuta."
 
@@ -13737,7 +13725,7 @@ msgstr "De valuta die wordt gebruikt wanneer ingediende evenementen moeten worde
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "De betaalmethode(n) die moet(en) worden gebruikt wanneer ingediende evenementen moeten worden betaald. Dit heeft niets te maken met RSVP-instellingen in het ingediende evenement zelf!"
 
-#: eme-payments.php:4169
+#: eme-payments.php:4172
 msgid "Configured"
 msgstr "Geconfigureerd"
 
@@ -14376,8 +14364,8 @@ msgstr "Jodit"
 msgid "The HTML editor used by the plugin."
 msgstr "De HTML-editor die door de plugin wordt gebruikt."
 
-#: eme-payments.php:3251
-#: eme-payments.php:3266
+#: eme-payments.php:3254
+#: eme-payments.php:3269
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr "Boeking geannuleerd en terugbetaald"
@@ -14560,7 +14548,7 @@ msgstr "Aanmeldformulier voor taken (sectie persoonlijke gegevens)"
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
 msgstr "(Laat leeg of vul 0 in om deze limiet uit te schakelen. Negatieve getallen zijn toegestaan en voor uren kunt u ook decimalen gebruiken.)"
 
-#: eme-payments.php:2208
+#: eme-payments.php:2211
 msgid "Webhook not created: localhost not allowed."
 msgstr ""
 
@@ -14572,4 +14560,16 @@ msgstr ""
 #: eme-rsvp.php:6269
 #: eme-rsvp.php:6282
 msgid "Nothing done."
+msgstr ""
+
+#: eme-payments.php:50
+msgid "Member signup for %s"
+msgstr ""
+
+#: eme-payments.php:53
+msgid "Event submission %s"
+msgstr ""
+
+#: eme-payments.php:59
+msgid "Booking for %s"
 msgstr ""

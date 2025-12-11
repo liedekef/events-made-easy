@@ -63,10 +63,10 @@ msgstr "v mene %s"
 #: eme-events.php:10594
 #: eme-events.php:10600
 #: eme-events.php:10864
-#: eme-formfields.php:5108
-#: eme-formfields.php:5163
-#: eme-formfields.php:5174
-#: eme-formfields.php:5196
+#: eme-formfields.php:5111
+#: eme-formfields.php:5166
+#: eme-formfields.php:5177
+#: eme-formfields.php:5199
 #: eme-functions.php:3424
 #: eme-functions.php:3445
 #: eme-functions.php:3446
@@ -90,7 +90,7 @@ msgstr "v mene %s"
 #: eme-members.php:6853
 #: eme-members.php:6933
 #: eme-options.php:140
-#: eme-payments.php:4134
+#: eme-payments.php:4137
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -357,7 +357,7 @@ msgstr "Nie je definované v šablónach"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:5012
+#: eme-formfields.php:5015
 #: eme-tasks.php:972
 #: eme-todos.php:221
 msgid "Remove"
@@ -446,7 +446,7 @@ msgstr "Názov"
 
 #: eme-categories.php:573
 #: eme-events.php:10301
-#: eme-formfields.php:5144
+#: eme-formfields.php:5147
 #: eme-holidays.php:288
 #: eme-locations.php:2987
 #: eme-members.php:6543
@@ -1551,13 +1551,13 @@ msgstr "Pevná na miesto"
 #: eme-formfields.php:3089
 #: eme-formfields.php:4020
 #: eme-formfields.php:4031
-#: eme-formfields.php:4658
-#: eme-formfields.php:4668
-#: eme-formfields.php:4678
-#: eme-formfields.php:5147
-#: eme-formfields.php:5149
+#: eme-formfields.php:4661
+#: eme-formfields.php:4671
+#: eme-formfields.php:4681
 #: eme-formfields.php:5150
-#: eme-formfields.php:5151
+#: eme-formfields.php:5152
+#: eme-formfields.php:5153
+#: eme-formfields.php:5154
 #: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1595,13 +1595,13 @@ msgstr "Áno"
 #: eme-formfields.php:3090
 #: eme-formfields.php:4021
 #: eme-formfields.php:4032
-#: eme-formfields.php:4659
-#: eme-formfields.php:4669
-#: eme-formfields.php:4679
-#: eme-formfields.php:5147
-#: eme-formfields.php:5149
+#: eme-formfields.php:4662
+#: eme-formfields.php:4672
+#: eme-formfields.php:4682
 #: eme-formfields.php:5150
-#: eme-formfields.php:5151
+#: eme-formfields.php:5152
+#: eme-formfields.php:5153
+#: eme-formfields.php:5154
 #: eme-fs.php:622
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1666,8 +1666,8 @@ msgstr "Stlačením tlačidla Späť v prehliadači sa vráťte na predchádzaj�
 #: eme-events.php:1264
 #: eme-events.php:4813
 #: eme-mailer.php:2308
-#: eme-payments.php:152
-#: eme-payments.php:2051
+#: eme-payments.php:155
+#: eme-payments.php:2054
 #: eme-rsvp.php:5234
 msgid "No such event"
 msgstr "Žiadne takéto podujatie"
@@ -1824,7 +1824,7 @@ msgstr "Tento odkaz už nie je platný, požiadajte prosím o nový odkaz."
 #: eme-events.php:1167
 #: eme-events.php:1268
 #: eme-events.php:1281
-#: eme-payments.php:432
+#: eme-payments.php:435
 msgid "Nothing linked to this payment id"
 msgstr "S týmto identifikačným číslom platby nie je nič prepojené"
 
@@ -4088,7 +4088,7 @@ msgstr "Cena podujatia"
 #: eme-events.php:9730
 #: eme-events.php:9741
 #: eme-events.php:9819
-#: eme-formfields.php:5155
+#: eme-formfields.php:5158
 msgid "Copy"
 msgstr "Kopírovať"
 
@@ -4273,7 +4273,7 @@ msgid "Signup date"
 msgstr "Dátum prihlásenia"
 
 #: eme-events.php:9719
-#: eme-formfields.php:4953
+#: eme-formfields.php:4956
 #: eme-options.php:1572
 #: events-manager.php:366
 msgid "Templates"
@@ -4396,7 +4396,7 @@ msgstr "Zobraziť"
 #: eme-formfields.php:1899
 #: eme-formfields.php:2981
 #: eme-formfields.php:3940
-#: eme-formfields.php:4587
+#: eme-formfields.php:4590
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:568
@@ -4414,7 +4414,7 @@ msgstr "Mesto"
 #: eme-formfields.php:1921
 #: eme-formfields.php:2993
 #: eme-formfields.php:3950
-#: eme-formfields.php:4603
+#: eme-formfields.php:4606
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:576
@@ -4472,8 +4472,8 @@ msgstr "Skupiny"
 #: eme-formfields.php:2893
 #: eme-formfields.php:3478
 #: eme-formfields.php:3864
-#: eme-formfields.php:4338
-#: eme-formfields.php:4521
+#: eme-formfields.php:4325
+#: eme-formfields.php:4524
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4502,8 +4502,8 @@ msgstr "Priezvisko"
 #: eme-formfields.php:3155
 #: eme-formfields.php:3494
 #: eme-formfields.php:3888
-#: eme-formfields.php:4352
-#: eme-formfields.php:4536
+#: eme-formfields.php:4339
+#: eme-formfields.php:4539
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4534,8 +4534,8 @@ msgstr "Krstné meno"
 #: eme-formfields.php:3044
 #: eme-formfields.php:3525
 #: eme-formfields.php:3998
-#: eme-formfields.php:4365
-#: eme-formfields.php:4632
+#: eme-formfields.php:4352
+#: eme-formfields.php:4635
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4564,7 +4564,7 @@ msgstr "Email"
 #: eme-formfields.php:3063
 #: eme-formfields.php:3510
 #: eme-formfields.php:4009
-#: eme-formfields.php:4646
+#: eme-formfields.php:4649
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -5088,7 +5088,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Zahrnúť toto pole do CSV exportu rezervácií."
 
 #: eme-formfields.php:354
-#: eme-formfields.php:4952
+#: eme-formfields.php:4955
 msgid "Field condition"
 msgstr "Podmienka poľa"
 
@@ -5455,7 +5455,7 @@ msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom upravovať ale
 #: eme-formfields.php:2000
 #: eme-formfields.php:3114
 #: eme-formfields.php:4052
-#: eme-formfields.php:4411
+#: eme-formfields.php:4414
 msgid "Remember me?"
 msgstr "Zapamätať si ma?"
 
@@ -5464,7 +5464,7 @@ msgstr "Zapamätať si ma?"
 #: eme-formfields.php:2931
 #: eme-formfields.php:3582
 #: eme-formfields.php:3899
-#: eme-formfields.php:4550
+#: eme-formfields.php:4553
 #: eme-people.php:1054
 #: eme-people.php:1226
 #: eme-people.php:2583
@@ -5477,7 +5477,7 @@ msgstr "Deň narodenia"
 #: eme-formfields.php:2945
 #: eme-formfields.php:3566
 #: eme-formfields.php:3910
-#: eme-formfields.php:4561
+#: eme-formfields.php:4564
 #: eme-people.php:1055
 #: eme-people.php:1227
 #: eme-people.php:2598
@@ -5486,7 +5486,7 @@ msgid "Place of birth"
 msgstr "Miesto narodenia"
 
 #: eme-formfields.php:1365
-#: eme-formfields.php:4429
+#: eme-formfields.php:4432
 msgid "Subscribe"
 msgstr "Prihlásenie"
 
@@ -5599,120 +5599,120 @@ msgid "Become member"
 msgstr "Stať sa členom"
 
 #: eme-formfields.php:4258
-#: eme-formfields.php:4776
+#: eme-formfields.php:4779
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_FIRSTNAME, #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4279
+#: eme-formfields.php:4381
 #: eme-tasks.php:606
 #: eme-templates.php:43
 msgid "All"
 msgstr "Všetky"
 
-#: eme-formfields.php:4284
-#: eme-formfields.php:4380
+#: eme-formfields.php:4367
+#: eme-formfields.php:4386
 msgid "Newsletter concerning new events"
 msgstr "Informačné novinky o nových podujatiach"
 
-#: eme-formfields.php:4342
-#: eme-formfields.php:4525
+#: eme-formfields.php:4329
+#: eme-formfields.php:4528
 msgid "You can change your last name in your WP profile."
 msgstr "Svoje priezvisko si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4356
-#: eme-formfields.php:4540
+#: eme-formfields.php:4343
+#: eme-formfields.php:4543
 msgid "You can change your first name in your WP profile."
 msgstr "Svoje meno si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4369
-#: eme-formfields.php:4636
+#: eme-formfields.php:4356
+#: eme-formfields.php:4639
 msgid "You can change your email in your WP profile."
 msgstr "Svoj e-mail môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4427
+#: eme-formfields.php:4430
 msgid "Unsubscribe"
 msgstr "Odhlásenie"
 
-#: eme-formfields.php:4452
+#: eme-formfields.php:4455
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4747
+#: eme-formfields.php:4750
 msgid "Save personal info"
 msgstr "Uložiť osobné údaje"
 
-#: eme-formfields.php:4946
+#: eme-formfields.php:4949
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Dynamicky zobrazovať polia na základe viacerých podmienok"
 
-#: eme-formfields.php:4951
+#: eme-formfields.php:4954
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4997
+#: eme-formfields.php:5000
 msgid "Field"
 msgstr "Pole"
 
-#: eme-formfields.php:4998
+#: eme-formfields.php:5001
 msgid "Condition"
 msgstr "Podmienka"
 
-#: eme-formfields.php:4999
+#: eme-formfields.php:5002
 msgid "Condition value"
 msgstr "Hodnota podmienky"
 
-#: eme-formfields.php:4954
+#: eme-formfields.php:4957
 msgid "Repeat"
 msgstr "Opakovať"
 
-#: eme-formfields.php:4984
+#: eme-formfields.php:4987
 #: eme-tasks.php:935
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Zmeniť poradie"
 
-#: eme-formfields.php:5003
+#: eme-formfields.php:5006
 msgid "Header template"
 msgstr "Šablóna hlavičky"
 
-#: eme-formfields.php:5004
+#: eme-formfields.php:5007
 msgid "Template"
 msgstr "Šablóna"
 
-#: eme-formfields.php:5005
+#: eme-formfields.php:5008
 msgid "Footer template"
 msgstr "Šablóna pätičky"
 
-#: eme-formfields.php:5012
+#: eme-formfields.php:5015
 msgid "Add new condition"
 msgstr "Pridať novú podmienku"
 
-#: eme-formfields.php:5015
+#: eme-formfields.php:5018
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Varovanie: Na základe tejto podmienky sú už zadané odpovede, zmena alebo odstránenie tejto podmienky by mohli viesť k nežiaducim vedľajším účinkom."
 
-#: eme-formfields.php:5026
+#: eme-formfields.php:5029
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Ak je splnená podmienka, vo formulári sa navyše zobrazí vybratá šablóna."
 
-#: eme-formfields.php:5028
+#: eme-formfields.php:5031
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Parameter „Pole“ sa vyplní akýmkoľvek platným zástupným výrazom povoleným vo formulári."
 
-#: eme-formfields.php:5030
+#: eme-formfields.php:5033
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Vybraná šablóna sa zobrazí niekoľkokrát, ak sa použije možnosť opakovania (na základe toho, koľkokrát sa pole líši od hodnoty podmienky. Toto sa nepoužije pri výbere podmienky „rovnaké ako“)."
 
-#: eme-formfields.php:5032
+#: eme-formfields.php:5035
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Vybraná šablóna môže obsahovať html a tiež mať zástupné výrazy pre vlastné polia formulárov (nie sú povolené žiadne iné zástupné výrazy)."
 
-#: eme-formfields.php:5033
+#: eme-formfields.php:5036
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických formulárov vo vašom formulári."
 
-#: eme-formfields.php:5183
-#: eme-formfields.php:5193
+#: eme-formfields.php:5186
+#: eme-formfields.php:5196
 #: eme-functions.php:3442
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
@@ -5771,7 +5771,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5046
-#: eme-payments.php:4024
+#: eme-payments.php:4027
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5789,7 +5789,7 @@ msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omy
 #: eme-members.php:1057
 #: eme-members.php:4661
 #: eme-members.php:5058
-#: eme-payments.php:4034
+#: eme-payments.php:4037
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -12280,114 +12280,102 @@ msgstr "Uložiť nastavenia"
 msgid "Offline"
 msgstr "Offline"
 
-#: eme-payments.php:50
-msgid "Member signup for '%s'"
-msgstr "Registrácia člena na '%s'"
-
-#: eme-payments.php:53
-msgid "Event submission '%s'"
-msgstr "Odoslanie podujatia '%s'"
-
 #: eme-payments.php:56
 msgid "Multiple booking request"
 msgstr "Viacnásobná požiadavka na rezerváciu"
 
-#: eme-payments.php:59
-msgid "Booking for '%s'"
-msgstr "Rezervácie na '%s'"
-
-#: eme-payments.php:130
-#: eme-payments.php:137
+#: eme-payments.php:133
+#: eme-payments.php:140
 msgid "Thank you for confirming these bookings."
 msgstr "Ďakujeme vám za potvrdenie týchto rezervácií."
 
-#: eme-payments.php:132
-#: eme-payments.php:139
+#: eme-payments.php:135
+#: eme-payments.php:142
 msgid "Thank you for confirming this booking."
 msgstr "Ďakujeme vám za potvrdenie rezervácie."
 
-#: eme-payments.php:172
+#: eme-payments.php:175
 msgid "Between the time of booking and the payment, all available seats have unfortunately all been taken already"
 msgstr "V čase medzi rezerváciou a platbou boli všetky voľné miesta bohužiaľ už obsadené"
 
-#: eme-payments.php:191
+#: eme-payments.php:194
 msgid "Payment failed for your booking for #_EVENTNAME, please try again."
 msgstr "Platba za vašu rezerváciu na #_EVENTNAME zlyhala, prosím skúste to znova."
 
-#: eme-payments.php:207
-#: eme-payments.php:347
-#: eme-payments.php:474
+#: eme-payments.php:210
+#: eme-payments.php:350
+#: eme-payments.php:477
 msgid "Payment handling"
 msgstr "Informácie o platbe"
 
-#: eme-payments.php:209
-#: eme-payments.php:349
-#: eme-payments.php:476
+#: eme-payments.php:212
+#: eme-payments.php:352
+#: eme-payments.php:479
 msgid "The amount to pay is %s"
 msgstr "Suma na platbu je %s"
 
-#: eme-payments.php:279
-#: eme-payments.php:425
+#: eme-payments.php:282
+#: eme-payments.php:428
 msgid "Payment failed for your membership for #_MEMBERSHIPNAME, please try again."
 msgstr "Platba za členstvo #_MEMBERSHIPNAME zlyhala, skúste to prosím znova."
 
-#: eme-payments.php:288
+#: eme-payments.php:291
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Nenašiel sa žiadny člen spojený s touto platbou. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte prosím majiteľa stránky."
 
-#: eme-payments.php:304
+#: eme-payments.php:307
 msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
 msgstr "Vaše členstvo je momentálne aktívne do %s. Ak znova zaplatíte členský poplatok, vaše členstvo bude predĺžené do %s"
 
-#: eme-payments.php:310
+#: eme-payments.php:313
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
 msgstr "Platnosť vášho členstva vypršala. Ak znova zaplatíte členský poplatok, vaše členstvo bude znova aktivované do %s"
 
-#: eme-payments.php:437
+#: eme-payments.php:440
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "K tejto platbe sa nenašlo žiadne podujatie. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte prosím majiteľa stránky."
 
-#: eme-payments.php:1513
+#: eme-payments.php:1516
 msgid "Pay %s"
 msgstr "Zaplatiť cez %s"
 
-#: eme-payments.php:1534
+#: eme-payments.php:1537
 msgid "Mercado Pago API returned an error: "
 msgstr "Mercado Pago API vrátilo chybu: "
 
-#: eme-payments.php:1987
-#: eme-payments.php:2071
+#: eme-payments.php:1990
+#: eme-payments.php:2074
 msgid "Hash Incorrect"
 msgstr "Nesprávna hash suma"
 
-#: eme-payments.php:2039
-#: eme-payments.php:2057
+#: eme-payments.php:2042
+#: eme-payments.php:2060
 msgid "Incorrect payment id."
 msgstr "Nesprávne ID platby."
 
-#: eme-payments.php:2062
+#: eme-payments.php:2065
 msgid "Incorrect currency."
 msgstr "Nesprávna mena."
 
-#: eme-payments.php:2231
+#: eme-payments.php:2234
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "pretože tento web beží na localhost-e, nebude vytvorený žiadny webhook"
 
-#: eme-payments.php:2809
+#: eme-payments.php:2812
 msgid "Booking refunded"
 msgstr "Platba za rezerváciu vrátená"
 
-#: eme-payments.php:3992
-#: eme-payments.php:4053
+#: eme-payments.php:3995
+#: eme-payments.php:4056
 msgid "Nothing found or booking already cancelled"
 msgstr "Nič sa nenašlo alebo rezervácia už bola zrušená"
 
-#: eme-payments.php:3995
-#: eme-payments.php:4056
+#: eme-payments.php:3998
+#: eme-payments.php:4059
 msgid "Booking already cancelled"
 msgstr "Rezervácia už bola zrušená"
 
-#: eme-payments.php:4169
+#: eme-payments.php:4172
 msgid "Configured"
 msgstr "Nastavené"
 
@@ -14387,8 +14375,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3251
-#: eme-payments.php:3266
+#: eme-payments.php:3254
+#: eme-payments.php:3269
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""
@@ -14572,7 +14560,7 @@ msgstr ""
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
 msgstr ""
 
-#: eme-payments.php:2208
+#: eme-payments.php:2211
 msgid "Webhook not created: localhost not allowed."
 msgstr ""
 
@@ -14584,4 +14572,16 @@ msgstr ""
 #: eme-rsvp.php:6269
 #: eme-rsvp.php:6282
 msgid "Nothing done."
+msgstr ""
+
+#: eme-payments.php:50
+msgid "Member signup for %s"
+msgstr ""
+
+#: eme-payments.php:53
+msgid "Event submission %s"
+msgstr ""
+
+#: eme-payments.php:59
+msgid "Booking for %s"
 msgstr ""

@@ -143,38 +143,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            let proceed = true;
-            if (['trashLocations', 'deleteLocations'].includes(doAction) && !confirm(emelocations.translate_areyousuretodeleteselected)) {
-                proceed = false;
-            }
+            if (['trashLocations', 'deleteLocations'].includes(doAction) && !confirm(emelocations.translate_areyousuretodeleteselected)) return;
 
-            if (proceed) {
-                actionsButton.textContent = emelocations.translate_pleasewait;
-                actionsButton.disabled = true;
+            actionsButton.textContent = emelocations.translate_pleasewait;
+            actionsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('location_id', idsJoined);
-                formData.append('action', 'eme_manage_locations');
-                formData.append('do_action', doAction);
-                formData.append('transferto_id', transfertoId);
-                formData.append('eme_admin_nonce', emelocations.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('location_id', idsJoined);
+            formData.append('action', 'eme_manage_locations');
+            formData.append('do_action', doAction);
+            formData.append('transferto_id', transfertoId);
+            formData.append('eme_admin_nonce', emelocations.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    LocationsTable.reload();
-                    actionsButton.textContent = emelocations.translate_apply;
-                    actionsButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                LocationsTable.reload();
+                actionsButton.textContent = emelocations.translate_apply;
+                actionsButton.disabled = false;
 
-                    const msg = EME.$('#locations-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
-                });
-            }
+                const msg = EME.$('#locations-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
         });
     }
 

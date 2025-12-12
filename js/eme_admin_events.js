@@ -1077,39 +1077,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            let proceed = true;
-            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction) && !confirm(emeevents.translate_areyousuretodeleteselected)) {
-                proceed = false;
-            }
+            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction) && !confirm(emeevents.translate_areyousuretodeleteselected)) return;
 
-            if (proceed) {
-                eventsButton.textContent = emeevents.translate_pleasewait;
-                eventsButton.disabled = true;
+            eventsButton.textContent = emeevents.translate_pleasewait;
+            eventsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('event_id', idsJoined);
-                formData.append('action', 'eme_manage_events');
-                formData.append('do_action', doAction);
-                formData.append('send_trashmails', sendTrashMails);
-                formData.append('addtocategory', addCategory);
-                formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('event_id', idsJoined);
+            formData.append('action', 'eme_manage_events');
+            formData.append('do_action', doAction);
+            formData.append('send_trashmails', sendTrashMails);
+            formData.append('addtocategory', addCategory);
+            formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    EventsTable.reload();
-                    eventsButton.textContent = emeevents.translate_apply;
-                    eventsButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                EventsTable.reload();
+                eventsButton.textContent = emeevents.translate_apply;
+                eventsButton.disabled = false;
 
-                    const msg = EME.$('#events-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
-                });
-            }
+                const msg = EME.$('#events-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
         });
     }
 
@@ -1125,39 +1120,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            let proceed = true;
-            if (doAction === 'deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) {
-                proceed = false;
-            }
+            if (doAction === 'deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) return;
 
-            if (proceed) {
-                recurrencesButton.textContent = emeevents.translate_pleasewait;
-                recurrencesButton.disabled = true;
+            recurrencesButton.textContent = emeevents.translate_pleasewait;
+            recurrencesButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('recurrence_id', idsJoined);
-                formData.append('action', 'eme_manage_recurrences');
-                formData.append('do_action', doAction);
-                formData.append('rec_new_start_date', recNewStartDate);
-                formData.append('rec_new_end_date', recNewEndDate);
-                formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('recurrence_id', idsJoined);
+            formData.append('action', 'eme_manage_recurrences');
+            formData.append('do_action', doAction);
+            formData.append('rec_new_start_date', recNewStartDate);
+            formData.append('rec_new_end_date', recNewEndDate);
+            formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    RecurrencesTable.reload();
-                    recurrencesButton.textContent = emeevents.translate_apply;
-                    recurrencesButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                RecurrencesTable.reload();
+                recurrencesButton.textContent = emeevents.translate_apply;
+                recurrencesButton.disabled = false;
 
-                    const msg = EME.$('#recurrences-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
-                });
-            }
+                const msg = EME.$('#recurrences-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
         });
     }
 

@@ -135,59 +135,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!selectedRows.length || !doAction) return;
 
-            let proceed = true;
-            if (doAction === 'deleteTaskSignups' && !confirm(emetasks.translate_areyousuretodeleteselected)) {
-                proceed = false;
-            }
+            if (doAction === 'deleteTaskSignups' && !confirm(emetasks.translate_areyousuretodeleteselected)) return;
 
-            if (proceed) {
-                actionsButton.textContent = emetasks.translate_pleasewait;
-                actionsButton.disabled = true;
+            actionsButton.textContent = emetasks.translate_pleasewait;
+            actionsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                // Special case: "Send Mails" redirects to mailing form
-                if (doAction === 'sendMails') {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = emetasks.translate_admin_sendmails_url;
-                    ['tasksignup_ids', 'eme_admin_action'].forEach(key => {
-                        const val = key === 'tasksignup_ids' ? idsJoined : 'new_mailing';
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = val;
-                        form.appendChild(input);
-                    });
-                    document.body.appendChild(form);
-                    form.submit();
-                    return;
-                }
-
-                // Regular AJAX action
-                const formData = new FormData();
-                formData.append('id', idsJoined);
-                formData.append('action', 'eme_manage_task_signups');
-                formData.append('do_action', doAction);
-                formData.append('send_mail', sendMail);
-                formData.append('eme_admin_nonce', emetasks.translate_adminnonce);
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    TaskSignupsTable.reload();
-                    actionsButton.textContent = emetasks.translate_apply;
-                    actionsButton.disabled = false;
-
-                    const messageDiv = EME.$('#tasksignups-message');
-                    if (messageDiv) {
-                        messageDiv.innerHTML = data.htmlmessage;
-                        eme_toggle(messageDiv, true);
-                        setTimeout(() => {
-                            eme_toggle(messageDiv, false);
-                        }, 5000);
-                    }
+            // Special case: "Send Mails" redirects to mailing form
+            if (doAction === 'sendMails') {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = emetasks.translate_admin_sendmails_url;
+                ['tasksignup_ids', 'eme_admin_action'].forEach(key => {
+                    const val = key === 'tasksignup_ids' ? idsJoined : 'new_mailing';
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = val;
+                    form.appendChild(input);
                 });
+                document.body.appendChild(form);
+                form.submit();
+                return;
             }
+
+            // Regular AJAX action
+            const formData = new FormData();
+            formData.append('id', idsJoined);
+            formData.append('action', 'eme_manage_task_signups');
+            formData.append('do_action', doAction);
+            formData.append('send_mail', sendMail);
+            formData.append('eme_admin_nonce', emetasks.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                TaskSignupsTable.reload();
+                actionsButton.textContent = emetasks.translate_apply;
+                actionsButton.disabled = false;
+
+                const messageDiv = EME.$('#tasksignups-message');
+                if (messageDiv) {
+                    messageDiv.innerHTML = data.htmlmessage;
+                    eme_toggle(messageDiv, true);
+                    setTimeout(() => {
+                        eme_toggle(messageDiv, false);
+                    }, 5000);
+                }
+            });
         });
     }
 

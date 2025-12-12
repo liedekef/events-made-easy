@@ -341,9 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashBookings', 'deleteBookings'].includes(doAction) && !confirm(emersvp.translate_areyousuretodeleteselected)) {
-                return;
-            }
+            if (['trashBookings', 'deleteBookings'].includes(doAction) && !confirm(emersvp.translate_areyousuretodeleteselected)) return;
             if (doAction == 'partialPayment' && selectedRows.length > 1) {
                 alert(emersvp.translate_selectonerowonlyforpartial);
                 return;

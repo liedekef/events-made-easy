@@ -142,33 +142,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteDiscounts' && !confirm(emediscounts.translate_areyousuretodeleteselected)) {
+            if (doAction === 'deleteDiscounts' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
-                discountsButton.textContent = emediscounts.translate_pleasewait;
-                discountsButton.disabled = true;
+            discountsButton.textContent = emediscounts.translate_pleasewait;
+            discountsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('id', idsJoined);
-                formData.append('action', 'eme_manage_discounts');
-                formData.append('do_action', doAction);
-                formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('id', idsJoined);
+            formData.append('action', 'eme_manage_discounts');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    DiscountsTable.reload();
-                    discountsButton.textContent = emediscounts.translate_apply;
-                    discountsButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                DiscountsTable.reload();
+                discountsButton.textContent = emediscounts.translate_apply;
+                discountsButton.disabled = false;
 
-                    const msg = EME.$('#discounts-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 3000);
-                    }
-                });
-            }
+                const msg = EME.$('#discounts-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 3000);
+                }
+            });
         });
     }
 
@@ -182,33 +181,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteDiscountGroups' && !confirm(emediscounts.translate_areyousuretodeleteselected)) {
+            if (doAction === 'deleteDiscountGroups' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
-                groupsButton.textContent = emediscounts.translate_pleasewait;
-                groupsButton.disabled = true;
+            groupsButton.textContent = emediscounts.translate_pleasewait;
+            groupsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('id', idsJoined);
-                formData.append('action', 'eme_manage_discountgroups');
-                formData.append('do_action', doAction);
-                formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('id', idsJoined);
+            formData.append('action', 'eme_manage_discountgroups');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    DiscountGroupsTable.reload();
-                    groupsButton.textContent = emediscounts.translate_apply;
-                    groupsButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                DiscountGroupsTable.reload();
+                groupsButton.textContent = emediscounts.translate_apply;
+                groupsButton.disabled = false;
 
-                    const msg = EME.$('#discountgroups-message');
-                    if (msg) {
-                        msg.textContent = data.Message;
-                        eme_toggle(msg, true);
-                        setTimeout(() => eme_toggle(msg, false), 3000);
-                    }
-                });
-            }
+                const msg = EME.$('#discountgroups-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 3000);
+                }
+            });
         });
     }
 });

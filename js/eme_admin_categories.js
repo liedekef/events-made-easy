@@ -50,37 +50,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (selectedRows.length === 0 || !doAction) return;
 
-                let proceed = true;
-                if (doAction === 'deleteCategories' && !confirm(emecategories.translate_areyousuretodeleteselected)) {
-                    proceed = false;
-                }
+                if (doAction === 'deleteCategories' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
 
-                if (proceed) {
-                    actionsButton.textContent = emecategories.translate_pleasewait;
-                    actionsButton.disabled = true;
+                actionsButton.textContent = emecategories.translate_pleasewait;
+                actionsButton.disabled = true;
 
-                    const ids = selectedRows.map(row => row.dataset.recordKey);
-                    const idsJoined = ids.join(',');
+                const ids = selectedRows.map(row => row.dataset.recordKey);
+                const idsJoined = ids.join(',');
 
-                    const formData = new FormData();
-                    formData.append('category_ids', idsJoined);
-                    formData.append('action', 'eme_manage_categories');
-                    formData.append('do_action', doAction);
-                    formData.append('eme_admin_nonce', emecategories.translate_adminnonce);
+                const formData = new FormData();
+                formData.append('category_ids', idsJoined);
+                formData.append('action', 'eme_manage_categories');
+                formData.append('do_action', doAction);
+                formData.append('eme_admin_nonce', emecategories.translate_adminnonce);
 
-                    eme_postJSON(ajaxurl, formData, (data) => {
-                        CategoriesTable.reload();
-                        actionsButton.textContent = emecategories.translate_apply;
-                        actionsButton.disabled = false;
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    CategoriesTable.reload();
+                    actionsButton.textContent = emecategories.translate_apply;
+                    actionsButton.disabled = false;
 
-                        const msg = EME.$('#categories-message');
-                        if (msg) {
-                            msg.innerHTML = data.htmlmessage;
-                            eme_toggle(msg, true);
-                            setTimeout(() => eme_toggle(msg, false), 3000);
-                        }
-                    });
-                }
+                    const msg = EME.$('#categories-message');
+                    if (msg) {
+                        msg.innerHTML = data.htmlmessage;
+                        eme_toggle(msg, true);
+                        setTimeout(() => eme_toggle(msg, false), 3000);
+                    }
+                });
             });
         }
 

@@ -61,9 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['deleteMemberships'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) {
-                return;
-            }
+            if (['deleteMemberships'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) return;
 
             membershipsButton.textContent = ememembers.translate_pleasewait;
             membershipsButton.disabled = true;
@@ -325,9 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['deleteMembers'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) {
-                return;
-            }
+            if (['deleteMembers'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) return;
 
             membersButton.textContent = ememembers.translate_pleasewait;
             membersButton.disabled = true;

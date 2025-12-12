@@ -408,9 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashPeople', 'deletePeople'].includes(doAction) && !confirm(emepeople.translate_areyousuretodeleteselected)) {
-                return;
-            }
+            if (['trashPeople', 'deletePeople'].includes(doAction) && !confirm(emepeople.translate_areyousuretodeleteselected)) return;
 
             peopleButton.textContent = emepeople.translate_pleasewait;
             peopleButton.disabled = true;

@@ -80,39 +80,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            let proceed = true;
-            if (doAction === 'deleteTemplates' && !confirm(emetemplates.translate_areyousuretodeleteselected)) {
-                proceed = false;
-            }
+            if (doAction === 'deleteTemplates' && !confirm(emetemplates.translate_areyousuretodeleteselected)) return;
 
-            if (proceed) {
-                actionsButton.textContent = emetemplates.translate_pleasewait;
-                actionsButton.disabled = true;
+            actionsButton.textContent = emetemplates.translate_pleasewait;
+            actionsButton.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsJoined = ids.join(',');
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
 
-                const formData = new FormData();
-                formData.append('id', idsJoined);
-                formData.append('action', 'eme_manage_templates');
-                formData.append('do_action', doAction);
-                formData.append('eme_admin_nonce', emetemplates.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('id', idsJoined);
+            formData.append('action', 'eme_manage_templates');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emetemplates.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    TemplatesTable.reload();
-                    actionsButton.textContent = emetemplates.translate_apply;
-                    actionsButton.disabled = false;
+            eme_postJSON(ajaxurl, formData, (data) => {
+                TemplatesTable.reload();
+                actionsButton.textContent = emetemplates.translate_apply;
+                actionsButton.disabled = false;
 
-                    const messageDiv = EME.$('#templates-message');
-                    if (messageDiv) {
-                        messageDiv.innerHTML = data.htmlmessage;
-                        eme_toggle(messageDiv, true);
-                        if (doAction === 'deleteTemplates') {
-                            setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
-                        }
+                const messageDiv = EME.$('#templates-message');
+                if (messageDiv) {
+                    messageDiv.innerHTML = data.htmlmessage;
+                    eme_toggle(messageDiv, true);
+                    if (doAction === 'deleteTemplates') {
+                        setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
                     }
-                });
-            }
+                }
+            });
         });
     }
 

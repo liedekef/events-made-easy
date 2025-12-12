@@ -453,52 +453,47 @@ document.addEventListener('DOMContentLoaded', function () {
             const do_action = EME.$('#eme_admin_action_mails').value;
             if (!selectedRows.length || !do_action) return;
 
-            let action_ok = 1;
-            if (do_action === 'deleteMails' && !confirm(ememails.translate_areyousuretodeleteselected)) {
-                action_ok = 0;
-            }
+            if (do_action === 'deleteMails' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
 
-            if (action_ok === 1) {
-                this.textContent = ememails.translate_pleasewait;
-                this.disabled = true;
+            this.textContent = ememails.translate_pleasewait;
+            this.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const personids = selectedRows.map(row => row.dataset.record?.person_id);
-                const idsjoined = ids.join();
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const personids = selectedRows.map(row => row.dataset.record?.person_id);
+            const idsjoined = ids.join();
 
-                if (do_action === 'sendMails') {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = ememails.translate_admin_sendmails_url;
-                    ['person_ids', 'eme_admin_action'].forEach(key => {
-                        const val = key === 'person_ids' ? personids.join() : 'new_mailing';
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = val;
-                        form.appendChild(input);
-                    });
-                    document.body.appendChild(form);
-                    form.submit();
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('mail_ids', idsjoined);
-                formData.append('action', 'eme_manage_mails');
-                formData.append('do_action', do_action);
-                formData.append('eme_admin_nonce', ememails.translate_adminnonce);
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    MailsTable.reload();
-                    this.textContent = ememails.translate_apply;
-                    this.disabled = false;
-                    const msg = EME.$('#mails-message');
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 3000);
+            if (do_action === 'sendMails') {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = ememails.translate_admin_sendmails_url;
+                ['person_ids', 'eme_admin_action'].forEach(key => {
+                    const val = key === 'person_ids' ? personids.join() : 'new_mailing';
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = val;
+                    form.appendChild(input);
                 });
+                document.body.appendChild(form);
+                form.submit();
+                return;
             }
+
+            const formData = new FormData();
+            formData.append('mail_ids', idsjoined);
+            formData.append('action', 'eme_manage_mails');
+            formData.append('do_action', do_action);
+            formData.append('eme_admin_nonce', ememails.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                MailsTable.reload();
+                this.textContent = ememails.translate_apply;
+                this.disabled = false;
+                const msg = EME.$('#mails-message');
+                msg.innerHTML = data.htmlmessage;
+                eme_toggle(msg, true);
+                setTimeout(() => eme_toggle(msg, false), 3000);
+            });
         });
     }
 
@@ -591,34 +586,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const do_action = EME.$('#eme_admin_action_mailings').value;
             if (!selectedRows.length || !do_action) return;
 
-            let action_ok = 1;
-            if (do_action === 'deleteMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) {
-                action_ok = 0;
-            }
+            if (do_action === 'deleteMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
 
-            if (action_ok === 1) {
-                this.textContent = ememails.translate_pleasewait;
-                this.disabled = true;
+            this.textContent = ememails.translate_pleasewait;
+            this.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsjoined = ids.join();
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsjoined = ids.join();
 
-                const formData = new FormData();
-                formData.append('mailing_ids', idsjoined);
-                formData.append('action', 'eme_manage_mailings');
-                formData.append('do_action', do_action);
-                formData.append('eme_admin_nonce', ememails.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('mailing_ids', idsjoined);
+            formData.append('action', 'eme_manage_mailings');
+            formData.append('do_action', do_action);
+            formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    MailingsTable.reload();
-                    this.textContent = ememails.translate_apply;
-                    this.disabled = false;
-                    const msg = EME.$('#mailings-message');
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                });
-            }
+            eme_postJSON(ajaxurl, formData, (data) => {
+                MailingsTable.reload();
+                this.textContent = ememails.translate_apply;
+                this.disabled = false;
+                const msg = EME.$('#mailings-message');
+                msg.innerHTML = data.htmlmessage;
+                eme_toggle(msg, true);
+                setTimeout(() => eme_toggle(msg, false), 5000);
+            });
         });
     }
 
@@ -701,34 +691,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const do_action = EME.$('#eme_admin_action_archivedmailings').value;
             if (!selectedRows.length || !do_action) return;
 
-            let action_ok = 1;
-            if (do_action === 'deleteArchivedMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) {
-                action_ok = 0;
-            }
+            if (do_action === 'deleteArchivedMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
 
-            if (action_ok === 1) {
-                this.textContent = ememails.translate_pleasewait;
-                this.disabled = true;
+            this.textContent = ememails.translate_pleasewait;
+            this.disabled = true;
 
-                const ids = selectedRows.map(row => row.dataset.recordKey);
-                const idsjoined = ids.join();
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsjoined = ids.join();
 
-                const formData = new FormData();
-                formData.append('mailing_ids', idsjoined);
-                formData.append('action', 'eme_manage_archivedmailings');
-                formData.append('do_action', do_action);
-                formData.append('eme_admin_nonce', ememails.translate_adminnonce);
+            const formData = new FormData();
+            formData.append('mailing_ids', idsjoined);
+            formData.append('action', 'eme_manage_archivedmailings');
+            formData.append('do_action', do_action);
+            formData.append('eme_admin_nonce', ememails.translate_adminnonce);
 
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    ArchivedMailingsTable.reload();
-                    this.textContent = ememails.translate_apply;
-                    this.disabled = false;
-                    const msg = EME.$('#archivedmailings-message');
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                });
-            }
+            eme_postJSON(ajaxurl, formData, (data) => {
+                ArchivedMailingsTable.reload();
+                this.textContent = ememails.translate_apply;
+                this.disabled = false;
+                const msg = EME.$('#archivedmailings-message');
+                msg.innerHTML = data.htmlmessage;
+                eme_toggle(msg, true);
+                setTimeout(() => eme_toggle(msg, false), 5000);
+            });
         });
     }
 

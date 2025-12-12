@@ -19,6 +19,9 @@ class Client {
 
     const ENVIRONMENT_PROD = 'prod';
     const ENVIRONMENT_EXT = 'ext';
+    
+    // Toegestane karakters volgens EPC217-08 SEPA Conversion Table
+    const ALLOWED_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:?+-/()'";
 
     protected $apiKey;
     protected $endpoint;
@@ -76,6 +79,45 @@ class Client {
     }
 
     /**
+     * Convert string to EPC217-08 SEPA compliant format
+     *
+     * @param  string $input  Original string
+     * @param  int    $maxLength  Maximum length (optional)
+     * 
+     * @return string  Converted string
+     */
+    private function convertToSEPA($input, $maxLength = null) {
+        // Convert to UTF-8 if not already
+        if (!mb_detect_encoding($input, 'UTF-8', true)) {
+            $input = mb_convert_encoding($input, 'UTF-8');
+        }
+        
+        // Normalize: remove diacritics/accents
+        $input = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);
+        
+        // Filter to only allowed characters
+        $result = '';
+        $allowedChars = self::ALLOWED_CHARS;
+        
+        for ($i = 0; $i < mb_strlen($input); $i++) {
+            $char = mb_substr($input, $i, 1);
+            if (strpos($allowedChars, $char) !== false) {
+                $result .= $char;
+            }
+        }
+        
+        // Trim and replace multiple spaces with single space
+        $result = trim(preg_replace('/\s+/', ' ', $result));
+        
+        // Apply max length if specified
+        if ($maxLength !== null && mb_strlen($result) > $maxLength) {
+            $result = mb_substr($result, 0, $maxLength);
+        }
+        
+        return $result;
+    }
+
+    /**
      * Create a new payment
      * 
      * @param  float $amount		Payment amount in cents
@@ -90,6 +132,10 @@ class Client {
      * @throws CreatePaymentFailedException  If the response has no transactionid
      */
     public function createPayment( $amount, $currency = 'EUR', $description='', $reference='', $bulkId='', $callbackUrl='', $returnUrl = null ) {
+        // Convert description and reference to SEPA compliant format
+        $description = $this->convertToSEPA($description, 140); // SEPA max is 140 chars for description
+        $reference = $this->convertToSEPA($reference, 35); // SEPA max is 35 chars for reference
+        
         $data_arr = [
             'amount' => $amount,
             'currency' => $currency,
@@ -136,6 +182,9 @@ class Client {
      * @return  array  Response objects by Payconiq
      */
     public function getPaymentsListByReference( $reference ) {
+        // Convert reference to SEPA compliant format voor consistentie
+        $reference = $this->convertToSEPA($reference, 35);
+        
         $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/search' ), [
             'reference' => $reference
         ]);
@@ -198,10 +247,14 @@ class Client {
      *
      * @param  float $amount		Payment amount in cents
      * @param  string $currency		Payment currency code in IOS 4217 format
+     * @param  string $description	Optional refund description
      *
      * @return  object  Response object by Payconiq
      */
     public function refundPayment( $paymentId, $amount, $currency = 'EUR', $description = '' ) {
+        // Convert description to SEPA compliant format
+        $description = $this->convertToSEPA($description, 140);
+        
         $data_arr = [
             'amount' => $amount,
             'currency' => $currency,
@@ -210,6 +263,7 @@ class Client {
         if ( ! empty( $description ) ) {
             $data_arr['description'] = $description;
         }
+        // JWS to be calculated and added as header 'Idempotency-Key' to the data_arr
         $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/' . $paymentId ), $data_arr );
 
         if ( empty( $response->paymentId ) ) {
@@ -325,5 +379,140 @@ class Client {
         }
 
         return $decoded;
+    }
+
+    /**
+     * Verify Payconiq webhook signature
+     *
+     * @param string $payload   Raw request body (php://input)
+     * @param array  $headers   All request headers (getallheaders())
+     * @param string $environment 'prod' or 'ext'
+     * @return bool true if valid, false otherwise
+     * @throws \Exception on errors or malformed data
+     */
+    public function verifyWebhookSignature( $payload, $headers, $environment = self::ENVIRONMENT_PROD ) {
+        $signatureHeader = $headers['JWS-Request-Signature-Payment'] ?? null;
+        if (!$signatureHeader) {
+            throw new \Exception("Missing JWS-Request-Signature-Payment header");
+        }
+
+        // --- 1. Split JWS parts ---
+        $parts = explode('.', $signatureHeader);
+        if (count($parts) !== 3) {
+            throw new \Exception("Invalid JWS format (expected 3 parts)");
+        }
+
+        [$encodedHeader, $encodedPayload, $encodedSignature] = $parts;
+
+        // --- 2. Decode JOSE header ---
+        $headerJson = json_decode(self::base64urlDecode($encodedHeader), true);
+        if (!$headerJson || !isset($headerJson['kid'])) {
+            throw new \Exception("Invalid JOSE header or missing kid");
+        }
+
+        // --- 3. Fetch JWKS ---
+        $jwksUrl = ($environment === self::ENVIRONMENT_PROD)
+            ? 'https://jwks.bancontact.net/'
+            : 'https://jwks.preprod.bancontact.net/';
+        $jwks = json_decode(file_get_contents($jwksUrl), true);
+        if (!isset($jwks['keys'])) {
+            throw new \Exception("Invalid JWKS format from $jwksUrl");
+        }
+
+        // --- 4. Find matching key ---
+        $jwk = null;
+        foreach ($jwks['keys'] as $key) {
+            if ($key['kid'] === $headerJson['kid']) {
+                $jwk = $key;
+                break;
+            }
+        }
+        if (!$jwk) {
+            throw new \Exception("No matching key found for kid={$headerJson['kid']}");
+        }
+
+        // --- 5. Convert JWK to PEM ---
+        $pem = self::ecJwkToPem($jwk);
+
+        // --- 6. Verify signature ---
+        $reconstructedPayload = self::base64urlEncode($payload);
+        $signingInput = $encodedHeader . '.' . $reconstructedPayload;
+        $signature = self::base64urlDecode($encodedSignature);
+
+        $signatureDer = self::ecdsaRawToDer($signature);
+
+        $verified = openssl_verify(
+            $signingInput,
+            $signatureDer,
+            $pem,
+            OPENSSL_ALGO_SHA256
+        );
+
+        return $verified === 1;
+    }
+
+    // -----------------------
+    // Helper methods
+    // -----------------------
+
+    private static function base64urlEncode($data) {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+
+    private static function base64urlDecode($data) {
+        $remainder = strlen($data) % 4;
+        if ($remainder) {
+            $data .= str_repeat('=', 4 - $remainder);
+        }
+        return base64_decode(strtr($data, '-_', '+/'));
+    }
+
+    private static function ecJwkToPem($jwk) {
+        if (($jwk['kty'] ?? '') !== 'EC' || ($jwk['crv'] ?? '') !== 'P-256') {
+            throw new \Exception("Unsupported JWK type or curve");
+        }
+
+        $x = self::base64urlDecode($jwk['x']);
+        $y = self::base64urlDecode($jwk['y']);
+        $pubKey = "\x04" . $x . $y;
+
+        $oidEcPublicKey = "\x06\x07\x2A\x86\x48\xCE\x3D\x02\x01";
+        $oidPrime256v1  = "\x06\x08\x2A\x86\x48\xCE\x3D\x03\x01\x07";
+
+        $algoid = "\x30" . chr(strlen($oidEcPublicKey . $oidPrime256v1) + 4)
+            . "\x06" . chr(strlen($oidEcPublicKey)) . $oidEcPublicKey
+            . "\x06" . chr(strlen($oidPrime256v1)) . $oidPrime256v1;
+
+        $pubKeyBitString = "\x03" . chr(strlen($pubKey) + 1) . "\x00" . $pubKey;
+
+        $seq = "\x30" . chr(strlen($algoid . $pubKeyBitString)) . $algoid . $pubKeyBitString;
+
+        $pem = "-----BEGIN PUBLIC KEY-----\n"
+            . chunk_split(base64_encode($seq), 64, "\n")
+            . "-----END PUBLIC KEY-----\n";
+
+        return $pem;
+    }
+
+    private static function ecdsaRawToDer($signature) {
+        $length = strlen($signature);
+        if ($length % 2 !== 0) {
+            throw new \Exception("Invalid ECDSA signature length");
+        }
+        $r = substr($signature, 0, $length / 2);
+        $s = substr($signature, $length / 2);
+
+        $r = ltrim($r, "\x00");
+        $s = ltrim($s, "\x00");
+
+        if (ord($r[0]) > 0x7F) $r = "\x00" . $r;
+        if (ord($s[0]) > 0x7F) $s = "\x00" . $s;
+
+        $der = "\x30"
+            . chr(strlen($r) + strlen($s) + 4)
+            . "\x02" . chr(strlen($r)) . $r
+            . "\x02" . chr(strlen($s)) . $s;
+
+        return $der;
     }
 }

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.31  (2025/12/13) =
+* Ftable update
+
 = 3.0.30  (2025/12/12) =
 * Really Payconiq update
 * Ftable update

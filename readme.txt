@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.32  (2025/12/) =
+* Braintree API update to 6.31.0
+
 = 3.0.31  (2025/12/15) =
 * Ftable update
 * fix deleting categories and discounts via mass action

@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit42f3d30f2b6aee9c0864900d1982814b
 {
     public static $prefixLengthsPsr4 = array (
-        'B' => 
+        'B' =>
         array (
             'Braintree\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Braintree\\' => 
+        'Braintree\\' =>
         array (
             0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
         ),

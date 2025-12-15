@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction === 'deleteDiscounts' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteDiscounts' && !confirm(emediscounts.translate_areyousuretodeleteselected)) return;
 
             discountsButton.textContent = emediscounts.translate_pleasewait;
             discountsButton.disabled = true;

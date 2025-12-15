@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (selectedRows.length === 0 || !doAction) return;
 
-                if (doAction === 'deleteCategories' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
+                if (doAction === 'deleteCategories' && !confirm(emecategories.translate_areyousuretodeleteselected)) return;
 
                 actionsButton.textContent = emecategories.translate_pleasewait;
                 actionsButton.disabled = true;

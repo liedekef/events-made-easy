@@ -3439,6 +3439,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
             $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' );
         }
         $fTableResult['Result']      = 'OK';
+        $fTableResult['Message']     = __( 'Records deleted!', 'events-made-easy' );
         $fTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
     } else {
         $fTableResult['Result']      = 'Error';

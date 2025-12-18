@@ -67,7 +67,7 @@ div.ftable-main-container div.ftable-title div.ftable-title-text {
     text-shadow: none;
 }
 
-div.ftable-main-container div.ftable-title div.ftable-toolbar span.ftable-toolbar-item {
+div.ftable-main-container div.ftable-title div.ftable-toolbar .ftable-toolbar-item {
     font-size: 1.1em;
     background: #e6e6e6;
     color: #555;

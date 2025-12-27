@@ -544,6 +544,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 }
 
 function eme_booking_discount( $event, $booking ) {
+    // this function calculates discounts but doesn't change anything to the discounts themselves
 	$discountgroup_id = $booking['dgroupid'];
 	$total_discount   = 0;
 	// make sure to not store an empty discount name:
@@ -720,6 +721,7 @@ function eme_update_booking_discount( $booking ) {
 	if ( empty( $event ) ) {
 		return;
 	}
+    // the next calc calculates discounts but doesn't change anything to the discounts themselves
 	$calc_discount = eme_booking_discount( $event, $booking );
 
 	$bookings_table        = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;

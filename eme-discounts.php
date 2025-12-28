@@ -1374,11 +1374,11 @@ function eme_calc_booking_discount( $discount, $booking ) {
 	}
  
 	// check min seats
-	if ( $discount['properties']['min_seats'] !== '' && ! $booking['booking_seats']<intval($discount['properties']['min_seats']) ) {
+	if ( $discount['properties']['min_seats'] !== '' && $booking['booking_seats']<intval($discount['properties']['min_seats']) ) {
 		return false;
 	}
 	// check max seats
-	if ( $discount['properties']['max_seats'] !== '' && ! $booking['booking_seats']>intval($discount['properties']['max_seats']) ) {
+	if ( $discount['properties']['max_seats'] !== '' && $booking['booking_seats']>intval($discount['properties']['max_seats']) ) {
 		return false;
 	}
 

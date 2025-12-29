@@ -1283,8 +1283,8 @@ function eme_update_booking_discounts( $booking ) {
             }
             eme_increase_discount_count( $discount['id'], $discount_count_to_use );
 
-            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[ $discount['id'])) {
-                $discount['value'] -= $applied_discounts[ $discount['id']];
+            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[$discount['id']])) {
+                $discount['value'] -= $applied_discounts[$discount['id']];
                 if ($discount['value']<0) $discount['value']=0;
                 eme_db_update_discount( $discount['id'], $discount);
             }
@@ -1308,8 +1308,8 @@ function eme_update_member_discounts( $member ) {
         if ( $discount ) {
             $discount_count_to_use = 1;
             eme_increase_discount_count( $discount['id'], $discount_count_to_use );
-            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[ $discount['id'])) {
-                $discount['value'] -= $applied_discounts[ $discount['id']];
+            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[$discount['id']])) {
+                $discount['value'] -= $applied_discounts[$discount['id']];
                 eme_db_update_discount( $discount['id'], $discount);
             }
         }

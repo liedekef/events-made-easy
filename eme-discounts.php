@@ -42,6 +42,9 @@ function eme_init_discount_props( $props ) {
 	if ( ! isset( $props['wp_users_only'] ) ) {
 		$props['wp_users_only'] = 0;
 	}
+	if ( ! isset( $props['voucher'] ) ) {
+		$props['voucher'] = 0;
+	}
 	if ( ! isset( $props['maxcount_pp'] ) ) {
 		$props['maxcount_pp'] = 0;
 	}
@@ -547,12 +550,17 @@ function eme_booking_discount( $event, $booking ) {
     // this function calculates discounts but doesn't change anything to the discounts themselves
 	$discountgroup_id = $booking['dgroupid'];
 	$total_discount   = 0;
-	// make sure to not store an empty discount name:
-	// explode on an empty string creates a empty first array element
+    $legacy_format = false;
+    $applied_discounts = [];
+    $applied_discountids = [];
 	if ( ! empty( $booking['discountids'] ) ) {
-		$applied_discountids = explode( ',', $booking['discountids'] );
-	} else {
-		$applied_discountids = [];
+        if ( eme_is_serialized( $booking['discountids'] ) ) {
+            $applied_discounts = eme_unserialize( $booking['discountids'] );
+            $applied_discountids = array_keys($applied_discounts);
+        } else {
+            $applied_discountids = explode( ',', $booking['discountids'] );
+            $legacy_format = true;
+        }
 	}
 
 	if ( eme_is_admin_request() ) {
@@ -561,6 +569,8 @@ function eme_booking_discount( $event, $booking ) {
 			$booking_discount = sprintf( '%01.2f', $booking['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $post_discount != $booking_discount ) {
+                $legacy_format          = false;
+				$applied_discounts      = [];
 				$applied_discountids    = [];
 				$discountgroup_id       = 0;
 				$booking['dcodes_used'] = [];
@@ -594,7 +604,8 @@ function eme_booking_discount( $event, $booking ) {
 				if ( $amount ) {
 					++$group_count;
 					$total_discount       += $amount;
-					$applied_discountids[] = $id;
+                    $applied_discounts[$id] = $amount;
+                    $applied_discountids[] = $id;
 					// we assign the dcodes_used back to $booking, so the next run of this foreach loop has this knowlede in eme_calc_booking_discount()
 					if ( ! empty( $calc_result[1] ) ) {
 						$booking['dcodes_used'] = $calc_result[1];
@@ -612,7 +623,8 @@ function eme_booking_discount( $event, $booking ) {
 		}
 		if ( $amount ) {
 			$total_discount        = $amount;
-			$applied_discountids[] = $discount['id'];
+            $applied_discounts[$discount['id']] = $amount;
+            $applied_discountids[] = $discount['id'];
 			if ( ! empty( $calc_result[1] ) ) {
 				$booking['dcodes_used'] = $calc_result[1];
 			} else {
@@ -621,7 +633,11 @@ function eme_booking_discount( $event, $booking ) {
 		}
 	}
 
-	$discountids = join( ',', array_unique( $applied_discountids ) );
+    if ($legacy_format) {
+        $discountids = join( ',', array_unique( $applied_discountids ) );
+    } else {
+        $discountids = eme_serialize( $applied_discounts );
+    }
 	return [
 		'discount'    => $total_discount,
 		'discountids' => $discountids,
@@ -633,13 +649,18 @@ function eme_booking_discount( $event, $booking ) {
 function eme_member_discount( $membership, $member ) {
 	$discountgroup_id = $member['dgroupid'];
 	$total_discount   = 0;
-	// make sure to not store an empty discount name:
-	// explode on an empty string creates a empty first array element
-	if ( ! empty( $member['discountids'] ) ) {
-		$applied_discountids = explode( ',', $member['discountids'] );
-	} else {
-		$applied_discountids = [];
-	}
+    $legacy_format = false;
+    $applied_discountids = [];
+    $applied_discounts = [];
+    if ( ! empty( $member['discountids'] ) ) {
+        if ( eme_is_serialized( $member['discountids'] ) ) {
+            $applied_discounts = eme_unserialize( $member['discountids'] );
+            $applied_discountids = array_keys($applied_discounts);
+        } else {
+            $applied_discountids = explode( ',', $member['discountids'] );
+            $legacy_format = true;
+        }
+    }
 
 	if ( eme_is_admin_request() ) {
 		if ( isset( $_POST['DISCOUNT'] ) ) {
@@ -647,6 +668,7 @@ function eme_member_discount( $membership, $member ) {
 			$member_discount = sprintf( '%01.2f', $member['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $post_discount != $member_discount ) {
+				$applied_discounts     = [];
 				$applied_discountids   = [];
 				$discountgroup_id      = 0;
 				$member['dcodes_used'] = [];
@@ -679,7 +701,8 @@ function eme_member_discount( $membership, $member ) {
 				}
 				if ( $amount ) {
 					++$group_count;
-					$total_discount       += $amount;
+					$total_discount += $amount;
+                    $applied_discounts[$id] = $amount;
 					$applied_discountids[] = $id;
 					// we assign the dcodes_used back to $member, so the next run of this foreach loop has this knowlede in eme_calc_member_discount()
 					if ( ! empty( $calc_result[1] ) ) {
@@ -698,7 +721,8 @@ function eme_member_discount( $membership, $member ) {
 		}
 		if ( $amount ) {
 			$total_discount        = $amount;
-			$applied_discountids[] = $discount['id'];
+            $applied_discounts[$discount['id']] = $amount;
+            $applied_discountids[] = $discount['id'];
 			if ( ! empty( $calc_result[1] ) ) {
                 $member['dcodes_used'] = $calc_result[1];
 			} else {
@@ -707,7 +731,11 @@ function eme_member_discount( $membership, $member ) {
 		}
 	}
 
-	$discountids = join( ',', array_unique( $applied_discountids ) );
+    if ($legacy_format) {
+        $discountids = join( ',', array_unique( $applied_discountids ) );
+    } else {
+        $discountids = eme_serialize( $applied_discounts );
+    }
 	return [
 		'discount'    => $total_discount,
 		'discountids' => $discountids,
@@ -716,7 +744,7 @@ function eme_member_discount( $membership, $member ) {
 	];
 }
 
-function eme_update_booking_discount( $booking ) {
+function eme_check_booking_discount( $booking ) {
 	global $wpdb;
 
 	$event = eme_get_event( $booking['event_id'] );
@@ -737,15 +765,20 @@ function eme_update_booking_discount( $booking ) {
 	if ( $calc_discount['discount'] != $booking['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
 		// so we also decrease the usage count of the discount ids
-		$discount_ids = explode( ',', $booking['discountids'] );
-		foreach ( $discount_ids as $discount_id ) {
+        if ( eme_is_serialized( $booking['discountids'] ) ) {
+            $applied_discounts = eme_unserialize( $booking['discountids'] );
+            $applied_discountids = array_keys($applied_discounts);
+        } else {
+            $applied_discountids = explode( ',', $booking['discountids'] );
+        }
+		foreach ( $applied_discountids as $discount_id ) {
 			eme_decrease_discount_booking_count( $discount_id, $booking );
 		}
 	}
 	$wpdb->update( $bookings_table, $fields, $where );
 }
 
-function eme_update_member_discount( $member ) {
+function eme_check_member_discount( $member ) {
 	global $wpdb;
 
 	$membership    = eme_get_membership( $member['membership_id'] );
@@ -761,9 +794,14 @@ function eme_update_member_discount( $member ) {
 	$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount != $member['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
-		// so we also decrease the usage count of the discount ids
-		$discount_ids = explode( ',', $member['discountids'] );
-		foreach ( $discount_ids as $discount_id ) {
+        // so we also decrease the usage count of the discount ids
+        if ( eme_is_serialized( $member['discountids'] ) ) {
+            $applied_discounts = eme_unserialize( $member['discountids'] );
+            $applied_discountids = array_keys($applied_discounts);
+        } else {
+            $applied_discountids = explode( ',', $member['discountids'] );
+        }
+		foreach ( $applied_discountids as $discount_id ) {
 			eme_decrease_discount_member_count( $discount_id, $member );
 		}
 	}
@@ -849,6 +887,12 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<td><input name='coupon' id='coupon' type='text' value='<?php echo eme_esc_html( $discount['coupon'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The coupon code to enter for the discount to apply (this does not apply to discounts of type "Code")', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'If you leave the coupon code empty but set a discount expiration date, you can use this as an "early bird" discount', 'events-made-easy' ); ?>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Voucher mode', 'events-made-easy' ); ?></label></th>
+			<td><?php echo eme_ui_select_binary( $discount['properties']['voucher'], 'properties[voucher]' ); ?>
+			<br><p class='eme_smaller'><?php esc_html_e( 'If voucher mode is active (for type "fixed" only), the discount value will be decreased by the calculated value until it reaches 0.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 		<tr class='form-field'>
@@ -1062,24 +1106,24 @@ function eme_db_insert_discount( $line ) {
 }
 
 function eme_db_update_discount( $id, $line ) {
-		global $wpdb;
+    global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
-		$discount = eme_get_discount( $id );
-		// we only want the columns that interest us
-		$keys     = array_intersect_key( $line, $discount );
-		$new_line = array_merge( $discount, $keys );
+    $discount = eme_get_discount( $id );
+    // we only want the columns that interest us
+    $keys     = array_intersect_key( $line, $discount );
+    $new_line = array_merge( $discount, $keys );
 	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
-			$new_line['properties'] = eme_serialize( $new_line['properties'] );
+        $new_line['properties'] = eme_serialize( $new_line['properties'] );
 	}
-		$where = [ 'id' => $id ];
+    $where = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
 		unset( $new_line['id'] );
 	}
 	if ( $wpdb->update( $table, $new_line, $where ) === false ) {
-			return false;
+        return false;
 	} else {
-			return $id;
+        return $id;
 	}
 }
 
@@ -1214,29 +1258,62 @@ function eme_decrease_discount_count( $id, $usage ) {
 	return $wpdb->query( $sql );
 }
 
-function eme_update_discount_booking_usage( $id, $booking ) {
-	$discount = eme_get_discount( $id );
-	if ( $discount ) {
-		if ( $discount['use_per_seat'] > 0 ) {
-			if ( $discount['maxcount'] > 0 && $discount['count'] + $booking['booking_seats'] > $discount['maxcount'] ) {
-				$discount_count_to_use = $discount['maxcount'] - $discount['count'];
-			} else {
-				$discount_count_to_use = $booking['booking_seats'];
-			}
-		} else {
-			$discount_count_to_use = 1;
-		}
-		eme_increase_discount_count( $discount['id'], $discount_count_to_use );
-	}
+// next function is only called after new booking
+function eme_update_booking_discounts( $booking ) {
+    if (empty($booking['discountids'])) {
+        return;
+    }
+    if ( eme_is_serialized( $booking['discountids'] ) ) {
+        $applied_discounts = eme_unserialize( $booking['discountids'] );
+        $applied_discountids = array_keys($applied_discounts);
+    } else {
+        $applied_discountids = explode( ',', $booking['discountids'] );
+    }
+    foreach ($applied_discountids as $discountid) {
+        $discount = eme_get_discount( $discountid );
+        if ( $discount ) {
+            if ( $discount['use_per_seat'] > 0 ) {
+                if ( $discount['maxcount'] > 0 && $discount['count'] + $booking['booking_seats'] > $discount['maxcount'] ) {
+                    $discount_count_to_use = $discount['maxcount'] - $discount['count'];
+                } else {
+                    $discount_count_to_use = $booking['booking_seats'];
+                }
+            } else {
+                $discount_count_to_use = 1;
+            }
+            eme_increase_discount_count( $discount['id'], $discount_count_to_use );
+
+            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[ $discount['id'])) {
+                $discount['value'] -= $applied_discounts[ $discount['id']];
+                if ($discount['value']<0) $discount['value']=0;
+                eme_db_update_discount( $discount['id'], $discount);
+            }
+        }
+    }
 }
 
-function eme_update_discount_member_usage( $id, $member ) {
-	$discount = eme_get_discount( $id );
-	// currently no use for $member, but we leave it in for future usage
-	if ( $discount ) {
-		$discount_count_to_use = 1;
-		eme_increase_discount_count( $discount['id'], $discount_count_to_use );
-	}
+// next function is only called after member insert
+function eme_update_member_discounts( $member ) {
+    if (empty($member['discountids'])) {
+        return;
+    }
+    if ( eme_is_serialized( $member['discountids'] ) ) {
+        $applied_discounts = eme_unserialize( $member['discountids'] );
+        $applied_discountids = array_keys($applied_discounts);
+    } else {
+        $applied_discountids = explode( ',', $member['discountids'] );
+    }
+    foreach ($applied_discountids as $discountid) {
+        $discount = eme_get_discount( $discountid );
+        if ( $discount ) {
+            $discount_count_to_use = 1;
+            eme_increase_discount_count( $discount['id'], $discount_count_to_use );
+            if ( ! empty( $discount['properties']['voucher'] ) && $discount['type'] == EME_DISCOUNT_TYPE_FIXED && !empty($applied_discounts[ $discount['id'])) {
+                $discount['value'] -= $applied_discounts[ $discount['id']];
+                eme_db_update_discount( $discount['id'], $discount);
+            }
+        }
+    }
 }
 
 function eme_decrease_discount_booking_count( $id, $booking ) {
@@ -1318,13 +1395,43 @@ function eme_get_discount_by_name( $name ) {
 function eme_get_person_used_discount_count( $person_id, $discount_id) {
 	global $wpdb;
 	$table    = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE person_id = %d AND FIND_IN_SET(%d, discountids)", $person_id, $discount_id );
-	$used_count = $wpdb->get_var( $sql );
+    // Use LIKE as a pre-filter to reduce rows
+    $like_pattern = '%' . $wpdb->esc_like( $discount_id ) . '%';
 
-	$table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$sql      = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE person_id = %d AND FIND_IN_SET(%d, discountids)", $person_id, $discount_id );
-	$used_count += $wpdb->get_var( $sql );
-    return $used_count;
+    $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+    $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+    
+    // Use UNION to combine both queries into one database call
+    $sql = $wpdb->prepare( 
+        "SELECT discountids FROM $bookings_table 
+         WHERE person_id = %d 
+         AND discountids LIKE %s
+         UNION ALL
+         SELECT discountids FROM $members_table 
+         WHERE person_id = %d 
+         AND discountids LIKE %s",
+        $person_id, $like_pattern,
+        $person_id, $like_pattern
+    );
+    
+    $discountids_results = $wpdb->get_col( $sql );
+    $count = 0;
+    foreach ( $discountids_results as $discountids ) {
+        if ( eme_is_serialized( $discountids ) ) {
+            // Serialized format: unserialize and check keys
+            $applied_discounts = eme_unserialize( $discountids );
+            if ( is_array( $applied_discounts ) && array_key_exists( $discount_id, $applied_discounts ) ) {
+                $count++;
+            }
+        } else {
+            // CSV format: split and check
+            $discount_ids = explode( ',', $discountids );
+            if ( in_array( $discount_id, $discount_ids ) ) {
+                $count++;
+            }
+        }
+    }
+    return $count;
 }
 
 function eme_calc_booking_discount( $discount, $booking ) {

@@ -1666,12 +1666,9 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                     eme_delete_booking( $booking_id );
                 } else {
                     $booking_ids[] = $booking_id;
-                    // make sure to update the discount count if applied
+                    // make sure to update the discount count and any other discount actions if applied
                     if ( ! $eme_is_admin_request && ! empty( $booking['discountids'] ) ) {
-                        $discount_ids = explode( ',', $booking['discountids'] );
-                        foreach ( $discount_ids as $discount_id ) {
-                            eme_update_discount_booking_usage( $discount_id, $booking );
-                        }
+                        eme_update_booking_discounts( $booking );
                     }
 
                     // everything ok? So then we add the user in WP if desired
@@ -2710,7 +2707,7 @@ function eme_db_update_booking( $line ) {
         $booking = eme_get_booking( $line['booking_id'] );
         //eme_delete_booking_answers($booking_id);
         eme_store_booking_answers( $booking );
-        eme_update_booking_discount( $booking );
+        eme_check_booking_discount( $booking );
         // now that everything is (or should be) correctly entered in the db, execute possible actions for the booking
         if ( has_action( 'eme_update_rsvp_action' ) ) {
             do_action( 'eme_update_rsvp_action', $booking );
@@ -3677,9 +3674,14 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             }
         } elseif ( preg_match( '/#_APPLIEDDISCOUNTNAMES$/', $result ) ) {
             if ( ! empty( $booking['discountids'] ) ) {
-                $discount_ids   = explode( ',', $booking['discountids'] );
+                if ( eme_is_serialized( $booking['discountids'] ) ) {
+                    $applied_discounts = eme_unserialize( $booking['discountids'] );
+                    $applied_discountids = array_keys($applied_discounts);
+                } else {
+                    $applied_discountids = explode( ',', $booking['discountids'] );
+                }
                 $discount_names = [];
-                foreach ( $discount_ids as $discount_id ) {
+                foreach ( $applied_discountids as $discount_id ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = eme_esc_html( $discount['name'] );

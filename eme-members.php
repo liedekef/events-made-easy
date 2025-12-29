@@ -362,7 +362,7 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
         }
         // only for accounts that are not family members, we calc discount
         if ( $member['related_member_id'] == 0 ) {
-            eme_update_member_discount( $member );
+            eme_check_member_discount( $member );
         }
         return $member_id;
     }
@@ -1196,12 +1196,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                             eme_delete_member( $member_id );
                         }
                     } else {
-                        // make sure to update the discount count if applied
+                        // make sure to update the discount count and any other discount info if applied
                         if ( ! $eme_is_admin_request && ! empty( $member['discountids'] ) ) {
-                            $discount_ids = explode( ',', $member['discountids'] );
-                            foreach ( $discount_ids as $discount_id ) {
-                                eme_update_discount_member_usage( $discount_id, $member );
-                            }
+                            eme_update_member_discounts( $member );
                         }
 
                         // now for the familymembers, we need to do this before we send out the newMember mail, otherwise the info
@@ -5273,9 +5270,14 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             }
         } elseif ( preg_match( '/#_APPLIEDDISCOUNTNAMES$/', $result ) ) {
             if ( ! empty( $member['discountids'] ) ) {
-                $discount_ids   = explode( ',', $member['discountids'] );
-                $discount_names = [];
-                foreach ( $discount_ids as $discount_id ) {
+                if ( eme_is_serialized( $member['discountids'] ) ) {
+                    $applied_discounts = eme_unserialize( $member['discountids'] );
+                    $applied_discountids = array_keys($applied_discounts);
+                } else {
+                    $applied_discountids = explode( ',', $member['discountids'] );
+                }
+                $discount_names = []; 
+                foreach ( $applied_discountids as $discount_id ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = eme_esc_html( $discount['name'] );

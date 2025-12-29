@@ -1200,7 +1200,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                         if ( ! $eme_is_admin_request && ! empty( $member['discountids'] ) ) {
                             $discount_ids = explode( ',', $member['discountids'] );
                             foreach ( $discount_ids as $discount_id ) {
-                                eme_increase_discount_member_count( $discount_id, $member );
+                                eme_update_discount_member_usage( $discount_id, $member );
                             }
                         }
 
@@ -3345,9 +3345,9 @@ function eme_member_from_form( $membership ) {
     if ( isset( $_POST['members'] ) ) {
         foreach ( $_POST['members'][ $membership_id ] as $key => $value ) {
             if ( preg_match( '/^DISCOUNT/', $key ) ) {
-                $discount_value = eme_sanitize_request( $value );
+                $dcode_entered = eme_sanitize_request( $value );
                 if ( ! empty( $value ) ) {
-                    $dcodes_entered[] = $discount_value;
+                    $dcodes_entered[] = $dcode_entered;
                 }
             }
         }

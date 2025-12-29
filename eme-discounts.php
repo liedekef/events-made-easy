@@ -557,9 +557,10 @@ function eme_booking_discount( $event, $booking ) {
 
 	if ( eme_is_admin_request() ) {
 		if ( isset( $_POST['DISCOUNT'] ) ) {
-			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$post_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$booking_discount = sprintf( '%01.2f', $booking['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
-			if ( $total_discount != $booking['discount'] ) {
+			if ( $post_discount != $booking_discount ) {
 				$applied_discountids    = [];
 				$discountgroup_id       = 0;
 				$booking['dcodes_used'] = [];
@@ -642,9 +643,10 @@ function eme_member_discount( $membership, $member ) {
 
 	if ( eme_is_admin_request() ) {
 		if ( isset( $_POST['DISCOUNT'] ) ) {
-			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$post_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$member_discount = sprintf( '%01.2f', $member['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
-			if ( $total_discount != $member['discount'] ) {
+			if ( $post_discount != $member_discount ) {
 				$applied_discountids   = [];
 				$discountgroup_id      = 0;
 				$member['dcodes_used'] = [];
@@ -698,7 +700,7 @@ function eme_member_discount( $membership, $member ) {
 			$total_discount        = $amount;
 			$applied_discountids[] = $discount['id'];
 			if ( ! empty( $calc_result[1] ) ) {
-					$member['dcodes_used'] = $calc_result[1];
+                $member['dcodes_used'] = $calc_result[1];
 			} else {
 				$member['dcodes_used'] = [];
 			}
@@ -1212,7 +1214,7 @@ function eme_decrease_discount_count( $id, $usage ) {
 	return $wpdb->query( $sql );
 }
 
-function eme_increase_discount_booking_count( $id, $booking ) {
+function eme_update_discount_booking_usage( $id, $booking ) {
 	$discount = eme_get_discount( $id );
 	if ( $discount ) {
 		if ( $discount['use_per_seat'] > 0 ) {
@@ -1228,7 +1230,7 @@ function eme_increase_discount_booking_count( $id, $booking ) {
 	}
 }
 
-function eme_increase_discount_member_count( $id, $member ) {
+function eme_update_discount_member_usage( $id, $member ) {
 	$discount = eme_get_discount( $id );
 	// currently no use for $member, but we leave it in for future usage
 	if ( $discount ) {

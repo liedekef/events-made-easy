@@ -2155,9 +2155,9 @@ function eme_booking_from_form( $event ) {
     if ( isset( $_POST['bookings'][ $event_id ] ) ) {
         foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
             if ( preg_match( '/^DISCOUNT/', eme_sanitize_request( $key ), $matches ) ) {
-                $discount_value = eme_sanitize_request( $value );
+                $dcode_entered = eme_sanitize_request( $value );
                 if ( ! empty( $value ) ) {
-                    $dcodes_entered[] = $discount_value;
+                    $dcodes_entered[] = $dcode_entered;
                 }
             }
         }

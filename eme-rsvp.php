@@ -1670,7 +1670,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                     if ( ! $eme_is_admin_request && ! empty( $booking['discountids'] ) ) {
                         $discount_ids = explode( ',', $booking['discountids'] );
                         foreach ( $discount_ids as $discount_id ) {
-                            eme_increase_discount_booking_count( $discount_id, $booking );
+                            eme_update_discount_booking_usage( $discount_id, $booking );
                         }
                     }
 

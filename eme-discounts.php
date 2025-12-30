@@ -890,9 +890,9 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			</td>
 		</tr>
 		<tr class='form-field'>
-			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Voucher mode', 'events-made-easy' ); ?></label></th>
+			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Credit Voucher', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_select_binary( $discount['properties']['voucher'], 'properties[voucher]' ); ?>
-			<br><p class='eme_smaller'><?php esc_html_e( 'If voucher mode is active (for type "fixed" only), the discount value will be decreased by the calculated value until it reaches 0.', 'events-made-easy' ); ?></p>
+			<br><p class='eme_smaller'><?php esc_html_e( 'Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 		<tr class='form-field'>

@@ -1571,7 +1571,16 @@ function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
 	if ( ( ! empty( $discount['strcase'] ) && strcmp( $discount['coupon'], $coupon ) === 0 ) ||
 		( empty( $discount['strcase'] ) && strcasecmp( $discount['coupon'], $coupon ) === 0 ) ) {
 		if ( $discount['type'] == EME_DISCOUNT_TYPE_FIXED ) {
-			$res = $discount['value'];
+            if (! empty( $discount['properties']['voucher'] ) ) {
+                $price = eme_get_total_booking_price( $booking, $ignore_extras );
+                if ($discount['value']>$price) {
+                    $res = $price;
+                } else {
+                    $res = $discount['value'];
+                }
+            } else {
+                $res = $discount['value'];
+            }
 		} elseif ( $discount['type'] == EME_DISCOUNT_TYPE_PCT ) {
 			// eme_get_total_booking_price by default takes the discount and extra charge into account
 			// not that it matters for discount, as for now the discount is 0

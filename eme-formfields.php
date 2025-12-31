@@ -3351,27 +3351,36 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     $postfield_name = 'DISCOUNT';
                     if ( $booking['discount'] ) {
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $booking['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $booking['discount'], $event['currency'] ) );
+                        $replacement .= '<ul>';
                     } else {
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value=''><br>" . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
                     }
                     if ( $booking['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            $replacement .= '<br>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) );
+                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
-                            $replacement .= '<br>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] );
+                            $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ) . '</li>';
                         }
                     }
                     if ( ! empty( $booking['discountids'] ) ) {
-                        $discount_ids = explode( ',', $booking['discountids'] );
-                        foreach ( $discount_ids as $discount_id ) {
+                        if ( eme_is_serialized( $booking['discountids'] ) ) {
+                            $applied_discounts = eme_unserialize( $booking['discountids'] );
+                            $applied_discountids = array_keys($applied_discounts);
+                        } else {
+                            $applied_discountids = explode( ',', $booking['discountids'] );
+                        }
+                        foreach ( $applied_discountids as $discount_id ) {
                             $discount = eme_get_discount( $discount_id );
                             if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<br>' . eme_esc_html( $discount['name'] );
+                                $replacement .= '<li>' . eme_esc_html( $discount['name'] ) . '</li>';
                             } else {
-                                $replacement .= '<br>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
+                                $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
                         }
+                    }
+                    if ( $booking['discount'] ) {
+                        $replacement .= '</ul>';
                     }
                     $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
                 }
@@ -4099,27 +4108,38 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     $postfield_name = 'DISCOUNT';
                     if ( $member['discount'] ) {
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $member['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $member['discount'], $membership['properties']['currency'] ) );
+                        $replacement .= '<ul>';
                     } else {
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value=''><br>" . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
                     }
                     if ( $member['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $member['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            $replacement .= '<br>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) );
+                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
-                            $replacement .= '<br>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] );
+                            $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] ) . '</li>';
                         }
                     }
                     if ( ! empty( $member['discountids'] ) ) {
+                        if ( eme_is_serialized( $member['discountids'] ) ) {
+                            $applied_discounts = eme_unserialize( $member['discountids'] );
+                            $applied_discountids = array_keys($applied_discounts);
+                        } else {
+                            $applied_discountids = explode( ',', $member['discountids'] );
+                        }
+
                         $discount_ids = explode( ',', $member['discountids'] );
                         foreach ( $discount_ids as $discount_id ) {
                             $discount = eme_get_discount( $discount_id );
                             if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<br>' . eme_esc_html( $discount['name'] );
+                                $replacement .= '<li>' . eme_esc_html( $discount['name'] ) . '</li>';
                             } else {
-                                $replacement .= '<br>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
+                                $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
                         }
+                    }
+                    if ( $member['discount'] ) {
+                        $replacement .= '</ul>';
                     }
                     $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
                 }

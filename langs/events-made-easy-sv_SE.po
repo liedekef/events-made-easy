@@ -62,7 +62,7 @@ msgstr ""
 #: eme-members.php:6855
 #: eme-members.php:6935
 #: eme-options.php:140
-#: eme-payments.php:4137
+#: eme-payments.php:4132
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -5903,7 +5903,7 @@ msgstr "Ingen sådan post"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5043
-#: eme-payments.php:4027
+#: eme-payments.php:4022
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5921,7 +5921,7 @@ msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänli
 #: eme-members.php:1057
 #: eme-members.php:4658
 #: eme-members.php:5055
-#: eme-payments.php:4037
+#: eme-payments.php:4032
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -11876,13 +11876,13 @@ msgstr "eftersom denna webbplats körs på localhost kommer inte webhook att ska
 msgid "Booking refunded"
 msgstr "Bokning återbetald"
 
-#: eme-payments.php:3995
-#: eme-payments.php:4056
+#: eme-payments.php:3990
+#: eme-payments.php:4051
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:3998
-#: eme-payments.php:4059
+#: eme-payments.php:3993
+#: eme-payments.php:4054
 msgid "Booking already cancelled"
 msgstr ""
 
@@ -13776,7 +13776,7 @@ msgstr ""
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: eme-payments.php:4172
+#: eme-payments.php:4167
 msgid "Configured"
 msgstr ""
 
@@ -14436,8 +14436,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3254
-#: eme-payments.php:3269
+#: eme-payments.php:3246
+#: eme-payments.php:3261
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""

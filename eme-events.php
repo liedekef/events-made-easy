@@ -1180,10 +1180,10 @@ function eme_events_page_content() {
         $result         = get_query_var( 'eme_pmt_result' );
         $configured_pgs = eme_get_configured_pgs();
         if ( is_string($result) && in_array( $result, $configured_pgs ) ) {
-            $paid   = eme_get_payment_paid( $payment );
             $result = eme_sanitize_request($result);
-            $func = 'eme_complete_transaction_' . $result ;
+            $func   = 'eme_complete_transaction_' . $result ;
             if ( function_exists( $func ) ) {
+                $paid = eme_get_payment_paid( $payment );
                 if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $payment['pg_pid'] ) ) {
                     $func( $payment );
                 }

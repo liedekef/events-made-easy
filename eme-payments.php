@@ -3629,7 +3629,6 @@ function eme_delete_payment( $payment_id ) {
 }
 
 function eme_get_payment_paid( $payment ) {
-    $seats = 0;
     if ( $payment['target'] == 'member' ) {
         $member = eme_get_member_by_paymentid( $payment['id'] );
         return $member['paid'];
@@ -3645,6 +3644,7 @@ function eme_get_payment_paid( $payment ) {
         }
     }
 }
+
 function eme_get_payment_seats( $payment ) {
     $seats = 0;
     // does only work for bookings of course

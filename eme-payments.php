@@ -1638,23 +1638,23 @@ function eme_complete_transaction_sumup( $payment ) {
 
     require_once 'payment_gateways/sumup/vendor/autoload.php';
     try {
-            $sumup = new \SumUp\SumUp(
-                [
-                    'app_id'     => $eme_sumup_app_id,
-                    'app_secret' => $eme_sumup_app_secret,
-                    'grant_type' => 'client_credentials',
-                    'scopes'     => [ 'payments', 'transactions.history' ],
-                    //'scopes'      => ['transactions.history']
-                ]
-            );
-            $accessToken = $sumup->getAccessToken();
-            $value       = $accessToken->getValue();
+        $sumup = new \SumUp\SumUp(
+            [
+                'app_id'     => $eme_sumup_app_id,
+                'app_secret' => $eme_sumup_app_secret,
+                'grant_type' => 'client_credentials',
+                'scopes'     => [ 'payments', 'transactions.history' ],
+                //'scopes'      => ['transactions.history']
+            ]
+        );
+        $accessToken = $sumup->getAccessToken();
+        $value       = $accessToken->getValue();
     } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-            echo 'Authentication error: ' . $e->getMessage();
+        echo 'Authentication error: ' . $e->getMessage();
     } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-            echo 'Response error: ' . $e->getMessage();
+        echo 'Response error: ' . $e->getMessage();
     } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-            echo 'SumUp SDK error: ' . $e->getMessage();
+        echo 'SumUp SDK error: ' . $e->getMessage();
     }
 
     $checkout_id      = $payment['pg_pid'];
@@ -3020,6 +3020,9 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     }
     $payment_id = $mollie_payment->metadata->payment_id;
     $payment    = eme_get_payment( $payment_id );
+    if ( !$payment ) {
+        return; // payment doesn't exist, let's quit
+    }
     if ( $payment['pg_pid'] != $mollie_payment_id ) {
         return;
     }
@@ -3137,12 +3140,7 @@ function eme_complete_transaction_payconiq( $payment ) {
     $eme_price  = eme_get_payment_price( $payment_id );
     $payment    = eme_get_payment( $payment_id );
     if ( !$payment ) {
-        // notif for payment that doesn't exist, let's quit
-        return;
-    }
-    if (eme_get_payment_paid($payment)) {
-        // Payment is already processed, just return success
-        return;
+        return; // payment doesn't exist, let's quit
     }
     // The payment is paid and to be sure we also check the paid amount
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
@@ -3190,19 +3188,13 @@ function eme_notification_payconiq() {
     }
 
     $payment_id = $payconiq_payment->reference;
-    $eme_price  = eme_get_payment_price( $payment_id );
     $payment    = eme_get_payment( $payment_id );
     if ( !$payment ) {
         // notif for payment that doesn't exist, let's quit
         http_response_code( 403 );
         exit;
     }
-    if (eme_get_payment_paid($payment)) {
-        // Payment is already processed, just return success
-        http_response_code( 200 );
-        exit;
-    }
-    // The payment is paid and to be sure we also check the paid amount
+    $eme_price = eme_get_payment_price( $payment_id );
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
     } else {
@@ -3581,7 +3573,7 @@ function eme_get_payment( $payment_id=0, $payment_randomid = 0 ) {
         $payment = false;
     }
 
-        if ( $payment === false ) {
+    if ( $payment === false ) {
         if ( $payment_id ) {
             $sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
         } else {
@@ -3767,6 +3759,9 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
     // This may overwrite the pg_pid set here by some gateways (like mollie, paypal) but at this point those are no longer needed anyway
     if ( $payment['pg_pid'] != $pg_pid ) {
         eme_update_payment_pg_pid( $payment_id, $pg_pid );
+        // payment changed, let's get it again
+        $payment = eme_get_payment( $payment_id );
+        // to be sure to avoid any kind of caching: we again set the pg_handled=0, but should not be needed
         $payment['pg_handled'] = 0;
     }
 
@@ -3780,7 +3775,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
         // we do this as soon as possible, so other payments arriving won't trigger another payment
         eme_update_payment_pg_handled( $payment_id );
         // log it, so we have a trace
-        error_log("Handling $pg payment notification for id $$payment_id");
+        error_log("Handling $pg payment notification for id $payment_id");
     }
 
     if ( $payment['target'] == 'member' ) {

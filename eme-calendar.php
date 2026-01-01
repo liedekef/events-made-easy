@@ -159,8 +159,8 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	global $wp_locale;
 
 	$do_echo     = filter_var( $do_echo, FILTER_VALIDATE_BOOLEAN );
-        $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
-        $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
+    $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
+    $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 
 	if ( ! empty( $weekdays ) ) {
 		$weekday_arr = explode( ',', $weekdays );

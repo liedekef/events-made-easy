@@ -2723,6 +2723,7 @@ function eme_refund_booking_paypal($booking) {
         $event = eme_get_event( $booking['event_id'] );
         $cur = $event ? $event['currency'] : 'EUR';
         $price = eme_get_total_booking_price( $booking );
+        $price = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
         $client->refund_capture( $booking['pg_pid'], $price, $cur );
         return true;
     } catch ( Exception $e ) {
@@ -2749,6 +2750,7 @@ function eme_refund_booking_payconiq( $booking ) {
         $event = eme_get_event( $booking['event_id'] );
         $cur = $event ? $event['currency'] : 'EUR';
         $price = eme_get_total_booking_price( $booking );
+        $price = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
         $description = 'Refund';
         $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
@@ -3227,12 +3229,13 @@ function eme_refund_booking_mollie( $booking ) {
         return false;
     }
 
-    // according to the refund example, mollie requires 2 decimals
-    $price = eme_get_total_booking_price( $booking );
-    $price = sprintf( '%01.2f', $price );
     $event = eme_get_event( $booking['event_id'] );
     if ( ! empty( $event ) ) {
         $cur = $event['currency'];
+        // according to the refund example, mollie requires 2 decimals
+        $price = eme_get_total_booking_price( $booking );
+        $price = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
+        $price = sprintf( '%01.2f', $price );
         if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
             try {
                 if (version_compare(\Mollie\Api\MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 3.0.34  (2026//) =
+* Reintroduce payconiq refunding
+
 = 3.0.33  (2026/01/02) =
 * Payconiq fix for paid checks
 

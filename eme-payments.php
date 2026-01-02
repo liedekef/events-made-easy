@@ -2731,7 +2731,6 @@ function eme_refund_booking_paypal($booking) {
     }
 }
 
-/* payconiq refund code needs to be completed 
 function eme_refund_booking_payconiq( $booking ) {
     $api_key = get_option( "eme_payconiq_api_key" );
     if ( ! $api_key ) {
@@ -2750,8 +2749,7 @@ function eme_refund_booking_payconiq( $booking ) {
         $event = eme_get_event( $booking['event_id'] );
         $cur = $event ? $event['currency'] : 'EUR';
         $price = eme_get_total_booking_price( $booking );
-        // currently no description
-        $description = '';
+        $description = 'Refund';
         $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
@@ -2759,7 +2757,6 @@ function eme_refund_booking_payconiq( $booking ) {
         return false;
     }
 }
- */
 
 function eme_refund_booking_mercadopago( $booking ) {
     if ( get_option( 'eme_mercadopago_demo' ) == 1 ) {

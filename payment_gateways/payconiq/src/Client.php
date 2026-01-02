@@ -168,7 +168,7 @@ class Client {
         $response = $this->makeRequest( 'GET', $this->getEndpoint( '/payments/' . $paymentId ) );
 
         if ( empty( $response->paymentId ) ) {
-            throw new RetrievePaymentFailedException( $response->message ?: 'failed ro retrieve payment' );
+            throw new RetrievePaymentFailedException( $response->message ?: 'failed to retrieve payment' );
         }
 
         return $response;
@@ -243,33 +243,55 @@ class Client {
     /**
      * Refund an existing payment
      *
-     * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service
+     * @param  string $paymentId      The unique Payconiq identifier of a payment
+     * @param  float  $amount         Payment amount in cents
+     * @param  string $currency       Payment currency code in ISO 4217 format
+     * @param  string $description    Optional refund description
+     * @param  string $idempotencyKey Optional idempotency key (UUIDv4 recommended)
+     * @param  string $refundurl      Optional refund url, if not get it from the payment
      *
-     * @param  float $amount		Payment amount in cents
-     * @param  string $currency		Payment currency code in IOS 4217 format
-     * @param  string $description	Optional refund description
-     *
-     * @return  object  Response object by Payconiq
+     * @return object  Response object by Payconiq
+     * @throws RefundFailedException
      */
-    public function refundPayment( $paymentId, $amount, $currency = 'EUR', $description = '' ) {
+    public function refundPayment($paymentId, $amount, $currency = 'EUR', $description = '', $idempotencyKey = null, $refundUrl = null) {
         // Convert description to SEPA compliant format
         $description = $this->convertToSEPA($description, 140);
-        
+
         $data_arr = [
             'amount' => $amount,
             'currency' => $currency,
         ];
-        // description is optional, so add it only when not empty
-        if ( ! empty( $description ) ) {
+        if (!empty($description)) {
             $data_arr['description'] = $description;
         }
-        // JWS to be calculated and added as header 'Idempotency-Key' to the data_arr
-        $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/' . $paymentId ), $data_arr );
 
-        if ( empty( $response->paymentId ) ) {
-            throw new RefundFailedException( $response->message ?: 'failed to refund payment' );
+        // Ensure idempotency key is provided
+        if (empty($idempotencyKey)) {
+            $idempotencyKey = $this->generateUuidV4();
         }
 
+        $extraHeaders = [
+            'Idempotency-Key: ' . $idempotencyKey
+        ];
+
+        if (empty($refundUrl)) {
+            $payment = $this->retrievePayment($paymentId);
+            if (empty($payment->_links->refund->href)) {
+                throw new \LogicException("Refund not allowed for payment {$paymentId}");
+            }
+            $refundUrl = $payment->_links->refund->href;
+        }
+
+        $response = $this->makeRequest(
+            'POST',
+            $refundUrl,
+            $data_arr,
+            $extraHeaders
+        );
+
+        if (empty($response->paymentId)) {
+            throw new RefundFailedException($response->message ?: 'failed to refund payment');
+        }
         return $response;
     }
 
@@ -302,14 +324,31 @@ class Client {
     /**
      * Construct the headers for the cURL call
      * 
+     * @param  array $extraHeaders  Optional extra headers to add to the request headers
+     * 
      * @return array
      */
-    private function constructHeaders() {
-        return [
+    private function constructHeaders($extraHeaders = []) {
+        $headers = [
             'Content-Type: application/json',
             'Cache-Control: no-cache',
             'Authorization: Bearer ' . $this->apiKey
         ];
+        return array_merge($headers, $extraHeaders);
+    }
+
+    /**
+     * Generate a random UUID v4 (RFC 4122)
+     *
+     * @return string
+     */
+    private function generateUuidV4() {
+        $bytes = random_bytes(16);
+        // Set version to 0100 (4)
+        $bytes[6] = chr((ord($bytes[6]) & 0x0f) | 0x40);
+        // Set variant to 10xx (RFC 4122)
+        $bytes[8] = chr((ord($bytes[8]) & 0x3f) | 0x80);
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
     }
 
     /**
@@ -317,18 +356,18 @@ class Client {
      *
      * @param  string $method
      * @param  string $url
-     * @param  array $headers
      * @param  array $parameters
+     * @param  array $extraHeaders
      *
      * @return response
      */
-    private function makeRequest( $method, $url, $parameters = [] ) {
+    private function makeRequest( $method, $url, $parameters = [], $extraHeaders = [] ) {
         $curl = curl_init();
 
         curl_setopt( $curl, CURLOPT_URL, $url );
         curl_setopt( $curl, CURLOPT_CONNECTTIMEOUT, 20 );
         curl_setopt( $curl, CURLOPT_TIMEOUT, 20 );
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, $this->constructHeaders() );
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, $this->constructHeaders($extraHeaders) );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, $method );
 
@@ -337,8 +376,8 @@ class Client {
         }
 
         $response_body = curl_exec( $curl );
-        $http_code      = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-        $curl_error     = curl_error( $curl );
+        $http_code     = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+        $curl_error    = curl_error( $curl );
 
         curl_close( $curl );
 
@@ -414,7 +453,7 @@ class Client {
         $jwksUrl = ($environment === self::ENVIRONMENT_PROD)
             ? 'https://jwks.bancontact.net/'
             : 'https://jwks.preprod.bancontact.net/';
-        $jwks = json_decode(file_get_contents($jwksUrl), true);
+        $jwks = json_decode(self::fetchUrl($jwksUrl), true);
         if (!isset($jwks['keys'])) {
             throw new \Exception("Invalid JWKS format from $jwksUrl");
         }
@@ -454,6 +493,39 @@ class Client {
     // -----------------------
     // Helper methods
     // -----------------------
+
+    private static function fetchUrl($url) {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FAILONERROR => true,
+            CURLOPT_USERAGENT => 'Payconiq-PHP-Client/1.0',
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 3,
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($response === false) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            throw new \Exception("Failed to fetch URL: {$error}");
+        }
+
+        curl_close($ch);
+
+        // Check for HTTP errors (4xx, 5xx)
+        if ($httpCode >= 400) {
+            throw new \Exception("HTTP error {$httpCode} when fetching URL: {$url}");
+        }
+
+        return $response;
+    }
 
     private static function base64urlEncode($data) {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');

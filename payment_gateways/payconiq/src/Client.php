@@ -430,9 +430,9 @@ class Client {
      * @throws \Exception on errors or malformed data
      */
     public function verifyWebhookSignature( $payload, $headers, $environment = self::ENVIRONMENT_PROD ) {
-        $signatureHeader = $headers['JWS-Request-Signature-Payment'] ?? null;
+        $signatureHeader = $headers['Signature'] ?? null;
         if (!$signatureHeader) {
-            throw new \Exception("Missing JWS-Request-Signature-Payment header");
+            throw new \Exception("Missing Signature header");
         }
 
         // --- 1. Split JWS parts ---

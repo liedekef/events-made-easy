@@ -3160,6 +3160,7 @@ function eme_notification_payconiq() {
     $payload            = @file_get_contents( 'php://input' );
     $data               = json_decode( $payload );
     $payconiq_paymentid = $data->paymentId;
+    $headers            = getallheaders();
 
     if ( ! class_exists( 'Payconiq\Client' ) ) {
         require_once 'payment_gateways/payconiq/src/Client.php';
@@ -3169,6 +3170,18 @@ function eme_notification_payconiq() {
     if ( preg_match( '/sandbox/', $mode ) ) {
         $payconiq->setEndpointTest();
     }
+/*
+    try {
+        if ( ! $payconiq->verifyWebhookSignature( $payload, $headers ) ) {
+            http_response_code( 401 );
+            exit;
+        }
+    } catch ( Exception $e ) {
+        error_log( 'Payconiq webhook verification error: ' . $e->getMessage() );
+        http_response_code( 400 );
+        exit;
+    }
+ */
 
     // we don't trust the notification (and don't bother with the signature), easiest is to retrieve the payment from payconiq and check it
     try {

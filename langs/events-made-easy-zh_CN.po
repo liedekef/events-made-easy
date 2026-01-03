@@ -62,7 +62,7 @@ msgstr ""
 #: eme-members.php:6855
 #: eme-members.php:6935
 #: eme-options.php:140
-#: eme-payments.php:4132
+#: eme-payments.php:4145
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -5903,7 +5903,7 @@ msgstr "没有这样的记录"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5043
-#: eme-payments.php:4022
+#: eme-payments.php:4035
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5921,7 +5921,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-members.php:1057
 #: eme-members.php:4658
 #: eme-members.php:5055
-#: eme-payments.php:4032
+#: eme-payments.php:4045
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -11877,17 +11877,17 @@ msgstr "支付 ID 不正确。"
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "因为这是一个运行在 localhost 上的网站，所以不会创建网络钩子。"
 
-#: eme-payments.php:2812
+#: eme-payments.php:2811
 msgid "Booking refunded"
 msgstr "预订已退款"
 
-#: eme-payments.php:3990
-#: eme-payments.php:4051
+#: eme-payments.php:4003
+#: eme-payments.php:4064
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:3993
-#: eme-payments.php:4054
+#: eme-payments.php:4006
+#: eme-payments.php:4067
 msgid "Booking already cancelled"
 msgstr ""
 
@@ -13782,7 +13782,7 @@ msgstr ""
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: eme-payments.php:4167
+#: eme-payments.php:4180
 msgid "Configured"
 msgstr ""
 
@@ -14441,8 +14441,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3246
-#: eme-payments.php:3261
+#: eme-payments.php:3259
+#: eme-payments.php:3274
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""

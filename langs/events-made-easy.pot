@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.32\n"
+"Project-Id-Version: Events Made Easy 3.0.33\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-01T23:48:05+00:00\n"
+"POT-Creation-Date: 2026-01-03T15:54:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -91,7 +91,7 @@ msgstr ""
 #: eme-members.php:6855
 #: eme-members.php:6935
 #: eme-options.php:140
-#: eme-payments.php:4132
+#: eme-payments.php:4145
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -6162,7 +6162,7 @@ msgstr ""
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5043
-#: eme-payments.php:4022
+#: eme-payments.php:4035
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -6180,7 +6180,7 @@ msgstr ""
 #: eme-members.php:1057
 #: eme-members.php:4658
 #: eme-members.php:5055
-#: eme-payments.php:4032
+#: eme-payments.php:4045
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -13068,27 +13068,27 @@ msgstr ""
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr ""
 
-#: eme-payments.php:2812
+#: eme-payments.php:2811
 msgid "Booking refunded"
 msgstr ""
 
-#: eme-payments.php:3246
-#: eme-payments.php:3261
+#: eme-payments.php:3259
+#: eme-payments.php:3274
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""
 
-#: eme-payments.php:3990
-#: eme-payments.php:4051
+#: eme-payments.php:4003
+#: eme-payments.php:4064
 msgid "Nothing found or booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:3993
-#: eme-payments.php:4054
+#: eme-payments.php:4006
+#: eme-payments.php:4067
 msgid "Booking already cancelled"
 msgstr ""
 
-#: eme-payments.php:4167
+#: eme-payments.php:4180
 msgid "Configured"
 msgstr ""
 

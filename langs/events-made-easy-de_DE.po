@@ -62,7 +62,7 @@ msgstr "im Namen von %s"
 #: eme-members.php:6855
 #: eme-members.php:6935
 #: eme-options.php:140
-#: eme-payments.php:4132
+#: eme-payments.php:4145
 #: eme-people.php:4256
 #: eme-people.php:5262
 #: eme-people.php:5368
@@ -5887,7 +5887,7 @@ msgstr "Kein solcher Eintrag"
 #: eme-gdpr.php:215
 #: eme-gdpr.php:331
 #: eme-members.php:5043
-#: eme-payments.php:4022
+#: eme-payments.php:4035
 #: eme-people.php:4828
 #: eme-people.php:4914
 #: eme-rsvp.php:858
@@ -5905,7 +5905,7 @@ msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlich
 #: eme-members.php:1057
 #: eme-members.php:4658
 #: eme-members.php:5055
-#: eme-payments.php:4032
+#: eme-payments.php:4045
 #: eme-people.php:4838
 #: eme-people.php:4925
 #: eme-rsvp.php:869
@@ -11835,17 +11835,17 @@ msgstr "Ungültige Zahlungs ID."
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr "da es sich um eine Website handelt, die auf localhost läuft, wird kein Webhook erstellt"
 
-#: eme-payments.php:2812
+#: eme-payments.php:2811
 msgid "Booking refunded"
 msgstr "Buchung erstattet"
 
-#: eme-payments.php:3990
-#: eme-payments.php:4051
+#: eme-payments.php:4003
+#: eme-payments.php:4064
 msgid "Nothing found or booking already cancelled"
 msgstr "Nichts gefunden oder Buchung bereits storniert"
 
-#: eme-payments.php:3993
-#: eme-payments.php:4054
+#: eme-payments.php:4006
+#: eme-payments.php:4067
 msgid "Booking already cancelled"
 msgstr "Buchung bereits storniert"
 
@@ -13734,7 +13734,7 @@ msgstr "Die Währung, die verwendet wird, wenn eingereichte Ereignisse bezahlt w
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Die Zahlungsmethode(n), die verwendet werden soll(en), wenn eingereichte Ereignisse bezahlt werden müssen. Dies hat nichts mit den RSVP-Einstellungen im eingereichten Ereignis selbst zu tun!"
 
-#: eme-payments.php:4167
+#: eme-payments.php:4180
 msgid "Configured"
 msgstr "Konfiguriert"
 
@@ -14394,8 +14394,8 @@ msgstr ""
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: eme-payments.php:3246
-#: eme-payments.php:3261
+#: eme-payments.php:3259
+#: eme-payments.php:3274
 #: payment_gateways/paypal/class_eme_paypal.php:105
 msgid "Booking cancelled and refunded"
 msgstr ""

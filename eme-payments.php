@@ -3125,13 +3125,13 @@ function eme_complete_transaction_payconiq( $payment ) {
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
-        error_log("EME payconiq error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
+        //error_log("EME payconiq error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
         return;
     }
 
     $payconiq_merchantid = $payconiq_payment->creditor->merchantId;
     if ( $payconiq_merchantid != $merchant_id ) {
-        error_log("EME payconiq error: wrong merchant id $payconiq_merchantid");
+        //error_log("EME payconiq error: wrong merchant id $payconiq_merchantid");
         return;
     }
 
@@ -3144,8 +3144,8 @@ function eme_complete_transaction_payconiq( $payment ) {
     // The payment is paid and to be sure we also check the paid amount
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
-    } else {
-        error_log("EME payconiq error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
+    //} else {
+    //    error_log("EME payconiq error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }
 }
 
@@ -3187,14 +3187,14 @@ function eme_notification_payconiq() {
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
-        error_log("EME payconiq notif error error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
+        //error_log("EME payconiq notif error error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
         http_response_code( 400 );
         exit;
     }
 
     $payconiq_merchantid = $payconiq_payment->creditor->merchantId;
     if ( $payconiq_merchantid != $merchant_id ) {
-        error_log("EME payconiq notif error: wrong merchant id $payconiq_merchantid");
+        //error_log("EME payconiq notif error: wrong merchant id $payconiq_merchantid");
         http_response_code( 400 );
         exit;
     }
@@ -3209,8 +3209,8 @@ function eme_notification_payconiq() {
     $eme_price = eme_get_payment_price( $payment_id );
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
-    } else {
-        error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
+    //} else {
+    //    error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }
     http_response_code( 200 );
     exit;

@@ -4161,6 +4161,9 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
             if ( ! eme_is_empty_string( $event['event_notes'] ) ) {
                 // first translate, since for "noexcerpt" the language indication is not there (it is only at the beginning of the notes, not after the separator)
                 $event_notes = eme_translate( $event['event_notes'] );
+                if ( $target == 'html' && $orig_target != 'html_nohtml2br' ) {
+                    $event_notes = eme_nl2br_save_html( $event_notes );
+                }
 
                 // make sure no windows line endings are in
                 $event_notes = preg_replace( '/\r\n|\n\r/', "\n", $event_notes );

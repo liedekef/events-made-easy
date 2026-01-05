@@ -744,11 +744,11 @@ function eme_jodit_preview_render() {
         if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'rsvp') {
             $new_booking = eme_new_booking();
             $new_event = eme_new_event();
-	    if (! empty( $_POST['editor_id']) && $_POST['editor_id'] == 'eme_registration_form_format' ) {
-		    $new_booking = eme_new_booking();
-		    $new_event = eme_new_event();
-		    $rendered = eme_replace_rsvp_formfields_placeholders( '', $new_event, $new_booking, $rendered );
-	    }
+            if (! empty( $_POST['editor_id']) && $_POST['editor_id'] == 'eme_registration_form_format' ) {
+                $new_booking = eme_new_booking();
+                $new_event = eme_new_event();
+                $rendered = eme_replace_rsvp_formfields_placeholders( '', $new_event, $new_booking, $rendered );
+            }
         }
         if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'emefs') {
             $rendered = eme_event_fs_form($rendered);

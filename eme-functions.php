@@ -2661,6 +2661,7 @@ function eme_nl2br_save_html( $string ) {
             stripos($string, '<table') !== false ||
             stripos($string, '<span') !== false ||
             stripos($string, '<br') !== false) {
+            $string = str_replace(["\n","\r"], ' ', $string);
             return $string;
         }
     }

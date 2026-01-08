@@ -3593,7 +3593,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                                 $old_grouping  = $grouping;
                                 $old_occurence = $occurence;
                             }
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( $tmp_formfield['field_name'] ) . ":</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( $tmp_formfield['field_name'] ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
                         } else {
                             $replacement .= $tmp_formfield['field_name'] . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
                         }

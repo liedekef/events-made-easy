@@ -1478,7 +1478,6 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     require_once 'payment_gateways/mercadopago/vendor/autoload.php';
     MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
-    $payment_id = $payment['id'];
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
     // gateway doesn't like the single quotes
@@ -1492,8 +1491,6 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     $item_name   = eme_esc_html( $item_name );
 
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
-    $events_page_link = eme_get_events_page();
-    $payment_id       = $payment['id'];
     $quantity         = 1;
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -1563,7 +1560,6 @@ function eme_payment_form_fondy( $item_name, $payment, $baseprice, $cur, $multi_
     $description = eme_esc_html( $description );
 
     $price      = eme_payment_gateway_total( $baseprice, $cur, $gateway );
-    $payment_id = $payment['id'];
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -2186,7 +2182,7 @@ function eme_notification_fondy() {
             $order_id = $result->getData()['order_id'];
             $payment  = eme_get_payment_by_pg_pid( $order_id );
             if ( $payment ) {
-                    eme_mark_payment_paid( $payment['id'], 1, $gateway, $order_id );
+                eme_mark_payment_paid( $payment['id'], 1, $gateway, $order_id );
             }
         }
 
@@ -3113,7 +3109,6 @@ function eme_complete_transaction_payconiq( $payment ) {
     if ( ! $payconiq_paymentid ) {
         return;
     }
-
     if ( ! class_exists( 'Payconiq\Client' ) ) {
         require_once 'payment_gateways/payconiq/src/Client.php';
     }
@@ -3136,16 +3131,15 @@ function eme_complete_transaction_payconiq( $payment ) {
     }
 
     $payment_id = $payconiq_payment->reference;
-    $eme_price  = eme_get_payment_price( $payment_id );
-    $payment    = eme_get_payment( $payment_id );
-    if ( !$payment ) {
-        return; // payment doesn't exist, let's quit
+    if ($payment_id != $payment['id']) {
+        error_log("EME payconiq error: wrong payment id $payment_id, expected {$payment['id']}");
+        return;
     }
+
+    $eme_price  = eme_get_payment_price( $payment_id );
     // The payment is paid and to be sure we also check the paid amount
     if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
-    //} else {
-    //    error_log("EME payconiq error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }
 }
 
@@ -3204,6 +3198,11 @@ function eme_notification_payconiq() {
     if ( !$payment ) {
         // notif for payment that doesn't exist, let's quit
         http_response_code( 403 );
+        exit;
+    }
+    if ( $payment['pg_pid'] != $payconiq_paymentid ) {
+        error_log("EME payconiq notif error: payment id $payment_id with pg_pid {$payment['pg_pid']} does not match payconiq payment id $payconiq_paymentid");
+        http_response_code( 400 );
         exit;
     }
     $eme_price = eme_get_payment_price( $payment_id );

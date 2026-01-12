@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 417 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 418 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1190,6 +1190,7 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 		$sql = 'CREATE TABLE ' . $table_name . " (
          id int(11) NOT NULL auto_increment,
          creation_date datetime,
+         updated_date datetime,
          random_id varchar(50),
          target varchar(50),
          related_id mediumint(9) DEFAULT 0,
@@ -1205,6 +1206,7 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 		maybe_add_column( $table_name, 'target', "ALTER TABLE $table_name ADD target varchar(50);" );
 		maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
 		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+		maybe_add_column( $table_name, 'updated_date', "ALTER TABLE $table_name ADD updated_date datetime;" );
 		maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
 		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
 		eme_maybe_drop_column( $table_name, 'attend_count' );

@@ -3518,6 +3518,7 @@ function eme_create_fs_event_payment( $event_id ) {
     $payment['related_id']    = $event_id;
     $payment['target']        = 'fs_event';
     $payment['creation_date'] = current_time( 'mysql', false );
+    $payment['updated_date'] = current_time( 'mysql', false );
     if ( $wpdb->insert( $payments_table, $payment ) ) {
         $payment_id = $wpdb->insert_id;
     }
@@ -3534,6 +3535,7 @@ function eme_create_member_payment( $member_id ) {
     $payment['related_id']    = $member_id;
     $payment['target']        = 'member';
     $payment['creation_date'] = current_time( 'mysql', false );
+    $payment['updated_date'] = current_time( 'mysql', false );
     if ( $wpdb->insert( $payments_table, $payment ) ) {
         $payment_id           = $wpdb->insert_id;
         $where['member_id']   = $member_id;
@@ -3560,6 +3562,7 @@ function eme_create_booking_payment( $booking_ids ) {
     $payment['target']        = 'booking';
     // we don't set the related id here, since multiple bookings can be linked to one payment
     $payment['creation_date'] = current_time( 'mysql', false );
+    $payment['updated_date'] = current_time( 'mysql', false );
     if ( $wpdb->insert( $payments_table, $payment ) ) {
         $payment_id      = $wpdb->insert_id;
         $booking_ids_arr = explode( ',', $booking_ids );
@@ -3749,10 +3752,29 @@ function eme_get_attendance_count( $booking_id ) {
     }
 }
 
+function eme_is_timely_payment_notification($payment_id, $max_hours = 4) {
+    $payment = eme_get_payment($payment_id);
+    if (!$payment || empty($payment['updated_date'])) {
+        return false;
+    }
+
+    $updated_date = strtotime($payment['updated_date']);
+    $current_time = current_time('timestamp', true);
+
+    // If strtotime failed or date is invalid
+    if ($updated_date === false) {
+        return false;
+    }
+
+    $hours_difference = ($current_time - $updated_date) / 3600;
+    return $hours_difference <= $max_hours;
+}
+
 function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id );
+    $updated_date = current_time( 'mysql', false );
+    $sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0, updated_date=%s WHERE id=%d", $pg_pid, $updated_date, $payment_id );
     $wpdb->query( $sql );
     wp_cache_delete( "eme_payment ".$payment_id );
 }
@@ -3767,6 +3789,13 @@ function eme_update_payment_pg_handled( $payment_id ) {
 
 function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = '' ) {
     $payment = eme_get_payment( $payment_id );
+    if ( ! $payment ) {
+        return;
+    }
+    // for IPN: only allow 4 hours for payment notification/complete window
+    if ( $is_ipn && ! eme_is_timely_payment_notification($payment, 4) ) {
+        return;
+    }
     // let's now store the payment gateway id, so we can see if it has been handled already
     // This may overwrite the pg_pid set here by some gateways (like mollie, paypal) but at this point those are no longer needed anyway
     if ( $payment['pg_pid'] != $pg_pid ) {

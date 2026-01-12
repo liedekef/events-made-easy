@@ -11,5 +11,7 @@ FDatepicker.setMessages({
     format: 'd/m/Y H:i',
     firstDayOfWeek: 1,
     noDatesSelected: 'Aucune date sélectionnée',
+    singleDateSelected: '1 date sélectionnée',
+    multipleDatesSelected: '{count} dates sélectionnées',
     datesSelected: 'Dates sélectionnées ({0}):'
 });

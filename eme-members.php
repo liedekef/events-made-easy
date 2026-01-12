@@ -1319,20 +1319,16 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
         if ( eme_is_empty_date( $member['end_date'] ) ) {
             return "<div class='eme-message-success eme-already-paid'>" . __( 'This has already been paid for', 'events-made-easy' ) . '</div>';
         } else {
-            $too_soon_to_pay = 0;
             if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && ! empty( $membership['properties']['renewal_cutoff_days'] ) ) {
                 $end_date_obj     = emeExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], emeExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
                 $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $diff             = $eme_date_obj_now->getDifferenceInDays( $end_date_obj );
                 if ( $diff > $membership['properties']['renewal_cutoff_days'] ) {
-                    $too_soon_to_pay = 1;
+                    // too soon to pay, show that as info
+                    $end_date   = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+                    $ret_string = "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
+                    return $ret_string;
                 }
-            }
-
-            if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && $too_soon_to_pay ) {
-                $end_date   = eme_localized_date( $member['end_date'], EME_TIMEZONE );
-                $ret_string = "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
-                return $ret_string;
             }
         }
     }

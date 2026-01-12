@@ -2757,6 +2757,7 @@ function eme_wp_date_format_php_to_datepicker_js( $php_format ) {
     return $fdatepicker_format;
 }
 
+/*
 function eme_wp_time_format_php_to_datepicker_js( $php_format ) {
     return $php_format;
     $SYMBOLS_MATCHING   = [
@@ -2789,6 +2790,7 @@ function eme_wp_time_format_php_to_datepicker_js( $php_format ) {
     }
     return $fdatepicker_format;
 }
+ */
 
 function eme_getValueFromPath( $arr, $path ) {
     // todo: add checks on $path

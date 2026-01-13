@@ -7130,9 +7130,10 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
         <div id="div_event_date">
         <b><?php esc_html_e( 'Event date', 'events-made-easy' ); ?></b>
         <input id="start-date-to-submit" type="hidden" name="event_start_date" value="">
-        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Start date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+        -
         <input id="end-date-to-submit" type="hidden" name="event_end_date" value="">
-        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
+        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'End date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
         <p class="eme_smaller">
         <?php esc_html_e( 'The event beginning and end date.', 'events-made-easy' ); ?>
         </p>

@@ -1815,7 +1815,7 @@ function eme_notification_instamojo() {
     $ver = explode( '.', phpversion() );
     ksort( $data, SORT_STRING | SORT_FLAG_CASE );
     $mac_calculated = hash_hmac( 'sha1', implode( '|', $data ), $instamojo_salt );
-    if ( $mac_provided == $mac_calculated && $payment['pg_pid'] == $instamojo_requestid ) {
+    if ( $mac_provided == $mac_calculated ) {
         if ( $data['status'] == 'Credit' ) {
             eme_mark_payment_paid( $payment_id, 1, $gateway, $instamojo_requestid );
         }
@@ -3018,9 +3018,6 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     if ( !$payment ) {
         return; // payment doesn't exist, let's quit
     }
-    if ( $payment['pg_pid'] != $mollie_payment_id ) {
-        return;
-    }
     // The payment is paid and isn't refunded or charged back
     if ( $mollie_payment->isPaid() && ! $mollie_payment->hasRefunds() && ! $mollie_payment->hasChargebacks() ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $mollie_payment_id );
@@ -3198,11 +3195,6 @@ function eme_notification_payconiq() {
     if ( !$payment ) {
         // notif for payment that doesn't exist, let's quit
         http_response_code( 403 );
-        exit;
-    }
-    if ( $payment['pg_pid'] != $payconiq_paymentid ) {
-        error_log("EME payconiq notif error: payment id $payment_id with pg_pid {$payment['pg_pid']} does not match payconiq payment id $payconiq_paymentid");
-        http_response_code( 400 );
         exit;
     }
     $eme_price = eme_get_payment_price( $payment_id );

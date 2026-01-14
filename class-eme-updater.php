@@ -9,16 +9,28 @@ class EME_GitHub_Updater {
     private $access_token;
     private $plugin_active;
     private $readme_data = null;
+    private $update_hostname;
 
     public function __construct($plugin_file, $github_username, $github_repository, $access_token = '') {
-        add_filter('pre_set_site_transient_update_plugins', [$this, 'check_update']);
-        add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
-        add_filter('upgrader_post_install', [$this, 'post_install'], 10, 3);
-
+        // Get the plugin slug
+        $this->slug = plugin_basename($plugin_file);
         $this->plugin_file = $plugin_file;
         $this->github_username = $github_username;
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
+        
+        // Create a unique hostname for GitHub updates
+        $this->update_hostname = 'github.com';
+        
+        // Use the modern update filter
+        add_filter("update_plugins_{$this->update_hostname}", [$this, 'check_update'], 10, 3);
+        
+        // Keep these filters
+        add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
+        add_filter('upgrader_post_install', [$this, 'post_install'], 10, 3);
+        
+        // Initialize plugin data
+        $this->init_plugin_data();
     }
 
     private function get_repository_info() {
@@ -28,7 +40,7 @@ class EME_GitHub_Updater {
 
         $args = [];
         if ($this->access_token) {
-            $args['headers']['Authorization'] = 'token ' . $this->access_token;
+            $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
         }
         
         // Build API URL
@@ -42,18 +54,21 @@ class EME_GitHub_Updater {
             $response = wp_remote_get($url, $args);
             
             if (is_wp_error($response)) {
+                error_log('EME GitHub Updater: Failed to fetch release info - ' . $response->get_error_message());
                 return false;
             }
             
             $response_code = wp_remote_retrieve_response_code($response);
             
             if (200 !== $response_code) {
+                error_log("EME GitHub Updater: GitHub API returned status {$response_code}");
                 return false;
             }
             
             $github_data = json_decode(wp_remote_retrieve_body($response), true);
             
-            if (empty($github_data)) {
+            if (empty($github_data) || !isset($github_data['tag_name'])) {
+                error_log('EME GitHub Updater: Invalid release data received');
                 return false;
             }
             
@@ -74,7 +89,7 @@ class EME_GitHub_Updater {
 
         $args = [];
         if ($this->access_token) {
-            $args['headers']['Authorization'] = 'token ' . $this->access_token;
+            $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
         }
         
         // Try to get readme.txt from the repository
@@ -150,70 +165,87 @@ class EME_GitHub_Updater {
     }
 
     private function init_plugin_data() {
-        $this->slug = plugin_basename($this->plugin_file);
+        if (!function_exists('get_plugin_data')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
         $this->plugin_data = get_plugin_data($this->plugin_file);
         $this->plugin_active = is_plugin_active($this->slug);
     }
 
-    public function check_update($transient) {
-        if (empty($transient->checked)) {
-            return $transient;
+    public function check_update($update, $plugin_data, $plugin_file) {
+        // Only respond to our plugin
+        if ($this->slug !== $plugin_file) {
+            return $update;
         }
-
-        $this->init_plugin_data();
         
-        if (!$this->get_repository_info()) {
-            return $transient;
+        // If update is already set, return it
+        if ($update !== false) {
+            return $update;
         }
 
-        $current_version = $this->plugin_data['Version'];
+        if (!$this->get_repository_info()) {
+            return false;
+        }
+
+        $current_version = $plugin_data['Version'];
         $latest_version = ltrim($this->github_data['tag_name'], 'v');
 
-        $plugin_update = new stdClass();
-        $plugin_update->id = "external/" . $this->slug;
-        $plugin_update->slug = $this->slug;
-        $plugin_update->plugin = $this->slug;
-        $plugin_update->new_version = $latest_version;
-        $plugin_update->url = $this->plugin_data['PluginURI'];
+        // If no update needed, return false
+        if (!version_compare($latest_version, $current_version, '>')) {
+            return false;
+        }
+
+        // Create update object
+        $update = new stdClass();
+        $update->slug = $this->slug;
+        $update->plugin = $this->slug;
+        $update->version = $latest_version;
+        $update->new_version = $latest_version;
+        $update->url = $this->plugin_data['PluginURI'];
         
-        // Use the browser_download_url from assets if available, otherwise fallback to zipball
+        // Get package URL
         if (isset($this->github_data['assets'][0]['browser_download_url'])) {
-            $plugin_update->package = $this->github_data['assets'][0]['browser_download_url'];
+            $update->package = $this->github_data['assets'][0]['browser_download_url'];
         } else {
-            $plugin_update->package = $this->github_data['zipball_url'];
+            $update->package = $this->github_data['zipball_url'];
         }
         
-        // Add access token if needed
+        // Add access token if needed (for private repos)
         if ($this->access_token) {
-            $plugin_update->package = add_query_arg(
+            $update->package = add_query_arg(
                 ['access_token' => $this->access_token],
-                $plugin_update->package
+                $update->package
             );
         }
 
         // Get readme data for version requirements
         $readme_data = $this->get_readme_info();
-
-        $plugin_update->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
-        $plugin_update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
-        $plugin_update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
-
-        if (version_compare($latest_version, $current_version, '>')) {
-            $transient->response[$this->slug] = $plugin_update;
-        } else {
-            $transient->no_update[$this->slug] = $plugin_update;
-        }
-
-        return $transient;
+        
+        $update->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
+        $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
+        $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
+        $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
+        
+        // Add update host for WordPress to recognize
+        $update->update_host = $this->update_hostname;
+        $update->id = $this->plugin_data['UpdateURI'];
+        
+        // Add icons and banners for update notification
+        $update->icons = $this->get_icons();
+        $update->banners = $this->get_banners();
+        
+        return $update;
     }
+
+    // Update the plugin header to include Update URI
+    // Add this to your main plugin file:
+    // Update URI: https://github.com/your-username/your-repository
 
     public function plugin_popup($result, $action, $args) {
         if ('plugin_information' !== $action) {
             return $result;
         }
 
-        $this->init_plugin_data();
-        
         // Check if this is our plugin
         if (!isset($args->slug) || $args->slug !== $this->slug) {
             return $result;
@@ -231,16 +263,15 @@ class EME_GitHub_Updater {
         $plugin_info->slug = $this->slug;
         $plugin_info->version = ltrim($this->github_data['tag_name'], 'v');
         $plugin_info->author = $this->plugin_data['Author'];
-        //$plugin_info->author_profile = !empty($readme_data['contributors'][0]) ? 'https://profiles.wordpress.org/' . $readme_data['contributors'][0] : '';
-        //$plugin_info->contributors = !empty($readme_data['contributors']) ? array_fill_keys($readme_data['contributors'], '') : [];
-        $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
         $plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
         $plugin_info->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
+        $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->homepage = $this->plugin_data['PluginURI'];
         $plugin_info->last_updated = $this->github_data['published_at'];
+        $plugin_info->id = $this->plugin_data['UpdateURI'];
         
-        // Use the browser_download_url from assets if available, otherwise fallback to zipball
+        // Download link
         if (isset($this->github_data['assets'][0]['browser_download_url'])) {
             $plugin_info->download_link = $this->github_data['assets'][0]['browser_download_url'];
         } else {
@@ -261,19 +292,57 @@ class EME_GitHub_Updater {
             $plugin_info->sections[$key] = $this->parse_markdown($value);
         }
 
-        // Banner images (if available in repository)
-        $plugin_info->banners = [
-            'low' => $this->get_banner_url('low'),
-            'high' => $this->get_banner_url('high'),
-        ];
-        
-        // Plugin icons
-        $plugin_info->icons = [
-            '1x' => $this->get_icon_url('1x'),
-            '2x' => $this->get_icon_url('2x'),
-        ];
+        // Add banners and icons
+        $plugin_info->banners = $this->get_banners();
+        $plugin_info->icons = $this->get_icons();
 
         return $plugin_info;
+    }
+
+    private function get_banners() {
+        $banners = [
+            'low' => '',
+            'high' => ''
+        ];
+        
+        $low_banner = $this->get_banner_url('low');
+        $high_banner = $this->get_banner_url('high');
+        
+        if ($low_banner) {
+            $banners['low'] = $low_banner;
+        }
+        
+        if ($high_banner) {
+            $banners['high'] = $high_banner;
+        }
+        
+        // Return empty array if no banners found
+        return array_filter($banners);
+    }
+    
+    private function get_icons() {
+        $icons = [];
+        
+        $icon_1x = $this->get_icon_url('1x');
+        $icon_2x = $this->get_icon_url('2x');
+        $icon_svg = $this->get_icon_url('svg');
+        
+        if ($icon_1x) {
+            $icons['1x'] = $icon_1x;
+        }
+        
+        if ($icon_2x) {
+            $icons['2x'] = $icon_2x;
+        }
+        
+        if ($icon_svg) {
+            $icons['svg'] = $icon_svg;
+            $icons['default'] = $icon_svg; // WordPress uses 'default' key
+        } elseif ($icon_1x) {
+            $icons['default'] = $icon_1x;
+        }
+        
+        return $icons;
     }
 
     private function get_banner_url($type = 'low') {

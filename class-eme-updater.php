@@ -117,8 +117,12 @@ class EME_GitHub_Updater {
                 $parsed['name'] = trim($matches[1]);
             } elseif (preg_match('/^Requires at least: (.*)$/', $line, $matches)) {
                 $parsed['requires'] = trim($matches[1]);
+            //} elseif (preg_match('/^Contributors?: (.*)$/', $line, $matches)) {
+             //   $parsed['contributors'] = array_map('trim', explode(',', $matches[1]));
             } elseif (preg_match('/^Tested up to: (.*)$/', $line, $matches)) {
                 $parsed['tested'] = trim($matches[1]);
+            } elseif (preg_match('/^Donate link: (.*)$/', $line, $matches)) {
+                $parsed['donate_link'] = trim($matches[1]);
             } elseif (preg_match('/^Requires PHP: (.*)$/', $line, $matches)) {
                 $parsed['requires_php'] = trim($matches[1]);
             } elseif (preg_match('/^Stable tag: (.*)$/', $line, $matches)) {
@@ -227,6 +231,9 @@ class EME_GitHub_Updater {
         $plugin_info->slug = $this->slug;
         $plugin_info->version = ltrim($this->github_data['tag_name'], 'v');
         $plugin_info->author = $this->plugin_data['Author'];
+        //$plugin_info->author_profile = !empty($readme_data['contributors'][0]) ? 'https://profiles.wordpress.org/' . $readme_data['contributors'][0] : '';
+        //$plugin_info->contributors = !empty($readme_data['contributors']) ? array_fill_keys($readme_data['contributors'], '') : [];
+        $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
         $plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
         $plugin_info->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();

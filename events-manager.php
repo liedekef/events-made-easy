@@ -74,6 +74,7 @@ if ( ! class_exists( 'emeExpressiveDate' ) ) {
 
 // Setting constants, no calls to "__" here!!!
 define( 'EME_VERSION', '3.0.35' );
+define( 'EME_PLUGIN_FILE_PATH', __FILE__ );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
 define( 'DEFAULT_CAP_AUTHOR_EVENT', 'publish_posts' );
@@ -278,17 +279,6 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 	return $vars;
 }
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
-
-// include our custom update checker code
-require_once 'plugin-update-checker/plugin-update-checker.php';
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-$myUpdateChecker = PucFactory::buildUpdateChecker(
-	'https://github.com/liedekef/events-made-easy/',
-	__FILE__,
-	'events-made-easy'
-);
-// we'll use a release asset
-$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
 
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );

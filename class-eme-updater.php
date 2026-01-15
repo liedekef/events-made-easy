@@ -191,9 +191,9 @@ class EME_GitHub_Updater {
         $latest_version = ltrim($this->github_data['tag_name'], 'v');
 
         // If no update needed, return false
-        if (!version_compare($latest_version, $current_version, '>')) {
-            return false;
-        }
+        //if (!version_compare($latest_version, $current_version, '>')) {
+         //   return $update;
+       // }
 
         // Create update object
         $update = new stdClass();
@@ -237,10 +237,6 @@ class EME_GitHub_Updater {
         return $update;
     }
 
-    // Update the plugin header to include Update URI
-    // Add this to your main plugin file:
-    // Update URI: https://github.com/your-username/your-repository
-
     public function plugin_popup($result, $action, $args) {
         if ('plugin_information' !== $action) {
             return $result;
@@ -261,6 +257,7 @@ class EME_GitHub_Updater {
         $plugin_info = new stdClass();
         $plugin_info->name = !empty($readme_data['name']) ? $readme_data['name'] : $this->plugin_data['Name'];
         $plugin_info->slug = $this->slug;
+        $plugin_info->plugin = $this->slug;
         $plugin_info->version = ltrim($this->github_data['tag_name'], 'v');
         $plugin_info->author = $this->plugin_data['Author'];
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();

@@ -9,7 +9,6 @@ class EME_GitHub_Updater {
     private $access_token;
     private $plugin_active;
     private $readme_data = null;
-    private $update_hostname;
 
     public function __construct($plugin_file, $github_username, $github_repository, $access_token = '') {
         // Get the plugin slug
@@ -19,11 +18,8 @@ class EME_GitHub_Updater {
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
         
-        // Create a unique hostname for GitHub updates
-        $this->update_hostname = 'github.com';
-        
         // Use the modern update filter
-        add_filter("update_plugins_{$this->update_hostname}", [$this, 'check_update'], 10, 3);
+        add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
         
         // Keep these filters
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
@@ -198,8 +194,8 @@ class EME_GitHub_Updater {
         // Create update object
         $update = new stdClass();
         $update->slug = $this->slug;
-        $update->plugin = $this->slug;
-        $update->version = $latest_version;
+        $update->plugin = $this->plugin_file;
+        $update->version = $current_version;
         $update->new_version = $latest_version;
         $update->url = $this->plugin_data['PluginURI'];
         
@@ -225,10 +221,7 @@ class EME_GitHub_Updater {
         $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
         $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
         $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
-        
-        // Add update host for WordPress to recognize
-        $update->update_host = $this->update_hostname;
-        $update->id = $this->plugin_data['UpdateURI'];
+        //$update->id = $this->plugin_data['UpdateURI'];
         
         // Add icons and banners for update notification
         $update->icons = $this->get_icons();
@@ -266,7 +259,7 @@ class EME_GitHub_Updater {
         $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->homepage = $this->plugin_data['PluginURI'];
         $plugin_info->last_updated = $this->github_data['published_at'];
-        $plugin_info->id = $this->plugin_data['UpdateURI'];
+        //$plugin_info->id = $this->plugin_data['UpdateURI'];
         
         // Download link
         if (isset($this->github_data['assets'][0]['browser_download_url'])) {

@@ -280,6 +280,19 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 }
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
+/*
+// include our custom update checker code
+require_once 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+        'https://github.com/liedekef/events-made-easy/',
+        __FILE__,
+        'events-made-easy'
+);
+// we'll use a release asset
+$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
+ */
+
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );
 function eme_create_events_submenu() {

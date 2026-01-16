@@ -83,7 +83,10 @@ class EME_GitHub_Updater {
             return $this->readme_data;
         }
 
-        $args = [];
+        $args = [
+            'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
+        ];
+
         if ($this->access_token) {
             $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
         }

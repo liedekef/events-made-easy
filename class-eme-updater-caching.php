@@ -1,6 +1,7 @@
 <?php
 class EME_GitHub_Updater {
     private $slug;
+    private $transient_base;
     private $github_data;
     private $plugin_file;
     private $github_username;
@@ -19,10 +20,14 @@ class EME_GitHub_Updater {
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
         $this->plugin_active = is_plugin_active($this->slug);
+        $this->transient_base = dirname($this->slug) !== '.'
+            ? dirname($this->slug)
+            : basename($this->slug, '.php');
 
         add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
         add_filter('upgrader_post_install', [$this, 'post_install'], 10, 3);
+        add_action('load-update-core.php', [$this, 'clear_all_caches']);
     }
 
     private function get_repository_info() {
@@ -31,32 +36,42 @@ class EME_GitHub_Updater {
         }
         
         $url = "https://api.github.com/repos/{$this->github_username}/{$this->github_repository}/releases/latest";
-        $args = [];
-        if ($this->access_token) {
-            $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
+        // Transient cache
+        $transient_key = "{$this->transient_base}_github_release_" . md5($url);
+        $cached_response = get_transient($transient_key);
+        
+        if (false === $cached_response) {
+            $args = [];
+            if ($this->access_token) {
+                $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
+            }
+            $response = wp_remote_get($url, $args);
+            
+            if (is_wp_error($response)) {
+                error_log('GitHub Updater: Failed to fetch release info - ' . $response->get_error_message());
+                return false;
+            }
+            
+            $response_code = wp_remote_retrieve_response_code($response);
+            
+            if (200 !== $response_code) {
+                error_log("GitHub Updater: GitHub API returned status {$response_code}");
+                return false;
+            }
+            
+            $github_data = json_decode(wp_remote_retrieve_body($response), true);
+            
+            if (empty($github_data) || !isset($github_data['tag_name'])) {
+                error_log('GitHub Updater: Invalid release data received');
+                return false;
+            }
+            
+            // Cache for 6 hours
+            set_transient($transient_key, $github_data, 6 * HOUR_IN_SECONDS);
+            $this->github_data = $github_data;
+        } else {
+            $this->github_data = $cached_response;
         }
-        $response = wp_remote_get($url, $args);
-
-        if (is_wp_error($response)) {
-            error_log('GitHub Updater: Failed to fetch release info - ' . $response->get_error_message());
-            return false;
-        }
-
-        $response_code = wp_remote_retrieve_response_code($response);
-
-        if (200 !== $response_code) {
-            error_log("GitHub Updater: GitHub API returned status {$response_code}");
-            return false;
-        }
-
-        $github_data = json_decode(wp_remote_retrieve_body($response), true);
-
-        if (empty($github_data) || !isset($github_data['tag_name'])) {
-            error_log('GitHub Updater: Invalid release data received');
-            return false;
-        }
-
-        $this->github_data = $github_data;
         
         return true;
     }
@@ -67,25 +82,34 @@ class EME_GitHub_Updater {
         }
         
         $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
-        $args = [
-            'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
-        ];
+        $transient_key = "{$this->transient_base}_github_readme_" . md5($url);
+        $cached_response = get_transient($transient_key);
+        
+        if (false === $cached_response) {
+            $args = [
+                'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
+            ];
 
-        if ($this->access_token) {
-            $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
+            if ($this->access_token) {
+                $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
+            }
+            $response = wp_remote_get($url, $args);
+            
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $readme_content = wp_remote_retrieve_body($response);
+                $parsed = $this->parse_readme($readme_content);
+                set_transient($transient_key, $parsed, 6 * HOUR_IN_SECONDS);
+                $this->readme_data = $parsed;
+                return $parsed;
+            }
+            
+            // Return empty array if readme not found
+            $this->readme_data = [];
+            return [];
+        } else {
+            $this->readme_data = $cached_response;
+            return $cached_response;
         }
-        $response = wp_remote_get($url, $args);
-
-        if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
-            $readme_content = wp_remote_retrieve_body($response);
-            $parsed = $this->parse_readme($readme_content);
-            $this->readme_data = $parsed;
-            return $parsed;
-        }
-
-        // Return empty array if readme not found
-        $this->readme_data = [];
-        return [];
     }
 
     private function parse_readme($readme_content) {
@@ -376,12 +400,34 @@ class EME_GitHub_Updater {
             }
         }
         
+        // Clear readme cache after update
+        $this->clear_readme_cache();
+        
         // Reactivate if it was active
         if ($this->plugin_active) {
             activate_plugin($this->slug, '', is_multisite());
         }
         
         return $result;
+    }
+
+    public function clear_all_caches() {
+        // Clear both caches when user manually checks for updates
+        $url = "https://api.github.com/repos/{$this->github_username}/{$this->github_repository}/releases/latest";
+        delete_transient("{$this->transient_base}_github_release_" . md5($url));
+
+        $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
+        delete_transient("{$this->transient_base}_github_readme_" . md5($url));
+
+        $this->github_data = null;
+        $this->readme_data = null;
+    }
+
+    private function clear_readme_cache() {
+        $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
+        $transient_key = "{$this->transient_base}_github_readme_" . md5($url);
+        delete_transient($transient_key);
+        $this->readme_data = null;
     }
 
     private function get_tested_wp_version() {

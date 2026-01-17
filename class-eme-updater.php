@@ -13,7 +13,7 @@ class EME_GitHub_Updater {
         if (!function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        $this->slug = plugin_basename($plugin_file);
+        $this->slug = dirname(plugin_basename($plugin_file));
         $this->plugin_file = $plugin_file;
         $this->github_username = $github_username;
         $this->github_repository = $github_repository;
@@ -136,7 +136,7 @@ class EME_GitHub_Updater {
 
     public function check_update($update, $plugin_data, $plugin_file) {
         // Only respond to our plugin
-        if ($this->slug !== $plugin_file) {
+        if ($this->slug !== dirname(plugin_basename($plugin_file))) {
             return $update;
         }
         
@@ -152,7 +152,7 @@ class EME_GitHub_Updater {
         $current_version = $plugin_data['Version'];
         $latest_version = ltrim($this->github_data['tag_name'], 'v');
 
-        // If no update needed, return false
+        // WP does the version compare, check_update always needs to return an object
         //if (!version_compare($latest_version, $current_version, '>')) {
          //   return $update;
        // }
@@ -180,19 +180,6 @@ class EME_GitHub_Updater {
             );
         }
 
-        // Get readme data for version requirements
-        $readme_data = $this->get_readme_info();
-        
-        $update->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
-        $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php($plugin_data);
-        $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
-        $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
-        //$update->id = $plugin_data['UpdateURI'];
-        
-        // Add icons and banners for update notification
-        $update->icons = $this->get_icons();
-        $update->banners = $this->get_banners();
-        
         return $update;
     }
 
@@ -213,12 +200,13 @@ class EME_GitHub_Updater {
         // Get readme and plugin data
         $readme_data = $this->get_readme_info();
         $plugin_data = get_plugin_data($this->plugin_file);
+        $latest_version = ltrim($this->github_data['tag_name'], 'v');
         
         $plugin_info = new stdClass();
         $plugin_info->name = !empty($readme_data['name']) ? $readme_data['name'] : $plugin_data['Name'];
         $plugin_info->slug = $this->slug;
-        $plugin_info->plugin = $this->slug;
-        $plugin_info->version = ltrim($this->github_data['tag_name'], 'v');
+        $plugin_info->plugin = $this->plugin_file;
+        $plugin_info->version = $latest_version;
         $plugin_info->author = $plugin_data['Author'];
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
         $plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
@@ -226,7 +214,6 @@ class EME_GitHub_Updater {
         $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->homepage = $plugin_data['PluginURI'];
         $plugin_info->last_updated = $this->github_data['published_at'];
-        //$plugin_info->id = $plugin_data['UpdateURI'];
         
         // Download link
         if (isset($this->github_data['assets'][0]['browser_download_url'])) {

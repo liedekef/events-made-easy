@@ -158,9 +158,9 @@ class EME_GitHub_Updater {
        // }
 
         // Create update object
+        // id and plugin are being set fixed in wp-includes/update.php after the filter update_plugins_{$hostname}
         $update = new stdClass();
         $update->slug = $this->slug;
-        $update->plugin = $this->plugin_file;
         $update->version = $current_version;
         $update->new_version = $latest_version;
         $update->url = $plugin_data['PluginURI'];
@@ -179,6 +179,21 @@ class EME_GitHub_Updater {
                 $update->package
             );
         }
+
+        /* the rest is not really needed and by not asking it, we skip on a github call to readme.txt too
+        // Get readme data for version requirements
+        $readme_data = $this->get_readme_info();
+
+        $update->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
+        $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php($plugin_data);
+        $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
+        $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
+        //$update->id = $plugin_data['UpdateURI'];
+
+        // Add icons and banners for update notification
+        $update->icons = $this->get_icons();
+        $update->banners = $this->get_banners();
+         */
 
         return $update;
     }
@@ -205,7 +220,7 @@ class EME_GitHub_Updater {
         $plugin_info = new stdClass();
         $plugin_info->name = !empty($readme_data['name']) ? $readme_data['name'] : $plugin_data['Name'];
         $plugin_info->slug = $this->slug;
-        $plugin_info->plugin = $this->plugin_file;
+        //$plugin_info->plugin = $this->plugin_file;
         $plugin_info->version = $latest_version;
         $plugin_info->author = $plugin_data['Author'];
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();

@@ -13,7 +13,6 @@ class EME_GitHub_Updater {
         if (!function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        // Get the plugin slug
         $this->slug = plugin_basename($plugin_file);
         $this->plugin_file = $plugin_file;
         $this->github_username = $github_username;
@@ -21,10 +20,7 @@ class EME_GitHub_Updater {
         $this->access_token = $access_token;
         $this->plugin_active = is_plugin_active($this->slug);
         
-        // Use the modern update filter
         add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
-        
-        // Keep these filters
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
         add_filter('upgrader_post_install', [$this, 'post_install'], 10, 3);
     }

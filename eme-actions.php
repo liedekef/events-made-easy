@@ -200,16 +200,8 @@ add_filter('doing_it_wrong_trigger_error',
 */
 
 function eme_actions_admin_init() {
-
-    if (is_admin()) {
-        require_once("class-eme-updater.php");
-        $plugin_file = EME_PLUGIN_FILE_PATH;
-        $github_username = 'liedekef';
-        $github_repository = 'events-made-easy';
-        new EME_GitHub_Updater($plugin_file, $github_username, $github_repository);
-    }
-
     global $current_user, $plugin_page;
+
     $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     eme_options_register();
 

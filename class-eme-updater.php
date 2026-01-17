@@ -1,6 +1,7 @@
 <?php
 class EME_GitHub_Updater {
     private $slug;
+    private $transient_base;
     private $github_data;
     private $plugin_file;
     private $github_username;
@@ -19,7 +20,10 @@ class EME_GitHub_Updater {
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
         $this->plugin_active = is_plugin_active($this->slug);
-        
+        $this->transient_base = dirname($this->slug) !== '.'
+            ? dirname($this->slug)
+            : basename($this->slug, '.php');
+
         add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
         add_filter('upgrader_post_install', [$this, 'post_install'], 10, 3);
@@ -29,38 +33,35 @@ class EME_GitHub_Updater {
         if (!empty($this->github_data)) {
             return true;
         }
-
-        $args = [];
-        if ($this->access_token) {
-            $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
-        }
         
-        // Build API URL
         $url = "https://api.github.com/repos/{$this->github_username}/{$this->github_repository}/releases/latest";
-        
-        // Add cache busting
-        $transient_key = 'eme_github_latest_release_' . md5($url);
+        // Transient cache
+        $transient_key = "{$this->transient_base}_github_release_" . md5($url);
         $cached_response = get_transient($transient_key);
         
         if (false === $cached_response) {
+            $args = [];
+            if ($this->access_token) {
+                $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
+            }
             $response = wp_remote_get($url, $args);
             
             if (is_wp_error($response)) {
-                error_log('EME GitHub Updater: Failed to fetch release info - ' . $response->get_error_message());
+                error_log('GitHub Updater: Failed to fetch release info - ' . $response->get_error_message());
                 return false;
             }
             
             $response_code = wp_remote_retrieve_response_code($response);
             
             if (200 !== $response_code) {
-                error_log("EME GitHub Updater: GitHub API returned status {$response_code}");
+                error_log("GitHub Updater: GitHub API returned status {$response_code}");
                 return false;
             }
             
             $github_data = json_decode(wp_remote_retrieve_body($response), true);
             
             if (empty($github_data) || !isset($github_data['tag_name'])) {
-                error_log('EME GitHub Updater: Invalid release data received');
+                error_log('GitHub Updater: Invalid release data received');
                 return false;
             }
             
@@ -78,22 +79,19 @@ class EME_GitHub_Updater {
         if (!is_null($this->readme_data)) {
             return $this->readme_data;
         }
-
-        $args = [
-            'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
-        ];
-
-        if ($this->access_token) {
-            $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
-        }
         
-        // Try to get readme.txt from the repository
         $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
-        
-        $transient_key = 'eme_github_readme_' . md5($url);
+        $transient_key = "{$this->transient_base}_github_readme_" . md5($url);
         $cached_response = get_transient($transient_key);
         
         if (false === $cached_response) {
+            $args = [
+                'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
+            ];
+
+            if ($this->access_token) {
+                $args['headers']['Authorization'] = 'Bearer ' . $this->access_token;
+            }
             $response = wp_remote_get($url, $args);
             
             if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
@@ -414,7 +412,7 @@ class EME_GitHub_Updater {
 
     private function clear_readme_cache() {
         $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
-        $transient_key = 'eme_github_readme_' . md5($url);
+        $transient_key = "{$this->transient_base}_github_readme_" . md5($url);
         delete_transient($transient_key);
         $this->readme_data = null;
     }

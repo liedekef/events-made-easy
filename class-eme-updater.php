@@ -1,6 +1,8 @@
 <?php
 class EME_GitHub_Updater {
     private $slug;
+    private $plugin_basename;
+    private $plugin_dir_path;
     private $github_data;
     private $plugin_file;
     private $github_username;
@@ -13,12 +15,14 @@ class EME_GitHub_Updater {
         if (!function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        $this->slug = dirname(plugin_basename($plugin_file));
+        $this->plugin_basename = plugin_basename($plugin_file);
+        $this->slug = dirname($this->plugin_basename);
         $this->plugin_file = $plugin_file;
+        $this->plugin_dir_path = plugin_dir_path($plugin_file);
         $this->github_username = $github_username;
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
-        $this->plugin_active = is_plugin_active($this->slug);
+        $this->plugin_active = is_plugin_active($this->plugin_basename);
 
         add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
@@ -61,30 +65,30 @@ class EME_GitHub_Updater {
         return true;
     }
 
-    private function get_readme_info() {
+    private function get_readme_data($current_version, $latest_version) {
         if (!is_null($this->readme_data)) {
-            return $this->readme_data;
-        }
-        
-        $tag = $this->github_data['tag_name'];
-        $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$tag}/readme.txt";
-        $args = [];
-
-        if ($this->access_token) {
-            $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
-        }
-        $response = wp_remote_get($url, $args);
-
-        if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
-            $readme_content = wp_remote_retrieve_body($response);
-            $parsed = $this->parse_readme($readme_content);
-            $this->readme_data = $parsed;
-            return $parsed;
+            return;
         }
 
-        // Return empty array if readme not found
-        $this->readme_data = [];
-        return [];
+        $readme_content = '';
+        $plugin_dir = dirname( $this->plugin_file );
+        if ($current_version == $latest_version && file_exists("{$plugin_dir}/readme.txt") ) {
+            $readme_content = file_get_contents("{$plugin_dir}/readme.txt");
+        } else {
+            $tag = $this->github_data['tag_name'];
+            $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$tag}/readme.txt";
+            $args = [];
+            if ($this->access_token) {
+                $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
+            }
+            $response = wp_remote_get($url, $args);
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $readme_content = wp_remote_retrieve_body($response);
+            }
+        }
+        if (!empty($readme_content)) {
+            $this->readme_data = $this->parse_readme($readme_content);
+        }
     }
 
     private function parse_readme($readme_content) {
@@ -181,12 +185,12 @@ class EME_GitHub_Updater {
 
         /* the rest is not really needed and by not asking it, we skip on a github call to readme.txt too
         // Get readme data for version requirements
-        $readme_data = $this->get_readme_info();
+        $this->get_readme_data();
 
-        $update->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
-        $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php($plugin_data);
-        $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
-        $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
+        $update->tested = !empty($this->readme_data['tested']) ? $this->readme_data['tested'] : $this->get_tested_wp_version();
+        $update->requires_php = !empty($this->readme_data['requires_php']) ? $this->readme_data['requires_php'] : $this->get_requires_php($plugin_data);
+        $update->requires = !empty($this->readme_data['requires']) ? $this->readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
+        $update->donate_link = !empty($this->readme_data['donate_link']) ? $this->readme_data['donate_link'] : '';
          */
 
         $update->tested = $this->get_tested_wp_version();
@@ -212,21 +216,22 @@ class EME_GitHub_Updater {
         }
 
         // Get readme and plugin data
-        $readme_data = $this->get_readme_info();
         $plugin_data = get_plugin_data($this->plugin_file);
+        $current_version = $plugin_data['Version'];
         $latest_version = ltrim($this->github_data['tag_name'], 'v');
+        $this->get_readme_data($current_version, $latest_version);
         
         $plugin_info = new stdClass();
-        $plugin_info->name = !empty($readme_data['name']) ? $readme_data['name'] : $plugin_data['Name'];
+        $plugin_info->name = !empty($this->readme_data['name']) ? $this->readme_data['name'] : $plugin_data['Name'];
         $plugin_info->slug = $this->slug;
         //$plugin_info->plugin = $this->plugin_file;
         $plugin_info->version = $latest_version;
         $plugin_info->author = $plugin_data['Author'];
-        $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
-        //$plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
+        $plugin_info->requires = !empty($this->readme_data['requires']) ? $this->readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
+        //$plugin_info->tested = !empty($this->readme_data['tested']) ? $this->readme_data['tested'] : $this->get_tested_wp_version();
         $plugin_info->tested = $this->get_tested_wp_version();
-        $plugin_info->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
-        $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
+        $plugin_info->requires_php = !empty($this->readme_data['requires_php']) ? $this->readme_data['requires_php'] : $this->get_requires_php($plugin_data);
+        $plugin_info->donate_link = !empty($this->readme_data['donate_link']) ? $this->readme_data['donate_link'] : '';
         $plugin_info->homepage = $plugin_data['PluginURI'];
         $plugin_info->last_updated = $this->github_data['published_at'];
         
@@ -247,7 +252,7 @@ class EME_GitHub_Updater {
         // Build sections from readme
         $plugin_info->sections = [];
         
-        foreach ($readme_data['sections'] as $key => $value) {
+        foreach ($this->readme_data['sections'] as $key => $value) {
             $plugin_info->sections[$key] = $this->parse_markdown($value);
         }
 
@@ -257,7 +262,7 @@ class EME_GitHub_Updater {
 
         if (isset($plugin_info->sections['screenshots'])) {
             $asset_url = plugin_dir_url( $this->plugin_file )."assets/";
-            $asset_dir = dirname( $this->plugin_file )."/assets/";
+            $asset_dir = $this->plugin_dir_path."/assets/";
             $res = '<ol>';
             preg_match_all('|<li>(.*?)</li>|s', $plugin_info->sections['screenshots'], $tmp_screenshots, PREG_SET_ORDER);
             if ( $tmp_screenshots ) {
@@ -268,10 +273,8 @@ class EME_GitHub_Updater {
                     elseif (file_exists($asset_dir."screenshot-$count.gif"))
                         $image = $asset_url."screenshot-$count.gif";
                     else
-                        $image = "";
-                    if (!empty($image)) {
-                        $tmp = "<li><a href='{$image}'><img src='{$image}'></a><p>{$tmp_screenshot[1]}</p></li>";
-                    }
+                        $image = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$this->github_data['tag_name']}/assets/screenshot-$count.gif";
+                    $tmp = "<li><a href='{$image}'><img src='{$image}'></a><p>{$tmp_screenshot[1]}</p></li>";
                     $count++;
                     $res .= $tmp;
                 }
@@ -337,7 +340,7 @@ class EME_GitHub_Updater {
 
         foreach ($extensions as $ext) {
             $filename = str_replace('.png', $ext, $banner_filename);
-            $local_path = plugin_dir_path($this->plugin_file) . 'assets/' . $filename;
+            $local_path = $this->plugin_dir_path . 'assets/' . $filename;
 
             if (file_exists($local_path)) {
                 $url = plugins_url('assets/' . $filename, $this->plugin_file);
@@ -367,14 +370,14 @@ class EME_GitHub_Updater {
 
                 foreach ($filenames as $filename) {
                     // Check in assets folder first (most common)
-                    $local_path = plugin_dir_path($this->plugin_file) . 'assets/' . $filename;
+                    $local_path = $this->plugin_dir_path . 'assets/' . $filename;
                     if (file_exists($local_path)) {
                         $url = plugins_url('assets/' . $filename, $this->plugin_file);
                         return $url;
                     }
 
                     // Check in plugin root
-                    $local_path = plugin_dir_path($this->plugin_file) . $filename;
+                    $local_path = $this->plugin_dir_path . $filename;
                     if (file_exists($local_path)) {
                         $url = plugins_url($filename, $this->plugin_file);
                         return $url;
@@ -388,24 +391,22 @@ class EME_GitHub_Updater {
 
     public function post_install($true, $hook_extra, $result) {
         // Check if this is our plugin
-        if (!isset($hook_extra['plugin']) || $hook_extra['plugin'] !== $this->slug) {
+        if (!isset($hook_extra['plugin']) || dirname($hook_extra['plugin']) !== $this->slug) {
             return $true;
         }
         
         global $wp_filesystem;
         
-        $install_directory = plugin_dir_path($this->plugin_file);
-        
         // Check if source and destination are different
-        if ($result['destination'] !== $install_directory) {
-            if ($wp_filesystem->move($result['destination'], $install_directory)) {
-                $result['destination'] = $install_directory;
+        if ($result['destination'] !== $this->plugin_dir_path) {
+            if ($wp_filesystem->move($result['destination'], $this->plugin_dir_path)) {
+                $result['destination'] = $this->plugin_dir_path;
             }
         }
         
         // Reactivate if it was active
         if ($this->plugin_active) {
-            activate_plugin($this->slug, '', is_multisite());
+            activate_plugin($this->plugin_basename, '', is_multisite());
         }
         
         return $result;
@@ -489,7 +490,7 @@ class EME_GitHub_Updater {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
                     $list_items = [];
-                    $in_listl = false;
+                    $in_list = false;
                 }
                 $processed_lines[] = '';
             }

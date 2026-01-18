@@ -189,12 +189,12 @@ class EME_GitHub_Updater {
         $update->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php($plugin_data);
         $update->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
         $update->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
-        //$update->id = $plugin_data['UpdateURI'];
+         */
 
+        $update->tested = $this->get_tested_wp_version();
         // Add icons and banners for update notification
         $update->icons = $this->get_icons();
         $update->banners = $this->get_banners();
-         */
 
         return $update;
     }
@@ -225,7 +225,8 @@ class EME_GitHub_Updater {
         $plugin_info->version = $latest_version;
         $plugin_info->author = $plugin_data['Author'];
         $plugin_info->requires = !empty($readme_data['requires']) ? $readme_data['requires'] : $this->get_requires_wp_version();
-        $plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
+        //$plugin_info->tested = !empty($readme_data['tested']) ? $readme_data['tested'] : $this->get_tested_wp_version();
+        $plugin_info->tested = $this->get_tested_wp_version();
         $plugin_info->requires_php = !empty($readme_data['requires_php']) ? $readme_data['requires_php'] : $this->get_requires_php();
         $plugin_info->donate_link = !empty($readme_data['donate_link']) ? $readme_data['donate_link'] : '';
         $plugin_info->homepage = $plugin_data['PluginURI'];
@@ -255,6 +256,15 @@ class EME_GitHub_Updater {
         // Add banners and icons
         $plugin_info->banners = $this->get_banners();
         $plugin_info->icons = $this->get_icons();
+
+        if (isset($plugin_info->sections['screenshots'])) {
+            $plugin_info->screenshots = [];
+            preg_match_all('|<li>(.*?)</li>|s', $plugin_info->sections['screenshots'], $tmp_screenshots, PREG_SET_ORDER);
+            if ( $tmp_screenshots ) {
+                foreach ( (array) $tmp_screenshots as $tmp_screenshot )
+                    $plugin_info->screenshots[] = $tmp_screenshot[1];
+            }
+        }
 
         return $plugin_info;
     }
@@ -401,7 +411,7 @@ class EME_GitHub_Updater {
 
     private function parse_markdown($markdown) {
         if (empty($markdown)) {
-            return 'No changelog available.';
+            return '';
         }
 
         // Split by lines to process properly
@@ -465,7 +475,7 @@ class EME_GitHub_Updater {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
                     $list_items = [];
-                    $in_list = false;
+                    $in_listl = false;
                 }
                 $processed_lines[] = '';
             }

@@ -162,8 +162,8 @@ class EME_GitHub_Updater {
         // id and plugin are being set fixed in wp-includes/update.php after the filter update_plugins_{$hostname}
         $update = new stdClass();
         $update->slug = $this->slug;
-        $update->version = $current_version;
-        $update->new_version = $latest_version;
+        $update->version = $current_version; // version just needs to be present, but the value is ignored if new_version is also present
+        $update->new_version = $latest_version; // if this is not present, then WP will copy version into new_version
         $update->url = $plugin_data['PluginURI'];
         
         // Get package URL

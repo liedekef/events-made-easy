@@ -68,9 +68,7 @@ class EME_GitHub_Updater {
         
         $tag = $this->github_data['tag_name'];
         $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$tag}/readme.txt";
-        $args = [
-            'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
-        ];
+        $args = [];
 
         if ($this->access_token) {
             $args['headers'] = [ 'Authorization' => 'Bearer ' . $this->access_token ];
@@ -258,12 +256,28 @@ class EME_GitHub_Updater {
         $plugin_info->icons = $this->get_icons();
 
         if (isset($plugin_info->sections['screenshots'])) {
-            $plugin_info->screenshots = [];
+            $asset_url = plugin_dir_url( $this->plugin_file )."assets/";
+            $asset_dir = dirname( $this->plugin_file )."/assets/";
+            $res = '<ol>';
             preg_match_all('|<li>(.*?)</li>|s', $plugin_info->sections['screenshots'], $tmp_screenshots, PREG_SET_ORDER);
             if ( $tmp_screenshots ) {
-                foreach ( (array) $tmp_screenshots as $tmp_screenshot )
-                    $plugin_info->screenshots[] = $tmp_screenshot[1];
+                $count = 1;
+                foreach ( (array) $tmp_screenshots as $tmp_screenshot ) {
+                    if (file_exists($asset_dir."screenshot-$count.png"))
+                        $image = $asset_url."screenshot-$count.png";
+                    elseif (file_exists($asset_dir."screenshot-$count.gif"))
+                        $image = $asset_url."screenshot-$count.gif";
+                    else
+                        $image = "";
+                    if (!empty($image)) {
+                        $tmp = "<li><a href='{$image}'><img src='{$image}'></a><p>{$tmp_screenshot[1]}</p></li>";
+                    }
+                    $count++;
+                    $res .= $tmp;
+                }
             }
+            $res .= '</ol>';
+            $plugin_info->sections['screenshots'] = $res;
         }
 
         return $plugin_info;

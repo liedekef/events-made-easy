@@ -98,6 +98,13 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
+== Screenshots ==
+
+1. A map with a pin and popup
+2. A view on the list of events
+3. Part of the admin menu
+4. Recurrence editing of an event
+
 == Changelog ==
 = 3.0.35  (2026/01/08) =
 * Better copy/paste for word when jodit is the html editor

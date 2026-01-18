@@ -66,7 +66,8 @@ class EME_GitHub_Updater {
             return $this->readme_data;
         }
         
-        $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/main/readme.txt";
+        $tag = $this->github_data['tag_name'];
+        $url = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$tag}/readme.txt";
         $args = [
             'limit_response_size' => 8192, // Limit readme download to 8KB (like WP does internally too)
         ];

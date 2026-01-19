@@ -497,6 +497,24 @@ class EME_GitHub_Updater {
                 }
                 $processed_lines[] = '';
             }
+            // Handle continuation lines (start with 2+ spaces)
+            elseif (preg_match('/^  (.+)$/', $line, $matches)) {
+                if ($in_list && !empty($list_items)) {
+                    // Append to the last list item with a <br>
+                    $last_index = count($list_items) - 1;
+                    $list_items[$last_index] = rtrim($list_items[$last_index], '</li>');
+                    $list_items[$last_index] .= '<br>' . $this->parse_inline_markdown($trimmed) . '</li>';
+                } else {
+                    // Not in a list, append to last processed line
+                    if (!empty($processed_lines)) {
+                        $last_index = count($processed_lines) - 1;
+                        $processed_lines[$last_index] = rtrim($processed_lines[$last_index], '</p>');
+                        $processed_lines[$last_index] .= '<br>' . $this->parse_inline_markdown($trimmed) . '</p>';
+                    } else {
+                        $processed_lines[] = '<p>' . $this->parse_inline_markdown($trimmed) . '</p>';
+                    }
+                }
+            }
             // Regular text
             else {
                 // Close list if we were in one and now have regular text

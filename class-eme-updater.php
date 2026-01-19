@@ -123,7 +123,7 @@ class EME_GitHub_Updater {
             } elseif (empty($parsed['short_description']) && !empty(trim($line)) && $current_section == '') {
                 // First non-empty line after headers is short description
                 $parsed['short_description'] = trim($line);
-            } elseif ($current_section && !empty(trim($line))) {
+            } elseif ($current_section && !empty(trim($line)) ) {
                 // Add to current section
                 $parsed['sections'][$current_section] .= $line . "\n";
             }
@@ -488,6 +488,7 @@ class EME_GitHub_Updater {
                 $list_items[] = '<li>' . $list_content . '</li>';
             }
             // Empty line - close list if we were in one
+            // In parse_readme we already remove empty lines so this is not really needed
             elseif (empty($trimmed)) {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
@@ -504,7 +505,7 @@ class EME_GitHub_Updater {
                     $list_items = [];
                     $in_list = false;
                 }
-                $processed_lines[] = $this->parse_inline_markdown($trimmed);
+                $processed_lines[] = '<p>' . $this->parse_inline_markdown($trimmed) . '</p>';
             }
         }
 
@@ -513,9 +514,8 @@ class EME_GitHub_Updater {
             $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
         }
 
-        // Combine lines (br is added by 2 empty spaces at the end of a line)
+        // Combine lines
         $html = implode("\n", $processed_lines);
-
         // Security: Allow only safe HTML
         return wp_kses_post($html);
     }

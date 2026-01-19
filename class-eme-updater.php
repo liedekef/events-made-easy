@@ -264,17 +264,19 @@ class EME_GitHub_Updater {
             $asset_url = plugin_dir_url( $this->plugin_file )."assets/";
             $asset_dir = $this->plugin_dir_path."/assets/";
             $res = '<ol>';
-            preg_match_all('|<li>(.*?)</li>|s', $plugin_info->sections['screenshots'], $tmp_screenshots, PREG_SET_ORDER);
-            if ( $tmp_screenshots ) {
+            preg_match_all('|<li>(.*?)</li>|s', $plugin_info->sections['screenshots'], $matches);
+            if (!empty($matches[1])) {
                 $count = 1;
-                foreach ( (array) $tmp_screenshots as $tmp_screenshot ) {
+                foreach ($matches[1] as $description) {
                     if (file_exists($asset_dir."screenshot-$count.png"))
                         $image = $asset_url."screenshot-$count.png";
                     elseif (file_exists($asset_dir."screenshot-$count.gif"))
                         $image = $asset_url."screenshot-$count.gif";
                     else
                         $image = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$this->github_data['tag_name']}/assets/screenshot-$count.gif";
-                    $tmp = "<li><a href='{$image}'><img src='{$image}'></a><p>{$tmp_screenshot[1]}</p></li>";
+                    $escaped_image = esc_url($image);
+                    $safe_description = wp_kses_post($description);
+                    $tmp = "<li><a href='{$escaped_image}'><img src='{$escaped_image}'></a><p>{$safe_description}</p></li>";
                     $count++;
                     $res .= $tmp;
                 }
@@ -530,8 +532,8 @@ class EME_GitHub_Updater {
         // Code: `code`
         $text = preg_replace('/`([^`]+)`/', '<code>$1</code>', $text);
 
-        // Links: [text](url)
-        $text = preg_replace('/\[([^\]]+)\]\(([^)]+)\)/', '<a href="$2" target="_blank" rel="noopener">$1</a>', $text);
+        // Links: [text](url) with URL escaping
+        $text = preg_replace('/\[([^\]]+)\]\(([^)]+)\)/', '<a href="' . esc_url($matches[2]) . '" target="_blank" rel="noopener">$1</a>', $text);
 
         return $text;
     }

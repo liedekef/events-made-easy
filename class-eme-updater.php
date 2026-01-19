@@ -536,7 +536,13 @@ class EME_GitHub_Updater {
         $text = preg_replace('/(.*?)  $/', '$1<br>', $text);        
 
         // Links: [text](url) with URL escaping
-        $text = preg_replace('/\[([^\]]+)\]\(([^)]+)\)/', '<a href="' . esc_url($matches[2]) . '" target="_blank" rel="noopener">$1</a>', $text);
+        $text = preg_replace_callback(
+            '/\[([^\]]+)\]\(([^)]+)\)/',
+            function($matches) {
+                return '<a href="' . esc_url($matches[2]) . '" target="_blank" rel="noopener">' . $matches[1] . '</a>';
+            },
+            $text
+        );
 
         return $text;
     }

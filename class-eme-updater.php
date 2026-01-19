@@ -513,8 +513,8 @@ class EME_GitHub_Updater {
             $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
         }
 
-        // Combine lines and add paragraphs
-        $html = eme_nl2br_save_html(implode("\n", $processed_lines));
+        // Combine lines (br is added by 2 empty spaces at the end of a line)
+        $html = implode("\n", $processed_lines);
 
         // Security: Allow only safe HTML
         return wp_kses_post($html);
@@ -531,6 +531,9 @@ class EME_GitHub_Updater {
 
         // Code: `code`
         $text = preg_replace('/`([^`]+)`/', '<code>$1</code>', $text);
+
+        // break: 2 spaces at the end
+        $text = preg_replace('/(.*?)  $/', '$1<br>', $text);        
 
         // Links: [text](url) with URL escaping
         $text = preg_replace('/\[([^\]]+)\]\(([^)]+)\)/', '<a href="' . esc_url($matches[2]) . '" target="_blank" rel="noopener">$1</a>', $text);

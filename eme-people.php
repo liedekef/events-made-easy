@@ -1364,8 +1364,13 @@ function eme_csv_booking_report( $event_id ) {
                 }
             }
             if ( ! empty( $booking['discountids'] ) ) {
-                $discount_ids = explode( ',', $booking['discountids'] );
-                foreach ( $discount_ids as $discount_id ) {
+                if ( eme_is_serialized( $booking['discountids'] ) ) {
+                    $applied_discounts = eme_unserialize( $booking['discountids'] );
+                    $applied_discountids = array_keys($applied_discounts);
+                } else {
+                    $applied_discountids = explode( ',', $booking['discountids'] );
+                }
+                foreach ( $applied_discountids as $discount_id ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = $discount['name'];
@@ -1675,8 +1680,13 @@ function eme_printable_booking_report( $event_id ) {
             }
         }
         if ( ! empty( $booking['discountids'] ) ) {
-            $discount_ids = explode( ',', $booking['discountids'] );
-            foreach ( $discount_ids as $discount_id ) {
+            if ( eme_is_serialized( $booking['discountids'] ) ) {
+                $applied_discounts = eme_unserialize( $booking['discountids'] );
+                $applied_discountids = array_keys($applied_discounts);
+            } else {
+                $applied_discountids = explode( ',', $booking['discountids'] );
+            }
+            foreach ( $applied_discountids as $discount_id ) {
                 $discount = eme_get_discount( $discount_id );
                 if ( $discount && isset( $discount['name'] ) ) {
                     $discount_name .= '<br>' . esc_html( $discount['name'] );

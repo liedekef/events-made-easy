@@ -438,10 +438,8 @@ class EME_GitHub_Updater {
         $list_items = [];
 
         foreach ($lines as $line) {
-            $trimmed = trim($line);
-
             // Handle headers first (they break lists)
-            if (preg_match('/^= (.+) =$/', $trimmed, $matches)) {
+            if (preg_match('/^= (.+) =$/', $line, $matches)) {
                 // If we were in a list, close it first
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
@@ -451,7 +449,7 @@ class EME_GitHub_Updater {
                 $processed_lines[] = '<h4>' . esc_html(trim($matches[1])) . '</h4>';
             }
             // Handle other headers
-            elseif (preg_match('/^# (.+)$/', $trimmed, $matches)) {
+            elseif (preg_match('/^# (.+)$/', $line, $matches)) {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
                     $list_items = [];
@@ -459,7 +457,7 @@ class EME_GitHub_Updater {
                 }
                 $processed_lines[] = '<h1>' . esc_html(trim($matches[1])) . '</h1>';
             }
-            elseif (preg_match('/^## (.+)$/', $trimmed, $matches)) {
+            elseif (preg_match('/^## (.+)$/', $line, $matches)) {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
                     $list_items = [];
@@ -467,7 +465,7 @@ class EME_GitHub_Updater {
                 }
                 $processed_lines[] = '<h2>' . esc_html(trim($matches[1])) . '</h2>';
             }
-            elseif (preg_match('/^### (.+)$/', $trimmed, $matches)) {
+            elseif (preg_match('/^### (.+)$/', $line, $matches)) {
                 if ($in_list && !empty($list_items)) {
                     $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
                     $list_items = [];
@@ -476,26 +474,16 @@ class EME_GitHub_Updater {
                 $processed_lines[] = '<h3>' . esc_html(trim($matches[1])) . '</h3>';
             }
             // Handle list items
-            elseif (preg_match('/^\* (.+)$/', $trimmed, $matches)) {
+            elseif (preg_match('/^\* (.+)$/', $line, $matches)) {
                 $in_list = true;
                 $list_content = $this->parse_inline_markdown(trim($matches[1]));
                 $list_items[] = '<li>' . $list_content . '</li>';
             }
             // Handle numbered lists
-            elseif (preg_match('/^\d+\. (.+)$/', $trimmed, $matches)) {
+            elseif (preg_match('/^\d+\. (.+)$/', $line, $matches)) {
                 $in_list = true;
                 $list_content = $this->parse_inline_markdown(trim($matches[1]));
                 $list_items[] = '<li>' . $list_content . '</li>';
-            }
-            // Empty line - close list if we were in one
-            // In parse_readme we already remove empty lines so this is not really needed
-            elseif (empty($trimmed)) {
-                if ($in_list && !empty($list_items)) {
-                    $processed_lines[] = '<ul>' . implode('', $list_items) . '</ul>';
-                    $list_items = [];
-                    $in_list = false;
-                }
-                $processed_lines[] = '';
             }
             // Handle continuation lines (start with 2+ spaces)
             elseif (preg_match('/^  (.+)$/', $line, $matches)) {
@@ -503,15 +491,15 @@ class EME_GitHub_Updater {
                     // Append to the last list item with a <br>
                     $last_index = count($list_items) - 1;
                     $list_items[$last_index] = rtrim($list_items[$last_index], '</li>');
-                    $list_items[$last_index] .= '<br>' . $this->parse_inline_markdown($trimmed) . '</li>';
+                    $list_items[$last_index] .= '<br>' . $this->parse_inline_markdown($line) . '</li>';
                 } else {
                     // Not in a list, append to last processed line
                     if (!empty($processed_lines)) {
                         $last_index = count($processed_lines) - 1;
                         $processed_lines[$last_index] = rtrim($processed_lines[$last_index], '</p>');
-                        $processed_lines[$last_index] .= '<br>' . $this->parse_inline_markdown($trimmed) . '</p>';
+                        $processed_lines[$last_index] .= '<br>' . $this->parse_inline_markdown($line) . '</p>';
                     } else {
-                        $processed_lines[] = '<p>' . $this->parse_inline_markdown($trimmed) . '</p>';
+                        $processed_lines[] = '<p>' . $this->parse_inline_markdown($line) . '</p>';
                     }
                 }
             }
@@ -523,7 +511,7 @@ class EME_GitHub_Updater {
                     $list_items = [];
                     $in_list = false;
                 }
-                $processed_lines[] = '<p>' . $this->parse_inline_markdown($trimmed) . '</p>';
+                $processed_lines[] = '<p>' . $this->parse_inline_markdown($line) . '</p>';
             }
         }
 

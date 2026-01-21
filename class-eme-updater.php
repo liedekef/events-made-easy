@@ -273,7 +273,7 @@ class EME_GitHub_Updater {
                     elseif (file_exists($asset_dir."screenshot-$count.gif"))
                         $image = $asset_url."screenshot-$count.gif";
                     else
-                        $image = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$this->github_data['tag_name']}/assets/screenshot-$count.gif";
+                        $image = "https://raw.githubusercontent.com/{$this->github_username}/{$this->github_repository}/refs/tags/{$this->github_data['tag_name']}/assets/screenshot-$count.png"; // for github, we only support png
                     $escaped_image = esc_url($image);
                     $safe_description = wp_kses_post($description);
                     $tmp = "<li><a href='{$escaped_image}'><img src='{$escaped_image}'></a><p>{$safe_description}</p></li>";

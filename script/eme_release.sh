@@ -39,7 +39,7 @@ sed -i "s/Stable tag: $old_release/Stable tag: $release/" readme.txt
 # now create a zip of the new release
 cd $basedir/..
 # some payment gateways (sumup) look at composer.json for their version info, so don't exclude that
-zip -r $plugin.zip $plugin -x '*.git*' "$plugin/langs/*.po" "$plugin/langs/pot_gen*" "$plugin/langs/*.pot" "$plugin/langs/gettextize.sh*" "$plugin/screenshot*" -x "$plugin/dist*" -x "$plugin/changelog.txt" -x "$plugin/script*" -x "$plugin/payment_gateways/*/composer.lock"
+zip -r $plugin.zip $plugin -x '*.git*' "$plugin/langs/*.po" "$plugin/langs/pot_gen*" "$plugin/langs/*.pot" "$plugin/langs/gettextize.sh*" "$plugin/dist*" "$plugin/changelog.txt" "$plugin/script*" "$plugin/payment_gateways/*/composer.lock"
 mv $plugin.zip $basedir/dist
 
 # move 

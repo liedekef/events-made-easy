@@ -2657,8 +2657,10 @@ function eme_nl2br_save_html( $string ) {
 
     $htmleditor = get_option( 'eme_htmleditor' );
     if ($htmleditor != 'tinymce') {
+        // this avoids wordpress adding breaks via "the_content" filter
+        // while this seems weird, copy/paste from word can lead to words on another line that are meant to be separated by a space
+        $string = str_replace( "\n", " ", $string )
         // if not tinymce, no other changes anymore
-        $string = str_replace( "\n", " ", $string ); // this avoids wordpress adding breaks via "the_content" filter
         return $string;
     }
 

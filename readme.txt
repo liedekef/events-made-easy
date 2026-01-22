@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.36
+Stable tag: 3.0.37
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.37  (2026/01/22) =
+* Small update because the zip contained unwanted files
+
 = 3.0.36  (2026/01/22) =
 * Use native WP filters to update from github (and include screenshots in the plugin 'View details' popup)
 * Fix discount print in booking csv and print report

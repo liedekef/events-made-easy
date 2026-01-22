@@ -265,3 +265,6 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * javascript and jtable updates to more reliable check for checked status of checkboxes
 * also fdatepicker code updates and other javascript improvements
 * Added the possibility to give a "Maximum usage count per user" for a discount (applies and requires users to be logged in).
+
+= Older changes =
+See [changelog.txt on github](https://github.com/liedekef/events-made-easy/blob/main/changelog.txt)

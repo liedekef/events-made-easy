@@ -493,7 +493,6 @@
 = 2.4.23 (2024/01/15) =
 * Prefill Stripe Payment Form with E-Mail from EME Booking Form (thanks to EweLoHD)
 
-= Older changes: see changelog.txt
 = 2.4.22 (2023/12/30) =
 * Fix #_CONTACT and #_AUTHOR event placeholders if no EME person is linked to that wp id
 * Sumup and Mollie API updates

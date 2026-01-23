@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Conditional UI: Show/hide mail options ---
-    function updateShowHideStuff() {
+    function updateShowHideAdminActions() {
         const action = EME.$('#eme_admin_action')?.value || '';
         const sendMailsSpan = EME.$('#span_sendmails');
         eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
@@ -309,9 +309,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         eme_toggle(sendMailsSpan, ['acceptPayment', 'stopMembership', 'markUnpaid'].includes(action));
     }
+    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideAdminActions);
+    updateShowHideAdminActions();
 
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
-    updateShowHideStuff();
+    // --- Conditional UI: Show/hide options ---
+    const select_type = EME.$('select#type');
+    if (select_type) {
+        function updateShowHideFixedStartdate() {
+            const type_value = select_type.value || '';
+            eme_toggle(EME.$('tr#startdate'), type_value === 'fixed');
+        }
+        select_type.addEventListener('change', updateShowHideFixedStartdate);
+        updateShowHideFixedStartdate();
+    }
+
+    // --- Conditional UI: Show/hide options ---
+    const select_duration_period = EME.$('select#duration_period');
+    if (select_duration_period) {
+        function updateShowHideReminder () {
+            const duration_period_value = select_duration_period?.value || '';
+            eme_toggle(EME.$('tr#reminder'), duration_period_value !== 'forever');
+            eme_toggle(EME.$('#duration_count'), duration_period_value !== 'forever');
+        }
+        select_duration_period.addEventListener('change', updateShowHideReminder);
+        updateShowHideReminder();
+    }
+
+    // --- Conditional UI: Show/hide options ---
+    const input_allow_renewal = EME.$('input#allow_renewal');
+    if (input_allow_renewal) {
+        function updateShowHideRenewal () {
+            eme_toggle(EME.$('tr#tr_renewal_cutoff_days'), input_allow_renewal.checked );
+        }
+        input_allow_renewal.addEventListener('change',updateShowHideRenewal);
+        updateShowHideRenewal();
+    }
+
+    // --- Conditional UI: Show/hide options ---
+    const inputFamilyMembership = EME.$('#family_membership');
+    if (inputFamilyMembership) {
+        function updateShowHideFamilytpl () {
+            if (inputFamilyMembership.checked) {
+                eme_toggle(EME.$('#tr_family_maxmembers'), true);
+                eme_toggle(EME.$('#tr_familymember_form_tpl'), true);
+                EME.$('select[name="properties[familymember_form_tpl]"]').required = true;
+            } else {
+                eme_toggle(EME.$('#tr_family_maxmembers'), false);
+                eme_toggle(EME.$('#tr_familymember_form_tpl'), false);
+                EME.$('select[name="properties[familymember_form_tpl]"]').required = false;
+            }
+        }
+        inputFamilyMembership.addEventListener('change', updateShowHideFamilytpl);
+        updateShowHideFamilytpl();
+    }
 
     // --- Bulk Actions ---
     const membersButton = EME.$('#MembersActionsButton');
@@ -412,6 +462,91 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
     });
+
+    // --- Autocomplete: chooseperson ---
+    if (EME.$('input[name="chooseperson"]')) {
+        let timeout;
+        const input = EME.$('input[name="chooseperson"]');
+        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
+
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+            const value = this.value.trim();
+            if (value.length < 2) return;
+
+            timeout = setTimeout(() => {
+                const formData = new FormData();
+                formData.append('lastname', value);
+                formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
+                formData.append('action', 'eme_autocomplete_people');
+                formData.append('eme_searchlimit', 'people');
+
+                eme_postJSON(ajaxurl, formData, (data) => {
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'eme-autocomplete-suggestions';
+                    data.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'eme-autocomplete-suggestion';
+                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
+                        suggestion.addEventListener('click', e => {
+                            e.preventDefault();
+                            // first hide all personal info, then show informational info on the selected person
+                            EME.$$('.personal_info').forEach(el => eme_toggle(el, false));
+                            const lastname = EME.$('input[name=lastname]');
+                            lastname.value = eme_htmlDecode(item.lastname);
+                            lastname.readOnly = true;
+                            eme_toggle(lastname, true);
+                            const firstname = EME.$('input[name=firstname]');
+                            firstname.value = eme_htmlDecode(item.firstname);
+                            firstname.readOnly = true;
+                            eme_toggle(firstname, true);
+                            const email = EME.$('input[name=email]');
+                            email.value = eme_htmlDecode(item.email);
+                            email.readOnly = true;
+                            eme_toggle(email, true);
+                            EME.$('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
+                            EME.$('input[name=wp_id]').value = eme_htmlDecode(item.wp_id);
+                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
+                            input.readOnly = true;
+                            input.classList.add('clearable', 'x');
+                        });
+                        suggestions.appendChild(suggestion);
+                    });
+                    if (data.length === 0) {
+                        const noMatch = document.createElement('div');
+                        noMatch.className = 'eme-autocomplete-suggestion';
+                        noMatch.textContent = ememembers.translate_nomatchperson;
+                        suggestions.appendChild(noMatch);
+                    }
+                    input.insertAdjacentElement('afterend', suggestions);
+                });
+            }, 500);
+        });
+
+        input.addEventListener('change', () => {
+            if (input.value === '') {
+                const lastname = EME.$('input[name=lastname]');
+                lastname.value = ''
+                lastname.readOnly = false;
+                const firstname = EME.$('input[name=firstname]');
+                firstname.value = ''
+                firstname.readOnly = false;
+                const email = EME.$('input[name=email]');
+                email.value = ''
+                email.readOnly = false;
+
+                EME.$('input[name="chooseperson"]').value = '';
+                input.readOnly = false;
+                input.classList.remove('clearable', 'x');
+
+                EME.$('input[name=person_id]').value = '';
+                EME.$('input[name=wp_id]').value = '';
+
+                EME.$$('.personal_info').forEach(el => eme_toggle(el, true));
+            }
+        });
+    }
 
     // --- Autocomplete: transferperson ---
     if (EME.$('input[name="transferperson"]')) {
@@ -598,23 +733,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // return false to make sure the real form doesn't submit
         return false;
     });
-
-    const inputFamilyMembership = EME.$('#family_membership');
-    if (inputFamilyMembership) {
-        function updateShowHideFamilytpl () {
-            if (inputFamilyMembership.checked) {
-                eme_toggle(EME.$('#tr_family_maxmembers'), true);
-                eme_toggle(EME.$('#tr_familymember_form_tpl'), true);
-                EME.$('select[name="properties[familymember_form_tpl]"]').required = true;
-            } else {
-                eme_toggle(EME.$('#tr_family_maxmembers'), false);
-                eme_toggle(EME.$('#tr_familymember_form_tpl'), false);
-                EME.$('select[name="properties[familymember_form_tpl]"]').required = false;
-            }
-        }
-        inputFamilyMembership.addEventListener('change', updateShowHideFamilytpl);
-        updateShowHideFamilytpl();
-    }
 
     eme_admin_init_attachment_ui('#newmember_attach_button', '#newmember_attach_links', '#eme_newmember_attach_ids', '#newmember_remove_attach_button');
     eme_admin_init_attachment_ui('#extended_attach_button', '#extended_attach_links', '#eme_extended_attach_ids', '#extended_remove_attach_button');

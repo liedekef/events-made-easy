@@ -330,6 +330,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const duration_period_value = select_duration_period?.value || '';
             eme_toggle(EME.$('tr#reminder'), duration_period_value !== 'forever');
             eme_toggle(EME.$('#duration_count'), duration_period_value !== 'forever');
+            eme_toggle(EME.$('tr#freeperiod'), duration_period_value !== 'forever');
+            eme_toggle(EME.$('tr#graceperiod'), duration_period_value !== 'forever');
         }
         select_duration_period.addEventListener('change', updateShowHideReminder);
         updateShowHideReminder();

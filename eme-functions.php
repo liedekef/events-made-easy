@@ -2657,21 +2657,29 @@ function eme_nl2br_save_html( $string ) {
 
     $htmleditor = get_option( 'eme_htmleditor' );
     if ($htmleditor != 'tinymce') {
-        // this avoids wordpress adding breaks via "the_content" filter
-        // while this seems weird, copy/paste from word can lead to words on another line that are meant to be separated by a space
-        $string = str_replace( "\n", " ", $string );
-        // if not tinymce, no other changes anymore
-        return $string;
+        // if not tinmce and p, br, span, table tags exist, we consider it full-fledged html and no longer touch it
+        // this is normally always the case if not tinymce, but in case people switch between editors ...
+        if (str_contains($string, '<p') ||
+            str_contains($string, '<table') ||
+            str_contains($string, '<span') ||
+            str_contains($string, '<br') ) {
+            // the next avoids wordpress adding breaks via "the_content" filter
+            // while this seems weird, copy/paste from word can lead to words on another line that are meant to be separated by a space
+            // if not tinymce, no other changes anymore
+            $string = str_replace( "\n", " ", $string );
+            return $string;
+        }
     }
 
-    // remove unwanted empty lines after tr/td tags
-    $string = preg_replace('/(<tr[^>]*>)\s+/i', '$1', $string);   // after opening <tr>
-    $string = preg_replace('/\s+(<\/tr>)/i', '$1', $string);      // before closing </tr>
-    $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
-    $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
-
-    // if br is found, replace it by BREAK
-    $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
+    if ($htmleditor == 'tinymce') {
+        // remove unwanted empty lines after tr/td tags
+        $string = preg_replace('/(<tr[^>]*>)\s+/i', '$1', $string);   // after opening <tr>
+        $string = preg_replace('/\s+(<\/tr>)/i', '$1', $string);      // before closing </tr>
+        $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
+        $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
+        // if br is found, replace it by BREAK
+        $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
+    }
 
     $lines      = explode( "\n", $string );
     $last_index = count( $lines ) - 1;
@@ -2706,7 +2714,9 @@ function eme_nl2br_save_html( $string ) {
     }
     // now that we added the needed br-tags, join back together and return the modified string
     $res = implode( " ", $lines ); // we implode on a space, not \n so WP doesn't get tempted to add own br-tags ...
-    $res = str_replace( 'BREAK', "<br>", $res );
+    if ($htmleditor == 'tinymce') {
+        $res = str_replace( 'BREAK', "<br>", $res );
+    }
     return $res;
 }
 

@@ -14587,8 +14587,8 @@ msgstr "Is alleen van toepassing op vaste kortingen. Wanneer gebruikt als een kr
 
 #: eme-events.php:7230
 msgid "Recurrence start date"
-msgstr ""
+msgstr "Begindatum van de herhaling"
 
 #: eme-events.php:7233
 msgid "Recurrence end date"
-msgstr ""
+msgstr "Einddatum van de herhaling"

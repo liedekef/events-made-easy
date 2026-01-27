@@ -2153,24 +2153,37 @@ function eme_send_mails_ajax_actions( $action ) {
                 $mailing_datetime = $eme_date_obj_now->getDateTime();
                 $fast_queue=1;
             }
+            $recipients_configured=0;
             if ( isset( $_POST['eme_send_all_people'] ) ) {
                 $conditions['eme_send_all_people'] = 1;
+                $recipients_configured = 1;
             } else {
                 if ( ! empty( $_POST['eme_genericmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_persons'] ) ) {
                     $conditions['eme_genericmail_send_persons'] = join( ',', $_POST['eme_genericmail_send_persons'] );
+                    $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_send_members'] ) && eme_is_numeric_array( $_POST['eme_send_members'] ) ) {
                     $conditions['eme_send_members'] = join( ',', $_POST['eme_send_members'] );
+                    $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_genericmail_send_peoplegroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_peoplegroups'] ) ) {
                     $conditions['eme_genericmail_send_peoplegroups'] = join( ',', $_POST['eme_genericmail_send_peoplegroups'] );
+                    $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_genericmail_send_membergroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_membergroups'] ) ) {
                     $conditions['eme_genericmail_send_membergroups'] = join( ',', $_POST['eme_genericmail_send_membergroups'] );
+                    $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_send_memberships'] ) && eme_is_numeric_array( $_POST['eme_send_memberships'] ) ) {
                     $conditions['eme_send_memberships'] = join( ',', $_POST['eme_send_memberships'] );
+                    $recipients_configured = 1;
                 }
+            }
+            if ( ! $recipients_configured ) {
+                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one recipient.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['Result']      = 'ERROR';
+                echo wp_json_encode( $ajaxResult );
+                wp_die();
             }
             if ( $queue && $fast_queue ) {
                 $mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );

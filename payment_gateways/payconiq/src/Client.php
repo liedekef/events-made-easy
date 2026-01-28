@@ -18,13 +18,17 @@ use Payconiq\Support\Exceptions\GetRefundIbanFailedException;
 class Client {
 
     const ENVIRONMENT_PROD = 'prod';
-    const ENVIRONMENT_EXT = 'ext';
-    
-    // Toegestane karakters volgens EPC217-08 SEPA Conversion Table
+    const ENVIRONMENT_TEST = 'test';
+    const JWKS_CACHE_TTL = 3600*12; // needs to be at least 3600 
+
+    // Allowed characters according to EPC217-08 SEPA Conversion Table
     const ALLOWED_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:?+-/()'";
 
     protected $apiKey;
     protected $endpoint;
+    protected $jwksUrl;
+    protected $environment;
+    private $cacheDir;
 
     /**
      * Construct
@@ -35,33 +39,56 @@ class Client {
      * @return void
      */
     public function __construct( $apiKey = null, $environment = self::ENVIRONMENT_PROD ) {
-        $this->apiKey = $apiKey;
-        $this->endpoint = $environment == self::ENVIRONMENT_PROD
-            ? 'https://merchant.api.bancontact.net/v3'
-            : 'https://merchant.api.preprod.bancontact.net/v3';
+        if (!empty($apiKey)) {
+            $this->setApiKey($apiKey);
+        }
+
+        // Normalize environment string
+        $environment = strtolower(trim($environment));
+
+        $this->configureForEnvironment($environment);
     }
 
     /**
-     * Set the endpoint
+     * Set endpoints based on environment
+     * 
+     * @param string $environment The environment string
+     */
+    private function configureForEnvironment($environment) {
+        // Store the environment
+        $this->environment = $environment;
+
+        // Only 'prod' uses production endpoints, everything else uses test
+        if ( $environment === self::ENVIRONMENT_PROD ) {
+            $this->endpoint = 'https://merchant.api.bancontact.net/v3';
+            $this->jwksUrl = 'https://jwks.bancontact.net/';
+        } else {
+            $this->endpoint = 'https://merchant.api.preprod.bancontact.net/v3';
+            $this->jwksUrl = 'https://jwks.preprod.bancontact.net/';
+        }
+    }
+
+    /**
+     * Set optional own endpoints
      *
      * @param  string $url  The endpoint of the Payconiq API.
+     * @param  string $jwksUrl  The jwks endpoint of the Payconiq API.
      *
      * @return self
      */
-    public function setEndpoint( $url ) {
-        $this->endpoint = $url;
-
+    public function setEndpoints($url = null, $jwksUrl = null) {
+        $this->endpoint = $url ?: $this->endpoint;
+        $this->jwksUrl = $jwksUrl ?: $this->jwksUrl;
         return $this;
     }
 
     /**
-     * Set the endpoint to test env
+     * Set the environment to test env
      *
      * @return self
      */
     public function setEndpointTest() {
-        $this->endpoint = 'https://merchant.api.preprod.bancontact.net/v3';
-
+        $this->configureForEnvironment(self::ENVIRONMENT_TEST);
         return $this;
     }
 
@@ -73,68 +100,45 @@ class Client {
      * @return self
      */
     public function setApiKey( $apiKey ) {
-        $this->apiKey = $apiKey;
+        if (!empty($apiKey)) {
+            $this->apiKey = $apiKey;
+        }
 
         return $this;
     }
 
+    public function setCacheDir($dir) {
+        $this->cacheDir = rtrim($dir, '/');
+        return $this;
+    }
+
     /**
-     * Convert string to EPC217-08 SEPA compliant format
+     * Get current environment
      *
-     * @param  string $input  Original string
-     * @param  int    $maxLength  Maximum length (optional)
-     * 
-     * @return string  Converted string
+     * @return string
      */
-    private function convertToSEPA($input, $maxLength = null) {
-        // Convert to UTF-8 if not already
-        if (!mb_detect_encoding($input, 'UTF-8', true)) {
-            $input = mb_convert_encoding($input, 'UTF-8');
-        }
-        
-        // Normalize: remove diacritics/accents
-        $input = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);
-        
-        // Filter to only allowed characters
-        $result = '';
-        $allowedChars = self::ALLOWED_CHARS;
-        
-        for ($i = 0; $i < mb_strlen($input); $i++) {
-            $char = mb_substr($input, $i, 1);
-            if (strpos($allowedChars, $char) !== false) {
-                $result .= $char;
-            }
-        }
-        
-        // Trim and replace multiple spaces with single space
-        $result = trim(preg_replace('/\s+/', ' ', $result));
-        
-        // Apply max length if specified
-        if ($maxLength !== null && mb_strlen($result) > $maxLength) {
-            $result = mb_substr($result, 0, $maxLength);
-        }
-        
-        return $result;
+    public function getEnvironment() {
+        return $this->environment;
     }
 
     /**
      * Create a new payment
      * 
      * @param  float $amount		Payment amount in cents
-     * @param  string $currency		Payment currency code in IOS 4217 format
+     * @param  string $currency		Payment currency code in ISO 4217 format
      * @param  string $description	Payment description shown during payment (optional)
      * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system (optional)
      * @param  string $bulkId	    BulkId for bulk payouts (optional)
      * @param  string $callbackUrl  A url to which the merchant or partner will be notified of a payment (optiona)
-     * @param  string $returnUrl  Return url to return client after paying on payconiq site itself (optional)
+     * @param  string $returnUrl    Return url to return client after paying on payconiq site itself (optional)
      * 
      * @return object  payment object
      * @throws CreatePaymentFailedException  If the response has no transactionid
      */
     public function createPayment( $amount, $currency = 'EUR', $description='', $reference='', $bulkId='', $callbackUrl='', $returnUrl = null ) {
         // Convert description and reference to SEPA compliant format
-        $description = $this->convertToSEPA($description, 140); // SEPA max is 140 chars for description
-        $reference = $this->convertToSEPA($reference, 35); // SEPA max is 35 chars for reference
+        $description = self::convertToSEPA($description, 140); // SEPA max is 140 chars for description
+        $reference = self::convertToSEPA($reference, 35); // SEPA max is 35 chars for reference
         
         $data_arr = [
             'amount' => $amount,
@@ -183,7 +187,7 @@ class Client {
      */
     public function getPaymentsListByReference( $reference ) {
         // Convert reference to SEPA compliant format voor consistentie
-        $reference = $this->convertToSEPA($reference, 35);
+        $reference = self::convertToSEPA($reference, 35);
         
         $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/search' ), [
             'reference' => $reference
@@ -255,7 +259,7 @@ class Client {
      */
     public function refundPayment($paymentId, $amount, $currency = 'EUR', $description = '', $idempotencyKey = null, $refundUrl = null) {
         // Convert description to SEPA compliant format
-        $description = $this->convertToSEPA($description, 140);
+        $description = self::convertToSEPA($description, 140);
 
         $data_arr = [
             'amount' => $amount,
@@ -362,6 +366,9 @@ class Client {
      * @return response
      */
     private function makeRequest( $method, $url, $parameters = [], $extraHeaders = [] ) {
+        if (empty($this->apiKey)) {
+            throw new \RuntimeException('API key is not set. Call setApiKey() first.');
+        }
         $curl = curl_init();
 
         curl_setopt( $curl, CURLOPT_URL, $url );
@@ -425,11 +432,10 @@ class Client {
      *
      * @param string $payload   Raw request body (php://input)
      * @param array  $headers   All request headers (getallheaders())
-     * @param string $environment 'prod' or 'ext'
      * @return bool true if valid, false otherwise
      * @throws \Exception on errors or malformed data
      */
-    public function verifyWebhookSignature( $payload, $headers, $environment = self::ENVIRONMENT_PROD ) {
+    public function verifyWebhookSignature($payload, $headers) {
         $signatureHeader = $headers['Signature'] ?? null;
         if (!$signatureHeader) {
             throw new \Exception("Missing Signature header");
@@ -449,31 +455,39 @@ class Client {
             throw new \Exception("Invalid JOSE header or missing kid");
         }
 
-        // --- 3. Fetch JWKS ---
-        $jwksUrl = ($environment === self::ENVIRONMENT_PROD)
-            ? 'https://jwks.bancontact.net/'
-            : 'https://jwks.preprod.bancontact.net/';
-        $jwks = json_decode(self::fetchUrl($jwksUrl), true);
-        if (!isset($jwks['keys'])) {
-            throw new \Exception("Invalid JWKS format from $jwksUrl");
-        }
+        $kid = $headerJson['kid'];
 
-        // --- 4. Find matching key ---
-        $jwk = null;
-        foreach ($jwks['keys'] as $key) {
-            if ($key['kid'] === $headerJson['kid']) {
-                $jwk = $key;
-                break;
+        // --- 3. Try verification with cached JWKS ---
+        try {
+            return $this->attemptVerification($encodedHeader, $payload, $encodedSignature, $kid, false);
+        } catch (\Exception $e) {
+            // First attempt failed, try with forced refresh
+            try {
+                return $this->attemptVerification($encodedHeader, $payload, $encodedSignature, $kid, true);
+            } catch (\Exception $e2) {
+                // Both attempts failed
+                throw new \Exception("Signature verification failed after refresh: " . $e2->getMessage());
             }
         }
+    }
+
+    /**
+     * Attempt to verify the signature with optional forced refresh
+     */
+    private function attemptVerification($encodedHeader, $payload, $encodedSignature, $kid, $forceRefresh = false) {
+        // Fetch JWKS keys (with optional forced refresh)
+        $keys = $this->getJWKS($forceRefresh);
+
+        // Find matching key
+        $jwk = self::findKeyByKid($keys, $kid);
         if (!$jwk) {
-            throw new \Exception("No matching key found for kid={$headerJson['kid']}");
+            throw new \Exception("No matching key found for kid={$kid}");
         }
 
-        // --- 5. Convert JWK to PEM ---
+        // Convert JWK to PEM
         $pem = self::ecJwkToPem($jwk);
 
-        // --- 6. Verify signature ---
+        // Verify signature
         $reconstructedPayload = self::base64urlEncode($payload);
         $signingInput = $encodedHeader . '.' . $reconstructedPayload;
         $signature = self::base64urlDecode($encodedSignature);
@@ -487,12 +501,122 @@ class Client {
             OPENSSL_ALGO_SHA256
         );
 
-        return $verified === 1;
+        if ($verified !== 1) {
+            throw new \Exception("Signature verification failed");
+        }
+
+        return true;
+    }
+
+    private function getJWKS($forceRefresh = false) {
+        $cacheDir = $this->cacheDir ?: sys_get_temp_dir();
+        $cacheFile = $cacheDir . "/payconiq_jwks_{$this->environment}.json";
+
+        // Anti-abuse: don't allow forced refresh more than once per hour
+        if ($forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 3600) {
+            $forceRefresh = false;
+        }
+
+        // Use cache if valid and not forcing refresh
+        if (!$forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < self::JWKS_CACHE_TTL) {
+            $jwksContent = @file_get_contents($cacheFile);
+            if ($jwksContent !== false) {
+                $jwks = json_decode($jwksContent, true);
+                if (isset($jwks['keys'])) {
+                    return $jwks['keys'];
+                }
+                // If cache is corrupt, fall through to fetch
+            }
+        }
+
+        // Attempt to fetch fresh JWKS
+        $jwksContent = null;
+        try {
+            $jwksContent = self::fetchUrl($this->jwksUrl);
+            $jwks = json_decode($jwksContent, true);
+            if (!isset($jwks['keys'])) {
+                throw new \Exception("Invalid JWKS format");
+            }
+            // Save successful response
+            @file_put_contents($cacheFile, $jwksContent, LOCK_EX);
+            return $jwks['keys'];
+        } catch (\Exception $e) {
+            // Log the fetch failure
+            error_log("Payconiq JWKS fetch failed: " . $e->getMessage());
+
+            // Fallback: if any cache exists (even stale), try to use it
+            if (file_exists($cacheFile)) {
+                $fallbackContent = @file_get_contents($cacheFile);
+                if ($fallbackContent !== false) {
+                    $fallbackJwks = json_decode($fallbackContent, true);
+                    if (isset($fallbackJwks['keys'])) {
+                        // Log that we're using stale keys
+                        error_log("Using stale Payconiq JWKS due to fetch failure");
+                        return $fallbackJwks['keys'];
+                    }
+                }
+            }
+
+            // No cache, no fetch => rethrow
+            throw new \Exception("JWKS unavailable: " . $e->getMessage());
+        }
     }
 
     // -----------------------
     // Helper methods
     // -----------------------
+
+    /**
+     * Convert string to EPC217-08 SEPA compliant format
+     *
+     * @param  string $input  Original string
+     * @param  int    $maxLength  Maximum length (optional)
+     *
+     * @return string  Converted string
+     */
+    private static function convertToSEPA($input, $maxLength = null) {
+        // Convert to UTF-8 if not already
+        if (!mb_detect_encoding($input, 'UTF-8', true)) {
+            $input = mb_convert_encoding($input, 'UTF-8');
+        }
+
+        // Normalize: remove diacritics/accents
+        $input = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);
+
+        // Filter to only allowed characters
+        $result = '';
+        $allowedChars = self::ALLOWED_CHARS;
+
+        for ($i = 0; $i < mb_strlen($input); $i++) {
+            $char = mb_substr($input, $i, 1);
+            if (strpos($allowedChars, $char) !== false) {
+                $result .= $char;
+            }
+        }
+
+        // Trim and replace multiple spaces with single space
+        $result = trim(preg_replace('/\s+/', ' ', $result));
+
+        // Apply max length if specified
+        if ($maxLength !== null && mb_strlen($result) > $maxLength) {
+            $result = mb_substr($result, 0, $maxLength);
+        }
+
+        return $result;
+    }
+
+    private static function findKeyByKid(array $keys, string $kid): ?array {
+        foreach ($keys as $key) {
+            if (!isset($key['kid'])) {
+                continue;
+            }
+
+            if (hash_equals($key['kid'], $kid)) {
+                return $key;
+            }
+        }
+        return null;
+    }
 
     private static function fetchUrl($url) {
         $ch = curl_init();

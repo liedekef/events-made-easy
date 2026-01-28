@@ -2329,35 +2329,35 @@ function eme_charge_2co() {
     }
 
     $eme_2co_buylinksecret = get_option( 'eme_2co_buylinksecret' );
-    $eme_2co_secret = get_option( 'eme_2co_secret' );
-    $eme_2co_business  = get_option( 'eme_2co_business' );
-    $item_name              = esc_attr( get_option( 'blog_name' ) );
+    $eme_2co_secret        = get_option( 'eme_2co_secret' );
+    $eme_2co_business      = get_option( 'eme_2co_business' );
+    $item_name             = esc_attr( get_option( 'blog_name' ) );
     if ( empty( $item_name ) ) {
         $item_name = $description;
     }
 
     require_once 'payment_gateways/2checkout/2checkout-php-sdk/autoloader.php';
     $config    = [
-            'sellerId'      => $eme_2co_business,
-            'secretKey'     => $eme_2co_secret,
-            'buyLinkSecretWord'    => $eme_2co_buylinksecret,
-            'jwtExpireTime' => 30,
-            'curlVerifySsl' => 1
+            'sellerId'          => $eme_2co_business,
+            'secretKey'         => $eme_2co_secret,
+            'buyLinkSecretWord' => $eme_2co_buylinksecret,
+            'jwtExpireTime'     => 30,
+            'curlVerifySsl'     => 1
     ];
     $buyLinkParameters = [
         'order-ext-ref' => $payment_id,
-        'back-url' => $events_page_link,
-        'currency' => $cur,
-        'qty' => 1,
-        'price' => $price,
-        'prod' => $item_name,
-        'description' => $description,
-        'merchant' => $eme_2co_business,
-        'return-url' => $success_link,
-        'return-type' => 'Redirect',
-        'tangible' => 0,
-        'type' => 'PRODUCT',
-        'dynamic' => 1,
+        'back-url'      => $events_page_link,
+        'currency'      => $cur,
+        'qty'           => 1,
+        'price'         => $price,
+        'prod'          => $item_name,
+        'description'   => $description,
+        'merchant'      => $eme_2co_business,
+        'return-url'    => $success_link,
+        'return-type'   => 'Redirect',
+        'tangible'      => 0,
+        'type'          => 'PRODUCT',
+        'dynamic'       => 1,
     ];
     $tco = new TwocheckoutFacade($config);
 
@@ -2487,12 +2487,12 @@ function eme_charge_braintree() {
         return;
     }
 
-    $payment_id  = intval( $_POST['payment_id'] );
-    $price       = eme_sanitize_request( $_POST['price'] );
-    $cur         = eme_sanitize_request( $_POST['cur'] );
+    $payment_id   = intval( $_POST['payment_id'] );
+    $price        = eme_sanitize_request( $_POST['price'] );
+    $cur          = eme_sanitize_request( $_POST['cur'] );
     // braintree ignores the description, but let's act as usual
-    $description = eme_sanitize_request( $_POST['description'] );
-    $payment     = eme_get_payment( $payment_id );
+    $description  = eme_sanitize_request( $_POST['description'] );
+    $payment      = eme_get_payment( $payment_id );
 
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
@@ -2549,12 +2549,12 @@ function eme_charge_instamojo() {
         return;
     }
 
-    $events_page_link = eme_get_events_page();
-    $payment_id       = intval( $_POST['payment_id'] );
-    $price            = eme_sanitize_request( $_POST['price'] );
-    $cur              = eme_sanitize_request( $_POST['cur'] );
-    $description      = eme_sanitize_request( $_POST['description'] );
-    $payment          = eme_get_payment( $payment_id );
+    $events_page_link  = eme_get_events_page();
+    $payment_id        = intval( $_POST['payment_id'] );
+    $price             = eme_sanitize_request( $_POST['price'] );
+    $cur               = eme_sanitize_request( $_POST['cur'] );
+    $description       = eme_sanitize_request( $_POST['description'] );
+    $payment           = eme_get_payment( $payment_id );
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, 1 );
@@ -2717,7 +2717,7 @@ function eme_refund_booking_paypal($booking) {
 
     try {
         $event = eme_get_event( $booking['event_id'] );
-        $cur = $event ? $event['currency'] : 'EUR';
+        $cur   = $event ? $event['currency'] : 'EUR';
         $price = eme_get_total_booking_price( $booking );
         $price = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
         $client->refund_capture( $booking['pg_pid'], $price, $cur );
@@ -2743,11 +2743,11 @@ function eme_refund_booking_payconiq( $booking ) {
         $payconiq->setEndpointTest();
     }
     try {
-        $event = eme_get_event( $booking['event_id'] );
-        $cur = $event ? $event['currency'] : 'EUR';
-        $price = eme_get_total_booking_price( $booking );
-        $price = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
-        $description = 'Refund';
+        $event            = eme_get_event( $booking['event_id'] );
+        $cur              = $event ? $event['currency'] : 'EUR';
+        $price            = eme_get_total_booking_price( $booking );
+        $price            = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
+        $description      = 'Refund';
         $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
@@ -3307,8 +3307,11 @@ function eme_notification_opayo() {
     }
 
     // crypt is passed as part of the request
-    $crypt = eme_sanitize_request( $_GET['crypt'] );
+    if ( empty( $_GET['crypt'] ) ) {
+        return;
+    }
     require_once 'payment_gateways/opayo/eme-opayo-util.php';
+    $crypt      = eme_sanitize_request( $_GET['crypt'] );
     $decrypt    = SagepayUtil::decryptAes( $crypt, $opayo_pwd );
     $decryptArr = SagepayUtil::queryStringToArray( $decrypt );
     if ( $decrypt && ! empty( $decryptArr ) ) {
@@ -3322,8 +3325,7 @@ function eme_notification_opayo() {
 function eme_get_configured_pgs() {
     // allow people to change the sequence or even add their own payment gateway
     $pgs = wp_cache_get( 'eme_configured_pgs' );
-
-        if ( $pgs === false ) {
+    if ( $pgs === false ) {
         $pgs = [];
         if ( ! empty( get_option( 'eme_paypal_clientid' ) ) ) {
             $pgs[] = 'paypal';
@@ -3379,7 +3381,7 @@ function eme_get_configured_pgs() {
 }
 
 function eme_configured_pgs_descriptions() {
-    $pgs=eme_payment_gateways();
+    $pgs            = eme_payment_gateways();
     $configured_pgs = eme_get_configured_pgs();
     foreach ($pgs as $pg=>$desc) {
         if (!in_array($pg,$configured_pgs))
@@ -3459,8 +3461,8 @@ function eme_membership_count_pgs( $membership ) {
 }
 
 function eme_fs_event_count_pgs( ) {
-    $pgs      = eme_get_configured_pgs();
-    $pg_count = 0;
+    $pgs            = eme_get_configured_pgs();
+    $pg_count       = 0;
     $eme_fs_options = get_option('eme_fs');
     foreach ( $pgs as $pg ) {
         if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
@@ -3471,7 +3473,7 @@ function eme_fs_event_count_pgs( ) {
 }
 
 function eme_event_get_first_pg( $event ) {
-    $pgs      = eme_get_configured_pgs();
+    $pgs = eme_get_configured_pgs();
     foreach ( $pgs as $pg ) {
         if ( !empty($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
             return $pg;
@@ -3481,7 +3483,7 @@ function eme_event_get_first_pg( $event ) {
 }
 
 function eme_membership_get_first_pg( $membership ) {
-    $pgs      = eme_get_configured_pgs();
+    $pgs = eme_get_configured_pgs();
     foreach ( $pgs as $pg => $value ) {
         if ( !empty($membership['properties']['payment_gateways']) && in_array($pg, $membership['properties']['payment_gateways']) ) {
             return $pg;
@@ -3492,7 +3494,7 @@ function eme_membership_get_first_pg( $membership ) {
 
 function eme_fs_event_get_first_pg( ) {
     $eme_fs_options = get_option('eme_fs');
-    $pgs      = eme_get_configured_pgs();
+    $pgs            = eme_get_configured_pgs();
     foreach ( $pgs as $pg => $value ) {
         if ( !empty($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
             return $pg;
@@ -3667,7 +3669,7 @@ function eme_get_payment_price_novat( $payment_id ) {
     $price    = 0;
     $bookings = eme_get_bookings_by_paymentid( $payment_id );
     foreach ( $bookings as $booking ) {
-        $event = eme_get_event($booking['event_id']);
+        $event               = eme_get_event($booking['event_id']);
         $total_booking_price = eme_get_total_booking_price( $booking );
         // take into account already received payments (in any possible way)
         if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
@@ -3683,7 +3685,7 @@ function eme_get_payment_price_vatonly( $payment_id ) {
     $price    = 0;
     $bookings = eme_get_bookings_by_paymentid( $payment_id );
     foreach ( $bookings as $booking ) {
-        $event = eme_get_event($booking['event_id']);
+        $event               = eme_get_event($booking['event_id']);
         $total_booking_price = eme_get_total_booking_price( $booking );
         // take into account already received payments (in any possible way)
         if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
@@ -3881,7 +3883,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 }
 
 function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target='html', $lang='', $do_shortcode = 1 ) {
-    $orig_target  = $target;
+    $orig_target = $target;
     if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
         $target = 'html';
     }
@@ -4003,7 +4005,7 @@ function eme_cancel_payment_form( $payment_randomid ) {
     $person_ids = eme_get_booking_personids( $booking_ids );
     $person     = eme_get_person( $person_ids[0] );
 
-	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
+	$form_id = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $nonce   = wp_nonce_field( "cancel payment $payment_randomid", 'eme_frontend_nonce', false, false );
 
     $output  = "<div id='eme-cancel-payment-message-ok-$form_id' class='eme-message-success eme-cancel-payment-message eme-cancel-payment-message-success eme-hidden'></div><div id='eme-cancel-payment-message-error-$form_id' class='eme-message-error eme-cancel-payment-message eme-cancel-payment-message-error eme-hidden'></div><div id='div_eme-cancel-payment-form-$form_id'><form id='$form_id' name='eme-cancel-payment-form' method='post' action='#'>

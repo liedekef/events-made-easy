@@ -124,8 +124,7 @@ function _eme_install() {
 		$res = wp_schedule_event( time(), 'eme_5min', 'eme_cron_cleanup_actions' );
 	}
 
-	// now cleanup old crons
-	$crons_to_remove = [ 'eme_cron_cleanup_unpaid', 'eme_cron_cleanup_unconfirmed', 'eme_cron_cleanup_captcha' ];
+	$crons_to_remove = [ 'eme_cron_cleanup_unpaid', 'eme_cron_cleanup_unconfirmed', 'eme_cron_cleanup_captcha', 'puc_cron_check_updates-events-made-easy' ];
 	foreach ( $crons_to_remove as $tmp_cron ) {
 		if ( wp_next_scheduled( $tmp_cron ) ) {
 			wp_unschedule_hook( $tmp_cron );
@@ -229,14 +228,6 @@ function _eme_uninstall( $force_drop = 0 ) {
 		// make sure eme_version is deleted if drop_data is selected
 		// this is not needed if drop_settings is set, since that already removes all eme related options
 		delete_option( 'eme_version' );
-	}
-
-	// unschedule the update checker when uninstalling only
-	if ($force_drop) {
-		$cron_action = 'puc_cron_check_updates-events-made-easy';
-		if ( wp_next_scheduled( $cron_action ) ) {
-			wp_unschedule_hook( $cron_action );
-		}
 	}
 
 	// SEO rewrite rules

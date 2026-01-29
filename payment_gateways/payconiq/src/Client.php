@@ -484,40 +484,40 @@ class Client {
             throw new \Exception("No matching key found for kid={$kid}");
         }
 
-        $kty = $jwk['kty'] ?? 'unknown';
-        $alg = $jwk['alg'] ?? 'unknown';
+	$kty = $jwk['kty'] ?? 'unknown';
+	$alg = $jwk['alg'] ?? 'unknown';
 
-        // Convert JWK to PEM based on key type
-        if ($kty === 'RSA') {
-            $pem = self::rsaJwkToPem($jwk);
-        } elseif ($kty === 'EC') {
-            $pem = self::ecJwkToPem($jwk);
-        } else {
-            throw new \Exception("Unsupported key type: {$kty}");
-        }
+	// Convert JWK to PEM based on key type
+	if ($kty === 'RSA') {
+		$pem = self::rsaJwkToPem($jwk);
+	} elseif ($kty === 'EC') {
+		$pem = self::ecJwkToPem($jwk);
+	} else {
+		throw new \Exception("Unsupported key type: {$kty}");
+	}
 
-        // Verify the PEM is valid
-        $publicKey = openssl_pkey_get_public($pem);
-        if ($publicKey === false) {
-            throw new \Exception("Invalid PEM format generated from JWK");
-        }
+	// Verify the PEM is valid
+	$publicKey = openssl_pkey_get_public($pem);
+	if ($publicKey === false) {
+		throw new \Exception("Invalid PEM format generated from JWK");
+	}
 
         // Verify signature
         $reconstructedPayload = self::base64urlEncode($payload);
         $signingInput = $encodedHeader . '.' . $reconstructedPayload;
         $signature = self::base64urlDecode($encodedSignature);
 
-        // Choose the right verification method
-        if ($kty === 'EC' && ($alg === 'ES256' || $alg === 'unknown')) {
-            // EC signature needs DER encoding
-            $signatureDer = self::ecdsaRawToDer($signature);
-            $verified = openssl_verify($signingInput, $signatureDer, $pem, OPENSSL_ALGO_SHA256);
-        } elseif ($kty === 'RSA' && ($alg === 'RS256' || $alg === 'unknown')) {
-            // RSA signature is already in the right format
-            $verified = openssl_verify($signingInput, $signature, $pem, OPENSSL_ALGO_SHA256);
-        } else {
-            throw new \Exception("Unsupported algorithm: {$alg} for key type: {$kty}");
-        }
+	// Choose the right verification method
+	if ($kty === 'EC' && ($alg === 'ES256' || $alg === 'unknown')) {
+		// EC signature needs DER encoding
+		$signatureDer = self::ecdsaRawToDer($signature);
+		$verified = openssl_verify($signingInput, $signatureDer, $pem, OPENSSL_ALGO_SHA256);
+	} elseif ($kty === 'RSA' && ($alg === 'RS256' || $alg === 'unknown')) {
+		// RSA signature is already in the right format
+		$verified = openssl_verify($signingInput, $signature, $pem, OPENSSL_ALGO_SHA256);
+	} else {
+		throw new \Exception("Unsupported algorithm: {$alg} for key type: {$kty}");
+	}
 
         if ($verified !== 1) {
             throw new \Exception("Signature verification failed");
@@ -688,18 +688,30 @@ class Client {
 
         $x = self::base64urlDecode($jwk['x']);
         $y = self::base64urlDecode($jwk['y']);
-        $pubKey = "\x04" . $x . $y;
 
-        $oidEcPublicKey = "\x06\x07\x2A\x86\x48\xCE\x3D\x02\x01";
-        $oidPrime256v1  = "\x06\x08\x2A\x86\x48\xCE\x3D\x03\x01\x07";
+        // Verify lengths
+        if (strlen($x) !== 32 || strlen($y) !== 32) {
+            throw new \Exception("Invalid EC coordinate length");
+        }
 
-        $algoid = "\x30" . chr(strlen($oidEcPublicKey . $oidPrime256v1) + 4)
-            . "\x06" . chr(strlen($oidEcPublicKey)) . $oidEcPublicKey
-            . "\x06" . chr(strlen($oidPrime256v1)) . $oidPrime256v1;
+        $pubKey = "\x04" . $x . $y; // Uncompressed point format
 
-        $pubKeyBitString = "\x03" . chr(strlen($pubKey) + 1) . "\x00" . $pubKey;
+        // OID for ecPublicKey: 1.2.840.10045.2.1
+        $oidEcPublicKey = "\x2A\x86\x48\xCE\x3D\x02\x01";
 
-        $seq = "\x30" . chr(strlen($algoid . $pubKeyBitString)) . $algoid . $pubKeyBitString;
+        // OID for prime256v1 (P-256): 1.2.840.10045.3.1.7
+        $oidPrime256v1 = "\x2A\x86\x48\xCE\x3D\x03\x01\x07";
+
+        // Build algorithm identifier SEQUENCE
+        $algoid = "\x30\x13" // SEQUENCE, length 19
+            . "\x06\x07" . $oidEcPublicKey  // OID ecPublicKey
+            . "\x06\x08" . $oidPrime256v1;   // OID prime256v1
+
+        // Public key as BIT STRING
+        $pubKeyBitString = "\x03\x42\x00" . $pubKey; // BIT STRING, length 66, no unused bits
+
+        // Complete SEQUENCE
+        $seq = "\x30\x59" . $algoid . $pubKeyBitString; // SEQUENCE, length 89
 
         $pem = "-----BEGIN PUBLIC KEY-----\n"
             . chunk_split(base64_encode($seq), 64, "\n")
@@ -739,45 +751,42 @@ class Client {
         $n = self::base64urlDecode($jwk['n']);
         $e = self::base64urlDecode($jwk['e']);
 
-        // Build the RSA public key in ASN.1 format
-        $modulus = "\x00" . $n; // Add leading zero for positive integer
+        // Ensure the modulus has a leading zero if the first byte is > 0x7F
+        if (ord($n[0]) > 0x7F) {
+            $n = "\x00" . $n;
+        }
 
-        $exponent = $e;
+        // Build DER sequence
+        $modulus = "\x02" . self::encodeLength(strlen($n)) . $n;
+        $exponent = "\x02" . self::encodeLength(strlen($e)) . $e;
 
-        // Sequence for modulus and exponent
-        $modulusSequence = pack('Ca*a*', 0x02, self::encodeLength(strlen($modulus)), $modulus);
-        $exponentSequence = pack('Ca*a*', 0x02, self::encodeLength(strlen($exponent)), $exponent);
-
-        // Main sequence
-        $sequence = pack('Ca*a*a*', 0x30,
-            self::encodeLength(strlen($modulusSequence) + strlen($exponentSequence)),
-            $modulusSequence,
-            $exponentSequence
-        );
+        // Combine modulus and exponent
+        $sequence = "\x30" . self::encodeLength(strlen($modulus) + strlen($exponent)) . $modulus . $exponent;
 
         // Bit string wrapper
-        $bitString = pack('Ca*', 0x03, self::encodeLength(strlen($sequence) + 1)) . "\x00" . $sequence;
+        $bitString = "\x03" . self::encodeLength(strlen($sequence) + 1) . "\x00" . $sequence;
 
-        // Algorithm identifier for RSA
-        $algorithmIdentifier = pack('H*', '300d06092a864886f70d0101010500');
+        // RSA algorithm identifier (OID 1.2.840.113549.1.1.1 with NULL parameters)
+        $algorithmIdentifier = "\x30\x0d\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x01\x01\x05\x00";
 
         // Public key info
-        $publicKeyInfo = pack('Ca*a*', 0x30,
-            self::encodeLength(strlen($algorithmIdentifier) + strlen($bitString)),
-            $algorithmIdentifier,
-            $bitString
-        );
+        $publicKeyInfo = "\x30" . self::encodeLength(strlen($algorithmIdentifier) + strlen($bitString)) . $algorithmIdentifier . $bitString;
 
         // Create PEM
         $pem = "-----BEGIN PUBLIC KEY-----\n" .
             chunk_split(base64_encode($publicKeyInfo), 64, "\n") .
             "-----END PUBLIC KEY-----\n";
 
+        // Verify the PEM is valid
+        if (openssl_pkey_get_public($pem) === false) {
+            throw new \Exception("Generated RSA PEM is invalid: " . openssl_error_string());
+        }
+
         return $pem;
     }
 
     private static function encodeLength($length) {
-        if ($length <= 0x7F) {
+        if ($length < 0x80) {
             return chr($length);
         }
 

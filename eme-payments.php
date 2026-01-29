@@ -3097,7 +3097,6 @@ function eme_charge_payconiq() {
 function eme_complete_transaction_payconiq( $payment ) {
     $gateway     = 'payconiq';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
-    $merchant_id = get_option( "eme_{$gateway}_merchant_id" );
     if ( ! $api_key ) {
         return;
     }
@@ -3121,12 +3120,6 @@ function eme_complete_transaction_payconiq( $payment ) {
         return;
     }
 
-    $payconiq_merchantid = $payconiq_payment->creditor->merchantId;
-    if ( $payconiq_merchantid != $merchant_id ) {
-        //error_log("EME payconiq error: wrong merchant id $payconiq_merchantid");
-        return;
-    }
-
     $payment_id = $payconiq_payment->reference;
     if ($payment_id != $payment['id']) {
         error_log("EME payconiq error: wrong payment id $payment_id, expected {$payment['id']}");
@@ -3143,15 +3136,9 @@ function eme_complete_transaction_payconiq( $payment ) {
 function eme_notification_payconiq() {
     $gateway     = 'payconiq';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
-    $merchant_id = get_option( "eme_{$gateway}_merchant_id" );
     if ( ! $api_key ) {
         exit;
     }
-
-    $payload            = @file_get_contents( 'php://input' );
-    $data               = json_decode( $payload );
-    $payconiq_paymentid = $data->paymentId;
-    $headers            = getallheaders();
 
     if ( ! class_exists( 'Payconiq\Client' ) ) {
         require_once 'payment_gateways/payconiq/src/Client.php';
@@ -3161,9 +3148,14 @@ function eme_notification_payconiq() {
     if ( preg_match( '/sandbox/', $mode ) ) {
         $payconiq->setEndpointTest();
     }
+
+    $payload = @file_get_contents( 'php://input' );
+    $headers = getallheaders();
+
 /*
     try {
         if ( ! $payconiq->verifyWebhookSignature( $payload, $headers ) ) {
+            error_log( 'Payconiq webhook signature verification failure' );
             http_response_code( 401 );
             exit;
         }
@@ -3172,20 +3164,27 @@ function eme_notification_payconiq() {
         http_response_code( 400 );
         exit;
     }
+    $payconiq_payment   = json_decode( $payload );
+    $payconiq_paymentid = $payconiq_payment->paymentId;
+    if ( ! $payconiq_paymentid ) {
+        error_log( 'Payconiq webhook no payment id' );
+        http_response_code( 400 );
+        exit;
+    }
  */
 
     // we don't trust the notification (and don't bother with the signature), easiest is to retrieve the payment from payconiq and check it
+    $data               = json_decode( $payload );
+    $payconiq_paymentid = $data->paymentId;
+    if ( ! $payconiq_paymentid ) {
+        error_log( 'Payconiq webhook no payment id' );
+        http_response_code( 400 );
+        exit;
+    }
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
         //error_log("EME payconiq notif error error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
-        http_response_code( 400 );
-        exit;
-    }
-
-    $payconiq_merchantid = $payconiq_payment->creditor->merchantId;
-    if ( $payconiq_merchantid != $merchant_id ) {
-        //error_log("EME payconiq notif error: wrong merchant id $payconiq_merchantid");
         http_response_code( 400 );
         exit;
     }

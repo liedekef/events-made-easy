@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 417 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 418 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );

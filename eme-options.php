@@ -3115,7 +3115,7 @@ case 'maps':
 <h2><?php esc_html_e( 'Map options', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
-    eme_options_toggle( __( 'Enable map scroll-wheel zooming?', 'events-made-easy' ), 'eme_map_zooming', __( 'Yes, enables map scroll-wheel zooming. No, enables scroll-wheel page scrolling over maps. (It will be necessary to refresh your web browser on a map page to see the effect of this change.)', 'events-made-easy' ) );
+    eme_options_toggle( __( 'Enable map scroll-wheel zooming?', 'events-made-easy' ), 'eme_map_zooming', __( 'Yes, enables map scroll-wheel zooming. No, disables scroll-wheel page scrolling over maps. (It will be necessary to refresh your web browser on a map page to see the effect of this change.)', 'events-made-easy' ) );
     eme_options_toggle( __( 'Enable map gestures?', 'events-made-easy' ), 'eme_map_gesture_handling', __( 'If you choose to use map gestures, then on a desktop zooming must be done using ctrl+zoom, and on a mobile device the user needs to use two fingers to pan the map. This to prevent getting "trapped" in the map when a big map is shown.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Individual map zoom factor', 'events-made-easy' ), 'eme_indiv_zoom_factor', __( 'The zoom factor used when showing a single map (max: 14).', 'events-made-easy' ) );
     eme_options_input_text( __( 'Default location map icon', 'events-made-easy' ), 'eme_location_map_icon', __( "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here.", 'events-made-easy' ) . '<br>' . __( 'Size should be 32x32, bottom center will be pointing to the location on the map.', 'events-made-easy' ) );

@@ -484,22 +484,40 @@ class Client {
             throw new \Exception("No matching key found for kid={$kid}");
         }
 
-        // Convert JWK to PEM
-        $pem = self::ecJwkToPem($jwk);
+        $kty = $jwk['kty'] ?? 'unknown';
+        $alg = $jwk['alg'] ?? 'unknown';
+
+        // Convert JWK to PEM based on key type
+        if ($kty === 'RSA') {
+            $pem = self::rsaJwkToPem($jwk);
+        } elseif ($kty === 'EC') {
+            $pem = self::ecJwkToPem($jwk);
+        } else {
+            throw new \Exception("Unsupported key type: {$kty}");
+        }
+
+        // Verify the PEM is valid
+        $publicKey = openssl_pkey_get_public($pem);
+        if ($publicKey === false) {
+            throw new \Exception("Invalid PEM format generated from JWK");
+        }
 
         // Verify signature
         $reconstructedPayload = self::base64urlEncode($payload);
         $signingInput = $encodedHeader . '.' . $reconstructedPayload;
         $signature = self::base64urlDecode($encodedSignature);
 
-        $signatureDer = self::ecdsaRawToDer($signature);
-
-        $verified = openssl_verify(
-            $signingInput,
-            $signatureDer,
-            $pem,
-            OPENSSL_ALGO_SHA256
-        );
+        // Choose the right verification method
+        if ($kty === 'EC' && ($alg === 'ES256' || $alg === 'unknown')) {
+            // EC signature needs DER encoding
+            $signatureDer = self::ecdsaRawToDer($signature);
+            $verified = openssl_verify($signingInput, $signatureDer, $pem, OPENSSL_ALGO_SHA256);
+        } elseif ($kty === 'RSA' && ($alg === 'RS256' || $alg === 'unknown')) {
+            // RSA signature is already in the right format
+            $verified = openssl_verify($signingInput, $signature, $pem, OPENSSL_ALGO_SHA256);
+        } else {
+            throw new \Exception("Unsupported algorithm: {$alg} for key type: {$kty}");
+        }
 
         if ($verified !== 1) {
             throw new \Exception("Signature verification failed");
@@ -710,5 +728,65 @@ class Client {
             . "\x02" . chr(strlen($s)) . $s;
 
         return $der;
+    }
+
+    private static function rsaJwkToPem($jwk) {
+        if (!isset($jwk['n']) || !isset($jwk['e'])) {
+            throw new \Exception("Invalid RSA JWK: missing n or e parameters");
+        }
+
+        // Decode base64url encoded parameters
+        $n = self::base64urlDecode($jwk['n']);
+        $e = self::base64urlDecode($jwk['e']);
+
+        // Build the RSA public key in ASN.1 format
+        $modulus = "\x00" . $n; // Add leading zero for positive integer
+
+        $exponent = $e;
+
+        // Sequence for modulus and exponent
+        $modulusSequence = pack('Ca*a*', 0x02, self::encodeLength(strlen($modulus)), $modulus);
+        $exponentSequence = pack('Ca*a*', 0x02, self::encodeLength(strlen($exponent)), $exponent);
+
+        // Main sequence
+        $sequence = pack('Ca*a*a*', 0x30,
+            self::encodeLength(strlen($modulusSequence) + strlen($exponentSequence)),
+            $modulusSequence,
+            $exponentSequence
+        );
+
+        // Bit string wrapper
+        $bitString = pack('Ca*', 0x03, self::encodeLength(strlen($sequence) + 1)) . "\x00" . $sequence;
+
+        // Algorithm identifier for RSA
+        $algorithmIdentifier = pack('H*', '300d06092a864886f70d0101010500');
+
+        // Public key info
+        $publicKeyInfo = pack('Ca*a*', 0x30,
+            self::encodeLength(strlen($algorithmIdentifier) + strlen($bitString)),
+            $algorithmIdentifier,
+            $bitString
+        );
+
+        // Create PEM
+        $pem = "-----BEGIN PUBLIC KEY-----\n" .
+            chunk_split(base64_encode($publicKeyInfo), 64, "\n") .
+            "-----END PUBLIC KEY-----\n";
+
+        return $pem;
+    }
+
+    private static function encodeLength($length) {
+        if ($length <= 0x7F) {
+            return chr($length);
+        }
+
+        $bytes = '';
+        while ($length > 0) {
+            $bytes = chr($length & 0xFF) . $bytes;
+            $length >>= 8;
+        }
+
+        return chr(0x80 | strlen($bytes)) . $bytes;
     }
 }

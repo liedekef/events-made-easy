@@ -96,6 +96,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.39  (2026//) =
+* Payconiq code updates (ready for signature verification)
+* Jodit update to 4.8.3
+
 = 3.0.38  (2026/01/23) =
 * Some class fixes for adding existing person as member via admin interface
 * Membership javascript fixes to hide irrelevant fields when appropriate

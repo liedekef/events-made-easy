@@ -3148,6 +3148,7 @@ function eme_notification_payconiq() {
     if ( preg_match( '/sandbox/', $mode ) ) {
         $payconiq->setEndpointTest();
     }
+    $payconiq->setCacheDir(get_temp_dir());
 
     $payload = @file_get_contents( 'php://input' );
     $headers = getallheaders();
@@ -3160,7 +3161,7 @@ function eme_notification_payconiq() {
             exit;
         }
     } catch ( Exception $e ) {
-        error_log( 'Payconiq webhook verification error: ' . $e->getMessage() );
+        error_log( 'Payconiq webhook signature verification error: ' . $e->getMessage() );
         http_response_code( 400 );
         exit;
     }

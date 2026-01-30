@@ -484,40 +484,40 @@ class Client {
             throw new \Exception("No matching key found for kid={$kid}");
         }
 
-	$kty = $jwk['kty'] ?? 'unknown';
-	$alg = $jwk['alg'] ?? 'unknown';
+        $kty = $jwk['kty'] ?? 'unknown';
+        $alg = $jwk['alg'] ?? 'unknown';
 
-	// Convert JWK to PEM based on key type
-	if ($kty === 'RSA') {
-		$pem = self::rsaJwkToPem($jwk);
-	} elseif ($kty === 'EC') {
-		$pem = self::ecJwkToPem($jwk);
-	} else {
-		throw new \Exception("Unsupported key type: {$kty}");
-	}
+        // Convert JWK to PEM based on key type
+        if ($kty === 'RSA') {
+            $pem = self::rsaJwkToPem($jwk);
+        } elseif ($kty === 'EC') {
+            $pem = self::ecJwkToPem($jwk);
+        } else {
+            throw new \Exception("Unsupported key type: {$kty}");
+        }
 
-	// Verify the PEM is valid
-	$publicKey = openssl_pkey_get_public($pem);
-	if ($publicKey === false) {
-		throw new \Exception("Invalid PEM format generated from JWK");
-	}
+        // Verify the PEM is valid
+        $publicKey = openssl_pkey_get_public($pem);
+        if ($publicKey === false) {
+            throw new \Exception("Invalid PEM format generated from JWK");
+        }
 
         // Verify signature
         $reconstructedPayload = self::base64urlEncode($payload);
         $signingInput = $encodedHeader . '.' . $reconstructedPayload;
         $signature = self::base64urlDecode($encodedSignature);
 
-	// Choose the right verification method
-	if ($kty === 'EC' && ($alg === 'ES256' || $alg === 'unknown')) {
-		// EC signature needs DER encoding
-		$signatureDer = self::ecdsaRawToDer($signature);
-		$verified = openssl_verify($signingInput, $signatureDer, $pem, OPENSSL_ALGO_SHA256);
-	} elseif ($kty === 'RSA' && ($alg === 'RS256' || $alg === 'unknown')) {
-		// RSA signature is already in the right format
-		$verified = openssl_verify($signingInput, $signature, $pem, OPENSSL_ALGO_SHA256);
-	} else {
-		throw new \Exception("Unsupported algorithm: {$alg} for key type: {$kty}");
-	}
+        // Choose the right verification method
+        if ($kty === 'EC' && ($alg === 'ES256' || $alg === 'unknown')) {
+            // EC signature needs DER encoding
+            $signatureDer = self::ecdsaRawToDer($signature);
+            $verified = openssl_verify($signingInput, $signatureDer, $pem, OPENSSL_ALGO_SHA256);
+        } elseif ($kty === 'RSA' && ($alg === 'RS256' || $alg === 'unknown')) {
+            // RSA signature is already in the right format
+            $verified = openssl_verify($signingInput, $signature, $pem, OPENSSL_ALGO_SHA256);
+        } else {
+            throw new \Exception("Unsupported algorithm: {$alg} for key type: {$kty}");
+        }
 
         if ($verified !== 1) {
             throw new \Exception("Signature verification failed");
@@ -531,12 +531,12 @@ class Client {
         $cacheFile = $cacheDir . "/payconiq_jwks_{$this->environment}.json";
 
         // Anti-abuse: don't allow forced refresh more than once per hour
-        if ($forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 3600) {
+        if ($cacheDir && $forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 3600) {
             $forceRefresh = false;
         }
 
         // Use cache if valid and not forcing refresh
-        if (!$forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < self::JWKS_CACHE_TTL) {
+        if ($cacheDir && !$forceRefresh && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < self::JWKS_CACHE_TTL) {
             $jwksContent = @file_get_contents($cacheFile);
             if ($jwksContent !== false) {
                 $jwks = json_decode($jwksContent, true);
@@ -556,14 +556,15 @@ class Client {
                 throw new \Exception("Invalid JWKS format");
             }
             // Save successful response
-            @file_put_contents($cacheFile, $jwksContent, LOCK_EX);
+            if ($cacheDir)
+                @file_put_contents($cacheFile, $jwksContent, LOCK_EX);
             return $jwks['keys'];
         } catch (\Exception $e) {
             // Log the fetch failure
             error_log("Payconiq JWKS fetch failed: " . $e->getMessage());
 
             // Fallback: if any cache exists (even stale), try to use it
-            if (file_exists($cacheFile)) {
+            if ($cacheDir && file_exists($cacheFile)) {
                 $fallbackContent = @file_get_contents($cacheFile);
                 if ($fallbackContent !== false) {
                     $fallbackJwks = json_decode($fallbackContent, true);

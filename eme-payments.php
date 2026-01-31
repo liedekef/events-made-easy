@@ -3153,13 +3153,13 @@ function eme_notification_payconiq() {
     $payload = @file_get_contents( 'php://input' );
     $headers = getallheaders();
 
-/*
     try {
         if ( ! $payconiq->verifyWebhookSignature( $payload, $headers ) ) {
             error_log( 'Payconiq webhook signature verification failure' );
             http_response_code( 401 );
             exit;
         }
+        //error_log( 'Payconiq webhook signature verification success' );
     } catch ( Exception $e ) {
         error_log( 'Payconiq webhook signature verification error: ' . $e->getMessage() );
         http_response_code( 400 );
@@ -3168,13 +3168,20 @@ function eme_notification_payconiq() {
     $payconiq_payment   = json_decode( $payload );
     $payconiq_paymentid = $payconiq_payment->paymentId;
     if ( ! $payconiq_paymentid ) {
-        error_log( 'Payconiq webhook no payment id' );
+        //error_log( 'Payconiq webhook no payment id' );
         http_response_code( 400 );
         exit;
     }
- */
 
-    // we don't trust the notification (and don't bother with the signature), easiest is to retrieve the payment from payconiq and check it
+    // ignore notifs that are not success
+    if ( $payconiq_payment->status !== 'SUCCEEDED') {
+        http_response_code( 200 );
+        //error_log("EME payconiq notif ignore: " . $payconiq_payment->status);
+        exit;
+    }
+
+    /*
+    // if we decide to not trust the notification (and don't bother with the signature), we could also retrieve the payment from payconiq and check it
     $data               = json_decode( $payload );
     $payconiq_paymentid = $data->paymentId;
     if ( ! $payconiq_paymentid ) {
@@ -3189,6 +3196,7 @@ function eme_notification_payconiq() {
         http_response_code( 400 );
         exit;
     }
+     */
 
     $payment_id = $payconiq_payment->reference;
     $payment    = eme_get_payment( $payment_id );
@@ -3198,8 +3206,9 @@ function eme_notification_payconiq() {
         exit;
     }
     $eme_price = eme_get_payment_price( $payment_id );
-    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
+    if ( $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
+        //error_log("EME payconiq notif: payment id $payment_id with price $eme_price marked as paid");
     //} else {
     //    error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }

@@ -3168,35 +3168,27 @@ function eme_notification_payconiq() {
     $payconiq_payment   = json_decode( $payload );
     $payconiq_paymentid = $payconiq_payment->paymentId;
     if ( ! $payconiq_paymentid ) {
-        //error_log( 'Payconiq webhook no payment id' );
         http_response_code( 400 );
-        exit;
-    }
-
-    // ignore notifs that are not success
-    if ( $payconiq_payment->status !== 'SUCCEEDED') {
-        http_response_code( 200 );
-        //error_log("EME payconiq notif ignore: " . $payconiq_payment->status);
         exit;
     }
 
     /*
-    // if we decide to not trust the notification (and don't bother with the signature), we could also retrieve the payment from payconiq and check it
+    // if we decide to not trust the notification, we could also retrieve the payment from payconiq and check it
     $data               = json_decode( $payload );
     $payconiq_paymentid = $data->paymentId;
-    if ( ! $payconiq_paymentid ) {
-        error_log( 'Payconiq webhook no payment id' );
-        http_response_code( 400 );
-        exit;
-    }
     try {
         $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
     } catch ( Exception $e ) {
-        //error_log("EME payconiq notif error error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
         http_response_code( 400 );
         exit;
     }
      */
+
+    // ignore notifs that are not success
+    if ( $payconiq_payment->status !== 'SUCCEEDED') {
+        http_response_code( 200 );
+        exit;
+    }
 
     $payment_id = $payconiq_payment->reference;
     $payment    = eme_get_payment( $payment_id );
@@ -3208,9 +3200,6 @@ function eme_notification_payconiq() {
     $eme_price = eme_get_payment_price( $payment_id );
     if ( $payconiq_payment->amount / 100 >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
-        //error_log("EME payconiq notif: payment id $payment_id with price $eme_price marked as paid");
-    //} else {
-    //    error_log("EME payconiq notif error: payment id $payment_id with price $eme_price, ignored payconiq notification with payment id $payconiq_paymentid, status ".$payconiq_payment->status . ", amount ". $payconiq_payment->amount );
     }
     http_response_code( 200 );
     exit;

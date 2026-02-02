@@ -2713,9 +2713,9 @@ function eme_nl2br_save_html( $string ) {
         }
     }
     // now that we added the needed br-tags, join back together and return the modified string
-    $res = implode( " ", $lines ); // we implode on a space, not \n so WP doesn't get tempted to add own br-tags ...
+    $res = implode( "\n", $lines );
     if ($htmleditor == 'tinymce') {
-        $res = str_replace( 'BREAK', "<br>", $res );
+        $res = str_replace( 'BREAK', "<br>\n", $res );
     }
     return $res;
 }

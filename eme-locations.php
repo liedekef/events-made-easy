@@ -2691,7 +2691,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         }
 
         # first we set the balloon info
-        $tmp_loc = eme_replace_locations_placeholders( get_option( 'eme_location_baloon_format' ), $location );
+        $tmp_loc = eme_replace_locations_placeholders( get_option( 'eme_location_balloon_format' ), $location );
         // newlines are already replaced by eme_replace_locations_placeholders
                 //    no newlines allowed, otherwise no map is shown
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
@@ -2731,7 +2731,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $zoom_factor = get_option( 'eme_indiv_zoom_factor' );
     }
 
-    $map_text = eme_replace_locations_placeholders( get_option( 'eme_location_baloon_format' ), $location );
+    $map_text = eme_replace_locations_placeholders( get_option( 'eme_location_balloon_format' ), $location );
     // newlines are already replaced by eme_replace_locations_placeholders
     //    no newlines allowed, otherwise no map is shown
     //    $map_text = eme_nl2br_save_html( $map_text );

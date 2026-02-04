@@ -947,12 +947,18 @@ function eme_archive_old_mailings() {
 function eme_cancel_mail( $mail_id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $where = [
-	    'id' => $mail_id,
-	    'status' => EME_MAIL_STATUS_PLANNED
-    ];
-    $fields = ['status' => EME_MAIL_STATUS_CANCELLED ];
-    $wpdb->update( $queue_table, $fields, $where );
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE $queue_table
+            SET status = %d
+            WHERE id = %d
+            AND status IN (%d, %d)",
+            EME_MAIL_STATUS_CANCELLED,
+            $mail_id,
+            EME_MAIL_STATUS_PLANNED,
+            EME_MAIL_STATUS_DELAYED
+        )
+    );
 }
 
 function eme_cancel_mailing( $mailing_id ) {

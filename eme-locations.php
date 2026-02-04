@@ -35,6 +35,9 @@ function eme_init_location_props( $props = [] ) {
     if ( ! isset( $props['map_icon'] ) ) {
         $props['map_icon'] = '';
     }
+    if ( ! isset( $props['balloon_format'] ) ) {
+        $props['balloon_format'] = '';
+    }
     if ( ! isset( $props['online_only'] ) ) {
         $props['online_only'] = 0;
     }
@@ -612,6 +615,16 @@ function eme_meta_box_div_location_details( $location ) {
 <?php
     if ( $map_is_active ) :
 ?>
+
+        <div id="loc_balloon_format" class="postbox">
+            <h3>
+            <?php esc_html_e( 'Location balloon format', 'events-made-easy' ); ?>
+            </h3>
+            <div class="inside">
+            <?php eme_wysiwyg_textarea( 'eme_loc_prop_balloon_format', $location['location_properties']['balloon_format'], 1, 1 ); ?>
+                <br><?php esc_html_e( "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default.", 'events-made-easy' ); ?>
+            </div>
+        </div>
 
         <div id="loc_map_icon" class="postbox">
             <h3>
@@ -2691,7 +2704,12 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         }
 
         # first we set the balloon info
-        $tmp_loc = eme_replace_locations_placeholders( get_option( 'eme_location_balloon_format' ), $location );
+        if (!empty($location['location_properties']['balloon_format'] )) {
+            $balloon_format = $location['location_properties']['balloon_format'];
+        } else {
+            $balloon_format = get_option( 'eme_location_balloon_format' );
+        }
+        $tmp_loc = eme_replace_locations_placeholders( $balloon_format, $location );
         // newlines are already replaced by eme_replace_locations_placeholders
                 //    no newlines allowed, otherwise no map is shown
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
@@ -2731,7 +2749,12 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $zoom_factor = get_option( 'eme_indiv_zoom_factor' );
     }
 
-    $map_text = eme_replace_locations_placeholders( get_option( 'eme_location_balloon_format' ), $location );
+    if (!empty($location['location_properties']['balloon_format'] )) {
+        $balloon_format = $location['location_properties']['balloon_format'];
+    } else {
+        $balloon_format = get_option( 'eme_location_balloon_format' );
+    }
+    $map_text = eme_replace_locations_placeholders( $balloon_format, $location );
     // newlines are already replaced by eme_replace_locations_placeholders
     //    no newlines allowed, otherwise no map is shown
     //    $map_text = eme_nl2br_save_html( $map_text );

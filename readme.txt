@@ -99,6 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 3.0.39  (2026//) =
 * Payconiq code updates (signature verification now works as expected, saving a call to the payment gateway server)
 * Jodit update to 4.8.3
+* Allow balloon format per location
 
 = 3.0.38  (2026/01/23) =
 * Some class fixes for adding existing person as member via admin interface

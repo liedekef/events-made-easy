@@ -201,14 +201,6 @@ function eme_add_event_form_shortcode( $atts ) {
         wp_enqueue_style('jodit-css');
     }
 
-    if (get_option( 'eme_htmleditor' ) == 'summernote') {
-        wp_enqueue_media();
-        wp_enqueue_script('eme-summernote');
-        wp_enqueue_style('summernote-css');
-        wp_enqueue_script('summernote-table-js');
-        wp_enqueue_style('summernote-table-css');
-    }
-
     $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
     $atts['id'] = intval($atts['id']);
     if ( $atts['startdatetime'] != 'now' )

@@ -2666,7 +2666,7 @@ function eme_nl2br_save_html( $string ) {
             // the next avoids wordpress adding breaks via "the_content" filter
             // while this seems weird, copy/paste from word can lead to words on another line that are meant to be separated by a space
             // if not tinymce, no other changes anymore
-            $string = str_replace( "\n", " ", $string );
+            //$string = str_replace( "\n", " ", $string );
             return $string;
         }
     }
@@ -2713,6 +2713,7 @@ function eme_nl2br_save_html( $string ) {
         }
     }
     // now that we added the needed br-tags, join back together and return the modified string
+    // since we call this function in eme_wysiwyg_textarea too, we keep the carriage returns
     $res = implode( "\n", $lines );
     if ($htmleditor == 'tinymce') {
         $res = str_replace( 'BREAK', "<br>\n", $res );
@@ -4101,11 +4102,6 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
 
     if ( $show_wp_editor ) {
         switch ( $html_editor ) {
-            case 'summernote':
-                ?>
-                <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
-                <?php
-                break;
             case 'jodit':
                 ?>
                 <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>

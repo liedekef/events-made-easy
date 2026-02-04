@@ -3209,8 +3209,7 @@ case 'other':
                     'eme_htmleditor',
                     [
                         'tinymce'    => __( 'TinyMCE', 'events-made-easy' ),
-                        'jodit'      => __( 'Jodit', 'events-made-easy' ),
-                        //'summernote' => __( 'Summernote', 'events-made-easy' ),
+                        'jodit'      => __( 'Jodit', 'events-made-easy' )
                     ],
                     __( 'The HTML editor used by the plugin.', 'events-made-easy' )
     );

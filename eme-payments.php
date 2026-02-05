@@ -3151,7 +3151,8 @@ function eme_notification_payconiq() {
 
 	$payload = @file_get_contents( 'php://input' );
 
-    // we decide to not trust the notification, so retrieve the payment from payconiq and check it
+    // do not trust the notification, retrieve the payment from payconiq and check it
+    // extra reason for not using signature verification is that payconiq seems to have servers that don't provide it
     $data               = json_decode( $payload );
     $payconiq_paymentid = $data->paymentId;
     try {

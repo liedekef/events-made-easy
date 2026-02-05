@@ -3148,32 +3148,10 @@ function eme_notification_payconiq() {
     if ( preg_match( '/sandbox/', $mode ) ) {
         $payconiq->setEndpointTest();
     }
-    $payconiq->setCacheDir(get_temp_dir());
 
-    $payload = @file_get_contents( 'php://input' );
-    $headers = getallheaders();
+	$payload = @file_get_contents( 'php://input' );
 
-    try {
-        if ( ! $payconiq->verifyWebhookSignature( $payload, $headers ) ) {
-            error_log( 'Payconiq webhook signature verification failure' );
-            http_response_code( 401 );
-            exit;
-        }
-        //error_log( 'Payconiq webhook signature verification success' );
-    } catch ( Exception $e ) {
-        error_log( 'Payconiq webhook signature verification error: ' . $e->getMessage() );
-        http_response_code( 400 );
-        exit;
-    }
-    $payconiq_payment   = json_decode( $payload );
-    $payconiq_paymentid = $payconiq_payment->paymentId;
-    if ( ! $payconiq_paymentid ) {
-        http_response_code( 400 );
-        exit;
-    }
-
-    /*
-    // if we decide to not trust the notification, we could also retrieve the payment from payconiq and check it
+    // we decide to not trust the notification, so retrieve the payment from payconiq and check it
     $data               = json_decode( $payload );
     $payconiq_paymentid = $data->paymentId;
     try {
@@ -3182,8 +3160,7 @@ function eme_notification_payconiq() {
         http_response_code( 400 );
         exit;
     }
-     */
-
+	
     // ignore notifs that are not success
     if ( $payconiq_payment->status !== 'SUCCEEDED') {
         http_response_code( 200 );

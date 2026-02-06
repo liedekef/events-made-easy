@@ -134,6 +134,7 @@ function eme_actions_init() {
     }
 
     if ( isset( $_GET['eme_admin_action'] ) && $eme_is_admin_request ) {
+        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         if ( $_GET['eme_admin_action'] == 'autocomplete_locations' ) {
             $no_wp_die = 1;
             eme_locations_search_ajax( $no_wp_die );

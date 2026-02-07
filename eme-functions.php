@@ -3821,8 +3821,9 @@ function eme_extra_event_headers( $event ) {
 
 function eme_isjson( $data ) {
     if (!is_string($data)) return false;
-    $decoded_data = json_decode($data);
-    return (json_last_error() == JSON_ERROR_NONE);
+    $decoded_data = json_decode($data, true);
+    if (json_last_error() !== JSON_ERROR_NONE) return false;
+    return is_array($decoded_data);
 }
 
 function eme_is_serialized( $data ) {
@@ -3846,7 +3847,7 @@ function eme_unserialize( $data ) {
         return unserialize( $data, ['allowed_classes' => false] );
     } elseif (eme_isjson($data)) {
         // add TRUE to make sure the return is an array
-        return json_decode ($data, TRUE);
+        return json_decode ($data, true);
     } else {
         return $data;
     }

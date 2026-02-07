@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.40  (2026//) =
+* Fix csv and printable reports if there's an older discount present
+
 = 3.0.39  (2026/02/05) =
 * Payconiq code updates
 * Jodit update to 4.8.3

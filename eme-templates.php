@@ -151,7 +151,6 @@ function eme_templates_table_layout( $message = '' ) {
 
     $template_types = eme_template_types();
     $destination    = admin_url( "admin.php?page=$plugin_page" );
-    $nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -166,13 +165,13 @@ function eme_templates_table_layout( $message = '' ) {
          <h1>" . __( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
-    <div id="templates-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="templates-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+        <p><?php echo esc_html( $message ); ?></p>
     </div>
 
     <div class="wrap">
-    <form id="templates-new" method="post" action="<?php echo $destination; ?>">
-            <?php echo $nonce_field; ?>
+    <form id="templates-new" method="post" action="<?php echo esc_url( $destination ); ?>">
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
             <input type="hidden" name="eme_admin_action" value="add_template">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add template', 'events-made-easy' ); ?>">
         </form>
@@ -186,7 +185,7 @@ function eme_templates_table_layout( $message = '' ) {
 
     <div id="bulkactions">
     <form id='templates-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteTemplates"><?php esc_html_e( 'Delete selected templates', 'events-made-easy' ); ?></option>
@@ -223,7 +222,6 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
         $action_string = __( 'Add template', 'events-made-easy' );
     }
     $template_types      = eme_template_types();
-    $nonce_field         = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     $orientation_array   = [
         'portrait'  => __( 'Portrait', 'events-made-easy' ),
         'landscape' => __( 'Landscape', 'events-made-easy' ),
@@ -252,10 +250,10 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 ?>
 
         <div id='ajax-response'></div>
-        <form name='edit_template' id='edit_template' method='post' action='<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>' class='validate'>
+        <form name='edit_template' id='edit_template' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>' class='validate'>
         <input type='hidden' name='eme_admin_action' value='do_edittemplate'>
-        <input type='hidden' name='template_id' value='<?php echo $template_id; ?>'>
-        <?php echo $nonce_field; ?>
+        <input type='hidden' name='template_id' value='<?php echo esc_attr( $template_id ); ?>'>
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
         <table>
             <tr>
             <td><?php esc_html_e( 'Name', 'events-made-easy' ); ?></label></td>
@@ -320,7 +318,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
             <?php esc_html_e( "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the mail, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it.", 'events-made-easy' ); ?></td>
             </tr>
         </table>
-        <p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
+        <p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo esc_attr( $action_string ); ?>'></p>
         </form>
     </div>
     </div>

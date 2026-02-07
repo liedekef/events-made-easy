@@ -302,13 +302,12 @@ function eme_countries_main_layout( $message = '' ) {
 	} else {
 		$html .= __( 'There are no countries defined yet. First define some countries, then you can manage the states.', 'events-made-easy' ) . '<br>';
 	}
-	echo $html;
+	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
 function eme_manage_countries_layout( $message = '' ) {
 	global $plugin_page;
 	$lang        = eme_detect_lang();
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
@@ -330,14 +329,14 @@ function eme_manage_countries_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-			<p><?php echo $message; ?></p>
+		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+			<p><?php echo esc_html( $message ); ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new country', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
-		<form method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
-			<?php echo $nonce_field; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
+			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 			<input type="hidden" name="eme_admin_action" value="add_country">
 			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add country', 'events-made-easy' ); ?>">
 		</form>
@@ -352,7 +351,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	</span>
 	<div id='eme_div_import' class='eme-hidden'>
 	<form id='countries-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<input type="file" name="eme_csv">
 		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -370,7 +369,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	<?php } ?>
     <div id="bulkactions">
 	<form id='countries-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
+	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteCountries"><?php esc_html_e( 'Delete selected countries', 'events-made-easy' ); ?></option>
@@ -387,7 +386,6 @@ function eme_manage_countries_layout( $message = '' ) {
 
 function eme_manage_states_layout( $message = '' ) {
 	global $plugin_page;
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
@@ -399,14 +397,14 @@ function eme_manage_states_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-		<p><?php echo $message; ?></p>
+	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+		<p><?php echo esc_html( $message ); ?></p>
 	</div>
 
 		<h1><?php esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
-		<form method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
-			<?php echo $nonce_field; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
+			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 			<input type="hidden" name="eme_admin_action" value="add_state">
 			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add state', 'events-made-easy' ); ?>">
 		</form>
@@ -421,7 +419,7 @@ function eme_manage_states_layout( $message = '' ) {
 	</span>
 	<div id='eme_div_import' class='eme-hidden'>
 	<form id='states-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<input type="file" name="eme_csv">
 		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -439,7 +437,7 @@ function eme_manage_states_layout( $message = '' ) {
 	<br>
     <div id="bulkactions">
 	<form id='states-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
+	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteStates"><?php esc_html_e( 'Delete selected states', 'events-made-easy' ); ?></option>
@@ -518,7 +516,7 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
       </form>
    </div>
    ";
-	echo $layout;
+	echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
 function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
@@ -592,7 +590,7 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
       </form>
    </div>
    ";
-	echo $layout;
+	echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
 function eme_get_localized_states( $country_code = '' ) {

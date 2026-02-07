@@ -76,7 +76,6 @@ function eme_categories_page() {
 }
 
 function eme_categories_table_layout( $message = '' ) {
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 ?>
     <div class="wrap nosubsub">
@@ -87,8 +86,8 @@ function eme_categories_table_layout( $message = '' ) {
     <?php if ( current_user_can( get_option( 'eme_cap_categories' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new category', 'events-made-easy' ); ?></h1>
         <div class="wrap">
-        <form method="post" action="<?php echo admin_url( 'admin.php?page=eme-categories' ); ?>">
-            <?php echo $nonce_field; ?>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-categories' ) ); ?>">
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
             <input type="hidden" name="eme_admin_action" value="add_category">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add category', 'events-made-easy' ); ?>">
         </form>
@@ -98,14 +97,14 @@ function eme_categories_table_layout( $message = '' ) {
     <h1><?php esc_html_e( 'Manage categories', 'events-made-easy' ); ?></h1>
     <?php if ( $message != '' ) { ?>
     <div id="message" class="updated notice notice-success is-dismissible">
-         <p><?php echo $message; ?></p>
+         <p><?php echo esc_html( $message ); ?></p>
     </div>
     <?php } ?>
 
     <div id="categories-message" class="eme-hidden" ></div>
     <div id="bulkactions">
     <form action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteCategories"><?php esc_html_e( 'Delete selected categories', 'events-made-easy' ); ?></option>
@@ -139,19 +138,18 @@ function eme_categories_edit_layout() {
 		$action            = 'add';
 	}
 
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	?>
 	<div class='wrap'>
 		<div id='icon-edit' class='icon32'>
 		</div>
 		 
-		<h1><?php echo $h1_string; ?></h1>   
+		<h1><?php echo esc_html( $h1_string ); ?></h1>   
 	  
 		<div id='ajax-response'></div>
-		<form name='edit_category' id='edit_category' method='post' action='<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>'>
+		<form name='edit_category' id='edit_category' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editcategory'>
-		<input type='hidden' name='category_id' value='<?php echo $category_id; ?>'>
-		<?php echo $nonce_field; ?>
+		<input type='hidden' name='category_id' value='<?php echo esc_attr( $category_id ); ?>'>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 		<table class='form-table'>
 			<tr class='form-field'>
 		        <th scope='row' style='vertical-align:top'><label for='category_name'><?php esc_html_e( 'Category name', 'events-made-easy' ); ?></label></th>
@@ -159,7 +157,7 @@ function eme_categories_edit_layout() {
 		<?php esc_html_e( 'The name of the category', 'events-made-easy' ); ?></td>
 			</tr>
 			<tr>
-			    <th scope='row' style='vertical-align:top'><label for='slug'><?php echo $permalink_string; ?></label></th>
+			    <th scope='row' style='vertical-align:top'><label for='slug'><?php echo esc_html( $permalink_string ); ?></label></th>
 				<td>
 				<?php
 				echo trailingslashit( home_url() );
@@ -181,12 +179,12 @@ function eme_categories_edit_layout() {
 				} else {
 					echo eme_permalink_convert( $categories_prefixes );
 				}
-				echo $extra_prefix;
+				echo esc_html( $extra_prefix );
 				if ( $action == 'edit' ) {
 					$slug = $category['category_slug'] ? $category['category_slug'] : $category['category_name'];
 					$slug = eme_permalink_convert_noslash( $slug );
 					?>
-					<input type="text" id="slug" name="category_slug" value="<?php echo $slug; ?>"><?php echo user_trailingslashit( '' ); ?>
+					<input type="text" id="slug" name="category_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
 						<?php
 				}
 				?>
@@ -204,7 +202,7 @@ function eme_categories_edit_layout() {
 			    </td>
 			</tr>
 		</table>
-		<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
+		<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo esc_attr( $action_string ); ?>'></p>
 		</form>
 	</div>
 	<?php

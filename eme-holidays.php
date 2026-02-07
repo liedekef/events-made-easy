@@ -65,7 +65,6 @@ function eme_holidays_page() {
 }
 
 function eme_holidays_table_layout( $message = '' ) {
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
@@ -75,8 +74,8 @@ function eme_holidays_table_layout( $message = '' ) {
     <?php if ( current_user_can( get_option( 'eme_cap_holidays' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new list of holidays', 'events-made-easy' ); ?></h1>
         <div class="wrap">
-        <form method="post" action="<?php echo admin_url( 'admin.php?page=eme-holidays' ); ?>">
-            <?php echo $nonce_field; ?>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-holidays' ) ); ?>">
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
             <input type="hidden" name="eme_admin_action" value="add_holidays">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add holidays list', 'events-made-easy' ); ?>">
         </form>
@@ -86,14 +85,14 @@ function eme_holidays_table_layout( $message = '' ) {
     <h1><?php esc_html_e( 'Manage list of holidays', 'events-made-easy' ); ?></h1>
     <?php if ( $message != '' ) { ?>
     <div id="message" class="updated notice notice-success is-dismissible">
-         <p><?php echo $message; ?></p>
+         <p><?php echo esc_html( $message ); ?></p>
     </div>
     <?php } ?>
 
     <div id="holidays-message" class="eme-hidden" ></div>
     <div id="bulkactions">
     <form action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteHolidays"><?php esc_html_e( 'Delete selected lists of holidays', 'events-made-easy' ); ?></option>

@@ -392,14 +392,13 @@ function eme_discounts_main_layout( $message = '' ) {
 	$html .= "<a href='$discounts_destination'>" . __( 'Manage discounts', 'events-made-easy' ) . '</a><br>';
 	$html .= '<h2>' . __( 'Manage discountgroups', 'events-made-easy' ) . '</h2>';
 	$html .= "<a href='$dgroups_destination'>" . __( 'Manage discountgroups', 'events-made-easy' ) . '</a><br>';
-	echo $html;
+	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
 function eme_manage_discounts_layout( $message = '' ) {
 	global $plugin_page;
 
 	$dgroups     = eme_get_dgroups();
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
@@ -412,14 +411,14 @@ function eme_manage_discounts_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-			<p><?php echo $message; ?></p>
+		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+			<p><?php echo esc_html( $message ); ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new discount definition', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
-		<form method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
-			<?php echo $nonce_field; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
+			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 			<input type="hidden" name="eme_admin_action" value="add_discount">
 			<input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add discount', 'events-made-easy' ); ?>">
 		</form>
@@ -434,7 +433,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	</span>
 	<div id='eme_div_import' class='eme-hidden'>
 	<form id='discount-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<input type="file" name="eme_csv">
 		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=','>
@@ -448,7 +447,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<?php } ?>
     <div id="bulkactions">
 	<form id='discounts-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
+	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteDiscounts"><?php esc_html_e( 'Delete selected discounts', 'events-made-easy' ); ?></option>
@@ -483,7 +482,6 @@ function eme_manage_discounts_layout( $message = '' ) {
 
 function eme_manage_dgroups_layout( $message = '' ) {
 	global $plugin_page;
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
@@ -495,14 +493,14 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-		<p><?php echo $message; ?></p>
+	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+		<p><?php echo esc_html( $message ); ?></p>
 	</div>
 
 		<h1><?php esc_html_e( 'Add a new discount group', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
-		<form method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
-			<?php echo $nonce_field; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
+			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 			<input type="hidden" name="eme_admin_action" value="add_dgroup">
 			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add discount group', 'events-made-easy' ); ?>">
 		</form>
@@ -517,7 +515,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	</span>
 	<div id='eme_div_import' class='eme-hidden'>
 	<form id='discountgroups-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<input type="file" name="eme_csv">
 		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=','>
@@ -531,7 +529,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	<?php } ?>
     <div id="bulkactions">
 	<form id='discountgroups-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
+	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteDiscountGroups"><?php esc_html_e( 'Delete selected discountgroups', 'events-made-easy' ); ?></option>
@@ -836,7 +834,6 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		$action_string = __( 'Add discount', 'events-made-easy' );
 	}
 
-	$nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$discount_types = eme_get_discounttypes();
 	$dgroups        = eme_get_dgroups();
 	$groups         = eme_get_static_groups();
@@ -847,19 +844,19 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		<div id='icon-edit' class='icon32'>
 		</div>
 		 
-		<h1><?php echo $h1_string; ?></h1>
+		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
 		<?php if ( $message != '' ) { ?>
 		<div id='message' class='updated notice notice-success is-dismissible'>
-		<p><?php echo $message; ?></p>
+		<p><?php echo esc_html( $message ); ?></p>
 		</div>
 		<?php } ?>
 		<div id='ajax-response'></div>
 
-		<form name='edit_discounts' id='edit_discounts' method='post' action='<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>'>
+		<form name='edit_discounts' id='edit_discounts' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editdiscount'>
-		<input type='hidden' name='id' value='<?php echo $discount_id; ?>'>
-		<?php echo $nonce_field; ?>
+		<input type='hidden' name='id' value='<?php echo esc_attr( $discount_id ); ?>'>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 		<table class='form-table'>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discount name', 'events-made-easy' ); ?></label></th>
@@ -995,7 +992,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			</td>
 		</tr>
 		</table>
-	<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
+	<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo esc_attr( $action_string ); ?>'></p>
 		</form>
 	</div>
 	<?php
@@ -1014,26 +1011,25 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 			$action_string = __( 'Add discount group', 'events-made-easy' );
 	}
 
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	?>
 	<div class='wrap'>
 		<div id='icon-edit' class='icon32'>
 		</div>
 		 
-		<h1><?php echo $h1_string; ?></h1>
+		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
 		<?php if ( $message != '' ) { ?>
 		<div id='message' class='updated notice notice-success is-dismissible'>
-		<p><?php echo $message; ?></p>
+		<p><?php echo esc_html( $message ); ?></p>
 		</div>
 		<?php } ?>
 		<div id='ajax-response'></div>
 
-		<form name='edit_dgroups' id='edit_dgroups' method='post' action='<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>'>
+		<form name='edit_dgroups' id='edit_dgroups' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editdgroup'>
-		<input type='hidden' name='id' value='<?php echo $dgroup_id; ?>'>
-		<?php echo $nonce_field; ?>
+		<input type='hidden' name='id' value='<?php echo esc_attr( $dgroup_id ); ?>'>
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 		<table class='form-table'>
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discountgroup name', 'events-made-easy' ); ?></label></th>
@@ -1051,7 +1047,7 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 				</td>
 			</tr>
 		</table>
-	<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
+	<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo esc_attr( $action_string ); ?>'></p>
 		</form>
 	</div>
 	<?php

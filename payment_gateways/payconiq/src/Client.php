@@ -169,6 +169,9 @@ class Client {
      * @return  object  Response object by Payconiq
      */
     public function retrievePayment( $paymentId ) {
+        return $this->getPayment( $paymentId );
+    }
+    public function getPayment( $paymentId ) {
         $response = $this->makeRequest( 'GET', $this->getEndpoint( '/payments/' . $paymentId ) );
 
         if ( empty( $response->paymentId ) ) {
@@ -179,29 +182,50 @@ class Client {
     }
 
     /**
-     * Get payments list
+     * Get payment by reference
      *
      * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
      * 
-     * @return  array  Response objects by Payconiq
+     * @param  string $fromDate	The start date and time to filter the search results.
+     *				Default: is the API default: Current date and time minus one day. (Now - 1 day)
+     *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+     * 
+     * @param  string $toDate	The end date and time to filter the search results.
+     *				Default: is the API default: Current date and time. (Now)
+     *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+     * 
+     * @return  object  Response object by Payconiq
      */
-    public function getPaymentsListByReference( $reference ) {
+    public function getPaymentByReference( $reference, $fromDate = '', $toDate = '' ) {
         // Convert reference to SEPA compliant format voor consistentie
         $reference = self::convertToSEPA($reference, 35);
-        
-        $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/search' ), [
-            'reference' => $reference
-        ]);
-
-        if ( empty( $response->size ) ) {
-            throw new GetPaymentsListFailedException( $response->message ?: 'failed to retrieve payment list or no payments retrieved' );
-        }
-
-        return $response->details;
+        $details = $this->getPaymentsListByDateRange( $fromDate, $toDate, 50, $reference);
+        return $details[0];
     }
 
     /**
-     * Get payments list
+     * Get payments list by reference
+     *
+     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
+     * 
+     * @param  string $fromDate	The start date and time to filter the search results.
+     *				Default: is the API default: Current date and time minus one day. (Now - 1 day)
+     *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+     * 
+     * @param  string $toDate	The end date and time to filter the search results.
+     *				Default: is the API default: Current date and time. (Now)
+     *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+     * 
+     * @return  array  Response objects by Payconiq
+     */
+    public function getPaymentsListByReference( $reference, $fromDate = '', $toDate = '', $size = 50 ) {
+        // Convert reference to SEPA compliant format voor consistentie
+        $reference = self::convertToSEPA($reference, 35);
+        return $this->getPaymentsListByDateRange( $fromDate, $toDate, $size, $reference);
+    }
+
+    /**
+     * Get payments list by date range
      *
      * @param  string $fromDate	The start date and time to filter the search results.
      *				Default: is the API default: Current date and time minus one day. (Now - 1 day)
@@ -214,9 +238,11 @@ class Client {
      * @param  int $size	The page size for responses, more used internally
      *              Default: 50
      * 
+     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
+     * 
      * @return  array  Response objects by Payconiq
      */
-    public function getPaymentsListByDateRange( $fromDate = '', $toDate = '', $size = 50 ) {
+    public function getPaymentsListByDateRange( $fromDate = '', $toDate = '', $size = 50, $reference = '' ) {
         $param_arr = [
             "paymentStatuses" => [ "SUCCEEDED" ]
         ];
@@ -226,6 +252,10 @@ class Client {
         if ( ! empty( $toDate ) ) {
             $param_arr['to'] = $toDate;
         }
+        if ( ! empty( $reference ) ) {
+            $param_arr['reference'] = $reference;
+        }
+
         $page = 0;
         $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/search?page=' . intval( $page ) . '&size=' . intval( $size ) ), $param_arr );
 

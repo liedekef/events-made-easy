@@ -6007,8 +6007,8 @@ function eme_ajax_bookings_list() {
                 }
 
                 if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                    $printable_address            = wp_nonce_url( admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' );
-                    $csv_address                  = wp_nonce_url( admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' );
+                    $printable_address            = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
+                    $csv_address                  = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
                     $event_name_info[ $event_id ] .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
                     $event_name_info[ $event_id ] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='$csv_address'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
                 }

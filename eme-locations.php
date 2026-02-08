@@ -621,7 +621,7 @@ function eme_meta_box_div_location_details( $location ) {
             <?php esc_html_e( 'Location balloon format', 'events-made-easy' ); ?>
             </h3>
             <div class="inside">
-            <?php eme_wysiwyg_textarea( 'eme_loc_prop_balloon_format', $location['location_properties']['balloon_format'], 1, 1 ); ?>
+            <?php eme_wysiwyg_textarea( 'eme_loc_prop_balloon_format', $location['location_properties']['balloon_format'], 1, 0 ); ?>
                 <br><?php esc_html_e( "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default.", 'events-made-easy' ); ?>
             </div>
         </div>

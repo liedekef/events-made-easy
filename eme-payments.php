@@ -3757,7 +3757,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
         // we do this as soon as possible, so other payments arriving won't trigger another payment
         eme_update_payment_pg_handled( $payment_id );
         // log it, so we have a trace
-        error_log("Handling $pg payment notification for id $payment_id");
+        //error_log("Handling $pg payment notification for id $payment_id");
     }
 
     if ( $payment['target'] == 'member' ) {

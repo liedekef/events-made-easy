@@ -254,7 +254,7 @@ msgstr "按结束日期过滤"
 msgid "Filter attendances"
 msgstr "出席者的筛选"
 
-#: eme-functions.php:4308
+#: eme-functions.php:4309
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "提示：右键单击列标题以显示或隐藏列"
 
@@ -7206,15 +7206,15 @@ msgstr "基于结束日期的有效会员的续期"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "只有当会员资格结束日期少于所提到的天数时，才允许有效的会员支付续约费用。这可以防止人员连续多次付款。输入 \"0\" 或 \"无\" 来禁用它（默认）。"
 
-#: eme-functions.php:4246
+#: eme-functions.php:4247
 msgid "Google reCAPTCHA"
 msgstr "谷歌 reCAPTCHA"
 
-#: eme-functions.php:4248
+#: eme-functions.php:4249
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4250
+#: eme-functions.php:4251
 msgid "Cloudflare Turnstile"
 msgstr ""
 
@@ -13656,7 +13656,7 @@ msgstr ""
 msgid "Frontend Draft (unpaid)"
 msgstr ""
 
-#: eme-functions.php:4254
+#: eme-functions.php:4255
 msgid "Basic EME Captcha"
 msgstr ""
 
@@ -14140,7 +14140,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4252
+#: eme-functions.php:4253
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14204,7 +14204,7 @@ msgid "One person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 
-#: eme-functions.php:4312
+#: eme-functions.php:4313
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14281,7 +14281,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4314
+#: eme-functions.php:4315
 msgid "All selected columns are used for sorting"
 msgstr ""
 

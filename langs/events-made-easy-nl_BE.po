@@ -254,7 +254,7 @@ msgstr "Filter op einddatum"
 msgid "Filter attendances"
 msgstr "Filter aanwezigen"
 
-#: eme-functions.php:4308
+#: eme-functions.php:4309
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
@@ -7196,15 +7196,15 @@ msgstr "Verlenging voor actieve leden op basis van einddatum"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Laat actieve leden alleen betalen voor een verlenging als de einddatum van het lidmaatschap minder is dan het genoemde aantal dagen. Dit voorkomt dat mensen vele malen achter elkaar betalen. Voer 0 of niets in om dit uit te schakelen (de standaardinstelling)."
 
-#: eme-functions.php:4246
+#: eme-functions.php:4247
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4248
+#: eme-functions.php:4249
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4250
+#: eme-functions.php:4251
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13600,7 +13600,7 @@ msgstr "Selecteer een captcha die u wilt gebruiken"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (onbetaald)"
 
-#: eme-functions.php:4254
+#: eme-functions.php:4255
 msgid "Basic EME Captcha"
 msgstr "Basis EME-captcha"
 
@@ -14080,7 +14080,7 @@ msgstr "Verwijder ook gedefinieerde categorieën, sjablonen, feestdagen, korting
 msgid "Please check the Friendly Captcha box"
 msgstr "Vink het vakje Friendly Captcha aan"
 
-#: eme-functions.php:4252
+#: eme-functions.php:4253
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -14128,7 +14128,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] "Eén persoon heeft zich al aangemeld voor deze taak"
 msgstr[1] "%d personen hebben zich al aangemeld voor deze taak"
 
-#: eme-functions.php:4312
+#: eme-functions.php:4313
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Gebruik Ctrl-klik om op meerdere kolommen te sorteren"
 
@@ -14205,7 +14205,7 @@ msgstr "Terugbetaling is mogelijk."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Terugbetaling is mogelijk als er voldoende saldo op de rekening is."
 
-#: eme-functions.php:4314
+#: eme-functions.php:4315
 msgid "All selected columns are used for sorting"
 msgstr "Alle geselecteerde kolommen worden gebruikt voor sorteren"
 

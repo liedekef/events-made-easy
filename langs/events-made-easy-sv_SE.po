@@ -254,7 +254,7 @@ msgstr "Filtrera efter slutdatum"
 msgid "Filter attendances"
 msgstr ""
 
-#: eme-functions.php:4308
+#: eme-functions.php:4309
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 
@@ -7205,15 +7205,15 @@ msgstr ""
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr ""
 
-#: eme-functions.php:4246
+#: eme-functions.php:4247
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4248
+#: eme-functions.php:4249
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-functions.php:4250
+#: eme-functions.php:4251
 msgid "Cloudflare Turnstile"
 msgstr ""
 
@@ -13650,7 +13650,7 @@ msgstr ""
 msgid "Frontend Draft (unpaid)"
 msgstr ""
 
-#: eme-functions.php:4254
+#: eme-functions.php:4255
 msgid "Basic EME Captcha"
 msgstr ""
 
@@ -14134,7 +14134,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4252
+#: eme-functions.php:4253
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14199,7 +14199,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-functions.php:4312
+#: eme-functions.php:4313
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14276,7 +14276,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4314
+#: eme-functions.php:4315
 msgid "All selected columns are used for sorting"
 msgstr ""
 

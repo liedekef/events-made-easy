@@ -298,7 +298,7 @@ msgstr "Filtrovať podľa dátumu ukončenia"
 msgid "Filter attendances"
 msgstr "Filtrovať podľa účasti"
 
-#: eme-functions.php:4308
+#: eme-functions.php:4309
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zobrazenie a skrytie stĺpcov"
 
@@ -6111,19 +6111,19 @@ msgstr "Pri nahrávaní súborov sa vyskytli chyby"
 msgid "No such record"
 msgstr "Taký záznam neexistuje"
 
-#: eme-functions.php:4246
+#: eme-functions.php:4247
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4248
+#: eme-functions.php:4249
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4250
+#: eme-functions.php:4251
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: eme-functions.php:4254
+#: eme-functions.php:4255
 msgid "Basic EME Captcha"
 msgstr "Základná EME Captcha"
 
@@ -14073,7 +14073,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4252
+#: eme-functions.php:4253
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14139,7 +14139,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: eme-functions.php:4312
+#: eme-functions.php:4313
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14216,7 +14216,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4314
+#: eme-functions.php:4315
 msgid "All selected columns are used for sorting"
 msgstr ""
 

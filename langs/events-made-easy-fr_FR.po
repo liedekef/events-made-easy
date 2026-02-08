@@ -254,7 +254,7 @@ msgstr "Filtrer sur la date de fin"
 msgid "Filter attendances"
 msgstr "Filtre des présences"
 
-#: eme-functions.php:4308
+#: eme-functions.php:4309
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Astuce : cliquez avec le bouton droit sur les en-têtes de colonne pour afficher/masquer les colonnes"
 
@@ -7192,15 +7192,15 @@ msgstr "Renouvellement pour les membres actifs basé sur la date de fin"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Autoriser les membres actifs à payer pour un renouvellement uniquement si la date de fin d’adhésion est inférieure au nombre de jours mentionné. Cela empêche les personnes de payer plusieurs fois de suite. Saisissez 0 ou rien pour désactiver cette option (par défaut)."
 
-#: eme-functions.php:4246
+#: eme-functions.php:4247
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4248
+#: eme-functions.php:4249
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4250
+#: eme-functions.php:4251
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13598,7 +13598,7 @@ msgstr "Sélectionner un captcha à utiliser"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (non rémunéré)"
 
-#: eme-functions.php:4254
+#: eme-functions.php:4255
 msgid "Basic EME Captcha"
 msgstr "Captcha de base de l'EME"
 
@@ -14082,7 +14082,7 @@ msgstr "Supprimez également les catégories définies, les modèles, les jours 
 msgid "Please check the Friendly Captcha box"
 msgstr "Veuillez cocher la case Captcha amical"
 
-#: eme-functions.php:4252
+#: eme-functions.php:4253
 msgid "Friendly Captcha"
 msgstr "Captcha convivial"
 
@@ -14130,7 +14130,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] "Une personne s'est déjà inscrite pour cette tâche"
 msgstr[1] "%d personnes se sont déjà inscrites pour cette tâche"
 
-#: eme-functions.php:4312
+#: eme-functions.php:4313
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Utilisez Ctrl-clic pour trier sur plusieurs colonnes"
 
@@ -14207,7 +14207,7 @@ msgstr "Le remboursement est possible."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Le remboursement est possible si des fonds sont disponibles sur le compte."
 
-#: eme-functions.php:4314
+#: eme-functions.php:4315
 msgid "All selected columns are used for sorting"
 msgstr "Toutes les colonnes sélectionnées sont utilisées pour le tri"
 

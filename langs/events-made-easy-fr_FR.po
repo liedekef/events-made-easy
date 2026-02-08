@@ -87,14 +87,14 @@ msgstr "au nom de %s"
 msgid "Access denied!"
 msgstr "Accès refusé!"
 
-#: eme-actions.php:244
+#: eme-actions.php:248
 #: eme-events.php:6446
 #: eme-events.php:9689
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Évènement"
 
-#: eme-actions.php:253
+#: eme-actions.php:257
 #: eme-events.php:6447
 #: eme-events.php:8390
 #: eme-events.php:9638
@@ -102,7 +102,7 @@ msgstr "Évènement"
 msgid "Location"
 msgstr "Lieu"
 
-#: eme-actions.php:357
+#: eme-actions.php:361
 #: eme-events.php:9539
 #: eme-events.php:9783
 #: eme-events.php:9813
@@ -118,7 +118,7 @@ msgstr "Lieu"
 msgid "State"
 msgstr "État"
 
-#: eme-actions.php:358
+#: eme-actions.php:362
 #: eme-countries.php:513
 #: eme-events.php:9540
 #: eme-events.php:9782
@@ -135,30 +135,30 @@ msgstr "État"
 msgid "Country"
 msgstr "Pays"
 
-#: eme-actions.php:360
+#: eme-actions.php:364
 #: eme-events.php:9542
 msgid "An error has occurred"
 msgstr "Une erreur est survenue"
 
-#: eme-actions.php:361
+#: eme-actions.php:365
 msgid "Clear"
 msgstr "Vider"
 
-#: eme-actions.php:362
+#: eme-actions.php:366
 #: eme-events.php:9543
 msgid "Mailing preferences"
 msgstr "Préférences d’envoi"
 
-#: eme-actions.php:363
+#: eme-actions.php:367
 #: eme-events.php:9544
 msgid "Yes, I'm sure"
 msgstr "Oui, je suis sûr"
 
-#: eme-actions.php:505
+#: eme-actions.php:509
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Cette page correspond à la page des évènements <strong>Events Made Easy</strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à <strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
 
-#: eme-actions.php:540
+#: eme-actions.php:544
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Si vous trouvez qu’<strong>Events Made Easy</strong> vous est utile, envisagez de faire un petit don pour contribuer au temps investi et aux développements ultérieurs. Merci de votre soutien !"
 
@@ -915,7 +915,7 @@ msgstr "Nom de l'état"
 msgid "The name of the state"
 msgstr "Le nom de l'état"
 
-#: eme-actions.php:437
+#: eme-actions.php:441
 #: eme-countries.php:506
 #: eme-discounts.php:1726
 #: eme-events.php:9599
@@ -4154,7 +4154,7 @@ msgstr "États"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Aucun pays associé à cet état, il n'apparaîtra pas dans les listes déroulantes. Veuillez éditer cet état et corriger les informations sur le pays."
 
-#: eme-actions.php:417
+#: eme-actions.php:421
 #: eme-events.php:9623
 #: eme-events.php:9801
 msgid "No matching location found"
@@ -6020,7 +6020,7 @@ msgstr "EME utilise éventuellement un cookie pour stocker la date et l'heure du
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:695
+#: eme-actions.php:699
 #: eme-gdpr.php:520
 #: events-manager.php:364
 msgid "Events Made Easy"
@@ -6372,7 +6372,7 @@ msgstr "Sujet"
 msgid "Queued on"
 msgstr "En file d’attente"
 
-#: eme-actions.php:433
+#: eme-actions.php:437
 #: eme-events.php:9595
 #: eme-mailer.php:1667
 #: eme-mailer.php:1677
@@ -13385,15 +13385,15 @@ msgstr "À partir de %s (extension automatique)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Si le nombre de places pour une tâche est de 0, la description de la tâche sera traitée comme un en-tête de section pour la prochaine série de tâches."
 
-#: eme-actions.php:537
+#: eme-actions.php:541
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy a été installé ou mis à jour"
 
-#: eme-actions.php:538
+#: eme-actions.php:542
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Faites un don pour le développement d’Events Made Easy"
 
-#: eme-actions.php:548
+#: eme-actions.php:552
 msgid "Dismiss"
 msgstr "Ignorer"
 
@@ -13421,7 +13421,7 @@ msgstr "Corps de l’e-mail à la personne de contact d’un membre effacé"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Le corps de l’e-mail envoyé à la personne de contact juste avant la suppression d'un membre."
 
-#: eme-actions.php:700
+#: eme-actions.php:704
 msgid "List of next 10 events"
 msgstr "Liste des 10 prochains évènements"
 
@@ -14310,32 +14310,32 @@ msgstr "Cochez cette option si vous souhaitez envoyer les e-mails « payés »
 msgid "Use membership feature?"
 msgstr "Utiliser la fonctionnalité d'adhésion ?"
 
-#: eme-actions.php:431
+#: eme-actions.php:435
 #: eme-events.php:9593
 msgid "Insert image"
 msgstr "Insérer une image"
 
-#: eme-actions.php:432
+#: eme-actions.php:436
 #: eme-events.php:9594
 msgid "Insert"
 msgstr "Insérer"
 
-#: eme-actions.php:434
+#: eme-actions.php:438
 #: eme-events.php:9596
 msgid "Insert from Media Library"
 msgstr "Insérer depuis la médiathèque"
 
-#: eme-actions.php:435
+#: eme-actions.php:439
 #: eme-events.php:9597
 msgid "Preview"
 msgstr "Aperçu"
 
-#: eme-actions.php:436
+#: eme-actions.php:440
 #: eme-events.php:9598
 msgid "Visual"
 msgstr "Visuel"
 
-#: eme-actions.php:438
+#: eme-actions.php:442
 #: eme-events.php:9600
 msgid "Insert non-breaking space"
 msgstr "Insérer une espace insécable"
@@ -14383,7 +14383,7 @@ msgstr "Pour les champs qui acceptent plusieurs valeurs (comme les listes dérou
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
 msgstr "Pour les types 'Date (Javascript)', 'Datetime (Javascript)' et 'Time (Javascript)', vous pouvez entrer le mot 'NOW' pour utiliser automatiquement la date et/ou l’heure actuelles lors de l’affichage du champ."
 
-#: eme-actions.php:529
+#: eme-actions.php:533
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Salut, <strong>%s</strong>, bienvenue sur <strong>Events Made Easy</strong> ! Nous espérons que vous vous y plaisez.</p><p>Il est maintenant temps d'insérer des listes d'événements via des <a href='%s' title='Page des widgets'>widgets</a>, des <a href='%s' title='Documentation des balises de modèle'>balises de modèle</a> ou des <a href='%s' title='Documentation des shortcodes'>shortcodes</a>.</p><p>Au fait, avez-vous jeté un coup d'œil à la <a href='%s' title='Modifier les paramètres'>page des paramètres</a> ? C'est là que vous personnalisez l'affichage des événements et des lieux.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous comprends, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"
 

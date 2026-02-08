@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.39\n"
+"Project-Id-Version: Events Made Easy 3.0.40\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-08T09:03:41+00:00\n"
+"POT-Creation-Date: 2026-02-08T16:31:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:695
+#: eme-actions.php:699
 #: eme-gdpr.php:520
 #: events-manager.php:364
 msgid "Events Made Easy"
@@ -116,14 +116,14 @@ msgstr ""
 msgid "Access denied!"
 msgstr ""
 
-#: eme-actions.php:244
+#: eme-actions.php:248
 #: eme-events.php:6446
 #: eme-events.php:9689
 #: eme-templates.php:44
 msgid "Event"
 msgstr ""
 
-#: eme-actions.php:253
+#: eme-actions.php:257
 #: eme-events.php:6447
 #: eme-events.php:8390
 #: eme-events.php:9638
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: eme-actions.php:357
+#: eme-actions.php:361
 #: eme-events.php:9539
 #: eme-events.php:9783
 #: eme-events.php:9813
@@ -147,7 +147,7 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: eme-actions.php:358
+#: eme-actions.php:362
 #: eme-countries.php:513
 #: eme-events.php:9540
 #: eme-events.php:9782
@@ -164,42 +164,42 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: eme-actions.php:360
+#: eme-actions.php:364
 #: eme-events.php:9542
 msgid "An error has occurred"
 msgstr ""
 
-#: eme-actions.php:361
+#: eme-actions.php:365
 msgid "Clear"
 msgstr ""
 
-#: eme-actions.php:362
+#: eme-actions.php:366
 #: eme-events.php:9543
 msgid "Mailing preferences"
 msgstr ""
 
-#: eme-actions.php:363
+#: eme-actions.php:367
 #: eme-events.php:9544
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: eme-actions.php:417
+#: eme-actions.php:421
 #: eme-events.php:9623
 #: eme-events.php:9801
 msgid "No matching location found"
 msgstr ""
 
-#: eme-actions.php:431
+#: eme-actions.php:435
 #: eme-events.php:9593
 msgid "Insert image"
 msgstr ""
 
-#: eme-actions.php:432
+#: eme-actions.php:436
 #: eme-events.php:9594
 msgid "Insert"
 msgstr ""
 
-#: eme-actions.php:433
+#: eme-actions.php:437
 #: eme-events.php:9595
 #: eme-mailer.php:1667
 #: eme-mailer.php:1677
@@ -208,22 +208,22 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: eme-actions.php:434
+#: eme-actions.php:438
 #: eme-events.php:9596
 msgid "Insert from Media Library"
 msgstr ""
 
-#: eme-actions.php:435
+#: eme-actions.php:439
 #: eme-events.php:9597
 msgid "Preview"
 msgstr ""
 
-#: eme-actions.php:436
+#: eme-actions.php:440
 #: eme-events.php:9598
 msgid "Visual"
 msgstr ""
 
-#: eme-actions.php:437
+#: eme-actions.php:441
 #: eme-countries.php:506
 #: eme-discounts.php:1726
 #: eme-events.php:9599
@@ -232,36 +232,36 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: eme-actions.php:438
+#: eme-actions.php:442
 #: eme-events.php:9600
 msgid "Insert non-breaking space"
 msgstr ""
 
-#: eme-actions.php:505
+#: eme-actions.php:509
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr ""
 
-#: eme-actions.php:529
+#: eme-actions.php:533
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:537
+#: eme-actions.php:541
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:538
+#: eme-actions.php:542
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:540
+#: eme-actions.php:544
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr ""
 
-#: eme-actions.php:548
+#: eme-actions.php:552
 msgid "Dismiss"
 msgstr ""
 
-#: eme-actions.php:700
+#: eme-actions.php:704
 msgid "List of next 10 events"
 msgstr ""
 

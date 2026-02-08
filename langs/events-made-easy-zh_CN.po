@@ -87,14 +87,14 @@ msgstr ""
 msgid "Access denied!"
 msgstr "拒绝访问!"
 
-#: eme-actions.php:244
+#: eme-actions.php:248
 #: eme-events.php:6446
 #: eme-events.php:9689
 #: eme-templates.php:44
 msgid "Event"
 msgstr "活动"
 
-#: eme-actions.php:253
+#: eme-actions.php:257
 #: eme-events.php:6447
 #: eme-events.php:8390
 #: eme-events.php:9638
@@ -102,7 +102,7 @@ msgstr "活动"
 msgid "Location"
 msgstr "地点"
 
-#: eme-actions.php:357
+#: eme-actions.php:361
 #: eme-events.php:9539
 #: eme-events.php:9783
 #: eme-events.php:9813
@@ -118,7 +118,7 @@ msgstr "地点"
 msgid "State"
 msgstr "州/省"
 
-#: eme-actions.php:358
+#: eme-actions.php:362
 #: eme-countries.php:513
 #: eme-events.php:9540
 #: eme-events.php:9782
@@ -135,30 +135,30 @@ msgstr "州/省"
 msgid "Country"
 msgstr "国家"
 
-#: eme-actions.php:360
+#: eme-actions.php:364
 #: eme-events.php:9542
 msgid "An error has occurred"
 msgstr "出现错误。"
 
-#: eme-actions.php:361
+#: eme-actions.php:365
 msgid "Clear"
 msgstr "清空"
 
-#: eme-actions.php:362
+#: eme-actions.php:366
 #: eme-events.php:9543
 msgid "Mailing preferences"
 msgstr "邮寄优先权"
 
-#: eme-actions.php:363
+#: eme-actions.php:367
 #: eme-events.php:9544
 msgid "Yes, I'm sure"
 msgstr "是的，我肯定"
 
-#: eme-actions.php:505
+#: eme-actions.php:509
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "本页对应于 <strong>Events Made Easy</strong> 的活动页面。它的内容将被 <strong>Events Made Easy</strong> 覆盖。如果您想显示您的内容，您可以在 <a href='%s'>Settings</a> 中为 <strong>Events Made Easy</strong> 指定另一个页面。"
 
-#: eme-actions.php:540
+#: eme-actions.php:544
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "如果您觉得 <strong>Events Made Easy</strong> 对您有用，请考虑进行小额捐赠，以帮助我投入时间和进一步发展。谢谢您的善意支持!"
 
@@ -919,7 +919,7 @@ msgstr "州名"
 msgid "The name of the state"
 msgstr "州的名称"
 
-#: eme-actions.php:437
+#: eme-actions.php:441
 #: eme-countries.php:506
 #: eme-discounts.php:1726
 #: eme-events.php:9599
@@ -4169,7 +4169,7 @@ msgstr "州"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 
-#: eme-actions.php:417
+#: eme-actions.php:421
 #: eme-events.php:9623
 #: eme-events.php:9801
 msgid "No matching location found"
@@ -6027,7 +6027,7 @@ msgstr "EME 有选择地使用一个 cookie 来存储客户端的日期和时间
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:695
+#: eme-actions.php:699
 #: eme-gdpr.php:520
 #: events-manager.php:364
 msgid "Events Made Easy"
@@ -6381,7 +6381,7 @@ msgstr "主题"
 msgid "Queued on"
 msgstr "排列的时间是"
 
-#: eme-actions.php:433
+#: eme-actions.php:437
 #: eme-events.php:9595
 #: eme-mailer.php:1667
 #: eme-mailer.php:1677
@@ -13443,15 +13443,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:537
+#: eme-actions.php:541
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:538
+#: eme-actions.php:542
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:548
+#: eme-actions.php:552
 msgid "Dismiss"
 msgstr ""
 
@@ -13479,7 +13479,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:700
+#: eme-actions.php:704
 msgid "List of next 10 events"
 msgstr ""
 
@@ -14384,32 +14384,32 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
-#: eme-actions.php:431
+#: eme-actions.php:435
 #: eme-events.php:9593
 msgid "Insert image"
 msgstr ""
 
-#: eme-actions.php:432
+#: eme-actions.php:436
 #: eme-events.php:9594
 msgid "Insert"
 msgstr ""
 
-#: eme-actions.php:434
+#: eme-actions.php:438
 #: eme-events.php:9596
 msgid "Insert from Media Library"
 msgstr ""
 
-#: eme-actions.php:435
+#: eme-actions.php:439
 #: eme-events.php:9597
 msgid "Preview"
 msgstr ""
 
-#: eme-actions.php:436
+#: eme-actions.php:440
 #: eme-events.php:9598
 msgid "Visual"
 msgstr ""
 
-#: eme-actions.php:438
+#: eme-actions.php:442
 #: eme-events.php:9600
 msgid "Insert non-breaking space"
 msgstr ""
@@ -14457,7 +14457,7 @@ msgstr ""
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
 msgstr ""
 
-#: eme-actions.php:529
+#: eme-actions.php:533
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 

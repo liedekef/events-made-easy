@@ -87,14 +87,14 @@ msgstr "in naam van %s"
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
-#: eme-actions.php:244
+#: eme-actions.php:248
 #: eme-events.php:6446
 #: eme-events.php:9689
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Evenement"
 
-#: eme-actions.php:253
+#: eme-actions.php:257
 #: eme-events.php:6447
 #: eme-events.php:8390
 #: eme-events.php:9638
@@ -102,7 +102,7 @@ msgstr "Evenement"
 msgid "Location"
 msgstr "Locatie"
 
-#: eme-actions.php:357
+#: eme-actions.php:361
 #: eme-events.php:9539
 #: eme-events.php:9783
 #: eme-events.php:9813
@@ -118,7 +118,7 @@ msgstr "Locatie"
 msgid "State"
 msgstr "Staat/Provincie"
 
-#: eme-actions.php:358
+#: eme-actions.php:362
 #: eme-countries.php:513
 #: eme-events.php:9540
 #: eme-events.php:9782
@@ -135,30 +135,30 @@ msgstr "Staat/Provincie"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:360
+#: eme-actions.php:364
 #: eme-events.php:9542
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 
-#: eme-actions.php:361
+#: eme-actions.php:365
 msgid "Clear"
 msgstr "Leegmaken"
 
-#: eme-actions.php:362
+#: eme-actions.php:366
 #: eme-events.php:9543
 msgid "Mailing preferences"
 msgstr "Mailing voorkeuren"
 
-#: eme-actions.php:363
+#: eme-actions.php:367
 #: eme-events.php:9544
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
-#: eme-actions.php:505
+#: eme-actions.php:509
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
-#: eme-actions.php:540
+#: eme-actions.php:544
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -915,7 +915,7 @@ msgstr "Staat/provincie naam"
 msgid "The name of the state"
 msgstr "De staat/provincie naam"
 
-#: eme-actions.php:437
+#: eme-actions.php:441
 #: eme-countries.php:506
 #: eme-discounts.php:1726
 #: eme-events.php:9599
@@ -4154,7 +4154,7 @@ msgstr "Provincies/staten"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Geen land geassocieerd met deze provincie, deze zal niet getoond worden in dropdown lijsten. Pas deze provincie aan met de correcte land info."
 
-#: eme-actions.php:417
+#: eme-actions.php:421
 #: eme-events.php:9623
 #: eme-events.php:9801
 msgid "No matching location found"
@@ -6024,7 +6024,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:695
+#: eme-actions.php:699
 #: eme-gdpr.php:520
 #: events-manager.php:364
 msgid "Events Made Easy"
@@ -6177,7 +6177,7 @@ msgstr "Locatiecoördinaten overschrijven"
 
 #: eme-locations.php:631
 msgid "Location map icon url"
-msgstr "Loactie kaart pictogram url"
+msgstr "Locatie kaart pictogram url"
 
 #: eme-locations.php:635
 msgid "Map icon url"
@@ -6376,7 +6376,7 @@ msgstr "Onderwerp"
 msgid "Queued on"
 msgstr "In de wachtrij gezet op"
 
-#: eme-actions.php:433
+#: eme-actions.php:437
 #: eme-events.php:9595
 #: eme-mailer.php:1667
 #: eme-mailer.php:1677
@@ -13387,15 +13387,15 @@ msgstr "Vanaf %s (automatisch verlengd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Als het aantal plaatsen voor een taak 0 is, wordt de taakbeschrijving behandeld als sectiehoofd voor de volgende reeks taken."
 
-#: eme-actions.php:537
+#: eme-actions.php:541
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: eme-actions.php:538
+#: eme-actions.php:542
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
-#: eme-actions.php:548
+#: eme-actions.php:552
 msgid "Dismiss"
 msgstr "Negeren"
 
@@ -13423,7 +13423,7 @@ msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: eme-actions.php:700
+#: eme-actions.php:704
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
@@ -14308,32 +14308,32 @@ msgstr "Schakel deze optie in als u de betaalde e-mails zo snel mogelijk wilt ve
 msgid "Use membership feature?"
 msgstr "Lidmaatschapsfunctie gebruiken?"
 
-#: eme-actions.php:431
+#: eme-actions.php:435
 #: eme-events.php:9593
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
 
-#: eme-actions.php:432
+#: eme-actions.php:436
 #: eme-events.php:9594
 msgid "Insert"
 msgstr "Invoegen"
 
-#: eme-actions.php:434
+#: eme-actions.php:438
 #: eme-events.php:9596
 msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
-#: eme-actions.php:435
+#: eme-actions.php:439
 #: eme-events.php:9597
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: eme-actions.php:436
+#: eme-actions.php:440
 #: eme-events.php:9598
 msgid "Visual"
 msgstr "Visueel"
 
-#: eme-actions.php:438
+#: eme-actions.php:442
 #: eme-events.php:9600
 msgid "Insert non-breaking space"
 msgstr "Vaste spatie invoegen"
@@ -14381,7 +14381,7 @@ msgstr "Voor velden die meerdere waarden ondersteunen (zoals keuzelijst of check
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
 msgstr "Voor de types 'Datum (Javascript)', 'Datumtijd (Javascript)' en 'Tijd (Javascript)' kun je optioneel het woord 'NOW' invoeren om automatisch de huidige datum en/of tijd te gebruiken wanneer het veld wordt weergegeven."
 
-#: eme-actions.php:529
+#: eme-actions.php:533
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo, <strong>%s</strong>, welkom bij <strong>Events Made Easy</strong>! We hopen dat je het hier naar je zin hebt.</p><p>Nu is het tijd om evenementenlijsten toe te voegen via <a href='%s' title='Widgets pagina'>widgets</a>, <a href='%s' title='Documentatie over template tags'>template tags</a> of <a href='%s' title='Documentatie over shortcodes'>shortcodes</a>.</p><p>Trouwens, heb je al een kijkje genomen op de <a href='%s' title='Instellingen wijzigen'>Instellingenpagina</a>? Daar pas je aan hoe evenementen en locaties worden weergegeven.</p><p>Wat? Ben je het zat om dit advies te zien? Ik snap het, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Laat dit advies niet meer zien\">klik hier</a> en je zult dit niet meer zien!</p>"
 
@@ -14595,8 +14595,8 @@ msgstr "'Ja' maakt inzoomen met het scrollwiel op de kaart mogelijk. 'Nee' maakt
 
 #: eme-locations.php:621
 msgid "Location balloon format"
-msgstr ""
+msgstr "Locatie \"ballon\"-opmaak"
 
 #: eme-locations.php:625
 msgid "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default."
-msgstr ""
+msgstr "Als je de standaard \"ballon\"-opmaak niet mooi vindt, kun je hier iets anders instellen. Laat dit veld leeg om de standaardopmaak te behouden."

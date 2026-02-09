@@ -85,7 +85,7 @@ function eme_holidays_table_layout( $message = '' ) {
     <h1><?php esc_html_e( 'Manage list of holidays', 'events-made-easy' ); ?></h1>
     <?php if ( $message != '' ) { ?>
     <div id="message" class="updated notice notice-success is-dismissible">
-         <p><?php echo esc_html( $message ); ?></p>
+         <p><?php echo nl2br( esc_html( $message ) ); ?></p>
     </div>
     <?php } ?>
 

@@ -9536,8 +9536,8 @@ function eme_admin_enqueue_js() {
         $translation_array = [
             'translate_plugin_url'         => esc_url(EME_PLUGIN_URL),
             'translate_ajax_url'           => admin_url( 'admin-ajax.php' ),
-            'translate_selectstate'        => __( 'State', 'events-made-easy' ),
-            'translate_selectcountry'      => __( 'Country', 'events-made-easy' ),
+            'translate_selectstate'        => __( 'Select state/province', 'events-made-easy' ),
+            'translate_selectcountry'      => __( 'Select country', 'events-made-easy' ),
             'translate_frontendnonce'      => wp_create_nonce( 'eme_frontend' ),
             'translate_error'              => __( 'An error has occurred', 'events-made-easy' ),
             'translate_mailingpreferences' => __( 'Mailing preferences', 'events-made-easy' ),

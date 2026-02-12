@@ -3010,7 +3010,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2_fitcontent', $extra_attributes, 1, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_fitcontent', $extra_attributes, 1, id_prefix: $id_prefix );
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
         }

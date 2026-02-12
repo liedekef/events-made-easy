@@ -2472,8 +2472,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     </h1>
 
     <?php if ( $message != '' ) { ?>
-        <div id="message" class="updated notice notice-success is-dismissible">
-            <p><?php echo $message; ?></p>
+        <div id="message">
+            <?php echo $message; ?>
         </div>
     <?php } ?>
     <div id="ajax-response"></div>
@@ -2753,7 +2753,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
     </h1>
 
     <?php if ( $message != '' ) { ?>
-        <div id="message" class="updated notice notice-success is-dismissible">
+        <div id="message">
             <p><?php echo $message; ?></p>
         </div>
     <?php } ?>

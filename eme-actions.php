@@ -279,7 +279,7 @@ add_action( 'wp_footer', 'eme_general_footer' );
 
 function eme_admin_register_scripts() {
     $eme_plugin_dir  = eme_plugin_dir();
-    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/dist/snapselect.min.js', [], EME_VERSION );
+    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION );
@@ -337,7 +337,7 @@ function eme_admin_register_scripts() {
         wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
     }
     wp_register_style( 'eme-ftable-css', EME_PLUGIN_URL . 'js/ftable/themes/lightcolor/gray/ftable.min.css' );
-    wp_register_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/dist/snapselect.min.css' );
+    wp_register_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.css' );
     wp_register_style( 'eme-ftables-css', EME_PLUGIN_URL . 'css/ftables.css', [], EME_VERSION );
     eme_admin_enqueue_js();
 }
@@ -352,7 +352,7 @@ function eme_register_scripts() {
     }
     $language = eme_detect_lang();
 
-    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/dist/snapselect.min.js', [], EME_VERSION );
+    wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, $load_js_in_footer );
     $eme_fs_options = get_option('eme_fs');
     $translation_array = [
@@ -467,7 +467,7 @@ function eme_enqueue_frontend() {
         wp_enqueue_script( 'eme-select' );
         // for english, no translation code is needed)
         wp_enqueue_script( 'eme-basic' );
-        wp_enqueue_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/dist/snapselect.min.css', [], EME_VERSION );
+        wp_enqueue_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.css', [], EME_VERSION );
 
         wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );
         wp_enqueue_style( 'eme_stylesheet', EME_PLUGIN_URL . 'css/eme.css', [], EME_VERSION );

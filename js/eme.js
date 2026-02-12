@@ -77,7 +77,7 @@ function initSnapSelect(selector, options = {}) {
 
         const config = {
             placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
-            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : true,
+            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : false,
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : !el.multiple,
             allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : false,
@@ -113,7 +113,6 @@ function initSnapSelectRemote(selector, options = {}) {
 
         const config = {
             placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
-            liveSearch:     true,
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  !el.multiple,
             allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
@@ -147,7 +146,7 @@ function initSnapSelectRemote(selector, options = {}) {
 
                 delay:              300,
                 minimumInputLength: 0,
-                cache:              typeof ajaxParams === 'function' ? false : true,
+                cache:              typeof ajaxParams === 'function' ? false : true, // if ajaxParams is a function, we don't cache at all
                 method:             'GET'
             },
             pageSize: pagesize

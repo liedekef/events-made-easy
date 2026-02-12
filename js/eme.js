@@ -57,27 +57,9 @@ function eme_toggle(el, show) {
     //if (el) el.style.display = show ? '' : 'none';
 }
 
-function setTomSelectChWidth(tomselect, extraChars = 0) {
-    const control = tomselect.control;
-    const placeholder = tomselect.settings.placeholder || 'Select...';
-    let text = placeholder;
 
-    // If something is selected, use that instead
-    if (tomselect.items.length > 0) {
-        const item = tomselect.options[tomselect.items[0]];
-        if (item && item.text) {
-            text = item.text;
-        }
-    }
 
-    // Add extra chars for dropdown arrow, padding, etc.
-    const chWidth = Math.max(text.length + extraChars, 8); // at least 8ch
-
-    // Apply via CSS variable or direct style
-    control.style.minWidth = `${chWidth}ch`;
-}
-
-function initTomSelect(selector, options = {}) {
+function initSnapSelect(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'
         ? EME.$$(selector)
@@ -85,88 +67,29 @@ function initTomSelect(selector, options = {}) {
 
     if (!elements.length) return [];
 
-    // Default configuration
-    const defaults = {
-        plugins: ['remove_button'],
-        placeholder: null,
-        hidePlaceholder: true,
-    };
-
-    // Merge options
-    // const settings = Object.assign({}, defaults, options);
-    // Destructure to separate plugin options
-    const { plugins, extraPlugins = [], ...userOptions } = options;
-
-    // Merge plugin arrays (with deduplication)
-    const mergedPlugins = [
-        ...new Set([
-            ...(plugins || defaults.plugins),       // User's plugins or defaults
-            ...(Array.isArray(extraPlugins) ? extraPlugins : [])  // extraPlugins if provided
-        ])
-    ];
-
-    // Final settings
-    const settings = {
-        ...defaults,
-        ...userOptions,
-        plugins: mergedPlugins,
-
-    };
-
     return Array.from(elements).map(el => {
-        if (el.tomselectInitialized || (el.tomselect && !el.tomselect.destroyed)) {
-            return el.tomselect; // Return existing instance
-        }
+        // Guard: skip if already initialised
+        if (el.snapselectInstance) return el.snapselectInstance;
+
         if (!el.id) {
-            el.id = 'tom-select-' + Math.random().toString(36).slice(2, 11);
+            el.id = 'snap-select-' + Math.random().toString(36).slice(2, 11);
         }
 
         const config = {
-            plugins: settings.plugins,
-            placeholder: settings.placeholder,
-            render: {
-                item: function(data, escape) {
-                    if (!data.optgroup) {
-                        return `<div>${escape(data.text)}</div>`;
-                    }
-                    const groupHeader = this.dropdown_content.querySelector(
-                        `.optgroup[data-group="${data.optgroup}"] .optgroup-header`
-                    );
-                    const groupLabel = groupHeader?.textContent || '';
+            placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
+            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : true,
+            clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
+            closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : !el.multiple,
+            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : false,
+        };
 
-                    return groupLabel
-                        ? `<div>${escape(groupLabel)} > ${escape(data.text)}</div>`
-                        : `<div>${escape(data.text)}</div>`;
-                }
-            },
-            onItemAdd: function() {
-                if (!this.settings.mode || this.settings.mode === 'single') {
-                    this.blur(); // Remove focus after selection
-                }
-            },
-            // Parse standard data-attributes
-            ...Object.entries(el.dataset).reduce((acc, [key, value]) => {
-                //if (key.startsWith('ts')) {
-                   // const optName = key.replace('ts', '').replace(/([A-Z])/, g => g[0].toLowerCase());
-                    // Try parsing JSON for complex values
-                  //  try { acc[optName] = JSON.parse(value); }
-                   // catch { acc[optName] = value; }
-                //}
-                try { acc[key] = JSON.parse(value); }
-                catch { acc[key] = value; }
-                return acc;
-            }, {})
-        }
-        const tomselect = new TomSelect(el, config);
-        setTomSelectChWidth(tomselect);
-
-        el.tomselectInitialized = true;
-        el.tomselect = tomselect;
-        return tomselect;
+        const instance = new SnapSelectClass(el, config);
+        el.snapselectInstance = instance;
+        return instance;
     });
 }
 
-function initTomSelectRemote(selector, options = {}) {
+function initSnapSelectRemote(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'
         ? EME.$$(selector)
@@ -174,131 +97,85 @@ function initTomSelectRemote(selector, options = {}) {
 
     if (!elements.length) return [];
 
-    // Default configuration
-    const defaults = {
-        plugins: ['virtual_scroll', 'dropdown_input', 'remove_button'],
-        valueField: 'id',
-        labelField: 'text',
-        searchField: ['text'],
-        maxOptions: 500,
-        preload: 'focus',
-        placeholder: null,
-        hidePlaceholder: true,
-        pagesize: 10,
-        action: 'default_select_action',
-        url: emebasic.translate_ajax_url,
-        ajaxParams: { }
-    };
-
-    // Merge options
-    // const settings = Object.assign({}, defaults, options);
-    // Destructure to separate plugin options
-    const { plugins, extraPlugins = [], ...userOptions } = options;
-
-    // Merge plugin arrays (with deduplication)
-    const mergedPlugins = [
-        ...new Set([
-            ...(plugins || defaults.plugins),       // User's plugins or defaults
-            ...(Array.isArray(extraPlugins) ? extraPlugins : [])  // extraPlugins if provided
-        ])
-    ];
-
-    // Final settings
-    const settings = {
-        ...defaults,
-        ...userOptions,
-        plugins: mergedPlugins
-    };
-
     return Array.from(elements).map(el => {
-        if (el.tomselectInitialized || (el.tomselect && !el.tomselect.destroyed)) {
-            return el.tomselect; // Return existing instance
-        }
+        // Guard: skip if already initialised
+        if (el.snapselectInstance) return el.snapselectInstance;
+
         if (!el.id) {
-            el.id = 'tom-select-' + Math.random().toString(36).slice(2, 11);
+            el.id = 'snap-select-' + Math.random().toString(36).slice(2, 11);
         }
+
+        // Build the ajax.url function, incorporating any extra ajaxParams
+        const ajaxUrl    = options.url    || emebasic.translate_ajax_url;
+        const action     = options.action || 'default_select_action';
+        const pagesize   = options.pagesize || 10;
+        const ajaxParams = options.ajaxParams || {};
 
         const config = {
-            plugins: settings.plugins,
-            valueField: settings.valueField,
-            labelField: settings.labelField,
-            searchField: settings.searchField,
-            maxOptions: settings.maxOptions,
-            preload: settings.preload,
-            placeholder: settings.placeholder,
-            firstUrl: settings.firstUrl || function(query) {
-                const ajaxParams = typeof settings.ajaxParams === 'function'
-                ? settings.ajaxParams()
-                : settings.ajaxParams;
+            placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
+            liveSearch:     true,
+            clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
+            closeOnSelect:  !el.multiple,
+            allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
 
-                const params = new URLSearchParams({
-                    q: query || '',
-                    page: 1,
-                    pagesize: settings.pagesize,
-                    action: settings.action,
-                    ...ajaxParams
-                });
-                return settings.url + '?' + params.toString();
-            },
-            load: settings.load || function(query, callback) {
-                const url = this.getUrl(query);
-                fetch(url)
-                    .then(response => response.json())
-                    .then(json => {
-                        const urlParams = new URLSearchParams(url.split('?')[1] || '');
-                        const cur_page = parseInt(urlParams.get('page')) || 1;
+            ajax: {
+                // Allow caller to pass a custom url function (e.g. for state→country cascade)
+                url: options.firstUrl || function(search, page) {
+                    const extra = typeof ajaxParams === 'function' ? ajaxParams() : ajaxParams;
+                    const params = new URLSearchParams({
+                        q:        search || '',
+                        page:     page,
+                        pagesize: pagesize,
+                        action:   action,
+                        ...extra
+                    });
+                    return ajaxUrl + '?' + params.toString();
+                },
 
-                        if (json.TotalRecordCount > cur_page * settings.pagesize) {
-                            const ajaxParams = typeof settings.ajaxParams === 'function'
-                            ? settings.ajaxParams()
-                            : settings.ajaxParams;
+                processResults: function(data, search, page) {
+                    // EME backend returns { TotalRecordCount, Records:[{id,text},...] }
+                    // or a plain array
+                    const records = Array.isArray(data)
+                        ? data
+                        : (data.Records || []);
+                    const total   = data.TotalRecordCount !== undefined
+                        ? data.TotalRecordCount
+                        : records.length;
+                    const hasMore = total > page * pagesize;
+                    return { results: records, hasMore };
+                },
 
-                            const nextParams = new URLSearchParams({
-                                q: query,
-                                page: cur_page + 1,
-                                pagesize: settings.pagesize,
-                                action: settings.action,
-                                ...ajaxParams
-                            });
-                            this.setNextUrl(query, url + '?' + nextParams.toString());
-                        }
-                        callback(json.Records || json);
-                    })
-                    .catch(() => callback());
+                delay:              300,
+                minimumInputLength: 0,
+                cache:              typeof ajaxParams === 'function' ? false : true,
+                method:             'GET'
             },
-            onItemAdd: function() {
-                if (!this.settings.mode || this.settings.mode === 'single') {
-                    this.blur(); // Remove focus after selection
-                }
-            },
-            // Copy all other settings except those already handled
-            ...Object.entries(settings).reduce((acc, [key, value]) => {
-                if (!['plugins', 'valueField', 'labelField', 'searchField', 'maxOptions', 'preload', 'placeholder', 'url', 'action', 'pagesize', 'ajaxParams', 'firstUrl', 'load'].includes(key)) {
-                    acc[key] = value;
-                }
-                return acc;
-            }, {}),
-            // Parse standard data-attributes
-            ...Object.entries(el.dataset).reduce((acc, [key, value]) => {
-                //if (key.startsWith('ts')) {
-                 //   const optName = key.replace('ts', '').replace(/([A-Z])/, g => g[0].toLowerCase());
-                    // Try parsing JSON for complex values
-                 //   try { acc[optName] = JSON.parse(value); }
-                 //   catch { acc[optName] = value; }
-                //}
-                // Try parsing JSON for complex values
-                try { acc[key] = JSON.parse(value); }
-                catch { acc[key] = value; }
-                return acc;
-            }, {})
+            pageSize: pagesize
         };
 
-        const tomselect = new TomSelect(el, config);
-        setTomSelectChWidth(tomselect);
+        // Allow caller to supply a fully custom processResults
+        if (typeof options.processResults === 'function') {
+            config.ajax.processResults = options.processResults;
+        }
 
-        el.tomselectInitialized = true;
-        el.tomselect = tomselect;
-        return tomselect;
+        const instance = new SnapSelectClass(el, config);
+
+        // Expose a .snapselect property on the element
+        el.snapselectInstance = instance;
+
+        // Wire up optional change callbacks
+        if (options.onItemAdd || options.onItemRemove) {
+            el.addEventListener('change', function() {
+                if (options.onItemAdd && this.value) {
+                    options.onItemAdd.call({ input: el }, this.value);
+                }
+                if (options.onItemRemove && !this.value) {
+                    options.onItemRemove.call({ input: el }, this.value);
+                }
+            });
+        }
+
+        return instance;
     });
 }
 
@@ -410,64 +287,52 @@ function eme_init_widgets(dynamicOnly = false) {
     });
 
     // Basic select2 replacement
-    initTomSelect('select.eme_select2' + dynamicSelector);
-    initTomSelect('select.eme_select2_width50_class' + dynamicSelector);
-    initTomSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
-        valueField: 'id',
-        labelField: 'text',
-        searchField: ['text'],
+    initSnapSelect('select.eme_select2' + dynamicSelector);
+    initSnapSelect('select.eme_select2_width50_class' + dynamicSelector);
+    initSnapSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
         action: 'eme_select_country',
         pagesize: 30,
         ajaxParams: {
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
-        onItemAdd: function(value, $item) {
-            // Clear corresponding state field when country changes
-            const form = this.input.closest('form');
+        // When country changes, reset the state field in the same form
+        onItemAdd: function(value) {
+            const form       = this.input.closest('form');
             const stateField = form?.querySelector('.eme_select2_state_class');
-            if (stateField && stateField.tomselect) {
-                stateField.tomselect.clear();
-                stateField.tomselect.clearOptions();
-                stateField.tomselect.load();
+            if (stateField && stateField.snapselectInstance) {
+                stateField.snapselectInstance.clear();
+                stateField.snapselectInstance.clearCache();
             }
         },
         onItemRemove: function(value) {
-            const form = this.input.closest('form');
+            const form       = this.input.closest('form');
             const stateField = form?.querySelector('.eme_select2_state_class');
-            if (stateField && stateField.tomselect) {
-                stateField.tomselect.clear();
-                stateField.tomselect.clearOptions();
-                stateField.tomselect.load();
+            if (stateField && stateField.snapselectInstance) {
+                stateField.snapselectInstance.clear();
+                stateField.snapselectInstance.clearCache();
             }
         }
     });
 
-    initTomSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
-        valueField: 'id',
-        labelField: 'text',
-        searchField: ['text'],
+    initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
         action: 'eme_select_state',
         pagesize: 30,
-        firstUrl: function(query) {
-            const form = this.input.closest('form');
-            const countryField = form?.querySelector('[name=country_code]');
-            const countryCode = countryField?.value || '';
-            const params = new URLSearchParams({
-                q: query || '',
-                page: 1,
-                pagesize: 30,
-                action: 'eme_select_state',
+        // Dynamically include the currently selected country_code in every request
+        ajaxParams: function() {
+            const stateEl     = document.querySelector('select.eme_select2_state_class');
+            const form        = stateEl?.closest('form');
+            const countryCode = form?.querySelector('[name=country_code]')?.value || '';
+            return {
                 eme_frontend_nonce: emebasic.translate_frontendnonce,
                 country_code: countryCode
-            });
-            return emebasic.translate_ajax_url + '?' + params.toString();
+            };
         }
     });
 
-    initTomSelect('select.eme_select2_filter' + dynamicSelector);
-    initTomSelect('select.eme_select2_fitcontent' + dynamicSelector);
+    initSnapSelect('select.eme_select2_filter' + dynamicSelector);
+    initSnapSelect('select.eme_select2_fitcontent' + dynamicSelector);
 
 }
 

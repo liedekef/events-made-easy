@@ -96,6 +96,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.41  (2026//) =
+* Use modified snapselect instead of tomselect
+* Fix country and state names when editing a person
+
 = 3.0.40  (2026/02/08) =
 * Fix csv and printable reports if there's an older discount present
 

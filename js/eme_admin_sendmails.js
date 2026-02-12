@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     form.reset();
                     resetSelectors.forEach(sel => {
                         const el = EME.$(sel);
-                        if (el && el.tomselect) {
-                            el.tomselect.clear();
+                        if (el && el.snapselectInstance) {
+                            el.snapselectInstance.clear();
                         }
                     });
                     if (typeof extraReset === 'function') extraReset();
@@ -717,17 +717,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initTomSelectRemote('select.eme_select2_events_class', {
-        placeholder: ememails.translate_selectevents,
-        extraPlugins: ['remove_button'],
-        pagesize: 30,
+    initSnapSelectRemote('select.eme_select2_events_class', {
         action: 'eme_events_select2',
-            ajaxParams: function() {
-                return {
-                    search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
-                    eme_admin_nonce: ememails.translate_adminnonce
-                };
-            }
+        placeholder: ememails.translate_selectevents,
+        allowEmpty: true,
+        ajaxParams: function() {
+            return {
+                search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
+                eme_admin_nonce: ememails.translate_adminnonce
+            };
+        }
     });
-
 });

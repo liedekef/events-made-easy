@@ -481,44 +481,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    initTomSelectRemote('select.eme_select2_members_class', {
+    initSnapSelectRemote('select.eme_select2_members_class', {
         action: 'eme_members_select2',
-	    placeholder: emeadmin.translate_selectmembers,
-	    extraPlugins: ['remove_button'],
-	    ajaxParams: {
-		    pagesize: 30,
-		    eme_admin_nonce: emeadmin.translate_adminnonce,
-	    }
+        placeholder: emeadmin.translate_selectmembers,
+        ajaxParams: {
+            pagesize: 30,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
+        }
     });
-    initTomSelectRemote('select.eme_select2_people_class', {
+    initSnapSelectRemote('select.eme_select2_people_class', {
         action: 'eme_people_select2',
         placeholder: emeadmin.translate_selectpersons,
-	    extraPlugins: ['remove_button'],
-	    ajaxParams: {
-		    pagesize: 30,
-		    eme_admin_nonce: emeadmin.translate_adminnonce,
-	    }
+        ajaxParams: {
+            pagesize: 30,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
+        }
     });
-    initTomSelectRemote('select.eme_select2_discounts_class', {
+    initSnapSelectRemote('select.eme_select2_discounts_class', {
         action: 'eme_discounts_select2',
-	    extraPlugins: ['remove_button'],
-	    ajaxParams: {
-		    pagesize: 30,
-		    eme_admin_nonce: emeadmin.translate_adminnonce,
-	    }
+        ajaxParams: {
+            pagesize: 30,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
+        }
     });
-    initTomSelectRemote('select.eme_select2_dgroups_class', {
+    initSnapSelectRemote('select.eme_select2_dgroups_class', {
         action: 'eme_dgroups_select2',
-	    extraPlugins: ['remove_button'],
-	    ajaxParams: {
-		    pagesize: 30,
-		    eme_admin_nonce: emeadmin.translate_adminnonce,
-	    }
+        ajaxParams: {
+            pagesize: 30,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
+        }
     });
-    initTomSelect('select.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
-    initTomSelect('select.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
-    initTomSelect('select.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
-    initTomSelect('select.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
+    initSnapSelect('select.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
+    initSnapSelect('select.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
+    initSnapSelect('select.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
+    initSnapSelect('select.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
    
     document.addEventListener('click', (e) => {
         if (e.target.matches('.eme-dismiss-notice')) {

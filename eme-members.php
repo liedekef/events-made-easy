@@ -2160,7 +2160,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for='properties[addpersontogroup]'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_multiselect_key_value( $membership['properties']['addpersontogroup'], 'properties[addpersontogroup]', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><br><p class='eme_smaller'><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+    <td><?php echo eme_ui_multiselect_key_value( $membership['properties']['addpersontogroup'], 'properties[addpersontogroup]', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2' ); ?><br><p class='eme_smaller'><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr>
     <td><label for='properties[member_template_id]'><?php esc_html_e( 'Membership card PDF template', 'events-made-easy' ); ?></label></td>
@@ -2174,7 +2174,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 <?php
     esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
     echo '<br>';
-    echo eme_ui_multiselect( $membership['properties']['payment_gateways'], eme_get_field_name('properties','payment_gateways'), eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
+    echo eme_ui_multiselect( $membership['properties']['payment_gateways'], eme_get_field_name('properties','payment_gateways'), eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2' );
 
     $configured_pgs = eme_get_configured_pgs();
     if ( empty( $configured_pgs ) ) {
@@ -2304,7 +2304,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[newmember_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2448,7 +2448,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[extended_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2527,7 +2527,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[paid_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2957,7 +2957,8 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class', id_prefix: $id_prefix );
+    $extra_attributes = '" data-placeholder="' . esc_html( __( 'Filter on membership', 'events-made-easy' )) . '"';
+    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
     }
@@ -2966,7 +2967,8 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2_memberstatus_class', id_prefix: $id_prefix );
+    $extra_attributes = '" data-placeholder="' . esc_html( __( 'Filter on member status', 'events-made-easy' )) . '"';
+    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on person', 'events-made-easy' ) . '</td><td>';
     }
@@ -3010,7 +3012,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_fitcontent', $extra_attributes, 1, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2', $extra_attributes, 1, id_prefix: $id_prefix );
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
         }

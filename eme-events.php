@@ -6158,7 +6158,7 @@ function eme_events_table( $message = '' ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_fitcontent', $extra_attributes, 1 );
+        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2', $extra_attributes, 1 );
     }
 ?>
     </div>
@@ -7621,7 +7621,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -7822,7 +7822,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8206,7 +8206,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
+        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8615,7 +8615,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         echo "</b>";
     } else {
-        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
+        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
     }
 ?>
                 </p>
@@ -8840,17 +8840,17 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_require_eme_group'>
         <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_require_eme_memberships'>
         <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_select2', '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_addpersontogroup'>
         <td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_rsvppassword'>
         <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
@@ -9560,10 +9560,6 @@ function eme_admin_enqueue_js() {
             'translate_areyousuretodeletefile'     => __( 'Are you sure you want to delete this file?', 'events-made-easy' ),
             'translate_selectpersons'              => __( 'Select one or more persons', 'events-made-easy' ),
             'translate_selectmembers'              => __( 'Select one or more members', 'events-made-easy' ),
-            'translate_selectgroups'               => __( 'Select one or more groups', 'events-made-easy' ),
-            'translate_anygroup'                   => __( 'Any group', 'events-made-easy' ),
-            'translate_selectmemberships'          => __( 'Filter on membership', 'events-made-easy' ),
-            'translate_selectmemberstatus'         => __( 'Filter on member status', 'events-made-easy' ),
             'translate_addatachments'              => __( 'Add attachments', 'events-made-easy' ),
             'translate_selectdiscount'             => __( 'Select a discount', 'events-made-easy' ),
             'translate_selectdiscountgroup'        => __( 'Select a discountgroup', 'events-made-easy' ),

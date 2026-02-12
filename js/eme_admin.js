@@ -511,10 +511,6 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
-    initSnapSelect('select.eme_select2_groups_class', { placeholder: emeadmin.translate_selectgroups });
-    initSnapSelect('select.eme_select2_people_groups_class', { placeholder: emeadmin.translate_anygroup });
-    initSnapSelect('select.eme_select2_memberstatus_class', { placeholder: emeadmin.translate_selectmemberstatus });
-    initSnapSelect('select.eme_select2_memberships_class', { placeholder: emeadmin.translate_selectmemberships });
    
     document.addEventListener('click', (e) => {
         if (e.target.matches('.eme-dismiss-notice')) {

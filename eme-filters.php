@@ -236,10 +236,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select ) {
 							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, 'eme_select2_filter', $aria_label . "data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, 'eme_select2', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, $label, 0, 'eme_select2_filter', $aria_label );
+						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, $label, 0, 'eme_select2', $aria_label );
 					}
 				}
 			}
@@ -270,10 +270,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, 'eme_select2_filter', $aria_label . "data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, 'eme_select2', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, $label, 0, 'eme_select2_filter', $aria_label );
+						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, $label, 0, 'eme_select2', $aria_label );
 					}
 				}
 			}
@@ -304,10 +304,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, 'eme_select2_filter', $aria_label . "data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, 'eme_select2', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, $label, 0, 'eme_select2_filter', $aria_label );
+						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, $label, 0, 'eme_select2', $aria_label );
 					}
 				}
 			}
@@ -338,10 +338,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, 'eme_select2_filter', $aria_label . "data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, 'eme_select2', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, $label, 0, 'eme_select2_filter', $aria_label );
+						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, $label, 0, 'eme_select2', $aria_label );
 					}
 				}
 			}
@@ -427,7 +427,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'name'             => $contact_post_name,
 				'show_option_none' => eme_esc_html( $label ),
 				'selected'         => $selected_contact,
-				'class'            => 'eme_select2_filter',
+				'class'            => 'eme_select2',
 			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -455,7 +455,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'name'             => $author_post_name,
 				'show_option_none' => eme_esc_html( $label ),
 				'selected'         => $selected_author,
-				'class'            => 'eme_select2_filter',
+				'class'            => 'eme_select2',
 			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)

@@ -352,7 +352,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_field_condition' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_condition'>" . __( 'Field condition', 'events-made-easy' ) . '</label></th>
-               <td>' . eme_ui_multiselect( $field_condition_arr, 'field_condition', $peoplefieldconditions, 5, '', 0, ' eme_select2_width50_class' ) . '
+               <td>' . eme_ui_multiselect( $field_condition_arr, 'field_condition', $peoplefieldconditions, 5, '', 0, ' eme_select2' ) . '
                    <br>' . __( 'Only show this field if the person is member of the selected group. Leave empty to add this field to all people.', 'events-made-easy' ) . "
                </td>
             </tr>

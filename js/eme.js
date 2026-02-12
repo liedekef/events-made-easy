@@ -287,7 +287,9 @@ function eme_init_widgets(dynamicOnly = false) {
 
     // Basic select2 replacement
     initSnapSelect('select.eme_select2' + dynamicSelector);
-    initSnapSelect('select.eme_select2_width50_class' + dynamicSelector);
+    //initSnapSelect('select.eme_select2_allow_empty' + dynamicSelector, {
+     //   allowEmpty: true
+    //});
     initSnapSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
         action: 'eme_select_country',
@@ -329,10 +331,6 @@ function eme_init_widgets(dynamicOnly = false) {
             };
         }
     });
-
-    initSnapSelect('select.eme_select2_filter' + dynamicSelector);
-    initSnapSelect('select.eme_select2_fitcontent' + dynamicSelector);
-
 }
 
 // function to execute the injected javascript via ajax to force payment button click

@@ -426,6 +426,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'echo'             => 0,
 				'name'             => $contact_post_name,
 				'show_option_none' => eme_esc_html( $label ),
+                'option_none_value'=> '',
 				'selected'         => $selected_contact,
 				'class'            => 'eme_select2',
 			];
@@ -454,6 +455,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'echo'             => 0,
 				'name'             => $author_post_name,
 				'show_option_none' => eme_esc_html( $label ),
+                'option_none_value'=> '',
 				'selected'         => $selected_author,
 				'class'            => 'eme_select2',
 			];

@@ -140,7 +140,9 @@ function initSnapSelectRemote(selector, options = {}) {
                     const total   = data.TotalRecordCount !== undefined
                         ? data.TotalRecordCount
                         : records.length;
-                    const hasMore = total > page * pagesize;
+                    let hasMore = total > page * pagesize;
+                    if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
+                        hasMore = false;
                     return { results: records, hasMore };
                 },
 

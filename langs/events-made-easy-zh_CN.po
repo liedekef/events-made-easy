@@ -4002,7 +4002,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "在一个循环中，开始和结束日期不能相同"
 
 #: eme-events.php:9650
-#: eme-filters.php:451
+#: eme-filters.php:452
 #: eme-options.php:1828
 msgid "Event author"
 msgstr "活动作者"
@@ -4849,7 +4849,7 @@ msgstr "选择一个日期范围"
 msgid "Event contact"
 msgstr "活动联系"
 
-#: eme-filters.php:497
+#: eme-filters.php:499
 msgid "Submit"
 msgstr "提交"
 

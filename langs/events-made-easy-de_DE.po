@@ -3993,7 +3993,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "In einer Veranstaltungsserie dürfen Start- und End-Datum nicht identisch sein"
 
 #: eme-events.php:9650
-#: eme-filters.php:451
+#: eme-filters.php:452
 #: eme-options.php:1828
 msgid "Event author"
 msgstr "Veranstaltungsautor"
@@ -4837,7 +4837,7 @@ msgstr "Einen Datumsbereich auswählen"
 msgid "Event contact"
 msgstr "Veranstaltung Kontakt"
 
-#: eme-filters.php:497
+#: eme-filters.php:499
 msgid "Submit"
 msgstr "Senden"
 

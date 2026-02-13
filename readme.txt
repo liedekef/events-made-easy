@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.40
+Stable tag: 3.0.41
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -96,7 +96,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.41  (2026//) =
+= 3.0.41  (2026/02/13) =
 * Use modified snapselect instead of tomselect
 * Fix country and state names when editing a person
 

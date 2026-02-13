@@ -76,7 +76,7 @@ function initSnapSelect(selector, options = {}) {
         }
 
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
+            placeholder:    options.placeholder    || el.dataset.placeholder || '',
             liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : false,
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : !el.multiple,
@@ -112,7 +112,7 @@ function initSnapSelectRemote(selector, options = {}) {
         const ajaxParams = options.ajaxParams || {};
 
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || 'Select...',
+            placeholder:    options.placeholder    || el.dataset.placeholder || '',
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  !el.multiple,
             allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
@@ -287,9 +287,9 @@ function eme_init_widgets(dynamicOnly = false) {
 
     // Basic select2 replacement
     initSnapSelect('select.eme_select2' + dynamicSelector);
-    //initSnapSelect('select.eme_select2_allow_empty' + dynamicSelector, {
-     //   allowEmpty: true
-    //});
+    initSnapSelect('select.eme_select2_allow_empty' + dynamicSelector, {
+        allowEmpty: true
+    });
     initSnapSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
         action: 'eme_select_country',

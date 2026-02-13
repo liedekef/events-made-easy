@@ -481,31 +481,37 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    initSnapSelectRemote('select.eme_select2_members_class', {
+    initSnapSelectRemote('.eme_select2_members_class', {
         action: 'eme_members_select2',
+        allowEmpty: true,
         placeholder: emeadmin.translate_selectmembers,
         ajaxParams: {
             pagesize: 30,
             eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
-    initSnapSelectRemote('select.eme_select2_people_class', {
+    initSnapSelectRemote('.eme_select2_people_class', {
         action: 'eme_people_select2',
+        allowEmpty: true,
         placeholder: emeadmin.translate_selectpersons,
         ajaxParams: {
             pagesize: 30,
             eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
-    initSnapSelectRemote('select.eme_select2_discounts_class', {
+    initSnapSelectRemote('.eme_select2_discounts_class', {
         action: 'eme_discounts_select2',
+        allowEmpty: true,
+        placeholder: emeadmin.translate_selectdiscount,
         ajaxParams: {
             pagesize: 30,
             eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
-    initSnapSelectRemote('select.eme_select2_dgroups_class', {
+    initSnapSelectRemote('.eme_select2_dgroups_class', {
         action: 'eme_dgroups_select2',
+        allowEmpty: true,
+        placeholder: emeadmin.translate_selectdiscountgroup,
         ajaxParams: {
             pagesize: 30,
             eme_admin_nonce: emeadmin.translate_adminnonce,

@@ -10841,6 +10841,7 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
 
 add_action( 'wp_ajax_eme_events_select2', 'eme_ajax_events_select2' );
 function eme_ajax_events_select2() {
+    // snapselect gives us paging, but currently we ignore it here and return everything we can
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {

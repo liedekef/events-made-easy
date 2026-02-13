@@ -105,32 +105,18 @@ function initSnapSelectRemote(selector, options = {}) {
             el.id = 'snap-select-' + Math.random().toString(36).slice(2, 11);
         }
 
-        // Build the ajax.url function, incorporating any extra ajaxParams
-        const ajaxUrl    = options.url    || emebasic.translate_ajax_url;
-        const action     = options.action || 'default_select_action';
-        const pagesize   = options.pagesize || 10;
-        const ajaxParams = options.ajaxParams || {};
-
+        const pagesize = options.pagesize || 30;
+        // Build the ajax.url function, incorporating any extra data
         const config = {
             placeholder:    options.placeholder    || el.dataset.placeholder || '',
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  !el.multiple,
             allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
-
             ajax: {
                 // Allow caller to pass a custom url function (e.g. for state→country cascade)
-                url: options.firstUrl || function(search, page) {
-                    const extra = typeof ajaxParams === 'function' ? ajaxParams() : ajaxParams;
-                    const params = new URLSearchParams({
-                        q:        search || '',
-                        page:     page,
-                        pagesize: pagesize,
-                        action:   action,
-                        ...extra
-                    });
-                    return ajaxUrl + '?' + params.toString();
-                },
-
+                url: options.url || emebasic.translate_ajax_url,
+                pagesize: pagesize,
+                data: options.data || {},
                 processResults: function(data, search, page) {
                     // EME backend returns { TotalRecordCount, Records:[{id,text},...] }
                     // or a plain array
@@ -145,13 +131,8 @@ function initSnapSelectRemote(selector, options = {}) {
                         hasMore = false;
                     return { results: records, hasMore };
                 },
-
-                delay:              300,
-                minimumInputLength: 0,
-                cache:              typeof ajaxParams === 'function' ? false : true, // if ajaxParams is a function, we don't cache at all
-                method:             'GET'
-            },
-            pageSize: pagesize
+                cache:  typeof data === 'function' ? false : true, // if data is a function, we don't cache at all
+            }
         };
 
         // Allow caller to supply a fully custom processResults
@@ -294,9 +275,8 @@ function eme_init_widgets(dynamicOnly = false) {
     });
     initSnapSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
-        action: 'eme_select_country',
-        pagesize: 30,
-        ajaxParams: {
+        data: {
+            action: 'eme_select_country',
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
         // When country changes, reset the state field in the same form
@@ -320,14 +300,13 @@ function eme_init_widgets(dynamicOnly = false) {
 
     initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
-        action: 'eme_select_state',
-        pagesize: 30,
         // Dynamically include the currently selected country_code in every request
-        ajaxParams: function() {
+        data: function(search, page) {
             const stateEl     = document.querySelector('select.eme_select2_state_class');
             const form        = stateEl?.closest('form');
             const countryCode = form?.querySelector('[name=country_code]')?.value || '';
             return {
+                action: 'eme_select_state',
                 eme_frontend_nonce: emebasic.translate_frontendnonce,
                 country_code: countryCode
             };

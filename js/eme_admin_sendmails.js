@@ -718,11 +718,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     initSnapSelectRemote('select.eme_select2_events_class', {
-        action: 'eme_events_select2',
         placeholder: ememails.translate_selectevents,
         allowEmpty: true,
-        ajaxParams: function() {
+        data: function(search, page) {
             return {
+                action: 'eme_events_select2',
                 search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
                 eme_admin_nonce: ememails.translate_adminnonce
             };

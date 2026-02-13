@@ -845,16 +845,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     initSnapSelectRemote('#event_author.eme_select2_wpuser_class', {
-        action: 'eme_wpuser_select2',
-        ajaxParams: {
+        data: {
+            action: 'eme_wpuser_select2',
             eme_admin_nonce: emeevents.translate_adminnonce
         }
     });
     initSnapSelectRemote('#event_contactperson_id.eme_select2_wpuser_class', {
-        action: 'eme_wpuser_select2',
         placeholder: emeevents.translate_selectcontact,
         allowEmpty: true,
-        ajaxParams: {
+        data: {
+            action: 'eme_wpuser_select2',
             eme_admin_nonce: emeevents.translate_adminnonce
         }
     });

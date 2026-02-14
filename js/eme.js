@@ -284,7 +284,7 @@ function eme_init_widgets(dynamicOnly = false) {
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
-                stateField.snapselectInstance.clearCache();
+                //stateField.snapselectInstance.clearCache(); no cache clear needed since not cached for states because since data is a function for states, caching is not active
             }
         },
         onItemRemove: function(value) {
@@ -292,7 +292,7 @@ function eme_init_widgets(dynamicOnly = false) {
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
-                stateField.snapselectInstance.clearCache();
+                //stateField.snapselectInstance.clearCache(); no cache clear needed since not cached for states because since data is a function for states, caching is not active
             }
         }
     });
@@ -300,7 +300,7 @@ function eme_init_widgets(dynamicOnly = false) {
     initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
         // Dynamically include the currently selected country_code in every request
-        data: function(search, page) {
+        data: function(search, page) { // since this is a function, no caching happens
             const stateEl     = document.querySelector('select.eme_select2_state_class');
             const form        = stateEl?.closest('form');
             const countryCode = form?.querySelector('[name=country_code]')?.value || '';

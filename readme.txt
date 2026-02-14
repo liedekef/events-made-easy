@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.44  (2026/02/14) =
+* fix select-caching for event-related emails and state/country
+
 = 3.0.43  (2026/02/14) =
 * fix snapselect paging arguments and some JS simplications
 

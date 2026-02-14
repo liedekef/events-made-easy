@@ -130,8 +130,7 @@ function initSnapSelectRemote(selector, options = {}) {
                     if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
                         hasMore = false;
                     return { results: records, hasMore };
-                },
-                cache:  typeof data === 'function' ? false : true, // if data is a function, we don't cache at all
+                }
             }
         };
 

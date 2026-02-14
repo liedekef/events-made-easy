@@ -10101,38 +10101,6 @@ function eme_countdown_shortcode( $atts ) {
     }
 }
 
-function eme_ajax_events_search() {
-    $return = [];
-    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    header( 'Content-type: application/json; charset=utf-8' );
-    if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        wp_die();
-    }
-
-    $q = (!empty( $_POST['q'] )) ? strtolower( eme_sanitize_request( $_POST['q'] ) ) : '';
-    if ( empty( $q ) ) {
-        echo wp_json_encode( $return );
-        return;
-    }
-    $search_all = isset( $_POST['search_all'] ) ? intval( $_POST['search_all'] ) : 0;
-    if ( $search_all ) {
-        $scope = 'all';
-    } else {
-        $scope = 'future';
-    }
-    $exclude_id = isset( $_POST['exclude_id'] ) ? intval( $_POST['exclude_id'] ) : 0;
-    $only_rsvp  = isset( $_POST['only_rsvp'] ) ? intval( $_POST['only_rsvp'] ) : 0;
-    $events     = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp );
-    foreach ( $events as $event ) {
-        $record              = [];
-        $record['event_id']  = $event['event_id'];
-        $record['eventinfo'] = eme_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' );
-        $return[]            = $record;
-    }
-    echo wp_json_encode( $return );
-    wp_die();
-}
-
 add_action( 'wp_ajax_eme_wpuser_select2', 'eme_ajax_wpuser_select2' );
 function eme_ajax_wpuser_select2() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -10163,7 +10131,6 @@ function eme_ajax_wpuser_select2() {
 
 add_action( 'wp_ajax_eme_events_list', 'eme_ajax_events_list' );
 add_action( 'wp_ajax_eme_manage_events', 'eme_ajax_manage_events' );
-add_action( 'wp_ajax_eme_autocomplete_event', 'eme_ajax_events_search' );
 
 function eme_ajax_events_list() {
     global $wpdb;
@@ -10858,20 +10825,17 @@ function eme_ajax_events_select2() {
     } else {
         $scope = 'future';
     }
-    $events      = eme_search_events( $q, $scope, 1 );
+    $exclude_id  = isset( $_POST['exclude_id'] ) ? intval( $_POST['exclude_id'] ) : 0;
+    $only_rsvp   = isset( $_POST['only_rsvp'] ) ? intval( $_POST['only_rsvp'] ) : 0;
+    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp );
     $records     = [];
-    $recordCount = 0;
     foreach ( $events as $event ) {
-        if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
-            ( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
-            $records[] = [
-                'id'   => $event['event_id'],
-                'text' => trim( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
-            ];
-            ++$recordCount;
-        }
+        $records[] = [
+            'id'   => $event['event_id'],
+            'text' => trim( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
+        ];
     }
-    $fTableResult['TotalRecordCount'] = $recordCount;
+    $fTableResult['TotalRecordCount'] = count($records);
     $fTableResult['Records']          = $records;
     print wp_json_encode( $fTableResult );
     wp_die();

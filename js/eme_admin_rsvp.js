@@ -440,63 +440,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- Autocomplete: chooseevent ---
-    const chooseevent = EME.$('input[name="chooseevent"]');
-    if (chooseevent) {
-        let timeout;
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        chooseevent.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            timeout = setTimeout(() => {
-                const searchAll = EME.$('#eventsearch_all')?.checked ? 1 : 0;
-                const formData = new FormData();
-                formData.append('q', value);
-                formData.append('exclude_id', EME.$('#event_id')?.value || '');
-                formData.append('only_rsvp', 1);
-                formData.append('search_all', searchAll);
-                formData.append('eme_admin_nonce', emersvp.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_event');
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.eventinfo)}</strong>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            if (item.event_id) {
-                                EME.$('input[name="transferto_id"]').value = eme_htmlDecode(item.event_id);
-                                chooseevent.value = `${eme_htmlDecode(item.eventinfo)} `;
-                                chooseevent.readOnly = true;
-                                chooseevent.classList.add('clearable', 'x');
-                            }
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = emersvp.translate_nomatchevent;
-                        suggestions.appendChild(noMatch);
-                    }
-                    chooseevent.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        chooseevent.addEventListener('change', () => {
-            if (chooseevent.value === '') {
-                EME.$('input[name="transferto_id"]').value = '';
-                chooseevent.readOnly = false;
-                chooseevent.classList.remove('clearable', 'x');
-            }
-        });
-    }
+    initSnapSelectRemote('select.eme_select2_events_class', {
+        allowEmpty: true,
+        data: function(search, page) {
+            return {
+                exclude_id: EME.$('#event_id')?.value || '',
+                only_rsvp: 1,
+                action: 'eme_events_select2',
+                search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
+                eme_admin_nonce: emersvp.translate_adminnonce
+            };
+        }
+    });
 });

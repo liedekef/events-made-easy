@@ -4857,9 +4857,10 @@ function eme_registration_seats_page( $pending = 0 ) {
         $ret_string .= '<table>';
         $ret_string .= '<tr><td>' . __( 'Send emails for changed booking?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ) . '</td></tr>';
         $ret_string .= '<tr><td>' . __( 'Move booking to event', 'events-made-easy' ) . '</td><td>';
-        $ret_string .= "<input type='hidden' id='transferto_id' name='transferto_id'>";
         $ret_string .= "<input type='hidden' id='person_id' name='person_id' value='" . $booking['person_id'] . "'>";
-        $ret_string .= "<input type='text' id='chooseevent' name='chooseevent' class='nodynamicupdates' placeholder='" . __( 'Start typing an event name', 'events-made-easy' ) . "'>";
+        // we include the event id, so the select2 can exclude this event upon search
+        $ret_string .= "<input type='hidden' id='event_id' value='" . $booking['event_id'] . "'>";
+        $ret_string .= eme_ui_select( '', 'transferto_id', [], '', 0, 'eme_select2_events_class', "data-placeholder='" . __( 'Select an event', 'events-made-easy' ) . "'" );
         $ret_string .= "&nbsp;<input id='eventsearch_all' name='eventsearch_all' value='1' type='checkbox'>" . __( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ) . '</td></tr>';
         $ret_string .= '<tr><td>' . __( 'Has the booking been paid?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( $booking['booking_paid'], 'booking_paid', 0, 'nodynamicupdates' ) . '</td></tr>';
         $ret_string .= '</table>';

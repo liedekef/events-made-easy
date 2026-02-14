@@ -2943,8 +2943,7 @@ function eme_emails_page() {
         </div>
         <hr>
         <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
-        <input type="hidden" name="send_previeweventmailto_id" id="send_previeweventmailto_id" value="">
-        <input type='search' id='eventmail_chooseperson' name='eventmail_chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
+        <select id="send_previeweventmailto_id" name="send_previeweventmailto_id" class="eme_select2_people_class" data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
         <button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
         <div id="previeweventmail-result" class="eme-hidden" ></div>
         <hr>
@@ -3125,8 +3124,7 @@ function eme_emails_page() {
         </div>
         <hr>
         <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
-        <input type="hidden" name="send_previewmailto_id" id="send_previewmailto_id" value="">
-        <input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
+        <select id="send_previewmailto_id" name="send_previewmailto_id" class="eme_select2_people_class" data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
         <button id='previewmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
         <br><?php esc_html_e( 'Small remark: the preview mail will not replace booking or attendee related placeholders.', 'events-made-easy' ); ?>
         <div id="previewmail-result" class="eme-hidden" ></div>

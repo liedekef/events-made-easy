@@ -2129,7 +2129,8 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         } else {
             $value = '';
         }
-        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2', 'data-placeholder="' . esc_html( __( 'Any group', 'events-made-easy' ) ) . '"', id_prefix: $id_prefix );
+        $extra_attributes = '" data-placeholder="' . esc_html( __( 'Any group', 'events-made-easy' )) . '"';
+        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
     }
 
     if ( $edit_group ) {
@@ -2629,7 +2630,11 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2' ); ?><br>
+TTT
+        <td colspan=2><?php 
+            $extra_attributes = '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' )) . '"';
+            echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2', $extra_attributes );
+            ?><br>
         <?php esc_html_e( "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in.", 'events-made-easy' ); ?>
         </td>
         </tr>

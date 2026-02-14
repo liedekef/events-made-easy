@@ -130,10 +130,13 @@ function initSnapSelectRemote(selector, options = {}) {
                     if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
                         hasMore = false;
                     return { results: records, hasMore };
-                }
+                },
             }
         };
-
+        // set caching if defined
+        if (options.cache !== undefined) {
+            config.ajax.cache = options.cache;
+        }
         // Allow caller to supply a fully custom processResults
         if (typeof options.processResults === 'function') {
             config.ajax.processResults = options.processResults;
@@ -284,7 +287,7 @@ function eme_init_widgets(dynamicOnly = false) {
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
-                //stateField.snapselectInstance.clearCache(); no cache clear needed since not cached for states because since data is a function for states, caching is not active
+                stateField.snapselectInstance.clearCache();
             }
         },
         onItemRemove: function(value) {
@@ -292,7 +295,7 @@ function eme_init_widgets(dynamicOnly = false) {
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
-                //stateField.snapselectInstance.clearCache(); no cache clear needed since not cached for states because since data is a function for states, caching is not active
+                stateField.snapselectInstance.clearCache();
             }
         }
     });
@@ -309,7 +312,8 @@ function eme_init_widgets(dynamicOnly = false) {
                 eme_frontend_nonce: emebasic.translate_frontendnonce,
                 country_code: countryCode
             };
-        }
+        },
+        cache: true // we set the cache true and clear it in the country select if needed
     });
 }
 

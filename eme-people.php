@@ -5469,7 +5469,8 @@ function eme_ajax_people_select2() {
     }
     $pagesize    = intval( $_REQUEST['pagesize'] );
     $start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
-    $count_sql   = "SELECT COUNT(*) FROM $table WHERE $where";
+    // the function eme_get_persons only selects active people by default, so we do that here too
+    $count_sql   = "SELECT COUNT(*) FROM $table WHERE $where AND status=" . EME_PEOPLE_STATUS_ACTIVE;
     $recordCount = $wpdb->get_var( $count_sql );
     $limit       = "LIMIT $start,$pagesize";
 

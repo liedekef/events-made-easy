@@ -96,6 +96,7 @@ function eme_attendances_table_layout( $message = '' ) {
 		}
 	}
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+    $select2_attributes = "required='required' data-placeholder='".__('Select a person','events-made-easy')."'";
 	echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
@@ -105,8 +106,9 @@ function eme_attendances_table_layout( $message = '' ) {
 	 <form action='#' method='post'>$nonce_field
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
          <input type='hidden' name='person_id' value=''>
-         <input type='search' id='chooseperson' name='chooseperson' placeholder='" . esc_html__( 'Start typing a name', 'events-made-easy' ) . "'>
-         " . esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
+         "
+         . eme_ui_select( '', 'person_id', [], '', 0, 'eme_select2_people_class', $select2_attributes )
+         . esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
          <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
          <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple='false' class='eme_formfield_fdatetime'><br>
          <input type='submit' class='button-primary' name='submit' value='" . esc_attr__( 'Add attendance', 'events-made-easy' ) . "'>

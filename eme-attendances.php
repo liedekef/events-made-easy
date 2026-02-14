@@ -108,7 +108,7 @@ function eme_attendances_table_layout( $message = '' ) {
          <input type='hidden' name='person_id' value=''>
          "
          . eme_ui_select( '', 'person_id', [], '', 0, 'eme_select2_people_class', $select2_attributes )
-         . esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
+         . ' '. esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
          <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
          <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple='false' class='eme_formfield_fdatetime'><br>
          <input type='submit' class='button-primary' name='submit' value='" . esc_attr__( 'Add attendance', 'events-made-easy' ) . "'>

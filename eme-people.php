@@ -2630,7 +2630,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
-TTT
         <td colspan=2><?php 
             $extra_attributes = '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' )) . '"';
             echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2', $extra_attributes );

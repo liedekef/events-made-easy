@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
         allowEmpty: true,
         data: function(search, page) {
             return {
-                exclude_id: EME.$('#event_id')?.value || '',
+                exclude_id: this.dataset.exclude_event_id || '',
                 only_rsvp: 1,
                 action: 'eme_events_select2',
                 search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,

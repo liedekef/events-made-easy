@@ -112,6 +112,9 @@ function initSnapSelectRemote(selector, options = {}) {
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  !el.multiple,
             allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
+            onItemAdd:      typeof options.onItemAdd    === 'function' ? options.onItemAdd    : undefined,
+            onItemDelete:   typeof options.onItemDelete === 'function' ? options.onItemDelete :
+                            typeof options.onItemRemove === 'function' ? options.onItemRemove : undefined,
             ajax: {
                 // Allow caller to pass a custom url function (e.g. for state→country cascade)
                 url: options.url || emebasic.translate_ajax_url,
@@ -146,18 +149,6 @@ function initSnapSelectRemote(selector, options = {}) {
 
         // Expose a .snapselect property on the element
         el.snapselectInstance = instance;
-
-        // Wire up optional change callbacks
-        if (options.onItemAdd || options.onItemRemove) {
-            el.addEventListener('change', function() {
-                if (options.onItemAdd && this.value) {
-                    options.onItemAdd.call({ input: el }, this.value);
-                }
-                if (options.onItemRemove && !this.value) {
-                    options.onItemRemove.call({ input: el }, this.value);
-                }
-            });
-        }
 
         return instance;
     });
@@ -282,22 +273,23 @@ function eme_init_widgets(dynamicOnly = false) {
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
         // When country changes, reset the state field in the same form
-        onItemAdd: function(value) {
-            const form       = this.input.closest('form');
+        onItemAdd: function(value, text) {
+            const form       = this.closest('form');
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
                 stateField.snapselectInstance.clearCache();
             }
         },
-        onItemRemove: function(value) {
-            const form       = this.input.closest('form');
+        onItemRemove: function(value, text) {
+            const form       = this.closest('form');
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
                 stateField.snapselectInstance.clearCache();
             }
-        }
+        },
+        closeOnSelect: true
     });
 
     initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {

@@ -302,7 +302,7 @@ function eme_cron_form( $message = '' ) {
 
     <?php if ( $message != '' ) { ?>
     <div id='message' class='updated eme-message-admin'>
-    <p><?php echo nl2br( esc_html( $message ) ); ?></p>
+    <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 <?php
     } else {
@@ -457,8 +457,12 @@ function eme_cron_form( $message = '' ) {
             $scheduled = false;
         }
         foreach ( $schedules as $key => $schedule ) {
-            $selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
-            echo '<option ' . $selected . " value='" . esc_attr( $key ) . "'>" . esc_html( $schedule['display'] ) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded attribute
+            printf(
+                "<option value='%s'%s>%s</option>\n",
+                esc_attr( $key ),
+                selected( $scheduled, $key, false ),
+                esc_html( $schedule['display'] )
+            );
         }
 ?>
     </select>

@@ -1980,8 +1980,12 @@ function eme_options_page() {
                 $schedules = wp_get_schedules();
                 $scheduled = wp_get_schedule( 'eme_cron_send_queued' );
                 foreach ( $schedules as $key => $schedule ) {
-                    $selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
-                    echo '<option ' . $selected . " value='" . esc_attr( $key ) . "'>" . esc_html( $schedule['display'] ) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded attribute
+                    printf(
+                        "<option value='%s'%s>%s</option>\n",
+                        esc_attr( $key ),
+                        selected( $scheduled, $key, false ),
+                        esc_html( $schedule['display'] )
+                    );
                 }
 ?>
         </select><br>

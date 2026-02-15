@@ -97,7 +97,7 @@ function eme_categories_table_layout( $message = '' ) {
     <h1><?php esc_html_e( 'Manage categories', 'events-made-easy' ); ?></h1>
     <?php if ( $message != '' ) { ?>
     <div id="message" class="updated notice notice-success is-dismissible">
-         <p><?php echo nl2br( esc_html( $message ) ); ?></p>
+         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
     <?php } ?>
 

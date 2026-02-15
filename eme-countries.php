@@ -330,7 +330,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		</div>
 		 
 		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-			<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+			<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new country', 'events-made-easy' ); ?></h1>
@@ -398,7 +398,7 @@ function eme_manage_states_layout( $message = '' ) {
 		</div>
 		 
 	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+		<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
 
 		<h1><?php esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>

@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function applyDefaultOnFocusBlur() {
         EME.$$('input[data-default]').forEach(el => {
-            const defaultValue = el.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
+            const defaultValue = el.dataset('default').replace(/<br\s*\/?>/gi, '<br>');
             
             el.addEventListener('focus', function() {
                 if (this.value.trim() === '') {
@@ -604,8 +604,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         EME.$$('span[data-default]').forEach(span => {
-            const defaultValue = span.getAttribute('data-default').replace(/<br\s*\/?>/gi, '<br>');
-            const targetId = span.getAttribute('data-targetid');
+            const defaultValue = span.dataset('default').replace(/<br\s*\/?>/gi, '<br>');
+            const targetId = span.dataset('targetid');
             const target = EME.$(`#${targetId}`);
             
             if (target) {

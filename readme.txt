@@ -98,6 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 3.0.45  (2026//) =
 * Make manual add of attendances work again
+* More usage of snapselect for autocomplete fields
 
 = 3.0.44  (2026/02/14) =
 * fix select-caching for event-related emails 

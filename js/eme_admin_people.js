@@ -264,136 +264,37 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_dynamic_people_data_json('editperson');
     }
 
-    // --- Autocomplete: chooseperson ---
-    if (EME.$('input[name="chooseperson"]')) {
-        let timeout;
-        const input = EME.$('input[name="chooseperson"]');
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        input.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            // Exclude selected person IDs
-            let excludeIds = '';
-            if (PeopleTableContainer) {
-                const selectedRows = PeopleTable.getSelectedRows();
-                if (selectedRows.length > 0) {
-                    const ids = selectedRows.map(row => row.dataset.record['people.person_id']);
-                    excludeIds = ids.join(',');
-                }
-            }
-
-            timeout = setTimeout(() => {
-                const formData = new FormData();
-                formData.append('lastname', value);
-                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_people');
-                formData.append('eme_searchlimit', 'people');
-                if (excludeIds) formData.append('exclude_personids', excludeIds);
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            EME.$('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
-                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
-                            input.readOnly = true;
-                            input.classList.add('clearable', 'x');
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = emepeople.translate_nomatchperson;
-                        suggestions.appendChild(noMatch);
+    // --- SnapSelect: transferto_id (chooseperson) ---
+    if (EME.$('select.eme_snapselect_chooseperson')) {
+        initSnapSelectRemote('select.eme_snapselect_chooseperson', {
+            allowEmpty: true,
+            data: function(search, page) {
+                let excludeIds = '';
+                if (PeopleTableContainer && PeopleTable) {
+                    const selectedRows = PeopleTable.getSelectedRows();
+                    if (selectedRows.length > 0) {
+                        excludeIds = selectedRows.map(row => row.dataset.record['people.person_id']).join(',');
                     }
-
-                    input.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        input.addEventListener('keyup', () => {
-            EME.$('input[name="person_id"]').value = '';
-        });
-
-        input.addEventListener('change', () => {
-            if (input.value === '') {
-                EME.$('input[name="person_id"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
+                }
+                return {
+                    action:             'eme_people_select2',
+                    eme_admin_nonce:    emepeople.translate_adminnonce,
+                    exclude_personids:  excludeIds,
+                };
             }
         });
     }
 
-    // --- Autocomplete: chooserelatedperson ---
-    if (EME.$('input[name="chooserelatedperson"]')) {
-        let timeout;
-        const input = EME.$('input[name="chooserelatedperson"]');
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        input.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            timeout = setTimeout(() => {
-                const formData = new FormData();
-                formData.append('lastname', value);
-                formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_people');
-                formData.append('eme_searchlimit', 'people');
-                formData.append('exclude_personids', EME.$('input[name="person_id"]').value);
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            EME.$('input[name="related_person_id"]').value = eme_htmlDecode(item.person_id);
-                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
-                            input.readOnly = true;
-                            input.classList.add('clearable', 'x');
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = emepeople.translate_nomatchperson;
-                        suggestions.appendChild(noMatch);
-                    }
-
-                    input.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        input.addEventListener('change', () => {
-            if (input.value === '') {
-                EME.$('input[name="related_person_id"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
+    // --- SnapSelect: related_person_id (chooserelatedperson) ---
+    if (EME.$('select.eme_snapselect_chooserelatedperson')) {
+        initSnapSelectRemote('select.eme_snapselect_chooserelatedperson', {
+            allowEmpty: true,
+            data: function(search, page) {
+                return {
+                    action:            'eme_people_select2',
+                    eme_admin_nonce:   emepeople.translate_adminnonce,
+                    exclude_personids: this.dataset.personId || '',
+                };
             }
         });
     }
@@ -420,7 +321,6 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('person_id', idsJoined);
             formData.append('action', 'eme_manage_people');
             formData.append('do_action', doAction);
-            formData.append('chooseperson', EME.$('#chooseperson')?.value || '');
             formData.append('transferto_id', EME.$('#transferto_id')?.value || '');
             formData.append('language', EME.$('#language')?.value || '');
             formData.append('pdf_template', EME.$('#pdf_template')?.value || '');

@@ -2044,8 +2044,10 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     </span>
     <span id="span_transferto" class="eme-hidden">
     <?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
-    <input type='hidden' id='transferto_id' name='transferto_id'>
-    <input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
+    <select id='transferto_id' name='transferto_id'
+        data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+        class="eme_snapselect_chooseperson">
+    </select>
     </span>
     <span id="span_addtogroup" class="eme-hidden">
     <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
@@ -2436,12 +2438,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     }
     if ( ! empty( $related_person ) ) {
         $related_person_id    = $person['related_person_id'];
-        $related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] );
-        $related_person_class = "readonly='readonly' class='clearable x'";
     } else {
         $related_person_id    = '';
-        $related_person_name  = '';
-        $related_person_class = '';
     }
     if ( $person['status'] == EME_PEOPLE_STATUS_TRASH ) {
         $readonly = 1;
@@ -2529,9 +2527,21 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td></td>
         </tr>
         <tr>
-        <td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Related family member', 'events-made-easy' ); ?></label></td>
-        <td> <input type="hidden" name="related_person_id" id="related_person_id" value="<?php echo intval( $person['related_person_id'] ); ?>">
-        <input type='text' id='chooserelatedperson' name='chooserelatedperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" size="40" <?php echo $related_person_class; ?>>
+        <td style="vertical-align:top"><label for="related_person_id"><?php esc_html_e( 'Related family member', 'events-made-easy' ); ?></label></td>
+        <td>
+<?php
+    $preselected_option = '';
+    if ( ! empty( $related_person ) ) {
+        $preselected_text   = eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
+        $preselected_option = '<option value="' . intval( $person['related_person_id'] ) . '" selected>' . $preselected_text . '</option>';
+    }
+?>
+        <select id='related_person_id' name='related_person_id'
+            data-placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>"
+            data-person-id="<?php echo intval( $person['person_id'] ); ?>"
+            class="eme_snapselect_chooserelatedperson">
+            <?php echo $preselected_option; ?>
+        </select>
 <?php
     if ( $person['related_person_id'] > 0 ) {
         print "<a href='" . admin_url( "admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=$related_person_id" ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html__( 'Click here to edit that person', 'events-made-easy' ) . '</a>';
@@ -5466,6 +5476,13 @@ function eme_ajax_people_select2() {
         $where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
     } else {
         $where = '(1=1)';
+    }
+    if ( ! empty( $_REQUEST['exclude_personids'] ) ) {
+        $exclude_personids     = eme_sanitize_request( $_REQUEST['exclude_personids'] );
+        $exclude_personids_arr = explode( ',', $exclude_personids );
+        if ( eme_is_numeric_array( $exclude_personids_arr ) ) {
+            $where .= " AND person_id NOT IN ($exclude_personids)";
+        }
     }
     $pagesize    = intval( $_REQUEST['pagesize'] );
     $start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;

@@ -550,115 +550,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- Autocomplete: transferperson ---
-    if (EME.$('input[name="transferperson"]')) {
-        let timeout;
-        const input = EME.$('input[name="transferperson"]');
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        input.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            timeout = setTimeout(() => {
-                const formData = new FormData();
-                formData.append('q', value);
-                formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_memberperson');
-                formData.append('exclude_personid', EME.$('input[name="person_id"]').value);
-                formData.append('membership_id', EME.$('#membership_id')?.value || '');
-                formData.append('related_member_id', EME.$('#related_member_id')?.value || '');
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            EME.$('input[name="transfer_person_id"]').value = eme_htmlDecode(item.person_id);
-                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
-                            input.readOnly = true;
-                            input.classList.add('clearable', 'x');
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = ememembers.translate_nomatchperson;
-                        suggestions.appendChild(noMatch);
-                    }
-                    input.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        input.addEventListener('change', () => {
-            if (input.value === '') {
-                EME.$('input[name="transfer_person_id"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
+    // --- SnapSelect: transferto_personid ---
+    if (EME.$('select.eme_snapselect_transferperson')) {
+        initSnapSelectRemote('select.eme_snapselect_transferperson', {
+            allowEmpty: true,
+            data: function(search, page) {
+                return {
+                    action:            'eme_memberperson_snapselect',
+                    eme_admin_nonce:   ememembers.translate_adminnonce,
+                    exclude_personid:  this.dataset.personId    || '',
+                    membership_id:     this.dataset.membershipId || '',
+                    related_member_id: this.dataset.memberId     || '',
+                };
             }
         });
     }
 
-    // --- Autocomplete: chooserelatedmember ---
-    if (EME.$('input[name="chooserelatedmember"]')) {
-        let timeout;
-        const input = EME.$('input[name="chooserelatedmember"]');
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        input.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            timeout = setTimeout(() => {
-                const formData = new FormData();
-                formData.append('q', value);
-                formData.append('member_id', EME.$('#member_id')?.value || '');
-                formData.append('membership_id', EME.$('#membership_id')?.value || '');
-                formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_membermainaccount');
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            EME.$('input[name="related_member_id"]').value = eme_htmlDecode(item.member_id);
-                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
-                            input.readOnly = true;
-                            input.classList.add('clearable', 'x');
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = ememembers.translate_nomatchperson;
-                        suggestions.appendChild(noMatch);
-                    }
-                    input.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        input.addEventListener('change', () => {
-            if (input.value === '') {
-                EME.$('input[name="related_member_id"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
+    // --- SnapSelect: related_member_id ---
+    if (EME.$('select.eme_snapselect_relatedmember')) {
+        initSnapSelectRemote('select.eme_snapselect_relatedmember', {
+            allowEmpty: true,
+            data: function(search, page) {
+                return {
+                    action:          'eme_membermainaccount_snapselect',
+                    eme_admin_nonce: ememembers.translate_adminnonce,
+                    member_id:       this.dataset.memberId     || '',
+                    membership_id:   this.dataset.membershipId || '',
+                };
             }
         });
     }

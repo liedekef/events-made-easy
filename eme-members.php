@@ -1481,8 +1481,6 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         $h1_message           = __( 'Add member', 'events-made-easy' );
         $member['start_date'] = eme_get_start_date( $membership, $member );
         $member['end_date']   = eme_get_next_end_date( $membership, $member['start_date'] );
-        $related_person_name  = '';
-        $related_person_class = '';
     } else {
         $action     = 'edit';
         $h1_message = __( 'Edit member', 'events-made-easy' );
@@ -1501,11 +1499,9 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             $related_person = null;
         }
         if ( ! empty( $related_person ) ) {
-            $related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] );
-            $related_person_class = "readonly='readonly' class='clearable x'";
+            // $related_person data used in the SnapSelect pre-populated option below
         } else {
-            $related_person_name  = '';
-            $related_person_class = '';
+            $related_person = null;
         }
     }
     echo "<h1>$h1_message </h1>";
@@ -1569,8 +1565,13 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <tr><td>
             <?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>
         </td><td>
-            <input type='text' id='transferperson' name='transferperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
-            <input type='hidden' name='transferto_personid' id='transferto_personid' value=''>
+            <select id='transferto_personid' name='transferto_personid'
+                data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; ?>"
+                data-membership-id="<?php echo intval( $membership['membership_id'] ); ?>"
+                data-person-id="<?php echo isset( $member['person_id'] ) ? intval( $member['person_id'] ) : 0; ?>"
+                class="eme_snapselect_transferperson nodynamicupdates">
+            </select>
         </td></tr>
         <tr><td>
             <?php esc_html_e( 'If you want, select a different membership to transfer this member to: ', 'events-made-easy' ); ?>
@@ -1595,8 +1596,8 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </td></tr>
     <?php if ( ! empty( $membership['properties']['family_membership'] ) ) { ?>
     <tr>
-        <td style="vertical-align:top"><label for="chooserelatedmember"><?php esc_html_e( "'Head of the family' account", 'events-made-easy' ); ?></label></td>
-        <td> <input type="hidden" name="related_member_id" id="related_member_id" value="<?php echo intval( $member['related_member_id'] ); ?>">
+        <td style="vertical-align:top"><label for="related_member_id"><?php esc_html_e( "'Head of the family' account", 'events-made-easy' ); ?></label></td>
+        <td>
 <?php
              if ( isset( $member['member_id'] ) ) {
                  $related_member_ids = eme_get_family_member_ids( $member['member_id'] );
@@ -1616,8 +1617,26 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
                      }
                  }
              } else {
+                 // Pre-populate the option for the currently linked member so SnapSelect shows it on load
+                 $preselected_option = '';
+                 if ( ! empty( $member['related_member_id'] ) ) {
+                     $related_member = eme_get_member( $member['related_member_id'] );
+                     if ( $related_member ) {
+                         $related_person = eme_get_person( $related_member['person_id'] );
+                         if ( $related_person ) {
+                             $preselected_text = eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
+                             $preselected_option = '<option value="' . intval( $member['related_member_id'] ) . '" selected>' . $preselected_text . '</option>';
+                         }
+                     }
+                 }
 ?>
-                 <input type='text' id='chooserelatedmember' name='chooserelatedmember' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" <?php echo $related_person_class; ?>>
+                 <select id='related_member_id' name='related_member_id'
+                     data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                     data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; ?>"
+                     data-membership-id="<?php echo intval( $membership['membership_id'] ); ?>"
+                     class="eme_snapselect_relatedmember">
+                     <?php echo $preselected_option; ?>
+                 </select>
                  <br><?php esc_html_e( "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too.", 'events-made-easy' ); ?>
 <?php
                  if ( ! empty( $member['related_member_id'] ) ) {
@@ -6372,125 +6391,109 @@ function eme_import_csv_member_dynamic_answers() {
     return $result;
 }
 
-
-function eme_ajax_member_person_autocomplete( $no_wp_die = 0 ) {
+/**
+ * SnapSelect-compatible endpoint for the "transfer to person" field.
+ * Returns { Records:[{id, text}], TotalRecordCount } with paging support.
+ * Extra POST params: exclude_personid, membership_id, related_member_id.
+ */
+function eme_ajax_memberperson_snapselect() {
     global $wpdb;
     $people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         wp_die();
     }
-    $return = [];
-    $q      = '';
-    if ( isset( $_POST['lastname'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_POST['lastname'] ) );
-    } elseif ( isset( $_POST['q'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_POST['q'] ) );
-    }
 
-    if ( isset( $_POST['membership_id'] ) ) {
-        $membership_id = intval( $_POST['membership_id'] );
-    } else {
-        $membership_id = 0;
-    }
-    if ( isset( $_POST['exclude_personid'] ) ) {
-        $exclude_personid = intval( $_POST['exclude_personid'] );
-    } else {
-        $exclude_personid = 0;
-    }
-    if ( isset( $_POST['related_member_id'] ) ) {
-        $related_member_id = intval( $_POST['related_member_id'] );
-    } else {
-        $related_member_id = 0;
-    }
+    $q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $exclude_personid  = isset( $_REQUEST['exclude_personid'] )  ? intval( $_REQUEST['exclude_personid'] )  : 0;
+    $membership_id     = isset( $_REQUEST['membership_id'] )     ? intval( $_REQUEST['membership_id'] )     : 0;
+    $related_member_id = isset( $_REQUEST['related_member_id'] ) ? intval( $_REQUEST['related_member_id'] ) : 0;
+    $pagesize          = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $page              = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start             = ( $page - 1 ) * $pagesize;
 
-    header( 'Content-type: application/json; charset=utf-8' );
-    if ( empty( $q ) ) {
-        echo wp_json_encode( $return );
-        if ( ! $no_wp_die ) {
-            wp_die();
-        }
-        return;
-    }
-
-    $search = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+    $search = ! empty( $q )
+        ? "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')"
+        : '(1=1)';
     if ( $exclude_personid > 0 ) {
-        $search .= " AND people.person_id<>$exclude_personid";
+        $search .= " AND people.person_id <> $exclude_personid";
     }
     if ( $related_member_id > 0 ) {
-        $search .= " AND members.member_id<>$related_member_id";
+        $search .= " AND members.member_id <> $related_member_id";
     }
-    // we need people not in the membership, so ...
     if ( $membership_id > 0 ) {
-        $search .= " AND (members.membership_id<>$membership_id OR members.membership_id IS NULL OR members.status = " . EME_MEMBER_STATUS_EXPIRED . ' OR members.status IS NULL)';
+        $search .= " AND (members.membership_id <> $membership_id OR members.membership_id IS NULL OR members.status = " . EME_MEMBER_STATUS_EXPIRED . ' OR members.status IS NULL)';
     }
 
-    $sql = "SELECT people.person_id,people.lastname,people.firstname,people.email
+    $sql       = "SELECT people.person_id, people.lastname, people.firstname, people.email
         FROM $people_table AS people
-        LEFT JOIN $members_table AS members ON members.person_id=people.person_id
+        LEFT JOIN $members_table AS members ON members.person_id = people.person_id
+        WHERE $search ORDER BY people.lastname, people.firstname LIMIT $start, $pagesize";
+    $count_sql = "SELECT COUNT(*)
+        FROM $people_table AS people
+        LEFT JOIN $members_table AS members ON members.person_id = people.person_id
         WHERE $search";
 
-    $persons = $wpdb->get_results( $sql, ARRAY_A );
-    foreach ( $persons as $item ) {
-        $record              = [];
-        $record['lastname']  = eme_esc_html( $item['lastname'] );
-        $record['firstname'] = eme_esc_html( $item['firstname'] );
-        $record['email']     = eme_esc_html( $item['email'] );
-        $record['person_id'] = intval( $item['person_id'] );
-        $return[]            = $record;
+    $records     = [];
+    $recordCount = $wpdb->get_var( $count_sql );
+    foreach ( $wpdb->get_results( $sql, ARRAY_A ) as $item ) {
+        $records[] = [
+            'id'   => intval( $item['person_id'] ),
+            'text' => eme_format_full_name( $item['firstname'], $item['lastname'], $item['email'] ),
+        ];
     }
-
-    echo wp_json_encode( $return );
-    if ( ! $no_wp_die ) {
-        wp_die();
-    }
+    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    wp_die();
 }
 
-function eme_ajax_member_main_account_autocomplete() {
+/**
+ * SnapSelect-compatible endpoint for the "related member / head of family" field.
+ * Returns { Records:[{id, text}], TotalRecordCount } with paging support.
+ * Extra POST params: member_id, membership_id.
+ */
+function eme_ajax_membermainaccount_snapselect() {
     global $wpdb;
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         wp_die();
     }
-    $return        = [];
-    $q             = '';
-    $membership_id = 0;
-    $member_id     = 0;
-    if ( ! empty( $_POST['q'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_POST['q'] ) );
+
+    $q             = isset( $_REQUEST['q'] )             ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $member_id     = isset( $_REQUEST['member_id'] )     ? intval( $_REQUEST['member_id'] )     : 0;
+    $membership_id = isset( $_REQUEST['membership_id'] ) ? intval( $_REQUEST['membership_id'] ) : 0;
+    $pagesize      = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $page          = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start         = ( $page - 1 ) * $pagesize;
+
+    $search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND members.related_member_id=0";
+    if ( $member_id > 0 ) {
+        $search .= " AND members.member_id <> $member_id";
     }
-    if ( ! empty( $_POST['member_id'] ) ) {
-        $member_id = intval( $_POST['member_id'] );
-    }
-    if ( ! empty( $_POST['membership_id'] ) ) {
-        $membership_id = intval( $_POST['membership_id'] );
+    if ( $membership_id > 0 ) {
+        $search .= " AND members.membership_id = $membership_id";
     }
 
-    if ( empty( $q ) ) {
-        echo wp_json_encode( $return );
-        wp_die();
+    $all_members = eme_get_members( '', $search );
+    $recordCount = count( $all_members );
+    $paged       = array_slice( $all_members, $start, $pagesize );
+    $records     = [];
+    foreach ( $paged as $item ) {
+        $records[] = [
+            'id'   => intval( $item['member_id'] ),
+            'text' => eme_format_full_name( $item['firstname'], $item['lastname'], $item['email'] ),
+        ];
     }
-
-    $search  = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%') AND members.member_id <> $member_id AND members.related_member_id=0 AND members.membership_id=$membership_id";
-    $persons = eme_get_members( '', $search );
-    foreach ( $persons as $item ) {
-        $record              = [];
-        $record['lastname']  = eme_esc_html( $item['lastname'] );
-        $record['firstname'] = eme_esc_html( $item['firstname'] );
-        $record['email']     = eme_esc_html( $item['email'] );
-        $record['member_id'] = intval( $item['member_id'] );
-        $return[]            = $record;
-    }
-
-    echo wp_json_encode( $return );
+    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
     wp_die();
 }
 
-add_action( 'wp_ajax_eme_autocomplete_memberperson', 'eme_ajax_member_person_autocomplete' );
-add_action( 'wp_ajax_eme_autocomplete_membermainaccount', 'eme_ajax_member_main_account_autocomplete' );
+add_action( 'wp_ajax_eme_memberperson_snapselect',     'eme_ajax_memberperson_snapselect' );
+add_action( 'wp_ajax_eme_membermainaccount_snapselect', 'eme_ajax_membermainaccount_snapselect' );
+
 add_action( 'wp_ajax_eme_members_list', 'eme_ajax_members_list' );
 add_action( 'wp_ajax_eme_members_select2', 'eme_ajax_members_select2' );
 add_action( 'wp_ajax_eme_memberships_list', 'eme_ajax_memberships_list' );

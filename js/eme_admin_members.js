@@ -465,86 +465,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // --- Autocomplete: chooseperson ---
-    if (EME.$('input[name="chooseperson"]')) {
-        let timeout;
-        const input = EME.$('input[name="chooseperson"]');
-        document.addEventListener('click', () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove()));
-
-        input.addEventListener('input', function () {
-            clearTimeout(timeout);
-            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-            const value = this.value.trim();
-            if (value.length < 2) return;
-
-            timeout = setTimeout(() => {
-                const formData = new FormData();
-                formData.append('lastname', value);
-                formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
-                formData.append('action', 'eme_autocomplete_people');
-                formData.append('eme_searchlimit', 'people');
-
-                eme_postJSON(ajaxurl, formData, (data) => {
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'eme-autocomplete-suggestions';
-                    data.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-                        suggestion.innerHTML = `<strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong><br><small>${eme_htmlDecode(item.email)}</small>`;
-                        suggestion.addEventListener('click', e => {
-                            e.preventDefault();
-                            // first hide all personal info, then show informational info on the selected person
-                            EME.$$('.personal_info').forEach(el => eme_toggle(el, false));
-                            const lastname = EME.$('input[name=lastname]');
-                            lastname.value = eme_htmlDecode(item.lastname);
-                            lastname.readOnly = true;
-                            eme_toggle(lastname, true);
-                            const firstname = EME.$('input[name=firstname]');
-                            firstname.value = eme_htmlDecode(item.firstname);
-                            firstname.readOnly = true;
-                            eme_toggle(firstname, true);
-                            const email = EME.$('input[name=email]');
-                            email.value = eme_htmlDecode(item.email);
-                            email.readOnly = true;
-                            eme_toggle(email, true);
-                            EME.$('input[name="person_id"]').value = eme_htmlDecode(item.person_id);
-                            EME.$('input[name=wp_id]').value = eme_htmlDecode(item.wp_id);
-                            input.value = `${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}  `;
-                            input.readOnly = true;
-                            input.classList.add('clearable', 'x');
-                        });
-                        suggestions.appendChild(suggestion);
-                    });
-                    if (data.length === 0) {
-                        const noMatch = document.createElement('div');
-                        noMatch.className = 'eme-autocomplete-suggestion';
-                        noMatch.textContent = ememembers.translate_nomatchperson;
-                        suggestions.appendChild(noMatch);
-                    }
-                    input.insertAdjacentElement('afterend', suggestions);
-                });
-            }, 500);
-        });
-
-        input.addEventListener('change', () => {
-            if (input.value === '') {
-                const lastname = EME.$('input[name=lastname]');
-                lastname.value = ''
-                lastname.readOnly = false;
+    // --- SnapSelect: chooseperson (add-member form) ---
+    if (EME.$('select.eme_snapselect_chooseperson')) {
+        initSnapSelectRemote('select.eme_snapselect_chooseperson', {
+            allowEmpty: true,
+            url: ajaxurl,
+            data: function(search, page) {
+                return {
+                    action:          'eme_chooseperson_snapselect',
+                    eme_admin_nonce: ememembers.translate_adminnonce,
+                };
+            },
+            onItemAdd: function(value, text) {
+                // first hide all personal info, then show informational info on the selected person
+                EME.$$('.personal_info').forEach(el => eme_toggle(el, false));
+                // Read extra fields stored on the <option> by SnapSelect's processResults
+                const opt = this.querySelector(`option[value="${value}"]`);
+                EME.$('input[name="person_id"]').value = value;
+                EME.$('input[name=wp_id]').value       = opt?.dataset.wpid || '';
+                const lastname  = EME.$('input[name=lastname]');
                 const firstname = EME.$('input[name=firstname]');
-                firstname.value = ''
-                firstname.readOnly = false;
-                const email = EME.$('input[name=email]');
-                email.value = ''
-                email.readOnly = false;
-
-                EME.$('input[name="chooseperson"]').value = '';
-                input.readOnly = false;
-                input.classList.remove('clearable', 'x');
-
-                EME.$('input[name=person_id]').value = '';
-                EME.$('input[name=wp_id]').value = '';
-
+                const email     = EME.$('input[name=email]');
+                if (lastname)  { lastname.value  = opt?.dataset.lastname  || ''; lastname.readOnly  = true; eme_toggle(lastname, true); }
+                if (firstname) { firstname.value = opt?.dataset.firstname || ''; firstname.readOnly = true; eme_toggle(firstname, true);}
+                if (email)     { email.value     = opt?.dataset.email     || ''; email.readOnly     = true; eme_toggle(email, true);}
+            },
+            onItemDelete: function(value, text) {
+                EME.$('input[name="person_id"]').value = '';
+                EME.$('input[name=wp_id]').value       = '';
+                const lastname  = EME.$('input[name=lastname]');
+                const firstname = EME.$('input[name=firstname]');
+                const email     = EME.$('input[name=email]');
+                if (lastname)  { lastname.value  = ''; lastname.readOnly  = false; }
+                if (firstname) { firstname.value = ''; firstname.readOnly = false; }
+                if (email)     { email.value     = ''; email.readOnly     = false; }
                 EME.$$('.personal_info').forEach(el => eme_toggle(el, true));
             }
         });
@@ -554,6 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (EME.$('select.eme_snapselect_transferperson')) {
         initSnapSelectRemote('select.eme_snapselect_transferperson', {
             allowEmpty: true,
+            url: ajaxurl,
             data: function(search, page) {
                 return {
                     action:            'eme_memberperson_snapselect',
@@ -570,6 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (EME.$('select.eme_snapselect_relatedmember')) {
         initSnapSelectRemote('select.eme_snapselect_relatedmember', {
             allowEmpty: true,
+            url: ajaxurl,
             data: function(search, page) {
                 return {
                     action:          'eme_membermainaccount_snapselect',

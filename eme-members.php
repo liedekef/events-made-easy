@@ -1543,7 +1543,10 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <tr><td>
         <?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?>
         </td><td>
-            <input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
+            <select id='chooseperson' name='chooseperson'
+                data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                class="eme_snapselect_chooseperson nodynamicupdates">
+            </select>
         </td></tr>
     <?php } else { ?>
 <?php
@@ -6491,8 +6494,50 @@ function eme_ajax_membermainaccount_snapselect() {
     wp_die();
 }
 
+/**
+ * SnapSelect endpoint for the "choose person" field on the add-member form.
+ * Returns {Records:[{id, text, firstname, lastname, email, wpId}], TotalRecordCount}
+ * so that onItemAdd can populate the personal detail fields directly from the option's dataset.
+ */
+function eme_ajax_chooseperson_snapselect() {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+    if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
+        wp_die();
+    }
+
+    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start    = ( $page - 1 ) * $pagesize;
+
+    $where = ! empty( $q )
+        ? "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND status=" . EME_PEOPLE_STATUS_ACTIVE
+        : 'status=' . EME_PEOPLE_STATUS_ACTIVE;
+
+    $recordCount = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE $where" );
+    $persons     = eme_get_persons( '', $where, "LIMIT $start,$pagesize" );
+
+    $records = [];
+    foreach ( $persons as $person ) {
+        $records[] = [
+            'id'        => intval( $person['person_id'] ),
+            'text'      => eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')',
+            'firstname' => eme_esc_html( $person['firstname'] ),
+            'lastname'  => eme_esc_html( $person['lastname'] ),
+            'email'     => eme_esc_html( $person['email'] ),
+            'wpid'      => intval( $person['wp_id'] ),
+        ];
+    }
+    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    wp_die();
+}
 add_action( 'wp_ajax_eme_memberperson_snapselect',     'eme_ajax_memberperson_snapselect' );
 add_action( 'wp_ajax_eme_membermainaccount_snapselect', 'eme_ajax_membermainaccount_snapselect' );
+add_action( 'wp_ajax_eme_chooseperson_snapselect', 'eme_ajax_chooseperson_snapselect' );
 
 add_action( 'wp_ajax_eme_members_list', 'eme_ajax_members_list' );
 add_action( 'wp_ajax_eme_members_select2', 'eme_ajax_members_select2' );

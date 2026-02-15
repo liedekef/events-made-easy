@@ -308,14 +308,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Tab binding and default activation
     EME.$$('.eme-tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
-            const target = e.target.dataset('tab');
+            const target = e.target.dataset.tab;
             eme_activateTab(target);
         });
     });
 
     const tabsContainer = EME.$('.eme-tabs');
     if (tabsContainer) {
-        const preferredTab = tabsContainer.dataset('showtab');
+        const preferredTab = tabsContainer.dataset.showtab;
         if (preferredTab) {
             eme_activateTab(preferredTab);
         } else if ($_GET['page'] && $_GET['page']=='eme-emails') {
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             const firstTab = EME.$('.eme-tab');
             if (firstTab) {
-                eme_activateTab(firstTab.dataset('tab'));
+                eme_activateTab(firstTab.dataset.tab);
             }
         }
     }
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
     EME.$$('.showhidebutton').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            const elname = e.target.dataset('showhide');
+            const elname = e.target.dataset.showhide;
             const targetEl = EME.$(`#${elname}`);
             if (targetEl) {
                 targetEl.classList.toggle('eme-hidden');
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', (e) => {
         if (e.target.matches('.eme-dismiss-notice')) {
             e.preventDefault();
-            const notice = e.target.dataset('notice');
+            const notice = e.target.dataset.notice;
             const noticeDiv = e.target.closest('.notice');
 
             const formData = new URLSearchParams({
@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const formData = new URLSearchParams({
                 action: 'eme_get_payconiq_iban',
-                pg_pid: e.target.dataset('pg_pid'),
+                pg_pid: e.target.dataset.pg_pid,
                 eme_admin_nonce: emeadmin.translate_adminnonce
             });
             fetch(ajaxurl, {
@@ -680,12 +680,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.matches('.eme_del_upload-button')) {
             e.preventDefault();
             if (confirm(emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
-                const id = e.target.dataset('id');
-                const name = e.target.dataset('name');
-                const type = e.target.dataset('type');
-                const randomId = e.target.dataset('random_id');
-                const fieldId = e.target.dataset('field_id');
-                const extraId = e.target.dataset('extra_id');
+                const id = e.target.dataset.id;
+                const name = e.target.dataset.name;
+                const type = e.target.dataset.type;
+                const randomId = e.target.dataset.random_id;
+                const fieldId = e.target.dataset.field_id;
+                const extraId = e.target.dataset.extra_id;
 
                 const formData = new URLSearchParams({
                     id: id,

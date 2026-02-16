@@ -557,7 +557,6 @@ function eme_task_signups_page() {
 }
 
 function eme_task_signups_table_layout( $message = '' ) {
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -572,15 +571,15 @@ function eme_task_signups_table_layout( $message = '' ) {
          <h1>" . __( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
-    <div id="tasksignups-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="tasksignups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>
-        <input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']);?>">
+        <input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo esc_attr( intval($_GET['event_id']) ); ?>">
         <?php if (isset($_GET['status'])) { ?>
-            <input type="hidden" name="search_signup_status" id="search_signup_status" value="<?php echo intval($_GET['status']);?>">
+            <input type="hidden" name="search_signup_status" id="search_signup_status" value="<?php echo esc_attr( intval($_GET['status']) ); ?>">
         <?php } ?>
     <?php } else { ?>
         <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
@@ -623,7 +622,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 
     <div id="bulkactions">
     <form id='task-signups-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
@@ -655,7 +654,7 @@ function eme_task_signups_table_layout( $message = '' ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="TaskSignupsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="TaskSignupsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
     </div>
     </div>
     <?php
@@ -930,18 +929,19 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
             }
             foreach ( $tasks as $count => $task ) {
                 ?>
-                <tr id="eme_row_task_<?php echo $count; ?>" >
+                <tr id="eme_row_task_<?php echo esc_attr( $count ); ?>" >
                 <td>
                 <?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
                 </td>
                 <td>
                 <?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the task ids only if it is not a duplicate event ?>
-                    <input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_id]" name="eme_tasks[<?php echo $count; ?>][task_id]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_id'] ) ) { echo $task['task_id'];} ?>">
-                    <input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_nbr]" name="eme_tasks[<?php echo $count; ?>][task_nbr]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_nbr'] ) ) { echo $task['task_nbr'];} ?>">
+                    <input type='hidden' id="eme_tasks[<?php echo esc_attr( $count ); ?>][task_id]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_id]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_id'] ) ) { echo esc_attr( $task['task_id'] );} ?>">
+                    <input type='hidden' id="eme_tasks[<?php echo esc_attr( $count ); ?>][task_nbr]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_nbr]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_nbr'] ) ) { echo esc_attr( $task['task_nbr'] );} ?>">
                 <?php endif; ?>
                 </td>
                 <td>
-                <input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][name]" name="eme_tasks[<?php echo $count; ?>][name]" size="15" aria-label="name" value="<?php echo $task['name']; ?>">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
+                <input <?php echo $required; ?> id="eme_tasks[<?php echo esc_attr( $count ); ?>][name]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][name]" size="15" aria-label="name" value="<?php echo esc_attr( $task['name'] ); ?>">
 <?php
                 if (!empty($task['task_id'])) {
                     $count_signups = eme_count_task_signups($task['task_id']);
@@ -955,18 +955,21 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 ?>
                 </td>
                 <td>
-                <input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_start]' id='eme_tasks[<?php echo $count; ?>][task_start]'>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_start]' id='eme_tasks[<?php echo $count; ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo eme_js_datetime( $task['task_start'] );} ?>' data-alt-field='eme_tasks[<?php echo $count; ?>][task_start]' class='eme_formfield_fdatetime'>
+                <input type='hidden' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]'>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo esc_attr( eme_js_datetime( $task['task_start'] ) );} ?>' data-alt-field='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' class='eme_formfield_fdatetime'>
                 </td>
                 <td>
-                <input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_end]' id='eme_tasks[<?php echo $count; ?>][task_end]'>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_end]' id='eme_tasks[<?php echo $count; ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo eme_js_datetime( $task['task_end'] );} ?>' data-alt-field='eme_tasks[<?php echo $count; ?>][task_end]' class='eme_formfield_fdatetime'>
+                <input type='hidden' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]'>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' data-alt-field='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' class='eme_formfield_fdatetime'>
                 </td>
                 <td>
-                <input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][spaces]" name="eme_tasks[<?php echo $count; ?>][spaces]" size="12" aria-label="spaces" value="<?php echo $task['spaces']; ?>">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
+                <input <?php echo $required; ?> id="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" size="12" aria-label="spaces" value="<?php echo esc_attr( $task['spaces'] ); ?>">
                 </td>
                 <td>
-                <textarea class="eme_fullresizable" id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
+                <textarea class="eme_fullresizable" id="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
                 </td>
                 <td>
                 <a href="#" class='eme_remove_task'><?php echo "<img class='eme_remove_task' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img class='eme_add_task' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
@@ -995,37 +998,37 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_task_settings( $event ) {
-    $eme_prop_task_registered_users_only = ( $event['event_properties']['task_registered_users_only'] ) ? "checked='checked'" : '';
-    $eme_prop_task_requires_approval     = ( $event['event_properties']['task_requires_approval'] ) ? "checked='checked'" : '';
-    $eme_prop_task_only_one_signup_pp    = ( $event['event_properties']['task_only_one_signup_pp'] ) ? "checked='checked'" : '';
-    $eme_prop_task_allow_overlap         = ( $event['event_properties']['task_allow_overlap'] ) ? "checked='checked'" : '';
     $eme_prop_task_reminder_days         = eme_esc_html( $event['event_properties']['task_reminder_days'] );
     $extra_attributes                    = 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
     ?>
     <div id='div_event_task_settings'>
         <p id='p_task_registered_users_only'>
-            <input id="eme_prop_task_registered_users_only" name='eme_prop_task_registered_users_only' value='1' type='checkbox' <?php echo $eme_prop_task_registered_users_only; ?>>
+            <input id="eme_prop_task_registered_users_only" name='eme_prop_task_registered_users_only' value='1' type='checkbox' <?php checked( $event['event_properties']['task_registered_users_only'] ); ?>>
         <label for="eme_prop_task_registered_users_only"><?php esc_html_e( 'Require WP membership to be able to sign up for tasks?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_addpersontogroup'>
             <label for='eme_prop_task_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-            <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['task_addpersontogroup'], 'eme_prop_task_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p>
+            <td><?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted UI helper HTML
+			echo eme_ui_multiselect_key_value( $event['event_properties']['task_addpersontogroup'], 'eme_prop_task_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p>
         <p id='p_task_requires_approval'>
-            <input id="eme_prop_task_requires_approval" name='eme_prop_task_requires_approval' value='1' type='checkbox' <?php echo $eme_prop_task_requires_approval; ?>>
+            <input id="eme_prop_task_requires_approval" name='eme_prop_task_requires_approval' value='1' type='checkbox' <?php checked( $event['event_properties']['task_requires_approval'] ); ?>>
             <label for="eme_prop_task_requires_approval"><?php esc_html_e( 'Require approval for task signups?', 'events-made-easy' ); ?></label>
-            <br><?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending_tasksignups'], 'eme_prop_ignore_pending_tasksignups', __( 'Consider pending (unapproved) task signups as available for new signups', 'events-made-easy' ) ); ?>
+            <br><?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted UI helper HTML
+			echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending_tasksignups'], 'eme_prop_ignore_pending_tasksignups', __( 'Consider pending (unapproved) task signups as available for new signups', 'events-made-easy' ) ); ?>
         </p>
 
         <p id='p_task_only_one_signup_pp'>
-            <input id="eme_prop_task_only_one_signup_pp" name='eme_prop_task_only_one_signup_pp' value='1' type='checkbox' <?php echo $eme_prop_task_only_one_signup_pp; ?>>
+            <input id="eme_prop_task_only_one_signup_pp" name='eme_prop_task_only_one_signup_pp' value='1' type='checkbox' <?php checked( $event['event_properties']['task_only_one_signup_pp'] ); ?>>
             <label for="eme_prop_task_only_one_signup_pp"><?php esc_html_e( 'Allow only one sign up for tasks per event for a person?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_allow_overlap'>
-            <input id="eme_prop_task_allow_overlap" name='eme_prop_task_allow_overlap' value='1' type='checkbox' <?php echo $eme_prop_task_allow_overlap; ?>>
+            <input id="eme_prop_task_allow_overlap" name='eme_prop_task_allow_overlap' value='1' type='checkbox' <?php checked( $event['event_properties']['task_allow_overlap'] ); ?>>
             <label for="eme_prop_task_allow_overlap"><?php esc_html_e( 'Allow overlap for task signups?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_reminder_days'>
-            <input id="eme_prop_task_reminder_days" name='eme_prop_task_reminder_days' type='text' value="<?php echo $eme_prop_task_reminder_days; ?>">
+            <input id="eme_prop_task_reminder_days" name='eme_prop_task_reminder_days' type='text' value="<?php echo esc_attr( $eme_prop_task_reminder_days ); ?>">
             <label for="eme_prop_task_reminder_days"><?php esc_html_e( 'Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
         </p>
     </div>

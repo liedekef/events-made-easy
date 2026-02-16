@@ -357,19 +357,18 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     } else {
         $action = 'edit';
     }
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <div class="wrap">
     <?php if ( $message != '' ) { ?>
         <div id="message" class="notice is-dismissible eme-message-admin">
-        <p><?php echo $message; ?></p>
+        <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
     <?php } ?>
         <div id="eme-location-changed" class='notice is-dismissible eme-message-admin eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
         </div>
     <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <?php if ( $action == 'add' ) { ?>
     <input type="hidden" name="eme_admin_action" value="do_addlocation">
     <?php } else { ?>
@@ -459,13 +458,8 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 <?php
     } else {
         foreach ( $categories as $category ) {
-            if ( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ) {
-                $selected = "checked='checked'";
-            } else {
-                $selected = '';
-            }
 ?>
-                            <input type="checkbox" name="location_category_ids[]" value="<?php echo $category['category_id']; ?>" <?php echo $selected; ?>><?php echo eme_trans_esc_html( $category['category_name'] ); ?><br>
+                            <input type="checkbox" name="location_category_ids[]" value="<?php echo esc_attr( $category['category_id'] ); ?>" <?php checked( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ); ?>><?php echo eme_trans_esc_html( $category['category_name'] ); ?><br>
 <?php
         } // end foreach
     } // end if
@@ -521,7 +515,7 @@ function eme_meta_box_div_location_name( $location ) {
         $slug = $location['location_slug'] ? $location['location_slug'] : $location['location_name'];
         $slug = eme_permalink_convert_noslash( $slug );
 ?>
-        <input type="text" id="slug" name="location_slug" value="<?php echo $slug; ?>"><?php echo user_trailingslashit( '' ); ?>
+        <input type="text" id="slug" name="location_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
 <?php
     }
 ?>
@@ -543,7 +537,7 @@ function eme_meta_box_div_location_name_for_event( $location ) {
                 <?php esc_html_e( 'Location name', 'events-made-easy' ); ?>
             </h3>
             <div class="inside">
-            <input name="location_name" id="location_name" type="text" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40"> <?php echo $edit_link; ?>
+            <input name="location_name" id="location_name" type="text" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40"> <?php echo $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_url() and esc_attr__() ?>
             <br><span class="eme_smaller"><?php esc_html_e( 'This is an autocomplete field. If a name of an existing location matches, it will be suggested.', 'events-made-easy' ); ?></span>
             </div>
         </div>
@@ -552,7 +546,6 @@ function eme_meta_box_div_location_name_for_event( $location ) {
 
 function eme_meta_box_div_location_details( $location ) {
     $map_is_active = get_option( 'eme_map_is_active' );
-    $eme_loc_prop_override_loc_checked = ( $location['location_properties']['override_loc'] ) ? "checked='checked'" : '';
 ?>
         <div id="loc_address" class="postbox" style="overflow: hidden;">
             <h3>
@@ -590,7 +583,7 @@ function eme_meta_box_div_location_details( $location ) {
             </tr>
             <tr>
                 <td><label for="eme_loc_prop_override_loc"><?php esc_html_e( 'Override location coordinates', 'events-made-easy' ); ?></label></td>
-                <td><input id="eme_loc_prop_override_loc" name='eme_loc_prop_override_loc' value='1' type='checkbox' <?php echo $eme_loc_prop_override_loc_checked; ?>>
+                <td><input id="eme_loc_prop_override_loc" name='eme_loc_prop_override_loc' value='1' type='checkbox' <?php checked( $location['location_properties']['override_loc'] ); ?>>
             </tr>
             <tr>
             <td><label for="location_latitude"><?php esc_html_e( 'Latitude', 'events-made-easy' ); ?></label></td>
@@ -655,7 +648,7 @@ function eme_meta_box_div_location_details( $location ) {
             <div class="inside">
             <table><tr>
             <td><label for="eme_loc_prop_max_capacity"><?php esc_html_e( 'Max capacity', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_loc_prop_max_capacity" name="eme_loc_prop_max_capacity" type="text" value="<?php echo $location['location_properties']['max_capacity']; ?>" size="40">
+        <td><input id="eme_loc_prop_max_capacity" name="eme_loc_prop_max_capacity" type="text" value="<?php echo esc_attr( $location['location_properties']['max_capacity'] ); ?>" size="40">
         <br><?php esc_html_e( "If setting the max capacity to something else than 0, then - for all events that are happening at the same time at this location - a check will be done to see if the location still allows extra people inside.", 'events-made-easy' ); ?>
             </td>
             </tr></table>
@@ -723,8 +716,6 @@ function eme_meta_box_div_location_image( $location ) {
 }
 
 function eme_meta_box_div_location_url( $location ) {
-    $eme_loc_prop_online_only_checked = ( $location['location_properties']['online_only'] ) ? "checked='checked'" : '';
-
 ?>
 <div id="div_location_url" class="postbox">
     <h3>
@@ -739,7 +730,7 @@ function eme_meta_box_div_location_url( $location ) {
     </tr>
     <tr>
     <td><label for="eme_loc_prop_online_only"><?php esc_html_e( 'Only online location', 'events-made-easy' ); ?></label></td>
-    <td><input id="eme_loc_prop_online_only" name='eme_loc_prop_online_only' value='1' type='checkbox' <?php echo $eme_loc_prop_online_only_checked; ?>>
+    <td><input id="eme_loc_prop_online_only" name='eme_loc_prop_online_only' value='1' type='checkbox' <?php checked( $location['location_properties']['online_only'] ); ?>>
     <br><span class="eme_smaller"><?php esc_html_e( 'Check this is the location is purely virtual (like a meeting url or so).', 'events-made-easy' ); ?></span>
     </td>
     </tr>
@@ -833,8 +824,6 @@ function eme_meta_box_div_location_customfields( $location ) {
 
 
 function eme_locations_table( $message = '' ) {
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
@@ -845,7 +834,7 @@ function eme_locations_table( $message = '' ) {
         <h1><?php esc_html_e( 'Add a new location', 'events-made-easy' ); ?></h1>
         <div class="wrap">
         <form id="locations-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-locations' ); ?>">
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <input type="hidden" name="eme_admin_action" value="add_location">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add location', 'events-made-easy' ); ?>">
         </form>
@@ -855,7 +844,7 @@ function eme_locations_table( $message = '' ) {
         <h1><?php esc_html_e( 'Manage locations', 'events-made-easy' ); ?></h1>
         <?php if ( $message != '' ) { ?>
             <div id="message" class="updated notice notice-success is-dismissible">
-                <p><?php echo $message; ?></p>
+                <p><?php echo wp_kses_post( $message ); ?></p>
             </div>
         <?php } ?>
 
@@ -866,7 +855,7 @@ function eme_locations_table( $message = '' ) {
         </span>
         <div id='eme_div_import' class='eme-hidden'>
         <form id='location-import' method='post' enctype='multipart/form-data' action='#'>
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="file" name="eme_csv">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
         <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -904,7 +893,7 @@ function eme_locations_table( $message = '' ) {
 
     <div id="bulkactions">
     <form action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteLocations"><?php esc_html_e( 'Delete selected locations', 'events-made-easy' ); ?></option>

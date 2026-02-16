@@ -49,9 +49,9 @@ class WP_Widget_eme_list extends WP_Widget {
 			$authinfo = get_userdata( $instance['authorid'] );
 			$author   = $authinfo->user_login;
 		}
-		echo $args['before_widget'];
+		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget arg
 		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget args
 		}
 
 		if ( is_array( $category ) ) {
@@ -63,11 +63,11 @@ class WP_Widget_eme_list extends WP_Widget {
 
 		$events_list = eme_get_events_list( limit: $limit, scope: $scope, order: $order, format: $format, category: $category, showperiod: $showperiod, author: $author, show_ongoing: $show_ongoing, show_recurrent_events_once: $recurrence_only_once, notcategory: $notcategory, template_id: $format_tpl );
 		if ( strstr( $events_list, 'events-no-events' ) ) {
-			echo $events_list;
+			echo $events_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted plugin HTML
 		} else {
-			echo $header . $events_list . $footer;
+			echo $header . $events_list . $footer; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted plugin HTML
 		}
-		echo $args['after_widget'];
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget arg
 	}
 
 	public function update( $new_instance, $old_instance ) {
@@ -150,11 +150,11 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Number of events', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo $limit; ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo esc_attr( $limit ); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>"><?php esc_html_e( 'Scope of the events', 'events-made-easy' ); ?><br><?php esc_html_e( '(See the doc for &#91;eme_events] for all possible values)', 'events-made-easy' ); ?>:</label><br>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo $scope; ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo esc_attr( $scope ); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'showperiod' ) ); ?>"><?php esc_html_e( 'Show events per period', 'events-made-easy' ); ?>:</label><br>
@@ -217,22 +217,22 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>"><?php esc_html_e( 'List header format<br>(if empty &lt;ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo $header; ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo esc_attr( $header ); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format_tpl' ) ); ?>"><?php esc_html_e( 'List item format', 'events-made-easy' ); ?>:</label>
 		<?php
 		esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-		echo eme_ui_select( $format_tpl, $this->get_field_name( 'format_tpl' ), $templates_array );
+		echo eme_ui_select( $format_tpl, $this->get_field_name( 'format_tpl' ), $templates_array ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 		?>
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>"><?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>:</label>
-	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo $format; ?></textarea>
+	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo esc_textarea( $format ); ?></textarea>
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>"><?php esc_html_e( 'List footer format<br>(if empty &lt;/ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo $footer; ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo esc_attr( $footer ); ?>">
 	</p>
 		<?php
 	}
@@ -287,12 +287,12 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		$month = $eme_date_obj->format( 'm' );
 		$year  = $eme_date_obj->format( 'Y' );
 
-		echo $args['before_widget'];
+		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget arg
 		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget args
 		}
-		echo eme_get_calendar( long_events: $long_events, category: $category, notcategory: $notcategory, month: $month, year: $year, author: $author, holiday_id: $holiday_id );
-		echo $args['after_widget'];
+		echo eme_get_calendar( long_events: $long_events, category: $category, notcategory: $notcategory, month: $month, year: $year, author: $author, holiday_id: $holiday_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted plugin HTML
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget arg
 	}
 
 	public function update( $new_instance, $old_instance ) {

@@ -2811,7 +2811,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         </tr>
         <tr>
         <td><label for="People"><?php esc_html_e( 'People', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 0, 'eme_select2_people_class' ); ?></td>
+        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 1, 'eme_select2_people_class' ); ?></td>
         </tr>
 <?php
             } elseif ( $group['type'] == 'dynamic_people' ) {

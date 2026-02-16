@@ -113,11 +113,11 @@ function initSnapSelectRemote(selector, options = {}) {
             closeOnSelect:  !el.multiple,
             allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : undefined,
             onItemAdd:      typeof options.onItemAdd    === 'function' ? options.onItemAdd    : undefined,
-            onItemDelete:   typeof options.onItemDelete === 'function' ? options.onItemDelete :
-                            typeof options.onItemRemove === 'function' ? options.onItemRemove : undefined,
+            onItemDelete:   typeof options.onItemDelete === 'function' ? options.onItemDelete : undefined,
             ajax: {
                 // Allow caller to pass a custom url function (e.g. for state→country cascade)
                 url: options.url || emebasic.translate_ajax_url,
+                cache: options.cache !== undefined ? options.cache : undefined,
                 pagesize: pagesize,
                 data: options.data || {},
                 processResults: function(data, search, page) {
@@ -136,15 +136,6 @@ function initSnapSelectRemote(selector, options = {}) {
                 },
             }
         };
-        // set caching if defined
-        if (options.cache !== undefined) {
-            config.ajax.cache = options.cache;
-        }
-        // Allow caller to supply a fully custom processResults
-        if (typeof options.processResults === 'function') {
-            config.ajax.processResults = options.processResults;
-        }
-
         const instance = new SnapSelectClass(el, config);
 
         // Expose a .snapselect property on the element
@@ -281,7 +272,7 @@ function eme_init_widgets(dynamicOnly = false) {
                 stateField.snapselectInstance.clearCache();
             }
         },
-        onItemRemove: function(value, text) {
+        onItemDelete: function(value, text) {
             const form       = this.closest('form');
             const stateField = form?.querySelector('.eme_select2_state_class');
             if (stateField && stateField.snapselectInstance) {

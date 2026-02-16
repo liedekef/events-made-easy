@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function () {
             onItemAdd: function(value, text) {
                 // first hide all personal info, then show informational info on the selected person
                 EME.$$('.personal_info').forEach(el => eme_toggle(el, false));
-                // Read extra fields stored on the <option> by SnapSelect's processResults
+                // Read extra fields stored on the <option> by SnapSelect
                 const opt = this.querySelector(`option[value="${value}"]`);
                 EME.$('input[name="person_id"]').value = value;
                 EME.$('input[name=wp_id]').value       = opt?.dataset.wpid || '';

@@ -1902,7 +1902,7 @@ function eme_options_page() {
             eme_options_toggle( __( 'Ignore pending bookings in the bookings list', 'events-made-easy' ), 'eme_bookings_list_ignore_pending', __( 'Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Check waitinglist when seats become available', 'events-made-easy' ), 'eme_check_free_waiting', __( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ) );
 
-            eme_options_textarea( __( 'Booking recorded message', 'events-made-easy' ), 'eme_registration_recorded_ok_html', __( 'The text (html allowed) shown to the user when the booking has been made successfully.', 'events-made-easy' ) , 1 );
+            eme_options_textarea( __( 'Booking recorded message', 'events-made-easy' ), 'eme_registration_recorded_ok_html', __( 'The text (html allowed) shown to the user when the booking has been made successfully.', 'events-made-easy' ) .'<br>'. __('In case online payment is possible, the payment redirect message will also be shown, see the payment options if you want to change that message.','events-made-easy') , 1 );
             eme_options_toggle( __( 'Show RSVP form again after booking?', 'events-made-easy' ), 'eme_rsvp_show_form_after_booking', __( "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking.", 'events-made-easy' ) );
             eme_options_toggle( __( 'Allow overbooking?', 'events-made-easy' ), 'eme_rsvp_admin_allow_overbooking', __( 'Check this option if you want to allow overbookings when adding/editing an booking in the admin interface.', 'events-made-easy' ) );
 ?>

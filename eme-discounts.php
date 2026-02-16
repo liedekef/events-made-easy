@@ -161,7 +161,7 @@ function eme_discounts_page() {
 							}
 							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
-								$message .= "\n" . $error_msg;
+								$message .= "<br>" . $error_msg;
 							}
 						}
 						fclose( $handle );
@@ -220,7 +220,7 @@ function eme_discounts_page() {
 							}
 							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
-								$message .= "\n" . $error_msg;
+								$message .= "<br>" . $error_msg;
 							}
 						}
 						fclose( $handle );

@@ -740,7 +740,8 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 ];
                 $my_arr[] = $new_el;
             }
-            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, '', $field_attributes . ' ' . $disabled );
+            $new_attrs = eme_merge_classes_into_attrs('eme_select2', $field_attributes) . ' ' . $disabled;
+            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, '', $new_attrs );
             break;
         case 'dropdown_multi':
             # dropdown, multiselect

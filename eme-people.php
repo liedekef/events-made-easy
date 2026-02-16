@@ -2594,12 +2594,12 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class', 'data-allow-empty="true"' ); ?></td>
+        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class', 'data-allow-empty="true"' ); ?></td>
+        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
         <td></td>
         </tr>
         <tr>

@@ -76,11 +76,11 @@ function initSnapSelect(selector, options = {}) {
         }
 
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || '',
-            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : false,
+            placeholder:    options.placeholder    || el.dataset.placeholder || undefined,
+            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : undefined,
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : !el.multiple,
-            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : false,
+            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : undefined,
         };
 
         const instance = new SnapSelectClass(el, config);
@@ -108,10 +108,10 @@ function initSnapSelectRemote(selector, options = {}) {
         const pagesize = options.pagesize || 30;
         // Build the ajax.url function, incorporating any extra data
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || '',
+            placeholder:    options.placeholder    || el.dataset.placeholder || undefined,
             clearAllButton: options.clearAllButton !== undefined ? options.clearAllButton : el.multiple,
             closeOnSelect:  !el.multiple,
-            allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : false,
+            allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : undefined,
             onItemAdd:      typeof options.onItemAdd    === 'function' ? options.onItemAdd    : undefined,
             onItemDelete:   typeof options.onItemDelete === 'function' ? options.onItemDelete :
                             typeof options.onItemRemove === 'function' ? options.onItemRemove : undefined,

@@ -289,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (EME.$('select.eme_snapselect_chooserelatedperson')) {
         initSnapSelectRemote('select.eme_snapselect_chooserelatedperson', {
             allowEmpty: true,
+            cache: true,
             data: function(search, page) {
                 return {
                     action:            'eme_people_select2',

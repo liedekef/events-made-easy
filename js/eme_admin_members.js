@@ -470,6 +470,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initSnapSelectRemote('select.eme_snapselect_chooseperson', {
             allowEmpty: true,
             url: ajaxurl,
+            cache: true,
             data: function(search, page) {
                 return {
                     action:          'eme_chooseperson_snapselect',
@@ -509,6 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initSnapSelectRemote('select.eme_snapselect_transferperson', {
             allowEmpty: true,
             url: ajaxurl,
+            cache: true,
             data: function(search, page) {
                 return {
                     action:            'eme_memberperson_snapselect',
@@ -526,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initSnapSelectRemote('select.eme_snapselect_relatedmember', {
             allowEmpty: true,
             url: ajaxurl,
+            cache: true,
             data: function(search, page) {
                 return {
                     action:          'eme_membermainaccount_snapselect',

@@ -198,7 +198,6 @@ function eme_formfields_table_layout( $message = '' ) {
     global $plugin_page;
     $field_types    = eme_get_fieldtypes();
     $field_purposes = eme_get_fieldpurpose();
-    $nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     $destination    = admin_url( "admin.php?page=$plugin_page" );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
@@ -211,15 +210,15 @@ function eme_formfields_table_layout( $message = '' ) {
     <div id="icon-edit" class="icon32">
     </div>
 
-    <div id="formfields-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="formfields-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <h1><?php esc_html_e( 'Add custom field', 'events-made-easy' ); ?></h1>
 
     <div class="wrap">
-        <form id="formfields-new" method="post" action="<?php echo $destination; ?>">
-            <?php echo $nonce_field; ?>
+        <form id="formfields-new" method="post" action="<?php echo esc_url( $destination ); ?>">
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <input type="hidden" name="eme_admin_action" value="add_formfield">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add custom field', 'events-made-easy' ); ?>">
         </form>
@@ -234,7 +233,7 @@ function eme_formfields_table_layout( $message = '' ) {
 
     <div id="bulkactions">
     <form id='formfields-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteFormfields"><?php esc_html_e( 'Delete selected fields', 'events-made-easy' ); ?></option>
@@ -427,7 +426,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
    </div>
    <p>" . __( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=44'>" . __( 'the documentation', 'events-made-easy' ) . '</a></p>
    ';
-    echo $layout;
+    echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from hardcoded strings and translations
 }
 
 function eme_get_dyndata_conditions() {
@@ -5001,7 +5000,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
             foreach ( $eme_data as $count => $info ) {
                 $grouping_used = in_array( $info['grouping'], $used_groupingids ) ? 1 : 0;
                 ?>
-                    <tr id="eme_dyndata_<?php echo $count; ?>">
+                    <tr id="eme_dyndata_<?php echo esc_attr( $count ); ?>">
                     <td>
                 <?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
                     </td>
@@ -5009,16 +5008,16 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
             <!-- the grouping index parameter should be a unique index per condition. This is used to set/retrieve all the entered info based on this condition in the database (so once set, always keep it to the same value for that condition) -->
             <!-- Since it is too complicated to explain that, but we still need it: keep it a hidden field if possible, the value for new rows is set via php anyway -->
                         <?php if ($dyn_count_total>0 && $grouping_used==0) : ?>
-                        <input type='text' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo $info['grouping']; ?>">
+                        <input type='text' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo esc_attr( $info['grouping'] ); ?>">
                         <?php else : ?>
-                        <?php if ($dyn_count_total>0) echo $info['grouping']; ?>
-                        <input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" value="<?php echo $info['grouping']; ?>">
+                        <?php if ($dyn_count_total>0) echo esc_html( $info['grouping'] ); ?>
+                        <input type='hidden' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" value="<?php echo esc_attr( $info['grouping'] ); ?>">
                         <?php endif; ?>
                     </td>
                     <td><table style="">
-                        <tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][field]" name="eme_dyndata[<?php echo $count; ?>][field]" size="12" aria-label="field" value="<?php echo $info['field']; ?>"></td></tr>
+                        <tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" size="12" aria-label="field" value="<?php echo esc_attr( $info['field'] ); ?>"></td></tr>
                         <tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][condval]" name="eme_dyndata[<?php echo $count; ?>][condval]" aria-label="condition value" size="12" value="<?php echo $info['condval']; ?>"></td></tr>
+                        <tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" aria-label="condition value" size="12" value="<?php echo esc_attr( $info['condval'] ); ?>"></td></tr>
                     </table>
                     </td>
                     <td><table style="">

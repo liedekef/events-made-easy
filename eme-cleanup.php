@@ -277,7 +277,7 @@ function eme_cleanup_form( $message = '' ) {
 	<?php if ( $message != '' ) { ?>
 <h1><?php esc_html_e( 'Action info', 'events-made-easy' ); ?></h1>
 	<div id='message' class='updated eme-message-admin'>
-	<p><?php echo $message; ?></p>
+	<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
 <?php } ?>
 <h1><?php esc_html_e( 'Cleanup actions', 'events-made-easy' ); ?></h1>

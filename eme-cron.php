@@ -302,7 +302,7 @@ function eme_cron_form( $message = '' ) {
 
     <?php if ( $message != '' ) { ?>
     <div id='message' class='updated eme-message-admin'>
-    <p><?php echo $message; ?></p>
+    <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 <?php
     } else {
@@ -351,7 +351,7 @@ function eme_cron_form( $message = '' ) {
     esc_html_e( 'Schedule the automatic removal of unpaid pending bookings older than', 'events-made-easy' );
 ?>
     </label>
-    <input type="number" id="eme_cron_cleanup_unpaid_minutes" name="eme_cron_cleanup_unpaid_minutes" size="6" maxlength="6" min="0" max="999999" step="5" value="<?php echo $minutes; ?>">
+    <input type="number" id="eme_cron_cleanup_unpaid_minutes" name="eme_cron_cleanup_unpaid_minutes" size="6" maxlength="6" min="0" max="999999" step="5" value="<?php echo esc_attr( $minutes ); ?>">
     <?php esc_html_e( '(value is in minutes, leave empty or 0 to disable the scheduled cleanup)', 'events-made-easy' ); ?>
     <input type='hidden' name='eme_admin_action' value='eme_cron_cleanup_unpaid'>
     <input type="submit" value="<?php esc_html_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
@@ -364,7 +364,7 @@ function eme_cron_form( $message = '' ) {
     esc_html_e( 'Schedule the automatic removal of unconfirmed bookings older than', 'events-made-easy' );
 ?>
     </label>
-    <input type="number" id="eme_cron_cleanup_unconfirmed_minutes" name="eme_cron_cleanup_unconfirmed_minutes" size="6" maxlength="6" min="0" max="999999" step="5" value="<?php echo $minutes; ?>">
+    <input type="number" id="eme_cron_cleanup_unconfirmed_minutes" name="eme_cron_cleanup_unconfirmed_minutes" size="6" maxlength="6" min="0" max="999999" step="5" value="<?php echo esc_attr( $minutes ); ?>">
     <?php esc_html_e( '(value is in minutes, leave empty or 0 to disable the scheduled cleanup)', 'events-made-easy' ); ?>
     <input type='hidden' name='eme_admin_action' value='eme_cron_cleanup_unconfirmed'>
     <input type="submit" value="<?php esc_html_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
@@ -422,7 +422,7 @@ function eme_cron_form( $message = '' ) {
         $footer              = intval( get_option( 'eme_cron_new_events_footer' ) );
         esc_html_e( 'Send a mail to all EME registered people for upcoming events that will happen in the next', 'events-made-easy' );
 ?>
-    <input type="number" id="eme_cron_new_events_days" name="eme_cron_new_events_days" size="6" maxlength="6" min="0" max="999999" step="1" value="<?php echo $days; ?>"><?php esc_html_e( 'days', 'events-made-easy' ); ?><br>
+    <input type="number" id="eme_cron_new_events_days" name="eme_cron_new_events_days" size="6" maxlength="6" min="0" max="999999" step="1" value="<?php echo esc_attr( $days ); ?>"><?php esc_html_e( 'days', 'events-made-easy' ); ?><br>
         <?php $templates_array = eme_get_templates_array_by_id( 'rsvpmail' ); ?>
 <?php
         esc_html_e( 'Email subject template', 'events-made-easy' );
@@ -457,8 +457,12 @@ function eme_cron_form( $message = '' ) {
             $scheduled = false;
         }
         foreach ( $schedules as $key => $schedule ) {
-            $selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
-            print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
+            printf(
+                "<option value='%s'%s>%s</option>\n",
+                esc_attr( $key ),
+                selected( $scheduled, $key, false ),
+                esc_html( $schedule['display'] )
+            );
         }
 ?>
     </select>

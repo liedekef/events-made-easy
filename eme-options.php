@@ -1973,15 +1973,19 @@ function eme_options_page() {
                 esc_html_e( 'Send out queued emails in batches of ', 'events-made-easy' );
 ?>
         </label>
-        <input type="number" id="eme_cron_queue_count" name="eme_cron_queue_count" size="6" maxlength="6" min="1" max="999999" step="1" value="<?php echo $eme_cron_queue_count; ?>">&nbsp;
+        <input type="number" id="eme_cron_queue_count" name="eme_cron_queue_count" size="6" maxlength="6" min="1" max="999999" step="1" value="<?php echo esc_attr( $eme_cron_queue_count ); ?>">&nbsp;
         <select name="eme_cron_send_queued">
         <option value=""><?php esc_html_e( 'Not scheduled', 'events-made-easy' ); ?></option>
 <?php
                 $schedules = wp_get_schedules();
                 $scheduled = wp_get_schedule( 'eme_cron_send_queued' );
                 foreach ( $schedules as $key => $schedule ) {
-                    $selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
-                    print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
+                    printf(
+                        "<option value='%s'%s>%s</option>\n",
+                        esc_attr( $key ),
+                        selected( $scheduled, $key, false ),
+                        esc_html( $schedule['display'] )
+                    );
                 }
 ?>
         </select><br>
@@ -2104,7 +2108,7 @@ function eme_options_page() {
                 foreach ( $attachment_id_arr as $attachment_id ) {
                     $attach_link = eme_get_attachment_link( $attachment_id );
                     if ( ! empty( $attach_link ) ) {
-                        echo $attach_link;
+                        echo wp_kses_post( $attach_link );
                         echo '<br \>';
                     }
                 }
@@ -2113,7 +2117,7 @@ function eme_options_page() {
             }
 ?>
             </span>
-    <input type="hidden" name="eme_booking_attach_ids" id="eme_booking_attach_ids" value="<?php echo $attachment_ids; ?>">
+    <input type="hidden" name="eme_booking_attach_ids" id="eme_booking_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="booking_attach_button" id="booking_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="booking_remove_attach_button" id="booking_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <br><?php esc_html_e( 'Optionally add attachments to the mail when a new booking is made.', 'events-made-easy' ); ?>
@@ -2164,7 +2168,7 @@ function eme_options_page() {
                 foreach ( $attachment_id_arr as $attachment_id ) {
                     $attach_link = eme_get_attachment_link( $attachment_id );
                     if ( ! empty( $attach_link ) ) {
-                        echo $attach_link;
+                        echo wp_kses_post( $attach_link );
                         echo '<br \>';
                     }
                 }
@@ -2173,7 +2177,7 @@ function eme_options_page() {
             }
 ?>
             </span>
-<input type="hidden" name="eme_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="pending_attach_button" id="pending_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="pending_remove_attach_button" id="pending_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is pending.', 'events-made-easy' ); ?>
@@ -2284,7 +2288,7 @@ function eme_options_page() {
                 foreach ( $attachment_id_arr as $attachment_id ) {
                     $attach_link = eme_get_attachment_link( $attachment_id );
                     if ( ! empty( $attach_link ) ) {
-                        echo $attach_link;
+                        echo wp_kses_post( $attach_link );
                         echo '<br \>';
                     }
                 }
@@ -2293,7 +2297,7 @@ function eme_options_page() {
             }
 ?>
             </span>
-<input type="hidden" name="eme_paid_attach_ids" id="eme_paid_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_paid_attach_ids" id="eme_paid_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="paid_attach_button" id="paid_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is paid.', 'events-made-easy' ); ?>
@@ -2350,7 +2354,7 @@ function eme_options_page() {
                 foreach ( $attachment_id_arr as $attachment_id ) {
                     $attach_link = eme_get_attachment_link( $attachment_id );
                     if ( ! empty( $attach_link ) ) {
-                        echo $attach_link;
+                        echo wp_kses_post( $attach_link );
                         echo '<br \>';
                     }
                 }
@@ -2359,7 +2363,7 @@ function eme_options_page() {
             }
 ?>
             </span>
-<input type="hidden" name="eme_fs_ipn_attach_ids" id="eme_fs_ipn_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_fs_ipn_attach_ids" id="eme_fs_ipn_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="fs_ipn_attach_button" id="fs_ipn_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="fs_ipn_remove_attach_button" id="fs_ipn_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when an event is paid for.', 'events-made-easy' ); ?>
@@ -2397,7 +2401,7 @@ function eme_options_page() {
                 foreach ( $attachment_id_arr as $attachment_id ) {
                     $attach_link = eme_get_attachment_link( $attachment_id );
                     if ( ! empty( $attach_link ) ) {
-                        echo $attach_link;
+                        echo wp_kses_post( $attach_link );
                         echo '<br \>';
                     }
                 }
@@ -2406,7 +2410,7 @@ function eme_options_page() {
             }
 ?>
             </span>
-<input type="hidden" name="eme_subscribe_attach_ids" id="eme_subscribe_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_subscribe_attach_ids" id="eme_subscribe_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="subscribe_attach_button" id="subscribe_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="subscribe_remove_attach_button" id="subscribe_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when someone subscribes to a mailing group.', 'events-made-easy' ); ?>

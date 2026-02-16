@@ -412,7 +412,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 		</div>
 		 
 		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-			<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+			<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new discount definition', 'events-made-easy' ); ?></h1>
@@ -494,7 +494,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		</div>
 		 
 	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+		<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
 
 		<h1><?php esc_html_e( 'Add a new discount group', 'events-made-easy' ); ?></h1>
@@ -848,7 +848,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 	  
 		<?php if ( $message != '' ) { ?>
 		<div id='message' class='updated notice notice-success is-dismissible'>
-		<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+		<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
 		<?php } ?>
 		<div id='ajax-response'></div>
@@ -1022,7 +1022,7 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 	  
 		<?php if ( $message != '' ) { ?>
 		<div id='message' class='updated notice notice-success is-dismissible'>
-		<p><?php echo nl2br( esc_html( $message ) ); ?></p>
+		<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
 		<?php } ?>
 		<div id='ajax-response'></div>

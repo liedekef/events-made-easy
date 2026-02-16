@@ -166,7 +166,7 @@ function eme_templates_table_layout( $message = '' ) {
 
     ?>
     <div id="templates-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-        <p><?php echo nl2br( esc_html( $message ) ); ?></p>
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <div class="wrap">

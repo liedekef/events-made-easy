@@ -263,6 +263,7 @@ function eme_init_widgets(dynamicOnly = false) {
             action: 'eme_select_country',
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
+        cache: true,
         // When country changes, reset the state field in the same form
         onItemAdd: function(value, text) {
             const form       = this.closest('form');

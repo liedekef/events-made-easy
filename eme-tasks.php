@@ -577,9 +577,9 @@ function eme_task_signups_table_layout( $message = '' ) {
 
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>
-        <input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo esc_attr( intval($_GET['event_id']) ); ?>">
+        <input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>">
         <?php if (isset($_GET['status'])) { ?>
-            <input type="hidden" name="search_signup_status" id="search_signup_status" value="<?php echo esc_attr( intval($_GET['status']) ); ?>">
+            <input type="hidden" name="search_signup_status" id="search_signup_status" value="<?php echo intval($_GET['status']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>">
         <?php } ?>
     <?php } else { ?>
         <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>

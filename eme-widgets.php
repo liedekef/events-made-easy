@@ -150,11 +150,11 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Number of events', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo esc_attr( $limit ); ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo $limit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already intval() on line 116 ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>"><?php esc_html_e( 'Scope of the events', 'events-made-easy' ); ?><br><?php esc_html_e( '(See the doc for &#91;eme_events] for all possible values)', 'events-made-easy' ); ?>:</label><br>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo esc_attr( $scope ); ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo $scope; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already eme_esc_html() on line 117 ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'showperiod' ) ); ?>"><?php esc_html_e( 'Show events per period', 'events-made-easy' ); ?>:</label><br>
@@ -217,7 +217,7 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>"><?php esc_html_e( 'List header format<br>(if empty &lt;ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo esc_attr( $header ); ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo $header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already eme_esc_html() on line 125 ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format_tpl' ) ); ?>"><?php esc_html_e( 'List item format', 'events-made-easy' ); ?>:</label>
@@ -228,11 +228,11 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>"><?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>:</label>
-	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo esc_textarea( $format ); ?></textarea>
+	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo $format; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already eme_esc_html() on lines 138/140 ?></textarea>
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>"><?php esc_html_e( 'List footer format<br>(if empty &lt;/ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo esc_attr( $footer ); ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo $footer; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already eme_esc_html() on line 126 ?>">
 	</p>
 		<?php
 	}

@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.46  (2026//) =
+* Allow different field html attributes for the admin backend
+
 = 3.0.45  (2026/02/17) =
 * Make manual add of attendances work again
 * More usage of snapselect for autocomplete fields, caching, members ...

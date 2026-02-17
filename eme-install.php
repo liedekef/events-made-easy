@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 419 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 420 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1020,6 +1020,7 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
          field_tags text,
          admin_tags text,
          field_attributes tinytext,
+         admin_attributes tinytext,
          field_purpose tinytext,
          field_condition tinytext,
          field_required bool DEFAULT 0,
@@ -1036,6 +1037,7 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 		maybe_add_column( $table_name, 'admin_values', "ALTER TABLE $table_name ADD admin_values text;" );
 		maybe_add_column( $table_name, 'admin_tags', "ALTER TABLE $table_name ADD admin_tags text;" );
 		maybe_add_column( $table_name, 'field_attributes', "ALTER TABLE $table_name ADD field_attributes tinytext;" );
+		maybe_add_column( $table_name, 'admin_attributes', "ALTER TABLE $table_name ADD admin_attributes tinytext;" );
 		maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge bool DEFAULT 0;" );
 		maybe_add_column( $table_name, 'field_condition', "ALTER TABLE $table_name ADD field_condition tinytext;" );
 		maybe_add_column( $table_name, 'field_required', "ALTER TABLE $table_name ADD field_required bool DEFAULT 0;" );

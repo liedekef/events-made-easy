@@ -13,6 +13,7 @@ function eme_new_formfield() {
         'admin_values'     => '',
         'admin_tags'       => '',
         'field_attributes' => '',
+        'admin_attributes' => '',
         'field_purpose'    => '',
         'field_condition'  => '',
         'field_required'   => 0,
@@ -127,6 +128,7 @@ function eme_formfields_page() {
                 $formfield['admin_tags']   = trim( eme_sanitize_request( $_POST['admin_tags'] ) );
             }
             $formfield['field_attributes'] = trim( eme_sanitize_request( $_POST['field_attributes'] ) );
+            $formfield['admin_attributes'] = trim( eme_sanitize_request( $_POST['admin_attributes'] ) );
             // for updates the field_purpose can be empty, so check for this
             if ( ! empty( $_POST['field_purpose'] ) ) {
                 $formfield['field_purpose'] = trim( eme_sanitize_request( $_POST['field_purpose'] ) );
@@ -419,6 +421,12 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                     <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'.", 'events-made-easy' ) . "
                </td>
             </tr>
+            <tr id='tr_admin_attributes' class='form-field'>
+               <th scope='row' style='vertical-align:top'><label for='admin_attributes'>" . __( 'Admin HTML field attributes', 'events-made-easy' ) . "</label></th>
+               <td><input name='admin_attributes' id='admin_attributes' type='text' value='" . eme_esc_html( $formfield['admin_attributes'] ) . "' size='40'>
+                   <br>" . __( 'If you want different HTML attributes in the admin interface, enter these here.', 'events-made-easy' ) . "
+               </td>
+            </tr>
       </table>
       <p class='submit'><input type='submit' class='button-primary' name='submit' value='" . $action_string . "'></p>
       </form>
@@ -640,6 +648,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
         $class_att = '';
     }
     $field_attributes = eme_merge_classes_into_attrs($class, $formfield['field_attributes']);
+    if (!empty($formfield['admin_attributes'])) {
+        $admin_attributes = eme_merge_classes_into_attrs($class, $formfield['admin_attributes']);
+    } else {
+        $admin_attributes = $field_attributes;
+    }
 
     if ( $required ) {
         $required_att = "required='required'";
@@ -651,7 +664,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
     $field_tags = '';
     if ( (eme_is_admin_request() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
         // remove some attributes for backend edit (like checked)
-        $field_attributes = eme_remove_attrs('checked', $field_attributes);
+        $field_attributes = eme_remove_attrs('checked', $admin_attributes);
 
         // fields can have a different value for front/backend for multi-fields
         if ( ! empty( $formfield['admin_values'] ) ) {

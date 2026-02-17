@@ -147,6 +147,9 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
 
     $payment_gateways = eme_get_configured_pgs();
     if (isset($props['payment_gateways'])) {
+        if (in_array('payconiq',$props['payment_gateways'])) {
+            $props['payment_gateways'][] = 'bancontactwero';
+        }
         $props['payment_gateways'] = array_intersect($props['payment_gateways'],$payment_gateways);
     } else {
         $props['payment_gateways'] = [];

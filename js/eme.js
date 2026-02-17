@@ -656,7 +656,7 @@ function eme_attach_dynamic_handlers(selector, isBooking) {
             if (debounced_family && event.target.id === 'familycount') {
                 debounced_family();
             }
-            if (eme_hasClass(event.target, 'nodynamicupdates')) {
+            if (eme_hasClass(event.target, 'nodynamicupdates') || event.target.closest('fieldset.nodynamicupdates')) {
                 if (eme_hasClass(event.target, 'dynamicprice')) {
                     form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
                     debounced_price();

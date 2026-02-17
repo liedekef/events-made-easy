@@ -6111,8 +6111,8 @@ function eme_ajax_bookings_list() {
             } else {
                 $line['pg'] = 'UNKNOWN';
             }
-            if ( $booking['pg'] == 'payconiq' && ! empty( $booking['pg_pid'] ) ) {
-                $line['pg'] .= "<br><button id='button_".$booking['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN','events-made-easy')."</button><span id='payconiq_".$booking['payment_id']."'></span>";
+            if ( ($booking['pg'] == 'payconiq'||$booking['pg'] == 'bancontactwero') && ! empty( $booking['pg_pid'] ) ) {
+                $line['pg'] .= "<br><button id='button_".$booking['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN','events-made-easy')."</button><span id='bancontactwero_".$booking['payment_id']."'></span>";
             }
         } else {
             $line['pg'] = '';

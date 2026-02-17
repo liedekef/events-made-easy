@@ -658,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.matches('.eme_iban_button')) {
             e.preventDefault();
             const formData = new URLSearchParams({
-                action: 'eme_get_payconiq_iban',
+                action: 'eme_get_bancontactwero_iban',
                 pg_pid: e.target.dataset.pg_pid,
                 eme_admin_nonce: emeadmin.translate_adminnonce
             });
@@ -671,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then(response => response.json()).then(response => {
                 const paymentbutton = EME.$('#button_'+response.payment_id);
                 if (paymentbutton) eme_toggle(paymentbutton, false);
-                const paymentspan = EME.$('span#payconiq_'+response.payment_id);
+                const paymentspan = EME.$('span#bancontactwero_'+response.payment_id);
                 if (paymentspan) paymentspan.innerHTML=response.iban;
             });
             // return false to make sure the real form doesn't submit

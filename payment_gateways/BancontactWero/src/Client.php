@@ -1,6 +1,6 @@
 <?php
 
-namespace Payconiq;
+namespace BancontactWero;
 
 // Require the exception classes
 require_once __DIR__ . '/Support/Exceptions/CreatePaymentFailedException.php';
@@ -9,11 +9,11 @@ require_once __DIR__ . '/Support/Exceptions/GetPaymentsListFailedException.php';
 require_once __DIR__ . '/Support/Exceptions/RefundFailedException.php';
 require_once __DIR__ . '/Support/Exceptions/GetRefundIbanFailedException.php';
 
-use Payconiq\Support\Exceptions\CreatePaymentFailedException;
-use Payconiq\Support\Exceptions\RetrievePaymentFailedException;
-use Payconiq\Support\Exceptions\GetPaymentsListFailedException;
-use Payconiq\Support\Exceptions\RefundFailedException;
-use Payconiq\Support\Exceptions\GetRefundIbanFailedException;
+use BancontactWero\Support\Exceptions\CreatePaymentFailedException;
+use BancontactWero\Support\Exceptions\RetrievePaymentFailedException;
+use BancontactWero\Support\Exceptions\GetPaymentsListFailedException;
+use BancontactWero\Support\Exceptions\RefundFailedException;
+use BancontactWero\Support\Exceptions\GetRefundIbanFailedException;
 
 class Client {
 
@@ -33,7 +33,7 @@ class Client {
     /**
      * Construct
      *
-     * @param  string $apiKey		Used to secure request between merchant backend and Payconiq backend.
+     * @param  string $apiKey		Used to secure request between merchant backend and BancontactWero backend.
      * @param  string $environment	Environment to use when making API calls
      * 
      * @return void
@@ -71,8 +71,8 @@ class Client {
     /**
      * Set optional own endpoints
      *
-     * @param  string $url  The endpoint of the Payconiq API.
-     * @param  string $jwksUrl  The jwks endpoint of the Payconiq API.
+     * @param  string $url  The endpoint of the BancontactWero API.
+     * @param  string $jwksUrl  The jwks endpoint of the BancontactWero API.
      *
      * @return self
      */
@@ -95,7 +95,7 @@ class Client {
     /**
      * Set the API key
      *
-     * @param  string $apiKey  Used to secure request between merchant backend and Payconiq backend.
+     * @param  string $apiKey  Used to secure request between merchant backend and BancontactWero backend.
      *
      * @return self
      */
@@ -127,7 +127,7 @@ class Client {
      * @param  float $amount		Payment amount in cents
      * @param  string $currency		Payment currency code in ISO 4217 format
      * @param  string $description	Payment description shown during payment (optional)
-     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system (optional)
+     * @param  string $reference	External payment reference used to reference the BancontactWero payment in the calling party's system (optional)
      * @param  string $bulkId	    BulkId for bulk payouts (optional)
      * @param  string $callbackUrl  A url to which the merchant or partner will be notified of a payment (optiona)
      * @param  string $returnUrl    Return url to return client after paying on payconiq site itself (optional)
@@ -164,9 +164,9 @@ class Client {
     /**
      * Get payment details of an existing payment
      *
-     * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service
+     * @param  string $paymentId  The unique BancontactWero identifier of a payment as provided by the create payment service
      *
-     * @return  object  Response object by Payconiq
+     * @return  object  Response object by BancontactWero
      */
     public function retrievePayment( $paymentId ) {
         return $this->getPayment( $paymentId );
@@ -184,7 +184,7 @@ class Client {
     /**
      * Get payment by reference
      *
-     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
+     * @param  string $reference	External payment reference used to reference the BancontactWero payment in the calling party's system
      * 
      * @param  string $fromDate	The start date and time to filter the search results.
      *				Default: is the API default: Current date and time minus one day. (Now - 1 day)
@@ -194,7 +194,7 @@ class Client {
      *				Default: is the API default: Current date and time. (Now)
      *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
      * 
-     * @return  object  Response object by Payconiq
+     * @return  object  Response object by BancontactWero
      */
     public function getPaymentByReference( $reference, $fromDate = '', $toDate = '' ) {
         // Convert reference to SEPA compliant format voor consistentie
@@ -206,7 +206,7 @@ class Client {
     /**
      * Get payments list by reference
      *
-     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
+     * @param  string $reference	External payment reference used to reference the BancontactWero payment in the calling party's system
      * 
      * @param  string $fromDate	The start date and time to filter the search results.
      *				Default: is the API default: Current date and time minus one day. (Now - 1 day)
@@ -216,7 +216,7 @@ class Client {
      *				Default: is the API default: Current date and time. (Now)
      *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
      * 
-     * @return  array  Response objects by Payconiq
+     * @return  array  Response objects by BancontactWero
      */
     public function getPaymentsListByReference( $reference, $fromDate = '', $toDate = '', $size = 50 ) {
         // Convert reference to SEPA compliant format voor consistentie
@@ -238,9 +238,9 @@ class Client {
      * @param  int $size	The page size for responses, more used internally
      *              Default: 50
      * 
-     * @param  string $reference	External payment reference used to reference the Payconiq payment in the calling party's system
+     * @param  string $reference	External payment reference used to reference the BancontactWero payment in the calling party's system
      * 
-     * @return  array  Response objects by Payconiq
+     * @return  array  Response objects by BancontactWero
      */
     public function getPaymentsListByDateRange( $fromDate = '', $toDate = '', $size = 50, $reference = '' ) {
         $param_arr = [
@@ -277,14 +277,14 @@ class Client {
     /**
      * Refund an existing payment
      *
-     * @param  string $paymentId      The unique Payconiq identifier of a payment
+     * @param  string $paymentId      The unique BancontactWero identifier of a payment
      * @param  float  $amount         Payment amount in cents
      * @param  string $currency       Payment currency code in ISO 4217 format
      * @param  string $description    Optional refund description
      * @param  string $idempotencyKey Optional idempotency key (UUIDv4 recommended)
      * @param  string $refundurl      Optional refund url, if not get it from the payment
      *
-     * @return object  Response object by Payconiq
+     * @return object  Response object by BancontactWero
      * @throws RefundFailedException
      */
     public function refundPayment($paymentId, $amount, $currency = 'EUR', $description = '', $idempotencyKey = null, $refundUrl = null) {
@@ -332,9 +332,9 @@ class Client {
     /**
      * Get refund IBAN
      *
-     * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service
+     * @param  string $paymentId  The unique BancontactWero identifier of a payment as provided by the create payment service
      *
-     * @return  object  Response object by Payconiq
+     * @return  object  Response object by BancontactWero
      */
     public function getRefundIban( $paymentId ) {
         $response = $this->makeRequest( 'GET', $this->getEndpoint( '/payments/' . $paymentId . '/debtor/refundIban' ) );
@@ -458,7 +458,7 @@ class Client {
     }
 
     /**
-     * Verify Payconiq webhook signature
+     * Verify BancontactWero webhook signature
      *
      * @param string $payload   Raw request body (php://input)
      * @param array  $headers   All request headers (getallheaders())
@@ -591,7 +591,7 @@ class Client {
             return $jwks['keys'];
         } catch (\Exception $e) {
             // Log the fetch failure
-            error_log("Payconiq JWKS fetch failed: " . $e->getMessage());
+            error_log("BancontactWero JWKS fetch failed: " . $e->getMessage());
 
             // Fallback: if any cache exists (even stale), try to use it
             if ($cacheDir && file_exists($cacheFile)) {
@@ -600,7 +600,7 @@ class Client {
                     $fallbackJwks = json_decode($fallbackContent, true);
                     if (isset($fallbackJwks['keys'])) {
                         // Log that we're using stale keys
-                        error_log("Using stale Payconiq JWKS due to fetch failure");
+                        error_log("Using stale BancontactWero JWKS due to fetch failure");
                         return $fallbackJwks['keys'];
                     }
                 }
@@ -674,7 +674,7 @@ class Client {
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FAILONERROR => true,
-            CURLOPT_USERAGENT => 'Payconiq-PHP-Client/1.0',
+            CURLOPT_USERAGENT => 'BancontactWero-PHP-Client/1.0',
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_FOLLOWLOCATION => true,

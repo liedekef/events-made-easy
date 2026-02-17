@@ -98,6 +98,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 3.0.46  (2026//) =
 * Allow different field html attributes for the admin backend
+* Start rename Payconiq to Bancontact-Wero
+* Fix a select-issue for single selects
 
 = 3.0.45  (2026/02/17) =
 * Make manual add of attendances work again

@@ -1174,7 +1174,7 @@ function eme_events_page_content() {
         //     (pg_handled gets set to 0 if a new pg pid gets generated, see function eme_update_payment_pg_pid, and gets set to 1 if a payment is handled via a payment gateway)
 
         // mollie updates the state of the payment before returning to the success/failure url, but it doesn't make a distinction for success/failure url, so we check it here
-        // other payment gateways (payconiq, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
+        // other payment gateways (Bancontact-Wero, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
         // so in all these case we check if a corresponding 'eme_complete_transaction_' . $result function exists 
         // and execute it if appropriate
         $result         = get_query_var( 'eme_pmt_result' );

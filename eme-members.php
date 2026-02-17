@@ -6764,8 +6764,8 @@ function eme_ajax_members_list( ) {
             } else {
                 $record['pg'] = 'UNKNOWN';
             }
-            if ( $item['pg'] == 'payconiq' && ! empty( $item['pg_pid'] ) ) {
-                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
+            if ( ($item['pg'] == 'payconiq'||$item['pg'] == 'bancontactwero') && ! empty( $item['pg_pid'] ) ) {
+                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='bancontactwero_".$item['payment_id']."'></span>";
             }
         } else {
             $record['pg'] = '';

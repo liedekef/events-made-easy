@@ -12,7 +12,8 @@ function eme_payment_gateways() {
         'webmoney'     => __( 'Webmoney', 'events-made-easy' ),
         'fdgg'         => __( 'First Data', 'events-made-easy' ),
         'mollie'       => __( 'Mollie', 'events-made-easy' ),
-        'payconiq'     => __( 'Payconiq', 'events-made-easy' ),
+        'payconiq'     => __( 'BancontactWero', 'events-made-easy' ),
+        'bancontactwero' => __( 'BancontactWero', 'events-made-easy' ),
         'worldpay'     => __( 'Worldpay', 'events-made-easy' ),
         'opayo'        => __( 'Opayo', 'events_made_easy' ),
         'sumup'        => __( 'SumUp', 'events-made-easy' ),
@@ -570,7 +571,7 @@ function eme_payment_gateway_total( $price, $cur, $gateway ) {
         if ( $gateway == 'stripe' ) {
             $price *= 100;
         }
-        if ( $gateway == 'payconiq' ) {
+        if ( $gateway == 'payconiq' || $gateway == 'bancontactwero' ) {
             $price *= 100;
         }
         if ( $gateway == 'fondy' ) {
@@ -1289,8 +1290,11 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 }
 
 function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
-    $gateway = 'payconiq';
-    $api_key = get_option( 'eme_payconiq_api_key' );
+    return eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur, $multi_booking);
+}
+function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+    $gateway = 'bancontactwero';
+    $api_key = get_option( 'eme_bancontactwero_api_key' );
     if ( ! $api_key ) {
         return;
     }
@@ -2729,18 +2733,21 @@ function eme_refund_booking_paypal($booking) {
 }
 
 function eme_refund_booking_payconiq( $booking ) {
-    $api_key = get_option( "eme_payconiq_api_key" );
+    return eme_refund_booking_bancontactwero( $booking );
+}
+function eme_refund_booking_bancontactwero( $booking ) {
+    $api_key = get_option( "eme_bancontactwero_api_key" );
     if ( ! $api_key ) {
         return;
     }
-    if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/src/Client.php';
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once 'payment_gateways/BancontactWero/src/Client.php';
     }
 
-    $mode     = get_option( 'eme_payconiq_env' );
-    $payconiq = new \Payconiq\Client( $api_key );
+    $mode     = get_option( 'eme_bancontactwero_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
     if ( preg_match( '/sandbox/', $mode ) ) {
-        $payconiq->setEndpointTest();
+        $bancontactwero->setEndpointTest();
     }
     try {
         $event            = eme_get_event( $booking['event_id'] );
@@ -2748,10 +2755,10 @@ function eme_refund_booking_payconiq( $booking ) {
         $price            = eme_get_total_booking_price( $booking );
         $price            = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
         $description      = 'Refund';
-        $payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
+        $bancontactwero_payment = $bancontactwero->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
-        error_log("Payconiq refund API error: {$e->getMessage()}");
+        error_log("BancontactWero refund API error: {$e->getMessage()}");
         return false;
     }
 }
@@ -3025,6 +3032,9 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
 }
 
 function eme_charge_payconiq() {
+    return eme_charge_bancontactwero();
+}
+function eme_charge_bancontactwero() {
     $events_page_link = eme_get_events_page();
     $payment_id       = intval( $_POST['payment_id'] );
     $price            = eme_sanitize_request( $_POST['price'] );
@@ -3039,7 +3049,7 @@ function eme_charge_payconiq() {
         $bulkId = "bookings";
     }
 
-    $gateway = 'payconiq';
+    $gateway = 'bancontactwero';
     $api_key = get_option( "eme_{$gateway}_api_key" );
     if ( ! $api_key ) {
         return;
@@ -3062,16 +3072,16 @@ function eme_charge_payconiq() {
         return $check_allowed_to_pay;
     }
 
-    if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/src/Client.php';
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once 'payment_gateways/BancontactWero/src/Client.php';
     }
-    $mode     = get_option( 'eme_payconiq_env' );
-    $payconiq = new \Payconiq\Client( $api_key );
+    $mode     = get_option( 'eme_bancontactwero_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
     if ( preg_match( '/sandbox/', $mode ) ) {
-            $payconiq->setEndpointTest();
+            $bancontactwero->setEndpointTest();
     }
     try {
-        $payconiq_payment = $payconiq->createPayment( 
+        $bancontactwero_payment = $bancontactwero->createPayment( 
             amount: $price,
             currency: $cur,
             description: $description,
@@ -3080,95 +3090,100 @@ function eme_charge_payconiq() {
             callbackUrl: $notification_link,
             returnUrl: $return_link
         );
-        $url = $payconiq_payment->_links->checkout->href;
+        $url = $bancontactwero_payment->_links->checkout->href;
     } catch ( Exception $e ) {
         $url = '';
-        print 'Payconiq API call failed: ' . htmlspecialchars( $e->getMessage() );
+        print 'BancontactWero API call failed: ' . htmlspecialchars( $e->getMessage() );
     }
 
     if ( ! empty( $url ) ) {
         // we'll store the payment id already, so when people arrive to the redirecturl before the webhook fired, we can check for it
-        eme_update_payment_pg_pid( $payment['id'], $payconiq_payment->paymentId );
+        eme_update_payment_pg_pid( $payment['id'], $bancontactwero_payment->paymentId );
         wp_redirect($url);
         exit;
     }
 }
 
 function eme_complete_transaction_payconiq( $payment ) {
-    $gateway     = 'payconiq';
+    return eme_complete_transaction_bancontactwero( $payment );
+}
+function eme_complete_transaction_bancontactwero( $payment ) {
+    $gateway     = 'bancontactwero';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
     if ( ! $api_key ) {
         return;
     }
 
-    $payconiq_paymentid = $payment['pg_pid'];
-    if ( ! $payconiq_paymentid ) {
+    $bancontactwero_paymentid = $payment['pg_pid'];
+    if ( ! $bancontactwero_paymentid ) {
         return;
     }
-    if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/src/Client.php';
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once 'payment_gateways/BancontactWero/src/Client.php';
     }
-    $payconiq = new \Payconiq\Client( $api_key );
-    $mode     = get_option( 'eme_payconiq_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
+    $mode     = get_option( 'eme_bancontactwero_env' );
     if ( preg_match( '/sandbox/', $mode ) ) {
-        $payconiq->setEndpointTest();
+        $bancontactwero->setEndpointTest();
     }
     try {
-        $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
+        $bancontactwero_payment = $bancontactwero->retrievePayment( $bancontactwero_paymentid );
     } catch ( Exception $e ) {
-        //error_log("EME payconiq error: error getting payment id $payconiq_paymentid: " . $e->getMessage());
         return;
     }
 
-    $payment_id = $payconiq_payment->reference;
+    $payment_id = $bancontactwero_payment->reference;
     if ($payment_id != $payment['id']) {
-        error_log("EME payconiq error: wrong payment id $payment_id, expected {$payment['id']}");
+        error_log("EME bancontactwero error: wrong payment id $payment_id, expected {$payment['id']}");
         return;
     }
 
     $eme_price  = eme_get_payment_price( $payment_id );
     // The payment is paid and to be sure we also check the paid amount
-    if ( $payconiq_payment->status == 'SUCCEEDED' && $payconiq_payment->amount / 100 >= $eme_price ) {
-        eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
+    if ( $bancontactwero_payment->status == 'SUCCEEDED' && $bancontactwero_payment->amount / 100 >= $eme_price ) {
+        eme_mark_payment_paid( $payment_id, 1, $gateway, $bancontactwero_paymentid );
     }
 }
 
 function eme_notification_payconiq() {
-    $gateway     = 'payconiq';
+    return eme_notification_bancontactwero();
+}
+function eme_notification_bancontactwero() {
+    $gateway     = 'bancontactwero';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
     if ( ! $api_key ) {
         exit;
     }
 
-    if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/src/Client.php';
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once 'payment_gateways/BancontactWero/src/Client.php';
     }
-    $payconiq = new \Payconiq\Client( $api_key );
-    $mode     = get_option( 'eme_payconiq_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
+    $mode     = get_option( 'eme_bancontactwero_env' );
     if ( preg_match( '/sandbox/', $mode ) ) {
-        $payconiq->setEndpointTest();
+        $bancontactwero->setEndpointTest();
     }
 
 	$payload = @file_get_contents( 'php://input' );
 
-    // do not trust the notification, retrieve the payment from payconiq and check it
-    // extra reason for not using signature verification is that payconiq seems to have servers that don't provide it
+    // do not trust the notification, retrieve the payment from bancontactwero and check it
+    // extra reason for not using signature verification is that bancontactwero seems to have servers that don't provide it
     $data               = json_decode( $payload );
-    $payconiq_paymentid = $data->paymentId;
+    $bancontactwero_paymentid = $data->paymentId;
     try {
-        $payconiq_payment = $payconiq->retrievePayment( $payconiq_paymentid );
+        $bancontactwero_payment = $bancontactwero->retrievePayment( $bancontactwero_paymentid );
     } catch ( Exception $e ) {
         http_response_code( 400 );
         exit;
     }
 	
     // ignore notifs that are not success
-    if ( $payconiq_payment->status !== 'SUCCEEDED') {
+    if ( $bancontactwero_payment->status !== 'SUCCEEDED') {
         http_response_code( 200 );
         exit;
     }
 
-    $payment_id = $payconiq_payment->reference;
+    $payment_id = $bancontactwero_payment->reference;
     $payment    = eme_get_payment( $payment_id );
     if ( !$payment ) {
         // notif for payment that doesn't exist, let's quit
@@ -3176,8 +3191,8 @@ function eme_notification_payconiq() {
         exit;
     }
     $eme_price = eme_get_payment_price( $payment_id );
-    if ( $payconiq_payment->amount / 100 >= $eme_price ) {
-        eme_mark_payment_paid( $payment_id, 1, $gateway, $payconiq_paymentid );
+    if ( $bancontactwero_payment->amount / 100 >= $eme_price ) {
+        eme_mark_payment_paid( $payment_id, 1, $gateway, $bancontactwero_paymentid );
     }
     http_response_code( 200 );
     exit;
@@ -3318,8 +3333,8 @@ function eme_get_configured_pgs() {
         if ( ! empty( get_option( 'eme_mollie_api_key' ) ) ) {
             $pgs[] = 'mollie';
         }
-        if ( ! empty( get_option( 'eme_payconiq_api_key' ) ) ) {
-            $pgs[] = 'payconiq';
+        if ( ! empty( get_option( 'eme_bancontactwero_api_key' ) ) ) {
+            $pgs[] = 'bancontactwero';
         }
         if ( ! empty( get_option( 'eme_worldpay_instid' ) ) ) {
             $pgs[] = 'worldpay';
@@ -3996,7 +4011,7 @@ function eme_cancel_payment_form( $payment_randomid ) {
 
 add_action( 'wp_ajax_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 add_action( 'wp_ajax_nopriv_eme_cancel_payment', 'eme_cancel_payment_ajax' );
-add_action( 'wp_ajax_eme_get_payconiq_iban', 'eme_ajax_get_payconiq_iban' );
+add_action( 'wp_ajax_eme_get_bancontactwero_iban', 'eme_ajax_get_bancontactwero_iban' );
 
 function eme_cancel_payment_ajax() {
     $payment_randomid = eme_sanitize_request( $_POST['eme_pmt_rndid'] );
@@ -4099,7 +4114,7 @@ function eme_cancel_payment_ajax() {
     wp_die();
 }
 
-function eme_ajax_get_payconiq_iban() {
+function eme_ajax_get_bancontactwero_iban() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $ajaxResult              = [];
 
@@ -4115,22 +4130,22 @@ function eme_ajax_get_payconiq_iban() {
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
-    $api_key = get_option( "eme_payconiq_api_key" );
+    $api_key = get_option( "eme_bancontactwero_api_key" );
     if ( ! $api_key ) {
         wp_die();
     }
-    if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/src/Client.php';
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once 'payment_gateways/BancontactWero/src/Client.php';
     }
 
     $pg_pid   = eme_sanitize_request( $_POST['pg_pid'] );
-    $mode     = get_option( 'eme_payconiq_env' );
-    $payconiq = new \Payconiq\Client( $api_key );
+    $mode     = get_option( 'eme_bancontactwero_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
     if ( preg_match( '/sandbox/', $mode ) ) {
-        $payconiq->setEndpointTest();
+        $bancontactwero->setEndpointTest();
     }
     try {
-        $iban = $payconiq->getRefundIban( $pg_pid );
+        $iban = $bancontactwero->getRefundIban( $pg_pid );
     } catch ( Exception $e ) {
         wp_die();
     }

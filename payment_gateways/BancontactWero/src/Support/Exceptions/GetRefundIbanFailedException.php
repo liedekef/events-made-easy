@@ -1,6 +1,6 @@
 <?php
 
-namespace Payconiq\Support\Exceptions;
+namespace BancontactWero\Support\Exceptions;
 
 use Exception;
 

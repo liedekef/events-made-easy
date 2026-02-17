@@ -264,6 +264,7 @@ function eme_init_widgets(dynamicOnly = false) {
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
         cache: true,
+        allowEmpty: true,
         // When country changes, reset the state field in the same form
         onItemAdd: function(value, text) {
             const form       = this.closest('form');
@@ -286,6 +287,7 @@ function eme_init_widgets(dynamicOnly = false) {
 
     initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
+        allowEmpty: true,
         // Dynamically include the currently selected country_code in every request
         data: function(search, page) { // since this is a function, no caching happens
             const stateEl     = document.querySelector('select.eme_select2_state_class');

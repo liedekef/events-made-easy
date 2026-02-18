@@ -316,7 +316,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <th scope='row' style='vertical-align:top'><label for='field_type'>" . __( 'Field type', 'events-made-easy' ) . '</label></th>
                <td>' . eme_ui_select( $formfield['field_type'], 'field_type', $field_types ) . '
                     <br>' . __( "For the types 'Date (JS)','Datetime (JS)' and 'Time (JS)' you can optionally enter a custom date format in 'HTML Field attributes' to be used when the field is shown.", 'events-made-easy' ) . '
-                    <br>' . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder 'HTML Field attributes' to be used when the field is shown.", 'events-made-easy' ) . '
+                    <br>' . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder in 'HTML Field attributes' to be used when the field is shown. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show.", 'events-made-easy' ) . '
                     <br>' . __( "For the type 'File' you can optionally enter a maximum upload size in MB in 'Field values'.", 'events-made-easy' ) . "
                </td>
             </tr>
@@ -418,7 +418,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <td><input name='field_attributes' id='field_attributes' type='text' value='" . eme_esc_html( $formfield['field_attributes'] ) . "' size='40'>
                    <br>" . __( 'Here you can specify extra html attributes for your field (like size, maxlength, pattern, ...).', 'events-made-easy' ) . '
                    <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' enter a valid PHP-format of the date you like to see when entering/showing the value (unrecognized characters in the format will cause the result to be empty). If left empty, the WordPress settings for date format will be used.", 'events-made-easy' ) . "
-                    <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'.", 'events-made-easy' ) . "
+                    <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show.", 'events-made-easy' ) . "
                </td>
             </tr>
             <tr id='tr_admin_attributes' class='form-field'>

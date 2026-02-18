@@ -494,14 +494,16 @@ function eme_add_options( $reset = 0 ) {
         'eme_mollie_button_img_url'                       => '',
         'eme_mollie_button_above'                         => sprintf( $eme_payment_button_above_localizable, 'Mollie' ),
         'eme_mollie_button_below'                         => __( 'Using Mollie, you can pay using one of the following methods:', 'events-made-easy' ) . '<br>',
-        'eme_bancontactwero_api_key'                            => '',
-        'eme_bancontactwero_env'                                => '',
-        'eme_bancontactwero_cost'                               => 0,
-        'eme_bancontactwero_cost2'                              => 0,
-        'eme_bancontactwero_button_label'                       => sprintf( $eme_payment_button_label_localizable, 'BancontactWero (Payconiq)' ),
-        'eme_bancontactwero_button_img_url'                     => esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/logo.png',
-        'eme_bancontactwero_button_above'                       => sprintf( $eme_payment_button_above_localizable, 'BancontactWero (Payconiq)' ),
-        'eme_bancontactwero_button_below'                       => '',
+        'eme_bancontactwero_api_key'                      => '',
+        'eme_bancontactwero_env'                          => '',
+        'eme_bancontactwero_cost'                         => 0,
+        'eme_bancontactwero_cost2'                        => 0,
+        //'eme_bancontactwero_button_label'                 => sprintf( $eme_payment_button_label_localizable, 'Bancontact Pay - Wero' ),
+        'eme_bancontactwero_button_label'                 => sprintf( $eme_payment_button_label_localizable, 'Payconiq' ),
+        'eme_bancontactwero_button_img_url'               => esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/payconiq/logo.png',
+        //'eme_bancontactwero_button_above'                 => __('Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments' 'events-made-easy'),
+        'eme_bancontactwero_button_above'                 => sprintf( $eme_payment_button_label_localizable, 'Payconiq' ),
+        'eme_bancontactwero_button_below'                 => '',
         'eme_mercadopago_demo'                            => 1,
         'eme_mercadopago_sandbox_token'                   => '',
         'eme_mercadopago_live_token'                      => '',
@@ -1070,15 +1072,17 @@ function eme_update_options( $db_version ) {
                 'eme_payconiq_button_above'   => 'eme_bancontactwero_button_above',
                 'eme_payconiq_button_below'   => 'eme_bancontactwero_button_below'
             ];
+            /*
             foreach ( $rename_options as $old_option => $new_option ) {
                 if ( get_option( $old_option ) ) {
-                    update_option( $new_option, str_replace('Payconiq', 'Bancontact-Wero (Payconiq)',get_option( $old_option )) );
+                    update_option( $new_option, str_replace('Payconiq', 'Bancontact Pay - Wero (Payconiq)',get_option( $old_option )) );
                     delete_option( $old_option );
                 }
             }
-            //if ( str_contains(get_option( 'eme_bancontactwero_button_img_url' ),'images/payment_gateways/payconiq/logo.png')) {
-            //    update_option( 'eme_bancontactwero_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/bancontactwero.jpg' );
-            //}
+            if ( str_contains(get_option( 'eme_bancontactwero_button_img_url' ),'images/payment_gateways/payconiq/logo.png')) {
+                update_option( 'eme_bancontactwero_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/bancontactwero.png' );
+            }
+             */
         }
     }
 
@@ -2819,22 +2823,22 @@ if (!empty($webhook_id)) {
 </details>
 
 <details name='eme_details_options' class="eme_accordion">
-<summary><?php esc_html_e( 'BancontactWero (Payconiq)', 'events-made-easy' ); echo_configured_pg('bancontactwero'); ?></summary>
+<summary><?php esc_html_e( 'Bancontact Pay - Wero (Payconiq)', 'events-made-easy' ); echo_configured_pg('bancontactwero'); ?></summary>
 <div>
 <table class='form-table'>
 <?php
     $gateway = 'bancontactwero';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
-        __( 'BancontactWero (Payconiq) live or test', 'events-made-easy' ),
+        __( 'Bancontact Pay - Wero (Payconiq) live or test', 'events-made-easy' ),
         'eme_bancontactwero_env',
         [
-            'sandbox'    => __( 'BancontactWero (Payconiq) Sandbox (for testing)', 'events-made-easy' ),
-            'production' => __( 'BancontactWero (Payconiq) Live', 'events-made-easy'),
+            'sandbox'    => __( 'Bancontact Pay - Wero (Payconiq) Sandbox (for testing)', 'events-made-easy' ),
+            'production' => __( 'Bancontact Pay - Wero (Payconiq) Live', 'events-made-easy'),
         ],
-        __( 'Choose wether you want to test BancontactWero (Payconiq) in a sandbox or go live and really use BancontactWero (Payconiq).', 'events-made-easy' )
+        __( 'Choose wether you want to test Bancontact Pay - Wero (Payconiq) in a sandbox or go live and really use Bancontact Pay - Wero (Payconiq).', 'events-made-easy' )
     );
-    eme_options_input_text( __( 'BancontactWero (Payconiq) API key', 'events-made-easy' ), 'eme_bancontactwero_api_key', __( 'BancontactWero (Payconiq) API key', 'events-made-easy' ) );
+    eme_options_input_text( __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ), 'eme_bancontactwero_api_key', __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );

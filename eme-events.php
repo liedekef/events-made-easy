@@ -233,6 +233,9 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
     if ( ! isset( $props['attendancerecord'] ) ) {
         $props['attendancerecord'] = 0;
     }
+    if ( ! isset( $props['attendanceperday'] ) ) {
+        $props['attendanceperday'] = 0;
+    }
     if ( ! isset( $props['skippaymentoptions'] ) ) {
         $props['skippaymentoptions'] = 0;
     }
@@ -265,7 +268,7 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
     }
 
     // for sure integers
-    $numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'ignore_pending_tasksignups', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_only_one_signup_pp', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats', 'check_free_waiting', 'ticket_template_id', 'skippaymentoptions' ];
+    $numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'ignore_pending_tasksignups', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_only_one_signup_pp', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'attendanceperday', 'waitinglist_seats', 'check_free_waiting', 'ticket_template_id', 'skippaymentoptions' ];
     foreach ( $numbers as $opt ) {
         $props[$opt]=intval($props[$opt]);
     }
@@ -1016,21 +1019,7 @@ function eme_events_page_content() {
         }
     } elseif ( get_query_var( 'eme_check_rsvp' ) && ! empty( $_GET['bid'] ) ) {
         $booking_id = intval( $_GET['bid'] );
-        // old school uses the random id, the new style uses a timeless nonce
-        if ( get_query_var( 'eme_pmt_rndid' )) {
-            $payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-            $payment          = eme_get_payment( payment_randomid: $payment_randomid );
-            if ( $payment ) {
-                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
-            }
-            if ( $payment['target'] != 'booking' ) {
-                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Attendance check only valid for events and bookings, not members', 'events-made-easy' ) . '</div>';
-            }
-            $booking_ids = eme_get_payment_booking_ids( $payment['id'] );
-            if ( empty( $booking_ids ) || ! in_array( $booking_id, $booking_ids ) ) {
-                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
-            }
-        } elseif (! empty( $_GET['eme_hash'] ) ) {
+        if ( !empty( $_GET['eme_hash'] ) ) {
             $get_check_rsvp_hash = eme_sanitize_request( $_GET['eme_hash'] );
             $calc_check_rsvp_hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
             if ( $get_check_rsvp_hash != $calc_check_rsvp_hash ) {
@@ -1099,36 +1088,40 @@ function eme_events_page_content() {
         if ( $begin_difference > $event['event_properties']['attendance_begin'] ) {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
             $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed yet', 'events-made-easy' ) . '</div>';
-        } elseif ( $end_difference > $event['event_properties']['attendance_end'] ) {
+            return $format;
+        }
+        if ( $end_difference > $event['event_properties']['attendance_end'] ) {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
             $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
+            return $format;
+        }
+
+        if ($event['event_properties']['attendanceperday'] ) {
+            $attendance_count = eme_count_today_attendances( $booking_id );
         } else {
+            $attendance_count = eme_get_attendance_count( $booking_id );
+        }
+        $seats_booked = $booking['booking_seats'];
+        if ( $attendance_count >= $seats_booked ) {
             $update_res = eme_update_attendance_count( $booking_id );
             if ($update_res === false ) {
                 $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-                $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: error updating attendance count', 'events-made-easy' ) ) . '</div>';
-            } else {
-                $attendance_count = eme_get_attendance_count( $booking_id );
-                $seats_booked     = $booking['booking_seats'];
-                if ( $attendance_count == 0 ) {
-                    $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-                    $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: attendance count is 0', 'events-made-easy' ) ) . '</div>';
-                } elseif ( $attendance_count > $seats_booked ) {
-                    $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-                    $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
-                } else {
-                    $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-                    $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
-                    $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
-                    if ( $event['event_properties']['attendancerecord'] ) {
-                        $res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
-                        if ( $res ) {
-                            $format .= '<br>' . __( 'Attendance record added', 'events-made-easy' );
-                        }
-                    }
-                    $format .= '</div>';
+                $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Error updating attendance count, but ignoring', 'events-made-easy' ) ) . '</div>';
+            }
+
+            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
+            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+        } else {
+            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
+            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
+            $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
+            if ( $event['event_properties']['attendancerecord'] || $event['event_properties']['attendanceperday']) {
+                $res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
+                if ( $res ) {
+                    $format .= '<br>' . __( 'Attendance record added', 'events-made-easy' );
                 }
             }
+            $format .= '</div>';
         }
         return $format;
 
@@ -8633,6 +8626,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 
 function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array ) {
     $eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
+    $eme_prop_attendanceperday = ( $event['event_properties']['attendanceperday'] ) ? "checked='checked'" : '';
     if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
         $showhide_style_unauth = 'class="eme-hidden" style="width:100%;"';
     } else {
@@ -8649,13 +8643,17 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                     <input id="eme_prop_attendancerecord" name='eme_prop_attendancerecord' value='1' type='checkbox' <?php echo $eme_prop_attendancerecord; ?>>
                     <label for="eme_prop_attendancerecord"><?php esc_html_e( 'Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user.', 'events-made-easy' ); ?></label>
                 </p>
+                <p id='p_attendanceperday'>
+                    <input id="eme_prop_attendanceperday" name='eme_prop_attendanceperday' value='1' type='checkbox' <?php echo $eme_prop_attendanceperday; ?>>
+                    <label for="eme_prop_attendanceperday"><?php esc_html_e( 'Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration.', 'events-made-easy' ); ?></label>
+                </p>
                 <p id='span_attendance_limit'>
                     <?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?>
                     <input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" size='4' value="<?php echo $event['event_properties']['attendance_begin']; ?>">
                     <?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
                     <input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" size='4' value="<?php echo $event['event_properties']['attendance_end']; ?>">
                     <?php esc_html_e( 'hours after the event ends.', 'events-made-easy' ); ?>
-                    <br><span class="eme_smaller"><?php esc_html_e( 'When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats.', 'events-made-easy' ); ?></span>
+                    <br><span class="eme_smaller"><?php esc_html_e( 'When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter.', 'events-made-easy' ); ?></span>
                 </p>
 
                 <div id='span_attendance_unauth_scan_format'>

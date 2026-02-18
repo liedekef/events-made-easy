@@ -24,6 +24,27 @@ function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $re
 	}
 }
 
+function eme_count_today_attendances($type, $person_id, $related_id) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
+	$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
+	$start_date = $eme_date_obj->startOfDay()->getDateTime();
+	$end_date = $eme_date_obj->endOfDay()->getDateTime();
+
+    $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE
+        type=%s AND person_id=%d AND related_id=%d
+        AND creation_date BETWEEN %s AND %s
+        ",
+        $type,
+        $event_id,
+        $person_id,
+        $start_date,
+        $end_date,
+    );
+    $count = $wpdb->get_var( $sql );
+    return $count;
+}
+
 // for GDPR cron
 function eme_delete_old_attendances() {
 	global $wpdb;

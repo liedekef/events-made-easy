@@ -33,7 +33,7 @@ function eme_actions_early_init() {
                 $event   = eme_get_event( $booking['event_id'] );
                 if ( $event && $payment && $payment['target'] == 'booking' ) {
                     // the 1 param at the end causes direct streaming to the browser
-                    eme_generate_booking_pdf($booking, $event, $event['event_properties']['attendance_rsvp_proof_tpl'], 1);
+                    eme_generate_booking_pdf($booking, $event, $event['event_properties']['attendance_proof_tpl'], 1);
                 }
             }
         }

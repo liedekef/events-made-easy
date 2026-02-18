@@ -14651,3 +14651,7 @@ msgstr ""
 #: eme-payments.php:16
 msgid "Bancontact Pay - Wero"
 msgstr ""
+
+#: eme-formfields.php:421
+msgid "EME uses a custom snapselect version for dropdowns, see https://github.com/liedekef/snapselect for all data-related possibilities."
+msgstr ""

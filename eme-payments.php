@@ -2754,7 +2754,7 @@ function eme_refund_booking_bancontactwero( $booking ) {
         $cur              = $event ? $event['currency'] : 'EUR';
         $price            = eme_get_total_booking_price( $booking );
         $price            = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
-        $description      = 'Refund';
+        $description      = __( 'Booking refunded', 'events-made-easy' );
         $bancontactwero_payment = $bancontactwero->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
@@ -3238,7 +3238,7 @@ function eme_refund_booking_mollie( $booking ) {
                     $refund = $mollie->send(
                         new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
                             paymentId: $mollie_payment->id,
-                            description: __('Booking cancelled and refunded', 'events-made-easy'),
+                            description: __( 'Booking refunded', 'events-made-easy' ),
                             amount: new \Mollie\Api\Http\Data\Money(
                                 currency: $cur,
                                 value: sprintf('%01.2f', $price)
@@ -3253,7 +3253,7 @@ function eme_refund_booking_mollie( $booking ) {
                             'currency' => $cur,
                             'value'    => sprintf('%01.2f', $price),
                         ],
-                        'description' => __('Booking cancelled and refunded', 'events-made-easy'),
+                        'description' => __('Booking refunded', 'events-made-easy'),
                     ]);
                 }
                 return true;

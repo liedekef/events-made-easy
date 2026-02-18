@@ -418,7 +418,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <td><input name='field_attributes' id='field_attributes' type='text' value='" . eme_esc_html( $formfield['field_attributes'] ) . "' size='40'>
                    <br>" . __( 'Here you can specify extra html attributes for your field (like size, maxlength, pattern, ...).', 'events-made-easy' ) . '
                    <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' enter a valid PHP-format of the date you like to see when entering/showing the value (unrecognized characters in the format will cause the result to be empty). If left empty, the WordPress settings for date format will be used.", 'events-made-easy' ) . "
-                    <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show.", 'events-made-easy' ) . "
+                    <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show.", 'events-made-easy' ) . __('EME uses a custom snapselect version for dropdowns, see https://github.com/liedekef/snapselect for all data-related possibilities.','events-made-easy') . "
                </td>
             </tr>
             <tr id='tr_admin_attributes' class='form-field'>

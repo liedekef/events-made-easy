@@ -1097,20 +1097,20 @@ function eme_events_page_content() {
         }
 
         if ($event['event_properties']['attendanceperday'] ) {
-            $attendance_count = eme_count_today_attendances( $booking_id );
+            $scan_count = eme_count_today_attendances( $booking_id );
         } else {
-            $attendance_count = eme_get_attendance_count( $booking_id );
+            $scan_count = eme_get_attendance_count( $booking_id );
         }
         // to take the current scan into account
-        $attendance_count ++;
+        $scan_count ++;
 
         $seats_booked = $booking['booking_seats'];
-        if ( $attendance_count > $seats_booked ) {
+        if ( $scan_count > $seats_booked ) {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count exceeds max count (%d)', 'events-made-easy' ), $scan_count, $seats_booked ) . '</div>';
         } else {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
+            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $scan_count, $seats_booked );
 
             $update_res = eme_update_attendance_count( $booking_id );
             if ($update_res === false ) {

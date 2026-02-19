@@ -383,6 +383,15 @@ document.addEventListener('DOMContentLoaded', function () {
         editor.events.on('blur', function () {
             textarea.value = visualBtn.classList.contains('active') ? editor.value : textarea.value;
         });
+        /* in case blur event doesn't fire (browser plugins can prevent this) we could use the following:
+        editor.container.addEventListener('focusout', function (e) {
+            // focusout bubbles, blur doesn't
+            if (!editor.container.contains(e.relatedTarget)) {
+                // focus truly left the editor
+                textarea.value = visualBtn.classList.contains('active') ? editor.value : textarea.value;
+            }
+        });
+        */
 
         editor.value = initialValue;
         // if jodit dom changes the content: show the code by default

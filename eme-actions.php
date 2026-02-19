@@ -282,7 +282,7 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION, [ 'strategy' => 'defer' ] );
     wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'eme-ftable', 'eme-sortable' ], EME_VERSION );
 
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
@@ -353,7 +353,7 @@ function eme_register_scripts() {
     $language = eme_detect_lang();
 
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, $load_js_in_footer );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer, 'strategy' => 'defer' ] );
     $eme_fs_options = get_option('eme_fs');
     $translation_array = [
         'translate_plugin_url'         => EME_PLUGIN_URL,
@@ -446,17 +446,17 @@ function eme_register_scripts() {
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
         //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
-        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], '', true );
+        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
     }
     if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', true );
+        wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
     }
     if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', true );
+        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
     }
     if ( get_option( 'eme_friendlycaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], '', true );
-        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], '', true );
+        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
+        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
     }
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
@@ -477,23 +477,6 @@ function eme_enqueue_frontend() {
         }
     }
 }
-
-function eme_add_defer_attribute( $tag, $handle ) {
-    switch ($handle) {
-    case 'eme-basic':
-        $tag = str_replace( ' src', ' defer="defer" src', $tag );
-        break;
-    case 'eme-recaptcha':
-    case 'eme-hcaptcha':
-    case 'eme-cfcaptcha':
-    case 'eme-friendlycaptcha-1':
-    case 'eme-friendlycaptcha-2':
-        $tag = str_replace( ' src', ' defer="defer" async src', $tag );
-        break;
-    }
-    return $tag;
-}
-add_filter( 'script_loader_tag', 'eme_add_defer_attribute', 10, 2 );
 
 add_action( 'template_redirect', 'eme_template_redir' );
 add_action( 'admin_notices', 'eme_admin_notices' );

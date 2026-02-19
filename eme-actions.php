@@ -431,7 +431,7 @@ function eme_register_scripts() {
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
     $translation_array = [
 	    'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-	    'translate_flanguage'       => eme_detect_lang(),
+	    'translate_flanguage'       => $language,
 	    'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
 	    'translate_insert'          => __('Insert', 'events-made-easy' ),
 	    'translate_cancel'          => __('Cancel', 'events-made-easy' ),
@@ -576,7 +576,7 @@ function eme_handle_dismiss_notice() {
 add_action( 'wp_ajax_eme_del_upload', 'eme_del_upload_ajax' );
 function eme_del_upload_ajax() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+    if ( ! (current_user_can( get_option( 'eme_cap_edit_people' ) ) || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) ) {
         wp_die();
     }
 

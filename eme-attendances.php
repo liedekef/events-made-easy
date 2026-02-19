@@ -31,15 +31,14 @@ function eme_count_today_attendances($type, $person_id, $related_id) {
 	$start_date = $eme_date_obj->startOfDay()->getDateTime();
 	$end_date = $eme_date_obj->endOfDay()->getDateTime();
 
-    $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE
+    $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE
         type=%s AND person_id=%d AND related_id=%d
-        AND creation_date BETWEEN %s AND %s
-        ",
+        AND creation_date BETWEEN %s AND %s",
         $type,
-        $event_id,
         $person_id,
+        $related_id,
         $start_date,
-        $end_date,
+        $end_date
     );
     $count = $wpdb->get_var( $sql );
     return $count;

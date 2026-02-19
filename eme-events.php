@@ -1101,19 +1101,23 @@ function eme_events_page_content() {
         } else {
             $attendance_count = eme_get_attendance_count( $booking_id );
         }
+        // to take the current scan into account
+        $attendance_count ++;
+
         $seats_booked = $booking['booking_seats'];
-        if ( $attendance_count >= $seats_booked ) {
+        if ( $attendance_count > $seats_booked ) {
+            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
+            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+        } else {
+            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
+            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
+
             $update_res = eme_update_attendance_count( $booking_id );
             if ($update_res === false ) {
                 $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
                 $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Error updating attendance count, but ignoring', 'events-made-easy' ) ) . '</div>';
             }
 
-            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
-        } else {
-            $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
             $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
             if ( $event['event_properties']['attendancerecord'] || $event['event_properties']['attendanceperday']) {
                 $res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );

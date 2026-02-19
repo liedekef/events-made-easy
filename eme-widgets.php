@@ -47,7 +47,7 @@ class WP_Widget_eme_list extends WP_Widget {
 			$author = '';
 		} else {
 			$authinfo = get_userdata( $instance['authorid'] );
-			$author   = $authinfo->user_login;
+			$author   = $authinfo ? $authinfo->user_login : '';
 		}
 		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP core widget arg
 		if ( $title ) {
@@ -267,7 +267,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 			$author = '';
 		} else {
 			$authinfo = get_userdata( $instance['authorid'] );
-			$author   = $authinfo->user_login;
+			$author   = $authinfo ? $authinfo->user_login : '';
 		}
 
 		if ( is_array( $category ) ) {
@@ -363,9 +363,11 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	<select id="<?php echo esc_attr( $this->get_field_id( 'holiday_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'holiday_id' ) ); ?>">
 			<?php
 			eme_option_items( $holidays_array_by_id, $holiday_id );
+			?>
+	</select>
+			<?php
 		}
 		?>
-	</select>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'authorid' ) ); ?>"><?php esc_html_e( 'Author', 'events-made-easy' ); ?>:</label><br>
 		<?php

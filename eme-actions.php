@@ -301,7 +301,7 @@ function eme_admin_register_scripts() {
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
 
     $locale_code     = determine_locale();
-    $locale_code     = preg_replace( '/_/', '-', $locale_code );
+    $locale_code     = str_replace( '_', '-', $locale_code );
     $locale_file     = $eme_plugin_dir . "js/ftable/localization/ftable.$locale_code.js";
     $locale_file_url = EME_PLUGIN_URL . "js/ftable/localization/ftable.$locale_code.js";
     // for english, no translation code is needed)
@@ -513,7 +513,7 @@ function eme_admin_notices() {
             }
         }
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
-        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ) ); ?></div>
+        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), esc_html($current_user->display_name), admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ) ); ?></div>
 <?php
         }
 
@@ -532,7 +532,7 @@ PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurr
 Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>
     <br><br>
 <?php
-            echo sprintf( '<a href="#" class="eme-dismiss-notice" data-notice="donate" title="%s">%s</a>', __("Dismiss",'events-made-easy'), __("Dismiss",'events-made-easy') );
+            echo sprintf( '<a href="#" class="eme-dismiss-notice" data-notice="donate" title="%s">%s</a>', esc_attr(__("Dismiss",'events-made-easy')), esc_attr(__("Dismiss",'events-made-easy')) );
 ?>
     </div>
 </div>
@@ -593,7 +593,7 @@ function eme_del_upload_ajax() {
         $field_id = intval( $_POST['field_id'] );
         $fName    = trim( eme_sanitize_request( $_POST['name'] ) );
         $indexOFF     = strrpos( $fName, '.' );
-        if ( $indexOFF ) {
+        if ( $indexOFF !== false ) {
             $nameFile  = substr( $fName, 0, $indexOFF );
             $extension = substr( $fName, $indexOFF + 1 );
         } else {
@@ -730,8 +730,6 @@ function eme_jodit_preview_render() {
     }
     if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == 'events-made-easy_page_eme-options' ) {
         if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'rsvp') {
-            $new_booking = eme_new_booking();
-            $new_event = eme_new_event();
             if (! empty( $_POST['editor_id']) && $_POST['editor_id'] == 'eme_registration_form_format' ) {
                 $new_booking = eme_new_booking();
                 $new_event = eme_new_event();

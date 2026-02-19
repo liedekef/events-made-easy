@@ -1512,7 +1512,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     }
 
     $locale_code             = determine_locale();
-    $locale_code             = preg_replace( '/_/', '-', $locale_code );
+    $locale_code             = str_replace( '_', '-', $locale_code );
     $button_price            = eme_localized_price( $price, $cur );
     $button_text_inside_form = eme_esc_html( sprintf( __( 'Pay %s', 'events-made-easy' ), $button_price ) );
     $form_html               = $button_above;

@@ -211,8 +211,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                         const messageBox = document.getElementById('bookings-message');
                                         if (messageBox) {
                                             messageBox.innerHTML = data.htmlmessage;
-                                            messageBox.style.display = 'block';
-                                            setTimeout(() => messageBox.style.display = 'none', 5000);
+                                            messageBox.classList.toggle('eme-hidden');
+                                            setTimeout(() => messageBox.classList.toggle('eme-hidden'), 5000);
                                         }
                                     }
                                     BookingsTable.reload();
@@ -253,13 +253,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    if (data.Result !== 'OK') {
-                                        const messageBox = document.getElementById('bookings-message');
-                                        if (messageBox) {
-                                            messageBox.innerHTML = data.htmlmessage;
-                                            messageBox.style.display = 'block';
-                                            setTimeout(() => messageBox.style.display = 'none', 5000);
-                                        }
+                                    const messageBox = document.getElementById('bookings-message');
+                                    if (messageBox) {
+                                        messageBox.innerHTML = data.htmlmessage;
+                                        messageBox.classList.toggle('eme-hidden');
+                                        setTimeout(() => messageBox.classList.toggle('eme-hidden'), 5000);
                                     }
                                     BookingsTable.reload();
                                 })

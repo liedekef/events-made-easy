@@ -145,7 +145,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 		$result = $link;
 	}
 	if ( $echo ) {
-		echo $result;
+		echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted URL or HTML link built with eme_trans_esc_html()
 	} else {
 		return $result;
 	}

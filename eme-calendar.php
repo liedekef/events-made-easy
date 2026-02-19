@@ -646,7 +646,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	$calendar .= '</div>';
 
 	if ( $do_echo ) {
-		echo $calendar;
+		echo $calendar; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted calendar HTML built in this function
 	} else {
 		return $calendar;
 	}

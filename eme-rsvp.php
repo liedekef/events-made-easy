@@ -4823,7 +4823,7 @@ function eme_registration_seats_page( $pending = 0 ) {
         <input type='hidden' name='person_id' value='' >
         <input type='hidden' name='wp_id' value=''>
         </form>";
-        print $ret_string;
+        print $ret_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted admin booking form HTML
         return;
     } elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'editBooking' && isset( $_GET['booking_id'] ) ) {
         $booking_id = intval( $_GET['booking_id'] );
@@ -4877,7 +4877,7 @@ function eme_registration_seats_page( $pending = 0 ) {
         }
         //$files_title=__('Uploaded files related to this booking', 'events-made-easy');
         //$ret_string.= eme_get_uploaded_files_br($booking['booking_id'],"bookings",$files_title).'</table>';
-        print $ret_string;
+        print $ret_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted admin booking form HTML
         return;
     } else {
         $action    = isset( $_POST ['eme_admin_action'] ) ? eme_sanitize_request($_POST ['eme_admin_action']) : '';
@@ -4893,9 +4893,9 @@ function eme_registration_seats_page( $pending = 0 ) {
                 $result      = $booking_res[0];
                 $payment_id  = $booking_res[1];
                 if ( ! $payment_id ) {
-                    print "<div id='message' class='error'><p>$result</p></div>";
+                    print "<div id='message' class='error'><p>" . wp_kses_post( $result ) . '</p></div>';
                 } else {
-                    print "<div id='message' class='updated notice is-dismissible'><p>$result</p></div>";
+                    print "<div id='message' class='updated notice is-dismissible'><p>" . wp_kses_post( $result ) . '</p></div>';
                 }
             }
         } elseif ( $action == 'updateBooking' ) {
@@ -5069,7 +5069,7 @@ function eme_registration_seats_page( $pending = 0 ) {
             // eme_cap_cleanup is used for cleanup, cron and imports (should more be something like 'eme_cap_actions')
             check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
             $message = eme_import_csv_payments();
-            print "<div id='message' class='updated notice is-dismissible'><p>" . $message . '</p></div>';
+            print "<div id='message' class='updated notice is-dismissible'><p>" . wp_kses_post( $message ) . '</p></div>';
         }
     }
 
@@ -5213,7 +5213,6 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     $mailing_pending  = get_option( 'eme_rsvp_mail_notify_pending' );
     $mailing_approved = get_option( 'eme_rsvp_mail_notify_approved' );
 
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
 <div class="wrap">
 <div id="icon-events" class="icon32">
@@ -5268,7 +5267,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         </span>
         <div id='eme_div_import' class='eme-hidden'>
         <form id='payment-import' method='post' enctype='multipart/form-data' action='#'>
-        <?php echo $nonce_field; ?>
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="file" name="eme_csv">
         <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?> 
         <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -5292,7 +5291,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         echo '<input type="hidden" id="booking_status" name="booking_status" value="APPROVED">';
     }
 
-    echo "<input type='hidden' name='event_id' id='event_id' value='$event_id'>";
+    echo "<input type='hidden' name='event_id' id='event_id' value='" . esc_attr( $event_id ) . "'>";
     if ( ! $event_id && ! $person_id ) {
         // if event id or person_id is passed via POST, we ignore the scope, so let's hide the selection too
 ?>
@@ -5466,7 +5465,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="BookingsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="BookingsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
 
 </div>
 <?php
@@ -7001,7 +7000,7 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
         }
     }
     $html .= "$footer</body></html>";
-    print $html;
+    print $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted printable booking list HTML
 }
 
 // for CRON

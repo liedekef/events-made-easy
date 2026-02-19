@@ -20,7 +20,7 @@ function eme_option_items( $arr, $saved_value ) {
         }
         $output .= "<option value='" . eme_esc_html( $key ) . "' $selected >" . eme_esc_html( $item ) . "</option>\n";
     }
-    echo $output;
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with eme_esc_html() in this function
 }
 
 function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
@@ -44,7 +44,7 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
             $output .= "<br>\n";
         }
     }
-    echo $output;
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with eme_esc_html() in this function
 }
 
 function eme_options_input_type( $title, $name, $description, $type = 'text', $option_value = false ) {
@@ -57,12 +57,12 @@ function eme_options_input_type( $title, $name, $description, $type = 'text', $o
         $autocomplete = 'autocomplete="new-password"';
     }
 ?>
-    <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-        <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+        <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
         <td>
-<?php echo "<input $autocomplete name='$name' type='$type' id='$name' style='width: 95%;' value='" . eme_esc_html( $option_value ) . "' size='45'>";
+<?php echo "<input $autocomplete name='" . esc_attr( $name ) . "' type='" . esc_attr( $type ) . "' id='" . esc_attr( $name ) . "' style='width: 95%;' value='" . eme_esc_html( $option_value ) . "' size='45'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $autocomplete is hardcoded
 if ( ! empty( $description ) ) {
-    echo '<br>' . $description;
+    echo '<br>' . wp_kses_post( $description );
 }
 ?>
         </td>
@@ -94,13 +94,13 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
         $option_value = get_option( $name );
     }
 ?>
-    <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-    <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
     <td>
 <?php
     eme_wysiwyg_textarea( $name, $option_value, $show_wp_editor, $show_full);
     if ( ! empty( $description ) ) {
-        echo '<br>' . $description;
+        echo '<br>' . wp_kses_post( $description );
     }
 ?>
     </td>
@@ -115,22 +115,21 @@ function eme_options_toggle($title, $name, $description = '', $option_value = fa
     }
 
     $id = esc_attr(sanitize_html_class($name));
-    $checked = $option_value ? 'checked' : '';
     $yes_label = esc_attr('Yes', 'events-made-easy');
     $no_label  = esc_attr('No', 'events-made-easy');
 ?>
-<tr style="vertical-align:top" id="<?php echo $id; ?>_row">
+<tr style="vertical-align:top" id="<?php echo esc_attr( $id ); ?>_row">
     <th scope="row"><?php echo esc_html($title); ?></th>
     <td>
         <input type="checkbox" class="eme-yesno-check-input"
-            name="<?php echo esc_attr($name); ?>" 
-            id="<?php echo $id; ?>" 
-            value="1" 
-            <?php echo $checked; ?>
+            name="<?php echo esc_attr($name); ?>"
+            id="<?php echo esc_attr( $id ); ?>"
+            value="1"
+            <?php checked( $option_value ); ?>
         >
-        <label for="<?php echo $id; ?>" class="eme-yesno-check-text" data-yes="<?php echo $yes_label; ?>" data-no="<?php echo $no_label; ?>"></label>
+        <label for="<?php echo esc_attr( $id ); ?>" class="eme-yesno-check-text" data-yes="<?php echo esc_attr( $yes_label ); ?>" data-no="<?php echo esc_attr( $no_label ); ?>"></label>
         <?php if (!empty($description)): ?>
-            <div class="eme-toggle-description"><?php echo $description; ?></div>
+            <div class="eme-toggle-description"><?php echo wp_kses_post( $description ); ?></div>
         <?php endif; ?>
     </td>
 </tr>
@@ -143,14 +142,14 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
         $option_value = get_option( $name );
     }
 ?>
-        <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
+        <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
             <th scope="row"><?php echo esc_html( $title ); ?></th>
             <td>
-            <input id="<?php echo $name; ?>_yes" name="<?php echo $name; ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo $name; ?>_yes'><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
-            <input  id="<?php echo $name; ?>_no" name="<?php echo $name; ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo $name; ?>_no'><?php esc_html_e( 'No', 'events-made-easy' ); ?>
+            <input id="<?php echo esc_attr( $name ); ?>_yes" name="<?php echo esc_attr( $name ); ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_yes'><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
+            <input  id="<?php echo esc_attr( $name ); ?>_no" name="<?php echo esc_attr( $name ); ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_no'><?php esc_html_e( 'No', 'events-made-easy' ); ?>
 <?php
     if ( ! empty( $description ) ) {
-        echo '<br>' . $description;
+        echo '<br>' . wp_kses_post( $description );
     }
 ?>
         </td>
@@ -169,13 +168,13 @@ function eme_options_input_list( $title, $name, $list, $description, $option_val
         $option_value = get_option( $name );
     }
 ?>
-    <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-    <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
     <td>
 <?php
-    echo eme_ui_list( $option_value, $name, $list );
+    echo eme_ui_list( $option_value, $name, $list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_list()
     if ( ! empty( $description ) ) {
-        echo '<br>' . $description;
+        echo '<br>' . wp_kses_post( $description );
     }
 ?>
     </td>
@@ -194,13 +193,13 @@ function eme_options_select( $title, $name, $list, $description, $option_value =
         $option_value = get_option( $name );
     }
 ?>
-    <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-    <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
     <td>
 <?php
-    echo eme_ui_select( $option_value, $name, $list, $add_empty_first );
+    echo eme_ui_select( $option_value, $name, $list, $add_empty_first ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     if ( ! empty( $description ) ) {
-        echo '<br>' . $description;
+        echo '<br>' . wp_kses_post( $description );
     }
 ?>
     </td>
@@ -228,13 +227,13 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
         $option_value_arr = $option_value;
     }
 ?>
-    <tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-    <th scope="row"><label for='<?php echo $name; ?>'><?php echo $title; ?></label></th>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
     <td>
 <?php
-    echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class );
+    echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
     if ( ! empty( $description ) ) {
-        echo '<br>' . $description;
+        echo '<br>' . wp_kses_post( $description );
     }
 ?>
     </td>

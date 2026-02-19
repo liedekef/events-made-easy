@@ -491,7 +491,7 @@ function eme_admin_notices() {
     if ( $pagenow == 'post.php' && isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) && $_GET['post'] == "$events_page_id" ) {
         $message = sprintf( __( "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. ", 'events-made-easy' ), 'admin.php?page=eme-options' );
         $notice  = "<div class='error'><p>$message</p></div>";
-        echo $notice;
+        echo wp_kses_post( $notice );
     }
 
     // only show the notices to admin users

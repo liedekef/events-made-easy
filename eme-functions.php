@@ -133,7 +133,7 @@ function eme_client_clock_ajax() {
     // the cookie is stored using wp_json_encode and not eme_serialize, to avoid for Object Injection
     // See https://www.owasp.org/index.php/PHP_Object_Injection
     setcookie( 'eme_client_time', wp_json_encode( $client_timeinfo ), 0, COOKIEPATH, COOKIE_DOMAIN );
-    echo esc_html( $ret );
+    echo $ret; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed 0 or 1
     wp_die();
 }
 

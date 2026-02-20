@@ -1007,7 +1007,7 @@ function eme_csv_tasksignups_report( $event_id ) {
     $current_userid = get_current_user_id();
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
-        echo 'No access';
+        echo esc_html__( 'No access', 'events-made-easy' );
         die;
     }
 
@@ -1183,7 +1183,7 @@ function eme_csv_booking_report( $event_id ) {
     $current_userid = get_current_user_id();
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
-        echo 'No access';
+        echo esc_html__( 'No access', 'events-made-easy' );
         die;
     }
 
@@ -1455,7 +1455,7 @@ function eme_printable_booking_report( $event_id ) {
     $current_userid = get_current_user_id();
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
-        echo 'No access';
+        echo esc_html__( 'No access', 'events-made-easy' );
         die;
     }
 
@@ -1724,7 +1724,7 @@ function eme_printable_booking_report( $event_id ) {
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td colspan='<?php echo $nbr_columns - 1; ?>' style='text-align: left;' >
+            <td colspan='<?php echo intval( $nbr_columns ) - 1; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- integer arithmetic ?>' style='text-align: left;' >
 <?php
         if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
             $answers = eme_get_dyndata_booking_answers( $booking['booking_id'] );
@@ -1976,7 +1976,6 @@ function eme_person_verify_layout() {
 }
 
 function eme_render_people_table_and_filters( $limit_to_group = 0) {
-    $nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     $groups                  = eme_get_static_groups();
     $pdftemplates            = eme_get_templates( 'pdf', 1 );
     $htmltemplates           = eme_get_templates( 'html', 1 );
@@ -2011,7 +2010,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 
     <div id="bulkactions">
     <form id='people-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
@@ -2083,7 +2082,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="PeopleTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="PeopleTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
 <?php
 }
 
@@ -2335,8 +2334,6 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
 function eme_manage_people_layout( $message = '' ) {
     global $plugin_page;
 
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -2349,15 +2346,15 @@ function eme_manage_people_layout( $message = '' ) {
     <div id="icon-edit" class="icon32">
     </div>
 
-    <div id="people-message" class="<?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="people-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
     <h1><?php esc_html_e( 'Add a new person', 'events-made-easy' ); ?></h1>
     <div class="wrap">
     <form id="people-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-people' ); ?>">
-        <?php echo $nonce_field; ?>
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="hidden" name="eme_admin_action" value="add_person">
         <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add person', 'events-made-easy' ); ?>">
     </form>
@@ -2378,7 +2375,7 @@ function eme_manage_people_layout( $message = '' ) {
         </span>
         <div id='eme_div_import' class='eme-hidden'>
         <form id='people-import' method='post' enctype='multipart/form-data' action='#'>
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="file" name="eme_csv">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
         <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -2452,7 +2449,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         $wp_readonly = '';
     }
 
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     $groups      = eme_get_static_groups();
 ?>
     <div class="wrap">
@@ -2474,13 +2470,13 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 
     <?php if ( $message != '' ) { ?>
         <div id="message">
-            <?php echo $message; ?>
+            <?php echo wp_kses_post( $message ); ?>
         </div>
     <?php } ?>
     <div id="ajax-response"></div>
     <?php if ( ! $readonly ) { ?>
     <form name="editperson" id="editperson" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate" enctype='multipart/form-data'>
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <?php if ( $action == 'add' ) { ?>
             <input type="hidden" name="eme_admin_action" value="do_addperson">
         <?php } else { ?>
@@ -2540,7 +2536,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
             data-placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>"
             data-person-id="<?php echo intval( $person['person_id'] ); ?>"
             class="eme_snapselect_chooserelatedperson">
-            <?php echo $preselected_option; ?>
+            <?php echo $preselected_option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML option element ?>
         </select>
 <?php
     if ( $person['related_person_id'] > 0 ) {
@@ -2657,7 +2653,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 ?>
         <tr>
         <td><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></td>
-        <td colspan=2><?php echo $membership_names; ?></td>
+        <td colspan=2><?php echo $membership_names; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped membership names HTML ?></td>
         </tr>
 <?php
         endif;
@@ -2739,7 +2735,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
             }
         }
     }
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <div class="wrap">
         <div id="poststuff">
@@ -2770,18 +2765,18 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 
     <?php if ( $message != '' ) { ?>
         <div id="message">
-            <p><?php echo $message; ?></p>
+            <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
     <?php } ?>
     <div id="ajax-response"></div>
     <form name="editgroup" id="editgroup" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">
-    <?php echo $nonce_field; ?>
-    <input type="hidden" name="group_type" value="<?php echo $group['type']; ?>">
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
+    <input type="hidden" name="group_type" value="<?php echo esc_attr( $group['type'] ); ?>">
     <?php if ( $action == 'add' ) { ?>
     <input type="hidden" name="eme_admin_action" value="do_addgroup">
     <?php } else { ?>
     <input type="hidden" name="eme_admin_action" value="do_editgroup">
-    <input type="hidden" name="group_id" value="<?php echo $group['group_id']; ?>">
+    <input type="hidden" name="group_id" value="<?php echo esc_attr( $group['group_id'] ); ?>">
     <?php } ?>
 
     <!-- we need titlediv and title for qtranslate as ID -->
@@ -2846,7 +2841,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 }
 
 function eme_manage_groups_layout( $message = '' ) {
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -2858,15 +2852,15 @@ function eme_manage_groups_layout( $message = '' ) {
     <div id="icon-edit" class="icon32">
     </div>
 
-    <div id="groups-message" class="<?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="groups-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
     <h1><?php esc_html_e( 'Add a new group', 'events-made-easy' ); ?></h1>
     <div class="wrap">
     <form id="add-group" method="post" action="<?php echo admin_url( 'admin.php?page=eme-groups' ); ?>">
-        <?php echo $nonce_field; ?>
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="hidden" name="eme_admin_action" value="add_group">
         <button type="submit" class="button-primary" name="eme_admin_action" value="add_group"><?php esc_html_e( 'Add group', 'events-made-easy' ); ?></button>
         <button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_people_group"><?php esc_html_e( 'Add dynamic group of people', 'events-made-easy' ); ?></button>
@@ -2879,7 +2873,7 @@ function eme_manage_groups_layout( $message = '' ) {
 
     <div id="bulkactions">
     <form id='groups-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
@@ -4652,7 +4646,7 @@ function eme_user_profile( $user ) {
         </tr>
         <tr>
         <th><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></th>
-        <td><?php echo $memberships_list; ?></td>
+        <td><?php echo $memberships_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped memberships HTML ?></td>
         </tr>
     </table>
 <?php
@@ -5851,7 +5845,7 @@ function eme_ajax_generate_people_html( $ids_arr, $template_id, $template_id_hea
         $html  .= eme_replace_people_placeholders( $format, $person );
     }
     $html .= "$footer</body></html>";
-    print $html;
+    print $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- full print view HTML
 }
 
 function eme_get_family_person_ids( $person_id ) {

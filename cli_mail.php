@@ -67,7 +67,7 @@ function mailRead( $iKlimit = '' ) {
 
 	// Failed to connect to STDIN? (shouldn't really happen)
 	if ( ! $fp ) {
-		echo $sErrorSTDINFail;
+		echo $sErrorSTDINFail; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CLI error message, not web output
 		exit();
 	}
 

@@ -1462,7 +1462,6 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 
 function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     global $plugin_page;
-    $nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     $eme_member_status_array = eme_member_status_array();
 
     $membership = eme_get_membership( $membership_id );
@@ -1504,22 +1503,22 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             $related_person = null;
         }
     }
-    echo "<h1>$h1_message </h1>";
+    echo '<h1>' . esc_html( $h1_message ) . ' </h1>';
     if ( $action == 'edit' ) {
         echo "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $member['person_id'] ) . "' title='" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
     }
 ?>
     <form name="eme-member-adminform" id="eme-member-adminform" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" enctype='multipart/form-data'>
 <?php
-    echo $nonce_field;
+    wp_nonce_field( 'eme_admin', 'eme_admin_nonce' );
     if ( $action == 'add' ) {
 ?>
         <input type='hidden' name='eme_admin_action' value='do_addmember'>
         <input type='hidden' name='person_id' id='person_id' value=''>
     <?php } else { ?>
         <input type='hidden' name='eme_admin_action' value='do_editmember'>
-        <input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
-        <input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
+        <input type='hidden' name='person_id' id='person_id' value='<?php echo intval( $member['person_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>'>
+        <input type='hidden' name='member_id' id='member_id' value='<?php echo intval( $member['member_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>'>
     <?php } ?>
     <table>
 <?php
@@ -1570,9 +1569,9 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         </td><td>
             <select id='transferto_personid' name='transferto_personid'
                 data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
-                data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; ?>"
-                data-membership-id="<?php echo intval( $membership['membership_id'] ); ?>"
-                data-person-id="<?php echo isset( $member['person_id'] ) ? intval( $member['person_id'] ) : 0; ?>"
+                data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
+                data-membership-id="<?php echo intval( $membership['membership_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
+                data-person-id="<?php echo isset( $member['person_id'] ) ? intval( $member['person_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                 class="eme_snapselect_transferperson nodynamicupdates">
             </select>
         </td></tr>
@@ -1635,10 +1634,10 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 ?>
                  <select id='related_member_id' name='related_member_id'
                      data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
-                     data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; ?>"
-                     data-membership-id="<?php echo intval( $membership['membership_id'] ); ?>"
+                     data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
+                     data-membership-id="<?php echo intval( $membership['membership_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                      class="eme_snapselect_relatedmember">
-                     <?php echo $preselected_option; ?>
+                     <?php echo $preselected_option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML option element ?>
                  </select>
                  <br><?php esc_html_e( "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too.", 'events-made-easy' ); ?>
 <?php
@@ -1653,30 +1652,30 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     <?php } ?>
         <tr><td><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='start_date' id='start_date' value='<?php echo $member['start_date']; ?>'>
+            <input type='hidden' name='start_date' id='start_date' value='<?php echo esc_attr( $member['start_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
             } else {
 ?>
-                 <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
+                 <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['start_date'] ) ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
 <?php       } ?>
     </td></tr>
     <tr><td><?php esc_html_e( 'End date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='end_date' id='end_date' value='<?php echo $member['end_date']; ?>'>
+            <input type='hidden' name='end_date' id='end_date' value='<?php echo esc_attr( $member['end_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
             } else {
 ?>
-                <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
+                <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['end_date'] ) ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
 <?php       } ?>
     </td></tr>
 <?php if ( $membership['properties']['max_usage_count'] > 0 ) { ?>
     <tr>
     <td><label for="properties[usage_count]"><?php esc_html_e( 'Usage count', 'events-made-easy' ); ?></label></td>
-    <td><input type="number" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo $member['properties']['usage_count']; ?>" size="40">
+    <td><input type="number" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo esc_attr( $member['properties']['usage_count'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'This indicates the amount of times this member has RSVP-ed to an event that requires this membership.', 'events-made-easy' ); ?>
 <?php 
         if ( $member['properties']['usage_count'] >= $membership['properties']['max_usage_count'] ) {
@@ -1704,13 +1703,13 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </td></tr>
     <tr><td><?php esc_html_e( 'Last payment received date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='payment_date' id='payment_date' value='<?php echo $member['payment_date']; ?>'>
+            <input type='hidden' name='payment_date' id='payment_date' value='<?php echo esc_attr( $member['payment_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 );
             } else {
 ?>
-                <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo eme_js_datetime( $member['payment_date'] ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
+                <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['payment_date'] ) ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
 <?php       } ?>
         <br>
         <?php echo "<p class='eme_smaller'>" . esc_html__( 'This indicates the last date a payment was received. Changing this will only change that date, no new payment will actually be processed and the membership state is not influenced by this.', 'events-made-easy' ) . '</p>'; ?>
@@ -1821,7 +1820,6 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
     } else {
         $is_new_membership = 0;
     }
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <div class="wrap">
         <div id="icon-edit" class="icon32">
@@ -1839,19 +1837,19 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 
         <?php if ( $message != '' ) { ?>
             <div id="message" class="updated notice notice-success is-dismissible">
-                <p><?php echo $message; ?></p>
+                <p><?php echo wp_kses_post( $message ); ?></p>
             </div>
         <?php } ?>
 
 
         <div id="ajax-response"></div>
         <form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"  enctype="multipart/form-data" class="validate">
-        <?php echo $nonce_field; ?>
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <?php if ( $is_new_membership == 1 ) { ?>
         <input type="hidden" name="eme_admin_action" value="do_addmembership">
         <?php } else { ?>
         <input type="hidden" name="eme_admin_action" value="do_editmembership">
-        <input type="hidden" name="membership_id" value="<?php echo $membership['membership_id']; ?>">
+        <input type="hidden" name="membership_id" value="<?php echo intval( $membership['membership_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>">
         <?php } ?>
 
         <!-- we need titlediv and title for qtranslate as ID -->
@@ -1888,16 +1886,9 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     $type_array                 = eme_membership_types();
     $duration_array             = eme_membership_durations();
     $status_array               = eme_membership_status();
-    $registration_wp_users_only = ( $membership['properties']['registration_wp_users_only'] ) ? "checked='checked'" : '';
-    $captcha_only_logged_out    = ( $membership['properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
     $selected_captcha           = $membership['properties']['selected_captcha'];
-    $attendancerecord           = ( $membership['properties']['attendancerecord'] ) ? "checked='checked'" : '';
-    $allow_renewal              = ( $membership['properties']['allow_renewal'] ) ? "checked='checked'" : '';
-    $family_membership          = ( $membership['properties']['family_membership'] ) ? "checked='checked'" : '';
-    $create_wp_user             = ( $membership['properties']['create_wp_user'] ) ? "checked='checked'" : '';
     $membership_discount        = ( $membership['properties']['discount'] ) ? $membership['properties']['discount'] : '';
     $membership_discountgroup   = ( $membership['properties']['discountgroup'] ) ? $membership['properties']['discountgroup'] : '';
-    $dyndata_all_fields         = ( $membership['properties']['dyndata_all_fields'] ) ? "checked='checked'" : '';
     $discount_arr               = [];
     $dgroup_arr                 = [];
     if ( ! empty( $membership_discount ) ) {
@@ -1929,13 +1920,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='startdate'>
     <td><label for="start_date"><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></label></td>
-    <td><input type='hidden' name='start_date' id='start_date' value='<?php echo $membership['start_date']; ?>'>
-        <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $membership['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
+    <td><input type='hidden' name='start_date' id='start_date' value='<?php echo esc_attr( $membership['start_date'] ); ?>'>
+        <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo esc_attr( eme_js_datetime( $membership['start_date'] ) ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
     </td>
     </tr>
     <tr>
     <td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?></label></td>
-    <td><input type="number" id="duration_count" name="duration_count" value="<?php echo $membership['duration_count']; ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); ?>
+    <td><input type="number" id="duration_count" name="duration_count" value="<?php echo esc_attr( $membership['duration_count'] ); ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'Once this duration period has passed, the membership start date for new members will be increased by the passed period.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -1948,39 +1939,39 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='graceperiod'>
     <td><label for="properties[grace_period]"><?php esc_html_e( 'Grace period', 'events-made-easy' ); ?></label></td>
-    <td><input type="text" id="properties[grace_period]" name="properties[grace_period]" value="<?php echo $membership['properties']['grace_period']; ?>" size="40">
+    <td><input type="text" id="properties[grace_period]" name="properties[grace_period]" value="<?php echo esc_attr( $membership['properties']['grace_period'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'After a membership has expired, people can still be considered as a member until this many days have passed.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'After the mentioned number of days have passed, the membership will be set to expired.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr>
     <td><label for="properties[max_usage_count]"><?php esc_html_e( 'Maximum usage', 'events-made-easy' ); ?></label></td>
-    <td><input type="number" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo $membership['properties']['max_usage_count']; ?>" size="40">
+    <td><input type="number" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo esc_attr( $membership['properties']['max_usage_count'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership.', 'events-made-easy' ); ?>
     </td>
     </tr>
     <tr id='reminder'>
     <td><label for="properties[reminder_days]"><?php esc_html_e( 'Reminder', 'events-made-easy' ); ?></label></td>
-    <td><input type="text" id="properties[reminder_days]" name="properties[reminder_days]" value="<?php echo $membership['properties']['reminder_days']; ?>" size="40">
+    <td><input type="text" id="properties[reminder_days]" name="properties[reminder_days]" value="<?php echo esc_attr( $membership['properties']['reminder_days'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'Set the number of days before membership expiration a reminder will be sent out.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr id='remove_pending'>
     <td><label for="properties[remove_pending_days]"><?php esc_html_e( 'Automatically remove pending members', 'events-made-easy' ); ?></label></td>
-    <td><input type="text" id="properties[remove_pending_days]" name="properties[remove_pending_days]" value="<?php echo $membership['properties']['remove_pending_days']; ?>" size="40">
+    <td><input type="text" id="properties[remove_pending_days]" name="properties[remove_pending_days]" value="<?php echo esc_attr( $membership['properties']['remove_pending_days'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'Set the number of days after which pending members are automatically removed. Leave empty or 0 for no automatic removal.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr>
     <td><label for="allow_renewal"><?php esc_html_e( 'Allow membership renewal', 'events-made-easy' ); ?></label></td>
-    <td><input id="allow_renewal" name="properties[allow_renewal]" type="checkbox" value="1" <?php echo $allow_renewal; ?>>
+    <td><input id="allow_renewal" name="properties[allow_renewal]" type="checkbox" value="1" <?php checked( $membership['properties']['allow_renewal'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want members to be able to renew/extend the membership after payment via the unique payment url generated by the member placeholder #_PAYMENT_URL or the generic placeholder #_MEMBERSHIP_PAYMENT_URL{xx} (with xx being the membership id, see the doc).', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr id='tr_renewal_cutoff_days'>
     <td><label for="properties[renewal_cutoff_days]"><?php esc_html_e( 'Renewal for active members based on end date', 'events-made-easy' ); ?></label></td>
-    <td><input type="text" id="properties[renewal_cutoff_days]" name="properties[renewal_cutoff_days]" value="<?php echo $membership['properties']['renewal_cutoff_days']; ?>" size="40">
+    <td><input type="text" id="properties[renewal_cutoff_days]" name="properties[renewal_cutoff_days]" value="<?php echo esc_attr( $membership['properties']['renewal_cutoff_days'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default).', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -1991,13 +1982,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 ?>
     <tr>
     <td><label for="captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label></td>
-    <td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" value='1' <?php echo $captcha_only_logged_out; ?>>
+    <td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" value='1' <?php checked( $membership['properties']['captcha_only_logged_out'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr>
     <td><label for="create_wp_user"><?php esc_html_e( 'Create WP user after signup', 'events-made-easy' ); ?></label></td>
-    <td><input id="create_wp_user" name="properties[create_wp_user]" type="checkbox" value='1' <?php echo $create_wp_user; ?>>
+    <td><input id="create_wp_user" name="properties[create_wp_user]" type="checkbox" value='1' <?php checked( $membership['properties']['create_wp_user'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'This will create a WP user after the membership signup is completed, as if the person registered in WP itself. This will only create a user if the person signing up was not logged in and the email is not yet taken by another WP user.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -2047,13 +2038,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="registration_wp_users_only"><?php esc_html_e( 'Logged-in users only', 'events-made-easy' ); ?></label></td>
-    <td><input id="registration_wp_users_only" name='properties[registration_wp_users_only]' value='1' type='checkbox' <?php echo $registration_wp_users_only; ?>>
+    <td><input id="registration_wp_users_only" name='properties[registration_wp_users_only]' value='1' type='checkbox' <?php checked( $membership['properties']['registration_wp_users_only'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'Require users to be logged-in before being able to sign up for this membership.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr id='tr_attendancerecord'>
     <td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?></label></td>
-    <td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php echo $attendancerecord; ?>>
+    <td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php checked( $membership['properties']['attendancerecord'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin.', 'events-made-easy' ); ?>
     </td>
     </tr>
@@ -2071,20 +2062,20 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_member_form_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_member_form_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[member_form_text]', $membership['properties']['member_form_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
     <tr>
     <td><label for="family_membership"><?php esc_html_e( 'Ask for family member info when someone signs up', 'events-made-easy' ); ?></label></td>
-    <td><input id="family_membership" name="properties[family_membership]" type="checkbox" value='1' <?php echo $family_membership; ?>>
+    <td><input id="family_membership" name="properties[family_membership]" type="checkbox" value='1' <?php checked( $membership['properties']['family_membership'] ); ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to ask for extra info for each family member of the person that signs up. These will also become a member but payment will only be handled by the initial member that signs up. The membership member form must include the placeholder "#_FAMILYCOUNT" to ask for the number of extra family members and "#_FAMILYMEMBERS" to ask for the extra family members info.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr id="tr_family_maxmembers">
     <td><label for="family_maxmembers"><?php esc_html_e( 'Maximum number of family members', 'events-made-easy' ); ?></label></td>
-    <td><input id="family_maxmembers" name="properties[family_maxmembers]" type="number" value="<?php echo $membership['properties']['family_maxmembers']; ?>" size="4">
+    <td><input id="family_maxmembers" name="properties[family_maxmembers]" type="number" value="<?php echo esc_attr( $membership['properties']['family_maxmembers'] ); ?>" size="4">
         <br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of family members allowed to sign up.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -2103,7 +2094,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_familymember_form_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_familymember_form_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[familymember_form_text]', $membership['properties']['familymember_form_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2121,7 +2112,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_member_added_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_member_added_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[member_added_text]', $membership['properties']['member_added_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2139,7 +2130,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_payment_form_header_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_payment_form_header_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[payment_form_header_text]', $membership['properties']['payment_form_header_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2157,7 +2148,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_payment_form_footer_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_payment_form_footer_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[payment_form_footer_text]', $membership['properties']['payment_form_footer_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2175,7 +2166,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_payment_success_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_payment_success_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[payment_success_text]', $membership['properties']['payment_success_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2219,7 +2210,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_offline_payment_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_offline_payment_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[offline_payment_text]', $membership['properties']['offline_payment_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2248,7 +2239,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <div>
         <br>
         <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b>
-        <input id="properties[dyndata_all_fields]" name='properties[dyndata_all_fields]' value='1' type='checkbox' <?php echo $dyndata_all_fields; ?>>
+        <input id="properties[dyndata_all_fields]" name='properties[dyndata_all_fields]' value='1' type='checkbox' <?php checked( $membership['properties']['dyndata_all_fields'] ); ?>>
         <span class="eme_smaller"><br><?php esc_html_e( 'By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your membership form definition. Using this option, you can use all membership placeholders, even if not defined in your membership form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If your membership uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option.', 'events-made-easy' ); ?>
         </span>
@@ -2288,7 +2279,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_new_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_new_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[new_body_text]', $membership['properties']['new_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2303,7 +2294,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -2312,7 +2303,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
 </span>
-    <input type="hidden" name="properties[newmember_attach_ids]" id="eme_newmember_attach_ids" value="<?php echo $attachment_ids; ?>">
+    <input type="hidden" name="properties[newmember_attach_ids]" id="eme_newmember_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
     <input type="button" name="newmember_attach_button" id="newmember_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <input type="button" name="newmember_remove_attach_button" id="newmember_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <br><?php esc_html_e( 'Optionally add attachments to the mail when a new member signs up.', 'events-made-easy' ); ?>
@@ -2358,7 +2349,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_contact_new_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_contact_new_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_new_body_text]', $membership['properties']['contact_new_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2395,7 +2386,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_updated_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_updated_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[updated_body_text]', $membership['properties']['updated_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2432,7 +2423,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_extended_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_extended_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[extended_body_text]', $membership['properties']['extended_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2447,7 +2438,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -2456,7 +2447,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
 </span>
-    <input type="hidden" name="properties[extended_attach_ids]" id="eme_extended_attach_ids" value="<?php echo $attachment_ids; ?>">
+    <input type="hidden" name="properties[extended_attach_ids]" id="eme_extended_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
     <input type="button" name="extended_attach_button" id="extended_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <input type="button" name="extended_remove_attach_button" id="extended_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <br><?php esc_html_e( 'Optionally add attachments to the mail when a member extends its membership.', 'events-made-easy' ); ?>
@@ -2511,7 +2502,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_paid_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_paid_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[paid_body_text]', $membership['properties']['paid_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2526,7 +2517,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -2535,7 +2526,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
 </span>
-    <input type="hidden" name="properties[paid_attach_ids]" id="eme_paid_attach_ids" value="<?php echo $attachment_ids; ?>">
+    <input type="hidden" name="properties[paid_attach_ids]" id="eme_paid_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
     <input type="button" name="paid_attach_button" id="paid_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
     <br><?php esc_html_e( 'Optionally add attachments to the mail when a member has paid for the membership.', 'events-made-easy' ); ?>
@@ -2581,7 +2572,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_contact_paid_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_contact_paid_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_paid_body_text]', $membership['properties']['contact_paid_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2621,7 +2612,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_reminder_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_reminder_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[reminder_body_text]', $membership['properties']['reminder_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2661,7 +2652,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_stop_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_stop_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[stop_body_text]', $membership['properties']['stop_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2692,7 +2683,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_contact_stop_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_contact_stop_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_stop_body_text]', $membership['properties']['contact_stop_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2729,7 +2720,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_contact_deleted_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_contact_deleted_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_deleted_body_text]', $membership['properties']['contact_deleted_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2765,7 +2756,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         $showhide_style = 'style="width:100%;"';
     }
 ?>
-        <div id="div_membership_properties_contact_ipn_body_text" <?php echo $showhide_style; ?>>
+        <div id="div_membership_properties_contact_ipn_body_text" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_ipn_body_text]', $membership['properties']['contact_ipn_body_text'], 1, 1 ); ?>
         </div>
     </td>
@@ -2846,7 +2837,6 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     $pdftemplates    = eme_get_templates( 'pdf', 1 );
     $htmltemplates   = eme_get_templates( 'html', 1 );
     $membertemplates = eme_get_templates( 'membershipmail' );
-    $nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
 <?php
@@ -2878,7 +2868,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 
     <div id="bulkactions">
     <form id='members-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
@@ -2944,7 +2934,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="MembersTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="MembersTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
 <?php
 }
 
@@ -3198,7 +3188,6 @@ function eme_manage_members_layout( $message ) {
     global $plugin_page;
 
     $memberships     = eme_get_memberships();
-    $nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
     if ( empty( $message ) ) {
         $style_class = "class='eme-hidden'";
@@ -3211,8 +3200,8 @@ function eme_manage_members_layout( $message ) {
     <div id="icon-edit" class="icon32">
     </div>
 
-    <div id="members-message" <?php echo $style_class; ?>>
-        <p><?php echo $message; ?></p>
+    <div id="members-message" <?php echo $style_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>>
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
@@ -3222,8 +3211,8 @@ function eme_manage_members_layout( $message ) {
         <form id="members-filter" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
             <input type="hidden" name="eme_admin_action" value="add_member">
 <?php
-    echo $nonce_field;
-    echo eme_ui_select_key_value( '', 'membership_id', $memberships, 'membership_id', 'name' );
+    wp_nonce_field( 'eme_admin', 'eme_admin_nonce' );
+    echo eme_ui_select_key_value( '', 'membership_id', $memberships, 'membership_id', 'name' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML helper
 ?>
             <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add member', 'events-made-easy' ); ?>">
         </form>
@@ -3244,7 +3233,7 @@ function eme_manage_members_layout( $message ) {
     </span>
     <div id='eme_div_import' class='eme-hidden'>
     <form id='member-import' method='post' enctype='multipart/form-data' action='#'>
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <input type="file" name="eme_csv">
     <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
     <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -3255,7 +3244,7 @@ function eme_manage_members_layout( $message ) {
     <?php esc_html_e( 'If you want, use this to import members info into the database', 'events-made-easy' ); ?>
     </form>
     <form id='member-import-answers' method='post' enctype='multipart/form-data' action='#'>
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <input type="file" name="eme_csv">
     <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
     <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -3280,7 +3269,6 @@ function eme_manage_members_layout( $message ) {
 function eme_manage_memberships_layout( $message ) {
     global $plugin_page;
 
-    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
@@ -3299,7 +3287,7 @@ function eme_manage_memberships_layout( $message ) {
         <h1><?php esc_html_e( 'Add a new membership definition', 'events-made-easy' ); ?></h1>
         <div class="wrap">
         <form id="memberships-filter" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <input type="hidden" name="eme_admin_action" value="add_membership">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add membership', 'events-made-easy' ); ?>">
         </form>
@@ -3310,7 +3298,7 @@ function eme_manage_memberships_layout( $message ) {
 
     <div id="bulkactions">
     <form id='memberships-form' action="#" method="post">
-    <?php echo $nonce_field; ?>
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
@@ -3337,7 +3325,7 @@ function eme_manage_memberships_layout( $message ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="MembershipsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="MembershipsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
     </div>
     </div>
 <?php
@@ -7426,7 +7414,7 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
         $html      .= eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
     }
     $html .= "$footer</body></html>";
-    print $html;
+    print $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- full membership print view HTML
 }
 
 function eme_get_membership_post_answers() {

@@ -532,7 +532,7 @@ PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurr
 Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>
     <br><br>
 <?php
-            echo sprintf( '<a href="#" class="eme-dismiss-notice" data-notice="donate" title="%s">%s</a>', esc_attr(__("Dismiss",'events-made-easy')), esc_attr(__("Dismiss",'events-made-easy')) );
+            echo sprintf( '<a href="#" class="eme-dismiss-notice" data-notice="donate" title="%s">%s</a>', esc_attr__("Dismiss",'events-made-easy'), esc_attr__("Dismiss",'events-made-easy') );
 ?>
     </div>
 </div>

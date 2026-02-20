@@ -4846,8 +4846,8 @@ function eme_registration_seats_page( $pending = 0 ) {
         // we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
         $action_url  = admin_url( "admin.php?page=$plugin_page" );
         $nonce_field = wp_nonce_field( "eme_admin", 'eme_admin_nonce', false, false );
-        $ret_string  = '<h1>' . __( 'Edit booking', 'events-made-easy' ) . '</h1>';
-        $ret_string .= "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $booking['person_id'] ) . "' title='" . __( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . __( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
+        $ret_string  = '<h1>' . esc_html__( 'Edit booking', 'events-made-easy' ) . '</h1>';
+        $ret_string .= "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $booking['person_id'] ) . "' title='" . esc_attr__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
 
         // the event id can be empty if we are editng a booking where the event has been removed
         if ( ! empty( $event['event_id'] ) ) {
@@ -5935,7 +5935,7 @@ function eme_ajax_bookings_list() {
         if ( $trash ) {
             $line['edit_link'] = '';
         } else {
-            $line['edit_link'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=editBooking&amp;booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . __( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
+            $line['edit_link'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=editBooking&amp;booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
         }
         if ( ! isset( $event_name_info[ $event_id ] ) ) {
             $event_name_info[ $event_id ] = '';
@@ -5944,7 +5944,7 @@ function eme_ajax_bookings_list() {
             $add_event_info = 0;
         }
         if ( $add_event_info ) {
-            $event_name_info[ $event_id ] .= "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+            $event_name_info[ $event_id ] .= "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
         }
         if ( $event['event_rsvp'] ) {
             if ( $add_event_info ) {

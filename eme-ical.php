@@ -137,15 +137,15 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 		$url = add_query_arg( [ 'lang' => $language ], $url );
 	}
 
-	$link = "<a href='$url'>".eme_trans_esc_html($text)."</a>";
+	$link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 
 	if ( $justurl ) {
-		$result = $url;
+		$result = esc_url( $url );
 	} else {
 		$result = $link;
 	}
 	if ( $echo ) {
-		echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted URL or HTML link built with eme_trans_esc_html()
+		echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $result is either esc_url() or HTML link built with esc_url() + esc_html()
 	} else {
 		return $result;
 	}

@@ -1183,7 +1183,7 @@ function eme_mail_track( $random_id ) {
         $eme_plugin_dir = eme_plugin_dir();
         header( 'Content-Type: image/gif' );
         //$image = file_get_contents($eme_plugin_dir.'images/1x1.gif');
-        //echo $image;
+        //echo $image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- commented out
         readfile( $eme_plugin_dir . 'images/1x1.gif' );
     }
 }
@@ -2740,7 +2740,7 @@ function eme_emails_page() {
 <div class="wrap">
 <div id="icon-events" class="icon32">
 </div>
-<div class="eme-tabs" <?php echo $data_forced_tab; ?>>
+<div class="eme-tabs" <?php echo $data_forced_tab; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?>>
     <div class="eme-tab" data-tab="tab-eventmails"><?php esc_html_e( 'Event related email', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-mailings"><?php esc_html_e( 'Mailings', 'events-made-easy' ); ?></div>
@@ -2766,7 +2766,7 @@ function eme_emails_page() {
         <td><?php
     $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_select2_events_class', $aria_label ); ?>
@@ -2802,7 +2802,7 @@ function eme_emails_page() {
         <tr id="eme_exclude_registered_row">
         <td><?php esc_html_e( 'Exclude people already registered for the selected event(s)', 'events-made-easy' ); ?>&nbsp;</td>
         <td>
-        <input type="checkbox" name="exclude_registered" value="1" <?php echo $exclude_registered_checked; ?>>
+        <input type="checkbox" name="exclude_registered" value="1" <?php echo $exclude_registered_checked; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>>
         </td>
         </tr>
         <tr id="eme_only_unpaid_row">
@@ -2811,7 +2811,7 @@ function eme_emails_page() {
         &nbsp;
         </td>
         <td>
-            <input type="checkbox" name="only_unpaid" value="1" <?php echo $only_unpaid_checked; ?>>
+            <input type="checkbox" name="only_unpaid" value="1" <?php echo $only_unpaid_checked; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>>
         </td>
         </tr>
         <tr id="eme_people_row">
@@ -2819,7 +2819,7 @@ function eme_emails_page() {
 <?php
     $label      = eme_esc_html( 'Send to a number of people', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect( $person_ids, 'eme_eventmail_send_persons', $mygroups, 5, '', 0, 'eme_select2_people_class', $aria_label ); ?></td>
@@ -2829,7 +2829,7 @@ function eme_emails_page() {
 <?php
     $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
     $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_eventmail_send_groups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td>
@@ -2838,7 +2838,7 @@ function eme_emails_page() {
 <?php
     $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
     <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
@@ -2847,7 +2847,7 @@ function eme_emails_page() {
     $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
     <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td></tr>
@@ -2856,7 +2856,7 @@ function eme_emails_page() {
     $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
-    echo $label;
+    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
     <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_eventmail_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td></tr>
@@ -2869,7 +2869,7 @@ function eme_emails_page() {
 ?>
         <br>
         <?php esc_html_e( 'Or enter your own: ', 'events-made-easy' ); ?>
-        <input type="text" name="event_mail_subject" id="event_mail_subject" value="<?php echo eme_esc_html( $event_mail_subject ); ?>">
+        <input type="text" name="event_mail_subject" id="event_mail_subject" value="<?php echo esc_attr( $event_mail_subject ); ?>">
         </p></div>
         <div class="form-field"><p>
         <b><?php esc_html_e( 'Message', 'events-made-easy' ); ?></b><br>
@@ -2911,8 +2911,8 @@ function eme_emails_page() {
         <div id='div_event_mailing_attach'>
         <p>
         <b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
-        <span id="eventmail_attach_links"><?php echo $event_mail_attach_url_string; ?></span>
-        <input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo $event_mail_attachment_ids; ?>">
+        <span id="eventmail_attach_links"><?php echo $event_mail_attach_url_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link() ?></span>
+        <input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo esc_attr( $event_mail_attachment_ids ); ?>">
         <input type="button" name="eventmail_attach_button" id="eventmail_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
         <input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
         </p>
@@ -2937,7 +2937,7 @@ function eme_emails_page() {
         <div id='div_event_ignore_massmail_setting'>
         <p>
         <b><label for='eventmail_ignore_massmail_setting'><?php esc_html_e( 'Ignore massmail setting:', 'events-made-easy' ); ?></label></b>
-                <input id="eventmail_ignore_massmail_setting" name='eventmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $event_mail_ignore_massmail_setting; ?>><br>
+                <input id="eventmail_ignore_massmail_setting" name='eventmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $event_mail_ignore_massmail_setting; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>><br>
                 <?php esc_html_e( 'When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option.', 'events-made-easy' ); ?>
         </p>
         </div>
@@ -2961,7 +2961,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-            printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
+            printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
 <?php
@@ -2979,7 +2979,7 @@ function eme_emails_page() {
         <div class="form-field">
         <b><?php esc_html_e( 'Target audience:', 'events-made-easy' ); ?></b><br>
         <label for='eme_send_all_people'><?php esc_html_e( 'Send to all EME people', 'events-made-easy' ); ?></label>
-        <input id="eme_send_all_people" name='eme_send_all_people' value='1' type='checkbox' <?php echo $send_to_all_people_checked; ?>><br>
+        <input id="eme_send_all_people" name='eme_send_all_people' value='1' type='checkbox' <?php echo $send_to_all_people_checked; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>><br>
         <div id='div_eme_send_all_people'>
 <?php
         esc_html_e( 'Deselect this to select specific groups and/or memberships for your mailing', 'events-made-easy' );
@@ -2991,7 +2991,7 @@ function eme_emails_page() {
 <?php
         $label      = eme_esc_html( 'Send to a number of people', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
-        echo $label;
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
                 <td><?php echo eme_ui_multiselect( $person_ids, 'eme_genericmail_send_persons', $mygroups, 5, '', 0, 'eme_select2_people_class', $aria_label ); ?></td></tr>
@@ -3000,7 +3000,7 @@ function eme_emails_page() {
         $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-        echo $label;
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_genericmail_send_peoplegroups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td></tr>
@@ -3008,7 +3008,7 @@ function eme_emails_page() {
 <?php
         $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
-        echo $label;
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
@@ -3017,7 +3017,7 @@ function eme_emails_page() {
         $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-        echo $label;
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_genericmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td></tr>
@@ -3026,7 +3026,7 @@ function eme_emails_page() {
         $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
-        echo $label;
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes ); ?></td></tr>
@@ -3039,18 +3039,18 @@ function eme_emails_page() {
 ?>
         <p>
         <b><?php esc_html_e( 'Sender name', 'events-made-easy' ); ?></b><br>
-        <input type="text" name="generic_mail_from_name" id="generic_mail_from_name" value="<?php echo eme_esc_html( $generic_mail_from_name ); ?>" required='required' size='40'>
+        <input type="text" name="generic_mail_from_name" id="generic_mail_from_name" value="<?php echo esc_attr( $generic_mail_from_name ); ?>" required='required' size='40'>
         </p>
         <p>
         <b><?php esc_html_e( 'Sender email', 'events-made-easy' ); ?></b><br>
-        <input type="text" name="generic_mail_from_email" id="generic_mail_from_email" value="<?php echo eme_esc_html( $generic_mail_from_email ); ?>" required='required' size='40'>
+        <input type="text" name="generic_mail_from_email" id="generic_mail_from_email" value="<?php echo esc_attr( $generic_mail_from_email ); ?>" required='required' size='40'>
         </p>
 <?php
         }
 ?>
         <p>
         <b><?php esc_html_e( 'Subject', 'events-made-easy' ); ?></b><br>
-        <input type="text" name="generic_mail_subject" id="generic_mail_subject" value="<?php echo eme_esc_html( $generic_mail_subject ); ?>" required='required' size='40'>
+        <input type="text" name="generic_mail_subject" id="generic_mail_subject" value="<?php echo esc_attr( $generic_mail_subject ); ?>" required='required' size='40'>
         </p>
         </div>
         <div class="form-field">
@@ -3092,8 +3092,8 @@ function eme_emails_page() {
         <div id='div_generic_mailing_attach'>
         <p>
         <b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
-            <span id="generic_attach_links"><?php echo $generic_mail_attach_url_string; ?></span>
-            <input type="hidden" name="eme_generic_attach_ids" id="eme_generic_attach_ids" value="<?php echo $generic_mail_attachment_ids; ?>">
+            <span id="generic_attach_links"><?php echo $generic_mail_attach_url_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link() ?></span>
+            <input type="hidden" name="eme_generic_attach_ids" id="eme_generic_attach_ids" value="<?php echo esc_attr( $generic_mail_attachment_ids ); ?>">
             <input type="button" name="generic_attach_button" id="generic_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
             <input type="button" name="generic_remove_attach_button" id="generic_remove_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
             </p>
@@ -3118,7 +3118,7 @@ function eme_emails_page() {
         <div id='div_generic_ignore_massmail_setting'>
         <p>
         <b><label for='genericmail_ignore_massmail_setting'><?php esc_html_e( 'Ignore massmail setting:', 'events-made-easy' ); ?></label></b>
-                <input id="genericmail_ignore_massmail_setting" name='genericmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $generic_mail_ignore_massmail_setting; ?>><br>
+                <input id="genericmail_ignore_massmail_setting" name='genericmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $generic_mail_ignore_massmail_setting; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>><br>
                 <?php esc_html_e( 'When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option.', 'events-made-easy' ); ?>
         </p>
         </div>
@@ -3143,7 +3143,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-                printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
+                printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
 <?php

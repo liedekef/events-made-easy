@@ -4607,7 +4607,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 
     // see how to return the output
     if ( $echo ) {
-        echo $output;
+        echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode HTML output
     } else {
         return $output;
     }
@@ -6058,7 +6058,6 @@ function eme_events_table( $message = '' ) {
 
     $event_status_array = eme_status_array();
     $categories         = eme_get_categories();
-    $nonce_field        = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 ?>
 
@@ -6066,8 +6065,8 @@ function eme_events_table( $message = '' ) {
 <div id="poststuff">
     <div id="icon-edit" class="icon32"></div>
 
-    <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
-                <p><?php echo $message; ?></p>
+    <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+                <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
@@ -6095,7 +6094,7 @@ function eme_events_table( $message = '' ) {
         </span>
         <div id='eme_div_import' class='eme-hidden'>
         <form id='event-import' method='post' enctype='multipart/form-data' action='#'>
-            <?php echo $nonce_field; ?>
+            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <input type="file" name="eme_csv">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
         <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
@@ -6222,7 +6221,7 @@ function eme_events_table( $message = '' ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="EventsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="EventsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
 </div>
 </div>
 <?php
@@ -6248,8 +6247,8 @@ function eme_recurrences_table( $message = '' ) {
 <div id="poststuff">
     <div id="icon-edit" class="icon32"></div>
 
-    <div id="recurrences-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="recurrences-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
@@ -6314,7 +6313,6 @@ function eme_recurrences_table( $message = '' ) {
 
 function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     $event_status_array = eme_status_array();
-    $nonce_field        = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
     if ( ! isset( $info['feedback'] ) ) {
         $hidden_class = 'eme-hidden';
         $message      = '';
@@ -6403,14 +6401,14 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
 ?>
     <div class="wrap">
-    <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
-        <p><?php echo $message; ?></p>
+    <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
-    <form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo $form_destination; ?>">
-    <?php echo $nonce_field; ?>
-    <?php echo $hidden_fields; ?>
+    <form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo esc_url( $form_destination ); ?>">
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
+    <?php echo $hidden_fields; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML hidden fields ?>
         <div id="icon-events" class="icon32"></div>
-        <h1><?php echo eme_trans_esc_html( $info['title'] ); ?></h1>
+        <h1><?php echo esc_html( eme_translate( $info['title'] ) ); ?></h1>
 <?php
     if ( $event['recurrence_id'] ) {
 ?>
@@ -6668,7 +6666,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             __( '(opens in a new tab)', 'events-made-easy' )
         );
 ?>
-                        <a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; ?></a>
+                        <a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted sprintf() with __() ?></a>
                         <br><?php esc_html_e( 'If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
                     <?php } ?> 
                     <?php if ( $edit_recurrence && $recurrence_id > 0 ) { ?>
@@ -6806,7 +6804,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
             }
         }
-        print $info_line;
+        print $info_line; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML with admin URLs and translated strings
 ?>
         </div>
         </div>
@@ -6878,7 +6876,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $selected = '';
                 }
 ?>
-            <input type="checkbox" name="event_category_ids[]" value="<?php echo $category['category_id']; ?>" <?php echo $selected; ?>><?php echo eme_trans_esc_html( $category['category_name'] ); ?><br>
+            <input type="checkbox" name="event_category_ids[]" value="<?php echo $category['category_id']; ?>" <?php echo $selected; ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
 <?php
             } // end foreach
         } // end if
@@ -7085,7 +7083,7 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
             $slug = preg_replace( '/\-\d+$/', '', $slug );
         }
 ?>
-        <input type="text" id="event_slug" name="event_slug" value="<?php echo $slug; ?>"><?php echo user_trailingslashit( '' ); ?>
+        <input type="text" id="event_slug" name="event_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
 <?php
     }
 ?>
@@ -7130,27 +7128,27 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
         <div id="div_event_date">
         <b><?php esc_html_e( 'Event date', 'events-made-easy' ); ?></b>
         <input id="start-date-to-submit" type="hidden" name="event_start_date" value="">
-        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Start date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Start date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo esc_attr( eme_js_datetime( $event['event_start'] ) );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
         -
         <input id="end-date-to-submit" type="hidden" name="event_end_date" value="">
-        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'End date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
+        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'End date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo esc_attr( eme_js_datetime( $event['event_end'] ) );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
         <p class="eme_smaller">
         <?php esc_html_e( 'The event beginning and end date.', 'events-made-easy' ); ?>
         </p>
         </div>
         <div id="div_recurrence_event_duration">
         <b><?php esc_html_e( 'Event duration (in days)', 'events-made-easy' ); ?></b>
-        <input id="event_duration" type="number" name="event_duration" min="1" value="<?php echo $recurrence['event_duration']; ?>"><?php esc_html_e( 'day(s)', 'events-made-easy' ); ?>
+        <input id="event_duration" type="number" name="event_duration" min="1" value="<?php echo esc_attr( $recurrence['event_duration'] ); ?>"><?php esc_html_e( 'day(s)', 'events-made-easy' ); ?>
         </div>
         <div id="time-selector">
 <?php
     echo '<b>' . esc_html__( 'Event time', 'events-made-easy' ) . '</b>';
 ?>
         <input id="start-time-to-submit" type="hidden" name="event_start_time" value="">
-        <input id="localized-start-time" type="text" name="localized_event_start_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-time-to-submit' class='eme_formfield_ftime' required="required">
+        <input id="localized-start-time" type="text" name="localized_event_start_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo esc_attr( eme_js_datetime( $event['event_start'] ) );} ?>' data-alt-field='start-time-to-submit' class='eme_formfield_ftime' required="required">
         -
         <input id="end-time-to-submit" type="hidden" name="event_end_time" value="">
-        <input id="localized-end-time" type="text" name="localized_event_end_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-time-to-submit' class='eme_formfield_ftime' required="required">
+        <input id="localized-end-time" type="text" name="localized_event_end_time" value="" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo esc_attr( eme_js_datetime( $event['event_end'] ) );} ?>' data-alt-field='end-time-to-submit' class='eme_formfield_ftime' required="required">
         <p class="eme_smaller">
         <?php esc_html_e( 'The time of the event beginning and end', 'events-made-easy' ); ?>
         </p>
@@ -7161,7 +7159,7 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 <?php
     if ( $show_recurrent_form == 1 ) {
 ?>
-            <input id="event-recurrence" type="checkbox" name="repeated_event" value="1" <?php echo $eme_recurrence_checked; ?>>
+            <input id="event-recurrence" type="checkbox" name="repeated_event" value="1" <?php echo $eme_recurrence_checked; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute with optional onclick handler ?>>
             <label for="event-recurrence"><?php esc_html_e( 'Check if your event happens more than once.', 'events-made-easy' ); ?></label>
 <?php
     } elseif (!$event['recurrence_id']) {
@@ -7227,10 +7225,10 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
     <b><?php esc_html_e( 'Recurrence dates', 'events-made-easy' ); ?></b>
     <div>
     <input id="rec-start-date-to-submit" type="hidden" name="recurrence_start_date" value="">
-    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence start date', 'events-made-easy' ); ?>" data-date='<?php echo eme_js_datetime( $recurrence_start_date ); ?>' data-alt-field='rec-start-date-to-submit' <?php echo $data_multiple; ?> data-multiple-display-selector='#recurrence-dates-specificdates' class='eme_formfield_fdate'>
+    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence start date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence_start_date ) ); ?>' data-alt-field='rec-start-date-to-submit' <?php echo $data_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?> data-multiple-display-selector='#recurrence-dates-specificdates' class='eme_formfield_fdate'>
     -
     <input id="rec-end-date-to-submit" type="hidden" name="recurrence_end_date" value="">
-    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence end date', 'events-made-easy' ); ?>" data-date='<?php echo eme_js_datetime( $recurrence['recurrence_end_date'] ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence end date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence['recurrence_end_date'] ) ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
     </div>
     <p class="eme_smaller" id='recurrence-dates-explanation'>
     <?php esc_html_e( 'The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one.', 'events-made-easy' ); ?>
@@ -7248,7 +7246,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
         <div id="recurrence-intervals">
             <p>
             <?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-            <input id='recurrence-interval' name='recurrence_interval' type='number' min='1' max='99' step='1' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
+            <input id='recurrence-interval' name='recurrence_interval' type='number' min='1' max='99' step='1' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo esc_attr( $recurrence['recurrence_interval'] );} ?>'>
             <span id="specific_months_span">
             <?php eme_checkbox_items( 'specific_months[]', $month_names, $choosen_months ); ?>
             </span>
@@ -7295,7 +7293,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
         <br>
     <?php esc_html_e( 'Excluded days:', 'events-made-easy' ); ?> 
     <input id="rec-excludedays-to-submit" type="hidden" name="recurrence_exclude_days" value="">
-    <input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" readonly="readonly" data-multiple='true' data-date='<?php echo eme_js_datetime( $recurrence['exclude_days'] ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" readonly="readonly" data-multiple='true' data-date='<?php echo esc_attr( eme_js_datetime( $recurrence['exclude_days'] ) ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
             <p class="eme_smaller">
 <?php
     esc_html_e( 'No events will be created on excluded days.', 'events-made-easy' );
@@ -7341,7 +7339,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_page_title_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_page_title_format_div" <?php echo $showhide_style; ?>>
+    <div id="event_page_title_format_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <input type="text" maxlength="250" style="width: 100%;" name="event_page_title_format" id="event_page_title_format" value="<?php echo eme_esc_html( $event['event_page_title_format']); ?>" data-default="<?php echo esc_attr(get_option('eme_event_page_title_format')); ?>">
     </div>
 </div>
@@ -7375,7 +7373,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_single_event_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_single_event_format_div" <?php echo $showhide_style; ?>>
+    <div id="event_single_event_format_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_single_event_format', $event['event_single_event_format'], 1, 0, 'eme_single_event_format' ); ?>
 <?php
     if ( current_user_can( 'unfiltered_html' ) ) {
@@ -7411,7 +7409,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_ipn_email_subject" id="eme_prop_contactperson_registration_ipn_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_ipn_email_subject']); ?>" data-default="<?php echo esc_attr(get_option('contactperson_ipn_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_ipn_email_subject" id="eme_prop_contactperson_registration_ipn_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_ipn_email_subject']); ?>" data-default="<?php echo esc_attr(get_option('contactperson_ipn_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_ipn_email_body'] ) ) {
@@ -7433,7 +7431,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo EME_PLUGIN_URL; ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="eme_prop_contactperson_registration_ipn_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="eme_prop_contactperson_registration_ipn_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_ipn_email_body', $event['event_properties']['contactperson_registration_ipn_email_body'], $use_html_editor, 0, 'eme_contactperson_ipn_email_body' ); ?>
     </div>
 </div>
@@ -7441,12 +7439,12 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 }
 
 function eme_meta_box_div_event_dyndata_allfields( $dyndata_all_fields, $templates_array ) {
-    $eme_prop_dyndata_all_fields = ( $dyndata_all_fields ) ? "checked='checked'" : '';
+    // dyndata_all_fields checked attribute handled by checked() below
 ?>
 <div id="div_event_dyndata_allfields">
         <br>
         <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b>
-        <input id="eme_prop_dyndata_all_fields" name='eme_prop_dyndata_all_fields' value='1' type='checkbox' <?php echo $eme_prop_dyndata_all_fields; ?>>
+        <input id="eme_prop_dyndata_all_fields" name='eme_prop_dyndata_all_fields' value='1' type='checkbox' <?php checked( $dyndata_all_fields ); ?>>
         <span class="eme_smaller"><br><?php esc_html_e( 'By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your RSVP form definition. Using this option, you can use all booking placeholders, even if not defined in your RSVP form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed.', 'events-made-easy' ); ?></span>
         <br><?php esc_html_e( 'If your event uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option.', 'events-made-easy' ); ?>
 </div>
@@ -7477,7 +7475,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_recorded_ok_html_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_recorded_ok_html_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_recorded_ok_html_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_recorded_ok_html', $event['event_registration_recorded_ok_html'], 1, 1, 'eme_registration_recorded_ok_html' ); ?>
     </div>
 </div>
@@ -7519,7 +7517,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_respondent_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_respondent_email_subject" id="eme_prop_event_respondent_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_respondent_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_respondent_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_respondent_email_subject" id="eme_prop_event_respondent_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_respondent_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_respondent_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_respondent_email_body'] ) ) {
@@ -7541,7 +7539,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_respondent_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_respondent_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_respondent_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_respondent_email_body', $event['event_respondent_email_body'], $use_html_editor, 0, 'eme_respondent_email_body' ); ?>
     </div>
 </div>
@@ -7567,7 +7565,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_contactperson_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_contactperson_email_subject" id="eme_prop_event_contactperson_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_contactperson_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_contactperson_email_subject" id="eme_prop_event_contactperson_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_contactperson_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_contactperson_email_body'] ) ) {
@@ -7589,7 +7587,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_contactperson_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_contactperson_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_contactperson_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_contactperson_email_body', $event['event_contactperson_email_body'], $use_html_editor, 0, 'eme_contactperson_email_body' ); ?>
     </div>
 </div>
@@ -7604,7 +7602,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -7613,7 +7611,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     }
 ?>
 </span>
-<input type="hidden" name="eme_prop_booking_attach_ids" id="eme_booking_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_prop_booking_attach_ids" id="eme_booking_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="booking_attach_button" id="booking_attach_button" value="<?php esc_attr_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="booking_remove_attach_button" id="booking_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a new booking is made.', 'events-made-easy' ); ?>
@@ -7662,7 +7660,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_userpending_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_userpending_email_subject" id="eme_prop_event_registration_userpending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_userpending_email_subject'] ); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_userpending_email_subject" id="eme_prop_event_registration_userpending_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_userpending_email_subject'] ); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_body'] ) ) {
@@ -7684,7 +7682,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_userpending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_userpending_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_userpending_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_userpending_email_body', $event['event_properties']['event_registration_userpending_email_body'], $use_html_editor, 0, 'eme_registration_userpending_email_body' ); ?>
     </div>
 </div>
@@ -7720,7 +7718,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_pending_email_subject" id="eme_prop_event_registration_pending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_pending_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_pending_email_subject" id="eme_prop_event_registration_pending_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_pending_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_pending_email_body'] ) ) {
@@ -7742,7 +7740,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_pending_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_pending_email_body', $event['event_registration_pending_email_body'], $use_html_editor, 0, 'eme_registration_pending_email_body' ); ?>
     </div>
 </div>
@@ -7768,7 +7766,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_pending_email_subject" id="eme_prop_contactperson_registration_pending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_pending_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_pending_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_pending_email_subject" id="eme_prop_contactperson_registration_pending_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_pending_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_pending_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_pending_email_body'] ) ) {
@@ -7790,7 +7788,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="eme_prop_contactperson_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="eme_prop_contactperson_registration_pending_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_pending_email_body', $event['event_properties']['contactperson_registration_pending_email_body'], $use_html_editor, 0, 'eme_contactperson_pending_email_body' ); ?>
     </div>
 </div>
@@ -7805,7 +7803,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -7814,7 +7812,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     }
 ?>
 </span>
-<input type="hidden" name="eme_prop_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_prop_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="pending_attach_button" id="pending_attach_button" value="<?php esc_attr_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="pending_remove_attach_button" id="pending_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is pending.', 'events-made-easy' ); ?>
@@ -7857,7 +7855,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_updated_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_updated_email_subject" id="eme_prop_event_registration_updated_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_updated_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_updated_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_updated_email_subject" id="eme_prop_event_registration_updated_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_updated_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_updated_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_updated_email_body'] ) ) {
@@ -7879,7 +7877,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_updated_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_updated_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_updated_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_updated_email_body', $event['event_registration_updated_email_body'], $use_html_editor, 0, 'eme_registration_updated_email_body' ); ?>
     </div>
 </div>
@@ -7908,7 +7906,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_pending_reminder_email_subject" id="eme_prop_event_registration_pending_reminder_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_reminder_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_pending_reminder_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_pending_reminder_email_subject" id="eme_prop_event_registration_pending_reminder_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_reminder_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_pending_reminder_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_body'] ) ) {
@@ -7930,7 +7928,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0, 'eme_registration_pending_reminder_email_body' ); ?>
     </div>
     <br>
@@ -7949,7 +7947,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_reminder_email_subject" id="eme_prop_event_registration_reminder_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_reminder_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_reminder_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_reminder_email_subject" id="eme_prop_event_registration_reminder_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_reminder_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_reminder_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['event_registration_reminder_email_body'] ) ) {
@@ -7971,7 +7969,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_reminder_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_reminder_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 0, 'eme_registration_reminder_email_body' ); ?>
     </div>
 </div>
@@ -8000,7 +7998,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_cancelled_email_subject" id="eme_prop_event_registration_cancelled_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_cancelled_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_cancelled_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_cancelled_email_subject" id="eme_prop_event_registration_cancelled_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_cancelled_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_cancelled_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_cancelled_email_body'] ) ) {
@@ -8022,7 +8020,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_cancelled_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_cancelled_email_body', $event['event_registration_cancelled_email_body'], $use_html_editor, 0, 'eme_registration_cancelled_email_body' ); ?>
     </div>
 </div>
@@ -8048,7 +8046,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_cancelled_email_subject" id="eme_prop_contactperson_registration_cancelled_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_cancelled_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_cancelled_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_cancelled_email_subject" id="eme_prop_contactperson_registration_cancelled_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_cancelled_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_contactperson_cancelled_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_cancelled_email_body'] ) ) {
@@ -8070,7 +8068,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="eme_prop_contactperson_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="eme_prop_contactperson_registration_cancelled_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_cancelled_email_body', $event['event_properties']['contactperson_registration_cancelled_email_body'], $use_html_editor, 0, 'eme_contactperson_cancelled_email_body' ); ?>
     </div>
 </div>
@@ -8104,7 +8102,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_paid_email_subject" id="eme_prop_event_registration_paid_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_paid_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_paid_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_paid_email_subject" id="eme_prop_event_registration_paid_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_paid_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_paid_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_paid_email_body'] ) ) {
@@ -8126,7 +8124,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_paid_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_paid_email_body', $event['event_registration_paid_email_body'], $use_html_editor, 0, 'eme_registration_paid_email_body' ); ?>
     </div>
 </div>
@@ -8152,7 +8150,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_paid_email_subject" id="eme_prop_contactperson_registration_paid_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_paid_email_subject'] ); ?>">
+    <input type="text" maxlength="250" name="eme_prop_contactperson_registration_paid_email_subject" id="eme_prop_contactperson_registration_paid_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_paid_email_subject'] ); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_paid_email_body'] ) ) {
@@ -8174,7 +8172,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="eme_prop_contactperson_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="eme_prop_contactperson_registration_paid_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_paid_email_body', $event['event_properties']['contactperson_registration_paid_email_body'], $use_html_editor, 0, 'eme_contactperson_paid_email_body' ); ?>
     </div>
 </div>
@@ -8189,7 +8187,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
         foreach ( $attachment_id_arr as $attachment_id ) {
             $attach_link = eme_get_attachment_link( $attachment_id );
             if ( ! empty( $attach_link ) ) {
-                echo $attach_link;
+                echo $attach_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link()
                 echo '<br \>';
             }
         }
@@ -8198,7 +8196,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     }
 ?>
 </span>
-<input type="hidden" name="eme_prop_paid_attach_ids" id="eme_paid_attach_ids" value="<?php echo $attachment_ids; ?>">
+<input type="hidden" name="eme_prop_paid_attach_ids" id="eme_paid_attach_ids" value="<?php echo esc_attr( $attachment_ids ); ?>">
 <input type="button" name="paid_attach_button" id="paid_attach_button" value="<?php esc_attr_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is paid.', 'events-made-easy' ); ?>
@@ -8241,7 +8239,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_trashed_email_subject" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <input type="text" maxlength="250" name="eme_prop_event_registration_trashed_email_subject" id="eme_prop_event_registration_trashed_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_trashed_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_trashed_email_subject')); ?>">
+    <input type="text" maxlength="250" name="eme_prop_event_registration_trashed_email_subject" id="eme_prop_event_registration_trashed_email_subject" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_trashed_email_subject'] ); ?>" data-default="<?php echo esc_attr(get_option('eme_registration_trashed_email_subject')); ?>">
     <br>
 <?php
     if ( eme_is_empty_string( $event['event_registration_trashed_email_body'] ) ) {
@@ -8263,7 +8261,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_trashed_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_trashed_email_body_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_trashed_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_trashed_email_body', $event['event_registration_trashed_email_body'], $use_html_editor, 0, 'eme_registration_trashed_email_body' ); ?>
     </div>
 </div>
@@ -8291,7 +8289,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_form_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_registration_form_format_div" <?php echo $showhide_style; ?>>
+    <div id="event_registration_form_format_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_registration_form_format', $event['event_registration_form_format'], 1, 0, 'eme_registration_form_format' ); ?>
     </div>
 </div>
@@ -8320,7 +8318,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_cancel_form_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
-    <div id="event_cancel_form_format_div" <?php echo $showhide_style; ?>>
+    <div id="event_cancel_form_format_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'event_cancel_form_format', $event['event_cancel_form_format'], 1, 0, 'eme_cancel_form_format' ); ?>
     </div>
 </div>
@@ -8328,7 +8326,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_captcha_settings( $event ) {
-    $eme_prop_captcha_only_logged_out   = ( $event['event_properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
+    // captcha_only_logged_out checked attribute handled by checked() below
     $selected_captcha   = $event['event_properties']['selected_captcha'];
     $configured_captchas = eme_get_configured_captchas();
 ?>
@@ -8343,7 +8341,7 @@ function eme_meta_box_div_event_captcha_settings( $event ) {
     <label for="eme_prop_selected_captcha"><?php esc_html_e( 'Select a captcha to use', 'events-made-easy' ); ?></label>
     </p>
     <p id='p_captcha_only_logged_out'>
-        <input id="eme_prop_captcha_only_logged_out" name='eme_prop_captcha_only_logged_out' value='1' type='checkbox' <?php echo $eme_prop_captcha_only_logged_out; ?>>
+        <input id="eme_prop_captcha_only_logged_out" name='eme_prop_captcha_only_logged_out' value='1' type='checkbox' <?php checked( $event['event_properties']['captcha_only_logged_out'] ); ?>>
         <label for="eme_prop_captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label>
         <span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ); ?></span>
     </p>
@@ -8390,7 +8388,7 @@ function eme_meta_box_div_event_location( $event ) {
         <th><?php esc_html_e( 'Location', 'events-made-easy' ); ?></th>
         <td> 
         <select name="location-select-id" id='location-select-id' size="1">
-        <option value="<?php echo $location_0['location_id']; ?>" ><?php echo eme_trans_esc_html( $location_0['location_name'] ); ?></option>
+        <option value="<?php echo esc_attr( $location_0['location_id'] ); ?>" ><?php echo esc_html( eme_translate( $location_0['location_name'] ) ); ?></option>
 <?php
         $selected_location = $location_0;
         foreach ( $locations as $tmp_location ) {
@@ -8400,20 +8398,20 @@ function eme_meta_box_div_event_location( $event ) {
                 $selected          = "selected='selected' ";
             }
 ?>
-        <option value="<?php echo $tmp_location['location_id']; ?>" <?php echo $selected; ?>><?php echo eme_trans_esc_html( $tmp_location['location_name'] ); ?></option>
+        <option value="<?php echo esc_attr( $tmp_location['location_id'] ); ?>" <?php selected( isset( $location['location_id'] ) && $tmp_location['location_id'] == $location['location_id'] ); ?>><?php echo esc_html( eme_translate( $tmp_location['location_name'] ) ); ?></option>
 <?php
         }
 ?>
         </select>
-        <input type='hidden' name='location-select-name' value='<?php echo eme_trans_esc_html( $selected_location['location_name'] ); ?>'>
-        <input type='hidden' name='location-select-city' value='<?php echo eme_trans_esc_html( $selected_location['location_city'] ); ?>'>
-        <input type='hidden' name='location-select-address1' value='<?php echo eme_trans_esc_html( $selected_location['location_address1'] ); ?>'>
-        <input type='hidden' name='location-select-address2' value='<?php echo eme_trans_esc_html( $selected_location['location_address2'] ); ?>'>
-        <input type='hidden' name='location-select-state' value='<?php echo eme_trans_esc_html( $selected_location['location_state'] ); ?>'>
-        <input type='hidden' name='location-select-zip' value='<?php echo eme_trans_esc_html( $selected_location['location_zip'] ); ?>'>
-        <input type='hidden' name='location-select-country' value='<?php echo eme_trans_esc_html( $selected_location['location_country'] ); ?>'>
-        <input type='hidden' name='location-select-latitude' value='<?php echo eme_trans_esc_html( $selected_location['location_latitude'] ); ?>'>
-        <input type='hidden' name='location-select-longitude' value='<?php echo eme_trans_esc_html( $selected_location['location_longitude'] ); ?>'>
+        <input type='hidden' name='location-select-name' value='<?php echo esc_attr( eme_translate( $selected_location['location_name'] ) ); ?>'>
+        <input type='hidden' name='location-select-city' value='<?php echo esc_attr( eme_translate( $selected_location['location_city'] ) ); ?>'>
+        <input type='hidden' name='location-select-address1' value='<?php echo esc_attr( eme_translate( $selected_location['location_address1'] ) ); ?>'>
+        <input type='hidden' name='location-select-address2' value='<?php echo esc_attr( eme_translate( $selected_location['location_address2'] ) ); ?>'>
+        <input type='hidden' name='location-select-state' value='<?php echo esc_attr( eme_translate( $selected_location['location_state'] ) ); ?>'>
+        <input type='hidden' name='location-select-zip' value='<?php echo esc_attr( eme_translate( $selected_location['location_zip'] ) ); ?>'>
+        <input type='hidden' name='location-select-country' value='<?php echo esc_attr( eme_translate( $selected_location['location_country'] ) ); ?>'>
+        <input type='hidden' name='location-select-latitude' value='<?php echo esc_attr( eme_translate( $selected_location['location_latitude'] ) ); ?>'>
+        <input type='hidden' name='location-select-longitude' value='<?php echo esc_attr( eme_translate( $selected_location['location_longitude'] ) ); ?>'>
         </td>
 <?php
         if ( $map_is_active ) {
@@ -8599,7 +8597,7 @@ function eme_meta_box_div_event_rsvp_enabled( $event ) {
 }
 
 function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
-    $eme_prop_skippaymentoptions = ( $event['event_properties']['skippaymentoptions'] ) ? "checked='checked'" : '';
+    // skippaymentoptions checked attribute handled by checked() below
 ?>
             <div id="div_event_payment_methods">
                 <p id='span_payment_methods_explain'>
@@ -8621,7 +8619,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
                 </p>
                 <p id='span_skippaymentoptions'>
                     <?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><br>
-                    <input id="eme_prop_skippaymentoptions" name='eme_prop_skippaymentoptions' value='1' type='checkbox' <?php echo $eme_prop_skippaymentoptions; ?>>
+                    <input id="eme_prop_skippaymentoptions" name='eme_prop_skippaymentoptions' value='1' type='checkbox' <?php checked( $event['event_properties']['skippaymentoptions'] ); ?>>
                     <span class="eme_smaller"><?php esc_html_e( 'If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message.', 'events-made-easy' ); ?></span>
                 </p>
             </div>
@@ -8629,8 +8627,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 }
 
 function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array ) {
-    $eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
-    $eme_prop_attendanceperday = ( $event['event_properties']['attendanceperday'] ) ? "checked='checked'" : '';
+    // attendancerecord/attendanceperday checked attributes handled by checked() below
     if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
         $showhide_style_unauth = 'class="eme-hidden" style="width:100%;"';
     } else {
@@ -8644,18 +8641,18 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
 ?>
             <div id='div_event_attendance_info'>
                 <p id='p_attendancerecord'>
-                    <input id="eme_prop_attendancerecord" name='eme_prop_attendancerecord' value='1' type='checkbox' <?php echo $eme_prop_attendancerecord; ?>>
+                    <input id="eme_prop_attendancerecord" name='eme_prop_attendancerecord' value='1' type='checkbox' <?php checked( $event['event_properties']['attendancerecord'] ); ?>>
                     <label for="eme_prop_attendancerecord"><?php esc_html_e( 'Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user.', 'events-made-easy' ); ?></label>
                 </p>
                 <p id='p_attendanceperday'>
-                    <input id="eme_prop_attendanceperday" name='eme_prop_attendanceperday' value='1' type='checkbox' <?php echo $eme_prop_attendanceperday; ?>>
+                    <input id="eme_prop_attendanceperday" name='eme_prop_attendanceperday' value='1' type='checkbox' <?php checked( $event['event_properties']['attendanceperday'] ); ?>>
                     <label for="eme_prop_attendanceperday"><?php esc_html_e( 'Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration.', 'events-made-easy' ) .'<br>' . esc_html_e( "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with case.", 'events-made-easy') ;  ?></label>
                 </p>
                 <p id='span_attendance_limit'>
                     <?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?>
-                    <input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" size='4' value="<?php echo $event['event_properties']['attendance_begin']; ?>">
+                    <input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" size='4' value="<?php echo esc_attr( $event['event_properties']['attendance_begin'] ); ?>">
                     <?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
-                    <input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" size='4' value="<?php echo $event['event_properties']['attendance_end']; ?>">
+                    <input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" size='4' value="<?php echo esc_attr( $event['event_properties']['attendance_end'] ); ?>">
                     <?php esc_html_e( 'hours after the event ends.', 'events-made-easy' ); ?>
                     <br><span class="eme_smaller"><?php esc_html_e( 'When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter.', 'events-made-easy' ); ?></span>
                 </p>
@@ -8671,7 +8668,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
                 <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_unauth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
                 <br>
-                <div id="attendance_unauth_scan_format_div" <?php echo $showhide_style_unauth; ?>>
+                <div id="attendance_unauth_scan_format_div" <?php echo $showhide_style_unauth; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
                 <?php eme_wysiwyg_textarea( 'eme_prop_attendance_unauth_scan_format', $event['event_properties']['attendance_unauth_scan_format'], 1, 0 ); ?>
                 </div>
                 </div>
@@ -8686,7 +8683,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
                 <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_auth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
                 <br>
-                <div id="attendance_auth_scan_format_div" <?php echo $showhide_style_auth; ?>>
+                <div id="attendance_auth_scan_format_div" <?php echo $showhide_style_auth; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
                 <?php eme_wysiwyg_textarea( 'eme_prop_attendance_auth_scan_format', $event['event_properties']['attendance_auth_scan_format'], 1, 0 ); ?>
                 </div>
                 </div>
@@ -8706,7 +8703,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
 function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     $currency_array                 = eme_currency_array();
     $event_number_seats             = $event['event_seats'];
-    $registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';
+    // registration_requires_approval checked attribute handled by checked() below
 
     $eme_prop_rsvp_discount               = ( $event['event_properties']['rsvp_discount'] ) ? $event['event_properties']['rsvp_discount'] : '';
     $eme_prop_rsvp_discountgroup          = ( $event['event_properties']['rsvp_discountgroup'] ) ? $event['event_properties']['rsvp_discountgroup'] : '';
@@ -8729,7 +8726,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <span class="eme_smaller"><br><?php esc_html_e( "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker.", 'events-made-easy' ); ?></span>
     </p>
     <p id='p_approval_required'>
-        <input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php echo $registration_requires_approval; ?>>
+        <input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php checked( $event['registration_requires_approval'] ); ?>>
         <label for="approval_required-checkbox"><?php esc_html_e( 'Require booking approval', 'events-made-easy' ); ?></label>
         <br>
 <?php
@@ -8885,9 +8882,9 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </table>
     <p id='span_rsvp_allowed_from'>
         <?php esc_html_e( 'Allow RSVP from ', 'events-made-easy' ); ?>
-        <input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
+        <input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" size='4' value="<?php echo esc_attr( $event['event_properties']['rsvp_start_number_days'] ); ?>">
         <?php esc_html_e( 'days', 'events-made-easy' ); ?>
-        <input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
+        <input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" size='4' value="<?php echo esc_attr( $event['event_properties']['rsvp_start_number_hours'] ); ?>">
         <?php esc_html_e( 'hours', 'events-made-easy' );
               echo " ";
               esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
@@ -8898,9 +8895,9 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </p>
     <p id='span_rsvp_allowed_until'>
         <?php esc_html_e( 'Allow RSVP until ', 'events-made-easy' ); ?>
-        <input id="eme_prop_rsvp_end_number_days" type="text" name="eme_prop_rsvp_end_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_days']; ?>">
+        <input id="eme_prop_rsvp_end_number_days" type="text" name="eme_prop_rsvp_end_number_days" size='4' value="<?php echo esc_attr( $event['event_properties']['rsvp_end_number_days'] ); ?>">
         <?php esc_html_e( 'days', 'events-made-easy' ); ?>
-        <input id="eme_prop_rsvp_end_number_hours" type="text" name="eme_prop_rsvp_end_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_hours']; ?>">
+        <input id="eme_prop_rsvp_end_number_hours" type="text" name="eme_prop_rsvp_end_number_hours" size='4' value="<?php echo esc_attr( $event['event_properties']['rsvp_end_number_hours'] ); ?>">
         <?php esc_html_e( 'hours', 'events-made-easy' );
               echo " ";
               esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
@@ -8928,15 +8925,15 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
         $text = 'RSS';
     }
     $url  = site_url( "/?eme_rss=main&scope=$scope&show_ongoing=$show_ongoing&order=$order&category=$category&author=$author&contact_person=$contact_person&limit=$limit&location_id=$location_id&title=" . urlencode( $title ) );
-    $link = "<a href='$url'>".eme_trans_esc_html($text)."</a>";
+    $link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 
     if ( $justurl ) {
-        $result = $url;
+        $result = esc_url( $url );
     } else {
         $result = $link;
     }
     if ( $echo ) {
-        echo $result;
+        echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $result is either esc_url() or HTML link built with esc_url() + esc_html()
     } else {
         return $result;
     }
@@ -9125,7 +9122,7 @@ function eme_general_head() {
     $extra_html_header = get_option( 'eme_html_header' );
     $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
     if ( ! empty( $extra_html_header ) ) {
-        echo $extra_html_header . "\n";
+        echo $extra_html_header . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- custom HTML header from event properties
     }
 
     if ( eme_is_single_event_page() ) {
@@ -9151,7 +9148,7 @@ function eme_general_head() {
             # remove empty lines
             $extra_header = preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $extra_header );
             if ( $extra_header != '' ) {
-                echo $extra_header . "\n";
+                echo $extra_header . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- custom HTML header from event properties
             }
         }
     } elseif ( eme_is_single_location_page() ) {
@@ -9170,7 +9167,7 @@ function eme_general_head() {
             # remove empty lines
             $extra_header = preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $extra_header );
             if ( ! empty( $extra_header ) ) {
-                echo $extra_header . "\n";
+                echo $extra_header . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- custom HTML header from event properties
             }
         }
     }
@@ -9180,7 +9177,7 @@ function eme_general_footer() {
     $extra_html_footer = get_option( 'eme_html_footer' );
     $extra_html_footer = trim( preg_replace( '/\r\n/', "\n", $extra_html_footer ) );
     if ( ! eme_is_empty_string( $extra_html_footer ) ) {
-        echo $extra_html_footer . "\n";
+        echo $extra_html_footer . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- custom HTML footer from event properties
     }
 }
 

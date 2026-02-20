@@ -2421,8 +2421,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     } else {
         $country_arr = [];
     }
-    if ( ! empty( $person['state_code'] ) && ! empty( $person['country_code'] ) ) {
-        $country_code = $person['country_code'];
+    if ( ! empty( $person['state_code'] ) ) {
+        $country_code = $person['country_code']; // can be empty
         $state_code   = $person['state_code'];
         $state_arr    = [ $state_code => eme_get_state_name( $state_code, $country_code ) ];
     } else {

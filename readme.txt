@@ -96,6 +96,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.48  (2026//) =
+* fix edit for people with empty country but filled out state
+* snapselect update
+* many escapes added to the code to become inline with WP coding style (ongoing, thanks to TommsNL)
+
 = 3.0.47  (2026/02/19) =
 * Allow attendance scans per day
 

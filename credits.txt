@@ -1,4 +1,6 @@
-For the icon and banner, I gladly give credit to Jan-Thijs Tempelman
+For great effort (and AI help) to become more inline with WP coding styles, I thank Jan-Thijs Tempelman
+
+For the icon and banner, I gladly give (again) credit to Jan-Thijs Tempelman
 
 The icon is based on work from:
 http://freepsdfiles.net

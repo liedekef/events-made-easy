@@ -2082,7 +2082,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="PeopleTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="PeopleTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
 <?php
 }
 

@@ -6221,7 +6221,7 @@ function eme_events_table( $message = '' ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="EventsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="EventsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
 </div>
 </div>
 <?php

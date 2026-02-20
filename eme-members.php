@@ -1926,7 +1926,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?></label></td>
-    <td><input type="number" id="duration_count" name="duration_count" value="<?php echo esc_attr( $membership['duration_count'] ); ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+    <td><input type="number" id="duration_count" name="duration_count" value="<?php echo esc_attr( $membership['duration_count'] ); ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()  ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'Once this duration period has passed, the membership start date for new members will be increased by the passed period.', 'events-made-easy' ); ?></p>
     </td>
     </tr>

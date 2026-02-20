@@ -100,6 +100,9 @@ function eme_trans_esc_html( $value, $lang = '' ) {
 }
 
 function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
+	if ( empty( $value ) ) {
+		return $value;
+	}
 	$translated = $value;
 	if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtrans_use' ) ) {
 		if ( empty( $lang ) ) {

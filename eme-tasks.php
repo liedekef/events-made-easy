@@ -1073,15 +1073,15 @@ function eme_mytasks_signups_shortcode( $atts ) {
         $format = eme_get_template_format( $template_id );
     }
     if ( empty( $format ) ) {
-        $format = eme_translate_string( get_option( 'eme_task_signup_format' ) );
+        $format = get_option( 'eme_task_signup_format' );
     }
 
     if ( ! empty( $template_id_header ) ) {
-        $header = eme_get_template_format( $template_id_header );
+        $header = eme_translate( eme_get_template_format( $template_id_header ) );
     }
 
     if ( ! empty( $template_id_footer ) ) {
-        $footer = eme_get_template_format( $template_id_footer );
+        $footer = eme_translate( eme_get_template_format( $template_id_footer ) );
     }
 
     $signups = eme_get_task_signups_by( $wp_id, $task_id, $event_id, $scope );
@@ -1153,14 +1153,6 @@ function eme_tasks_signups_shortcode( $atts ) {
         $format = get_option( 'eme_task_signup_format' );
     }
 
-    if ( ! empty( $template_id_header ) ) {
-        $header = eme_get_template_format( $template_id_header );
-    }
-
-    if ( ! empty( $template_id_footer ) ) {
-        $footer = eme_get_template_format( $template_id_footer );
-    }
-
     if ( $task_id > 0 ) {
         $signups = eme_get_task_signups( $task_id );
         foreach ( $signups as $signup ) {
@@ -1168,6 +1160,14 @@ function eme_tasks_signups_shortcode( $atts ) {
             $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
         }
         return $result;
+    }
+
+    if ( ! empty( $template_id_header ) ) {
+        $header = eme_translate( eme_get_template_format( $template_id_header ) );
+    }
+
+    if ( ! empty( $template_id_footer ) ) {
+        $footer = eme_translate( eme_get_template_format( $template_id_footer ) );
     }
 
     if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {

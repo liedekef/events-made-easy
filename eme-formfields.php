@@ -2958,7 +2958,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 } else {
                     $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
                 }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' placeholder='$placeholder_text'>";
+                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
             }
         } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
             if ( ! $is_multibooking ) {

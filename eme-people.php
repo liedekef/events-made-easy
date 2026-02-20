@@ -2495,7 +2495,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><input id="firstname" name="firstname" type="text" value="<?php echo eme_esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
-        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
+        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
+    }
 ?>
         </td>
         <td rowspan=10>
@@ -2507,7 +2508,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><input id="lastname" name="lastname" type="text" value="<?php echo eme_esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
-        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
+        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
+    }
 ?>
         </td>
         <td></td>
@@ -2517,7 +2519,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?> autocomplete="off"><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
-        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
+        esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
+    }
 ?>
             </td>
         <td></td>

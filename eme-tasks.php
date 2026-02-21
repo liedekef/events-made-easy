@@ -2143,8 +2143,8 @@ function eme_ajax_task_signups_list() {
             $localized_taskend_date      = eme_localized_datetime( $row['task_end'], EME_TIMEZONE, 1 );
             $localized_signup_date       = eme_localized_datetime( $row['signup_date'], EME_TIMEZONE, 1 );
             $row['event_name']  = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $row['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $row['event_name'] ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
-            $csv_address = wp_nonce_url( admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=tasksignups_csv&amp;event_id=' . $row['event_id'] ), 'eme_admin', 'eme_admin_nonce' );
-            $row['event_name'] .= " (<a id='tasksignups_csv_" . $row['event_id'] . "' href='$csv_address'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+            $csv_address = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=tasksignups_csv&amp;event_id=' . $row['event_id'] );
+            $row['event_name'] .= " (<a id='tasksignups_csv_" . $row['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             $row['task_name']   = eme_esc_html( $row['task_name'] );
             $row['comment']     = nl2br(eme_esc_html( $row['comment'] ));
             $row['task_start']  = $localized_taskstart_date;

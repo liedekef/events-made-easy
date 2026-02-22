@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
         allowEmpty: true,
         placeholder: emeadmin.translate_selectpersons,
         data: {
-            action: 'eme_people_select2',
+            action: 'eme_chooseperson_snapselect',
             eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });

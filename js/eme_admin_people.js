@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
                 return {
-                    action:             'eme_people_select2',
+                    action:             'eme_chooseperson_snapselect',
                     eme_admin_nonce:    emepeople.translate_adminnonce,
                     exclude_personids:  excludeIds,
                 };
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cache: true,
             data: function(search, page) {
                 return {
-                    action:            'eme_people_select2',
+                    action:            'eme_chooseperson_snapselect',
                     eme_admin_nonce:   emepeople.translate_adminnonce,
                     exclude_personids: this.dataset.personId || '',
                 };

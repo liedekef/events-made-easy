@@ -466,8 +466,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // --- SnapSelect: chooseperson (add-member form) ---
-    if (EME.$('select.eme_snapselect_chooseperson')) {
-        initSnapSelectRemote('select.eme_snapselect_chooseperson', {
+    if (EME.$('select.eme_snapselect_autocompletememberperson')) {
+        initSnapSelectRemote('select.eme_snapselect_autocompletememberperson', {
             allowEmpty: true,
             url: ajaxurl,
             cache: true,

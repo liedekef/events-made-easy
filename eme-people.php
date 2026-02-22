@@ -5269,7 +5269,6 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
 }
 
 add_action( 'wp_ajax_eme_autocomplete_people', 'eme_ajax_people_autocomplete' );
-add_action( 'wp_ajax_eme_people_select2', 'eme_ajax_people_select2' );
 add_action( 'wp_ajax_eme_people_list', 'eme_ajax_people_list' );
 add_action( 'wp_ajax_eme_groups_list', 'eme_ajax_groups_list' );
 add_action( 'wp_ajax_eme_manage_people', 'eme_ajax_manage_people' );
@@ -5453,27 +5452,30 @@ function eme_ajax_groups_list() {
     wp_die();
 }
 
-function eme_ajax_people_select2() {
+/**
+ * SnapSelect endpoint for the "choose person" field on the add-member form.
+ * Returns {Records:[{id, text, firstname, lastname, email, wpId}], TotalRecordCount}
+ * so that onItemAdd can populate the personal detail fields directly from the option's dataset.
+ */
+function eme_ajax_chooseperson_snapselect() {
     global $wpdb;
+    $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
-        $ajaxResult['Result']  = 'Error';
-        $ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $ajaxResult );
         wp_die();
     }
 
-    $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start    = ( $page - 1 ) * $pagesize;
 
-    $fTableResult = [];
-    $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    if ( ! empty( $q ) ) {
-        $where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
-    } else {
-        $where = '(1=1)';
-    }
+    $where = ! empty( $q )
+        ? "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND status=" . EME_PEOPLE_STATUS_ACTIVE
+        : 'status=' . EME_PEOPLE_STATUS_ACTIVE;
+
     if ( ! empty( $_REQUEST['exclude_personids'] ) ) {
         $exclude_personids     = eme_sanitize_request( $_REQUEST['exclude_personids'] );
         $exclude_personids_arr = explode( ',', $exclude_personids );
@@ -5481,27 +5483,25 @@ function eme_ajax_people_select2() {
             $where .= " AND person_id NOT IN ($exclude_personids)";
         }
     }
-    $pagesize    = intval( $_REQUEST['pagesize'] );
-    $start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
-    // the function eme_get_persons only selects active people by default, so we do that here too
-    $count_sql   = "SELECT COUNT(*) FROM $table WHERE $where AND status=" . EME_PEOPLE_STATUS_ACTIVE;
-    $recordCount = $wpdb->get_var( $count_sql );
-    $limit       = "LIMIT $start,$pagesize";
+
+    $recordCount = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE $where" );
+    $persons     = eme_get_persons( '', $where, "LIMIT $start,$pagesize" );
 
     $records = [];
-    $persons = eme_get_persons( '', $where, $limit );
     foreach ( $persons as $person ) {
-        $record       = [];
-        $record['id'] = $person['person_id'];
-        // no eme_esc_html here, select2 does it own escaping upon arrival
-        $record['text'] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')';
-        $records[]      = $record;
+        $records[] = [
+            'id'        => intval( $person['person_id'] ),
+            'text'      => eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')',
+            'firstname' => eme_esc_html( $person['firstname'] ),
+            'lastname'  => eme_esc_html( $person['lastname'] ),
+            'email'     => eme_esc_html( $person['email'] ),
+            'wpid'      => intval( $person['wp_id'] ),
+        ];
     }
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
+    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
     wp_die();
 }
+add_action( 'wp_ajax_eme_chooseperson_snapselect', 'eme_ajax_chooseperson_snapselect' );
 
 function eme_ajax_store_people_query() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );

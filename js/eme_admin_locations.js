@@ -254,4 +254,25 @@ document.addEventListener('DOMContentLoaded', function () {
             if (imageExample) eme_toggle(imageExample, false);
         }
     }
+
+    if (EME.$('select.eme_snapselect_location')) {
+        initSnapSelectRemote('select.eme_snapselect_location', {
+            allowEmpty: true,
+            data: function(search, page) {
+                let excludeIds = '';
+                if (LocationsTableContainer && LocationsTable) {
+                    const selectedRows = LocationsTable.getSelectedRows();
+                    if (selectedRows.length > 0) {
+                        excludeIds = selectedRows.map(row => row.dataset.recordKey).join(',');
+                    }
+                }
+                return {
+                    action: 'eme_chooselocation_snapselect',
+                    eme_admin_nonce: emelocations.translate_adminnonce,
+                    exclude_locationids: excludeIds
+                };
+            }
+        });
+    }
+
 });

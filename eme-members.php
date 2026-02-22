@@ -1543,7 +1543,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?>
         </td><td>
             <select id='chooseperson' name='chooseperson'
-                data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>"
                 class="eme_snapselect_chooseperson nodynamicupdates">
             </select>
         </td></tr>
@@ -1568,7 +1568,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             <?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>
         </td><td>
             <select id='transferto_personid' name='transferto_personid'
-                data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>"
                 data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                 data-membership-id="<?php echo intval( $membership['membership_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                 data-person-id="<?php echo isset( $member['person_id'] ) ? intval( $member['person_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
@@ -1633,7 +1633,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
                  }
 ?>
                  <select id='related_member_id' name='related_member_id'
-                     data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+                     data-placeholder="<?php esc_attr_e( 'Select a member', 'events-made-easy' ); ?>"
                      data-member-id="<?php echo isset( $member['member_id'] ) ? intval( $member['member_id'] ) : 0; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                      data-membership-id="<?php echo intval( $membership['membership_id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- intval() always returns safe integer ?>"
                      class="eme_snapselect_relatedmember">

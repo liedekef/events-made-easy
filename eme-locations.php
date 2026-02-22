@@ -901,7 +901,10 @@ function eme_locations_table( $message = '' ) {
     <span id="span_transferto" class="eme-hidden">
     <?php esc_html_e( 'Transfer associated events to (leave empty to delete the location info for those events):', 'events-made-easy' ); ?>
     <input type='hidden' id='transferto_id' name='transferto_id'>
-    <input type='text' id='chooselocation' name='chooselocation' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
+    <select id='chooselocation' name='chooselocation'
+        data-placeholder="<?php esc_attr_e( 'Select a location', 'events-made-easy' ); ?>"
+        class="eme_snapselect_location">
+    </select>
     </span>
     <button id="LocationsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -3092,6 +3095,46 @@ function eme_ajax_manage_locations() {
     print wp_json_encode( $fTableResult );
     wp_die();
 }
+
+function eme_ajax_chooselocation_snapselect() {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+    if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ) {
+        wp_die();
+    }
+
+    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start    = ( $page - 1 ) * $pagesize;
+
+    $where = ! empty( $q )
+        ? "(locations.location_name like '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')"
+        : "(1=1)";
+    if ( ! empty( $_REQUEST['exclude_locationids'] ) ) {
+        $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );
+        $exclude_locationids_arr = explode( ',', $exclude_locationids );
+        if ( eme_is_numeric_array( $exclude_locationids_arr ) ) {
+            $where .= " AND location_id NOT IN ($exclude_locationids)";
+        }
+    }
+
+    $recordCount = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE $where" );
+    $locations   = $wpdb->get_results( "SELECT * FROM $table WHERE $where LIMIT $start,$pagesize", ARRAY_A );
+    $records = [];
+    foreach ( $locations as $location ) {
+        $records[] = [
+            'id'        => intval( $location['location_id'] ),
+            'text'      => $location['location_name']
+        ];
+    }
+    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    wp_die();
+}
+add_action( 'wp_ajax_eme_chooselocation_snapselect', 'eme_ajax_chooselocation_snapselect' );
 
 function eme_get_location_post_answers() {
     $answers = [];

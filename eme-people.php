@@ -2044,7 +2044,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     <span id="span_transferto" class="eme-hidden">
     <?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
     <select id='transferto_id' name='transferto_id'
-        data-placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>"
+        data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>"
         class="eme_snapselect_chooseperson">
     </select>
     </span>
@@ -2536,7 +2536,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     }
 ?>
         <select id='related_person_id' name='related_person_id'
-            data-placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>"
+            data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>"
             data-person-id="<?php echo intval( $person['person_id'] ); ?>"
             class="eme_snapselect_chooserelatedperson">
             <?php echo $preselected_option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML option element ?>

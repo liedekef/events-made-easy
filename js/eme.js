@@ -128,6 +128,7 @@ function initSnapSelectRemote(selector, options = {}) {
                         ? data.TotalRecordCount
                         : records.length;
                     let hasMore = total > page * pagesize;
+                    // the next if covers the case where all rows are returned in 1 go, not respecting paging
                     if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
                         hasMore = false;
                     return { results: records, hasMore };

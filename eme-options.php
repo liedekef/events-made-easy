@@ -1357,8 +1357,8 @@ function eme_admin_tabs( $current = 'homepage' ) {
     echo '<h1 class="nav-tab-wrapper">';
     $eme_options_url = admin_url( 'admin.php?page=eme-options' );
     foreach ( $tabs as $tab => $name ) {
-        $class = ( $tab == $current ) ? ' nav-tab-active' : '';
-        echo "<a class='nav-tab" . esc_attr( $class ) . "' href='" . esc_url( $eme_options_url . '&tab=' . $tab ) . "'>" . esc_html( $name ) . '</a>';
+        $class = ( $tab == $current ) ? 'nav-tab nav-tab-active' : 'nav-tab';
+        echo "<a class='" . esc_attr( $class ) . "' href='" . esc_url( $eme_options_url . '&tab=' . $tab ) . "'>" . esc_html( $name ) . '</a>';
     }
     echo '</h1>';
 }

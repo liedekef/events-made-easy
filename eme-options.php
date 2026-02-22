@@ -1358,7 +1358,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
     $eme_options_url = admin_url( 'admin.php?page=eme-options' );
     foreach ( $tabs as $tab => $name ) {
         $class = ( $tab == $current ) ? ' nav-tab-active' : '';
-        echo "<a class='nav-tab$class' href='$eme_options_url&tab=$tab'>$name</a>";
+        echo "<a class='nav-tab" . esc_attr( $class ) . "' href='" . esc_url( $eme_options_url . '&tab=' . $tab ) . "'>" . esc_html( $name ) . '</a>';
     }
     echo '</h1>';
 }

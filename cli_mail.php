@@ -18,7 +18,7 @@ if ( ! function_exists( 'mailparse_msg_create' ) ) {
 	die();
 }
 
-function help( $progname ) {
+function eme_help( $progname ) {
 	echo "For all doc, see https://www.e-dynamics.be/wordpress/category/documentation/21-command-line-mail-script/\n";
 	echo "Usage: $progname -d <email>\n";
 	echo "Or   : $progname --groupid=<groupid>\n";
@@ -41,7 +41,7 @@ function help( $progname ) {
 	exit;
 }
 
-function mailRead( $iKlimit = '' ) {
+function eme_mail_read( $iKlimit = '' ) {
 	// Purpose:
 	//   Reads piped mail from STDIN
 	//
@@ -96,7 +96,7 @@ function mailRead( $iKlimit = '' ) {
 
 $arguments = getopt( 'ahd:f:', [ 'fast', 'allowed_senders:', 'extra_allowed_senders:', 'groupid:' ] );
 if ( ( ! isset( $arguments['groupid'] ) && ! isset( $arguments['d'] ) ) || isset( $arguments['h'] ) ) {
-	help( $argv[0] );
+	eme_help( $argv[0] );
 }
 
 $group = '';
@@ -114,7 +114,7 @@ if ( empty( $group ) ) {
 	exit;
 }
 
-$email_raw = mailRead();
+$email_raw = eme_mail_read();
 
 $mime_resource = mailparse_msg_create();
 mailparse_msg_parse( $mime_resource, $email_raw );

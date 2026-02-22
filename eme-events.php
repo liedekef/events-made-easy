@@ -4564,7 +4564,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
                     }
 
                     $eme_link = eme_calendar_day_url( $theyear . '-' . $themonth . '-' . $theday );
-                    $output  .= "<a href='$eme_link' $class>" . eme_localized_date( $day_key, EME_TIMEZONE ) . '</a>';
+                    $output  .= "<a href='" . esc_url( $eme_link ) . "' $class>" . eme_localized_date( $day_key, EME_TIMEZONE ) . '</a>';
                 } else {
                     $output .= eme_localized_date( $day_key, EME_TIMEZONE );
                 }
@@ -10403,7 +10403,7 @@ function eme_ajax_events_list() {
 
         if ( isset( $event_status_array[ $event['event_status'] ] ) ) {
             $record['event_status'] = $event_status_array[ $event['event_status'] ];
-            $event_url              = eme_event_url( $event );
+            $event_url              = esc_url( eme_event_url( $event ) );
             if ( ! $view_trash ) {
                 if ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
                     $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . __( 'Preview event', 'events-made-easy' ) . '</a>';

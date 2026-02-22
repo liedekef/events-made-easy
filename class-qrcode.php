@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Code from https://github.com/kazuhikoarase/qrcode-generator
 
 //---------------------------------------------------------------

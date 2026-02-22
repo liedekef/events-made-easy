@@ -4754,7 +4754,7 @@ function eme_members_report_link_shortcode( $atts ) {
         $public_access = intval($atts['public_access']);
         $url = wp_nonce_url( $url, "eme_members $public_access", 'eme_members_nonce' );
     }
-    return "<a href='$url' title='" . esc_attr( $atts['link_text'] ) . "'>" . esc_html( $atts['link_text'] ) . '</a>';
+    return "<a href='" . esc_url( $url ) . "' title='" . esc_attr( $atts['link_text'] ) . "'>" . esc_html( $atts['link_text'] ) . '</a>';
 }
 
 function eme_members_shortcode( $atts ) {

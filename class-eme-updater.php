@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class EME_GitHub_Updater {
     private $slug;
     private $plugin_basename;

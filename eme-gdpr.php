@@ -257,7 +257,7 @@ function eme_cpi_request_ajax() {
 				$first_person_name = $person_name;
 			}
 			if ( $mail_text_html == 'htmlmail' ) {
-				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='$change_link'>" . __( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
+				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='" . esc_url( $change_link ) . "'>" . __( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
 			} else {
 				$change_info .= "$person_name: $change_link " . __( '(copy/paste this link in your browser to change the info for this person)', 'events-made-easy' );
 			}

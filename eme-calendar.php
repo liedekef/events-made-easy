@@ -479,7 +479,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 			$class = "class='$class'";
 		}
 
-		$cells[ $day_key ] = "<span class='span-eme-calday span-eme-calday-$event_day'><a title='$link_title' href='$cal_day_link' $class>$event_day</a></span>";
+		$cells[ $day_key ] = "<span class='span-eme-calday span-eme-calday-$event_day'><a title='" . esc_attr( $link_title ) . "' href='" . esc_url( $cal_day_link ) . "' $class>$event_day</a></span>";
 		if ( $full ) {
 			$cells[ $day_key ] .= "$holiday_info<ul class='eme-calendar-day-event'>";
 			foreach ( $events as $event ) {

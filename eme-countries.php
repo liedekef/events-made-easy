@@ -278,8 +278,8 @@ function eme_countries_page() {
 }
 
 function eme_countries_main_layout( $message = '' ) {
-	$countries_destination = admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=countries' );
-	$states_destination    = admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=states' );
+	$countries_destination = esc_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=countries' ) );
+	$states_destination    = esc_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=states' ) );
 	$html                  = "
       <div class='wrap nosubsub'>\n
          <div id='icon-edit' class='icon32'>

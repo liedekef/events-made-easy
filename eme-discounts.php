@@ -376,8 +376,8 @@ function eme_discounts_page() {
 }
 
 function eme_discounts_main_layout( $message = '' ) {
-	$discounts_destination = admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=discounts' );
-	$dgroups_destination   = admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=dgroups' );
+	$discounts_destination = esc_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=discounts' ) );
+	$dgroups_destination   = esc_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=dgroups' ) );
 	$html                  = "
       <div class='wrap nosubsub'>\n
          <div id='icon-edit' class='icon32'>

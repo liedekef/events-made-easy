@@ -2075,7 +2075,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     $extrafieldsearchable_arr = [];
     foreach ( $formfields as $formfield ) {
         $extrafields_arr[]          = intval($formfield['field_id']);
-        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_trans_esc_html( $formfield['field_name'] ));
+        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
         $extrafieldsearchable_arr[] = esc_html($formfield['searchable']);
     }
     $extrafields          = join( ',', $extrafields_arr );

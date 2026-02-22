@@ -5444,7 +5444,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     $extrafieldsearchable_arr = [];
     foreach ( $formfields as $formfield ) {
         $extrafields_arr[]          = $formfield['field_id'];
-        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_trans_esc_html( $formfield['field_name'] ));
+        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
         $extrafieldsearchable_arr[] = $formfield['searchable'];
     }
     // add the formfields of events last
@@ -5456,7 +5456,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         $extrafieldsearchable_arr[] = 0;
         foreach ( $formfields as $formfield ) {
             $extrafields_arr[]          = $formfield['field_id'];
-            $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_trans_esc_html( $formfield['field_name'] ));
+            $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
             $extrafieldsearchable_arr[] = $formfield['searchable'];
         }
     }

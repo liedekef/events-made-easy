@@ -200,7 +200,7 @@ function eme_formfields_table_layout( $message = '' ) {
     global $plugin_page;
     $field_types    = eme_get_fieldtypes();
     $field_purposes = eme_get_fieldpurpose();
-    $destination    = admin_url( "admin.php?page=$plugin_page" );
+    $destination    = esc_url( admin_url( "admin.php?page=$plugin_page" ) );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -302,7 +302,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
     $layout .= "
       <div id='ajax-response'></div>
 
-      <form name='edit_formfield' id='edit_formfield' method='post' action='" . admin_url( "admin.php?page=$plugin_page" ) . "' class='validate'>
+      <form name='edit_formfield' id='edit_formfield' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "' class='validate'>
       <input type='hidden' name='eme_admin_action' value='do_editformfield'>
       $nonce_field
       <input type='hidden' name='field_id' value='" . $field_id . "'>
@@ -1181,7 +1181,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -1197,7 +1197,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -1206,7 +1206,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -1219,7 +1219,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
             }
@@ -1228,7 +1228,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
             }
@@ -1247,7 +1247,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
@@ -1259,7 +1259,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
             }
@@ -1269,9 +1269,9 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' placeholder='$placeholder_text' >";
         } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
@@ -1279,9 +1279,9 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' placeholder='$placeholder_text' $readonly >";
         } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
@@ -1289,7 +1289,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'City', 'events-made-easy' );
             }
@@ -1299,7 +1299,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
             }
@@ -1378,12 +1378,12 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             } else {
                 $label = __( 'Subscribe', 'events-made-easy' );
             }
-            $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -1530,7 +1530,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -1542,7 +1542,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -1551,7 +1551,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -1563,7 +1563,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Cancel reason', 'events-made-easy' );
             }
@@ -1581,7 +1581,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             } else {
                 $label = get_option( 'eme_rsvp_delbooking_submit_string' );
             }
-            $replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } else {
             $found = 0;
         }
@@ -1699,7 +1699,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
             } else {
                 $label = get_option( 'eme_rsvp_delbooking_submit_string' );
             }
-            $replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } else {
             $found = 0;
         }
@@ -1846,7 +1846,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -1862,7 +1862,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -1871,7 +1871,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
@@ -1881,7 +1881,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
             }
@@ -1890,25 +1890,25 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='address1' id='address1' value='$bookerAddress1' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='address2' id='address2' value='$bookerAddress2' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'City', 'events-made-easy' );
             }
@@ -1930,7 +1930,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
             }
@@ -1975,7 +1975,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -2046,7 +2046,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
                 }
@@ -2058,7 +2058,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
             }
@@ -2067,7 +2067,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
             }
@@ -2085,7 +2085,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             } else {
                 $label = get_option( 'eme_rsvp_addbooking_submit_string' );
             }
-            $replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
             $replacement = "<span id='eme_calc_bookingprice'></span>";
         } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/', $result ) ) {
@@ -2094,7 +2094,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -2191,7 +2191,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -2306,7 +2306,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -2902,7 +2902,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
                 }
@@ -2929,7 +2929,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
                 }
@@ -2940,7 +2940,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
                 }
@@ -2954,7 +2954,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
                 }
@@ -2966,9 +2966,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
-                    $placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+                    $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
                 }
                 $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
             }
@@ -2978,9 +2978,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
-                    $placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+                    $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
                 }
                 $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
             }
@@ -2990,7 +2990,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'City', 'events-made-easy' );
                 }
@@ -3002,7 +3002,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
                 }
@@ -3053,7 +3053,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
                 }
@@ -3072,7 +3072,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
                 }
@@ -3164,7 +3164,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
                 }
@@ -3256,7 +3256,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
                 }
@@ -3272,7 +3272,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -3357,7 +3357,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ( isset( $matches[1] ) ) {
                         // remove { and } (first and last char of second match)
                         $placeholder_text = substr( $matches[1], 1, -1 );
-                        $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                        $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                     } else {
                         $placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
                     }
@@ -3410,7 +3410,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 } else {
                     $label = get_option( 'eme_rsvp_addbooking_submit_string' );
                 }
-                $replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+                $replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
             }
         } else {
             $found = 0;
@@ -3496,7 +3496,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -3512,7 +3512,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -3528,7 +3528,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
             }
@@ -3543,7 +3543,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -3584,7 +3584,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
             }
@@ -3600,7 +3600,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
@@ -3611,7 +3611,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -3879,7 +3879,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -3903,7 +3903,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -3914,7 +3914,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
@@ -3925,7 +3925,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
             }
@@ -3935,9 +3935,9 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
@@ -3945,9 +3945,9 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
@@ -3955,7 +3955,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'City', 'events-made-easy' );
             }
@@ -3965,7 +3965,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
             }
@@ -4013,7 +4013,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -4024,7 +4024,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
             }
@@ -4111,7 +4111,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     if ( isset( $matches[1] ) ) {
                         // remove { and } (first and last char of second match)
                         $placeholder_text = substr( $matches[1], 1, -1 );
-                        $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                        $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                     } else {
                         $placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
                     }
@@ -4197,7 +4197,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -4256,7 +4256,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             } else {
                 $label = __( 'Become member', 'events-made-easy' );
             }
-            $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } else {
             $found = 0;
         }
@@ -4351,7 +4351,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                 if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
                 }
@@ -4365,7 +4365,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                 if ( isset( $matches[1] ) ) {
                     // remove { and } (first and last char of second match)
                     $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
                 } else {
                     $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
                 }
@@ -4378,7 +4378,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -4462,7 +4462,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
             } else {
                 $label = __( 'Subscribe', 'events-made-easy' );
             }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } else {
             $found = 0;
         }
@@ -4550,7 +4550,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
             }
@@ -4565,7 +4565,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
             }
@@ -4579,7 +4579,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
@@ -4590,7 +4590,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
             }
@@ -4598,25 +4598,25 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='address1' id='address1' value='$bookerAddress1' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
-                $placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
             }
             $replacement = "<input $required_att type='text' name='address2' id='address2' value='$bookerAddress2' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'City', 'events-made-easy' );
             }
@@ -4632,7 +4632,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
             }
@@ -4661,7 +4661,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
             }
@@ -4675,7 +4675,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
+                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
             }
@@ -4724,7 +4724,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                    $replacement = eme_trans_esc_html( $formfield['field_name'] );
+                    $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
             } else {
                 $found = 0;
             }
@@ -4780,7 +4780,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             } else {
                 $label = __( 'Save personal info', 'events-made-easy' );
             }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         } else {
             $found = 0;
         }
@@ -5183,9 +5183,9 @@ function eme_ajax_formfields_list() {
             $rows[ $key ]['extra_charge']   = ( $formfield['extra_charge'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             $rows[ $key ]['searchable']     = ( $formfield['searchable'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             $rows[ $key ]['used']           = in_array( $formfield['field_id'], $used_formfield_ids ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            $rows[ $key ]['field_name']     = "<a href='" . admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=edit_formfield&amp;field_id=' . $formfield['field_id'] ) . "'>" . $formfield['field_name'] . '</a>';
+            $rows[ $key ]['field_name']     = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-formfields&eme_admin_action=edit_formfield&field_id=' . $formfield['field_id'] ) ) . "'>" . esc_html( $formfield['field_name'] ) . '</a>';
 
-            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=copy_formfield&amp;field_id=' . $formfield['field_id'] ).'";';
+            $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-formfields&eme_admin_action=copy_formfield&field_id=' . $formfield['field_id'] ) ).'";';
             $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Copy', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
 
         }

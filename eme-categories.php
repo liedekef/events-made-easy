@@ -507,7 +507,7 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 
 		if ( $found ) {
 			if ( $target == 'html' ) {
-				$replacement = eme_trans_esc_html( $replacement, $lang );
+				$replacement = esc_html( eme_translate( $replacement, $lang ) );
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} elseif ( $target == 'rss' ) {
 				$replacement = eme_translate( $replacement, $lang );
@@ -570,8 +570,8 @@ function eme_ajax_action_categories_list() {
         if ( empty( $row['category_name'] ) ) {
             $row['category_name'] = __( 'No name', 'events-made-easy' );
         }
-        $record['category_id'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['category_id'] . '</a>';
-        $record['category_name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . eme_trans_esc_html( $row['category_name'] ) . '</a>';
+        $record['category_id'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-categories&eme_admin_action=edit_category&category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['category_id'] . '</a>';
+        $record['category_name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-categories&eme_admin_action=edit_category&category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html( eme_translate( $row['category_name'] ) ) . '</a>';
         $records[] = $record;
     }
     $fTableResult['Result']           = 'OK';

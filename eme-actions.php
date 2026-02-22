@@ -354,7 +354,7 @@ function eme_register_scripts() {
     $eme_fs_options = get_option('eme_fs');
     $translation_array = [
         'translate_plugin_url'         => EME_PLUGIN_URL,
-        'translate_ajax_url'           => admin_url( 'admin-ajax.php' ),
+        'translate_ajax_url'           => esc_url( admin_url( 'admin-ajax.php' ) ),
         'translate_selectstate'        => __( 'Select state/province', 'events-made-easy' ),
         'translate_selectcountry'      => __( 'Select country', 'events-made-easy' ),
         'translate_frontendnonce'      => wp_create_nonce( 'eme_frontend' ),
@@ -375,7 +375,7 @@ function eme_register_scripts() {
     if ( get_option( 'eme_use_client_clock' ) && ! isset( $_COOKIE['eme_client_time'] ) ) {
         // client clock should be executed asap, so load it in the header, and no defer
         $translation_array = [
-            'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
+            'translate_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
         ];
         wp_register_script( 'eme-client_clock_submit', EME_PLUGIN_URL . 'js/client-clock.js', [ ], EME_VERSION );
         wp_localize_script( 'eme-client_clock_submit', 'emeclock', $translation_array );
@@ -411,7 +411,7 @@ function eme_register_scripts() {
     }
     $map_is_active = $eme_map_is_active ? 'true' : 'false';
     $translation_array = [
-        'translate_ajax_url'        => admin_url( 'admin-ajax.php' ),
+        'translate_ajax_url'        => esc_url( admin_url( 'admin-ajax.php' ) ),
         'translate_plugin_url'      => EME_PLUGIN_URL,
         'translate_map_is_active'   => $map_is_active,
         'translate_flanguage'       => $language,
@@ -510,7 +510,7 @@ function eme_admin_notices() {
             }
         }
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
-        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), esc_html($current_user->display_name), admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ) ); ?></div>
+        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), esc_html($current_user->display_name), esc_url( admin_url( 'widgets.php' ) ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', esc_url( admin_url( 'admin.php?page=eme-options' ) ) ); ?></div>
 <?php
         }
 

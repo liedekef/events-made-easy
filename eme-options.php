@@ -1449,7 +1449,7 @@ function eme_explain_slug_conflict( $conflict_found ) {
         } else {
             esc_html_e( 'The EME SEO permalink settings are conflicting with an existing page (the permalink setting for either events, locations or categories is identical with the permalink of another WordPress page). This might cause problems rendering either events or that page. Please resolve the conflict by either changing your EME SEO permalink settings or the permalink of the conflicting page.', 'events-made-easy' );
             echo '<br>';
-            echo sprintf( __( 'The conflicting page can be edited <a href="%s" target="_blank">here</a>.', 'events-made-easy' ), admin_url( "post.php?post=$conflict_found&action=edit" ) );
+            echo sprintf( __( 'The conflicting page can be edited <a href="%s" target="_blank">here</a>.', 'events-made-easy' ), esc_url( admin_url( "post.php?post=$conflict_found&action=edit" ) ) );
         }
         ?>
         </p></div>
@@ -1478,7 +1478,7 @@ function eme_options_page() {
 
 <h2><?php esc_html_e( 'General options', 'events-made-easy' ); ?></h2>
 <p> 
-    <?php printf( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ), admin_url( 'profile.php' ) ); ?>
+    <?php printf( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ), esc_url( admin_url( 'profile.php' ) ) ); ?>
 </p>
 <table class="form-table">
             <?php

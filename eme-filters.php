@@ -29,7 +29,7 @@ function eme_filter_form_shortcode( $atts ) {
 	$template_id = intval($atts['template_id']);
 	$category = eme_sanitize_request($atts['category']);
 	$notcategory = eme_sanitize_request($atts['notcategory']);
-	$submit = eme_trans_esc_html($atts['submit']);
+	$submit = esc_attr( eme_translate( $atts['submit'] ) );
 
 	if ( $template_id ) {
 		// when using a template, don't bother with fields, the template should contain the things needed
@@ -498,7 +498,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Submit', 'events-made-easy' );
 			}
-			$replacement = "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
 		} else {
 			$found = 0;
 		}

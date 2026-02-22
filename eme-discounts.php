@@ -1792,7 +1792,7 @@ function eme_ajax_discounts_list() {
 			$rows[ $key ]['type']             = eme_get_discounttype( $row['type'] );
 				$rows[ $key ]['strcase']      = ( $row['strcase'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 				$rows[ $key ]['use_per_seat'] = ( $row['use_per_seat'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-				$rows[ $key ]['name']         = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_discount&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+				$rows[ $key ]['name']         = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&eme_admin_action=edit_discount&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
 		$fTableResult['Result']           = 'OK';
 		$fTableResult['Records']          = $rows;
@@ -1832,7 +1832,7 @@ function eme_ajax_discountgroups_list() {
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-				$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_dgroup&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+				$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&eme_admin_action=edit_dgroup&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
 		$fTableResult['Result']           = 'OK';
 		$fTableResult['Records']          = $rows;

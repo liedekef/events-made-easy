@@ -595,7 +595,7 @@ function eme_attendees_report_link_shortcode( $atts ) {
         $public_access = intval($atts['public_access']);
         $url = wp_nonce_url( $url, "eme_attendees $public_access", 'eme_attendees_nonce' );
     }
-    return "<a href='$url' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
+    return "<a href='" . esc_url( $url ) . "' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
 }
 
 function eme_bookings_report_link_shortcode( $atts ) {
@@ -635,7 +635,7 @@ function eme_bookings_report_link_shortcode( $atts ) {
         $public_access = intval($atts['public_access']);
         $url = wp_nonce_url( $url, "eme_bookings $public_access", 'eme_bookings_nonce' );
     }
-    return "<a href='$url' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
+    return "<a href='" . esc_url( $url ) . "' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
 }
 
 function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id_header ) {

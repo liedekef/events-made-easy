@@ -3037,7 +3037,7 @@ function eme_ajax_locations_list() {
         $record['external_url']       = eme_trans_esc_html( $location['location_url'] );
         $record['online_only']        = $location['location_properties']['online_only'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         $location_url                 = eme_location_url( $location );
-        $record['view']               = "<a href='$location_url'>" . __( 'View location', 'events-made-easy' ) . '</a>';
+        $record['view']               = "<a href='" . esc_url( $location_url ) . "'>" . __( 'View location', 'events-made-easy' ) . '</a>';
         $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=copy_location&amp;location_id=' . $location['location_id'] ).'";';
         $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         $location_cf_values           = eme_get_location_answers( $location['location_id'] );

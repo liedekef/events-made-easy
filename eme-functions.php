@@ -755,10 +755,10 @@ function eme_get_events_page( $justurl = 1, $text = '' ) {
         $page_link      = trailingslashit( home_url() );
     }
     if ( $justurl || empty( $text ) ) {
-        $result = $page_link;
+        $result = esc_url( $page_link );
     } else {
         $text   = eme_esc_html( $text );
-        $result = "<a href='$page_link' title='$text'>$text</a>";
+        $result = "<a href='" . esc_url( $page_link ) . "' title='$text'>$text</a>";
     }
     return $result;
 }
@@ -3273,7 +3273,7 @@ function eme_get_uploaded_file_linkdelete( $file ) {
     $style_del = 'eme_del_upload-button';
     // the name of the file given by the person
     $name = $file['name'];
-    $url  = $file['url'];
+    $url  = esc_url( $file['url'] );
     // person/member/... id
     $id = $file['id'];
     // person, member ...
@@ -3540,7 +3540,7 @@ function eme_get_attachment_link( $id ) {
             } else {
                 $link_text = pathinfo( $id[0], PATHINFO_BASENAME );
             }
-            $url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id[1] );
+            $url = esc_url( str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id[1] ) );
             return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
         } else {
             // not numeric ? Then it is a path
@@ -3551,7 +3551,7 @@ function eme_get_attachment_link( $id ) {
             $link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $link_text );
             $link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
             $link_text .= ".$extension";
-            $url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id );
+            $url = esc_url( str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id ) );
             return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
         }
     }

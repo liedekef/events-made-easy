@@ -2153,7 +2153,7 @@ function eme_options_page() {
                 $title = __( 'PDF templates as attachments', 'events-made-easy' );
                 $name  = 'eme_booking_attach_tmpl_ids';
                 $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2' );
+                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_snapselect' );
             } else {
                 esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
             }
@@ -2213,7 +2213,7 @@ function eme_options_page() {
                 $title = __( 'PDF templates as attachments', 'events-made-easy' );
                 $name  = 'eme_pending_attach_tmpl_ids';
                 $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2' );
+                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_snapselect' );
             } else {
                 esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
             }
@@ -2333,7 +2333,7 @@ function eme_options_page() {
                 $title = __( 'PDF templates as attachments', 'events-made-easy' );
                 $name  = 'eme_paid_attach_tmpl_ids';
                 $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2' );
+                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_snapselect' );
             } else {
                 esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
             }
@@ -2399,7 +2399,7 @@ function eme_options_page() {
                 $title = __( 'PDF templates as attachments', 'events-made-easy' );
                 $name  = 'eme_fs_ipn_attach_tmpl_ids';
                 $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2' );
+                eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_snapselect' );
             } else {
                 esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
             }
@@ -2988,7 +2988,7 @@ if (!empty($webhook_id)) {
         'boleto'            => 'boleto',
         'oxxo'              => 'oxxo',
     ];
-    eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_select2' );
+    eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_snapselect' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
@@ -3184,7 +3184,7 @@ if ( $categories ) {
 eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), $fs_options['auto_publish'] );
 eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), $fs_options['price'] );
 eme_options_select( __( 'Currency', 'events-made-easy' ), eme_get_field_name('eme_fs','currency'), eme_currency_array(), __( 'The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!', 'events-made-easy' ) , $fs_options['currency'] );
-eme_options_multiselect( __( 'Payment methods', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), __( 'The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!', 'events-made-easy' ), $fs_options['payment_gateways'], 'eme_select2' );
+eme_options_multiselect( __( 'Payment methods', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), __( 'The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!', 'events-made-easy' ), $fs_options['payment_gateways'], 'eme_snapselect' );
 
 //$indexed_users[-1] = __( 'No contact', 'events-made-easy' );
 //$indexed_users    += eme_get_indexed_users();

@@ -2131,7 +2131,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
             $value = '';
         }
         $extra_attributes = '" data-placeholder="' . esc_html( __( 'Any group', 'events-made-easy' )) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
     }
 
     if ( $edit_group ) {
@@ -2143,7 +2143,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         $value = '';
     }
     $extra_attributes = '" data-placeholder="' . esc_html( __( 'Filter on membership', 'events-made-easy' )) . '"';
-    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
 
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
@@ -2154,7 +2154,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         $value = '';
     }
     $extra_attributes = '" data-placeholder="' . __( 'Filter on member status', 'events-made-easy' ) . '"';
-    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
 
     $formfields_searchable = eme_get_searchable_formfields( 'people' );
     if ( ! empty( $formfields_searchable ) ) {
@@ -2178,7 +2178,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2', $extra_attributes, 1, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix );
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
         }
@@ -2593,12 +2593,12 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
+        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_snapselect_country_class' ); ?></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
+        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_snapselect_state_class' ); ?></td>
         <td></td>
         </tr>
         <tr>
@@ -2641,7 +2641,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
         <td colspan=2><?php 
             $extra_attributes = '" data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' )) . '"';
-            echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2', $extra_attributes );
+            echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_snapselect', $extra_attributes );
             ?><br>
         <?php esc_html_e( "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in.", 'events-made-easy' ); ?>
         </td>
@@ -2809,7 +2809,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         </tr>
         <tr>
         <td><label for="People"><?php esc_html_e( 'People', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 1, 'eme_select2_people_class' ); ?></td>
+        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 1, 'eme_snapselect_people_class' ); ?></td>
         </tr>
 <?php
             } elseif ( $group['type'] == 'dynamic_people' ) {

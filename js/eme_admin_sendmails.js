@@ -640,12 +640,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initSnapSelectRemote('select.eme_select2_events_class', {
+    initSnapSelectRemote('select.eme_snapselect_events_class', {
         placeholder: ememails.translate_selectevents,
         allowEmpty: true,
         data: function(search, page) {
             return {
-                action: 'eme_events_select2',
+                action: 'eme_events_snapselect',
                 search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
                 eme_admin_nonce: ememails.translate_adminnonce
             };

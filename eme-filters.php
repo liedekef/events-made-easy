@@ -236,10 +236,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select ) {
 							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'" );
+						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
 				}
 			}
@@ -270,10 +270,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'" );
+						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
 				}
 			}
@@ -304,10 +304,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'" );
+						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
 				}
 			}
@@ -338,10 +338,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						if ( $old_select > 1 ) {
 							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
 						} else {
-							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 						}
 					} else {
-						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, '', 0, 'eme_select2_allow_empty', $aria_label . " data-placeholder='$label'" );
+						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
 				}
 			}
@@ -428,7 +428,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'show_option_none' => eme_esc_html( $label ),
                 'option_none_value'=> '',
 				'selected'         => $selected_contact,
-				'class'            => 'eme_select2_allow_empty',
+				'class'            => 'eme_snapselect_allow_empty',
 			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -457,7 +457,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				'show_option_none' => eme_esc_html( $label ),
                 'option_none_value'=> '',
 				'selected'         => $selected_author,
-				'class'            => 'eme_select2_allow_empty',
+				'class'            => 'eme_snapselect_allow_empty',
 			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)

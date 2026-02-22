@@ -6157,7 +6157,7 @@ function eme_events_table( $message = '' ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2', $extra_attributes, 1 );
+        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 );
     }
 ?>
     </div>
@@ -6829,7 +6829,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ($user_info !== false)
                 $eme_wp_user_arr[ $event_author ] = $user_info->display_name;
         }
-        echo eme_ui_select( $event_author, 'event_author', $eme_wp_user_arr, '', 0, 'eme_select2_wpuser_class' );
+        echo eme_ui_select( $event_author, 'event_author', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' );
 ?>
         </p>
         </div>
@@ -6848,7 +6848,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ($user_info !== false)
                 $eme_wp_user_arr[ $event['event_contactperson_id'] ] = $user_info->display_name;
         }
-        echo eme_ui_select( $event['event_contactperson_id'], 'event_contactperson_id', $eme_wp_user_arr, '', 0, 'eme_select2_wpuser_class' );
+        echo eme_ui_select( $event['event_contactperson_id'], 'event_contactperson_id', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' );
         // if it is not a new event and there's no contact person defined, then the event author becomes contact person
         // So let's display a warning what this means if there's no author (like when submitting via the frontend submission form)
         if ( ! $is_new_event && $event['event_contactperson_id'] < 1 && $event['event_author'] < 1 ) {
@@ -7619,7 +7619,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
+        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -7820,7 +7820,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
+        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8204,7 +8204,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2' );
+        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8613,7 +8613,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         echo "</b>";
     } else {
-        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
+        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_snapselect', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
     }
 ?>
                 </p>
@@ -8804,11 +8804,11 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_discount'>
         <td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_select2_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_discountgroup'>
         <td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_select2_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_waitinglist_seats'>
         <td><label for='eme_prop_waitinglist_seats'><?php esc_html_e( 'Waitinglist seats', 'events-made-easy' ); ?></label></td>
@@ -8842,17 +8842,17 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_require_eme_group'>
         <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_require_eme_memberships'>
         <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_select2', '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_addpersontogroup'>
         <td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_rsvppassword'>
         <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
@@ -10103,8 +10103,8 @@ function eme_countdown_shortcode( $atts ) {
     }
 }
 
-add_action( 'wp_ajax_eme_wpuser_select2', 'eme_ajax_wpuser_select2' );
-function eme_ajax_wpuser_select2() {
+add_action( 'wp_ajax_eme_wpuser_snapselect', 'eme_ajax_wpuser_snapselect' );
+function eme_ajax_wpuser_snapselect() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
 
@@ -10121,7 +10121,7 @@ function eme_ajax_wpuser_select2() {
     foreach ( $wp_users as $wp_user ) {
         $record       = [];
         $record['id'] = $wp_user->ID;
-        // no eme_esc_html here, select2 does it own escaping upon arrival
+        // no eme_esc_html here, snapselect does it own escaping upon arrival
         $record['text'] = $wp_user->display_name;
         $records[]      = $record;
     }
@@ -10808,8 +10808,8 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
     return $wpdb->get_col( $sql );
 }
 
-add_action( 'wp_ajax_eme_events_select2', 'eme_ajax_events_select2' );
-function eme_ajax_events_select2() {
+add_action( 'wp_ajax_eme_events_snapselect', 'eme_ajax_events_snapselect' );
+function eme_ajax_events_snapselect() {
     // snapselect gives us paging, but currently we ignore it here and return everything we can
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );

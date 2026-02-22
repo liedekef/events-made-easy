@@ -250,12 +250,11 @@ function eme_init_widgets(dynamicOnly = false) {
         }
     });
 
-    // Basic select2 replacement
-    initSnapSelect('select.eme_select2' + dynamicSelector);
-    initSnapSelect('select.eme_select2_allow_empty' + dynamicSelector, {
+    initSnapSelect('select.eme_snapselect' + dynamicSelector);
+    initSnapSelect('select.eme_snapselect_allow_empty' + dynamicSelector, {
         allowEmpty: true
     });
-    initSnapSelectRemote('select.eme_select2_country_class' + dynamicSelector, {
+    initSnapSelectRemote('select.eme_snapselect_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
         data: {
             action: 'eme_select_country',
@@ -266,7 +265,7 @@ function eme_init_widgets(dynamicOnly = false) {
         // When country changes, reset the state field in the same form
         onItemAdd: function(value, text) {
             const form       = this.closest('form');
-            const stateField = form?.querySelector('.eme_select2_state_class');
+            const stateField = form?.querySelector('.eme_snapselect_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
                 stateField.snapselectInstance.clearCache();
@@ -274,7 +273,7 @@ function eme_init_widgets(dynamicOnly = false) {
         },
         onItemDelete: function(value, text) {
             const form       = this.closest('form');
-            const stateField = form?.querySelector('.eme_select2_state_class');
+            const stateField = form?.querySelector('.eme_snapselect_state_class');
             if (stateField && stateField.snapselectInstance) {
                 stateField.snapselectInstance.clear();
                 stateField.snapselectInstance.clearCache();
@@ -283,12 +282,12 @@ function eme_init_widgets(dynamicOnly = false) {
         closeOnSelect: true
     });
 
-    initSnapSelectRemote('select.eme_select2_state_class' + dynamicSelector, {
+    initSnapSelectRemote('select.eme_snapselect_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
         allowEmpty: true,
         // Dynamically include the currently selected country_code in every request
         data: function(search, page) { // since this is a function, no caching happens
-            const stateEl     = document.querySelector('select.eme_select2_state_class');
+            const stateEl     = document.querySelector('select.eme_snapselect_state_class');
             const form        = stateEl?.closest('form');
             const countryCode = form?.querySelector('[name=country_code]')?.value || '';
             return {

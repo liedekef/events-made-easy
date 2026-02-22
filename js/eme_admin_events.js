@@ -844,17 +844,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    initSnapSelectRemote('#event_author.eme_select2_wpuser_class', {
+    initSnapSelectRemote('#event_author.eme_snapselect_wpuser_class', {
         data: {
-            action: 'eme_wpuser_select2',
+            action: 'eme_wpuser_snapselect',
             eme_admin_nonce: emeevents.translate_adminnonce
         }
     });
-    initSnapSelectRemote('#event_contactperson_id.eme_select2_wpuser_class', {
+    initSnapSelectRemote('#event_contactperson_id.eme_snapselect_wpuser_class', {
         placeholder: emeevents.translate_selectcontact,
         allowEmpty: true,
         data: {
-            action: 'eme_wpuser_select2',
+            action: 'eme_wpuser_snapselect',
             eme_admin_nonce: emeevents.translate_adminnonce
         }
     });

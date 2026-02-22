@@ -438,13 +438,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initSnapSelectRemote('select.eme_select2_events_class', {
+    initSnapSelectRemote('select.eme_snapselect_events_class', {
         allowEmpty: true,
         data: function(search, page) {
             return {
                 exclude_id: this.dataset.exclude_event_id || '',
                 only_rsvp: 1,
-                action: 'eme_events_select2',
+                action: 'eme_events_snapselect',
                 search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
                 eme_admin_nonce: emersvp.translate_adminnonce
             };

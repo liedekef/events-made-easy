@@ -894,7 +894,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='value'><?php esc_html_e( 'Discount groups', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_multiselect_key_value( $selected_dgroup_arr, 'dgroup', $dgroups, 'id', 'name', 5, '', 0, 'eme_select2' ); ?>
+			<td><?php echo eme_ui_multiselect_key_value( $selected_dgroup_arr, 'dgroup', $dgroups, 'id', 'name', 5, '', 0, 'eme_snapselect' ); ?>
 			<br><?php esc_html_e( 'If wanted, you can make this discount a part of one or more discount groups, and then apply a discount group to your event', 'events-made-easy' ); ?>
 			</td>
 		</tr>
@@ -926,7 +926,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2' ); ?>
+			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups for this discount to apply.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
@@ -936,7 +936,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<?php
 			if ( ! empty( $memberships ) ) {
                 $extra_attributes = '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
-				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2', $extra_attributes );
+				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes );
 			} else {
 				esc_html_e( 'No memberships defined yet!', 'events-made-easy' );
 			}
@@ -1737,8 +1737,8 @@ add_action( 'wp_ajax_eme_discount_edit', 'eme_ajax_discount_edit' );
 add_action( 'wp_ajax_eme_discountgroups_list', 'eme_ajax_discountgroups_list' );
 add_action( 'wp_ajax_eme_manage_discountgroups', 'eme_ajax_manage_discountgroups' );
 add_action( 'wp_ajax_eme_discountgroups_edit', 'eme_ajax_discountgroups_edit' );
-add_action( 'wp_ajax_eme_discounts_select2', 'eme_ajax_discounts_select2' );
-add_action( 'wp_ajax_eme_dgroups_select2', 'eme_ajax_dgroups_select2' );
+add_action( 'wp_ajax_eme_discounts_snapselect', 'eme_ajax_discounts_snapselect' );
+add_action( 'wp_ajax_eme_dgroups_snapselect', 'eme_ajax_dgroups_snapselect' );
 
 function eme_ajax_discounts_list() {
 	global $wpdb;
@@ -1845,7 +1845,7 @@ function eme_ajax_discountgroups_list() {
 	wp_die();
 }
 
-function eme_ajax_discounts_select2() {
+function eme_ajax_discounts_snapselect() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -1872,7 +1872,7 @@ function eme_ajax_discounts_select2() {
 	foreach ( $discounts as $discount ) {
 		$record       = [];
 		$record['id'] = $discount['id'];
-		// no eme_esc_html here, select2 does it own escaping upon arrival
+		// no eme_esc_html here, snapselect does it own escaping upon arrival
 		$record['text'] = $discount['name'];
 		$records[]      = $record;
 	}
@@ -1882,7 +1882,7 @@ function eme_ajax_discounts_select2() {
 	wp_die();
 }
 
-function eme_ajax_dgroups_select2() {
+function eme_ajax_dgroups_snapselect() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -1909,7 +1909,7 @@ function eme_ajax_dgroups_select2() {
 	foreach ( $dgroups as $dgroup ) {
 		$record       = [];
 		$record['id'] = $dgroup['id'];
-		// no eme_esc_html here, select2 does it own escaping upon arrival
+		// no eme_esc_html here, snapselect does it own escaping upon arrival
 		$record['text'] = $dgroup['name'];
 		$records[]      = $record;
 	}

@@ -443,7 +443,7 @@ function eme_show_personal_info( $email ) {
 			foreach ( $answers as $answer ) {
 				$formfield = eme_get_formfield( $answer['field_id'] );
 				if ( ! empty( $formfield ) ) {
-					$name       = eme_trans_esc_html( $formfield['field_name'] );
+					$name       = esc_html( eme_translate( $formfield['field_name'] ) );
 					$tmp_answer = eme_answer2readable( $answer['answer'], $formfield, 1, '<br>', 'html' );
 					$output    .= "<tr><td>$name</td><td>$tmp_answer</td></tr>";
 				}
@@ -452,7 +452,7 @@ function eme_show_personal_info( $email ) {
 			$files = eme_get_uploaded_files( $person_id, 'people' );
 			if ( ! empty( $files ) ) {
 				foreach ( $files as $file ) {
-					$output .= '<tr><td>' . eme_trans_esc_html( $file['field_name'] ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
+					$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
 				}
 			}
 			$output .= '</table>';
@@ -482,7 +482,7 @@ function eme_show_personal_info( $email ) {
 					foreach ( $answers as $answer ) {
 						$formfield = eme_get_formfield( $answer['field_id'] );
 						if ( ! empty( $formfield ) ) {
-							$name       = eme_trans_esc_html( $formfield['field_name'] );
+							$name       = esc_html( eme_translate( $formfield['field_name'] ) );
 							$tmp_answer = eme_answer2readable( $answer['answer'], $formfield, 1, '<br>', 'html' );
 							$output    .= "<tr><td>$name</td><td>$tmp_answer</td></tr>";
 						}
@@ -491,7 +491,7 @@ function eme_show_personal_info( $email ) {
 					$files = eme_get_uploaded_files( $member['member_id'], 'members' );
 					if ( ! empty( $files ) ) {
 						foreach ( $files as $file ) {
-							$output .= '<tr><td>' . eme_trans_esc_html( $file['field_name'] ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
+							$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
 						}
 					}
 					$output .= '</table>';

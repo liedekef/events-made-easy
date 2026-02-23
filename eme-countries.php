@@ -490,7 +490,7 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 		$layout .= "
       <div id='ajax-response'></div>
 
-      <form name='edit_states' id='edit_states' method='post' action='" . admin_url( "admin.php?page=$plugin_page" ) . "'>
+      <form name='edit_states' id='edit_states' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editstate'>
       <input type='hidden' name='id' value='" . $state_id . "'>
       $nonce_field
@@ -556,7 +556,7 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 		$layout .= "
       <div id='ajax-response'></div>
 
-      <form name='edit_countries' id='edit_countries' method='post' action='" . admin_url( "admin.php?page=$plugin_page" ) . "'>
+      <form name='edit_countries' id='edit_countries' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editcountry'>
       <input type='hidden' name='id' value='" . esc_attr( $country_id ) . "'>
       $nonce_field
@@ -875,7 +875,7 @@ function eme_ajax_countries_list() {
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_country&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+			$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-countries&eme_admin_action=edit_country&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
 		$fTableResult['Result']           = 'OK';
 		$fTableResult['Records']          = $rows;
@@ -903,7 +903,7 @@ function eme_ajax_states_list() {
 		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_state&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+			$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-countries&eme_admin_action=edit_state&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
 
 		$fTableResult['Result']           = 'OK';

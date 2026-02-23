@@ -133,7 +133,7 @@ function eme_holidays_edit_layout() {
     $layout .= "
       <div id='ajax-response'></div>
 
-      <form name='edit_holidays' id='edit_holidays' method='post' action='" . admin_url( "admin.php?page=$plugin_page" ) . "'>
+      <form name='edit_holidays' id='edit_holidays' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editholidays'>
       <input type='hidden' name='id' value='" . $holidays_id . "'>
       $nonce_field
@@ -249,7 +249,7 @@ function eme_holidays_shortcode( $atts ) {
 		} else {
 			print '<span id="eme_holidays_date">' . eme_localized_date( $day, EME_TIMEZONE ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
-		print '&nbsp; <span id="eme_holidays_name">' . eme_trans_esc_html( $name ) . '</span><br>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print '&nbsp; <span id="eme_holidays_name">' . esc_html( eme_translate( $name ) ) . '</span><br>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	print '</div>';
 }
@@ -286,8 +286,8 @@ function eme_ajax_action_holidays_list() {
         if ( empty( $row['name'] ) ) {
             $row['name'] = __( 'No name', 'events-made-easy' );
         }
-        $record['id'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-holidays&amp;eme_admin_action=edit_holidays&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['id'] . '</a>';
-        $record['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-holidays&amp;eme_admin_action=edit_holidays&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . eme_trans_esc_html( $row['name'] ) . '</a>';
+        $record['id'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-holidays&eme_admin_action=edit_holidays&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['id'] . '</a>';
+        $record['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-holidays&eme_admin_action=edit_holidays&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html( eme_translate( $row['name'] ) ) . '</a>';
         $records[] = $record;
     }
     $fTableResult['Result']           = 'OK';

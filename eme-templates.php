@@ -150,7 +150,7 @@ function eme_templates_table_layout( $message = '' ) {
     global $plugin_page;
 
     $template_types = eme_template_types();
-    $destination    = admin_url( "admin.php?page=$plugin_page" );
+    $destination    = esc_url( admin_url( "admin.php?page=$plugin_page" ) );
     if ( empty( $message ) ) {
         $hidden_class = 'eme-hidden';
     } else {
@@ -480,8 +480,8 @@ function eme_ajax_templates_list() {
             $row['id'] = $val['id'];
             $row['description'] = $val['description'];
             $row[ 'type'] = $template_types[ $val['type'] ];
-            $row[ 'name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $val['id'] ) . "'>" . $val['name'] . '</a>';
-            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $val['id'] ).'";';
+            $row[ 'name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-templates&eme_admin_action=edit_template&id=' . $val['id'] ) ) . "'>" . esc_html( $val['name'] ) . '</a>';
+            $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-templates&eme_admin_action=copy_template&id=' . $val['id'] ) ).'";';
             $row[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
             $rows[] = $row;
         }

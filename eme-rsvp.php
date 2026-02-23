@@ -3794,7 +3794,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             if ( isset( $booking[ $tmp_attkey ] ) && ! is_array( $booking[ $tmp_attkey ] ) ) {
                 $replacement = $booking[ $tmp_attkey ];
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $replacement, $lang );
+                    $replacement = esc_html( eme_translate( $replacement, $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( $replacement, $lang );
@@ -3942,7 +3942,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+                    $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } else {
                     $replacement = eme_translate( $formfield['field_name'], $lang );
@@ -4805,7 +4805,7 @@ function eme_registration_seats_page( $pending = 0 ) {
             return;
         }
         // we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
-        $action_url  = admin_url( "admin.php?page=$plugin_page" );
+        $action_url  = esc_url( admin_url( "admin.php?page=$plugin_page" ) );
         $nonce_field = wp_nonce_field( "eme_admin", 'eme_admin_nonce', false, false );
         $ret_string  = '<h1>' . __( 'Add booking', 'events-made-easy' ) . '</h1>';
         if ( get_option( 'eme_rsvp_admin_allow_overbooking' ) ) {
@@ -4844,10 +4844,10 @@ function eme_registration_seats_page( $pending = 0 ) {
         }
 
         // we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
-        $action_url  = admin_url( "admin.php?page=$plugin_page" );
+        $action_url  = esc_url( admin_url( "admin.php?page=$plugin_page" ) );
         $nonce_field = wp_nonce_field( "eme_admin", 'eme_admin_nonce', false, false );
         $ret_string  = '<h1>' . esc_html__( 'Edit booking', 'events-made-easy' ) . '</h1>';
-        $ret_string .= "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $booking['person_id'] ) . "' title='" . esc_attr__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
+        $ret_string .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $booking['person_id'] ) ) . "' title='" . esc_attr__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
 
         // the event id can be empty if we are editng a booking where the event has been removed
         if ( ! empty( $event['event_id'] ) ) {
@@ -5238,9 +5238,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         } else {
             $event_q_string = '&event_id=' . intval( $_GET['event_id'] );
             if ( $pending ) {
-                printf( __( 'Manage pending bookings for %s', 'events-made-easy' ), eme_trans_esc_html( $event['event_name'] ) );
+                printf( __( 'Manage pending bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             } else {
-                printf( __( 'Manage approved bookings for %s', 'events-made-easy' ), eme_trans_esc_html( $event['event_name'] ) );
+                printf( __( 'Manage approved bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             }
         }
     } else {
@@ -5257,9 +5257,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 ?>
 </h1>
     <?php if ( $trash ) { ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=0$event_q_string" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=0$event_q_string" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
     <?php } else { ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=1$event_q_string" ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=1$event_q_string" ) ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
         <div id="bookings-message" class="eme-hidden"></div>
         <span class="eme_import_form_img">
         <?php esc_html_e( 'Click on the icon to show the import form to import payments', 'events-made-easy' ); ?>
@@ -5895,7 +5895,7 @@ function eme_ajax_bookings_list() {
             } else {
                 $line['wp_user'] = '';
             }
-            $line['booker'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . __( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+            $line['booker'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . __( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
             $line['person_id'] = $booking['person_id'];
         } else {
             $line['booker']  = __( 'Anonymous', 'events-made-easy' );
@@ -5935,7 +5935,7 @@ function eme_ajax_bookings_list() {
         if ( $trash ) {
             $line['edit_link'] = '';
         } else {
-            $line['edit_link'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=editBooking&amp;booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
+            $line['edit_link'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=editBooking&booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
         }
         if ( ! isset( $event_name_info[ $event_id ] ) ) {
             $event_name_info[ $event_id ] = '';
@@ -5944,7 +5944,7 @@ function eme_ajax_bookings_list() {
             $add_event_info = 0;
         }
         if ( $add_event_info ) {
-            $event_name_info[ $event_id ] .= "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+            $event_name_info[ $event_id ] .= "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
         }
         if ( $event['event_rsvp'] ) {
             if ( $add_event_info ) {
@@ -5978,19 +5978,19 @@ function eme_ajax_bookings_list() {
                         $available_seats_string = $available_seats;
                     }
                     $event_name_info[ $event_id ] .= esc_html__( 'Free:', 'events-made-easy' ) .' '. $available_seats_string;
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>$booked_string $booked_seats_string</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>$booked_string $booked_seats_string</a>";
                 } else {
                     $total_seats_string                    = '&infin;';
-                    $event_name_info[ $event_id ] .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>$booked_string $booked_seats_string</a>";
+                    $event_name_info[ $event_id ] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>$booked_string $booked_seats_string</a>";
                 }
 
                 if ( $pending_seats > 0 ) {
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
                 }
                 if ( $event['event_properties']['take_attendance'] ) {
                     $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
                     if ( $absent_bookings > 0 ) {
-                        $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                        $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
                 if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
@@ -6006,8 +6006,8 @@ function eme_ajax_bookings_list() {
                 }
 
                 if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                    $printable_address            = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
-                    $csv_address                  = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
+                    $printable_address            = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
+                    $csv_address                  = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
                     $event_name_info[ $event_id ] .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='".esc_url($printable_address)."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
                     $event_name_info[ $event_id ] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
                 }
@@ -6019,7 +6019,7 @@ function eme_ajax_bookings_list() {
                 $page = 'eme-registration-seats';
             }
 
-            $line['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Add booking for this event', 'events-made-easy' ) . "'>" . esc_html__( 'RSVP', 'events-made-easy' ) . '</a>';
+            $line['rsvp'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=newBooking&event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Add booking for this event', 'events-made-easy' ) . "'>" . esc_html__( 'RSVP', 'events-made-easy' ) . '</a>';
             if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
                 $line['rsvp'] .= '<br>(' . esc_html__( 'Password protected', 'events-made-easy' ) . ')';
             }
@@ -6044,9 +6044,9 @@ function eme_ajax_bookings_list() {
                 #$event_name_info[ $event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
                 $event_name_info[ $event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                 }
-                $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
             }
         }
 

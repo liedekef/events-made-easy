@@ -1736,10 +1736,10 @@ add_filter( 'template_include', 'eme_single_event_page_template', 99 );
 function eme_edit_post_link( $data ) {
     if ( eme_is_single_event_page() ) {
         $event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
-        return admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event_id );
+        return esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event_id ) );
     } elseif ( eme_is_single_location_page() ) {
         $location_id = eme_sanitize_request( get_query_var( 'location_id' ) );
-        return admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location_id );
+        return esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location_id ) );
     } else {
         return $data;
     }
@@ -2483,10 +2483,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             if ( preg_match( '/#_EDITEVENTLINK/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                     ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
-                    $url = admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] );
-                    if ( $target == 'html' ) {
-                        $url = esc_url( $url );
-                    }
+                    $url = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) );
                     $replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_EDITEVENTURL/', $result ) ) {
@@ -2500,14 +2497,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             } elseif ( preg_match( '/#_PRINTBOOKINGSLINK/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
-                    $url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
-                    if ( $target == 'html' ) {
-                        $url = esc_url( $url );
-                    }
+                    $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
                     $replacement = "<a href='$url'>" . __( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_PRINTBOOKINGSURL/', $result ) ) {
-                if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+                if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
                     $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
                     if ( $target == 'html' ) {
@@ -2517,14 +2511,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             } elseif ( preg_match( '/#_CSVBOOKINGSLINK/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
-                    $url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
-                    if ( $target == 'html' ) {
-                        $url = esc_url( $url );
-                    }
+                    $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
                     $replacement = "<a href='$url'>" . __( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_CSVBOOKINGSURL/', $result ) ) {
-                if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+                if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
                     $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
                     if ( $target == 'html' ) {
@@ -2897,7 +2888,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 }
                 if ( $target == 'html' ) {
                     $event_link  = esc_url( $event_link );
-                    $replacement = "<a href='$event_link' $linktarget title='" . eme_trans_esc_html( $event['event_name'], $lang ) . "'>" . eme_trans_esc_html( $event['event_name'], $lang ) . '</a>';
+                    $replacement = "<a href='$event_link' $linktarget title='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>" . esc_html( eme_translate( $event['event_name'], $lang ) ) . '</a>';
                 } else {
                     $replacement = eme_translate( $event['event_name'], $lang );
                 }
@@ -3000,7 +2991,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     if ( $target == 'html' ) {
                         $url = esc_url( $url );
                     }
-                    $replacement = "<img src='$url' alt='" . eme_trans_esc_html( $event['event_name'], $lang ) . "'>";
+                    $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>";
                 }
                 if ( ! empty( $replacement ) ) {
                     if ( $target == 'html' ) {
@@ -3064,7 +3055,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
                     $replacement = $event[ $tmp_attkey ];
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $replacement, $lang );
+                        $replacement = esc_html( eme_translate( $replacement, $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( $replacement, $lang );
@@ -3081,7 +3072,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( ! empty( $tmp_event ) && isset( $tmp_event['event_attributes'][ $tmp_event_attkey ] ) ) {
                     $replacement = $tmp_event['event_attributes'][ $tmp_event_attkey ];
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $replacement, $lang );
+                        $replacement = esc_html( eme_translate( $replacement, $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( $replacement, $lang );
@@ -3096,7 +3087,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $formfield = eme_get_formfield( $field_key );
                 if ( ! empty( $formfield ) ) {
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+                        $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } else {
                         $replacement = eme_translate( $formfield['field_name'], $lang );
@@ -3179,7 +3170,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $replacement = $event[ $field ];
                 }
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $replacement, $lang );
+                    $replacement = esc_html( eme_translate( $replacement, $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( $replacement, $lang );
@@ -3553,7 +3544,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             } elseif ( preg_match( '/#_CATEGORYIDS$/', $result ) && get_option( 'eme_categories_enabled' ) ) {
                 $category_ids = $event['event_category_ids'];
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $category_ids, $lang );
+                    $replacement = esc_html( eme_translate( $category_ids, $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( $category_ids, $lang );
@@ -3569,7 +3560,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $cat_names = array_column( $event_categories, 'category_name' );
                 foreach ( $cat_names as $key => $cat_name ) {
                     if ( $target == 'html' ) {
-                        $cat_names[ $key ] = eme_trans_esc_html( $cat_name, $lang );
+                        $cat_names[ $key ] = esc_html( eme_translate( $cat_name, $lang ) );
                     } else {
                         $cat_names[ $key ] = eme_translate( $cat_name, $lang );
                     }
@@ -3592,7 +3583,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 }
                 $cat_names = array_column( $event_categories, 'category_name' );
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( join( ' ', $cat_names ), $lang );
+                    $replacement = esc_html( eme_translate( join( ' ', $cat_names ), $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( join( ' ', $cat_names ), $lang );
@@ -3628,7 +3619,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $cat_name = $category['category_name'];
                     if ( $target == 'html' ) {
                         $cat_link = esc_url( $cat_link );
-                        $cat_links[] = "<a href='$cat_link' title='" . eme_trans_esc_html( $cat_name, $lang ) . "'>" . eme_trans_esc_html( $cat_name, $lang ) . '</a>';
+                        $cat_links[] = "<a href='$cat_link' title='" . esc_attr( eme_translate( $cat_name, $lang ) ) . "'>" . esc_html( eme_translate( $cat_name, $lang ) ) . '</a>';
                     } else {
                         $cat_links[] = eme_translate( $cat_name, $lang );
                     }
@@ -3662,7 +3653,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $cat_names        = [];
                 foreach ( $t_categories as $cat_name ) {
                     if ( $target == 'html' ) {
-                        $cat_names[] = eme_trans_esc_html( $cat_name, $lang );
+                        $cat_names[] = esc_html( eme_translate( $cat_name, $lang ) );
                     } else {
                         $cat_names[] = eme_translate( $cat_name, $lang );
                     }
@@ -3694,7 +3685,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
                 $t_categories     = eme_get_event_category_names( $event['event_id'], $extra_conditions, $order_by );
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( join( ' ', $t_categories ), $lang );
+                    $replacement = esc_html( eme_translate( join( ' ', $t_categories ), $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( join( ' ', $t_categories ), $lang );
@@ -3749,7 +3740,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $cat_name = $category['category_name'];
                     if ( $target == 'html' ) {
                         $cat_link = esc_url( $cat_link );
-                        $cat_links[] = "<a href='$cat_link' title='" . eme_trans_esc_html( $cat_name, $lang ) . "'>" . eme_trans_esc_html( $cat_name, $lang ) . '</a>';
+                        $cat_links[] = "<a href='$cat_link' title='" . esc_attr( eme_translate( $cat_name, $lang ) ) . "'>" . esc_html( eme_translate( $cat_name, $lang ) ) . '</a>';
                     } else {
                         $cat_links[] = eme_translate( $cat_name, $lang );
                     }
@@ -6072,7 +6063,7 @@ function eme_events_table( $message = '' ) {
     <?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
     <h1><?php esc_html_e( 'Add a new event', 'events-made-easy' ); ?></h1>
     <div class="wrap">
-        <form id="locations-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-manager' ); ?>">
+        <form id="locations-filter" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-manager' ) ); ?>">
         <input type="hidden" name="eme_admin_action" value="add_new_event">
         <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add event', 'events-made-easy' ); ?>">
         </form>
@@ -6080,13 +6071,13 @@ function eme_events_table( $message = '' ) {
 <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage events', 'events-made-easy' ); ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page&recurrences=1" ); ?>"><?php esc_html_e( 'Manage recurrences', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&recurrences=1" ) ); ?>"><?php esc_html_e( 'Manage recurrences', 'events-made-easy' ); ?></a><br>
     </h1>
 
     <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
     <?php } else { ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=1" ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=1" ) ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
         <?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
         <span class="eme_import_form_img">
             <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
@@ -6254,7 +6245,7 @@ function eme_recurrences_table( $message = '' ) {
     <?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
     <h1><?php esc_html_e( 'Add a new recurrence', 'events-made-easy' ); ?></h1>
     <div class="wrap">
-        <form id="locations-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-manager' ); ?>">
+        <form id="locations-filter" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-manager' ) ); ?>">
         <input type="hidden" name="eme_admin_action" value="add_new_recurrence">
         <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add recurrence', 'events-made-easy' ); ?>">
         </form>
@@ -6262,7 +6253,7 @@ function eme_recurrences_table( $message = '' ) {
 <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage recurrences', 'events-made-easy' ); ?>
-        <a href="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"><?php esc_html_e( 'Manage events', 'events-made-easy' ); ?></a><br>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"><?php esc_html_e( 'Manage events', 'events-made-easy' ); ?></a><br>
     </h1>
 
     <form method='post' action="#">
@@ -6424,7 +6415,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             esc_html_e( 'WARNING: This event is part of a recurrence.', 'events-made-easy' );
             echo '<br>';
             esc_html_e( 'If you change this event, it will become an independent event and be removed from the recurrence.', 'events-made-easy' );
-            echo "<br> <a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $event['recurrence_id'] ) . "'>";
+            echo "<br> <a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_recurrence&recurrence_id=' . $event['recurrence_id'] ) ) . "'>";
             esc_html_e( 'Edit Recurrence', 'events-made-easy' );
             echo '</a>';
         }
@@ -6746,19 +6737,19 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $available_seats_string = $available_seats;
                 }
                 $info_line .= __( 'Free:', 'events-made-easy' ) . ' ' . $available_seats_string;
-                $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
             } else {
                 $total_seats_string    = '&infin;';
-                $info_line .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+                $info_line .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
             }
 
             if ( $pending_seats > 0 ) {
-                $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
             }
             if ( $event['event_properties']['take_attendance'] ) {
                 $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
                 if ( $absent_bookings > 0 ) {
-                    $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                 }
             }
 	    $location = eme_get_location( $event['location_id'] );
@@ -6773,10 +6764,10 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 $info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                $printable_address     = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
-                $csv_address           = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
-                $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".esc_url($printable_address)."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
-                $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
+                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
+                $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }
 
@@ -6799,9 +6790,9 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 }
                 $info_line .= sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
-                    $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                 }
-                $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
             }
         }
         print $info_line; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML with admin URLs and translated strings
@@ -8533,7 +8524,7 @@ function eme_meta_box_div_event_customfields( $event ) {
     }
 
     foreach ( $formfields as $formfield ) {
-        $field_name     = eme_trans_esc_html( $formfield['field_name'] );
+        $field_name     = esc_html( eme_translate( $formfield['field_name'] ) );
         $field_id       = $formfield['field_id'];
         $postfield_name = 'FIELD' . $field_id;
         $entered_val    = '';
@@ -9537,7 +9528,7 @@ function eme_admin_enqueue_js() {
         remove_action( 'admin_enqueue_scripts', 'widgetopts_load_admin_scripts', 100 );
         $translation_array = [
             'translate_plugin_url'         => esc_url(EME_PLUGIN_URL),
-            'translate_ajax_url'           => admin_url( 'admin-ajax.php' ),
+            'translate_ajax_url'           => esc_url( admin_url( 'admin-ajax.php' ) ),
             'translate_selectstate'        => __( 'Select state/province', 'events-made-easy' ),
             'translate_selectcountry'      => __( 'Select country', 'events-made-easy' ),
             'translate_frontendnonce'      => wp_create_nonce( 'eme_frontend' ),
@@ -9691,7 +9682,7 @@ function eme_admin_enqueue_js() {
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
-            'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
+            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),
             'translate_tasksignup_date'            => __( 'Signup date', 'events-made-easy' ),
@@ -9870,7 +9861,7 @@ function eme_admin_enqueue_js() {
             'translate_publicgroup'                => __( 'Public group', 'events-made-easy' ),
             'translate_groupcount'                 => __( 'Nbr People', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
+            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
         ];
         wp_localize_script( 'eme-people', 'emepeople', $translation_array );
         wp_enqueue_script( 'eme-people' );
@@ -9925,7 +9916,7 @@ function eme_admin_enqueue_js() {
             'translate_nbrreminder'                => __( 'Reminders sent', 'events-made-easy' ),
             'translate_status'                     => __( 'Status', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
+            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_addatachments'              => __( 'Add attachments', 'events-made-easy' ),
             'translate_discount'                   => __( 'Discount', 'events-made-easy' ),
             'translate_dcodes_used'                => __( 'Used discount codes', 'events-made-easy' ),
@@ -9973,7 +9964,7 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
+            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
             'translate_selectonerowonlyforpartial' => __( 'Please select only one record in order to do partial payments', 'events-made-easy' ),
         ];
@@ -10048,7 +10039,7 @@ function eme_admin_enqueue_js() {
             'translate_addatachments'   => __( 'Add attachments', 'events-made-easy' ),
             'translate_selecteddates'   => __( 'Selected dates:', 'events-made-easy' ),
             'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
+            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
         ];
         wp_localize_script( 'eme-sendmails', 'ememails', $translation_array );
         wp_enqueue_script( 'eme-sendmails' );
@@ -10256,9 +10247,9 @@ function eme_ajax_events_list() {
         $date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
 
         if ($no_edit_links==1) {
-            $record['event_name'] = "<strong>" . eme_trans_esc_html( $event['event_name'] ) . '</strong>';
+            $record['event_name'] = "<strong>" . esc_html( eme_translate( $event['event_name'] ) ) . '</strong>';
         } else {
-            $record['event_name'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+            $record['event_name'] = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
         }
         if ( ! empty( $event['event_category_ids'] ) ) {
             $categories            = explode( ',', $event['event_category_ids'] );
@@ -10267,7 +10258,7 @@ function eme_ajax_events_list() {
             foreach ( $categories as $cat ) {
                 $category = eme_get_category( $cat );
                 if ( $category ) {
-                    $cat_names[] = eme_trans_esc_html( $category['category_name'] );
+                    $cat_names[] = esc_html( eme_translate( $category['category_name'] ) );
                 }
             }
             $record['event_name'] .= implode( ', ', $cat_names );
@@ -10306,14 +10297,14 @@ function eme_ajax_events_list() {
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
                 }
             } else {
                 $total_seats_string    = '&infin;';
                 if ($no_edit_links==1) {
                     $record['event_name'] .= __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string";
                 } else {
-                    $record['event_name'] .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+                    $record['event_name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
                 }
             }
 
@@ -10321,7 +10312,7 @@ function eme_ajax_events_list() {
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
                 }
             }
             if ( $event['event_properties']['take_attendance'] ) {
@@ -10330,7 +10321,7 @@ function eme_ajax_events_list() {
                     if ($no_edit_links==1) {
                         $record['event_name'] .= ', ' . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings";
                     } else {
-                        $record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
             }
@@ -10345,10 +10336,10 @@ function eme_ajax_events_list() {
                 $record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                $printable_address     = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
-                $csv_address           = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
-                $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".esc_url($printable_address)."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
-                $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
+                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
+                $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }
 
@@ -10371,13 +10362,13 @@ function eme_ajax_events_list() {
                     if ($no_edit_links==1) {
                         $record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces";
                     } else {
-                        $record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                     }
                 }
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $used_spaces";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
                 }
             }
         }
@@ -10385,20 +10376,20 @@ function eme_ajax_events_list() {
         if ( empty( $event['location_name'] ) ) {
             $record['location_name'] = '';
         } else {
-            $record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $event['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['location_name'] ) . '</a>';
+            $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $event['location_id'] ) ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['location_name'] ) ) . '</a>';
             if ( ! $event['location_latitude'] && ! $event['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $event['location_properties']['online_only'] ) {
                 $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
             }
         }
 
         if ( ! empty( $event['location_address1'] ) || ! empty( $event['location_address2'] ) ) {
-            $record['location_name'] .= '<br>' . eme_trans_esc_html( $event['location_address1'] ) . ' ' . eme_trans_esc_html( $event['location_address2'] );
+            $record['location_name'] .= '<br>' . esc_html( eme_translate( $event['location_address1'] ) ) . ' ' . esc_html( eme_translate( $event['location_address2'] ) );
         }
         if ( ! empty( $event['location_city'] ) || ! empty( $event['location_state'] ) || ! empty( $event['location_zip'] ) || ! empty( $event['location_country'] ) ) {
-            $record['location_name'] .= '<br>' . eme_trans_esc_html( $event['location_city'] ) . ' ' . eme_trans_esc_html( $event['location_state'] ) . ' ' . eme_trans_esc_html( $event['location_zip'] ) . ' ' . eme_trans_esc_html( $event['location_country'] );
+            $record['location_name'] .= '<br>' . esc_html( eme_translate( $event['location_city'] ) ) . ' ' . esc_html( eme_translate( $event['location_state'] ) ) . ' ' . esc_html( eme_translate( $event['location_zip'] ) ) . ' ' . esc_html( eme_translate( $event['location_country'] ) );
         }
         if ( ! $event['location_properties']['online_only'] && ! empty( $event['location_url'] ) ) {
-            $record['location_name'] .= '<br>' . eme_trans_esc_html( $event['location_url'] );
+            $record['location_name'] .= '<br>' . esc_html( eme_translate( $event['location_url'] ) );
         }
 
         if ( isset( $event_status_array[ $event['event_status'] ] ) ) {
@@ -10414,7 +10405,7 @@ function eme_ajax_events_list() {
         }
 
         if (current_user_can(get_option('eme_cap_add_event'))) {
-            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ).'";';
+            $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=duplicate_event&event_id=' . $event['event_id'] ) ).'";';
             $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         } else {
             $record['copy'] = "";
@@ -10427,7 +10418,7 @@ function eme_ajax_events_list() {
                 $page = 'eme-registration-seats';
             }
 
-            $record['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
+            $record['rsvp'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=newBooking&event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
             if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
                 $record['rsvp'] .= '<br>(' . __( 'Password protected', 'events-made-easy' ) . ')';
             }
@@ -10476,7 +10467,7 @@ function eme_ajax_events_list() {
             if ($no_edit_links==1) {
                 $record['recinfo']  = $recurrence_desc;
             } else {
-                $record['recinfo']  = "$recurrence_desc <br> <a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $event['recurrence_id'] ) . "'>";
+                $record['recinfo']  = "$recurrence_desc <br> <a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_recurrence&recurrence_id=' . $event['recurrence_id'] ) ) . "'>";
                 $record['recinfo'] .= __( 'Edit Recurrence', 'events-made-easy' );
                 $record['recinfo'] .= '</a>';
             }

@@ -220,7 +220,7 @@ function eme_ajax_attendances_list() {
 				$person_info_shown .= ' ' . $person['firstname'];
 			}
 			$person_info_shown           .= ' (' . $person['email'] . ')';
-			$rows[ $key ]['person']       = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+			$rows[ $key ]['person']       = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
 			$rows[ $key ]['related_name'] = '';
 			if ( $row['type'] == 'event' ) {
 				$event = eme_get_event( $row['related_id'] );
@@ -240,12 +240,12 @@ function eme_ajax_attendances_list() {
 						$datetime .= "$localized_start_time - $localized_end_time";
 					}
 
-					$rows[ $key ]['related_name'] = eme_trans_esc_html( $event['event_name'] ) . "<br>$datetime";
+					$rows[ $key ]['related_name'] = esc_html( eme_translate( $event['event_name'] ) ) . "<br>$datetime";
 				}
 			} elseif ( $row['type'] == 'membership' ) {
 				$membership = eme_get_membership( $row['related_id'] );
 				if ( $membership ) {
-					$rows[ $key ]['related_name'] = eme_trans_esc_html( $membership['name'] );
+					$rows[ $key ]['related_name'] = esc_html( eme_translate( $membership['name'] ) );
 				}
 			} else {
 				$rows[ $key ]['related_name'] = __( 'Manual entry', 'events-made-easy' );

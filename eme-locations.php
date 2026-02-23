@@ -367,7 +367,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
         <div id="eme-location-changed" class='notice is-dismissible eme-message-admin eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
         </div>
-    <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">
+    <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" class="validate">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <?php if ( $action == 'add' ) { ?>
     <input type="hidden" name="eme_admin_action" value="do_addlocation">
@@ -380,7 +380,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     if ( $action == 'add' ) {
         esc_html_e( 'Insert New Location', 'events-made-easy' );
     } else {
-        echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), eme_trans_esc_html( $location['location_name'] ) );
+        echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), esc_html( eme_translate( $location['location_name'] ) ) );
     }
 ?>
         </h1>
@@ -459,7 +459,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     } else {
         foreach ( $categories as $category ) {
 ?>
-                            <input type="checkbox" name="location_category_ids[]" value="<?php echo esc_attr( $category['category_id'] ); ?>" <?php checked( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ); ?>><?php echo eme_trans_esc_html( $category['category_name'] ); ?><br>
+                            <input type="checkbox" name="location_category_ids[]" value="<?php echo esc_attr( $category['category_id'] ); ?>" <?php checked( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ); ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
 <?php
         } // end foreach
     } // end if
@@ -785,7 +785,7 @@ function eme_meta_box_div_location_customfields( $location ) {
     }
 
     foreach ( $formfields as $formfield ) {
-        $field_name     = eme_trans_esc_html( $formfield['field_name'] );
+        $field_name     = esc_html( eme_translate( $formfield['field_name'] ) );
         $field_id       = $formfield['field_id'];
         $postfield_name = 'FIELD' . $field_id;
         $entered_val    = '';
@@ -833,7 +833,7 @@ function eme_locations_table( $message = '' ) {
     <?php if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new location', 'events-made-easy' ); ?></h1>
         <div class="wrap">
-        <form id="locations-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-locations' ); ?>">
+        <form id="locations-filter" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-locations' ) ); ?>">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <input type="hidden" name="eme_admin_action" value="add_location">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add location', 'events-made-easy' ); ?>">
@@ -1697,7 +1697,7 @@ function eme_global_map_shortcode( $atts ) {
         if ( $show_locations ) {
             $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
                 "' $letter_style><a>" .
-                eme_trans_esc_html( $location['location_name'] ) . '</a></li>';
+                esc_html( eme_translate( $location['location_name'] ) ) . '</a></li>';
         }
         if ( $show_events ) {
             $events    = eme_get_events( scope: $scope, offset: $scope_offset, location_id: $location['location_id'], category: $atts['category'] );
@@ -1706,11 +1706,11 @@ function eme_global_map_shortcode( $atts ) {
                 if ( $show_locations ) {
                     $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
                         "' style='list-style-type: none'>- <a>" .
-                        eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
+                        esc_html( eme_translate( $event['event_name'] ) ) . '</a></li>';
                 } else {
                     $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
                         "' style='list-style-type: none'>$firstletter. <a>" .
-                        eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
+                        esc_html( eme_translate( $event['event_name'] ) ) . '</a></li>';
                 }
             }
             $loc_list .= '</ol>';
@@ -2056,7 +2056,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location[ $field ] ) ) {
                     $replacement = $location[ $field ];
                 }
-                $replacement = eme_trans_esc_html( $replacement, $lang );
+                $replacement = esc_html( eme_translate( $replacement, $lang ) );
                 if ( $target == 'html' ) {
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
@@ -2069,7 +2069,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location[ $field ] ) ) {
                     $replacement = $location[ $field ];
                 }
-                $replacement = eme_trans_esc_html( $replacement, $lang );
+                $replacement = esc_html( eme_translate( $replacement, $lang ) );
                 if ( $target == 'html' ) {
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
@@ -2082,7 +2082,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location[ $field ] ) ) {
                     $replacement = $location[ $field ];
                 }
-                $replacement = eme_trans_esc_html( $replacement, $lang );
+                $replacement = esc_html( eme_translate( $replacement, $lang ) );
                 if ( $target == 'html' ) {
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
@@ -2157,7 +2157,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     if ( $target == 'html' ) {
                         $url = esc_url( $url );
                     }
-                    $replacement = "<img src='$url' alt='" . eme_trans_esc_html( $location['location_name'], $lang ) . "'>";
+                    $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $location['location_name'], $lang ) ) . "'>";
                 }
                 if ( ! empty( $replacement ) ) {
                     if ( $target == 'html' ) {
@@ -2242,7 +2242,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
                     $replacement = $location[ $tmp_attkey ];
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $replacement, $lang );
+                        $replacement = esc_html( eme_translate( $replacement, $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( $replacement, $lang );
@@ -2257,7 +2257,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
                     $replacement = $location['location_attributes'][ $tmp_attkey ];
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $replacement, $lang );
+                        $replacement = esc_html( eme_translate( $replacement, $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( $replacement, $lang );
@@ -2278,7 +2278,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     }
                     $cat_names = array_column( $location_categories, 'category_name' );
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( join( $sep, $cat_names ), $lang );
+                        $replacement = esc_html( eme_translate( join( $sep, $cat_names ), $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( join( $sep, $cat_names ), $lang );
@@ -2295,7 +2295,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     }
                     $cat_names = array_column( $location_categories, 'category_name' );
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( join( ' ', $cat_names ), $lang );
+                        $replacement = esc_html( eme_translate( join( ' ', $cat_names ), $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( join( ' ', $cat_names ), $lang );
@@ -2316,7 +2316,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     }
                     $cat_descs = array_column( $location_categories, 'description' );
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( join( $sep, $cat_descs ), $lang );
+                        $replacement = esc_html( eme_translate( join( $sep, $cat_descs ), $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } elseif ( $target == 'rss' ) {
                         $replacement = eme_translate( join( $sep, $cat_descs ), $lang );
@@ -2343,7 +2343,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $cat_names        = [];
                 foreach ( $categories as $cat_name ) {
                     if ( $target == 'html' ) {
-                        $cat_names[] = eme_trans_esc_html( $cat_name, $lang );
+                        $cat_names[] = esc_html( eme_translate( $cat_name, $lang ) );
                     } else {
                         $cat_names[] = eme_translate( $cat_name, $lang );
                     }
@@ -2375,7 +2375,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
                 $categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( join( ' ', $categories ), $lang );
+                    $replacement = esc_html( eme_translate( join( ' ', $categories ), $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } elseif ( $target == 'rss' ) {
                     $replacement = eme_translate( join( ' ', $categories ), $lang );
@@ -2414,7 +2414,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                     if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
                         ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
-                        $url = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+                        $url = admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] );
                         if ( $target == 'html' ) {
                             $url = esc_url( $url );
                         }
@@ -2425,7 +2425,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                     if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
                         ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
-                        $replacement = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+                        $replacement = admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] );
                         if ( $target == 'html' ) {
                             $replacement = esc_url( $replacement );
                         }
@@ -2459,7 +2459,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $formfield = eme_get_formfield( $field_key );
                 if ( ! empty( $formfield ) ) {
                     if ( $target == 'html' ) {
-                        $replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+                        $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
                         $replacement = apply_filters( 'eme_general', $replacement );
                     } else {
                         $replacement = eme_translate( $formfield['field_name'], $lang );
@@ -2707,7 +2707,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
         # no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
         $tmp_loc                           = preg_replace( '/\s+/', ' ', $tmp_loc );
-        $json_location['location_balloon'] = eme_trans_esc_html( $tmp_loc );
+        $json_location['location_balloon'] = esc_html( eme_translate( $tmp_loc ) );
 
         # second, we fill in the rest of the info
         foreach ( $location as $key => $value ) {
@@ -2715,7 +2715,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
             if ( preg_match( '/location_balloon|location_id|location_latitude|location_longitude/', $key ) ) {
                 # no newlines allowed, otherwise no map is shown
                 $value                 = eme_nl2br( $value );
-                $json_location[ $key ] = eme_trans_esc_html( $value );
+                $json_location[ $key ] = esc_html( eme_translate( $value ) );
             }
             $json_location['map_icon'] = eme_esc_html( $location['location_properties']['map_icon'] );
         }
@@ -2837,18 +2837,18 @@ function eme_locations_search_ajax() {
         } else {
             $record = [];
             $record['id']           = $item['location_id'];
-            $record['name']         = eme_trans_esc_html( $item['location_name'] );
-            $record['address1']     = eme_trans_esc_html( $item['location_address1'] );
-            $record['address2']     = eme_trans_esc_html( $item['location_address2'] );
-            $record['city']         = eme_trans_esc_html( $item['location_city'] );
-            $record['state']        = eme_trans_esc_html( $item['location_state'] );
-            $record['zip']          = eme_trans_esc_html( $item['location_zip'] );
-            $record['country']      = eme_trans_esc_html( $item['location_country'] );
-            $record['latitude']     = eme_trans_esc_html( $item['location_latitude'] );
-            $record['longitude']    = eme_trans_esc_html( $item['location_longitude'] );
-            $record['map_icon']     = eme_trans_esc_html( $item['location_properties']['map_icon'] );
-            $record['online_only']  = eme_trans_esc_html( $item['location_properties']['online_only'] );
-            $record['location_url'] = eme_trans_esc_html( $item['location_url'] );
+            $record['name']         = esc_html( eme_translate( $item['location_name'] ) );
+            $record['address1']     = esc_html( eme_translate( $item['location_address1'] ) );
+            $record['address2']     = esc_html( eme_translate( $item['location_address2'] ) );
+            $record['city']         = esc_html( eme_translate( $item['location_city'] ) );
+            $record['state']        = esc_html( eme_translate( $item['location_state'] ) );
+            $record['zip']          = esc_html( eme_translate( $item['location_zip'] ) );
+            $record['country']      = esc_html( eme_translate( $item['location_country'] ) );
+            $record['latitude']     = esc_html( eme_translate( $item['location_latitude'] ) );
+            $record['longitude']    = esc_html( eme_translate( $item['location_longitude'] ) );
+            $record['map_icon']     = esc_html( eme_translate( $item['location_properties']['map_icon'] ) );
+            $record['online_only']  = esc_html( eme_translate( $item['location_properties']['online_only'] ) );
+            $record['location_url'] = esc_html( eme_translate( $item['location_url'] ) );
             echo wp_json_encode( $record );
         }
     } else {
@@ -2884,18 +2884,18 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
         $properties = eme_init_location_props(eme_unserialize($item['location_properties']));
         $record                = [];
         $record['location_id'] = $item['location_id'];
-        $record['name']        = eme_trans_esc_html( $item['location_name'] );
-        $record['address1']    = eme_trans_esc_html( $item['location_address1'] );
-        $record['address2']    = eme_trans_esc_html( $item['location_address2'] );
-        $record['city']        = eme_trans_esc_html( $item['location_city'] );
-        $record['state']       = eme_trans_esc_html( $item['location_state'] );
-        $record['zip']         = eme_trans_esc_html( $item['location_zip'] );
-        $record['country']     = eme_trans_esc_html( $item['location_country'] );
-        $record['latitude']    = eme_trans_esc_html( $item['location_latitude'] );
-        $record['longitude']   = eme_trans_esc_html( $item['location_longitude'] );
-        $record['location_url']= eme_trans_esc_html( $item['location_url'] );
+        $record['name']        = esc_html( eme_translate( $item['location_name'] ) );
+        $record['address1']    = esc_html( eme_translate( $item['location_address1'] ) );
+        $record['address2']    = esc_html( eme_translate( $item['location_address2'] ) );
+        $record['city']        = esc_html( eme_translate( $item['location_city'] ) );
+        $record['state']       = esc_html( eme_translate( $item['location_state'] ) );
+        $record['zip']         = esc_html( eme_translate( $item['location_zip'] ) );
+        $record['country']     = esc_html( eme_translate( $item['location_country'] ) );
+        $record['latitude']    = esc_html( eme_translate( $item['location_latitude'] ) );
+        $record['longitude']   = esc_html( eme_translate( $item['location_longitude'] ) );
+        $record['location_url']= esc_html( eme_translate( $item['location_url'] ) );
         foreach ($properties as $key=>$val) {
-            $record[$key]    = eme_trans_esc_html( $val );
+            $record[$key]    = esc_html( eme_translate( $val ) );
         }
         $res[]                 = $record;
     }
@@ -3003,7 +3003,7 @@ function eme_ajax_locations_list() {
         }
         $record                  = [];
         $record['location_id']   = $location['location_id'];
-        $record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $location['location_name'] ) . '</a>';
+        $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] ) ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $location['location_name'] ) ) . '</a>';
         if ( ! $location['location_latitude'] && ! $location['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $location['location_properties']['online_only'] ) {
             $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
         }
@@ -3014,7 +3014,7 @@ function eme_ajax_locations_list() {
                         foreach ( $categories as $cat ) {
                                 $category = eme_get_category( $cat );
                                 if ( $category ) {
-                                        $cat_names[] = eme_trans_esc_html( $category['category_name'] );
+                                        $cat_names[] = esc_html( eme_translate( $category['category_name'] ) );
                                 }
                         }
                         $record['location_name'] .= implode( ', ', $cat_names );
@@ -3026,19 +3026,19 @@ function eme_ajax_locations_list() {
                         $record['location_name'] .= '</span>';
         }
 
-        $record['location_address1']  = eme_trans_esc_html( $location['location_address1'] );
-        $record['location_address2']  = eme_trans_esc_html( $location['location_address2'] );
-        $record['location_city']      = eme_trans_esc_html( $location['location_city'] );
-        $record['location_state']     = eme_trans_esc_html( $location['location_state'] );
-        $record['location_zip']       = eme_trans_esc_html( $location['location_zip'] );
-        $record['location_country']   = eme_trans_esc_html( $location['location_country'] );
-        $record['location_latitude']  = eme_trans_esc_html( $location['location_latitude'] );
-        $record['location_longitude'] = eme_trans_esc_html( $location['location_longitude'] );
-        $record['external_url']       = eme_trans_esc_html( $location['location_url'] );
+        $record['location_address1']  = esc_html( eme_translate( $location['location_address1'] ) );
+        $record['location_address2']  = esc_html( eme_translate( $location['location_address2'] ) );
+        $record['location_city']      = esc_html( eme_translate( $location['location_city'] ) );
+        $record['location_state']     = esc_html( eme_translate( $location['location_state'] ) );
+        $record['location_zip']       = esc_html( eme_translate( $location['location_zip'] ) );
+        $record['location_country']   = esc_html( eme_translate( $location['location_country'] ) );
+        $record['location_latitude']  = esc_html( eme_translate( $location['location_latitude'] ) );
+        $record['location_longitude'] = esc_html( eme_translate( $location['location_longitude'] ) );
+        $record['external_url']       = esc_html( eme_translate( $location['location_url'] ) );
         $record['online_only']        = $location['location_properties']['online_only'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         $location_url                 = eme_location_url( $location );
         $record['view']               = "<a href='" . esc_url( $location_url ) . "'>" . __( 'View location', 'events-made-easy' ) . '</a>';
-        $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=copy_location&amp;location_id=' . $location['location_id'] ).'";';
+        $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=copy_location&location_id=' . $location['location_id'] ) ).'";';
         $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         $location_cf_values           = eme_get_location_answers( $location['location_id'] );
         foreach ( $formfields as $formfield ) {

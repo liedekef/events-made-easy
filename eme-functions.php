@@ -2254,7 +2254,7 @@ function eme_calc_bookingprice_detail_ajax() {
         $event = eme_get_event( $event_id );
         // if there's more than 1 event: show the event name too
         if ($count>1) {
-            $result .= eme_trans_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ) . "<br>";
+            $result .= esc_html( eme_translate( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ) ) . "<br>";
         }
         if ( ! empty( $event ) ) {
             $fake_booking = eme_fake_booking( $event );
@@ -2318,7 +2318,7 @@ function eme_dyndata_people_ajax() {
             foreach ( $fields as $formfield ) {
                 $field_id       = $formfield['field_id'];
                 $form_html     .= '<tr><td>';
-                $name           = eme_trans_esc_html( $formfield['field_name'] );
+                $name           = esc_html( eme_translate( $formfield['field_name'] ) );
                 $form_html     .= "$name</td><td>";
                 $var_prefix     = "dynamic_personfields[$person_id][";
                 $var_postfix    = ']';
@@ -3250,7 +3250,7 @@ function eme_get_uploaded_files( $id, $type = 'bookings' ) {
                     $line['field_id']  = $info[1];
                     $formfield         = eme_get_formfield( $info[1] );
                     if ( $formfield ) {
-                        $line['field_name'] = eme_trans_esc_html( $formfield['field_name'] );
+                        $line['field_name'] = esc_html( eme_translate( $formfield['field_name'] ) );
                     } else {
                         // unknown ...
                         $line['field_name'] = $entry;

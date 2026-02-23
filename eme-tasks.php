@@ -1295,7 +1295,7 @@ function eme_tasks_signups_shortcode( $atts ) {
         $result .= eme_replace_event_placeholders( $header, $event );
         foreach ( $tasks as $task ) {
             if ( $task['spaces'] == 0 ) {
-                $result .= '<br><span class="eme_task_section_header">'.eme_trans_esc_html( $task['name'], $lang ).'</span><br>';
+                $result .= '<br><span class="eme_task_section_header">'.esc_html( eme_translate( $task['name'], $lang ) ).'</span><br>';
             } else {
                 $signups = eme_get_task_signups( $task['task_id'] );
                 foreach ( $signups as $signup ) {
@@ -1584,7 +1584,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
                 ++$open_tasks_found;
             }
             if ( $task['spaces'] == 0 ) {
-                $result .= '<br><span class="eme_task_section_header">'.eme_trans_esc_html( $task['name'], $lang ).'</span><br>';
+                $result .= '<br><span class="eme_task_section_header">'.esc_html( eme_translate( $task['name'], $lang ) ).'</span><br>';
             } elseif ( ! $skip ) {
                 $result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
             }
@@ -2142,8 +2142,8 @@ function eme_ajax_task_signups_list() {
             $localized_taskstart_date    = eme_localized_datetime( $row['task_start'], EME_TIMEZONE, 1 );
             $localized_taskend_date      = eme_localized_datetime( $row['task_end'], EME_TIMEZONE, 1 );
             $localized_signup_date       = eme_localized_datetime( $row['signup_date'], EME_TIMEZONE, 1 );
-            $row['event_name']  = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $row['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $row['event_name'] ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
-            $csv_address = admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=tasksignups_csv&amp;event_id=' . $row['event_id'] );
+            $row['event_name']  = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $row['event_id'] ) ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $row['event_name'] ) ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
+            $csv_address = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=tasksignups_csv&event_id=' . $row['event_id'] ) );
             $row['event_name'] .= " (<a id='tasksignups_csv_" . $row['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             $row['task_name']   = eme_esc_html( $row['task_name'] );
             $row['comment']     = nl2br(eme_esc_html( $row['comment'] ));
@@ -2155,7 +2155,7 @@ function eme_ajax_task_signups_list() {
             } else {
                 $row['signup_status'] = __('Pending', 'events-made-easy');
             }
-            $row['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>' . ' (' . eme_esc_html( $row['email'] ) . ')';
+            $row['person_info'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $row['person_id'] ) ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>' . ' (' . eme_esc_html( $row['email'] ) . ')';
 
             foreach ( $formfields as $formfield ) {
                 foreach ( $answers as $answer ) {

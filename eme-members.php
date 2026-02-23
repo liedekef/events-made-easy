@@ -655,7 +655,7 @@ function eme_get_linked_activemembership_names_by_personid( $person_id ) {
     $rows = $wpdb->get_results( $sql, ARRAY_A );
     $memberships_list = '';
     foreach ($rows as $item) {
-        $memberships_list .= "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a><br>';
+        $memberships_list .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a><br>';
     }
     return $memberships_list;
 }
@@ -1505,10 +1505,10 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     }
     echo '<h1>' . esc_html( $h1_message ) . ' </h1>';
     if ( $action == 'edit' ) {
-        echo "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $member['person_id'] ) . "' title='" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
+        echo "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $member['person_id'] ) ) . "' title='" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
     }
 ?>
-    <form name="eme-member-adminform" id="eme-member-adminform" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" enctype='multipart/form-data'>
+    <form name="eme-member-adminform" id="eme-member-adminform" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" enctype='multipart/form-data'>
 <?php
     wp_nonce_field( 'eme_admin', 'eme_admin_nonce' );
     if ( $action == 'add' ) {
@@ -1614,7 +1614,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
                      if ( $related_member ) {
                          $related_person = eme_get_person( $related_member['person_id'] );
                          if ( $related_person ) {
-                             print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
+                             print "<br><a href='" . esc_url( admin_url( "admin.php?page=eme-members&eme_admin_action=edit_member&member_id=$related_member_id" ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
                          }
                      }
                  }
@@ -1843,7 +1843,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 
 
         <div id="ajax-response"></div>
-        <form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"  enctype="multipart/form-data" class="validate">
+        <form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"  enctype="multipart/form-data" class="validate">
         <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <?php if ( $is_new_membership == 1 ) { ?>
         <input type="hidden" name="eme_admin_action" value="do_addmembership">
@@ -2795,7 +2795,7 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
         $answers = [];
     }
     foreach ( $formfields as $formfield ) {
-        $field_name     = eme_trans_esc_html( $formfield['field_name'] );
+        $field_name     = esc_html( eme_translate( $formfield['field_name'] ) );
         $field_id       = $formfield['field_id'];
         $postfield_name = 'FIELD' . $field_id;
         $entered_val    = '';
@@ -3208,7 +3208,7 @@ function eme_manage_members_layout( $message ) {
         <h1><?php esc_html_e( 'Add a new member', 'events-made-easy' ); ?></h1>
         <div class="wrap">
         <?php if ( ! empty( $memberships ) ) { ?>
-        <form id="members-filter" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
+        <form id="members-filter" method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
             <input type="hidden" name="eme_admin_action" value="add_member">
 <?php
     wp_nonce_field( 'eme_admin', 'eme_admin_nonce' );
@@ -3286,7 +3286,7 @@ function eme_manage_memberships_layout( $message ) {
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new membership definition', 'events-made-easy' ); ?></h1>
         <div class="wrap">
-        <form id="memberships-filter" method="post" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>">
+        <form id="memberships-filter" method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
             <input type="hidden" name="eme_admin_action" value="add_membership">
             <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add membership', 'events-made-easy' ); ?>">
@@ -5673,7 +5673,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+                    $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } else {
                     $replacement = eme_translate( $formfield['field_name'], $lang );
@@ -5953,7 +5953,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 if ( $target == 'html' ) {
-                    $replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+                    $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } else {
                     $replacement = eme_translate( $formfield['field_name'], $lang );
@@ -6551,7 +6551,7 @@ function eme_ajax_memberships_list() {
             $record['name'] = "<s>";
         }
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            $record['name'] .= "<a href='" . admin_url( 'admin.php?page=eme-memberships&amp;eme_admin_action=edit_membership&amp;membership_id=' . $item['membership_id'] ) . "' title='" . esc_html__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
+            $record['name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-memberships&eme_admin_action=edit_membership&membership_id=' . $item['membership_id'] ) ) . "' title='" . esc_html__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
         } else {
             $record['name'] .= eme_esc_html( $item['name'] );
         }
@@ -6649,7 +6649,7 @@ function eme_ajax_members_list( ) {
             $related_member = eme_get_member( $item['related_member_id'] );
             if ( $related_member ) {
                 $related_person              = eme_get_person( $related_member['person_id'] );
-                $record['related_member_id'] = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['related_member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
+                $record['related_member_id'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['related_member_id'] ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
                 $familytext                 .= '<br>' . esc_html__( 'Head of the family: ', 'events-made-easy' ) . $record['related_member_id'];
             }
         } elseif ( ! empty( $membership['properties']['family_membership'] ) ) {
@@ -6658,9 +6658,9 @@ function eme_ajax_members_list( ) {
             $familytext = '';
         }
 
-        $record['lastname']   = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
-        $record['firstname']  = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
-        $record['email']      = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;
+        $record['lastname']   = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
+        $record['firstname']  = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
+        $record['email']      = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;
         $record['birthdate']  = eme_localized_date( $item['birthdate'], EME_TIMEZONE, 1 );
         $record['birthplace'] = eme_esc_html( $item['birthplace'] );
         $record['address1']   = eme_esc_html( $item['address1'] );

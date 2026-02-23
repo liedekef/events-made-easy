@@ -2969,7 +2969,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    $extra_attributes = '" data-placeholder="' . esc_html( __( 'Filter on membership', 'events-made-easy' )) . '"';
+    $extra_attributes = ' data-placeholder="' . esc_html( __( 'Filter on membership', 'events-made-easy' )) . '"';
     echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
@@ -2979,7 +2979,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    $extra_attributes = '" data-placeholder="' . esc_html( __( 'Filter on member status', 'events-made-easy' )) . '"';
+    $extra_attributes = ' data-placeholder="' . esc_html( __( 'Filter on member status', 'events-made-easy' )) . '"';
     echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on person', 'events-made-easy' ) . '</td><td>';

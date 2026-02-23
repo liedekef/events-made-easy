@@ -124,13 +124,18 @@ function initSnapSelectRemote(selector, options = {}) {
                     const records = Array.isArray(data)
                         ? data
                         : (data.Records || []);
-                    const total   = data.TotalRecordCount !== undefined
-                        ? data.TotalRecordCount
-                        : records.length;
-                    let hasMore = total > page * pagesize;
-                    // the next if covers the case where all rows are returned in 1 go, not respecting paging
-                    if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
-                        hasMore = false;
+                    let hasMore;
+                    if (data.hasMore !== undefined) {
+                        hasMore = data.hasMore;
+                    } else {
+                        const total   = data.TotalRecordCount !== undefined
+                            ? data.TotalRecordCount
+                            : records.length;
+                        hasMore = total > page * pagesize;
+                        // the next if covers the case where all rows are returned in 1 go, not respecting paging
+                        if (data.TotalRecordCount !== undefined && records.length >= data.TotalRecordCount)
+                            hasMore = false;
+                    }
                     return { results: records, hasMore };
                 },
             }

@@ -6403,6 +6403,7 @@ function eme_ajax_memberperson_snapselect() {
     $membership_id     = isset( $_REQUEST['membership_id'] )     ? intval( $_REQUEST['membership_id'] )     : 0;
     $related_member_id = isset( $_REQUEST['related_member_id'] ) ? intval( $_REQUEST['related_member_id'] ) : 0;
     $pagesize          = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize    = $pagesize +1;
     $page              = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $start             = ( $page - 1 ) * $pagesize;
 
@@ -6422,11 +6423,7 @@ function eme_ajax_memberperson_snapselect() {
     $sql       = "SELECT people.person_id, people.lastname, people.firstname, people.email
         FROM $people_table AS people
         LEFT JOIN $members_table AS members ON members.person_id = people.person_id
-        WHERE $search ORDER BY people.lastname, people.firstname LIMIT $start, $pagesize";
-    $count_sql = "SELECT COUNT(*)
-        FROM $people_table AS people
-        LEFT JOIN $members_table AS members ON members.person_id = people.person_id
-        WHERE $search";
+        WHERE $search ORDER BY people.lastname, people.firstname LIMIT $start, $mysql_pagesize";
 
     $records     = [];
     $recordCount = $wpdb->get_var( $count_sql );
@@ -6436,7 +6433,10 @@ function eme_ajax_memberperson_snapselect() {
             'text' => eme_format_full_name( $item['firstname'], $item['lastname'], $item['email'] ),
         ];
     }
-    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 
@@ -6469,8 +6469,7 @@ function eme_ajax_membermainaccount_snapselect() {
     }
 
     $all_members = eme_get_members( '', $search );
-    $recordCount = count( $all_members );
-    $paged       = array_slice( $all_members, $start, $pagesize );
+    $paged       = array_slice( $all_members, $start, $pagesize+1 );
     $records     = [];
     foreach ( $paged as $item ) {
         $records[] = [
@@ -6478,7 +6477,11 @@ function eme_ajax_membermainaccount_snapselect() {
             'text' => eme_format_full_name( $item['firstname'], $item['lastname'], $item['email'] ),
         ];
     }
-    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
+
     wp_die();
 }
 
@@ -6754,50 +6757,40 @@ function eme_ajax_members_snapselect() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-        $ajaxResult 		   = [];
-        $ajaxResult['Result']      = 'Error';
-        $ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $ajaxResult );
+        print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => __( 'Access denied!', 'events-made-easy' ) ] );
         wp_die();
     }
 
     $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    $fTableResult      = [];
     $q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     if ( ! empty( $q ) ) {
         $where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
     } else {
         $where = '(1=1)';
     }
-    $pagesize = intval( $_REQUEST['pagesize'] );
-    //$start= isset($_REQUEST["page"]) ? intval($_REQUEST["page"])*$pagesize : 0;
+	$pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
     $start     = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
     $sql       = "SELECT members.member_id, people.lastname, people.firstname, people.email, people.wp_id, memberships.name AS membership_name
         FROM $members_table AS members
         LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
         LEFT JOIN $people_table as people ON members.person_id=people.person_id
-        WHERE $where ORDER BY people.lastname, people.firstname LIMIT $start,$pagesize";
-    $count_sql = "SELECT COUNT(*)
-        FROM $members_table AS members
-        LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
-        LEFT JOIN $people_table as people ON members.person_id=people.person_id
-        WHERE $where";
+        WHERE $where ORDER BY people.lastname, people.firstname LIMIT $start,$mysql_pagesize";
 
     $records     = [];
-    $recordCount = $wpdb->get_var( $count_sql );
     $members     = $wpdb->get_results( $sql, ARRAY_A );
     foreach ( $members as $member ) {
-        $record       = [];
-        $record['id'] = $member['member_id'];
-        // no eme_esc_html here, snapselect does it own escaping upon arrival
-        $record['text'] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] ) . ' (' . $member['membership_name'] . ')';
-        $records[]      = $record;
+        $records[] = [
+            'id'   => $member['member_id'],
+            'text' => eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] ) . ' (' . $member['membership_name'] . ')'
+        ];
     }
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 

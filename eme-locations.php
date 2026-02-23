@@ -3108,7 +3108,8 @@ function eme_ajax_chooselocation_snapselect() {
 
     $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
-    $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $mysql_pagesize = $pagesize+1;
+    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $start    = ( $page - 1 ) * $pagesize;
 
     $where = ! empty( $q )
@@ -3122,8 +3123,7 @@ function eme_ajax_chooselocation_snapselect() {
         }
     }
 
-    $recordCount = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE $where" );
-    $locations   = $wpdb->get_results( "SELECT * FROM $table WHERE $where LIMIT $start,$pagesize", ARRAY_A );
+    $locations   = $wpdb->get_results( "SELECT * FROM $table WHERE $where LIMIT $start,$mysql_pagesize", ARRAY_A );
     $records = [];
     foreach ( $locations as $location ) {
         $records[] = [
@@ -3131,7 +3131,10 @@ function eme_ajax_chooselocation_snapselect() {
             'text'      => $location['location_name']
         ];
     }
-    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 add_action( 'wp_ajax_eme_chooselocation_snapselect', 'eme_ajax_chooselocation_snapselect' );

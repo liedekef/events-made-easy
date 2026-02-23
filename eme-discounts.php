@@ -1853,7 +1853,6 @@ function eme_ajax_discounts_snapselect() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
-	$fTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1861,24 +1860,24 @@ function eme_ajax_discounts_snapselect() {
 			$where = '(1=1)';
 	}
 
-	$pagesize    = intval( $_REQUEST['pagesize'] );
-	$start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
-	$count_sql   = "SELECT COUNT(*) FROM $table WHERE $where";
-	$recordCount = $wpdb->get_var( $count_sql );
-	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
+	$pagesize    = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
+    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start    = ( $page - 1 ) * $pagesize;
+	$search      = "$where ORDER BY name LIMIT $start,$mysql_pagesize";
 
 	$records   = [];
 	$discounts = eme_get_discounts( $search );
 	foreach ( $discounts as $discount ) {
-		$record       = [];
-		$record['id'] = $discount['id'];
-		// no eme_esc_html here, snapselect does it own escaping upon arrival
-		$record['text'] = $discount['name'];
-		$records[]      = $record;
+        $records[] = [
+            'id'   => $discount['id'],
+            'text' => $discount['name']
+        ];
 	}
-	$fTableResult['TotalRecordCount'] = $recordCount;
-	$fTableResult['Records']          = $records;
-	print wp_json_encode( $fTableResult );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
 	wp_die();
 }
 
@@ -1890,7 +1889,6 @@ function eme_ajax_dgroups_snapselect() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
-	$fTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1898,24 +1896,24 @@ function eme_ajax_dgroups_snapselect() {
 			$where = '(1=1)';
 	}
 
-	$pagesize    = intval( $_REQUEST['pagesize'] );
-	$start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
-	$count_sql   = "SELECT COUNT(*) FROM $table WHERE $where";
-	$recordCount = $wpdb->get_var( $count_sql );
-	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
+    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
+    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $start    = ( $page - 1 ) * $pagesize;
+	$search      = "$where ORDER BY name LIMIT $start,$mysql_pagesize";
 
 	$records = [];
 	$dgroups = eme_get_dgroups( $search );
 	foreach ( $dgroups as $dgroup ) {
-		$record       = [];
-		$record['id'] = $dgroup['id'];
-		// no eme_esc_html here, snapselect does it own escaping upon arrival
-		$record['text'] = $dgroup['name'];
-		$records[]      = $record;
+        $records[] = [
+            'id'   => $dgroup['id'],
+            'text' => $dgroup['name']
+        ];
 	}
-	$fTableResult['TotalRecordCount'] = $recordCount;
-	$fTableResult['Records']          = $records;
-	print wp_json_encode( $fTableResult );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
 	wp_die();
 }
 

@@ -4876,7 +4876,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
     }
 }
 
-function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0 ) {
+function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0, $limit='' ) {
     global $wpdb;
     $table         = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -4904,15 +4904,15 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 
     if ( ! empty( $name ) ) {
         if ( $name_only ) {
-            $query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start";
+            $query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start $limit";
             $sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' );
         } else {
             $query = "SELECT * FROM $table WHERE ((event_name LIKE %s) OR
-                (event_notes LIKE %s)) $condition ORDER BY event_start";
+                (event_notes LIKE %s)) $condition ORDER BY event_start $limit";
             $sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
         }
     } else {
-        $sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start";
+        $sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start $limit";
     }
 
     return $wpdb->get_results( $sql, ARRAY_A );
@@ -10111,23 +10111,23 @@ function eme_ajax_wpuser_snapselect() {
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
         wp_die();
     }
-    $fTableResult = [];
     $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize     = intval( $_REQUEST['pagesize'] );
-    $start        = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
+    $pagesize     = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
+    $start        = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
-    $records              = [];
-    [$wp_users, $total] = eme_get_wp_users( $q, $start, $pagesize );
+    $records  = [];
+    $wp_users = eme_get_wp_users( $q, $start, $mysql_pagesize );
     foreach ( $wp_users as $wp_user ) {
-        $record       = [];
-        $record['id'] = $wp_user->ID;
-        // no eme_esc_html here, snapselect does it own escaping upon arrival
-        $record['text'] = $wp_user->display_name;
-        $records[]      = $record;
+        $records[] = [
+            'id'   => $wp_user->ID,
+            'text' => $wp_user->display_name
+        ];
     }
-    $fTableResult['TotalRecordCount'] = $total;
-    $fTableResult['Records']          = $records;
-    print wp_json_encode( $fTableResult );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 
@@ -10814,9 +10814,7 @@ function eme_ajax_events_snapselect() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $fTableResult );
+        print wp_json_encode( [ 'Result' => 'Error', 'Message' => __( 'Access denied!', 'events-made-easy' ) ] );
         wp_die();
     }
     $current_userid = get_current_user_id();
@@ -10827,9 +10825,13 @@ function eme_ajax_events_snapselect() {
     } else {
         $scope = 'future';
     }
+    $pagesize  = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
+    $start     = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
+
     $exclude_id  = isset( $_POST['exclude_id'] ) ? intval( $_POST['exclude_id'] ) : 0;
     $only_rsvp   = isset( $_POST['only_rsvp'] ) ? intval( $_POST['only_rsvp'] ) : 0;
-    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp );
+    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp, "LIMIT $start,$mysql_pagesize" );
     $records     = [];
     foreach ( $events as $event ) {
         $records[] = [
@@ -10837,9 +10839,10 @@ function eme_ajax_events_snapselect() {
             'text' => trim( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
         ];
     }
-    $fTableResult['TotalRecordCount'] = count($records);
-    $fTableResult['Records']          = $records;
-    print wp_json_encode( $fTableResult );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 

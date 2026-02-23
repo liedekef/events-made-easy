@@ -4839,8 +4839,7 @@ function eme_get_wp_users( $search, $offset = 0, $pagesize = 0, $wp_ids_to_exclu
     //$users = get_users($args);
     $user_query = new WP_User_Query( $args );
     $users      = $user_query->get_results(); // array of WP_User objects, like get_users
-    $total      = $user_query->get_total(); // int, total number of users (not just the first page)
-    return [ $users, $total ];
+    return $users;
 }
 
 add_action( 'wp_ajax_eme_subscribe', 'eme_subscribe_ajax' );
@@ -5237,7 +5236,7 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
     }
     if ( $search_tables == 'wp_users' || $search_tables == 'both' ) {
         // we don't want to include the people linked in EME, so we exclude those
-        [$wp_users, $total] = eme_get_wp_users( search: $lastname, wp_ids_to_exclude: $wp_ids_seen );
+        $wp_users = eme_get_wp_users( search: $lastname, wp_ids_to_exclude: $wp_ids_seen );
         foreach ( $wp_users as $wp_user ) {
             $record             = [];
             $phone              = eme_esc_html( eme_get_user_phone( $wp_user->ID ) );
@@ -5469,6 +5468,7 @@ function eme_ajax_chooseperson_snapselect() {
 
     $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $mysql_pagesize = $pagesize+1;
     $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $start    = ( $page - 1 ) * $pagesize;
 
@@ -5484,8 +5484,7 @@ function eme_ajax_chooseperson_snapselect() {
         }
     }
 
-    $recordCount = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE $where" );
-    $persons     = eme_get_persons( '', $where, "LIMIT $start,$pagesize" );
+    $persons     = eme_get_persons( '', $where, "LIMIT $start,$mysql_pagesize" );
 
     $records = [];
     foreach ( $persons as $person ) {
@@ -5498,7 +5497,10 @@ function eme_ajax_chooseperson_snapselect() {
             'wpid'      => intval( $person['wp_id'] ),
         ];
     }
-    print wp_json_encode( [ 'Records' => $records, 'TotalRecordCount' => $recordCount ] );
+    $hasMore = count($records) > $pagesize;
+    if ($hasMore)
+        $records = array_slice($records, 0, $pagesize);
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
     wp_die();
 }
 add_action( 'wp_ajax_eme_chooseperson_snapselect', 'eme_ajax_chooseperson_snapselect' );

@@ -146,7 +146,7 @@ function eme_holidays_edit_layout() {
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='description'>" . __( 'Holidays list', 'events-made-easy' ) . "</label></th>
                <td><textarea name='list' id='description' rows='5' >" . eme_esc_html( $holidays['list'] ) . '</textarea><br>
-                 ' . __( 'Basic format: YYYY-MM-DD, one per line', 'events-made-easy' ) . '<br>' . __( 'For more information about holidays, see ', 'events-made-easy' ) . " <a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=6086'>" . __( 'the documentation', 'events-made-easy' ) . "</a></td>
+                 ' . __( 'Basic format: YYYY-MM-DD, one per line', 'events-made-easy' ) . '<br>' . esc_html__( 'For more information about holidays, see ', 'events-made-easy' ) . " <a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=6086'>" . esc_html__( 'the documentation', 'events-made-easy' ) . "</a></td>
             </tr>
          </table>
       <p class='submit'><input type='submit' class='button-primary' name='submit' value='" . $action_string . "'></p>

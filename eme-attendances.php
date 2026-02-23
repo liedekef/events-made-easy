@@ -116,7 +116,7 @@ function eme_attendances_table_layout( $message = '' ) {
 		}
 	}
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-    $snapselect_attributes = "required='required' data-placeholder='".__('Select a person','events-made-easy')."'";
+    $snapselect_attributes = "required='required' data-placeholder='".esc_attr__('Select a person','events-made-easy')."'";
 	echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
@@ -220,7 +220,7 @@ function eme_ajax_attendances_list() {
 				$person_info_shown .= ' ' . $person['firstname'];
 			}
 			$person_info_shown           .= ' (' . $person['email'] . ')';
-			$rows[ $key ]['person']       = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+			$rows[ $key ]['person']       = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
 			$rows[ $key ]['related_name'] = '';
 			if ( $row['type'] == 'event' ) {
 				$event = eme_get_event( $row['related_id'] );

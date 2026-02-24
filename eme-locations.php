@@ -2418,7 +2418,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                         if ( $target == 'html' ) {
                             $url = esc_url( $url );
                         }
-                        $replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
+                        $replacement = "<a href='$url'>" . esc_html__( 'Edit', 'events-made-easy' ) . '</a>';
                     }
                 }
             } elseif ( preg_match( '/#_EDITLOCATIONURL/', $result ) ) {
@@ -2673,7 +2673,7 @@ function eme_add_directions_form( $location ) {
         $res .= '<input type="text" name="saddr" id="saddr" value="">';
         $res .= '<input type="hidden" name="daddr" value="' . $location['location_address1'] . ', ' . $location['location_city'] . '">';
         $res .= '<input type="hidden" name="hl" value="' . $locale_code . '"></div>';
-        $res .= '<input type="submit" value="' . __( 'Get Directions', 'events-made-easy' ) . '">';
+        $res .= '<input type="submit" value="' . esc_attr__( 'Get Directions', 'events-made-easy' ) . '">';
         $res .= '</form>';
     }
 
@@ -3003,13 +3003,13 @@ function eme_ajax_locations_list() {
         }
         $record                  = [];
         $record['location_id']   = $location['location_id'];
-        $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] ) ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $location['location_name'] ) ) . '</a>';
+        $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] ) ) . "' title='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $location['location_name'] ) ) . '</a>';
         if ( ! $location['location_latitude'] && ! $location['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $location['location_properties']['online_only'] ) {
             $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
         }
         if ( ! empty( $location['location_category_ids'] ) ) {
                         $categories            = explode( ',', $location['location_category_ids'] );
-                        $record['location_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
+                        $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Category', 'events-made-easy' ) . "'>";
                         $cat_names             = [];
                         foreach ( $categories as $cat ) {
                                 $category = eme_get_category( $cat );
@@ -3021,7 +3021,7 @@ function eme_ajax_locations_list() {
                         $record['location_name'] .= '</span>';
                 }
         if ( ! empty( $location['location_properties']['max_capacity'] ) ) {
-                        $record['location_name'] .= "<br><span class='eme_small' title='" . __( 'Max capacity', 'events-made-easy' ) . "'>";
+                        $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Max capacity', 'events-made-easy' ) . "'>";
             $record['location_name'] .= __( 'Max capacity', 'events-made-easy' ) . " ".$location['location_properties']['max_capacity'];
                         $record['location_name'] .= '</span>';
         }
@@ -3037,9 +3037,9 @@ function eme_ajax_locations_list() {
         $record['external_url']       = esc_html( eme_translate( $location['location_url'] ) );
         $record['online_only']        = $location['location_properties']['online_only'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         $location_url                 = eme_location_url( $location );
-        $record['view']               = "<a href='" . esc_url( $location_url ) . "'>" . __( 'View location', 'events-made-easy' ) . '</a>';
+        $record['view']               = "<a href='" . esc_url( $location_url ) . "'>" . esc_html__( 'View location', 'events-made-easy' ) . '</a>';
         $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=copy_location&location_id=' . $location['location_id'] ) ).'";';
-        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
+        $record[ 'copy'] = "<button onclick='$copy_link' title='" . esc_attr__( 'Duplicate this location', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         $location_cf_values           = eme_get_location_answers( $location['location_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $location_cf_values as $val ) {

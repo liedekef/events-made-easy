@@ -125,10 +125,10 @@ function eme_rpi_shortcode( $atts ) {
 	<div id='eme-rpi-message-ok-$form_id' class='eme-message-success eme-rpi-message eme-rpi-message-success eme-hidden'></div><div id='eme-rpi-message-error-$form_id' class='eme-message-error eme-rpi-message eme-rpi-message-error eme-hidden'></div><div id='div_eme-rpi-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-rpi-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
+		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
 		$captcha_html
-		<input type='submit' value='" . __( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
+		<input type='submit' value='" . esc_attr__( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
 	return $form_html;
 }
@@ -199,10 +199,10 @@ function eme_gdpr_approve_shortcode() {
 	<div id='eme-gdpr-approve-message-ok-$form_id' class='eme-message-success eme-gdpr-approve-message eme-gdpr-approve-message-success eme-hidden'></div><div id='eme-gdpr-approve-message-error-$form_id' class='eme-message-error eme-gdpr-approve-message eme-gdpr-approve-message-error eme-hidden'></div><div id='div_eme-gdpr-approve-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-gdpr-approve-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-   		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
+   		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
 		$captcha_html
-   		<input type='submit' value='" . __( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
+   		<input type='submit' value='" . esc_attr__( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form>";
 	return $form_html;
 }
@@ -257,7 +257,7 @@ function eme_cpi_request_ajax() {
 				$first_person_name = $person_name;
 			}
 			if ( $mail_text_html == 'htmlmail' ) {
-				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='" . esc_url( $change_link ) . "'>" . __( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
+				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='" . esc_url( $change_link ) . "'>" . esc_html__( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
 			} else {
 				$change_info .= "$person_name: $change_link " . __( '(copy/paste this link in your browser to change the info for this person)', 'events-made-easy' );
 			}
@@ -315,10 +315,10 @@ function eme_cpi_shortcode( $atts ) {
         <div id='eme-cpi-request-message-ok-$form_id' class='eme-message-success eme-cpi-request-message eme-cpi-request-message-success eme-hidden'></div><div id='eme-cpi-request-message-error-$form_id' class='eme-message-error eme-cpi-request-message eme-cpi-request-message-error eme-hidden'></div><div id='div_eme-cpi-request-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-cpi-request-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-		<input type='email' name='eme_email' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
+		<input type='email' name='eme_email' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
 		$captcha_html
-		<input type='submit' value='" . __( 'Request to change personal info', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
+		<input type='submit' value='" . esc_attr__( 'Request to change personal info', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
 	return $form_html;
 }

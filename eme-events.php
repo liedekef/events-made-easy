@@ -2484,7 +2484,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                     ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
                     $url = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) );
-                    $replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
+                    $replacement = "<a href='$url'>" . esc_html__( 'Edit', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_EDITEVENTURL/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -2498,7 +2498,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
                     $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
-                    $replacement = "<a href='$url'>" . __( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
+                    $replacement = "<a href='$url'>" . esc_html__( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_PRINTBOOKINGSURL/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -2512,7 +2512,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
                     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
                     $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
-                    $replacement = "<a href='$url'>" . __( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
+                    $replacement = "<a href='$url'>" . esc_html__( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
                 }
             } elseif ( preg_match( '/#_CSVBOOKINGSURL/', $result ) ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -6177,8 +6177,8 @@ function eme_events_table( $message = '' ) {
     <?php } else { ?>
     <option value="trashEvents"><?php esc_html_e( 'Delete selected events (move to trash bin)', 'events-made-easy' ); ?></option>
     <option value="publicEvents"><?php esc_html_e( 'Publish selected events', 'events-made-easy' ); ?></option>
-    <option value="privateEvents" title="<?php esc_html_e( 'Private events are only accessible to logged-in users', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events private', 'events-made-easy' ); ?></option>
-    <option value="hiddenEvents" title="<?php esc_html_e( 'Hidden events are accessible to everyone but not shown in events lists or calendars.', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events hidden', 'events-made-easy' ); ?></option>
+    <option value="privateEvents" title="<?php esc_attr_e( 'Private events are only accessible to logged-in users', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events private', 'events-made-easy' ); ?></option>
+    <option value="hiddenEvents" title="<?php esc_attr_e( 'Hidden events are accessible to everyone but not shown in events lists or calendars.', 'events-made-easy' ); ?>"><?php esc_html_e( 'Make selected events hidden', 'events-made-easy' ); ?></option>
     <option value="draftEvents"><?php esc_html_e( 'Make selected events draft', 'events-made-easy' ); ?></option>
     <option value="addCategory"><?php esc_html_e( 'Add selected events to category', 'events-made-easy' ); ?></option>
     <?php } ?>
@@ -6247,7 +6247,7 @@ function eme_recurrences_table( $message = '' ) {
     <div class="wrap">
         <form id="locations-filter" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-manager' ) ); ?>">
         <input type="hidden" name="eme_admin_action" value="add_new_recurrence">
-        <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add recurrence', 'events-made-easy' ); ?>">
+        <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add recurrence', 'events-made-easy' ); ?>">
         </form>
     </div>
 <?php endif; ?>
@@ -6737,19 +6737,19 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $available_seats_string = $available_seats;
                 }
                 $info_line .= __( 'Free:', 'events-made-easy' ) . ' ' . $available_seats_string;
-                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
             } else {
                 $total_seats_string    = '&infin;';
-                $info_line .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+                $info_line .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
             }
 
             if ( $pending_seats > 0 ) {
-                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
             }
             if ( $event['event_properties']['take_attendance'] ) {
                 $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
                 if ( $absent_bookings > 0 ) {
-                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                 }
             }
 	    $location = eme_get_location( $event['location_id'] );
@@ -6766,8 +6766,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
                 $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
                 $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
-                $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
-                $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+                $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . esc_html__( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }
 
@@ -6790,9 +6790,9 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 }
                 $info_line .= sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
-                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                    $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                 }
-                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
             }
         }
         print $info_line; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML with admin URLs and translated strings
@@ -8471,8 +8471,8 @@ function eme_meta_box_div_event_image( $event ) {
     }
 ?>
     <div class="uploader">
-    <input type="button" name="event_image_button" id="event_image_button" value="<?php esc_html_e( 'Set a featured image', 'events-made-easy' ); ?>" class="button-secondary action">
-    <input type="button" id="event_remove_image_button" name="event_remove_image_button" value=" <?php esc_html_e( 'Unset featured image', 'events-made-easy' ); ?>" class="button-secondary action">
+    <input type="button" name="event_image_button" id="event_image_button" value="<?php esc_attr_e( 'Set a featured image', 'events-made-easy' ); ?>" class="button-secondary action">
+    <input type="button" id="event_remove_image_button" name="event_remove_image_button" value=" <?php esc_attr_e( 'Unset featured image', 'events-made-easy' ); ?>" class="button-secondary action">
     </div>
 </div>
 <?php
@@ -8604,7 +8604,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         echo "</b>";
     } else {
-        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_snapselect', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
+        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_snapselect', 'data-placeholder="'.esc_attr__('Select a payment method','events-made-easy') .'"' );
     }
 ?>
                 </p>
@@ -8753,14 +8753,14 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     <table class="eme_event_admin_table">
     <tr id='row_seats'>
         <td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label></td>
-        <td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_html__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_html( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event_number_seats ); ?>">
+        <td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_attr__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_attr( __( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ) ); ?>" value="<?php echo eme_esc_html( $event_number_seats ); ?>">
             <span class="eme_smaller"><br><?php esc_html_e( 'The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
             <span class="eme-hidden" id="loc_max_cap_warning"><br><img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL);?>images/warning.png' alt='warning'><b><?php esc_html_e( 'A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence.', 'events-made-easy' ); ?></b></span>
         </td>
     </tr>
     <tr id='row_price'>
         <td><label for='price'><?php esc_html_e( 'Price: ', 'events-made-easy' ); ?></label></td>
-        <td><input id="price" type="text" size="8" name="price" style="field-sizing: content; min-width: 100px; max-width: 500px;" title="<?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
+        <td><input id="price" type="text" size="8" name="price" style="field-sizing: content; min-width: 100px; max-width: 500px;" title="<?php esc_attr_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
             <select id="currency" name="currency">
 <?php
     foreach ( $currency_array as $key => $value ) {
@@ -8789,7 +8789,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_vat'>
         <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_prop_vat_pct" type="text" name="eme_prop_vat_pct" size='8' title="<?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['vat_pct'] ); ?>">%
+        <td><input id="eme_prop_vat_pct" type="text" name="eme_prop_vat_pct" size='8' title="<?php esc_attr_e( 'VAT percentage', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['vat_pct'] ); ?>">%
         <br><p class='eme_smaller'><?php esc_html_e( 'The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
@@ -8803,7 +8803,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_waitinglist_seats'>
         <td><label for='eme_prop_waitinglist_seats'><?php esc_html_e( 'Waitinglist seats', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_prop_waitinglist_seats" type="text" name="eme_prop_waitinglist_seats" size='8' title="<?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['waitinglist_seats'] ); ?>"><br><span class="eme_smaller"><?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?></span></td>
+        <td><input id="eme_prop_waitinglist_seats" type="text" name="eme_prop_waitinglist_seats" size='8' title="<?php esc_attr_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['waitinglist_seats'] ); ?>"><br><span class="eme_smaller"><?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?></span></td>
     </tr>
     <tr id='row_check_free_waiting'>
         <td><label for='eme_prop_check_free_waiting'><?php esc_html_e( 'Check waitinglist when seats become available', 'events-made-easy' ); ?></label></td>
@@ -8812,11 +8812,11 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_max_allowed'>
         <td><label for='eme_prop_max_allowed'><?php esc_html_e( 'Max number of seats to book', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_prop_max_allowed" type="text" name="eme_prop_max_allowed" size='8' title="<?php esc_html_e( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html_e( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['max_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
+        <td><input id="eme_prop_max_allowed" type="text" name="eme_prop_max_allowed" size='8' title="<?php echo esc_attr__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_attr__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['max_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
     </tr>
     <tr id='row_min_allowed'>
         <td><label for='eme_prop_min_allowed'><?php esc_html_e( 'Min number of seats to book', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_prop_min_allowed" type="text" name="eme_prop_min_allowed" size='8' title="<?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['min_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
+        <td><input id="eme_prop_min_allowed" type="text" name="eme_prop_min_allowed" size='8' title="<?php echo esc_attr__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_attr__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['min_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
     </tr>
     <tr id='row_take_attendance'>
         <td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
@@ -8833,17 +8833,17 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_require_eme_group'>
         <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_require_eme_memberships'>
         <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_addpersontogroup'>
         <td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_html( __( 'Select one or more groups', 'events-made-easy' ) ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_rsvppassword'>
         <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
@@ -9772,7 +9772,7 @@ function eme_admin_enqueue_js() {
             'translate_state'                      => __( 'State', 'events-made-easy' ),
             'translate_lang'                       => __( 'Language', 'events-made-easy' ),
             'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
-            'translate_missingcountry'             => "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info.', 'events-made-easy' ) . "'>",
+            'translate_missingcountry'             => "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info.', 'events-made-easy' ) . "'>",
             'translate_code'                       => __( 'Code', 'events-made-easy' ),
             'translate_alpha_2'                    => __( 'Alpha-2', 'events-made-easy' ),
             'translate_alpha_3'                    => __( 'Alpha-3', 'events-made-easy' ),
@@ -10249,11 +10249,11 @@ function eme_ajax_events_list() {
         if ($no_edit_links==1) {
             $record['event_name'] = "<strong>" . esc_html( eme_translate( $event['event_name'] ) ) . '</strong>';
         } else {
-            $record['event_name'] = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
+            $record['event_name'] = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
         }
         if ( ! empty( $event['event_category_ids'] ) ) {
             $categories            = explode( ',', $event['event_category_ids'] );
-            $record['event_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
+            $record['event_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Category', 'events-made-easy' ) . "'>";
             $cat_names             = [];
             foreach ( $categories as $cat ) {
                 $category = eme_get_category( $cat );
@@ -10297,14 +10297,14 @@ function eme_ajax_events_list() {
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
                 }
             } else {
                 $total_seats_string    = '&infin;';
                 if ($no_edit_links==1) {
                     $record['event_name'] .= __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string";
                 } else {
-                    $record['event_name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+                    $record['event_name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
                 }
             }
 
@@ -10312,7 +10312,7 @@ function eme_ajax_events_list() {
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
                 }
             }
             if ( $event['event_properties']['take_attendance'] ) {
@@ -10321,7 +10321,7 @@ function eme_ajax_events_list() {
                     if ($no_edit_links==1) {
                         $record['event_name'] .= ', ' . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings";
                     } else {
-                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
             }
@@ -10338,8 +10338,8 @@ function eme_ajax_events_list() {
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
                 $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
                 $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
-                $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
-                $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+                $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . esc_html__( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }
 
@@ -10362,13 +10362,13 @@ function eme_ajax_events_list() {
                     if ($no_edit_links==1) {
                         $record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces";
                     } else {
-                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                        $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                     }
                 }
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $used_spaces";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
                 }
             }
         }
@@ -10376,9 +10376,9 @@ function eme_ajax_events_list() {
         if ( empty( $event['location_name'] ) ) {
             $record['location_name'] = '';
         } else {
-            $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $event['location_id'] ) ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['location_name'] ) ) . '</a>';
+            $record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $event['location_id'] ) ) . "' title='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['location_name'] ) ) . '</a>';
             if ( ! $event['location_latitude'] && ! $event['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $event['location_properties']['online_only'] ) {
-                $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
+                $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
             }
         }
 
@@ -10397,16 +10397,16 @@ function eme_ajax_events_list() {
             $event_url              = esc_url( eme_event_url( $event ) );
             if ( ! $view_trash ) {
                 if ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
-                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . __( 'Preview event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . esc_html__( 'Preview event', 'events-made-easy' ) . '</a>';
                 } else {
-                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . __( 'View event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . esc_html__( 'View event', 'events-made-easy' ) . '</a>';
                 }
             }
         }
 
         if (current_user_can(get_option('eme_cap_add_event'))) {
             $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=duplicate_event&event_id=' . $event['event_id'] ) ).'";';
-            $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
+            $record[ 'copy'] = "<button onclick='$copy_link' title='" . esc_attr__( 'Duplicate this event', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
         } else {
             $record['copy'] = "";
         }
@@ -10418,7 +10418,7 @@ function eme_ajax_events_list() {
                 $page = 'eme-registration-seats';
             }
 
-            $record['rsvp'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=newBooking&event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
+            $record['rsvp'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=newBooking&event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Add booking for this event', 'events-made-easy' ) . "'>" . esc_html__( 'RSVP', 'events-made-easy' ) . '</a>';
             if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
                 $record['rsvp'] .= '<br>(' . __( 'Password protected', 'events-made-easy' ) . ')';
             }

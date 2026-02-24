@@ -432,7 +432,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
       </form>
 
    </div>
-   <p>" . __( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=44'>" . __( 'the documentation', 'events-made-easy' ) . '</a></p>
+   <p>" . esc_html__( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=44'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a></p>
    ';
     echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from hardcoded strings and translations
 }
@@ -1187,7 +1187,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             }
             $replacement = "<input required='required' type='text' name='task_lastname' id='task_lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
 
             ++$lastname_found;
@@ -2908,7 +2908,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 }
                 $replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
                 if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                    $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+                    $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
                 }
 
                 ++$lastname_found;
@@ -3885,7 +3885,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             }
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
             ++$lastname_found;
         } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
@@ -5186,7 +5186,7 @@ function eme_ajax_formfields_list() {
             $rows[ $key ]['field_name']     = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-formfields&eme_admin_action=edit_formfield&field_id=' . $formfield['field_id'] ) ) . "'>" . esc_html( $formfield['field_name'] ) . '</a>';
 
             $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-formfields&eme_admin_action=copy_formfield&field_id=' . $formfield['field_id'] ) ).'";';
-            $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Copy', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
+            $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . esc_attr__( 'Copy', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
 
         }
         $fTableResult['Result']           = 'OK';

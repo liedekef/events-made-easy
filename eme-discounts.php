@@ -389,9 +389,9 @@ function eme_discounts_main_layout( $message = '' ) {
 	}
 
 	$html .= '<h2>' . __( 'Manage discounts', 'events-made-easy' ) . '</h2>';
-	$html .= "<a href='$discounts_destination'>" . __( 'Manage discounts', 'events-made-easy' ) . '</a><br>';
+	$html .= "<a href='$discounts_destination'>" . esc_html__( 'Manage discounts', 'events-made-easy' ) . '</a><br>';
 	$html .= '<h2>' . __( 'Manage discountgroups', 'events-made-easy' ) . '</h2>';
-	$html .= "<a href='$dgroups_destination'>" . __( 'Manage discountgroups', 'events-made-easy' ) . '</a><br>';
+	$html .= "<a href='$dgroups_destination'>" . esc_html__( 'Manage discountgroups', 'events-made-easy' ) . '</a><br>';
 	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
@@ -935,7 +935,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<td>
 			<?php
 			if ( ! empty( $memberships ) ) {
-                $extra_attributes = ' data-placeholder="' . esc_html( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
+                $extra_attributes = ' data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"';
 				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes );
 			} else {
 				esc_html_e( 'No memberships defined yet!', 'events-made-easy' );

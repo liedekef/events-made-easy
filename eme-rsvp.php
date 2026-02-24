@@ -3861,7 +3861,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             if ( $target == 'html' ) {
                 $url = esc_url( $url );
             }
-            $replacement = "<a href='$url'>" . __( 'Cancel booking', 'events-made-easy' ) . '</a>';
+            $replacement = "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
         } elseif ( $payment && preg_match( '/#_CANCEL_OWN_URL$/', $result ) ) {
             if ( $person['wp_id'] == $current_userid || $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) {
                 $replacement = eme_cancel_url( $payment );
@@ -3875,7 +3875,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                 if ( $target == 'html' ) {
                     $url = esc_url( $url );
                 }
-                $replacement = "<a href='$url'>" . __( 'Cancel booking', 'events-made-easy' ) . '</a>';
+                $replacement = "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
             }
         } elseif ( $payment && preg_match( '/#_CANCEL_CODE$/', $result ) ) {
             $replacement = $payment['random_id'];
@@ -4859,7 +4859,7 @@ function eme_registration_seats_page( $pending = 0 ) {
         $ret_string .= '<tr><td>' . __( 'Move booking to event', 'events-made-easy' ) . '</td><td>';
         $ret_string .= "<input type='hidden' id='person_id' name='person_id' value='" . $booking['person_id'] . "'>";
         // we include the event id, so the snapselect can exclude this event upon search
-        $ret_string .= eme_ui_select( '', 'transferto_id', [], '', 0, 'eme_snapselect_events_class nodynamicupdates', "data-placeholder='" . __( 'Select an event', 'events-made-easy' ) . "' data-exclude_event_id='{$booking['event_id']}'" );
+        $ret_string .= eme_ui_select( '', 'transferto_id', [], '', 0, 'eme_snapselect_events_class nodynamicupdates', "data-placeholder='" . esc_attr__( 'Select an event', 'events-made-easy' ) . "' data-exclude_event_id='{$booking['event_id']}'" );
         $ret_string .= "&nbsp;<label><input id='eventsearch_all' name='eventsearch_all' value='1' type='checkbox' class='nodynamicupdates'>" . __( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ) . '</label></td></tr>';
         $ret_string .= '<tr><td>' . __( 'Has the booking been paid?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( $booking['booking_paid'], 'booking_paid', 0, 'nodynamicupdates' ) . '</td></tr>';
         $ret_string .= '</table>';
@@ -5895,7 +5895,7 @@ function eme_ajax_bookings_list() {
             } else {
                 $line['wp_user'] = '';
             }
-            $line['booker'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . __( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+            $line['booker'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
             $line['person_id'] = $booking['person_id'];
         } else {
             $line['booker']  = __( 'Anonymous', 'events-made-easy' );
@@ -5985,12 +5985,12 @@ function eme_ajax_bookings_list() {
                 }
 
                 if ( $pending_seats > 0 ) {
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-approval&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
                 }
                 if ( $event['event_properties']['take_attendance'] ) {
                     $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
                     if ( $absent_bookings > 0 ) {
-                        $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+                        $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
                 if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
@@ -6008,8 +6008,8 @@ function eme_ajax_bookings_list() {
                 if ( $booked_seats > 0 || $pending_seats > 0 ) {
                     $printable_address            = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
                     $csv_address                  = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
-                    $event_name_info[ $event_id ] .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='".esc_url($printable_address)."'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
-                    $event_name_info[ $event_id ] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".esc_url($csv_address)."'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+                    $event_name_info[ $event_id ] .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='".esc_url($printable_address)."'>" . esc_html__( 'Printable view', 'events-made-easy' ) . '</a>)';
+                    $event_name_info[ $event_id ] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".esc_url($csv_address)."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
                 }
             }
 
@@ -6044,9 +6044,9 @@ function eme_ajax_bookings_list() {
                 #$event_name_info[ $event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
                 $event_name_info[ $event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
                 }
-                $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+                $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=1&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
             }
         }
 
@@ -6096,7 +6096,7 @@ function eme_ajax_bookings_list() {
         $line['discount']   = eme_localized_price( $booking['discount'], $event['currency'] );
         // dcodes_used is still eme_serialized here
         $line['dcodes_used']  = eme_esc_html( eme_unserialize( $booking['dcodes_used'] ) );
-        $line['unique_nbr']   = "<span title='" . sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
+        $line['unique_nbr']   = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
         $line['booking_paid'] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
             $line['remaining'] = $line['totalprice'];

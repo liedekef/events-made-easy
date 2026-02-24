@@ -294,11 +294,11 @@ function eme_countries_main_layout( $message = '' ) {
 
 	$html           .= '<p><b>' . __( 'This is NOT used for event locations, only for personal info of people.', 'events-made-easy' ) . '</b></p>';
 	$html           .= '<h2>' . __( 'Manage countries', 'events-made-easy' ) . '</h2>';
-	$html           .= "<a href='$countries_destination'>" . __( 'Manage countries', 'events-made-easy' ) . '</a><br>';
+	$html           .= "<a href='$countries_destination'>" . esc_html__( 'Manage countries', 'events-made-easy' ) . '</a><br>';
 	$html           .= '<h2>' . __( 'Manage states', 'events-made-easy' ) . '</h2>';
 	$countries_count = eme_get_countries_count();
 	if ( $countries_count > 0 ) {
-		$html .= "<a href='$states_destination'>" . __( 'Manage states', 'events-made-easy' ) . '</a><br>';
+		$html .= "<a href='$states_destination'>" . esc_html__( 'Manage states', 'events-made-easy' ) . '</a><br>';
 	} else {
 		$html .= __( 'There are no countries defined yet. First define some countries, then you can manage the states.', 'events-made-easy' ) . '<br>';
 	}

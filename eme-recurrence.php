@@ -723,9 +723,9 @@ function eme_ajax_recurrences_list() {
 
 		$record                  = [];
 		$record['recurrence_id'] = $recurrence['recurrence_id'];
-		$record['event_name']    = "<strong><a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_recurrence&recurrence_id=' . $recurrence['recurrence_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . __( 'Edit recurrence', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
+		$record['event_name']    = "<strong><a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_recurrence&recurrence_id=' . $recurrence['recurrence_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Edit recurrence', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
         $copy_link='window.location.href="'.esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=duplicate_recurrence&recurrence_id=' . $recurrence['recurrence_id'] ) ).'";';
-        $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this recurrence', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
+        $record[ 'copy'] = "<button onclick='$copy_link' title='" . esc_attr__( 'Duplicate this recurrence', 'events-made-easy' ) . "' class='ftable-command-button eme-copy-button'><span>copy</span></a>";
 		if ( $event['event_rsvp'] ) {
 			$total_seats = eme_get_total( $event['event_seats'] );
 			if ( eme_is_multi( $event['event_seats'] ) ) {
@@ -745,7 +745,7 @@ function eme_ajax_recurrences_list() {
 
 		if ( ! empty( $event['event_category_ids'] ) ) {
 			$categories            = explode( ',', $event['event_category_ids'] );
-			$record['event_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
+			$record['event_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Category', 'events-made-easy' ) . "'>";
 			$cat_names             = [];
 			foreach ( $categories as $cat ) {
 				$category = eme_get_category( $cat );
@@ -763,9 +763,9 @@ function eme_ajax_recurrences_list() {
 		if ( empty( $location['location_name'] ) ) {
 				$record['location_name'] = '';
 		} else {
-				$record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] ) ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $location['location_name'] ) ) . '</a>';
+				$record['location_name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] ) ) . "' title='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $location['location_name'] ) ) . '</a>';
 			if ( ! $location['location_latitude'] && ! $location['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $event['location_properties']['online_only'] ) {
-					$record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
+					$record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
 			}
 		}
 

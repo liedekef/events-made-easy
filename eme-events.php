@@ -4938,7 +4938,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     }
 
     // we can provide our own order statements
-    $orderby = '';
+    $orderby = 'ORDER BY event_start ASC, event_name ASC';
     // remove trailing ',' and initial "ORDER BY " if present (it will be re-added)
     $order = preg_replace( '/,$|ORDER BY /i', '', $order );
     if ( ! eme_is_empty_string( $order )) {
@@ -4946,8 +4946,6 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $orderby = "ORDER BY event_start $order, event_name $order";
         } elseif ( eme_verify_sql_orderby( $order ) ) {
             $orderby = 'ORDER BY ' . $order;
-        } else {
-            $orderby = 'ORDER BY event_start ASC, event_name ASC';
         }
     }
 
@@ -5596,10 +5594,11 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         if ( ! empty( $limit_string ) ) {
             $count_sql = "SELECT COUNT(*) FROM $events_table $count_where";
             $t_count   = $wpdb->get_var( $count_sql );
-            // now increase the $limit with the number of events found
-            // we don't change $event_limit because we need that later on
-            $t_limit = $event_limit + intval( $t_count );
+            // Fetch significantly more to ensure we have enough after filtering
+            $t_limit = $event_limit + intval( $t_count ) + $offset;
             $limit_string = "LIMIT $t_limit";
+            // Don't use OFFSET in SQL, we'll handle it in PHP
+            $offset_string = '';
         }
     } elseif ( $include_customformfields ) {
         $answers_table         = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
@@ -5671,9 +5670,23 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                         $seen_recids[] = $this_event['recurrence_id'];
                     }
                     ++$event_count;
+
                     // if there's a limit set, let's respect it
-                    if ( $event_limit && $event_count >= $event_limit ) {
-                        break;
+                    if ($event_limit) {
+                        if ( $show_recurrent_events_once ) {
+                            // Apply offset and limit in PHP after filtering
+                            if ( $event_count <= $offset ) {
+                                continue; // Skip events until we reach the offset
+                            }
+                            if ( $event_count > $offset + $event_limit ) {
+                                break; // Stop when we've reached the limit
+                            }
+                        } else {
+                            // basic limit logic for non-recurrence case
+                            if ( $event_count >= $event_limit ) {
+                                break;
+                            }
+                        }
                     }
                 }
                 if ( ! eme_is_admin_request() && has_filter( 'eme_event_list_filter' ) ) {

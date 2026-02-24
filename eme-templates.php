@@ -178,7 +178,7 @@ function eme_templates_table_layout( $message = '' ) {
     </div>
     <br><br>
     <form action="#" method="post">
-    <?php echo eme_ui_select( '', 'search_type', $template_types ); ?>
+    <?php echo eme_ui_select( '', 'search_type', $template_types ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Template name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
     <button id="TemplatesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
     </form>
@@ -278,7 +278,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
             </tr>
             <tr>
             <td style='vertical-align:top'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></td>
-            <td><?php echo eme_ui_select( $template['type'], 'type', $template_types ); ?>
+            <td><?php echo eme_ui_select( $template['type'], 'type', $template_types ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
             <br><?php esc_html_e( 'The type allows you to indicate where you want to use this template. This helps to limit the dropdown list of templates to chose from in other parts of EME.', 'events-made-easy' ); ?>
             <br><?php esc_html_e( "The type 'All' means it can be selected anywhere where template selections are possible.", 'events-made-easy' ); ?>
             <br><?php esc_html_e( "The type 'PDF' is used for PDF templating and allows more settings concerning page size, orientation, ...", 'events-made-easy' ); ?>
@@ -290,12 +290,12 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
         <table class='form-table' id='pdf_properties'>
             <tr class='form-field'>
             <th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF size', 'events-made-easy' ); ?></th>
-            <td><?php echo eme_ui_select( $template['properties']['pdf_size'], 'properties[pdf_size]', $size_array ); ?><br>
+            <td><?php echo eme_ui_select( $template['properties']['pdf_size'], 'properties[pdf_size]', $size_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><br>
             <?php esc_html_e( "If you select 'Custom', you can enter your own widht/height below.", 'events-made-easy' ); ?></td>
             </tr>
             <tr class='form-field'>
             <th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF orientation', 'events-made-easy' ); ?></th>
-            <td><?php echo eme_ui_select( $template['properties']['pdf_orientation'], 'properties[pdf_orientation]', $orientation_array ); ?></td>
+            <td><?php echo eme_ui_select( $template['properties']['pdf_orientation'], 'properties[pdf_orientation]', $orientation_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
             </tr>
             <tr class='form-field'>
             <th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF margins', 'events-made-easy' ); ?></th>

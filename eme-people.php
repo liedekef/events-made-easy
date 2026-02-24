@@ -2049,20 +2049,20 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     </select>
     </span>
     <span id="span_addtogroup" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <span id="span_removefromgroup" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <span id="span_pdftemplate" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <span id="span_htmltemplate" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <button id="PeopleActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -2593,12 +2593,12 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_snapselect_country_class' ); ?></td>
+        <td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_snapselect_country_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_snapselect_state_class' ); ?></td>
+        <td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_snapselect_state_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         <td></td>
         </tr>
         <tr>
@@ -2611,7 +2611,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><label for="bd_email"><?php esc_html_e( 'Birthday email', 'events-made-easy' ); ?></label></td>
         <td colspan=2>
 <?php
-    echo eme_ui_select_binary( $person['bd_email'], 'bd_email' );
+    echo eme_ui_select_binary( $person['bd_email'], 'bd_email' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     esc_html_e( 'If active, the person will receive a birthday email.', 'events-made-easy' );
 ?>
         </td>
@@ -2627,15 +2627,15 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <tr>
         <tr>
         <td><label for="massmail"><?php esc_html_e( 'MassMail', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select_binary( $person['massmail'], 'massmail' ); ?></td>
+        <td colspan=2><?php echo eme_ui_select_binary( $person['massmail'], 'massmail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         </tr>
         <tr>
         <td><label for="newsletter"><?php esc_html_e( 'Newsletter', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select_binary( $person['newsletter'], 'newsletter' ); ?></td>
+        <td colspan=2><?php echo eme_ui_select_binary( $person['newsletter'], 'newsletter' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         </tr>
         <tr>
         <td><label for="gdpr"><?php esc_html_e( 'GDPR approval', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select_binary( $person['gdpr'], 'gdpr' ); ?></td>
+        <td colspan=2><?php echo eme_ui_select_binary( $person['gdpr'], 'gdpr' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         </tr>
         <tr>
         <td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
@@ -2684,7 +2684,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td style="vertical-align:top"><label for="properties[wp_delete_user]"><?php esc_html_e( 'Delete linked WP user?', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); ?>
+        <td colspan=2><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
             <br>
             <?php esc_html_e( "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin).", 'events-made-easy' ); ?><br>
             <?php esc_html_e( "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted.", 'events-made-easy' ); ?>
@@ -2803,7 +2803,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         <?php if ( $group['type'] == 'static' ) { ?>
         <tr>
         <td><label for="public"><?php esc_html_e( 'Public?', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select_binary( $group['public'], 'public' ); ?><br>
+        <td><?php echo eme_ui_select_binary( $group['public'], 'public' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><br>
             <?php esc_html_e( 'If you chose for this group to be a public group, then this group will appear in the list of groups to subscribe/unsubscribe in the eme_subform and eme_unsubform shortcodes (and the form generated by #_UNSUB_URL).', 'events-made-easy' ); ?>
         </td>
         </tr>

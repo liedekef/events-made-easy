@@ -507,7 +507,7 @@ function eme_meta_box_div_location_name( $location ) {
             $locations_prefixes_arr[ $locations_prefix ] = eme_permalink_convert( $locations_prefix );
         }
         $prefix = $location['location_prefix'] ? $location['location_prefix'] : '';
-        echo eme_ui_select( $prefix, 'location_prefix', $locations_prefixes_arr );
+        echo eme_ui_select( $prefix, 'location_prefix', $locations_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     } else {
         echo eme_permalink_convert( $locations_prefixes );
     }

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.47
+Stable tag: 3.0.48
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -96,10 +96,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.48  (2026//) =
+= 3.0.48  (2026/02/24) =
 * fix edit for people with empty country but filled out state
 * snapselect update
-* many escapes added to the code to become inline with WP coding style (ongoing, thanks to TommsNL)
+* many code edits to become compliant with WP coding style (ongoing, thanks to TommsNL)
 
 = 3.0.47  (2026/02/19) =
 * Allow attendance scans per day

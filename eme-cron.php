@@ -426,22 +426,22 @@ function eme_cron_form( $message = '' ) {
         <?php $templates_array = eme_get_templates_array_by_id( 'rsvpmail' ); ?>
 <?php
         esc_html_e( 'Email subject template', 'events-made-easy' );
-        echo eme_ui_select( $subject, 'eme_cron_new_events_subject', $templates_array );
+        echo eme_ui_select( $subject, 'eme_cron_new_events_subject', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php
         esc_html_e( 'Email body header', 'events-made-easy' );
-        echo eme_ui_select( $header, 'eme_cron_new_events_header', $templates_array );
+        echo eme_ui_select( $header, 'eme_cron_new_events_header', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php
         esc_html_e( 'Email body single event entry', 'events-made-easy' );
-        echo eme_ui_select( $entry, 'eme_cron_new_events_entry', $templates_array );
+        echo eme_ui_select( $entry, 'eme_cron_new_events_entry', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php
         esc_html_e( 'Email body footer', 'events-made-easy' );
-        echo eme_ui_select( $footer, 'eme_cron_new_events_footer', $templates_array );
+        echo eme_ui_select( $footer, 'eme_cron_new_events_footer', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
     <input type='hidden' name='eme_admin_action' value='eme_cron_send_new_events'>

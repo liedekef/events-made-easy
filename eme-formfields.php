@@ -227,8 +227,8 @@ function eme_formfields_table_layout( $message = '' ) {
     </div>
     <h1><?php esc_html_e( 'Manage custom fields', 'events-made-easy' ); ?></h1>
     <form action="#" method="post">
-    <?php echo eme_ui_select( '', 'search_type', $field_types, __( 'Any', 'events-made-easy' ) ); ?>
-    <?php echo eme_ui_select( '', 'search_purpose', $field_purposes, __( 'Any', 'events-made-easy' ) ); ?>
+    <?php echo eme_ui_select( '', 'search_type', $field_types, __( 'Any', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select( '', 'search_purpose', $field_purposes, __( 'Any', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_html_e( 'Field name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
     <button id="FormfieldsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
     </form>
@@ -5029,18 +5029,18 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
                     </td>
                     <td><table style="">
                         <tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" size="12" aria-label="field" value="<?php echo esc_attr( $info['field'] ); ?>"></td></tr>
-                        <tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
                         <tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" aria-label="condition value" size="12" value="<?php echo esc_attr( $info['condval'] ); ?>"></td></tr>
                     </table>
                     </td>
                     <td><table style="">
-                        <tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
                     </table>
                     </td>
                     <td>
-                <?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); ?>
+                <?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
                     </td>
                     <td>
                         <a href="#" class='eme_remove_dyndatacondition'><?php echo "<img class='eme_remove_dyndatacondition' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img class='eme_dyndata_add_tag' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>

@@ -127,7 +127,7 @@ function eme_attendances_table_layout( $message = '' ) {
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
          <input type='hidden' name='person_id' value=''>
          "
-         . eme_ui_select( '', 'person_id', [], '', 1, 'eme_snapselect_people_class', $snapselect_attributes )
+         . eme_ui_select( '', 'person_id', [], '', 1, 'eme_snapselect_people_class', $snapselect_attributes ) //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
          . ' '. esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
          <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
          <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple='false' class='eme_formfield_fdatetime'><br>

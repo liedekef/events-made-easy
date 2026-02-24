@@ -6186,11 +6186,11 @@ function eme_events_table( $message = '' ) {
     <span id="span_sendtrashmails" class="eme-hidden">
 <?php
         esc_html_e( 'Send emails for cancelled bookings too?', 'events-made-easy' );
-        echo eme_ui_select_binary( 0, 'send_trashmails' );
+        echo eme_ui_select_binary( 0, 'send_trashmails' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
     <span id="span_addtocategory" class="eme-hidden">
-        <?php echo eme_ui_select_key_value( '', 'addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); ?>
+        <?php echo eme_ui_select_key_value( '', 'addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <button id="EventsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -6820,7 +6820,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ($user_info !== false)
                 $eme_wp_user_arr[ $event_author ] = $user_info->display_name;
         }
-        echo eme_ui_select( $event_author, 'event_author', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' );
+        echo eme_ui_select( $event_author, 'event_author', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         </p>
         </div>
@@ -6839,7 +6839,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ($user_info !== false)
                 $eme_wp_user_arr[ $event['event_contactperson_id'] ] = $user_info->display_name;
         }
-        echo eme_ui_select( $event['event_contactperson_id'], 'event_contactperson_id', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' );
+        echo eme_ui_select( $event['event_contactperson_id'], 'event_contactperson_id', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         // if it is not a new event and there's no contact person defined, then the event author becomes contact person
         // So let's display a warning what this means if there's no author (like when submitting via the frontend submission form)
         if ( ! $is_new_event && $event['event_contactperson_id'] < 1 && $event['event_author'] < 1 ) {
@@ -6880,7 +6880,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     <div class="inside">
 <?php
         $templates = get_page_templates();
-        print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template' ) );
+        print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         print '<br>' . __( 'By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted.', 'events-made-easy' );
 ?>
                     </div>
@@ -7063,7 +7063,7 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
             $events_prefixes_arr[ $events_prefix ] = eme_permalink_convert( $events_prefix );
         }
         $prefix = $event['event_prefix'] ? $event['event_prefix'] : '';
-        echo eme_ui_select( $prefix, 'event_prefix', $events_prefixes_arr );
+        echo eme_ui_select( $prefix, 'event_prefix', $events_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     } else {
         echo eme_permalink_convert( $events_prefixes );
     }
@@ -7294,7 +7294,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
     if ( ! empty( $holidays_array_by_id ) ) {
         echo "<br>";
         esc_html_e( 'Holidays: ', 'events-made-easy' );
-        echo eme_ui_select( $recurrence['holidays_id'], 'holidays_id', $holidays_array_by_id );
+        echo eme_ui_select( $recurrence['holidays_id'], 'holidays_id', $holidays_array_by_id ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
             <p class="eme_smaller">
 <?php
@@ -7324,7 +7324,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_page_title_format_tpl'], 'eme_prop_event_page_title_format_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_page_title_format_tpl'], 'eme_prop_event_page_title_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7358,7 +7358,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_single_event_format_tpl'], 'eme_prop_event_single_event_format_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_single_event_format_tpl'], 'eme_prop_event_single_event_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7394,7 +7394,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_ipn_email_subject_tpl'], 'eme_prop_contactperson_registration_ipn_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_ipn_email_subject_tpl'], 'eme_prop_contactperson_registration_ipn_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7416,7 +7416,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_ipn_email_body_tpl'], 'eme_prop_contactperson_registration_ipn_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_ipn_email_body_tpl'], 'eme_prop_contactperson_registration_ipn_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7460,7 +7460,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_recorded_ok_html_tpl'], 'eme_prop_event_registration_recorded_ok_html_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_recorded_ok_html_tpl'], 'eme_prop_event_registration_recorded_ok_html_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7502,7 +7502,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_respondent_email_subject_tpl'], 'eme_prop_event_respondent_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_respondent_email_subject_tpl'], 'eme_prop_event_respondent_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7524,7 +7524,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_respondent_email_body_tpl'], 'eme_prop_event_respondent_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_respondent_email_body_tpl'], 'eme_prop_event_respondent_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7550,7 +7550,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_contactperson_email_subject_tpl'], 'eme_prop_event_contactperson_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_contactperson_email_subject_tpl'], 'eme_prop_event_contactperson_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7572,7 +7572,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_contactperson_email_body_tpl'], 'eme_prop_event_contactperson_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_contactperson_email_body_tpl'], 'eme_prop_event_contactperson_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7645,7 +7645,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_userpending_email_subject_tpl'], 'eme_prop_event_registration_userpending_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_userpending_email_subject_tpl'], 'eme_prop_event_registration_userpending_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7667,7 +7667,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_userpending_email_body_tpl'], 'eme_prop_event_registration_userpending_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_userpending_email_body_tpl'], 'eme_prop_event_registration_userpending_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7703,7 +7703,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_pending_email_subject_tpl'], 'eme_prop_event_registration_pending_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_pending_email_subject_tpl'], 'eme_prop_event_registration_pending_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7725,7 +7725,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_pending_email_body_tpl'], 'eme_prop_event_registration_pending_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_pending_email_body_tpl'], 'eme_prop_event_registration_pending_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7751,7 +7751,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_pending_email_subject_tpl'], 'eme_prop_contactperson_registration_pending_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_pending_email_subject_tpl'], 'eme_prop_contactperson_registration_pending_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7773,7 +7773,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_pending_email_body_tpl'], 'eme_prop_contactperson_registration_pending_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_pending_email_body_tpl'], 'eme_prop_contactperson_registration_pending_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7840,7 +7840,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_updated_email_subject_tpl'], 'eme_prop_event_registration_updated_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_updated_email_subject_tpl'], 'eme_prop_event_registration_updated_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7862,7 +7862,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_updated_email_body_tpl'], 'eme_prop_event_registration_updated_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_updated_email_body_tpl'], 'eme_prop_event_registration_updated_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7891,7 +7891,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_pending_reminder_email_subject_tpl'], 'eme_prop_event_registration_pending_reminder_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_pending_reminder_email_subject_tpl'], 'eme_prop_event_registration_pending_reminder_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7913,7 +7913,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_pending_reminder_email_body_tpl'], 'eme_prop_event_registration_pending_reminder_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_pending_reminder_email_body_tpl'], 'eme_prop_event_registration_pending_reminder_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7932,7 +7932,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_reminder_email_subject_tpl'], 'eme_prop_event_registration_reminder_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_reminder_email_subject_tpl'], 'eme_prop_event_registration_reminder_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7954,7 +7954,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_reminder_email_body_tpl'], 'eme_prop_event_registration_reminder_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_reminder_email_body_tpl'], 'eme_prop_event_registration_reminder_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -7983,7 +7983,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_cancelled_email_subject_tpl'], 'eme_prop_event_registration_cancelled_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_cancelled_email_subject_tpl'], 'eme_prop_event_registration_cancelled_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8005,7 +8005,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_cancelled_email_body_tpl'], 'eme_prop_event_registration_cancelled_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_cancelled_email_body_tpl'], 'eme_prop_event_registration_cancelled_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8031,7 +8031,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_cancelled_email_subject_tpl'], 'eme_prop_contactperson_registration_cancelled_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_cancelled_email_subject_tpl'], 'eme_prop_contactperson_registration_cancelled_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8053,7 +8053,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_cancelled_email_body_tpl'], 'eme_prop_contactperson_registration_cancelled_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_cancelled_email_body_tpl'], 'eme_prop_contactperson_registration_cancelled_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8087,7 +8087,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_paid_email_subject_tpl'], 'eme_prop_event_registration_paid_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_paid_email_subject_tpl'], 'eme_prop_event_registration_paid_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8109,7 +8109,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_paid_email_body_tpl'], 'eme_prop_event_registration_paid_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_paid_email_body_tpl'], 'eme_prop_event_registration_paid_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8135,7 +8135,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_paid_email_subject_tpl'], 'eme_prop_contactperson_registration_paid_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_paid_email_subject_tpl'], 'eme_prop_contactperson_registration_paid_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8157,7 +8157,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['contactperson_registration_paid_email_body_tpl'], 'eme_prop_contactperson_registration_paid_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['contactperson_registration_paid_email_body_tpl'], 'eme_prop_contactperson_registration_paid_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8224,7 +8224,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_trashed_email_subject_tpl'], 'eme_prop_event_registration_trashed_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_trashed_email_subject_tpl'], 'eme_prop_event_registration_trashed_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8246,7 +8246,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_trashed_email_body_tpl'], 'eme_prop_event_registration_trashed_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_trashed_email_body_tpl'], 'eme_prop_event_registration_trashed_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8274,7 +8274,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_registration_form_format_tpl'], 'eme_prop_event_registration_form_format_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_registration_form_format_tpl'], 'eme_prop_event_registration_form_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8303,7 +8303,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
     </p>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['event_cancel_form_format_tpl'], 'eme_prop_event_cancel_form_format_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['event_cancel_form_format_tpl'], 'eme_prop_event_cancel_form_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8327,7 +8327,7 @@ function eme_meta_box_div_event_captcha_settings( $event ) {
     <?php if ( ! empty( $configured_captchas ) ) : ?>
     <p id='p_select_captcha'>
 <?php
-    echo eme_ui_select($selected_captcha,'eme_prop_selected_captcha',$configured_captchas,__('None','events-made-easy'));
+    echo eme_ui_select($selected_captcha,'eme_prop_selected_captcha',$configured_captchas,__('None','events-made-easy')); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     <label for="eme_prop_selected_captcha"><?php esc_html_e( 'Select a captcha to use', 'events-made-easy' ); ?></label>
     </p>
@@ -8653,7 +8653,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <br><span class="eme_smaller"><?php esc_html_e( 'When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not authorized user, only info concerning the payment status is shown. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed.', 'events-made-easy' ); ?></span><br>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['attendance_unauth_scan_tpl'], 'eme_prop_attendance_unauth_scan_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['attendance_unauth_scan_tpl'], 'eme_prop_attendance_unauth_scan_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
                 <br>
                 <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8668,7 +8668,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <br><span class="eme_smaller"><?php esc_html_e( 'When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a authorized user, only info concerning the payment status is shown, next to attendance count info if configured to do so. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed.', 'events-made-easy' ); ?></span><br>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['attendance_auth_scan_tpl'], 'eme_prop_attendance_auth_scan_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['attendance_auth_scan_tpl'], 'eme_prop_attendance_auth_scan_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
                 <br>
                 <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -8684,7 +8684,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <br><span class="eme_smaller"><?php esc_html_e( 'When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed.', 'events-made-easy' ); ?></span><br>
 <?php
     esc_html_e( 'Choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['attendance_proof_tpl'], 'eme_prop_attendance_proof_tpl', $pdf_templates_array );
+    echo eme_ui_select( $event['event_properties']['attendance_proof_tpl'], 'eme_prop_attendance_proof_tpl', $pdf_templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
                 </div>
             </div>
@@ -8795,11 +8795,11 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_discount'>
         <td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_discountgroup'>
         <td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_waitinglist_seats'>
         <td><label for='eme_prop_waitinglist_seats'><?php esc_html_e( 'Waitinglist seats', 'events-made-easy' ); ?></label></td>
@@ -8858,14 +8858,14 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr id='row_ticket'>
         <td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdf_templates_array, '&nbsp;' ); ?>
+        <td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdf_templates_array, '&nbsp;' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
             <p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
             <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_ticketmail'>
         <td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></td>
-        <td> <?php echo eme_ui_select( $event['event_properties']['ticket_mail'], 'eme_prop_ticket_mail', [ 'booking'  => __( 'At booking time', 'events-made-easy' ), 'approval' => __( 'Upon approval', 'events-made-easy' ), 'payment'  => __( 'Upon payment', 'events-made-easy' ), 'always'   => __( 'All of the above', 'events-made-easy'), ]); ?>
+        <td> <?php echo eme_ui_select( $event['event_properties']['ticket_mail'], 'eme_prop_ticket_mail', [ 'booking'  => __( 'At booking time', 'events-made-easy' ), 'approval' => __( 'Upon approval', 'events-made-easy' ), 'payment'  => __( 'Upon payment', 'events-made-easy' ), 'always'   => __( 'All of the above', 'events-made-easy'), ]); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
             <p class="eme_smaller"><?php esc_html_e( 'Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for.', 'events-made-easy' ); ?>
         </td>
     </tr>
@@ -8879,7 +8879,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <?php esc_html_e( 'hours', 'events-made-easy' );
               echo " ";
               esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
-              echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
+              echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
         &nbsp;<?php esc_html_e( '(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)', 'events-made-easy' ); ?>
         <span id="rsvp-start-display" style="background-color: lightgrey;"></span>
@@ -8892,7 +8892,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <?php esc_html_e( 'hours', 'events-made-easy' );
               echo " ";
               esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
-              echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
+              echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
         <span id="rsvp-end-display" style="background-color: lightgrey;"></span>
     </p>

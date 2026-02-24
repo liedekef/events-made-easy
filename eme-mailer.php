@@ -2785,7 +2785,7 @@ function eme_emails_page() {
         'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
         'all_wp' => __('Email to all WP users', 'events-made-easy'),
     ];
-    echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1);
+    echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         </td>
         </tr>
@@ -2865,7 +2865,7 @@ function eme_emails_page() {
         <b><?php esc_html_e( 'Subject', 'events-made-easy' ); ?></b><br>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( 0, 'event_subject_template', $templates_array );
+    echo eme_ui_select( 0, 'event_subject_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
         <?php esc_html_e( 'Or enter your own: ', 'events-made-easy' ); ?>
@@ -2875,7 +2875,7 @@ function eme_emails_page() {
         <b><?php esc_html_e( 'Message', 'events-made-easy' ); ?></b><br>
 <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( 0, 'event_message_template', $templates_array );
+    echo eme_ui_select( 0, 'event_message_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php
@@ -3059,7 +3059,7 @@ function eme_emails_page() {
         <?php $templates_array = eme_get_templates_array_by_id( 'mail' ); ?>
 <?php
         esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-        echo eme_ui_select( 0, 'generic_message_template', $templates_array );
+        echo eme_ui_select( 0, 'generic_message_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php

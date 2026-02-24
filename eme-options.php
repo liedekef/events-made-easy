@@ -1881,7 +1881,7 @@ function eme_options_page() {
                 'end'   => __( 'ends', 'events-made-easy' ),
             ];
             esc_html_e( 'before the event ', 'events-made-easy' );
-            echo eme_ui_select( $eme_rsvp_start_target, 'eme_rsvp_start_target', $eme_rsvp_start_target_list );
+            echo eme_ui_select( $eme_rsvp_start_target, 'eme_rsvp_start_target', $eme_rsvp_start_target_list ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br><?php esc_html_e( '(0 for both days and hours indicates no limit)', 'events-made-easy' ); ?>
         </td>
@@ -1897,7 +1897,7 @@ function eme_options_page() {
                 'end'   => __( 'ends', 'events-made-easy' ),
             ];
             esc_html_e( 'before the event ', 'events-made-easy' );
-            echo eme_ui_select( $eme_rsvp_end_target, 'eme_rsvp_end_target', $eme_rsvp_end_target_list );
+            echo eme_ui_select( $eme_rsvp_end_target, 'eme_rsvp_end_target', $eme_rsvp_end_target_list ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br><?php esc_html_e( '(0 for both days and hours indicates no limit)', 'events-made-easy' ); ?>
         </td>

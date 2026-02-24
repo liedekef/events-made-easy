@@ -607,9 +607,9 @@ function eme_task_signups_table_layout( $message = '' ) {
             1 => __('Approved', 'events-made-easy')
         ];
         if (isset($_GET['status']))
-            echo eme_ui_select( intval($_GET['status']), 'search_signup_status', $eme_signup_status_array );
+            echo eme_ui_select( intval($_GET['status']), 'search_signup_status', $eme_signup_status_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         else
-            echo eme_ui_select( -1, 'search_signup_status', $eme_signup_status_array );
+            echo eme_ui_select( -1, 'search_signup_status', $eme_signup_status_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
 
         <input id="search_start_date" type="hidden" name="search_start_date" value="">
@@ -633,7 +633,7 @@ function eme_task_signups_table_layout( $message = '' ) {
         <span id="span_sendmails" class="eme-hidden">
         <?php
         esc_html_e( 'Send emails to people upon changes being made?', 'events-made-easy' );
-        echo eme_ui_select_binary( 1, 'send_mail' );
+        echo eme_ui_select_binary( 1, 'send_mail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
         </span>
     <button id="TaskSignupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
@@ -668,7 +668,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_email_subject_tpl'], 'eme_prop_task_signup_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_email_subject_tpl'], 'eme_prop_task_signup_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -677,7 +677,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_email_body_tpl'], 'eme_prop_task_signup_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_email_body_tpl'], 'eme_prop_task_signup_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
 <br>
@@ -687,7 +687,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_email_subject_tpl'], 'eme_prop_cp_task_signup_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_email_subject_tpl'], 'eme_prop_cp_task_signup_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -696,7 +696,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_email_body_tpl'], 'eme_prop_cp_task_signup_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_email_body_tpl'], 'eme_prop_cp_task_signup_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -710,7 +710,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_pending_email_subject_tpl'], 'eme_prop_task_signup_pending_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_pending_email_subject_tpl'], 'eme_prop_task_signup_pending_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -719,7 +719,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_pending_email_body_tpl'], 'eme_prop_task_signup_pending_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_pending_email_body_tpl'], 'eme_prop_task_signup_pending_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
 <br>
@@ -729,7 +729,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_pending_email_subject_tpl'], 'eme_prop_cp_task_signup_pending_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_pending_email_subject_tpl'], 'eme_prop_cp_task_signup_pending_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -738,7 +738,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_pending_email_body_tpl'], 'eme_prop_cp_task_signup_pending_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_pending_email_body_tpl'], 'eme_prop_cp_task_signup_pending_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -752,7 +752,7 @@ function eme_meta_box_div_event_task_signup_updated_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_updated_email_subject_tpl'], 'eme_prop_task_signup_updated_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_updated_email_subject_tpl'], 'eme_prop_task_signup_updated_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -761,7 +761,7 @@ function eme_meta_box_div_event_task_signup_updated_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_updated_email_body_tpl'], 'eme_prop_task_signup_updated_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_updated_email_body_tpl'], 'eme_prop_task_signup_updated_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -775,7 +775,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_cancelled_email_subject_tpl'], 'eme_prop_task_signup_cancelled_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_cancelled_email_subject_tpl'], 'eme_prop_task_signup_cancelled_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -784,7 +784,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_cancelled_email_body_tpl'], 'eme_prop_task_signup_cancelled_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_cancelled_email_body_tpl'], 'eme_prop_task_signup_cancelled_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
 <br>
@@ -794,7 +794,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_cancelled_email_subject_tpl'], 'eme_prop_cp_task_signup_cancelled_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_cancelled_email_subject_tpl'], 'eme_prop_cp_task_signup_cancelled_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -803,7 +803,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['cp_task_signup_cancelled_email_body_tpl'], 'eme_prop_cp_task_signup_cancelled_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['cp_task_signup_cancelled_email_body_tpl'], 'eme_prop_cp_task_signup_cancelled_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -817,7 +817,7 @@ function eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_trashed_email_subject_tpl'], 'eme_prop_task_signup_trashed_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_trashed_email_subject_tpl'], 'eme_prop_task_signup_trashed_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -826,7 +826,7 @@ function eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_ar
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_trashed_email_body_tpl'], 'eme_prop_task_signup_trashed_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_trashed_email_body_tpl'], 'eme_prop_task_signup_trashed_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -840,7 +840,7 @@ function eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_a
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_reminder_email_subject_tpl'], 'eme_prop_task_signup_reminder_email_subject_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_reminder_email_subject_tpl'], 'eme_prop_task_signup_reminder_email_subject_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
     <br>
     <br>
@@ -849,7 +849,7 @@ function eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_a
     <br>
     <?php
     esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
-    echo eme_ui_select( $event['event_properties']['task_signup_reminder_email_body_tpl'], 'eme_prop_task_signup_reminder_email_body_tpl', $templates_array );
+    echo eme_ui_select( $event['event_properties']['task_signup_reminder_email_body_tpl'], 'eme_prop_task_signup_reminder_email_body_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     ?>
 </div>
     <?php
@@ -863,14 +863,14 @@ function eme_meta_box_div_event_task_signup_form_format( $event, $templates_arra
     <br>
     <?php esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' ); ?>
     <?php esc_html_e( 'Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!', 'events-made-easy' ); ?>
-    <?php echo eme_ui_select( $event['event_properties']['task_form_entry_format_tpl'], 'eme_prop_task_form_entry_format_tpl', $templates_array ); ?>
+    <?php echo eme_ui_select( $event['event_properties']['task_form_entry_format_tpl'], 'eme_prop_task_form_entry_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </p><p>
     <b><?php esc_html_e( 'Task Signup Form (personal info section)', 'events-made-easy' ); ?></b>
     <p class="eme_smaller"><?php esc_html_e( 'The layout of the task signup form.', 'events-made-easy' ); ?></p>
     <br>
     <?php esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' ); ?>
     <?php esc_html_e( 'Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!', 'events-made-easy' ); ?>
-    <?php echo eme_ui_select( $event['event_properties']['task_signup_form_format_tpl'], 'eme_prop_task_signup_form_format_tpl', $templates_array ); ?>
+    <?php echo eme_ui_select( $event['event_properties']['task_signup_form_format_tpl'], 'eme_prop_task_signup_form_format_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </p>
 </div>
     <?php
@@ -883,7 +883,7 @@ function eme_meta_box_div_event_task_signup_recorded_ok_html( $event, $templates
     <p class="eme_smaller"><?php esc_html_e( 'The text (html allowed) shown to the user when the task signup has been made successfully.', 'events-made-easy' ); ?></p>
     <br>
     <?php esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' ); ?>
-    <?php echo eme_ui_select( $event['event_properties']['task_signup_recorded_ok_html_tpl'], 'eme_prop_task_signup_recorded_ok_html_tpl', $templates_array ); ?>
+    <?php echo eme_ui_select( $event['event_properties']['task_signup_recorded_ok_html_tpl'], 'eme_prop_task_signup_recorded_ok_html_tpl', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 </div>
     <?php
 }

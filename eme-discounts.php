@@ -457,10 +457,10 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<option value="changeValidTo"><?php esc_html_e( 'Change "valid until" date', 'events-made-easy' ); ?></option>
 	</select>
 	<span id="span_addtogroup" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'addtogroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'addtogroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 	</span>
 	<span id="span_removefromgroup" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 	</span>
 	<span id="span_newvalidfrom" class="eme-hidden">
 	<input id="new_validfrom" type="hidden" name="new_validfrom" value="">
@@ -869,7 +869,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='type'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select( $discount['type'], 'type', $discount_types ); ?>
+			<td><?php echo eme_ui_select( $discount['type'], 'type', $discount_types ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 			<br><?php esc_html_e( 'For type "Code" you have to create your own discount filters, please read the documention for this', 'events-made-easy' ); ?>
 		</tr>
 		<tr class='form-field'>
@@ -888,7 +888,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Credit Voucher', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select_binary( $discount['properties']['voucher'], 'properties[voucher]' ); ?>
+			<td><?php echo eme_ui_select_binary( $discount['properties']['voucher'], 'properties[voucher]' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
@@ -914,13 +914,13 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[invite_only]'><?php esc_html_e( 'Invited people only', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select_binary( $discount['properties']['invite_only'], 'properties[invite_only]' ); ?>
+			<td><?php echo eme_ui_select_binary( $discount['properties']['invite_only'], 'properties[invite_only]' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'People need to be invited and click on the invitation URL for this discount to apply.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[wp_users_only]'><?php esc_html_e( 'Logged-in users only', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select_binary( $discount['properties']['wp_users_only'], 'properties[wp_users_only]' ); ?>
+			<td><?php echo eme_ui_select_binary( $discount['properties']['wp_users_only'], 'properties[wp_users_only]' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require users to be logged-in for this discount to apply.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
@@ -952,7 +952,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='strcase'><?php esc_html_e( 'Case sensitive?', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select_binary( $discount['strcase'], 'strcase' ); ?></td>
+			<td><?php echo eme_ui_select_binary( $discount['strcase'], 'strcase' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='maxcount'><?php esc_html_e( 'Maximum usage count', 'events-made-easy' ); ?></label></th>
@@ -988,7 +988,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 	<?php } ?>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='use_per_seat'><?php esc_html_e( 'Count usage per seat?', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_select_binary( $discount['use_per_seat'], 'use_per_seat' ); ?>
+			<td><?php echo eme_ui_select_binary( $discount['use_per_seat'], 'use_per_seat' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 			<br><?php esc_html_e( 'By default the coupon usage count is counted per form submit. If you want, you can augment the usage count by the number of seats booked instead.', 'events-made-easy' ); ?>
 			</td>
 		</tr>

@@ -175,7 +175,7 @@ function eme_categories_edit_layout() {
 						$categories_prefixes_arr[ $categories_prefix ] = eme_permalink_convert( $categories_prefix );
 					}
 					$prefix = $category['category_prefix'] ? $category['category_prefix'] : '';
-					echo eme_ui_select( $prefix, 'category_prefix', $categories_prefixes_arr );
+					echo eme_ui_select( $prefix, 'category_prefix', $categories_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 				} else {
 					echo eme_permalink_convert( $categories_prefixes );
 				}

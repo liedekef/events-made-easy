@@ -1536,7 +1536,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 ?>
         <tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
         </td><td>
-        <?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
+        <?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         </td></tr>
         <?php } ?>
         <tr><td>
@@ -1560,7 +1560,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 ?>
         <tr><td><?php esc_html_e( 'Send mail for changed member?', 'events-made-easy' ); ?>
         </td><td>
-        <?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
+        <?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         </td></tr>
         <?php } ?>
         <?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
@@ -1580,7 +1580,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         </td><td>
 <?php
                     $memberships = eme_get_memberships( $membership['membership_id'] );
-                    echo eme_ui_select_key_value( '', 'transferto_membershipid', $memberships, 'membership_id', 'name', '&nbsp;', 0, 'nodynamicupdates' );
+                    echo eme_ui_select_key_value( '', 'transferto_membershipid', $memberships, 'membership_id', 'name', '&nbsp;', 0, 'nodynamicupdates' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         <br>
 <?php
@@ -1687,7 +1687,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </tr>
 <?php } ?>
     <tr><td><?php esc_html_e( 'Member status calculated automatically', 'events-made-easy' ); ?></td>
-    <td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); ?>
+    <td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
         if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
             echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
@@ -1696,10 +1696,10 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <?php echo "<p class='eme_smaller'>" . esc_html__( 'If set to automatic and the membership is paid for, the status will be recalculated on a daily basis.', 'events-made-easy' ) . '</p>'; ?>
         </td></tr>
         <tr><td><?php esc_html_e( 'Member status', 'events-made-easy' ); ?></td>
-    <td><?php echo eme_ui_select( $member['status'], 'status', $eme_member_status_array, '', 0, 'nodynamicupdates', $disabled ); ?>
+    <td><?php echo eme_ui_select( $member['status'], 'status', $eme_member_status_array, '', 0, 'nodynamicupdates', $disabled ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </td></tr>
         <tr><td><?php esc_html_e( 'Has the member paid?', 'events-made-easy' ); ?></td>
-    <td><?php echo eme_ui_select_binary( $member['paid'], 'paid', 0, 'nodynamicupdates', $disabled ); ?>
+    <td><?php echo eme_ui_select_binary( $member['paid'], 'paid', 0, 'nodynamicupdates', $disabled ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </td></tr>
     <tr><td><?php esc_html_e( 'Last payment received date', 'events-made-easy' ); ?></td>
         <td>
@@ -1910,11 +1910,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="type"><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['type'], 'type', $type_array ); ?></td>
+    <td><?php echo eme_ui_select( $membership['type'], 'type', $type_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr>
     <td><label for="status"><?php esc_html_e( 'Status', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['status'], 'status', $status_array ); ?>
+    <td><?php echo eme_ui_select( $membership['status'], 'status', $status_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'Inactive memberships will not be shown in membership selection lists.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -1932,7 +1932,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='freeperiod'>
     <td><label for="properties[one_free_period]"><?php esc_html_e( 'One extra free period', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_binary( $membership['properties']['one_free_period'], 'properties[one_free_period]', 0 ); ?>
+    <td><?php echo eme_ui_select_binary( $membership['properties']['one_free_period'], 'properties[one_free_period]', 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'When someone becomes a member, the end date is the end date of the current period calculated for this membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If you want new members to get one extra membership period for free, set this option.', 'events-made-easy' ); ?></p>
     </td>
@@ -2006,7 +2006,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[currency]"><?php esc_html_e( 'Currency', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['currency'], 'properties[currency]', $currency_array ); ?></td>
+    <td><?php echo eme_ui_select( $membership['properties']['currency'], 'properties[currency]', $currency_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr>
     <td><label for="vat_pct"><?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?></label></td>
@@ -2016,11 +2016,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='row_discount'>
     <td><label for='properties[discount]'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['discount'], 'properties[discount]', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
+    <td><?php echo eme_ui_select( $membership['properties']['discount'], 'properties[discount]', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_discountgroup'>
     <td><label for='properties[discountgroup]'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['discountgroup'], 'properties[discountgroup]', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
+    <td><?php echo eme_ui_select( $membership['properties']['discountgroup'], 'properties[discountgroup]', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr>
     <td><label for="properties[contact_id]"><?php esc_html_e( 'Contact person', 'events-made-easy' ); ?></label></td>
@@ -2050,7 +2050,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_member_form_tpl">
     <td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); ?>
+    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2081,7 +2081,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_familymember_form_tpl">
     <td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); ?>
+    <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up.', 'events-made-easy' ); ?></p>
@@ -2101,7 +2101,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[member_added_tpl]"><?php esc_html_e( 'Member Added Message:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['member_added_tpl'], 'properties[member_added_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['member_added_tpl'], 'properties[member_added_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown after someone subscribed. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2119,7 +2119,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[payment_form_header_tpl]"><?php esc_html_e( 'Payment Form Header:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['payment_form_header_tpl'], 'properties[payment_form_header_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['payment_form_header_tpl'], 'properties[payment_form_header_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown above the payment buttons. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2137,7 +2137,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[payment_form_footer_tpl]"><?php esc_html_e( 'Payment Form Footer:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['payment_form_footer_tpl'], 'properties[payment_form_footer_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['payment_form_footer_tpl'], 'properties[payment_form_footer_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown below the payment buttons. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2155,7 +2155,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[payment_success_tpl]"><?php esc_html_e( 'Payment Success Message:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['payment_success_tpl'], 'properties[payment_success_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['payment_success_tpl'], 'properties[payment_success_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php echo esc_html__( 'The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection "General options".', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2177,7 +2177,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for='properties[member_template_id]'><?php esc_html_e( 'Membership card PDF template', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_template_id'], 'properties[member_template_id]', eme_get_templates( 'pdf', 1 ), 'id', 'name', '&nbsp;' ); ?><br>
+    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_template_id'], 'properties[member_template_id]', eme_get_templates( 'pdf', 1 ), 'id', 'name', '&nbsp;' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?><br>
         <p class='eme_smaller'><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the membership is paid for.', 'events-made-easy' ); ?><br>
     </td>
     </tr>
@@ -2199,7 +2199,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_offline">
     <td><label for="properties[offline_payment_tpl]"><?php esc_html_e( 'Offline Payment Format:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['offline_payment_tpl'], 'properties[offline_payment_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['offline_payment_tpl'], 'properties[offline_payment_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown for the offline payment method. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2265,7 +2265,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="properties[new_body_format_tpl]"><?php esc_html_e( 'New member email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['new_body_format_tpl'], 'properties[new_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['new_body_format_tpl'], 'properties[new_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2335,7 +2335,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson new member email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['contact_new_body_format_tpl'], 'properties[contact_new_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['contact_new_body_format_tpl'], 'properties[contact_new_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2371,7 +2371,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Updated member email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['updated_body_format_tpl'], 'properties[updated_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['updated_body_format_tpl'], 'properties[updated_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member upon changes.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ); ?><br>
         </p>
@@ -2409,7 +2409,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership extended email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['extended_body_format_tpl'], 'properties[extended_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['extended_body_format_tpl'], 'properties[extended_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when the membership is extended.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2488,7 +2488,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership paid email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['paid_body_format_tpl'], 'properties[paid_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['paid_body_format_tpl'], 'properties[paid_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when marked as paid.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2558,7 +2558,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson membership paid email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['contact_paid_body_format_tpl'], 'properties[contact_paid_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['contact_paid_body_format_tpl'], 'properties[contact_paid_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2597,7 +2597,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership reminder email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['reminder_body_format_tpl'], 'properties[reminder_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['reminder_body_format_tpl'], 'properties[reminder_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ); ?><br>
         <br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
         </p>
@@ -2637,7 +2637,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership stopped email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['stop_body_format_tpl'], 'properties[stop_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['stop_body_format_tpl'], 'properties[stop_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
         </p>
@@ -2668,7 +2668,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson membership stopped email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['contact_stop_body_format_tpl'], 'properties[contact_stop_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['contact_stop_body_format_tpl'], 'properties[contact_stop_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
         </p>
@@ -2706,7 +2706,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson member deleted email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['contact_deleted_body_format_tpl'], 'properties[contact_deleted_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['contact_deleted_body_format_tpl'], 'properties[contact_deleted_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ); ?>
         </p>
         <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2742,7 +2742,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email body', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select( $membership['properties']['contact_ipn_body_format_tpl'], 'properties[contact_ipn_body_format_tpl]', $templates_array ); ?>
+    <td><?php echo eme_ui_select( $membership['properties']['contact_ipn_body_format_tpl'], 'properties[contact_ipn_body_format_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2888,28 +2888,28 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     <span id="span_sendmails" class="eme-hidden">
 <?php
     esc_html_e( 'Send emails to members upon changes being made?', 'events-made-easy' );
-    echo eme_ui_select_binary( 1, 'send_mail' );
+    echo eme_ui_select_binary( 1, 'send_mail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
     <span id="span_trashperson" class="eme-hidden">
 <?php
     esc_html_e( 'Move corresponding persons to the trash bin?', 'events-made-easy' );
-    echo eme_ui_select_binary( 0, 'trash_person' );
+    echo eme_ui_select_binary( 0, 'trash_person' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
     <span id="span_membermailtemplate" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'membermail_template_subject', $membertemplates, 'id', 'name', __( 'Select a subject template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'membermail_template', $membertemplates, 'id', 'name', __( 'Please select a body template', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'membermail_template_subject', $membertemplates, 'id', 'name', __( 'Select a subject template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'membermail_template', $membertemplates, 'id', 'name', __( 'Please select a body template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <span id="span_pdftemplate" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <span id="span_htmltemplate" class="eme-hidden">
-    <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-    <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+    <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <button id="MembersActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -4997,7 +4997,7 @@ function eme_access_meta_box_cb( $post ) {
     echo "<br><label for='eme_access_denied'>" . esc_html__( 'Access denied message template', 'events-made-easy' ) . '</label>&nbsp;';
     #echo "<input type='text' name='eme_access_denied' id='eme_access_denied' value='$text'>";
     $templates_array = eme_get_templates_array_by_id();
-    echo eme_ui_select( $access_denied_tpl, 'eme_access_denied', $templates_array );
+    echo eme_ui_select( $access_denied_tpl, 'eme_access_denied', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     echo "<br><p class='eme_smaller'>" . esc_html__( 'The format of the text shown if access to the page is denied. If left empty, a default message will be shown.', 'events-made-easy' ) . '</p>';
 
     wp_nonce_field( 'eme_meta_box', 'eme_meta_box_nonce' );

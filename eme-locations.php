@@ -2671,8 +2671,8 @@ function eme_add_directions_form( $location ) {
         $res .= '<form action="//maps.google.com/maps" method="get" target="_blank" style="text-align:left;">';
         $res .= '<div id="eme_direction_form"><label for="saddr">' . __( 'Your Street Address', 'events-made-easy' ) . '</label><br>';
         $res .= '<input type="text" name="saddr" id="saddr" value="">';
-        $res .= '<input type="hidden" name="daddr" value="' . $location['location_address1'] . ', ' . $location['location_city'] . '">';
-        $res .= '<input type="hidden" name="hl" value="' . $locale_code . '"></div>';
+        $res .= '<input type="hidden" name="daddr" value="' . esc_attr( $location['location_address1'] . ', ' . $location['location_city'] ) . '">';
+        $res .= '<input type="hidden" name="hl" value="' . esc_attr( $locale_code ) . '"></div>';
         $res .= '<input type="submit" value="' . esc_attr__( 'Get Directions', 'events-made-easy' ) . '">';
         $res .= '</form>';
     }

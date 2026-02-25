@@ -2166,7 +2166,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         } else {
             $value = '';
         }
-        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
+        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
 
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
@@ -2536,7 +2536,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     }
 ?>
         <select id='related_person_id' name='related_person_id'
-            data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>"
+            data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>"
             data-person-id="<?php echo intval( $person['person_id'] ); ?>"
             class="eme_snapselect_chooserelatedperson">
             <?php echo $preselected_option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML option element ?>

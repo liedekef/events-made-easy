@@ -2943,7 +2943,7 @@ function eme_emails_page() {
         </div>
         <hr>
         <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
-        <select id="send_previeweventmailto_id" name="send_previeweventmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
+        <select id="send_previeweventmailto_id" name="send_previeweventmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
         <button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
         <div id="previeweventmail-result" class="eme-hidden" ></div>
         <hr>
@@ -3124,7 +3124,7 @@ function eme_emails_page() {
         </div>
         <hr>
         <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
-        <select id="send_previewmailto_id" name="send_previewmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_html_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
+        <select id="send_previewmailto_id" name="send_previewmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
         <button id='previewmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
         <br><?php esc_html_e( 'Small remark: the preview mail will not replace booking or attendee related placeholders.', 'events-made-easy' ); ?>
         <div id="previewmail-result" class="eme-hidden" ></div>
@@ -3159,7 +3159,7 @@ function eme_emails_page() {
     <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
     <form id='send_testmail' name='send_testmail' action="#" method="post" onsubmit="return false;">
     <label for='testmail_to'><?php esc_html_e( 'Enter the recipient', 'events-made-easy' ); ?></label>
-    <input type="email" name="testmail_to" id="testmail_to" value="" placeholder="<?php esc_html_e( 'Enter any valid mail address', 'events-made-easy' ); ?>">
+    <input type="email" name="testmail_to" id="testmail_to" value="" placeholder="<?php esc_attr_e( 'Enter any valid mail address', 'events-made-easy' ); ?>">
     <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
     </form>
 </div>

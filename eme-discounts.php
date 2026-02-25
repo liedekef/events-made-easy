@@ -464,11 +464,11 @@ function eme_manage_discounts_layout( $message = '' ) {
 	</span>
 	<span id="span_newvalidfrom" class="eme-hidden">
 	<input id="new_validfrom" type="hidden" name="new_validfrom" value="">
-	<input id="eme_localized_new_validfrom" type="text" name="eme_localized_new_validfrom" value="" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validfrom' class='eme_formfield_fdatetime'>
+	<input id="eme_localized_new_validfrom" type="text" name="eme_localized_new_validfrom" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validfrom' class='eme_formfield_fdatetime'>
 	</span>
 	<span id="span_newvalidto" class="eme-hidden">
 	<input id="new_validto" type="hidden" name="new_validto" value="">
-	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
+	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
 	</span>
 	<button id="DiscountsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>

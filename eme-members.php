@@ -2989,7 +2989,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="search" value="' . esc_html($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '</td><td>';
@@ -2999,7 +2999,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="number" value="' . esc_html($value) . '" name="search_memberid" id="'.$id_prefix.'search_memberid" placeholder="' . esc_attr__( 'Filter on member ID', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="number" value="' . esc_attr($value) . '" name="search_memberid" id="'.$id_prefix.'search_memberid" placeholder="' . esc_attr__( 'Filter on member ID', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
     echo '<input type="search" name="search_paymentid" id="'.$id_prefix.'search_paymentid" placeholder="' . esc_attr__( 'Filter on payment id', 'events-made-easy' ) . '" class="eme_searchfilter">';
     echo '<input type="search" name="search_pg_pid" id="'.$id_prefix.'search_pg_pid" placeholder="' . esc_attr__( 'Filter on payment GW id', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
@@ -3013,7 +3013,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         } else {
             $value = '';
         }
-        echo '<input type="search" value="' . esc_html($value) . '" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
+        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
         }
@@ -3325,7 +3325,7 @@ function eme_manage_memberships_layout( $message ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    <div id="MembershipsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+    <div id="MembershipsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
     </div>
     </div>
 <?php

@@ -70,8 +70,8 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
 	}
 	$datetime = $eme_date_obj->getDateTime();
 	$sql      = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
-	$count    = $wpdb->get_col( $sql );
-        $sql      = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$count    = $wpdb->get_var( $sql );
+    $sql      = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
 	$wpdb->query( $sql );
 	return $count;
 }

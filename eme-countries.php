@@ -599,18 +599,18 @@ function eme_get_localized_states( $country_code = '' ) {
 	$countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$lang            = eme_detect_lang();
 	if ( empty( $country_code ) ) {
-		$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE lang=%s", $lang );
+		$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE lang=%s", $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	} else {
-		$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE country.alpha_2=%s AND country.lang=%s", $country_code, $lang );
+		$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE country.alpha_2=%s AND country.lang=%s", $country_code, $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
-	$res = $wpdb->get_results( $sql, ARRAY_A );
+	$res = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( empty( $res ) ) {
 		if ( empty( $country_code ) ) {
 			$sql = "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE lang=''";
 		} else {
-			$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE country.alpha_2=%s AND country.lang=''", $country_code );
+			$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE country.alpha_2=%s AND country.lang=''", $country_code ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
-		$res = $wpdb->get_results( $sql, ARRAY_A );
+		$res = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	return $res;
 }
@@ -619,24 +619,24 @@ function eme_get_countries_count() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$sql   = "SELECT COUNT(*) FROM $table";
-	return $wpdb->get_var( $sql );
+	return $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 }
 function eme_get_countries() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$sql   = "SELECT * FROM $table";
-	return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 }
 
 function eme_get_localized_countries() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$lang  = eme_detect_lang();
-	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE lang=%s", $lang );
-	$res   = $wpdb->get_results( $sql, ARRAY_A );
+	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE lang=%s", $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$res   = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( empty( $res ) ) {
 		$sql = "SELECT * FROM $table WHERE lang=''";
-		$res = $wpdb->get_results( $sql, ARRAY_A );
+		$res = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	return $res;
 }
@@ -644,7 +644,7 @@ function eme_get_countries_alpha2() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$sql   = "SELECT alpha_2 FROM $table GROUP BY alpha_2";
-	return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 }
 
 function eme_validate_state( $state ) {
@@ -667,11 +667,11 @@ function eme_validate_country( $country ) {
 		return __( 'Incorrect num-3 code', 'events-made-easy' );
 	}
 	if ( empty($country['id'] ) ) {
-		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE alpha_2=%s AND lang=%s", $country['alpha_2'], $country['lang'] );
+		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE alpha_2=%s AND lang=%s", $country['alpha_2'], $country['lang'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	} else {
-		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE id != %d AND alpha_2=%s AND lang=%s", $country['id'], $country['alpha_2'], $country['lang'] );
+		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE id != %d AND alpha_2=%s AND lang=%s", $country['id'], $country['alpha_2'], $country['lang'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
-	$count = $wpdb->get_var( $sql );
+	$count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( $count > 0 ) {
 		return __( 'Duplicate country with the same language and alpha-2 code detected', 'events-made-easy' );
 	}
@@ -707,19 +707,19 @@ function eme_db_update_country( $id, $line ) {
 	// first get the existing country, compary the alpha_2 and change ALL countries and people from the old to new alpha_2 if not the same
 	$country = eme_get_country( $id );
 	if ( $country['alpha_2'] != $line['alpha_2'] ) {
-		$sql = $wpdb->prepare( "UPDATE $people_table SET country_code=%s WHERE country_code=%s", $line['alpha_2'], $country['alpha_2'] );
-		$wpdb->query( $sql );
-		$sql = $wpdb->prepare( "UPDATE $table SET alpha_2=%s WHERE alpha_2=%s", $line['alpha_2'], $country['alpha_2'] );
-		$wpdb->query( $sql );
+		$sql = $wpdb->prepare( "UPDATE $people_table SET country_code=%s WHERE country_code=%s", $line['alpha_2'], $country['alpha_2'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$sql = $wpdb->prepare( "UPDATE $table SET alpha_2=%s WHERE alpha_2=%s", $line['alpha_2'], $country['alpha_2'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	if ( $country['alpha_3'] != $line['alpha_3'] ) {
-		$sql = $wpdb->prepare( "UPDATE $table SET alpha_3=%s WHERE alpha_3=%s", $line['alpha_3'], $country['alpha_3'] );
-		$wpdb->query( $sql );
+		$sql = $wpdb->prepare( "UPDATE $table SET alpha_3=%s WHERE alpha_3=%s", $line['alpha_3'], $country['alpha_3'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	if ( $country['num_3'] != $line['num_3'] ) {
 		// we take into account that old values were not correctly prefixed by a 0
-		$sql = $wpdb->prepare( "UPDATE $table SET num_3=%03d WHERE num_3=%03d or num_3=%s", $line['num_3'], $country['num_3'], $country['num_3'] );
-		$wpdb->query( $sql );
+		$sql = $wpdb->prepare( "UPDATE $table SET num_3=%03d WHERE num_3=%03d or num_3=%s", $line['num_3'], $country['num_3'], $country['num_3'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	// we only want the columns that interest us
@@ -762,10 +762,10 @@ function eme_db_update_state( $id, $line ) {
 	// first get the existing state, compary the state code and change ALL relevant states and people from the old to new code if not the same
 	$state = eme_get_state( $id );
 	if ( $state['code'] != $line['code'] ) {
-		$sql = $wpdb->prepare( "UPDATE $people_table SET state_code=%s WHERE state_code=%s", $line['code'], $state['code'] );
-		$wpdb->query( $sql );
-		$sql = $wpdb->prepare( "UPDATE $table SET code=%s WHERE code=%s AND country_id=%d", $line['code'], $state['code'], $state['country_id'] );
-		$wpdb->query( $sql );
+		$sql = $wpdb->prepare( "UPDATE $people_table SET state_code=%s WHERE state_code=%s", $line['code'], $state['code'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$sql = $wpdb->prepare( "UPDATE $table SET code=%s WHERE code=%s AND country_id=%d", $line['code'], $state['code'], $state['country_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	// we only want the columns that interest us
@@ -786,8 +786,8 @@ function eme_db_update_state( $id, $line ) {
 function eme_get_country( $id ) {
 	global $wpdb;
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$sql          = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
-	$res          = $wpdb->get_row( $sql, ARRAY_A );
+	$sql          = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$res          = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	$res['num_3'] = sprintf( '%03s', $res['num_3'] );
 	return $res;
 }
@@ -798,11 +798,11 @@ function eme_get_country_name( $code, $lang = '' ) {
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
 	}
-	$sql = $wpdb->prepare( "SELECT name FROM $table WHERE alpha_2 = %s AND lang=%s LIMIT 1", $code, $lang );
-	$res = $wpdb->get_var( $sql );
+	$sql = $wpdb->prepare( "SELECT name FROM $table WHERE alpha_2 = %s AND lang=%s LIMIT 1", $code, $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$res = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( empty( $res ) ) {
-		$sql = $wpdb->prepare( "SELECT name FROM $table WHERE alpha_2 = %s AND lang='' LIMIT 1", $code );
-		$res = $wpdb->get_var( $sql );
+		$sql = $wpdb->prepare( "SELECT name FROM $table WHERE alpha_2 = %s AND lang='' LIMIT 1", $code ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$res = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	return $res ?? '';
 }
@@ -810,16 +810,16 @@ function eme_get_country_name( $code, $lang = '' ) {
 function eme_get_state( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_STATES_TBNAME;
-	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
-	return $wpdb->get_row( $sql, ARRAY_A );
+	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_state_lang( $id ) {
 	global $wpdb;
 	$table           = EME_DB_PREFIX . EME_STATES_TBNAME;
 	$countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$sql             = $wpdb->prepare( "SELECT country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.id=%d", $id );
-	return $wpdb->get_var( $sql );
+	$sql             = $wpdb->prepare( "SELECT country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_state_name( $code, $country_code, $lang = '' ) {
@@ -830,18 +830,18 @@ function eme_get_state_name( $code, $country_code, $lang = '' ) {
 		$lang = eme_detect_lang();
 	}
 	if ( empty( $country_code ) ) {
-		$sql = $wpdb->prepare( "SELECT state.name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.code=%s AND (country.lang='' OR country.lang=%s) LIMIT 1", $code, $lang );
+		$sql = $wpdb->prepare( "SELECT state.name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.code=%s AND (country.lang='' OR country.lang=%s) LIMIT 1", $code, $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	} else {
-		$sql = $wpdb->prepare( "SELECT state.name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.code=%s and country.alpha_2=%s AND (country.lang='' OR country.lang=%s) LIMIT 1", $code, $country_code, $lang );
+		$sql = $wpdb->prepare( "SELECT state.name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.code=%s and country.alpha_2=%s AND (country.lang='' OR country.lang=%s) LIMIT 1", $code, $country_code, $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
-	return $wpdb->get_var( $sql ) ?? '';
+	return $wpdb->get_var( $sql ) ?? ''; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_countries_lang() {
 	global $wpdb;
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$sql          = "SELECT id, CONCAT (name, ' (', lang, ')') AS name FROM $table";
-	return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 }
 
 add_action( 'wp_ajax_eme_countries_list', 'eme_ajax_countries_list' );
@@ -869,11 +869,11 @@ function eme_ajax_countries_list() {
 	}
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
-		$recordCount = $wpdb->get_var( $sql );
+		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
-		$rows = $wpdb->get_results( $sql, ARRAY_A );
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-countries&eme_admin_action=edit_country&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
@@ -897,11 +897,11 @@ function eme_ajax_states_list() {
 	$fTableResult    = [];
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
-		$recordCount = $wpdb->get_var( $sql );
+		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $orderby $limit";
-		$rows = $wpdb->get_results( $sql, ARRAY_A );
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-countries&eme_admin_action=edit_state&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
@@ -968,8 +968,10 @@ function eme_ajax_country_delete() {
 	}
 	$ids_list = eme_sanitize_request($_POST['id']);
 	if ( eme_is_list_of_int( $ids_list ) ) {
-		$wpdb->query( "DELETE FROM $countries_table WHERE id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query( "UPDATE $states_table SET country_id=0 where country_id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$ids_arr = array_map( 'intval', explode( ',', $ids_list ) );
+		$placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $countries_table WHERE id in ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "UPDATE $states_table SET country_id=0 where country_id in ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 	$fTableResult['Result']  = 'OK';
 	$fTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );

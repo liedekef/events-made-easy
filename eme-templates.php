@@ -330,13 +330,13 @@ function eme_get_templates( $type = '', $strict = 0 ) {
     $table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     if ( ! empty( $type ) ) {
         if ( $strict ) {
-            $sql = $wpdb->prepare( "SELECT * FROM $table WHERE type=%s ORDER BY type,name", $type );
+            $sql = $wpdb->prepare( "SELECT * FROM $table WHERE type=%s ORDER BY type,name", $type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
         } else {
-            $sql = $wpdb->prepare( "SELECT * FROM $table WHERE type='' OR type=%s ORDER BY type,name", $type );
+            $sql = $wpdb->prepare( "SELECT * FROM $table WHERE type='' OR type=%s ORDER BY type,name", $type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
         }
-        return $wpdb->get_results( $sql, ARRAY_A );
+        return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
-        return $wpdb->get_results( "SELECT * FROM $table ORDER BY type,name", ARRAY_A );
+        return $wpdb->get_results( "SELECT * FROM $table ORDER BY type,name", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
     }
 }
 
@@ -345,13 +345,13 @@ function eme_get_templates_name_id( $type = '', $strict = 0 ) {
     $table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     if ( ! empty( $type ) ) {
         if ( $strict ) {
-            $sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type=%s ORDER BY type,name", $type );
+            $sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type=%s ORDER BY type,name", $type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
         } else {
-            $sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type='' OR type=%s ORDER BY type,name", $type );
+            $sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type='' OR type=%s ORDER BY type,name", $type ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
         }
-        return $wpdb->get_results( $sql, ARRAY_A );
+        return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
-        return $wpdb->get_results( "SELECT name,id FROM $table ORDER BY type,name", ARRAY_A );
+        return $wpdb->get_results( "SELECT name,id FROM $table ORDER BY type,name", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
     }
 }
 
@@ -376,8 +376,8 @@ function eme_get_template( $template_id ) {
     $template    = wp_cache_get( "eme_template $template_id" );
     if ( $template === false ) {
         $templates_table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
-        $sql             = $wpdb->prepare( "SELECT * FROM $templates_table WHERE id = %d", $template_id );
-        $template        = $wpdb->get_row( $sql, ARRAY_A );
+        $sql             = $wpdb->prepare( "SELECT * FROM $templates_table WHERE id = %d", $template_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+        $template        = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( $template !== false ) {
             if ( empty( $template['properties'] ) ) {
                 $template['properties'] = [];
@@ -465,11 +465,11 @@ function eme_ajax_templates_list() {
 
     if ( current_user_can( get_option( 'eme_cap_templates' ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
-        $recordCount = $wpdb->get_var( $sql );
+        $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
         $limit       = eme_get_datatables_limit();
         $orderby     = eme_get_datatables_orderby();
         $sql         = "SELECT * FROM $table $where $orderby $limit";
-        $res         = $wpdb->get_results( $sql, ARRAY_A );
+        $res         = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
         $rows        = [];
         foreach ( $res  as $key => $val ) {
             if ( empty( $val['name'] ) ) {

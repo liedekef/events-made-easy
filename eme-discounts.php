@@ -1061,7 +1061,7 @@ function eme_get_discounts( $extra_search = '' ) {
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " WHERE $extra_search";
 	}
-	$rows = $wpdb->get_results( $sql, ARRAY_A );
+	$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped search are safe variables
 	foreach ( $rows as $key => $discount ) {
 			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			$rows[ $key ]           = $discount;
@@ -1076,7 +1076,7 @@ function eme_get_dgroups( $extra_search = '' ) {
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " WHERE $extra_search";
 	}
-	return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped search are safe variables
 }
 
 function eme_db_insert_discount( $line ) {
@@ -1760,12 +1760,12 @@ function eme_ajax_discounts_list() {
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
-		$recordCount = $wpdb->get_var( $sql );
+		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where clause are safe variables
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
-		$rows = $wpdb->get_results( $sql, ARRAY_A );
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where/orderby/limit are safe variables
 		foreach ( $rows as $key => $row ) {
 			$selected_dgroup = $row['dgroup'];
 			// let's see if the dgroup is an csv of integers, if so: convert to names
@@ -1825,12 +1825,12 @@ function eme_ajax_discountgroups_list() {
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
-		$recordCount = $wpdb->get_var( $sql );
+		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where clause are safe variables
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
-		$rows = $wpdb->get_results( $sql, ARRAY_A );
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where/orderby/limit are safe variables
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&eme_admin_action=edit_dgroup&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}

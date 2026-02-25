@@ -277,8 +277,8 @@ function eme_ajax_action_holidays_list() {
 
     $count_sql  = "SELECT COUNT(*) FROM $table";
     $sql  = "SELECT * FROM $table $orderby $limit";
-    $recordCount = $wpdb->get_var( $count_sql );
-    $rows = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+    $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 
     $records = [];
     foreach ( $rows as $row ) {
@@ -317,7 +317,9 @@ function eme_ajax_action_manage_holidays() {
         case 'deleteHolidays':
             $ids_list = eme_sanitize_request($_POST['holidays_ids']);
             if (eme_is_list_of_int($ids_list)) {
-                $wpdb->query( "DELETE FROM $table WHERE id IN ( $ids_list )");
+                $ids_arr = array_map('intval', explode(',', $ids_list));
+                $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+                $wpdb->query($wpdb->prepare("DELETE FROM $table WHERE id IN ($placeholders)", ...$ids_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             }
             $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Holiday lists deleted','events-made-easy')."</div>";
             $fTableResult['Result'] = 'OK';

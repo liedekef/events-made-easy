@@ -283,7 +283,7 @@ function eme_cleanup_form( $message = '' ) {
 <h1><?php esc_html_e( 'Cleanup actions', 'events-made-easy' ); ?></h1>
 	<form action="" method="post">
 	<label for="eme_number"><?php esc_html_e( 'Remove events older than', 'events-made-easy' ); ?></label>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_events'>
 	<input type="number" id="eme_number" name="eme_number" size="3" maxlength="3" min="1" max="999" step="1" >
@@ -298,7 +298,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<label for="eme_number"><?php esc_html_e( 'Remove unpaid pending bookings older than', 'events-made-easy' ); ?></label>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_unpaid'>
 	<input type="number" id="eme_number" name="eme_number" size="6" maxlength="6" min="5" max="999999" step="1">
@@ -309,7 +309,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<label for="eme_number"><?php esc_html_e( 'Remove unconfirmed bookings older than', 'events-made-easy' ); ?></label>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_unconfirmed'>
 	<input type="number" id="eme_number" name="eme_number" size="6" maxlength="6" min="5" max="999999" step="1">
@@ -320,7 +320,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<?php esc_html_e( 'Move people who are no longer referenced in bookings, groups or memberships to the trash bin', 'events-made-easy' ); ?>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people'>
 	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
@@ -330,7 +330,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<label for="eme_number"><?php esc_html_e( 'Remove people in thrash older than', 'events-made-easy' ); ?></label>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_trashed_people'>
 	<input type="number" id="eme_number" name="eme_number" size="3" maxlength="3" min="1" max="999" step="1" >
@@ -345,7 +345,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<label for="eme_number"><?php esc_html_e( 'Remove bookings in thrash older than', 'events-made-easy' ); ?></label>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_trashed_bookings'>
 	<input type="number" id="eme_number" name="eme_number" size="3" maxlength="3" min="1" max="999" step="1" >
@@ -360,7 +360,7 @@ function eme_cleanup_form( $message = '' ) {
 <br><br>
 	<form action="" method="post">
 	<?php esc_html_e( 'Remove all data concerning events, locations, memberships, people and bookings', 'events-made-easy' ); ?>
-	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
 	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
@@ -381,7 +381,7 @@ function eme_cleanup_form( $message = '' ) {
 		?>
 	<form action="" method="post">
 		<?php esc_html_e( 'Empty the mail queue', 'events-made-easy' ); ?>
-		<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+		<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='eme_admin_action' value='eme_empty_queue'>
 	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
 	</form>

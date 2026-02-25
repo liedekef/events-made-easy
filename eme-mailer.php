@@ -2769,7 +2769,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_snapselect_events_class', $aria_label ); ?>
+        <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
         <br><label><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?> </label>
             <p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>
         </td>
@@ -2822,7 +2822,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect( $person_ids, 'eme_eventmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); ?></td>
+        <td><?php echo eme_ui_multiselect( $person_ids, 'eme_eventmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td>
         </tr>
         <tr id="eme_groups_row">
         <td class="eme-wsnobreak">
@@ -2832,7 +2832,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_eventmail_send_groups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td>
+        <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_eventmail_send_groups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td>
         </tr>
     <tr id="eme_members_row1"><td class="eme-wsnobreak">
 <?php
@@ -2841,7 +2841,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
-    <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); ?></td></tr>
+    <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
     <tr id="eme_members_row2"><td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
@@ -2850,7 +2850,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
-    <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td></tr>
+    <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
     <tr id="eme_members_row3"><td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
@@ -2859,7 +2859,7 @@ function eme_emails_page() {
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
     </td>
-    <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_eventmail_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td></tr>
+    <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_eventmail_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         </table>
         <div class="form-field"><p>
         <b><?php esc_html_e( 'Subject', 'events-made-easy' ); ?></b><br>
@@ -2994,7 +2994,7 @@ function eme_emails_page() {
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-                <td><?php echo eme_ui_multiselect( $person_ids, 'eme_genericmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); ?></td></tr>
+                <td><?php echo eme_ui_multiselect( $person_ids, 'eme_genericmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
@@ -3003,7 +3003,7 @@ function eme_emails_page() {
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_genericmail_send_peoplegroups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td></tr>
+        <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_genericmail_send_peoplegroups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
@@ -3011,7 +3011,7 @@ function eme_emails_page() {
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); ?></td></tr>
+        <td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
@@ -3020,7 +3020,7 @@ function eme_emails_page() {
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_genericmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td></tr>
+        <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_genericmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
@@ -3029,7 +3029,7 @@ function eme_emails_page() {
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
         </td>
-        <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); ?></td></tr>
+        <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         </table>
         </div>
         </div>

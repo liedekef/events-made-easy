@@ -894,7 +894,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='value'><?php esc_html_e( 'Discount groups', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_multiselect_key_value( $selected_dgroup_arr, 'dgroup', $dgroups, 'id', 'name', 5, '', 0, 'eme_snapselect' ); ?>
+			<td><?php echo eme_ui_multiselect_key_value( $selected_dgroup_arr, 'dgroup', $dgroups, 'id', 'name', 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
 			<br><?php esc_html_e( 'If wanted, you can make this discount a part of one or more discount groups, and then apply a discount group to your event', 'events-made-easy' ); ?>
 			</td>
 		</tr>
@@ -926,7 +926,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></th>
-			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); ?>
+			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups for this discount to apply.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
@@ -936,7 +936,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<?php
 			if ( ! empty( $memberships ) ) {
                 $extra_attributes = ' data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"';
-				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes );
+				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
 			} else {
 				esc_html_e( 'No memberships defined yet!', 'events-made-easy' );
 			}

@@ -6148,7 +6148,7 @@ function eme_events_table( $message = '' ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 );
+        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     }
 ?>
     </div>
@@ -6551,7 +6551,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     <div class="eme-tab-content" id="tab-tasks">
     <div class="inside">
         <p id='p_tasks'>
-        <?php echo eme_ui_checkbox_binary( $event['event_tasks'], 'event_tasks', __( 'Enable tasks for this event', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_tasks'], 'event_tasks', __( 'Enable tasks for this event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         </p>
         <p>
         <?php  esc_html_e( "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task.", 'events-made-easy' ); ?>
@@ -6608,7 +6608,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 <div class="eme-tab-content" id="tab-todos">
     <div class="inside">
     <p id='p_todos'>
-    <?php echo eme_ui_checkbox_binary( $event['event_todos'], 'event_todos', __( 'Enable todos for this event', 'events-made-easy' ) ); ?>
+    <?php echo eme_ui_checkbox_binary( $event['event_todos'], 'event_todos', __( 'Enable todos for this event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
 </p>
     <p>
     <?php esc_html_e( "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started.", 'events-made-easy' ); ?>
@@ -7145,7 +7145,7 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
         </p>
         </div>
         <p>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['all_day'], 'eme_prop_all_day', __( 'This event lasts all day', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['all_day'], 'eme_prop_all_day', __( 'This event lasts all day', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         </p>
 <?php
     if ( $show_recurrent_form == 1 ) {
@@ -7610,7 +7610,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -7811,7 +7811,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8195,7 +8195,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 <?php
     if (!empty($pdf_templates_array)) {
-        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo '<br>';
@@ -8581,7 +8581,7 @@ function eme_meta_box_div_event_rsvp_enabled( $event ) {
 ?>
                     <div class="inside">
                         <p id='p_rsvp'>
-    <?php echo eme_ui_checkbox_binary( $event['event_rsvp'], 'event_rsvp', __( 'Enable bookings for this event', 'events-made-easy' ) ); ?>
+    <?php echo eme_ui_checkbox_binary( $event['event_rsvp'], 'event_rsvp', __( 'Enable bookings for this event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
                         </p>
                     </div>
 <?php
@@ -8604,7 +8604,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         echo "</b>";
     } else {
-        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_snapselect', 'data-placeholder="'.esc_attr__('Select a payment method','events-made-easy') .'"' );
+        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_snapselect', 'data-placeholder="'.esc_attr__('Select a payment method','events-made-easy') .'"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
     }
 ?>
                 </p>
@@ -8713,7 +8713,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 ?>
 <div id="div_event_rsvp">
     <p id='p_user_confirmation_required'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         <span class="eme_smaller"><br><?php esc_html_e( "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker.", 'events-made-easy' ); ?></span>
     </p>
     <p id='p_approval_required'>
@@ -8729,9 +8729,9 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     <p id='p_approve_settings' style="background-color: lightgrey; padding: 5px;">
     <b><?php esc_html_e('Extra approval settings (also check out the mail templates)','events-made-easy'); ?></b>
         <br>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         <br>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         <br>
         <input id="eme_prop_rsvp_pending_reminder_days" name='eme_prop_rsvp_pending_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_pending_reminder_days ); ?>">
         <label for="eme_prop_rsvp_pending_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
@@ -8741,14 +8741,14 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <label for="eme_prop_rsvp_approved_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
     </p>
     <p id='p_create_wp_user'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         <span class="eme_smaller"><br><?php esc_html_e( 'This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user.', 'events-made-easy' ); ?></span>
     </p>
     <p id='p_email_only_once'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['email_only_once'], 'eme_prop_email_only_once', __( 'Allow only 1 booking per unique email address', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['email_only_once'], 'eme_prop_email_only_once', __( 'Allow only 1 booking per unique email address', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
     </p>
     <p id='p_person_only_once'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['person_only_once'], 'eme_prop_person_only_once', __( 'Allow only 1 booking per person (combo email/last name/first name)', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['person_only_once'], 'eme_prop_person_only_once', __( 'Allow only 1 booking per person (combo email/last name/first name)', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
     </p>
     <table class="eme_event_admin_table">
     <tr id='row_seats'>
@@ -8807,7 +8807,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_check_free_waiting'>
         <td><label for='eme_prop_check_free_waiting'><?php esc_html_e( 'Check waitinglist when seats become available', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['check_free_waiting'], 'eme_prop_check_free_waiting' ); ?>
+        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['check_free_waiting'], 'eme_prop_check_free_waiting' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
             <span class="eme_smaller"><br><?php esc_html_e( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ); ?></span></td>
     </tr>
     <tr id='row_max_allowed'>
@@ -8820,30 +8820,30 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_take_attendance'>
         <td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); ?>
+        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
             <span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br>
             <span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1.', 'events-made-easy' ); ?></span>
         </td>
     </tr>
     <tr id='p_wp_member_required'>
         <td><label for='registration_wp_users_only'><?php esc_html_e( 'Require WP membership for booking', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_checkbox_binary($event['registration_wp_users_only'], 'registration_wp_users_only'); ?>
+        <td><?php echo eme_ui_checkbox_binary($event['registration_wp_users_only'], 'registration_wp_users_only'); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         <span class="eme_smaller"><br><?php esc_html_e( "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only.", 'events-made-easy' ); ?></span>
         </td>
     </tr>
     <tr id='row_require_eme_group'>
         <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_require_eme_memberships'>
         <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_addpersontogroup'>
         <td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_rsvppassword'>
         <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
@@ -8851,7 +8851,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_inviteonly'>
         <td><label for='eme_prop_invite_only'><?php esc_html_e( 'Invite-only event?', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['invite_only'], 'eme_prop_invite_only', __( 'Require an invitation', 'events-made-easy' ) ); ?>
+        <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['invite_only'], 'eme_prop_invite_only', __( 'Require an invitation', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
             <span class="eme_smaller"><br><?php esc_html_e( 'Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL.', 'events-made-easy' ); ?></span>
         </td>
     </tr>
@@ -9124,7 +9124,7 @@ function eme_general_head() {
         }
         // I don't know if the canonical rel-link is needed, but since WP adds it by default ...
         $canon_url = eme_event_url( $event );
-        echo "<link rel=\"canonical\" href=\"$canon_url\">\n";
+        echo '<link rel="canonical" href="' . esc_url( $canon_url ) . '">' . "\n";
         $extra_headers_format = trim( get_option( 'eme_event_html_headers_format' ) );
         $extra_headers        = eme_extra_event_headers( $event );
         if ( eme_is_empty_string( $extra_headers_format ) ) {
@@ -9149,7 +9149,7 @@ function eme_general_head() {
             return;
         }
         $canon_url = eme_location_url( $location );
-        echo "<link rel=\"canonical\" href=\"$canon_url\">\n";
+        echo '<link rel="canonical" href="' . esc_url( $canon_url ) . '">' . "\n";
         $extra_headers_format = trim( get_option( 'eme_location_html_headers_format' ) );
         if ( ! eme_is_empty_string( $extra_headers_format ) ) {
             # we allow js in the header, so not too much escaping here

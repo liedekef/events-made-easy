@@ -5410,7 +5410,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 <?php
     esc_html_e( 'Partial payment amount', 'events-made-easy' );
     $label = eme_esc_html('Partial payment amount', 'events-made-easy' );
-    echo eme_ui_number( 0, 'partial_amount', 0, '', 'aria-label="' . $label . '"' );
+    echo eme_ui_number( 0, 'partial_amount', 0, '', 'aria-label="' . $label . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_number()
 ?>
     </span>
     <span id="span_rsvpmailtemplate" class="eme-hidden">

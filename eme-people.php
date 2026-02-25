@@ -2131,7 +2131,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
             $value = '';
         }
         $extra_attributes = ' data-placeholder="' . esc_attr__( 'Any group', 'events-made-easy' ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     }
 
     if ( $edit_group ) {
@@ -2143,7 +2143,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         $value = '';
     }
     $extra_attributes = ' data-placeholder="' . esc_attr__( 'Filter on membership', 'events-made-easy' ) . '"';
-    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
 
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
@@ -2154,7 +2154,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         $value = '';
     }
     $extra_attributes = ' data-placeholder="' . esc_attr__( 'Filter on member status', 'events-made-easy' ) . '"';
-    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
 
     $formfields_searchable = eme_get_searchable_formfields( 'people' );
     if ( ! empty( $formfields_searchable ) ) {
@@ -2178,7 +2178,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
         }
@@ -2193,7 +2193,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
             $label = __( 'Exact?', 'events-made-easy' );
         }
         $title = esc_attr__( 'Exact custom field search match', 'events-made-easy' );
-        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'");
+        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'"); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_nobreak_checkbox_binary()
     }
 }
 
@@ -2641,7 +2641,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
         <td colspan=2><?php 
             $extra_attributes = ' data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"';
-            echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_snapselect', $extra_attributes );
+            echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
             ?><br>
         <?php esc_html_e( "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in.", 'events-made-easy' ); ?>
         </td>
@@ -2809,7 +2809,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         </tr>
         <tr>
         <td><label for="People"><?php esc_html_e( 'People', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 1, 'eme_snapselect_people_class' ); ?></td>
+        <td><?php echo eme_ui_multiselect( $grouppersons, 'persons', $mygroups, 5, '', 1, 'eme_snapselect_people_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td>
         </tr>
 <?php
             } elseif ( $group['type'] == 'dynamic_people' ) {

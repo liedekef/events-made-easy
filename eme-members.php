@@ -2173,7 +2173,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for='properties[addpersontogroup]'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_multiselect_key_value( $membership['properties']['addpersontogroup'], 'properties[addpersontogroup]', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); ?><br><p class='eme_smaller'><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+    <td><?php echo eme_ui_multiselect_key_value( $membership['properties']['addpersontogroup'], 'properties[addpersontogroup]', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><br><p class='eme_smaller'><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr>
     <td><label for='properties[member_template_id]'><?php esc_html_e( 'Membership card PDF template', 'events-made-easy' ); ?></label></td>
@@ -2187,7 +2187,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 <?php
     esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
     echo '<br>';
-    echo eme_ui_multiselect( $membership['properties']['payment_gateways'], eme_get_field_name('properties','payment_gateways'), eme_configured_pgs_descriptions(), 5, '', 0, 'eme_snapselect' );
+    echo eme_ui_multiselect( $membership['properties']['payment_gateways'], eme_get_field_name('properties','payment_gateways'), eme_configured_pgs_descriptions(), 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
 
     $configured_pgs = eme_get_configured_pgs();
     if ( empty( $configured_pgs ) ) {
@@ -2217,7 +2217,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_skippaymentoptions">
     <td><label for="properties[skippaymentoptions]"><?php esc_html_e( 'Skip payment methods after registration:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_checkbox_binary( $membership['properties']['skippaymentoptions'], 'properties[skippaymentoptions]', __( 'Skip payment methods', 'events-made-easy' ) );
+    <td><?php echo eme_ui_checkbox_binary( $membership['properties']['skippaymentoptions'], 'properties[skippaymentoptions]', __( 'Skip payment methods', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary()
     echo "<br>";
     esc_html_e( 'If you want to skip the possibility to pay immediately after registration, select this option. This might be useful if you for example want to approve unpaid members internally and only then send them the payment link using #_PAYMENT_URL (for example via the Reminder template).', 'events-made-easy' ); ?>
     </td>
@@ -2317,7 +2317,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[newmember_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2461,7 +2461,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[extended_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2540,7 +2540,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[paid_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
-        echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' );
+        echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
         echo '<br>';
         esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
     } else {
@@ -2970,7 +2970,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         $value = '';
     }
     $extra_attributes = ' data-placeholder="' . esc_attr__( 'Filter on membership', 'events-made-easy' ) . '"';
-    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
     }
@@ -2980,7 +2980,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         $value = '';
     }
     $extra_attributes = ' data-placeholder="' . esc_attr__( 'Filter on member status', 'events-made-easy' ) . '"';
-    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix );
+    echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_snapselect', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on person', 'events-made-easy' ) . '</td><td>';
     }
@@ -3024,7 +3024,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
         }
@@ -3039,7 +3039,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
             $label = __( 'Exact?', 'events-made-easy' );
         }
         $title = esc_attr__( 'Exact custom field search match', 'events-made-easy' );
-        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'");
+        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'"); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_nobreak_checkbox_binary()
     }
 }
 
@@ -4983,7 +4983,7 @@ function eme_access_meta_box_cb( $post ) {
     foreach ( $all_memberships as $membership ) {
         $memberships_arr[ $membership['membership_id'] ] = $membership['name'];
     }
-    echo eme_ui_checkbox( $selected_membershipids_arr, 'eme_membershipids', $memberships_arr, false, 0 );
+    echo eme_ui_checkbox( $selected_membershipids_arr, 'eme_membershipids', $memberships_arr, false, 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox()
     echo "<br><label for='eme_drip_counter'>" . esc_html__( 'Allow access after the membership has been active for this many days (drip content):', 'events-made-easy' ) . '</label>&nbsp;';
     echo "<input type='number' id='eme_drip_counter' name='eme_drip_counter' value='$drip_counter'>";
     echo '<br><br>';
@@ -4992,7 +4992,7 @@ function eme_access_meta_box_cb( $post ) {
     foreach ( $all_groups as $group ) {
         $groups_arr[ $group['group_id'] ] = $group['name'];
     }
-    echo eme_ui_checkbox( $selected_groupids_arr, 'eme_groupids', $groups_arr, false, 0 );
+    echo eme_ui_checkbox( $selected_groupids_arr, 'eme_groupids', $groups_arr, false, 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox()
 
     echo "<br><label for='eme_access_denied'>" . esc_html__( 'Access denied message template', 'events-made-easy' ) . '</label>&nbsp;';
     #echo "<input type='text' name='eme_access_denied' id='eme_access_denied' value='$text'>";

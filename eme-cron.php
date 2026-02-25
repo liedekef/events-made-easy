@@ -346,7 +346,7 @@ function eme_cron_form( $message = '' ) {
     <form action="" method="post">
     <label for="eme_cron_cleanup_unpaid_minutes">
 <?php
-    echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+    echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML
     $minutes = intval( get_option( 'eme_cron_cleanup_unpaid_minutes' ) );
     esc_html_e( 'Schedule the automatic removal of unpaid pending bookings older than', 'events-made-easy' );
 ?>
@@ -359,7 +359,7 @@ function eme_cron_form( $message = '' ) {
     <form action="" method="post">
     <label for="eme_cron_cleanup_unconfirmed_minutes">
 <?php
-    echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+    echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML
     $minutes = intval( get_option( 'eme_cron_cleanup_unconfirmed_minutes' ) );
     esc_html_e( 'Schedule the automatic removal of unconfirmed bookings older than', 'events-made-easy' );
 ?>
@@ -414,7 +414,7 @@ function eme_cron_form( $message = '' ) {
     <h2><?php esc_html_e( 'Newsletter', 'events-made-easy' ); ?></h2>
     <form action="" method="post">
 <?php
-        echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+        echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML
         $days                = intval( get_option( 'eme_cron_new_events_days' ) );
         $subject             = intval( get_option( 'eme_cron_new_events_subject' ) );
         $header              = intval( get_option( 'eme_cron_new_events_header' ) );

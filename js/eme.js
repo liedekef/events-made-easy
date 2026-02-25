@@ -78,8 +78,8 @@ function initSnapSelect(selector, options = {}) {
         const config = {
             placeholder:    options.placeholder    || el.dataset.placeholder || undefined,
             liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : undefined,
-            closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : !el.multiple,
-            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : el.multiple,
+            closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : undefined,
+            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : undefined,
         };
 
         const instance = new SnapSelectClass(el, config);
@@ -284,8 +284,7 @@ function eme_init_widgets(dynamicOnly = false) {
                 stateField.snapselectInstance.clear();
                 stateField.snapselectInstance.clearCache();
             }
-        },
-        closeOnSelect: true
+        }
     });
 
     initSnapSelectRemote('select.eme_snapselect_state_class' + dynamicSelector, {

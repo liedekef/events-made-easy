@@ -462,8 +462,8 @@ function eme_get_used_formfield_ids() {
 function eme_check_used_formfield( $field_id ) {
     global $wpdb;
     $table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
-    $count  = $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $prepared_query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
+    $count  = $wpdb->get_var( $prepared_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;
 }
 
@@ -519,11 +519,11 @@ function eme_get_formfield( $field_info ) {
     }
     if ( $formfield === false ) {
         if ( is_numeric( $field_info ) ) {
-            $sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } else {
-            $sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
-        $formfield = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $formfield = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( is_numeric( $field_info ) || $field_info == 'performer' ) {
             wp_cache_set( "eme_formfield $field_info", $formfield, '', 60 );
         }
@@ -2148,8 +2148,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
 function eme_get_dyndata_people_fields( $condition ) {
     global $wpdb;
     $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
-    $sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
-    return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $prepared_sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $format, $grouping, $i = 0 ) {

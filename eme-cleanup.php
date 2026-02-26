@@ -11,8 +11,8 @@ function eme_cleanup_people() {
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $members_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $tasksignup_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
-	$person_ids       = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql     = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $members_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $tasksignup_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
+	$person_ids       = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	$count            = count( $person_ids );
 	$tmp_ids          = join( ',', $person_ids );
 	eme_trash_people( $tmp_ids );
@@ -40,8 +40,8 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 			break;
 	}
 	$datetime   = $eme_date_obj->getDateTime();
-	$sql        = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE modif_date < %s AND status = %d", $datetime, EME_PEOPLE_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	$person_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE modif_date < %s AND status = %d", $datetime, EME_PEOPLE_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$person_ids   = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	$count      = count( $person_ids );
 	$tmp_ids    = join( ',', $person_ids );
 	eme_delete_people( $tmp_ids );
@@ -69,10 +69,10 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
 			break;
 	}
 	$datetime = $eme_date_obj->getDateTime();
-	$sql      = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
-	$count    = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	$sql      = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
-	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$count        = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	return $count;
 }
 
@@ -94,8 +94,8 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 	}
 	$old_date = $eme_date_obj->minusMinutes( $eme_number )->getDateTime();
 
-	$sql         = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $events_table ON $bookings_table.event_id=$events_table.event_id WHERE $bookings_table.status = %d AND $bookings_table.booking_paid = 0 AND $events_table.event_start > %s AND $bookings_table.creation_date < %s", EME_RSVP_STATUS_USERPENDING, $today, $old_date );
-	$booking_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $events_table ON $bookings_table.event_id=$events_table.event_id WHERE $bookings_table.status = %d AND $bookings_table.booking_paid = 0 AND $events_table.event_start > %s AND $bookings_table.creation_date < %s", EME_RSVP_STATUS_USERPENDING, $today, $old_date );
+	$booking_ids  = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	foreach ( $booking_ids as $booking_id ) {
 		$booking = eme_get_booking( $booking_id );
 		$person  = eme_get_person( $booking['person_id'] );
@@ -109,8 +109,8 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 		$diff                         = abs( $eme_date_obj_booking_created->getDifferenceInMinutes( $eme_date_obj_person_modified ) );
 		// if the person was modified at most 2 minutes after booking creation (meaning in fact never), we also delete the person if no other bookings or members match that person
 		if ( $diff < 2 ) {
-			$sql   = $wpdb->prepare( "SELECT (SELECT COUNT(*) FROM $bookings_table WHERE person_id=%d AND status != %d) + (SELECT COUNT(*) FROM $members_table WHERE person_id=%d AND status != %d)", $booking['person_id'], EME_RSVP_STATUS_TRASH, $booking['person_id'], EME_MEMBER_STATUS_EXPIRED );
-			$count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$prepared_sql = $wpdb->prepare( "SELECT (SELECT COUNT(*) FROM $bookings_table WHERE person_id=%d AND status != %d) + (SELECT COUNT(*) FROM $members_table WHERE person_id=%d AND status != %d)", $booking['person_id'], EME_RSVP_STATUS_TRASH, $booking['person_id'], EME_MEMBER_STATUS_EXPIRED );
+			$count        = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( $count == 0 ) {
 				eme_trash_people( $booking['person_id'] );
 			}
@@ -135,8 +135,8 @@ function eme_cleanup_unpaid( $eme_number ) {
 	}
 	$old_date = $eme_date_obj->minusMinutes( $eme_number )->getDateTime();
 
-	$sql         = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status = %d AND bookings.booking_paid = 0 AND events.event_start > %s AND bookings.creation_date < %s", EME_RSVP_STATUS_PENDING, $today, $old_date );
-	$booking_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status = %d AND bookings.booking_paid = 0 AND events.event_start > %s AND bookings.creation_date < %s", EME_RSVP_STATUS_PENDING, $today, $old_date );
+	$booking_ids  = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	foreach ( $booking_ids as $booking_id ) {
 		$booking = eme_get_booking( $booking_id );
 		$event   = eme_get_event( $booking['event_id'] );

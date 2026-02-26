@@ -31,7 +31,7 @@ function eme_count_today_attendances($type, $person_id, $related_id) {
 	$start_date = $eme_date_obj->startOfDay()->getDateTime();
 	$end_date = $eme_date_obj->endOfDay()->getDateTime();
 
-    $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE
         type=%s AND person_id=%d AND related_id=%d
         AND creation_date BETWEEN %s AND %s",
         $type,
@@ -40,7 +40,7 @@ function eme_count_today_attendances($type, $person_id, $related_id) {
         $start_date,
         $end_date
     );
-    $count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $count = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;
 }
 
@@ -83,15 +83,15 @@ function eme_delete_person_attendances( $ids ) {
 function eme_delete_event_attendances( $event_id ) {
 	global $wpdb;
 	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d", $event_id);
-	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d", $event_id);
+	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_membership_attendances( $membership_id ) {
 	global $wpdb;
 	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d", $membership_id);
-	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$prepared_sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d", $membership_id);
+	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_attendances_page() {
@@ -215,20 +215,20 @@ function eme_ajax_attendances_list() {
 
 	if ( current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		if ( ! empty( $prepare_values ) ) {
-			$sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $table $where", $prepare_values ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$prepared_sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $table $where", $prepare_values ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		} else {
-			$sql         = "SELECT COUNT(*) FROM $table";
+			$prepared_sql         = "SELECT COUNT(*) FROM $table";
 		}
-		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$recordCount = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 		if ( ! empty( $prepare_values ) ) {
-			$sql     = $wpdb->prepare( "SELECT * FROM $table $where", $prepare_values ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$sql    .= " $orderby $limit";
+			$prepared_sql     = $wpdb->prepare( "SELECT * FROM $table $where", $prepare_values ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$prepared_sql    .= " $orderby $limit";
 		} else {
-			$sql     = "SELECT * FROM $table $orderby $limit";
+			$prepared_sql     = "SELECT * FROM $table $orderby $limit";
 		}
-		$rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$rows        = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['type']      = $att_types[ $row['type'] ];
 			$rows[ $key ]['creation_date'] = eme_localized_datetime( $row['creation_date'], EME_TIMEZONE, 1 );

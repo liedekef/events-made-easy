@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     initSnapSelectRemote('.eme_snapselect_members_class', {
-        allowEmpty: true,
+        showClearButton: true,
         placeholder: emeadmin.translate_selectmembers,
         data: {
             action: 'eme_members_snapselect',
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     initSnapSelectRemote('.eme_snapselect_people_class', {
-        allowEmpty: true,
+        showClearButton: true,
         placeholder: emeadmin.translate_selectpersons,
         data: {
             action: 'eme_chooseperson_snapselect',
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     initSnapSelectRemote('.eme_snapselect_discounts_class', {
-        allowEmpty: true,
+        showClearButton: true,
         placeholder: emeadmin.translate_selectdiscount,
         data: {
             action: 'eme_discounts_snapselect',
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     initSnapSelectRemote('.eme_snapselect_dgroups_class', {
-        allowEmpty: true,
+        showClearButton: true,
         placeholder: emeadmin.translate_selectdiscountgroup,
         data: {
             action: 'eme_dgroups_snapselect',

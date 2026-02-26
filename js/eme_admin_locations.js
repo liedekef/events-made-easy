@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (EME.$('select.eme_snapselect_location')) {
         initSnapSelectRemote('select.eme_snapselect_location', {
-            allowEmpty: true,
+            showClearButton: true,
             data: function(search, page) {
                 let excludeIds = '';
                 if (LocationsTableContainer && LocationsTable) {

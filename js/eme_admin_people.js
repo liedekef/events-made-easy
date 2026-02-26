@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- SnapSelect: transferto_id (chooseperson) ---
     if (EME.$('select.eme_snapselect_chooseperson')) {
         initSnapSelectRemote('select.eme_snapselect_chooseperson', {
-            allowEmpty: true,
+            showClearButton: true,
             data: function(search, page) {
                 let excludeIds = '';
                 if (PeopleTableContainer && PeopleTable) {
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- SnapSelect: related_person_id (chooserelatedperson) ---
     if (EME.$('select.eme_snapselect_chooserelatedperson')) {
         initSnapSelectRemote('select.eme_snapselect_chooserelatedperson', {
-            allowEmpty: true,
+            showClearButton: true,
             cache: true,
             data: function(search, page) {
                 return {

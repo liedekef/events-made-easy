@@ -76,10 +76,11 @@ function initSnapSelect(selector, options = {}) {
         }
 
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || undefined,
+            placeholder:    options.placeholder    || undefined,
+            defaultText:    options.defaultText    || emebasic.translate_optionselect,
             liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : undefined,
             closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : undefined,
-            allowEmpty:     options.allowEmpty     !== undefined ? options.allowEmpty     : undefined,
+            showClearButton:     options.showClearButton     !== undefined ? options.showClearButton     : undefined,
         };
 
         const instance = new SnapSelectClass(el, config);
@@ -107,9 +108,10 @@ function initSnapSelectRemote(selector, options = {}) {
         const pagesize = options.pagesize || 30;
         // Build the ajax.url function, incorporating any extra data
         const config = {
-            placeholder:    options.placeholder    || el.dataset.placeholder || undefined,
+            placeholder:    options.placeholder    || undefined,
+            defaultText:    options.defaultText    || emebasic.translate_optionselect,
             closeOnSelect:  !el.multiple,
-            allowEmpty:     options.allowEmpty !== undefined ? options.allowEmpty : undefined,
+            showClearButton:     options.showClearButton !== undefined ? options.showClearButton : undefined,
             onItemAdd:      typeof options.onItemAdd    === 'function' ? options.onItemAdd    : undefined,
             onItemDelete:   typeof options.onItemDelete === 'function' ? options.onItemDelete : undefined,
             ajax: {
@@ -258,7 +260,7 @@ function eme_init_widgets(dynamicOnly = false) {
 
     initSnapSelect('select.eme_snapselect' + dynamicSelector);
     initSnapSelect('select.eme_snapselect_allow_empty' + dynamicSelector, {
-        allowEmpty: true
+        showClearButton: true
     });
     initSnapSelectRemote('select.eme_snapselect_country_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectcountry,
@@ -267,7 +269,7 @@ function eme_init_widgets(dynamicOnly = false) {
             eme_frontend_nonce: emebasic.translate_frontendnonce
         },
         cache: true,
-        allowEmpty: true,
+        showClearButton: true,
         // When country changes, reset the state field in the same form
         onItemAdd: function(value, text) {
             const form       = this.closest('form');
@@ -289,7 +291,7 @@ function eme_init_widgets(dynamicOnly = false) {
 
     initSnapSelectRemote('select.eme_snapselect_state_class' + dynamicSelector, {
         placeholder: emebasic.translate_selectstate,
-        allowEmpty: true,
+        showClearButton: true,
         // Dynamically include the currently selected country_code in every request
         data: function(search, page) { // since this is a function, no caching happens
             const stateEl     = document.querySelector('select.eme_snapselect_state_class');

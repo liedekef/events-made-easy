@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     initSnapSelectRemote('select.eme_snapselect_events_class', {
-        allowEmpty: true,
+        showClearButton: true,
         data: function(search, page) {
             return {
                 exclude_id: this.dataset.exclude_event_id || '',

@@ -642,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initSnapSelectRemote('select.eme_snapselect_events_class', {
         placeholder: ememails.translate_selectevents,
-        allowEmpty: true,
+        showClearButton: true,
         data: function(search, page) {
             return {
                 action: 'eme_events_snapselect',

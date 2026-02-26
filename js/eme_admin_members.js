@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- SnapSelect: chooseperson (add-member form) ---
     if (EME.$('select.eme_snapselect_autocompletememberperson')) {
         initSnapSelectRemote('select.eme_snapselect_autocompletememberperson', {
-            allowEmpty: true,
+            showClearButton: true,
             url: ajaxurl,
             cache: true,
             data: function(search, page) {
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- SnapSelect: transferto_personid ---
     if (EME.$('select.eme_snapselect_transferperson')) {
         initSnapSelectRemote('select.eme_snapselect_transferperson', {
-            allowEmpty: true,
+            showClearButton: true,
             url: ajaxurl,
             cache: true,
             data: function(search, page) {
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- SnapSelect: related_member_id ---
     if (EME.$('select.eme_snapselect_relatedmember')) {
         initSnapSelectRemote('select.eme_snapselect_relatedmember', {
-            allowEmpty: true,
+            showClearButton: true,
             url: ajaxurl,
             cache: true,
             data: function(search, page) {

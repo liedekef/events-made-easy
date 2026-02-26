@@ -852,7 +852,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     initSnapSelectRemote('#event_contactperson_id.eme_snapselect_wpuser_class', {
         placeholder: emeevents.translate_selectcontact,
-        allowEmpty: true,
+        showClearButton: true,
         data: {
             action: 'eme_wpuser_snapselect',
             eme_admin_nonce: emeevents.translate_adminnonce

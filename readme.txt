@@ -96,6 +96,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.49  (2026//) =
+* snapselect update
+* more code edits to become compliant with WP coding style (ongoing, thanks to TommsNL)
+
 = 3.0.48  (2026/02/24) =
 * fix edit for people with empty country but filled out state
 * snapselect update

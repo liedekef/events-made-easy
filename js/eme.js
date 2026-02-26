@@ -57,8 +57,6 @@ function eme_toggle(el, show) {
     //if (el) el.style.display = show ? '' : 'none';
 }
 
-
-
 function initSnapSelect(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'

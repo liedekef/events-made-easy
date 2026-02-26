@@ -350,13 +350,16 @@ function eme_register_scripts() {
     $language = eme_detect_lang();
 
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer, 'strategy' => 'defer' ] );
+    // when loading scripts in footer, the html is already loaded and present, so defer does nothing usefull anymore (defer only really usefull in header)
+    //wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer, 'strategy' => 'defer' ] );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
     $eme_fs_options = get_option('eme_fs');
     $translation_array = [
         'translate_plugin_url'         => EME_PLUGIN_URL,
         'translate_ajax_url'           => esc_url( admin_url( 'admin-ajax.php' ) ),
         'translate_selectstate'        => __( 'Select state/province', 'events-made-easy' ),
         'translate_selectcountry'      => __( 'Select country', 'events-made-easy' ),
+        'translate_optionselect'       => __( 'Make your choice', 'events-made-easy' ),
         'translate_frontendnonce'      => wp_create_nonce( 'eme_frontend' ),
         'translate_error'              => __( 'An error has occurred', 'events-made-easy' ),
         'translate_clear'              => __( 'Clear', 'events-made-easy' ),

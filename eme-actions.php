@@ -279,12 +279,12 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION, [ 'strategy' => 'defer' ] );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION );
     wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'eme-ftable', 'eme-sortable' ], EME_VERSION );
 
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
-    wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION, true );
-    wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+    wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION );
     wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION );
     wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ ], EME_VERSION );
     wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ ], EME_VERSION );
@@ -293,9 +293,9 @@ function eme_admin_register_scripts() {
     // jodit stuff
     //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
     //wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
-    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
-    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
+    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION);
 
     $locale_code     = determine_locale();
     $locale_code     = str_replace( '_', '-', $locale_code );

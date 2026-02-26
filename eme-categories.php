@@ -269,8 +269,8 @@ function eme_get_categories_filtered( $category_ids, $categories ) {
 function eme_get_category( $category_id ) {
 	global $wpdb;
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id = %d", $category_id );
-	return $wpdb->get_row( $sql, ARRAY_A );
+	$prepared_sql              = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id = %d", $category_id );
+	return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_category_names( $event_id, $extra_conditions = '', $order_by = '' ) {
@@ -283,8 +283,8 @@ function eme_get_event_category_names( $event_id, $extra_conditions = '', $order
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT category_name FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT category_name FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_get_event_category_descriptions( $event_id, $extra_conditions = '', $order_by = '' ) {
@@ -297,8 +297,8 @@ function eme_get_event_category_descriptions( $event_id, $extra_conditions = '',
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT description FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT description FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by = '' ) {
@@ -311,8 +311,8 @@ function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by 
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
+	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_get_category_eventids( $category_id, $future_only = 1 ) {
@@ -329,11 +329,11 @@ function eme_get_category_eventids( $category_id, $future_only = 1 ) {
 	$cat_ids   = explode( ',', $category_id );
 	$event_ids = [];
 	foreach ( $cat_ids as $cat_id ) {
-		$sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE FIND_IN_SET(%d,event_category_ids) $extra_condition ORDER BY event_start ASC, event_name ASC", $cat_id );
+		$prepared_sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE FIND_IN_SET(%d,event_category_ids) $extra_condition ORDER BY event_start ASC, event_name ASC", $cat_id );
 		if ( empty( $event_ids ) ) {
-			$event_ids = $wpdb->get_col( $sql );
+			$event_ids = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		} else {
-			$event_ids = array_unique( array_merge( $event_ids, $wpdb->get_col( $sql ) ) );
+			$event_ids = array_unique( array_merge( $event_ids, $wpdb->get_col( $prepared_sql ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 	}
 	return $event_ids;
@@ -349,8 +349,8 @@ function eme_get_location_categories( $location_id, $extra_conditions = '', $ord
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $locations_table where location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
-	return $wpdb->get_results( $sql, ARRAY_A );
+	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $locations_table where location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
+	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_location_category_names( $location_id, $extra_conditions = '', $order_by = '' ) {
@@ -363,8 +363,8 @@ function eme_get_location_category_names( $location_id, $extra_conditions = '', 
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.category_name FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
-	return $wpdb->get_col( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.category_name FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_location_category_descriptions( $location_id, $extra_conditions = '', $order_by = '' ) {
@@ -377,8 +377,8 @@ function eme_get_location_category_descriptions( $location_id, $extra_conditions
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.description FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
-	return $wpdb->get_col( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.description FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_category_ids( $cat_slug = '' ) {
@@ -386,11 +386,11 @@ function eme_get_category_ids( $cat_slug = '' ) {
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
 	$cat_ids          = [];
 	if ( ! empty( $cat_slug ) ) {
-		$sql = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );
+		$prepared_sql = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );
 	} else {
-		$sql = "SELECT category_id FROM $categories_table ORDER BY category_id";
+		$prepared_sql = "SELECT category_id FROM $categories_table ORDER BY category_id";
 	}
-	$cat_ids = $wpdb->get_col( $sql );
+	$cat_ids = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	return $cat_ids;
 }
 
@@ -398,8 +398,8 @@ function eme_get_category_id_by_name_slug ($cat_name ) {
 	global $wpdb;
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
 	$cat_name = eme_sanitize_request($cat_name);
-	$sql = $wpdb->prepare( "SELECT category_id FROM $categories_table WHERE category_name = %s OR category_slug = %s LIMIT 1", $cat_name, $cat_name );
-	return $wpdb->get_var( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT category_id FROM $categories_table WHERE category_name = %s OR category_slug = %s LIMIT 1", $cat_name, $cat_name );
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_categories_shortcode( $atts ) {
@@ -561,8 +561,8 @@ function eme_ajax_action_categories_list() {
 
     $count_sql  = "SELECT COUNT(*) FROM $table";
     $sql  = "SELECT * FROM $table $orderby $limit";
-    $recordCount = $wpdb->get_var( $count_sql );
-    $rows = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+    $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
 
     $records = [];
     foreach ( $rows as $row ) {
@@ -601,7 +601,9 @@ function eme_ajax_action_manage_categories() {
         case 'deleteCategories':
             $category_ids_list = eme_sanitize_request($_POST['category_ids']);
             if (eme_is_list_of_int($category_ids_list)) {
-                $wpdb->query( "DELETE FROM $table WHERE category_id IN ( $category_ids_list )");
+                $ids_arr = array_map('intval', explode(',', $category_ids_list));
+                $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+                $wpdb->query($wpdb->prepare("DELETE FROM $table WHERE category_id IN ($placeholders)", ...$ids_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             }
             $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Categories deleted','events-made-easy')."</div>";
             $fTableResult['Result'] = 'OK';

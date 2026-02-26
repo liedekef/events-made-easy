@@ -456,14 +456,14 @@ function eme_get_dyndata_conditions() {
 function eme_get_used_formfield_ids() {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    return $wpdb->get_col( "SELECT DISTINCT field_id FROM $table" );
+    return $wpdb->get_col( "SELECT DISTINCT field_id FROM $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 }
 
 function eme_check_used_formfield( $field_id ) {
     global $wpdb;
     $table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
-    $count  = $wpdb->get_var( $query );
+    $prepared_query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
+    $count  = $wpdb->get_var( $prepared_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;
 }
 
@@ -486,7 +486,7 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
     if ( ! empty( $where_arr ) ) {
         $where = 'WHERE ' . join( ' AND ', $where_arr );
     }
-    return $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A );
+    return $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name and conditions are safe variables
 }
 
 function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
@@ -506,7 +506,7 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
     if ( ! empty( $where_arr ) ) {
         $where = 'WHERE ' . join( ' AND ', $where_arr );
     }
-    return $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A );
+    return $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name and conditions are safe variables
 }
 
 function eme_get_formfield( $field_info ) {
@@ -519,11 +519,11 @@ function eme_get_formfield( $field_info ) {
     }
     if ( $formfield === false ) {
         if ( is_numeric( $field_info ) ) {
-            $sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } else {
-            $sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
-        $formfield = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $formfield = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( is_numeric( $field_info ) || $field_info == 'performer' ) {
             wp_cache_set( "eme_formfield $field_info", $formfield, '', 60 );
         }
@@ -2148,8 +2148,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
 function eme_get_dyndata_people_fields( $condition ) {
     global $wpdb;
     $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
-    $sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $format, $grouping, $i = 0 ) {
@@ -5167,11 +5167,11 @@ function eme_ajax_formfields_list() {
 
     if ( current_user_can( get_option( 'eme_cap_forms' ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
-        $recordCount = $wpdb->get_var( $sql );
+        $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
         $limit       = eme_get_datatables_limit();
         $orderby     = eme_get_datatables_orderby();
         $sql         = "SELECT * FROM $table $where $orderby $limit";
-        $rows        = $wpdb->get_results( $sql, ARRAY_A );
+        $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
         $res         = [];
         foreach ( $rows as $key => $formfield ) {
             if ( empty( $formfield['field_name'] ) ) {

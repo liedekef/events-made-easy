@@ -60,8 +60,8 @@ function eme_db_insert_todo( $line ) {
 
 	// first check for todo_nbr
 	if (!isset($line['todo_nbr'])) {
-		$sql      = $wpdb->prepare( "SELECT IFNULL(max(todo_nbr),0) FROM $table WHERE event_id = %d", $line['event_id'] );
-		$todo_nbr = intval($wpdb->get_var( $sql ));
+		$prepared_sql = $wpdb->prepare( "SELECT IFNULL(max(todo_nbr),0) FROM $table WHERE event_id = %d", $line['event_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$todo_nbr     = intval($wpdb->get_var( $prepared_sql ));
 		$line['todo_nbr'] = $todo_nbr + 1;
 	}
 	$tmp_todo = eme_new_todo();
@@ -82,8 +82,8 @@ function eme_db_update_todo_by_todo_nbr( $line ) {
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
 
 	// get the todo id
-	$sql     = $wpdb->prepare( "SELECT todo_id FROM $table WHERE event_id = %d AND todo_nbr = %d", $line['event_id'], $line['todo_nbr'] );
-	$todo_id = $wpdb->get_var( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT todo_id FROM $table WHERE event_id = %d AND todo_nbr = %d", $line['event_id'], $line['todo_nbr'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$todo_id      = $wpdb->get_var( $prepared_sql );
 	if ( empty( $todo_id ) ) {
 		// this happens for recurrences where e.g. a new day is added to the recurrence
 		return eme_db_insert_todo( $line );
@@ -136,8 +136,8 @@ function eme_db_delete_todo( $todo_id ) {
 function eme_delete_event_todos( $event_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id );
-	$wpdb->query( $sql );
+	$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$wpdb->query( $prepared_sql );
 }
 
 function eme_delete_event_old_todos( $event_id, $ids_arr ) {
@@ -145,24 +145,25 @@ function eme_delete_event_old_todos( $event_id, $ids_arr ) {
 	if ( empty( $ids_arr ) || ! eme_is_numeric_array( $ids_arr ) ) {
 		return;
 	}
-	$ids_list = implode(',', $ids_arr);
+	$ids_arr  = array_map('intval', $ids_arr);
 	$table    = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND todo_id NOT IN ( $ids_list )", $event_id);
-	$wpdb->query( $sql);
+	$placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+	$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND todo_id NOT IN ( $placeholders )", $event_id, ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$wpdb->query( $prepared_sql );
 }
 
 function eme_get_todo( $todo_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE todo_id=%d", $todo_id );
-	return $wpdb->get_row( $sql, ARRAY_A );
+	$prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE todo_id=%d", $todo_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_row( $prepared_sql, ARRAY_A );
 }
 
 function eme_get_event_todos( $event_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d ORDER BY todo_seq ASC", $event_id );
-	return $wpdb->get_results( $sql, ARRAY_A );
+	$prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d ORDER BY todo_seq ASC", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_results( $prepared_sql, ARRAY_A );
 }
 
 function eme_meta_box_div_event_todos( $event ) {
@@ -236,8 +237,8 @@ function eme_get_past_unsent_todos() {
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$search_date  = $eme_date_obj_now->getDate();
-	$sql   = $wpdb->prepare("SELECT $table.* FROM $table LEFT JOIN $events_table ON $table.event_id=$events_table.event_id WHERE reminder_sent=0 AND DATE_SUB($events_table.event_start,INTERVAL $table.todo_offset DAY) < %s", $search_date . ' 23:59:00');
-	return $wpdb->get_results( $sql, ARRAY_A );
+	$prepared_sql = $wpdb->prepare("SELECT $table.* FROM $table LEFT JOIN $events_table ON $table.event_id=$events_table.event_id WHERE reminder_sent=0 AND DATE_SUB($events_table.event_start,INTERVAL $table.todo_offset DAY) < %s", $search_date . ' 23:59:00'); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_results( $prepared_sql, ARRAY_A );
 }
 
 function eme_email_todo($todo) {

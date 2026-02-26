@@ -69,8 +69,8 @@ function eme_db_insert_task( $line ) {
 
     // first check for task_nbr
     if (!isset($line['task_nbr'])) {
-        $sql      = $wpdb->prepare( "SELECT IFNULL(max(task_nbr),0) FROM $table WHERE event_id = %d", $line['event_id'] );
-        $task_nbr = intval($wpdb->get_var( $sql ));
+        $prepared_sql = $wpdb->prepare( "SELECT IFNULL(max(task_nbr),0) FROM $table WHERE event_id = %d", $line['event_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $task_nbr = intval($wpdb->get_var( $prepared_sql )); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $line['task_nbr'] = $task_nbr + 1;
     }
     $tmp_task = eme_new_task();
@@ -91,8 +91,8 @@ function eme_db_update_task_by_task_nbr( $line ) {
     $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
 
     // get the task id
-    $sql     = $wpdb->prepare( "SELECT task_id FROM $table WHERE event_id = %d AND task_nbr = %d", $line['event_id'], $line['task_nbr'] );
-    $task_id = $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT task_id FROM $table WHERE event_id = %d AND task_nbr = %d", $line['event_id'], $line['task_nbr'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $task_id = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( empty( $task_id ) ) {
         // this happens for recurrences where e.g. a new day is added to the recurrence
         return eme_db_insert_task( $line );
@@ -134,30 +134,29 @@ function eme_delete_event_tasks( $event_id ) {
     global $wpdb;
     // First get all task IDs for this event
     $tasks_table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $task_ids = $wpdb->get_col( 
-        $wpdb->prepare( "SELECT task_id FROM $tasks_table WHERE event_id = %d", $event_id ) 
-    );
+    $prepared_sql = $wpdb->prepare( "SELECT task_id FROM $tasks_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $task_ids = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     
     // Delete answers for each task
     if (!empty($task_ids)) {
         $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
         $placeholders = implode(',', array_fill(0, count($task_ids), '%d'));
         
-        $sql = $wpdb->prepare( 
-            "DELETE FROM $answers_table WHERE related_id IN ($placeholders) AND type = 'tasksignup'", 
-            $task_ids 
+        $prepared_sql = $wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "DELETE FROM $answers_table WHERE related_id IN ($placeholders) AND type = 'tasksignup'",
+            $task_ids
         );
-        $wpdb->query( $sql );
+        $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     
     // Delete the tasks
-    $sql = $wpdb->prepare( "DELETE FROM $tasks_table WHERE event_id = %d", $event_id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $tasks_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     
     // Delete the task signups
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id = %d", $event_id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
@@ -165,13 +164,14 @@ function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
     if ( empty( $ids_arr ) || ! eme_is_numeric_array( $ids_arr ) ) {
         return;
     }
-    $ids_list = implode(',', $ids_arr);
+    $ids_arr = array_map('intval', $ids_arr);
+    $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
     $table    = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $ids_list )", $event_id);
-    $wpdb->query( $sql);
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $placeholders )", $event_id, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $ids_list )", $event_id);
-    $wpdb->query( $sql);
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $placeholders )", $event_id, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_cancel_task_signup( $signup_randomid ) {
@@ -180,8 +180,8 @@ function eme_cancel_task_signup( $signup_randomid ) {
     if (empty($signup_randomid)) {
         return;
     }
-    $sql   = $wpdb->prepare( "DELETE FROM $table WHERE random_id=%s", $signup_randomid );
-    return $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE random_id=%s", $signup_randomid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_tasksignup_post_answers( $task_signup ) {
@@ -285,8 +285,8 @@ function eme_store_tasksignup_answers( $task_signup, $do_update = 1 ) {
 function eme_get_tasksignup_answers( $id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='tasksignup'", $id );
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='tasksignup'", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_db_insert_task_signup( $line ) {
@@ -337,8 +337,10 @@ function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     if ( eme_is_list_of_int( $person_ids ) ) {
-        $sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id IN ( $person_ids )", $to_person_id);
-        return $wpdb->query( $sql );
+        $ids_arr = array_map('intval', explode(',', $person_ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $prepared_sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id IN ( $placeholders )", $to_person_id, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }
 
@@ -356,50 +358,50 @@ function eme_db_delete_task_signup( $signup_id ) {
 function eme_get_task( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d", $task_id );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d", $task_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_tasks( $event_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d ORDER BY task_seq ASC", $event_id );
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d ORDER BY task_seq ASC", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_task_signup( $id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_count_task_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d", $task_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d", $task_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_count_task_approved_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND signup_status=1", $task_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND signup_status=1", $task_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_count_task_pending_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND signup_status=0", $task_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND signup_status=0", $task_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_task_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d ", $task_id );
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d ", $task_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 'future' ) {
@@ -442,23 +444,26 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
     }
     $where = 'WHERE ' . implode( ' AND ', $where_arr );
 
-    $sql = "SELECT $table.* FROM $table LEFT JOIN $people_table ON $table.person_id=$people_table.person_id $events_join $where $order_by";
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $sql = "SELECT $table.* FROM $table LEFT JOIN $people_table ON $table.person_id=$people_table.person_id $events_join $where $order_by"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_tasksignup_personids( $signup_ids ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     if ( eme_is_list_of_int( $signup_ids ) ) {
-        return $wpdb->get_col ( "SELECT DISTINCT person_id FROM $table WHERE id IN ( $signup_ids )" );
+        $ids_arr = array_map('intval', explode(',', $signup_ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $table WHERE id IN ( $placeholders )", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }
 
 function eme_count_event_task_signups( $event_id ) {
     global $wpdb;
     $table      = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT task_id, COUNT(*) as signup_count FROM $table WHERE event_id=%d GROUP BY task_id", $event_id );
-    $res        = $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT task_id, COUNT(*) as signup_count FROM $table WHERE event_id=%d GROUP BY task_id", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $res        = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $return_arr = [];
     foreach ( $res as $row ) {
         $return_arr[ $row['task_id'] ] = $row['signup_count'];
@@ -470,8 +475,8 @@ function eme_get_event_task_signups( $event_id ) {
     global $wpdb;
     $tasks_table = EME_DB_PREFIX . EME_TASKS_TBNAME;
     $table       = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql         = $wpdb->prepare( "SELECT * FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.event_id=%d", $event_id );
-    $res         = $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.event_id=%d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $res         = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $return_arr  = [];
     foreach ( $res as $row ) {
         $return_arr[ $row['id'] ] = $row;
@@ -482,23 +487,23 @@ function eme_get_event_task_signups( $event_id ) {
 function eme_count_event_task_person_signups( $event_id, $person_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE event_id=%d AND person_id=%d", $event_id, $person_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE event_id=%d AND person_id=%d", $event_id, $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_count_person_task_signups( $task_id, $person_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND person_id=%d", $task_id, $person_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND person_id=%d", $task_id, $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_check_task_signup_overlap( $task, $person_id ) {
     global $wpdb;
     $tasks_table = EME_DB_PREFIX . EME_TASKS_TBNAME;
     $table       = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.task_id<>%d AND person_id=%d AND task_start<%s AND task_end>%s", $task['task_id'], $person_id, $task['task_end'], $task['task_start'] );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.task_id<>%d AND person_id=%d AND task_start<%s AND task_end>%s", $task['task_id'], $person_id, $task['task_end'], $task['task_start'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // for CRON
@@ -547,8 +552,8 @@ function eme_tasks_remove_old_signups() {
     $old_date     = $eme_date_obj->minusDays( $remove_old_signups_days )->getDateTime();
 
     // we don't remove old bookings, just anonymize them
-    $sql = $wpdb->prepare("DELETE FROM $table WHERE event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < %s)", $old_date);
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare("DELETE FROM $table WHERE event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < %s)", $old_date); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 
@@ -2127,12 +2132,12 @@ function eme_ajax_task_signups_list() {
 
     if ( current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
         $formfields  = eme_get_formfields( '', 'generic,events,tasksignup' ); 
-        $sql         = "SELECT COUNT(*) FROM $signups_table AS signups $join $where";
-        $recordCount = $wpdb->get_var( $sql );
+        $sql         = "SELECT COUNT(*) FROM $signups_table AS signups $join $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $limit       = eme_get_datatables_limit();
         $orderby     = eme_get_datatables_orderby() ?: 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
-        $sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $orderby $limit";
-        $rows        = $wpdb->get_results( $sql, ARRAY_A );
+        $sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         foreach ( $rows as $key => $row ) {
             $answers  = eme_get_tasksignup_answers( $row['id'] );
             $localized_start_date        = eme_localized_date( $row['event_start'], EME_TIMEZONE, 1 );
@@ -2287,8 +2292,8 @@ function eme_count_pending_tasksignups() {
     $signups_table    = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $now              = $eme_date_obj_now->getDateTime();
-    $sql              = $wpdb->prepare( "SELECT COUNT(signups.id) FROM $signups_table AS signups LEFT JOIN $events_table AS events ON signups.event_id=events.event_id WHERE signups.signup_status=0 AND events.event_end >= %s", $now );
-    return $wpdb->get_var( $sql );
+    $prepared_sql     = $wpdb->prepare( "SELECT COUNT(signups.id) FROM $signups_table AS signups LEFT JOIN $events_table AS events ON signups.event_id=events.event_id WHERE signups.signup_status=0 AND events.event_end >= %s", $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 ?>

@@ -18,7 +18,7 @@ if ( ! is_multisite() ) {
 	// For Multisite
 	// For regular options.
 	global $wpdb;
-	$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+	$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	//$original_blog_id = get_current_blog_id();
 	foreach ( $blog_ids as $my_blog_id ) {
 		switch_to_blog( $my_blog_id );

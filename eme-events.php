@@ -888,7 +888,7 @@ function eme_events_page() {
 function eme_get_all_pages() {
     global $wpdb;
     $query = 'SELECT id, post_title FROM ' . EME_DB_PREFIX . "posts WHERE post_type = 'page' AND post_status='publish' ORDER BY post_title ASC";
-    $pages = $wpdb->get_results( $query, ARRAY_A );
+    $pages = $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
     // get_pages() is better, but uses way more memory and it might be filtered by eme_filter_get_pages()
     //$pages = get_pages();
     $output   = [];
@@ -1380,13 +1380,13 @@ function eme_events_count_for( $date ) {
             $conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
         }
     }
-    $conditions[] = "((event_start LIKE '$date%') OR (event_start <= '$date 00:00:00' AND event_end >= '$date 23:59:59'))";
+    $conditions[] = '((event_start LIKE %s) OR (event_start <= %s AND event_end >= %s))';
     $where        = implode( ' AND ', $conditions );
     if ( $where != '' ) {
         $where = ' WHERE ' . $where;
     }
-    $sql = "SELECT COUNT(*) FROM  $table_name $where";
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM  $table_name $where", $date . '%', $date . ' 00:00:00', $date . ' 23:59:59' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // filter function to call the event page when appropriate
@@ -4896,17 +4896,17 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
     if ( ! empty( $name ) ) {
         if ( $name_only ) {
             $query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start $limit";
-            $sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' );
+            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } else {
             $query = "SELECT * FROM $table WHERE ((event_name LIKE %s) OR
                 (event_notes LIKE %s)) $condition ORDER BY event_start $limit";
-            $sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
+            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
     } else {
-        $sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start $limit";
+        $prepared_sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
     }
 
-    return $wpdb->get_results( $sql, ARRAY_A );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // main function querying the database event table
@@ -5595,7 +5595,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         // Later on we we loop over the events and show only the amount wanted
         if ( ! empty( $limit_string ) ) {
             $count_sql = "SELECT COUNT(*) FROM $events_table $count_where";
-            $t_count   = $wpdb->get_var( $count_sql );
+            $t_count   = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
             // now increase the $limit with the number of events found
             // we don't change $event_limit because we need that later on
             $t_limit = $event_limit + intval( $t_count );
@@ -5641,11 +5641,11 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     $res     = wp_cache_get( "eme_events $sql_md5" );
     if ( $res === false ) {
         if ( $count ) {
-            $count = $wpdb->get_var( $sql );
+            $count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
             wp_cache_set( "eme_events $sql_md5", $count, '', 10 );
             return $count;
         } else {
-            $events          = $wpdb->get_results( $sql, ARRAY_A );
+            $events          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
             $inflated_events = [];
             $seen_recids     = [];
             if ( ! empty( $events ) ) {
@@ -5693,9 +5693,10 @@ function eme_get_events_assoc( $event_ids_arr = []) {
     $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $inflated_events = [];
     if ( eme_is_numeric_array( $event_ids_arr ) ) {
-        $event_ids = join(',', $event_ids_arr);
-        $sql = "SELECT * from $events_table WHERE event_id IN ( $event_ids )";
-        $events = $wpdb->get_results( $sql, ARRAY_A );
+        $event_ids_arr = array_map( 'intval', $event_ids_arr );
+        $placeholders  = implode( ',', array_fill( 0, count( $event_ids_arr ), '%d' ) );
+        $prepared_sql  = $wpdb->prepare( "SELECT * from $events_table WHERE event_id IN ( $placeholders )", ...$event_ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         foreach ( $events as $this_event ) {
             $this_event = eme_get_extra_event_data( $this_event );
             $inflated_events[$this_event['event_id']] = $this_event;
@@ -5725,8 +5726,8 @@ function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
         $where = '';
     }
 
-    $sql = $wpdb->prepare( "SELECT event_id from $events_table WHERE event_author = %d $where", $author_id );
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT event_id from $events_table WHERE event_author = %d $where", $author_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_name( $event_id ) {
@@ -5738,11 +5739,11 @@ function eme_get_event_name( $event_id ) {
 
     $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if ( is_numeric( $event_id ) ) {
-        $sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_id = %d", $event_id );
+        $prepared_sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_slug = %s LIMIT 1", $event_id );
+        $prepared_sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_slug = %s LIMIT 1", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    return $wpdb->get_var( $sql );
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event( $event_id ) {
@@ -5759,13 +5760,13 @@ function eme_get_event( $event_id ) {
     $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
     if ( is_numeric( $event_id ) ) {
-        $sql = $wpdb->prepare( "SELECT * from $events_table WHERE event_id = %d", $event_id );
+        $prepared_sql = $wpdb->prepare( "SELECT * from $events_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $sql = $wpdb->prepare( "SELECT * from $events_table WHERE event_slug = %s LIMIT 1", $event_id );
+        $prepared_sql = $wpdb->prepare( "SELECT * from $events_table WHERE event_slug = %s LIMIT 1", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $event = wp_cache_get( "eme_event $event_id" );
     if ( $event === false ) {
-        $event = $wpdb->get_row( $sql, ARRAY_A );
+        $event = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( $event ) {
             $event = eme_get_extra_event_data( $event );
             wp_cache_set( "eme_event $event_id", $event, '', 60 );
@@ -5796,8 +5797,10 @@ function eme_get_rsvp_event_arr( $event_ids ) {
 
     $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $conditions       = [];
+    $event_ids        = array_map( 'intval', $event_ids );
     $event_ids_joined = join( ',', $event_ids );
-    $conditions[]     = "event_id IN ($event_ids_joined)";
+    $placeholders_in  = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $conditions[]     = "event_id IN ($placeholders_in)";
     // rsvp is required
     $conditions[]     = 'event_rsvp = 1';
 
@@ -5816,9 +5819,9 @@ function eme_get_rsvp_event_arr( $event_ids ) {
     }
 
     // the 'order by' is of course only useful if the event_id argument for the function was an array of event id's
-    $sql = "SELECT * FROM $events_table $where ORDER BY FIELD(event_id,$event_ids_joined)";
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $events_table $where ORDER BY FIELD(event_id,$event_ids_joined)", ...$event_ids ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-    $events = $wpdb->get_results( $sql, ARRAY_A );
+    $events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $events as $key => $event ) {
         $events[ $key ] = eme_get_extra_event_data( $event );
     }
@@ -5933,11 +5936,11 @@ function eme_import_csv_events() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                $sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-                                $sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             }
                         }
                     }
@@ -6010,11 +6013,11 @@ function eme_import_csv_events() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
                                 $field_id = $formfield['field_id'];
-                                $sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='event'", $event_id, $field_id );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='event'", $event_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-                                $sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $event_id, $field_id, $value, 'event' );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $event_id, $field_id, $value, 'event' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             }
                         }
                     }
@@ -9445,13 +9448,13 @@ function eme_change_event_status( $events, $status ) {
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
     if ( is_array( $events ) ) {
-        $events_to_change = join( ',', $events );
+        $events_arr = array_map( 'intval', $events );
     } else {
-        $events_to_change = $events;
+        $events_arr = array_map( 'intval', explode( ',', $events ) );
     }
-
-    $sql = "UPDATE $table_name set event_status=$status WHERE event_id in (" . $events_to_change . ')';
-    $wpdb->query( $sql );
+    $placeholders = implode( ',', array_fill( 0, count( $events_arr ), '%d' ) );
+    $prepared_sql = $wpdb->prepare( "UPDATE $table_name set event_status=%d WHERE event_id in ($placeholders)", $status, ...$events_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // for GDPR cron
@@ -9468,8 +9471,8 @@ function eme_delete_old_events() {
     $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date     = $eme_date_obj->minusDays( $remove_old_events_days )->getDateTime();
 
-    $sql       = "SELECT event_id FROM $events_table WHERE $events_table.event_end <'$old_date'";
-    $event_ids = $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE $events_table.event_end < %s", $old_date ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $event_ids    = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $event_ids as $event_id ) {
         eme_db_delete_event( $event_id );
     }
@@ -9489,8 +9492,8 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
     }
 
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $sql        = $wpdb->prepare( "DELETE FROM $table_name WHERE event_id = %d", $event_id );
-    if ( $wpdb->query( $sql ) ) {
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $table_name WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    if ( $wpdb->query( $prepared_sql ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         eme_delete_all_bookings_for_event_id( $event_id );
         eme_delete_event_attendances( $event_id );
         eme_delete_event_answers( $event_id );
@@ -9503,15 +9506,15 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 function eme_delete_event_answers( $event_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
-    $wpdb->query( $sql );
+    $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_check_event_external_ref( $id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_admin_enqueue_js() {
@@ -10172,8 +10175,8 @@ function eme_ajax_events_list() {
     $location_ids = "";
     if ( ! empty( $search_location ) ) {
         $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-        $query = "SELECT location_id FROM $location_table WHERE location_name LIKE '%$search_location%'";
-        $location_ids_arr = $wpdb->get_col( $query );
+        $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $location_table WHERE location_name LIKE %s", '%' . $wpdb->esc_like( $search_location ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $location_ids_arr = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $location_ids = -1;
         if (!empty($location_ids_arr)) {
             $location_ids = join(',',$location_ids_arr);
@@ -10621,7 +10624,7 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
         $sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
-            WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
+            WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $ajaxResult['Result']  = 'OK';
@@ -10729,8 +10732,8 @@ function eme_get_event_answers( $event_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $cf            = wp_cache_get( "eme_event_cf $event_id" );
     if ( $cf === false ) {
-        $sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
-        $cf  = $wpdb->get_results( $sql, ARRAY_A );
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $cf  = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_event_cf $event_id", $cf, '', 60 );
     }
     return $cf;
@@ -10795,9 +10798,8 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
     if ( ! empty( $conditions ) ) {
         $condition = 'AND (' . join( ' OR ', $conditions ) . ')';
     }
-    $sql = "SELECT DISTINCT related_id FROM $table WHERE field_id=$field_id AND type='event' $condition";
-
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='event' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 add_action( 'wp_ajax_eme_events_snapselect', 'eme_ajax_events_snapselect' );
@@ -10842,8 +10844,8 @@ function eme_get_event_cf_answers_groupingids( $event_id ) {
     global $wpdb;
     $answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $sql            = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id );
-    return $wpdb->get_col( $sql );
+    $prepared_sql   = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_location_used_capacity( $event ) {
@@ -10871,7 +10873,7 @@ function eme_get_author_event_ids( $event_ids, $userid = 0 ) {
     if ( ! $user_id ) {
         $user_id = get_current_user_id();
     }
-    $sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($event_ids)", $user_id );
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($event_ids)", $user_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

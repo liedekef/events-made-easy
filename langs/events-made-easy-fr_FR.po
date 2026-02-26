@@ -14640,24 +14640,24 @@ msgstr "Lorsque vous scannez l'URL générée par #_QRCODE ou #_ATTENDANCE_URL, 
 
 #: eme-events.php:8756
 msgid "For multiseat events, separate the values by '||'"
-msgstr ""
+msgstr "Pour les évènements multisièges, séparez les valeurs par '||'"
 
 #: eme-members.php:1636
 msgid "Select a member"
-msgstr ""
+msgstr "Sélectionner un membre"
 
 #: eme-payments.php:2757
 #: eme-payments.php:2815
 #: eme-payments.php:3242
 #: eme-payments.php:3257
 msgid "Booking refunded for %s, payment id %d"
-msgstr ""
+msgstr "Réservation remboursée pour %s, identifiant de paiement %d"
 
 #: eme-people.php:1010
 #: eme-people.php:1186
 #: eme-people.php:1458
 msgid "No access"
-msgstr ""
+msgstr "Pas d'accès"
 
 #: eme-events.php:9534
 msgid "Make your choice"

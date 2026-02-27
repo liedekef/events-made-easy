@@ -5014,12 +5014,12 @@ function eme_access_meta_box_save( $post_id ) {
     }
 
     if ( isset( $_POST['eme_membershipids'] ) && eme_is_numeric_array( $_POST['eme_membershipids'] ) ) {
-        update_post_meta( $post_id, 'eme_membershipids', sanitize_text_field( wp_unslash( $_POST['eme_membershipids'] ) ) );
+        update_post_meta( $post_id, 'eme_membershipids', array_map( 'intval', $_POST['eme_membershipids'] ) );
     } else {
         delete_post_meta( $post_id, 'eme_membershipids' );
     }
     if ( isset( $_POST['eme_groupids'] ) && eme_is_numeric_array( $_POST['eme_groupids'] ) ) {
-        update_post_meta( $post_id, 'eme_groupids', sanitize_text_field( wp_unslash( $_POST['eme_groupids'] ) ) );
+        update_post_meta( $post_id, 'eme_groupids', array_map( 'intval', $_POST['eme_groupids'] ) );
     } else {
         delete_post_meta( $post_id, 'eme_groupids' );
     }

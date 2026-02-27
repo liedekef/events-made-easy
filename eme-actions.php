@@ -719,7 +719,7 @@ function eme_jodit_preview_render() {
     }
 
     // Render shortcodes in the HTML
-    $content = do_shortcode(wp_kses_post(wp_unslash($_POST['html'])));
+    $content = do_shortcode(wp_unslash($_POST['html']));
 
     // remove potential unsecured tags
     //$rendered = apply_filters('the_content', $content);

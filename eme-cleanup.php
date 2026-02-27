@@ -4,18 +4,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-function eme_cleanup_people() {
+function eme_get_cleanup_people() {
 	global $wpdb;
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$prepared_sql     = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $members_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $tasksignup_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
-	$person_ids       = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	$count            = count( $person_ids );
-	$tmp_ids          = join( ',', $person_ids );
-	eme_trash_people( $tmp_ids );
+	$prepared_sql     = $wpdb->prepare( "SELECT $people_table.person_id, $people_table.firstname, $people_table.lastname, $people_table.email, $people_table.creation_date, $people_table.modif_date FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $members_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $tasksignup_table.person_id=$people_table.person_id) AND status !=%d AND $people_table.wp_id=0 ORDER BY $people_table.modif_date", EME_PEOPLE_STATUS_TRASH );
+	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
+function eme_cleanup_people() {
+	$people = eme_get_cleanup_people();
+	$count  = count( $people );
+	if ( $count > 0 ) {
+		$person_ids = array_column( $people, 'person_id' );
+		$tmp_ids    = join( ',', $person_ids );
+		eme_trash_people( $tmp_ids );
+	}
 	return $count;
 }
 
@@ -249,6 +256,15 @@ function eme_cleanup_page() {
 					$count   = eme_cleanup_trashed_bookings( $eme_number, $eme_period );
 					$message = sprintf( __( 'Cleanup done: %d bookings removed from trash.', 'events-made-easy' ), $count );
 				}
+			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_preview' ) {
+				$preview_people = eme_get_cleanup_people();
+				$count          = count( $preview_people );
+				if ( $count === 0 ) {
+					$message = __( 'No people found that would be moved to the trash bin.', 'events-made-easy' );
+				} else {
+					eme_cleanup_form( '', $preview_people );
+					return;
+				}
 			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people' ) {
 				$count   = eme_cleanup_people();
 				$message = sprintf( __( 'Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed.', 'events-made-easy' ), $count );
@@ -269,7 +285,7 @@ function eme_cleanup_page() {
 	eme_cleanup_form( $message );
 }
 
-function eme_cleanup_form( $message = '' ) {
+function eme_cleanup_form( $message = '', $preview_people = null ) {
 	$areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
 	?>
 <div class="wrap">
@@ -279,6 +295,44 @@ function eme_cleanup_form( $message = '' ) {
 	<div id='message' class='updated eme-message-admin'>
 	<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
+<?php } ?>
+<?php if ( ! empty( $preview_people ) ) { ?>
+<h1><?php esc_html_e( 'Preview: People to be trashed', 'events-made-easy' ); ?></h1>
+<div id='message' class='updated eme-message-admin'>
+<p><?php echo esc_html( sprintf( __( 'The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:', 'events-made-easy' ), count( $preview_people ) ) ); ?></p>
+<table class="widefat striped" style="margin-bottom:1em;">
+<thead><tr>
+	<th><?php esc_html_e( 'ID', 'events-made-easy' ); ?></th>
+	<th><?php esc_html_e( 'First name', 'events-made-easy' ); ?></th>
+	<th><?php esc_html_e( 'Last name', 'events-made-easy' ); ?></th>
+	<th><?php esc_html_e( 'Email', 'events-made-easy' ); ?></th>
+	<th><?php esc_html_e( 'Created on', 'events-made-easy' ); ?></th>
+	<th><?php esc_html_e( 'Modified on', 'events-made-easy' ); ?></th>
+</tr></thead>
+<tbody>
+<?php foreach ( $preview_people as $person ) {
+    $edit_url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) );
+    $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
+    ?>
+<tr>
+    <?php foreach ( [ 'person_id', 'firstname', 'lastname', 'email' ] as $field ) { ?>
+    <td><a href="<?php echo $edit_url; ?>" title="<?php echo $edit_title; ?>"><?php echo esc_html( $person[ $field ] ); ?></a></td>
+    <?php } ?>
+    <td> <?php echo esc_html( $person['creation_date'] ); ?></td>
+    <td> <?php echo esc_html( $person['modif_date'] ); ?></td>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+<form action="" method="post">
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
+	<input type='hidden' name='page' value='eme-cleanup'>
+	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people'>
+	<input type="submit" value="<?php esc_attr_e( 'Confirm: Move all to trash', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction_confirm" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
+	&nbsp;
+	<a href="<?php echo esc_url( admin_url( 'admin.php?page=eme-cleanup' ) ); ?>" class="button"><?php esc_html_e( 'Cancel', 'events-made-easy' ); ?></a>
+</form>
+</div>
 <?php } ?>
 <h1><?php esc_html_e( 'Cleanup actions', 'events-made-easy' ); ?></h1>
 	<form action="" method="post">
@@ -322,8 +376,8 @@ function eme_cleanup_form( $message = '' ) {
 	<?php esc_html_e( 'Move people who are no longer referenced in bookings, groups or memberships to the trash bin', 'events-made-easy' ); ?>
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
-	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people'>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
+	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people_preview'>
+	<input type="submit" value="<?php esc_attr_e( 'Preview', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
 	<br><?php esc_html_e( 'Tip: If you want to avoid certain people from being trashed through automatic cleanup, put them in a group.', 'events-made-easy' ); ?>
 	</form>
 

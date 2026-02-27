@@ -2388,7 +2388,10 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today        = $eme_date_obj_now->getDateTime();
     if (eme_is_list_of_int( $person_ids ) ) {
-        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $today ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr = array_map('intval', explode(',', $person_ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $args = array_merge( [ EME_RSVP_STATUS_TRASH ], $ids_arr, [ $today ] );
+        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($placeholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", ...$args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }
@@ -2411,7 +2414,9 @@ function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if (eme_is_list_of_int( $person_ids ) ) {
-        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($person_ids)", $to_person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr = array_map('intval', explode(',', $person_ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($placeholders)", $to_person_id, ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return false;
@@ -2422,7 +2427,9 @@ function eme_trash_bookings_for_event_ids( $ids ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
-        $prepared_sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($ids)", EME_RSVP_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr = array_map('intval', explode(',', $ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $prepared_sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($placeholders)", EME_RSVP_STATUS_TRASH, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }
@@ -2642,7 +2649,9 @@ function eme_mark_booking_userconfirm( $booking_ids ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if (eme_is_list_of_int( $booking_ids ) ) {
-        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($booking_ids)", EME_RSVP_STATUS_USERPENDING ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr = array_map('intval', explode(',', $booking_ids));
+        $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($placeholders)", EME_RSVP_STATUS_USERPENDING, ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }

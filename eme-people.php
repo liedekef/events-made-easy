@@ -3954,7 +3954,7 @@ function eme_get_memberships_member_ids( $membership_ids ) {
     }
     $ids_arr = array_map('intval', explode(',', $membership_ids));
     $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-    $prepared_sql = $wpdb->prepare("SELECT members.member_id FROM $people_table AS people LEFT JOIN $members_table AS members ON people.person_id=members.person_id WHERE people.status=%d.AND members.status IN (%d,%d) AND members.membership_id IN ($placeholders) GROUP BY people.email", array_merge([EME_PEOPLE_STATUS_ACTIVE, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE], $ids_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare("SELECT members.member_id FROM $people_table AS people LEFT JOIN $members_table AS members ON people.person_id=members.person_id WHERE people.status=%d AND members.status IN (%d,%d) AND members.membership_id IN ($placeholders) GROUP BY people.email", array_merge([EME_PEOPLE_STATUS_ACTIVE, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE], $ids_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

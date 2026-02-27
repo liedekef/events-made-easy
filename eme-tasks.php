@@ -25,13 +25,13 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
     }
     $seq_nbr       = 1;
     $task_nbr_seen = 0;
-    foreach ( $_POST['eme_tasks'] as $eme_task ) {
+    foreach ( wp_unslash( $_POST['eme_tasks'] ) as $eme_task ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         if ( ! empty( $eme_task['task_nbr'] ) && intval( $eme_task['task_nbr'] ) > $task_nbr_seen ) {
             $task_nbr_seen = intval( $eme_task['task_nbr'] );
         }
     }
     $next_task_nbr = $task_nbr_seen + 1;
-    foreach ( $_POST['eme_tasks'] as $eme_task ) {
+    foreach ( wp_unslash( $_POST['eme_tasks'] ) as $eme_task ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $eme_task['name']       = eme_sanitize_request( $eme_task['name'] );
         $eme_task['task_seq']   = $seq_nbr;
         $eme_task['event_id']   = $event_id;
@@ -1914,7 +1914,7 @@ function eme_tasks_ajax() {
     if (!empty($t_person)) {
         $person_id = $t_person['person_id'];
     }
-    foreach ( $_POST['eme_task_signups'] as $event_id => $task_id_arr ) {
+    foreach ( wp_unslash( $_POST['eme_task_signups'] ) as $event_id => $task_id_arr ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $event_id              = intval( $event_id );
         $event                 = eme_get_event( $event_id );
         $allow_overlap         = $event['event_properties']['task_allow_overlap'];

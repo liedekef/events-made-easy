@@ -10218,7 +10218,7 @@ function eme_ajax_events_list() {
         $field_ids_arr[] = $field_id;
     }
     if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
-        $field_ids = join( ',', $_POST['search_customfieldids'] );
+        $field_ids = join( ',', array_map( 'intval', $_POST['search_customfieldids'] ) );
     } else {
         $field_ids = join( ',', $field_ids_arr );
     }
@@ -10526,8 +10526,8 @@ function eme_ajax_manage_events() {
     $ajaxResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
-        $ids       = $_POST['event_id'];
-        $ids_arr   = explode( ',', $ids );
+        $ids       = sanitize_text_field( $_POST['event_id'] );
+        $ids_arr   = array_map( 'intval', explode( ',', $ids ) );
         if ( ! eme_is_numeric_array( $ids_arr ) ) {
             $ajaxResult['Result']  = 'Error';
             $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );

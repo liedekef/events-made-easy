@@ -866,15 +866,15 @@ function eme_unique_slug( $slug, $table, $column, $index_col, $index_colval = 0 
     $table_name = EME_DB_PREFIX . $table;
     $slug       = untrailingslashit( $slug );
     // code taken from function wp_unique_term_slug
-    $query = $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $slug );
+    $prepared_sql = $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $slug ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     // it exists .... so strip of the last numbers and start finding new ones
-    if ( $wpdb->get_var( $query ) ) {
+    if ( $wpdb->get_var( $prepared_sql ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $slug = preg_replace( '/\-\d+$/', '', $slug );
         $num  = 2;
         do {
             $alt_slug = $slug . "-$num";
             ++$num;
-            $slug_check = $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $alt_slug ) );
+            $slug_check = $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $alt_slug ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } while ( $slug_check );
         $slug = $alt_slug;
     }
@@ -2830,7 +2830,7 @@ function eme_get_wp_image( $image_id ) {
 
 function eme_column_exists( $table_name, $column_name ) {
     global $wpdb;
-    foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+    foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) { // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if ( $column == $column_name ) {
             return true;
         }
@@ -2840,8 +2840,8 @@ function eme_column_exists( $table_name, $column_name ) {
 
 function eme_table_exists( $table_name ) {
     global $wpdb;
-    $query     = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
-    $db_result = $wpdb->get_var( $query );
+    $prepared_sql = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+    $db_result    = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( empty( $db_result ) ) {
         return false;
     } else {
@@ -2852,21 +2852,21 @@ function eme_table_exists( $table_name ) {
 function eme_maybe_drop_column( $table_name, $column_name ) {
     global $wpdb;
     if ( eme_column_exists( $table_name, $column_name ) ) {
-        $wpdb->query( "ALTER TABLE $table_name DROP COLUMN $column_name;" );
+        $wpdb->query( "ALTER TABLE $table_name DROP COLUMN $column_name;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     return true;
 }
 
 function eme_drop_table( $table ) {
     global $wpdb;
-    $wpdb->query( "DROP TABLE IF EXISTS $table" );
+    $wpdb->query( "DROP TABLE IF EXISTS $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_convert_charset( $table, $charset, $collate ) {
     global $wpdb;
     $table = EME_DB_PREFIX . $table;
     $sql   = "ALTER TABLE $table CONVERT TO $charset $collate;";
-    $wpdb->query( $sql );
+    $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_total( $multistring ) {
@@ -3414,12 +3414,12 @@ function eme_ajax_record_list( $tablename, $cap ) {
     }
     if ( current_user_can( get_option( $cap ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
-        $recordCount = $wpdb->get_var( $sql );
+        $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         $limit       = eme_get_datatables_limit();
         $orderby     = eme_get_datatables_orderby();
 
         $sql                    = "SELECT * FROM $table $where $orderby $limit";
-        $rows                   = $wpdb->get_results( $sql, ARRAY_A );
+        $rows                   = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         $fTableResult['Result'] = 'OK';
         if ( isset( $_REQUEST['options_list'] ) ) {
             $fTableResult['Options'] = $rows;
@@ -3444,7 +3444,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         // check the POST var
         $ids_arr = explode( ',', eme_sanitize_request($_POST[ $postvar ]) );
         if ( eme_is_numeric_array( $ids_arr ) ) {
-            $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' );
+            $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
         $fTableResult['Result']      = 'OK';
         $fTableResult['Message']     = __( 'Records deleted!', 'events-made-easy' );
@@ -4021,7 +4021,7 @@ function eme_migrate_event_payment_options() {
     $payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
     foreach ( $payment_options as $payment_option ) {
         $sql = "SELECT event_id from $table_name WHERE $payment_option=1";
-        $ids = $wpdb->get_col( $sql );
+        $ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         if ( ! empty( $ids ) ) {
             foreach ( $ids as $id ) {
                 $event = eme_get_event( $id );
@@ -4039,7 +4039,7 @@ function eme_migrate_event_rsvpstartend_options() {
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
     $sql = "SELECT event_id, rsvp_number_days, rsvp_number_hours from $table_name WHERE rsvp_number_days>0 OR rsvp_number_hours>0";
-    $res = $wpdb->get_results( $sql, ARRAY_A );
+    $res = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     if ( ! empty( $res ) ) {
         foreach ( $res as $row ) {
             $event = eme_get_event( $row['event_id'] );
@@ -4138,8 +4138,8 @@ function eme_get_answerid( $answers, $related_id, $type, $field_id, $grouping = 
 function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id = 0, $occurence = 0 ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql           = $wpdb->prepare( "INSERT INTO $answers_table (type,related_id,field_id,answer,eme_grouping,occurence) VALUES (%s,%d,%d,%s,%d,%d)", $type, $related_id, $field_id, $answer, $grouping_id, $occurence );
-    $wpdb->query( $sql );
+    $prepared_sql  = $wpdb->prepare( "INSERT INTO $answers_table (type,related_id,field_id,answer,eme_grouping,occurence) VALUES (%s,%d,%d,%s,%d,%d)", $type, $related_id, $field_id, $answer, $grouping_id, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $wpdb->insert_id;
 }
 

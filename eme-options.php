@@ -1113,7 +1113,7 @@ function eme_add_option( $key, $value, $reset ) {
 ////////////////////////////////////
 function eme_options_delete() {
     global $wpdb;
-    $wpdb->query("DELETE FROM ".$wpdb->options." WHERE option_name LIKE 'eme_%'" );
+    $wpdb->query("DELETE FROM ".$wpdb->options." WHERE option_name LIKE 'eme_%'" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_options_postsave_actions() {

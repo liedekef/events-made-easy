@@ -641,8 +641,8 @@ function eme_get_queued_count() {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     // the queued count is to know how much emails are left unsent in the queue
-    $sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status= " . EME_MAIL_STATUS_PLANNED . " OR status=" . EME_MAIL_STATUS_DELAYED ;
-    $count = $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $mqueue_table WHERE status= %d OR status=%d", EME_MAIL_STATUS_PLANNED, EME_MAIL_STATUS_DELAYED ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $count = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
     // now also include planned mailings
     $planned_mailings = eme_get_mailings(status: 'planned');
@@ -664,12 +664,12 @@ function eme_get_queued( $now ) {
     $mqueue_table   = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     // we take only the queued emails with status PLANNED where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
-    $sql                  = "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=" . EME_MAIL_STATUS_PLANNED . " AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<'$now'))";
+    $prepared_sql         = $wpdb->prepare( "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=%d AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<%s))", EME_MAIL_STATUS_PLANNED, $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
     if ( $eme_cron_queue_count > 0 ) {
-        $sql .= " LIMIT $eme_cron_queue_count";
+        $prepared_sql .= " LIMIT $eme_cron_queue_count";
     }
-    return $wpdb->get_results( $sql, ARRAY_A );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // unused function, the REST api call currenty directly calls eme_process_queue
@@ -816,8 +816,8 @@ function eme_process_queue( $force_interval = 0 ) {
 function eme_get_passed_planned_mailingids( $now ) {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<'$now'";
-    return $wpdb->get_col( $sql );
+    $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<%s", $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_mark_mailing_planned( $mailing_id, $planned_count ) {
@@ -932,33 +932,32 @@ function eme_archive_old_mailings() {
     $eme_date_obj   = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $old_date       = $eme_date_obj->minusDays( $archive_old_mailings_days )->getDateTime();
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = "SELECT id FROM $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
-    $mailing_ids    = $wpdb->get_col( $sql );
+    $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE creation_date < %s AND (status='completed' OR status='cancelled')", $old_date ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $mailing_ids    = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $mailing_ids as $mailing_id ) {
         eme_archive_mailing( $mailing_id );
     }
 
     // now remove old emails not belonging to a specific mailing
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = "DELETE FROM $queue_table WHERE mailing_id=0 AND creation_date < '$old_date'";
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=0 AND creation_date < %s", $old_date ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_cancel_mail( $mail_id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $wpdb->query(
-        $wpdb->prepare(
-            "UPDATE $queue_table
-            SET status = %d
-            WHERE id = %d
-            AND status IN (%d, %d)",
-            EME_MAIL_STATUS_CANCELLED,
-            $mail_id,
-            EME_MAIL_STATUS_PLANNED,
-            EME_MAIL_STATUS_DELAYED
-        )
+    $prepared_sql = $wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        "UPDATE $queue_table
+        SET status = %d
+        WHERE id = %d
+        AND status IN (%d, %d)",
+        EME_MAIL_STATUS_CANCELLED,
+        $mail_id,
+        EME_MAIL_STATUS_PLANNED,
+        EME_MAIL_STATUS_DELAYED
     );
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_cancel_mailing( $mailing_id ) {
@@ -993,37 +992,37 @@ function eme_resend_mail( $id ) {
 function eme_delete_mail( $id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE id=%d", $id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $queue_table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_mailing_mails( $id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_mailing( $id ) {
     global $wpdb;
     eme_delete_mailing_mails( $id );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = $wpdb->prepare( "DELETE FROM $mailings_table WHERE id=%d", $id );
-    $wpdb->query( $sql );
+    $prepared_sql   = $wpdb->prepare( "DELETE FROM $mailings_table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_mail( $id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_mail_by_rid( $random_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_mailing( $id ) {
@@ -1031,8 +1030,8 @@ function eme_get_mailing( $id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $mailing = wp_cache_get( "eme_mailing $id" );
     if ( $mailing === false ) {
-        $sql     = $wpdb->prepare( "SELECT * FROM $mailings_table WHERE id=%d", $id );
-        $mailing = $wpdb->get_row( $sql, ARRAY_A );
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $mailings_table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $mailing = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_mailing $id", $mailing, '', 10 );
     }
     return $mailing;
@@ -1049,11 +1048,11 @@ function eme_get_mailings( $status = '', $search_text = '' ) {
     }
     if ( !empty($search_text)) {
         $search_text = "%" . $wpdb->esc_like( $search_text ) . "%";
-        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) ORDER BY planned_on,name", $search_text, $search_text);
+        $prepared_sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) ORDER BY planned_on,name", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name";
+        $prepared_sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    return $wpdb->get_results( $sql, ARRAY_A );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_mail_states() {
@@ -1095,15 +1094,15 @@ function eme_mailing_localizedstates() {
 function eme_count_mails_to_send( $mailing_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( status = %d OR status = %d ) AND mailing_id=%d", EME_MAIL_STATUS_PLANNED, EME_MAIL_STATUS_DELAYED, $mailing_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( status = %d OR status = %d ) AND mailing_id=%d", EME_MAIL_STATUS_PLANNED, EME_MAIL_STATUS_DELAYED, $mailing_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_mailing_stats( $mailing_id = 0 ) {
     global $wpdb;
     $table     = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql       = "SELECT COUNT(*) AS count,status FROM $table WHERE mailing_id=$mailing_id GROUP BY mailing_id,status";
-    $lines = $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) AS count,status FROM $table WHERE mailing_id=%d GROUP BY mailing_id,status", $mailing_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $lines = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $res       = [
         'planned'          => 0,
         'sent'             => 0,
@@ -1161,17 +1160,17 @@ function eme_mail_track( $random_id ) {
                     if ( $res > 0 ) {
                         // res is >0, meaning a row was changed, so it was read for the first time
                         if ( $queued_mail['mailing_id'] > 0 ) {
-                            $sql = $wpdb->prepare( "UPDATE $mailings_table SET read_count=read_count+1, total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] );
-                            $wpdb->query( $sql );
+                            $prepared_sql = $wpdb->prepare( "UPDATE $mailings_table SET read_count=read_count+1, total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                            $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             wp_cache_delete( "eme_mailing ".$queued_mail['mailing_id'] );
                         }
                     } else {
                         // no row changed, meaning the mail was already read once, so do it without read_count=0 check
-                        $sql = $wpdb->prepare( "UPDATE $table SET last_read_on=%s, read_count=read_count+1 WHERE id = %d", $now, $queued_mail['id'] );
-                        $res = $wpdb->query( $sql );
+                        $prepared_sql = $wpdb->prepare( "UPDATE $table SET last_read_on=%s, read_count=read_count+1 WHERE id = %d", $now, $queued_mail['id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                        $res = $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                         if ( ! empty( $res ) && $queued_mail['mailing_id'] > 0 ) { // not false and >0
-                            $sql = $wpdb->prepare( "UPDATE $mailings_table SET total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] );
-                            $wpdb->query( $sql );
+                            $prepared_sql = $wpdb->prepare( "UPDATE $mailings_table SET total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                            $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             wp_cache_delete( "eme_mailing ".$queued_mail['mailing_id'] );
                         }
                     }
@@ -1556,12 +1555,12 @@ function eme_mailingreport_list() {
         $where = ' WHERE ' . implode( ' AND ', $where_arr );
     }
 
-    $sql          = "SELECT COUNT(*) FROM $table $where";
-    $recordCount  = $wpdb->get_var( $sql );
+    $sql          = "SELECT COUNT(*) FROM $table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $recordCount  = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $limit        = eme_get_datatables_limit();
     $orderby      = eme_get_datatables_orderby();
-    $sql          = "SELECT * FROM $table $where $orderby $limit";
-    $rows         = $wpdb->get_results( $sql, ARRAY_A );
+    $sql          = "SELECT * FROM $table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows         = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $records      = [];
     $states       = eme_mail_localizedstates();
     foreach ( $rows as $item ) {
@@ -1636,15 +1635,15 @@ function eme_ajax_mailings_list() {
     $orderby  = eme_get_datatables_orderby();
     $where = " WHERE status<>'archived' ";
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
-        $count_sql = "SELECT COUNT(*) FROM $mailings_table $where";
-        $sql = "SELECT * FROM $mailings_table $where $orderby $limit";
+        $count_sql = "SELECT COUNT(*) FROM $mailings_table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = "SELECT * FROM $mailings_table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
-        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text);
-        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text);
+        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    $recordCount = $wpdb->get_var( $count_sql );
-    $mailings = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $mailings = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailing_states = eme_mailing_localizedstates();
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
     $records = [];
@@ -1777,15 +1776,15 @@ function eme_ajax_archivedmailings_list() {
     $orderby  = eme_get_datatables_orderby();
     $where = " WHERE status='archived' ";
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
-        $count_sql = "SELECT COUNT(*) FROM $mailings_table $where";
-        $sql = "SELECT * FROM $mailings_table $where $orderby $limit";
+        $count_sql = "SELECT COUNT(*) FROM $mailings_table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = "SELECT * FROM $mailings_table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
-        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text);
-        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text);
+        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    $recordCount = $wpdb->get_var( $count_sql );
-    $mailings = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $mailings = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailing_states = eme_mailing_localizedstates();
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
     $records = [];
@@ -1872,27 +1871,27 @@ function eme_ajax_mails_list() {
         if ( ! empty( $_POST['search_failed'] ) ) {
             $where = 'WHERE status='. EME_MAIL_STATUS_FAILED;
         }
-        $count_sql = "SELECT COUNT(*) FROM $table";
+        $count_sql = "SELECT COUNT(*) FROM $table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if (empty($orderby)) {
             // subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
             //$sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC $limit) as q ORDER BY q.id";
             $orderby = "ORDER BY creation_date DESC";
         }
-        $sql  = "SELECT * FROM $table $where $orderby $limit";
+        $sql  = "SELECT * FROM $table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
         if ( ! empty( $_POST['search_failed'] ) ) {
             $where = 'AND status='.EME_MAIL_STATUS_FAILED;
         }
-        $count_sql  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
+        $count_sql  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if (empty($orderby)) {
             // "order by status=EME_MAIL_STATUS_PLANNED, id" will show the planned emails (status=EME_MAIL_STATUS_PLANNED) last
             $orderby = "ORDER BY status=".EME_MAIL_STATUS_PLANNED.",id";
         }
-        $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where $orderby $limit", $search_text, $search_text, $search_text );
+        $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where $orderby $limit", $search_text, $search_text, $search_text ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    $recordCount = $wpdb->get_var( $count_sql );
-    $rows = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
     $states = eme_mail_localizedstates();
     $records = [];

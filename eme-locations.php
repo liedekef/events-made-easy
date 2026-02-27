@@ -326,11 +326,11 @@ function eme_import_csv_locations() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                $sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-                                $sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' );
-                                $wpdb->query( $sql );
+                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             }
                         }
                     }
@@ -937,8 +937,8 @@ function eme_search_locations( $name ) {
     $table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $query = "SELECT * FROM $table WHERE (location_name LIKE %s) OR
         (location_description LIKE %s) ORDER BY location_name";
-    $sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
-    return $wpdb->get_results( $sql, ARRAY_A );
+    $prepared_sql = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // this returns all locations, can be useful in dropdown for location selects
@@ -946,7 +946,7 @@ function eme_get_all_locations() {
     global $wpdb;
     $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $sql             = "SELECT * FROM $locations_table WHERE location_name != '' ORDER BY location_name";
-    $locations       = $wpdb->get_results( $sql, ARRAY_A );
+    $locations       = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     foreach ( $locations as $key => $location ) {
         $locations[ $key ] = eme_get_extra_location_data( $location );
     }
@@ -960,11 +960,11 @@ function eme_get_locations_by_distance( $longitude, $latitude, $distance, $locat
     global $wpdb;
     $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     if ( $location_ids_only ) {
-        $sql       = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE ST_Distance_Sphere(point(%f,%f),point(location_longitude,location_latitude)) < %d", $longitude, $latitude, $distance );
-        $locations = $wpdb->get_col( $sql );
+        $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE ST_Distance_Sphere(point(%f,%f),point(location_longitude,location_latitude)) < %d", $longitude, $latitude, $distance ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $locations    = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
-        $sql       = $wpdb->prepare( "SELECT *, ST_Distance_Sphere(point(%f,%f),point(location_longitude,location_latitude)) AS distance_meters FROM $locations_table HAVING distance_meters < %d ORDER BY distance_meters,location_name", $longitude, $latitude, $distance );
-        $locations = $wpdb->get_results( $sql, ARRAY_A );
+        $prepared_sql = $wpdb->prepare( "SELECT *, ST_Distance_Sphere(point(%f,%f),point(location_longitude,location_latitude)) AS distance_meters FROM $locations_table HAVING distance_meters < %d ORDER BY distance_meters,location_name", $longitude, $latitude, $distance ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $locations    = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         foreach ( $locations as $key => $location ) {
             $locations[ $key ] = eme_get_extra_location_data( $location );
         }
@@ -1178,7 +1178,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
         } else {
             $sql = "SELECT * FROM $locations_table WHERE location_name != '' $where ORDER BY location_name $limit";
         }
-        $locations = $wpdb->get_results( $sql, ARRAY_A );
+        $locations = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         // don't forget the images (for the older locations that didn't use the wp gallery)
         if ( $locations ) {
             foreach ( $locations as $key => $location ) {
@@ -1213,11 +1213,11 @@ function eme_get_location( $location_id ) {
         $location = wp_cache_get( "eme_location $location_id" );
         if ( $location === false ) {
             if ( is_numeric( $location_id ) ) {
-                $sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_id = %d", $location_id );
+                $prepared_sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_id = %d", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             } else {
-                $sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_slug = %s", $location_id );
+                $prepared_sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_slug = %s", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             }
-            $location = $wpdb->get_row( $sql, ARRAY_A );
+            $location = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             if ( $location ) {
                 $location = eme_get_extra_location_data( $location );
                 wp_cache_set( "eme_location $location_id", $location, '', 60 );
@@ -1263,7 +1263,7 @@ function eme_get_city_location_ids( $cities ) {
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
-        $location_ids = $wpdb->get_col( $sql );
+        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     return $location_ids;
 }
@@ -1284,7 +1284,7 @@ function eme_get_country_location_ids( $countries ) {
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
-        $location_ids = $wpdb->get_col( $sql );
+        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     return $location_ids;
 }
@@ -1292,8 +1292,8 @@ function eme_get_country_location_ids( $countries ) {
 function eme_get_identical_location_id( $location ) {
     global $wpdb;
     $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-    $prepared_sql    = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s AND location_latitude = %s AND location_longitude = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ), stripcslashes( $location['location_latitude'] ), stripcslashes( $location['location_longitude'] ) );
-    return $wpdb->get_var( $prepared_sql );
+    $prepared_sql    = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s AND location_latitude = %s AND location_longitude = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ), stripcslashes( $location['location_latitude'] ), stripcslashes( $location['location_longitude'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_sanitize_location( $location ) {
@@ -1461,14 +1461,14 @@ function eme_delete_location_answers( $location_id ) {
 function eme_check_location_external_ref( $id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_check_location_coord( $lat, $long ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_latitude = %s AND location_longitude = %s", $lat, $long );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_latitude = %s AND location_longitude = %s", $lat, $long ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_check_location_name_address( $location ) {
@@ -1489,8 +1489,8 @@ function eme_check_location_name_address( $location ) {
     if ( ! isset( $location['location_country'] ) ) {
         $location['location_country'] = '';
     }
-    $sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ) );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_location_has_events( $location_id ) {
@@ -1504,8 +1504,8 @@ function eme_location_has_events( $location_id ) {
         }
     }
 
-    $sql             = "SELECT COUNT(event_id) FROM $events_table WHERE location_id = $location_id $condition";
-    $affected_events = $wpdb->get_results( $sql );
+    $prepared_sql    = $wpdb->prepare( "SELECT COUNT(event_id) FROM $events_table WHERE location_id = %d $condition", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $affected_events = $wpdb->get_results( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return ( $affected_events > 0 );
 }
 
@@ -2956,8 +2956,8 @@ function eme_ajax_locations_list() {
     $orderby  = eme_get_datatables_orderby();
 
     if ( empty( $formfields_searchable ) ) {
-        $count_sql = "SELECT COUNT(*) FROM $table AS locations $where";
-        $sql       = "SELECT locations.* FROM $table AS locations $where $orderby $limit";
+        $count_sql = "SELECT COUNT(*) FROM $table AS locations $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql       = "SELECT locations.* FROM $table AS locations $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $field_ids_arr = [];
         $group_concat_sql = '';
@@ -2989,12 +2989,12 @@ function eme_ajax_locations_list() {
                         ) ans
                    ON locations.location_id=ans.related_id";
         }
-        $count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where";
-        $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $orderby $limit";
+        $count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 
-    $recordCount = $wpdb->get_var( $count_sql );
-    $rows        = $wpdb->get_results( $sql, ARRAY_A );
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $records     = [];
     foreach ( $rows as $location ) {
         $location = eme_get_extra_location_data( $location );
@@ -3123,7 +3123,8 @@ function eme_ajax_chooselocation_snapselect() {
         }
     }
 
-    $locations   = $wpdb->get_results( "SELECT * FROM $table WHERE $where LIMIT $start,$mysql_pagesize", ARRAY_A );
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE $where LIMIT %d,%d", $start, $mysql_pagesize ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $locations    = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $records = [];
     foreach ( $locations as $location ) {
         $records[] = [
@@ -3175,8 +3176,8 @@ function eme_get_location_answers( $location_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $cf            = wp_cache_get( "eme_location_cf $location_id" );
     if ( $cf === false ) {
-        $sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id );
-        $cf  = $wpdb->get_results( $sql, ARRAY_A );
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $cf           = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_location_cf $location_id", $cf, '', 60 );
     }
     return $cf;
@@ -3241,8 +3242,8 @@ function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
     if ( ! empty( $conditions ) ) {
         $condition = 'AND (' . join( ' OR ', $conditions ) . ')';
     }
-    $sql = "SELECT DISTINCT related_id FROM $table WHERE field_id=$field_id AND type='location' $condition";
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='location' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 ?>

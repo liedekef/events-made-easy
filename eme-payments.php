@@ -3573,11 +3573,11 @@ function eme_get_payment( $payment_id=0, $payment_randomid = 0 ) {
 
     if ( $payment === false ) {
         if ( $payment_id ) {
-            $sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } else {
-            $sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE random_id=%s", $payment_randomid );
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE random_id=%s", $payment_randomid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
-        $payment = $wpdb->get_row( $sql, ARRAY_A );
+        $payment = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ($payment_id) {
             wp_cache_set( "eme_payment $payment_id", $payment, '', 10 );
         }
@@ -3588,22 +3588,22 @@ function eme_get_payment( $payment_id=0, $payment_randomid = 0 ) {
 function eme_get_payment_by_pg_pid( $pg_pid ) {
     global $wpdb;
     $payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $sql            = $wpdb->prepare( "SELECT * FROM $payments_table WHERE pg_pid=%s", $pg_pid );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $prepared_sql   = $wpdb->prepare( "SELECT * FROM $payments_table WHERE pg_pid=%s", $pg_pid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_payment_booking_ids( $payment_id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT booking_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT booking_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_payment_member_ids( $payment_id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT member_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_MEMBER_STATUS_GRACE, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_PENDING, $payment_id );
-    return $wpdb->get_col( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT member_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_MEMBER_STATUS_GRACE, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_PENDING, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 ) {
@@ -3611,19 +3611,19 @@ function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 
     $payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if ( $check_trash ) {
-        $sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status = %d AND $payments_table.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid );
+        $prepared_sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status = %d AND $payments_table.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status IN (%d,%d,%d) AND $payments_table.random_id=%s", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_randomid );
+        $prepared_sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status IN (%d,%d,%d) AND $payments_table.random_id=%s", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_randomid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    return $wpdb->get_col( $sql );
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_payment( $payment_id ) {
     global $wpdb;
     $payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $sql            = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id );
+    $prepared_sql   = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     wp_cache_delete( "eme_payment ".$payment_id );
-    return $wpdb->get_var( $sql );
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_payment_paid( $payment ) {
@@ -3717,8 +3717,8 @@ function eme_update_attendance_count( $booking_id ) {
     global $wpdb;
     if ( $booking_id ) {
         $table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-        $sql   = $wpdb->prepare( "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=%d",$booking_id);
-        return $wpdb->query( $sql );
+        $prepared_sql = $wpdb->prepare( "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=%d",$booking_id); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return false;
     }
@@ -3728,8 +3728,8 @@ function eme_get_attendance_count( $booking_id ) {
     global $wpdb;
     if ( $booking_id ) {
         $table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-        $sql   = $wpdb->prepare( "SELECT attend_count FROM $table WHERE booking_id=%d", $booking_id );
-        return $wpdb->get_var( $sql );
+        $prepared_sql = $wpdb->prepare( "SELECT attend_count FROM $table WHERE booking_id=%d", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return 0;
     }
@@ -3738,16 +3738,16 @@ function eme_get_attendance_count( $booking_id ) {
 function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     wp_cache_delete( "eme_payment ".$payment_id );
 }
 
 function eme_update_payment_pg_handled( $payment_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $sql   = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id );
-    $wpdb->query( $sql );
+    $prepared_sql = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     wp_cache_delete( "eme_payment ".$payment_id );
 }
 
@@ -3949,8 +3949,8 @@ function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $
 function eme_payment_count_unpaid_bookings( $payment_id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $sql        = $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d AND booking_paid=0", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
-    return $wpdb->get_var( $sql );
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d AND booking_paid=0", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_refund_booking( $booking ) {

@@ -431,45 +431,45 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'event_image_id', "ALTER TABLE $table_name ADD event_image_id mediumint(9) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'event_external_ref', "ALTER TABLE $table_name ADD event_external_ref text;" );
 		if ( $db_version < 3 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_name text;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_notes longtext;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_name text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_notes longtext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 4 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE event_category_id event_category_ids text;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_author mediumint(9) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_contactperson_id mediumint(9) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_seats mediumint(9) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY location_id mediumint(9) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_id mediumint(9) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_rsvp bool DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE event_category_id event_category_ids text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_author mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_contactperson_id mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_seats mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY location_id mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_id mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_rsvp bool DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 5 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_rsvp bool DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_rsvp bool DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 11 ) {
 			if ( eme_column_exists( $table_name, 'event_creator_id' ) ) {
 				eme_maybe_drop_column( $table_name, 'event_author' );
-				$wpdb->query( "ALTER TABLE $table_name CHANGE event_creator_id event_author mediumint(9) DEFAULT 0;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE event_creator_id event_author mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			}
 			// in case event_creator_id didn't exist ...
 			maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author mediumint(9) DEFAULT 0;" );
 		}
 		if ( $db_version < 29 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY price text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY price text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 33 ) {
 			$post_table_name = $db_prefix . 'posts';
-			$wpdb->query( "UPDATE $table_name SET event_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.event_image_url);" );
+			$wpdb->query( "UPDATE $table_name SET event_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.event_image_url);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 38 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_seats text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_seats text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 70 ) {
 			eme_maybe_drop_column( $table_name, 'use_google' );
 		}
 		if ( $db_version < 247 ) {
 			if ( eme_column_exists( $table_name, 'event_registration_denied_email_body' ) && ! eme_column_exists( $table_name, 'event_registration_trashed_email_body' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE event_registration_denied_email_body event_registration_trashed_email_body text;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE event_registration_denied_email_body event_registration_trashed_email_body text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			}
 			maybe_add_column( $table_name, 'event_registration_trashed_email_body', "ALTER TABLE $table_name ADD event_registration_trashed_email_body text;" );
 		}
@@ -483,15 +483,15 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			eme_maybe_drop_column( $table_name, 'use_sagepay' );
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 302 ) {
-			$wpdb->query( "UPDATE $table_name SET event_start = CONCAT(event_start_date,' ',event_start_time), event_end = CONCAT(event_end_date,' ',event_end_time) WHERE event_start_date IS NOT NULL and event_start_date <> '0000-00-00';" );
+			$wpdb->query( "UPDATE $table_name SET event_start = CONCAT(event_start_date,' ',event_start_time), event_end = CONCAT(event_end_date,' ',event_end_time) WHERE event_start_date IS NOT NULL and event_start_date <> '0000-00-00';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 303 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_start` )" );
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_end` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_start` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_end` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 311 ) {
 			eme_maybe_drop_column( $table_name, 'event_start_date' );
@@ -539,7 +539,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		maybe_add_column( $table_name, 'exclude_days', "ALTER TABLE $table_name ADD exclude_days text;" );
 		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id mediumint(9) DEFAULT 0;" );
 		if ( $db_version < 3 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 4 ) {
 			eme_maybe_drop_column( $table_name, 'recurrence_name' );
@@ -557,14 +557,14 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		}
 		if ( $db_version < 376 ) {
 			if ( eme_column_exists( $table_name, 'recurrence_specific_days' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE recurrence_specific_days specific_days text;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE recurrence_specific_days specific_days text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			} else {
 				maybe_add_column( $table_name, 'specific_days', "ALTER TABLE $table_name ADD specific_days text;" );
 			}
 		}
 		if ( $db_version < 416 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_end_date date DEFAULT NULL;" );
-			$wpdb->query( "UPDATE $table_name SET recurrence_end_date = NULL where recurrence_end_date = '';" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_end_date date DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "UPDATE $table_name SET recurrence_end_date = NULL where recurrence_end_date = '';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 417 ) {
             eme_paypal_webhook();
@@ -603,15 +603,15 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('Arts Millenium Building', 'Newcastle Road','Galway', '53.275', '-9.06532')"
 		);
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('The Crane Bar', '2, Sea Road','Galway', '53.2683224', '-9.0626223')"
 		);
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('Taaffes Bar', '19 Shop Street','Galway', '53.2725', '-9.05321')"
 		);
@@ -630,23 +630,23 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
 		maybe_add_column( $table_name, 'location_properties', "ALTER TABLE $table_name ADD location_properties text;" );
 		maybe_add_column( $table_name, 'location_external_ref', "ALTER TABLE $table_name ADD location_external_ref text;" );
 		if ( $db_version < 3 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY location_name text NOT NULL ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY location_name text NOT NULL ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 33 ) {
 			$post_table_name = $db_prefix . 'posts';
-			$wpdb->query( "UPDATE $table_name SET location_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.location_image_url);" );
+			$wpdb->query( "UPDATE $table_name SET location_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.location_image_url);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 110 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE location_address location_address1 tinytext;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE location_town location_city tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE location_address location_address1 tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE location_town location_city tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			maybe_add_column( $table_name, 'location_address2', "ALTER TABLE $table_name ADD location_address2 tinytext;" );
 			maybe_add_column( $table_name, 'location_state', "ALTER TABLE $table_name ADD location_state tinytext;" );
 			maybe_add_column( $table_name, 'location_zip', "ALTER TABLE $table_name ADD location_zip tinytext;" );
 			maybe_add_column( $table_name, 'location_country', "ALTER TABLE $table_name ADD location_country tinytext;" );
 		}
 		if ( $db_version < 183 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE location_latitude location_latitude tinytext;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE location_longitude location_longitude tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE location_latitude location_latitude tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE location_longitude location_longitude tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }
@@ -716,12 +716,12 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received tinytext;" );
 		maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining tinytext;" );
 		if ( eme_column_exists( $table_name, 'discountid' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		} else {
 			maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
 		}
 		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		} else {
 			maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
 		}
@@ -729,27 +729,27 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
 
 		if ( $db_version < 3 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id mediumint(9) NOT NULL;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY person_id mediumint(9) NOT NULL;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_seats mediumint(9) NOT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id mediumint(9) NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY person_id mediumint(9) NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_seats mediumint(9) NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 47 ) {
 			$people_table_name = $db_prefix . EME_PEOPLE_TBNAME;
-			$wpdb->query( "update $table_name a JOIN $people_table_name b on (a.person_id = b.person_id)  set a.wp_id=b.wp_id;" );
+			$wpdb->query( "update $table_name a JOIN $people_table_name b on (a.person_id = b.person_id)  set a.wp_id=b.wp_id;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 92 ) {
 			maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id mediumint(9) DEFAULT NULL;" );
 			$payment_table_name = $db_prefix . EME_PAYMENTS_TBNAME;
 			$sql                = "SELECT id,booking_ids from $payment_table_name";
 
-			$rows = $wpdb->get_results( $sql, ARRAY_A );
+			$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 			if ( $rows !== false && ! empty( $rows ) ) {
 				foreach ( $rows as $row ) {
 					$booking_ids = explode( ',', $row['booking_ids'] );
 					if ( is_array( $booking_ids ) && count( $booking_ids ) > 0 ) {
 						foreach ( $booking_ids as $booking_id ) {
-							$sql = $wpdb->prepare( "UPDATE $table_name SET payment_id=%d WHERE booking_id=%d", $row['id'], $booking_id );
-							$wpdb->query( $sql );
+							$prepared_sql = $wpdb->prepare( "UPDATE $table_name SET payment_id=%d WHERE booking_id=%d", $row['id'], $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+							$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 						}
 					}
 				}
@@ -757,32 +757,32 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			}
 		}
 		if ( $db_version < 107 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE booking_payed booking_paid bool DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE booking_payed booking_paid bool DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 208 ) {
 			if ( eme_column_exists( $table_name, 'booking_price' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE booking_price event_price text;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE booking_price event_price text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			} else {
 				maybe_add_column( $table_name, 'event_price', "ALTER TABLE $table_name ADD event_price text;" );
 			}
 		}
 
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 302 ) {
 			// we forgot to add the index in the past when adding the table, so: drop the index and set it again
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 345 ) {
 			// old records that were marked as active and not approved, now get PENDING as status
-			$sql = $wpdb->prepare( "UPDATE $table_name SET status=%d WHERE booking_approved=0 AND status=1", EME_RSVP_STATUS_PENDING );
-			$wpdb->query( $sql );
+			$prepared_sql = $wpdb->prepare( "UPDATE $table_name SET status=%d WHERE booking_approved=0 AND status=1", EME_RSVP_STATUS_PENDING ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			eme_maybe_drop_column( $table_name, 'booking_approved' );
 		}
 		if ( $db_version < 415 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }
@@ -854,12 +854,12 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id mediumint(9) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'bd_email', "ALTER TABLE $table_name ADD bd_email bool DEFAULT 0;" );
 		if ( $db_version < 10 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 78 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_phone phone tinytext;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_name lastname tinytext NOT NULL;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_email email tinytext NOT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_phone phone tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_name lastname tinytext NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_email email tinytext NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 163 ) {
 			eme_maybe_drop_column( $table_name, 'image_id' );
@@ -868,11 +868,11 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 			add_clean_index( $table_name, 'status' );
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 306 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_person_id` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 
@@ -896,10 +896,10 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $grouptable_name, 'stored_sql', "ALTER TABLE $grouptable_name ADD stored_sql text;" );
 		maybe_add_column( $grouptable_name, 'search_terms', "ALTER TABLE $grouptable_name ADD search_terms text;" );
 		if ( $db_version < 175 ) {
-			$wpdb->query( "UPDATE $grouptable_name SET type = 'static';" );
+			$wpdb->query( "UPDATE $grouptable_name SET type = 'static';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 344 ) {
-			$wpdb->query( "ALTER TABLE $grouptable_name CHANGE mail_only public bool DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $grouptable_name CHANGE mail_only public bool DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		} else {
 			maybe_add_column( $grouptable_name, 'public', "ALTER TABLE $grouptable_name ADD public bool DEFAULT 0;" );
 		}
@@ -936,7 +936,7 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version < 66 ) {
-			$categories = $wpdb->get_results( "SELECT * FROM $table_name", ARRAY_A );
+			$categories = $wpdb->get_results( "SELECT * FROM $table_name", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			foreach ( $categories as $this_category ) {
 				$where                   = [];
 				$fields                  = [];
@@ -987,16 +987,16 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		if ( $db_version < 41 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY format text NOT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY format text NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 144 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY type tinytext;" );
-			$wpdb->query( "UPDATE $table_name SET type='' WHERE type IS NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY type tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "UPDATE $table_name SET type='' WHERE type IS NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 151 ) {
 			if ( ! eme_column_exists( $table_name, 'name' ) ) {
 				maybe_add_column( $table_name, 'name', "ALTER TABLE $table_name ADD name tinytext;" );
-				$wpdb->query( "UPDATE $table_name SET name = description;" );
+				$wpdb->query( "UPDATE $table_name SET name = description;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			}
 		}
 		if ( $db_version < 385 ) {
@@ -1048,34 +1048,34 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 			eme_maybe_drop_column( $table_name, 'field_pattern' );
 		}
 		if ( $db_version < 154 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE field_info field_values text NOT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE field_info field_values text NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 54 ) {
-			$wpdb->query( 'UPDATE ' . $table_name . ' SET field_tags=field_values' );
+			$wpdb->query( 'UPDATE ' . $table_name . ' SET field_tags=field_values' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 166 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE field_type old_type mediumint(9);" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE field_type old_type mediumint(9);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			maybe_add_column( $table_name, 'field_type', "ALTER TABLE $table_name ADD field_type tinytext NOT NULL;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='text' WHERE old_type=1;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown' WHERE old_type=2;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='textarea' WHERE old_type=3;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox' WHERE old_type=4;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox' WHERE old_type=6;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date' WHERE old_type=8;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date_js' WHERE old_type=9;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown_multi' WHERE old_type=10;" );
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='text' WHERE old_type=1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown' WHERE old_type=2;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='textarea' WHERE old_type=3;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox' WHERE old_type=4;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox' WHERE old_type=6;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date' WHERE old_type=8;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date_js' WHERE old_type=9;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown_multi' WHERE old_type=10;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 			eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
 		}
 		// the next one is to fix older issues
 		if ( $db_version < 193 ) {
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" );
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" );
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 			eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
 		}
 		if ( $db_version < 214 ) {
-			$wpdb->query( 'UPDATE ' . $table_name . " SET field_purpose='generic' WHERE field_purpose IS NULL;" );
+			$wpdb->query( 'UPDATE ' . $table_name . " SET field_purpose='generic' WHERE field_purpose IS NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 215 ) {
 			eme_maybe_drop_column( $table_name, 'old_type' );
@@ -1105,12 +1105,12 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version == 23 ) {
-			$wpdb->query( 'ALTER TABLE ' . $table_name . ' DROP PRIMARY KEY' );
+			$wpdb->query( 'ALTER TABLE ' . $table_name . ' DROP PRIMARY KEY' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 112 ) {
 			maybe_add_column( $table_name, 'field_id', "ALTER TABLE $table_name ADD field_id INT(11) DEFAULT 0;" );
 			$formfield_table_name = $db_prefix . EME_FORMFIELDS_TBNAME;
-			$res                  = $wpdb->query( "UPDATE $table_name SET field_id = (select field_id from $formfield_table_name where field_name = $table_name.field_name LIMIT 1);" );
+			$res                  = $wpdb->query( "UPDATE $table_name SET field_id = (select field_id from $formfield_table_name where field_name = $table_name.field_name LIMIT 1);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			if ( $res !== false ) {
 				eme_maybe_drop_column( $table_name, 'field_name' );
 			}
@@ -1119,50 +1119,50 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			maybe_add_column( $table_name, 'occurence', "ALTER TABLE $table_name ADD occurence INT(11) DEFAULT 0;" );
 		}
 		if ( $db_version < 138 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_id mediumint(9) DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_id mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			maybe_add_column( $table_name, 'person_id', "ALTER TABLE $table_name ADD person_id MEDIUMINT(9) DEFAULT 0;" );
 		}
 		if ( $db_version < 143 ) {
 			maybe_add_column( $table_name, 'member_id', "ALTER TABLE $table_name ADD member_id MEDIUMINT(9) DEFAULT 0;" );
 		}
 		if ( $db_version < 156 ) {
-			$wpdb->query( 'ALTER TABLE ' . $table_name . ' DROP PRIMARY KEY' );
-			$wpdb->query( 'ALTER TABLE ' . $table_name . ' ADD answer_id INT(11) PRIMARY KEY AUTO_INCREMENT;' );
+			$wpdb->query( 'ALTER TABLE ' . $table_name . ' DROP PRIMARY KEY' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+			$wpdb->query( 'ALTER TABLE ' . $table_name . ' ADD answer_id INT(11) PRIMARY KEY AUTO_INCREMENT;' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 161 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE answer_id answer_id INT(11) PRIMARY KEY AUTO_INCREMENT;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE answer_id answer_id INT(11) PRIMARY KEY AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 279 ) {
 			if ( eme_column_exists( $table_name, 'grouping' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE grouping eme_grouping INT(11) DEFAULT 0;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE grouping eme_grouping INT(11) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			}
 			maybe_add_column( $table_name, 'eme_grouping', "ALTER TABLE $table_name ADD eme_grouping INT(11) DEFAULT 0;" );
 		}
 		if ( $db_version < 304 ) {
 			maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
 			maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type VARCHAR(20) DEFAULT NULL;" );
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_id` )" );
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `type` )" );
-			$wpdb->query( "UPDATE $table_name SET related_id=person_id,type='person' WHERE person_id>0" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `type` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "UPDATE $table_name SET related_id=person_id,type='person' WHERE person_id>0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'person_id' );
-			$wpdb->query( "UPDATE $table_name SET related_id=member_id,type='member' WHERE member_id>0" );
+			$wpdb->query( "UPDATE $table_name SET related_id=member_id,type='member' WHERE member_id>0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'member_id' );
-			$wpdb->query( "UPDATE $table_name SET related_id=booking_id,type='booking' WHERE booking_id>0" );
+			$wpdb->query( "UPDATE $table_name SET related_id=booking_id,type='booking' WHERE booking_id>0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'booking_id' );
             // code to move CF-tables into the generic answer table
 			$cf_table_name = $db_prefix . 'eme_memberships_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
-				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
+				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 				eme_drop_table( $cf_table_name );
 			}
 			$cf_table_name = $db_prefix . 'eme_events_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
-				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`event_id`,`answer`,'event' FROM $cf_table_name" );
+				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`event_id`,`answer`,'event' FROM $cf_table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 				eme_drop_table( $cf_table_name );
 			}
 			$cf_table_name = $db_prefix . 'eme_locations_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
-				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
+				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 				eme_drop_table( $cf_table_name );
 			}
 		}
@@ -1202,33 +1202,33 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
 		eme_maybe_drop_column( $table_name, 'attend_count' );
 		if ( $db_version < 80 ) {
-			$payment_ids = $wpdb->get_col( "SELECT id FROM $table_name" );
+			$payment_ids = $wpdb->get_col( "SELECT id FROM $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			foreach ( $payment_ids as $payment_id ) {
 				$random_id = eme_random_id();
-				$sql       = $wpdb->prepare( "UPDATE $table_name SET random_id = %s WHERE id = %d", $random_id, $payment_id );
-				$wpdb->query( $sql );
+				$prepared_sql = $wpdb->prepare( "UPDATE $table_name SET random_id = %s WHERE id = %d", $random_id, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			}
 		}
 		if ( $db_version < 104 ) {
 			eme_maybe_drop_column( $table_name, 'booking_ids' );
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 322 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE random_id random_id varchar(50);" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE random_id random_id varchar(50);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			add_clean_index( $table_name, 'random_id' );
 		}
 		if ( $db_version < 325 ) {
 			// else if pg_pids exists: rename to pg_pid and change type to varchar, otherwise create it
 			if ( eme_column_exists( $table_name, 'pg_pids' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE pg_pids pg_pid varchar(256);" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE pg_pids pg_pid varchar(256);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			} else {
 				maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid varchar(256);" );
 			}
 		}
 		if ( $db_version < 358 ) {
-			$wpdb->query( "UPDATE $table_name set target='member' where member_id>0;" );
+			$wpdb->query( "UPDATE $table_name set target='member' where member_id>0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'member_id' );
 		}
 	}
@@ -1271,7 +1271,7 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version < 254 ) {
 			if ( eme_column_exists( $table_name, 'expire' ) ) {
-				$wpdb->query( "UPDATE $table_name SET valid_to=CONCAT(expire,' 23:59:00') WHERE expire IS NOT NULL;" );
+				$wpdb->query( "UPDATE $table_name SET valid_to=CONCAT(expire,' 23:59:00') WHERE expire IS NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 				eme_maybe_drop_column( $table_name, 'expire' );
 			}
 		}
@@ -1349,27 +1349,27 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
 		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
 		if ( $db_version < 140 ) {
-			$wpdb->query( "ALTER TABLE $table_name DROP KEY is_sent;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE is_sent state tinyint DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name DROP KEY is_sent;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE is_sent state tinyint DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 153 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE state status tinyint DEFAULT 0;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE state status tinyint DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			add_clean_index( $table_name, 'status' );
 		}
 		if ( $db_version < 292 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE random_id random_id varchar(50);" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE random_id random_id varchar(50);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			add_clean_index( $table_name, 'random_id' );
 		}
 		if ( $db_version < 293 ) {
 			if ( eme_column_exists( $table_name, 'read_datetime' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE read_datetime first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE read_datetime first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			} else {
 				maybe_add_column( $table_name, 'first_read_on', "ALTER TABLE $table_name ADD first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
 			}
 			maybe_add_column( $table_name, 'last_read_on', "ALTER TABLE $table_name ADD last_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 
@@ -1411,11 +1411,11 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'total_read_count', "ALTER TABLE $table_name ADD total_read_count int DEFAULT 0;" );
 		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
 		if ( $db_version < 176 ) {
-			$wpdb->query( "UPDATE $table_name set status='cancelled' where cancelled=1;" );
+			$wpdb->query( "UPDATE $table_name set status='cancelled' where cancelled=1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'cancelled' );
 		}
 		if ( $db_version < 177 ) {
-			$wpdb->query( "UPDATE $table_name set total_read_count=read_count" );
+			$wpdb->query( "UPDATE $table_name set total_read_count=read_count" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'mail_count' );
 			$mailings = eme_get_mailings();
 			foreach ( $mailings as $mailing ) {
@@ -1434,10 +1434,10 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 			}
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 316 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY name varchar(255) DEFAULT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY name varchar(255) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }
@@ -1508,28 +1508,28 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
 		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
 		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		} else {
 			maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
 		}
 
 		if ( $db_version < 153 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE state status tinyint DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE state_automatic status_automatic BOOL DEFAULT 1;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE state status tinyint DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name CHANGE state_automatic status_automatic BOOL DEFAULT 1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 296 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 262 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY extra_charge tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY extra_charge tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 306 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_member_id` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_member_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 415 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" );
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" );
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 
@@ -1585,10 +1585,10 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version < 246 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE num_3 num_3 char(3) DEFAULT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE num_3 num_3 char(3) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 319 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE locale lang varchar(10) DEFAULT '';" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE locale lang varchar(10) DEFAULT '';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }
@@ -1657,7 +1657,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 		maybe_add_column( $table_name, 'comment', "ALTER TABLE $table_name ADD comment text;" );
 		maybe_add_column( $table_name, 'signup_date', "ALTER TABLE $table_name ADD signup_date datetime;" );
 		if ( $db_version < 367 ) {
-			$wpdb->query( "ALTER TABLE $table_name ADD signup_status BOOL DEFAULT 1;" );
+			$wpdb->query( "ALTER TABLE $table_name ADD signup_status BOOL DEFAULT 1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }
@@ -1703,7 +1703,7 @@ function eme_create_attendances_table( $charset, $collate, $db_version, $db_pref
 		maybe_create_table( $table_name, $sql );
 	}
 	if ( $db_version < 296 ) {
-		$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" );
+		$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
 }
 

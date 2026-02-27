@@ -24,8 +24,8 @@ function eme_new_recurrence() {
 function eme_get_recurrence( $recurrence_id ) {
 	global $wpdb;
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
-	$recurrence       = $wpdb->get_row( $sql, ARRAY_A );
+	$prepared_sql     = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$recurrence       = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	return $recurrence;
 }
 
@@ -34,7 +34,7 @@ function eme_get_perpetual_recurrences() {
 	$res = [];
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$sql              = "SELECT * FROM $recurrence_table WHERE recurrence_freq != 'specific'";
-	$recurrences      = $wpdb->get_results( $sql, ARRAY_A );
+	$recurrences      = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	foreach ($recurrences as $recurrence) {
 		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
 			$res[] = $recurrence;
@@ -403,8 +403,8 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	// and just deleting all current events for a recurrence and inserting new ones would break the link
 	// between booking id and event id
 	// Second step: check all days of the recurrence and if no event exists yet, insert it
-	$sql    = $wpdb->prepare( "SELECT event_id,event_start FROM $events_table WHERE recurrence_id = %d AND event_status <> %d", $recurrence['recurrence_id'], EME_EVENT_STATUS_TRASH );
-	$events = $wpdb->get_results( $sql, ARRAY_A );
+	$prepared_sql = $wpdb->prepare( "SELECT event_id,event_start FROM $events_table WHERE recurrence_id = %d AND event_status <> %d", $recurrence['recurrence_id'], EME_EVENT_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
 	$eme_date_obj_now  = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -477,8 +477,8 @@ function eme_db_delete_recurrence( $recurrence_id ) {
 	}
 
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
-	$sql              = $wpdb->prepare( "DELETE FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
-	$wpdb->query( $sql );
+	$prepared_sql     = $wpdb->prepare( "DELETE FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	eme_trash_events_for_recurrence_id( $recurrence_id );
 	return true;
 }
@@ -494,8 +494,8 @@ function eme_trash_events_for_recurrence_id( $recurrence_id ) {
 function eme_get_recurrence_first_eventid( $recurrence_id ) {
 	global $wpdb;
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$sql          = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d AND event_status !=%d ORDER BY event_start ASC LIMIT 1", $recurrence_id, EME_EVENT_STATUS_TRASH );
-	return $wpdb->get_var( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d AND event_status !=%d ORDER BY event_start ASC LIMIT 1", $recurrence_id, EME_EVENT_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
@@ -504,11 +504,11 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 	if ( $future_only ) {
 		$eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
 		$today        = $eme_date_obj->format( 'Y-m-d' );
-		$sql          = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d AND event_start > %s ORDER BY event_start ASC", $recurrence_id, $today );
+		$prepared_sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d AND event_start > %s ORDER BY event_start ASC", $recurrence_id, $today ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	} else {
-		$sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d ORDER BY event_start ASC", $recurrence_id );
+		$prepared_sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE recurrence_id = %d ORDER BY event_start ASC", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
-	return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_recurrence_desc( $recurrence_id ) {
@@ -622,8 +622,8 @@ function eme_recurrence_count( $recurrence_id ) {
 	# return the number of events for an recurrence
 	global $wpdb;
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$sql          = $wpdb->prepare( "SELECT COUNT(*) FROM $events_table WHERE recurrence_id = %d", $recurrence_id );
-	return $wpdb->get_var( $sql );
+	$prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $events_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 add_action( 'wp_ajax_eme_recurrences_list', 'eme_ajax_recurrences_list' );
@@ -680,14 +680,14 @@ function eme_ajax_recurrences_list() {
 	if ( ! empty( $search_name ) ) {
 		$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where";
-		$recurrences_count = $wpdb->get_var( $count_sql );
+		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where $orderby $limit";
 	} else {
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table $where";
-		$recurrences_count = $wpdb->get_var( $count_sql );
+		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$sql               = "SELECT * FROM $recurrence_table $where $orderby $limit";
 	}
-	$recurrences = $wpdb->get_results( $sql, ARRAY_A );
+	$recurrences = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 	$rows = [];
 	foreach ( $recurrences as $recurrence ) {

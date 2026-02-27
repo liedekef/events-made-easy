@@ -52,6 +52,9 @@ textarea.eme_fullresizable {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+textarea.eme_formfield {
+    resize: both; 
+}
 
 table.eme_event_admin_table td {
     vertical-align: top;

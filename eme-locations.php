@@ -812,7 +812,7 @@ function eme_meta_box_div_location_customfields( $location ) {
         if ( $formfield['field_type'] == 'hidden' ) {
             $field_html = __( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
         } else {
-            $field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
+            $field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, 'eme_formfield' );
         }
         echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
     }

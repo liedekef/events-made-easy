@@ -538,16 +538,6 @@ function eme_get_membership_stats( $ids ) {
         // sql for renewed members
         $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($ids)", $limit_start, $limit_end ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $member_nbr_renewed = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                /*
-                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
-                $member_nbr_new = $wpdb->get_var( $sql );
-                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
-                $member_nbr_expired = $wpdb->get_var( $sql );
-                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND membership_id IN ($ids)", $limit_start, $limit_end );
-                $member_nbr_paid = $wpdb->get_var( $sql );
-                $member_nbr_renewed = $member_nbr_paid - $member_nbr_new;
-                if ($member_nbr_renewed<0) $member_nbr_renewed=0; // can happen for memberships that have no ending, so only new ones
-                 */
         $res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr_expired</td><td>$member_nbr_renewed</td><td>$member_nbr</td></tr>";
         $eme_date_obj->startOfMonth()->modifyMonths(+1);
         $counter++;

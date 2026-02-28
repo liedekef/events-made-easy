@@ -1335,7 +1335,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
             $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0 );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_massmail' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -1346,7 +1346,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
             $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_massmail' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -1986,13 +1986,13 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = 1;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = 0;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
@@ -3084,7 +3084,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( ! $is_multibooking ) {
                 $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
                 $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic, $disabled );
+                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_massmail', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                     $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
@@ -3097,7 +3097,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( ! $is_multibooking ) {
                 $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
                 $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic, $disabled );
+                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_massmail', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                     $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
@@ -3566,14 +3566,14 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             } else {
                 $selected_massmail = $entered_val;
             }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic );
+            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_massmail' );
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             if ( $entered_val === false ) {
                 $selected_massmail = 0;
             } else {
                 $selected_massmail = $entered_val;
             }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic );
+            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_massmail' );
             $required     = 1;
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?/', $result, $matches ) ) {
             $postvar_arr = [ 'familymember', $counter, 'birthplace' ];
@@ -4034,7 +4034,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
             $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_massmail", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4045,7 +4045,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
             $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_massmail", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4686,7 +4686,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
             $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
         } elseif ( preg_match( '/#_MASSMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $massmail, 'massmail' );
+            $replacement = eme_ui_select_binary( $massmail, 'massmail', 0, 'eme_massmail' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4696,7 +4696,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             }
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4706,7 +4706,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             }
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');

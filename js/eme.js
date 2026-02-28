@@ -256,6 +256,7 @@ function eme_init_widgets(dynamicOnly = false) {
         }
     });
 
+    initSnapSelect('select.eme_massmail');
     initSnapSelect('select.eme_snapselect' + dynamicSelector);
     initSnapSelect('select.eme_snapselect_allow_empty' + dynamicSelector, {
         showClearButton: true

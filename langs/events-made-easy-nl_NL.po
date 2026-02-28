@@ -35,10 +35,10 @@ msgstr "in naam van %s"
 #: eme-events.php:10542
 #: eme-events.php:10548
 #: eme-events.php:10811
-#: eme-formfields.php:5142
-#: eme-formfields.php:5197
-#: eme-formfields.php:5208
-#: eme-formfields.php:5230
+#: eme-formfields.php:5127
+#: eme-formfields.php:5182
+#: eme-formfields.php:5193
+#: eme-formfields.php:5215
 #: eme-functions.php:3432
 #: eme-functions.php:3454
 #: eme-functions.php:3455
@@ -242,6 +242,7 @@ msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
 #: eme-attendances.php:244
+#: eme-cleanup.php:315
 #: eme-people.php:1862
 #: eme-people.php:1863
 #: eme-people.php:1864
@@ -296,7 +297,7 @@ msgstr "Niet in templates gedefineerd"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:5046
+#: eme-formfields.php:5031
 #: eme-tasks.php:980
 #: eme-todos.php:222
 msgid "Remove"
@@ -339,6 +340,7 @@ msgstr "Beheer categorieën"
 msgid "Add category"
 msgstr "Voeg categorie toe"
 
+#: eme-cleanup.php:305
 #: eme-events.php:9623
 #: eme-events.php:9659
 #: eme-events.php:9676
@@ -385,7 +387,7 @@ msgstr "Naam"
 
 #: eme-categories.php:571
 #: eme-events.php:10249
-#: eme-formfields.php:5178
+#: eme-formfields.php:5163
 #: eme-holidays.php:287
 #: eme-locations.php:3002
 #: eme-members.php:6530
@@ -446,84 +448,83 @@ msgstr "Categorie omschrijving"
 msgid "The description of the category"
 msgstr "De beschrijving van de categorie"
 
-#: eme-cleanup.php:212
+#: eme-cleanup.php:219
 msgid "Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed."
 msgstr "Opgeruimd: evenementen (en overeenkomstige reserverings gegevens) ouder dan %d %s(en) zijn verwijderd."
 
-#: eme-cleanup.php:221
+#: eme-cleanup.php:228
 msgid "Cleanup done: unpaid pending bookings older than %d minutes have been removed."
 msgstr "Opkuis gedaan: onbetaalde niet-goedgekeurde boekingen ouder dan %d minuten zijn verwijderd."
 
-#: eme-cleanup.php:230
+#: eme-cleanup.php:237
 msgid "Cleanup done: unconfirmed bookings older than %d minutes have been removed."
 msgstr "Opschonen gedaan: niet-bevestigde boekingen ouder dan %d minuten zijn verwijderd."
 
-#: eme-cleanup.php:240
+#: eme-cleanup.php:247
 msgid "Cleanup done: %d people removed from trash."
 msgstr "Opruimen gedaan: %d mensen verwijderd uit de prullenbak."
 
-#: eme-cleanup.php:250
+#: eme-cleanup.php:257
 msgid "Cleanup done: %d bookings removed from trash."
 msgstr "Opruimen gedaan: %d boekingen verwijderd uit de prullenbak."
 
-#: eme-cleanup.php:254
+#: eme-cleanup.php:270
 msgid "Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed."
 msgstr "Opgeruimd staat netjes: %d personen waarnaar niet meer verwezen wordt in boekingen, lidmaatschappen of groepen zijn nu verwijderd."
 
-#: eme-cleanup.php:257
+#: eme-cleanup.php:273
 msgid "The mail queue has been cleared."
 msgstr "De e-mail queue is leeggemaakt."
 
-#: eme-cleanup.php:264
+#: eme-cleanup.php:280
 msgid "Cleanup done: all data concerning events, locations and bookings have been removed."
 msgstr "Opschonen uitgevoerd: alle data mbt evenementen, locaties en boekingen is verwijderd."
 
-#: eme-cleanup.php:273
+#: eme-cleanup.php:289
 #: eme-mailer.php:1648
 #: eme-mailer.php:1789
 msgid "Are you sure you want to do this?"
 msgstr "Bent u zeker dat u dit wil doen?"
 
-#: eme-cleanup.php:278
+#: eme-cleanup.php:294
 msgid "Action info"
 msgstr "Actie info"
 
-#: eme-cleanup.php:283
+#: eme-cleanup.php:337
 #: events-manager.php:393
 msgid "Cleanup actions"
 msgstr "Opkuisacties"
 
-#: eme-cleanup.php:285
+#: eme-cleanup.php:339
 msgid "Remove events older than"
 msgstr "Verwijder evenementen ouder dan"
 
-#: eme-cleanup.php:291
-#: eme-cleanup.php:338
-#: eme-cleanup.php:353
+#: eme-cleanup.php:345
+#: eme-cleanup.php:392
+#: eme-cleanup.php:407
 msgid "Day(s)"
 msgstr "Dag(en)"
 
-#: eme-cleanup.php:292
-#: eme-cleanup.php:339
-#: eme-cleanup.php:354
+#: eme-cleanup.php:346
+#: eme-cleanup.php:393
+#: eme-cleanup.php:408
 msgid "Week(s)"
 msgstr "Weken"
 
-#: eme-cleanup.php:293
-#: eme-cleanup.php:340
-#: eme-cleanup.php:355
+#: eme-cleanup.php:347
+#: eme-cleanup.php:394
+#: eme-cleanup.php:409
 msgid "Month(s)"
 msgstr "Maand(en)"
 
 #: eme-categories.php:112
-#: eme-cleanup.php:295
-#: eme-cleanup.php:306
-#: eme-cleanup.php:317
-#: eme-cleanup.php:326
-#: eme-cleanup.php:342
-#: eme-cleanup.php:357
-#: eme-cleanup.php:367
-#: eme-cleanup.php:386
+#: eme-cleanup.php:349
+#: eme-cleanup.php:360
+#: eme-cleanup.php:371
+#: eme-cleanup.php:396
+#: eme-cleanup.php:411
+#: eme-cleanup.php:421
+#: eme-cleanup.php:440
 #: eme-countries.php:377
 #: eme-countries.php:445
 #: eme-cron.php:357
@@ -562,51 +563,51 @@ msgstr "Maand(en)"
 msgid "Apply"
 msgstr "Toepassen"
 
-#: eme-cleanup.php:300
+#: eme-cleanup.php:354
 msgid "Remove unpaid pending bookings older than"
 msgstr "Verwijder onbetaalde niet-goedgekeurde boekingen ouder dan"
 
-#: eme-cleanup.php:305
-#: eme-cleanup.php:316
+#: eme-cleanup.php:359
+#: eme-cleanup.php:370
 msgid "minutes"
 msgstr "minuten"
 
-#: eme-cleanup.php:311
+#: eme-cleanup.php:365
 msgid "Remove unconfirmed bookings older than"
 msgstr "Verwijder niet-bevestigde boekingen ouder dan"
 
-#: eme-cleanup.php:327
+#: eme-cleanup.php:381
 msgid "Tip: If you want to avoid certain people from being trashed through automatic cleanup, put them in a group."
 msgstr "Tip: Als u wilt voorkomen dat bepaalde mensen worden weggegooid door automatisch opschonen, plaatst u ze in een groep."
 
-#: eme-cleanup.php:332
+#: eme-cleanup.php:386
 msgid "Remove people in thrash older than"
 msgstr "Verwijder mensen in prullenbak ouder dan"
 
-#: eme-cleanup.php:347
+#: eme-cleanup.php:401
 msgid "Remove bookings in thrash older than"
 msgstr "Verwijder boekingen in prullenbak ouder dan"
 
-#: eme-cleanup.php:362
+#: eme-cleanup.php:416
 msgid "Remove all data concerning events, locations, memberships, people and bookings"
 msgstr "Verwijder alle gegevens aangaande evenementen, locatie's, lidmaatschappen, mensen en boekingen"
 
-#: eme-cleanup.php:374
+#: eme-cleanup.php:428
 #: eme-cron.php:378
 msgid "There are %d messages in the mail queue."
 msgstr "Er zijn %d berichten in de e-mail wachtrij."
 
-#: eme-cleanup.php:376
+#: eme-cleanup.php:430
 #: eme-cron.php:380
 msgid "There is 1 message in the mail queue."
 msgstr "Er is 1 bericht in de e-mail wachtrij."
 
-#: eme-cleanup.php:378
+#: eme-cleanup.php:432
 #: eme-cron.php:382
 msgid "There are no messages in the mail queue."
 msgstr "Er is niks in de e-mail wachtrij."
 
-#: eme-cleanup.php:383
+#: eme-cleanup.php:437
 msgid "Empty the mail queue"
 msgstr "Maak de e-mail queue leeg"
 
@@ -1480,20 +1481,20 @@ msgstr "Vast per plaats"
 
 #: eme-discounts.php:1793
 #: eme-discounts.php:1794
-#: eme-formfields.php:1341
-#: eme-formfields.php:1352
-#: eme-formfields.php:3090
-#: eme-formfields.php:3103
-#: eme-formfields.php:4040
-#: eme-formfields.php:4051
-#: eme-formfields.php:4692
-#: eme-formfields.php:4702
-#: eme-formfields.php:4712
-#: eme-formfields.php:5181
-#: eme-formfields.php:5183
-#: eme-formfields.php:5184
-#: eme-formfields.php:5185
-#: eme-fs.php:615
+#: eme-formfields.php:1338
+#: eme-formfields.php:1349
+#: eme-formfields.php:3078
+#: eme-formfields.php:3091
+#: eme-formfields.php:4025
+#: eme-formfields.php:4036
+#: eme-formfields.php:4677
+#: eme-formfields.php:4687
+#: eme-formfields.php:4697
+#: eme-formfields.php:5166
+#: eme-formfields.php:5168
+#: eme-formfields.php:5169
+#: eme-formfields.php:5170
+#: eme-fs.php:616
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1524,20 +1525,20 @@ msgstr "Ja"
 
 #: eme-discounts.php:1793
 #: eme-discounts.php:1794
-#: eme-formfields.php:1342
-#: eme-formfields.php:1353
-#: eme-formfields.php:3091
-#: eme-formfields.php:3104
-#: eme-formfields.php:4041
-#: eme-formfields.php:4052
-#: eme-formfields.php:4693
-#: eme-formfields.php:4703
-#: eme-formfields.php:4713
-#: eme-formfields.php:5181
-#: eme-formfields.php:5183
-#: eme-formfields.php:5184
-#: eme-formfields.php:5185
-#: eme-fs.php:614
+#: eme-formfields.php:1339
+#: eme-formfields.php:1350
+#: eme-formfields.php:3079
+#: eme-formfields.php:3092
+#: eme-formfields.php:4026
+#: eme-formfields.php:4037
+#: eme-formfields.php:4678
+#: eme-formfields.php:4688
+#: eme-formfields.php:4698
+#: eme-formfields.php:5166
+#: eme-formfields.php:5168
+#: eme-formfields.php:5169
+#: eme-formfields.php:5170
+#: eme-fs.php:615
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1642,7 +1643,7 @@ msgid "Edit Recurrence"
 msgstr "Bewerk terugkerend item"
 
 #: eme-events.php:665
-#: eme-fs.php:758
+#: eme-fs.php:759
 msgid "Database insert failed!"
 msgstr "Database insert is mislukt!"
 
@@ -2136,7 +2137,7 @@ msgstr "Toon/verberg extra filters"
 
 #: eme-events.php:6135
 #: eme-events.php:6679
-#: eme-fs.php:598
+#: eme-fs.php:599
 msgid "Event Status"
 msgstr "Status evenement"
 
@@ -3859,7 +3860,7 @@ msgstr "Prijs evenement"
 #: eme-events.php:9711
 #: eme-events.php:9722
 #: eme-events.php:9800
-#: eme-formfields.php:5189
+#: eme-formfields.php:5174
 msgid "Copy"
 msgstr "Kopieer"
 
@@ -3908,11 +3909,13 @@ msgstr "Datum en tijd"
 msgid "Selected dates:"
 msgstr "Geselecteerde datums:"
 
+#: eme-cleanup.php:309
 #: eme-events.php:9637
 #: eme-events.php:9860
 msgid "Created on"
 msgstr "Aangemaakt op"
 
+#: eme-cleanup.php:310
 #: eme-events.php:9638
 #: eme-events.php:9861
 msgid "Modified on"
@@ -4013,9 +4016,9 @@ msgstr "Taak einddatum"
 
 #: eme-events.php:9681
 #: eme-events.php:9963
-#: eme-formfields.php:1233
-#: eme-formfields.php:2072
-#: eme-formfields.php:3261
+#: eme-formfields.php:1230
+#: eme-formfields.php:2063
+#: eme-formfields.php:3249
 #: eme-options.php:39
 #: eme-people.php:1066
 #: eme-people.php:1261
@@ -4039,7 +4042,7 @@ msgid "Are you sure to delete the selected records?"
 msgstr "Bent u zeker dat u de geselecteerde records wil verwijderen?"
 
 #: eme-events.php:9700
-#: eme-formfields.php:4987
+#: eme-formfields.php:4972
 #: eme-options.php:1608
 #: events-manager.php:374
 msgid "Templates"
@@ -4153,11 +4156,11 @@ msgstr "Bewerk locatie '%s'"
 #: eme-events.php:9804
 #: eme-events.php:9838
 #: eme-events.php:9895
-#: eme-formfields.php:1294
-#: eme-formfields.php:1913
-#: eme-formfields.php:2995
-#: eme-formfields.php:3960
-#: eme-formfields.php:4621
+#: eme-formfields.php:1291
+#: eme-formfields.php:1904
+#: eme-formfields.php:2983
+#: eme-formfields.php:3945
+#: eme-formfields.php:4606
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:564
@@ -4171,11 +4174,11 @@ msgstr "Stad"
 #: eme-events.php:9805
 #: eme-events.php:9839
 #: eme-events.php:9896
-#: eme-formfields.php:1304
-#: eme-formfields.php:1935
-#: eme-formfields.php:3007
-#: eme-formfields.php:3970
-#: eme-formfields.php:4637
+#: eme-formfields.php:1301
+#: eme-formfields.php:1926
+#: eme-formfields.php:2995
+#: eme-formfields.php:3955
+#: eme-formfields.php:4622
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:572
@@ -4225,16 +4228,17 @@ msgstr "Personen"
 msgid "Groups"
 msgstr "Groepen"
 
+#: eme-cleanup.php:307
 #: eme-events.php:9834
 #: eme-events.php:9887
-#: eme-formfields.php:1186
-#: eme-formfields.php:1535
-#: eme-formfields.php:1851
-#: eme-formfields.php:2907
-#: eme-formfields.php:3501
-#: eme-formfields.php:3884
-#: eme-formfields.php:4356
-#: eme-formfields.php:4555
+#: eme-formfields.php:1183
+#: eme-formfields.php:1529
+#: eme-formfields.php:1842
+#: eme-formfields.php:2895
+#: eme-formfields.php:3489
+#: eme-formfields.php:3869
+#: eme-formfields.php:4341
+#: eme-formfields.php:4540
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4254,17 +4258,18 @@ msgstr "Groepen"
 msgid "Last name"
 msgstr "Achternaam"
 
+#: eme-cleanup.php:306
 #: eme-events.php:9835
 #: eme-events.php:9888
-#: eme-formfields.php:1202
-#: eme-formfields.php:1547
-#: eme-formfields.php:1867
-#: eme-formfields.php:2934
-#: eme-formfields.php:3169
-#: eme-formfields.php:3517
-#: eme-formfields.php:3908
-#: eme-formfields.php:4370
-#: eme-formfields.php:4570
+#: eme-formfields.php:1199
+#: eme-formfields.php:1541
+#: eme-formfields.php:1858
+#: eme-formfields.php:2922
+#: eme-formfields.php:3157
+#: eme-formfields.php:3505
+#: eme-formfields.php:3893
+#: eme-formfields.php:4355
+#: eme-formfields.php:4555
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4285,18 +4290,19 @@ msgstr "Achternaam"
 msgid "First name"
 msgstr "Voornaam"
 
+#: eme-cleanup.php:308
 #: eme-events.php:9842
 #: eme-events.php:9889
 #: eme-events.php:10030
 #: eme-formfields.php:597
-#: eme-formfields.php:1211
-#: eme-formfields.php:1556
-#: eme-formfields.php:1980
-#: eme-formfields.php:3058
-#: eme-formfields.php:3548
-#: eme-formfields.php:4018
-#: eme-formfields.php:4383
-#: eme-formfields.php:4666
+#: eme-formfields.php:1208
+#: eme-formfields.php:1550
+#: eme-formfields.php:1971
+#: eme-formfields.php:3046
+#: eme-formfields.php:3536
+#: eme-formfields.php:4003
+#: eme-formfields.php:4368
+#: eme-formfields.php:4651
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4320,12 +4326,12 @@ msgid "Email"
 msgstr "E-mail"
 
 #: eme-events.php:9843
-#: eme-formfields.php:1224
-#: eme-formfields.php:2063
-#: eme-formfields.php:3077
-#: eme-formfields.php:3533
-#: eme-formfields.php:4029
-#: eme-formfields.php:4680
+#: eme-formfields.php:1221
+#: eme-formfields.php:2054
+#: eme-formfields.php:3065
+#: eme-formfields.php:3521
+#: eme-formfields.php:4014
+#: eme-formfields.php:4665
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -4930,7 +4936,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Neem dit veld op in de CSV-export voor boekingen."
 
 #: eme-formfields.php:356
-#: eme-formfields.php:4986
+#: eme-formfields.php:4971
 msgid "Field condition"
 msgstr "Veld voorwaarde"
 
@@ -5251,8 +5257,8 @@ msgid "Checkbox (vertical)"
 msgstr "Checkbox (vertikaal)"
 
 #: eme-formfields.php:583
-#: eme-formfields.php:2051
-#: eme-formfields.php:3171
+#: eme-formfields.php:2042
+#: eme-formfields.php:3159
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -5288,25 +5294,25 @@ msgstr "Tijd (Javascript)"
 msgid "This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it"
 msgstr "Dit is een verborgen veld, maar in de backend wordt dit als tekst getoond zodat een admin de waarde kan zien en eventueel wijzigen"
 
-#: eme-formfields.php:1190
-#: eme-formfields.php:2911
+#: eme-formfields.php:1187
+#: eme-formfields.php:2899
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om deze gebeurtenis te bewerken, is het veld 'Achternaam' ook een veld voor automatisch aanvullen, zodat u desgewenst bestaande personen kunt selecteren. Of wis gewoon het veld en begin met typen."
 
-#: eme-formfields.php:1241
-#: eme-formfields.php:2014
-#: eme-formfields.php:3128
-#: eme-formfields.php:4072
-#: eme-formfields.php:4445
+#: eme-formfields.php:1238
+#: eme-formfields.php:2005
+#: eme-formfields.php:3116
+#: eme-formfields.php:4057
+#: eme-formfields.php:4430
 msgid "Remember me?"
 msgstr "Herinner mij?"
 
-#: eme-formfields.php:1252
-#: eme-formfields.php:1876
-#: eme-formfields.php:2945
-#: eme-formfields.php:3605
-#: eme-formfields.php:3919
-#: eme-formfields.php:4584
+#: eme-formfields.php:1249
+#: eme-formfields.php:1867
+#: eme-formfields.php:2933
+#: eme-formfields.php:3593
+#: eme-formfields.php:3904
+#: eme-formfields.php:4569
 #: eme-people.php:1054
 #: eme-people.php:1226
 #: eme-people.php:2605
@@ -5314,12 +5320,12 @@ msgstr "Herinner mij?"
 msgid "Date of birth"
 msgstr "Geboortedatum"
 
-#: eme-formfields.php:1264
-#: eme-formfields.php:1886
-#: eme-formfields.php:2959
-#: eme-formfields.php:3589
-#: eme-formfields.php:3930
-#: eme-formfields.php:4595
+#: eme-formfields.php:1261
+#: eme-formfields.php:1877
+#: eme-formfields.php:2947
+#: eme-formfields.php:3577
+#: eme-formfields.php:3915
+#: eme-formfields.php:4580
 #: eme-people.php:1055
 #: eme-people.php:1227
 #: eme-people.php:2620
@@ -5327,71 +5333,71 @@ msgstr "Geboortedatum"
 msgid "Place of birth"
 msgstr "Geboorteplaats"
 
-#: eme-formfields.php:1379
-#: eme-formfields.php:4463
+#: eme-formfields.php:1376
+#: eme-formfields.php:4448
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: eme-formfields.php:1434
-#: eme-formfields.php:1618
+#: eme-formfields.php:1431
+#: eme-formfields.php:1612
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Niet alle verplichte velden zijn aanwezig in het formulier. We hebben minimaal #_LASTNAME en #_EMAIL nodig."
 
-#: eme-formfields.php:1568
+#: eme-formfields.php:1562
 msgid "Cancel reason"
 msgstr "Annuleringsreden"
 
-#: eme-formfields.php:1727
+#: eme-formfields.php:1721
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereise velden zijn aanwezig in het formulier. We hebben minstens #_CANCEL_PAYMENT_LINE en #_SUBMIT (of gelijkaardig) placeholders nodig."
 
-#: eme-formfields.php:2027
-#: eme-formfields.php:3143
-#: eme-formfields.php:4085
+#: eme-formfields.php:2018
+#: eme-formfields.php:3131
+#: eme-formfields.php:4070
 msgid "Group is not public"
 msgstr "Groep is niet publiek"
 
-#: eme-formfields.php:2042
-#: eme-formfields.php:3158
-#: eme-formfields.php:4100
+#: eme-formfields.php:2033
+#: eme-formfields.php:3146
+#: eme-formfields.php:4085
 msgid "Group does not exist"
 msgstr "Groep bestaat niet"
 
-#: eme-formfields.php:3236
+#: eme-formfields.php:3224
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Door #_SEATS {xx} te gebruiken, gebruikt u meerdere stoelcategorieën in uw RSVP-template, maar u hebt geen prijs gedefinieerd voor elke categorie in de RSVP-instellingen van uw evenement. Corrigeer de RSVP-instellingen van het evenement."
 
-#: eme-formfields.php:3362
-#: eme-formfields.php:4116
+#: eme-formfields.php:3350
+#: eme-formfields.php:4101
 msgid "Discount code"
 msgstr "Kortingscode"
 
-#: eme-formfields.php:3368
-#: eme-formfields.php:4122
+#: eme-formfields.php:3356
+#: eme-formfields.php:4107
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Voer desgewenst een nieuwe vaste kortingswaarde in of laat deze staan om de berekende waarde %s te behouden op basis van de volgende toegepaste kortingen:"
 
-#: eme-formfields.php:3371
-#: eme-formfields.php:4125
+#: eme-formfields.php:3359
+#: eme-formfields.php:4110
 msgid "Enter a fixed discount value if wanted"
 msgstr "Geef een vaste korting in indien gewenst"
 
-#: eme-formfields.php:3376
-#: eme-formfields.php:4130
+#: eme-formfields.php:3364
+#: eme-formfields.php:4115
 #: eme-people.php:1361
 #: eme-people.php:1677
 msgid "Discountgroup %s"
 msgstr "Kortingsgroep %s"
 
-#: eme-formfields.php:3378
-#: eme-formfields.php:4132
+#: eme-formfields.php:3366
+#: eme-formfields.php:4117
 #: eme-people.php:1363
 #: eme-people.php:1679
 msgid "Applied discount group %d no longer exists"
 msgstr "Toegepaste kortingsgroep %d bestaat niet langer"
 
-#: eme-formfields.php:3393
-#: eme-formfields.php:4149
+#: eme-formfields.php:3381
+#: eme-formfields.php:4134
 #: eme-members.php:5283
 #: eme-people.php:1378
 #: eme-people.php:1694
@@ -5399,162 +5405,162 @@ msgstr "Toegepaste kortingsgroep %d bestaat niet langer"
 msgid "Applied discount %d no longer exists"
 msgstr "Toegepaste korting %d bestaat niet langer"
 
-#: eme-formfields.php:3400
-#: eme-formfields.php:4156
+#: eme-formfields.php:3388
+#: eme-formfields.php:4141
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "Enkel één kortingsveld kan in de admin backend gebruikt worden, de andere worden niet getoond"
 
-#: eme-formfields.php:3406
+#: eme-formfields.php:3394
 msgid "Update booking"
 msgstr "Werk boeking bij"
 
-#: eme-formfields.php:3454
+#: eme-formfields.php:3442
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_LASTNAME, #_EMAIL, #_SEATS en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:3457
+#: eme-formfields.php:3445
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Omdat dit evenement meerdere prijzen heeft, zorg ervoor dat je het boekingsformulier hebt aangepast zodat het #_SEAT{xx} placeholders voor iedere prijs bevat."
 
-#: eme-formfields.php:3460
+#: eme-formfields.php:3448
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Controleer of de placeholder #_PASSWORD aanwezig is in het formulier."
 
-#: eme-formfields.php:3662
+#: eme-formfields.php:3650
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Niet alle verplichte velden zijn aanwezig in het formulier. We hebben minimaal #_LASTNAME en #_FIRSTNAME nodig."
 
-#: eme-formfields.php:3888
+#: eme-formfields.php:3873
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om leden en lidmaatschappen te beheren, is het veld 'Achternaam' ook een veld voor automatisch aanvullen, zodat u desgewenst bestaande personen kunt selecteren. Of wis gewoon het veld en begin met typen."
 
-#: eme-formfields.php:4187
+#: eme-formfields.php:4172
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "In de backend kun je geen gezinslidgegevens toevoegen of bewerken, gebruik daarvoor het frontend formulier."
 
-#: eme-formfields.php:4252
+#: eme-formfields.php:4237
 msgid "Update member"
 msgstr "Pas lid aan"
 
-#: eme-formfields.php:4257
+#: eme-formfields.php:4242
 msgid "Become member"
 msgstr "Word lid"
 
-#: eme-formfields.php:4289
-#: eme-formfields.php:4810
+#: eme-formfields.php:4274
+#: eme-formfields.php:4795
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_LASTNAME, #_FIRSTNAME, #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4412
+#: eme-formfields.php:4397
 #: eme-tasks.php:610
 #: eme-templates.php:43
 msgid "All"
 msgstr "Alle"
 
-#: eme-formfields.php:4398
-#: eme-formfields.php:4417
+#: eme-formfields.php:4383
+#: eme-formfields.php:4402
 msgid "Newsletter concerning new events"
 msgstr "Nieuwsbrief betreffende nieuwe evenementen"
 
-#: eme-formfields.php:4360
-#: eme-formfields.php:4559
+#: eme-formfields.php:4345
+#: eme-formfields.php:4544
 msgid "You can change your last name in your WP profile."
 msgstr "U kunt uw achternaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4374
-#: eme-formfields.php:4574
+#: eme-formfields.php:4359
+#: eme-formfields.php:4559
 msgid "You can change your first name in your WP profile."
 msgstr "U kunt uw voornaam wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4387
-#: eme-formfields.php:4670
+#: eme-formfields.php:4372
+#: eme-formfields.php:4655
 msgid "You can change your email in your WP profile."
 msgstr "U kunt uw e-mailadres wijzigen in uw WP-profiel."
 
-#: eme-formfields.php:4461
+#: eme-formfields.php:4446
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: eme-formfields.php:4486
+#: eme-formfields.php:4471
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Niet alle vereiste velden zijn aanwezig in het formulier. We hebben ten minste #_EMAIL en #_SUBMIT (of vergelijkbare) placeholders nodig."
 
-#: eme-formfields.php:4781
+#: eme-formfields.php:4766
 msgid "Save personal info"
 msgstr "Wijzig persoonlijke gegevens"
 
-#: eme-formfields.php:4980
+#: eme-formfields.php:4965
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Toon dynamisch velden op basis van een aantal condities"
 
-#: eme-formfields.php:4985
+#: eme-formfields.php:4970
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:5031
+#: eme-formfields.php:5016
 msgid "Field"
 msgstr "Veld"
 
-#: eme-formfields.php:5032
+#: eme-formfields.php:5017
 msgid "Condition"
 msgstr "Conditie"
 
-#: eme-formfields.php:5033
+#: eme-formfields.php:5018
 msgid "Condition value"
 msgstr "Conditie waarde"
 
-#: eme-formfields.php:4988
+#: eme-formfields.php:4973
 msgid "Repeat"
 msgstr "Herhaal"
 
-#: eme-formfields.php:5018
+#: eme-formfields.php:5003
 #: eme-tasks.php:939
 #: eme-todos.php:204
 msgid "Reorder"
 msgstr "Herschikken"
 
-#: eme-formfields.php:5037
+#: eme-formfields.php:5022
 msgid "Header template"
 msgstr "Header template"
 
-#: eme-formfields.php:5038
+#: eme-formfields.php:5023
 msgid "Template"
 msgstr "Template"
 
-#: eme-formfields.php:5039
+#: eme-formfields.php:5024
 msgid "Footer template"
 msgstr "Footer template"
 
-#: eme-formfields.php:5046
+#: eme-formfields.php:5031
 msgid "Add new condition"
 msgstr "Voeg nieuwe voorwaarde toe"
 
-#: eme-formfields.php:5049
+#: eme-formfields.php:5034
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Waarschuwing: er zijn al antwoorden ingevoerd op basis van deze voorwaarde, het wijzigen of verwijderen van deze voorwaarde kan leiden tot ongewenste bijwerkingen."
 
-#: eme-formfields.php:5060
+#: eme-formfields.php:5045
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Hiermee wordt extra de geselecteerde template in het formulier weergegeven als aan de voorwaarde is voldaan."
 
-#: eme-formfields.php:5062
+#: eme-formfields.php:5047
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "De 'Veld' parameter moet worden ingevuld met elke geldige tijdelijke placeholder die in het formulier is toegestaan."
 
-#: eme-formfields.php:5064
+#: eme-formfields.php:5049
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "De geselecteerde template wordt meerdere keren getoond als de herhaaloptie wordt gebruikt (op basis van het aantal keren dat het veld verschilt van de waarde van de voorwaarde. Dit wordt niet gebruikt voor de voorwaarde-selector 'gelijk aan'."
 
-#: eme-formfields.php:5066
+#: eme-formfields.php:5051
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "De geselecteerde template kan html bevatten en heeft ook placeholders voor eigen aangemaakte formuliervelden (geen andere placeholders toegestaan)."
 
-#: eme-formfields.php:5067
+#: eme-formfields.php:5052
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw formulier weer te geven."
 
-#: eme-formfields.php:5217
-#: eme-formfields.php:5227
+#: eme-formfields.php:5202
+#: eme-formfields.php:5212
 #: eme-functions.php:3450
 #: eme-functions.php:3451
 msgid "Records deleted!"
@@ -5868,7 +5874,7 @@ msgstr "Er waren problemen bij het uploaden van bestanden"
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
-#: eme-fs.php:818
+#: eme-fs.php:819
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5883,7 +5889,7 @@ msgstr "Geen gegevens gevonden"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvangt, contacteer dan de websitebeheerder."
 
-#: eme-fs.php:828
+#: eme-fs.php:829
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -6351,6 +6357,7 @@ msgid "Queued on"
 msgstr "In de wachtrij gezet op"
 
 #: eme-actions.php:437
+#: eme-cleanup.php:333
 #: eme-events.php:9588
 #: eme-mailer.php:1666
 #: eme-mailer.php:1676
@@ -13258,7 +13265,7 @@ msgstr "Voeg optioneel bijlagen toe aan de e-mail wanneer een lid zijn lidmaatsc
 msgid "Optionally add attachments to the mail when a member has paid for the membership."
 msgstr "Voeg optioneel bijlagen toe aan de mail wanneer een lid voor het lidmaatschap heeft betaald."
 
-#: eme-cleanup.php:322
+#: eme-cleanup.php:376
 msgid "Move people who are no longer referenced in bookings, groups or memberships to the trash bin"
 msgstr "Verplaats mensen naar wie niet meer wordt verwezen in boekingen, groepen of lidmaatschappen naar de prullenbak"
 
@@ -13433,7 +13440,7 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr "Selecteer deze optie als u het uploaden van afbeeldingen in de frontend wysiwyg-editor voor de evenementomschrijving wilt toestaan."
 
 #: eme-fs.php:188
-#: eme-fs.php:841
+#: eme-fs.php:842
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Helaas, u mag geen nieuwe evenementen indienen."
 
@@ -13441,28 +13448,28 @@ msgstr "Helaas, u mag geen nieuwe evenementen indienen."
 msgid "Create event"
 msgstr "Maak evenement aan"
 
-#: eme-fs.php:625
+#: eme-fs.php:626
 #: eme-options.php:602
 msgid "New event succesfully created."
 msgstr "Nieuw evenement succesvol aangemaakt."
 
-#: eme-fs.php:645
+#: eme-fs.php:646
 msgid "Please enter a name for the event"
 msgstr "Voer een naam in voor het evenement"
 
-#: eme-fs.php:649
+#: eme-fs.php:650
 msgid "Please enter an event description"
 msgstr "Voer een evenementbeschrijving in"
 
-#: eme-fs.php:652
+#: eme-fs.php:653
 msgid "Please enter a location description"
 msgstr "Voer een locatiebeschrijving in"
 
-#: eme-fs.php:655
+#: eme-fs.php:656
 msgid "Enter the event's start date"
 msgstr "Geef een startdatum in voor het evenement"
 
-#: eme-fs.php:684
+#: eme-fs.php:685
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "De einddatum/-tijd moet <strong>na</strong> de begindatum/-tijd vallen"
 
@@ -14013,7 +14020,7 @@ msgstr "Verplaats evenement naar de prullenbak"
 msgid "Events moved to the trash bin"
 msgstr "Evenementen naar de prullenbak verplaatst"
 
-#: eme-cleanup.php:366
+#: eme-cleanup.php:420
 msgid "Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields"
 msgstr "Verwijder ook gedefinieerde categorieën, sjablonen, feestdagen, kortingen, staten, landen en eigen aangemaakte formuliervelden"
 
@@ -14265,6 +14272,7 @@ msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
 #: eme-actions.php:439
+#: eme-cleanup.php:380
 #: eme-events.php:9590
 msgid "Preview"
 msgstr "Voorbeeld"
@@ -14669,3 +14677,19 @@ msgstr "Toegang geweigerd: scan aantal (%d) overstijgt max aantal (%d)"
 #: eme-events.php:8643
 msgid "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with care."
 msgstr "Dit houdt in dat er per gebruiker aanwezigheidsregistraties worden bijgehouden en dat in die tabel wordt gezocht naar het aantal keren dat de QR-code van een gebruiker is gescand. Hierdoor wordt de database zwaarder belast, dus gebruik deze methode met de nodige voorzichtigheid."
+
+#: eme-cleanup.php:263
+msgid "No people found that would be moved to the trash bin."
+msgstr ""
+
+#: eme-cleanup.php:300
+msgid "Preview: People to be trashed"
+msgstr ""
+
+#: eme-cleanup.php:302
+msgid "The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:"
+msgstr ""
+
+#: eme-cleanup.php:331
+msgid "Confirm: Move all to trash"
+msgstr ""

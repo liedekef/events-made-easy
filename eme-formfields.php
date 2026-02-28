@@ -1151,9 +1151,6 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         $gdpr               = intval( $person['gdpr'] );
     }
 
-    # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
-    # if these are not present: we don't replace anything and the form is worthless
-
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
     foreach ( $placeholders[0] as $orig_result ) {
@@ -1335,7 +1332,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
             $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -1346,7 +1343,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
             $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -1501,9 +1498,6 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
-
-    # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
-    # if these are not present: we don't replace anything and the form is worthless
 
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
@@ -1803,9 +1797,6 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         }
     }
 
-    # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
-    # if these are not present: we don't replace anything and the form is worthless
-
     // let us always set the dynamic price class, since the js checks if the dynamic price html-span exists anyway
     $dynamic_price_class_basic = 'dynamicprice';
 
@@ -1986,13 +1977,13 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = 1;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = 0;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
@@ -2831,9 +2822,6 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         }
     }
 
-    # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
-    # if these are not present: we don't replace anything and the form is worthless
-
     // let us always set the dynamic price class, since the js checks if the dynamic price html-span exists anyway
     $dynamic_price_class       = "class='dynamicprice'";
     $dynamic_price_class_basic = 'dynamicprice';
@@ -3084,7 +3072,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( ! $is_multibooking ) {
                 $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
                 $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_massmail', $disabled );
+                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                     $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
@@ -3097,7 +3085,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( ! $is_multibooking ) {
                 $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
                 $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_massmail', $disabled );
+                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                     $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
@@ -3211,7 +3199,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( ! $min_allowed_is_multi && $min_allowed > 0 && $min_allowed == $max_allowed ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='$min_allowed'>";
                 } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
+                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
                 }
                 if ( $waitinglist && !$editing_booking_from_backend ) {
                     $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
@@ -3239,14 +3227,14 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='1'>";
                 } else {
-                    $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
+                    $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
                 }
                 ++$seats_found;
             } else {
                 if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='" . $multi_min_allowed[ $field_id - 1 ] . "'>";
                 } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
+                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
                 }
                 ++$seats_found;
             }
@@ -3566,14 +3554,14 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             } else {
                 $selected_massmail = $entered_val;
             }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             if ( $entered_val === false ) {
                 $selected_massmail = 0;
             } else {
                 $selected_massmail = $entered_val;
             }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_massmail' );
+            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
             $required     = 1;
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?/', $result, $matches ) ) {
             $postvar_arr = [ 'familymember', $counter, 'birthplace' ];
@@ -3812,9 +3800,6 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     $familycount_found   = 0;
     $familymembers_found = 0;
 
-    # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
-    # if these are not present: we don't replace anything and the form is worthless
-
     # first we check if people desire dynamic pricing on it's own, if not: we set the relevant price class to empty
     if ( str_contains( $format, '#_DYNAMICPRICE' ) ) {
         $dynamic_price_class       = "class='dynamicprice'";
@@ -4034,7 +4019,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
             $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_massmail", $disabled );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4045,7 +4030,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
             $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_massmail", $disabled );
+            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4686,7 +4671,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
             $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
         } elseif ( preg_match( '/#_MASSMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $massmail, 'massmail', 0, 'eme_massmail' );
+            $replacement = eme_ui_select_binary( $massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4696,7 +4681,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             }
         } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
@@ -4706,7 +4691,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             }
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_massmail' );
+            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
                 $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');

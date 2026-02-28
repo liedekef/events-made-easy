@@ -482,6 +482,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
     if ($required) {
         $more .= " required='required'";
     }
+    $more = eme_merge_classes_into_attrs('eme_formfield',$more); // add this class everywhere
     $html_by_type = array(
         'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" %s/>',
         'text' => '<input type="text" id="%s" name="event[%s]" %s/>',

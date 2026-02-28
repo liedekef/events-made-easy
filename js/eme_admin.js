@@ -328,6 +328,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /*
+    // Input placeholder sizing
+    EME.$$("input[placeholder]").forEach(input => {
+        const placeholder = input.getAttribute('placeholder');
+        const size = parseInt(input.getAttribute('size')) || 0;
+        if (placeholder && placeholder.length > size) {
+            input.setAttribute('size', placeholder.length);
+        }
+    });
+    */
+
     // Attribute metabox add/remove
     const attrAddBtn = EME.$('#eme_attr_add_tag');
     if (attrAddBtn) {

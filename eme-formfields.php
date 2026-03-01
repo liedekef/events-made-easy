@@ -3187,14 +3187,14 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ($new_booking_in_frontend) {
                         $entered_val = 1; // by default people attend :-)
                     }
-                    $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, '', "class='eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic'" );
+                    $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, '', "class='eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect'" );
                 }
                 ++$seats_found;
             } else {
                 if ( ! $min_allowed_is_multi && $min_allowed > 0 && $min_allowed == $max_allowed ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='$min_allowed'>";
                 } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
+                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
                 }
                 if ( $waitinglist && !$editing_booking_from_backend ) {
                     $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
@@ -3222,14 +3222,14 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='1'>";
                 } else {
-                    $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
+                    $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
                 }
                 ++$seats_found;
             } else {
                 if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
                     $replacement = "<input type='hidden' name='$fieldname' value='" . $multi_min_allowed[ $field_id - 1 ] . "'>";
                 } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic" );
+                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
                 }
                 ++$seats_found;
             }

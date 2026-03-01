@@ -974,26 +974,26 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         $post_start_date = sanitize_text_field( wp_unslash( $_POST['start_date'] ) );
         $post_end_date = isset( $_POST['end_date'] ) ? sanitize_text_field( wp_unslash( $_POST['end_date'] ) ) : '';
         if ( eme_is_date( $post_start_date ) ) {
-            $member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
+            $member['start_date'] = $post_start_date;
         }
         if ($_POST['status'] != EME_MEMBER_STATUS_EXPIRED) {
             if ( $transfer && ! eme_is_date( $post_start_date ) && eme_is_empty_date( $post_end_date ) ) {
                 $membership         = eme_get_membership( $membership_id );
                 $member['end_date'] = eme_get_next_end_date( $membership, $post_start_date );
             } elseif ( eme_is_date( $post_end_date ) ) {
-                $member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+                $member['end_date'] = $post_end_date;
             } elseif ( eme_is_date( $post_start_date ) ) {
                 $membership         = eme_get_membership( $membership_id );
                 $member['end_date'] = eme_get_next_end_date( $membership, $post_start_date );
             }
         } else {
             if ( eme_is_date( $post_start_date ) ) {
-                $member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
+                $member['start_date'] = $post_start_date;
             } else {
                 $member['start_date'] = '0000-00-00';
             }
             if ( eme_is_date( $post_end_date ) ) {
-                $member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+                $member['end_date'] = $post_end_date;
             } else {
                 $member['end_date'] = "0000-00-00";
             }
@@ -1011,7 +1011,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         }
         $post_payment_date = sanitize_text_field( wp_unslash( $_POST['payment_date'] ) );
         if ( eme_is_datetime( $post_payment_date ) ) {
-            $member['payment_date'] = eme_sanitize_request( $_POST['payment_date'] );
+            $member['payment_date'] = $post_payment_date;
         }
         if ( isset( $_POST['properties'] ) ) {
             $member['properties'] = eme_kses( $_POST['properties'] );

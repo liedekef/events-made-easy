@@ -10526,7 +10526,7 @@ function eme_ajax_manage_events() {
     $ajaxResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
-        $ids       = sanitize_text_field( $_POST['event_id'] );
+        $ids       = eme_sanitize_request( $_POST['event_id'] );
         $ids_arr   = array_map( 'intval', explode( ',', $ids ) );
         if ( ! eme_is_numeric_array( $ids_arr ) ) {
             $ajaxResult['Result']  = 'Error';

@@ -5374,7 +5374,8 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="approveBooking"><?php esc_html_e( 'Approve booking', 'events-made-easy' ); ?></option>
     <option value="trashBooking"><?php esc_html_e( 'Delete booking (move to trash)', 'events-made-easy' ); ?></option>
         <?php if ( $mailing_pending ) { ?>
-        <option value="resendPendingBooking"><?php esc_html_e( 'Resend the mail for pending booking', 'events-made-easy' ); ?></option>
+        <option value="resendPendingBooking"><?php esc_html_e( 'Resend the mail for pending bookings', 'events-made-easy' ); ?></option>
+        <option value="sendPendingBookingReminder"><?php esc_html_e( 'Send the configured reminder mail for pending bookings', 'events-made-easy' ); ?></option>
     <?php } ?>
     <option value="markPaid"><?php esc_html_e( 'Mark paid', 'events-made-easy' ); ?></option>
     <option value="markUnpaid"><?php esc_html_e( 'Mark unpaid', 'events-made-easy' ); ?></option>
@@ -5391,7 +5392,8 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="pendingBooking"><?php esc_html_e( 'Make booking pending', 'events-made-easy' ); ?></option>
     <option value="trashBooking"><?php esc_html_e( 'Delete booking (move to trash)', 'events-made-easy' ); ?></option>
     <?php if ( $mailing_approved ) { ?>
-        <option value="resendApprovedBooking"><?php esc_html_e( 'Resend the mail for approved booking', 'events-made-easy' ); ?></option>
+        <option value="resendApprovedBooking"><?php esc_html_e( 'Resend the mail for approved bookings', 'events-made-easy' ); ?></option>
+        <option value="sendBookingReminder"><?php esc_html_e( 'Send the configured reminder mail for approved bookings', 'events-made-easy' ); ?></option>
     <?php } ?>
     <option value="markPaid"><?php esc_html_e( 'Mark paid', 'events-made-easy' ); ?></option>
     <option value="markUnpaid"><?php esc_html_e( 'Mark unpaid', 'events-made-easy' ); ?></option>
@@ -6246,6 +6248,14 @@ function eme_ajax_manage_bookings() {
         case 'resendPendingBooking':
             header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_resend_booking_mail( $ids_arr, 'pendingBooking' );
+            break;
+        case 'sendBookingReminder':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_resend_booking_mail( $ids_arr, 'reminderBooking' );
+            break;
+        case 'sendPendingBookingReminder':
+            header( 'Content-type: application/json; charset=utf-8' );
+            eme_ajax_action_resend_booking_mail( $ids_arr, 'reminderPendingBooking' );
             break;
         case 'userConfirmBooking':
             header( 'Content-type: application/json; charset=utf-8' );

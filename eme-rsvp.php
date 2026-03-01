@@ -4363,8 +4363,8 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
                 $person_subject = get_option( 'eme_registration_pending_reminder_email_subject' );
             }
 
-            if ( ! empty( $event['event_registration_pending_reminder_email_body'] ) ) {
-                $person_body = $event['event_registration_pending_reminder_email_body'];
+            if ( ! empty( $event['event_properties']['event_registration_pending_reminder_email_body'] ) ) {
+                $person_body = $event['event_properties']['event_registration_pending_reminder_email_body'];
             } elseif ( $event['event_properties']['event_registration_pending_reminder_email_body_tpl'] > 0 ) {
                 $person_body = eme_get_template_format_plain( $event['event_properties']['event_registration_pending_reminder_email_body_tpl'] );
             } else {

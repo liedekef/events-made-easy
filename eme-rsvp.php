@@ -888,7 +888,7 @@ function eme_add_bookings_ajax() {
 
     $events = [];
     if ( ! empty( $_POST['eme_event_ids'] ) && eme_is_numeric_array( $_POST['eme_event_ids'] ) ) {
-        $events = eme_get_rsvp_event_arr( $_POST['eme_event_ids'] );
+        $events = eme_get_rsvp_event_arr( array_map( 'intval', $_POST['eme_event_ids'] ) );
     }
     if ( empty( $events ) ) {
         $form_html = __( 'Please select at least one event.', 'events-made-easy' );
@@ -2091,7 +2091,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 
     // first do the booking answers per event if any
     if ( isset( $_POST['bookings'][ $event_id ] ) ) {
-        foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
+        foreach ( wp_unslash( $_POST['bookings'][ $event_id ] ) as $key => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
                 $field_id      = intval( $matches[1] );
                 $fields_seen[] = $field_id;
@@ -2153,7 +2153,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
     // this is a little tricky: dynamic answers are in fact grouped by a seat condition when filled out, and there can be more than 1 of the same group
     // so we need a little more looping here ...
     if ( $include_dynamicdata && isset( $_POST['dynamic_bookings'][ $event_id ] ) ) {
-        foreach ( $_POST['dynamic_bookings'][ $event_id ] as $group_id => $group_value ) {
+        foreach ( wp_unslash( $_POST['dynamic_bookings'][ $event_id ] ) as $group_id => $group_value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             foreach ( $group_value as $occurence_id => $occurence_value ) {
                 foreach ( $occurence_value as $key => $value ) {
                     if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
@@ -5010,7 +5010,7 @@ function eme_registration_seats_page( $pending = 0 ) {
                         $bookedSeats_mp[ $key ] = intval( $already_booked_seats_mp[ $key ] );
                     }
                 }
-                foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
+                foreach ( wp_unslash( $_POST['bookings'][ $event_id ] ) as $key => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     if ( preg_match( '/bookedSeats(\d+)/', $key, $matches ) ) {
                         $field_id                    = intval( $matches[1] ) - 1;
                         $bookedSeats_mp[ $field_id ] = intval( $value );
@@ -5497,7 +5497,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 function eme_is_event_rsvpable() {
     $rsvp_is_active = get_option( 'eme_rsvp_enabled' );
     if ( eme_is_single_event_page() && isset( $_REQUEST['event_id'] ) ) {
-        $event = eme_get_event( $_REQUEST['event_id'] );
+        $event = eme_get_event( intval( $_REQUEST['event_id'] ) );
         if ( ! empty( $event ) && $rsvp_is_active ) {
             return $event['event_rsvp'];
         }

@@ -1844,7 +1844,7 @@ function eme_notification_mercadopago() {
     $merchant_order        = null;
     $mercadopago_paymentid = '';
     if ( isset( $_GET['topic'] ) && isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ) {
-        switch ( $_GET['topic'] ) {
+        switch ( sanitize_text_field( wp_unslash( $_GET['topic'] ) ) ) {
             case 'payment':
                 $mercadopago_paymentid = eme_sanitize_request( $_GET['id'] );
                 $mercadopago_payment   = MercadoPago\Payment::find_by_id( $mercadopago_paymentid );
@@ -1852,7 +1852,7 @@ function eme_notification_mercadopago() {
                 $merchant_order = MercadoPago\MerchantOrder::find_by_id( $mercadopago_payment->order->id );
                 break;
             case 'merchant_order':
-                $merchant_order = MercadoPago\MerchantOrder::find_by_id( $_GET['id'] );
+                $merchant_order = MercadoPago\MerchantOrder::find_by_id( intval( $_GET['id'] ) );
                 break;
         }
         if ( $merchant_order ) {
@@ -2530,7 +2530,7 @@ function eme_charge_braintree() {
     $result = $braintree_gateway->transaction()->sale(
         [
             'amount'             => $price,
-            'paymentMethodNonce' => $_POST['braintree_nonce'],
+            'paymentMethodNonce' => sanitize_text_field( wp_unslash( $_POST['braintree_nonce'] ) ),
             'orderId'            => $payment_id,
         ]
     );

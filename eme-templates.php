@@ -537,7 +537,7 @@ function eme_ajax_get_template() {
     }
     $ajaxResult = [];
     if ( isset( $_POST['template_id'] ) && intval( $_POST['template_id'] ) > 0 ) {
-        $ajaxResult['htmlmessage'] = eme_get_template_format( $_POST['template_id'] );
+        $ajaxResult['htmlmessage'] = eme_get_template_format( intval( $_POST['template_id'] ) );
     } else {
         $ajaxResult['htmlmessage'] = '';
     }

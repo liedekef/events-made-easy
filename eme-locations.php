@@ -136,7 +136,7 @@ function eme_locations_page() {
             $location['location_description'] = eme_kses_maybe_unfiltered( $_POST['location_description'] );
 
             if ( isset( $_POST['location_category_ids'] ) && eme_is_numeric_array( $_POST['location_category_ids'] ) ) {
-                $location ['location_category_ids'] = join( ',', $_POST['location_category_ids'] );
+                $location ['location_category_ids'] = join( ',', array_map( 'intval', $_POST['location_category_ids'] ) );
             } else {
                 $location ['location_category_ids'] = '';
             }
@@ -2970,7 +2970,7 @@ function eme_ajax_locations_list() {
         }
 
         if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
-            $field_ids = join( ',', $_POST['search_customfieldids'] );
+            $field_ids = join( ',', array_map( 'intval', $_POST['search_customfieldids'] ) );
         } else {
             $field_ids = join( ',', $field_ids_arr );
         }

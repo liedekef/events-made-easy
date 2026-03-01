@@ -96,6 +96,12 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.50  (2026//) =
+* ftable update
+* snapselect update
+* Add bulk action to send configured reminder mails for approved/pending bookings
+* Fix sending reminder mails for pending bookings where the body was defined in the event settings
+
 = 3.0.49  (2026/02/27) =
 * snapselect update
 * more code edits to become compliant with WP coding style (ongoing, thanks to TommsNL)

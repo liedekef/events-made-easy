@@ -971,27 +971,29 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         if ( isset( $_POST['status_automatic'] ) ) {
             $member['status_automatic'] = intval( $_POST['status_automatic'] );
         }
-        if ( eme_is_date( $_POST['start_date'] ) ) {
-            $member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
+        $post_start_date = sanitize_text_field( wp_unslash( $_POST['start_date'] ) );
+        $post_end_date = isset( $_POST['end_date'] ) ? sanitize_text_field( wp_unslash( $_POST['end_date'] ) ) : '';
+        if ( eme_is_date( $post_start_date ) ) {
+            $member['start_date'] = $post_start_date;
         }
         if ($_POST['status'] != EME_MEMBER_STATUS_EXPIRED) {
-            if ( $transfer && ! eme_is_date( $_POST['start_date'] ) && eme_is_empty_date( $_POST['end_date'] ) ) {
+            if ( $transfer && ! eme_is_date( $post_start_date ) && eme_is_empty_date( $post_end_date ) ) {
                 $membership         = eme_get_membership( $membership_id );
-                $member['end_date'] = eme_get_next_end_date( $membership, $_POST['start_date'] );
-            } elseif ( eme_is_date( $_POST['end_date'] ) ) {
-                $member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
-            } elseif ( eme_is_date( $_POST['start_date'] ) ) {
+                $member['end_date'] = eme_get_next_end_date( $membership, $post_start_date );
+            } elseif ( eme_is_date( $post_end_date ) ) {
+                $member['end_date'] = $post_end_date;
+            } elseif ( eme_is_date( $post_start_date ) ) {
                 $membership         = eme_get_membership( $membership_id );
-                $member['end_date'] = eme_get_next_end_date( $membership, $_POST['start_date'] );
+                $member['end_date'] = eme_get_next_end_date( $membership, $post_start_date );
             }
         } else {
-            if ( eme_is_date( $_POST['start_date'] ) ) {
-                $member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
+            if ( eme_is_date( $post_start_date ) ) {
+                $member['start_date'] = $post_start_date;
             } else {
                 $member['start_date'] = '0000-00-00';
             }
-            if ( eme_is_date( $_POST['end_date'] ) ) {
-                $member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+            if ( eme_is_date( $post_end_date ) ) {
+                $member['end_date'] = $post_end_date;
             } else {
                 $member['end_date'] = "0000-00-00";
             }
@@ -1007,8 +1009,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         if ( isset( $_POST['paid'] ) ) {
             $member['paid'] = intval( $_POST['paid'] );
         }
-        if ( eme_is_datetime( $_POST['payment_date'] ) ) {
-            $member['payment_date'] = eme_sanitize_request( $_POST['payment_date'] );
+        $post_payment_date = sanitize_text_field( wp_unslash( $_POST['payment_date'] ) );
+        if ( eme_is_datetime( $post_payment_date ) ) {
+            $member['payment_date'] = $post_payment_date;
         }
         if ( isset( $_POST['properties'] ) ) {
             $member['properties'] = eme_kses( $_POST['properties'] );
@@ -1111,10 +1114,10 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         } elseif ( eme_is_empty_string( $_POST['lastname'] ) ) {
             // we need at least lastname
             $err = __( 'Please enter at least the last name for a new member', 'events-made-easy' );
-        } elseif ( ! $eme_is_admin_request && ! eme_is_email_frontend( $_POST['email'] ) ) {
+        } elseif ( ! $eme_is_admin_request && ! eme_is_email_frontend( sanitize_text_field( wp_unslash( $_POST['email'] ) ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
-        } elseif ( $membership['properties']['create_wp_user'] && ! eme_is_email( $_POST['email'] ) ) {
+        } elseif ( $membership['properties']['create_wp_user'] && ! eme_is_email( sanitize_text_field( wp_unslash( $_POST['email'] ) ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } else {
@@ -1195,7 +1198,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                         // concerning related family members (#_FAMILYCOUNT and #_FAMILYMEMBERS) is not correctly replaced
                         $fields_to_copy          = [ 'start_date', 'end_date', 'paid', 'payment_date', 'status', 'status_automatic', 'reminder', 'reminder_date', 'pg', 'pg_pid' ];
                         if ( isset( $_POST['familymember'] ) ) {
-                            foreach ( $_POST['familymember'] as $familymember ) {
+                            foreach ( wp_unslash( $_POST['familymember'] ) as $familymember ) {
                                 $familymember = eme_sanitize_request($familymember);
                                 $familymember_person_id = eme_add_familymember_from_frontend( $person_id, $familymember );
                                 $familymember_id = eme_is_member( $familymember_person_id, $membership_id );
@@ -1362,7 +1365,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
     $membership['status']          = isset( $_POST['status'] ) ? eme_sanitize_request( $_POST['status'] ) : 1;
     $membership_properties = [];
     if ( isset( $_POST['properties'] ) ) {
-        foreach ( $_POST['properties'] as $key => $value ) {
+        foreach ( wp_unslash( $_POST['properties'] ) as $key => $value ) {
             if ( preg_match( '/password/', $key ) ) {
                 $membership_properties[ $key ] = $value;
             } else {
@@ -3338,7 +3341,7 @@ function eme_member_from_form( $membership ) {
 
     $dcodes_entered = [];
     if ( isset( $_POST['members'] ) ) {
-        foreach ( $_POST['members'][ $membership_id ] as $key => $value ) {
+        foreach ( wp_unslash( $_POST['members'][ $membership_id ] ) as $key => $value ) {
             if ( preg_match( '/^DISCOUNT/', $key ) ) {
                 $dcode_entered = eme_sanitize_request( $value );
                 if ( ! empty( $value ) ) {
@@ -3620,7 +3623,7 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1, $origin
     // this is a little tricky: dynamic answers are in fact grouped by a seat condition when filled out, and there can be more than 1 of the same group
     // so we need a little more looping here ...
     if ( $include_dynamicdata && isset( $_POST['dynamic_member'][ $membership_id ] ) ) {
-        foreach ( $_POST['dynamic_member'][ $membership_id ] as $group_id => $group_value ) {
+        foreach ( wp_unslash( $_POST['dynamic_member'][ $membership_id ] ) as $group_id => $group_value ) {
             foreach ( $group_value as $occurence_id => $occurence_value ) {
                 foreach ( $occurence_value as $key => $value ) {
                     if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
@@ -5011,12 +5014,12 @@ function eme_access_meta_box_save( $post_id ) {
     }
 
     if ( isset( $_POST['eme_membershipids'] ) && eme_is_numeric_array( $_POST['eme_membershipids'] ) ) {
-        update_post_meta( $post_id, 'eme_membershipids', $_POST['eme_membershipids'] );
+        update_post_meta( $post_id, 'eme_membershipids', array_map( 'intval', $_POST['eme_membershipids'] ) );
     } else {
         delete_post_meta( $post_id, 'eme_membershipids' );
     }
     if ( isset( $_POST['eme_groupids'] ) && eme_is_numeric_array( $_POST['eme_groupids'] ) ) {
-        update_post_meta( $post_id, 'eme_groupids', $_POST['eme_groupids'] );
+        update_post_meta( $post_id, 'eme_groupids', array_map( 'intval', $_POST['eme_groupids'] ) );
     } else {
         delete_post_meta( $post_id, 'eme_groupids' );
     }

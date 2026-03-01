@@ -2164,23 +2164,23 @@ function eme_send_mails_ajax_actions( $action ) {
                 $recipients_configured = 1;
             } else {
                 if ( ! empty( $_POST['eme_genericmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_persons'] ) ) {
-                    $conditions['eme_genericmail_send_persons'] = join( ',', $_POST['eme_genericmail_send_persons'] );
+                    $conditions['eme_genericmail_send_persons'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_persons'] ) );
                     $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_send_members'] ) && eme_is_numeric_array( $_POST['eme_send_members'] ) ) {
-                    $conditions['eme_send_members'] = join( ',', $_POST['eme_send_members'] );
+                    $conditions['eme_send_members'] = join( ',', array_map( 'intval', $_POST['eme_send_members'] ) );
                     $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_genericmail_send_peoplegroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_peoplegroups'] ) ) {
-                    $conditions['eme_genericmail_send_peoplegroups'] = join( ',', $_POST['eme_genericmail_send_peoplegroups'] );
+                    $conditions['eme_genericmail_send_peoplegroups'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_peoplegroups'] ) );
                     $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_genericmail_send_membergroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_membergroups'] ) ) {
-                    $conditions['eme_genericmail_send_membergroups'] = join( ',', $_POST['eme_genericmail_send_membergroups'] );
+                    $conditions['eme_genericmail_send_membergroups'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_membergroups'] ) );
                     $recipients_configured = 1;
                 }
                 if ( ! empty( $_POST['eme_send_memberships'] ) && eme_is_numeric_array( $_POST['eme_send_memberships'] ) ) {
-                    $conditions['eme_send_memberships'] = join( ',', $_POST['eme_send_memberships'] );
+                    $conditions['eme_send_memberships'] = join( ',', array_map( 'intval', $_POST['eme_send_memberships'] ) );
                     $recipients_configured = 1;
                 }
             }
@@ -2331,19 +2331,19 @@ function eme_send_mails_ajax_actions( $action ) {
             wp_die();
         } else {
             if ( ! empty( $_POST['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_persons'] ) ) {
-                $conditions['eme_eventmail_send_persons'] = join( ',', $_POST['eme_eventmail_send_persons'] );
+                $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_persons'] ) );
             }
             if ( ! empty( $_POST['eme_eventmail_send_groups'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_groups'] ) ) {
-                $conditions['eme_eventmail_send_groups'] = join( ',', $_POST['eme_eventmail_send_groups'] );
+                $conditions['eme_eventmail_send_groups'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_groups'] ) );
             }
             if ( ! empty( $_POST['eme_eventmail_send_members'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_members'] ) ) {
-                $conditions['eme_eventmail_send_members'] = join( ',', $_POST['eme_eventmail_send_members'] );
+                $conditions['eme_eventmail_send_members'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_members'] ) );
             }
             if ( ! empty( $_POST['eme_eventmail_send_membergroups'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_membergroups'] ) ) {
-                $conditions['eme_eventmail_send_membergroups'] = join( ',', $_POST['eme_eventmail_send_membergroups'] );
+                $conditions['eme_eventmail_send_membergroups'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_membergroups'] ) );
             }
             if ( ! empty( $_POST['eme_eventmail_send_memberships'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_memberships'] ) ) {
-                $conditions['eme_eventmail_send_memberships'] = join( ',', $_POST['eme_eventmail_send_memberships'] );
+                $conditions['eme_eventmail_send_memberships'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_memberships'] ) );
             }
             $eme_mail_type = isset( $_POST ['eme_mail_type'] ) ? eme_sanitize_request($_POST ['eme_mail_type']) : 'attendees';
             if ( empty( $eme_mail_type ) ) {

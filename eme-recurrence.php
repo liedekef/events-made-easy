@@ -802,7 +802,7 @@ function eme_ajax_manage_recurrences() {
 		$do_action          = eme_sanitize_request( $_POST['do_action'] );
 		$rec_new_start_date = eme_sanitize_request( $_POST['rec_new_start_date'] );
 		$rec_new_end_date   = eme_sanitize_request( $_POST['rec_new_end_date'] );
-		$ids                = $_POST['recurrence_id'];
+		$ids                = eme_sanitize_request( $_POST['recurrence_id'] );
 		$ids_arr            = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']  = 'Error';

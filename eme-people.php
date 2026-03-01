@@ -4685,7 +4685,7 @@ function eme_user_profile( $user ) {
 
 function eme_update_user_profile( $wp_id ) {
     if ( ! eme_is_empty_string( $_POST['eme_phone'] ) ) {
-        eme_update_user_phone( $wp_id, $_POST['eme_phone'] );
+        eme_update_user_phone( $wp_id, sanitize_text_field( wp_unslash( $_POST['eme_phone'] ) ) );
     }
 }
 
@@ -4912,7 +4912,7 @@ function eme_subscribe_ajax() {
     if ( eme_is_email_frontend( $eme_email ) ) {
         eme_captcha_remove ( $captcha_res );
         if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
-            $eme_email_groups = join( ',', $_POST['email_groups'] );
+            $eme_email_groups = join( ',', array_map( 'intval', $_POST['email_groups'] ) );
         } elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
             $eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
         } else {
@@ -4997,7 +4997,7 @@ function eme_unsubscribe_ajax() {
     if ( eme_is_email_frontend( $eme_email ) ) {
         eme_captcha_remove ( $captcha_res );
         if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
-            $eme_email_groups = join( ',', $_POST['email_groups'] );
+            $eme_email_groups = join( ',', array_map( 'intval', $_POST['email_groups'] ) );
         } elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
             $eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
         } else {
@@ -5120,7 +5120,7 @@ function eme_store_person_answers( $person_id, $new_person = 0, $backend = 0 ) {
         $field_person_id = $person_id;
     }
     if ( isset( $_POST['dynamic_personfields'][ $field_person_id ] ) ) {
-        foreach ( $_POST['dynamic_personfields'][ $field_person_id ] as $key => $value ) {
+        foreach ( wp_unslash( $_POST['dynamic_personfields'][ $field_person_id ] ) as $key => $value ) {
             if ( preg_match( '/^FIELD(\d+)$/', eme_sanitize_request($key), $matches ) ) {
                 $field_id  = intval( $matches[1] );
                 $formfield = eme_get_formfield( $field_id );

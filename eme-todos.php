@@ -23,13 +23,13 @@ function eme_handle_todos_post_adminform( $event_id ) {
 	}
 	$seq_nbr       = 1;
 	$todo_nbr_seen = 0;
-	foreach ( $_POST['eme_todos'] as $eme_todo ) {
+	foreach ( wp_unslash( $_POST['eme_todos'] ) as $eme_todo ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( ! empty( $eme_todo['todo_nbr'] ) && intval( $eme_todo['todo_nbr'] ) > $todo_nbr_seen ) {
 			$todo_nbr_seen = intval( $eme_todo['todo_nbr'] );
 		}
 	}
 	$next_todo_nbr = $todo_nbr_seen + 1;
-	foreach ( $_POST['eme_todos'] as $eme_todo ) {
+	foreach ( wp_unslash( $_POST['eme_todos'] ) as $eme_todo ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$eme_todo['name']       = eme_sanitize_request( $eme_todo['name'] );
 		$eme_todo['todo_seq']   = $seq_nbr;
 		$eme_todo['event_id']   = $event_id;

@@ -563,7 +563,7 @@ function eme_booking_discount( $event, $booking ) {
 
 	if ( eme_is_admin_request() ) {
 		if ( isset( $_POST['DISCOUNT'] ) ) {
-			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$total_discount = sprintf( '%01.2f', floatval( $_POST['DISCOUNT'] ) );
 			$booking_discount = sprintf( '%01.2f', $booking['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $booking_discount ) {
@@ -662,7 +662,7 @@ function eme_member_discount( $membership, $member ) {
 
 	if ( eme_is_admin_request() ) {
 		if ( isset( $_POST['DISCOUNT'] ) ) {
-			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
+			$total_discount = sprintf( '%01.2f', floatval( $_POST['DISCOUNT'] ) );
 			$member_discount = sprintf( '%01.2f', $member['discount'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $member_discount ) {

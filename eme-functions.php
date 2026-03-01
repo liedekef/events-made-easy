@@ -2143,7 +2143,7 @@ function eme_booking_from_form( $event ) {
             $bookedSeats_mp[ $key ] = 0;
         }
         if ( isset( $_POST['bookings'][ $event_id ] ) ) {
-            foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
+            foreach ( wp_unslash( $_POST['bookings'][ $event_id ] ) as $key => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 if ( preg_match( '/bookedSeats(\d+)/', eme_sanitize_request( $key ), $matches ) ) {
                     $field_id                    = intval( $matches[1] ) - 1;
                     $bookedSeats                += intval( $value );
@@ -2153,7 +2153,7 @@ function eme_booking_from_form( $event ) {
         }
     }
     if ( isset( $_POST['bookings'][ $event_id ] ) ) {
-        foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
+        foreach ( wp_unslash( $_POST['bookings'][ $event_id ] ) as $key => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if ( preg_match( '/^DISCOUNT/', eme_sanitize_request( $key ), $matches ) ) {
                 $dcode_entered = eme_sanitize_request( $value );
                 if ( ! empty( $value ) ) {
@@ -2209,7 +2209,7 @@ function eme_calc_bookingprice_ajax() {
     // first detect multibooking
     $event_ids = [];
     if ( isset( $_POST['bookings'] ) ) {
-        foreach ( $_POST['bookings'] as $key => $val ) {
+        foreach ( wp_unslash( $_POST['bookings'] ) as $key => $val ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $event_ids[] = intval( $key );
         }
     }
@@ -2240,7 +2240,7 @@ function eme_calc_bookingprice_detail_ajax() {
     // first detect multibooking
     $event_ids = [];
     if ( isset( $_POST['bookings'] ) ) {
-        foreach ( $_POST['bookings'] as $key => $val ) {
+        foreach ( wp_unslash( $_POST['bookings'] ) as $key => $val ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $event_ids[] = intval( $key );
         }
     }
@@ -4290,7 +4290,7 @@ function eme_get_datatables_limit() {
 function eme_get_datatables_orderby($preferred_sorting='') {
     if ( ! empty( $_REQUEST['jtSorting'] ) ) {
         $orderby = '';
-        $sanitized_sorting = eme_verify_sql_orderby( $_REQUEST['jtSorting'] );
+        $sanitized_sorting = eme_verify_sql_orderby( sanitize_text_field( wp_unslash( $_REQUEST['jtSorting'] ) ) );
         if ( ! empty( $sanitized_sorting ) ) {
             if ( ! empty( $preferred_sorting ) ) {
                 $orderby = "ORDER BY $preferred_sorting, " . esc_sql($sanitized_sorting);

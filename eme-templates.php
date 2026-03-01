@@ -160,8 +160,6 @@ function eme_templates_table_layout( $message = '' ) {
     echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
-         <div id='icon-edit' class='icon32'>
-         </div>
          <h1>" . __( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
@@ -183,7 +181,7 @@ function eme_templates_table_layout( $message = '' ) {
     <button id="TemplatesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='templates-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -236,9 +234,6 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
     echo "
    <div class='wrap'>
       <div id='poststuff'>
-      <div id='icon-edit' class='icon32'>
-      </div>
-
       <h1>" . $h1_string . '</h1>';
 
     if ( $message != '' ) {

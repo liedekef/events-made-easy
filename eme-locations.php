@@ -374,7 +374,6 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     <?php } else { ?>
     <input type="hidden" name="eme_admin_action" value="do_editlocation">
     <?php } ?>
-        <div id="icon-locations" class="icon32"></div>
         <h1>
 <?php
     if ( $action == 'add' ) {
@@ -827,8 +826,6 @@ function eme_locations_table( $message = '' ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new location', 'events-made-easy' ); ?></h1>
@@ -891,7 +888,7 @@ function eme_locations_table( $message = '' ) {
 ?>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">

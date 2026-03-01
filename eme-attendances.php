@@ -124,8 +124,6 @@ function eme_attendances_table_layout( $message = '' ) {
 	echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
-         <div id='icon-edit' class='icon32'>
-         </div>
          <h1>" . esc_html__( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
 	 <form action='#' method='post'>$nonce_field
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
@@ -163,7 +161,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	<button id="AttendancesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter attendances', 'events-made-easy' ); ?></button>
 	</form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <?php eme_rightclickhint(); ?>
     </div>
 	<div id="AttendancesTableContainer"></div>

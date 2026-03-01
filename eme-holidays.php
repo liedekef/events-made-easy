@@ -68,8 +68,6 @@ function eme_holidays_table_layout( $message = '' ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
 
     <?php if ( current_user_can( get_option( 'eme_cap_holidays' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new list of holidays', 'events-made-easy' ); ?></h1>
@@ -90,7 +88,7 @@ function eme_holidays_table_layout( $message = '' ) {
     <?php } ?>
 
     <div id="holidays-message" class="eme-hidden" ></div>
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -125,9 +123,6 @@ function eme_holidays_edit_layout() {
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$layout      = "
    <div class='wrap'>
-      <div id='icon-edit' class='icon32'>
-      </div>
-         
       <h1>" . $h1_string . '</h1>';
 
     $layout .= "

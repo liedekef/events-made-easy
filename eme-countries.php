@@ -282,8 +282,6 @@ function eme_countries_main_layout( $message = '' ) {
 	$states_destination    = esc_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=states' ) );
 	$html                  = "
       <div class='wrap nosubsub'>\n
-         <div id='icon-edit' class='icon32'>
-         </div>
          <h1>" . __( 'Manage countries and states', 'events-made-easy' ) . '</h1>
    ';
 	if ( ! empty( $message ) ) {
@@ -326,8 +324,6 @@ function eme_manage_countries_layout( $message = '' ) {
 	?>
 		<div class="wrap nosubsub">
 		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-		</div>
 		 
 		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
 			<p><?php echo wp_kses_post( $message ); ?></p>
@@ -367,7 +363,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	<?php esc_html_e( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ); ?>
 	<br>
 	<?php } ?>
-    <div id="bulkactions">
+    <div class="bulkactions">
 	<form id='countries-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -394,8 +390,6 @@ function eme_manage_states_layout( $message = '' ) {
 	?>
 		<div class="wrap nosubsub">
 		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-		</div>
 		 
 	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
 		<p><?php echo wp_kses_post( $message ); ?></p>
@@ -435,7 +429,7 @@ function eme_manage_states_layout( $message = '' ) {
 	<?php esc_html_e( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ); ?>
 	<?php } ?>
 	<br>
-    <div id="bulkactions">
+    <div class="bulkactions">
 	<form id='states-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -476,8 +470,6 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 
 	$layout = "
    <div class='wrap'>
-      <div id='icon-edit' class='icon32'>
-      </div>
          
       <h1>" . $h1_string . '</h1>';
 
@@ -542,8 +534,6 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 
 	$layout = "
    <div class='wrap'>
-      <div id='icon-edit' class='icon32'>
-      </div>
          
       <h1>" . $h1_string . '</h1>';
 

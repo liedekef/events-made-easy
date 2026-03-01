@@ -5237,8 +5237,6 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 
 ?>
 <div class="wrap">
-<div id="icon-events" class="icon32">
-</div>
 <h1>
 <?php
     if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) {
@@ -5363,7 +5361,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <button id="BookingsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter bookings', 'events-made-easy' ); ?></button>
     </form>
     </div>
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id="eme-admin-regform" name="eme-admin-regform" action="#" method="post">
     <select name="eme_admin_action" id="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>

@@ -1831,9 +1831,6 @@ function eme_person_verify_layout() {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <h1><?php esc_html_e( 'Verify link between people and WP', 'events-made-easy' ); ?></h1>
 <?php
     // the next function returns a row containing multiple person ids per line (csv), lastname,firstname,email,wp_id
@@ -2008,7 +2005,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 ?>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='people-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -2343,9 +2340,6 @@ function eme_manage_people_layout( $message = '' ) {
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <div id="people-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -2453,9 +2447,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 ?>
     <div class="wrap">
         <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <h1>
 <?php
     if ( $action == 'add' ) {
@@ -2741,9 +2732,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 ?>
     <div class="wrap">
         <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <h1>
 <?php
     if ( $action == 'add' ) {
@@ -2852,9 +2840,6 @@ function eme_manage_groups_layout( $message = '' ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <div id="groups-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -2874,7 +2859,7 @@ function eme_manage_groups_layout( $message = '' ) {
 
     <h1><?php esc_html_e( 'Manage groups', 'events-made-easy' ); ?></h1>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='groups-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">

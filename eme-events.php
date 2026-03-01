@@ -6057,8 +6057,6 @@ function eme_events_table( $message = '' ) {
 
 <div class="wrap nosubsub">
 <div id="poststuff">
-    <div id="icon-edit" class="icon32"></div>
-
     <div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
                 <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -6170,7 +6168,7 @@ function eme_events_table( $message = '' ) {
 <?php
     if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_author_event' ) ) ) :
 ?>
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -6239,8 +6237,6 @@ function eme_recurrences_table( $message = '' ) {
 
 <div class="wrap nosubsub">
 <div id="poststuff">
-    <div id="icon-edit" class="icon32"></div>
-
     <div id="recurrences-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -6279,7 +6275,7 @@ function eme_recurrences_table( $message = '' ) {
     <button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -6401,7 +6397,6 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     <form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo esc_url( $form_destination ); ?>">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <?php echo $hidden_fields; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML hidden fields ?>
-        <div id="icon-events" class="icon32"></div>
         <h1><?php echo esc_html( eme_translate( $info['title'] ) ); ?></h1>
 <?php
     if ( $event['recurrence_id'] ) {

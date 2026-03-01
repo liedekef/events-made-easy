@@ -571,8 +571,6 @@ function eme_task_signups_table_layout( $message = '' ) {
     echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
-         <div id='icon-edit' class='icon32'>
-         </div>
          <h1>" . __( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
@@ -625,7 +623,7 @@ function eme_task_signups_table_layout( $message = '' ) {
     <?php } ?>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='task-signups-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">

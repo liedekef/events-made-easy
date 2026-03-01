@@ -675,7 +675,7 @@ div#eme_div_import {
     border: 1px solid grey;
 }
 
-#bulkactions {
+.bulkactions {
     display: grid;
     padding-top: 5px;
 }

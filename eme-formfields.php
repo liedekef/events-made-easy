@@ -209,8 +209,6 @@ function eme_formfields_table_layout( $message = '' ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
 
     <div id="formfields-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
@@ -233,7 +231,7 @@ function eme_formfields_table_layout( $message = '' ) {
     <button id="FormfieldsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='formfields-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -280,9 +278,6 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
     }
     $layout = "
    <div class='wrap'>
-      <div id='icon-edit' class='icon32'>
-      </div>
-
       <h1>" . $h1_string . '</h1>';
 
     if ( $message != '' ) {

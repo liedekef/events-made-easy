@@ -2715,8 +2715,6 @@ function eme_emails_page() {
 ?>
         <div class="wrap nosubsub">
         <div id="poststuff">
-        <div id="icon-edit" class="icon32">
-        </div>
         <h1><?php esc_html_e( 'Mailing report', 'events-made-easy' ); ?></h1>
     <form action="#" method="post">
     <input type="search" class="eme_searchfilter" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
@@ -2737,8 +2735,6 @@ function eme_emails_page() {
     // now show the form
 ?>
 <div class="wrap">
-<div id="icon-events" class="icon32">
-</div>
 <div class="eme-tabs" <?php echo $data_forced_tab; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?>>
     <div class="eme-tab" data-tab="tab-eventmails"><?php esc_html_e( 'Event related email', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></div>
@@ -3195,7 +3191,7 @@ function eme_mails_div() {
     </form>
     <br>
     <div id="mails-message" class="eme-hidden" ></div>
-    <div>
+    <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_mails" name="eme_admin_action_mails">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -3251,7 +3247,7 @@ function eme_mailings_div() {
     </form>
     <br>
     <div id="mailings-message" class="eme-hidden" ></div>
-    <div>
+    <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_mailings" name="eme_admin_action_mailings">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -3285,7 +3281,7 @@ function eme_mailings_archive_div() {
     <button id='ArchivedMailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
     </form>
     <div id="archivedmailings-message" class="eme-hidden" ></div>
-    <div>
+    <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_archivedmailings" name="eme_admin_action_archivedmailings">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>

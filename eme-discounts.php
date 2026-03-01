@@ -380,8 +380,6 @@ function eme_discounts_main_layout( $message = '' ) {
 	$dgroups_destination   = esc_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=dgroups' ) );
 	$html                  = "
       <div class='wrap nosubsub'>\n
-         <div id='icon-edit' class='icon32'>
-         </div>
          <h1>" . __( 'Discount management', 'events-made-easy' ) . '</h1>
    ';
 	if ( ! empty( $message ) ) {
@@ -408,8 +406,6 @@ function eme_manage_discounts_layout( $message = '' ) {
 	?>
 		<div class="wrap nosubsub">
 		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-		</div>
 		 
 		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
 			<p><?php echo wp_kses_post( $message ); ?></p>
@@ -445,7 +441,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	</form>
 	</div>
 	<?php } ?>
-    <div id="bulkactions">
+    <div class="bulkactions">
 	<form id='discounts-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -490,8 +486,6 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	?>
 		<div class="wrap nosubsub">
 		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-		</div>
 		 
 	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
 		<p><?php echo wp_kses_post( $message ); ?></p>
@@ -527,7 +521,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	</form>
 	</div>
 	<?php } ?>
-    <div id="bulkactions">
+    <div class="bulkactions">
 	<form id='discountgroups-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -841,8 +835,6 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 
 	?>
 	<div class='wrap'>
-		<div id='icon-edit' class='icon32'>
-		</div>
 		 
 		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
@@ -1015,9 +1007,6 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 
 	?>
 	<div class='wrap'>
-		<div id='icon-edit' class='icon32'>
-		</div>
-		 
 		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
 		<?php if ( $message != '' ) { ?>

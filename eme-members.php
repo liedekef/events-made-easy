@@ -1435,8 +1435,6 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 ?>
     <div class="wrap">
         <div id="poststuff">
-        <div id="icon-edit" class="icon32">
-        </div>
 
 <?php
     if ( $action == 'add' && ! empty( $_POST['membership_id'] ) ) {
@@ -1815,9 +1813,6 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
     }
 ?>
     <div class="wrap">
-        <div id="icon-edit" class="icon32">
-        </div>
-
         <h1>
 <?php
     if ( $is_new_membership == 1 ) {
@@ -2859,7 +2854,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 ?>
     </form>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='members-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -3190,9 +3185,6 @@ function eme_manage_members_layout( $message ) {
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
-
     <div id="members-message" <?php echo $style_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>>
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -3265,8 +3257,6 @@ function eme_manage_memberships_layout( $message ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
-    <div id="icon-edit" class="icon32">
-    </div>
 
 <?php
     if ( ! empty( $message ) ) {
@@ -3289,7 +3279,7 @@ function eme_manage_memberships_layout( $message ) {
 
     <h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
 
-    <div id="bulkactions">
+    <div class="bulkactions">
     <form id='memberships-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">

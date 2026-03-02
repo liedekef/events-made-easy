@@ -659,8 +659,6 @@ function eme_enqueue_datetimepicker() {
     }
 }
 
-// QuickTags custom buttons are added via wp_add_inline_script() in eme_get_editor_settings()
-
 // action executed after plugin update
 // currently not needed, so we disable the action hook
 function eme_update_completed( $upgrader_object, $options ) {

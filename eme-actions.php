@@ -513,7 +513,22 @@ function eme_admin_notices() {
             }
         }
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
-        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), esc_html($current_user->display_name), esc_url( admin_url( 'widgets.php' ) ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', esc_url( admin_url( 'admin.php?page=eme-options' ) ) ); ?></div>
+        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php
+			/* translators: 1: user name, 2: widgets URL, 3: widgets title, 4: template tags URL, 5: template tags title, 6: shortcodes URL, 7: shortcodes title, 8: settings URL, 9: settings title, 10: dismiss title */
+			printf(
+				__( "<p>Hey, <strong>%1\$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2\$s' title='%3\$s'>widgets</a>, <a href='%4\$s' title='%5\$s'>template tags</a> or <a href='%6\$s' title='%7\$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8\$s' title='%9\$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10\$s'>click here</a> and you won't see this again!</p>", 'events-made-easy' ),
+				esc_html( $current_user->display_name ),
+				esc_url( admin_url( 'widgets.php' ) ),
+				esc_attr__( 'Widgets page', 'events-made-easy' ),
+				esc_url( '//www.e-dynamics.be/wordpress/#template-tags' ),
+				esc_attr__( 'Template tags documentation', 'events-made-easy' ),
+				esc_url( '//www.e-dynamics.be/wordpress/#shortcodes' ),
+				esc_attr__( 'Shortcodes documentation', 'events-made-easy' ),
+				esc_url( admin_url( 'admin.php?page=eme-options' ) ),
+				esc_attr__( 'Change settings', 'events-made-easy' ),
+				esc_attr__( "Don't show this advice again", 'events-made-easy' )
+			);
+		?></div>
 <?php
         }
 
@@ -644,21 +659,7 @@ function eme_enqueue_datetimepicker() {
     }
 }
 
-function eme_add_my_quicktags() {
-    global $plugin_page;
-    if ( preg_match( '/^eme-/', $plugin_page ) && wp_script_is( 'quicktags' ) ) {
-?>
-        <script type="text/javascript">
-        if (typeof QTags != 'undefined') {
-            QTags.addButton( 'br', 'br', '<br>' );
-            QTags.addButton( 'p', 'p', '<p>', '</p>' );
-    }
-    </script>
-<?php
-    }
-}
-// the eme_add_my_quicktags action will be added when needed, see function eme_get_editor_settings
-// add_action('admin_print_footer_scripts', 'eme_add_my_quicktags');
+// QuickTags custom buttons are added via wp_add_inline_script() in eme_get_editor_settings()
 
 // action executed after plugin update
 // currently not needed, so we disable the action hook

@@ -2628,8 +2628,16 @@ function eme_strip_weird( $value ) {
 }
 
 function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $media_buttons = true, $rows = 10 ) {
-    if ( ! $tinymce && ! has_action( 'eme_add_my_quicktags' ) ) {
-        add_action( 'admin_print_footer_scripts', 'eme_add_my_quicktags' );
+    if ( ! $tinymce ) {
+        static $quicktags_buttons_added = false;
+        if ( ! $quicktags_buttons_added ) {
+            $js = "if (typeof QTags !== 'undefined') {\n" .
+                "\tQTags.addButton('br', 'br', '<br>');\n" .
+                "\tQTags.addButton('p', 'p', '<p>', '</p>');\n" .
+                '}';
+            wp_add_inline_script( 'quicktags', $js );
+            $quicktags_buttons_added = true;
+        }
     }
 
     return [

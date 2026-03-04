@@ -374,7 +374,7 @@ function eme_cron_form( $message = '' ) {
 <?php
     $eme_queued_count = eme_get_queued_count();
     if ( $eme_queued_count > 1 ) {
-        echo sprintf( __( 'There are %d messages in the mail queue.', 'events-made-easy' ), $eme_queued_count );
+        printf( esc_html__( 'There are %d messages in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
     } elseif ( $eme_queued_count ) {
         esc_html_e( 'There is 1 message in the mail queue.', 'events-made-easy' );
     } else {
@@ -475,15 +475,15 @@ function eme_cron_form( $message = '' ) {
             if (!empty($eme_cron_queued_schedule)) {
                 $mail_schedule = $schedules[ $eme_cron_queued_schedule ];
                 if ( $eme_cron_queue_count> 0 ) {
-                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ), esc_html( $mail_schedule['display'] ) );
                 } else {
-                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
+                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), esc_html( $mail_schedule['display'] ) );
                 }
             } else {
                 if ( $eme_cron_queue_count> 0 ) {
-                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count );
+                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ) );
                 } else {
-                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
+                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), esc_html( $mail_schedule['display'] ) );
                 }
             }
         }

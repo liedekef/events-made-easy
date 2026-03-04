@@ -379,7 +379,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     if ( $action == 'add' ) {
         esc_html_e( 'Insert New Location', 'events-made-easy' );
     } else {
-        echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), esc_html( eme_translate( $location['location_name'] ) ) );
+        printf( esc_html__( "Edit Location '%s'", 'events-made-easy' ), esc_html( eme_translate( $location['location_name'] ) ) );
     }
 ?>
         </h1>
@@ -553,27 +553,27 @@ function eme_meta_box_div_location_details( $location ) {
             <div class="inside" style="float:left; width:50%">
             <table><tr>
             <td><label for="location_address1"><?php echo eme_translate( get_option( 'eme_address1_string' ) ); ?></label></td>
-            <td><input id="location_address1" name="location_address1" type="text" value="<?php echo eme_esc_html( $location['location_address1'] ); ?>" size="40"></td>
+            <td><input id="location_address1" name="location_address1" type="text" value="<?php echo esc_html( $location['location_address1'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_address2"><?php echo eme_translate( get_option( 'eme_address2_string' ) ); ?></label></td>
-            <td><input id="location_address2" name="location_address2" type="text" value="<?php echo eme_esc_html( $location['location_address2'] ); ?>" size="40"></td>
+            <td><input id="location_address2" name="location_address2" type="text" value="<?php echo esc_html( $location['location_address2'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_city"><?php esc_html_e( 'City', 'events-made-easy' ); ?></label></td>
-            <td><input name="location_city" id="location_city" type="text" value="<?php echo eme_esc_html( $location['location_city'] ); ?>" size="40"></td>
+            <td><input name="location_city" id="location_city" type="text" value="<?php echo esc_html( $location['location_city'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_state"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-            <td><input name="location_state" id="location_state" type="text" value="<?php echo eme_esc_html( $location['location_state'] ); ?>" size="40"></td>
+            <td><input name="location_state" id="location_state" type="text" value="<?php echo esc_html( $location['location_state'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_zip"><?php esc_html_e( 'Postal code', 'events-made-easy' ); ?></label></td>
-            <td><input name="location_zip" id="location_zip" type="text" value="<?php echo eme_esc_html( $location['location_zip'] ); ?>" size="40"></td>
+            <td><input name="location_zip" id="location_zip" type="text" value="<?php echo esc_html( $location['location_zip'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_country"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-            <td><input name="location_country" id="location_country" type="text" value="<?php echo eme_esc_html( $location['location_country'] ); ?>" size="40"></td>
+            <td><input name="location_country" id="location_country" type="text" value="<?php echo esc_html( $location['location_country'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td colspan='2'>
@@ -586,11 +586,11 @@ function eme_meta_box_div_location_details( $location ) {
             </tr>
             <tr>
             <td><label for="location_latitude"><?php esc_html_e( 'Latitude', 'events-made-easy' ); ?></label></td>
-            <td><input id="location_latitude" name="location_latitude" type="text" value="<?php echo eme_esc_html( $location['location_latitude'] ); ?>" size="40"></td>
+            <td><input id="location_latitude" name="location_latitude" type="text" value="<?php echo esc_html( $location['location_latitude'] ); ?>" size="40"></td>
             </tr>
             <tr>
             <td><label for="location_longitude"><?php esc_html_e( 'Longitude', 'events-made-easy' ); ?></label></td>
-            <td><input id="location_longitude" name="location_longitude" type="text" value="<?php echo eme_esc_html( $location['location_longitude'] ); ?>" size="40"></td>
+            <td><input id="location_longitude" name="location_longitude" type="text" value="<?php echo esc_html( $location['location_longitude'] ); ?>" size="40"></td>
             </tr></table>
             </div>
             <div class="inside" style="float:left;">
@@ -625,7 +625,7 @@ function eme_meta_box_div_location_details( $location ) {
             <div class="inside">
             <table><tr>
             <td><label for="eme_loc_prop_map_icon"><?php esc_html_e( 'Map icon url', 'events-made-easy' ); ?></label></td>
-        <td><input id="eme_loc_prop_map_icon" name="eme_loc_prop_map_icon" type="text" value="<?php echo eme_esc_html( $location['location_properties']['map_icon'] ); ?>" size="40">
+        <td><input id="eme_loc_prop_map_icon" name="eme_loc_prop_map_icon" type="text" value="<?php echo esc_html( $location['location_properties']['map_icon'] ); ?>" size="40">
         <br><?php esc_html_e( "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here.", 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'Size should be 32x32, bottom center will be pointing to the location on the map.', 'events-made-easy' ); ?>
             </td>
@@ -724,7 +724,7 @@ function eme_meta_box_div_location_url( $location ) {
     <table>
     <tr>
     <td><label for="location_url"><?php esc_html_e( 'External URL', 'events-made-easy' ); ?></label></td>
-    <td><input id="location_url" name="location_url" type="text" value="<?php echo eme_esc_html( $location['location_url'] ); ?>" size="40">
+    <td><input id="location_url" name="location_url" type="text" value="<?php echo esc_html( $location['location_url'] ); ?>" size="40">
     </td>
     </tr>
     <tr>

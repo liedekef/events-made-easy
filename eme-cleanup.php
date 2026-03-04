@@ -424,9 +424,9 @@ function eme_cleanup_form( $message = '', $preview_people = null ) {
 	<?php
 	$eme_queued_count = eme_get_queued_count();
 	if ( $eme_queued_count > 1 ) {
-			echo sprintf( __( 'There are %d messages in the mail queue.', 'events-made-easy' ), $eme_queued_count );
+			printf( esc_html__( 'There are %d messages in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
 	} elseif ( $eme_queued_count ) {
-			echo sprintf( __( 'There is 1 message in the mail queue.', 'events-made-easy' ), $eme_queued_count );
+			printf( esc_html__( 'There is 1 message in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
 	} else {
 		esc_html_e( 'There are no messages in the mail queue.', 'events-made-easy' );
 	}

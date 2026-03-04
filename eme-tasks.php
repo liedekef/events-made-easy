@@ -571,7 +571,7 @@ function eme_task_signups_table_layout( $message = '' ) {
     echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
-         <h1>" . __( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
+         <h1>" . esc_html__( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
     <div id="tasksignups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
@@ -904,7 +904,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
         <?php
         if ( ! empty( $tasks ) ) {
             esc_html_e( 'Change the date of the listed tasks by this many days', 'events-made-easy' );
-            print "<input type='number' id=task_offset name=task_offset><button type='button' name='change_task_days' id='change_task_days'>" . __( 'Change', 'events-made-easy' ) . '</button>';
+            print "<input type='number' id=task_offset name=task_offset><button type='button' name='change_task_days' id='change_task_days'>" . esc_html__( 'Change', 'events-made-easy' ) . '</button>';
         }
         ?>
         <table class="eme_tasks">
@@ -972,7 +972,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                 <input <?php echo $required; ?> id="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" size="12" aria-label="spaces" value="<?php echo esc_attr( $task['spaces'] ); ?>">
                 </td>
                 <td>
-                <textarea class="eme_fullresizable" id="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
+                <textarea class="eme_fullresizable" id="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $task['description'] ); ?></textarea>
                 </td>
                 <td>
                 <a href="#" class='eme_remove_task'><?php echo "<img class='eme_remove_task' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img class='eme_add_task' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>

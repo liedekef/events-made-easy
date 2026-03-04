@@ -4113,7 +4113,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         switch ( $html_editor ) {
             case 'jodit':
                 ?>
-                <textarea class="eme-editor" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?>><?php echo eme_esc_html( $value ); ?></textarea>
+                <textarea class="eme-editor" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?>><?php echo esc_html( $value ); ?></textarea>
                 <?php
                 break;
             default: // the original tinymce goes here
@@ -4126,7 +4126,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         }
     } else { 
         ?>
-        <textarea name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6" style="width: 95%"><?php echo eme_esc_html( $value ); ?></textarea>
+        <textarea name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6" style="width: 95%"><?php echo esc_html( $value ); ?></textarea>
         <?php
     }
 }

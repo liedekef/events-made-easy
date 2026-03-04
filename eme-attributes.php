@@ -113,9 +113,9 @@ function eme_attributes_form( $eme_array ) {
 							}
 							foreach ( $attributes as $attribute ) {
 								if ( $attribute == $name ) {
-									echo "<option selected='selected'>" . eme_esc_html( $attribute ) . '</option>';
+									echo "<option selected='selected'>" . esc_html( $attribute ) . '</option>';
 								} else {
-									echo '<option>' . eme_esc_html( $attribute ) . '</option>';
+									echo '<option>' . esc_html( $attribute ) . '</option>';
 								}
 							}
 							?>
@@ -123,7 +123,7 @@ function eme_attributes_form( $eme_array ) {
 						<a href="#"><?php esc_html_e( 'Remove', 'events-made-easy' ); ?></a>
 					</td>
 					<td>
-			<textarea rows="2" cols="40" id="eme_attr_<?php echo esc_attr( $count ); ?>_id" name="eme_attr_<?php echo esc_attr( $count ); ?>_name"><?php echo eme_esc_html( $value ); ?></textarea>
+			<textarea rows="2" cols="40" id="eme_attr_<?php echo esc_attr( $count ); ?>_id" name="eme_attr_<?php echo esc_attr( $count ); ?>_name"><?php echo esc_html( $value ); ?></textarea>
 					</td>
 					</tr>
 					<?php
@@ -136,7 +136,7 @@ function eme_attributes_form( $eme_array ) {
 						<select name="eme_attr_<?php echo esc_attr( $count ); ?>_ref">
 							<?php
 							foreach ( $attributes as $attribute ) {
-								echo '<option>' . eme_esc_html( $attribute ) . '</option>';
+								echo '<option>' . esc_html( $attribute ) . '</option>';
 							}
 							?>
 						</select>

@@ -4816,14 +4816,14 @@ function eme_registration_seats_page( $pending = 0 ) {
         check_admin_referer( "eme_admin", 'eme_admin_nonce' );
         $event = eme_get_event( $event_id );
         if ( empty( $event ) ) {
-            print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
+            print "<div id='message' class='error'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             return;
         }
         $current_userid = get_current_user_id();
         if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_registrations' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) ) {
 
-            print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
+            print "<div id='message' class='error'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             return;
         }
         // we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
@@ -4854,14 +4854,14 @@ function eme_registration_seats_page( $pending = 0 ) {
         $event_id = $booking['event_id'];
         $event    = eme_get_event( $event_id );
         if ( empty( $event ) ) {
-            print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
+            print "<div id='message' class='error'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             return;
         }
         $current_userid = get_current_user_id();
         if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_registrations' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) ) {
 
-            print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
+            print "<div id='message' class='error'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             return;
         }
 
@@ -4909,7 +4909,7 @@ function eme_registration_seats_page( $pending = 0 ) {
             check_admin_referer( "eme_admin", 'eme_admin_nonce' );
             $event = eme_get_event( $event_id );
             if ( empty( $event ) ) {
-                print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
+                print "<div id='message' class='error'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
             } else {
                 $booking_res = eme_book_seats( $event, $send_mail );
                 $result      = $booking_res[0];
@@ -5080,7 +5080,7 @@ function eme_registration_seats_page( $pending = 0 ) {
                 if ( $send_mail ) {
                     $mail_res = eme_email_booking_action( $booking, $action );
                     if ( ! $mail_res ) {
-                        print "<div id='mailmessage' class='error notice is-dismissible'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+                        print "<div id='mailmessage' class='error notice is-dismissible'><p>" . esc_html__( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
                     }
                 }
             } else {
@@ -5258,9 +5258,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         } else {
             $event_q_string = '&event_id=' . intval( $_GET['event_id'] );
             if ( $pending ) {
-                printf( __( 'Manage pending bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
+                printf( esc_html__( 'Manage pending bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             } else {
-                printf( __( 'Manage approved bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
+                printf( esc_html__( 'Manage approved bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             }
         }
     } else {

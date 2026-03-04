@@ -1699,7 +1699,7 @@ function eme_printable_booking_report( $event_id ) {
 ?>
             </td>
             <td class='eme_print_total_price'><?php echo eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ); ?></td>
-            <td class='eme_print_comment'><?php echo eme_esc_html( $booking['booking_comment'] ); ?></td> 
+            <td class='eme_print_comment'><?php echo esc_html( $booking['booking_comment'] ); ?></td>
 <?php
         $answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
         foreach ( $booking_answer_fieldids as $field_id ) {
@@ -1734,7 +1734,7 @@ function eme_printable_booking_report( $event_id ) {
                 $class         = 'eme_print_formfield' . $answer['field_id'];
                 $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                 if ( ! empty( $tmp_formfield ) ) {
-                    print "<span class='$class'>$grouping.$occurence " . eme_esc_html( $tmp_formfield['field_name'] ) . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) . '</span><br>';
+                    print "<span class='$class'>$grouping.$occurence " . esc_html( $tmp_formfield['field_name'] ) . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) . '</span><br>';
                 }
             }
         }
@@ -1856,11 +1856,11 @@ function eme_person_verify_layout() {
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
                 print '<td>' . $person_id . '</td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
                 if ( $row['wp_id'] && isset( $wp_users[ $row['wp_id'] ] ) ) {
-                    print '<td>' . eme_esc_html( $wp_users[ $row['wp_id'] ] ) . '</td>';
+                    print '<td>' . esc_html( $wp_users[ $row['wp_id'] ] ) . '</td>';
                 } else {
                     print '<td>' . esc_html__('Non-existing WP user linked!!','events-made-easy' ) . '</td>';
                 }
@@ -1904,9 +1904,9 @@ function eme_person_verify_layout() {
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
                 print '<td>' . $person_id . '</td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
                 $membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
                 print "<td>$membership_names</td>";
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
@@ -1947,9 +1947,9 @@ function eme_person_verify_layout() {
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
                 print '<td>' . $person_id . '</td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
-                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
+                print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
                 $membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
                 print "<td>$membership_names</td>";
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
@@ -2356,7 +2356,7 @@ function eme_manage_people_layout( $message = '' ) {
 <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage people', 'events-made-easy' ); ?></h1>
-    <?php echo sprintf( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) ); ?><br>
+    <?php printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) ); ?><br>
 
     <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
         <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=0" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
@@ -2483,7 +2483,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <table>
         <tr>
         <td style="vertical-align:top"><label for="firstname"><?php esc_html_e( 'First name', 'events-made-easy' ); ?></label></td>
-        <td><input id="firstname" name="firstname" type="text" value="<?php echo eme_esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+        <td><input id="firstname" name="firstname" type="text" value="<?php echo esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2496,7 +2496,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td style="vertical-align:top"><label for="lastname"><?php esc_html_e( 'Last name', 'events-made-easy' ); ?></label></td>
-        <td><input id="lastname" name="lastname" type="text" value="<?php echo eme_esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+        <td><input id="lastname" name="lastname" type="text" value="<?php echo esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2507,7 +2507,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td style="vertical-align:top"><label for="email"><?php esc_html_e( 'Email', 'events-made-easy' ); ?></label></td>
-        <td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?> autocomplete="off"><br>
+        <td><input id="email" name="email" type="email" value="<?php echo esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?> autocomplete="off"><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2549,7 +2549,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         foreach ( $familymember_person_ids as $family_person_id ) {
             $family_person = eme_get_person( $family_person_id );
             if ( $family_person ) {
-                print "<a href='" . esc_url( admin_url( "admin.php?page=eme-people&eme_admin_action=edit_person&person_id=$family_person_id" ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $family_person['firstname'], $family_person['lastname'], $family_person['email'] ) ) . '</a><br>';
+                print "<a href='" . esc_url( admin_url( "admin.php?page=eme-people&eme_admin_action=edit_person&person_id=$family_person_id" ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( eme_format_full_name( $family_person['firstname'], $family_person['lastname'], $family_person['email'] ) ) . '</a><br>';
             }
         }
     }
@@ -2559,27 +2559,27 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="phone"><?php esc_html_e( 'Phone Number', 'events-made-easy' ); ?></label></td>
-        <td><input id="phone" name="phone" type="text" value="<?php echo eme_esc_html( $person['phone'] ); ?>" size="40" autocomplete="off"></td>
+        <td><input id="phone" name="phone" type="text" value="<?php echo esc_html( $person['phone'] ); ?>" size="40" autocomplete="off"></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="address1"><?php echo get_option( 'eme_address1_string' ); ?></label></td>
-        <td><input id="address1" name="address1" type="text" value="<?php echo eme_esc_html( $person['address1'] ); ?>" size="40"></td>
+        <td><input id="address1" name="address1" type="text" value="<?php echo esc_html( $person['address1'] ); ?>" size="40"></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="address2"><?php echo get_option( 'eme_address2_string' ); ?></label></td>
-        <td><input id="address2" name="address2" type="text" value="<?php echo eme_esc_html( $person['address2'] ); ?>" size="40"></td>
+        <td><input id="address2" name="address2" type="text" value="<?php echo esc_html( $person['address2'] ); ?>" size="40"></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="zip"><?php esc_html_e( 'Postal code', 'events-made-easy' ); ?></label></td>
-        <td><input name="zip" id="zip" type="text" value="<?php echo eme_esc_html( $person['zip'] ); ?>" size="40"></td>
+        <td><input name="zip" id="zip" type="text" value="<?php echo esc_html( $person['zip'] ); ?>" size="40"></td>
         <td></td>
         </tr>
         <tr>
         <td><label for="city"><?php esc_html_e( 'City', 'events-made-easy' ); ?></label></td>
-        <td><input name="city" id="city" type="text" value="<?php echo eme_esc_html( $person['city'] ); ?>" size="40"></td>
+        <td><input name="city" id="city" type="text" value="<?php echo esc_html( $person['city'] ); ?>" size="40"></td>
         <td></td>
         </tr>
         <tr>
@@ -2594,8 +2594,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="dp_birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
-        <td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
-        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo eme_esc_html( $person['birthdate'] ); ?>' data-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
+        <td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo esc_html( $person['birthdate'] ); ?>'>
+        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo esc_html( $person['birthdate'] ); ?>' data-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
         <td></td>
         </tr>
         <tr>
@@ -2609,11 +2609,11 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="birthplace"><?php esc_html_e( 'Place of birth', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><input id="birthplace" name="birthplace" type="text" value="<?php echo eme_esc_html( $person['birthplace'] ); ?>" size="40"></td>
+        <td colspan=2><input id="birthplace" name="birthplace" type="text" value="<?php echo esc_html( $person['birthplace'] ); ?>" size="40"></td>
         </tr>
         <tr>
         <td><label for="language"><?php esc_html_e( 'Language', 'events-made-easy' ); ?></label></td>
-        <td colspan=2><input id="language" name="language" type="text" value="<?php echo eme_esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
+        <td colspan=2><input id="language" name="language" type="text" value="<?php echo esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
         </tr>
         <tr>
         <tr>
@@ -2776,15 +2776,15 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         <table>
         <tr>
         <td><label for="name"><?php esc_html_e( 'Name', 'events-made-easy' ); ?></label></td>
-        <td><input required='required' id="name" name="name" type="text" value="<?php echo eme_esc_html( $group['name'] ); ?>" size="40"></td>
+        <td><input required='required' id="name" name="name" type="text" value="<?php echo esc_html( $group['name'] ); ?>" size="40"></td>
         </tr>
         <tr>
         <td><label for="description"><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></td>
-        <td><input id="description" name="description" type="text" value="<?php echo eme_esc_html( $group['description'] ); ?>" size="40"></td>
+        <td><input id="description" name="description" type="text" value="<?php echo esc_html( $group['description'] ); ?>" size="40"></td>
         </tr>
         <tr>
         <td><label for="email"><?php esc_html_e( 'Group email', 'events-made-easy' ); ?></label></td>
-        <td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $group['email'] ); ?>" size="40"><br>
+        <td><input id="email" name="email" type="email" value="<?php echo esc_html( $group['email'] ); ?>" size="40"><br>
             <?php esc_html_e( 'If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty.', 'events-made-easy' ); ?>
             </td>
         </tr>

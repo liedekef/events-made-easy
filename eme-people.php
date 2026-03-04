@@ -4814,42 +4814,19 @@ function eme_get_indexed_users() {
 }
 
 function eme_get_wp_users( $search, $offset = 0, $pagesize = 0, $wp_ids_to_exclude = [] ) {
-    $meta_query = [
-        'relation' => 'OR',
-        [
-            'key'     => 'nickname',
-            'value'   => $search,
-            'compare' => 'LIKE',
+    $args = [
+        'search'         => '*' . $search . '*',
+        'search_columns' => [
+            'user_login',
+            'user_email',
+            'display_name',
+            'user_nicename',
         ],
-        [
-            'key'     => 'first_name',
-            'value'   => $search,
-            'compare' => 'LIKE',
-        ],
-        [
-            'key'     => 'last_name',
-            'value'   => $search,
-            'compare' => 'LIKE',
-        ],
-        [
-            'key'     => 'display_name',
-            'value'   => $search,
-            'compare' => 'LIKE',
-        ],
-        [
-            'key'     => 'user_email',
-            'value'   => $search,
-            'compare' => 'LIKE',
-        ],
+        'orderby'        => 'ID',
+        'order'          => 'ASC',
+        'count_total'    => true,
     ];
-    $args       = [
-        'meta_query'  => $meta_query,
-        'orderby'     => 'ID',
-        'order'       => 'ASC',
-        'count_total' => true,
-        // 'fields'      => [ 'ID' ], // default is all, we want all
-    ];
-    if (!empty($wp_ids_to_exclude)) {
+    if ( ! empty( $wp_ids_to_exclude ) ) {
         $args['exclude'] = $wp_ids_to_exclude;
     }
     if ( $pagesize > 0 ) {
@@ -4859,8 +4836,7 @@ function eme_get_wp_users( $search, $offset = 0, $pagesize = 0, $wp_ids_to_exclu
     // while get_users works, it doesn't give the total for paged results, so we need WP_User_Query directly
     //$users = get_users($args);
     $user_query = new WP_User_Query( $args );
-    $users      = $user_query->get_results(); // array of WP_User objects, like get_users
-    return $users;
+    return $user_query->get_results();
 }
 
 add_action( 'wp_ajax_eme_subscribe', 'eme_subscribe_ajax' );

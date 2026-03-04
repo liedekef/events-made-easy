@@ -398,7 +398,7 @@ function eme_create_events_submenu() {
 function eme_explain_events_page_missing() {
 	$advice = sprintf( __( "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!", 'events-made-easy' ), __( 'Events page', 'events-made-easy' ) );
 	?>
-	<div id="message" class="error"><p> <?php echo eme_esc_html( $advice ); ?> </p></div>
+	<div id="message" class="error"><p> <?php echo esc_html( $advice ); ?> </p></div>
 	<?php
 }
 

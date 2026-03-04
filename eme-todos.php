@@ -216,7 +216,7 @@ function eme_meta_box_div_event_todos( $event ) {
 				<input name='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' id='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' size="5" aria-label="event offset in days" value="<?php echo esc_attr( $todo['todo_offset'] ); ?>">
 				</td>
 				<td style="width: 60%;">
-				<textarea class="eme_fullresizable" id="eme_todos[<?php echo esc_attr( $count ); ?>][description]" name="eme_todos[<?php echo esc_attr( $count ); ?>][description]" ><?php echo eme_esc_html( $todo['description'] ); ?></textarea>
+				<textarea class="eme_fullresizable" id="eme_todos[<?php echo esc_attr( $count ); ?>][description]" name="eme_todos[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $todo['description'] ); ?></textarea>
 				</td>
 				<td>
 				<a href="#" class='eme_remove_todo'><?php echo "<img class='eme_remove_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_todo"><?php echo "<img class='eme_add_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "'>"; ?></a>

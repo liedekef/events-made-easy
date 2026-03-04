@@ -358,7 +358,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		<?php esc_html_e( 'If you want, use this to import countries into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
-	<?php echo sprintf( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ), 'https://en.wikipedia.org/wiki/ISO_3166-1' ); ?>
+	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ) ), esc_url( 'https://en.wikipedia.org/wiki/ISO_3166-1' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ); ?>
 	<br>
@@ -424,7 +424,7 @@ function eme_manage_states_layout( $message = '' ) {
 		<?php esc_html_e( 'If you want, use this to import states into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
-	<?php echo sprintf( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ), 'https://wikipedia.org/wiki/ISO_3166-2' ); ?>
+	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ) ), esc_url( 'https://wikipedia.org/wiki/ISO_3166-2' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ); ?>
 	<?php } ?>

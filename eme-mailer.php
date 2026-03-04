@@ -2887,7 +2887,7 @@ function eme_emails_page() {
             echo '</div>';
         }
     } else {
-        echo "<textarea name='event_mail_message' id='event_mail_message' rows='10' required='required'>" . eme_esc_html( $event_mail_message ) . '</textarea>';
+        echo "<textarea name='event_mail_message' id='event_mail_message' rows='10' required='required'>" . esc_html( $event_mail_message ) . '</textarea>';
     }
 ?>
         </div>
@@ -2896,10 +2896,10 @@ function eme_emails_page() {
     esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
     print "<br><a href='//www.e-dynamics.be/wordpress/?cat=25'>" . esc_html__( 'Event placeholders', 'events-made-easy' ) . '</a>';
     print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-12-people/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a>';
-    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=48'>" . esc_html__( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Attendee emails', 'events-made-easy' ) . ')';
-    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=45'>" . esc_html__( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Booking emails', 'events-made-easy' ) . ')';
-    print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . __( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
-    print '<br>' . __( 'You can also use any shortcode you want.', 'events-made-easy' );
+    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=48'>" . esc_html__( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Attendee emails', 'events-made-easy' ) . ')';
+    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=45'>" . esc_html__( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Booking emails', 'events-made-easy' ) . ')';
+    print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
+    print '<br>' . esc_html__( 'You can also use any shortcode you want.', 'events-made-easy' );
 ?>
         </p></div>
             <hr>
@@ -2956,7 +2956,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-            printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
+            printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
 <?php
@@ -3071,16 +3071,16 @@ function eme_emails_page() {
                 echo '</div>';
             }
         } else {
-            echo "<textarea name='generic_mail_message' id='generic_mail_message' rows='10' required='required'>" . eme_esc_html( $generic_mail_message ) . '</textarea>';
+            echo "<textarea name='generic_mail_message' id='generic_mail_message' rows='10' required='required'>" . esc_html( $generic_mail_message ) . '</textarea>';
         }
 ?>
         </div>
         <div>
 <?php
         esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
-        print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-12-people/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'People or groups', 'events-made-easy' ) . ')';
-        print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'members', 'events-made-easy' ) . ')';
-        print '<br>' . __( 'You can also use any shortcode you want.', 'events-made-easy' );
+        print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-12-people/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'People or groups', 'events-made-easy' ) . ')';
+        print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'members', 'events-made-easy' ) . ')';
+        print '<br>' . esc_html__( 'You can also use any shortcode you want.', 'events-made-easy' );
 ?>
         </div>
             <hr>
@@ -3138,7 +3138,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-                printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
+                printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
 <?php

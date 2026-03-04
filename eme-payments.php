@@ -208,7 +208,7 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
             $ret_string .= $result;
             $ret_string .= '</div>';
         } else {
-            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . __( 'Payment handling', 'events-made-easy' ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
         }
@@ -348,7 +348,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
                 $ret_string .= '</div>';
             }
         } else {
-            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . __( 'Payment handling', 'events-made-easy' ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
         }
@@ -475,7 +475,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
                 $ret_string .= '</div>';
             }
         } else {
-            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . __( 'Payment handling', 'events-made-easy' ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
         }

@@ -150,7 +150,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	<select id="search_type" name="search_type">
 	<?php
 	foreach ( $att_types as $key => $value ) {
-		echo "<option value='" . eme_esc_html( $key ) . "'>" . eme_esc_html( $value ) . '</option>';
+		echo "<option value='" . esc_html( $key ) . "'>" . esc_html( $value ) . '</option>';
 	}
 	?>
 	</select>

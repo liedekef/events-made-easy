@@ -1584,7 +1584,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <tr><td><?php esc_html_e( 'Membership', 'events-made-easy' ); ?></td>
         <td>
 <?php
-                    echo eme_esc_html( $membership['name'] );
+                    echo esc_html( $membership['name'] );
 ?>
     </td></tr>
     <?php if ( ! empty( $membership['properties']['family_membership'] ) ) { ?>
@@ -1605,7 +1605,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
                      if ( $related_member ) {
                          $related_person = eme_get_person( $related_member['person_id'] );
                          if ( $related_person ) {
-                             print "<br><a href='" . esc_url( admin_url( "admin.php?page=eme-members&eme_admin_action=edit_member&member_id=$related_member_id" ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
+                             print "<br><a href='" . esc_url( admin_url( "admin.php?page=eme-members&eme_admin_action=edit_member&member_id=$related_member_id" ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
                          }
                      }
                  }
@@ -1818,7 +1818,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
     if ( $is_new_membership == 1 ) {
         esc_html_e( 'Add a membership definition', 'events-made-easy' );
     } else {
-        echo sprintf( __( "Edit membership '%s'", 'events-made-easy' ), eme_esc_html( $membership['name'] ) );
+        printf( esc_html__( "Edit membership '%s'", 'events-made-easy' ), esc_html( $membership['name'] ) );
     }
 ?>
             </h1>
@@ -1890,11 +1890,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Name', 'events-made-easy' ); ?></label></td>
-    <td><input required='required' id="name" name="name" type="text" value="<?php echo eme_esc_html( $membership['name'] ); ?>" size="40"></td>
+    <td><input required='required' id="name" name="name" type="text" value="<?php echo esc_html( $membership['name'] ); ?>" size="40"></td>
     </tr>
     <tr>
     <td><label for="description"><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></td>
-    <td><input id="description" name="description" type="text" value="<?php echo eme_esc_html( $membership['description'] ); ?>" size="40"></td>
+    <td><input id="description" name="description" type="text" value="<?php echo esc_html( $membership['description'] ); ?>" size="40"></td>
     </tr>
     <tr>
     <td><label for="type"><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></td>
@@ -1982,13 +1982,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="price"><?php esc_html_e( 'Price', 'events-made-easy' ); ?></label></td>
-    <td><input id="price" name="properties[price]" type="text" value="<?php echo eme_esc_html( $membership['properties']['price'] ); ?>" size="4">
+    <td><input id="price" name="properties[price]" type="text" value="<?php echo esc_html( $membership['properties']['price'] ); ?>" size="4">
     <span class="eme_smaller"><br><?php esc_html_e( 'Use the point as decimal separator', 'events-made-easy' ); ?></span>
     </td>
     </tr>
     <tr>
     <td><label for="extra_charge"><?php esc_html_e( 'Extra charge for new members', 'events-made-easy' ); ?></label></td>
-    <td><input id="extra_charge" name="properties[extra_charge]" type="text" value="<?php echo eme_esc_html( $membership['properties']['extra_charge'] ); ?>" size="4">
+    <td><input id="extra_charge" name="properties[extra_charge]" type="text" value="<?php echo esc_html( $membership['properties']['extra_charge'] ); ?>" size="4">
     <span class="eme_smaller"><br><?php esc_html_e( 'Use the point as decimal separator', 'events-made-easy' ); ?></span>
     </td>
     </tr>
@@ -1998,7 +1998,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="vat_pct"><?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?></label></td>
-    <td><input id="vat_pct" name="properties[vat_pct]" type="text" value="<?php echo eme_esc_html( $membership['properties']['vat_pct'] ); ?>" size="4">%
+    <td><input id="vat_pct" name="properties[vat_pct]" type="text" value="<?php echo esc_html( $membership['properties']['vat_pct'] ); ?>" size="4">%
         <br><p class='eme_smaller'><?php esc_html_e( 'The price you indicate for memberships is VAT included, special placeholders are foreseen to indicate the price without VAT.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -2246,7 +2246,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="properties[new_subject_format]"><?php esc_html_e( 'New member email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[new_subject_format]" name="properties[new_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['new_subject_format'] ); ?>" size="40">
+    <td><input id="properties[new_subject_format]" name="properties[new_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['new_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?></p>
         <br>
     </td>
@@ -2316,7 +2316,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="properties[contact_new_subject_format]"><?php esc_html_e( 'Contactperson new member email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[contact_new_subject_format]" name="properties[contact_new_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_new_subject_format'] ); ?>" size="40">
+    <td><input id="properties[contact_new_subject_format]" name="properties[contact_new_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['contact_new_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ); ?></p>
         <br>
     </td>
@@ -2352,7 +2352,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Updated member email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[updated_subject_format]" name="properties[updated_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['updated_subject_format'] ); ?>" size="40">
+    <td><input id="properties[updated_subject_format]" name="properties[updated_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['updated_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member upon changes.', 'events-made-easy' ); ?></p>
         <br><p class='eme_smaller'><?php esc_html_e( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ); ?></p>
     </td>
@@ -2390,7 +2390,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership extended email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[extended_subject_format]" name="properties[extended_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['extended_subject_format'] ); ?>" size="40">
+    <td><input id="properties[extended_subject_format]" name="properties[extended_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['extended_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when the membership is extended.', 'events-made-easy' ); ?></p>
         <br>
     </td>
@@ -2469,7 +2469,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership paid email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[paid_subject_format]" name="properties[paid_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['paid_subject_format'] ); ?>" size="40">
+    <td><input id="properties[paid_subject_format]" name="properties[paid_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['paid_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when marked as paid.', 'events-made-easy' ); ?></p>
         <br>
     </td>
@@ -2539,7 +2539,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson membership paid email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[contact_paid_subject_format]" name="properties[contact_paid_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_paid_subject_format'] ); ?>" size="40">
+    <td><input id="properties[contact_paid_subject_format]" name="properties[contact_paid_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['contact_paid_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ); ?></p>
         <br>
     </td>
@@ -2576,7 +2576,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership reminder email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[reminder_subject_format]" name="properties[reminder_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['reminder_subject_format'] ); ?>" size="40">
+    <td><input id="properties[reminder_subject_format]" name="properties[reminder_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['reminder_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
         </p>
@@ -2616,7 +2616,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Membership stopped email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[stop_subject_format]" name="properties[stop_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['stop_subject_format'] ); ?>" size="40">
+    <td><input id="properties[stop_subject_format]" name="properties[stop_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['stop_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
         </p>
@@ -2647,7 +2647,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson membership stopped email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[contact_stop_subject_format]" name="properties[contact_stop_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_stop_subject_format'] ); ?>" size="40">
+    <td><input id="properties[contact_stop_subject_format]" name="properties[contact_stop_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['contact_stop_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ); ?>
                     <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
             </p>
@@ -2686,7 +2686,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson member deleted email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[contact_deleted_subject_format]" name="properties[contact_deleted_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_deleted_subject_format'] ); ?>" size="40">
+    <td><input id="properties[contact_deleted_subject_format]" name="properties[contact_deleted_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['contact_deleted_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ); ?>
             </p>
         <br>
@@ -2723,7 +2723,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email subject', 'events-made-easy' ); ?></label></td>
-    <td><input id="properties[contact_ipn_subject_format]" name="properties[contact_ipn_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_ipn_subject_format'] ); ?>" size="40">
+    <td><input id="properties[contact_ipn_subject_format]" name="properties[contact_ipn_subject_format]" type="text" value="<?php echo esc_html( $membership['properties']['contact_ipn_subject_format'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?></p>
         <br>
     </td>

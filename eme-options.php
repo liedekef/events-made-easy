@@ -1448,7 +1448,7 @@ function eme_explain_slug_conflict( $conflict_found ) {
         } else {
             esc_html_e( 'The EME SEO permalink settings are conflicting with an existing page (the permalink setting for either events, locations or categories is identical with the permalink of another WordPress page). This might cause problems rendering either events or that page. Please resolve the conflict by either changing your EME SEO permalink settings or the permalink of the conflicting page.', 'events-made-easy' );
             echo '<br>';
-            echo sprintf( __( 'The conflicting page can be edited <a href="%s" target="_blank">here</a>.', 'events-made-easy' ), esc_url( admin_url( "post.php?post=$conflict_found&action=edit" ) ) );
+            printf( wp_kses_post( __( 'The conflicting page can be edited <a href="%s" target="_blank">here</a>.', 'events-made-easy' ) ), esc_url( admin_url( "post.php?post=$conflict_found&action=edit" ) ) );
         }
         ?>
         </p></div>
@@ -1466,7 +1466,7 @@ function eme_options_page() {
     ?>
 <div class="wrap">
 <form id="eme_options_form" method="post" action="options.php" autocomplete="off">
-<input type='hidden' name='tab' value='<?php echo eme_esc_html( $tab ); ?>'>
+<input type='hidden' name='tab' value='<?php echo esc_html( $tab ); ?>'>
     <?php
     settings_fields( 'eme-options' );
     switch ( $tab ) {
@@ -1475,7 +1475,7 @@ function eme_options_page() {
 
 <h2><?php esc_html_e( 'General options', 'events-made-easy' ); ?></h2>
 <p> 
-    <?php printf( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ), esc_url( admin_url( 'profile.php' ) ) ); ?>
+    <?php printf( wp_kses_post( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ) ), esc_url( admin_url( 'profile.php' ) ) ); ?>
 </p>
 <table class="form-table">
             <?php
@@ -1739,11 +1739,11 @@ function eme_options_page() {
 <h2><?php esc_html_e( 'Events format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
-            eme_options_textarea( __( 'Default event list format header', 'events-made-easy' ), 'eme_event_list_item_format_header', sprintf( __( 'This content will appear just above your code for the default event list format. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), eme_esc_html( DEFAULT_EVENT_LIST_HEADER_FORMAT ) ) );
-            eme_options_textarea( __( 'Default categories event list format header', 'events-made-easy' ), 'eme_cat_event_list_item_format_header', sprintf( __( 'This content will appear just above your code for the event list format when showing events for a specific category. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), eme_esc_html( DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default event list format header', 'events-made-easy' ), 'eme_event_list_item_format_header', sprintf( __( 'This content will appear just above your code for the default event list format. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), esc_html( DEFAULT_EVENT_LIST_HEADER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default categories event list format header', 'events-made-easy' ), 'eme_cat_event_list_item_format_header', sprintf( __( 'This content will appear just above your code for the event list format when showing events for a specific category. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), esc_html( DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT ) ) );
             eme_options_textarea( __( 'Default event list format', 'events-made-easy' ), 'eme_event_list_item_format', __( 'The format of any events in a list.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=25'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
-            eme_options_textarea( __( 'Default event list format footer', 'events-made-easy' ), 'eme_event_list_item_format_footer', sprintf( __( 'This content will appear just below your code for the default event list format. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), eme_esc_html( DEFAULT_EVENT_LIST_FOOTER_FORMAT ) ) );
-            eme_options_textarea( __( 'Default categories event list format footer', 'events-made-easy' ), 'eme_cat_event_list_item_format_footer', sprintf( __( 'This content will appear just below your code for the default event list format when showing events for a specific category. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), eme_esc_html( DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default event list format footer', 'events-made-easy' ), 'eme_event_list_item_format_footer', sprintf( __( 'This content will appear just below your code for the default event list format. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), esc_html( DEFAULT_EVENT_LIST_FOOTER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default categories event list format footer', 'events-made-easy' ), 'eme_cat_event_list_item_format_footer', sprintf( __( 'This content will appear just below your code for the default event list format when showing events for a specific category. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), esc_html( DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT ) ) );
             eme_options_input_text( __( 'Single event page title format', 'events-made-easy' ), 'eme_event_page_title_format', __( 'The format of the page title when viewing a single event. Follow the previous formatting instructions.', 'events-made-easy' ) );
             eme_options_input_text( __( 'Single event html title format', 'events-made-easy' ), 'eme_event_html_title_format', __( 'The format of the page html title when viewing a single event. Follow the previous formatting instructions.', 'events-made-easy' ) . __( 'If empty (the default), the value of "Single event page title format" will be used.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Default single event format', 'events-made-easy' ), 'eme_single_event_format', __( 'The format of a single event page.<br>Follow the previous formatting instructions. <br>Use <code>#_MAP</code> to insert a map.<br>Use <code>#_CONTACTNAME</code>, <code>#_CONTACTEMAIL</code>, <code>#_CONTACTPHONE</code> to insert respectively the name, email address and phone number of the designated contact person. <br>Use <code>#_ADDBOOKINGFORM</code> to insert a form to allow the user to respond to your events booking one or more seats (RSVP).<br> Use <code>#_REMOVEBOOKINGFORM</code> to insert a form where users, inserting their name and email address, can remove their bookings.', 'events-made-easy' ) . __( '<br>Use <code>#_ADDBOOKINGFORM_IF_NOT_REGISTERED</code> to insert the booking form only if the user has not registered yet. Similar use <code>#_REMOVEBOOKINGFORM_IF_REGISTERED</code> to insert the booking removal form only if the user has already registered before. These two codes only work for WP users.', 'events-made-easy' ) . __( '<br> Use <code>#_DIRECTIONS</code> to insert a form so people can ask directions to the event.', 'events-made-easy' ) . __( '<br> Use <code>#_CATEGORIES</code> to insert a comma-separated list of categories an event is in.', 'events-made-easy' ) . __( '<br> Use <code>#_ATTENDEES</code> to get a list of the names attending the event.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=25'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>', 1 );
@@ -1789,9 +1789,9 @@ function eme_options_page() {
 <h2><?php esc_html_e( 'Locations format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
-            eme_options_textarea( __( 'Default location list format header', 'events-made-easy' ), 'eme_location_list_format_header', sprintf( __( 'This content will appear just above your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), eme_esc_html( DEFAULT_LOCATION_LIST_HEADER_FORMAT ) ) );
-            eme_options_textarea( __( 'Default location list item format', 'events-made-easy' ), 'eme_location_list_format_item', sprintf( __( 'The format of a location in a location list. If you leave this empty, the value <code>%s</code> will be used.<br>See the documentation for a list of available placeholders for locations.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), eme_esc_html( DEFAULT_LOCATION_EVENT_LIST_ITEM_FORMAT ) ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=26'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
-            eme_options_textarea( __( 'Default location list format footer', 'events-made-easy' ), 'eme_location_list_format_footer', sprintf( __( 'This content will appear just below your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), eme_esc_html( DEFAULT_LOCATION_LIST_FOOTER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default location list format header', 'events-made-easy' ), 'eme_location_list_format_header', sprintf( __( 'This content will appear just above your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), esc_html( DEFAULT_LOCATION_LIST_HEADER_FORMAT ) ) );
+            eme_options_textarea( __( 'Default location list item format', 'events-made-easy' ), 'eme_location_list_format_item', sprintf( __( 'The format of a location in a location list. If you leave this empty, the value <code>%s</code> will be used.<br>See the documentation for a list of available placeholders for locations.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), esc_html( DEFAULT_LOCATION_EVENT_LIST_ITEM_FORMAT ) ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=26'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
+            eme_options_textarea( __( 'Default location list format footer', 'events-made-easy' ), 'eme_location_list_format_footer', sprintf( __( 'This content will appear just below your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), esc_html( DEFAULT_LOCATION_LIST_FOOTER_FORMAT ) ) );
             eme_options_input_text( __( 'Single location page title format', 'events-made-easy' ), 'eme_location_page_title_format', __( 'The format of the page title when viewing a single location. Follow the previous formatting instructions.', 'events-made-easy' ) );
             eme_options_input_text( __( 'Single location html title format', 'events-made-easy' ), 'eme_location_html_title_format', __( 'The format of the page html title when viewing a single location. Follow the previous formatting instructions.', 'events-made-easy' ) . __( 'If empty (the default), the value of "Single location page title format" will be used.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Default single location page format', 'events-made-easy' ), 'eme_single_location_format', __( 'The format of a single location page.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=26'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>', 1 );
@@ -1870,8 +1870,8 @@ function eme_options_page() {
     <tr style='vertical-align:top' id='eme_rsvp_start_number_row'>
         <th scope="row"><?php esc_html_e( 'By default allow RSVP from', 'events-made-easy' ); ?></th>
         <td>
-        <input name="eme_rsvp_start_number_days" type="text" id="eme_rsvp_start_number_days" value="<?php echo eme_esc_html( $eme_rsvp_start_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
-        <input name="eme_rsvp_start_number_hours" type="text" id="eme_rsvp_start_number_hours" value="<?php echo eme_esc_html( $eme_rsvp_start_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
+        <input name="eme_rsvp_start_number_days" type="text" id="eme_rsvp_start_number_days" value="<?php echo esc_html( $eme_rsvp_start_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
+        <input name="eme_rsvp_start_number_hours" type="text" id="eme_rsvp_start_number_hours" value="<?php echo esc_html( $eme_rsvp_start_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 <?php
             $eme_rsvp_start_target_list = [
                 'start' => __( 'starts', 'events-made-easy' ),
@@ -1886,8 +1886,8 @@ function eme_options_page() {
     <tr style='vertical-align:top' id='eme_rsvp_end_number_row'>
         <th scope="row"><?php esc_html_e( 'By default allow RSVP until this many', 'events-made-easy' ); ?></th>
         <td>
-        <input name="eme_rsvp_end_number_days" type="text" id="eme_rsvp_end_number_days" value="<?php echo eme_esc_html( $eme_rsvp_end_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
-        <input name="eme_rsvp_end_number_hours" type="text" id="eme_rsvp_end_number_hours" value="<?php echo eme_esc_html( $eme_rsvp_end_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
+        <input name="eme_rsvp_end_number_days" type="text" id="eme_rsvp_end_number_days" value="<?php echo esc_html( $eme_rsvp_end_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
+        <input name="eme_rsvp_end_number_hours" type="text" id="eme_rsvp_end_number_hours" value="<?php echo esc_html( $eme_rsvp_end_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 <?php
             $eme_rsvp_end_target_list = [
                 'start' => __( 'starts', 'events-made-easy' ),
@@ -1918,9 +1918,9 @@ function eme_options_page() {
             eme_options_input_text( __( 'Person already registered text', 'events-made-easy' ), 'eme_rsvp_person_already_registered_string', __( 'The text shown if the person (combo of last name/first name/email) used to register is already used by another booking and the person is allowed to register once.', 'events-made-easy' ) . '<br>' . sprintf( __( "For all placeholders you can use here, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-2-events/' ) );
             eme_options_input_text( __( 'Attendees list format', 'events-made-easy' ), 'eme_attendees_list_format', __( 'The format for the attendees list when using the <code>#_ATTENDEES</code> placeholder.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all placeholders you can use here, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=48'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
             eme_options_toggle( __( 'Attendees/bookings list ignore pending', 'events-made-easy' ), 'eme_attendees_list_ignore_pending', __( 'Whether or not to ignore pending bookings when using the <code>#_ATTENDEES</code> or <code>#_BOOKINGS</code> placeholders.', 'events-made-easy' ) );
-            eme_options_input_text( __( 'Bookings list header format', 'events-made-easy' ), 'eme_bookings_list_header_format', __( 'The header format for the bookings list when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) . sprintf( __( " The default is '%s'", 'events-made-easy' ), eme_esc_html( DEFAULT_BOOKINGS_LIST_HEADER_FORMAT ) ) );
+            eme_options_input_text( __( 'Bookings list header format', 'events-made-easy' ), 'eme_bookings_list_header_format', __( 'The header format for the bookings list when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) . sprintf( __( " The default is '%s'", 'events-made-easy' ), esc_html( DEFAULT_BOOKINGS_LIST_HEADER_FORMAT ) ) );
             eme_options_input_text( __( 'Bookings list format', 'events-made-easy' ), 'eme_bookings_list_format', __( 'The format for the bookings list when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all placeholders you can use here, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=45'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' . '<br>' . esc_html__( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=44'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
-            eme_options_input_text( __( 'Bookings list footer format', 'events-made-easy' ), 'eme_bookings_list_footer_format', __( 'The footer format for the bookings list when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) . sprintf( __( " The default is '%s'", 'events-made-easy' ), eme_esc_html( DEFAULT_BOOKINGS_LIST_FOOTER_FORMAT ) ) );
+            eme_options_input_text( __( 'Bookings list footer format', 'events-made-easy' ), 'eme_bookings_list_footer_format', __( 'The footer format for the bookings list when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) . sprintf( __( " The default is '%s'", 'events-made-easy' ), esc_html( DEFAULT_BOOKINGS_LIST_FOOTER_FORMAT ) ) );
             eme_options_toggle( __( 'Ignore pending bookings in the bookings list', 'events-made-easy' ), 'eme_bookings_list_ignore_pending', __( 'Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Check waitinglist when seats become available', 'events-made-easy' ), 'eme_check_free_waiting', __( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ) );
 
@@ -2021,9 +2021,9 @@ function eme_options_page() {
 <?php
                 eme_options_input_int( __( 'Pause between emails', 'events-made-easy' ), 'eme_mail_sleep', __( 'Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued emails being sent. By default this is 0, meaning EME sends emails in bursts based on your mail queue settings. This option can be used to send emails more slowly, but be aware to not cause PHP timeouts.', 'events-made-easy' ) );
             } else {
-                echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Email queuing', 'events-made-easy' ) ));
+                printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Email queuing', 'events-made-easy' ) );
                 echo '<br>';
-                echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Pause between emails', 'events-made-easy' ) ));
+                printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Pause between emails', 'events-made-easy' ) );
             }
             eme_options_toggle( __( 'Read tracking', 'events-made-easy' ), 'eme_mail_tracking', __( 'Add an image (1x1 transparant pixel) to html emails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default.', 'events-made-easy' ) );
             eme_options_toggle( __( 'MassMail', 'events-made-easy' ), 'eme_people_massmail', __( "Should new persons in the database be considered for massmailing or not? This setting is used if you don't ask for opt-in/out info in e.g. the RSVP form. Warning: setting this to 'yes' is not GDPR compliant if you don't ask for a person's mail preferences.", 'events-made-easy' ) );
@@ -2068,7 +2068,7 @@ function eme_options_page() {
             eme_options_toggle( __( 'Debug SMTP?', 'events-made-easy' ), 'eme_smtp_debug', __( 'Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!', 'events-made-easy' ) );
             $test_url = admin_url( 'admin.php?page=eme-emails#tab-testmail' );
             eme_options_textarea( __( 'Email blacklist', 'events-made-easy' ), 'eme_mail_blacklist', __( 'A list of emails (one per line) that will not be accepted in EME. Examples can be ".com" (to not accept anything from ".com"), "anything.com" (to not accept addresses ending in "anything.com"), or even specific email addresses.', 'events-made-easy' ) );
-            echo "<tr><th colspan='2'>" . sprintf( __( "Hint: after you changed your mail settings, go to the <a href='%s'>Emails management</a> submenu to send a test mail.", 'events-made-easy' ), esc_url($test_url) ) . '</td></tr>';
+            echo "<tr><th colspan='2'>" . wp_kses_post( sprintf( __( "Hint: after you changed your mail settings, go to the <a href='%s'>Emails management</a> submenu to send a test mail.", 'events-made-easy' ), esc_url($test_url) ) ) . '</td></tr>';
 ?>
 </table>
 <?php
@@ -2099,15 +2099,15 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } else {
                 if ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
-                    print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                    print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
                 } else {
                     if ( get_option( 'eme_rsvp_mail_notify_paid' ) ) {
-                        print "<div class='info eme-message-admin'><p>" . __( 'When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for).', 'events-made-easy' ) . '</p></div>';
+                        print "<div class='info eme-message-admin'><p>" . esc_html__( 'When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for).', 'events-made-easy' ) . '</p></div>';
                     } else {
-                        print "<div class='info eme-message-admin'><p>" . __( 'Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid.', 'events-made-easy' ) . '</p></div>';
+                        print "<div class='info eme-message-admin'><p>" . esc_html__( 'Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid.', 'events-made-easy' ) . '</p></div>';
                     }
                 }
             }
@@ -2164,11 +2164,11 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
-            print "<div class='info eme-message-admin'><p>" . __( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' ) . '</p></div>';
+            print "<div class='info eme-message-admin'><p>" . esc_html__( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' ) . '</p></div>';
 ?>
 <table class='form-table'>
 <?php
@@ -2225,7 +2225,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Updated Email Subject', 'events-made-easy' ), 'eme_registration_updated_email_subject', __( 'The subject of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Booking Updated Email Body', 'events-made-easy' ), 'eme_registration_updated_email_body', __( 'The body of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2240,7 +2240,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Pending Booking Reminder Email Subject', 'events-made-easy' ), 'eme_registration_pending_reminder_email_subject', __( 'The subject of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Pending Booking Reminder Email Body', 'events-made-easy' ), 'eme_registration_pending_reminder_email_body', __( 'The body of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2257,7 +2257,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Cancelled Email Subject', 'events-made-easy' ), 'eme_registration_cancelled_email_subject', __( 'The subject of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Booking Cancelled Email Body', 'events-made-easy' ), 'eme_registration_cancelled_email_body', __( 'The body of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2274,7 +2274,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Deleted Email Subject', 'events-made-easy' ), 'eme_registration_trashed_email_subject', __( 'The subject of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
             eme_options_textarea( __( 'Booking Deleted Email Body', 'events-made-easy' ), 'eme_registration_trashed_email_body', __( 'The body of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>', $use_html_editor, $use_full );
@@ -2288,9 +2288,9 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_paid' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
 ?>
 <table class='form-table'>
@@ -2345,7 +2345,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . esc_html__( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Contact Person Payment Notification Email Subject', 'events-made-easy' ), 'eme_contactperson_ipn_email_subject', __( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Contact Person Payment Notification Email Body', 'events-made-easy' ), 'eme_contactperson_ipn_email_body', __( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2532,7 +2532,7 @@ function eme_options_page() {
 case 'gdpr':
 ?>
 <h2><?php esc_html_e( 'GDPR: General Data Protection Regulation options', 'events-made-easy' ); ?></h2>
-            <?php print esc_html__( 'For more info concerning GDPR, see', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_gdpr_approve/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_gdpr_approve' )) . "</a>, <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_request_personal_info/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_request_personal_info' )) . '</a> ' . esc_html__( 'and', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_change_personal_info/'>" .esc_html( sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_change_personal_info' )) . '</a>'; ?>
+            <?php print esc_html__( 'For more info concerning GDPR, see', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_gdpr_approve/'>" . sprintf( esc_html__( 'the documentation about the shortcode %s', 'events-made-easy' ), esc_html( 'eme_gdpr_approve' ) ) . "</a>, <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_request_personal_info/'>" . sprintf( esc_html__( 'the documentation about the shortcode %s', 'events-made-easy' ), esc_html( 'eme_request_personal_info' ) ) . '</a> ' . esc_html__( 'and', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_change_personal_info/'>" . sprintf( esc_html__( 'the documentation about the shortcode %s', 'events-made-easy' ), esc_html( 'eme_change_personal_info' ) ) . '</a>'; ?>
 <table class='form-table'>
 <?php
     if ( get_option( 'eme_mail_send_html' ) == '1' ) {
@@ -2551,17 +2551,17 @@ case 'gdpr':
         eme_options_input_text( __( 'Automatically archive old mailings and remove old emails', 'events-made-easy' ), 'eme_gdpr_archive_old_mailings_days', __( 'Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
         eme_options_input_text( __( 'Automatically delete old attendance records', 'events-made-easy' ), 'eme_gdpr_remove_old_attendances_days', __( 'Set the number of days after which attendance records are automatically removed. Leave empty or 0 for no automatic removal.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
     } else {
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically remove expired members', 'events-made-easy' ) ));
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically remove expired members', 'events-made-easy' ) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically anonimyze old bookings', 'events-made-easy' )) );
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically anonimyze old bookings', 'events-made-easy' ) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically remove old events', 'events-made-easy' ) ));
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically remove old events', 'events-made-easy' ) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically remove task signups for old events', 'events-made-easy' )) );
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically remove task signups for old events', 'events-made-easy' ) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically archive old mailings and remove old emails', 'events-made-easy' ) ));
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically archive old mailings and remove old emails', 'events-made-easy' ) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically delete old attendance records', 'events-made-easy' ) ));
+        printf( esc_html__( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), esc_html__( 'Automatically delete old attendance records', 'events-made-easy' ) );
         echo '<br>';
     }
     eme_options_input_text( __( 'Personal info approval email subject', 'events-made-easy' ), 'eme_gdpr_approve_subject', __( 'The subject of the email that will be sent to the person asking for personal info storage approval.', 'events-made-easy' ) . '<br>' . __( 'No placeholders can be used.', 'events-made-easy' ) . '<br>' . __( 'This setting is used in the mail sent as a result of submitting the form created by the shortcode [eme_gdpr_approve].', 'events-made-easy' ) );
@@ -2628,7 +2628,7 @@ case 'payments':
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy');?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), 'offline');?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html('offline'));?></td></tr>
 </table>
 </div>
 </details>
@@ -2662,9 +2662,9 @@ case 'payments':
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 <?php
 $webhook_id = get_option('eme_paypal_webhook_id');
 if (!empty($webhook_id)) {
@@ -2717,9 +2717,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2753,9 +2753,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2789,9 +2789,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2812,9 +2812,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2844,9 +2844,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible if funds are available on the account.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2883,9 +2883,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2921,7 +2921,7 @@ if (!empty($webhook_id)) {
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php _e( 'Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change.', 'events-made-easy' ); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2944,9 +2944,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2988,9 +2988,9 @@ if (!empty($webhook_id)) {
     eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_snapselect' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 <?php
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
     if ( ! empty( $eme_stripe_private_key ) ) {
@@ -3041,7 +3041,7 @@ if (!empty($webhook_id)) {
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -3076,9 +3076,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -3112,7 +3112,7 @@ if (!empty($webhook_id)) {
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -3134,9 +3134,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
 <tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
-<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
 </details>
@@ -3160,7 +3160,7 @@ case 'maps':
 case 'emefs':
 ?>
 <h2><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h2>
-<?php echo sprintf( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' );
+<?php printf( wp_kses_post( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ) ), esc_url( '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' ) );
 echo '<br><br>';
 _e("Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings.", 'events-made-easy' );
 ?>

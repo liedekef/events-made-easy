@@ -852,12 +852,12 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		<table class='form-table'>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discount name', 'events-made-easy' ); ?></label></th>
-			<td><input name='name' id='name' required='required' type='text' value='<?php echo eme_esc_html( $discount['name'] ); ?>' size='40'><br>
+			<td><input name='name' id='name' required='required' type='text' value='<?php echo esc_html( $discount['name'] ); ?>' size='40'><br>
 			<?php esc_html_e( 'The name of the discount', 'events-made-easy' ); ?></td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></th>
-			<td><textarea name='description' id='description' rows='5' ><?php echo eme_esc_html( $discount['description'] ); ?></textarea></td>
+			<td><textarea name='description' id='description' rows='5' ><?php echo esc_html( $discount['description'] ); ?></textarea></td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='type'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></th>
@@ -866,14 +866,14 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='value'><?php esc_html_e( 'Discount value', 'events-made-easy' ); ?></label></th>
-			<td><input name='value' id='value' type='text' value='<?php echo eme_esc_html( $discount['value'] ); ?>' size='40'>
+			<td><input name='value' id='value' type='text' value='<?php echo esc_html( $discount['value'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The applied discount value if the correct coupon code is entered (this does not apply to discounts of type "Code")', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'For type "Percentage" the value should be >=0 and <=100', 'events-made-easy' ); ?>
 				</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='coupon'><?php esc_html_e( 'Coupon code', 'events-made-easy' ); ?></label></th>
-			<td><input name='coupon' id='coupon' type='text' value='<?php echo eme_esc_html( $discount['coupon'] ); ?>' size='40'>
+			<td><input name='coupon' id='coupon' type='text' value='<?php echo esc_html( $discount['coupon'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The coupon code to enter for the discount to apply (this does not apply to discounts of type "Code")', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'If you leave the coupon code empty but set a discount expiration date, you can use this as an "early bird" discount', 'events-made-easy' ); ?>
 			</td>
@@ -948,32 +948,32 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='maxcount'><?php esc_html_e( 'Maximum usage count', 'events-made-easy' ); ?></label></th>
-			<td><input name='maxcount' id='maxcount' type='text' value='<?php echo eme_esc_html( $discount['maxcount'] ); ?>' size='40'>
+			<td><input name='maxcount' id='maxcount' type='text' value='<?php echo esc_html( $discount['maxcount'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The maximum number of times this discount can be applied', 'events-made-easy' ); ?>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='maxcount'><?php esc_html_e( 'Maximum usage count per user', 'events-made-easy' ); ?></label></th>
-			<td><input name='properties[maxcount_pp]' id='properties[maxcount_pp]' type='text' value='<?php echo eme_esc_html( $discount['properties']['maxcount_pp'] ); ?>' size='40'>
+			<td><input name='properties[maxcount_pp]' id='properties[maxcount_pp]' type='text' value='<?php echo esc_html( $discount['properties']['maxcount_pp'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count).', 'events-made-easy' ); ?>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[min_seats]'><?php esc_html_e( 'Min #seats booked', 'events-made-easy' ); ?></label></th>
-			<td><input name='properties[min_seats]' id='properties[min_seats]' type='text' value='<?php echo eme_esc_html( $discount['properties']['min_seats'] ); ?>' size='40'>
+			<td><input name='properties[min_seats]' id='properties[min_seats]' type='text' value='<?php echo esc_html( $discount['properties']['min_seats'] ); ?>' size='40'>
 			<br><p class='eme_smaller'><?php esc_html_e( 'The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='properties[max_seats]'><?php esc_html_e( 'Max #seats booked', 'events-made-easy' ); ?></label></th>
-			<td><input name='properties[max_seats]' id='properties[max_seats]' type='text' value='<?php echo eme_esc_html( $discount['properties']['max_seats'] ); ?>' size='40'>
+			<td><input name='properties[max_seats]' id='properties[max_seats]' type='text' value='<?php echo esc_html( $discount['properties']['max_seats'] ); ?>' size='40'>
 			<br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 	<?php if ( $discount_id ) { ?>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='count'><?php esc_html_e( 'Current usage count', 'events-made-easy' ); ?></label></th>
-			<td><input name='count' id='count' type='text' value='<?php echo eme_esc_html( $discount['count'] ); ?>' size='40'>
+			<td><input name='count' id='count' type='text' value='<?php echo esc_html( $discount['count'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The current number of times this discount has been applied', 'events-made-easy' ); ?>
 			</td>
 		</tr>
@@ -1023,16 +1023,16 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 		<table class='form-table'>
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discountgroup name', 'events-made-easy' ); ?></label></th>
-		<td><input name='name' id='name' required='required' type='text' value='<?php echo eme_esc_html( $dgroup['name'] ); ?>' size='40'><br>
+		<td><input name='name' id='name' required='required' type='text' value='<?php echo esc_html( $dgroup['name'] ); ?>' size='40'><br>
 		<?php esc_html_e( 'The name of the discount group', 'events-made-easy' ); ?></td>
 			</tr>
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></th>
-			<td><textarea name='description' id='description' rows='5' ><?php echo eme_esc_html( $dgroup['description'] ); ?></textarea></td>
+			<td><textarea name='description' id='description' rows='5' ><?php echo esc_html( $dgroup['description'] ); ?></textarea></td>
 			</tr>
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='maxdiscounts'><?php esc_html_e( 'Max amount of discounts applied', 'events-made-easy' ); ?></label></th>
-			<td><input name='maxdiscounts' id='maxdiscounts' type='text' value='<?php echo eme_esc_html( $dgroup['maxdiscounts'] ); ?>' size='40'>
+			<td><input name='maxdiscounts' id='maxdiscounts' type='text' value='<?php echo esc_html( $dgroup['maxdiscounts'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'A discount group exists of several discounts, and you can ask for several discount codes by using #_DISCOUNT repeatedly. This parameter then puts a limit of the number of valid discounts that can be applied. So even if you e.g. enter 5 valid coupon codes, you can limit the usage to only 3 or so.', 'events-made-easy' ); ?>
 				</td>
 			</tr>

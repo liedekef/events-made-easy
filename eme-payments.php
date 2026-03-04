@@ -2288,7 +2288,7 @@ function eme_charge_paypal() {
 
     // Validate nonce
     if (empty($_POST["eme_{$gateway}_nonce"]) || !wp_verify_nonce($_POST["eme_{$gateway}_nonce"], "$price$cur")) {
-        wp_redirect(eme_payment_return_url($payment, 1));
+        wp_safe_redirect(eme_payment_return_url($payment, 1));
         exit;
     }
 
@@ -2321,7 +2321,7 @@ function eme_charge_2co() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -2399,7 +2399,7 @@ function eme_charge_stripe() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -2503,7 +2503,7 @@ function eme_charge_braintree() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -2516,7 +2516,7 @@ function eme_charge_braintree() {
 
     require_once 'payment_gateways/braintree/vendor/autoload.php';
     if ( ! isset( $_POST['braintree_nonce'] ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
     $braintree_gateway = new Braintree\Gateway(
@@ -2537,10 +2537,10 @@ function eme_charge_braintree() {
     if ( $result->success ) {
         $transaction = $result->transaction;
         eme_mark_payment_paid( $payment_id, 1, $gateway, $transaction->id );
-        wp_redirect($success_link);
+        wp_safe_redirect($success_link);
         exit;
     } else {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 }
@@ -2566,7 +2566,7 @@ function eme_charge_instamojo() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -2642,10 +2642,10 @@ function eme_charge_mercadopago() {
     $eme_price = eme_get_payment_price( $payment_id );
     if ( $paid_amount >= $eme_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
-        wp_redirect($success_link);
+        wp_safe_redirect($success_link);
         exit;
     } else {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 }
@@ -2673,7 +2673,7 @@ function eme_charge_fondy() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -2707,7 +2707,7 @@ function eme_charge_fondy() {
         $response->toCheckout();
     } catch ( \Exception $e ) {
         error_log("Fondy API error: {$e->getMessage()}");
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 }
@@ -2926,7 +2926,7 @@ function eme_charge_mollie() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 
@@ -3062,7 +3062,7 @@ function eme_charge_bancontactwero() {
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
-        wp_redirect($fail_link);
+        wp_safe_redirect($fail_link);
         exit;
     }
 

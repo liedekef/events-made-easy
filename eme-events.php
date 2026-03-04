@@ -1792,7 +1792,7 @@ function eme_template_redir() {
                 $page_permalink = get_permalink();
                 $redir_url      = add_query_arg( [ 'redirect' => $page_permalink ], $redir_url );
                 eme_nocache_headers();
-                wp_redirect( esc_url( $redir_url ) );
+                wp_redirect( $redir_url );
                 exit;
             }
         }
@@ -1817,7 +1817,7 @@ function eme_template_redir() {
                     $page_permalink = get_permalink();
                     $redir_url      = add_query_arg( [ 'redirect' => $page_permalink ], $redir_url );
                     eme_nocache_headers();
-                    wp_redirect( esc_url( $redir_url ) );
+                    wp_safe_redirect( esc_url( $redir_url ) );
                     exit;
                 } else {
                     auth_redirect();

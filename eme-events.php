@@ -10095,34 +10095,6 @@ function eme_countdown_shortcode( $atts ) {
     }
 }
 
-add_action( 'wp_ajax_eme_wpuser_snapselect', 'eme_ajax_wpuser_snapselect' );
-function eme_ajax_wpuser_snapselect() {
-    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    header( 'Content-type: application/json; charset=utf-8' );
-
-    if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        wp_die();
-    }
-    $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize     = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
-    $mysql_pagesize = $pagesize+1;
-    $start        = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
-
-    $records  = [];
-    $wp_users = eme_get_wp_users( $q, $start, $mysql_pagesize );
-    foreach ( $wp_users as $wp_user ) {
-        $records[] = [
-            'id'   => $wp_user->ID,
-            'text' => $wp_user->display_name
-        ];
-    }
-    $hasMore = count($records) > $pagesize;
-    if ($hasMore)
-        $records = array_slice($records, 0, $pagesize);
-    print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
-    wp_die();
-}
-
 add_action( 'wp_ajax_eme_events_list', 'eme_ajax_events_list' );
 add_action( 'wp_ajax_eme_manage_events', 'eme_ajax_manage_events' );
 

@@ -185,6 +185,7 @@ function eme_ical_single() {
 	echo "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n";
 	$event = eme_get_event( eme_sanitize_request( $_GET['event_id'] ) );
 	if ( ! empty( $event ) ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- iCal format output (text/calendar), not HTML
 		echo eme_ical_single_event( $event );
 	}
 	echo "END:VCALENDAR\r\n";
@@ -212,6 +213,7 @@ function eme_ical() {
 	$contact_person     = isset( $_GET['contact_person'] ) ? eme_sanitize_request( urldecode( $_GET['contact_person'] ) ) : '';
 	$events             = eme_get_events( scope: $scope, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: 1, notcategory: $notcategory );
 	foreach ( $events as $event ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- iCal format output (text/calendar), not HTML
 		echo eme_ical_single_event( $event );
 	}
 	echo "END:VCALENDAR\r\n";
@@ -221,6 +223,7 @@ function eme_sitemap() {
 	eme_nocache_headers();
 	header( 'Content-type: text/xml; charset=utf-8' );
 	header( 'Content-Disposition: inline; filename=eme_public.xml' );
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- XML sitemap output (text/xml), not HTML
 	echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' . "\n";
 	$events = eme_get_events( limit: 5000, scope: 'all', order: 'DESC' );
 	if ( ! empty( $events ) ) {

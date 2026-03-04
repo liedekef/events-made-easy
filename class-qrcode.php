@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Third-party QR code library (MIT, Kazuhiko Arase). Output is computed from integer math and hardcoded color values, not user input.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

@@ -315,7 +315,7 @@ function eme_cleanup_form( $message = '', $preview_people = null ) {
     ?>
 <tr>
     <?php foreach ( [ 'person_id', 'firstname', 'lastname', 'email' ] as $field ) { ?>
-    <td><a href="<?php echo $edit_url; ?>" title="<?php echo $edit_title; ?>"><?php echo esc_html( $person[ $field ] ); ?></a></td>
+    <td><a href="<?php echo $edit_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped with esc_url() at assignment ?>" title="<?php echo $edit_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped with esc_attr__() at assignment ?>"><?php echo esc_html( $person[ $field ] ); ?></a></td>
     <?php } ?>
     <td> <?php echo esc_html( $person['creation_date'] ); ?></td>
     <td> <?php echo esc_html( $person['modif_date'] ); ?></td>

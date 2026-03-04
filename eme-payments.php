@@ -210,7 +210,7 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
-            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
 
@@ -350,7 +350,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
-            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
 
@@ -477,7 +477,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
-            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
+            $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
 
@@ -758,7 +758,7 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
     $form_html .= "<input type='hidden' name='currency' value='$cur'>";
     // for worldpay notifications to work: enable dynamic payment response in your worldpay setup, using the param MC_callback
     // also: set the Payment Response password and if wanted, the MD5 secret and field combo
-    $form_html .= "<input type='hidden' name='MC_callback' value='$notification_link'>";
+    $form_html .= "<input type='hidden' name='MC_callback' value='" . esc_url( $notification_link ) . "'>";
 
     if ( $worldpay_md5_secret ) {
         require_once 'payment_gateways/worldpay/eme-worldpay.php';
@@ -1650,11 +1650,11 @@ function eme_complete_transaction_sumup( $payment ) {
         $accessToken = $sumup->getAccessToken();
         $value       = $accessToken->getValue();
     } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-        echo 'Authentication error: ' . $e->getMessage();
+        echo 'Authentication error: ' . esc_html( $e->getMessage() );
     } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-        echo 'Response error: ' . $e->getMessage();
+        echo 'Response error: ' . esc_html( $e->getMessage() );
     } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-        echo 'SumUp SDK error: ' . $e->getMessage();
+        echo 'SumUp SDK error: ' . esc_html( $e->getMessage() );
     }
 
     $checkout_id      = $payment['pg_pid'];
@@ -2104,11 +2104,11 @@ function eme_notification_sumup() {
             $accessToken = $sumup->getAccessToken();
             $value       = $accessToken->getValue();
     } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-            echo 'Authentication error: ' . $e->getMessage();
+            echo 'Authentication error: ' . esc_html( $e->getMessage() );
     } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-            echo 'Response error: ' . $e->getMessage();
+            echo 'Response error: ' . esc_html( $e->getMessage() );
     } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-            echo 'SumUp SDK error: ' . $e->getMessage();
+            echo 'SumUp SDK error: ' . esc_html( $e->getMessage() );
     }
 
     $checkout_id      = eme_sanitize_request( $_POST['id'] );
@@ -2596,7 +2596,7 @@ function eme_charge_instamojo() {
         $url = $instamojo_payment['longurl'];
     } catch ( Exception $e ) {
         $url = '';
-        print 'Instamojo API call failed: ' . htmlspecialchars( $e->getMessage() );
+        print 'Instamojo API call failed: ' . esc_html( $e->getMessage() );
     }
 
     if ( ! empty( $url ) ) {
@@ -2977,7 +2977,7 @@ function eme_charge_mollie() {
         $url = $mollie_payment->getCheckoutUrl();
     } catch ( \Mollie\Api\Exceptions\ApiException $e ) {
         $url = '';
-        print 'Mollie API call failed: ' . htmlspecialchars( $e->getMessage() );
+        print 'Mollie API call failed: ' . esc_html( $e->getMessage() );
     }
 
     if ( ! empty( $url ) ) {
@@ -3094,7 +3094,7 @@ function eme_charge_bancontactwero() {
         $url = $bancontactwero_payment->_links->checkout->href;
     } catch ( Exception $e ) {
         $url = '';
-        print 'BancontactWero API call failed: ' . htmlspecialchars( $e->getMessage() );
+        print 'BancontactWero API call failed: ' . esc_html( $e->getMessage() );
     }
 
     if ( ! empty( $url ) ) {

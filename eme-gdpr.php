@@ -404,7 +404,7 @@ function eme_cpi_form( $person_id ) {
 }
 
 function eme_gdpr_approve_show() {
-	print eme_translate( get_option( 'eme_gdpr_approve_page_content' ) );
+	print eme_kses_maybe_unfiltered( eme_translate( get_option( 'eme_gdpr_approve_page_content' ) ) );
 }
 
 function eme_show_personal_info( $email ) {

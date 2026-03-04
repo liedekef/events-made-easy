@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- CLI-only script (terminal output), not web HTML; WordPress escaping functions are inappropriate here.
 if ( php_sapi_name() != 'cli' ) {
 	echo "This script needs to be run in in command-line mode only !!!! \n";
 

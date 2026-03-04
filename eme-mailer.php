@@ -2034,7 +2034,7 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( ! eme_is_email( $testmail_to ) ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a valid email address', 'events-made-easy' ) . '</p></div>';
             $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         }
 
@@ -2058,7 +2058,7 @@ function eme_send_mails_ajax_actions( $action ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>";
             $ajaxResult['Result']      = 'ERROR';
         }
-        echo wp_json_encode( $ajaxResult );
+        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         wp_die();
     }
 
@@ -2095,7 +2095,7 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( empty( $mail_subject ) || empty( $mail_message ) ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
             $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         }
 
@@ -2110,7 +2110,7 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( empty( $contact_email ) ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'No default sender defined and no event contact email found, bailing out', 'events-made-easy' ) . '</p></div>';
             $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         }
         $mailing_id = 0;
@@ -2144,7 +2144,7 @@ function eme_send_mails_ajax_actions( $action ) {
                     $ajaxResult['Result']      = 'ERROR';
                 }
             }
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         } else {
             if ( ! empty( $_POST['genericmail_mailing_name'] ) ) {
@@ -2187,7 +2187,7 @@ function eme_send_mails_ajax_actions( $action ) {
             if ( ! $recipients_configured ) {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one recipient.', 'events-made-easy' ) . '</p></div>';
                 $ajaxResult['Result']      = 'ERROR';
-                echo wp_json_encode( $ajaxResult );
+                echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 wp_die();
             }
             if ( $queue && $fast_queue ) {
@@ -2229,7 +2229,7 @@ function eme_send_mails_ajax_actions( $action ) {
             }
             $ajaxResult['Result'] = 'ERROR';
         }
-        echo wp_json_encode( $ajaxResult );
+        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         wp_die();
     }
 
@@ -2263,7 +2263,7 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( empty( $mail_subject ) || empty( $mail_message ) ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
             $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         }
 
@@ -2271,7 +2271,7 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( ! eme_is_numeric_array( $event_ids ) ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one event.', 'events-made-easy' ) . '</p></div>';
             $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         }
 
@@ -2327,7 +2327,7 @@ function eme_send_mails_ajax_actions( $action ) {
                     $ajaxResult['Result']      = 'ERROR';
                 }
             }
-            echo wp_json_encode( $ajaxResult );
+            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             wp_die();
         } else {
             if ( ! empty( $_POST['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_persons'] ) ) {
@@ -2349,7 +2349,7 @@ function eme_send_mails_ajax_actions( $action ) {
             if ( empty( $eme_mail_type ) ) {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select the type of mail to be sent.', 'events-made-easy' ) . '</p></div>';
                 $ajaxResult['Result']      = 'ERROR';
-                echo wp_json_encode( $ajaxResult );
+                echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 wp_die();
             }
             $conditions['eme_mail_type'] = $eme_mail_type;
@@ -2424,7 +2424,7 @@ function eme_send_mails_ajax_actions( $action ) {
             }
             $ajaxResult['Result'] = 'ERROR';
         }
-        echo wp_json_encode( $ajaxResult );
+        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         wp_die();
     }
     wp_die();

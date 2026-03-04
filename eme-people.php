@@ -2657,16 +2657,17 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td style="vertical-align:top"><label for="wp_id"><?php esc_html_e( 'Linked WP user', 'events-made-easy' ); ?></label></td>
         <td colspan=2>
 <?php
-    $used_wp_ids = eme_get_used_wpids( $person['wp_id'] );
-    $exclude = join( ',', $used_wp_ids );
-    wp_dropdown_users(
-        [
-            'name'             => 'wp_id',
-            'show_option_none' => '&nbsp;',
-            'selected'         => $person['wp_id'],
-            'exclude'          => $exclude,
-        ]
-    );
+    // Build the pre-selected option so the snapselect shows the current value on load.
+    $preselected_wpuser_option = '';
+    if ( ! empty( $person['wp_id'] ) ) {
+        $wp_user = get_userdata( $person['wp_id'] );
+        if ( $wp_user ) {
+            $preselected_wpuser_option = '<option value="' . intval( $person['wp_id'] ) . '" selected>'
+                . esc_html( $wp_user->display_name ) . '</option>';
+        }
+    }
+    $eme_wp_user_arr = [];   // snapselect loads options via AJAX; the static array is empty.
+    echo eme_ui_select( $person['wp_id'], 'wp_id', $eme_wp_user_arr, $preselected_wpuser_option, 0, 'eme_snapselect_wpuser_class', '', 'data-person_wpid="' . intval( $person['wp_id'] ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
             <br>
             <?php esc_html_e( "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email.", 'events-made-easy' ); ?><br>
@@ -3052,15 +3053,24 @@ function eme_get_wpid_by_personid( $person_id ) {
     $prepared_sql = $wpdb->prepare( "SELECT wp_id FROM $people_table WHERE person_id = %d", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return intval( $wpdb->get_var( $prepared_sql ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
+
+// AFTER
 function eme_get_used_wpids( $exclude_id = 0 ) {
     global $wpdb;
+    $cache_key = 'eme_used_wpids_' . intval( $exclude_id );
+    $cached    = wp_cache_get( $cache_key, 'eme' );
+    if ( false !== $cached ) {
+        return $cached;
+    }
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( ! empty( $exclude_id ) ) {
         $prepared_sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d", $exclude_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $prepared_sql = "SELECT DISTINCT wp_id FROM $people_table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
-    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $result = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    wp_cache_set( $cache_key, $result, 'eme' );
+    return $result;
 }
 
 function eme_find_persons_double_name_email() {
@@ -5522,8 +5532,14 @@ function eme_ajax_wpuser_snapselect() {
     $mysql_pagesize = $pagesize+1;
     $start        = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
+    // Exclude wp_ids already linked to another person; pass the current person's wp_id
+    // so that their own linked user stays available for (re-)selection.
+    $person_wpid  = isset( $_REQUEST['person_wpid'] ) ? intval( $_REQUEST['person_wpid'] ) : 0;
+    $used_wp_ids   = eme_get_used_wpids( $person_wpid );  // cached, so repeated AJAX pages are free
+
     $records  = [];
-    $wp_users = eme_get_wp_users( $q, $start, $mysql_pagesize );
+    $wp_users = eme_get_wp_users( $q, $start, $mysql_pagesize, $used_wp_ids );
+
     foreach ( $wp_users as $wp_user ) {
         $records[] = [
             'id'   => $wp_user->ID,

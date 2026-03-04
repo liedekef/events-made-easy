@@ -300,6 +300,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    initSnapSelectRemote('#wp_id.eme_snapselect_wpuser_class', {
+        data: function(search, page) {
+            return {
+                action: 'eme_wpuser_snapselect',
+                eme_admin_nonce: emepeople.translate_adminnonce,
+                person_wpid: this.dataset.person_wpid || 0
+            };
+        }
+    });
+
     // --- People Bulk Actions ---
     const peopleButton = EME.$('#PeopleActionsButton');
     if (peopleButton) {

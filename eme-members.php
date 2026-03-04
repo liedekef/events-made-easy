@@ -2944,7 +2944,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     }
 
     if ($limit_to_group) {
-        echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
+        echo '<input type="hidden" name="search_groups" id="'.esc_attr($id_prefix).'search_groups" value="' . esc_attr($limit_to_group) . '">';
         // currently we don't show the other filters anymore (double id's, need to fix that first)
         //return;
     }
@@ -2977,7 +2977,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.esc_attr($id_prefix).'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '</td><td>';
@@ -2987,9 +2987,9 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="number" value="' . esc_attr($value) . '" name="search_memberid" id="'.$id_prefix.'search_memberid" placeholder="' . esc_attr__( 'Filter on member ID', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
-    echo '<input type="search" name="search_paymentid" id="'.$id_prefix.'search_paymentid" placeholder="' . esc_attr__( 'Filter on payment id', 'events-made-easy' ) . '" class="eme_searchfilter">';
-    echo '<input type="search" name="search_pg_pid" id="'.$id_prefix.'search_pg_pid" placeholder="' . esc_attr__( 'Filter on payment GW id', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="number" value="' . esc_attr($value) . '" name="search_memberid" id="'.esc_attr($id_prefix).'search_memberid" placeholder="' . esc_attr__( 'Filter on member ID', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="search" name="search_paymentid" id="'.esc_attr($id_prefix).'search_paymentid" placeholder="' . esc_attr__( 'Filter on payment id', 'events-made-easy' ) . '" class="eme_searchfilter">';
+    echo '<input type="search" name="search_pg_pid" id="'.esc_attr($id_prefix).'search_pg_pid" placeholder="' . esc_attr__( 'Filter on payment GW id', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
     if ( ! empty( $formfields_searchable ) ) {

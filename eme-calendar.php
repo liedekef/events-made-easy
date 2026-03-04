@@ -672,7 +672,7 @@ function eme_calendar_ajax() {
 	( ! empty( $_POST['holiday_id'] ) ) ? $holiday_id         = intval( $_POST['holiday_id'] ) : $holiday_id = '';
 	( ! empty( $_POST['weekdays'] ) ) ? $weekdays             = eme_sanitize_request( $_POST['weekdays'] ) : $weekdays = ''; // this can be a string like 0,2,3,5
 
-	echo eme_get_calendar( full: $full, month: $month, year: $year, long_events: $long_events, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory, template_id: $template_id, weekdays: $weekdays, holiday_id: $holiday_id, htmltable: $htmltable, htmldiv: $htmldiv );
+	echo eme_get_calendar( full: $full, month: $month, year: $year, long_events: $long_events, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory, template_id: $template_id, weekdays: $weekdays, holiday_id: $holiday_id, htmltable: $htmltable, htmldiv: $htmldiv ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted calendar HTML built by eme_get_calendar()
 	wp_die();
 }
 

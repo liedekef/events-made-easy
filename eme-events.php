@@ -7052,7 +7052,7 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
     } else {
         echo '<b>' . esc_html__( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
     }
-    echo trailingslashit( home_url() );
+    echo esc_html( trailingslashit( home_url() ) );
     $events_prefixes = get_option( 'eme_permalink_events_prefix', 'events' );
     if ( preg_match( '/,/', $events_prefixes ) ) {
         $events_prefixes     = explode( ',', $events_prefixes );
@@ -7063,7 +7063,7 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
         $prefix = $event['event_prefix'] ? $event['event_prefix'] : '';
         echo eme_ui_select( $prefix, 'event_prefix', $events_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     } else {
-        echo eme_permalink_convert( $events_prefixes );
+        echo esc_html( eme_permalink_convert( $events_prefixes ) );
     }
     if ( ! empty( $event['event_id'] ) && ! empty( $event['event_name'] ) != '' ) {
         $slug = $event['event_slug'] ? $event['event_slug'] : $event['event_name'];
@@ -7072,7 +7072,7 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
             $slug = preg_replace( '/\-\d+$/', '', $slug );
         }
 ?>
-        <input type="text" id="event_slug" name="event_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
+        <input type="text" id="event_slug" name="event_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( user_trailingslashit( '' ) ); ?>
 <?php
     }
 ?>
@@ -8455,15 +8455,15 @@ function eme_meta_box_div_event_image( $event ) {
     </h3>
 <?php
     if ( ! empty( $event['event_image_url'] ) ) {
-        echo "<img id='eme_event_image_example' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' src='" . $event['event_image_url'] . "' width='200'>";
-        echo "<input type='hidden' name='event_image_url' id='event_image_url' value='" . $event['event_image_url'] . "'>";
+        echo "<img id='eme_event_image_example' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' src='" . esc_url( $event['event_image_url'] ) . "' width='200'>";
+        echo "<input type='hidden' name='event_image_url' id='event_image_url' value='" . esc_attr( $event['event_image_url'] ) . "'>";
     } else {
         # to prevent html validation errors, use a transparent small pixel
         echo "<img id='eme_event_image_example' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' width='200'>";
         echo "<input type='hidden' name='event_image_url' id='event_image_url'>";
     }
     if ( ! empty( $event['event_image_id'] ) ) {
-        echo "<input type='hidden' name='event_image_id' id='event_image_id' value='" . $event['event_image_id'] . "'>";
+        echo "<input type='hidden' name='event_image_id' id='event_image_id' value='" . absint( $event['event_image_id'] ) . "'>";
     } else {
         echo "<input type='hidden' name='event_image_id' id='event_image_id'>";
     }
@@ -9033,18 +9033,18 @@ function eme_rss() {
 <channel>
 <title>
 <?php
-    echo eme_rss_cdata( $main_title );
+    echo eme_rss_cdata( $main_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- RSS CDATA output, escaping would break format
 ?>
 </title>
 <link>
 <?php
     $events_page_link = eme_get_events_page();
-    echo eme_rss_cdata( $events_page_link );
+    echo eme_rss_cdata( $events_page_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- RSS CDATA output, escaping would break format
 ?>
 </link>
 <description>
 <?php
-    echo eme_rss_cdata( eme_sanitize_request( $rss_options['main_description'] ) );
+    echo eme_rss_cdata( eme_sanitize_request( $rss_options['main_description'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- RSS CDATA output, escaping would break format
 ?>
 </description>
 <docs>
@@ -9075,6 +9075,7 @@ Weblog Editor 2.0
             } else {
                 $image_url = '';
             }
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- RSS XML output, escaping would break format
             echo "<item>\n";
             echo "<title>$title</title>\n";
             echo "<link>$event_link</link>\n";
@@ -9099,6 +9100,7 @@ Weblog Editor 2.0
                 echo "</image>\n";
             }
             echo "</item>\n";
+            // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
 ?>

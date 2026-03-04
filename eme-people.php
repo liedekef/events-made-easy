@@ -1510,11 +1510,11 @@ function eme_printable_booking_report( $event_id ) {
             $price_arr = eme_convert_multi2array( $event['price'] );
             $multprice_desc_arr = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
             foreach ($price_arr as $key=>$price) {
-                $res_arr[] = eme_localized_price( $price, $event['currency']) . " " . esc_html($multprice_desc_arr[$key]);
+                $res_arr[] = esc_html( eme_localized_price( $price, $event['currency']) ) . " " . esc_html($multprice_desc_arr[$key]);
             }
-            echo eme_convert_array2multi( $res_arr, '<br>');
+            echo eme_convert_array2multi( $res_arr, '<br>'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- each element is esc_html() escaped, <br> is intentional HTML separator
         } else {
-            echo eme_localized_price( $event['price'], $event['currency']);
+            echo esc_html( eme_localized_price( $event['price'], $event['currency']) );
             if (!empty($event['event_properties']['price_desc'])) {
                 echo " ".esc_html($event['event_properties']['price_desc']);
             }
@@ -1561,7 +1561,7 @@ function eme_printable_booking_report( $event_id ) {
         if (!eme_is_empty_string($event['event_properties']['multiprice_desc'])) {
             esc_html_e( 'Seats', 'events-made-easy' );
             print "&nbsp; (";
-            print eme_convert_array2multi(eme_convert_multi2array($event['event_properties']['multiprice_desc']),', ');
+            print esc_html( eme_convert_array2multi(eme_convert_multi2array($event['event_properties']['multiprice_desc']),', ') );
             print ")";
         } else {
             esc_html_e( 'Seats (Multiprice)', 'events-made-easy' );
@@ -1695,10 +1695,10 @@ function eme_printable_booking_report( $event_id ) {
                 }
             }
         }
-        echo eme_localized_price( $booking['discount'], $event['currency'] ) .$discount_name;
+        echo esc_html( eme_localized_price( $booking['discount'], $event['currency'] ) ) . $discount_name;
 ?>
             </td>
-            <td class='eme_print_total_price'><?php echo eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ); ?></td>
+            <td class='eme_print_total_price'><?php echo esc_html( eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ) ); ?></td>
             <td class='eme_print_comment'><?php echo esc_html( $booking['booking_comment'] ); ?></td>
 <?php
         $answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
@@ -1855,7 +1855,7 @@ function eme_person_verify_layout() {
             $person_ids = explode(',',$row['person_ids']);
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
-                print '<td>' . $person_id . '</td>';
+                print '<td>' . intval( $person_id ) . '</td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
@@ -1865,7 +1865,7 @@ function eme_person_verify_layout() {
                     print '<td>' . esc_html__('Non-existing WP user linked!!','events-made-easy' ) . '</td>';
                 }
                 $membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
-                print "<td>$membership_names</td>";
+                print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
                     print "<td>".esc_html__('Yes','events_made_easy')."</td>";
@@ -1903,12 +1903,12 @@ function eme_person_verify_layout() {
             $person_ids = explode(',',$row['person_ids']);
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
-                print '<td>' . $person_id . '</td>';
+                print '<td>' . intval( $person_id ) . '</td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
                 $membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
-                print "<td>$membership_names</td>";
+                print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
                     print "<td>".esc_html__('Yes','events_made_easy')."</td>";
@@ -1946,12 +1946,12 @@ function eme_person_verify_layout() {
             $person_ids = explode(',',$row['person_ids']);
             foreach ($person_ids as $person_id) {
                 print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
-                print '<td>' . $person_id . '</td>';
+                print '<td>' . intval( $person_id ) . '</td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['lastname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['firstname'] ) . '</a></td>';
                 print "<td><a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person_id ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $row['email'] ) . '</a></td>';
                 $membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
-                print "<td>$membership_names</td>";
+                print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
                     print "<td>".esc_html__('Yes','events_made_easy')."</td>";
@@ -2114,10 +2114,10 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
     } else {
         $value = '';
     }
-    echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.esc_attr($id_prefix).'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     if ($limit_to_group) {
-        echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
+        echo '<input type="hidden" name="search_groups" id="'.esc_attr($id_prefix).'search_groups" value="' . esc_attr($limit_to_group) . '">';
     } else {
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Filter on group', 'events-made-easy' ) . '</td><td>';
@@ -2163,7 +2163,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
         } else {
             $value = '';
         }
-        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
+        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.esc_attr($id_prefix).'search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
 
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
@@ -2483,7 +2483,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <table>
         <tr>
         <td style="vertical-align:top"><label for="firstname"><?php esc_html_e( 'First name', 'events-made-easy' ); ?></label></td>
-        <td><input id="firstname" name="firstname" type="text" value="<?php echo esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+        <td><input id="firstname" name="firstname" type="text" value="<?php echo esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $wp_readonly is hardcoded '' or "readonly='readonly'" ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2491,12 +2491,12 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 ?>
         </td>
         <td rowspan=10>
-        <?php echo eme_person_replace_image_input( $person ); ?>
+        <?php echo eme_person_replace_image_input( $person ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_url() and esc_html__() ?>
         </td>
         </tr>
         <tr>
         <td style="vertical-align:top"><label for="lastname"><?php esc_html_e( 'Last name', 'events-made-easy' ); ?></label></td>
-        <td><input id="lastname" name="lastname" type="text" value="<?php echo esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+        <td><input id="lastname" name="lastname" type="text" value="<?php echo esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $wp_readonly is hardcoded '' or "readonly='readonly'" ?>><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2507,7 +2507,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td style="vertical-align:top"><label for="email"><?php esc_html_e( 'Email', 'events-made-easy' ); ?></label></td>
-        <td><input id="email" name="email" type="email" value="<?php echo esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?> autocomplete="off"><br>
+        <td><input id="email" name="email" type="email" value="<?php echo esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $wp_readonly is hardcoded '' or "readonly='readonly'" ?> autocomplete="off"><br>
 <?php
     if ( ! empty( $wp_readonly ) ) {
         esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );
@@ -2563,12 +2563,12 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td></td>
         </tr>
         <tr>
-        <td><label for="address1"><?php echo get_option( 'eme_address1_string' ); ?></label></td>
+        <td><label for="address1"><?php echo esc_html( get_option( 'eme_address1_string' ) ); ?></label></td>
         <td><input id="address1" name="address1" type="text" value="<?php echo esc_html( $person['address1'] ); ?>" size="40"></td>
         <td></td>
         </tr>
         <tr>
-        <td><label for="address2"><?php echo get_option( 'eme_address2_string' ); ?></label></td>
+        <td><label for="address2"><?php echo esc_html( get_option( 'eme_address2_string' ) ); ?></label></td>
         <td><input id="address2" name="address2" type="text" value="<?php echo esc_html( $person['address2'] ); ?>" size="40"></td>
         <td></td>
         </tr>
@@ -2905,7 +2905,7 @@ function eme_person_replace_image_input_div( $person, $relative_div = 0 ) {
    </div>
    <div id='eme_person_current_image' class='postarea'>
    <img id='eme_person_image_example' alt='{$person_image}' title='{$person_image}' src='$image_url'>
-   <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='{$person['properties']['image_id']}'>
+   <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='" . absint($person['properties']['image_id']) . "'>
    </div>
    <br>
 
@@ -2937,7 +2937,7 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
    </span>
    <span id='eme_person_current_image' class='postarea'>
    <img id='eme_person_image_example' alt='{$person_image}' title='{$person_image}' src='$image_url'>
-   <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='{$person['properties']['image_id']}'>
+   <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='" . absint($person['properties']['image_id']) . "'>
    </span>
    <br>
 

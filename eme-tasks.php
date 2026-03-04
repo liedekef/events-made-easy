@@ -599,6 +599,7 @@ function eme_task_signups_table_layout( $message = '' ) {
             if ( $key == 'future' ) {
                 $selected = "selected='selected'";
             }
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded selected attribute
             echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
         }
         ?>
@@ -949,7 +950,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                 if (!empty($task['task_id'])) {
                     $count_signups = eme_count_task_signups($task['task_id']);
                     if ($count_signups>0) {
-                        echo "<span name='eme_tasks[$count][signup_count]' id='eme_tasks[$count][signup_count]'><br>";
+                        echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks[" . intval($count) . "][signup_count]'><br>";
                         echo "<br>";
                         echo esc_html(sprintf( _n( 'One person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
                         echo "</span>";
@@ -1848,6 +1849,7 @@ function eme_tasks_ajax() {
     // check for spammers as early as possible
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1859,6 +1861,7 @@ function eme_tasks_ajax() {
 
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
         $message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1869,6 +1872,7 @@ function eme_tasks_ajax() {
     }
     if ( ! isset( $_POST['eme_task_signups'] ) || empty( $_POST['eme_task_signups'] ) ) {
         $message = __( 'Please select at least one task.', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -2015,6 +2019,7 @@ function eme_tasks_ajax() {
     // if some task signups were ok, but others not, show ok
     if ( $ok && $nok ) {
         //echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'OK',
@@ -2022,6 +2027,7 @@ function eme_tasks_ajax() {
             ]
         );
     } elseif ( $nok ) {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -2030,6 +2036,7 @@ function eme_tasks_ajax() {
         );
     } elseif ( $ok ) {
         //echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'OK',

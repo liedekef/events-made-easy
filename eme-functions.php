@@ -3864,7 +3864,7 @@ function eme_unserialize( $data ) {
 function eme_prettyprint_assoc( $jsonData, $pre = '' ) {
     $pretty = '';
     foreach ( $jsonData as $key => $val ) {
-        $pretty .= $pre . htmlspecialchars( ucfirst( $key ) ) . ': ';
+        $pretty .= $pre . esc_html( ucfirst( $key ) ) . ': ';
         if ( strcmp( gettype( $val ), 'array' ) == 0 ) {
             $pretty .= "<br>\n";
             $sno     = 1;
@@ -3873,7 +3873,7 @@ function eme_prettyprint_assoc( $jsonData, $pre = '' ) {
                 $pretty .= eme_prettyprint_assoc( $value, $pre . '&nbsp;&nbsp;' );
             }
         } else {
-            $pretty .= htmlspecialchars( $val ) . "<br>\n";
+            $pretty .= esc_html( $val ) . "<br>\n";
         }
     }
     return $pretty;
@@ -4344,7 +4344,7 @@ function eme_merge_classes_into_attrs($class, $attributes) {
     $class_value = implode(' ', $merged_classes);
     
     // Build the class attribute if we have any classes
-    $class_att = !empty($merged_classes) ? "class='" . htmlspecialchars($class_value, ENT_QUOTES) . "'" : '';
+    $class_att = !empty($merged_classes) ? "class='" . esc_attr($class_value) . "'" : '';
     
     // Combine with other attributes
     return trim($class_att . ' ' . $attributes);

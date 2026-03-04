@@ -156,7 +156,7 @@ function eme_categories_edit_layout() {
 			    <th scope='row' style='vertical-align:top'><label for='slug'><?php echo esc_html( $permalink_string ); ?></label></th>
 				<td>
 				<?php
-				echo trailingslashit( home_url() );
+				echo esc_html( trailingslashit( home_url() ) );
 				$categories_prefixes = get_option( 'eme_permalink_categories_prefix', '' );
 				if ( empty( $categories_prefixes ) ) {
 					$extra_prefix        = 'cat/';
@@ -173,14 +173,14 @@ function eme_categories_edit_layout() {
 					$prefix = $category['category_prefix'] ? $category['category_prefix'] : '';
 					echo eme_ui_select( $prefix, 'category_prefix', $categories_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 				} else {
-					echo eme_permalink_convert( $categories_prefixes );
+					echo esc_html( eme_permalink_convert( $categories_prefixes ) );
 				}
 				echo esc_html( $extra_prefix );
 				if ( $action == 'edit' ) {
 					$slug = $category['category_slug'] ? $category['category_slug'] : $category['category_name'];
 					$slug = eme_permalink_convert_noslash( $slug );
 					?>
-					<input type="text" id="slug" name="category_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
+					<input type="text" id="slug" name="category_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( user_trailingslashit( '' ) ); ?>
 						<?php
 				}
 				?>

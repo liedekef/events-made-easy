@@ -311,7 +311,7 @@ function eme_cron_form( $message = '' ) {
             echo '<br>';
             esc_html_e( 'Put something like this in the crontab of your server:', 'events-made-easy' );
             echo '<br>';
-            echo '<code>*/5 * * * * wget -q -O - ' . site_url( '/wp-cron.php' ) . ' >/dev/null 2>&1 </code><br>';
+            echo '<code>*/5 * * * * wget -q -O - ' . esc_html( site_url( '/wp-cron.php' ) ) . ' >/dev/null 2>&1 </code><br>';
             esc_html_e( 'And add the following to your wp-config.php:', 'events-made-easy' );
             echo '<br>';
             echo "<code>define('DISABLE_WP_CRON', true);</code>";
@@ -324,7 +324,7 @@ function eme_cron_form( $message = '' ) {
             echo '<br>';
             esc_html_e( 'Put something like this in the crontab of your server:', 'events-made-easy' );
             echo '<br>';
-            echo '<code>*/5 * * * * curl --user "username:password" ' . site_url( '/wp-json/events-made-easy/v1/processqueue/60' ) . ' >/dev/null 2>&1 </code><br>';
+            echo '<code>*/5 * * * * curl --user "username:password" ' . esc_html( site_url( '/wp-json/events-made-easy/v1/processqueue/60' ) ) . ' >/dev/null 2>&1 </code><br>';
             esc_html_e( 'Change the "username" by your user and the "password" by an application password generated in your WP user settings.', 'events-made-easy' );
             echo '<br>';
             esc_html_e( '"60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course.', 'events-made-easy' );
@@ -395,9 +395,9 @@ function eme_cron_form( $message = '' ) {
             $schedule = $schedules[ $eme_cron_send_queued_schedule ];
             echo '<br>';
             if ($eme_cron_queue_count > 0 ) {
-                echo sprintf( esc_html__( 'Queued emails will be send out in batches of %d %s', 'events-made-easy' ), get_option( 'eme_cron_queue_count' ), $schedule['display'] );
+                printf( esc_html__( 'Queued emails will be send out in batches of %d %s', 'events-made-easy' ), intval( get_option( 'eme_cron_queue_count' ) ), esc_html( $schedule['display'] ) );
             } else {
-                echo sprintf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), $schedule['display'] );
+                printf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), esc_html( $schedule['display'] ) );
             }
         }
     }

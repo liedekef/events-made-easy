@@ -497,7 +497,7 @@ function eme_meta_box_div_location_name( $location ) {
     } else {
         echo '<b>' . esc_html__( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
     }
-    echo trailingslashit( home_url() );
+    echo esc_html( trailingslashit( home_url() ) );
     $locations_prefixes = get_option( 'eme_permalink_locations_prefix', 'locations' );
     if ( preg_match( '/,/', $locations_prefixes ) ) {
         $locations_prefixes     = explode( ',', $locations_prefixes );
@@ -508,13 +508,13 @@ function eme_meta_box_div_location_name( $location ) {
         $prefix = $location['location_prefix'] ? $location['location_prefix'] : '';
         echo eme_ui_select( $prefix, 'location_prefix', $locations_prefixes_arr ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
     } else {
-        echo eme_permalink_convert( $locations_prefixes );
+        echo esc_html( eme_permalink_convert( $locations_prefixes ) );
     }
     if ( $action == 'edit' ) {
         $slug = $location['location_slug'] ? $location['location_slug'] : $location['location_name'];
         $slug = eme_permalink_convert_noslash( $slug );
 ?>
-        <input type="text" id="slug" name="location_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo user_trailingslashit( '' ); ?>
+        <input type="text" id="slug" name="location_slug" value="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( user_trailingslashit( '' ) ); ?>
 <?php
     }
 ?>
@@ -552,11 +552,11 @@ function eme_meta_box_div_location_details( $location ) {
             </h3>
             <div class="inside" style="float:left; width:50%">
             <table><tr>
-            <td><label for="location_address1"><?php echo eme_translate( get_option( 'eme_address1_string' ) ); ?></label></td>
+            <td><label for="location_address1"><?php echo esc_html( eme_translate( get_option( 'eme_address1_string' ) ) ); ?></label></td>
             <td><input id="location_address1" name="location_address1" type="text" value="<?php echo esc_html( $location['location_address1'] ); ?>" size="40"></td>
             </tr>
             <tr>
-            <td><label for="location_address2"><?php echo eme_translate( get_option( 'eme_address2_string' ) ); ?></label></td>
+            <td><label for="location_address2"><?php echo esc_html( eme_translate( get_option( 'eme_address2_string' ) ) ); ?></label></td>
             <td><input id="location_address2" name="location_address2" type="text" value="<?php echo esc_html( $location['location_address2'] ); ?>" size="40"></td>
             </tr>
             <tr>
@@ -692,15 +692,15 @@ function eme_meta_box_div_location_image( $location ) {
     <div id="location_current_image_inside" class="inside">
 <?php
     if ( ! empty( $location['location_image_url'] ) ) {
-        echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='" . $location['location_image_url'] . "' width='200'>";
-        echo "<input type='hidden' name='location_image_url' id='location_image_url' value='" . $location['location_image_url'] . "'>";
+        echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='" . esc_url( $location['location_image_url'] ) . "' width='200'>";
+        echo "<input type='hidden' name='location_image_url' id='location_image_url' value='" . esc_attr( $location['location_image_url'] ) . "'>";
     } else {
         # to prevent html validation errors, use a transparent small pixel
         echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=' width='200'>";
         echo "<input type='hidden' name='location_image_url' id='location_image_url'>";
     }
     if ( ! empty( $location['location_image_id'] ) ) {
-        echo "<input type='hidden' name='location_image_id' id='location_image_id' value='" . $location['location_image_id'] . "'>";
+        echo "<input type='hidden' name='location_image_id' id='location_image_id' value='" . absint( $location['location_image_id'] ) . "'>";
     } else {
         echo "<input type='hidden' name='location_image_id' id='location_image_id'>";
     }

@@ -125,7 +125,9 @@ function eme_attendances_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <h1>" . esc_html__( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
-	 <form action='#' method='post'>$nonce_field
+	 <form action='#' method='post'>"
+         . $nonce_field //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML
+         . "
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
          <input type='hidden' name='person_id' value=''>
          "
@@ -141,7 +143,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	if ( $message != '' ) {
 			echo "
             <div id='message' class='updated notice is-dismissible eme-message-admin'>
-               <p>$message</p>
+               <p>" . wp_kses_post( $message ) . "</p>
             </div>";
 	}
 	$att_types = eme_attendance_types();
@@ -150,7 +152,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	<select id="search_type" name="search_type">
 	<?php
 	foreach ( $att_types as $key => $value ) {
-		echo "<option value='" . esc_html( $key ) . "'>" . esc_html( $value ) . '</option>';
+		echo "<option value='" . esc_attr( $key ) . "'>" . esc_html( $value ) . '</option>';
 	}
 	?>
 	</select>

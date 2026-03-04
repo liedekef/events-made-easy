@@ -856,6 +856,7 @@ function eme_add_bookings_ajax() {
     // check for spammers as early as possible
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -867,6 +868,7 @@ function eme_add_bookings_ajax() {
 
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
         $form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -877,6 +879,7 @@ function eme_add_bookings_ajax() {
     }
     if ( empty( $_POST['eme_event_ids'] ) ) {
         $form_html = __( 'Please select at least one event.', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -892,6 +895,7 @@ function eme_add_bookings_ajax() {
     }
     if ( empty( $events ) ) {
         $form_html = __( 'Please select at least one event.', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -945,6 +949,7 @@ function eme_add_bookings_ajax() {
 
     if ( $memberships_failed == 1 ) {
         $form_html = __( 'No valid membership found.', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1035,6 +1040,7 @@ function eme_add_bookings_ajax() {
                 $message              = get_option( 'eme_payment_booking_on_waitinglist_format' );
                 $message              = eme_replace_booking_placeholders( $message, $event, $booking, $is_multi );
                 $form_result_message .= '<br>' . $message;
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'      => 'OK',
@@ -1044,6 +1050,7 @@ function eme_add_bookings_ajax() {
                 );
             } elseif ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
                 $payment_form = eme_payment_form( $payment_id );
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'      => 'OK',
@@ -1061,6 +1068,7 @@ function eme_add_bookings_ajax() {
                     $redirect_msg         = str_replace( '#_PAYMENT_URL', $payment_url, $redirect_msg );
                     $form_result_message .= '<br>' . $redirect_msg;
                 }
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'          => 'OK',
@@ -1072,6 +1080,7 @@ function eme_add_bookings_ajax() {
                 );
             } else {
                 $payment_form = eme_payment_form( $payment_id );
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'      => 'OK',
@@ -1091,6 +1100,7 @@ function eme_add_bookings_ajax() {
                 $only_if_not_registered = 0;
             }
             if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) && ! get_option( 'eme_rememberme' ) ) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'      => 'OK',
@@ -1099,6 +1109,7 @@ function eme_add_bookings_ajax() {
                     ]
                 );
             } else {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
                 echo wp_json_encode(
                     [
                         'Result'      => 'OK',
@@ -1120,6 +1131,7 @@ function eme_add_bookings_ajax() {
             $only_if_not_registered = 0;
         }
         if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) && ! get_option( 'eme_rememberme' ) ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             echo wp_json_encode(
                 [
                     'Result'      => 'OK',
@@ -1128,6 +1140,7 @@ function eme_add_bookings_ajax() {
                 ]
             );
         } else {
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
             echo wp_json_encode(
                 [
                     'Result'      => 'OK',
@@ -1138,6 +1151,7 @@ function eme_add_bookings_ajax() {
         }
     } else {
         // booking failed
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1154,6 +1168,7 @@ function eme_cancel_bookings_ajax() {
     // check for spammers as early as possible
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1165,6 +1180,7 @@ function eme_cancel_bookings_ajax() {
 
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
         $form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1177,6 +1193,7 @@ function eme_cancel_bookings_ajax() {
     $event_id = intval( $_POST['event_id'] );
     if ( ! $event_id ) {
         $form_html = __( 'No event id detected', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1189,6 +1206,7 @@ function eme_cancel_bookings_ajax() {
     $event = eme_get_event( $event_id );
     if ( empty( $event ) ) {
         $form_html = __( 'No event id detected', 'events-made-easy' );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
                 'Result'      => 'NOK',
@@ -1253,6 +1271,7 @@ function eme_cancel_bookings_ajax() {
     if ( $event['event_properties']['selected_captcha'] == "captcha" ) {
         eme_captcha_remove ( $captcha_res );
     }
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
     echo wp_json_encode(
         [
             'Result'      => 'OK',
@@ -5322,6 +5341,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
             if ( $key == 'future' ) {
                 $selected = "selected='selected'";
             }
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded selected attribute
             echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>  ";
         }
 ?>

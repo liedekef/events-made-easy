@@ -2627,7 +2627,7 @@ case 'payments':
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy');?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy');?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html('offline'));?></td></tr>
 </table>
 </div>
@@ -2661,9 +2661,9 @@ case 'payments':
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 <?php
 $webhook_id = get_option('eme_paypal_webhook_id');
@@ -2716,9 +2716,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2752,9 +2752,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2788,9 +2788,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2811,9 +2811,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2843,9 +2843,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible if funds are available on the account.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible if funds are available on the account.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2882,9 +2882,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2918,9 +2918,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php _e( 'Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change.', 'events-made-easy' ); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php esc_html_e( 'Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change.', 'events-made-easy' ); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2943,9 +2943,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -2987,9 +2987,9 @@ if (!empty($webhook_id)) {
     ];
     eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_snapselect' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 <?php
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
@@ -3039,8 +3039,8 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -3075,9 +3075,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -3110,8 +3110,8 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -3133,9 +3133,9 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
-<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><th colspan='2'><?php esc_html_e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php printf(esc_html__('The url for payment notifications is: %s','events-made-easy'), esc_html($notification_link)); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php esc_html_e('Refunding is possible.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php printf(esc_html__('Internal payment method name: %s','events-made-easy'), esc_html($gateway)); ?></td></tr>
 </table>
 </div>
@@ -3162,7 +3162,7 @@ case 'emefs':
 <h2><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h2>
 <?php printf( wp_kses_post( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ) ), esc_url( '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' ) );
 echo '<br><br>';
-_e("Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings.", 'events-made-easy' );
+esc_html_e("Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings.", 'events-made-easy' );
 ?>
 <table class='form-table'>
 <?php

@@ -234,12 +234,12 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
     echo "
    <div class='wrap'>
       <div id='poststuff'>
-      <h1>" . $h1_string . '</h1>';
+      <h1>" . esc_html( $h1_string ) . '</h1>';
 
     if ( $message != '' ) {
         echo "
       <div id='message' class='updated notice notice-success is-dismissible'>
-         <p>$message</p>
+         <p>" . wp_kses_post( $message ) . "</p>
       </div>";
     }
 ?>
@@ -536,7 +536,7 @@ function eme_ajax_get_template() {
     } else {
         $ajaxResult['htmlmessage'] = '';
     }
-    echo wp_json_encode( $ajaxResult );
+    echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
     wp_die();
 }
 

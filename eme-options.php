@@ -1222,8 +1222,9 @@ function eme_options_register() {
     };
 
     foreach ( $options as $opt ) {
-        register_setting ( 'eme-options', $opt );
-        add_filter ( 'sanitize_option_' . $opt, 'eme_sanitize_option', 10, 2 );
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing -- sanitization is handled via add_filter below
+        register_setting( 'eme-options', $opt );
+        add_filter( 'sanitize_option_' . $opt, 'eme_sanitize_option', 10, 2 );
     }
 }
 

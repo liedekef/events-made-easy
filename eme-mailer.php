@@ -2788,9 +2788,9 @@ function eme_emails_page() {
         <td><?php esc_html_e( 'Select your target audience', 'events-made-easy' ); ?></td>
         <td>
             <select name="rsvp_status">
-            <option value=0><?php esc_html_e( 'All registered persons', 'events-made-easy' ); ?></option>
-            <option value=<?php echo EME_RSVP_STATUS_APPROVED; ?>><?php esc_html_e( 'Only approved bookings', 'events-made-easy' ); ?></option>
-            <option value=<?php echo EME_RSVP_STATUS_PENDING; ?>><?php esc_html_e( 'Only pending bookings', 'events-made-easy' ); ?></option>
+            <option value="0"><?php esc_html_e( 'All registered persons', 'events-made-easy' ); ?></option>
+            <option value="<?php echo esc_attr( EME_RSVP_STATUS_APPROVED ); ?>"><?php esc_html_e( 'Only approved bookings', 'events-made-easy' ); ?></option>
+            <option value="<?php echo esc_attr( EME_RSVP_STATUS_PENDING ); ?>"><?php esc_html_e( 'Only pending bookings', 'events-made-easy' ); ?></option>
             </select>
         </td>
         </tr>

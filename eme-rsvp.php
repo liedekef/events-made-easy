@@ -5095,7 +5095,7 @@ function eme_registration_seats_page( $pending = 0 ) {
                 }
                 // now get the changed booking and send mail if wanted
                 $booking = eme_get_booking( $booking_id );
-                print "<div id='message' class='updated notice is-dismissible'><p>" . $update_message . '</p></div>';
+                print "<div id='message' class='updated notice is-dismissible'><p>" . wp_kses_post( $update_message ) . '</p></div>';
                 if ( $send_mail ) {
                     $mail_res = eme_email_booking_action( $booking, $action );
                     if ( ! $mail_res ) {
@@ -5104,7 +5104,7 @@ function eme_registration_seats_page( $pending = 0 ) {
                 }
             } else {
                 $update_message = __( 'During the time of your change, some free seats were taken leaving not enough free seats available anymore', 'events-made-easy' );
-                print "<div id='message' class='error notice is-dismissible'><p>" . $update_message . '</p></div>';
+                print "<div id='message' class='error notice is-dismissible'><p>" . wp_kses_post( $update_message ) . '</p></div>';
             }
         } elseif ( $action == 'import_payments' && isset( $_FILES['eme_csv'] ) ) {
             // eme_cap_cleanup is used for cleanup, cron and imports (should more be something like 'eme_cap_actions')

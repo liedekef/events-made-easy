@@ -404,7 +404,7 @@ function eme_cpi_form( $person_id ) {
 }
 
 function eme_gdpr_approve_show() {
-	print eme_kses_maybe_unfiltered( eme_translate( get_option( 'eme_gdpr_approve_page_content' ) ) );
+	print eme_kses_maybe_unfiltered( eme_translate( get_option( 'eme_gdpr_approve_page_content' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- eme_kses_maybe_unfiltered() is the plugin's escaping function for rich editor content
 }
 
 function eme_show_personal_info( $email ) {

@@ -1987,7 +1987,7 @@ function eme_notification_2co() {
         $StringToHash = strtoupper( md5( $hashOrder . $hashSid . $hashInvoice . $secret ) );
 
         if ( $StringToHash != $insMessage['md5_hash'] ) {
-            die( __( 'Hash Incorrect', 'events-made-easy' ) );
+            wp_die( esc_html__( 'Hash Incorrect', 'events-made-easy' ) );
         }
 
         if ( $insMessage['invoice_status'] == 'approved' || $insMessage['invoice_status'] == 'deposited' ) {
@@ -2071,7 +2071,7 @@ function eme_notification_fdgg() {
     $calc_hash = fdgg_createHash( $shared_secret . $approval_code . $charge_total . $cur_code . $datetime . $store_name );
 
     if ( $response_hash != $calc_hash ) {
-        die( __( 'Hash Incorrect', 'events-made-easy' ) );
+        wp_die( esc_html__( 'Hash Incorrect', 'events-made-easy' ) );
     }
 
     // TODO: do some extra checks, like the price paid and such
@@ -2469,12 +2469,13 @@ function eme_charge_stripe() {
     $stripe_session_id = $stripe_session->id;
     eme_update_payment_pg_pid( $payment_id, $stripe_session_id );
 
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Stripe payment integration HTML block with escaped variables
     print "<html><body>
         <script src='https://js.stripe.com/v3/'></script>
         <script>
-            var stripe = Stripe('$eme_stripe_public_key');
+            var stripe = Stripe('" . esc_js( $eme_stripe_public_key ) . "');
             stripe.redirectToCheckout({
-                sessionId: '$stripe_session_id'
+                sessionId: '" . esc_js( $stripe_session_id ) . "'
             });
         </script>
         </body></html>
@@ -4162,5 +4163,5 @@ function eme_ajax_get_bancontactwero_iban() {
 function echo_configured_pg($pg) {
     $configured_pgs = eme_get_configured_pgs();
     if (in_array($pg, $configured_pgs))
-        echo '&nbsp;<b style="color: green;">'.__('Configured','events-made-easy').'</b>';
+        echo '&nbsp;<b style="color: green;">' . esc_html__( 'Configured', 'events-made-easy' ) . '</b>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded HTML wrapper
 }

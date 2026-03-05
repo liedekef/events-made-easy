@@ -597,8 +597,8 @@ function eme_events_page() {
         if ( !empty($validation_result) ) {
             // validation unsuccessful
             echo "<div id='message' class='error '>
-                <p>$validation_result</p>
-                <p>$press_back</p>
+                <p>" . wp_kses_post( $validation_result ) . "</p>
+                <p>" . esc_html( $press_back ) . "</p>
                 </div>";
                 return;
         }
@@ -618,8 +618,8 @@ function eme_events_page() {
                 $validation_result = eme_validate_location( $location );
                 if ( $validation_result != 'OK' ) {
                     echo "<div id='message' class='error '>
-                        <p>$validation_result</p>
-                        <p>$press_back</p>
+                        <p>" . wp_kses_post( $validation_result ) . "</p>
+                        <p>" . esc_html( $press_back ) . "</p>
                         </div>";
                 return;
                 } else {
@@ -627,8 +627,8 @@ function eme_events_page() {
                     eme_location_store_answers( $new_location_id );
                     if ( ! $new_location_id ) {
                         echo "<div id='message' class='error '>
-                            <p>" . __( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'events-made-easy' ) . "</p>
-                            <p>$press_back</p>
+                            <p>" . esc_html__( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'events-made-easy' ) . "</p>
+                            <p>" . esc_html( $press_back ) . "</p>
                             </div>";
                 return;
                     }
@@ -6109,7 +6109,7 @@ function eme_events_table( $message = '' ) {
         if ( $key == 'future' ) {
             $selected = "selected='selected'";
         }
-        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
+        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
     }
 ?>
     </select>
@@ -6263,7 +6263,7 @@ function eme_recurrences_table( $message = '' ) {
         if ( $key == 'ongoing' ) {
             $selected = "selected='selected'";
         }
-        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
+        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
     }
 ?>
     </select>
@@ -6640,12 +6640,12 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                   <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 <?php
     } else {
-        $trash_button_text           = esc_html__( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
-        $deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
+        $trash_button_text           = __( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
+        $deleteRecurrence_button_text = __( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
 ?>
                   <input type="submit" class="button-primary eme_submit_button" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
                 <?php if ( ! $edit_recurrence ) { ?>
-                        <input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo $trash_button_text; ?>');">
+                        <input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo esc_js( $trash_button_text ); ?>');">
 <?php
         $view_button_text = __( 'View', 'events-made-easy' );
         $view_button      = sprintf(
@@ -6659,7 +6659,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                         <br><?php esc_html_e( 'If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
                     <?php } ?> 
                     <?php if ( $edit_recurrence && $recurrence_id > 0 ) { ?>
-                            <input type="submit" class="button-primary" id="event_deleteRecurrence_button" name="event_deleteRecurrence_button" value="<?php esc_attr_e( 'Delete Recurrence', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo $deleteRecurrence_button_text; ?>');">
+                            <input type="submit" class="button-primary" id="event_deleteRecurrence_button" name="event_deleteRecurrence_button" value="<?php esc_attr_e( 'Delete Recurrence', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo esc_js( $deleteRecurrence_button_text ); ?>');">
                     <?php } ?> 
             <?php } ?>
     </p>
@@ -6682,7 +6682,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             } else {
                 $selected = '';
             }
-            echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
+            echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
         }
 ?>
                         </select><br>
@@ -6865,7 +6865,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $selected = '';
                 }
 ?>
-            <input type="checkbox" name="event_category_ids[]" value="<?php echo $category['category_id']; ?>" <?php echo $selected; ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
+            <input type="checkbox" name="event_category_ids[]" value="<?php echo intval( $category['category_id'] ); ?>" <?php echo $selected; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
 <?php
             } // end foreach
         } // end if
@@ -7418,7 +7418,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 ?>
     <br>
     <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-    <img src="<?php echo EME_PLUGIN_URL; ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+    <img src="<?php echo esc_url( EME_PLUGIN_URL . 'images/showhide.png' ); ?>" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="eme_prop_contactperson_registration_ipn_email_body_div" <?php echo $showhide_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class/style string ?>>
     <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_ipn_email_body', $event['event_properties']['contactperson_registration_ipn_email_body'], $use_html_editor, 0, 'eme_contactperson_ipn_email_body' ); ?>
@@ -8554,7 +8554,7 @@ function eme_meta_box_div_event_customfields( $event ) {
         } else {
             $field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, 'eme_formfield' );
         }
-        echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
+        echo "<tr><td>" . esc_html( $field_name ) . "</td><td style='width: 100%;'>" . wp_kses_post( $field_html ) . "</td></tr>";
     }
 ?>
         </table>
@@ -8769,7 +8769,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         } else {
             $selected = '';
         }
-        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
+        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
     }
 ?>
             </select>
@@ -8783,7 +8783,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_multiprice_desc'>
         <td><label for='eme_prop_multiprice_desc'><?php esc_html_e( 'Price Categories descriptions', 'events-made-easy' ); ?> :</label></td>
-        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" col="40" style="field-sizing: content; min-width: 200px; max-width: 500px; min-height: 50px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", esc_html( $event['event_properties']['multiprice_desc'] ) ); ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
+        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" col="40" style="field-sizing: content; min-width: 200px; max-width: 500px; min-height: 50px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", esc_html( $event['event_properties']['multiprice_desc'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output is already escaped by esc_html(), str_replace only adds newlines ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_vat'>
         <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>

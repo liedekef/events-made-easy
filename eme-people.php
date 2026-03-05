@@ -1482,11 +1482,11 @@ function eme_printable_booking_report( $event_id ) {
 <?php
     $file_name = get_stylesheet_directory() . '/eme.css';
     if ( file_exists( $file_name ) ) {
-        echo "<link rel='stylesheet' href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='screen'>\n";
+        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme.css' ) . "' type='text/css' media='screen'>\n";
     }
     $file_name = get_stylesheet_directory() . '/eme_print.css';
     if ( file_exists( $file_name ) ) {
-        echo "<link rel='stylesheet' href='" . get_stylesheet_directory_uri() . "/eme_print.css' type='text/css' media='print'>\n";
+        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme_print.css' ) . "' type='text/css' media='print'>\n";
     }
 ?>
         </head>
@@ -1498,7 +1498,7 @@ function eme_printable_booking_report( $event_id ) {
 <?php
     if ( $event['location_id'] ) {
         $location = eme_get_location( $event['location_id'] );
-        echo eme_replace_locations_placeholders( '#_LOCATIONNAME, #_ADDRESS, #_TOWN', $location );
+        echo wp_kses_post( eme_replace_locations_placeholders( '#_LOCATIONNAME, #_ADDRESS, #_TOWN', $location ) );
     }
 ?>
     </p>
@@ -1613,7 +1613,7 @@ function eme_printable_booking_report( $event_id ) {
         $class         = 'eme_print_formfield' . $field_id;
         $tmp_formfield = eme_get_formfield( $field_id );
         if ( ! empty( $tmp_formfield ) ) {
-            print "<th scope='col' class='$class'>" . $tmp_formfield['field_name'] . '</th>';
+            print "<th scope='col' class='" . esc_attr( $class ) . "'>" . esc_html( $tmp_formfield['field_name'] ) . '</th>';
             ++$nbr_columns;
         }
     }
@@ -1695,7 +1695,7 @@ function eme_printable_booking_report( $event_id ) {
                 }
             }
         }
-        echo esc_html( eme_localized_price( $booking['discount'], $event['currency'] ) ) . $discount_name;
+        echo esc_html( eme_localized_price( $booking['discount'], $event['currency'] ) ) . wp_kses_post( $discount_name );
 ?>
             </td>
             <td class='eme_print_total_price'><?php echo esc_html( eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ) ); ?></td>
@@ -1709,7 +1709,7 @@ function eme_printable_booking_report( $event_id ) {
                     $class         = 'eme_print_formfield' . $answer['field_id'];
                     $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                     if ( ! empty( $tmp_formfield ) ) {
-                        print "<td class='$class'>" . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) . '</td>';
+                        print "<td class='" . esc_attr( $class ) . "'>" . wp_kses_post( eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) ) . '</td>';
                     }
                     $found = 1;
                     break;
@@ -1717,7 +1717,7 @@ function eme_printable_booking_report( $event_id ) {
             }
             # to make sure the number of columns are correct, we add an empty answer if none was found
             if ( ! $found ) {
-                print "<td class='$class'>&nbsp;</td>";
+                print "<td class='" . esc_attr( $class ) . "'>&nbsp;</td>";
             }
         }
 ?>
@@ -1734,7 +1734,7 @@ function eme_printable_booking_report( $event_id ) {
                 $class         = 'eme_print_formfield' . $answer['field_id'];
                 $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                 if ( ! empty( $tmp_formfield ) ) {
-                    print "<span class='$class'>$grouping.$occurence " . esc_html( $tmp_formfield['field_name'] ) . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) . '</span><br>';
+                    print "<span class='" . esc_attr( $class ) . "'>" . esc_html( $grouping . '.' . $occurence ) . ' ' . esc_html( $tmp_formfield['field_name'] ) . ': ' . wp_kses_post( eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) ) . '</span><br>';
                 }
             }
         }
@@ -2595,7 +2595,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <tr>
         <td><label for="dp_birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
         <td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo esc_html( $person['birthdate'] ); ?>'>
-        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo esc_html( $person['birthdate'] ); ?>' data-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
+        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo esc_html( $person['birthdate'] ); ?>' data-format='<?php echo esc_attr( EME_WP_DATE_FORMAT ); ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
         <td></td>
         </tr>
         <tr>
@@ -4668,7 +4668,7 @@ function eme_user_profile( $user ) {
         </tr>
         <tr>
         <th><?php esc_html_e( 'Bookings made for future events', 'events-made-easy' ); ?></th>
-        <td><?php echo eme_get_bookings_list_for_wp_id( $user->ID, 'future', $template ); ?>
+        <td><?php echo eme_get_bookings_list_for_wp_id( $user->ID, 'future', $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_bookings_list_for_wp_id() ?>
         </tr>
         <tr>
         <th><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></th>

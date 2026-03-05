@@ -446,17 +446,17 @@ function eme_register_scripts() {
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
         //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
-        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
+        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], null, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
+        wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], null, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
+        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], null, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_friendlycaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
-        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], '', [ 'strategy' => 'async', 'in_footer' => true ] );
+        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], null, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], null, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
@@ -515,6 +515,7 @@ function eme_admin_notices() {
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
         <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php
 			/* translators: 1: user name, 2: widgets URL, 3: widgets title, 4: template tags URL, 5: template tags title, 6: shortcodes URL, 7: shortcodes title, 8: settings URL, 9: settings title, 10: dismiss title */
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML format string with escaped arguments
 			printf(
 				__( "<p>Hey, <strong>%1\$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2\$s' title='%3\$s'>widgets</a>, <a href='%4\$s' title='%5\$s'>template tags</a> or <a href='%6\$s' title='%7\$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8\$s' title='%9\$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10\$s'>click here</a> and you won't see this again!</p>", 'events-made-easy' ),
 				esc_html( $current_user->display_name ),
@@ -685,7 +686,7 @@ function eme_custom_dashboard_next_events() {
     $format        = "<li>#_STARTDATE #_STARTTIME <a href='#_EDITEVENTURL'>#_EVENTNAME</a> </li>";
     $format_header = '<h3>'.__('List of next 10 events','events-made-easy').'</h3><ul>';
     $format_footer = '</ul>';
-    echo eme_get_events_list(limit: 10, format: $format, format_header: $format_header, format_footer: $format_footer);
+    echo eme_get_events_list(limit: 10, format: $format, format_header: $format_header, format_footer: $format_footer); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_events_list()
 }
 
 add_action( 'rest_api_init', function () {

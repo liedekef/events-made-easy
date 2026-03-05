@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Third-party ExpressiveDate library. Exception messages contain debug info, not user input.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

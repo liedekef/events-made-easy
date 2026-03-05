@@ -1646,7 +1646,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             <input type='hidden' name='start_date' id='start_date' value='<?php echo esc_attr( $member['start_date'] ); ?>'>
 <?php
             if ( $limited ) {
-                echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
+                echo esc_html( eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
                  <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['start_date'] ) ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
@@ -1657,7 +1657,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             <input type='hidden' name='end_date' id='end_date' value='<?php echo esc_attr( $member['end_date'] ); ?>'>
 <?php
             if ( $limited ) {
-                echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
+                echo esc_html( eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
                 <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['end_date'] ) ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
@@ -1697,7 +1697,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
             <input type='hidden' name='payment_date' id='payment_date' value='<?php echo esc_attr( $member['payment_date'] ); ?>'>
 <?php
             if ( $limited ) {
-                echo eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 );
+                echo esc_html( eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
                 <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['payment_date'] ) ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
@@ -1707,7 +1707,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </td></tr>
     </table><br><br>
 <?php
-    echo eme_member_form( $member, $membership_id, 1 );
+    echo eme_member_form( $member, $membership_id, 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML form output
 ?>
     </form>
 <?php
@@ -2812,7 +2812,7 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
         } else {
             $field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
         }
-        echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
+        echo "<tr><td>" . esc_html( $field_name ) . "</td><td style='width: 100%;'>" . wp_kses_post( $field_html ) . "</td></tr>";
     }
 ?>
     </table>
@@ -3260,7 +3260,7 @@ function eme_manage_memberships_layout( $message ) {
 
 <?php
     if ( ! empty( $message ) ) {
-        print '<div class="notice is-dismissible eme-message-admin"><p>'.$message.'</p></div>';
+        print '<div class="notice is-dismissible eme-message-admin"><p>' . wp_kses_post( $message ) . '</p></div>';
     }
 ?>
     <div id="memberships-message" class="eme-hidden">
@@ -4968,7 +4968,7 @@ function eme_access_meta_box_cb( $post ) {
     }
     echo eme_ui_checkbox( $selected_membershipids_arr, 'eme_membershipids', $memberships_arr, false, 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox()
     echo "<br><label for='eme_drip_counter'>" . esc_html__( 'Allow access after the membership has been active for this many days (drip content):', 'events-made-easy' ) . '</label>&nbsp;';
-    echo "<input type='number' id='eme_drip_counter' name='eme_drip_counter' value='$drip_counter'>";
+    echo "<input type='number' id='eme_drip_counter' name='eme_drip_counter' value='" . esc_attr( $drip_counter ) . "'>";
     echo '<br><br>';
     echo "<label for='eme_membershipids'>" . esc_html__( 'Limit access to EME people that are members of the following groups', 'events-made-easy' ) . '</label><br>';
     $groups_arr = [];

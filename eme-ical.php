@@ -245,6 +245,7 @@ function eme_sitemap() {
 					$changefreq = 'monthly';
 			}
             // Concatenate List of URLs
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- XML sitemap output, not HTML
             echo "<url>\n<loc>$locurl</loc>\n<lastmod>$lastmod</lastmod>\n<changefreq>$changefreq</changefreq>\n<priority>$priority</priority>\n</url>\n";
 		}
 	}

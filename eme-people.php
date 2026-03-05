@@ -5535,7 +5535,7 @@ function eme_ajax_wpuser_snapselect() {
     // Exclude wp_ids already linked to another person; pass the current person's wp_id
     // so that their own linked user stays available for (re-)selection.
     $person_wpid  = isset( $_REQUEST['person_wpid'] ) ? intval( $_REQUEST['person_wpid'] ) : 0;
-    $used_wp_ids   = eme_get_used_wpids( $person_wpid );  // cached, so repeated AJAX pages are free
+    $used_wp_ids   = eme_get_used_wpids( $person_wpid );
 
     $records  = [];
     $wp_users = eme_get_wp_users( $q, $start, $mysql_pagesize, $used_wp_ids );

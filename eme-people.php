@@ -2667,7 +2667,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         }
     }
     $eme_wp_user_arr = [];   // snapselect loads options via AJAX; the static array is empty.
-    echo eme_ui_select( $person['wp_id'], 'wp_id', $eme_wp_user_arr, $preselected_wpuser_option, 0, 'eme_snapselect_wpuser_class', '', 'data-person_wpid="' . intval( $person['wp_id'] ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+    echo eme_ui_select( $person['wp_id'], 'wp_id', $eme_wp_user_arr, $preselected_wpuser_option, 0, 'eme_snapselect_wpuser_class', 'data-person_wpid="' . intval( $person['wp_id'] ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
             <br>
             <?php esc_html_e( "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email.", 'events-made-easy' ); ?><br>

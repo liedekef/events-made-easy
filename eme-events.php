@@ -5583,24 +5583,10 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 
     $where    = implode( ' AND ', $conditions );
     $sql_join = '';
-
+    $groupby  = '';
     if ( $show_recurrent_events_once ) {
-        if ( $where != '' ) {
-            $count_where = ' WHERE ' . $where . " AND $events_table.recurrence_id>0";
-        } else {
-            $count_where = " WHERE $events_table.recurrence_id>0";
-        }
-        // for show_recurrent_events_once: first we count the number of recurrent events that match, and then we increase the limit by that number
-        // This will allow the sql to show all events relevant
-        // Later on we we loop over the events and show only the amount wanted
-        if ( ! empty( $limit_string ) ) {
-            $count_sql = "SELECT COUNT(*) FROM $events_table $count_where";
-            $t_count   = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-            // now increase the $limit with the number of events found
-            // we don't change $event_limit because we need that later on
-            $t_limit = $event_limit + intval( $t_count );
-            $limit_string = "LIMIT $t_limit";
-        }
+        // this would not work if the mysql mode ONLY_FULL_GROUP_BY is active, but WP disables that in the wpdb class
+        $groupby = "GROUP BY CASE WHEN $events_table.recurrence_id > 0 THEN $events_table.recurrence_id ELSE $events_table.event_id END"; 
     } elseif ( $include_customformfields ) {
         $answers_table         = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
@@ -5635,7 +5621,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         $where = ' WHERE ' . $where;
     }
     $sql = "SELECT $columns FROM $events_table LEFT JOIN $locations_table ON $events_table.location_id=$locations_table.location_id
-        $sql_join $where $orderby $limit_string $offset_string";
+        $sql_join $where $groupby $orderby $limit_string $offset_string";
 
     $sql_md5 = md5( $sql );
     $res     = wp_cache_get( "eme_events $sql_md5" );
@@ -5647,9 +5633,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         } else {
             $events          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
             $inflated_events = [];
-            $seen_recids     = [];
             if ( ! empty( $events ) ) {
-                $event_count = 0;
                 // if in the frontend we might want to hide rsvp ended events
                 if ( ! eme_is_admin_request() ) {
                     $eme_rsvp_hide_rsvp_ended_events = get_option( 'eme_rsvp_hide_rsvp_ended_events' );
@@ -5657,9 +5641,6 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                     $eme_rsvp_hide_rsvp_ended_events = 0;
                 }
                 foreach ( $events as $this_event ) {
-                    if ( $show_recurrent_events_once && $this_event['recurrence_id'] > 0 && in_array( $this_event['recurrence_id'], $seen_recids ) ) {
-                        continue;
-                    }
                     $this_event = eme_get_extra_event_data( $this_event );
                     $this_event = eme_get_extra_location_data( $this_event );
                     // this might throw of the limit parameter: you selected to show X events but in case the option to hide rsvp ended events is shown, the number of events shown will be less
@@ -5667,14 +5648,6 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
                         continue;
                     }
                     $inflated_events[] = $this_event;
-                    if ( $this_event['recurrence_id'] > 0 ) {
-                        $seen_recids[] = $this_event['recurrence_id'];
-                    }
-                    ++$event_count;
-                    // if there's a limit set, let's respect it
-                    if ( $event_limit && $event_count >= $event_limit ) {
-                        break;
-                    }
                 }
                 if ( ! eme_is_admin_request() && has_filter( 'eme_event_list_filter' ) ) {
                     $inflated_events = apply_filters( 'eme_event_list_filter', $inflated_events );

@@ -500,7 +500,20 @@ input[type="checkbox"] {
     min-inline-size: 10ch;
 }
 
-/* for task section header */
+/* for tasks */
+.eme_tasks {
+    border-collapse: collapse; 
+    width: 100%;
+}
+.eme_tasks thead {
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+}
+.eme_tasks tr {
+    border-width: thin;
+    border-style: solid;
+}
 .eme_task_section_header {
     font-weight: bold;
 }

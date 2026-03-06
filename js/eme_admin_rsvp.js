@@ -207,13 +207,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    if (data.Result !== 'OK') {
-                                        const messageBox = document.getElementById('bookings-message');
-                                        if (messageBox) {
-                                            messageBox.innerHTML = data.htmlmessage;
-                                            messageBox.classList.toggle('eme-hidden');
-                                            setTimeout(() => messageBox.classList.toggle('eme-hidden'), 5000);
-                                        }
+                                    if (data.Result === 'ERROR') {
+                                        BookingsTable.showError(data.htmlmessage);
+                                    } else {
+                                        BookingsTable.showInfo(data.htmlmessage);
                                     }
                                     BookingsTable.reload();
                                 })
@@ -253,11 +250,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    const messageBox = document.getElementById('bookings-message');
-                                    if (messageBox) {
-                                        messageBox.innerHTML = data.htmlmessage;
-                                        messageBox.classList.toggle('eme-hidden');
-                                        setTimeout(() => messageBox.classList.toggle('eme-hidden'), 5000);
+                                    if (data.Result === 'ERROR') {
+                                        BookingsTable.showError(data.htmlmessage);
+                                    } else {
+                                        BookingsTable.showInfo(data.htmlmessage);
                                     }
                                     BookingsTable.reload();
                                 })
@@ -416,11 +412,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
-                const msg = EME.$('#bookings-message');
-                if (msg) {
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
+                if (data.Result === 'ERROR') {
+                    BookingsTable.showError(data.htmlmessage);
+                } else {
+                    BookingsTable.showInfo(data.htmlmessage);
                 }
                 BookingsTable.reload();
                 actionsButton.textContent = emersvp.translate_apply;

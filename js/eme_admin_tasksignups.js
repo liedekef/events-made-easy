@@ -170,18 +170,14 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', emetasks.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
+                if (data.Result === 'ERROR') {
+                    TaskSignupsTable.showError(data.htmlmessage);
+                } else {
+                    TaskSignupsTable.showInfo(data.htmlmessage);
+                }
                 TaskSignupsTable.reload();
                 actionsButton.textContent = emetasks.translate_apply;
                 actionsButton.disabled = false;
-
-                const messageDiv = EME.$('#tasksignups-message');
-                if (messageDiv) {
-                    messageDiv.innerHTML = data.htmlmessage;
-                    eme_toggle(messageDiv, true);
-                    setTimeout(() => {
-                        eme_toggle(messageDiv, false);
-                    }, 5000);
-                }
             });
         });
     }

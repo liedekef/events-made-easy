@@ -561,22 +561,13 @@ function eme_task_signups_page() {
     eme_task_signups_table_layout();
 }
 
-function eme_task_signups_table_layout( $message = '' ) {
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
-
+function eme_task_signups_table_layout( ) {
     echo "
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <h1>" . esc_html__( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
-    <div id="tasksignups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
 
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>

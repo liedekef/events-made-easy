@@ -69,7 +69,7 @@ function eme_formfields_page() {
             $formfield                   = [];
             $field_id                    = intval( $_POST['field_id'] );
             $formfield['field_name']     = trim( eme_sanitize_request( $_POST['field_name'] ) );
-            $formfield['field_type']     = trim( eme_esc_html( eme_sanitize_request( $_POST['field_type'] ) ) );
+            $formfield['field_type']     = trim( esc_html( eme_sanitize_request( $_POST['field_type'] ) ) );
             $formfield['extra_charge']   = intval( $_POST['extra_charge'] );
             $formfield['searchable']     = intval( $_POST['searchable'] );
             $formfield['field_required'] = intval( $_POST['field_required'] );
@@ -305,7 +305,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
       <table class='form-table'>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_name'>" . __( 'Field name', 'events-made-easy' ) . "</label></th>
-               <td><input name='field_name' id='field_name' type='text' value='" . eme_esc_html( $formfield['field_name'] ) . "' size='40' required='required'></td>
+               <td><input name='field_name' id='field_name' type='text' value='" . esc_html( $formfield['field_name'] ) . "' size='40' required='required'></td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_type'>" . __( 'Field type', 'events-made-easy' ) . '</label></th>
@@ -376,7 +376,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             <tr id='tr_field_values' class='form-field'>
            <th scope='row' style='vertical-align:top'><label for='field_values'>" . __( 'Field values', 'events-made-easy' ) . '</label></th>';
 
-    $layout .= "<td><div id='field_values_container'><input name='field_values' id='field_values' type='text' value='" . eme_esc_html( $formfield['field_values'] ) . "' size='40'></div>";
+    $layout .= "<td><div id='field_values_container'><input name='field_values' id='field_values' type='text' value='" . esc_html( $formfield['field_values'] ) . "' size='40'></div>";
     $layout .= '
                   <br>' . __( 'Enter here the default value a field should have, or enter the list of values for fields that support multiple values.', 'events-made-easy' ) . '
                   <br>' . __( 'For fields that support multiple values (like Dropdown or Checkbox), enter one value per line. To include an empty first option (e.g., for a blank default in a dropdown), start with an empty line at the top.', 'events-made-easy' ) . '
@@ -386,7 +386,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_field_tags' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_tags'>" . __( 'Field tags', 'events-made-easy' ) . '</label></th>';
-    $layout .= "<td><div id='field_tags_container'><input name='field_tags' id='field_tags' type='text' value='" . eme_esc_html( $formfield['field_tags'] ) . "' size='40'></div>";
+    $layout .= "<td><div id='field_tags_container'><input name='field_tags' id='field_tags' type='text' value='" . esc_html( $formfield['field_tags'] ) . "' size='40'></div>";
     $layout .= '
           <br>' . __( 'This option determines the "visible" value people will see for the field.', 'events-made-easy' ) . '
           <br>' . __( 'For multivalue fields, you can here enter the "visible" tag people will see per value (so, if "Field values" contain e.g. "a1||a2||a3", you can use here e.g. "Text a1||Text a2||Text a3").', 'events-made-easy' ) . '
@@ -395,7 +395,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_admin_values' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='admin_values'>" . __( 'Admin Field values', 'events-made-easy' ) . '</label></th>';
-    $layout .= "<td><div id='admin_values_container'><input name='admin_values' id='admin_values' type='text' value='" . eme_esc_html( $formfield['admin_values'] ) . "' size='40'></div>";
+    $layout .= "<td><div id='admin_values_container'><input name='admin_values' id='admin_values' type='text' value='" . esc_html( $formfield['admin_values'] ) . "' size='40'></div>";
     $layout .= '
                   <br>' . __( 'If you want a bigger number of choices for e.g. dropdown fields in the admin interface, enter the possible values here', 'events-made-easy' ) . '
                   <br>' . __( "For the type 'File' you can optionally enter a maximum upload size in MB.", 'events-made-easy' ) . "
@@ -403,14 +403,14 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_admin_tags' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='admin_tags'>" . __( 'Admin Field tags', 'events-made-easy' ) . '</label></th>';
-    $layout .= "<td><div id='admin_tags_container'><input name='admin_tags' id='admin_tags' type='text' value='" . eme_esc_html( $formfield['admin_tags'] ) . "' size='40'></div>";
+    $layout .= "<td><div id='admin_tags_container'><input name='admin_tags' id='admin_tags' type='text' value='" . esc_html( $formfield['admin_tags'] ) . "' size='40'></div>";
     $layout .= '
                   <br>' . __( 'If you want a bigger number of choices for e.g. dropdown fields in the admin interface, enter the possible tags here', 'events-made-easy' ) . "
                </td>
             </tr>
             <tr id='tr_field_attributes' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_attributes'>" . __( 'HTML field attributes', 'events-made-easy' ) . "</label></th>
-               <td><input name='field_attributes' id='field_attributes' type='text' value='" . eme_esc_html( $formfield['field_attributes'] ) . "' size='40'>
+               <td><input name='field_attributes' id='field_attributes' type='text' value='" . esc_html( $formfield['field_attributes'] ) . "' size='40'>
                    <br>" . __( 'Here you can specify extra html attributes for your field (like size, maxlength, pattern, ...).', 'events-made-easy' ) . '
                    <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' enter a valid PHP-format of the date you like to see when entering/showing the value (unrecognized characters in the format will cause the result to be empty). If left empty, the WordPress settings for date format will be used.", 'events-made-easy' ) . "
                     <br>" . __( "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show.", 'events-made-easy' ) . __('EME uses a custom snapselect version for dropdowns, see https://github.com/liedekef/snapselect for all data-related possibilities.','events-made-easy') . "
@@ -418,7 +418,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_admin_attributes' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='admin_attributes'>" . __( 'Admin HTML field attributes', 'events-made-easy' ) . "</label></th>
-               <td><input name='admin_attributes' id='admin_attributes' type='text' value='" . eme_esc_html( $formfield['admin_attributes'] ) . "' size='40'>
+               <td><input name='admin_attributes' id='admin_attributes' type='text' value='" . esc_html( $formfield['admin_attributes'] ) . "' size='40'>
                    <br>" . __( 'If you want different HTML attributes in the admin interface, enter these here.', 'events-made-easy' ) . "
                </td>
             </tr>
@@ -703,7 +703,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $value ) ) {
                 $value = $field_values;
             }
-            $value = eme_esc_html( $value );
+            $value = esc_html( $value );
             $html  = "<input $readonly $required_att type='" . $formfield['field_type'] . "' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             break;
         case 'hidden':
@@ -711,7 +711,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $value ) ) {
                 $value = $field_values;
             }
-            $value = eme_esc_html( $value );
+            $value = esc_html( $value );
             if ( eme_is_admin_request() ) {
                     $html  = "<input $readonly $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes><br>";
                     $html .= __( 'This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it', 'events-made-easy' );
@@ -720,19 +720,19 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             break;
         case 'password':
-            $value = eme_esc_html( $entered_val );
+            $value = esc_html( $entered_val );
             $new_attrs = eme_merge_classes_into_attrs('eme_passwordfield', $field_attributes);
             $html = "<input $readonly $required_att type='text' autocomplete='off' name='$field_name' id='$field_name' value='$value' $new_attrs>";
             break;
         case 'readonly':
-            $value = eme_esc_html( $entered_val );
+            $value = esc_html( $entered_val );
             if ( empty( $value ) ) {
                 $value = eme_translate( $field_tags );
             }
             if ( empty( $value ) ) {
                 $value = $field_values;
             }
-            $value = eme_esc_html( $value );
+            $value = esc_html( $value );
             $html  = "<input readonly='readonly' $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             break;
         case 'dropdown':
@@ -783,7 +783,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $value ) ) {
                 $value = $field_values;
             }
-            $value = eme_esc_html( $value );
+            $value = esc_html( $value );
             $html  = "<textarea $required_att name='$field_name' id='$field_name' $field_attributes $readonly>$value</textarea>";
             break;
         case 'radiobox':
@@ -926,7 +926,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $value        = $eme_date_obj->getDate();
             }
 
-            $value = eme_esc_html( $value );
+            $value = esc_html( $value );
             $dateformat = $formfield['field_attributes'];
             if ( empty( $dateformat ) ) {
                 $dateformat = EME_WP_DATE_FORMAT;
@@ -947,7 +947,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $value        = $eme_date_obj->getDateTime();
             }
-            $value    = eme_esc_html( $value );
+            $value    = esc_html( $value );
             $js_value = eme_js_datetime( $value, EME_TIMEZONE );
             $dateformat = $formfield['field_attributes'];
             if ( empty( $dateformat ) ) {
@@ -970,7 +970,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
                 $value        = $eme_date_obj->getTime();
             }
-            $value    = eme_esc_html( $value );
+            $value    = esc_html( $value );
             $js_value = eme_js_datetime( $value, EME_TIMEZONE );
             $dateformat = $formfield['field_attributes'];
             if ( empty( $dateformat ) ) {
@@ -982,15 +982,15 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
         case 'datalist':
             # for text fields
             $value = $entered_val;
-            $value = eme_esc_html( $entered_val );
+            $value = esc_html( $entered_val );
             $html  = "<input $readonly $required_att type='text' list='list_$field_name' name='$field_name' id='$field_name' value='$value' $field_attributes>";
             // now the datalist
             $html  .= "<datalist id='list_$field_name'>";
             $values = eme_convert_multi2array( $field_values );
             $tags   = eme_convert_multi2array( $field_tags );
             foreach ( $values as $key => $val ) {
-                $val  = eme_esc_html($val);
-                $tag  = eme_esc_html($tags[ $key ]);
+                $val  = esc_html($val);
+                $tag  = esc_html($tags[ $key ]);
                 $html .= "<option value='$val'>$tag</option>";
             }
             $html  .= "</datalist>";
@@ -1130,18 +1130,18 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         if ( empty( $person ) ) {
             $person = eme_fake_person_by_wp_id( $current_user->ID );
         }
-        $bookerLastName     = eme_esc_html( $person['lastname'] );
-        $bookerFirstName    = eme_esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-        $bookerAddress1     = eme_esc_html( $person['address1'] );
-        $bookerAddress2     = eme_esc_html( $person['address2'] );
-        $bookerCity         = eme_esc_html( $person['city'] );
-        $bookerZip          = eme_esc_html( $person['zip'] );
-        $bookerState_code   = eme_esc_html( $person['state_code'] );
-        $bookerCountry_code = eme_esc_html( $person['country_code'] );
-        $bookerEmail        = eme_esc_html( $person['email'] );
-        $bookerPhone        = eme_esc_html( $person['phone'] );
+        $bookerLastName     = esc_html( $person['lastname'] );
+        $bookerFirstName    = esc_html( $person['firstname'] );
+        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+        $bookerBirthplace   = esc_html( $person['birthplace'] );
+        $bookerAddress1     = esc_html( $person['address1'] );
+        $bookerAddress2     = esc_html( $person['address2'] );
+        $bookerCity         = esc_html( $person['city'] );
+        $bookerZip          = esc_html( $person['zip'] );
+        $bookerState_code   = esc_html( $person['state_code'] );
+        $bookerCountry_code = esc_html( $person['country_code'] );
+        $bookerEmail        = esc_html( $person['email'] );
+        $bookerPhone        = esc_html( $person['phone'] );
         $bd_email           = intval( $person['bd_email'] );
         $gdpr               = intval( $person['gdpr'] );
     }
@@ -1329,7 +1329,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             $fieldname         = 'task_massmail';
             $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -1340,7 +1340,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
             $fieldname         = 'task_massmail';
             $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -1478,9 +1478,9 @@ function eme_replace_cancelformfields_placeholders( $event ) {
         if ( empty( $person ) ) {
             $person = eme_fake_person_by_wp_id( $current_user->ID );
         }
-        $bookerLastName  = eme_esc_html($person['lastname']);
-        $bookerFirstName = eme_esc_html($person['firstname']);
-        $bookerEmail     = eme_esc_html($person['email']);
+        $bookerLastName  = esc_html($person['lastname']);
+        $bookerFirstName = esc_html($person['firstname']);
+        $bookerEmail     = esc_html($person['email']);
     }
 
     // the 2 placeholders that can contain extra text are treated separately first
@@ -1751,18 +1751,18 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         if ( empty( $person ) ) {
             $person = eme_fake_person_by_wp_id( $current_user->ID );
         }
-        $bookerLastName     = eme_esc_html( $person['lastname'] );
-        $bookerFirstName    = eme_esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-        $bookerAddress1     = eme_esc_html( $person['address1'] );
-        $bookerAddress2     = eme_esc_html( $person['address2'] );
-        $bookerCity         = eme_esc_html( $person['city'] );
-        $bookerZip          = eme_esc_html( $person['zip'] );
-        $bookerState_code   = eme_esc_html( $person['state_code'] );
-        $bookerCountry_code = eme_esc_html( $person['country_code'] );
-        $bookerEmail        = eme_esc_html( $person['email'] );
-        $bookerPhone        = eme_esc_html( $person['phone'] );
+        $bookerLastName     = esc_html( $person['lastname'] );
+        $bookerFirstName    = esc_html( $person['firstname'] );
+        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+        $bookerBirthplace   = esc_html( $person['birthplace'] );
+        $bookerAddress1     = esc_html( $person['address1'] );
+        $bookerAddress2     = esc_html( $person['address2'] );
+        $bookerCity         = esc_html( $person['city'] );
+        $bookerZip          = esc_html( $person['zip'] );
+        $bookerState_code   = esc_html( $person['state_code'] );
+        $bookerCountry_code = esc_html( $person['country_code'] );
+        $bookerEmail        = esc_html( $person['email'] );
+        $bookerPhone        = esc_html( $person['phone'] );
         $bd_email           = intval( $person['bd_email'] );
         $gdpr               = intval( $person['gdpr'] );
 
@@ -1974,13 +1974,13 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             $selected_massmail = 1;
             $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
         } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
             $selected_massmail = 0;
             $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
             }
         } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
@@ -2021,7 +2021,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                     }
                     $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates'>";
                     if ( ! empty( $label ) ) {
-                        $replacement .= "<label for='subscribe_groups_$group_id'>" . eme_esc_html( $label ) . '</label>';
+                        $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
                     }
                 }
             } else {
@@ -2443,18 +2443,18 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         if ( empty( $person ) ) {
             $person = eme_fake_person_by_wp_id( $current_user->ID );
         }
-        $bookerLastName     = eme_esc_html( $person['lastname'] );
-        $bookerFirstName    = eme_esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-        $bookerAddress1     = eme_esc_html( $person['address1'] );
-        $bookerAddress2     = eme_esc_html( $person['address2'] );
-        $bookerCity         = eme_esc_html( $person['city'] );
-        $bookerZip          = eme_esc_html( $person['zip'] );
-        $bookerState_code   = eme_esc_html( $person['state_code'] );
-        $bookerCountry_code = eme_esc_html( $person['country_code'] );
-        $bookerEmail        = eme_esc_html( $person['email'] );
-        $bookerPhone        = eme_esc_html( $person['phone'] );
+        $bookerLastName     = esc_html( $person['lastname'] );
+        $bookerFirstName    = esc_html( $person['firstname'] );
+        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+        $bookerBirthplace   = esc_html( $person['birthplace'] );
+        $bookerAddress1     = esc_html( $person['address1'] );
+        $bookerAddress2     = esc_html( $person['address2'] );
+        $bookerCity         = esc_html( $person['city'] );
+        $bookerZip          = esc_html( $person['zip'] );
+        $bookerState_code   = esc_html( $person['state_code'] );
+        $bookerCountry_code = esc_html( $person['country_code'] );
+        $bookerEmail        = esc_html( $person['email'] );
+        $bookerPhone        = esc_html( $person['phone'] );
         $massmail           = intval( $person['massmail'] );
         $bd_email           = intval( $person['bd_email'] );
         $gdpr               = intval( $person['gdpr'] );
@@ -2464,24 +2464,24 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         if ( ! empty( $booking['person_id'] ) ) {
             $person = eme_get_person( $booking['person_id'] );
             // when editing a booking
-            $bookerLastName     = eme_esc_html( $person['lastname'] );
-            $bookerFirstName    = eme_esc_html( $person['firstname'] );
-            $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-            $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-            $bookerAddress1     = eme_esc_html( $person['address1'] );
-            $bookerAddress2     = eme_esc_html( $person['address2'] );
-            $bookerCity         = eme_esc_html( $person['city'] );
-            $bookerZip          = eme_esc_html( $person['zip'] );
-            $bookerState_code   = eme_esc_html( $person['state_code'] );
-            $bookerCountry_code = eme_esc_html( $person['country_code'] );
-            $bookerEmail        = eme_esc_html( $person['email'] );
-            $bookerPhone        = eme_esc_html( $person['phone'] );
+            $bookerLastName     = esc_html( $person['lastname'] );
+            $bookerFirstName    = esc_html( $person['firstname'] );
+            $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+            $bookerBirthplace   = esc_html( $person['birthplace'] );
+            $bookerAddress1     = esc_html( $person['address1'] );
+            $bookerAddress2     = esc_html( $person['address2'] );
+            $bookerCity         = esc_html( $person['city'] );
+            $bookerZip          = esc_html( $person['zip'] );
+            $bookerState_code   = esc_html( $person['state_code'] );
+            $bookerCountry_code = esc_html( $person['country_code'] );
+            $bookerEmail        = esc_html( $person['email'] );
+            $bookerPhone        = esc_html( $person['phone'] );
             $massmail           = intval( $person['massmail'] );
             $bd_email           = intval( $person['bd_email'] );
             $gdpr               = intval( $person['gdpr'] );
         }
-        $bookerComment = eme_esc_html( $booking['booking_comment'] );
-        $bookedSeats   = eme_esc_html( $booking['booking_seats'] );
+        $bookerComment = esc_html( $booking['booking_comment'] );
+        $bookedSeats   = esc_html( $booking['booking_seats'] );
         if ( $booking['booking_seats_mp'] ) {
             $booking_seats_mp = eme_convert_multi2array( $booking['booking_seats_mp'] );
         }
@@ -2795,7 +2795,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         }
 
         if ( $need_escape ) {
-            $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+            $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
         }
         if ( $need_urlencode ) {
             $replacement = rawurlencode( $replacement );
@@ -3069,7 +3069,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $fieldname         = 'massmail';
                 $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                    $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                    $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
                     $cancel  = esc_html__('No','events-made-easy');
                     if (!eme_is_empty_string($popup))
@@ -3082,7 +3082,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $fieldname         = 'massmail';
                 $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
                 if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                    $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                    $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                     $confirm = esc_html__('Yes','events-made-easy');
                     $cancel  = esc_html__('No','events-made-easy');
                     if (!eme_is_empty_string($popup))
@@ -3134,7 +3134,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                         }
                         $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates'>";
                         if ( ! empty( $label ) ) {
-                            $replacement .= "<label for='subscribe_groups_$group_id'>" . eme_esc_html( $label ) . '</label>';
+                            $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
                         }
                     }
                 } else {
@@ -3356,7 +3356,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ( $booking['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) ) . '</li>';
+                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
                             $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ) . '</li>';
                         }
@@ -3371,7 +3371,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                         foreach ( $applied_discountids as $discount_id ) {
                             $discount = eme_get_discount( $discount_id );
                             if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<li>' . eme_esc_html( $discount['name'] ) . '</li>';
+                                $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
                             } else {
                                 $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
@@ -3710,18 +3710,18 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         }
     }
     if ( ! empty( $person ) ) {
-        $bookerLastName     = eme_esc_html( $person['lastname'] );
-        $bookerFirstName    = eme_esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-        $bookerAddress1     = eme_esc_html( $person['address1'] );
-        $bookerAddress2     = eme_esc_html( $person['address2'] );
-        $bookerCity         = eme_esc_html( $person['city'] );
-        $bookerZip          = eme_esc_html( $person['zip'] );
-        $bookerState_code   = eme_esc_html( $person['state_code'] );
-        $bookerCountry_code = eme_esc_html( $person['country_code'] );
-        $bookerEmail        = eme_esc_html( $person['email'] );
-        $bookerPhone        = eme_esc_html( $person['phone'] );
+        $bookerLastName     = esc_html( $person['lastname'] );
+        $bookerFirstName    = esc_html( $person['firstname'] );
+        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+        $bookerBirthplace   = esc_html( $person['birthplace'] );
+        $bookerAddress1     = esc_html( $person['address1'] );
+        $bookerAddress2     = esc_html( $person['address2'] );
+        $bookerCity         = esc_html( $person['city'] );
+        $bookerZip          = esc_html( $person['zip'] );
+        $bookerState_code   = esc_html( $person['state_code'] );
+        $bookerCountry_code = esc_html( $person['country_code'] );
+        $bookerEmail        = esc_html( $person['email'] );
+        $bookerPhone        = esc_html( $person['phone'] );
         $massmail           = intval( $person['massmail'] );
         $bd_email           = intval( $person['bd_email'] );
         $gdpr               = intval( $person['gdpr'] );
@@ -4016,7 +4016,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             $fieldname         = 'massmail';
             $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -4027,7 +4027,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             $fieldname         = 'massmail';
             $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
             if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -4073,7 +4073,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     }
                     $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates $personal_info_class'>";
                     if ( ! empty( $label ) ) {
-                        $replacement .= "<label for='subscribe_groups_$group_id'>" . eme_esc_html( $label ) . '</label>';
+                        $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
                     }
                 }
             } else {
@@ -4107,7 +4107,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     if ( $member['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $member['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), eme_esc_html( $dgroup['name'] ) ) . '</li>';
+                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
                             $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] ) . '</li>';
                         }
@@ -4124,7 +4124,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                         foreach ( $discount_ids as $discount_id ) {
                             $discount = eme_get_discount( $discount_id );
                             if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<li>' . eme_esc_html( $discount['name'] ) . '</li>';
+                                $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
                             } else {
                                 $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
@@ -4302,7 +4302,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         $bookerEmail     = $person['email'];
         $gdpr            = intval( $person['gdpr'] );
     } elseif ( isset( $_GET['eme_email'] ) ) {
-        $bookerEmail = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+        $bookerEmail = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
     }
 
     // We need at least #_EMAIL
@@ -4397,7 +4397,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                     $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
                 }
                 foreach ( $tmp_groups as $group ) {
-                    $subscribable_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
+                    $subscribable_groups[ $group['group_id'] ] = esc_html( $group['name'] );
                 }
 
                 if ( ! empty( $subscribable_groups ) ) {
@@ -4483,18 +4483,18 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         $format = eme_add_captcha_submit( $format, $selected_captcha );
     }
 
-    $bookerLastName     = eme_esc_html( $person['lastname'] );
-    $bookerFirstName    = eme_esc_html( $person['firstname'] );
-    $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-    $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-    $bookerAddress1     = eme_esc_html( $person['address1'] );
-    $bookerAddress2     = eme_esc_html( $person['address2'] );
-    $bookerCity         = eme_esc_html( $person['city'] );
-    $bookerZip          = eme_esc_html( $person['zip'] );
-    $bookerState_code   = eme_esc_html( $person['state_code'] );
-    $bookerCountry_code = eme_esc_html( $person['country_code'] );
-    $bookerEmail        = eme_esc_html( $person['email'] );
-    $bookerPhone        = eme_esc_html( $person['phone'] );
+    $bookerLastName     = esc_html( $person['lastname'] );
+    $bookerFirstName    = esc_html( $person['firstname'] );
+    $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+    $bookerBirthplace   = esc_html( $person['birthplace'] );
+    $bookerAddress1     = esc_html( $person['address1'] );
+    $bookerAddress2     = esc_html( $person['address2'] );
+    $bookerCity         = esc_html( $person['city'] );
+    $bookerZip          = esc_html( $person['zip'] );
+    $bookerState_code   = esc_html( $person['state_code'] );
+    $bookerCountry_code = esc_html( $person['country_code'] );
+    $bookerEmail        = esc_html( $person['email'] );
+    $bookerPhone        = esc_html( $person['phone'] );
     $massmail           = intval( $person['massmail'] );
     $bd_email           = intval( $person['bd_email'] );
 
@@ -4668,7 +4668,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         } elseif ( preg_match( '/#_MASSMAIL$/', $result ) ) {
             $replacement = eme_ui_select_binary( $massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -4678,7 +4678,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
             $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -4688,7 +4688,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
             $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
             if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup   = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 $confirm = esc_html__('Yes','events-made-easy');
                 $cancel  = esc_html__('No','events-made-easy');
                 if (!eme_is_empty_string($popup))
@@ -4856,7 +4856,7 @@ function eme_answer2readable( $answer, $formfield=[], $convert_val = 1, $sep = '
                 foreach ( $values as $key => $val ) {
                     if ( $val === $ans ) {
                         if ( $target == 'html' ) {
-                            $my_arr[] = eme_esc_html( $tags[ $key ] );
+                            $my_arr[] = esc_html( $tags[ $key ] );
                         } else {
                             $my_arr[] = $tags[ $key ];
                         }
@@ -4867,7 +4867,7 @@ function eme_answer2readable( $answer, $formfield=[], $convert_val = 1, $sep = '
         } else {
             $answers = eme_convert_multi2array( $answer );
             if ( $target == 'html' ) {
-                $answers = eme_esc_html( $answers );
+                $answers = array_map( 'esc_html', $answers );
             }
             return eme_convert_array2multi( $answers, $sep );
         }

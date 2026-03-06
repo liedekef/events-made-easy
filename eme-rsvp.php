@@ -244,7 +244,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
             if ( $is_multibooking && $only_one_event ) {
                 if ( $simple ) {
                     $value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-                    $form_html .= "<input type='radio' id='eme_event_{$event_id}' name='eme_event_ids[]' value='$event_id'> <label for='eme_event_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
+                    $form_html .= "<input type='radio' id='eme_event_{$event_id}' name='eme_event_ids[]' value='$event_id'> <label for='eme_event_{$event_id}'>" . esc_html( $value ) . '</label>';
                 } else {
                     $form_html .= "<option value='$event_id'>" . eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event ) . '</option>';
                 }
@@ -253,7 +253,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
                     $form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
                 } else {
                     $value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-                    $form_html .= "<input type='checkbox' name='eme_event_ids[]' id='eme_event_ids_{$event_id}' value='$event_id'> <label for='eme_event_ids_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
+                    $form_html .= "<input type='checkbox' name='eme_event_ids[]' id='eme_event_ids_{$event_id}' value='$event_id'> <label for='eme_event_ids_{$event_id}'>" . esc_html( $value ) . '</label>';
                 }
             } else {
                 $form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
@@ -3569,7 +3569,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
         if ( preg_match( '/#_(RESP)?COMMENT/', $result ) ) {
             $replacement = $booking['booking_comment'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -3579,7 +3579,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                 $replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -3634,7 +3634,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                                 $old_grouping  = $grouping;
                                 $old_occurence = $occurence;
                             }
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( $tmp_formfield['field_name'] ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( $tmp_formfield['field_name'] ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
                         } else {
                             $replacement .= $tmp_formfield['field_name'] . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
                         }
@@ -3725,7 +3725,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                 foreach ( $applied_discountids as $discount_id ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $discount && isset( $discount['name'] ) ) {
-                        $discount_names[] = eme_esc_html( $discount['name'] );
+                        $discount_names[] = esc_html( $discount['name'] );
                     } else {
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
@@ -4104,7 +4104,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
@@ -4170,7 +4170,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
         }
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
@@ -5204,24 +5204,24 @@ function eme_import_csv_payments() {
 
             if ( empty( $payment_id ) ) {
                 ++$ignored;
-                $ignored_msg .= '<br>' . eme_esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
+                $ignored_msg .= '<br>' . esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
             } elseif ( ! eme_is_date( $payment_date ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
             } elseif ( empty( $amount ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
             } else {
                 $to_pay = eme_get_payment_price( $payment_id );
                 if ( $to_pay == 0 ) {
                     ++$ignored;
-                    $ignored_msg .= '<br>' . eme_esc_html( sprintf( __( 'Already paid in full: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
+                    $ignored_msg .= '<br>' . esc_html( sprintf( __( 'Already paid in full: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
                 } elseif ( $to_pay == $amount ) {
                     ++$updated;
                     eme_mark_payment_paid( $payment_id, 0 );
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Amount paid (%s) is not equal to the expected amount (%s): %s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Amount paid (%s) is not equal to the expected amount (%s): %s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
                 }
             }
         }
@@ -5451,7 +5451,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <span id="span_partialpayment" class="eme-hidden">
 <?php
     esc_html_e( 'Partial payment amount', 'events-made-easy' );
-    $label = eme_esc_html('Partial payment amount', 'events-made-easy' );
+    $label = esc_html__('Partial payment amount', 'events-made-easy' );
     echo eme_ui_number( 0, 'partial_amount', 0, '', 'aria-label="' . $label . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_number()
 ?>
     </span>
@@ -5930,14 +5930,14 @@ function eme_ajax_bookings_list() {
             if ( empty( $person ) ) {
                 $person = eme_new_person();
             }
-            $person_info_shown  = eme_esc_html( eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) );
-            $person_info_shown .= ' (' . eme_esc_html( $person['email'] ) . ')';
+            $person_info_shown  = esc_html( eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) );
+            $person_info_shown .= ' (' . esc_html( $person['email'] ) . ')';
             if ( ! empty( $person['wp_id'] ) && isset( $wp_users[ $person['wp_id'] ] ) ) {
-                $line['wp_user'] = eme_esc_html( $wp_users[ $person['wp_id'] ] );
+                $line['wp_user'] = esc_html( $wp_users[ $person['wp_id'] ] );
             } else {
                 $line['wp_user'] = '';
             }
-            $line['booker'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+            $line['booker'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . $person_info_shown . '</a>';
             $line['person_id'] = $booking['person_id'];
         } else {
             $line['booker']  = __( 'Anonymous', 'events-made-easy' );
@@ -6111,7 +6111,7 @@ function eme_ajax_bookings_list() {
         }
 
         $line['creation_date'] = esc_html($localized_booking_datetime);
-        $line['payment_id']    = eme_esc_html( $booking['payment_id'] );
+        $line['payment_id']    = esc_html( $booking['payment_id'] );
         if ( !eme_is_empty_datetime( $booking['payment_date'] ) ) {
             $line['payment_date'] = esc_html($localized_payment_datetime);
         } else {
@@ -6138,7 +6138,7 @@ function eme_ajax_bookings_list() {
         $line['discount']   = eme_localized_price( $booking['discount'], $event['currency'] );
         // dcodes_used is still eme_serialized here
         $line['dcodes_used']  = eme_esc_html( eme_unserialize( $booking['dcodes_used'] ) );
-        $line['unique_nbr']   = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
+        $line['unique_nbr']   = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) ) . "'>" . esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
         $line['booking_paid'] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
             $line['remaining'] = $line['totalprice'];
@@ -6148,7 +6148,7 @@ function eme_ajax_bookings_list() {
         $line['received'] = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
         if ( ! empty( $booking['pg'] ) ) {
             if ( isset( $pgs[ $booking['pg'] ] ) ) {
-                $line['pg'] = eme_esc_html( $pgs[ $booking['pg'] ] );
+                $line['pg'] = esc_html( $pgs[ $booking['pg'] ] );
             } else {
                 $line['pg'] = 'UNKNOWN';
             }
@@ -6159,9 +6159,9 @@ function eme_ajax_bookings_list() {
             $line['pg'] = '';
         }
 
-        $line['pg_pid']          = eme_esc_html( $booking['pg_pid'] );
+        $line['pg_pid']          = esc_html( $booking['pg_pid'] );
         $line['attend_count']    = intval( $booking['attend_count'] );
-        $line['booking_comment'] = eme_esc_html( $booking['booking_comment'] );
+        $line['booking_comment'] = esc_html( $booking['booking_comment'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $answers as $answer ) {
                 if ( $answer['field_id'] == $formfield['field_id'] && $answer['answer'] != '' ) {

@@ -1569,7 +1569,7 @@ function eme_mailingreport_list() {
         $record['receiveremail'] = $item['receiveremail'];
         $record['receivername']  = $item['receivername'];
         $record['status']        = $states[ $item['status'] ];
-        $record['error_msg']     = eme_esc_html( $item['error_msg'] );
+        $record['error_msg']     = esc_html( $item['error_msg'] );
 
         if ( $item['status'] != EME_MAIL_STATUS_PLANNED && $item['status'] != EME_MAIL_STATUS_DELAYED ) {
             $record['read_count']    = $item['read_count'];
@@ -1692,19 +1692,19 @@ function eme_ajax_mailings_list() {
 
         $record = [];
         $record['id'] = $id;
-        $record['name'] = eme_esc_html( $mailing['name'] );
-        $record['subject'] = eme_esc_html( $mailing['subject'] );
+        $record['name'] = esc_html( $mailing['name'] );
+        $record['subject'] = esc_html( $mailing['subject'] );
         $record['planned_on'] = eme_localized_datetime( $mailing['planned_on'] );
         $record['creation_date'] = eme_localized_datetime( $mailing['creation_date'] );
-        $record['status'] = eme_esc_html( $status );
+        $record['status'] = esc_html( $status );
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
         if ( $mailing['status'] == 'planned' ) {
-            $planned_estimation_title = eme_esc_html( sprintf(__('The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time.','events-made-easy'), $record['creation_date']) ) ;
-            $record['extra_info'] = eme_esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>";
+            $planned_estimation_title = esc_html( sprintf(__('The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time.','events-made-easy'), $record['creation_date']) ) ;
+            $record['extra_info'] = esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>";
             $record['report'] = '';
         } else {
-            $record['extra_info'] = eme_esc_html( $extra );
+            $record['extra_info'] = esc_html( $extra );
             $record['report'] = "<a title='".esc_attr__( 'Show mailing report', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=report_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Report', 'events-made-easy' ) . '</a>';
         }
         $record['action'] = $action;
@@ -1800,12 +1800,12 @@ function eme_ajax_archivedmailings_list() {
 
         $record = [];
         $record['id'] = $id;
-        $record['name'] = eme_esc_html( $mailing['name'] );
-        $record['subject'] = eme_esc_html( $mailing['subject'] );
+        $record['name'] = esc_html( $mailing['name'] );
+        $record['subject'] = esc_html( $mailing['subject'] );
         $record['planned_on'] = eme_localized_datetime( $mailing['planned_on'] );
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
-        $record['extra_info'] = eme_esc_html( $extra );
+        $record['extra_info'] = esc_html( $extra );
         $record['action'] = $action;
         $records[] = $record;
     }
@@ -1899,11 +1899,11 @@ function eme_ajax_mails_list() {
         $record  = [];
         $record['id'] = $row['id'];
         $record['person_id'] = $row['person_id'];
-        $record['fromname'] = eme_esc_html( $row['fromname'] );
-        $record['fromemail'] = eme_esc_html( $row['fromemail'] );
-        $record['receivername'] = eme_esc_html( $row['receivername'] );
-        $record['receiveremail'] = eme_esc_html( $row['receiveremail'] );
-        $record['subject'] = eme_esc_html( $row['subject'] );
+        $record['fromname'] = esc_html( $row['fromname'] );
+        $record['fromemail'] = esc_html( $row['fromemail'] );
+        $record['receivername'] = esc_html( $row['receivername'] );
+        $record['receiveremail'] = esc_html( $row['receiveremail'] );
+        $record['subject'] = esc_html( $row['subject'] );
         $record['status'] = $states[ $row['status'] ];
         $record['creation_date'] = eme_localized_datetime( $row['creation_date'] );
         // if status >0, then the mail is already treated
@@ -1920,7 +1920,7 @@ function eme_ajax_mails_list() {
                 $record['last_read_on'] = eme_localized_datetime( $row['last_read_on'] );
                 $record['read_count'] = $row['read_count'];
             }
-            $record['error_msg'] = eme_esc_html( $row['error_msg'] );
+            $record['error_msg'] = esc_html( $row['error_msg'] );
             $record['action'] = "<a title='".esc_attr__( 'Reuse this mail', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mail&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
         } else {
             //$record['action'] = "";
@@ -2046,10 +2046,10 @@ function eme_send_mails_ajax_actions( $action ) {
         $tmp_message   = 'This is a test message from Events Made Easy.';
         $mail_res_arr  = eme_send_mail( $tmp_subject, $tmp_message, $testmail_to, $person_name, $contact_email, $contact_name );
         $mail_res      = $mail_res_arr[0];
-        $extra_html    = eme_esc_html( $mail_res_arr[1] );
+        $extra_html    = esc_html( $mail_res_arr[1] );
         if ( ! empty( $mail_res_arr[2] ) ) {
             // this contains debug messages
-            $extra_html .= nl2br( eme_esc_html( $mail_res_arr[2] ) );
+            $extra_html .= nl2br( esc_html( $mail_res_arr[2] ) );
         }
         if ( $mail_res ) {
             $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>";
@@ -2219,12 +2219,12 @@ function eme_send_mails_ajax_actions( $action ) {
             if ( $queue ) {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been put on the queue, but not all persons will receive it.', 'events-made-easy' ) . '</p></div>';
                 if ( ! empty( $res['not_sent'] ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'The following persons will not receive the mail:', 'events-made-easy' ) . ' ' . eme_esc_html( $res['not_sent'] ) . '</p></div>';
+                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'The following persons will not receive the mail:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
                 }
             } else {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
                 if ( ! empty( $res['not_sent'] ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . eme_esc_html( $res['not_sent'] ) . '</p></div>';
+                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
                 }
             }
             $ajaxResult['Result'] = 'ERROR';
@@ -2419,7 +2419,7 @@ function eme_send_mails_ajax_actions( $action ) {
             } else {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
                 if ( ! empty( $not_sent ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . join( ', ', eme_esc_html( $not_sent ) ) . '</p></div>';
+                    $ajaxResult['htmlmessage'] .= "<div class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . join( ', ', array_map( 'esc_html', $not_sent ) ) . '</p></div>';
                 }
             }
             $ajaxResult['Result'] = 'ERROR';
@@ -2812,7 +2812,7 @@ function eme_emails_page() {
         <tr id="eme_people_row">
         <td>
 <?php
-    $label      = eme_esc_html( 'Send to a number of people', 'events-made-easy' );
+    $label      = esc_html__( 'Send to a number of people', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
@@ -2822,7 +2822,7 @@ function eme_emails_page() {
         <tr id="eme_groups_row">
         <td class="eme-wsnobreak">
 <?php
-    $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
+    $label      = esc_html__( 'Send to a number of groups', 'events-made-easy' );
     $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
@@ -2831,7 +2831,7 @@ function eme_emails_page() {
         </tr>
     <tr id="eme_members_row1"><td class="eme-wsnobreak">
 <?php
-    $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
+    $label      = esc_html__( 'Send to a number of members', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
@@ -2839,7 +2839,7 @@ function eme_emails_page() {
     <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
     <tr id="eme_members_row2"><td class="eme-wsnobreak">
 <?php
-    $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
+    $label      = esc_html__( 'Send to a number of member groups', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
@@ -2848,7 +2848,7 @@ function eme_emails_page() {
     <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
     <tr id="eme_members_row3"><td class="eme-wsnobreak">
 <?php
-    $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
+    $label      = esc_html__( 'Send to active members belonging to', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
     $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
     echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
@@ -2984,7 +2984,7 @@ function eme_emails_page() {
         <div id='div_eme_send_groups'><table class='widefat'>
         <tr><td class="eme-wsnobreak">
 <?php
-        $label      = eme_esc_html( 'Send to a number of people', 'events-made-easy' );
+        $label      = esc_html__( 'Send to a number of people', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
@@ -2992,7 +2992,7 @@ function eme_emails_page() {
                 <td><?php echo eme_ui_multiselect( $person_ids, 'eme_genericmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
-        $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
+        $label      = esc_html__( 'Send to a number of groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
@@ -3001,7 +3001,7 @@ function eme_emails_page() {
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_genericmail_send_peoplegroups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
-        $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
+        $label      = esc_html__( 'Send to a number of members', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
 ?>
@@ -3009,7 +3009,7 @@ function eme_emails_page() {
         <td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
-        $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
+        $label      = esc_html__( 'Send to a number of member groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
@@ -3018,7 +3018,7 @@ function eme_emails_page() {
         <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_genericmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
         <tr><td class="eme-wsnobreak">
 <?php
-        $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
+        $label      = esc_html__( 'Send to active members belonging to', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
         $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
         echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment

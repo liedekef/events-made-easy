@@ -699,7 +699,7 @@ function eme_for_shortcode( $atts, $content ) {
         $array_values = explode( $atts['sep'], $list );
         foreach ( $array_values as $val ) {
             $url_val     = rawurlencode( $val );
-            $esc_val     = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $val ) ) );
+            $esc_val     = eme_sanitize_request( esc_html( preg_replace( '/\n|\r/', '', $val ) ) );
             $replace     = [ $esc_val, $url_val, $loopcounter ];
             $tmp_content = str_replace( $search, $replace, $content );
             $result     .= do_shortcode( $tmp_content );
@@ -757,7 +757,7 @@ function eme_get_events_page( $justurl = 1, $text = '' ) {
     if ( $justurl || empty( $text ) ) {
         $result = esc_url( $page_link );
     } else {
-        $text   = eme_esc_html( $text );
+        $text   = esc_html( $text );
         $result = "<a href='" . esc_url( $page_link ) . "' title='$text'>$text</a>";
     }
     return $result;
@@ -845,7 +845,7 @@ function eme_ascii_encode( $e, $target = 'html' ) {
 }
 function eme_email_obfuscate( $e, $target = 'html' ) {
     if ( $target == 'htmlmail' ) {
-        return eme_esc_html( $e );
+        return esc_html( $e );
     } elseif ( $target == 'text' ) {
         return $e;
     } else {
@@ -2311,9 +2311,9 @@ function eme_dyndata_people_ajax() {
         $fields = eme_get_dyndata_people_fields( 'group:' . $group_id );
         if ( ! empty( $fields ) ) {
             if ( ! $group_id ) {
-                $form_html .= "<hr><div><span id='eme-people-dyndata-group-" . $group_id . "'>" . eme_esc_html( __( 'Extra info', 'events-made-easy' ) ) . '</span><table>';
+                $form_html .= "<hr><div><span id='eme-people-dyndata-group-" . $group_id . "'>" . esc_html( __( 'Extra info', 'events-made-easy' ) ) . '</span><table>';
             } else {
-                $form_html .= "<hr><div><span id='eme-people-dyndata-group-" . $group_id . "'>" . eme_esc_html( __( 'Group', 'events-made-easy' ) . ' ' . $group['name'] ) . '</span><table>';
+                $form_html .= "<hr><div><span id='eme-people-dyndata-group-" . $group_id . "'>" . esc_html( __( 'Group', 'events-made-easy' ) . ' ' . $group['name'] ) . '</span><table>';
             }
             foreach ( $fields as $formfield ) {
                 $field_id       = $formfield['field_id'];
@@ -2424,7 +2424,7 @@ function eme_dyndata_rsvp_ajax() {
 
                 if ( $condition['field'] == '#_GROUPS' ) {
                     $wp_id       = eme_get_wpid_by_post();
-                    $entered_val = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
+                    $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member
                     $entered_val = eme_replace_booking_placeholders( $condition['field'], $event, $fake_booking, 0, 'html', '', 1 );
@@ -3231,7 +3231,7 @@ function eme_upload_files( $id, $type = 'bookings' ) {
         }
     }
     if ( ! empty( $errors ) ) {
-        return '<p>' . __( 'Errors encountered while uploading files', 'events-made-easy' ) . '<br>' . join( '<br>', eme_esc_html( $errors ) ) . '</p>';
+        return '<p>' . __( 'Errors encountered while uploading files', 'events-made-easy' ) . '<br>' . join( '<br>', array_map( 'esc_html', $errors ) ) . '</p>';
     } else {
         return '';
     }
@@ -3498,7 +3498,7 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
                 } else {
                     $record[ $id_column ] = $record_id;
                 }
-                $fTableResult['Record'] = eme_esc_html( $record );
+                $fTableResult['Record'] = array_map( 'esc_html', $record );
             }
         }
     } else {

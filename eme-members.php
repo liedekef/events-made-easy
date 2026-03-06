@@ -645,7 +645,7 @@ function eme_get_linked_activemembership_names_by_personid( $person_id ) {
     $rows = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $memberships_list = '';
     foreach ($rows as $item) {
-        $memberships_list .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a><br>';
+        $memberships_list .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( $item['name'] ) . '</a><br>';
     }
     return $memberships_list;
 }
@@ -1617,7 +1617,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
                      if ( $related_member ) {
                          $related_person = eme_get_person( $related_member['person_id'] );
                          if ( $related_person ) {
-                             $preselected_text = eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
+                             $preselected_text = esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
                              $preselected_option = '<option value="' . intval( $member['related_member_id'] ) . '" selected>' . $preselected_text . '</option>';
                          }
                      }
@@ -3011,7 +3011,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
             $value = '';
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
         echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
@@ -3514,7 +3514,7 @@ function eme_dyndata_member_ajax() {
                 }
                 if ( $condition['field'] == '#_GROUPS' ) {
                     $wp_id 	     = eme_get_wpid_by_post();
-                    $entered_val = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
+                    $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member
                     $entered_val = eme_replace_member_placeholders( $condition['field'], $membership, $member, 'html', '', 1 );
@@ -5248,7 +5248,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         if ( preg_match( '/#_ID/', $result ) ) {
             $replacement = $member['member_id'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5271,7 +5271,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 foreach ( $applied_discountids as $discount_id ) {
                     $discount = eme_get_discount( $discount_id );
                     if ( $discount && isset( $discount['name'] ) ) {
-                        $discount_names[] = eme_esc_html( $discount['name'] );
+                        $discount_names[] = esc_html( $discount['name'] );
                     } else {
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
@@ -5292,7 +5292,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_PRICE$/', $result ) ) {
             $replacement = eme_localized_price( $total_member_price, $membership['properties']['currency'], $target );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5301,7 +5301,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             $price       = $total_member_price / ( 1 + $membership['properties']['vat_pct'] / 100 );
             $replacement = eme_localized_price( $price, $membership['properties']['currency'], $target );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5310,7 +5310,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             $price       = $total_member_price - $total_member_price / ( 1 + $membership['properties']['vat_pct'] / 100 );
             $replacement = eme_localized_price( $price, $membership['properties']['currency'], $target );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5336,7 +5336,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_TRANSFER_NBR_BE97|UNIQUE_NBR/', $result ) ) {
             $replacement = eme_unique_nbr_formatted( $member['unique_nbr'] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5348,7 +5348,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 $replacement = __( 'Never', 'events-made-easy' );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5356,7 +5356,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_CREATIONDATE\{(.+?)\}/', $result, $matches ) ) {
             $replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE, $matches[1] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5364,7 +5364,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_STARTDATE\{(.+?)\}/', $result, $matches ) ) {
             $replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE, $matches[1] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5382,7 +5382,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 $replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE, $matches[1] );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5405,7 +5405,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 $replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE, $matches[1] );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5413,7 +5413,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_CREATIONDATE$/', $result ) ) {
             $replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5421,7 +5421,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_STARTDATE$/', $result ) ) {
             $replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5439,7 +5439,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 $replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5466,7 +5466,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 $replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE );
             }
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5522,7 +5522,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                     if ( $related_member ) {
                         $related_person = eme_get_person( $related_member['person_id'] );
                         if ( $related_person ) {
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . esc_html( $related_person['email'] ) . '</td></tr>';
                         }
                     }
                 }
@@ -5537,7 +5537,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         } elseif ( preg_match( '/#_PAYMENTID/', $result ) ) {
             $replacement = $member['payment_id'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5605,7 +5605,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                                 $old_grouping  = $grouping;
                                 $old_occurence = $occurence;
                             }
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( $tmp_formfield['field_name'] ) . ":</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( $tmp_formfield['field_name'] ) . ":</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
                         } else {
                             $replacement .= $tmp_formfield['field_name'] . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
                         }
@@ -5836,7 +5836,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
         if ( preg_match( '/#_NAME/', $result ) ) {
             $replacement = $membership['name'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5844,7 +5844,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
         } elseif ( preg_match( '/#_DESCRIPTION/', $result ) ) {
             $replacement = $membership['description'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5854,7 +5854,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $currency    = $membership['properties']['currency'];
             $replacement = eme_localized_price( $price, $currency );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5864,7 +5864,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $currency    = $membership['properties']['currency'];
             $replacement = eme_localized_price( $price, $currency );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5875,7 +5875,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $currency    = $membership['properties']['currency'];
             $replacement = eme_localized_price( $price, $currency );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5883,7 +5883,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
         } elseif ( preg_match( '/#_PRICE_VAT_PCT/', $result ) ) {
             $replacement = $membership['properties']['vat_pct'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5894,7 +5894,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $charge = eme_payment_gateway_extra_charge( $price, $matches[1] );
             $replacement = eme_localized_price( $price+$charge, $currency );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -5904,7 +5904,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
             $charge = eme_payment_gateway_extra_charge( $price, $matches[1] );
             $replacement = eme_localized_price( $charge, $currency );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -6087,7 +6087,7 @@ function eme_import_csv_members() {
             // if email empty: at least lastname is needed
             if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
             // also allow empty firstname
@@ -6099,27 +6099,27 @@ function eme_import_csv_members() {
             }
             if ( ! isset( $line['membership'] ) || ! isset( $line['start_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
                 continue;
             }
             if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
                 continue;
             }
 
@@ -6142,13 +6142,13 @@ function eme_import_csv_members() {
                     $person_id = eme_db_insert_person( $person );
                     if ( ! $person_id ) {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
             } else {
                 // if membership doesn't exist
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
             if ( $membership && $person_id ) {
                 if ( isset( $line['start_date'] ) ) {
@@ -6198,7 +6198,7 @@ function eme_import_csv_members() {
                     }
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the member in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the member in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             }
         }
@@ -6275,7 +6275,7 @@ function eme_import_csv_member_dynamic_answers() {
             // if email empty: at least lastname is needed
             if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
             // also allow empty firstname
@@ -6287,7 +6287,7 @@ function eme_import_csv_member_dynamic_answers() {
             }
             if ( !isset( $line['membership'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
 
@@ -6299,12 +6299,12 @@ function eme_import_csv_member_dynamic_answers() {
                     $person_id = $person['person_id'];
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (person does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (person does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     continue;
                 }
             } else {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
             if ( $person_id ) {
@@ -6349,11 +6349,11 @@ function eme_import_csv_member_dynamic_answers() {
                     }
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (member does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (member does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             } else {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (no matching person found): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (no matching person found): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
     }
@@ -6534,9 +6534,9 @@ function eme_ajax_memberships_list() {
             $record['name'] = "<s>";
         }
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            $record['name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-memberships&eme_admin_action=edit_membership&membership_id=' . $item['membership_id'] ) ) . "' title='" . esc_attr__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
+            $record['name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-memberships&eme_admin_action=edit_membership&membership_id=' . $item['membership_id'] ) ) . "' title='" . esc_attr__( 'Edit membership', 'events-made-easy' ) . "'>" . esc_html( $item['name'] ) . '</a>';
         } else {
-            $record['name'] .= eme_esc_html( $item['name'] );
+            $record['name'] .= esc_html( $item['name'] );
         }
         if ($item['status']==0) {
             $record['name'] .= "</s>";
@@ -6546,8 +6546,8 @@ function eme_ajax_memberships_list() {
             $record['name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'No membership form has been defined for this membership, a simple default will be used.', 'events-made-easy' ) . "'>";
         }
 
-        $record['description'] = eme_esc_html( $item['description'] );
-        $record['status'] = eme_esc_html( $membership_status_array[$item['status']] );
+        $record['description'] = esc_html( $item['description'] );
+        $record['status'] = esc_html( $membership_status_array[$item['status']] );
         if ( ! isset( $familymembercount[ $item['membership_id'] ] ) ) {
             $familymembercount[ $item['membership_id'] ] = 0;
         }
@@ -6560,7 +6560,7 @@ function eme_ajax_memberships_list() {
         } else {
             $record['membercount'] = $total;
         }
-        $record['contact'] = eme_esc_html( "$contact_name ($contact_email)" );
+        $record['contact'] = esc_html( "$contact_name ($contact_email)" );
         $answers           = eme_get_membership_answers( $item['membership_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $answers as $val ) {
@@ -6628,11 +6628,11 @@ function eme_ajax_members_list( ) {
         $record['members.member_id'] = $item['member_id'];
         $record['related_member_id'] = '';
         if ( $item['related_member_id'] ) {
-            $familytext     = eme_esc_html( __( '(family member)', 'events-made-easy' ) );
+            $familytext     = esc_html( __( '(family member)', 'events-made-easy' ) );
             $related_member = eme_get_member( $item['related_member_id'] );
             if ( $related_member ) {
                 $related_person              = eme_get_person( $related_member['person_id'] );
-                $record['related_member_id'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['related_member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
+                $record['related_member_id'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['related_member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
                 $familytext                 .= '<br>' . esc_html__( 'Head of the family: ', 'events-made-easy' ) . $record['related_member_id'];
             }
         } elseif ( ! empty( $membership['properties']['family_membership'] ) ) {
@@ -6641,27 +6641,27 @@ function eme_ajax_members_list( ) {
             $familytext = '';
         }
 
-        $record['lastname']   = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
-        $record['firstname']  = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
-        $record['email']      = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;
+        $record['lastname']   = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( $item['lastname'] ) . '</a> ' . $familytext;
+        $record['firstname']  = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( $item['firstname'] ) . '</a> ' . $familytext;
+        $record['email']      = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-members&eme_admin_action=edit_member&member_id=' . $item['member_id'] ) ) . "' title='" . esc_attr__( 'Edit member', 'events-made-easy' ) . "'>" . esc_html( $item['email'] ) . '</a> ' . $familytext;
         $record['birthdate']  = eme_localized_date( $item['birthdate'], EME_TIMEZONE, 1 );
-        $record['birthplace'] = eme_esc_html( $item['birthplace'] );
-        $record['address1']   = eme_esc_html( $item['address1'] );
-        $record['address2']   = eme_esc_html( $item['address2'] );
-        $record['city']       = eme_esc_html( $item['city'] );
-        $record['zip']        = eme_esc_html( $item['zip'] );
+        $record['birthplace'] = esc_html( $item['birthplace'] );
+        $record['address1']   = esc_html( $item['address1'] );
+        $record['address2']   = esc_html( $item['address2'] );
+        $record['city']       = esc_html( $item['city'] );
+        $record['zip']        = esc_html( $item['zip'] );
         if ( ! empty( $item['state_code'] ) ) {
-            $record['state'] = eme_esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
+            $record['state'] = esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
         } else {
             $record['state'] = '';
         }
         if ( ! empty( $item['country_code'] ) ) {
-            $record['country'] = eme_esc_html( eme_get_country_name( $item['country_code'] ) );
+            $record['country'] = esc_html( eme_get_country_name( $item['country_code'] ) );
         } else {
             $record['country'] = '';
         }
         if ( $membership ) {
-            $record['membership_name'] = eme_esc_html( $membership['name'] );
+            $record['membership_name'] = esc_html( $membership['name'] );
         } else {
             $record['membership_name'] = '';
         }
@@ -6680,29 +6680,29 @@ function eme_ajax_members_list( ) {
         $record['dcodes_used']   = eme_esc_html( eme_unserialize( $item['dcodes_used'] ) );
         $record['renewal_count'] = intval( $item['renewal_count'] );
         $record['paid']          = ( $item['paid'] == 1 ) ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
-        $record['payment_id']    = eme_esc_html( $item['payment_id'] );
-        $record['unique_nbr']    = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the member: %d', 'events-made-easy' ), $item['payment_id'] ) ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $item['unique_nbr'] ) ) . '</span>';
+        $record['payment_id']    = esc_html( $item['payment_id'] );
+        $record['unique_nbr']    = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the member: %d', 'events-made-easy' ), $item['payment_id'] ) ) . "'>" . esc_html( eme_unique_nbr_formatted( $item['unique_nbr'] ) ) . '</span>';
         $record['status']        = $eme_member_status_array[ $item['status'] ];
-        $record['wp_id']         = eme_esc_html( $item['wp_id'] );
+        $record['wp_id']         = esc_html( $item['wp_id'] );
         if ( $item['wp_id'] && isset( $wp_users[ $record['wp_id'] ] ) ) {
-            $record['wp_user'] = eme_esc_html( $wp_users[ $record['wp_id'] ] );
+            $record['wp_user'] = esc_html( $wp_users[ $record['wp_id'] ] );
         } else {
             $record['wp_user'] = '';
         }
 
         if ( ! empty( $item['pg'] ) ) {
             if ( isset( $pgs[ $item['pg'] ] ) ) {
-                $record['pg'] = eme_esc_html( $pgs[ $item['pg'] ] );
+                $record['pg'] = esc_html( $pgs[ $item['pg'] ] );
             } else {
                 $record['pg'] = 'UNKNOWN';
             }
             if ( ($item['pg'] == 'payconiq'||$item['pg'] == 'bancontactwero') && ! empty( $item['pg_pid'] ) ) {
-                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='bancontactwero_".$item['payment_id']."'></span>";
+                $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button norowselectonclick' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN', 'events-made-easy')."</button><span id='bancontactwero_".$item['payment_id']."'></span>";
             }
         } else {
             $record['pg'] = '';
         }
-        $record['pg_pid'] = eme_esc_html( $item['pg_pid'] );
+        $record['pg_pid'] = esc_html( $item['pg_pid'] );
         $answers          = eme_get_member_answers( $item['member_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $answers as $val ) {

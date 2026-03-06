@@ -241,7 +241,7 @@ function eme_ajax_attendances_list() {
 				$person_info_shown .= ' ' . $person['firstname'];
 			}
 			$person_info_shown           .= ' (' . $person['email'] . ')';
-			$rows[ $key ]['person']       = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+			$rows[ $key ]['person']       = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $person['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $person_info_shown ) . '</a>';
 			$rows[ $key ]['related_name'] = '';
 			if ( $row['type'] == 'event' ) {
 				$event = eme_get_event( $row['related_id'] );

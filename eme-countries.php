@@ -1030,7 +1030,7 @@ function eme_ajax_state_edit() {
 			$record = eme_get_state( $res );
 			// for the new record, we also need to provide the lang (as done in eme_get_states)
 			$record['lang']         = eme_get_state_lang( $res );
-			$fTableResult['Record'] = eme_esc_html( $record );
+			$fTableResult['Record'] = array_map( 'esc_html', $record );
 		}
 	}
 

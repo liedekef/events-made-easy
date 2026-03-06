@@ -248,7 +248,7 @@ function eme_email_todo($todo) {
 	$contact_email  = $contact->user_email;
         $contact_name   = $contact->display_name;
 
-	$contact_subject = __('Todo reminder for event #_EVENTNAME: ','events_made_easy').$todo['name'];
+	$contact_subject = __('Todo reminder for event #_EVENTNAME: ','events-made-easy').$todo['name'];
 	$contact_body = $todo['description'];
 	$contact_subject = eme_replace_event_placeholders($contact_subject, $event, 'text');
 	$contact_body = eme_replace_event_placeholders($contact_body, $event);

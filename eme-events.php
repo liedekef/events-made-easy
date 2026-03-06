@@ -1118,7 +1118,7 @@ function eme_events_page_content() {
                 $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Error updating attendance count, but ignoring', 'events-made-easy' ) ) . '</div>';
             }
 
-            $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
+            $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), esc_html( $event['event_name'] ) );
             if ( $event['event_properties']['attendancerecord'] || $event['event_properties']['attendanceperday']) {
                 $res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
                 if ( $res ) {
@@ -2241,7 +2241,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
             if (!empty($t_person) && !empty($t_person['person_id']))
                 $replacement = join( ', ', eme_get_persongroup_names( $t_person['person_id'] ) );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -2255,7 +2255,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
             if (!empty($t_person) && !empty($t_person['person_id']))
                 $replacement = eme_get_activemembership_names_by_personid( $t_person['person_id'] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -2325,7 +2325,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
                 $replacement = "";
             }
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -2399,7 +2399,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
         }
 
         if ( $need_escape ) {
-            $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+            $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
         }
         if ( $need_urlencode ) {
             $replacement = rawurlencode( $replacement );
@@ -4034,7 +4034,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 if ( $need_urlencode ) {
                     $replacement = rawurlencode( $replacement );
@@ -4079,7 +4079,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             $replacement = eme_localized_date( $event[ $my_dt ], EME_TIMEZONE, substr( $result, $offset, ( strlen( $result ) - ( $offset + 1 ) ) ) );
 
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -4208,7 +4208,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
                 $needle_offset += $orig_result_length - strlen( $replacement );
@@ -5900,13 +5900,13 @@ function eme_import_csv_events() {
                     // location_id is returned if update is ok, and we use the location id later on
                     $location_id = eme_update_location( $line, $location_id );
                     if ( ! $location_id ) {
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
                     $location_id = eme_insert_location( $line );
                     if ( ! $location_id ) {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
                 if ( $location_id ) {
@@ -5930,10 +5930,10 @@ function eme_import_csv_events() {
 
             if ( ! empty( $line['event_start_date'] ) && ! eme_is_date( $line['event_start_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
             } elseif ( ! empty( $line['event_end_date'] ) && ! eme_is_date( $line['event_end_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
             } elseif ( isset( $line['event_name'] ) ) {
                 if ( ! isset( $line['location_id'] ) ) {
                     $line['location_id'] = $location_id;
@@ -5975,7 +5975,7 @@ function eme_import_csv_events() {
                         ++$updated;
                     } else {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
                     $event_id = eme_db_insert_event( $line );
@@ -5983,7 +5983,7 @@ function eme_import_csv_events() {
                         ++$inserted;
                     } else {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
                 if ( $event_id ) {
@@ -6005,7 +6005,7 @@ function eme_import_csv_events() {
                 }
             } else {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
         $result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
@@ -6129,7 +6129,7 @@ function eme_events_table( $message = '' ) {
     if ( ! empty( $formfields_searchable ) ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
         echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     }
 ?>
@@ -7150,6 +7150,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
         'specific' => __( 'Specific days', 'events-made-easy' ),
         'specific_months' => __( 'Specific months', 'events-made-easy' ),
     ];
+    // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations for $wp_locale
     $days_names           = [
         1 => $wp_locale->get_weekday_abbrev( __( 'Monday' ) ),
         2 => $wp_locale->get_weekday_abbrev( __( 'Tuesday' ) ),

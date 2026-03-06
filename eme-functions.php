@@ -2085,16 +2085,8 @@ function eme_convert_array2multi( $multiarr, $sep = '||' ) {
 
 function eme_random_id() {
     $length = 14 + 32;
-    if ( function_exists( 'random_bytes' ) ) {
-        $bytes = random_bytes( ceil( $length / 2 ) );
-        return substr( bin2hex( $bytes ), 0, $length );
-    } elseif ( function_exists( 'openssl_random_pseudo_bytes' ) ) {
-        $bytes = openssl_random_pseudo_bytes( ceil( $length / 2 ) );
-        return substr( bin2hex( $bytes ), 0, $length );
-    } else {
-        // the original function, and added substr to it so it never goes beyond 50 chars
-        return substr( uniqid(), 0, 13 ) . '_' . substr( md5( mt_rand() ), 0, 32 );
-    }
+    $bytes = random_bytes( ceil( $length / 2 ) );
+    return substr( bin2hex( $bytes ), 0, $length );
 }
 
 // API function so people can call this from their theme's search.php

@@ -76,18 +76,14 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('eme_admin_nonce', ememembers.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
+                if (data.Result === 'ERROR') {
+                    MembershipsTable.showError(data.htmlmessage);
+                } else {
+                    MembershipsTable.showInfo(data.htmlmessage);
+                }
                 MembershipsTable.reload();
                 membershipsButton.textContent = ememembers.translate_apply;
                 membershipsButton.disabled = false;
-
-                const msg = EME.$('#memberships-message');
-                if (msg) {
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    if (doAction !== 'showMembershipStats') {
-                        setTimeout(() => eme_toggle(msg, false), 5000);
-                    }
-                }
             });
         });
     }
@@ -436,16 +432,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
+                if (data.Result === 'ERROR') {
+                    MembersTable.showError(data.htmlmessage);
+                } else {
+                    MembersTable.showInfo(data.htmlmessage);
+                }
                 MembersTable.reload();
                 membersButton.textContent = ememembers.translate_apply;
                 membersButton.disabled = false;
-
-                const msg = EME.$('#members-message');
-                if (msg) {
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
             });
         });
     }
@@ -599,14 +593,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         eme_postJSON(ajaxurl, formData, (data) => {
+            if (data.Result === 'ERROR') {
+                MembersTable.showError(data.htmlmessage);
+            } else {
+                MembersTable.showInfo(data.htmlmessage);
+            }
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
-            const msg = EME.$('#members-message');
-            if (msg) {
-                msg.innerHTML = data.htmlmessage;
-                eme_toggle(msg, true);
-                setTimeout(() => eme_toggle(msg, false), 5000);
-            }
         });
 
         // return false to make sure the real form doesn't submit

@@ -7012,7 +7012,7 @@ function eme_ajax_action_set_member_unpaid( $ids_arr, $action, $send_mail ) {
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
         $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-        $ajaxResult['Result']      = 'ERROR';
+        $ajaxResult['Result']      = 'WARNING';
     } else {
         $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
         $ajaxResult['Result']      = 'ERROR';
@@ -7132,7 +7132,7 @@ function eme_ajax_action_stop_membership( $ids_arr, $action, $send_mail ) {
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
         $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-        $ajaxResult['Result']      = 'ERROR';
+        $ajaxResult['Result']      = 'WARNING';
     } else {
         $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
         $ajaxResult['Result']      = 'ERROR';

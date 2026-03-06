@@ -518,7 +518,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		return;
 	}
 
-	$weekdays_name  = [ __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) ];
+	$weekdays_name  = [ __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) ]; // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
 	$monthweek_name = [
 		'1'  => __( 'the first %s of the month', 'events-made-easy' ),
 		'2'  => __( 'the second %s of the month', 'events-made-easy' ),

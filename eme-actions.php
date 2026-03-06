@@ -240,7 +240,7 @@ function eme_add_events_locations_link_search( $results, $query ) {
     foreach ( $events as $event ) {
         $results[] = [
             'ID'        => $event['event_id'],
-            'title'     => trim( esc_html( strip_tags( $event['event_name'] ) . ' (' . eme_localized_datetime( $event['event_start'], EME_TIMEZONE ) . ')' ) ),
+            'title'     => trim( esc_html( wp_strip_all_tags( eme_translate($event['event_name']) ) . ' (' . eme_localized_datetime( $event['event_start'], EME_TIMEZONE ) . ')' ) ),
             'permalink' => eme_event_url( $event ),
             'info'      => __( 'Event', 'events-made-easy' ),
         ];
@@ -249,7 +249,7 @@ function eme_add_events_locations_link_search( $results, $query ) {
     foreach ( $locations as $location ) {
         $results[] = [
             'ID'        => $location['location_id'],
-            'title'     => trim( esc_html( strip_tags( $location['location_name'] ) ) ),
+            'title'     => trim( esc_html( wp_strip_all_tags( eme_translate($location['location_name']) ) ) ),
             'permalink' => eme_location_url( $location ),
             'info'      => __( 'Location', 'events-made-easy' ),
         ];

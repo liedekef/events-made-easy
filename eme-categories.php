@@ -280,7 +280,7 @@ function eme_get_event_category_names( $event_id, $extra_conditions = '', $order
 		$order_by = " ORDER BY $order_by";
 	}
 	$prepared_sql = $wpdb->prepare( "SELECT category_name FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_category_descriptions( $event_id, $extra_conditions = '', $order_by = '' ) {
@@ -294,7 +294,7 @@ function eme_get_event_category_descriptions( $event_id, $extra_conditions = '',
 		$order_by = " ORDER BY $order_by";
 	}
 	$prepared_sql = $wpdb->prepare( "SELECT description FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by = '' ) {
@@ -308,7 +308,7 @@ function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by 
 		$order_by = " ORDER BY $order_by";
 	}
 	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_category_eventids( $category_id, $future_only = 1 ) {

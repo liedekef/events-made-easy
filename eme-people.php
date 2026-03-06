@@ -1482,11 +1482,11 @@ function eme_printable_booking_report( $event_id ) {
 <?php
     $file_name = get_stylesheet_directory() . '/eme.css';
     if ( file_exists( $file_name ) ) {
-        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme.css' ) . "' type='text/css' media='screen'>\n";
+        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme.css' ) . "' type='text/css' media='screen'>\n"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for print output, not html
     }
     $file_name = get_stylesheet_directory() . '/eme_print.css';
     if ( file_exists( $file_name ) ) {
-        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme_print.css' ) . "' type='text/css' media='print'>\n";
+        echo "<link rel='stylesheet' href='" . esc_url( get_stylesheet_directory_uri() . '/eme_print.css' ) . "' type='text/css' media='print'>\n"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for print output, not html
     }
 ?>
         </head>

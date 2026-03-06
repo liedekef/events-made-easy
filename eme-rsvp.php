@@ -5374,7 +5374,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <?php endif; ?>
     <input type="search" name="search_customfields" id="search_customfields" placeholder="<?php esc_attr_e( 'Filter on custom field answer', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
     <input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
-    <input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) esc_attr_e(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>
+    <input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) echo esc_attr(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>
     <input type="search" name="search_pg_pid" id="search_pg_pid" placeholder="<?php esc_attr_e( 'Filter on payment GW id', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
     </div>
     <button id="BookingsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter bookings', 'events-made-easy' ); ?></button>
@@ -6921,10 +6921,10 @@ function eme_generate_booking_pdf( $booking, $event, $template_id, $stream_direc
     }
 
     $dompdf->setPaper( $pagesize, $orientation );
-    $css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
+    $css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     $eme_css_name = get_stylesheet_directory() . '/eme.css';
     if ( file_exists( $eme_css_name ) ) {
-        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     }
     $extra_html_header = get_option( 'eme_html_header' );
     $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
@@ -6987,10 +6987,10 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
     }
 
     $dompdf->setPaper( $pagesize, $orientation );
-    $css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
+    $css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     $eme_css_name = get_stylesheet_directory() . '/eme.css';
     if ( file_exists( $eme_css_name ) ) {
-        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     }
 
     $extra_html_header = get_option( 'eme_html_header' );

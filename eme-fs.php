@@ -124,10 +124,10 @@ function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
     }
 
     $dompdf->setPaper( $pagesize, $orientation );
-    $css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
+    $css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     $eme_css_name = get_stylesheet_directory() . '/eme.css';
     if ( file_exists( $eme_css_name ) ) {
-        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+        $css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for PDF creation, not html
     }
     $extra_html_header = get_option( 'eme_html_header' );
     $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );

@@ -1191,7 +1191,7 @@ function eme_change_discount_validfrom( $discount_id, $date ) {
 
 	if ( eme_is_datetime( $date ) ) {
 		$prepared_sql = $wpdb->prepare( "UPDATE $table SET valid_from = %s WHERE id = %d", $date, $discount_id );
-		$wpdb->query( $prepared_sql );
+		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 }
 function eme_change_discount_validto( $discount_id, $date ) {
@@ -1200,7 +1200,7 @@ function eme_change_discount_validto( $discount_id, $date ) {
 
 	if ( eme_is_datetime( $date ) ) {
 		$prepared_sql = $wpdb->prepare( "UPDATE $table SET valid_to = %s WHERE id = %d", $date, $discount_id );
-		$wpdb->query( $prepared_sql );
+		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 }
 
@@ -1211,7 +1211,7 @@ function eme_get_discountgroup( $id ) {
     }
 	$table = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
-	return $wpdb->get_row( $prepared_sql, ARRAY_A );
+	return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_discountgroup_by_name( $name ) {
@@ -1221,27 +1221,27 @@ function eme_get_discountgroup_by_name( $name ) {
     }
 	$table = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
-	return $wpdb->get_row( $prepared_sql, ARRAY_A );
+	return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_discountids_by_group( $dgroup ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "SELECT id FROM $table WHERE FIND_IN_SET(%d,dgroup) OR dgroup = %s", $dgroup['id'], $dgroup['name'] );
-	return $wpdb->get_col( $prepared_sql );
+	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_increase_discount_count( $id, $usage ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "UPDATE $table SET count=count+%d WHERE id = %d", $usage, $id );
-	return $wpdb->query( $prepared_sql );
+	return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_decrease_discount_count( $id, $usage ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "UPDATE $table SET count=count-%d WHERE id = %d", $usage, $id );
-	return $wpdb->query( $prepared_sql );
+	return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 // next function is only called after new booking
@@ -1341,7 +1341,7 @@ function eme_get_discount( $id ) {
     }
 	$table    = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql      = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
-	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A );
+	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( $discount ) {
 			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			return $discount;
@@ -1353,13 +1353,13 @@ function eme_get_discount_name( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
-	return $wpdb->get_var( $prepared_sql );
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_dgroup_name( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$prepared_sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
-	return $wpdb->get_var( $prepared_sql );
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_discount_by_name( $name ) {
@@ -1369,7 +1369,7 @@ function eme_get_discount_by_name( $name ) {
     }
 	$table    = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$prepared_sql      = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
-	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A );
+	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( $discount ) {
 			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			return $discount;
@@ -1400,7 +1400,7 @@ function eme_get_person_used_discount_count( $person_id, $discount_id) {
         $person_id, $like_pattern
     );
 
-    $discountids_results = $wpdb->get_col( $prepared_sql );
+    $discountids_results = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $count = 0;
     foreach ( $discountids_results as $discountids ) {
         if ( eme_is_serialized( $discountids ) ) {

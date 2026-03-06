@@ -6859,7 +6859,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     <div class="inside">
 <?php
         $templates = get_page_templates();
-        print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+        print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         print '<br>' . esc_html__( 'By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted.', 'events-made-easy' );
 ?>
                     </div>
@@ -7150,15 +7150,14 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
         'specific' => __( 'Specific days', 'events-made-easy' ),
         'specific_months' => __( 'Specific months', 'events-made-easy' ),
     ];
-    // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations for $wp_locale
     $days_names           = [
-        1 => $wp_locale->get_weekday_abbrev( __( 'Monday' ) ),
-        2 => $wp_locale->get_weekday_abbrev( __( 'Tuesday' ) ),
-        3 => $wp_locale->get_weekday_abbrev( __( 'Wednesday' ) ),
-        4 => $wp_locale->get_weekday_abbrev( __( 'Thursday' ) ),
-        5 => $wp_locale->get_weekday_abbrev( __( 'Friday' ) ),
-        6 => $wp_locale->get_weekday_abbrev( __( 'Saturday' ) ),
-        7 => $wp_locale->get_weekday_abbrev( __( 'Sunday' ) ),
+        1 => $wp_locale->get_weekday_abbrev( __( 'Monday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        2 => $wp_locale->get_weekday_abbrev( __( 'Tuesday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        3 => $wp_locale->get_weekday_abbrev( __( 'Wednesday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        4 => $wp_locale->get_weekday_abbrev( __( 'Thursday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        5 => $wp_locale->get_weekday_abbrev( __( 'Friday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        6 => $wp_locale->get_weekday_abbrev( __( 'Saturday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
+        7 => $wp_locale->get_weekday_abbrev( __( 'Sunday' ) ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
     ];
     $month_names = [];
     for ($i=1;$i<=12;$i++) {

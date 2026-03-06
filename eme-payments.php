@@ -15,7 +15,7 @@ function eme_payment_gateways() {
         'payconiq'     => __( 'Bancontact Pay - Wero', 'events-made-easy' ),
         'bancontactwero' => __( 'Bancontact Pay - Wero', 'events-made-easy' ),
         'worldpay'     => __( 'Worldpay', 'events-made-easy' ),
-        'opayo'        => __( 'Opayo', 'events_made_easy' ),
+        'opayo'        => __( 'Opayo', 'events-made-easy' ),
         'sumup'        => __( 'SumUp', 'events-made-easy' ),
         'stripe'       => __( 'Stripe', 'events-made-easy' ),
         'braintree'    => __( 'Braintree', 'events-made-easy' ),
@@ -630,7 +630,7 @@ function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $mul
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -684,7 +684,7 @@ function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_bo
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -738,7 +738,7 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
     }
     $quantity = 1;
 
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -939,7 +939,7 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
             script.src = "https://js.braintreegateway.com/web/dropin/1.33.0/js/dropin.min.js";
             script.async = true;
             script.onload = function () {
-                const clientToken = "' . eme_esc_html($clientToken) . '";
+                const clientToken = "' . esc_html($clientToken) . '";
                 const container = document.getElementById("braintree-payment-form-div");
     
                 if (!container) {
@@ -1013,7 +1013,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -1095,7 +1095,7 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 
     // gateway doesn't like the single quotes
     $description = str_replace( "'", '', $description );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $events_page_link = eme_get_events_page();
@@ -1145,7 +1145,7 @@ function eme_payment_form_fdgg( $item_name, $payment, $baseprice, $cur, $multi_b
 
     // we add the next lines to be conform with the others, but fdgg ignores the description
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     // the live or sandbox url
     $mode = get_option( 'eme_fdgg_url' );
@@ -1214,7 +1214,7 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -1255,7 +1255,7 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 
     // gateway doesn't like the single quotes
     $description = str_replace( "'", '', $description );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $events_page_link = eme_get_events_page();
@@ -1303,7 +1303,7 @@ function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur
 
     // gateway doesn't like the single quotes
     $description = str_replace( "'", '', $description );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $events_page_link = eme_get_events_page();
@@ -1354,7 +1354,7 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -1401,7 +1401,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
@@ -1491,8 +1491,8 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
         $item_name = $description;
     }
 
-    $description = eme_esc_html( $description );
-    $item_name   = eme_esc_html( $item_name );
+    $description = esc_html( $description );
+    $item_name   = esc_html( $item_name );
 
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $quantity         = 1;
@@ -1514,7 +1514,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     $locale_code             = determine_locale();
     $locale_code             = str_replace( '_', '-', $locale_code );
     $button_price            = eme_localized_price( $price, $cur );
-    $button_text_inside_form = eme_esc_html( sprintf( __( 'Pay %s', 'events-made-easy' ), $button_price ) );
+    $button_text_inside_form = esc_html( sprintf( __( 'Pay %s', 'events-made-easy' ), $button_price ) );
     $form_html               = $button_above;
 
     // Create a preference object
@@ -1535,7 +1535,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     $res                            = $preference->save();
 
     if ( ! $res ) {
-        $form_html .= '<br>' . __( 'Mercado Pago API returned an error: ', 'events-made-easy' ) . eme_esc_html( $preference->Error() );
+        $form_html .= '<br>' . __( 'Mercado Pago API returned an error: ', 'events-made-easy' ) . esc_html( $preference->Error() );
     } else {
         $form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
            <script src='https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js' data-preference-id='" . $preference->id . "' data-button-label='$button_label'></script>
@@ -1561,7 +1561,7 @@ function eme_payment_form_fondy( $item_name, $payment, $baseprice, $cur, $multi_
 
     // gateway doesn't like the single quotes
     $description = str_replace( "'", '', $description );
-    $description = eme_esc_html( $description );
+    $description = esc_html( $description );
 
     $price      = eme_payment_gateway_total( $baseprice, $cur, $gateway );
 
@@ -3930,7 +3930,7 @@ function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $
         }
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );

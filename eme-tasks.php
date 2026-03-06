@@ -1002,7 +1002,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_task_settings( $event ) {
-    $eme_prop_task_reminder_days         = eme_esc_html( $event['event_properties']['task_reminder_days'] );
+    $eme_prop_task_reminder_days         = esc_html( $event['event_properties']['task_reminder_days'] );
     $extra_attributes                    = 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"';
     ?>
     <div id='div_event_task_settings'>
@@ -1710,7 +1710,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
         if ( preg_match( '/#_TASKNAME$/', $result ) ) {
             $replacement = eme_translate( $task['name'], $lang );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -1718,7 +1718,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
         } elseif ( preg_match( '/#_TASKDESCRIPTION$/', $result ) ) {
             $replacement = eme_translate( $task['description'], $lang );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -1760,7 +1760,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
@@ -1817,7 +1817,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
         } elseif ( preg_match( '/#_(TASK)?COMMENT/', $result ) ) {
             $replacement = $signup['comment'];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -2153,8 +2153,8 @@ function eme_ajax_task_signups_list() {
             $row['event_name']  = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $row['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $row['event_name'] ) ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
             $csv_address = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=tasksignups_csv&event_id=' . $row['event_id'] ) );
             $row['event_name'] .= " (<a id='tasksignups_csv_" . $row['event_id'] . "' href='".esc_url($csv_address)."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
-            $row['task_name']   = eme_esc_html( $row['task_name'] );
-            $row['comment']     = nl2br(eme_esc_html( $row['comment'] ));
+            $row['task_name']   = esc_html( $row['task_name'] );
+            $row['comment']     = nl2br(esc_html( $row['comment'] ));
             $row['task_start']  = $localized_taskstart_date;
             $row['task_end']    = $localized_taskend_date;
             $row['signup_date'] = $localized_signup_date;
@@ -2163,7 +2163,7 @@ function eme_ajax_task_signups_list() {
             } else {
                 $row['signup_status'] = __('Pending', 'events-made-easy');
             }
-            $row['person_info'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $row['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>' . ' (' . eme_esc_html( $row['email'] ) . ')';
+            $row['person_info'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $row['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], $row['email'] ) ) . '</a>' . ' (' . esc_html( $row['email'] ) . ')';
 
             foreach ( $formfields as $formfield ) {
                 foreach ( $answers as $answer ) {

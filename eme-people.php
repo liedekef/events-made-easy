@@ -368,7 +368,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_FULLNAME/', $result ) ) {
             $replacement = eme_format_full_name( $person['firstname'], $person['lastname'] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -384,7 +384,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             }
             $replacement = $person[ $field ];
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -410,7 +410,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             // add trailing '.'
             $replacement .= ( substr( $replacement, -1 ) == '.' ? '' : '.' );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -419,7 +419,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             $length      = intval( $matches[1] );
             $replacement = substr( $person['lastname'], 0, $length );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -428,7 +428,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             $fullname    = eme_format_full_name( $person['firstname'], $person['lastname'] );
             $replacement = eme_get_initials( $fullname );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -436,7 +436,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_LASTNAME_INITIALS/', $result ) ) {
             $replacement = eme_get_initials( $person['lastname'] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -444,7 +444,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_COUNTRY/', $result ) ) {
             $replacement = eme_get_country_name( $person['country_code'], $lang );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -452,7 +452,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_STATE/', $result ) ) {
             $replacement = eme_get_state_name( $person['state_code'], $person['country_code'], $lang );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -461,7 +461,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             if (!empty($person['person_id']))
                 $replacement = join( ', ', eme_get_persongroup_names( $person['person_id'] ) );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -470,7 +470,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             if (!empty($person['person_id']))
                 $replacement = eme_get_activemembership_names_by_personid( $person['person_id'] );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -513,7 +513,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_BIRTHDAY_EMAIL/', $result ) ) {
             $replacement = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -521,7 +521,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_MASSMAIL|#_OPT_IN|#_OPT_OUT/', $result ) ) {
             $replacement = $person['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -529,7 +529,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_GDPR|#_CONSENT/', $result ) ) {
             $replacement = $person['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -758,7 +758,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                     $replacement = $user->user_nicename;
                 }
                 if ( $target == 'html' ) {
-                    $replacement = eme_esc_html( $replacement );
+                    $replacement = esc_html( $replacement );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } else {
                     $replacement = apply_filters( 'eme_text', $replacement );
@@ -771,7 +771,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                     $replacement = $user->display_name;
                 }
                 if ( $target == 'html' ) {
-                    $replacement = eme_esc_html( $replacement );
+                    $replacement = esc_html( $replacement );
                     $replacement = apply_filters( 'eme_general', $replacement );
                 } else {
                     $replacement = apply_filters( 'eme_text', $replacement );
@@ -786,7 +786,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
             $my_nonce = wp_create_nonce( 'eme_frontend' );
             $replacement = $person['random_id']."&eme_frontend_nonce=$my_nonce";
             if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
+                $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
             } else {
                 $replacement = apply_filters( 'eme_text', $replacement );
@@ -808,7 +808,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                     foreach ( $familymember_person_ids as $familymember_person_id ) {
                         $related_person = eme_get_person( $familymember_person_id );
                         if ( $related_person ) {
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . esc_html( $related_person['email'] ) . '</td></tr>';
                         }
                     }
                     $replacement .= '</table>';
@@ -824,7 +824,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                 $replacement = "";
             }
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -911,7 +911,7 @@ function eme_import_csv_people() {
             // if email empty: at least lastname is needed
             if ( empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
             // also allow empty firstname
@@ -923,7 +923,7 @@ function eme_import_csv_people() {
             }
             if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
                 continue;
             }
 
@@ -949,10 +949,10 @@ function eme_import_csv_people() {
                 $person_id = eme_db_update_person( $person['person_id'], $line );
                 if ( $person_id ) {
                     ++$updated;
-                    $updated_msg .= '<br>' . eme_esc_html( sprintf( __( 'Updated person %d: %s', 'events-made-easy' ), $person_id, implode( ',', $row ) ) );
+                    $updated_msg .= '<br>' . esc_html( sprintf( __( 'Updated person %d: %s', 'events-made-easy' ), $person_id, implode( ',', $row ) ) );
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             } else {
                 $person_id = eme_db_insert_person( $line );
@@ -960,7 +960,7 @@ function eme_import_csv_people() {
                     ++$inserted;
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             }
             if ( $person_id ) {
@@ -1390,7 +1390,7 @@ function eme_csv_booking_report( $event_id ) {
         }
         if ( ! empty( $booking['pg'] ) ) {
             if ( isset( $pgs[ $booking['pg'] ] ) ) {
-                $line[] = eme_esc_html( $pgs[ $booking['pg'] ] );
+                $line[] = esc_html( $pgs[ $booking['pg'] ] );
             } else {
                 $line[]  = '';
             }
@@ -1868,9 +1868,9 @@ function eme_person_verify_layout() {
                 print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
-                    print "<td>".esc_html__('Yes','events_made_easy')."</td>";
+                    print "<td>".esc_html__('Yes','events-made-easy')."</td>";
                 } else {
-                    print "<td>".esc_html__('No','events_made_easy')."</td>";
+                    print "<td>".esc_html__('No','events-made-easy')."</td>";
                 }
                 print '</tr>';
             }
@@ -1911,9 +1911,9 @@ function eme_person_verify_layout() {
                 print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
-                    print "<td>".esc_html__('Yes','events_made_easy')."</td>";
+                    print "<td>".esc_html__('Yes','events-made-easy')."</td>";
                 } else {
-                    print "<td>".esc_html__('No','events_made_easy')."</td>";
+                    print "<td>".esc_html__('No','events-made-easy')."</td>";
                 }
                 print '</tr>';
             }
@@ -1954,9 +1954,9 @@ function eme_person_verify_layout() {
                 print '<td>' . $membership_names . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped HTML from eme_get_linked_activemembership_names_by_personid()
                 $future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
                 if (!empty($future_bookings)) {
-                    print "<td>".esc_html__('Yes','events_made_easy')."</td>";
+                    print "<td>".esc_html__('Yes','events-made-easy')."</td>";
                 } else {
-                    print "<td>".esc_html__('No','events_made_easy')."</td>";
+                    print "<td>".esc_html__('No','events-made-easy')."</td>";
                 }
                 print '</tr>';
             }
@@ -2174,7 +2174,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
             $value = '';
         }
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
         echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
@@ -2522,7 +2522,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 <?php
     $preselected_option = '';
     if ( ! empty( $related_person ) ) {
-        $preselected_text   = eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
+        $preselected_text   = esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) );
         $preselected_option = '<option value="' . intval( $person['related_person_id'] ) . '" selected>' . $preselected_text . '</option>';
     }
 ?>
@@ -5228,16 +5228,16 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
         $persons = eme_get_persons( '', $search );
         foreach ( $persons as $item ) {
             $record              = [];
-            $record['lastname']  = eme_esc_html( $item['lastname'] );
-            $record['firstname'] = eme_esc_html( $item['firstname'] );
-            $record['address1']  = eme_esc_html( $item['address1'] );
-            $record['address2']  = eme_esc_html( $item['address2'] );
-            $record['city']      = eme_esc_html( $item['city'] );
-            $record['zip']       = eme_esc_html( $item['zip'] );
-            $record['state']     = eme_esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
-            $record['country']   = eme_esc_html( eme_get_country_name( $item['country_code'] ) );
-            $record['email']     = eme_esc_html( $item['email'] );
-            $record['phone']     = eme_esc_html( $item['phone'] );
+            $record['lastname']  = esc_html( $item['lastname'] );
+            $record['firstname'] = esc_html( $item['firstname'] );
+            $record['address1']  = esc_html( $item['address1'] );
+            $record['address2']  = esc_html( $item['address2'] );
+            $record['city']      = esc_html( $item['city'] );
+            $record['zip']       = esc_html( $item['zip'] );
+            $record['state']     = esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
+            $record['country']   = esc_html( eme_get_country_name( $item['country_code'] ) );
+            $record['email']     = esc_html( $item['email'] );
+            $record['phone']     = esc_html( $item['phone'] );
             $record['person_id'] = intval( $item['person_id'] );
             $record['wp_id']     = intval( $item['wp_id'] );
             $record['massmail']  = intval( $item['massmail'] );
@@ -5254,20 +5254,20 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
         $wp_users = eme_get_wp_users( search: $lastname, wp_ids_to_exclude: $wp_ids_seen );
         foreach ( $wp_users as $wp_user ) {
             $record             = [];
-            $phone              = eme_esc_html( eme_get_user_phone( $wp_user->ID ) );
-            $record['lastname'] = eme_esc_html( $wp_user->user_lastname );
+            $phone              = esc_html( eme_get_user_phone( $wp_user->ID ) );
+            $record['lastname'] = esc_html( $wp_user->user_lastname );
             if ( empty( $record['lastname'] ) ) {
-                $record['lastname'] = eme_esc_html( $wp_user->display_name );
+                $record['lastname'] = esc_html( $wp_user->display_name );
             }
-            $record['firstname'] = eme_esc_html( $wp_user->user_firstname );
-            $record['email']     = eme_esc_html( $wp_user->user_email );
+            $record['firstname'] = esc_html( $wp_user->user_firstname );
+            $record['email']     = esc_html( $wp_user->user_email );
             $record['address1']  = '';
             $record['address2']  = '';
             $record['city']      = '';
             $record['zip']       = '';
             $record['state']     = '';
             $record['country']   = '';
-            $record['phone']     = eme_esc_html( $phone );
+            $record['phone']     = esc_html( $phone );
             $record['wp_id']     = intval( $wp_user->ID );
             $record['massmail']  = 1;
             $record['gdpr']      = 1;
@@ -5320,7 +5320,7 @@ function eme_ajax_people_list( ) {
         $record['people.person_id'] = $item['person_id'];
         if ( $item['related_person_id'] ) {
             $related_person              = eme_get_person( $item['related_person_id'] );
-            $record['people.related_to'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['related_person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $related_person['lastname'] . ' ' . $related_person['firstname'] ) . '</a>';
+            $record['people.related_to'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['related_person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $related_person['lastname'] . ' ' . $related_person['firstname'] ) . '</a>';
             $familytext                  = esc_html__( '(family member)', 'events-made-easy' );
         } else {
             $record['people.related_to'] = '';
@@ -5328,40 +5328,40 @@ function eme_ajax_people_list( ) {
         }
 
         //$owner_user_info = get_userdata($item['wp_id']);
-        //$record['people.wp_id'] = eme_esc_html($owner_user_info->display_name);
+        //$record['people.wp_id'] = esc_html($owner_user_info->display_name);
         if ( $item['wp_id'] && isset( $wp_users[ $item['wp_id'] ] ) ) {
-            $record['people.wp_user'] = eme_esc_html( $wp_users[ $item['wp_id'] ] );
+            $record['people.wp_user'] = esc_html( $wp_users[ $item['wp_id'] ] );
         } else {
             $record['people.wp_user'] = '';
         }
-        $record['people.lastname']   = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
-        $record['people.firstname']  = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
-        $record['people.email']      = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;
-        $record['people.phone']      = eme_esc_html( $item['phone'] );
+        $record['people.lastname']   = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $item['lastname'] ) . '</a> ' . $familytext;
+        $record['people.firstname']  = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $item['firstname'] ) . '</a> ' . $familytext;
+        $record['people.email']      = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_person&person_id=' . $item['person_id'] ) ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html( $item['email'] ) . '</a> ' . $familytext;
+        $record['people.phone']      = esc_html( $item['phone'] );
         $record['people.birthdate']  = eme_localized_date( $item['birthdate'], EME_TIMEZONE, 1 );
         $record['people.bd_email']   = $item['bd_email'] ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
-        $record['people.birthplace'] = eme_esc_html( $item['birthplace'] );
-        $record['people.address1']   = eme_esc_html( $item['address1'] );
-        $record['people.address2']   = eme_esc_html( $item['address2'] );
-        $record['people.city']       = eme_esc_html( $item['city'] );
-        $record['people.zip']        = eme_esc_html( $item['zip'] );
-        $record['people.lang']       = eme_esc_html( $item['lang'] );
+        $record['people.birthplace'] = esc_html( $item['birthplace'] );
+        $record['people.address1']   = esc_html( $item['address1'] );
+        $record['people.address2']   = esc_html( $item['address2'] );
+        $record['people.city']       = esc_html( $item['city'] );
+        $record['people.zip']        = esc_html( $item['zip'] );
+        $record['people.lang']       = esc_html( $item['lang'] );
         if ( $item['state_code'] ) {
-            $record['people.state'] = eme_esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
+            $record['people.state'] = esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
         } elseif ( isset( $item['state'] ) ) {
-            $record['people.state'] = eme_esc_html( $item['state'] );
+            $record['people.state'] = esc_html( $item['state'] );
         }
         if ( $item['country_code'] ) {
-            $record['people.country'] = eme_esc_html( eme_get_country_name( $item['country_code'] ) );
+            $record['people.country'] = esc_html( eme_get_country_name( $item['country_code'] ) );
         } elseif ( isset( $item['country'] ) ) {
-            $record['people.country'] = eme_esc_html( $item['country'] );
+            $record['people.country'] = esc_html( $item['country'] );
         }
         $record['people.massmail']      = $item['massmail'] ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
         $record['people.gdpr']          = $item['gdpr'] ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
-        $record['people.gdpr_date']     = eme_esc_html( $item['gdpr_date'] );
+        $record['people.gdpr_date']     = esc_html( $item['gdpr_date'] );
         $record['people.creation_date'] = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
         $record['people.modif_date']    = eme_localized_datetime( $item['modif_date'], EME_TIMEZONE, 1 );
-        $record['people.groups']        = join( ', ', eme_esc_html( eme_get_persongroup_names( $item['person_id'] ) ) );
+        $record['people.groups']        = join( ', ', array_map( 'esc_html', eme_get_persongroup_names( $item['person_id'] ) ) );
         $record['people.memberships']   = eme_get_activemembership_names_by_personid( $item['person_id'] );
         $answers = eme_get_person_answers( $item['person_id'] );
         foreach ( $formfields as $formfield ) {
@@ -5429,11 +5429,11 @@ function eme_ajax_groups_list() {
         $record['group_id'] = $group['group_id'];
         $record['public']   = $group['public'] ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $record['name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-groups&eme_admin_action=edit_group&group_id=' . $group['group_id'] ) ) . "' title='" . esc_attr__( 'Edit group', 'events-made-easy' ) . "'>" . eme_esc_html( $group['name'] ) . '</a>';
+            $record['name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-groups&eme_admin_action=edit_group&group_id=' . $group['group_id'] ) ) . "' title='" . esc_attr__( 'Edit group', 'events-made-easy' ) . "'>" . esc_html( $group['name'] ) . '</a>';
         } else {
-            $record['name'] = eme_esc_html( $group['name'] );
+            $record['name'] = esc_html( $group['name'] );
         }
-        $record['description'] = eme_esc_html( $group['description'] );
+        $record['description'] = esc_html( $group['description'] );
         if ( $group['type'] == 'dynamic_people' ) {
             $record['groupcount'] = esc_html__( 'Dynamic group of people', 'events-made-easy' );
             if ( ! empty( $group['search_terms'] ) ) {
@@ -5506,9 +5506,9 @@ function eme_ajax_chooseperson_snapselect() {
         $records[] = [
             'id'        => intval( $person['person_id'] ),
             'text'      => eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')',
-            'firstname' => eme_esc_html( $person['firstname'] ),
-            'lastname'  => eme_esc_html( $person['lastname'] ),
-            'email'     => eme_esc_html( $person['email'] ),
+            'firstname' => esc_html( $person['firstname'] ),
+            'lastname'  => esc_html( $person['lastname'] ),
+            'email'     => esc_html( $person['email'] ),
             'wpid'      => intval( $person['wp_id'] ),
         ];
     }

@@ -135,12 +135,12 @@ function eme_holidays_edit_layout() {
       <table class='form-table'>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='name'>" . __( 'Holidays listname', 'events-made-easy' ) . "</label></th>
-               <td><input name='name' id='name' required='required' type='text' value='" . eme_esc_html( $holidays['name'] ) . "' size='40'><br>
+               <td><input name='name' id='name' required='required' type='text' value='" . esc_html( $holidays['name'] ) . "' size='40'><br>
                  " . __( 'The name of the holidays list', 'events-made-easy' ) . "</td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='description'>" . __( 'Holidays list', 'events-made-easy' ) . "</label></th>
-               <td><textarea name='list' id='description' rows='5' >" . eme_esc_html( $holidays['list'] ) . '</textarea><br>
+               <td><textarea name='list' id='description' rows='5' >" . esc_html( $holidays['list'] ) . '</textarea><br>
                  ' . __( 'Basic format: YYYY-MM-DD, one per line', 'events-made-easy' ) . '<br>' . esc_html__( 'For more information about holidays, see ', 'events-made-easy' ) . " <a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=6086'>" . esc_html__( 'the documentation', 'events-made-easy' ) . "</a></td>
             </tr>
          </table>

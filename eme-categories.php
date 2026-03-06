@@ -513,7 +513,7 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 			if ( $need_escape ) {
-				$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+				$replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 			}
 			if ( $need_urlencode ) {
 				$replacement = rawurlencode( $replacement );

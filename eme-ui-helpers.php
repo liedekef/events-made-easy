@@ -18,9 +18,9 @@ function eme_option_items( $arr, $saved_value ) {
         } else {
             "$key" == $saved_value ? $selected = "selected='selected' " : $selected = '';
         }
-        $output .= "<option value='" . eme_esc_html( $key ) . "' $selected >" . eme_esc_html( $item ) . "</option>\n";
+        $output .= "<option value='" . esc_html( $key ) . "' $selected >" . esc_html( $item ) . "</option>\n";
     }
-    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with eme_esc_html() in this function
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_html() in this function
 }
 
 function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
@@ -37,14 +37,14 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
             $checked = "checked='checked'";
         }
         $id = esc_attr( eme_get_field_id( $name, $key ));
-        $output .= "<input type='checkbox' name='$name' id='$id' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . $item . '</label>';
+        $output .= "<input type='checkbox' name='$name' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . $item . '</label>';
         if ( $horizontal ) {
             $output .= "&nbsp;";
         } else {
             $output .= "<br>\n";
         }
     }
-    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with eme_esc_html() in this function
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_html() in this function
 }
 
 function eme_options_input_type( $title, $name, $description, $type = 'text', $option_value = false ) {
@@ -60,7 +60,7 @@ function eme_options_input_type( $title, $name, $description, $type = 'text', $o
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
         <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
         <td>
-<?php echo "<input $autocomplete name='" . esc_attr( $name ) . "' type='" . esc_attr( $type ) . "' id='" . esc_attr( $name ) . "' style='width: 95%;' value='" . eme_esc_html( $option_value ) . "' size='45'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $autocomplete is hardcoded
+<?php echo "<input $autocomplete name='" . esc_attr( $name ) . "' type='" . esc_attr( $type ) . "' id='" . esc_attr( $name ) . "' style='width: 95%;' value='" . esc_html( $option_value ) . "' size='45'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $autocomplete is hardcoded
 if ( ! empty( $description ) ) {
     echo '<br>' . wp_kses_post( $description );
 }
@@ -289,16 +289,16 @@ function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '
     foreach ( $list as $key => $value ) {
         if ( is_array( $value ) ) {
             $t_key   = $value[0];
-            $t_value = eme_esc_html( $value[1] );
+            $t_value = esc_html( $value[1] );
         } else {
             $t_key   = $key;
-            $t_value = eme_esc_html( $value );
+            $t_value = esc_html( $value );
         }
         if ( empty( $t_value ) && $t_value !== '0' ) {
             $t_value = '&nbsp;';
         }
         "$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
-        $val                                    .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        $val                                    .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
     }
     $val .= ' </select>';
     return $val;
@@ -325,7 +325,7 @@ function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $
     $val = "<input list='$datalist_id' id='$name' name='$name' value='$option_value' $extra_attributes >";
     $val .= "<datalist id='$datalist_id'>";
     foreach ( $list as $key => $value ) {
-        $val .= "<option value='".eme_esc_html( $value )."'>";
+        $val .= "<option value='".esc_html( $value )."'>";
     }
     $val .= "</datalist>";
     return $val;
@@ -354,21 +354,21 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
     foreach ( $list as $key => $value ) {
         if ( is_array( $value ) ) {
             $t_key   = $value[0];
-            $t_value = eme_esc_html( $value[1] );
+            $t_value = esc_html( $value[1] );
         } else {
             $t_key   = $key;
-            $t_value = eme_esc_html( $value );
+            $t_value = esc_html( $value );
         }
         if ( empty( $t_value ) && $t_value !== '0' ) {
             $t_value = '&nbsp;';
         }
         if ( $t_key == 'BEGINOPTGROUP' ) {
-            $val .= "<optgroup label='" . eme_esc_html( $t_value ) . "'>";
+            $val .= "<optgroup label='" . esc_html( $t_value ) . "'>";
         } elseif ( $t_key == 'ENDOPTGROUP' ) {
             $val .= "</optgroup>";
         } else {
             "$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
-            $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+            $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
         }
     }
     $val .= ' </select>';
@@ -396,12 +396,12 @@ function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first =
         $val .= "<option value=''>$add_empty_first</option>";
     }
     foreach ( $list as $value => $key ) {
-        $t_value = eme_esc_html( $value );
+        $t_value = esc_html( $value );
         if ( empty( $t_value ) ) {
             $t_value = '&nbsp;';
         }
         "$key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
-        $val                                  .= "<option value='" . eme_esc_html( $key ) . "' $selected>$t_value</option>";
+        $val                                  .= "<option value='" . esc_html( $key ) . "' $selected>$t_value</option>";
     }
     $val .= ' </select>';
     return $val;
@@ -425,16 +425,16 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
 
     $val = "<select id='$name' name='$name' $extra_attributes >";
     if ( $add_empty_first != '' ) {
-        $val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+        $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
     }
     foreach ( $list as $line ) {
         $t_key   = $line[ $key ];
-        $t_value = eme_esc_html( $line[ $value ] );
+        $t_value = esc_html( $line[ $value ] );
         if ( empty( $t_value ) && $t_value !== '0' ) {
             $t_value = '&nbsp;';
         }
         "$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
-        $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
     }
     $val .= ' </select>';
     return $val;
@@ -458,19 +458,19 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
     $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
     if ( $add_empty_first != '' ) {
         if ($disable_first_option) {
-            $val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+            $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
         } else {
-            $val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+            $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
         }
     }
     foreach ( $list as $key => $value ) {
         $selected = '';
         if ( is_array( $value ) ) {
             $t_key   = $value[0];
-            $t_value = eme_esc_html( $value[1] );
+            $t_value = esc_html( $value[1] );
         } else {
             $t_key   = $key;
-            $t_value = eme_esc_html( $value );
+            $t_value = esc_html( $value );
         }
         if ( ! empty( $t_key ) ) {
             if ( is_array( $option_value ) ) {
@@ -480,11 +480,11 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
             }
         }
         if ( $t_key == 'BEGINOPTGROUP' ) {
-            $val .= "<optgroup label='" . eme_esc_html( $t_value ) . "'>";
+            $val .= "<optgroup label='" . esc_html( $t_value ) . "'>";
         } elseif ( $t_key == 'ENDOPTGROUP' ) {
             $val .= "</optgroup>";
         } else {
-            $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+            $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
         }
     }
     $val .= ' </select>';
@@ -510,15 +510,15 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
     $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
     if ( ! empty( $add_empty_first ) ) {
         if ($disable_first_option) {
-            $val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+            $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
         } else {
-            $val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+            $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
         }
     }
     foreach ( $list as $line ) {
         $selected = '';
         $t_key   = $line[ $key ];
-        $t_value = eme_esc_html( $line[ $value ] );
+        $t_value = esc_html( $line[ $value ] );
         if ( ! empty( $t_key ) ) {
             if ( is_array( $option_value ) ) {
                 if (in_array( $t_key, $option_value )) $selected = "selected='selected' ";
@@ -529,7 +529,7 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
         if ( empty( $t_value ) ) {
             $t_value = '&nbsp;';
         }
-        $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
     }
     $val .= ' </select>';
     return $val;
@@ -558,7 +558,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
             $t_value = $value;
         }
         "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . $t_value . '</label>';
+        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . $t_value . '</label>';
         if (  $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -616,7 +616,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
         } else {
             "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
         }
-        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . $value . '</label>';
+        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . $value . '</label>';
         if ( $horizontal ) {
             $val .= "&nbsp;";
         } else {

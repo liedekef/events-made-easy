@@ -390,7 +390,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		if ( $holidays ) {
 			foreach ( $holidays as $day_key => $info ) {
 				if ( ! empty( $info['name'] ) ) {
-					$holiday_title = trim( eme_esc_html( $info['name'] ) );
+					$holiday_title = trim( esc_html( $info['name'] ) );
 					$eme_holiday_class = 'eme-cal-holidays';
 					if ( empty( $info['class'] ) ) {
 						$class = $eme_holiday_class;
@@ -580,6 +580,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		$sCalDivRows .= "</div>\n";
 	}
 
+	// phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations for $wp_locale
 	$weekday_names        = [ __( 'Sunday' ), __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ) ];
 	$weekday_header_class = [ 'Sun_header', 'Mon_header', 'Tue_header', 'Wed_header', 'Thu_header', 'Fri_header', 'Sat_header' ];
 	$sCalTblDayNames      = '';

@@ -97,7 +97,7 @@ function eme_rpi_ajax() {
 function eme_rpi_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
-		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+		$email = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
 	} else {
 		$email = '';
 	}
@@ -186,7 +186,7 @@ function eme_gdpr_approve_ajax() {
 function eme_gdpr_approve_shortcode() {
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
-		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+		$email = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
 	} else {
 		$email = '';
 	}
@@ -257,7 +257,7 @@ function eme_cpi_request_ajax() {
 				$first_person_name = $person_name;
 			}
 			if ( $mail_text_html == 'htmlmail' ) {
-				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . eme_esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='" . esc_url( $change_link ) . "'>" . esc_html__( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
+				$change_info .= "<tr><td style='border: 1px solid black;padding: 5px;'>" . esc_html( $person['firstname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'>" . esc_html( $person['lastname'] ) . "</td><td style='border: 1px solid black;padding: 5px;'><a href='" . esc_url( $change_link ) . "'>" . esc_html__( 'Click here to change the info for this person', 'events-made-easy' ) . '</a></td></tr>';
 			} else {
 				$change_info .= "$person_name: $change_link " . __( '(copy/paste this link in your browser to change the info for this person)', 'events-made-easy' );
 			}
@@ -285,7 +285,7 @@ function eme_cpi_request_ajax() {
 function eme_cpi_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
-		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+		$email = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
 	} else {
 		$email = '';
 	}
@@ -423,23 +423,23 @@ function eme_show_personal_info( $email ) {
 			$gdpr     = $person['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 			$output  .= '<table>';
 			$output  .= '<tr><td>' . __( 'ID', 'events-made-easy' ) . '</td><td>' . intval( $person['person_id'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'Last name', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['lastname'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'First name', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['firstname'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'Email', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['email'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . $eme_address1_string . '</td><td>' . eme_esc_html( $person['address1'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . $eme_address2_string . '</td><td>' . eme_esc_html( $person['address2'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'City', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['city'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'Postal code', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['zip'] ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'State', 'events-made-easy' ) . '</td><td>' . eme_esc_html( eme_get_state_name( $person['state_code'], $person['country_code'], $person['lang'] ) ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'Country', 'events-made-easy' ) . '</td><td>' . eme_esc_html( eme_get_country_name( $person['country_code'], $person['lang'] ) ) . '</td></tr>';
-			$output  .= '<tr><td>' . __( 'Phone number', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $person['phone'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'Last name', 'events-made-easy' ) . '</td><td>' . esc_html( $person['lastname'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'First name', 'events-made-easy' ) . '</td><td>' . esc_html( $person['firstname'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'Email', 'events-made-easy' ) . '</td><td>' . esc_html( $person['email'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . $eme_address1_string . '</td><td>' . esc_html( $person['address1'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . $eme_address2_string . '</td><td>' . esc_html( $person['address2'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'City', 'events-made-easy' ) . '</td><td>' . esc_html( $person['city'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'Postal code', 'events-made-easy' ) . '</td><td>' . esc_html( $person['zip'] ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'State', 'events-made-easy' ) . '</td><td>' . esc_html( eme_get_state_name( $person['state_code'], $person['country_code'], $person['lang'] ) ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'Country', 'events-made-easy' ) . '</td><td>' . esc_html( eme_get_country_name( $person['country_code'], $person['lang'] ) ) . '</td></tr>';
+			$output  .= '<tr><td>' . __( 'Phone number', 'events-made-easy' ) . '</td><td>' . esc_html( $person['phone'] ) . '</td></tr>';
 			$output  .= '<tr><td>' . __( 'MassMail', 'events-made-easy' ) . '</td><td>' . $massmail . '</td></tr>';
 			$output  .= '<tr><td>' . __( 'GDPR approval', 'events-made-easy' ) . '</td><td>' . $gdpr . '</td></tr>';
 			if ( ! empty( $person['properties']['image_id'] ) ) {
 				$img = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
 				$output             .= '<tr><td>' . __( 'Image', 'events-made-easy' ) . '</td><td>' . $img . '</td></tr>';
 			}
-			$output .= '<tr><td>' . __( 'Member of group(s)', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $groups ) . '</td></tr>';
+			$output .= '<tr><td>' . __( 'Member of group(s)', 'events-made-easy' ) . '</td><td>' . esc_html( $groups ) . '</td></tr>';
 			foreach ( $answers as $answer ) {
 				$formfield = eme_get_formfield( $answer['field_id'] );
 				if ( ! empty( $formfield ) ) {
@@ -452,7 +452,7 @@ function eme_show_personal_info( $email ) {
 			$files = eme_get_uploaded_files( $person_id, 'people' );
 			if ( ! empty( $files ) ) {
 				foreach ( $files as $file ) {
-					$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
+					$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . esc_html( $file['name'] ) . '</a></td></tr>';
 				}
 			}
 			$output .= '</table>';
@@ -463,7 +463,7 @@ function eme_show_personal_info( $email ) {
 					$end_date           = eme_localized_date( $member['end_date'] );
 					$output            .= '<table>';
 					$output            .= '<tr><td>' . __( 'ID', 'events-made-easy' ) . '</td><td>' . intval( $member['member_id'] ) . '</td></tr>';
-					$output            .= '<tr><td>' . __( 'Membership', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $member['membership_name'] ) . '</td></tr>';
+					$output            .= '<tr><td>' . __( 'Membership', 'events-made-easy' ) . '</td><td>' . esc_html( $member['membership_name'] ) . '</td></tr>';
 					$output            .= '<tr><td>' . __( 'Start', 'events-made-easy' ) . '</td><td>' . $start_date . '</td></tr>';
 					$output            .= '<tr><td>' . __( 'End', 'events-made-easy' ) . '</td><td>' . $end_date . '</td></tr>';
 					$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
@@ -473,7 +473,7 @@ function eme_show_personal_info( $email ) {
 							if ( $related_member ) {
 								$related_person = eme_get_person( $related_member['person_id'] );
 								if ( $related_person ) {
-									$output .= '<tr><td>' . __( 'Main family account for', 'events-made-easy' ) . '</td><td>' . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . ' (' . eme_esc_html( $related_person['email'] ) . ')</td></tr>';
+									$output .= '<tr><td>' . __( 'Main family account for', 'events-made-easy' ) . '</td><td>' . esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . ' (' . esc_html( $related_person['email'] ) . ')</td></tr>';
 								}
 							}
 						}
@@ -491,7 +491,7 @@ function eme_show_personal_info( $email ) {
 					$files = eme_get_uploaded_files( $member['member_id'], 'members' );
 					if ( ! empty( $files ) ) {
 						foreach ( $files as $file ) {
-							$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . eme_esc_html( $file['name'] ) . '</a></td></tr>';
+							$output .= '<tr><td>' . esc_html( eme_translate( $file['field_name'] ) ) . '</td><td>' . "<a href='" . $file['url'] . "'>" . esc_html( $file['name'] ) . '</a></td></tr>';
 						}
 					}
 					$output .= '</table>';
@@ -523,7 +523,7 @@ function eme_gdpr_add_suggested_privacy_content() {
 
 function eme_gdpr_register_exporters( $exporters ) {
 	$exporters[] = [
-		'exporter_friendly_name' => __( 'Events Made Easy' ),
+		'exporter_friendly_name' => __( 'Events Made Easy', 'events-made-easy' ),
 		'callback'               => 'eme_gdpr_user_data_exporter',
 	];
 	return $exporters;
@@ -609,7 +609,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 			}
 			// Add this group of items to the exporters data array.
 			$group_id       = 'eme-personal-data';
-			$group_label    = __( 'Events Made Easy Personal Data', 'event-made-easy' );
+			$group_label    = __( 'Events Made Easy Personal Data', 'events-made-easy' );
 			$export_items[] = [
 				'group_id'    => $group_id,
 				'group_label' => $group_label,
@@ -621,7 +621,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 			$files = eme_get_uploaded_files( $person_id, 'people' );
 			if ( ! empty( $files ) ) {
 				$group_id    = 'eme-personal-data-media';
-				$group_label = __( 'Events Made Easy Uploaded files linked to the person', 'event-made-easy' );
+				$group_label = __( 'Events Made Easy Uploaded files linked to the person', 'events-made-easy' );
 				$data        = [];
 				foreach ( $files as $file ) {
 					$data[] = [
@@ -684,7 +684,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 						}
 					}
 					$group_id       = 'eme-member-data';
-					$group_label    = __( 'Events Made Easy Member Data', 'event-made-easy' );
+					$group_label    = __( 'Events Made Easy Member Data', 'events-made-easy' );
 					$export_items[] = [
 						'group_id'    => $group_id,
 						'group_label' => $group_label,
@@ -695,7 +695,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 					$files = eme_get_uploaded_files( $member['member_id'], 'members' );
 					if ( ! empty( $files ) ) {
 						$group_id    = 'eme-member-data-media';
-						$group_label = __( 'Events Made Easy Uploaded files linked to the member', 'event-made-easy' );
+						$group_label = __( 'Events Made Easy Uploaded files linked to the member', 'events-made-easy' );
 						$data        = [];
 						foreach ( $files as $file ) {
 							$data[] = [
@@ -724,7 +724,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 
 function eme_gdpr_register_erasers( $erasers = [] ) {
 	$erasers[] = [
-		'eraser_friendly_name' => __( 'Events Made Easy' ),
+		'eraser_friendly_name' => __( 'Events Made Easy', 'events-made-easy' ),
 		'callback'             => 'eme_gdpr_user_data_eraser',
 	];
 	return $erasers;

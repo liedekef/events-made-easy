@@ -156,7 +156,7 @@ function eme_discounts_page() {
 									++$inserted;
 								} else {
 									++$errors;
-									$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
 							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
@@ -215,7 +215,7 @@ function eme_discounts_page() {
 									++$inserted;
 								} else {
 									++$errors;
-									$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
 							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );

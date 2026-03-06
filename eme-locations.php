@@ -307,7 +307,7 @@ function eme_import_csv_locations() {
                         ++$updated;
                     } else {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
                     $location_id = eme_insert_location( $line );
@@ -315,7 +315,7 @@ function eme_import_csv_locations() {
                         ++$inserted;
                     } else {
                         ++$errors;
-                        $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                        $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
                 if ( $location_id ) {
@@ -337,7 +337,7 @@ function eme_import_csv_locations() {
                 }
             } else {
                 ++$errors;
-                $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
         $result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
@@ -872,7 +872,7 @@ function eme_locations_table( $message = '' ) {
     if ( ! empty( $formfields_searchable ) ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
         echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     }
 ?>
@@ -1937,7 +1937,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
             }
 
             if ( $need_escape ) {
-                $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -2524,7 +2524,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 if ( $need_urlencode ) {
                     $replacement = rawurlencode( $replacement );
@@ -2651,7 +2651,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
                 $needle_offset += $orig_result_length - strlen( $replacement );
@@ -2714,7 +2714,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
                 $value                 = eme_nl2br( $value );
                 $json_location[ $key ] = esc_html( eme_translate( $value ) );
             }
-            $json_location['map_icon'] = eme_esc_html( $location['location_properties']['map_icon'] );
+            $json_location['map_icon'] = esc_html( $location['location_properties']['map_icon'] );
         }
         $json_locations[] = $json_location;
     }
@@ -2798,7 +2798,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $data    = "data-lat='" . $location['location_latitude'] . "'";
         $data   .= " data-lon='" . $location['location_longitude'] . "'";
         $data   .= " data-map_icon='" . $location['location_properties']['map_icon'] . "'";
-        $data   .= " data-map_text='" . eme_esc_html( $map_text ) . "'";
+        $data   .= " data-map_text='" . esc_html( $map_text ) . "'";
         $data   .= " data-enable_zooming='$enable_zooming'";
         $data   .= " data-gestures='$gestures'";
         $data   .= " data-default_map_icon='$map_icon'";

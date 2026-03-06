@@ -96,7 +96,7 @@ function eme_trans_sanitize_html( $value, $lang = '' ) {
 }
 
 function eme_trans_esc_html( $value, $lang = '' ) {
-	return eme_esc_html( eme_translate( $value, $lang ) );
+	return esc_html( eme_translate( $value, $lang ) );
 }
 
 function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {

@@ -220,7 +220,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Select a category', 'events-made-easy' );
 			}
-			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
+			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
 
 			$categories = eme_get_categories( $eventful, 'future', $extra_conditions );
 			if ( $categories ) {
@@ -255,7 +255,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Select a location', 'events-made-easy' );
 			}
-			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
+			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
 			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $locations ) ) {
 				$loc_list = [];
@@ -289,7 +289,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Select a city', 'events-made-easy' );
 			}
-			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
+			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
 			$cities     = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $cities ) ) {
 				$city_list = [];
@@ -323,7 +323,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Select a country', 'events-made-easy' );
 			}
-			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
+			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
 			$countries  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $countries ) ) {
 				$country_list = [];
@@ -363,7 +363,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			}
 			if ( $scope_fieldcount == 0 ) {
 				$label       = __( 'Select Week', 'events-made-easy' );
-				$aria_label  = 'aria-label="' . eme_esc_html( $label ) . '"';
+				$aria_label  = 'aria-label="' . esc_html( $label ) . '"';
 				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_week_scope( $past_count, $future_count, $eventful ), $label, 0, '', $aria_label );
 				++$scope_fieldcount;
 			}
@@ -425,7 +425,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			$args = [
 				'echo'             => 0,
 				'name'             => $contact_post_name,
-				'show_option_none' => eme_esc_html( $label ),
+				'show_option_none' => esc_html( $label ),
                 'option_none_value'=> '',
 				'selected'         => $selected_contact,
 				'class'            => 'eme_snapselect_allow_empty',
@@ -454,7 +454,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			$args = [
 				'echo'             => 0,
 				'name'             => $author_post_name,
-				'show_option_none' => eme_esc_html( $label ),
+				'show_option_none' => esc_html( $label ),
                 'option_none_value'=> '',
 				'selected'         => $selected_author,
 				'class'            => 'eme_snapselect_allow_empty',

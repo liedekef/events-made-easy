@@ -951,7 +951,6 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                     $count_signups = eme_count_task_signups($task['task_id']);
                     if ($count_signups>0) {
                         echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks[" . intval($count) . "][signup_count]'><br>";
-                        echo "<br>";
                         echo esc_html(sprintf( _n( 'One person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
                         echo "</span>";
                     }

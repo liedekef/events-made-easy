@@ -5583,11 +5583,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 
     $where    = implode( ' AND ', $conditions );
     $sql_join = '';
-    $groupby  = '';
-    if ( $show_recurrent_events_once ) {
-        // this would not work if the mysql mode ONLY_FULL_GROUP_BY is active, but WP disables that in the wpdb class
-        $groupby = "GROUP BY CASE WHEN $events_table.recurrence_id > 0 THEN $events_table.recurrence_id ELSE $events_table.event_id END"; 
-    } elseif ( $include_customformfields ) {
+    if ( $include_customformfields ) {
         $answers_table         = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
         $formfields_searchable = eme_get_searchable_formfields( 'events', 1 );
@@ -5620,8 +5616,20 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     if ( $where != '' ) {
         $where = ' WHERE ' . $where;
     }
-    $sql = "SELECT $columns FROM $events_table LEFT JOIN $locations_table ON $events_table.location_id=$locations_table.location_id
-        $sql_join $where $groupby $orderby $limit_string $offset_string";
+
+    if ( $show_recurrent_events_once && !$count) {
+        // a subquery with "ORDER BY event_start ASC" so, later on the group by works predictable
+        $sql = "SELECT * FROM (
+                  SELECT $columns FROM $events_table
+                  LEFT JOIN $locations_table ON $events_table.location_id=$locations_table.location_id
+                  $sql_join $where ORDER BY event_start ASC
+                ) AS sorted_events
+                GROUP BY CASE WHEN recurrence_id > 0 THEN recurrence_id ELSE event_id END
+                $orderby $limit_string $offset_string";
+    } else {
+        $sql = "SELECT $columns FROM $events_table LEFT JOIN $locations_table ON $events_table.location_id=$locations_table.location_id
+                $sql_join $where $orderby $limit_string $offset_string";
+    }
 
     $sql_md5 = md5( $sql );
     $res     = wp_cache_get( "eme_events $sql_md5" );

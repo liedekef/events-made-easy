@@ -493,8 +493,8 @@ msgid "The description of the category"
 msgstr "Popis kategórie"
 
 #: eme-cleanup.php:219
-msgid "Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed."
-msgstr "Čistenie vykonané: podujatia (a zodpovedajúce rezervačné údaje) staršie ako %d %s(s) boli odstránené."
+msgid "Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed."
+msgstr "Čistenie vykonané: podujatia (a zodpovedajúce rezervačné údaje) staršie ako %1$d %2$s(s) boli odstránené."
 
 #: eme-cleanup.php:228
 msgid "Cleanup done: unpaid pending bookings older than %d minutes have been removed."
@@ -702,8 +702,8 @@ msgstr "Neimportované: %s"
 #: eme-discounts.php:162
 #: eme-discounts.php:221
 #: eme-members.php:6361
-msgid "Import finished: %d inserts, %d errors"
-msgstr "Import dokončený: %d vložených, %d chýb"
+msgid "Import finished: %1$d inserts, %2$d errors"
+msgstr "Import dokončený: %1$d vložených, %2$d chýb"
 
 #: eme-countries.php:93
 #: eme-countries.php:152
@@ -1083,8 +1083,8 @@ msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "Žiadne automatické čistenie nepotvrdených rezervácií nebude vykonané."
 
 #: eme-cron.php:478
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
-msgstr "%s sa skontroluje, či by sa nové podujatia mali zasielať ľuďom zaregistrovaným v EME (tie sa potom zaradia do poradia a odošlú v dávkach po %d %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)"
+msgstr "%1$s sa skontroluje, či by sa nové podujatia mali zasielať ľuďom zaregistrovaným v EME (tie sa potom zaradia do poradia a odošlú v dávkach po %2$d %3$s)"
 
 #: eme-cron.php:284
 #: eme-cron.php:287
@@ -1135,8 +1135,8 @@ msgid "Email queue info"
 msgstr "Informácie o emailovom poradí"
 
 #: eme-cron.php:398
-msgid "Queued emails will be send out in batches of %d %s"
-msgstr "Emaily v poradí budú odoslané v dávkach %d %s"
+msgid "Queued emails will be send out in batches of %1$d %2$s"
+msgstr "Emaily v poradí budú odoslané v dávkach %1$d %2$s"
 
 #: eme-cron.php:413
 #: eme-options.php:2033
@@ -1838,8 +1838,8 @@ msgid "No entry allowed anymore"
 msgstr "Už nie je povolená rezervácia"
 
 #: eme-events.php:1113
-msgid "Access granted: scan count=%d, max count=%d"
-msgstr "Prístup povolený: počet skenov=%d, max počet=%d"
+msgid "Access granted: scan count=%1$d, max count=%2$d"
+msgstr "Prístup povolený: počet skenov=%1$d, max počet=%2$d"
 
 #: eme-events.php:1121
 msgid "Event : %s"
@@ -2101,8 +2101,8 @@ msgstr "Miesta neboli importované: %s"
 #: eme-members.php:6117
 #: eme-members.php:6122
 #: eme-people.php:926
-msgid "Not imported (field %s not valid): %s"
-msgstr "Neimportované (pole %s nie je platné): %s"
+msgid "Not imported (field %1$s not valid): %2$s"
+msgstr "Neimportované (pole %1$s nie je platné): %2$s"
 
 #: eme-events.php:5997
 msgid "Not imported (problem updating the event in the db): %s"
@@ -2123,8 +2123,8 @@ msgstr "Neimportované (nie sú prítomné všetky povinné polia): %s"
 #: eme-locations.php:343
 #: eme-members.php:6207
 #: eme-people.php:990
-msgid "Import finished: %d inserts, %d updates, %d errors"
-msgstr "Import dokončený: %d vložení, %d aktualizácií, %d chýb"
+msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
+msgstr "Import dokončený: %1$d vložení, %2$d aktualizácií, %3$d chýb"
 
 #: eme-events.php:6049
 #: eme-rsvp.php:5244
@@ -6481,8 +6481,8 @@ msgid "Mailing completed with errors"
 msgstr "Mailing bol dokončený s chybami"
 
 #: eme-mailer.php:874
-msgid "Mailing \"%s\" completed with %d errors, please check the mailing report"
-msgstr "Mailing „%s“ bol dokončený s %d chybami, skontrolujte prosím správu o mailingu"
+msgid "Mailing \"%1$s\" completed with %2$d errors, please check the mailing report"
+msgstr "Mailing „%1$s“ bol dokončený s %2$d chybami, skontrolujte prosím správu o mailingu"
 
 #: eme-mailer.php:1072
 #: eme-mailer.php:1085
@@ -6925,8 +6925,8 @@ msgstr "Správa o stave"
 
 #: eme-mailer.php:1661
 #: eme-mailer.php:1795
-msgid "%d emails sent, %d emails failed, %d emails cancelled"
-msgstr "%d odoslaných emailov, %d neúspešných emailov, %d zrušených emailov"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails cancelled"
+msgstr "%1$d odoslaných emailov, %2$d neúspešných emailov, %3$d zrušených emailov"
 
 #: eme-mailer.php:1662
 #: eme-mailer.php:1684
@@ -6946,16 +6946,16 @@ msgid "Ongoing"
 msgstr "Prebieha"
 
 #: eme-mailer.php:1679
-msgid "%d emails sent, %d emails failed, %d emails left"
-msgstr "%d odoslaných emailov, %d zlyhalo, %d emailov ostáva"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails left"
+msgstr "%1$d odoslaných emailov, %2$d zlyhalo, %3$d emailov ostáva"
 
 #: eme-mailer.php:1087
 msgid "Completed"
 msgstr "Hotovo"
 
 #: eme-mailer.php:1683
-msgid "%d emails sent, %d emails failed"
-msgstr "%d odoslaných emailov, %d emailov zlyhalo"
+msgid "%1$d emails sent, %2$d emails failed"
+msgstr "%1$d odoslaných emailov, %2$d emailov zlyhalo"
 
 #: eme-mailer.php:1690
 msgid "Retry failed emails"
@@ -8243,8 +8243,8 @@ msgid "No membership form has been defined for this membership, a simple default
 msgstr "Pre toto členstvo nebol definovaný žiadny členský formulár, použije sa jednoduchý predvolený formulár."
 
 #: eme-members.php:6559
-msgid "%d head of the family accounts + %d family members"
-msgstr "%d účtov hlavy rodiny + %d rodinných príslušníkov"
+msgid "%1$d head of the family accounts + %2$d family members"
+msgstr "%1$d účtov hlavy rodiny + %2$d rodinných príslušníkov"
 
 #: eme-members.php:6631
 #: eme-people.php:5324
@@ -12275,8 +12275,8 @@ msgid "No member found linked to this payment. If you believe you've received th
 msgstr "Nenašiel sa žiadny člen spojený s touto platbou. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte prosím majiteľa stránky."
 
 #: eme-payments.php:308
-msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
-msgstr "Vaše členstvo je momentálne aktívne do %s. Ak znova zaplatíte členský poplatok, vaše členstvo bude predĺžené do %s"
+msgid "Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s"
+msgstr "Vaše členstvo je momentálne aktívne do %1$s. Ak znova zaplatíte členský poplatok, vaše členstvo bude predĺžené do %2$s"
 
 #: eme-payments.php:314
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
@@ -12894,8 +12894,8 @@ msgid "From %s onwards (automatically extended)"
 msgstr "Od %s ďalej (automaticky predĺžené)"
 
 #: eme-recurrence.php:533
-msgid "From %s to %s"
-msgstr "Od %s do %s"
+msgid "From %1$s to %2$s"
+msgstr "Od %1$s do %2$s"
 
 #: eme-recurrence.php:536
 msgid "everyday"
@@ -13088,20 +13088,20 @@ msgstr "Nenašla sa žiadna prepojená platba: %s"
 
 #: eme-rsvp.php:5210
 #: eme-rsvp.php:5213
-msgid "Field %s not valid: %s"
-msgstr "Pole %s nie je platné: %s"
+msgid "Field %1$s not valid: %2$s"
+msgstr "Pole %1$s nie je platné: %2$s"
 
 #: eme-rsvp.php:5218
 msgid "Already paid in full: %s"
 msgstr "Už zaplatené v plnej výške: %s"
 
 #: eme-rsvp.php:5224
-msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
-msgstr "Zaplatená suma (%s) sa nerovná očakávanej sume (%s): %s"
+msgid "Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s"
+msgstr "Zaplatená suma (%1$s) sa nerovná očakávanej sume (%2$s): %3$s"
 
 #: eme-rsvp.php:5228
-msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
-msgstr "Import dokončený: %d záznamov označených ako zaplatené, %d ignorovaných, %d chýb"
+msgid "Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors"
+msgstr "Import dokončený: %1$d záznamov označených ako zaplatené, %2$d ignorovaných, %3$d chýb"
 
 #: eme-rsvp.php:5230
 msgid "Ignored entries"
@@ -13776,11 +13776,11 @@ msgid "All queued emails will be send out without limit %s."
 msgstr ""
 
 #: eme-cron.php:480
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %2$s)"
 msgstr ""
 
 #: eme-cron.php:484
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d every time the queue is processed via the REST API call)"
 msgstr ""
 
 #: eme-cron.php:486
@@ -14316,7 +14316,7 @@ msgid "Booking cancelled and refunded"
 msgstr ""
 
 #: eme-people.php:952
-msgid "Updated person %d: %s"
+msgid "Updated person %1$d: %2$s"
 msgstr ""
 
 #: eme-formfields.php:381
@@ -14656,7 +14656,7 @@ msgstr ""
 #: eme-payments.php:2816
 #: eme-payments.php:3243
 #: eme-payments.php:3258
-msgid "Booking refunded for %s, payment id %d"
+msgid "Booking refunded for %1$s, payment id %2$d"
 msgstr ""
 
 #: eme-people.php:1010
@@ -14671,7 +14671,7 @@ msgid "Make your choice"
 msgstr ""
 
 #: eme-events.php:1110
-msgid "Access denied: scan count (%d) exceeds max count (%d)"
+msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
 msgstr ""
 
 #: eme-events.php:8638

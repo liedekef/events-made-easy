@@ -451,8 +451,8 @@ msgstr "Beskrivning av kategorin"
 
 #: eme-cleanup.php:219
 #, fuzzy
-msgid "Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed."
-msgstr "Rensning utförd: obetalda bokningar som inväntar bekräftelse och är äldre än %d minuter har tagits bort."
+msgid "Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed."
+msgstr "Rensning utförd: obetalda bokningar som inväntar bekräftelse och är äldre än %1$d minuter har tagits bort."
 
 #: eme-cleanup.php:228
 msgid "Cleanup done: unpaid pending bookings older than %d minutes have been removed."
@@ -658,7 +658,7 @@ msgstr "Inte importerat: %s"
 #: eme-discounts.php:162
 #: eme-discounts.php:221
 #: eme-members.php:6361
-msgid "Import finished: %d inserts, %d errors"
+msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr ""
 
 #: eme-countries.php:93
@@ -1040,7 +1040,7 @@ msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr ""
 
 #: eme-cron.php:478
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)"
 msgstr ""
 
 #: eme-cron.php:284
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #: eme-cron.php:398
 #, fuzzy
-msgid "Queued emails will be send out in batches of %d %s"
+msgid "Queued emails will be send out in batches of %1$d %2$s"
 msgstr "Sänd köad e-post i grupper om"
 
 #: eme-cron.php:413
@@ -1798,7 +1798,7 @@ msgid "No entry allowed anymore"
 msgstr "Deltagande tillåts inte längre"
 
 #: eme-events.php:1113
-msgid "Access granted: scan count=%d, max count=%d"
+msgid "Access granted: scan count=%1$d, max count=%2$d"
 msgstr ""
 
 #: eme-events.php:1121
@@ -2044,8 +2044,8 @@ msgstr "Plats importerades inte: %s"
 #: eme-members.php:6122
 #: eme-people.php:926
 #, fuzzy
-msgid "Not imported (field %s not valid): %s"
-msgstr "Inte importerad (medlem finns inte): %s"
+msgid "Not imported (field %1$s not valid): %2$s"
+msgstr "Inte importerad (medlem finns inte): %1$s"
 
 #: eme-events.php:5997
 msgid "Not imported (problem updating the event in the db): %s"
@@ -2066,7 +2066,7 @@ msgstr ""
 #: eme-locations.php:343
 #: eme-members.php:6207
 #: eme-people.php:990
-msgid "Import finished: %d inserts, %d updates, %d errors"
+msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr ""
 
 #: eme-events.php:6049
@@ -6308,7 +6308,7 @@ msgid "Mailing completed with errors"
 msgstr "Utskicket avslutat med fel"
 
 #: eme-mailer.php:874
-msgid "Mailing \"%s\" completed with %d errors, please check the mailing report"
+msgid "Mailing \"%1$s\" completed with %2$d errors, please check the mailing report"
 msgstr ""
 
 #: eme-mailer.php:1072
@@ -6748,7 +6748,7 @@ msgstr "Rapport"
 
 #: eme-mailer.php:1661
 #: eme-mailer.php:1795
-msgid "%d emails sent, %d emails failed, %d emails cancelled"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails cancelled"
 msgstr ""
 
 #: eme-mailer.php:1662
@@ -6769,7 +6769,7 @@ msgid "Ongoing"
 msgstr "Pågående"
 
 #: eme-mailer.php:1679
-msgid "%d emails sent, %d emails failed, %d emails left"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails left"
 msgstr ""
 
 #: eme-mailer.php:1087
@@ -6777,7 +6777,7 @@ msgid "Completed"
 msgstr "Färdig"
 
 #: eme-mailer.php:1683
-msgid "%d emails sent, %d emails failed"
+msgid "%1$d emails sent, %2$d emails failed"
 msgstr ""
 
 #: eme-mailer.php:1690
@@ -7999,7 +7999,7 @@ msgid "No membership form has been defined for this membership, a simple default
 msgstr ""
 
 #: eme-members.php:6559
-msgid "%d head of the family accounts + %d family members"
+msgid "%1$d head of the family accounts + %2$d family members"
 msgstr ""
 
 #: eme-members.php:6631
@@ -11789,8 +11789,8 @@ msgstr ""
 
 #: eme-payments.php:308
 #, fuzzy
-msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
-msgstr "Ditt medlemskap har gått ut. Om du betalar medlemsavgiften igen, kommer ditt medlemskap att återaktiveras till %s"
+msgid "Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s"
+msgstr "Ditt medlemskap har gått ut. Om du betalar medlemsavgiften igen, kommer ditt medlemskap att återaktiveras till %1$s"
 
 #: eme-payments.php:314
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
@@ -12402,7 +12402,7 @@ msgstr "den sista %s i månaden"
 
 #: eme-recurrence.php:533
 #, fuzzy
-msgid "From %s to %s"
+msgid "From %1$s to %2$s"
 msgstr "Från %1$s till %2$s"
 
 #: eme-recurrence.php:536
@@ -12597,7 +12597,7 @@ msgstr ""
 
 #: eme-rsvp.php:5210
 #: eme-rsvp.php:5213
-msgid "Field %s not valid: %s"
+msgid "Field %1$s not valid: %2$s"
 msgstr ""
 
 #: eme-rsvp.php:5218
@@ -12605,11 +12605,11 @@ msgid "Already paid in full: %s"
 msgstr ""
 
 #: eme-rsvp.php:5224
-msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
+msgid "Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s"
 msgstr ""
 
 #: eme-rsvp.php:5228
-msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
+msgid "Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors"
 msgstr ""
 
 #: eme-rsvp.php:5230
@@ -13837,11 +13837,11 @@ msgid "All queued emails will be send out without limit %s."
 msgstr ""
 
 #: eme-cron.php:480
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %2$s)"
 msgstr ""
 
 #: eme-cron.php:484
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d every time the queue is processed via the REST API call)"
 msgstr ""
 
 #: eme-cron.php:486
@@ -14376,7 +14376,7 @@ msgid "Booking cancelled and refunded"
 msgstr ""
 
 #: eme-people.php:952
-msgid "Updated person %d: %s"
+msgid "Updated person %1$d: %2$s"
 msgstr ""
 
 #: eme-formfields.php:381
@@ -14715,7 +14715,7 @@ msgstr ""
 #: eme-payments.php:2816
 #: eme-payments.php:3243
 #: eme-payments.php:3258
-msgid "Booking refunded for %s, payment id %d"
+msgid "Booking refunded for %1$s, payment id %2$d"
 msgstr ""
 
 #: eme-people.php:1010
@@ -14730,7 +14730,7 @@ msgid "Make your choice"
 msgstr ""
 
 #: eme-events.php:1110
-msgid "Access denied: scan count (%d) exceeds max count (%d)"
+msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
 msgstr ""
 
 #: eme-events.php:8638

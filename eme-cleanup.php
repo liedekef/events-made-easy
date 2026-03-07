@@ -216,7 +216,8 @@ function eme_cleanup_page() {
 
                 if ( $eme_number > 1 ) {
                     eme_cleanup_events( $eme_number, $eme_period );
-                    $message = sprintf( __( 'Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed.', 'events-made-easy' ), $eme_number, $eme_period );
+                    // translators: %1$d is the number of time units, %2$s is the time period (day, week, or month)
+                    $message = sprintf( __( 'Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed.', 'events-made-easy' ), $eme_number, $eme_period );
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_unpaid' ) {
                 $eme_number = 0;
@@ -225,6 +226,7 @@ function eme_cleanup_page() {
                 }
                 if ( $eme_number >= 5 ) {
                     eme_cleanup_unpaid( $eme_number );
+                    // translators: %d is the number of minutes
                     $message = sprintf( __( 'Cleanup done: unpaid pending bookings older than %d minutes have been removed.', 'events-made-easy' ), $eme_number );
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_unconfirmed' ) {
@@ -234,6 +236,7 @@ function eme_cleanup_page() {
                 }
                 if ( $eme_number >= 5 ) {
                     eme_cleanup_unconfirmed( $eme_number );
+                    // translators: %d is the number of minutes
                     $message = sprintf( __( 'Cleanup done: unconfirmed bookings older than %d minutes have been removed.', 'events-made-easy' ), $eme_number );
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_trashed_people' ) {
@@ -244,6 +247,7 @@ function eme_cleanup_page() {
                 }
                 if ( $eme_number > 0 ) {
                     $count   = eme_cleanup_trashed_people( $eme_number, $eme_period );
+                    // translators: %d is the number of people removed
                     $message = sprintf( __( 'Cleanup done: %d people removed from trash.', 'events-made-easy' ), $count );
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_trashed_bookings' ) {
@@ -254,6 +258,7 @@ function eme_cleanup_page() {
                 }
                 if ( $eme_number > 0 ) {
                     $count   = eme_cleanup_trashed_bookings( $eme_number, $eme_period );
+                    // translators: %d is the number of bookings removed
                     $message = sprintf( __( 'Cleanup done: %d bookings removed from trash.', 'events-made-easy' ), $count );
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_preview' ) {
@@ -267,6 +272,7 @@ function eme_cleanup_page() {
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people' ) {
                 $count   = eme_cleanup_people();
+                // translators: %d is the number of people trashed
                 $message = sprintf( __( 'Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed.', 'events-made-easy' ), $count );
             } elseif ( $_POST['eme_admin_action'] == 'eme_empty_queue' ) {
                 eme_cancel_all_queued();
@@ -298,7 +304,9 @@ function eme_cleanup_form( $message = '', $preview_people = null ) {
 <?php if ( ! empty( $preview_people ) ) { ?>
 <h1><?php esc_html_e( 'Preview: People to be trashed', 'events-made-easy' ); ?></h1>
 <div id='message' class='updated eme-message-admin'>
-<p><?php echo esc_html( sprintf( __( 'The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:', 'events-made-easy' ), count( $preview_people ) ) ); ?></p>
+<p><?php
+// translators: %d is the number of people to be trashed
+echo esc_html( sprintf( __( 'The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:', 'events-made-easy' ), count( $preview_people ) ) ); ?></p>
 <table class="widefat striped" style="margin-bottom:1em;">
 <thead><tr>
     <th><?php esc_html_e( 'ID', 'events-made-easy' ); ?></th>
@@ -424,6 +432,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
 <?php
 $eme_queued_count = eme_get_queued_count();
 if ( $eme_queued_count > 1 ) {
+    // translators: %d is the number of messages in the queue
     printf( esc_html__( 'There are %d messages in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
 } elseif ( $eme_queued_count ) {
     printf( esc_html__( 'There is 1 message in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );

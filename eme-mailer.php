@@ -871,7 +871,8 @@ function eme_mark_mailing_completed( $mailing_id ) {
     if ( $stats['failed'] > 0 ) {
         $mailing        = eme_get_mailing( $mailing_id );
         $failed_subject = __( 'Mailing completed with errors', 'events-made-easy' );
-        $failed_body    = sprintf( __( 'Mailing "%s" completed with %d errors, please check the mailing report', 'events-made-easy' ), $mailing['name'], $stats['failed'] );
+        // translators: %1$s is the mailing name, %2$d is the number of errors
+        $failed_body    = sprintf( __( 'Mailing "%1$s" completed with %2$d errors, please check the mailing report', 'events-made-easy' ), $mailing['name'], $stats['failed'] );
         eme_send_mail( $failed_subject, $failed_body, $mailing['replytoemail'], $mailing['replytoname'], $mailing['replytoemail'], $mailing['replytoname'] );
     }
 }
@@ -1658,7 +1659,8 @@ function eme_ajax_mailings_list() {
         }
         if ( $mailing['status'] == 'cancelled' ) {
             $stats  = eme_unserialize( $mailing['stats'] );
-            $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+            // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
+            $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=archive_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Archive', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'initial' ) {
             $stats  = '';
@@ -1672,15 +1674,18 @@ function eme_ajax_mailings_list() {
             } else {
                 $stats  = eme_unserialize( $mailing['stats'] );
             }
+            // translators: %d is the number of emails left to send
             $extra  = sprintf( __( '%d emails left', 'events-made-easy' ), $stats['planned'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Cancel the sending of this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=cancel_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'ongoing' ) {
             $stats  = eme_get_mailing_stats( $id );
-            $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
+            // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails left to send
+            $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Cancel the sending of this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=cancel_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
             $stats  = eme_unserialize( $mailing['stats'] );
-            $extra  = sprintf( __( '%d emails sent, %d emails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
+            // translators: %1$d is the number of emails sent, %2$d is the number of emails failed
+            $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Archive this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=archive_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Archive', 'events-made-easy' ) . '</a>';
         }
         if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
@@ -1700,6 +1705,7 @@ function eme_ajax_mailings_list() {
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
         if ( $mailing['status'] == 'planned' ) {
+            // translators: %s is the mailing creation date
             $planned_estimation_title = esc_html( sprintf(__('The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time.','events-made-easy'), $record['creation_date']) ) ;
             $record['extra_info'] = esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>";
             $record['report'] = '';
@@ -1792,7 +1798,8 @@ function eme_ajax_archivedmailings_list() {
         $id = $mailing['id'];
 
         $stats  = eme_unserialize( $mailing['stats'] );
-        $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+        // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
+        $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
         $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_archivedmailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . '</a>';
         if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
             $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
@@ -2956,6 +2963,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
+            // translators: %s is the URL to the Email settings page
             printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
@@ -3138,6 +3146,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
+                // translators: %s is the URL to the Email settings page
                 printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
 ?>
                 </p></div>
@@ -3179,6 +3188,7 @@ function eme_mails_div() {
             if ( empty( $archive_old_mailings_days ) ) {
                 esc_html_e( 'If you want to archive old mailings and clean up old emails automatically, check the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME', 'events-made-easy' );
             } else {
+                // translators: %d is the number of days between automatic archiving
                 sprintf(esc_html__( 'Every %d days, old mailings will be archived and old emails will be cleaned up (see the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
             }
 ?>
@@ -3228,6 +3238,7 @@ function eme_mailings_div() {
     if ( empty( $archive_old_mailings_days ) ) {
         esc_html_e( 'If you want to archive old mailings and clean up old emails automatically, check the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME', 'events-made-easy' );
     } else {
+        // translators: %d is the number of days between automatic archiving
         sprintf(esc_html__( 'Every %d days, old mailings will be archived and old emails will be cleaned up (see the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
     }
 ?>

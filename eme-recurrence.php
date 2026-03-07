@@ -520,21 +520,30 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 
 	$weekdays_name  = [ __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) ]; // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
 	$monthweek_name = [
+		// translators: %s is the weekday name
 		'1'  => __( 'the first %s of the month', 'events-made-easy' ),
+		// translators: %s is the weekday name
 		'2'  => __( 'the second %s of the month', 'events-made-easy' ),
+		// translators: %s is the weekday name
 		'3'  => __( 'the third %s of the month', 'events-made-easy' ),
+		// translators: %s is the weekday name
 		'4'  => __( 'the fourth %s of the month', 'events-made-easy' ),
+		// translators: %s is the weekday name
 		'5'  => __( 'the fifth %s of the month', 'events-made-easy' ),
+		// translators: %s is the weekday name
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
 	];
 	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+		// translators: %s is the start date
 		$output         = sprintf( __( 'From %s onwards (automatically extended)', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ) ) . ', ';
 	} else {
-		$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+		// translators: %1$s is the start date, %2$s is the end date
+		$output         = sprintf( __( 'From %1$s to %2$s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
 	}
 	if ( $recurrence['recurrence_freq'] == 'daily' ) {
 		$freq_desc = __( 'everyday', 'events-made-easy' );
 		if ( $recurrence['recurrence_interval'] > 1 ) {
+			// translators: %s is the number of days
 			$freq_desc = sprintf( __( 'every %s days', 'events-made-easy' ), $recurrence['recurrence_interval'] );
 		}
 	} elseif ( $recurrence['recurrence_freq'] == 'weekly' ) {
@@ -556,6 +565,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		$output    .= implode( $and_string, $natural_days );
 		$freq_desc  = ', ' . __( 'every week', 'events-made-easy' );
 		if ( $recurrence['recurrence_interval'] > 1 ) {
+			// translators: %s is the number of weeks
 			$freq_desc = ', ' . sprintf( __( 'every %s weeks', 'events-made-easy' ), $recurrence['recurrence_interval'] );
 		}
 	} elseif ( $recurrence['recurrence_freq'] == 'monthly' ) {
@@ -572,6 +582,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		$and_string = __( ' and ', 'events-made-easy' );
 		$freq_desc  = sprintf( ( $monthweek_name[ $recurrence['recurrence_byweekno'] ] ), implode( $and_string, $natural_days ) );
 		if ( $recurrence['recurrence_interval'] > 1 ) {
+			// translators: %s is the number of months
 			$freq_desc .= ', ' . sprintf( __( 'every %s months', 'events-made-easy' ), $recurrence['recurrence_interval'] );
 		} else {
 			$freq_desc .= ', ' . __( 'every month', 'events-made-easy' );

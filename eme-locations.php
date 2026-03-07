@@ -218,6 +218,7 @@ function eme_import_csv_locations() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected file MIME type
         return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -307,6 +308,7 @@ function eme_import_csv_locations() {
                         ++$updated;
                     } else {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
@@ -315,6 +317,7 @@ function eme_import_csv_locations() {
                         ++$inserted;
                     } else {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the location in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
@@ -337,10 +340,12 @@ function eme_import_csv_locations() {
                 }
             } else {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
-        $result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+        // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
+        $result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
         if ( $errors ) {
             $result .= '<br>' . $error_msg;
         }
@@ -379,6 +384,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     if ( $action == 'add' ) {
         esc_html_e( 'Insert New Location', 'events-made-easy' );
     } else {
+        // translators: %s is the location name
         printf( esc_html__( "Edit Location '%s'", 'events-made-easy' ), esc_html( eme_translate( $location['location_name'] ) ) );
     }
 ?>
@@ -1346,13 +1352,16 @@ function eme_validate_location( $location ) {
     ];
     $troubles                 = '';
     if ( empty( $location['location_name'] ) ) {
+        // translators: %s is the name of the required field
         $troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $location_required_fields['location_name'] ) . '</li>';
     }
     if ( empty( $location['location_longitude'] ) && empty( $location['location_longitude'] ) && ! $location['location_properties']['online_only'] ) {
         if ( empty( $location['location_address1'] ) ) {
+            // translators: %s is the name of the required field
             $troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $location_required_fields['location_address1'] ) . '</li>';
         }
         if ( empty( $location['location_city'] ) ) {
+            // translators: %s is the name of the required field
             $troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $location_required_fields['location_city'] ) . '</li>';
         }
     }

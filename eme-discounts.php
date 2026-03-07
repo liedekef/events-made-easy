@@ -156,10 +156,12 @@ function eme_discounts_page() {
 									++$inserted;
 								} else {
 									++$errors;
+									// translators: %s is the CSV row data
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
+							// translators: %1$d is the number of inserts, %2$d is the number of errors
+							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= "<br>" . $error_msg;
 							}
@@ -170,6 +172,7 @@ function eme_discounts_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
+				// translators: %s is the detected file MIME type
 				$message = sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_importdgroups' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
@@ -215,10 +218,12 @@ function eme_discounts_page() {
 									++$inserted;
 								} else {
 									++$errors;
+									// translators: %s is the CSV row data
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
+							// translators: %1$d is the number of inserts, %2$d is the number of errors
+							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= "<br>" . $error_msg;
 							}
@@ -229,6 +234,7 @@ function eme_discounts_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
+				// translators: %s is the detected file MIME type
 				$message = sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_editdiscount' ) {

@@ -647,6 +647,7 @@ function eme_events_page() {
                     $feedback_message = __( 'No recurrence created!', 'events-made-easy' );
                 } else {
                     $count            = eme_recurrence_count( $recurrence_id );
+                    // translators: %d is the number of events in the recurrence
                     $feedback_message = sprintf( __( 'New recurrence inserted containing %d events', 'events-made-easy' ), $count );
                     if ( $stay_on_edit_page ) {
                         $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
@@ -673,6 +674,7 @@ function eme_events_page() {
                     }
                     $feedback_message = __( 'New event successfully inserted!', 'events-made-easy' );
                     if ( $stay_on_edit_page ) {
+                        // translators: %s is the event name
                         $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
                         $info['feedback'] = $feedback_message;
                         $event            = eme_get_event( $event_id );
@@ -692,6 +694,7 @@ function eme_events_page() {
                     $recurrence['recurrence_id'] = $recurrence_ID;
                     $count                       = eme_db_update_recurrence( $recurrence, $event );
                     if ( $count ) {
+                        // translators: %d is the number of events in the recurrence
                         $feedback_message = sprintf( __( 'Recurrence updated, contains %d events', 'events-made-easy' ), $count );
                         if ( $stay_on_edit_page ) {
                             $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
@@ -706,6 +709,7 @@ function eme_events_page() {
                         $feedback_message = __( 'Recurrence no longer contains events, so it has been removed', 'events-made-easy' );
                     }
                 } else {
+                    // translators: %s is the event name
                     $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
                 }
             } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -719,6 +723,7 @@ function eme_events_page() {
                     } else {
                         eme_db_delete_event( $orig_event['event_id'] );
                         $count            = eme_recurrence_count( $recurrence_id );
+                        // translators: %d is the number of events in the recurrence
                         $feedback_message = sprintf( __( 'New recurrent event inserted containing %d events', 'events-made-easy' ), $count );
                         if ( $stay_on_edit_page ) {
                             $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
@@ -741,8 +746,10 @@ function eme_events_page() {
                             $event = eme_get_event( $event_ID );
                             do_action( 'eme_update_event_action', $event );
                         }
+                        // translators: %s is the event name
                         $feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
                         if ( $stay_on_edit_page ) {
+                            // translators: %s is the event name
                             $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
                             $info['feedback'] = $feedback_message;
                             $event            = eme_get_event( $event_ID );
@@ -752,10 +759,12 @@ function eme_events_page() {
                             return;
                         }
                     } else {
+                        // translators: %s is the event name
                         $feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
                     }
                 }
             } else {
+                // translators: %s is the event name
                 $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
             }
         }
@@ -802,9 +811,11 @@ function eme_events_page() {
         } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
             // UPDATE event
+            // translators: %s is the event name
             $info = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
             eme_event_form( $event, $info );
         } else {
+            // translators: %s is the event name
             $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
             eme_events_table( $feedback_message );
         }
@@ -825,9 +836,11 @@ function eme_events_page() {
 
         if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+            // translators: %s is the event name
             $info = [ 'title' => sprintf( __( "Edit event copy '%s'", 'events-made-easy' ), $event['event_name'] ) ];
             eme_event_form( $event, $info );
         } else {
+            // translators: %s is the event name
             $feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
             eme_events_table( $feedback_message );
         }
@@ -846,9 +859,11 @@ function eme_events_page() {
 
         if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+            // translators: %s is the event name
             $info = [ 'title' => sprintf( __( "Edit recurrence copy '%s'", 'events-made-easy' ), $event['event_name'] ) ];
             eme_event_form( $event, $info, 1 );
         } else {
+            // translators: %s is the event name
             $feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
             eme_events_table( $feedback_message );
         }
@@ -867,6 +882,7 @@ function eme_events_page() {
             $info = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) . " '" . eme_translate( $event['event_name'] ) . "'" ];
             eme_event_form( $event, $info, 1 );
         } else {
+            // translators: %s is the event name
             $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
             eme_recurrences_table( $feedback_message );
         }
@@ -1107,10 +1123,12 @@ function eme_events_page_content() {
         $seats_booked = $booking['booking_seats'];
         if ( $scan_count > $seats_booked ) {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count (%d) exceeds max count (%d)', 'events-made-easy' ), $scan_count, $seats_booked ) . '</div>';
+            // translators: %1$d is the scan count, %2$d is the maximum allowed count
+            $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count (%1$d) exceeds max count (%2$d)', 'events-made-easy' ), $scan_count, $seats_booked ) . '</div>';
         } else {
             $img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $scan_count, $seats_booked );
+            // translators: %1$d is the scan count, %2$d is the maximum allowed count
+            $format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%1$d, max count=%2$d', 'events-made-easy' ), $scan_count, $seats_booked );
 
             $update_res = eme_update_attendance_count( $booking_id );
             if ($update_res === false ) {
@@ -1118,6 +1136,7 @@ function eme_events_page_content() {
                 $format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Error updating attendance count, but ignoring', 'events-made-easy' ) ) . '</div>';
             }
 
+            // translators: %s is the event name
             $format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), esc_html( $event['event_name'] ) );
             if ( $event['event_properties']['attendancerecord'] || $event['event_properties']['attendanceperday']) {
                 $res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
@@ -1137,6 +1156,7 @@ function eme_events_page_content() {
         $member_id = intval( $_GET['member_id'] );
         if ( ! eme_check_member_url() ) {
             $img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
+            // translators: %d is the member ID
             $format = "<div class='eme-message-error eme-member-message-error'>$img " . sprintf( __( 'NOK: member %d is either not active or does not exist!', 'events-made-easy' ), $member_id ) . '</div>';
         } else {
             $img            = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
@@ -3195,21 +3215,27 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $parts = [];
 
                     if ($diff->y > 0) {
+                        // translators: %d is the number of years
                         $parts[] = sprintf(_n('%d year', '%d years', $diff->y, 'events-made-easy'), $diff->y);
                     }
                     if ($diff->m > 0) {
+                        // translators: %d is the number of months
                         $parts[] = sprintf(_n('%d month', '%d months', $diff->m, 'events-made-easy'), $diff->m);
                     }
                     if ($diff->d > 0) {
+                        // translators: %d is the number of days
                         $parts[] = sprintf(_n('%d day', '%d days', $diff->d, 'events-made-easy'), $diff->d);
                     }
                     if ($diff->h > 0) {
+                        // translators: %d is the number of hours
                         $parts[] = sprintf(_n('%d hour', '%d hours', $diff->h, 'events-made-easy'), $diff->h);
                     }
                     if ($diff->i > 0) {
+                        // translators: %d is the number of minutes
                         $parts[] = sprintf(_n('%d minute', '%d minutes', $diff->i, 'events-made-easy'), $diff->i);
                     }
                     if ($diff->s > 0 || empty($parts)) {
+                        // translators: %d is the number of seconds
                         $parts[] = sprintf(_n('%d second', '%d seconds', $diff->s, 'events-made-easy'), $diff->s);
                     }
 
@@ -4432,6 +4458,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
                 $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
             }
             $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $forward ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+            // translators: %d is the page number
             $pagination_top .= "<span class='eme_nav_center'>" . sprintf( __( 'Page %d', 'events-made-easy' ), $page_number ) . '</span>';
         }
         if ( $events_count <= $limit && $limit_offset > 0 ) {
@@ -4443,6 +4470,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
                 $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
             }
             $pagination_top .= "<a class='eme_nav_right' $nav_hidden_class href='#'>$next_text &gt;&gt;</a>";
+            // translators: %d is the page number
             $pagination_top .= "<span class='eme_nav_center'>" . sprintf( __( 'Page %d', 'events-made-easy' ), $page_number ) . '</span>';
         }
     }
@@ -5834,6 +5862,7 @@ function eme_import_csv_events() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected file MIME type
         return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -5900,12 +5929,14 @@ function eme_import_csv_events() {
                     // location_id is returned if update is ok, and we use the location id later on
                     $location_id = eme_update_location( $line, $location_id );
                     if ( ! $location_id ) {
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
                     $location_id = eme_insert_location( $line );
                     if ( ! $location_id ) {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Location not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
@@ -5930,10 +5961,12 @@ function eme_import_csv_events() {
 
             if ( ! empty( $line['event_start_date'] ) && ! eme_is_date( $line['event_start_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
             } elseif ( ! empty( $line['event_end_date'] ) && ! eme_is_date( $line['event_end_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
             } elseif ( isset( $line['event_name'] ) ) {
                 if ( ! isset( $line['location_id'] ) ) {
                     $line['location_id'] = $location_id;
@@ -5975,6 +6008,7 @@ function eme_import_csv_events() {
                         ++$updated;
                     } else {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 } else {
@@ -5983,6 +6017,7 @@ function eme_import_csv_events() {
                         ++$inserted;
                     } else {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the event in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
@@ -6005,10 +6040,12 @@ function eme_import_csv_events() {
                 }
             } else {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
-        $result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+        // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
+        $result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
         if ( $errors ) {
             $result .= '<br>' . $error_msg;
         }
@@ -6740,6 +6777,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             }
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
+                // translators: %d is the number of waiting list seats
                 $info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
@@ -6767,6 +6805,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $used_spaces += eme_count_task_approved_signups( $task['task_id'] );
                     //$total_spaces += $task['spaces'];
                 }
+                // translators: %d is the number of tasks
                 $info_line .= sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
                     $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
@@ -6883,9 +6922,11 @@ function eme_validate_event( $event ) {
     ];
     $troubles        = '';
     if ( eme_is_empty_datetime( $event['event_start'] ) ) {
+        // translators: %s is the name of the required field
         $troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $required_fields['start_date'] ) . '</li>';
     }
     if ( empty( $event['event_name'] ) ) {
+        // translators: %s is the name of the required field
         $troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $required_fields['event_name'] ) . '</li>';
     }
 
@@ -9601,6 +9642,7 @@ function eme_admin_enqueue_js() {
             'translate_id'                         => __( 'ID', 'events-made-easy' ),
             'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_insertnewevent'             => __( 'Insert New Event', 'events-made-easy' ),
+            // translators: %s is the event name
             'translate_editeventstring'            => __( "Edit Event '%s'", 'events-made-easy' ),
             'translate_status'                     => __( 'Status', 'events-made-easy' ),
             'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
@@ -9774,6 +9816,7 @@ function eme_admin_enqueue_js() {
             'translate_id'                         => __( 'ID', 'events-made-easy' ),
             'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_insertnewlocation'          => __( 'Insert New Location', 'events-made-easy' ),
+            // translators: %s is the location name
             'translate_editlocationstring'         => __( "Edit Location '%s'", 'events-made-easy' ),
             'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
             'translate_view'                       => __( 'View', 'events-made-easy' ),
@@ -10287,6 +10330,7 @@ function eme_ajax_events_list() {
             }
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
+                // translators: %d is the number of waiting list seats
                 $record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
@@ -10311,6 +10355,7 @@ function eme_ajax_events_list() {
                     $used_spaces += eme_count_task_approved_signups( $task['task_id'] );
                     //$total_spaces += $task['spaces'];
                 }
+                // translators: %d is the number of tasks
                 $record['event_name'] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
                     if ($no_edit_links==1) {

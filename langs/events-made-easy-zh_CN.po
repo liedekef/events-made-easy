@@ -451,8 +451,8 @@ msgstr "分类的描述"
 
 #: eme-cleanup.php:219
 #, fuzzy
-msgid "Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed."
-msgstr "清理完毕：超过 %d 分钟的未支付的待订已被删除。"
+msgid "Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed."
+msgstr "清理完毕：超过 %1$d 分钟的未支付的待订已被删除。"
 
 #: eme-cleanup.php:228
 msgid "Cleanup done: unpaid pending bookings older than %d minutes have been removed."
@@ -658,7 +658,7 @@ msgstr "未被导入：%s"
 #: eme-discounts.php:162
 #: eme-discounts.php:221
 #: eme-members.php:6361
-msgid "Import finished: %d inserts, %d errors"
+msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr ""
 
 #: eme-countries.php:93
@@ -1040,7 +1040,7 @@ msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "将不会对未确认的预订进行自动清理。"
 
 #: eme-cron.php:478
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)"
 msgstr ""
 
 #: eme-cron.php:284
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #: eme-cron.php:398
 #, fuzzy
-msgid "Queued emails will be send out in batches of %d %s"
+msgid "Queued emails will be send out in batches of %1$d %2$s"
 msgstr "分批发送队列的邮件"
 
 #: eme-cron.php:413
@@ -1804,7 +1804,7 @@ msgid "No entry allowed anymore"
 msgstr "不再允许进入"
 
 #: eme-events.php:1113
-msgid "Access granted: scan count=%d, max count=%d"
+msgid "Access granted: scan count=%1$d, max count=%2$d"
 msgstr ""
 
 #: eme-events.php:1121
@@ -2044,8 +2044,8 @@ msgstr "地点未被导入：%s"
 #: eme-members.php:6122
 #: eme-people.php:926
 #, fuzzy
-msgid "Not imported (field %s not valid): %s"
-msgstr "未导入（人不存在）：%s"
+msgid "Not imported (field %1$s not valid): %2$s"
+msgstr "未导入（人不存在）：%1$s"
 
 #: eme-events.php:5978
 msgid "Not imported (problem updating the event in the db): %s"
@@ -2066,7 +2066,7 @@ msgstr "未导入（并非所有必要的字段都存在）：%s"
 #: eme-locations.php:343
 #: eme-members.php:6207
 #: eme-people.php:990
-msgid "Import finished: %d inserts, %d updates, %d errors"
+msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr ""
 
 #: eme-events.php:6030
@@ -6315,7 +6315,7 @@ msgid "Mailing completed with errors"
 msgstr "完成的邮寄有错误"
 
 #: eme-mailer.php:874
-msgid "Mailing \"%s\" completed with %d errors, please check the mailing report"
+msgid "Mailing \"%1$s\" completed with %2$d errors, please check the mailing report"
 msgstr ""
 
 #: eme-mailer.php:1072
@@ -6756,7 +6756,7 @@ msgstr "报告"
 
 #: eme-mailer.php:1661
 #: eme-mailer.php:1795
-msgid "%d emails sent, %d emails failed, %d emails cancelled"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails cancelled"
 msgstr ""
 
 #: eme-mailer.php:1662
@@ -6777,7 +6777,7 @@ msgid "Ongoing"
 msgstr "正在进行中"
 
 #: eme-mailer.php:1679
-msgid "%d emails sent, %d emails failed, %d emails left"
+msgid "%1$d emails sent, %2$d emails failed, %3$d emails left"
 msgstr ""
 
 #: eme-mailer.php:1087
@@ -6785,7 +6785,7 @@ msgid "Completed"
 msgstr "已完成"
 
 #: eme-mailer.php:1683
-msgid "%d emails sent, %d emails failed"
+msgid "%1$d emails sent, %2$d emails failed"
 msgstr ""
 
 #: eme-mailer.php:1690
@@ -8011,7 +8011,7 @@ msgstr ""
 
 #: eme-members.php:6559
 #, fuzzy
-msgid "%d head of the family accounts + %d family members"
+msgid "%1$d head of the family accounts + %2$d family members"
 msgstr "“一家之主” 账户"
 
 #: eme-members.php:6631
@@ -11802,8 +11802,8 @@ msgstr "您的会籍 #_MEMBERSHIPNAME 付款失败，请重试。"
 
 #: eme-payments.php:308
 #, fuzzy
-msgid "Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s"
-msgstr "您的会籍已经过期。如果您再次支付会员费，您的会籍将被重新激活，直到 %s"
+msgid "Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s"
+msgstr "您的会籍已经过期。如果您再次支付会员费，您的会籍将被重新激活，直到 %1$s"
 
 #: eme-payments.php:314
 msgid "Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s"
@@ -12416,7 +12416,7 @@ msgstr "该月的最后 %s"
 
 #: eme-recurrence.php:533
 #, fuzzy
-msgid "From %s to %s"
+msgid "From %1$s to %2$s"
 msgstr "从 %1$s 到 %2$s"
 
 #: eme-recurrence.php:536
@@ -12611,7 +12611,7 @@ msgstr ""
 
 #: eme-rsvp.php:5210
 #: eme-rsvp.php:5213
-msgid "Field %s not valid: %s"
+msgid "Field %1$s not valid: %2$s"
 msgstr ""
 
 #: eme-rsvp.php:5218
@@ -12619,11 +12619,11 @@ msgid "Already paid in full: %s"
 msgstr ""
 
 #: eme-rsvp.php:5224
-msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
+msgid "Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s"
 msgstr ""
 
 #: eme-rsvp.php:5228
-msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
+msgid "Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors"
 msgstr ""
 
 #: eme-rsvp.php:5230
@@ -13852,11 +13852,11 @@ msgid "All queued emails will be send out without limit %s."
 msgstr ""
 
 #: eme-cron.php:480
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %2$s)"
 msgstr ""
 
 #: eme-cron.php:484
-msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
+msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d every time the queue is processed via the REST API call)"
 msgstr ""
 
 #: eme-cron.php:486
@@ -14391,7 +14391,7 @@ msgid "Booking cancelled and refunded"
 msgstr ""
 
 #: eme-people.php:952
-msgid "Updated person %d: %s"
+msgid "Updated person %1$d: %2$s"
 msgstr ""
 
 #: eme-formfields.php:381
@@ -14729,7 +14729,7 @@ msgstr ""
 #: eme-payments.php:2816
 #: eme-payments.php:3243
 #: eme-payments.php:3258
-msgid "Booking refunded for %s, payment id %d"
+msgid "Booking refunded for %1$s, payment id %2$d"
 msgstr ""
 
 #: eme-people.php:1010
@@ -14744,7 +14744,7 @@ msgid "Make your choice"
 msgstr ""
 
 #: eme-events.php:1110
-msgid "Access denied: scan count (%d) exceeds max count (%d)"
+msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
 msgstr ""
 
 #: eme-events.php:8619

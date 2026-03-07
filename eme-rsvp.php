@@ -1553,6 +1553,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                 if ( count( $missing_required_fields ) > 0 ) {
                     // if any required field is empty: return an error
                     $missing_required_fields_string = join( ', ', $missing_required_fields );
+                    // translators: %s is the list of missing required field names
                     $form_html                     .= sprintf( __( 'Please make sure all of the following required fields are filled out: %s', 'events-made-easy' ), $missing_required_fields_string );
                     continue;
                 }
@@ -3727,6 +3728,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = esc_html( $discount['name'] );
                     } else {
+                        // translators: %d is the discount ID
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
                 }
@@ -5126,6 +5128,7 @@ function eme_import_csv_payments() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected MIME type of the uploaded file
         return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -5204,28 +5207,34 @@ function eme_import_csv_payments() {
 
             if ( empty( $payment_id ) ) {
                 ++$ignored;
+                // translators: %s is the CSV row data
                 $ignored_msg .= '<br>' . esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
             } elseif ( ! eme_is_date( $payment_date ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %1$s not valid: %2$s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
             } elseif ( empty( $amount ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Field %1$s not valid: %2$s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
             } else {
                 $to_pay = eme_get_payment_price( $payment_id );
                 if ( $to_pay == 0 ) {
                     ++$ignored;
+                    // translators: %s is the CSV row data
                     $ignored_msg .= '<br>' . esc_html( sprintf( __( 'Already paid in full: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
                 } elseif ( $to_pay == $amount ) {
                     ++$updated;
                     eme_mark_payment_paid( $payment_id, 0 );
                 } else {
                     ++$errors;
-                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Amount paid (%s) is not equal to the expected amount (%s): %s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
+                    // translators: %1$s is the amount paid, %2$s is the expected amount, %3$s is the CSV row data
+                    $error_msg .= '<br>' . esc_html( sprintf( __( 'Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
                 }
             }
         }
-        $result = sprintf( __( 'Import finished: %d entries marked as paid, %d ignored, %d errors', 'events-made-easy' ), $updated, $ignored, $errors );
+        // translators: %1$d is the number of entries marked as paid, %2$d is the number ignored, %3$d is the number of errors
+        $result = sprintf( __( 'Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors', 'events-made-easy' ), $updated, $ignored, $errors );
         if ( $ignored ) {
             $result .= '<br><br>' . __( 'Ignored entries', 'events-made-easy' ) . '<br>' . $ignored_msg;
         }
@@ -5277,8 +5286,10 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         } else {
             $event_q_string = '&event_id=' . intval( $_GET['event_id'] );
             if ( $pending ) {
+                // translators: %s is the event name
                 printf( esc_html__( 'Manage pending bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             } else {
+                // translators: %s is the event name
                 printf( esc_html__( 'Manage approved bookings for %s', 'events-made-easy' ), esc_html( eme_translate( $event['event_name'] ) ) );
             }
         }
@@ -6043,6 +6054,7 @@ function eme_ajax_bookings_list() {
 
                 $waitinglist_seats            = $event['event_properties']['waitinglist_seats'];
                 if ( $waitinglist_seats > 0 ) {
+                    // translators: %d is the number of waiting list seats
                     $event_name_info[ $event_id ] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
                 }
 
@@ -6083,6 +6095,7 @@ function eme_ajax_bookings_list() {
                 }
                 #$free_spaces = $total_spaces - $used_spaces;
                 #$event_name_info[ $event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
+                // translators: %d is the number of tasks
                 $event_name_info[ $event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
                 if ( $pending_spaces >0 ) {
                     $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-task-signups&status=0&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
@@ -6137,6 +6150,7 @@ function eme_ajax_bookings_list() {
         $line['discount']   = eme_localized_price( $booking['discount'], $event['currency'] );
         // dcodes_used is still eme_serialized here
         $line['dcodes_used']  = eme_esc_html( eme_unserialize( $booking['dcodes_used'] ) );
+        // translators: %d is the payment ID of the booking
         $line['unique_nbr']   = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) ) . "'>" . esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
         $line['booking_paid'] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
         if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {

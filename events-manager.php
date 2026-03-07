@@ -330,8 +330,11 @@ function eme_create_events_submenu() {
 			$pending_tasksignups_count  = 0;
 		}
 		$pending_count          = $pending_bookings_count + $pending_members_count + $pending_tasksignups_count;
+		// translators: %d is the number of pending bookings
 		$pending_bookings_title = esc_attr( sprintf(_n( '%d pending booking', '%d pending bookings', $pending_bookings_count, 'events-made-easy' ), number_format_i18n($pending_bookings_count ) ));
+		// translators: %d is the number of pending members
 		$pending_members_title  = esc_attr( sprintf(_n( '%d pending member', '%d pending members', $pending_members_count, 'events-made-easy' ), number_format_i18n($pending_members_count ) ));
+		// translators: %d is the number of pending task signups
 		$pending_signups_title  = esc_attr( sprintf(_n( '%d pending task signup', '%d pending task signups', $pending_tasksignups_count, 'events-made-easy' ), number_format_i18n($pending_tasksignups_count ) ));
 		// we can't use the global var $plugin_page yet, so we check using _GET
 		if ( !empty($_GET['page']) && preg_match( '/^eme-/', eme_sanitize_request($_GET['page']) ) ) {
@@ -396,6 +399,7 @@ function eme_create_events_submenu() {
 }
 
 function eme_explain_events_page_missing() {
+	// translators: %s is the name of the settings option
 	$advice = sprintf( __( "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!", 'events-made-easy' ), __( 'Events page', 'events-made-easy' ) );
 	?>
 	<div id="message" class="error"><p> <?php echo esc_html( $advice ); ?> </p></div>

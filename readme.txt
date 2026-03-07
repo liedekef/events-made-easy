@@ -98,6 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 3.0.51  (2026//) =
 * Update Stripe API to 19.4.1
+* Update Mollie API to 3.9.0
 
 = 3.0.50  (2026/03/05) =
 * ftable update

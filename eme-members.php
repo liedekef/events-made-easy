@@ -1161,8 +1161,10 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                     if ( empty( $payment_url ) ) {
                         $result = __( 'Payment not possible for this member.', 'events-made-easy' );
                     } elseif ( eme_is_expired_member( $existing_member ) ) {
+                        // translators: %s is the payment URL
                         $result = sprintf( __( 'This person is already a member, but the membership has expired. No updates have been done. Please click <a href="%s">here</a> to complete the payment process and reactivate the membership.', 'events-made-easy' ), $payment_url );
                     } else {
+                        // translators: %s is the payment URL
                         $result = sprintf( __( 'This person is already a member, but has not paid yet. Please click <a href="%s">here</a> to complete the payment process.', 'events-made-easy' ), $payment_url );
                     }
                 }
@@ -1319,6 +1321,7 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
                 if ( $diff > $membership['properties']['renewal_cutoff_days'] ) {
                     // too soon to pay, show that as info
                     $end_date   = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+                    // translators: %s is the membership end date
                     $ret_string = "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
                     return $ret_string;
                 }
@@ -1328,6 +1331,7 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
     if ( ! $membership['properties']['allow_renewal'] && $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
         $contact      = eme_get_contact( $membership['properties']['contact_id'] );
         $contact_name = $contact->display_name;
+        // translators: %s is the contact person name
         $ret_string   = "<div class='eme-message-error eme-rsvp-message-error'>" . sprintf( __( 'Your membership has expired but renewal is not allowed, please contact %s.', 'events-made-easy' ), $contact_name ) . '</div>';
         return $ret_string;
     }
@@ -1723,6 +1727,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 
     if ( empty( $membership ) ) {
         $form_html  = "<div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message-error'>";
+        // translators: %d is the membership ID
         $form_html .= sprintf( __( 'No membership with ID %d found', 'events-made-easy' ), $membership_id );
         $form_html .= '</div>';
         return $form_html;
@@ -1818,6 +1823,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
     if ( $is_new_membership == 1 ) {
         esc_html_e( 'Add a membership definition', 'events-made-easy' );
     } else {
+        // translators: %s is the membership name
         printf( esc_html__( "Edit membership '%s'", 'events-made-easy' ), esc_html( $membership['name'] ) );
     }
 ?>
@@ -5273,6 +5279,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = esc_html( $discount['name'] );
                     } else {
+                        // translators: %d is the discount ID
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
                 }
@@ -6036,6 +6043,7 @@ function eme_import_csv_members() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected file MIME type
         return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -6087,6 +6095,7 @@ function eme_import_csv_members() {
             // if email empty: at least lastname is needed
             if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
@@ -6099,27 +6108,32 @@ function eme_import_csv_members() {
             }
             if ( ! isset( $line['membership'] ) || ! isset( $line['start_date'] ) ) {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
                 continue;
             }
             if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
                 continue;
             }
             if ( isset( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
                 continue;
             }
 
@@ -6142,12 +6156,14 @@ function eme_import_csv_members() {
                     $person_id = eme_db_insert_person( $person );
                     if ( ! $person_id ) {
                         ++$errors;
+                        // translators: %s is the CSV row data
                         $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     }
                 }
             } else {
                 // if membership doesn't exist
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
             if ( $membership && $person_id ) {
@@ -6198,13 +6214,15 @@ function eme_import_csv_members() {
                     }
                 } else {
                     ++$errors;
+                    // translators: %s is the CSV row data
                     $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the member in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             }
         }
     }
     fclose( $handle );
-    $result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+    // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
+    $result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
     if ( $errors ) {
         $result .= '<br>' . $error_msg;
     }
@@ -6223,6 +6241,7 @@ function eme_import_csv_member_dynamic_answers() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected file MIME type
         return sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -6275,6 +6294,7 @@ function eme_import_csv_member_dynamic_answers() {
             // if email empty: at least lastname is needed
             if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
@@ -6287,6 +6307,7 @@ function eme_import_csv_member_dynamic_answers() {
             }
             if ( !isset( $line['membership'] ) ) {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
@@ -6299,11 +6320,13 @@ function eme_import_csv_member_dynamic_answers() {
                     $person_id = $person['person_id'];
                 } else {
                     ++$errors;
+                    // translators: %s is the CSV row data
                     $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (person does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                     continue;
                 }
             } else {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
@@ -6349,16 +6372,19 @@ function eme_import_csv_member_dynamic_answers() {
                     }
                 } else {
                     ++$errors;
+                    // translators: %s is the CSV row data
                     $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (member does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             } else {
                 ++$errors;
+                // translators: %s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (no matching person found): %s', 'events-made-easy' ), implode( ',', $row ) ) );
             }
         }
     }
     fclose( $handle );
-    $result = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
+    // translators: %1$d is the number of inserts, %2$d is the number of errors
+    $result = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
     if ( $errors ) {
         $result .= '<br>' . $error_msg;
     }
@@ -6556,7 +6582,8 @@ function eme_ajax_memberships_list() {
         }
         $total = $mainmembercount[ $item['membership_id'] ] + $familymembercount[ $item['membership_id'] ];
         if ( ! empty( $item['properties']['family_membership'] ) ) {
-            $record['membercount'] = $total . ' (' . sprintf( esc_html__( '%d head of the family accounts + %d family members', 'events-made-easy' ), $mainmembercount[ $item['membership_id'] ], $familymembercount[ $item['membership_id'] ] ) . ')';
+            // translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
+            $record['membercount'] = $total . ' (' . sprintf( esc_html__( '%1$d head of the family accounts + %2$d family members', 'events-made-easy' ), $mainmembercount[ $item['membership_id'] ], $familymembercount[ $item['membership_id'] ] ) . ')';
         } else {
             $record['membercount'] = $total;
         }
@@ -6681,6 +6708,7 @@ function eme_ajax_members_list( ) {
         $record['renewal_count'] = intval( $item['renewal_count'] );
         $record['paid']          = ( $item['paid'] == 1 ) ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
         $record['payment_id']    = esc_html( $item['payment_id'] );
+        // translators: %d is the payment ID
         $record['unique_nbr']    = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the member: %d', 'events-made-easy' ), $item['payment_id'] ) ) . "'>" . esc_html( eme_unique_nbr_formatted( $item['unique_nbr'] ) ) . '</span>';
         $record['status']        = $eme_member_status_array[ $item['status'] ];
         $record['wp_id']         = esc_html( $item['wp_id'] );

@@ -3348,6 +3348,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 } elseif ( $eme_is_admin_request && $discount_fields_count == 1 ) {
                     $postfield_name = 'DISCOUNT';
                     if ( $booking['discount'] ) {
+                        // translators: %s is the calculated discount value
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $booking['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $booking['discount'], $event['currency'] ) );
                         $replacement .= '<ul>';
                     } else {
@@ -3356,8 +3357,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ( $booking['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
+                            // translators: %s is the discount group name
                             $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
+                            // translators: %d is the discount group ID
                             $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ) . '</li>';
                         }
                     }
@@ -3373,6 +3376,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                             if ( $discount && isset( $discount['name'] ) ) {
                                 $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
                             } else {
+                                // translators: %d is the discount ID
                                 $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
                         }
@@ -4099,6 +4103,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                 } elseif ( $eme_is_admin_request && $discount_fields_count == 1 ) {
                     $postfield_name = 'DISCOUNT';
                     if ( $member['discount'] ) {
+                        // translators: %s is the calculated discount value
                         $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $member['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $member['discount'], $membership['properties']['currency'] ) );
                         $replacement .= '<ul>';
                     } else {
@@ -4107,8 +4112,10 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     if ( $member['dgroupid'] ) {
                         $dgroup = eme_get_discountgroup( $member['dgroupid'] );
                         if ( $dgroup && isset( $dgroup['name'] ) ) {
+                            // translators: %s is the discount group name
                             $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
                         } else {
+                            // translators: %d is the discount group ID
                             $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] ) . '</li>';
                         }
                     }
@@ -4126,6 +4133,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                             if ( $discount && isset( $discount['name'] ) ) {
                                 $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
                             } else {
+                                // translators: %d is the discount ID
                                 $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
                             }
                         }

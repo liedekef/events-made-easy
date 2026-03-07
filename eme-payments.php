@@ -48,15 +48,18 @@ function eme_is_offline_pg( $pg ) {
 
 function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking, $remove_accents=false ) {
     if ( $payment['target'] == 'member' ) {
+        // translators: %s is the membership name
         $description = sprintf( __( "Member signup for %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_member_paymentform_description_filter';
     } elseif ( $payment['target'] == 'fs_event' ) {
+        // translators: %s is the event submission name
         $description = sprintf( __( "Event submission %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_fs_event_paymentform_description_filter';
     } elseif ( $multi_booking ) {
         $description = __( 'Multiple booking request', 'events-made-easy' );
         $filtername  = 'eme_rsvp_paymentform_description_filter';
     } else {
+        // translators: %s is the event name
         $description = sprintf( __( "Booking for %s", 'events-made-easy' ), $item_name );
         $filtername  = 'eme_rsvp_paymentform_description_filter';
     }
@@ -210,6 +213,7 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
+            // translators: %s is the localized payment amount
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
@@ -305,12 +309,14 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
             $end_date      = eme_localized_date( $member['end_date'], EME_TIMEZONE );
             $next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
             $next_end_date = eme_localized_date( $next_end_date, EME_TIMEZONE );
-            $ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
+            // translators: %1$s is the current membership end date, %2$s is the extended membership end date
+            $ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
         } elseif ( $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
             // set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
             $new_start_date = eme_get_start_date( $membership, $member, 1 );
             $next_end_date  = eme_get_next_end_date( $membership, $new_start_date );
             $next_end_date  = eme_localized_date( $next_end_date, EME_TIMEZONE );
+            // translators: %s is the membership reactivation end date
             $ret_string    .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s', 'events-made-easy' ), $next_end_date ) . '</div>';
         }
     }
@@ -350,6 +356,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
+            // translators: %s is the localized payment amount
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
@@ -477,6 +484,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
         } else {
             $ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . esc_html__( 'Payment handling', 'events-made-easy' ) . '</div>';
             $localized_price = eme_localized_price( $total_price, $cur );
+            // translators: %s is the localized payment amount
             $ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( esc_html__( 'The amount to pay is %s', 'events-made-easy' ), esc_html( $localized_price ) ) . '</div>';
         }
     }
@@ -1514,6 +1522,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     $locale_code             = determine_locale();
     $locale_code             = str_replace( '_', '-', $locale_code );
     $button_price            = eme_localized_price( $price, $cur );
+    // translators: %s is the localized payment amount
     $button_text_inside_form = esc_html( sprintf( __( 'Pay %s', 'events-made-easy' ), $button_price ) );
     $form_html               = $button_above;
 
@@ -2755,7 +2764,8 @@ function eme_refund_booking_bancontactwero( $booking ) {
         $cur              = $event ? $event['currency'] : 'EUR';
         $price            = eme_get_total_booking_price( $booking );
         $price            = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
-        $description      = sprintf(__( 'Booking refunded for %s, payment id %d', 'events-made-easy' ),$event['event_name'],$booking['payment_id']);
+        // translators: %1$s is the event name, %2$d is the payment ID
+        $description      = sprintf(__( 'Booking refunded for %1$s, payment id %2$d', 'events-made-easy' ),$event['event_name'],$booking['payment_id']);
         $bancontactwero_payment = $bancontactwero->refundPayment( $booking['pg_pid'], $price, $cur, $description );
         return true;
     } catch ( Exception $e ) {
@@ -2813,7 +2823,8 @@ function eme_refund_booking_instamojo( $booking ) {
             [
                 'payment_id' => $booking['pg_pid'],
                 'type'       => 'QFL',
-                'body'       => sprintf(__( 'Booking refunded for %s, payment id %d', 'events-made-easy' ),$event['event_name'],$booking['payment_id'])
+                // translators: %1$s is the event name, %2$d is the payment ID
+                'body'       => sprintf(__( 'Booking refunded for %1$s, payment id %2$d', 'events-made-easy' ),$event['event_name'],$booking['payment_id'])
             ]
         );
         return true;
@@ -3240,7 +3251,8 @@ function eme_refund_booking_mollie( $booking ) {
                     $refund = $mollie->send(
                         new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
                             paymentId: $mollie_payment->id,
-                            description: sprintf(__( 'Booking refunded for %s, payment id %d', 'events-made-easy' ),$event['event_name'],$booking['payment_id']),
+                            // translators: %1$s is the event name, %2$d is the payment ID
+                            description: sprintf(__( 'Booking refunded for %1$s, payment id %2$d', 'events-made-easy' ),$event['event_name'],$booking['payment_id']),
                             amount: new \Mollie\Api\Http\Data\Money(
                                 currency: $cur,
                                 value: sprintf('%01.2f', $price)
@@ -3255,7 +3267,8 @@ function eme_refund_booking_mollie( $booking ) {
                             'currency' => $cur,
                             'value'    => sprintf('%01.2f', $price),
                         ],
-                        'description' => sprintf(__( 'Booking refunded for %s, payment id %d', 'events-made-easy' ),$event['event_name'],$booking['payment_id'])
+                        // translators: %1$s is the event name, %2$d is the payment ID
+                        'description' => sprintf(__( 'Booking refunded for %1$s, payment id %2$d', 'events-made-easy' ),$event['event_name'],$booking['payment_id'])
                     ]);
                 }
                 return true;

@@ -942,6 +942,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                     $count_signups = eme_count_task_signups($task['task_id']);
                     if ($count_signups>0) {
                         echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks[" . intval($count) . "][signup_count]'><br>";
+                        // translators: %d is the number of persons signed up
                         echo esc_html(sprintf( _n( 'One person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
                         echo "</span>";
                     }
@@ -982,6 +983,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
             esc_html_e( 'For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly.', 'events-made-easy' );
             if ( ! eme_is_empty_date( $event['event_start'] ) ) {
                 echo '<br>';
+                // translators: %s is the start date of the first event
                 echo esc_html(sprintf( __( 'The start date of the first event in the series was initially %s', 'events-made-easy' ), eme_localized_datetime( $event['event_start'], EME_TIMEZONE ) ));
             }
             echo '</div>';

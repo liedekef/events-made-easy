@@ -237,6 +237,7 @@ function eme_cron_page() {
                 $eme_cron_cleanup_unpaid_minutes = intval( $_POST['eme_cron_cleanup_unpaid_minutes'] );
                 if ( $eme_cron_cleanup_unpaid_minutes >= 5 ) {
                     update_option( 'eme_cron_cleanup_unpaid_minutes', $eme_cron_cleanup_unpaid_minutes );
+                    // translators: %d is the number of minutes
                     $message = sprintf( __( 'Scheduled the cleanup of unpaid pending bookings older than %d minutes', 'events-made-easy' ), $eme_cron_cleanup_unpaid_minutes );
                 } else {
                     update_option( 'eme_cron_cleanup_unpaid_minutes', 0 );
@@ -246,6 +247,7 @@ function eme_cron_page() {
                 $eme_cron_cleanup_unconfirmed_minutes = intval( $_POST['eme_cron_cleanup_unconfirmed_minutes'] );
                 if ( $eme_cron_cleanup_unconfirmed_minutes >= 5 ) {
                     update_option( 'eme_cron_cleanup_unconfirmed_minutes', $eme_cron_cleanup_unconfirmed_minutes );
+                    // translators: %d is the number of minutes
                     $message = sprintf( __( 'Scheduled the cleanup of unconfirmed bookings older than %d minutes', 'events-made-easy' ), $eme_cron_cleanup_unconfirmed_minutes );
                 } else {
                     update_option( 'eme_cron_cleanup_unconfirmed_minutes', 0 );
@@ -374,6 +376,7 @@ function eme_cron_form( $message = '' ) {
 <?php
     $eme_queued_count = eme_get_queued_count();
     if ( $eme_queued_count > 1 ) {
+        // translators: %d is the number of messages in the queue
         printf( esc_html__( 'There are %d messages in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
     } elseif ( $eme_queued_count ) {
         esc_html_e( 'There is 1 message in the mail queue.', 'events-made-easy' );
@@ -395,8 +398,10 @@ function eme_cron_form( $message = '' ) {
             $schedule = $schedules[ $eme_cron_send_queued_schedule ];
             echo '<br>';
             if ($eme_cron_queue_count > 0 ) {
-                printf( esc_html__( 'Queued emails will be send out in batches of %d %s', 'events-made-easy' ), intval( get_option( 'eme_cron_queue_count' ) ), esc_html( $schedule['display'] ) );
+                // translators: %1$d is the batch size, %2$s is the schedule frequency
+                printf( esc_html__( 'Queued emails will be send out in batches of %1$d %2$s', 'events-made-easy' ), intval( get_option( 'eme_cron_queue_count' ) ), esc_html( $schedule['display'] ) );
             } else {
+                // translators: %s is the schedule frequency
                 printf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), esc_html( $schedule['display'] ) );
             }
         }
@@ -475,14 +480,18 @@ function eme_cron_form( $message = '' ) {
             if (!empty($eme_cron_queued_schedule)) {
                 $mail_schedule = $schedules[ $eme_cron_queued_schedule ];
                 if ( $eme_cron_queue_count> 0 ) {
-                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ), esc_html( $mail_schedule['display'] ) );
+                    // translators: %1$s is the check schedule, %2$d is the batch size, %3$s is the mail schedule
+                    printf( esc_html__( '%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ), esc_html( $mail_schedule['display'] ) );
                 } else {
-                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), esc_html( $mail_schedule['display'] ) );
+                    // translators: %1$s is the check schedule, %2$s is the mail schedule
+                    printf( esc_html__( '%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %2$s)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), esc_html( $mail_schedule['display'] ) );
                 }
             } else {
                 if ( $eme_cron_queue_count> 0 ) {
-                    printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ) );
+                    // translators: %1$s is the check schedule, %2$d is the batch size
+                    printf( esc_html__( '%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d every time the queue is processed via the REST API call)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), intval( $eme_cron_queue_count ) );
                 } else {
+                    // translators: %s is the check schedule
                     printf( esc_html__( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)', 'events-made-easy' ), esc_html( $new_events_schedule['display'] ), esc_html( $mail_schedule['display'] ) );
                 }
             }

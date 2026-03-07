@@ -79,10 +79,12 @@ function eme_countries_page() {
 									++$inserted;
 								} else {
 									++$errors;
+									// translators: %s is the CSV row data that failed to import
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
+							// translators: %1$d is the number of successful inserts, %2$d is the number of errors
+							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= "<br>" . $error_msg;
 							}
@@ -93,6 +95,7 @@ function eme_countries_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
+				// translators: %s is the detected MIME type of the uploaded file
 				$message = sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_importstates' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
@@ -138,10 +141,12 @@ function eme_countries_page() {
 									++$inserted;
 								} else {
 									++$errors;
+									// translators: %s is the CSV row data that failed to import
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
+							// translators: %1$d is the number of successful inserts, %2$d is the number of errors
+							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= "<br>" . $error_msg;
 							}
@@ -152,6 +157,7 @@ function eme_countries_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
+				// translators: %s is the detected MIME type of the uploaded file
 				$message = sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_editstate' ) {
@@ -169,6 +175,7 @@ function eme_countries_page() {
 			}
 			$validation_result = eme_validate_state( $state );
 			if ( ! empty( $validation_result ) ) {
+				// translators: %s is the validation error message
 				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
 			} elseif ( $state_id ) {
 				$update_result = eme_db_update_state( $state_id, $state );
@@ -215,6 +222,7 @@ function eme_countries_page() {
 			}
 			$validation_result = eme_validate_country( $country );
 			if ( ! empty( $validation_result ) ) {
+				// translators: %s is the validation error message
 				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
 			} elseif ( $country_id ) {
 				$update_result = eme_db_update_country( $country_id, $country );
@@ -317,6 +325,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		$countries = eme_get_countries();
 		$country   = $countries[0];
 		if ( ! empty( $country['lang'] ) && $country['lang'] != $lang ) {
+			// translators: %s is the WordPress detected language code
 			$message .= sprintf( __( "There's only one country defined, but the language of the country is not empty and doesn't match the WordPress detected language (%s), meaning it won't show up when editing people. Either add extra countries or correct the language of this country.", 'events-made-easy' ), $lang );
 		}
 	}
@@ -358,6 +367,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		<?php esc_html_e( 'If you want, use this to import countries into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
+	<?php // translators: %s is the URL for more information on country codes ?>
 	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ) ), esc_url( 'https://en.wikipedia.org/wiki/ISO_3166-1' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ); ?>
@@ -424,6 +434,7 @@ function eme_manage_states_layout( $message = '' ) {
 		<?php esc_html_e( 'If you want, use this to import states into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
+	<?php // translators: %s is the URL for more information on state codes ?>
 	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ) ), esc_url( 'https://wikipedia.org/wiki/ISO_3166-2' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ); ?>
@@ -495,7 +506,9 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='value'>" . __( 'Code', 'events-made-easy' ) . "</label></th>
 	       <td><input name='code' id='code' type='text' value='" . esc_html( $state['code'] ) . "' size='40'>
-               <br>" . sprintf( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ), 'https://wikipedia.org/wiki/ISO_3166-2' ) . '
+               <br>" .
+               // translators: %s is the URL for more information on state codes
+               sprintf( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ), 'https://wikipedia.org/wiki/ISO_3166-2' ) . '
                <br>' . __( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ) . "
                </td>
             </tr>
@@ -575,7 +588,9 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
                </td>
             </tr>
          </table>
-         <br>' . sprintf( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ), 'https://en.wikipedia.org/wiki/ISO_3166-1' ) . "
+         <br>' .
+         // translators: %s is the URL for more information on country codes
+         sprintf( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ), 'https://en.wikipedia.org/wiki/ISO_3166-1' ) . "
       <p class='submit'><input type='submit' class='button-primary' name='submit' value='" . $action_string . "'></p>
       </form>
    </div>

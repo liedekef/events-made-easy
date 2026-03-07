@@ -855,6 +855,7 @@ function eme_import_csv_people() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
+        // translators: %s is the detected MIME type of the uploaded file
         return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
@@ -911,6 +912,7 @@ function eme_import_csv_people() {
             // if email empty: at least lastname is needed
             if ( empty($line['email'] ) && !isset( $line['lastname'] ) ) {
                 ++$errors;
+                // translators: %s is the CSV row data that failed to import
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
@@ -923,7 +925,8 @@ function eme_import_csv_people() {
             }
             if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
                 ++$errors;
-                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+                // translators: %1$s is the field name, %2$s is the CSV row data
+                $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
                 continue;
             }
 
@@ -949,9 +952,11 @@ function eme_import_csv_people() {
                 $person_id = eme_db_update_person( $person['person_id'], $line );
                 if ( $person_id ) {
                     ++$updated;
-                    $updated_msg .= '<br>' . esc_html( sprintf( __( 'Updated person %d: %s', 'events-made-easy' ), $person_id, implode( ',', $row ) ) );
+                    // translators: %1$d is the person ID, %2$s is the CSV row data
+                    $updated_msg .= '<br>' . esc_html( sprintf( __( 'Updated person %1$d: %2$s', 'events-made-easy' ), $person_id, implode( ',', $row ) ) );
                 } else {
                     ++$errors;
+                    // translators: %s is the CSV row data that failed to import
                     $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             } else {
@@ -960,6 +965,7 @@ function eme_import_csv_people() {
                     ++$inserted;
                 } else {
                     ++$errors;
+                    // translators: %s is the CSV row data that failed to import
                     $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (problem inserting the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 }
             }
@@ -987,7 +993,8 @@ function eme_import_csv_people() {
                 }
             }
         }
-        $result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+        // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
+        $result = sprintf( esc_html__( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
     }
     fclose( $handle );
     if ( $updated ) {
@@ -1239,8 +1246,10 @@ function eme_csv_booking_report( $event_id ) {
         $multprice_desc_arr = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
         for ( $i = 0; $i < $price_count; $i++ ) {
             if ( ! empty( $multprice_desc_arr[ $i ] ) ) {
+                // translators: %s is the seat category description
                 $line[] = sprintf( __( 'Seats "%s"', 'events-made-easy' ), $multprice_desc_arr[ $i ] );
             } else {
+                // translators: %d is the seat category number
                 $line[] = sprintf( __( 'Seats category %d', 'events-made-easy' ), $i + 1 );
             }
         }
@@ -1358,8 +1367,10 @@ function eme_csv_booking_report( $event_id ) {
             if ( $booking['dgroupid'] ) {
                 $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
                 if ( $dgroup && isset( $dgroup['name'] ) ) {
+                    // translators: %s is the discount group name
                     $discount_names[] = sprintf( __( 'Discountgroup %s', 'events-made-easy' ), $dgroup['name'] );
                 } else {
+                    // translators: %d is the discount group ID
                     $discount_name[] = sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] );
                 }
             }
@@ -1375,6 +1386,7 @@ function eme_csv_booking_report( $event_id ) {
                     if ( $discount && isset( $discount['name'] ) ) {
                         $discount_names[] = $discount['name'];
                     } else {
+                        // translators: %d is the discount ID
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
                 }
@@ -1674,8 +1686,10 @@ function eme_printable_booking_report( $event_id ) {
         if ( $booking['dgroupid'] ) {
             $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
             if ( $dgroup && isset( $dgroup['name'] ) ) {
+                // translators: %s is the discount group name
                 $discount_name = '<br>' . esc_html(sprintf( __( 'Discountgroup %s', 'events-made-easy' ), $dgroup['name'] ) );
             } else {
+                // translators: %d is the discount group ID
                 $discount_name = '<br>' . esc_html(sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ));
             }
         }
@@ -1691,6 +1705,7 @@ function eme_printable_booking_report( $event_id ) {
                 if ( $discount && isset( $discount['name'] ) ) {
                     $discount_name .= '<br>' . esc_html( $discount['name'] );
                 } else {
+                    // translators: %d is the discount ID
                     $discount_name .= '<br>' . esc_html(sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ));
                 }
             }
@@ -2356,6 +2371,7 @@ function eme_manage_people_layout( $message = '' ) {
 <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage people', 'events-made-easy' ); ?></h1>
+    <?php // translators: %s is the URL to verify EME people integrity ?>
     <?php printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) ); ?><br>
 
     <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
@@ -5441,6 +5457,7 @@ function eme_ajax_groups_list() {
                 $count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
                 $count        = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 if ( $count > 0 ) {
+                    // translators: %d is the number of persons in the group
                     $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 person)', '(%d persons)', $count, 'events-made-easy' ), $count );
                 }
             }
@@ -5451,6 +5468,7 @@ function eme_ajax_groups_list() {
                 $count_sql    = eme_get_sql_members_searchfields( search_terms: $search_terms, count: 1 );
                 $count        = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 if ( $count > 0 ) {
+                    // translators: %d is the number of members in the group
                     $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 member)', '(%d members)', $count, 'events-made-easy' ), $count );
                 }
             }

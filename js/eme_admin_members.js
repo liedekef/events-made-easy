@@ -78,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_postJSON(ajaxurl, formData, (data) => {
                 if (data.Result === 'ERROR') {
                     MembershipsTable.showError(data.htmlmessage);
+                } else if (data.Result === 'WARNING') {
+                    MembershipsTable.showWarning(data.htmlmessage);
                 } else {
                     MembershipsTable.showInfo(data.htmlmessage);
                 }
@@ -434,6 +436,8 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_postJSON(ajaxurl, formData, (data) => {
                 if (data.Result === 'ERROR') {
                     MembersTable.showError(data.htmlmessage);
+                } else if (data.Result === 'WARNING') {
+                    MembersTable.showWarning(data.htmlmessage);
                 } else {
                     MembersTable.showInfo(data.htmlmessage);
                 }
@@ -595,6 +599,8 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_postJSON(ajaxurl, formData, (data) => {
             if (data.Result === 'ERROR') {
                 MembersTable.showError(data.htmlmessage);
+            } else if (data.Result === 'WARNING') {
+                MembersTable.showWarning(data.htmlmessage);
             } else {
                 MembersTable.showInfo(data.htmlmessage);
             }

@@ -172,6 +172,8 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_postJSON(ajaxurl, formData, (data) => {
                 if (data.Result === 'ERROR') {
                     TaskSignupsTable.showError(data.htmlmessage);
+                } else if (data.Result === 'WARNING') {
+                    TaskSignupsTable.showWarning(data.htmlmessage);
                 } else {
                     TaskSignupsTable.showInfo(data.htmlmessage);
                 }

@@ -209,6 +209,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then(data => {
                                     if (data.Result === 'ERROR') {
                                         BookingsTable.showError(data.htmlmessage);
+                                    } else if (data.Result === 'WARNING') {
+                                        BookingsTable.showWarning(data.htmlmessage);
                                     } else {
                                         BookingsTable.showInfo(data.htmlmessage);
                                     }
@@ -252,6 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then(data => {
                                     if (data.Result === 'ERROR') {
                                         BookingsTable.showError(data.htmlmessage);
+                                    } else if (data.Result === 'WARNING') {
+                                        BookingsTable.showWarning(data.htmlmessage);
                                     } else {
                                         BookingsTable.showInfo(data.htmlmessage);
                                     }
@@ -414,6 +418,8 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_postJSON(ajaxurl, formData, (data) => {
                 if (data.Result === 'ERROR') {
                     BookingsTable.showError(data.htmlmessage);
+                } else if (data.Result === 'WARNING') {
+                    BookingsTable.showWarning(data.htmlmessage);
                 } else {
                     BookingsTable.showInfo(data.htmlmessage);
                 }

@@ -1,6 +1,11 @@
 <?php
 //Emulating payment result api 1.0 format json
 //To check it not use php-build in server
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $curl = curl_init();
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $domainName = $_SERVER['HTTP_HOST'];

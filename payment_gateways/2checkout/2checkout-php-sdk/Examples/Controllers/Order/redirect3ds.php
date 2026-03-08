@@ -2,6 +2,11 @@
 /**
  * 3DS callback controller example.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once __DIR__ . '/../../../autoloader.php';
 use Tco\Examples\Common;
 

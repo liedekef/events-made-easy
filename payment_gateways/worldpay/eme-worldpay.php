@@ -1,5 +1,10 @@
 <?php
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function eme_generate_worldpay_signature($md5_secret,$params_arr,$instId,$cartId,$currency,$amount) {
     $defaults = [
     'instId' => $instId,

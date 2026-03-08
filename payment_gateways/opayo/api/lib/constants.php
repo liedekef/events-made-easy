@@ -1,5 +1,10 @@
 <?php
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 defined('SAGEPAY_SDK_PATH') || exit('No direct script access.');
 
 /**

@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once __DIR__.'/src/Tco/Autoloader/Psr4AutoloaderClass.php';
 
 $loader = new Psr4AutoloaderClass();

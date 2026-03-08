@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable
 
 defined('SAGEPAY_SDK_PATH') || exit('No direct script access.');
 

@@ -1,4 +1,8 @@
 <?php
+// phpcs:disable
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /** Main classes */
 require(dirname(__FILE__) . '/lib/Configuration.php');

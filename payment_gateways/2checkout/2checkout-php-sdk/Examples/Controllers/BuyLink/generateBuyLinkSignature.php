@@ -1,4 +1,10 @@
 <?php
+// phpcs:disable
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once __DIR__ . '/../../../autoloader.php';
 
 use Tco\TwocheckoutFacade;

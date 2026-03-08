@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable
 
 // File generated from our OpenAPI spec
 

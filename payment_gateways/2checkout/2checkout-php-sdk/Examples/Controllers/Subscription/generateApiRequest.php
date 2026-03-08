@@ -3,6 +3,11 @@
  * This is a full flow example with 3DS using 2PayJs generated token and the PHP API Library to place Orders
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once __DIR__ . '/../../../autoloader.php';
 
 use Tco\Examples\Common;

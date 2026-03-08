@@ -7,6 +7,11 @@
 */
 
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 define('WM_GET', 0);
 define('WM_POST', 1);
 define('WM_LINK', 2);

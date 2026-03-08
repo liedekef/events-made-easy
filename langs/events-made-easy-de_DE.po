@@ -12500,9 +12500,9 @@ msgstr "Dynamische Gruppe von Personen"
 
 #. translators: %d is the number of persons in the group
 #: eme-people.php:5461
-msgid "(1 person)"
+msgid "(%d person)"
 msgid_plural "(%d persons)"
-msgstr[0] "(1 Person)"
+msgstr[0] "(%d Person)"
 msgstr[1] "(%d Personen)"
 
 #: eme-people.php:5465
@@ -12511,9 +12511,9 @@ msgstr "Dynamische Gruppe von Mitgliedern"
 
 #. translators: %d is the number of members in the group
 #: eme-people.php:5472
-msgid "(1 member)"
+msgid "(%d member)"
 msgid_plural "(%d members)"
-msgstr[0] "(1 Mitglied)"
+msgstr[0] "(%d Mitglied)"
 msgstr[1] "(%d Mitglieder)"
 
 #: eme-people.php:5732
@@ -14362,9 +14362,9 @@ msgstr "Eine maximale Kapazität für den Standort ist festgelegt. Wenn das Maxi
 
 #. translators: %d is the number of persons signed up
 #: eme-tasks.php:946
-msgid "One person already signed up for this task"
+msgid "%d person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
-msgstr[0] "Eine Person hat sich bereits für diese Aufgabe angemeldet"
+msgstr[0] "%d Person hat sich bereits für diese Aufgabe angemeldet"
 msgstr[1] "%d Personen haben sich bereits für diese Aufgabe angemeldet"
 
 #: eme-functions.php:1477

@@ -16,6 +16,11 @@
 // 	May or may not have a value 
 //
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 defined('SAGEPAY_SDK_PATH') || exit('No direct script access.');
 
 /**

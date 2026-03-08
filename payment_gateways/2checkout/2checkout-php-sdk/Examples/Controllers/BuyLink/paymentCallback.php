@@ -1,8 +1,14 @@
 <?php
+// phpcs:disable
 /**
  * Order Payment Callback controller example.
  * Here we creater or validate the order based on cartId && RefNo for TCO validation
  */
+
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 require_once __DIR__ . '/../../../autoloader.php';
 

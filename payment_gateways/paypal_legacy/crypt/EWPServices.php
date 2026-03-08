@@ -3,6 +3,11 @@
  * Copyright 2007 PayPal, Inc. All Rights Reserved.
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once "PPCrypto.php";
 
 /**

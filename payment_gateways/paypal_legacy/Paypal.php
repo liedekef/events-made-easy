@@ -19,6 +19,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Paypal {
 
 	// Official url: https://www.paypal.com/cgi-bin/webscr

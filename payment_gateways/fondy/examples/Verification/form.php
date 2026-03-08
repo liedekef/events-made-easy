@@ -1,4 +1,10 @@
 <?php
+// phpcs:disable
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once '../configuration.php';
 require_once SDK_ROOTPATH . '/../vendor/autoload.php';
 

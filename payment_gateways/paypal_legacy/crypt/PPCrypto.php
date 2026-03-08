@@ -6,6 +6,11 @@
 /**
  * This class provides a utility sign and encrypt function of a string using PKCS7
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class PPCrypto
 {
 	/**

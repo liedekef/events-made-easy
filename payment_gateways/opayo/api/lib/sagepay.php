@@ -8,6 +8,11 @@
  * @copyright (c) 2013, Sage Pay Europe Ltd.
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 define('SAGEPAY_SDK_PATH', dirname(__FILE__)); // Path to SagePay SDK
 
 include_once SAGEPAY_SDK_PATH . '/constants.php';

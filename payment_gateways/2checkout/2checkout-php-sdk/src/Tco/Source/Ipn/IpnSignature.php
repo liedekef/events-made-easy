@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable
 
 namespace Tco\Source\Ipn;
 

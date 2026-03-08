@@ -14003,7 +14003,7 @@ msgstr ""
 
 #. translators: %d is the number of persons in the group
 #: eme-people.php:5461
-msgid "(1 person)"
+msgid "(%d person)"
 msgid_plural "(%d persons)"
 msgstr[0] ""
 msgstr[1] ""
@@ -14014,7 +14014,7 @@ msgstr ""
 
 #. translators: %d is the number of members in the group
 #: eme-people.php:5472
-msgid "(1 member)"
+msgid "(%d member)"
 msgid_plural "(%d members)"
 msgstr[0] ""
 msgstr[1] ""
@@ -14653,7 +14653,7 @@ msgstr ""
 
 #. translators: %d is the number of persons signed up
 #: eme-tasks.php:946
-msgid "One person already signed up for this task"
+msgid "%d person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 msgstr[1] ""

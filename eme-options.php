@@ -2745,8 +2745,8 @@ if (!empty($webhook_id)) {
 } else {
     $err_txt = get_option('eme_paypal_webhook_error');
     if (!empty($err_txt)) {
-        // translators: %s is the error reason
         echo "<tr><td colspan='2' class='notice notice-warning'>" .
+            // translators: %s is the error reason
             sprintf( esc_html__( 'WARNING: webhook has not been created. Reason: %s', 'events-made-easy' ), esc_html($err_txt) ) .
             '</td></tr>';
     } else {

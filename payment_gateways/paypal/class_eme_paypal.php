@@ -25,11 +25,13 @@ class EME_PayPal_Client {
         ]);
 
         if ( is_wp_error( $response ) ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception( 'PayPal auth error: ' . $response->get_error_message() );
         }
 
         $data = json_decode( wp_remote_retrieve_body( $response ), true );
         if ( empty( $data['access_token'] ) ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception( 'PayPal: failed to obtain access token' );
         }
 
@@ -55,6 +57,7 @@ class EME_PayPal_Client {
         $response = wp_remote_request( $url, $args );
 
         if ( is_wp_error( $response ) ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception( "PayPal API error ({$endpoint}): " . $response->get_error_message() );
         }
 
@@ -63,6 +66,7 @@ class EME_PayPal_Client {
 
         $code = wp_remote_retrieve_response_code( $response );
         if ( $code < 200 || $code >= 300 ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception( "PayPal API error ({$endpoint}): HTTP {$code}, " . print_r( $data, true ) );
         }
 
@@ -137,12 +141,14 @@ class EME_PayPal_Client {
         $required = ['Paypal-Transmission-Id', 'Paypal-Transmission-Time', 'Paypal-Transmission-Sig', 'Paypal-Cert-Url', 'Paypal-Auth-Algo'];
         foreach ( $required as $h ) {
             if ( ! isset( $headers[ $h ] ) ) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
                 throw new Exception( "Missing header: $h" );
             }
         }
 
         $webhook_id = get_option( 'eme_paypal_webhook_id' );
         if ( ! $webhook_id ) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception( 'Webhook ID not configured' );
         }
 

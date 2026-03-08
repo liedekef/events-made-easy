@@ -943,7 +943,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                     if ($count_signups>0) {
                         echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks[" . intval($count) . "][signup_count]'><br>";
                         // translators: %d is the number of persons signed up
-                        echo esc_html(sprintf( _n( 'One person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
+                        echo esc_html(sprintf( _n( '%d person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
                         echo "</span>";
                     }
                 }

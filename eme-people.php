@@ -5458,7 +5458,7 @@ function eme_ajax_groups_list() {
                 $count        = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 if ( $count > 0 ) {
                     // translators: %d is the number of persons in the group
-                    $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 person)', '(%d persons)', $count, 'events-made-easy' ), $count );
+                    $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(%d person)', '(%d persons)', $count, 'events-made-easy' ), $count );
                 }
             }
         } elseif ( $group['type'] == 'dynamic_members' ) {
@@ -5469,7 +5469,7 @@ function eme_ajax_groups_list() {
                 $count        = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 if ( $count > 0 ) {
                     // translators: %d is the number of members in the group
-                    $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 member)', '(%d members)', $count, 'events-made-easy' ), $count );
+                    $record['groupcount'] .= '&nbsp;' . sprintf( _n( '(%d member)', '(%d members)', $count, 'events-made-easy' ), $count );
                 }
             }
         } else {

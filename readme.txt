@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Update Stripe API to 19.4.1
 * Update Mollie API to 3.9.0
 * Update Braintree API to 6.32.0
+* Update DomPDF API to 3.1.5
 
 = 3.0.50  (2026/03/05) =
 * ftable update

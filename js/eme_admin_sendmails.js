@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
-            const personids = selectedRows.map(row => row.dataset.record?.person_id);
+            const personids = selectedRows.map(row => row.recordData.person_id);
             const idsjoined = ids.join();
 
             if (do_action === 'sendMails') {

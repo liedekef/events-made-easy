@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (PeopleTableContainer && PeopleTable) {
                     const selectedRows = PeopleTable.getSelectedRows();
                     if (selectedRows.length > 0) {
-                        excludeIds = selectedRows.map(row => row.dataset.record['people.person_id']).join(',');
+                        excludeIds = selectedRows.map(row => row.recordData['people.person_id']).join(',');
                     }
                 }
                 return {

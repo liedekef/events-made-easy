@@ -366,7 +366,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
         } elseif ( preg_match( '/#_WPID/', $result ) ) {
             $replacement = intval( $person['wp_id'] );
         } elseif ( preg_match( '/#_FULLNAME/', $result ) ) {
-            $replacement = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $replacement = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             if ( $target == 'html' ) {
                 $replacement = esc_html( $replacement );
                 $replacement = apply_filters( 'eme_general', $replacement );
@@ -425,7 +425,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                 $replacement = apply_filters( 'eme_text', $replacement );
             }
         } elseif ( preg_match( '/#_INITIALS/', $result ) ) {
-            $fullname    = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $fullname    = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $replacement = eme_get_initials( $fullname );
             if ( $target == 'html' ) {
                 $replacement = esc_html( $replacement );

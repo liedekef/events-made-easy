@@ -1271,7 +1271,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
             if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
                 continue;
             }
-            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             // we will NOT ignore double emails for member-related emails
             // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
             // but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
@@ -1297,7 +1297,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
             if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $person_id, $cond_person_ids_arr ) ) {
                 continue;
             }
-            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             // we will ignore double emails
             if ( ! in_array( $person['email'], $emails_handled ) ) {
                 if ($count_only) {
@@ -1355,7 +1355,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                     } else {
                         $tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
                         $tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
-                        $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
+                        $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'], $attendee['email'] );
                         $person_id   = $attendee['person_id'];
                         $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                     }
@@ -1377,7 +1377,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                         } else {
                             $tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
                             $tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
-                            $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
+                            $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'], $attendee['email'] );
                             $person_id   = $attendee['person_id'];
                             $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                         }
@@ -1430,7 +1430,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                     if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
                         continue;
                     }
-                    $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                    $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 
                     // we will NOT ignore double emails for member-related emails
                     // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
@@ -1462,7 +1462,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                     $person = eme_get_person( $person_id );
                     // we will ignore double emails
                     if ( ! in_array( $person['email'], $emails_handled ) ) {
-                        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
                         if ( ! $ignore_massmail_setting && ! $person['massmail'] ) {
                             continue;
                         }
@@ -2136,7 +2136,7 @@ function eme_send_mails_ajax_actions( $action ) {
                 $ajaxResult['Result']      = 'ERROR';
             } else {
                 $person       = eme_get_person( $preview_mail_to );
-                $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
                 $mail_subject = eme_replace_generic_placeholders( $mail_subject, 'text' );
                 $mail_message = eme_replace_generic_placeholders( $mail_message, $mail_text_html );
                 $mail_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
@@ -2308,7 +2308,7 @@ function eme_send_mails_ajax_actions( $action ) {
                 $ajaxResult['Result']      = 'ERROR';
             } else {
                 $person      = eme_get_person( $preview_mail_to );
-                $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
                 $event       = eme_get_event( $event_ids[0] );
                 if ( ! empty( $event ) ) {
                     $contact       = eme_get_event_contact( $event );
@@ -2463,7 +2463,7 @@ function eme_emails_page() {
             $person_ids     = eme_get_tasksignup_personids( $tasksignup_ids );
             $persons        = eme_get_persons( $person_ids );
             foreach ( $persons as $person ) {
-                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             }
         }
         if ( isset( $_POST['booking_ids'] ) ) {
@@ -2472,7 +2472,7 @@ function eme_emails_page() {
             $person_ids  = eme_get_booking_personids( $booking_ids );
             $persons     = eme_get_persons( $person_ids );
             foreach ( $persons as $person ) {
-                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             }
         }
         if ( isset( $_POST['person_ids'] ) ) {
@@ -2480,7 +2480,7 @@ function eme_emails_page() {
             $person_ids = explode( ',', eme_sanitize_request($_POST['person_ids'] ));
             $persons    = eme_get_persons( $person_ids );
             foreach ( $persons as $person ) {
-                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             }
         }
         if ( isset( $_POST['member_ids'] ) ) {
@@ -2488,7 +2488,7 @@ function eme_emails_page() {
             $member_ids = explode( ',', eme_sanitize_request($_POST['member_ids'] ));
             $members    = eme_get_members( $member_ids );
             foreach ( $members as $member ) {
-                $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'] );
+                $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] );
             }
         }
     } else {
@@ -2538,7 +2538,7 @@ function eme_emails_page() {
                 if (! empty( $member ) ) {
                     $person = eme_get_person( $member['person_id'] );
                     if ( !empty( $person ) ) {
-                        $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['firstname'] );
+                        $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
                     }
                 }
             }
@@ -3391,7 +3391,7 @@ function eme_unsub_send_confirmation_mail( $email ) {
         $unsub_confirm_body    = eme_translate( get_option( 'eme_unsub_confirm_body' ) );
         $unsub_confirm_body    = eme_replace_people_placeholders( $unsub_confirm_body, $person );
         $unsub_confirm_body    = str_replace( '#_CONTACTPERSON', $contact_email, $unsub_confirm_body );
-        $full_name             = eme_format_full_name( $person['firstname'], $person['lastname'] );
+        $full_name             = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
         eme_queue_fastmail( $unsub_confirm_subject, $unsub_confirm_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
     }
 }

@@ -821,7 +821,7 @@ function eme_meta_box_div_location_customfields( $location ) {
         } else {
             $field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, 'eme_formfield' );
         }
-        echo "<tr><td>" . esc_html( $field_name ) . "</td><td style='width: 100%;'>" . $field_html . "</td></tr>";
+        echo "<tr><td>" . esc_html( $field_name ) . "</td><td style='width: 100%;'>" . $field_html . "</td></tr>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted plugin HTML
     }
 ?>
     </table>

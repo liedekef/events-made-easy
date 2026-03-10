@@ -4893,11 +4893,13 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 
     header( 'Content-type: text/csv; charset=UTF-8' );
     header( 'Content-Encoding: UTF-8' );
-    header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
+    header( 'Content-Disposition: attachment; filename=report-' . gmdate( 'Ymd-His' ) . '.csv' );
     eme_nocache_headers();
 
     // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV export
     $fp = fopen( 'php://output', 'w' );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
     if ( $template_id_header ) {
@@ -4938,6 +4940,7 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
             eme_fputcsv( $fp, $output, $delimiter );
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $fp );
     exit;
 }
@@ -6053,6 +6056,7 @@ function eme_import_csv_members() {
     $inserted  = 0;
     $errors    = 0;
     $error_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -6220,6 +6224,7 @@ function eme_import_csv_members() {
             }
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
     $result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
@@ -6250,6 +6255,7 @@ function eme_import_csv_member_dynamic_answers() {
     $inserted  = 0;
     $errors    = 0;
     $error_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -6382,6 +6388,7 @@ function eme_import_csv_member_dynamic_answers() {
             }
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     // translators: %1$d is the number of inserts, %2$d is the number of errors
     $result = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );

@@ -232,9 +232,9 @@ function eme_sitemap() {
             $locurl = eme_event_url( $event );
             // Format the date - also in case some EME Events have 0000-00-00 date format, manually add 1st Jan 2012
 			if ( strtotime( $event['modif_date'] ) > strtotime( '2010-01-01 00:00' ) ) {
-					$lastmod = date( 'Y-m-d', strtotime( $event['modif_date'] ) );
+					$lastmod = gmdate( 'Y-m-d', strtotime( $event['modif_date'] ) );
 			} else {
-					$lastmod = date( 'Y-m-d', strtotime( '2010-01-01 00:00' ) );
+					$lastmod = gmdate( 'Y-m-d', strtotime( '2010-01-01 00:00' ) );
 			}
 				// Make future events higher priority
 			if ( strtotime( $event['event_start'] ) > strtotime( 'today' ) ) {

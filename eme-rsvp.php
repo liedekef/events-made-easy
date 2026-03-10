@@ -661,11 +661,13 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 
     header( 'Content-type: text/csv; charset=UTF-8' );
     header( 'Content-Encoding: UTF-8' );
-    header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
+    header( 'Content-Disposition: attachment; filename=report-' . gmdate( 'Ymd-His' ) . '.csv' );
     eme_nocache_headers();
 
     // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV export
     $fp = fopen( 'php://output', 'w' );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
     if ( $template_id_header ) {
@@ -705,6 +707,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
             }
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $fp );
     exit;
 }
@@ -728,11 +731,13 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 
     header( 'Content-type: text/csv; charset=UTF-8' );
     header( 'Content-Encoding: UTF-8' );
-    header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
+    header( 'Content-Disposition: attachment; filename=report-' . gmdate( 'Ymd-His' ) . '.csv' );
     eme_nocache_headers();
 
     // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV export
     $fp      = fopen( 'php://output', 'w' );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
     $headers = [ __( 'Title\Date', 'events-made-easy' ) ];
 
@@ -786,6 +791,7 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
         }
         eme_fputcsv( $fp, $line, $delimiter );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $fp );
     exit;
 }
@@ -5139,6 +5145,7 @@ function eme_import_csv_payments() {
     $errors      = 0;
     $error_msg   = '';
     $ignored_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle      = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -5242,6 +5249,7 @@ function eme_import_csv_payments() {
             $result .= '<br><br>' . __( 'Erronous entries', 'events-made-easy' ) . '<br>' . $error_msg;
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     return $result;
 }

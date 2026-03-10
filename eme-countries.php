@@ -44,6 +44,7 @@ function eme_countries_page() {
 			//validate whether uploaded file is a csv file
 			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
 					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 					if ( ! $handle ) {
 						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -89,6 +90,7 @@ function eme_countries_page() {
 								$message .= "<br>" . $error_msg;
 							}
 						}
+						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
 						fclose( $handle );
 					}
 				} else {
@@ -105,6 +107,7 @@ function eme_countries_page() {
 			//validate whether uploaded file is a csv file
 			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
 					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 					if ( ! $handle ) {
 						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -151,6 +154,7 @@ function eme_countries_page() {
 								$message .= "<br>" . $error_msg;
 							}
 						}
+						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
 						fclose( $handle );
 					}
 				} else {

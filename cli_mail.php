@@ -64,6 +64,7 @@ function eme_mail_read( $iKlimit = '' ) {
 	$sErrorSTDINFail = 'Error - failed to read mail from STDIN!';
 
 	// Attempt to connect to STDIN
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- STDIN handling
 	$fp = fopen( 'php://stdin', 'r' );
 
 	// Failed to connect to STDIN? (shouldn't really happen)
@@ -78,17 +79,20 @@ function eme_mail_read( $iKlimit = '' ) {
 	// Read message up until limit (if any)
 	if ( $iKlimit == -1 ) {
 		while ( ! feof( $fp ) ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- binary read
 			$sEmail .= fread( $fp, 1024 );
 		}
 	} else {
 		$i_limit = 0;
 		while ( ! feof( $fp ) && $i_limit < $iKlimit ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- binary read
 			$sEmail .= fread( $fp, 1024 );
 			++$i_limit;
 		}
 	}
 
 	// Close connection to STDIN
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- STDIN handling
 	fclose( $fp );
 
 	// Return message

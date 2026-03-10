@@ -178,8 +178,7 @@ function eme_get_holiday_listinfo( $id ) {
 			$current = strtotime( $start );
 			$end     = strtotime( $end );
 			while ( $current <= $end ) {
-				// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date -- local date iteration from strtotime()
-			$day_in_range                       = date( 'Y-m-d', $current );
+                $day_in_range                       = date( 'Y-m-d', $current ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date -- local date iteration from strtotime()
 				$res_days[ $day_in_range ]['name']  = $name;
 				$res_days[ $day_in_range ]['class'] = $class;
 				$res_days[ $day_in_range ]['link']  = $link;

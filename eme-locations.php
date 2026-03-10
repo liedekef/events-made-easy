@@ -228,6 +228,7 @@ function eme_import_csv_locations() {
     $inserted  = 0;
     $errors    = 0;
     $error_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -350,6 +351,7 @@ function eme_import_csv_locations() {
             $result .= '<br>' . $error_msg;
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     return $result;
 }
@@ -1310,7 +1312,7 @@ function eme_sanitize_location( $location ) {
     foreach ( $url_vars as $url_var ) {
         if ( ! empty( $location[ $url_var ] ) ) {
             //make sure url's have a correct prefix
-            $parsed = parse_url( $location[ $url_var ] );
+            $parsed = wp_parse_url( $location[ $url_var ] );
             if ( empty( $parsed['scheme'] ) ) {
                 $scheme               = is_ssl() ? 'https://' : 'http://';
                 $location[ $url_var ] = $scheme . ltrim( $location[ $url_var ], '/' );
@@ -1646,7 +1648,7 @@ function eme_global_map_shortcode( $atts ) {
     $random_order  = false;
     $locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $atts['category'], notcategory: $atts['notcategory'], limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
     $id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
-    $id_base       = rand() . '_' . $id_base;
+    $id_base       = wp_rand() . '_' . $id_base;
     $style = '';
     if ( ! empty( $width ) || ! empty( $height ) ) {
         $width_style = '';
@@ -2776,7 +2778,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         if ( isset( $location['event_id'] ) ) {
             $id_base = $location['event_id'] . '_' . $id_base;
         } else {
-            $id_base = rand() . '_' . $id_base;
+            $id_base = wp_rand() . '_' . $id_base;
         }
         $id             = 'eme-location-map_' . $id_base;
         $enable_zooming = get_option( 'eme_map_zooming' ) ? 'true' : 'false';

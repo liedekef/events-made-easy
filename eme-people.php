@@ -866,6 +866,7 @@ function eme_import_csv_people() {
     $errors    = 0;
     $error_msg = '';
     $updated_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -996,6 +997,7 @@ function eme_import_csv_people() {
         // translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
         $result = sprintf( esc_html__( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     if ( $updated ) {
         $result .= '<br>' . $updated_msg;
@@ -1034,7 +1036,9 @@ function eme_csv_tasksignups_report( $event_id ) {
     $tasksignup_answer_fieldids = eme_get_tasksignups_answers_fieldids( array_keys($signups) );
 
     // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV export
     $out = fopen( 'php://output', 'w' );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite($out, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
     if ( has_filter( 'eme_csv_header_filter' ) ) {
@@ -1171,6 +1175,7 @@ function eme_csv_tasksignups_report( $event_id ) {
         $line = apply_filters( 'eme_csv_footer_filter', $event );
         eme_fputcsv( $out, $line, $delimiter );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $out );
     die();
 }
@@ -1210,7 +1215,9 @@ function eme_csv_booking_report( $event_id ) {
     $booking_answer_fieldids = eme_get_booking_answers_fieldids( eme_get_bookingids_for( $event_id ) );
 
     // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV export
     $out = fopen( 'php://output', 'w' );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite($out, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
     if ( has_filter( 'eme_csv_header_filter' ) ) {
@@ -1455,6 +1462,7 @@ function eme_csv_booking_report( $event_id ) {
         $line = apply_filters( 'eme_csv_footer_filter', $event );
         eme_fputcsv( $out, $line, $delimiter );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $out );
     die();
 }

@@ -607,7 +607,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	}
 
 	// the real links are created via jquery when clicking on the prev-month or next-month class-links
-	$random        = ( rand( 100, 200 ) );
+	$random        = ( wp_rand( 100, 200 ) );
 	$cal_div_id    = "eme-calendar-$random";
 	$previous_link = "<a class='prev-month eme-cal-prev-month' href='#' data-full='$full' data-htmltable='$htmltable' data-htmldiv='$htmldiv' data-long_events='$long_events' data-month='$iPrevMonth' data-year='$iPrevYear' data-category='$category' data-author='$author' data-contact_person='$contact_person' data-location_id='$location_id' data-notcategory='$notcategory' data-template_id='$template_id' data-holiday_id='$holiday_id' data-weekdays='$weekdays' data-language='$lang' data-calendar_divid='$cal_div_id'>&lt;&lt;</a>";
 	$next_link     = "<a class='next-month eme-cal-next-month' href=\"#\" data-full='$full' data-htmltable='$htmltable' data-htmldiv='$htmldiv' data-long_events='$long_events' data-month='$iNextMonth' data-year='$iNextYear' data-category='$category' data-author='$author' data-contact_person='$contact_person' data-location_id='$location_id' data-notcategory='$notcategory' data-template_id='$template_id' data-holiday_id='$holiday_id' data-weekdays='$weekdays' data-language='$lang' data-calendar_divid='$cal_div_id'>&gt;&gt;</a>";

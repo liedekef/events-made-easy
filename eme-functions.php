@@ -140,19 +140,20 @@ function eme_client_clock_ajax() {
 function eme_captcha_generate( $file ) {
     // 23 letters (not the "l",o","q")
     $alphabet = 'abcdefghjkmnpqrstuvwxyz';
-    $random1  = substr( $alphabet, rand( 1, 23 ) - 1, 1 );
-    $random2  = rand( 2, 9 );
-    $rand     = rand( 1, 23 ) - 1;
-    $random3  = substr( $alphabet, rand( 1, 23 ) - 1, 1 );
-    $random4  = rand( 2, 9 );
-    $rand     = rand( 1, 23 ) - 1;
-    $random5  = substr( $alphabet, rand( 1, 23 ) - 1, 1 );
+    $random1  = substr( $alphabet, wp_rand( 1, 23 ) - 1, 1 );
+    $random2  = wp_rand( 2, 9 );
+    $rand     = wp_rand( 1, 23 ) - 1;
+    $random3  = substr( $alphabet, wp_rand( 1, 23 ) - 1, 1 );
+    $random4  = wp_rand( 2, 9 );
+    $rand     = wp_rand( 1, 23 ) - 1;
+    $random5  = substr( $alphabet, wp_rand( 1, 23 ) - 1, 1 );
 
     $randomtext = $random1 . $random2 . $random3 . $random4 . $random5;
     // strtolower not needed, $alphabet lowercase only
     //$randomtext=strtolower($randomtext);
 
     $res = 'eme_captcha_' . $file . '-' . md5( $randomtext );
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_touch -- filesystem check
     touch( get_temp_dir() . $res );
 
     $im = imagecreatetruecolor( 120, 38 );
@@ -167,7 +168,7 @@ function eme_captcha_generate( $file ) {
     $background_colors = [ $red, $blue, $green, $black ];
 
     // draw rectangle in random color
-    $background_color = $background_colors[ rand( 0, 3 ) ];
+    $background_color = $background_colors[ wp_rand( 0, 3 ) ];
     imagefilledrectangle( $im, 0, 0, 120, 38, $background_color );
 
     // replace font.ttf with the location of your own ttf font file
@@ -909,7 +910,7 @@ function eme_event_url( $event, $language = '' ) {
 
     if ( $event['event_url'] != '' && get_option( 'eme_use_external_url' ) && eme_is_url( $event['event_url'] ) ) {
         $the_link = $event['event_url'];
-        $parsed   = parse_url( $the_link );
+        $parsed   = wp_parse_url( $the_link );
         if ( empty( $parsed['scheme'] ) ) {
             $the_link = 'https://' . ltrim( $the_link, '/' );
         }
@@ -952,7 +953,7 @@ function eme_location_url( $location, $language = '' ) {
     $the_link = '';
     if ( $location['location_url'] != '' && ( get_option( 'eme_use_external_url' ) || $location['location_properties']['online_only'] ) && eme_is_url( $location['location_url'] ) ) {
         $the_link = $location['location_url'];
-        $parsed   = parse_url( $the_link );
+        $parsed   = wp_parse_url( $the_link );
         if ( empty( $parsed['scheme'] ) ) {
             $the_link = 'https://' . ltrim( $the_link, '/' );
         }
@@ -1981,7 +1982,7 @@ function eme_is_url( $url ) {
     if ( eme_is_empty_string( $url ) ) {
         return false;
     }
-    $parsed = parse_url( $url );
+    $parsed = wp_parse_url( $url );
     if ( empty( $parsed['scheme'] ) ) {
         $url = 'https://' . ltrim( $url, '/' );
     }
@@ -3154,6 +3155,7 @@ function eme_upload_files( $id, $type = 'bookings' ) {
                 continue;
             }
 
+            // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- file upload handling
             if ( ! move_uploaded_file( $temp_name, $targetPath . '/' . $fileNameChanged ) ) {
                 $errors[] = $fileName . ': ' . __( 'Upload failed.', 'events-made-easy' );
                 continue;
@@ -3215,6 +3217,7 @@ function eme_upload_files( $id, $type = 'bookings' ) {
                     continue;
                 }
 
+                // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- file upload handling
                 if ( ! move_uploaded_file( $temp_name, $targetPath . '/' . $fileNameChanged ) ) {
                     $errors[] = $fileName . ': ' . __( 'Upload failed.', 'events-made-easy' );
                     continue;
@@ -3301,6 +3304,7 @@ function eme_delTree( $dir ) {
     foreach ( $files as $file ) {
         ( is_dir( "$dir/$file" ) ) ? delTree( "$dir/$file" ) : wp_delete_file( "$dir/$file" );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- directory cleanup
     return rmdir( $dir );
 }
 function eme_delete_uploaded_files( $id, $type = 'bookings' ) {
@@ -3379,6 +3383,7 @@ function eme_fputcsv( $fh, $fields, $delimiter = ';', $enclosure = '"' ) {
         ) : $enclosure . $field . $enclosure;
     }
 
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- CSV export
     fwrite( $fh, join( $delimiter, $output ) . "\r\n" );
 }
 
@@ -3584,7 +3589,7 @@ function eme_generate_unique_wp_username( $name ) {
     $basic_username = preg_replace( '/\s+/', '', $name );
     $username       = sanitize_user( $basic_username );
     while ( username_exists( $username ) ) {
-        $rnd_str  = sprintf( '%0d', mt_rand( 1, 999999 ) );
+        $rnd_str  = sprintf( '%0d', wp_rand( 1, 999999 ) );
         $username = sanitize_user( $basic_username . '-' . $rnd_str );
     }
     return $username;
@@ -4211,7 +4216,9 @@ function eme_mkdir_with_index( $targetPath ) {
     if ( ! is_dir( $targetPath ) ) {
         $mkdir_res = wp_mkdir_p( $targetPath );
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- filesystem check
     if ( $mkdir_res && is_writable( $targetPath ) && ! is_file( $targetPath . '/index.html' ) ) {
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_touch -- filesystem check
         touch( $targetPath . '/index.html' );
     }
     return $mkdir_res;

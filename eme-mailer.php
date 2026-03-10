@@ -1184,6 +1184,7 @@ function eme_mail_track( $random_id ) {
         header( 'Content-Type: image/gif' );
         //$image = file_get_contents($eme_plugin_dir.'images/1x1.gif');
         //echo $image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- commented out
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile -- attachment download
         readfile( $eme_plugin_dir . 'images/1x1.gif' );
     }
 }

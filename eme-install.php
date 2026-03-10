@@ -74,8 +74,10 @@ function _eme_install() {
 		eme_mkdir_with_index( $eme_upload_dir . '/' . $upload_folder );
 	}
 	// let's restrict includes folder even more
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- filesystem check
 	if ( is_writable( $eme_upload_dir . '/includes' ) && ! is_file( $eme_upload_dir . '/includes/.htaccess' ) ) {
 		$content = "Deny from all";
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- htaccess creation
 		file_put_contents($eme_upload_dir . '/includes/.htaccess', $content);
 	}
 

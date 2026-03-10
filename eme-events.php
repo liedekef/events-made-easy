@@ -4434,7 +4434,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 
     // get the paging output ready
     $id_base          = preg_replace( '/\D/', '_', microtime( 1 ) );
-    $id_base          = rand() . '_' . $id_base;
+    $id_base          = wp_rand() . '_' . $id_base;
     $pagination_top   = "<div id='div_events-pagination-top_$id_base' class='events-pagination-top'> ";
     $nav_hidden_class = "style='visibility:hidden;'";
 
@@ -5872,6 +5872,7 @@ function eme_import_csv_events() {
     $inserted  = 0;
     $errors    = 0;
     $error_msg = '';
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -6050,6 +6051,7 @@ function eme_import_csv_events() {
             $result .= '<br>' . $error_msg;
         }
     }
+    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
     fclose( $handle );
     return $result;
 }
@@ -9282,7 +9284,7 @@ function eme_sanitize_event( $event ) {
     foreach ( $url_vars as $url_var ) {
         if ( ! empty( $event[ $url_var ] ) ) {
             //make sure url's have a correct prefix
-            $parsed = parse_url( $event[ $url_var ] );
+            $parsed = wp_parse_url( $event[ $url_var ] );
             if ( empty( $parsed['scheme'] ) ) {
                 $scheme            = is_ssl() ? 'https://' : 'http://';
                 $event[ $url_var ] = $scheme . ltrim( $event[ $url_var ], '/' );

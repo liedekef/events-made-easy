@@ -34,7 +34,7 @@ function eme_get_perpetual_recurrences() {
 	$res = [];
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$sql              = "SELECT * FROM $recurrence_table WHERE recurrence_freq != 'specific'";
-	$recurrences      = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$recurrences      = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 	foreach ($recurrences as $recurrence) {
 		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
 			$res[] = $recurrence;
@@ -691,14 +691,14 @@ function eme_ajax_recurrences_list() {
 	if ( ! empty( $search_name ) ) {
 		$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where";
-		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where $orderby $limit";
 	} else {
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table $where";
-		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$recurrences_count = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 		$sql               = "SELECT * FROM $recurrence_table $where $orderby $limit";
 	}
-	$recurrences = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$recurrences = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 
 	$rows = [];
 	foreach ( $recurrences as $recurrence ) {

@@ -1075,6 +1075,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
     eme_update_payment_pg_pid( $payment['id'], $checkoutId );
 
     $form_html  = $button_above;
+    // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript -- SumUp payment SDK, must be loaded inline for payment form
     $form_html .= '
     <div id="sumup-card"></div>
     <script type="text/javascript" src="https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js" ></script>
@@ -1088,6 +1089,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
             },
         });
     </script>';
+    // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript
     $form_html .= $button_below;
     return $form_html;
 }
@@ -1546,10 +1548,12 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     if ( ! $res ) {
         $form_html .= '<br>' . __( 'Mercado Pago API returned an error: ', 'events-made-easy' ) . esc_html( $preference->Error() );
     } else {
+        // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Mercado Pago payment SDK, must be loaded inline for payment form
         $form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
            <script src='https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js' data-preference-id='" . $preference->id . "' data-button-label='$button_label'></script>
            <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
            ";
+        // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript
         $form_html .= '</form>';
     }
     $form_html .= $button_below;
@@ -2478,7 +2482,7 @@ function eme_charge_stripe() {
     $stripe_session_id = $stripe_session->id;
     eme_update_payment_pg_pid( $payment_id, $stripe_session_id );
 
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Stripe payment integration HTML block with escaped variables
+    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Stripe payment integration HTML block with escaped variables, SDK must be loaded inline
     print "<html><body>
         <script src='https://js.stripe.com/v3/'></script>
         <script>
@@ -2489,6 +2493,7 @@ function eme_charge_stripe() {
         </script>
         </body></html>
    ";
+    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.EnqueuedResources.NonEnqueuedScript
 }
 
 function eme_charge_braintree() {

@@ -452,11 +452,11 @@ function eme_register_scripts() {
         wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_friendlycaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
-        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
     }
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
@@ -516,7 +516,7 @@ function eme_admin_notices() {
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
         <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php
 			/* translators: 1: user name, 2: widgets URL, 3: widgets title, 4: template tags URL, 5: template tags title, 6: shortcodes URL, 7: shortcodes title, 8: settings URL, 9: settings title, 10: dismiss title */
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML format string with escaped arguments
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML format string with escaped arguments
 			printf(
 				__( "<p>Hey, <strong>%1\$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2\$s' title='%3\$s'>widgets</a>, <a href='%4\$s' title='%5\$s'>template tags</a> or <a href='%6\$s' title='%7\$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8\$s' title='%9\$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10\$s'>click here</a> and you won't see this again!</p>", 'events-made-easy' ),
 				esc_html( $current_user->display_name ),
@@ -530,6 +530,7 @@ function eme_admin_notices() {
 				esc_attr__( 'Change settings', 'events-made-easy' ),
 				esc_attr__( "Don't show this advice again", 'events-made-easy' )
 			);
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		?></div>
 <?php
         }
@@ -544,6 +545,7 @@ function eme_admin_notices() {
             echo wp_kses_post( __( 'If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'events-made-easy' ) );
 ?>
     <br><br>
+<?php // phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- PayPal donate button, external image is intentional ?>
 PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="PayPal - The safer, easier way to pay online!"></a>
     <br><br>
 Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>

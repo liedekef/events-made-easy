@@ -445,7 +445,7 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
             $sql .= " WHERE $extra_search";
         }
     }
-    $members = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $members = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $members as $key => $member ) {
         $members[ $key ] = eme_get_extra_member_data( $member );
     }

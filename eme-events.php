@@ -904,7 +904,7 @@ function eme_events_page() {
 function eme_get_all_pages() {
     global $wpdb;
     $query = 'SELECT id, post_title FROM ' . EME_DB_PREFIX . "posts WHERE post_type = 'page' AND post_status='publish' ORDER BY post_title ASC";
-    $pages = $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+    $pages = $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
     // get_pages() is better, but uses way more memory and it might be filtered by eme_filter_get_pages()
     //$pages = get_pages();
     $output   = [];
@@ -4924,11 +4924,11 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
     if ( ! empty( $name ) ) {
         if ( $name_only ) {
             $query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start $limit";
-            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         } else {
             $query = "SELECT * FROM $table WHERE ((event_name LIKE %s) OR
                 (event_notes LIKE %s)) $condition ORDER BY event_start $limit";
-            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         }
     } else {
         $prepared_sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -5663,11 +5663,11 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     $res     = wp_cache_get( "eme_events $sql_md5" );
     if ( $res === false ) {
         if ( $count ) {
-            $count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            $count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
             wp_cache_set( "eme_events $sql_md5", $count, '', 10 );
             return $count;
         } else {
-            $events          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            $events          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
             $inflated_events = [];
             if ( ! empty( $events ) ) {
                 // if in the frontend we might want to hide rsvp ended events
@@ -10622,7 +10622,7 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
     if (eme_is_list_of_int( $ids ) ) {
         $sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
             WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     }
     $ajaxResult['Result']  = 'OK';
     $ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );

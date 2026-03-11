@@ -3449,7 +3449,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         // check the POST var
         $ids_arr = explode( ',', eme_sanitize_request($_POST[ $postvar ]) );
         if ( eme_is_numeric_array( $ids_arr ) ) {
-            $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         }
         $fTableResult['Result']      = 'OK';
         $fTableResult['Message']     = __( 'Records deleted!', 'events-made-easy' );

@@ -1498,6 +1498,7 @@ function eme_printable_booking_report( $event_id ) {
         <html>
         <head>
     <title><?php echo esc_html__( 'Bookings for', 'events-made-easy' ) . ' ' . esc_html( eme_translate( $event['event_name'] ) ); ?></title>
+    <?php // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- stylesheet for print output, not standard page ?>
     <link rel="stylesheet" href="<?php echo esc_url($stylesheet); ?>" type="text/css" media="screen">
 <?php
     $file_name = get_stylesheet_directory() . '/eme.css';
@@ -2995,21 +2996,21 @@ function eme_get_person_by_post() {
 function eme_count_persons_by_email( $email ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_personids_by_email( $email ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_person_by_email( $email ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' LIMIT 1', $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' LIMIT 1', $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     $res     = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( $res ) {
         $res['properties'] = eme_init_person_props( eme_unserialize( $res['properties'] ) );
@@ -3026,7 +3027,7 @@ function eme_get_person_by_email_only( $email ) {
     //if (get_option('eme_unique_email_per_person'))
     //  $sql = $wpdb->prepare("SELECT * FROM $people_table WHERE email = %s AND status=".EME_PEOPLE_STATUS_ACTIVE. " ORDER BY wp_id DESC LIMIT 1",$email);
     //else
-    $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE lastname = '' AND firstname = '' AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC LIMIT 1', $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE lastname = '' AND firstname = '' AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC LIMIT 1', $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     $res     = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( $res ) {
         $res['properties'] = eme_init_person_props( eme_unserialize( $res['properties'] ) );
@@ -3046,16 +3047,16 @@ function eme_get_person_by_name_and_email( $lastname, $firstname, $email, $skip_
         $extra_sql = "";
     }
     if ( ! empty( $firstname ) ) {
-        $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $firstname, $lastname, $firstname, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $firstname, $lastname, $firstname, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     } else {
-        $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     }
     $res = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( ! $res && get_option( 'eme_rsvp_check_without_accents' ) ) {
         if ( ! empty( $firstname ) ) {
-            $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), remove_accents( $firstname ), remove_accents( $lastname ), remove_accents( $firstname ), $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), remove_accents( $firstname ), remove_accents( $lastname ), remove_accents( $firstname ), $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         } else {
-            $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         }
         $res = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
@@ -3676,7 +3677,7 @@ function eme_update_grouppersons( $group_id, $person_ids ) {
         }
 
         $prepared_sql = $wpdb->prepare(
-            "INSERT INTO $table (person_id, group_id) VALUES " . implode(',', $placeholders), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "INSERT INTO $table (person_id, group_id) VALUES " . implode(',', $placeholders), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
             $values
         );
         $wpdb->query($prepared_sql); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

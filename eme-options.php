@@ -1403,7 +1403,7 @@ function eme_check_conflicting_slug() {
         if ( eme_is_empty_string( $events_prefix ) ) {
             continue;
         }
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $events_prefix, $events_pageid ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $events_prefix, $events_pageid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $check_sql uses $wpdb->posts and %s/%d placeholders, fully prepared
         if ( ! empty( $post_name_check ) ) {
             return $post_name_check;
         }
@@ -1412,7 +1412,7 @@ function eme_check_conflicting_slug() {
         if ( eme_is_empty_string( $locations_prefix ) ) {
             continue;
         }
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $locations_prefix, $events_pageid ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $locations_prefix, $events_pageid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $check_sql uses $wpdb->posts and %s/%d placeholders, fully prepared
         if ( ! empty( $post_name_check ) ) {
             return $post_name_check;
         }
@@ -1421,19 +1421,19 @@ function eme_check_conflicting_slug() {
         if ( eme_is_empty_string( $categories_prefix ) ) {
             continue;
         }
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $categories_prefix, $events_pageid ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $categories_prefix, $events_pageid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $check_sql uses $wpdb->posts and %s/%d placeholders, fully prepared
         if ( ! empty( $post_name_check ) ) {
             return $post_name_check;
         }
     }
     if ( ! empty( $calendar_prefix ) ) {
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $calendar_prefix, $events_pageid ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $calendar_prefix, $events_pageid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $check_sql uses $wpdb->posts and %s/%d placeholders, fully prepared
         if ( ! empty( $post_name_check ) ) {
             return $post_name_check;
         }
     }
     if ( ! empty( $payments_prefix ) ) {
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $payments_prefix, $events_pageid ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $payments_prefix, $events_pageid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $check_sql uses $wpdb->posts and %s/%d placeholders, fully prepared
         if ( ! empty( $post_name_check ) ) {
             return $post_name_check;
         }

@@ -942,7 +942,7 @@ function eme_search_locations( $name ) {
     $table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $query = "SELECT * FROM $table WHERE (location_name LIKE %s) OR
         (location_description LIKE %s) ORDER BY location_name";
-    $prepared_sql = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -951,7 +951,7 @@ function eme_get_all_locations() {
     global $wpdb;
     $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $sql             = "SELECT * FROM $locations_table WHERE location_name != '' ORDER BY location_name";
-    $locations       = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $locations       = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $locations as $key => $location ) {
         $locations[ $key ] = eme_get_extra_location_data( $location );
     }
@@ -1183,7 +1183,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
         } else {
             $sql = "SELECT * FROM $locations_table WHERE location_name != '' $where ORDER BY location_name $limit";
         }
-        $locations = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $locations = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
         // don't forget the images (for the older locations that didn't use the wp gallery)
         if ( $locations ) {
             foreach ( $locations as $key => $location ) {
@@ -1268,7 +1268,7 @@ function eme_get_city_location_ids( $cities ) {
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
-        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     }
     return $location_ids;
 }
@@ -1289,7 +1289,7 @@ function eme_get_country_location_ids( $countries ) {
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
-        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     }
     return $location_ids;
 }
@@ -3001,8 +3001,8 @@ function eme_ajax_locations_list() {
         $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 
-    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+    $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     $records     = [];
     foreach ( $rows as $location ) {
         $location = eme_get_extra_location_data( $location );

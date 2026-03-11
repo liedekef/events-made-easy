@@ -605,18 +605,9 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 
-		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
-		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
-               VALUES ('Arts Millenium Building', 'Newcastle Road','Galway', '53.275', '-9.06532')"
-		);
-		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
-		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
-               VALUES ('The Crane Bar', '2, Sea Road','Galway', '53.2683224', '-9.0626223')"
-		);
-		$wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
-		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
-               VALUES ('Taaffes Bar', '19 Shop Street','Galway', '53.2725', '-9.05321')"
-		);
+		$wpdb->query( 'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude) VALUES ('Arts Millenium Building', 'Newcastle Road','Galway', '53.275', '-9.06532')" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- hardcoded seed data, table name is a safe constant
+		$wpdb->query( 'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude) VALUES ('The Crane Bar', '2, Sea Road','Galway', '53.2683224', '-9.0626223')" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- hardcoded seed data, table name is a safe constant
+		$wpdb->query( 'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude) VALUES ('Taaffes Bar', '19 Shop Street','Galway', '53.2725', '-9.05321')" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- hardcoded seed data, table name is a safe constant
 	} else {
 		maybe_add_column( $table_name, 'location_author', "ALTER TABLE $table_name ADD location_author mediumint(9) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'location_category_ids', "ALTER TABLE $table_name ADD location_category_ids text;" );

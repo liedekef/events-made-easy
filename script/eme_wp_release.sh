@@ -22,6 +22,11 @@ set -euo pipefail
 PLUGIN_SLUG="events-made-easy"
 SVN_URL="https://plugins.svn.wordpress.org/${PLUGIN_SLUG}"
 
+# Third-party directories/files that get phpcs:disable injected in the build.
+# These are vendor SDKs whose code we don't control but PCP still scans.
+VENDOR_PHP_DIRS=(payment_gateways dompdf)
+VENDOR_PHP_FILES=(class-expressivedate.php)
+
 # --- Argument parsing --------------------------------------------------------
 
 VERSION="${1:-}"
@@ -139,7 +144,7 @@ fi
 # STEP 1: Validation
 # =============================================================================
 
-step "1/6" "Validation"
+step "1/7" "Validation"
 
 # Check version matches plugin header
 HEADER_VERSION=$(grep -oP "^Version:\s*\K[0-9.]+" "${PLUGIN_DIR}/events-manager.php" || true)
@@ -168,7 +173,7 @@ if [ "$DEPLOY" = true ]; then
 fi
 
 # PHP syntax check on own code
-step "2/6" "PHP syntax check"
+step "2/7" "PHP syntax check"
 PHP_ERRORS=0
 for file in "${PLUGIN_DIR}"/*.php; do
     if ! php -l "$file" >/dev/null 2>&1; then
@@ -186,7 +191,7 @@ info "All PHP files pass syntax check"
 # STEP 3: Create clean copy
 # =============================================================================
 
-step "3/6" "Create clean release copy"
+step "3/7" "Create clean release copy"
 
 # Export from git (no .git directory)
 mkdir -p "$RELEASE_DIR"
@@ -278,14 +283,59 @@ for i in "${!VC_PATHS[@]}"; do
 done
 
 # =============================================================================
-# STEP 4: Patch events-manager.php
+# STEP 4: Inject phpcs:disable into third-party PHP files
+# =============================================================================
+# PCP (Plugin Check Plugin) scans ALL PHP files in the release, including
+# third-party SDKs. These vendor files generate hundreds of PCP errors that
+# would block WP.org submission. Since we must not modify vendor code in the
+# repo (upstream updates would overwrite changes), we inject a phpcs:disable
+# comment at the top of each vendor PHP file during the build only.
+#
+# References:
+#   - WP.org PCP requirement: https://developer.wordpress.org/plugins/wordpress-org/plugin-developer-faq/#plugin-check
+#   - PCP auto-ignores vendor_prefixed/ but not custom vendor dir names
+#   - Feature request for configurable exclusions: https://github.com/WordPress/plugin-check/issues/823
+
+step "4/7" "Inject phpcs:disable into third-party PHP files"
+
+VENDOR_INJECTED=0
+
+# Process vendor directories
+for vdir in "${VENDOR_PHP_DIRS[@]}"; do
+    vfull="${RELEASE_DIR}/${vdir}"
+    [ -d "$vfull" ] || continue
+    while IFS= read -r phpfile; do
+        # Only inject if file starts with <?php and doesn't already have phpcs:disable
+        head -3 "$phpfile" | grep -q 'phpcs:disable' && continue
+        if head -1 "$phpfile" | grep -q '^<?php'; then
+            sed -i '1 a\// phpcs:disable' "$phpfile"
+            VENDOR_INJECTED=$((VENDOR_INJECTED + 1))
+        fi
+    done < <(find "$vfull" -name '*.php' -type f)
+done
+
+# Process individual vendor files
+for vfile in "${VENDOR_PHP_FILES[@]}"; do
+    vfull="${RELEASE_DIR}/${vfile}"
+    [ -f "$vfull" ] || continue
+    head -3 "$vfull" | grep -q 'phpcs:disable' && continue
+    if head -1 "$vfull" | grep -q '^<?php'; then
+        sed -i '1 a\// phpcs:disable' "$vfull"
+        VENDOR_INJECTED=$((VENDOR_INJECTED + 1))
+    fi
+done
+
+info "Injected phpcs:disable into ${VENDOR_INJECTED} third-party PHP files"
+
+# =============================================================================
+# STEP 5: Patch events-manager.php
 # =============================================================================
 
-step "4/6" "Patch events-manager.php (remove GitHub updater + Update URI)"
+step "5/7" "Patch events-manager.php (remove GitHub updater + Update URI)"
 
 EM_FILE="${RELEASE_DIR}/events-manager.php"
 
-# 4a: Remove "Update URI:" line from plugin header
+# 5a: Remove "Update URI:" line from plugin header
 if grep -q "^Update URI:" "$EM_FILE"; then
     sed -i '/^Update URI:/d' "$EM_FILE"
     info "Removed 'Update URI:' header line"
@@ -293,7 +343,7 @@ else
     warn "'Update URI:' not found in header (already removed?)"
 fi
 
-# 4b: Remove GitHub updater block
+# 5b: Remove GitHub updater block
 #     require_once("class-eme-updater.php");
 #     $plugin_file = EME_PLUGIN_FILE_PATH;
 #     $github_username = 'liedekef';
@@ -306,7 +356,7 @@ else
     warn "GitHub updater code not found (already removed?)"
 fi
 
-# 4c: Verify the patched file is still valid PHP
+# 5c: Verify the patched file is still valid PHP
 if php -l "$EM_FILE" >/dev/null 2>&1; then
     info "Patched events-manager.php passes PHP syntax check"
 else
@@ -315,10 +365,10 @@ else
 fi
 
 # =============================================================================
-# STEP 5: Verification
+# STEP 6: Verification
 # =============================================================================
 
-step "5/6" "Verification"
+step "6/7" "Verification"
 
 # Verify critical files exist
 for f in events-manager.php readme.txt eme-functions.php eme-events.php; do
@@ -393,6 +443,25 @@ else
     info "No hidden files in vendor dirs"
 fi
 
+# Verify phpcs:disable was injected into vendor PHP files
+VENDOR_WITHOUT_DISABLE=0
+for vdir in "${VENDOR_PHP_DIRS[@]}"; do
+    vfull="${RELEASE_DIR}/${vdir}"
+    [ -d "$vfull" ] || continue
+    while IFS= read -r phpfile; do
+        if ! head -3 "$phpfile" | grep -q 'phpcs:disable'; then
+            fail "Missing phpcs:disable: ${phpfile#"$RELEASE_DIR"/}"
+            VENDOR_WITHOUT_DISABLE=$((VENDOR_WITHOUT_DISABLE + 1))
+        fi
+    done < <(find "$vfull" -name '*.php' -type f)
+done
+if [ "$VENDOR_WITHOUT_DISABLE" -gt 0 ]; then
+    fail "${VENDOR_WITHOUT_DISABLE} vendor PHP files missing phpcs:disable"
+    ERRORS=$((ERRORS + 1))
+else
+    info "All vendor PHP files have phpcs:disable"
+fi
+
 # Summary check
 if [ "$ERRORS" -gt 0 ]; then
     echo ""
@@ -408,10 +477,10 @@ TOTAL_FILES=$(find "$RELEASE_DIR" -type f | wc -l)
 info "Total files in release: ${TOTAL_FILES}"
 
 # =============================================================================
-# STEP 6: SVN Deploy
+# STEP 7: SVN Deploy
 # =============================================================================
 
-step "6/6" "SVN Deploy"
+step "7/7" "SVN Deploy"
 
 if [ "$DEPLOY" = false ]; then
     echo ""

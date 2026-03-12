@@ -540,9 +540,9 @@ function eme_meta_box_div_location_name_for_event( $location ) {
     echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 ?>
         <div id="loc_name" class="postbox">
-            <h3>
+            <h2>
                 <?php esc_html_e( 'Location name', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside">
             <input name="location_name" id="location_name" type="text" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40"> <?php echo $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_url() and esc_attr__() ?>
             <br><span class="eme_smaller"><?php esc_html_e( 'This is an autocomplete field. If a name of an existing location matches, it will be suggested.', 'events-made-easy' ); ?></span>
@@ -555,9 +555,9 @@ function eme_meta_box_div_location_details( $location ) {
     $map_is_active = get_option( 'eme_map_is_active' );
 ?>
         <div id="loc_address" class="postbox" style="overflow: hidden;">
-            <h3>
+            <h2>
                 <?php esc_html_e( 'Location address', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside" style="float:left; width:50%">
             <table><tr>
             <td><label for="location_address1"><?php echo esc_html( eme_translate( get_option( 'eme_address1_string' ) ) ); ?></label></td>
@@ -605,7 +605,7 @@ function eme_meta_box_div_location_details( $location ) {
 <?php
     if ( $map_is_active ) {
 ?>
-        <div id='eme-edit-location-map' class='eme-adminedit-location-map'></div></td>
+        <div id='eme-edit-location-map' class='eme-adminedit-location-map'></div>
 <?php
     }
 ?>
@@ -617,9 +617,9 @@ function eme_meta_box_div_location_details( $location ) {
 ?>
 
         <div id="loc_balloon_format" class="postbox">
-            <h3>
+            <h2>
             <?php esc_html_e( 'Location balloon format', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside">
             <?php eme_wysiwyg_textarea( 'eme_loc_prop_balloon_format', $location['location_properties']['balloon_format'], 1, 0 ); ?>
                 <br><?php esc_html_e( "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default.", 'events-made-easy' ); ?>
@@ -627,9 +627,9 @@ function eme_meta_box_div_location_details( $location ) {
         </div>
 
         <div id="loc_map_icon" class="postbox">
-            <h3>
+            <h2>
             <?php esc_html_e( 'Location map icon url', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside">
             <table><tr>
             <td><label for="eme_loc_prop_map_icon"><?php esc_html_e( 'Map icon url', 'events-made-easy' ); ?></label></td>
@@ -649,9 +649,9 @@ function eme_meta_box_div_location_details( $location ) {
         <?php endif; ?>
 
         <div id="loc_max_capacity" class="postbox">
-            <h3>
+            <h2>
             <?php esc_html_e( 'Location maximum capacity', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside">
             <table><tr>
             <td><label for="eme_loc_prop_max_capacity"><?php esc_html_e( 'Max capacity', 'events-made-easy' ); ?></label></td>
@@ -667,9 +667,9 @@ function eme_meta_box_div_location_details( $location ) {
 function eme_meta_box_div_location_notes( $location ) {
 ?>
         <div class="postbox" id="loc_description">
-            <h3>
+            <h2>
                 <?php esc_html_e( 'Location description', 'events-made-easy' ); ?>
-            </h3>
+            </h2>
             <div class="inside">
                 <div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
 <?php
@@ -694,9 +694,9 @@ function eme_meta_box_div_location_image( $location ) {
     }
 ?>
 <div id="div_location_image" class="postbox">
-    <h3>
+    <h2>
         <?php esc_html_e( 'Location image', 'events-made-easy' ); ?>
-    </h3>
+    </h2>
     <div id="location_current_image_inside" class="inside">
 <?php
     if ( ! empty( $location['location_image_url'] ) ) {
@@ -725,9 +725,9 @@ function eme_meta_box_div_location_image( $location ) {
 function eme_meta_box_div_location_url( $location ) {
 ?>
 <div id="div_location_url" class="postbox">
-    <h3>
+    <h2>
         <?php esc_html_e( 'External info', 'events-made-easy' ); ?>
-    </h3>
+    </h2>
     <div id="div_location_url_inside" class="inside">
     <table>
     <tr>

@@ -2709,7 +2709,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
             <?php esc_html_e( "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin).", 'events-made-easy' ); ?><br>
             <?php esc_html_e( "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted.", 'events-made-easy' ); ?>
         </td>
-        </td>
         </tr>
 <?php
     endif;

@@ -577,6 +577,7 @@ function eme_fs_getcategoriesradio( $more ) {
 }
 
 function eme_fs_getcategoriesselect( $more ) {
+    $more = eme_merge_classes_into_attrs('eme_snapselect', $more);
     $category_select = array();
     $category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" '.$more.' >';
     $categories = eme_fs_getcategories();
@@ -592,6 +593,7 @@ function eme_fs_getcategoriesselect( $more ) {
 }
 
 function eme_fs_getstatusselect( $more ) {
+    $more = eme_merge_classes_into_attrs('eme_snapselect', $more);
     $event_status_array = eme_status_array ();
     $status_select = array();
     $status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
@@ -605,7 +607,7 @@ function eme_fs_getstatusselect( $more ) {
 }
 
 function eme_fs_getbinaryselect( $name, $field_id, $default ) {
-    $val = "<select name='$name' id='$field_id'>";
+    $val = "<select name='$name' id='$field_id' class='eme_snapselect'>";
     $selected_YES="";
     $selected_NO="";
     if ($default==1)

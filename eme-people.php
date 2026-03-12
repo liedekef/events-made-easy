@@ -2641,7 +2641,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         <td colspan=2><input id="language" name="language" type="text" value="<?php echo esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
         </tr>
         <tr>
-        <tr>
         <td><label for="massmail"><?php esc_html_e( 'MassMail', 'events-made-easy' ); ?></label></td>
         <td colspan=2><?php echo eme_ui_select_binary( $person['massmail'], 'massmail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
         </tr>
@@ -2691,9 +2690,13 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
                 . esc_html( $wp_user->display_name ) . '</option>';
         }
     }
-    $eme_wp_user_arr = [];   // snapselect loads options via AJAX; the static array is empty.
-    echo eme_ui_select( $person['wp_id'], 'wp_id', $eme_wp_user_arr, $preselected_wpuser_option, 0, 'eme_snapselect_wpuser_class', 'data-person_wpid="' . intval( $person['wp_id'] ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
+        <select id='wp_id' name='wp_id'
+            data-placeholder="<?php esc_attr_e( 'Select a WP user', 'events-made-easy' ); ?>"
+            data-person_wpid="<?php echo intval( $person['wp_id'] ); ?>"
+            class="eme_snapselect_wpuser_class">
+            <?php echo $preselected_wpuser_option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML option element ?>
+        </select>
             <br>
             <?php esc_html_e( "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email.", 'events-made-easy' ); ?><br>
             <?php esc_html_e( "Linking an EME person with a WP user will change the person firstname/lastname/email to the WP user's firstname/lastname/email and those fields can then only be changed via the WP profile of that person.", 'events-made-easy' ); ?>

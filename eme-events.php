@@ -8807,7 +8807,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_multiprice_desc'>
         <td><label for='eme_prop_multiprice_desc'><?php esc_html_e( 'Price Categories descriptions', 'events-made-easy' ); ?> :</label></td>
-        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" col="40" style="field-sizing: content; min-width: 200px; max-width: 500px; min-height: 50px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", esc_html( $event['event_properties']['multiprice_desc'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output is already escaped by esc_html(), str_replace only adds newlines ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
+        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" cols="40" style="field-sizing: content; min-width: 200px; max-width: 500px; min-height: 50px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", esc_html( $event['event_properties']['multiprice_desc'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output is already escaped by esc_html(), str_replace only adds newlines ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_vat'>
         <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>
@@ -8860,7 +8860,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_require_eme_memberships'>
         <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
-        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', '" data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+        <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
         </td>
     </tr>
     <tr id='row_addpersontogroup'>
@@ -8886,7 +8886,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         </td>
     </tr>
     <tr id='row_ticketmail'>
-        <td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></td>
+        <td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></label></td>
         <td> <?php echo eme_ui_select( $event['event_properties']['ticket_mail'], 'eme_prop_ticket_mail', [ 'booking'  => __( 'At booking time', 'events-made-easy' ), 'approval' => __( 'Upon approval', 'events-made-easy' ), 'payment'  => __( 'Upon payment', 'events-made-easy' ), 'always'   => __( 'All of the above', 'events-made-easy'), ]); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
             <p class="eme_smaller"><?php esc_html_e( 'Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for.', 'events-made-easy' ); ?>
         </td>

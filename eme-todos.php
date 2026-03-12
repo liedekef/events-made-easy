@@ -205,8 +205,8 @@ function eme_meta_box_div_event_todos( $event ) {
 				</td>
 				<td>
 				<?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the todo ids only if it is not a duplicate event ?>
-					<input type='hidden' id="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" aria-label="hidden index" size="5" value="<?php if ( isset( $todo['todo_id'] ) ) { echo esc_attr( $todo['todo_id'] );} ?>">
-					<input type='hidden' id="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" aria-label="hidden index" size="5" value="<?php if ( isset( $todo['todo_nbr'] ) ) { echo esc_attr( $todo['todo_nbr'] );} ?>">
+					<input type='hidden' id="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_id'] ) ) { echo esc_attr( $todo['todo_id'] );} ?>">
+					<input type='hidden' id="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_nbr'] ) ) { echo esc_attr( $todo['todo_nbr'] );} ?>">
 				<?php endif; ?>
 				</td>
 				<td>

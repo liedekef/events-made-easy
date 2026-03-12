@@ -532,10 +532,10 @@ function eme_meta_box_div_location_name( $location ) {
 
 function eme_meta_box_div_location_name_for_event( $location ) {
     if ( empty( $location['location_id'] ) ) {
-        $edit_link = "<img id='img_edit_location' name='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Add location', 'events-made-easy' ) . "' title='" . __( 'Add location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
+        $edit_link = "<img id='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Add location', 'events-made-easy' ) . "' title='" . __( 'Add location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
         $location['location_id'] = 0;
     } else {
-        $edit_link = "<img id='img_edit_location' name='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
+        $edit_link = "<img id='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
     }
     echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 ?>

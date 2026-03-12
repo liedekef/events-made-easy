@@ -4098,7 +4098,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         // this way the html editor can show the layout as intended
 	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
         ?>
-        <span style="display: hidden;" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?> data-targetid="<?php echo esc_attr( $editor_id ); ?>">
+        <span style="display: none;" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?> data-targetid="<?php echo esc_attr( $editor_id ); ?>"></span>
         <?php
 	    // adding defaults in tinymce is difficult so we force the plain editor
         if ($html_editor == 'tinymce') {
@@ -4110,7 +4110,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         switch ( $html_editor ) {
             case 'jodit':
                 ?>
-                <textarea class="eme-editor" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?>><?php echo esc_html( $value ); ?></textarea>
+                <textarea class="eme-editor" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $editor_id ); ?>" rows="6"><?php echo esc_html( $value ); ?></textarea>
                 <?php
                 break;
             default: // the original tinymce goes here

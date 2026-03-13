@@ -3,15 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let CategoriesTable;
 
     if (CategoriesTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'categoriestablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        CategoriesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         CategoriesTable = new FTable('#CategoriesTableContainer', {
             title: emecategories.translate_categories,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             selecting: true,
             multiselect: true,
@@ -33,9 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 category_name: {
                     title: emecategories.translate_name
                 }
-            },
-            sortingInfoSelector: '#categoriestablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         CategoriesTable.load();

@@ -871,11 +871,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Events Table ---
     if (EventsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'eventstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        EventsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let eventFields = {
             event_id: {
                 key: true,
@@ -956,6 +951,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: emeevents.translate_events,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'event_start ASC, event_name ASC',
             selecting: true,
@@ -978,9 +974,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_customfields: eme_getValue(EME.$('#search_customfields')),
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
             }),
-            fields: eventFields,
-            sortingInfoSelector: '#eventstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            fields: eventFields
         });
 
         EventsTable.load();
@@ -988,15 +982,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Recurrences Table ---
     if (RecurrencesTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'recurrencetablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        RecurrencesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         RecurrencesTable = new FTable('#RecurrencesTableContainer', {
             title: emeevents.translate_recurrences,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'event_name ASC',
             selecting: true,
@@ -1060,9 +1050,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emeevents.translate_rec_singledur,
                     sorting: false
                 }
-            },
-            sortingInfoSelector: '#recurrencetablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         RecurrencesTable.load();

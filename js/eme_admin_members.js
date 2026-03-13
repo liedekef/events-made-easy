@@ -6,15 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Memberships Table ---
     if (MembershipsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'memberstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        MembershipsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         MembershipsTable = new FTable('#MembershipsTableContainer', {
             title: ememembers.translate_memberships,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -43,9 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: ememembers.translate_membercount,
                     sorting: false
                 }
-            },
-            sortingInfoSelector: '#memberstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         MembershipsTable.load();
@@ -92,11 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Members Table ---
     if (MembersTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'membersmemberstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        MembersTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let memberFields = {
             'members.member_id': {
                 key: true,
@@ -261,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: ememembers.translate_members,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'member_name ASC',
             selecting: true,
@@ -282,9 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
                 search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
             }),
-            fields: memberFields,
-            sortingInfoSelector: '#membersmemberstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            fields: memberFields
         });
 
         MembersTable.load();

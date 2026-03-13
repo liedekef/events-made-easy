@@ -6,11 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize People Table ---
     if (PeopleTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'peopletablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        PeopleTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let personFields = {
             'people.person_id': {
                 key: true,
@@ -145,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: emepeople.translate_people,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
             selecting: true,
@@ -165,9 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
                 search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
             }),
-            fields: personFields,
-            sortingInfoSelector: '#peopletablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            fields: personFields
         });
 
         PeopleTable.load();
@@ -175,15 +169,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Groups Table ---
     if (GroupsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'groupstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        GroupsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         GroupsTable = new FTable('#GroupsTableContainer', {
             title: emepeople.translate_groups,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -215,9 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emepeople.translate_groupcount,
                     sorting: false
                 }
-            },
-            sortingInfoSelector: '#groupstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         GroupsTable.load();

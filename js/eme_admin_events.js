@@ -603,25 +603,28 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        EME.$$('span[data-default]').forEach(span => {
-            const defaultValue = span.dataset.default.replace(/<br\s*\/?>/gi, '<br>');
-            const targetId = span.dataset.targetid;
-            const target = EME.$(`#${targetId}`);
-            
-            if (target) {
-                target.addEventListener('focus', function() {
-                    if (this.value.trim() === '') {
-                        this.value = defaultValue;
-                    }
-                });
+        // the next is only for tinymce, jodit has specific code for this
+        if (emeevents.translate_htmleditor === 'tinymce') {
+            EME.$$('span[data-default]').forEach(span => {
+                const defaultValue = span.dataset.default.replace(/<br\s*\/?>/gi, '<br>');
+                const targetId = span.dataset.targetid;
+                const target = EME.$(`#${targetId}`);
 
-                target.addEventListener('blur', function() {
-                    if (this.value.trim() === defaultValue) {
-                        this.value = '';
-                    }
-                });
-            }
-        });
+                if (target) {
+                    target.addEventListener('focus', function() {
+                        if (this.value.trim() === '') {
+                            this.value = defaultValue;
+                        }
+                    });
+
+                    target.addEventListener('blur', function() {
+                        if (this.value.trim() === defaultValue) {
+                            this.value = '';
+                        }
+                    });
+                }
+            });
+        }
     }
 
     function validateEventForm() {

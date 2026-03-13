@@ -15004,58 +15004,58 @@ msgstr "Dit advies niet meer tonen"
 
 #: eme-events.php:6903
 msgid "Default Template"
-msgstr ""
+msgstr "Standaard Template"
 
 #: eme-gdpr.php:612
 msgid "Events Made Easy Personal Data"
-msgstr ""
+msgstr "Events Made Easy Persoonlijke Data"
 
 #: eme-gdpr.php:624
 msgid "Events Made Easy Uploaded files linked to the person"
-msgstr ""
+msgstr "Events Made Easy - Geüploade bestanden gekoppeld aan de persoon"
 
 #: eme-gdpr.php:687
 msgid "Events Made Easy Member Data"
-msgstr ""
+msgstr "Events Made Easy - Lidgegevens"
 
 #: eme-gdpr.php:698
 msgid "Events Made Easy Uploaded files linked to the member"
-msgstr ""
+msgstr "Events Made Easy - Geüploade bestanden gekoppeld aan het lid"
 
 #: eme-mailer.php:2823
 #: eme-mailer.php:2996
 msgid "Send to a number of people"
-msgstr ""
+msgstr "Verzenden naar een aantal personen"
 
 #: eme-mailer.php:2833
 #: eme-mailer.php:3004
 msgid "Send to a number of groups"
-msgstr ""
+msgstr "Verzenden naar een aantal groepen"
 
 #: eme-mailer.php:2842
 #: eme-mailer.php:3013
 msgid "Send to a number of members"
-msgstr ""
+msgstr "Verzenden naar een aantal leden"
 
 #: eme-mailer.php:2850
 #: eme-mailer.php:3021
 msgid "Send to a number of member groups"
-msgstr ""
+msgstr "Verzenden naar een aantal ledengroepen"
 
 #: eme-mailer.php:2859
 #: eme-mailer.php:3030
 msgid "Send to active members belonging to"
-msgstr ""
+msgstr "Verzenden naar actieve leden die behoren tot"
 
 #: eme-options.php:3326
 #: eme-options.php:3327
 msgid "Documentation on date and time formatting."
-msgstr ""
+msgstr "Documentatie over datum- en tijdnotatie."
 
 #: eme-todos.php:251
 msgid "Todo reminder for event #_EVENTNAME: "
-msgstr ""
+msgstr "Takenherinnering voor evenement #_EVENTNAME: "
 
 #: eme-people.php:2695
 msgid "Select a WP user"
-msgstr ""
+msgstr "Selecteer een WP-gebruiker"

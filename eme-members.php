@@ -420,7 +420,7 @@ function eme_update_member_usage_count( $member ) {
     }
 }
 
-function eme_get_members( $member_ids, $extra_search = '' ) {
+function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesize = 0 ) {
     global $wpdb;
     $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
@@ -444,6 +444,11 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
         if ( ! empty( $extra_search ) ) {
             $sql .= " WHERE $extra_search";
         }
+    }
+    if ( $pagesize > 0 ) {
+        $limit  = intval( $pagesize );
+        $offset = max( 0, intval( $offset ) );
+        $sql   .= $wpdb->prepare( ' LIMIT %d OFFSET %d', $limit, $offset );
     }
     $members = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $members as $key => $member ) {
@@ -6473,7 +6478,7 @@ function eme_ajax_membermainaccount_snapselect() {
     $membership_id = isset( $_REQUEST['membership_id'] ) ? intval( $_REQUEST['membership_id'] ) : 0;
     $pagesize      = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
     $page          = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
-    $start         = ( $page - 1 ) * $pagesize;
+    $offset        = ( $page - 1 ) * $pagesize;
 
     $search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND members.related_member_id=0";
     if ( $member_id > 0 ) {
@@ -6483,9 +6488,8 @@ function eme_ajax_membermainaccount_snapselect() {
         $search .= " AND members.membership_id = $membership_id";
     }
 
-    $all_members = eme_get_members( '', $search );
-    $paged       = array_slice( $all_members, $start, $pagesize+1 );
-    $records     = [];
+    $paged   = eme_get_members( '', $search, $offset, $pagesize + 1 ); // get 1 element more so the hasMore calc works
+    $records = [];
     foreach ( $paged as $item ) {
         $records[] = [
             'id'   => intval( $item['member_id'] ),

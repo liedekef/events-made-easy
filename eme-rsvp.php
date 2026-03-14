@@ -32,6 +32,9 @@ function eme_new_booking() {
 
 function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
     $event           = eme_get_event( $event_id );
+    if ( empty( $event ) ) {
+        return;
+    }
     $events          = [ $event ];
     $is_multibooking = 0;
     // we don't worry about the eme_register_empty_seats param, for attendance-like events it is checked later on

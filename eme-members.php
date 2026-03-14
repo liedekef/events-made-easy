@@ -6442,7 +6442,6 @@ function eme_ajax_memberperson_snapselect() {
         WHERE $search ORDER BY people.lastname, people.firstname LIMIT $start, $mysql_pagesize"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
     $records     = [];
-    $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $wpdb->get_results( $sql, ARRAY_A ) as $item ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $records[] = [
             'id'   => intval( $item['person_id'] ),

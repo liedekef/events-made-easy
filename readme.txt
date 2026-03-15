@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.54  (2026/03/15) =
+* Fix getting contacts/authors from wp (wrongly excluded too much)
+
 = 3.0.53  (2026/03/13) =
 * Several small html fixes
 

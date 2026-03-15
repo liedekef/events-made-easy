@@ -288,10 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initSnapSelectRemote('#wp_id.eme_snapselect_wpuser_class', {
+    initSnapSelectRemote('#wp_id.eme_snapselect_wpuser_class_exclude_linked', {
         data: function(search, page) {
             return {
-                action: 'eme_wpuser_snapselect',
+                action: 'eme_wpuser_snapselect_exclude_linked',
                 eme_admin_nonce: emepeople.translate_adminnonce,
                 person_wpid: this.dataset.person_wpid || 0
             };

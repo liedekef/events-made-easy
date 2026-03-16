@@ -43,7 +43,7 @@ Main features:
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
 * Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and [qtranslate-xt](https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking emails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
 
-For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
+For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/eme-docs/) .
 
 == Installation ==
 
@@ -82,11 +82,11 @@ After the installation, Events Made Easy add a top level "Events" menu to your W
 *  The *Settings* page is used to set generic EME defaults for events, payment gateways, emailserver info, mail templates, ...
 *  Fine-grainded configurable access control (ACL) for managing events, locations, bookings, members, ...
 
-Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/).
+Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/eme-docs/).
  
 == Frequently Asked Questions ==
 
-See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
+See the FAQ section at the [Official site](https://www.e-dynamics.be/eme-docs/).
 
 == Screenshots ==
 

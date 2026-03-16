@@ -2101,7 +2101,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr>
     <td><label for="properties[member_added_tpl]"><?php esc_html_e( 'Member Added Message:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['member_added_tpl'], 'properties[member_added_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown after someone subscribed. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
+        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown after someone subscribed. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
@@ -2119,7 +2119,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr>
     <td><label for="properties[payment_form_header_tpl]"><?php esc_html_e( 'Payment Form Header:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_form_header_tpl'], 'properties[payment_form_header_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown above the payment buttons. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
+        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown above the payment buttons. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
@@ -2137,7 +2137,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr>
     <td><label for="properties[payment_form_footer_tpl]"><?php esc_html_e( 'Payment Form Footer:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_form_footer_tpl'], 'properties[payment_form_footer_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown below the payment buttons. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
+        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown below the payment buttons. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
@@ -2155,7 +2155,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr>
     <td><label for="properties[payment_success_tpl]"><?php esc_html_e( 'Payment Success Message:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_success_tpl'], 'properties[payment_success_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-        <br><p class='eme_smaller'><?php echo esc_html__( 'The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection "General options".', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
+        <br><p class='eme_smaller'><?php echo esc_html__( 'The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection "General options".', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
 <?php
@@ -2199,7 +2199,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr id="tr_offline">
     <td><label for="properties[offline_payment_tpl]"><?php esc_html_e( 'Offline Payment Format:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['offline_payment_tpl'], 'properties[offline_payment_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown for the offline payment method. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
+        <br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown for the offline payment method. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
 <?php

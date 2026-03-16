@@ -233,7 +233,7 @@ class EME_GitHub_Updater {
         $plugin_info->author = $plugin_data['Author'];
         $plugin_info->requires = !empty($this->readme_data['requires']) ? $this->readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
         //$plugin_info->tested = !empty($this->readme_data['tested']) ? $this->readme_data['tested'] : $this->get_tested_wp_version();
-        $plugin_info->tested = $this->get_tested_wp_version();
+        //$plugin_info->tested = $this->get_tested_wp_version();
         $plugin_info->requires_php = !empty($this->readme_data['requires_php']) ? $this->readme_data['requires_php'] : $this->get_requires_php($plugin_data);
         $plugin_info->donate_link = !empty($this->readme_data['donate_link']) ? $this->readme_data['donate_link'] : '';
         $plugin_info->homepage = $plugin_data['PluginURI'];

@@ -5203,6 +5203,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
         $target = 'html';
     }
 
+    if (empty($format) || empty($membership)) return '';
     // replace EME language tags as early as possible
     $format = eme_translate_string( $format );
 

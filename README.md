@@ -9,7 +9,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![ClassicPress](https://img.shields.io/badge/ClassicPress-compatible-057f99)](https://www.classicpress.net/)
 
-[Documentation](https://www.e-dynamics.be/eme-docs/) &middot; [Report Issue](https://github.com/liedekef/events-made-easy/issues) &middot; [Sponsor](https://github.com/sponsors/liedekef)
+[Documentation](https://www.e-dynamics.be/wordpress/eme-docs/) &middot; [Report Issue](https://github.com/liedekef/events-made-easy/issues) &middot; [Sponsor](https://github.com/sponsors/liedekef)
 
 ---
 
@@ -83,7 +83,7 @@ After activation, an **Events** menu appears in your admin sidebar with 19 dedic
 | `[eme_add_member_form]` | Membership signup form |
 | `[eme_countdown id=42]` | Countdown timer to an event |
 
-68 shortcodes total — [see the full reference](https://www.e-dynamics.be/eme-docs/shortcodes/)
+68 shortcodes total — [see the full reference](https://www.e-dynamics.be/wordpress/eme-docs/shortcodes/)
 
 ## Payment gateways
 
@@ -196,7 +196,7 @@ Or contribute via the [WordPress translation platform](https://translate.wordpre
 <details>
 <summary><strong>FAQ</strong></summary>
 
-See the [FAQ documentation](https://www.e-dynamics.be/eme-docs/faq/).
+See the [FAQ documentation](https://www.e-dynamics.be/wordpress/eme-docs/faq/).
 
 </details>
 

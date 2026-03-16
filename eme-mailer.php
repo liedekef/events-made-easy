@@ -2902,11 +2902,11 @@ function eme_emails_page() {
         <div><p>
 <?php
     esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
-    print "<br><a href='https://www.e-dynamics.be/eme-docs/event-formatting/'>" . esc_html__( 'Event placeholders', 'events-made-easy' ) . '</a>';
-    print "<br><a href='https://www.e-dynamics.be/eme-docs/people-placeholders/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a>';
-    print "<br><a href='https://www.e-dynamics.be/eme-docs/attendees-list/'>" . esc_html__( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Attendee emails', 'events-made-easy' ) . ')';
-    print "<br><a href='https://www.e-dynamics.be/eme-docs/registration-form-formatting/'>" . esc_html__( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Booking emails', 'events-made-easy' ) . ')';
-    print "<br><a href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
+    print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/event-formatting/'>" . esc_html__( 'Event placeholders', 'events-made-easy' ) . '</a>';
+    print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/people-placeholders/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a>';
+    print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/attendees-list/'>" . esc_html__( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Attendee emails', 'events-made-easy' ) . ')';
+    print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/registration-form-formatting/'>" . esc_html__( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Booking emails', 'events-made-easy' ) . ')';
+    print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/member-placeholders/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
     print '<br>' . esc_html__( 'You can also use any shortcode you want.', 'events-made-easy' );
 ?>
         </p></div>
@@ -3087,8 +3087,8 @@ function eme_emails_page() {
         <div>
 <?php
         esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
-        print "<br><a href='https://www.e-dynamics.be/eme-docs/people-placeholders/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'People or groups', 'events-made-easy' ) . ')';
-        print "<br><a href='https://www.e-dynamics.be/eme-docs/member-placeholders/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'members', 'events-made-easy' ) . ')';
+        print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/people-placeholders/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'People or groups', 'events-made-easy' ) . ')';
+        print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/member-placeholders/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'members', 'events-made-easy' ) . ')';
         print '<br>' . esc_html__( 'You can also use any shortcode you want.', 'events-made-easy' );
 ?>
         </div>

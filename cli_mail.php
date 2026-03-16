@@ -20,7 +20,7 @@ if ( ! function_exists( 'mailparse_msg_create' ) ) {
 }
 
 function eme_help( $progname ) {
-	echo "For all doc, see https://www.e-dynamics.be/eme-docs/send-mail-to-group-via-script/\n";
+	echo "For all doc, see https://www.e-dynamics.be/wordpress/eme-docs/send-mail-to-group-via-script/\n";
 	echo "Usage: $progname -d <email>\n";
 	echo "Or   : $progname --groupid=<groupid>\n";
 	echo "-d <email>\tCauses the email to be forwarded to the EME group with the specified email address\n";

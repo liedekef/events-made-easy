@@ -105,7 +105,9 @@ function eme_actions_early_init() {
 function eme_actions_init() {
     // first the no cache headers
     //eme_nocache_headers();
-    //eme_load_textdomain();
+    if ( version_compare( get_bloginfo('version'), '6.8', '<' ) ) {
+        eme_load_textdomain();
+    }
 
     $eme_is_admin_request = eme_is_admin_request();
 

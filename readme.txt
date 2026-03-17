@@ -2,7 +2,7 @@
 Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
-Requires at least: 6.8
+Requires at least: 6.0
 Tested up to: 6.9
 Stable tag: 3.0.54
 Requires PHP: 8.1

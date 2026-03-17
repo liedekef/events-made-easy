@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/*
 function eme_load_textdomain() {
         $domain = 'events-made-easy';
         $locale = determine_locale();
@@ -14,7 +13,7 @@ function eme_load_textdomain() {
             // the locale is optional, but we already have the info, so it makes the function just a bit faster
             load_textdomain($domain, $path . '/' . $moFile, $locale);
         }
-}*/
+}
 
 function eme_detect_lang() {
 	$language = wp_cache_get( 'eme_language' );

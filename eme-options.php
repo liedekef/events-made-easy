@@ -3257,7 +3257,7 @@ case 'emefs':
 ?>
 <h2><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h2>
 <?php // translators: %s is the documentation URL
-printf( wp_kses_post( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ) ), esc_url( 'https://www.e-dynamics.be/wordpress/eme-docs/frontend-submit/' ) );
+printf( wp_kses_post( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ) ), esc_url( 'https://www.e-dynamics.be/wordpress/eme-docs/eme_add_event_form/' ) );
 echo '<br><br>';
 esc_html_e("Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings.", 'events-made-easy' );
 ?>

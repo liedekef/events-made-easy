@@ -56,11 +56,11 @@ msgstr ""
 #: eme-mailer.php:3179
 #: eme-mailer.php:3224
 #: eme-mailer.php:3280
-#: eme-members.php:6523
-#: eme-members.php:6641
-#: eme-members.php:6781
-#: eme-members.php:6861
-#: eme-members.php:6941
+#: eme-members.php:6524
+#: eme-members.php:6642
+#: eme-members.php:6782
+#: eme-members.php:6862
+#: eme-members.php:6942
 #: eme-options.php:142
 #: eme-payments.php:4149
 #: eme-people.php:4329
@@ -86,14 +86,14 @@ msgstr ""
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
 
-#: eme-actions.php:245
+#: eme-actions.php:247
 #: eme-events.php:6453
 #: eme-events.php:9704
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Event"
 
-#: eme-actions.php:254
+#: eme-actions.php:256
 #: eme-events.php:6454
 #: eme-events.php:8401
 #: eme-events.php:9653
@@ -130,31 +130,31 @@ msgstr "Stat"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:364
+#: eme-actions.php:366
 #: eme-events.php:9560
 msgid "An error has occurred"
 msgstr "Ett fel har uppstått"
 
-#: eme-actions.php:365
+#: eme-actions.php:367
 msgid "Clear"
 msgstr "Rensa"
 
-#: eme-actions.php:366
+#: eme-actions.php:368
 #: eme-events.php:9561
 msgid "Mailing preferences"
 msgstr "Alternativ för e-postutskick"
 
-#: eme-actions.php:367
+#: eme-actions.php:369
 #: eme-events.php:9562
 msgid "Yes, I'm sure"
 msgstr "Ja, jag är säker"
 
 #. translators: %s is the URL to the settings page
-#: eme-actions.php:493
+#: eme-actions.php:495
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Denna sida motsvarar <strong>Events Made Easy</strong> eventsida. Dess innehåll kommer att skrivas över av <strong>Events Made Easy</strong>. Om du vill visa ditt innehåll kan du tilldela en annan sida för <strong>Events Made Easy</strong> i <a href='%s'>Inställningarna</a>."
 
-#: eme-actions.php:545
+#: eme-actions.php:547
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Om du finner <strong>Events Made Easy</strong> användbart, vänligen fundera på att ge ett litet bidrag för den tid jag investerat och för att möjliggöra fortsatt utveckling. Tack för ditt stöd!"
 
@@ -392,7 +392,7 @@ msgstr "Namn"
 #: eme-formfields.php:5166
 #: eme-holidays.php:282
 #: eme-locations.php:3010
-#: eme-members.php:6559
+#: eme-members.php:6560
 #: eme-people.php:5454
 #: eme-templates.php:471
 msgid "No name"
@@ -634,8 +634,8 @@ msgstr "Du har inte behörighet att hantera rabatter!"
 #: eme-discounts.php:190
 #: eme-events.php:5878
 #: eme-locations.php:234
-#: eme-members.php:6067
-#: eme-members.php:6266
+#: eme-members.php:6068
+#: eme-members.php:6267
 #: eme-people.php:872
 #: eme-rsvp.php:5154
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -647,8 +647,8 @@ msgstr "Problem att komma åt den uppladdade filen, kan vara något säkerhetspr
 #: eme-discounts.php:215
 #: eme-events.php:5905
 #: eme-locations.php:261
-#: eme-members.php:6093
-#: eme-members.php:6292
+#: eme-members.php:6094
+#: eme-members.php:6293
 #: eme-people.php:899
 #: eme-rsvp.php:5181
 msgid "Not all required fields present."
@@ -669,7 +669,7 @@ msgstr "Inte importerat: %s"
 #: eme-countries.php:152
 #: eme-discounts.php:165
 #: eme-discounts.php:229
-#: eme-members.php:6399
+#: eme-members.php:6400
 msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr ""
 
@@ -679,8 +679,8 @@ msgstr ""
 #: eme-discounts.php:238
 #: eme-events.php:5869
 #: eme-locations.php:225
-#: eme-members.php:6058
-#: eme-members.php:6258
+#: eme-members.php:6059
+#: eme-members.php:6259
 #: eme-people.php:862
 #: eme-rsvp.php:5144
 msgid "Problem detected while uploading the file"
@@ -694,8 +694,8 @@ msgstr "Ett problem upptäcktes vid uppladdning av filen"
 #: eme-discounts.php:242
 #: eme-events.php:5866
 #: eme-locations.php:222
-#: eme-members.php:6055
-#: eme-members.php:6255
+#: eme-members.php:6056
+#: eme-members.php:6256
 #: eme-people.php:859
 #: eme-rsvp.php:5141
 msgid "No CSV file detected: %s"
@@ -921,7 +921,7 @@ msgstr "Namn på stat"
 msgid "The name of the state"
 msgstr "Namnet på staten"
 
-#: eme-actions.php:441
+#: eme-actions.php:443
 #: eme-countries.php:511
 #: eme-discounts.php:1722
 #: eme-events.php:9613
@@ -1530,7 +1530,7 @@ msgstr "Fast per plats"
 #: eme-gdpr.php:542
 #: eme-gdpr.php:543
 #: eme-locations.php:3046
-#: eme-members.php:6719
+#: eme-members.php:6720
 #: eme-people.php:514
 #: eme-people.php:522
 #: eme-people.php:530
@@ -1577,7 +1577,7 @@ msgstr "Ja"
 #: eme-gdpr.php:542
 #: eme-gdpr.php:543
 #: eme-locations.php:3046
-#: eme-members.php:6719
+#: eme-members.php:6720
 #: eme-people.php:514
 #: eme-people.php:522
 #: eme-people.php:530
@@ -2089,10 +2089,10 @@ msgstr "Plats importerades inte: %s"
 #. translators: %1$s is the field name, %2$s is the CSV row data
 #: eme-events.php:5966
 #: eme-events.php:5970
-#: eme-members.php:6127
-#: eme-members.php:6133
-#: eme-members.php:6139
-#: eme-members.php:6145
+#: eme-members.php:6128
+#: eme-members.php:6134
+#: eme-members.php:6140
+#: eme-members.php:6146
 #: eme-people.php:930
 #, fuzzy
 msgid "Not imported (field %1$s not valid): %2$s"
@@ -2111,15 +2111,15 @@ msgstr ""
 #. translators: %s is the CSV row data
 #: eme-events.php:6045
 #: eme-locations.php:345
-#: eme-members.php:6121
-#: eme-members.php:6322
+#: eme-members.php:6122
+#: eme-members.php:6323
 msgid "Not imported (not all required fields are present): %s"
 msgstr ""
 
 #. translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
 #: eme-events.php:6049
 #: eme-locations.php:349
-#: eme-members.php:6235
+#: eme-members.php:6236
 #: eme-people.php:998
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr ""
@@ -4204,7 +4204,7 @@ msgstr "Stater"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Inget land är kopplat till denna stat, den kommer inte synas i rullgardinsmenyer. Vänligen redigera staten och korrigera landsinformationen."
 
-#: eme-actions.php:421
+#: eme-actions.php:423
 #: eme-events.php:9637
 #: eme-events.php:9816
 msgid "No matching location found"
@@ -5469,7 +5469,7 @@ msgstr "Använd rabattgrupp %d finns inte längre"
 #. translators: %d is the discount ID
 #: eme-formfields.php:3380
 #: eme-formfields.php:4137
-#: eme-members.php:5291
+#: eme-members.php:5292
 #: eme-people.php:1397
 #: eme-people.php:1718
 #: eme-rsvp.php:3741
@@ -6072,7 +6072,7 @@ msgstr "EME använder som option en cookie att lagra klientdatum och tid för at
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:685
+#: eme-actions.php:687
 #: eme-gdpr.php:520
 #: eme-gdpr.php:526
 #: eme-gdpr.php:727
@@ -6358,9 +6358,9 @@ msgstr "Skapa kopia av denna plats"
 #: eme-mailer.php:2233
 #: eme-mailer.php:2330
 #: eme-mailer.php:2428
-#: eme-members.php:6999
-#: eme-members.php:7078
-#: eme-members.php:7197
+#: eme-members.php:7000
+#: eme-members.php:7079
+#: eme-members.php:7198
 #: eme-rsvp.php:1275
 #: eme-rsvp.php:5113
 #: eme-rsvp.php:6789
@@ -6432,7 +6432,7 @@ msgstr "Ärenderad"
 msgid "Queued on"
 msgstr ""
 
-#: eme-actions.php:437
+#: eme-actions.php:439
 #: eme-cleanup.php:340
 #: eme-events.php:9609
 #: eme-mailer.php:1669
@@ -6460,7 +6460,7 @@ msgstr ""
 #: eme-mailer.php:2223
 #: eme-mailer.php:2327
 #: eme-mailer.php:2421
-#: eme-members.php:6996
+#: eme-members.php:6997
 #: eme-rsvp.php:6786
 #: eme-rsvp.php:6806
 msgid "The mail has been sent."
@@ -7058,10 +7058,10 @@ msgstr "Lägg till medlem"
 #: eme-members.php:653
 #: eme-members.php:1485
 #: eme-members.php:1617
-#: eme-members.php:6672
-#: eme-members.php:6681
+#: eme-members.php:6673
 #: eme-members.php:6682
 #: eme-members.php:6683
+#: eme-members.php:6684
 msgid "Edit member"
 msgstr "Redigera medlem"
 
@@ -8031,130 +8031,130 @@ msgstr "Inget medlemskap valt"
 msgid "You did not enter a valid discount code"
 msgstr "Du angav inte en giltig rabattkod"
 
-#: eme-members.php:5363
+#: eme-members.php:5364
 #: eme-rsvp.php:6157
 msgid "Never"
 msgstr "Aldrig"
 
-#: eme-members.php:5394
-#: eme-members.php:5412
-#: eme-members.php:5451
-#: eme-members.php:5473
+#: eme-members.php:5395
+#: eme-members.php:5413
+#: eme-members.php:5452
+#: eme-members.php:5474
 msgid "no end date"
 msgstr "inget slutdatum"
 
-#: eme-members.php:5467
+#: eme-members.php:5468
 msgid "expired"
 msgstr "löpt ut"
 
-#: eme-members.php:6049
-#: eme-members.php:6248
+#: eme-members.php:6050
+#: eme-members.php:6249
 msgid "Access denied"
 msgstr "Åtkomst nekad"
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: eme-members.php:6169
+#: eme-members.php:6170
 #: eme-people.php:961
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6176
-#: eme-members.php:6341
+#: eme-members.php:6177
+#: eme-members.php:6342
 msgid "Not imported (membership does not exist): %s"
 msgstr "Inte importerad (medlemskap finns inte): %s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6227
+#: eme-members.php:6228
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "Inte importerad (problem med att infoga medlemmen i databasen): %s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6335
+#: eme-members.php:6336
 msgid "Not imported (person does not exist): %s"
 msgstr "Inte importerad (personen finns inte): %s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6387
+#: eme-members.php:6388
 msgid "Not imported (member does not exist): %s"
 msgstr "Inte importerad (medlem finns inte): %s"
 
-#: eme-members.php:6573
+#: eme-members.php:6574
 msgid "Edit membership"
 msgstr "Redigera medlemskap"
 
-#: eme-members.php:6582
+#: eme-members.php:6583
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
 #. translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
-#: eme-members.php:6596
+#: eme-members.php:6597
 msgid "%1$d head of the family accounts + %2$d family members"
 msgstr ""
 
-#: eme-members.php:6668
+#: eme-members.php:6669
 #: eme-people.php:5351
 msgid "(family member)"
 msgstr ""
 
-#: eme-members.php:6673
+#: eme-members.php:6674
 msgid "Head of the family: "
 msgstr ""
 
-#: eme-members.php:6676
+#: eme-members.php:6677
 msgid "(head of the family)"
 msgstr ""
 
 #. translators: %d is the payment ID
-#: eme-members.php:6722
+#: eme-members.php:6723
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6827
+#: eme-members.php:6828
 #: eme-people.php:5627
 msgid "(Dynamic)"
 msgstr "(Dynamisk)"
 
-#: eme-members.php:6839
+#: eme-members.php:6840
 #: eme-people.php:5639
 msgid "Dynamic group added"
 msgstr "Dynamisk grupp tillagd"
 
-#: eme-members.php:6841
+#: eme-members.php:6842
 #: eme-people.php:5641
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "Det uppstod ett problem med att lägga till fältet"
 
-#: eme-members.php:6844
+#: eme-members.php:6845
 #: eme-people.php:5644
 msgid "Please enter a name for the group"
 msgstr "Vänligen ange ett namn för gruppen"
 
-#: eme-members.php:6903
-#: eme-members.php:6972
+#: eme-members.php:6904
+#: eme-members.php:6973
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 
-#: eme-members.php:6957
+#: eme-members.php:6958
 msgid "Memberships deleted."
 msgstr "Medlemskap borttagna."
 
-#: eme-members.php:7013
+#: eme-members.php:7014
 msgid "No corresponding persons found."
 msgstr "Inga motsvarande personer kan hittas"
 
-#: eme-members.php:7023
+#: eme-members.php:7024
 msgid "Members deleted."
 msgstr "Medlemmarna borttagna."
 
-#: eme-members.php:7049
-#: eme-members.php:7075
-#: eme-members.php:7138
-#: eme-members.php:7169
-#: eme-members.php:7194
-#: eme-members.php:7211
+#: eme-members.php:7050
+#: eme-members.php:7076
+#: eme-members.php:7139
+#: eme-members.php:7170
+#: eme-members.php:7195
+#: eme-members.php:7212
 #: eme-rsvp.php:6420
 #: eme-rsvp.php:6454
 #: eme-rsvp.php:6498
@@ -8172,8 +8172,8 @@ msgstr "Medlemmarna borttagna."
 msgid "The action has been executed successfully."
 msgstr "Handlingen har utförts."
 
-#: eme-members.php:7052
-#: eme-members.php:7172
+#: eme-members.php:7053
+#: eme-members.php:7173
 #: eme-rsvp.php:6423
 #: eme-rsvp.php:6457
 #: eme-rsvp.php:6501
@@ -8186,8 +8186,8 @@ msgstr "Handlingen har utförts."
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "Handlingen har utförts men det var problem med att sända e-post."
 
-#: eme-members.php:7055
-#: eme-members.php:7175
+#: eme-members.php:7056
+#: eme-members.php:7176
 #: eme-rsvp.php:6426
 #: eme-rsvp.php:6460
 #: eme-rsvp.php:6495
@@ -13612,14 +13612,14 @@ msgstr ""
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: eme-members.php:6108
-#: eme-members.php:6309
+#: eme-members.php:6109
+#: eme-members.php:6310
 #: eme-people.php:917
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr ""
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6392
+#: eme-members.php:6393
 msgid "Not imported (no matching person found): %s"
 msgstr ""
 
@@ -13636,15 +13636,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:542
+#: eme-actions.php:544
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:543
+#: eme-actions.php:545
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:554
+#: eme-actions.php:556
 msgid "Dismiss"
 msgstr ""
 
@@ -13672,7 +13672,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:690
+#: eme-actions.php:692
 msgid "List of next 10 events"
 msgstr ""
 
@@ -14161,7 +14161,7 @@ msgstr ""
 msgid "Select the event(s)"
 msgstr ""
 
-#: eme-members.php:6738
+#: eme-members.php:6739
 #: eme-rsvp.php:6180
 msgid "Get IBAN"
 msgstr ""
@@ -14385,7 +14385,7 @@ msgstr ""
 #: eme-events.php:6778
 #: eme-events.php:10328
 #: eme-events.php:10331
-#: eme-members.php:6707
+#: eme-members.php:6708
 #: eme-recurrence.php:747
 #: eme-rsvp.php:6060
 #: eme-rsvp.php:6063
@@ -14591,33 +14591,33 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
-#: eme-actions.php:435
+#: eme-actions.php:437
 #: eme-events.php:9607
 msgid "Insert image"
 msgstr ""
 
-#: eme-actions.php:436
+#: eme-actions.php:438
 #: eme-events.php:9608
 msgid "Insert"
 msgstr ""
 
-#: eme-actions.php:438
+#: eme-actions.php:440
 #: eme-events.php:9610
 msgid "Insert from Media Library"
 msgstr ""
 
-#: eme-actions.php:439
+#: eme-actions.php:441
 #: eme-cleanup.php:387
 #: eme-events.php:9611
 msgid "Preview"
 msgstr ""
 
-#: eme-actions.php:440
+#: eme-actions.php:442
 #: eme-events.php:9612
 msgid "Visual"
 msgstr ""
 
-#: eme-actions.php:442
+#: eme-actions.php:444
 #: eme-events.php:9614
 msgid "Insert non-breaking space"
 msgstr ""
@@ -14884,7 +14884,7 @@ msgstr ""
 msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zooming. A browser refresh on a page showing a map will be necessary to see the effect of this change."
 msgstr ""
 
-#: eme-actions.php:361
+#: eme-actions.php:363
 #: eme-events.php:9557
 msgid "Select country"
 msgstr ""
@@ -14896,7 +14896,7 @@ msgstr ""
 msgid "Select one or more memberships"
 msgstr ""
 
-#: eme-actions.php:360
+#: eme-actions.php:362
 #: eme-events.php:9556
 msgid "Select state/province"
 msgstr ""
@@ -15002,7 +15002,7 @@ msgstr ""
 msgid "No access"
 msgstr ""
 
-#: eme-actions.php:362
+#: eme-actions.php:364
 #: eme-events.php:9558
 msgid "Make your choice"
 msgstr ""
@@ -15049,27 +15049,27 @@ msgstr ""
 msgid "Send the configured reminder mail for approved bookings"
 msgstr ""
 
-#: eme-actions.php:521
+#: eme-actions.php:523
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:524
+#: eme-actions.php:526
 msgid "Widgets page"
 msgstr ""
 
-#: eme-actions.php:526
+#: eme-actions.php:528
 msgid "Template tags documentation"
 msgstr ""
 
-#: eme-actions.php:528
+#: eme-actions.php:530
 msgid "Shortcodes documentation"
 msgstr ""
 
-#: eme-actions.php:530
+#: eme-actions.php:532
 msgid "Change settings"
 msgstr ""
 
-#: eme-actions.php:531
+#: eme-actions.php:533
 msgid "Don't show this advice again"
 msgstr ""
 

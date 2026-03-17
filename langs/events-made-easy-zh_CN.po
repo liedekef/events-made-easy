@@ -56,11 +56,11 @@ msgstr ""
 #: eme-mailer.php:3179
 #: eme-mailer.php:3224
 #: eme-mailer.php:3280
-#: eme-members.php:6523
-#: eme-members.php:6641
-#: eme-members.php:6781
-#: eme-members.php:6861
-#: eme-members.php:6941
+#: eme-members.php:6524
+#: eme-members.php:6642
+#: eme-members.php:6782
+#: eme-members.php:6862
+#: eme-members.php:6942
 #: eme-options.php:142
 #: eme-payments.php:4149
 #: eme-people.php:4329
@@ -86,14 +86,14 @@ msgstr ""
 msgid "Access denied!"
 msgstr "拒绝访问!"
 
-#: eme-actions.php:245
+#: eme-actions.php:247
 #: eme-events.php:6453
 #: eme-events.php:9704
 #: eme-templates.php:44
 msgid "Event"
 msgstr "活动"
 
-#: eme-actions.php:254
+#: eme-actions.php:256
 #: eme-events.php:6454
 #: eme-events.php:8401
 #: eme-events.php:9653
@@ -130,31 +130,31 @@ msgstr "州/省"
 msgid "Country"
 msgstr "国家"
 
-#: eme-actions.php:364
+#: eme-actions.php:366
 #: eme-events.php:9560
 msgid "An error has occurred"
 msgstr "出现错误。"
 
-#: eme-actions.php:365
+#: eme-actions.php:367
 msgid "Clear"
 msgstr "清空"
 
-#: eme-actions.php:366
+#: eme-actions.php:368
 #: eme-events.php:9561
 msgid "Mailing preferences"
 msgstr "邮寄优先权"
 
-#: eme-actions.php:367
+#: eme-actions.php:369
 #: eme-events.php:9562
 msgid "Yes, I'm sure"
 msgstr "是的，我肯定"
 
 #. translators: %s is the URL to the settings page
-#: eme-actions.php:493
+#: eme-actions.php:495
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "本页对应于 <strong>Events Made Easy</strong> 的活动页面。它的内容将被 <strong>Events Made Easy</strong> 覆盖。如果您想显示您的内容，您可以在 <a href='%s'>Settings</a> 中为 <strong>Events Made Easy</strong> 指定另一个页面。"
 
-#: eme-actions.php:545
+#: eme-actions.php:547
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "如果您觉得 <strong>Events Made Easy</strong> 对您有用，请考虑进行小额捐赠，以帮助我投入时间和进一步发展。谢谢您的善意支持!"
 
@@ -392,7 +392,7 @@ msgstr "名字"
 #: eme-formfields.php:5166
 #: eme-holidays.php:282
 #: eme-locations.php:3010
-#: eme-members.php:6559
+#: eme-members.php:6560
 #: eme-people.php:5454
 #: eme-templates.php:471
 msgid "No name"
@@ -634,8 +634,8 @@ msgstr "您无权管理折扣!"
 #: eme-discounts.php:190
 #: eme-events.php:5878
 #: eme-locations.php:234
-#: eme-members.php:6067
-#: eme-members.php:6266
+#: eme-members.php:6068
+#: eme-members.php:6267
 #: eme-people.php:872
 #: eme-rsvp.php:5154
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -647,8 +647,8 @@ msgstr "在访问上传的文件时出现问题，也许是一些安保问题？
 #: eme-discounts.php:215
 #: eme-events.php:5905
 #: eme-locations.php:261
-#: eme-members.php:6093
-#: eme-members.php:6292
+#: eme-members.php:6094
+#: eme-members.php:6293
 #: eme-people.php:899
 #: eme-rsvp.php:5181
 msgid "Not all required fields present."
@@ -669,7 +669,7 @@ msgstr "未被导入：%s"
 #: eme-countries.php:152
 #: eme-discounts.php:165
 #: eme-discounts.php:229
-#: eme-members.php:6399
+#: eme-members.php:6400
 msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr ""
 
@@ -679,8 +679,8 @@ msgstr ""
 #: eme-discounts.php:238
 #: eme-events.php:5869
 #: eme-locations.php:225
-#: eme-members.php:6058
-#: eme-members.php:6258
+#: eme-members.php:6059
+#: eme-members.php:6259
 #: eme-people.php:862
 #: eme-rsvp.php:5144
 msgid "Problem detected while uploading the file"
@@ -694,8 +694,8 @@ msgstr "上传文件时发现问题"
 #: eme-discounts.php:242
 #: eme-events.php:5866
 #: eme-locations.php:222
-#: eme-members.php:6055
-#: eme-members.php:6255
+#: eme-members.php:6056
+#: eme-members.php:6256
 #: eme-people.php:859
 #: eme-rsvp.php:5141
 msgid "No CSV file detected: %s"
@@ -921,7 +921,7 @@ msgstr "州名"
 msgid "The name of the state"
 msgstr "州的名称"
 
-#: eme-actions.php:441
+#: eme-actions.php:443
 #: eme-countries.php:511
 #: eme-discounts.php:1722
 #: eme-events.php:9613
@@ -1530,7 +1530,7 @@ msgstr "每个座位固定"
 #: eme-gdpr.php:542
 #: eme-gdpr.php:543
 #: eme-locations.php:3046
-#: eme-members.php:6719
+#: eme-members.php:6720
 #: eme-people.php:514
 #: eme-people.php:522
 #: eme-people.php:530
@@ -1577,7 +1577,7 @@ msgstr "是的"
 #: eme-gdpr.php:542
 #: eme-gdpr.php:543
 #: eme-locations.php:3046
-#: eme-members.php:6719
+#: eme-members.php:6720
 #: eme-people.php:514
 #: eme-people.php:522
 #: eme-people.php:530
@@ -2083,10 +2083,10 @@ msgstr "地点未被导入：%s"
 #. translators: %1$s is the field name, %2$s is the CSV row data
 #: eme-events.php:5966
 #: eme-events.php:5970
-#: eme-members.php:6127
-#: eme-members.php:6133
-#: eme-members.php:6139
-#: eme-members.php:6145
+#: eme-members.php:6128
+#: eme-members.php:6134
+#: eme-members.php:6140
+#: eme-members.php:6146
 #: eme-people.php:930
 #, fuzzy
 msgid "Not imported (field %1$s not valid): %2$s"
@@ -2105,15 +2105,15 @@ msgstr "未导入（在数据库中插入活动时出了问题）：%s"
 #. translators: %s is the CSV row data
 #: eme-events.php:6045
 #: eme-locations.php:345
-#: eme-members.php:6121
-#: eme-members.php:6322
+#: eme-members.php:6122
+#: eme-members.php:6323
 msgid "Not imported (not all required fields are present): %s"
 msgstr "未导入（并非所有必要的字段都存在）：%s"
 
 #. translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
 #: eme-events.php:6049
 #: eme-locations.php:349
-#: eme-members.php:6235
+#: eme-members.php:6236
 #: eme-people.php:998
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr ""
@@ -4201,7 +4201,7 @@ msgstr "州"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 
-#: eme-actions.php:421
+#: eme-actions.php:423
 #: eme-events.php:9637
 #: eme-events.php:9816
 msgid "No matching location found"
@@ -5468,7 +5468,7 @@ msgstr "应用的折扣群组 %d 已不存在"
 #. translators: %d is the discount ID
 #: eme-formfields.php:3380
 #: eme-formfields.php:4137
-#: eme-members.php:5291
+#: eme-members.php:5292
 #: eme-people.php:1397
 #: eme-people.php:1718
 #: eme-rsvp.php:3741
@@ -6071,7 +6071,7 @@ msgstr "EME 有选择地使用一个 cookie 来存储客户端的日期和时间
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:685
+#: eme-actions.php:687
 #: eme-gdpr.php:520
 #: eme-gdpr.php:526
 #: eme-gdpr.php:727
@@ -6357,9 +6357,9 @@ msgstr "复制这个地点"
 #: eme-mailer.php:2233
 #: eme-mailer.php:2330
 #: eme-mailer.php:2428
-#: eme-members.php:6999
-#: eme-members.php:7078
-#: eme-members.php:7197
+#: eme-members.php:7000
+#: eme-members.php:7079
+#: eme-members.php:7198
 #: eme-rsvp.php:1275
 #: eme-rsvp.php:5113
 #: eme-rsvp.php:6789
@@ -6431,7 +6431,7 @@ msgstr "主题"
 msgid "Queued on"
 msgstr "排列的时间是"
 
-#: eme-actions.php:437
+#: eme-actions.php:439
 #: eme-cleanup.php:340
 #: eme-events.php:9609
 #: eme-mailer.php:1669
@@ -6459,7 +6459,7 @@ msgstr "请输入有效的电子邮件地址"
 #: eme-mailer.php:2223
 #: eme-mailer.php:2327
 #: eme-mailer.php:2421
-#: eme-members.php:6996
+#: eme-members.php:6997
 #: eme-rsvp.php:6786
 #: eme-rsvp.php:6806
 msgid "The mail has been sent."
@@ -7058,10 +7058,10 @@ msgstr "添加会员"
 #: eme-members.php:653
 #: eme-members.php:1485
 #: eme-members.php:1617
-#: eme-members.php:6672
-#: eme-members.php:6681
+#: eme-members.php:6673
 #: eme-members.php:6682
 #: eme-members.php:6683
+#: eme-members.php:6684
 msgid "Edit member"
 msgstr "编辑会员"
 
@@ -8034,131 +8034,131 @@ msgstr "没有选择会籍"
 msgid "You did not enter a valid discount code"
 msgstr "您没有输入有效的折扣代码"
 
-#: eme-members.php:5363
+#: eme-members.php:5364
 #: eme-rsvp.php:6157
 msgid "Never"
 msgstr "从未"
 
-#: eme-members.php:5394
-#: eme-members.php:5412
-#: eme-members.php:5451
-#: eme-members.php:5473
+#: eme-members.php:5395
+#: eme-members.php:5413
+#: eme-members.php:5452
+#: eme-members.php:5474
 msgid "no end date"
 msgstr "没有结束日期"
 
-#: eme-members.php:5467
+#: eme-members.php:5468
 msgid "expired"
 msgstr "已过期"
 
-#: eme-members.php:6049
-#: eme-members.php:6248
+#: eme-members.php:6050
+#: eme-members.php:6249
 msgid "Access denied"
 msgstr "拒绝访问"
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: eme-members.php:6169
+#: eme-members.php:6170
 #: eme-people.php:961
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr "未导入（在数据库中更新人时出了问题）：%s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6176
-#: eme-members.php:6341
+#: eme-members.php:6177
+#: eme-members.php:6342
 msgid "Not imported (membership does not exist): %s"
 msgstr "未导入（会籍不存在）：%s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6227
+#: eme-members.php:6228
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "未导入（在数据库中插入该会员时出了问题）：%s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6335
+#: eme-members.php:6336
 msgid "Not imported (person does not exist): %s"
 msgstr "未导入（人不存在）：%s"
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6387
+#: eme-members.php:6388
 msgid "Not imported (member does not exist): %s"
 msgstr "未导入（会员不存在）：%s"
 
-#: eme-members.php:6573
+#: eme-members.php:6574
 msgid "Edit membership"
 msgstr "编辑会籍"
 
-#: eme-members.php:6582
+#: eme-members.php:6583
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
 #. translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
-#: eme-members.php:6596
+#: eme-members.php:6597
 #, fuzzy
 msgid "%1$d head of the family accounts + %2$d family members"
 msgstr "“一家之主” 账户"
 
-#: eme-members.php:6668
+#: eme-members.php:6669
 #: eme-people.php:5351
 msgid "(family member)"
 msgstr "(家庭成员)"
 
-#: eme-members.php:6673
+#: eme-members.php:6674
 msgid "Head of the family: "
 msgstr "一家之主"
 
-#: eme-members.php:6676
+#: eme-members.php:6677
 msgid "(head of the family)"
 msgstr "(一家之主)"
 
 #. translators: %d is the payment ID
-#: eme-members.php:6722
+#: eme-members.php:6723
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6827
+#: eme-members.php:6828
 #: eme-people.php:5627
 msgid "(Dynamic)"
 msgstr "(动态)"
 
-#: eme-members.php:6839
+#: eme-members.php:6840
 #: eme-people.php:5639
 msgid "Dynamic group added"
 msgstr "已添加动态群组"
 
-#: eme-members.php:6841
+#: eme-members.php:6842
 #: eme-people.php:5641
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "添加字段时出现了问题"
 
-#: eme-members.php:6844
+#: eme-members.php:6845
 #: eme-people.php:5644
 msgid "Please enter a name for the group"
 msgstr "请为该群组输入名称"
 
-#: eme-members.php:6903
-#: eme-members.php:6972
+#: eme-members.php:6904
+#: eme-members.php:6973
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "主题或正文的内容是空的，没有邮件被发送。"
 
-#: eme-members.php:6957
+#: eme-members.php:6958
 msgid "Memberships deleted."
 msgstr "已删除会籍。"
 
-#: eme-members.php:7013
+#: eme-members.php:7014
 msgid "No corresponding persons found."
 msgstr "没有找到相应的人们。"
 
-#: eme-members.php:7023
+#: eme-members.php:7024
 msgid "Members deleted."
 msgstr "已删除会员。"
 
-#: eme-members.php:7049
-#: eme-members.php:7075
-#: eme-members.php:7138
-#: eme-members.php:7169
-#: eme-members.php:7194
-#: eme-members.php:7211
+#: eme-members.php:7050
+#: eme-members.php:7076
+#: eme-members.php:7139
+#: eme-members.php:7170
+#: eme-members.php:7195
+#: eme-members.php:7212
 #: eme-rsvp.php:6420
 #: eme-rsvp.php:6454
 #: eme-rsvp.php:6498
@@ -8176,8 +8176,8 @@ msgstr "已删除会员。"
 msgid "The action has been executed successfully."
 msgstr "该行动已成功执行。"
 
-#: eme-members.php:7052
-#: eme-members.php:7172
+#: eme-members.php:7053
+#: eme-members.php:7173
 #: eme-rsvp.php:6423
 #: eme-rsvp.php:6457
 #: eme-rsvp.php:6501
@@ -8190,8 +8190,8 @@ msgstr "该行动已成功执行。"
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。"
 
-#: eme-members.php:7055
-#: eme-members.php:7175
+#: eme-members.php:7056
+#: eme-members.php:7176
 #: eme-rsvp.php:6426
 #: eme-rsvp.php:6460
 #: eme-rsvp.php:6495
@@ -13617,14 +13617,14 @@ msgstr ""
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: eme-members.php:6108
-#: eme-members.php:6309
+#: eme-members.php:6109
+#: eme-members.php:6310
 #: eme-people.php:917
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr ""
 
 #. translators: %s is the CSV row data
-#: eme-members.php:6392
+#: eme-members.php:6393
 msgid "Not imported (no matching person found): %s"
 msgstr ""
 
@@ -13641,15 +13641,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:542
+#: eme-actions.php:544
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:543
+#: eme-actions.php:545
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:554
+#: eme-actions.php:556
 msgid "Dismiss"
 msgstr ""
 
@@ -13677,7 +13677,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:690
+#: eme-actions.php:692
 msgid "List of next 10 events"
 msgstr ""
 
@@ -14166,7 +14166,7 @@ msgstr ""
 msgid "Select the event(s)"
 msgstr ""
 
-#: eme-members.php:6738
+#: eme-members.php:6739
 #: eme-rsvp.php:6180
 msgid "Get IBAN"
 msgstr ""
@@ -14390,7 +14390,7 @@ msgstr ""
 #: eme-events.php:6778
 #: eme-events.php:10328
 #: eme-events.php:10331
-#: eme-members.php:6707
+#: eme-members.php:6708
 #: eme-recurrence.php:747
 #: eme-rsvp.php:6060
 #: eme-rsvp.php:6063
@@ -14595,33 +14595,33 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
-#: eme-actions.php:435
+#: eme-actions.php:437
 #: eme-events.php:9607
 msgid "Insert image"
 msgstr ""
 
-#: eme-actions.php:436
+#: eme-actions.php:438
 #: eme-events.php:9608
 msgid "Insert"
 msgstr ""
 
-#: eme-actions.php:438
+#: eme-actions.php:440
 #: eme-events.php:9610
 msgid "Insert from Media Library"
 msgstr ""
 
-#: eme-actions.php:439
+#: eme-actions.php:441
 #: eme-cleanup.php:387
 #: eme-events.php:9611
 msgid "Preview"
 msgstr ""
 
-#: eme-actions.php:440
+#: eme-actions.php:442
 #: eme-events.php:9612
 msgid "Visual"
 msgstr ""
 
-#: eme-actions.php:442
+#: eme-actions.php:444
 #: eme-events.php:9614
 msgid "Insert non-breaking space"
 msgstr ""
@@ -14887,7 +14887,7 @@ msgstr ""
 msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zooming. A browser refresh on a page showing a map will be necessary to see the effect of this change."
 msgstr ""
 
-#: eme-actions.php:361
+#: eme-actions.php:363
 #: eme-events.php:9557
 msgid "Select country"
 msgstr ""
@@ -14899,7 +14899,7 @@ msgstr ""
 msgid "Select one or more memberships"
 msgstr ""
 
-#: eme-actions.php:360
+#: eme-actions.php:362
 #: eme-events.php:9556
 msgid "Select state/province"
 msgstr ""
@@ -15005,7 +15005,7 @@ msgstr ""
 msgid "No access"
 msgstr ""
 
-#: eme-actions.php:362
+#: eme-actions.php:364
 #: eme-events.php:9558
 msgid "Make your choice"
 msgstr ""
@@ -15052,27 +15052,27 @@ msgstr ""
 msgid "Send the configured reminder mail for approved bookings"
 msgstr ""
 
-#: eme-actions.php:521
+#: eme-actions.php:523
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:524
+#: eme-actions.php:526
 msgid "Widgets page"
 msgstr ""
 
-#: eme-actions.php:526
+#: eme-actions.php:528
 msgid "Template tags documentation"
 msgstr ""
 
-#: eme-actions.php:528
+#: eme-actions.php:530
 msgid "Shortcodes documentation"
 msgstr ""
 
-#: eme-actions.php:530
+#: eme-actions.php:532
 msgid "Change settings"
 msgstr ""
 
-#: eme-actions.php:531
+#: eme-actions.php:533
 msgid "Don't show this advice again"
 msgstr ""
 

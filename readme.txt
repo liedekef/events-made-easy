@@ -96,6 +96,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.55  (2026/03/17) =
+* Bring minimal required WP version back down to 6.0
+
 = 3.0.54  (2026/03/15) =
 * Fix getting contacts/authors from wp (wrongly excluded too much)
 

@@ -427,7 +427,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
       </form>
 
    </div>
-   <p>" . esc_html__( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/?cat=44'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a></p>
+   <p>" . esc_html__( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/eme-docs/custom-attributes/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a></p>
    ';
     echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from hardcoded strings and translations
 }

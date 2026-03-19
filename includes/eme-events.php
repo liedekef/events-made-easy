@@ -7141,10 +7141,10 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
         <div id="div_event_date">
         <b><?php esc_html_e( 'Event date', 'events-made-easy' ); ?></b>
         <input id="start-date-to-submit" type="hidden" name="event_start_date" value="">
-        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Start date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo esc_attr( eme_js_datetime( $event['event_start'] ) );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+        <input id="localized-start-date" type="text" name="localized_event_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Start date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo esc_attr( eme_js_datetime( $event['event_start'] ) );} ?>' data-alt-field='start-date-to-submit' required="required">
         -
         <input id="end-date-to-submit" type="hidden" name="event_end_date" value="">
-        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'End date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo esc_attr( eme_js_datetime( $event['event_end'] ) );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
+        <input id="localized-end-date" type="text" name="localized_event_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'End date', 'events-made-easy' ); ?>" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo esc_attr( eme_js_datetime( $event['event_end'] ) );} ?>' data-alt-field='end-date-to-submit'>
         <p class="eme_smaller">
         <?php esc_html_e( 'The event beginning and end date.', 'events-made-easy' ); ?>
         </p>
@@ -7238,10 +7238,10 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
     <b><?php esc_html_e( 'Recurrence dates', 'events-made-easy' ); ?></b>
     <div>
     <input id="rec-start-date-to-submit" type="hidden" name="recurrence_start_date" value="">
-    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence start date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence_start_date ) ); ?>' data-alt-field='rec-start-date-to-submit' <?php echo $data_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?> data-multiple-display-selector='#recurrence-dates-specificdates' class='eme_formfield_fdate'>
+    <input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence start date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence_start_date ) ); ?>' data-alt-field='rec-start-date-to-submit' <?php echo $data_multiple; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?> data-multiple-display-selector='#recurrence-dates-specificdates'>
     -
     <input id="rec-end-date-to-submit" type="hidden" name="recurrence_end_date" value="">
-    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence end date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence['recurrence_end_date'] ) ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
+    <input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Recurrence end date', 'events-made-easy' ); ?>" data-date='<?php echo esc_attr( eme_js_datetime( $recurrence['recurrence_end_date'] ) ); ?>' data-alt-field='rec-end-date-to-submit'>
     </div>
     <p class="eme_smaller" id='recurrence-dates-explanation'>
     <?php esc_html_e( 'The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one.', 'events-made-easy' ); ?>

@@ -40,7 +40,6 @@ define( 'EME_VERSION', '3.0.55' );
 define( 'EME_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EME_INCLUDE_DIR', EME_PLUGIN_DIR . 'includes/');
 define( 'EME_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'EME_PLUGIN_FILE_PATH', __FILE__ );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // INCLUDES

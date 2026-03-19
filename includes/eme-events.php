@@ -2900,7 +2900,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 }
             } elseif ( preg_match( '/#_LINKEDNAME/', $result ) ) {
                 $event_link = eme_event_url( $event, $lang );
-                // if the url is externnal, we'll open a new window/tab
+                // if the url is external, we'll open a new window/tab
                 if ( $event_link == $event['event_url'] ) {
                     $linktarget = "target='_blank'";
                 } else {

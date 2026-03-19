@@ -895,7 +895,6 @@ function eme_event_url( $event, $language = '' ) {
         if ( empty( $parsed['scheme'] ) ) {
             $the_link = 'https://' . ltrim( $the_link, '/' );
         }
-        $the_link = esc_url( $the_link );
     } else {
         if ( empty( $language ) ) {
             $language = eme_detect_lang();

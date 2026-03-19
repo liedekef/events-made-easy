@@ -7,6 +7,10 @@ if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // require the minimal files needed to uninstall the plugin
 // we could include the main file, but that might trigger other issues
 // and does "too much"
+if ( ! defined( 'EME_PLUGIN_DIR' ) ) {
+    define( 'EME_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+}
+
 require_once EME_PLUGIN_DIR . 'includes/eme-install.php';
 require_once EME_PLUGIN_DIR . 'includes/eme-options.php';
 require_once EME_PLUGIN_DIR . 'includes/eme-functions.php';

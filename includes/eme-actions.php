@@ -105,7 +105,10 @@ function eme_actions_early_init() {
 function eme_actions_init() {
     // first the no cache headers
     //eme_nocache_headers();
-    if ( version_compare( get_bloginfo('version'), '6.8', '<' ) ) {
+    if ( function_exists( 'classicpress_version' ) ) {
+        // ClassicPress: always load the textdomain (CP is currently based on older WP then 6.8)
+        eme_load_textdomain();
+    } elseif ( version_compare( get_bloginfo('version'), '6.8', '<' ) ) {
         eme_load_textdomain();
     }
 

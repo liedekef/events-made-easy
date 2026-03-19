@@ -37,39 +37,39 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 // INCLUDES
-require_once 'eme-install.php';
-require_once 'eme-options.php';
-require_once 'eme-functions.php';
-require_once 'eme-filters.php';
-require_once 'eme-events.php';
-require_once 'eme-calendar.php';
-require_once 'eme-widgets.php';
-require_once 'eme-rsvp.php';
-require_once 'eme-locations.php';
-require_once 'eme-people.php';
-require_once 'eme-recurrence.php';
-require_once 'eme-ui-helpers.php';
-require_once 'eme-categories.php';
-require_once 'eme-holidays.php';
-require_once 'eme-templates.php';
-require_once 'eme-attributes.php';
-require_once 'eme-attendances.php';
-require_once 'eme-ical.php';
-require_once 'eme-cleanup.php';
-require_once 'eme-cron.php';
-require_once 'eme-formfields.php';
-require_once 'eme-shortcodes.php';
-require_once 'eme-actions.php';
-require_once 'eme-payments.php';
-require_once 'eme-discounts.php';
-require_once 'eme-members.php';
-require_once 'eme-mailer.php';
-require_once 'eme-countries.php';
-require_once 'eme-gdpr.php';
-require_once 'eme-tasks.php';
-require_once 'eme-todos.php';
-require_once 'eme-translate.php';
-require_once 'eme-fs.php';
+require_once __DIR__ . '/includes/eme-install.php';
+require_once __DIR__ . '/includes/eme-options.php';
+require_once __DIR__ . '/includes/eme-functions.php';
+require_once __DIR__ . '/includes/eme-filters.php';
+require_once __DIR__ . '/includes/eme-events.php';
+require_once __DIR__ . '/includes/eme-calendar.php';
+require_once __DIR__ . '/includes/eme-widgets.php';
+require_once __DIR__ . '/includes/eme-rsvp.php';
+require_once __DIR__ . '/includes/eme-locations.php';
+require_once __DIR__ . '/includes/eme-people.php';
+require_once __DIR__ . '/includes/eme-recurrence.php';
+require_once __DIR__ . '/includes/eme-ui-helpers.php';
+require_once __DIR__ . '/includes/eme-categories.php';
+require_once __DIR__ . '/includes/eme-holidays.php';
+require_once __DIR__ . '/includes/eme-templates.php';
+require_once __DIR__ . '/includes/eme-attributes.php';
+require_once __DIR__ . '/includes/eme-attendances.php';
+require_once __DIR__ . '/includes/eme-ical.php';
+require_once __DIR__ . '/includes/eme-cleanup.php';
+require_once __DIR__ . '/includes/eme-cron.php';
+require_once __DIR__ . '/includes/eme-formfields.php';
+require_once __DIR__ . '/includes/eme-shortcodes.php';
+require_once __DIR__ . '/includes/eme-actions.php';
+require_once __DIR__ . '/includes/eme-payments.php';
+require_once __DIR__ . '/includes/eme-discounts.php';
+require_once __DIR__ . '/includes/eme-members.php';
+require_once __DIR__ . '/includes/eme-mailer.php';
+require_once __DIR__ . '/includes/eme-countries.php';
+require_once __DIR__ . '/includes/eme-gdpr.php';
+require_once __DIR__ . '/includes/eme-tasks.php';
+require_once __DIR__ . '/includes/eme-todos.php';
+require_once __DIR__ . '/includes/eme-translate.php';
+require_once __DIR__ . '/includes/eme-fs.php';
 if ( ! class_exists( 'emeExpressiveDate' ) ) {
     require_once 'class-expressivedate.php';
 }
@@ -294,7 +294,7 @@ $myUpdateChecker = PucFactory::buildUpdateChecker(
 // we'll use a release asset
 $myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
  */
-require_once("class-eme-updater.php");
+require_once __DIR__ . '/includes/class-eme-updater.php';
 $plugin_file = EME_PLUGIN_FILE_PATH;
 $github_username = 'liedekef';
 $github_repository = 'events-made-easy';

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_plugin_url() {
     $url = wp_cache_get( 'eme_plugin_url' );
     if ( $url === false ) {
-        $url = plugin_dir_url( __FILE__ );
+        $url = plugin_dir_url( dirname( __DIR__ ) . '/events-manager.php' );
         wp_cache_set( 'eme_plugin_url', $url, '', 60 );
     }
     return $url;
@@ -16,7 +16,7 @@ function eme_plugin_url() {
 function eme_plugin_dir() {
     $dir = wp_cache_get( 'eme_plugin_dir' );
     if ( $dir === false ) {
-        $dir = plugin_dir_path( __FILE__ );
+        $dir = dirname( __DIR__ ) . '/';
         wp_cache_set( 'eme_plugin_dir', $dir, '', 60 );
     }
     return $dir;
@@ -173,7 +173,7 @@ function eme_captcha_generate( $file ) {
 
     // replace font.ttf with the location of your own ttf font file
     $eme_plugin_dir = eme_plugin_dir();
-    $font           = $eme_plugin_dir . 'font.ttf';
+    $font           = $eme_plugin_dir . 'assets/fonts/font.ttf';
 
     if ( function_exists( 'imagettftext' ) ) {
         // add shadow
@@ -3916,7 +3916,7 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
         $target_file = $targetBasePath . '/' . $rand_id . '-' . $name;
         $target_url  = $targetBaseUrl . '/' . $rand_id . '-' . $name;
         if ( ! class_exists( 'QRCode' ) ) {
-            require_once 'class-qrcode.php';
+            require_once dirname(__DIR__) . '/class-qrcode.php';
         }
         if ( $real_size <= 2 ) {
             $qr_error_level = QR_ERROR_CORRECT_LEVEL_M;

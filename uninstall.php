@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // require the minimal files needed to uninstall the plugin
 // we could include the main file, but that might trigger other issues
 // and does "too much"
-require_once 'eme-install.php';
-require_once 'eme-options.php';
-require_once 'eme-functions.php';
+require_once __DIR__ . '/includes/eme-install.php';
+require_once __DIR__ . '/includes/eme-options.php';
+require_once __DIR__ . '/includes/eme-functions.php';
 
 // For Single site
 if ( ! is_multisite() ) {

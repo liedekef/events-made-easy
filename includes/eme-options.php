@@ -3325,7 +3325,7 @@ case 'other':
     eme_options_toggle( __( 'Limit birthday emails to active members?', 'events-made-easy' ), 'eme_bd_email_members_only', __( 'If selected and birthday emails are to be send, only persons with an active membership will get a birthday email.', 'events-made-easy' ) );
     eme_options_input_text( __( 'EME backend date format', 'events-made-easy' ), 'eme_backend_dateformat', __( 'The date format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'><a href='https://wordpress.org/support/article/formatting-date-and-time/'>" . __('Documentation on date and time formatting.','events-made-easy' ) . '</a></p>' );
     eme_options_input_text( __( 'EME backend time format', 'events-made-easy' ), 'eme_backend_timeformat', __( 'The time format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'><a href='https://wordpress.org/support/article/formatting-date-and-time/'>" . __('Documentation on date and time formatting.','events-made-easy' ) . '</a></p>' );
-    require_once 'dompdf/vendor/autoload.php';
+    require_once EME_INCLUDE_DIR . 'dompdf/vendor/autoload.php';
     $dompdf                = new Dompdf\Dompdf();
     $dompdf_fontfamilies   = array_keys( $dompdf->getFontMetrics()->getFontFamilies() );
     $pdf_font_families_arr = [];

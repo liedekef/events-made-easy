@@ -4,24 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-function eme_plugin_url() {
-    $url = wp_cache_get( 'eme_plugin_url' );
-    if ( $url === false ) {
-        $url = plugin_dir_url( __FILE__ );
-        wp_cache_set( 'eme_plugin_url', $url, '', 60 );
-    }
-    return $url;
-}
-
-function eme_plugin_dir() {
-    $dir = wp_cache_get( 'eme_plugin_dir' );
-    if ( $dir === false ) {
-        $dir = plugin_dir_path( __FILE__ );
-        wp_cache_set( 'eme_plugin_dir', $dir, '', 60 );
-    }
-    return $dir;
-}
-
 add_action( 'wp_ajax_eme_client_clock', 'eme_client_clock_ajax' );
 add_action( 'wp_ajax_nopriv_eme_client_clock', 'eme_client_clock_ajax' );
 function eme_client_clock_ajax() {
@@ -172,8 +154,7 @@ function eme_captcha_generate( $file ) {
     imagefilledrectangle( $im, 0, 0, 120, 38, $background_color );
 
     // replace font.ttf with the location of your own ttf font file
-    $eme_plugin_dir = eme_plugin_dir();
-    $font           = $eme_plugin_dir . 'font.ttf';
+    $font           = EME_PLUGIN_DIR . 'assets/fonts/font.ttf';
 
     if ( function_exists( 'imagettftext' ) ) {
         // add shadow
@@ -3916,7 +3897,7 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
         $target_file = $targetBasePath . '/' . $rand_id . '-' . $name;
         $target_url  = $targetBaseUrl . '/' . $rand_id . '-' . $name;
         if ( ! class_exists( 'QRCode' ) ) {
-            require_once 'class-qrcode.php';
+            require_once EME_INCLUDE_DIR . 'class-qrcode.php';
         }
         if ( $real_size <= 2 ) {
             $qr_error_level = QR_ERROR_CORRECT_LEVEL_M;

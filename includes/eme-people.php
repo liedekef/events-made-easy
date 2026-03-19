@@ -5901,7 +5901,7 @@ function eme_ajax_generate_people_pdf( $ids_arr, $template_id, $template_id_head
     $header = eme_get_template_format( $template_id_header );
     $footer = eme_get_template_format( $template_id_footer );
 
-    require_once 'dompdf/vendor/autoload.php';
+    require_once EME_INCLUDE_DIR . 'dompdf/vendor/autoload.php';
     // instantiate and use the dompdf class
     $options = new Dompdf\Options();
     $options->set( 'isRemoteEnabled', true );

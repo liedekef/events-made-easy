@@ -109,7 +109,7 @@ function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
     // the template format needs br-handling, so lets use a handy function
     $format = eme_get_template_format( $template_id );
 
-    require_once 'dompdf/vendor/autoload.php';
+    require_once EME_INCLUDE_DIR . 'dompdf/vendor/autoload.php';
     // instantiate and use the dompdf class
     $options = new Dompdf\Options();
     $options->set( 'isRemoteEnabled', true );

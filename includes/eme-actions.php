@@ -277,7 +277,6 @@ add_action( 'wp_footer', 'eme_general_footer' );
 //}
 
 function eme_admin_register_scripts() {
-    $eme_plugin_dir  = eme_plugin_dir();
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
@@ -301,13 +300,13 @@ function eme_admin_register_scripts() {
 
     $locale_code     = determine_locale();
     $locale_code     = str_replace( '_', '-', $locale_code );
-    $locale_file     = $eme_plugin_dir . "js/ftable/localization/ftable.$locale_code.js";
+    $locale_file     = EME_PLUGIN_DIR . "js/ftable/localization/ftable.$locale_code.js";
     $locale_file_url = EME_PLUGIN_URL . "js/ftable/localization/ftable.$locale_code.js";
     // for english, no translation code is needed)
     if ( $locale_code != 'en-US' ) {
         if ( ! file_exists( $locale_file ) ) {
             $locale_code     = substr( $locale_code, 0, 2 );
-            $locale_file     = $eme_plugin_dir . "js/ftable/localization/ftable.$locale_code.js";
+            $locale_file     = EME_PLUGIN_DIR . "js/ftable/localization/ftable.$locale_code.js";
             $locale_file_url = EME_PLUGIN_URL . "js/ftable/localization/ftable.$locale_code.js";
         }
         if ( file_exists( $locale_file ) ) {
@@ -649,7 +648,6 @@ function eme_enqueue_datetimepicker() {
     } else {
         $load_js_in_footer = true;
     }
-    $eme_plugin_dir = eme_plugin_dir();
 
     wp_enqueue_script( 'eme-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/js/fdatepicker.min.js', [ ], EME_VERSION, $load_js_in_footer );
     wp_enqueue_style( 'eme-fdatepicker', EME_PLUGIN_URL . 'js/fdatepicker/css/fdatepicker.min.css', [], EME_VERSION );
@@ -657,7 +655,7 @@ function eme_enqueue_datetimepicker() {
     $language = eme_detect_lang();
     // for english, no translation code is needed)
     if ( $language != 'en' ) {
-        $locale_file     = $eme_plugin_dir . "js/fdatepicker/js/i18n/fdatepicker.$language.js";
+        $locale_file     = EME_PLUGIN_DIR . "js/fdatepicker/js/i18n/fdatepicker.$language.js";
         $locale_file_url = EME_PLUGIN_URL . "js/fdatepicker/js/i18n/fdatepicker.$language.js";
         if ( file_exists( $locale_file ) ) {
             wp_enqueue_script( 'eme-fdatepick-locale', $locale_file_url, [ 'eme-fdatepicker' ], EME_VERSION, $load_js_in_footer );

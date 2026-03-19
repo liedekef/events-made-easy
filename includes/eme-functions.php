@@ -937,7 +937,6 @@ function eme_location_url( $location, $language = '' ) {
         if ( empty( $parsed['scheme'] ) ) {
             $the_link = 'https://' . ltrim( $the_link, '/' );
         }
-        $the_link = esc_url( $the_link );
     } elseif ( isset( $location['location_id'] ) && isset( $location['location_name'] ) ) {
         if ( empty( $language ) ) {
             $language = eme_detect_lang();

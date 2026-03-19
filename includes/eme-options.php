@@ -500,11 +500,9 @@ function eme_add_options( $reset = 0 ) {
         'eme_bancontactwero_env'                          => '',
         'eme_bancontactwero_cost'                         => 0,
         'eme_bancontactwero_cost2'                        => 0,
-        //'eme_bancontactwero_button_label'                 => sprintf( $eme_payment_button_label_localizable, 'Bancontact Pay - Wero' ),
-        'eme_bancontactwero_button_label'                 => sprintf( $eme_payment_button_label_localizable, 'Payconiq' ),
-        'eme_bancontactwero_button_img_url'               => esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/payconiq/logo.png',
-        //'eme_bancontactwero_button_above'                 => __('Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments' 'events-made-easy'),
-        'eme_bancontactwero_button_above'                 => sprintf( $eme_payment_button_label_localizable, 'Payconiq' ),
+        'eme_bancontactwero_button_label'                 => sprintf( $eme_payment_button_label_localizable, 'Bancontact Pay - Wero' ),
+        'eme_bancontactwero_button_img_url'               => esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/bancontactwero.png',
+        'eme_bancontactwero_button_above'                 => __('Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments', 'events-made-easy'),
         'eme_bancontactwero_button_below'                 => '',
         'eme_mercadopago_demo'                            => 1,
         'eme_mercadopago_sandbox_token'                   => '',
@@ -1063,7 +1061,7 @@ function eme_update_options( $db_version ) {
                 }
             }
         }
-        if ( $db_version < 421 ) {
+        if ( $db_version < 422 ) {
             $rename_options = [
                 'eme_payconiq_api_key'        => 'eme_bancontactwero_api_key',
                 'eme_payconiq_env'            => 'eme_bancontactwero_env',
@@ -1074,17 +1072,15 @@ function eme_update_options( $db_version ) {
                 'eme_payconiq_button_above'   => 'eme_bancontactwero_button_above',
                 'eme_payconiq_button_below'   => 'eme_bancontactwero_button_below'
             ];
-            /*
             foreach ( $rename_options as $old_option => $new_option ) {
-                if ( get_option( $old_option ) ) {
+                if ( !empty(get_option( $old_option )) && empty(get_option( $new_option)) ) {
                     update_option( $new_option, str_replace('Payconiq', 'Bancontact Pay - Wero (Payconiq)',get_option( $old_option )) );
-                    delete_option( $old_option );
                 }
+                delete_option( $old_option );
             }
-            if ( str_contains(get_option( 'eme_bancontactwero_button_img_url' ),'images/payment_gateways/payconiq/logo.png')) {
-                update_option( 'eme_bancontactwero_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/bancontactwero.png' );
-            }
-             */
+            update_option( 'eme_bancontactwero_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/bancontactwero/bancontactwero.png' );
+            update_option( 'eme_bancontactwero_button_label', 'Bancontact Pay - Wero');
+            update_option( 'eme_bancontactwero_button_above', __('Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments','events-made-easy'));
         }
     }
 

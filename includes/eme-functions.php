@@ -737,7 +737,7 @@ function eme_get_events_page( $justurl = 1, $text = '' ) {
         $page_link      = trailingslashit( home_url() );
     }
     if ( $justurl || empty( $text ) ) {
-        $result = esc_url( $page_link );
+        $result = $page_link;
     } else {
         $text   = esc_html( $text );
         $result = "<a href='" . esc_url( $page_link ) . "' title='$text'>$text</a>";

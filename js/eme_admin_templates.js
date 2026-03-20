@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     action: 'eme_templates_list',
                     eme_admin_nonce: emetemplates.translate_adminnonce,
                     search_name: EME.$('#search_name')?.value || '',
+                    search_content: EME.$('#search_content')?.value || '',
                     search_type: EME.$('#search_type')?.value || ''
                 };
             },

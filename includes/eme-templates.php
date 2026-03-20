@@ -178,6 +178,7 @@ function eme_templates_table_layout( $message = '' ) {
     <form action="#" method="post">
     <?php echo eme_ui_select( '', 'search_type', $template_types ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Template name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
+    <input type="search" name="search_content" id="search_content" placeholder="<?php esc_attr_e( 'Filter content', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
     <button id="TemplatesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
     </form>
 
@@ -444,12 +445,16 @@ function eme_ajax_templates_list() {
     $template_types = eme_template_types();
     $fTableResult   = [];
     $search_type    = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
+    $search_content = isset( $_POST['search_content'] ) ? esc_sql( eme_sanitize_request( $_POST['search_content'] ) ) : '';
     $search_name    = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
 
     $where     = '';
     $where_arr = [];
     if ( ! empty( $search_name ) ) {
         $where_arr[] = "name like '%" . $search_name . "%'";
+    }
+    if ( ! empty( $search_content ) ) {
+        $where_arr[] = "format like '%" . $search_content . "%'";
     }
     if ( ! empty( $search_type ) ) {
         $where_arr[] = "(type = '$search_type')";

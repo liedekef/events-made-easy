@@ -1002,11 +1002,11 @@ function eme_events_page_content() {
         }
         if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_unsub_nonce'] ), "unsub $eme_email$eme_email_groups" ) ) {
             $res = eme_unsub_do( $eme_email, $eme_email_groups_arr );
-	    if (empty($res)) {
-		    return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
-	    } else {
-		    return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
-	    }
+            if (empty($res)) {
+                return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
+            } else {
+                return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
+            }
         } else {
             return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
         }
@@ -1773,23 +1773,23 @@ add_filter( 'get_edit_post_link', 'eme_edit_post_link' );
 //  if (eme_is_single_event_page()) {
 //      $event_id =eme_sanitize_request(get_query_var('event_id'));
 //      //$wp_admin_bar->remove_menu('edit');
-//      $wp_admin_bar->add_menu( array(
+//      $wp_admin_bar->add_menu( [
 //          'parent' => 'edit', // use 'false' for a root menu, or pass the ID of the parent menu
 //          'id' => 'edit_event', // link ID, defaults to a sanitized title value
 //          'title' => __('Edit Event','events-made-easy'), // link title
 //          'href' => admin_url("admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=".$event_id),
-//          'meta' => false // array of any of the following options: array( 'html' => '', 'class' => '', 'onclick' => '', target => '', title => '' );
-//      ));
+//          'meta' => false // array of any of the following options: [ 'html' => '', 'class' => '', 'onclick' => '', target => '', title => '' ];
+//      ]);
 //  } elseif (eme_is_single_location_page()) {
 //      $location_id =eme_sanitize_request(get_query_var('location_id'));
 //      //$wp_admin_bar->remove_menu('edit');
-//      $wp_admin_bar->add_menu( array(
+//      $wp_admin_bar->add_menu( [
 //          'parent' => 'edit', // use 'false' for a root menu, or pass the ID of the parent menu
 //          'id' => 'edit_location', // link ID, defaults to a sanitized title value
 //          'title' => __('Edit Location','events-made-easy'), // link title
 //          'href' => admin_url("admin.php?page=eme-manager&amp;eme_admin_action=edit_location&amp;location_id=".$location_id),
-//          'meta' => false // array of any of the following options: array( 'html' => '', 'class' => '', 'onclick' => '', target => '', title => '' );
-//      ));
+//          'meta' => false // array of any of the following options: [ 'html' => '', 'class' => '', 'onclick' => '', target => '', title => '' ];
+//      ]);
 //  }
 //}
 //add_action( 'wp_before_admin_bar_render', 'eme_admin_bar_render' );
@@ -6770,8 +6770,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $info_line .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                 }
             }
-	    $location = eme_get_location( $event['location_id'] );
-	    if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+            $location = eme_get_location( $event['location_id'] );
+            if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
                 $info_line .= '<br><s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
                 $info_line .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
             } else {
@@ -8571,7 +8571,7 @@ function eme_meta_box_div_event_customfields( $event ) {
             $required = 0;
         }
         #if ( $formfield['field_type'] == 'file' ) {
-        #	$field_html = __( "File upload is not allowed here, use the regular WP media library to upload files or use the 'Add media' button in the event notes.", 'events-made-easy' );
+        #    $field_html = __( "File upload is not allowed here, use the regular WP media library to upload files or use the 'Add media' button in the event notes.", 'events-made-easy' );
         #} elseif ( $formfield['field_type'] == 'hidden' ) {
         if ( $formfield['field_type'] == 'hidden' ) {
             $field_html = __( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );

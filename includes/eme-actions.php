@@ -449,7 +449,7 @@ function eme_register_scripts() {
 
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
-        //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
+        //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', ['eme-basic'], '',true);
         wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
@@ -696,21 +696,21 @@ function eme_custom_dashboard_next_events() {
 }
 
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'events-made-easy/v1', '/processqueue/(?P<interval>\d+)', array(
+    register_rest_route( 'events-made-easy/v1', '/processqueue/(?P<interval>\d+)', [
         'methods' => 'GET',
         'callback' => 'eme_process_queue',
-        'args' => array(
-            'interval' => array(
+        'args' => [
+            'interval' => [
                 'validate_callback' => function($param, $request, $key) {
                     return is_numeric( $param );
                 }
-            ),
-        ),
+            ],
+        ],
         'permission_callback' => function () {
             return current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
                 current_user_can( get_option( 'eme_cap_send_mails' ) );
         }
-    ) );
+    ] );
 } );
 
 // AJAX handler for rendering shortcodes in Jodit preview

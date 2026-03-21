@@ -177,7 +177,7 @@ function eme_add_event_form_shortcode( $atts ) {
         if ($eme_fs_options['redirect_to_login']) {
             //auth_redirect();
             global $wp;
-            $current_url = home_url( add_query_arg( array(), $wp->request ) );
+            $current_url = home_url( add_query_arg( [], $wp->request ) );
             if (is_user_logged_in())
                 $login_url = wp_login_url($current_url,true);
             else

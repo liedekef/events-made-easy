@@ -5029,11 +5029,11 @@ function eme_access_meta_box_save( $post_id ) {
     }
 
     if ( isset( $_POST['eme_access_denied'] ) ) {
-        #$allowed=array(
-        #   'a' => array( // on allow a tags
-        #       'href' => array() // and those anchors can only have href attribute
-        #   )
-        #);
+        #$allowed=[
+        #   'a' => [ // on allow a tags
+        #       'href' => [] // and those anchors can only have href attribute
+        #   ]
+        #];
         update_post_meta( $post_id, 'eme_access_denied', wp_kses_post( $_POST['eme_access_denied'] ) );
     }
     if ( isset( $_POST['eme_drip_counter'] ) ) {

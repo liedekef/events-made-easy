@@ -386,7 +386,7 @@ function eme_check_emecaptcha( $remove_upon_success = 0 ) {
 function eme_check_captcha( $properties = [], $remove_captcha_if_ok = 0 ) {
     $captcha_res = false;
     if ( (! empty( $properties ) && !empty($properties['captcha_only_logged_out'])) ||
-        (empty( $properties ) && get_option( 'eme_captcha_only_logged_out' ) ) ) 	 {
+        (empty( $properties ) && get_option( 'eme_captcha_only_logged_out' ) ) ) {
         if (is_user_logged_in()) {
             return true;
         }
@@ -777,7 +777,7 @@ function eme_get_contact( $contact_id = 0 ) {
         }
         // still nothing ? Can be if the main admin email is not matching a user, so get the first admin
         if ( ! $userinfo ) {
-            $user_query = new WP_User_Query( array( 'role' => 'administrator', 'number' => 1 ) );
+            $user_query = new WP_User_Query( [ 'role' => 'administrator', 'number' => 1 ] );
             $users      = $user_query->get_results(); // array of WP_User objects, like get_users
             $userinfo   = $users[0];
         }
@@ -2979,16 +2979,16 @@ function eme_sanitize_attach_filename( $filename, $use_simple_sanitize=0 ) {
      */
     $filename = ltrim($filename, '.');
     // reduce consecutive characters
-    $filename = preg_replace(array(
+    $filename = preg_replace([
         '/ +/', // "file   name.zip" becomes "file-name.zip"
         '/_+/', // "file___name.zip" becomes "file-name.zip"
         '/-+/' // "file---name.zip" becomes "file-name.zip"
-    ), '-', $filename);
+    ], '-', $filename);
 
-    $filename = preg_replace(array(
+    $filename = preg_replace([
         '/-*\.-*/', // "file--.--.-.--name.zip" becomes "file.name.zip"
         '/\.{2,}/' // "file...name..zip" becomes "file.name.zip"
-    ), '.', $filename);
+    ], '.', $filename);
     // ".file-name.-" becomes "file-name"
     $filename = trim($filename, '.-');
     if ( empty( $filename ) ) {
@@ -4075,14 +4075,14 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
     if (!empty($data_default_optionname)) {
         // for the default we convert newlines to breaks intelligently, as we do later on too
         // this way the html editor can show the layout as intended
-	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
+        $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
         ?>
         <span style="display: none;" <?php echo $data_default; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped with esc_attr() on line 4094 ?> data-targetid="<?php echo esc_attr( $editor_id ); ?>"></span>
         <?php
-	    // adding defaults in tinymce is difficult so we force the plain editor
+        // adding defaults in tinymce is difficult so we force the plain editor
         if ($html_editor == 'tinymce') {
-		    $show_full = 0;
-	    }
+            $show_full = 0;
+        }
     }
 
     if ( $show_wp_editor ) {
@@ -4401,7 +4401,7 @@ function eme_sanitize_attr_string( $attributes, $extra_class = '' ) {
 function eme_remove_attrs($attrs_to_remove, $attributes) {
     // Convert single attribute to array for uniform processing
     if (!is_array($attrs_to_remove)) {
-        $attrs_to_remove = array($attrs_to_remove);
+        $attrs_to_remove = [ $attrs_to_remove ];
     }
 
     foreach ($attrs_to_remove as $attr) {
@@ -4417,7 +4417,7 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
         // )?             - make the whole value part optional
         // (?=\s|$)       - lookahead for whitespace or end of string
         $pattern = '/\s*\b' . preg_quote($attr, '/') .
-		  '(?:\s*=\s*([\'"]).*?(?:\1))?(?=\s|$)/i';
+            '(?:\s*=\s*([\'"]).*?(?:\1))?(?=\s|$)/i';
         $attributes = preg_replace($pattern, '', $attributes);
     }
 

@@ -514,7 +514,7 @@ function eme_ajax_manage_templates() {
 }
 
 //function eme_ajax_get_template_plain() {
-//   $ajaxResult=array();
+//   $ajaxResult = [];
 //   if (isset($_REQUEST['template_id']) && intval($_REQUEST['template_id'])>0) {
 //     $ajaxResult['htmlmessage']=eme_get_template_format_plain($_REQUEST['template_id']);
 //   } else {

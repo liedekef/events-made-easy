@@ -1360,7 +1360,7 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
     $payment_id       = $payment['id'];
     // $success_link = eme_payment_return_url($payment,'paypal');
     // $fail_link = eme_payment_return_url($payment,1);
-    // $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
+    // $notification_link = add_query_arg( ['eme_eventAction'=>'paypal_notification'],$events_page_link);
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
@@ -1953,7 +1953,7 @@ function eme_notification_legacypaypal() {
     $ipn->log_subject  = 'IPN Log: '; // prefix for the email subject
 
     // array of currencies accepted or false to disable
-    //$ipn->currencies = array('USD','EUR');
+    //$ipn->currencies = ['USD','EUR'];
     $ipn->currencies = false;
 
     // date format on log headers (default: dd/mm/YYYY HH:mm:ss)

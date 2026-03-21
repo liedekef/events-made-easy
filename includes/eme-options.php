@@ -1228,7 +1228,7 @@ function eme_options_register() {
 
 function eme_sanitize_option( $option_value, $option_name ) {
     // allow js only in very specific header settings
-    //$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
+    //$allow_js_arr = ['eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html'];
     $no_kses = ['eme_smtp_password'];
     $numeric_options = [
         'eme_rsvp_start_number_days' => 0,
@@ -3263,7 +3263,7 @@ $categories=eme_get_categories();
 $fs_options=get_option('eme_fs');
 if (!isset($fs_options['payment_gateways']))
     $fs_options['payment_gateways'] = [];
-$category_arr=array();
+$category_arr = [];
 $category_arr[0]='';
 if ( $categories ) {
     // the first value should be empty, so if it is required, the browser can require it ...

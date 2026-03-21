@@ -2009,7 +2009,7 @@ function eme_tasks_ajax() {
 
     // if some task signups were ok, but others not, show ok
     if ( $ok && $nok ) {
-        //echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
+        //echo wp_json_encode(['Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message]);
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [
@@ -2026,7 +2026,7 @@ function eme_tasks_ajax() {
             ]
         );
     } elseif ( $ok ) {
-        //echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
+        //echo wp_json_encode(['Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message]);
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
         echo wp_json_encode(
             [

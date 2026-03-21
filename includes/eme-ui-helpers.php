@@ -642,7 +642,7 @@ function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra
 }
 
 function eme_get_field_id ( $field_name, $number = 1) {
-    $field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
+    $field_name = str_replace( [ '[]', '[', ']' ], [ '', '-', '' ], $field_name );
     $field_name = trim( $field_name, '-' );
     return 'emefield-' . $number . '-' . $field_name;
 }

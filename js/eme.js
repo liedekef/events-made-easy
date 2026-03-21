@@ -433,11 +433,9 @@ function eme_refresh_captcha(form_id) {
 
 function eme_scrollToEl(sel) {
     if (sel) {
-        const offsetTop = sel.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-            top: offsetTop - window.innerHeight / 2 + sel.offsetHeight / 2,
-            behavior: 'smooth'
-        });
+        const rect = sel.getBoundingClientRect();
+        const scrollTop = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+        window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
 }
 
@@ -924,11 +922,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Scroll to payment form if present
     const paymentForm = document.getElementById('eme-payment-form');
     if (paymentForm) {
-        const offsetTop = paymentForm.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-            top: offsetTop - window.innerHeight / 2 + paymentForm.offsetHeight / 2,
-            behavior: 'smooth'
-        });
+        eme_scrollToEl(paymentForm);
     }
 
     // Initialize widgets

@@ -4328,6 +4328,76 @@ function eme_merge_classes_into_attrs($class, $attributes) {
     return trim($class_att . ' ' . $attributes);
 }
 
+/**
+ * Parse a raw HTML attribute string (e.g. from a template placeholder) and
+ * return a safely re-escaped version. Known boolean attributes are preserved.
+ * Mirrors the style of eme_merge_classes_into_attrs but for all attributes.
+ *
+ * Handles:  attr='value'  attr="value"  attr=value  boolean-attr
+ */
+function eme_sanitize_attr_string( $attributes, $extra_class = '' ) {
+    if ( empty( $attributes ) ) {
+        // quick stuff
+        return $extra_class ? "class='" . esc_attr( $extra_class ) . "'" : '';
+    }
+
+    // Allowed attribute names (all data-attrs allowed too)
+    $allowed_attrs = [
+        'id', 'name', 'class', 'style', 'title', 'placeholder', 'value',
+        'min', 'max', 'step', 'size', 'rows', 'cols', 'maxlength', 'minlength',
+        'pattern', 'autocomplete', 'autofocus', 'tabindex',
+        'readonly', 'disabled', 'required', 'multiple', 'checked', 'selected'
+    ];
+
+    $boolean_attrs = [ 'readonly', 'disabled', 'required', 'multiple', 'checked', 'selected', 'autofocus' ];
+
+    // Parse all attr=value pairs (single/double/unquoted) and bare boolean attrs
+    preg_match_all(
+        '/(\w[\w-]*)(?:\s*=\s*(?:\'([^\']*)\'|"([^"]*)"|(\S+)))?/',
+        $attributes,
+        $matches,
+        PREG_SET_ORDER
+    );
+
+    $out_parts  = [];
+    $class_val  = $extra_class; // start with any extra class
+
+    foreach ( $matches as $m ) {
+        $attr_name = strtolower( $m[1] );
+
+        if ( ! in_array( $attr_name, $allowed_attrs, true ) && !str_starts_with($attr_name, 'data-') ) {
+            continue; // safe attributes only
+        }
+
+        // Determine value (group 2=single-quoted, 3=double-quoted, 4=unquoted, empty=boolean)
+        $has_value = isset( $m[2] ) || isset( $m[3] ) || isset( $m[4] );
+        $attr_val  = $m[2] ?? $m[3] ?? $m[4] ?? '';
+
+        if ( $attr_name === 'class' ) {
+            $class_val = trim( $class_val . ' ' . $attr_val );
+            continue;
+        }
+
+        if ( in_array( $attr_name, $boolean_attrs, true ) ) {
+            if ( ! $has_value || $attr_val === $attr_name || $attr_val === '' ) {
+                $out_parts[] = esc_attr( $attr_name ) . "='" . esc_attr( $attr_name ) . "'";
+            } else {
+                // e.g. required='required'
+                $out_parts[] = esc_attr( $attr_name ) . "='" . esc_attr( $attr_val ) . "'";
+            }
+            continue;
+        }
+
+        $out_parts[] = esc_attr( $attr_name ) . "='" . esc_attr( $attr_val ) . "'";
+    }
+
+    // Add merged class attribute
+    if ( ! empty( $class_val ) ) {
+        $out_parts[] = "class='" . esc_attr( trim( $class_val ) ) . "'" ;
+    }
+    return implode( ' ', $out_parts );
+}
+
 function eme_remove_attrs($attrs_to_remove, $attributes) {
     // Convert single attribute to array for uniform processing
     if (!is_array($attrs_to_remove)) {

@@ -398,161 +398,194 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
     return do_shortcode( $format );
 }
 
-function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $required=0, $field_id = false) {
-    if (!$field)
+function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $required = 0, $field_id = false ) {
+    if ( ! $field ) {
         return false;
-    $localized_field_id='';
-    $eme_fs_options = get_option('eme_fs');
-    $selected_captcha = eme_get_selected_captcha($eme_fs_options);
-    // if the type is not hidden, set it to the sensible value
-    if ($type != 'hidden') {
-        switch($field) {
-        case 'event_notes':
-        case 'location_description':
-            if ($eme_fs_options['use_wysiwyg']) {
-                $type = 'wysiwyg_textarea';
+    }
+    $localized_field_id = '';
+    $eme_fs_options     = get_option( 'eme_fs' );
+    $selected_captcha   = eme_get_selected_captcha( $eme_fs_options );
+
+    if ( $type !== 'hidden' ) {
+        switch ( $field ) {
+            case 'event_notes':
+            case 'location_description':
+                $type = $eme_fs_options['use_wysiwyg'] ? 'wysiwyg_textarea' : 'textarea';
+                break;
+            case 'event_category_ids':
+                $type = ( $type !== 'radio' ) ? 'category_select' : 'category_radio';
+                break;
+            case 'event_status':
+                $type = 'status_select';
+                break;
+            case 'event_rsvp':
+                $type = 'binary';
+                break;
+            case 'location_id':
+            case 'location_latitude':
+            case 'location_longitude':
+                $type = 'hidden';
+                break;
+            case 'event_start_time':
+                $localized_field_id = 'localized-start-time';
+                $more .= " required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
+                $type = 'localized_datetime';
+                break;
+            case 'event_end_time':
+                $localized_field_id = 'localized-end-time';
+                $more .= " readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
+                $type = 'localized_datetime';
+                break;
+            case 'event_start_date':
+                $localized_field_id = 'localized-start-date';
+                $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
+                $type     = 'localized_datetime';
+                $required = 1;
+                break;
+            case 'event_end_date':
+                $localized_field_id = 'localized-end-date';
+                $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
+                $type = 'localized_datetime';
+                break;
+            case 'location_name':
+                $required = 1;
+                $type     = 'text';
+                $more    .= " class='clearable'";
+                break;
+            case 'event_name':
+                $required = 1;
+                $type     = 'text';
+                break;
+            case 'event_attributes':
+            case 'event_properties':
+                break;
+            case 'recaptcha':
+            case 'hcaptcha':
+            case 'cfcaptcha':
+            case 'captcha':
+                $type = $selected_captcha;
+                break;
+            case 'event_image_url':
+            case 'event_url':
+                $type = ( $type !== 'url' ) ? 'text' : 'url';
+                break;
+        }
+    }
+
+    if ( $required ) {
+        $more .= " required='required'";
+    }
+
+    // Sanitize and escape the full $more attribute string, merging in the base class
+    $safe_more = eme_sanitize_attr_string( $more, 'eme_formfield' );
+
+    $field_id = $field_id ? $field_id : $field;
+
+    // Pre-escaped identifiers used in sprintf calls
+    $esc_field_id           = esc_attr( $field_id );
+    $esc_field              = esc_attr( $field );
+    $esc_localized_field_id = esc_attr( $localized_field_id );
+
+    // Templates use %1$s=id, %2$s=name-suffix, %3$s=attrs
+    $html_by_type = [
+        'number'           => '<input type="number" id="%1$s" name="event[%2$s]" min="0" step="any" %3$s/>',
+        'text'             => '<input type="text" id="%1$s" name="event[%2$s]" %3$s/>',
+        'search'           => '<input type="search" id="%1$s" name="event[%2$s]" %3$s/>',
+        'url'              => '<input type="url" id="%1$s" name="event[%2$s]" %3$s/>',
+        'localized_time'   => '<input type="text" id="%1$s" name="%2$s" %3$s/>',
+        'localized_datetime' => '<input type="text" id="%1$s" name="%2$s" %3$s/>',
+        'textarea'         => '<textarea id="%1$s" name="event[%2$s]" %3$s></textarea>',
+        'hidden'           => '<input type="hidden" id="%1$s" name="event[%2$s]" %3$s/>',
+        'attr-textarea'    => '<textarea id="%1$s" name="event_attributes[%2$s]" %3$s></textarea>',
+        'attr-text'        => '<input type="text" id="%1$s" name="event_attributes[%2$s]" %3$s/>',
+        'attr-tel'         => '<input type="tel" id="%1$s" name="event_attributes[%2$s]" %3$s/>',
+        'attr-email'       => '<input type="email" id="%1$s" name="event_attributes[%2$s]" %3$s/>',
+        'attr-hidden'      => '<input type="hidden" id="%1$s" name="event_attributes[%2$s]" %3$s/>',
+        'prop-text'        => '<input type="text" id="%1$s" name="event_properties[%2$s]" %3$s/>',
+        'prop-hidden'      => '<input type="hidden" id="%1$s" name="event_properties[%2$s]" %3$s/>',
+        'prop-textarea'    => '<textarea id="%1$s" name="event_properties[%2$s]" %3$s></textarea>',
+    ];
+
+    $res = '';
+    switch ( $type ) {
+        case 'wysiwyg_textarea':
+            if ( $eme_fs_options['allow_upload'] && is_user_logged_in() ) {
+                $editor_settings = [ 'media_buttons' => true, 'textarea_name' => "event[$field]" ];
+                $allow_upload    = 'yes';
             } else {
-                $type = 'textarea';
+                $editor_settings = [ 'media_buttons' => false, 'textarea_name' => "event[$field]" ];
+                $allow_upload    = 'no';
+            }
+            $editor_settings['editor_class'] = 'eme_fs_wysiwig_editor_width';
+            if ( get_option( 'eme_htmleditor' ) === 'tinymce' ) {
+                ob_start();
+                wp_editor( '', $field_id, $editor_settings );
+                $res = ob_get_clean();
+            }
+            if ( get_option( 'eme_htmleditor' ) === 'jodit' ) {
+                $res = sprintf(
+                    "<textarea class='eme-fs-editor' name='%s' id='%s' rows='6' data-allowupload='%s'></textarea>",
+                    $esc_field_id,
+                    $esc_field_id,
+                    esc_attr( $allow_upload )
+                );
             }
             break;
-        case 'event_category_ids':
-            $type = ($type != 'radio')?'category_select':'category_radio';
+
+        case 'localized_datetime':
+            // Hidden input for the raw value, visible input for the localized display
+            $res  = sprintf( '<input type="hidden" id="%s" name="event[%s]"/>', $esc_field_id, $esc_field );
+            $res .= sprintf(
+                $html_by_type['localized_datetime'],
+                $esc_localized_field_id,
+                esc_attr( "event[$localized_field_id]" ),
+                $safe_more
+            );
             break;
-        case 'event_status':
-            $type = 'status_select';
+
+        case 'status_select':
+            $res = eme_fs_getstatusselect( $more );
             break;
-        case 'event_rsvp':
-            $type = 'binary';
+
+        case 'category_select':
+            $res = eme_fs_getcategoriesselect( $more );
             break;
-        case 'location_id':
-        case 'location_latitude':
-        case 'location_longitude':
-            $type = 'hidden';
+
+        case 'category_radio':
+            $res = eme_fs_getcategoriesradio( $more );
             break;
-        case 'event_start_time':
-            $localized_field_id='localized-start-time';
-            $more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
-            $type = 'localized_datetime';
-            //$field = 'event[localized_start_time]';
-            //$more .= " size=8 class='eme_formfield_timepicker'";
-            //$type = 'localized_time';
-            break;
-        case 'event_end_time':
-            $localized_field_id='localized-end-time';
-            $more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
-            $type = 'localized_datetime';
-            //$field = 'event[localized_end_time]';
-            //$more .= " size=8 class='eme_formfield_timepicker'";
-            //$type = 'localized_time';
-            break;
-        case 'event_start_date':
-            $localized_field_id='localized-start-date';
-            $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
-            $type = 'localized_datetime';
-            $required = 1;
-            break;
-        case 'event_end_date':
-            $localized_field_id='localized-end-date';
-            $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
-            $type = 'localized_datetime';
-            break;
-        case 'location_name':
-            $required = 1;
-            $type = 'text';
-            $more .= " class='clearable'";
-            break;
-        case 'event_name':
-            $required = 1;
-            $type = 'text';
-            break;
-        case 'event_attributes':
-        case 'event_properties':
-            break;
+
         case 'recaptcha':
         case 'hcaptcha':
         case 'cfcaptcha':
         case 'captcha':
-            $type = $selected_captcha;
+            $res = eme_generate_captchas_html();
             break;
-        case 'event_image_url':
-        case 'event_url':
-            $type = ($type != 'url')?'text':'url';
-        }
-    }
-    if ($required) {
-        $more .= " required='required'";
-    }
-    $more = eme_merge_classes_into_attrs('eme_formfield',$more); // add this class everywhere
-    $html_by_type = array(
-        'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" %s/>',
-        'text' => '<input type="text" id="%s" name="event[%s]" %s/>',
-        'url' => '<input type="url" id="%s" name="event[%s]" %s/>',
-        'localized_time' => '<input type="text" id="%s" name="%s" %s/>',
-        'localized_datetime' => '<input type="text" id="%s" name="%s" %s/>',
-        'textarea' => '<textarea id="%s" name="event[%s]" %s></textarea>',
-        'hidden' => '<input type="hidden" id="%s" name="event[%s]" %s />',
-        'attr-textarea' => '<textarea id="%s" name="event_attributes[%s]" %s></textarea>',
-        'attr-text' => '<input type="text" id="%s" name="event_attributes[%s]" %s />',
-        'attr-tel' => '<input type="tel" id="%s" name="event_attributes[%s]" %s />',
-        'attr-email' => '<input type="email" id="%s" name="event_attributes[%s]" %s />',
-        'attr-hidden' => '<input type="hidden" id="%s" name="event_attributes[%s]" %s />',
-        'prop-text' => '<input type="text" id="%s" name="event_properties[%s]" %s />',
-        'prop-hidden' => '<input type="hidden" id="%s" name="event_properties[%s]" %s />',
-        'prop-textarea' => '<textarea id="%s" name="event_properties[%s]" %s></textarea>',
-    );
 
-    $field_id = ($field_id)?$field_id:$field;
+        case 'binary':
+            $res = eme_fs_getbinaryselect( "event[$field]", $field_id, 0 );
+            break;
 
-    $res = '';
-    switch($type) {
-    case 'wysiwyg_textarea':
-        if ($eme_fs_options['allow_upload'] && is_user_logged_in()) {
-            $editor_settings=['media_buttons'=>true,'textarea_name'=>"event[$field]"];
-	    $allow_upload="yes";
-	} else {
-            $editor_settings=['media_buttons'=>false,'textarea_name'=>"event[$field]"];
-	    $allow_upload="no";
-	}
-        $editor_settings['editor_class'] = "eme_fs_wysiwig_editor_width";
-	if (get_option('eme_htmleditor') == 'tinymce') {
-            ob_start(); // Start output buffer
-            wp_editor('',$field_id,$editor_settings);
-            // Store the printed data in $editor variable
-            $res = ob_get_clean();
-	}
-	if (get_option('eme_htmleditor') == 'jodit') {
-            $res = "<textarea class='eme-fs-editor' name='$field_id' id='$field_id' rows='6' data-allowupload='$allow_upload'></textarea>";
-	}
-        break;
-    case 'localized_datetime':
-        $res = sprintf($html_by_type['hidden'], $field_id, $field, '');
-        $res .= sprintf($html_by_type[$type], $localized_field_id, "event[$localized_field_id]", $more);
-        break;
-    case 'status_select':
-        $res = eme_fs_getstatusselect($more);
-        break;
-    case 'category_select':
-        $res = eme_fs_getcategoriesselect($more);
-        break;
-    case 'category_radio':
-        $res = eme_fs_getcategoriesradio($more);
-        break;
-    case 'recaptcha':
-    case 'hcaptcha':
-    case 'cfcaptcha':
-    case 'captcha':
-        $res = eme_generate_captchas_html();
-        break;
-    case 'binary':
-        $res = eme_fs_getbinaryselect("event[".$field."]",$field_id,0);
-        break;
-    case 'prop-binary':
-        $res = eme_fs_getbinaryselect("event_properties[".$field_id."]",$field_id,0);
-        break;
-    default:
-        $res = sprintf($html_by_type[$type], $field_id, $field_id, $more);
-        break;
+        case 'prop-binary':
+            $res = eme_fs_getbinaryselect( "event_properties[$field_id]", $field_id, 0 );
+            break;
+
+        default:
+            if ( isset( $html_by_type[ $type ] ) ) {
+                $res = sprintf( $html_by_type[ $type ], $esc_field_id, $esc_field_id, $safe_more );
+            } else {
+                // Unknown type: escape the type itself and fall back to a text-like input
+                $res = sprintf(
+                    '<input type="%s" id="%s" name="event[%s]" %s/>',
+                    esc_attr( $type ),
+                    $esc_field_id,
+                    $esc_field_id,
+                    $safe_more
+                );
+            }
+            break;
     }
+
     return $res;
 }
 
@@ -563,60 +596,73 @@ function eme_fs_getcategories() {
 }
 
 function eme_fs_getcategoriesradio( $more ) {
-    $categories = eme_fs_getcategories();
-    $category_radios = array();
+    $safe_more      = eme_sanitize_attr_string( $more );
+    $categories     = eme_fs_getcategories();
+    $category_radios = [];
     if ( $categories ) {
-        // the first value should be empty, so if it is required, the browser can require it ...
-        $category_radios[] = '<input type="hidden" name="event[event_category_ids]" value="0" '.$more.' />';
-        foreach ($categories as $category){
-            $category_radios[] = sprintf('<input type="radio" id="event_category_ids_%s" value="%s" name="event[event_category_ids]" %s />', $category['category_id'], $category['category_id'], $checked);
-            $category_radios[] = sprintf('<label for="event_category_ids_%s">%s</label><br/>', $category['category_id'], $category['category_name']);
+        $category_radios[] = '<input type="hidden" name="event[event_category_ids]" value="0" ' . $safe_more . '/>';
+        foreach ( $categories as $category ) {
+            $cat_id   = esc_attr( $category['category_id'] );
+            $cat_name = esc_html( $category['category_name'] );
+            $category_radios[] = sprintf(
+                '<input type="radio" id="event_category_ids_%1$s" value="%1$s" name="event[event_category_ids]" />',
+                $cat_id
+            );
+            $category_radios[] = sprintf(
+                '<label for="event_category_ids_%s">%s</label><br/>',
+                $cat_id,
+                $cat_name
+            );
         }
     }
-    return implode("\n", $category_radios);
+    return implode( "\n", $category_radios );
 }
 
 function eme_fs_getcategoriesselect( $more ) {
-    $more = eme_merge_classes_into_attrs('eme_snapselect', $more);
-    $category_select = array();
-    $category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" '.$more.' >';
+    $safe_more       = eme_sanitize_attr_string( $more, 'eme_snapselect' );
+    $category_select = [];
+    $category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" ' . $safe_more . '>';
     $categories = eme_fs_getcategories();
     if ( $categories ) {
         // the first value should be empty, so if it is required, the browser can require it ...
         $category_select[] = '<option value="">&nbsp;</option>';
-        foreach ($categories as $category){
-            $category_select[] = sprintf('<option value="%s">%s</option>', $category['category_id'], $category['category_name']);
+        foreach ( $categories as $category ) {
+            $category_select[] = sprintf(
+                '<option value="%s">%s</option>',
+                esc_attr( $category['category_id'] ),
+                esc_html( $category['category_name'] )
+            );
         }
     }
     $category_select[] = '</select>';
-    return implode("\n", $category_select);
+    return implode( "\n", $category_select );
 }
 
 function eme_fs_getstatusselect( $more ) {
-    $more = eme_merge_classes_into_attrs('eme_snapselect', $more);
-    $event_status_array = eme_status_array ();
-    $status_select = array();
-    $status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
+    $safe_more         = eme_sanitize_attr_string( $more, 'eme_snapselect' );
+    $event_status_array = eme_status_array();
+    $status_select     = [];
+    $status_select[]   = '<select id="event_status" name="event[event_status]" ' . $safe_more . '>';
     // the first value should be empty, so if it is required, the browser can require it ...
-    $category_select[] = '<option value="">'.__('Event Status','events-made-easy').'</option>';
-    foreach ($event_status_array as $event_status_key=>$event_status_value) {
-        $status_select[] = "<option value='$event_status_key'> $event_status_value</option>";
+    $status_select[]   = '<option value="">' . esc_html__( 'Event Status', 'events-made-easy' ) . '</option>';
+    foreach ( $event_status_array as $event_status_key => $event_status_value ) {
+        $status_select[] = sprintf(
+            '<option value="%s">%s</option>',
+            esc_attr( $event_status_key ),
+            esc_html( $event_status_value )
+        );
     }
     $status_select[] = '</select>';
-    return implode("\n", $status_select);
+    return implode( "\n", $status_select );
 }
 
 function eme_fs_getbinaryselect( $name, $field_id, $default ) {
-    $val = "<select name='$name' id='$field_id' class='eme_snapselect'>";
-    $selected_YES="";
-    $selected_NO="";
-    if ($default==1)
-        $selected_YES = "selected='selected'";
-    else
-        $selected_NO = "selected='selected'";
-    $val.= "<option value='0' $selected_NO>".__('No', 'events-made-easy')."</option>";
-    $val.= "<option value='1' $selected_YES>".__('Yes', 'events-made-easy')."</option>";
-    $val.=" </select>";
+    $selected_yes = $default == 1 ? "selected='selected'" : '';
+    $selected_no  = $default != 1 ? "selected='selected'" : '';
+    $val  = "<select name='" . esc_attr( $name ) . "' id='" . esc_attr( $field_id ) . "' class='eme_snapselect'>";
+    $val .= "<option value='0' $selected_no>"  . esc_html__( 'No',  'events-made-easy' ) . '</option>';
+    $val .= "<option value='1' $selected_yes>" . esc_html__( 'Yes', 'events-made-easy' ) . '</option>';
+    $val .= '</select>';
     return $val;
 }
 

@@ -9,7 +9,7 @@ Plugin Name: Events Made Easy
 Version: 3.0.56
 Plugin URI: https://www.e-dynamics.be/wordpress
 Update URI: https://github.com/liedekef/events-made-easy/
-Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, 2Checkout and others.
+Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others.
 Author: Franky Van Liedekerke
 Author URI: https://www.e-dynamics.be/
 Text Domain: events-made-easy
@@ -19,7 +19,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 /*
-Copyright (c) 2010-2021, Franky Van Liedekerke.
+Copyright (c) 2010-2026, Franky Van Liedekerke.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 define( 'EME_VERSION', '3.0.56' );
 define( 'EME_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'EME_INCLUDE_DIR', EME_PLUGIN_DIR . 'includes/');
+define( 'EME_INCLUDE_DIR', EME_PLUGIN_DIR . 'includes/' );
 define( 'EME_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
@@ -161,8 +161,6 @@ define( 'EME_DISCOUNT_TYPE_FIXED', 1 );
 define( 'EME_DISCOUNT_TYPE_PCT', 2 );
 define( 'EME_DISCOUNT_TYPE_CODE', 3 );
 define( 'EME_DISCOUNT_TYPE_FIXED_PER_SEAT', 4 );
-#define('EME_LANGUAGE_REGEX','[a-z]{2,3}([_\-][a-z]{2,3})?');
-#define('EME_LANGUAGE_REGEX','[a-z]{2}(_[a-z]{2})?');
 define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );

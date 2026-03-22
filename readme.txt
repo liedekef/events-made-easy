@@ -1,7 +1,7 @@
 === Events Made Easy ===  
 Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
-Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
+Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 6.9
 Stable tag: 3.0.56
@@ -9,11 +9,11 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Manage and display events, memberships, recurring events, locations and maps, volunteers, widgets, RSVP, ICAL and RSS feeds, payment gateways support. SEO compatible.
+Manage and display (recurring) events, memberships, locations and maps, volunteers, widgets, RSVP, ICAL and RSS feeds, payment gateways. SEO ready.
              
 == Description ==
 
-Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, 2Checkout, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
+Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
 
 Main features:
 * Public, private, draft and recurring events with custom and dynamic fields in the RSVP form
@@ -34,7 +34,7 @@ Main features:
 * Protection of forms with internal captcha, Google reCaptcha or hCaptcha
 * Templating for emails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
 * Lots of shortcodes and options
-* Payment gateways: Paypal, FirstData, 2CheckOut, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
+* Payment gateways: Paypal, FirstData, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
 * Send emails to registered people, automatically send reminders for payments
 * Automatically send reminders for memberships that are about to expire or have expired
 * Mail queueing and newsletter functionality

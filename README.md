@@ -89,7 +89,7 @@ After activation, an **Events** menu appears in your admin sidebar with 19 dedic
 
 <p align="center">
 
-**Stripe** &middot; **Mollie** &middot; **PayPal** &middot; **Braintree** &middot; **SumUp** &middot; **Opayo** &middot; **Worldpay** &middot; **Payconiq** &middot; **Instamojo** &middot; **Mercado Pago** &middot; **Fondy** &middot; **FirstData** &middot; **2Checkout** &middot; **Bancontact/Wero** &middot; **Webmoney** &middot; **Offline**
+**Stripe** &middot; **Mollie** &middot; **PayPal** &middot; **Braintree** &middot; **SumUp** &middot; **Opayo** &middot; **Worldpay** &middot; **Payconiq** &middot; **Instamojo** &middot; **Mercado Pago** &middot; **Fondy** &middot; **FirstData** &middot; **Bancontact/Wero** &middot; **Webmoney** &middot; **Offline**
 
 </p>
 

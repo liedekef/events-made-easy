@@ -6880,24 +6880,16 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             <span><?php esc_html_e( 'No categories defined.', 'events-made-easy' ); ?></span>
 <?php
         } else {
-            foreach ( $categories as $category ) {
-                if ( $event['event_category_ids'] && in_array( $category['category_id'], explode( ',', $event['event_category_ids'] ) ) ) {
-                    $selected = "checked='checked'";
-                } else {
-                    $selected = '';
-                }
-?>
-            <input type="checkbox" name="event_category_ids[]" value="<?php echo intval( $category['category_id'] ); ?>" <?php echo $selected; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
-<?php
-            } // end foreach
-        } // end if
+            $event_cat_arr = explode(",",$event['event_category_ids']);
+            echo eme_ui_multiselect_key_value( $event_cat_arr, 'event_category_ids', $categories, 'category_id', 'category_name', 3, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
+        }
 ?>
         </div>
         </div> 
         <?php endif; ?>
-                    <div class="postbox" id="eme_pagetemplate">
-                    <h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span></h2>
-                    <div class="inside">
+        <div class="postbox" id="eme_pagetemplate">
+        <h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span></h2>
+        <div class="inside">
 <?php
         $templates = get_page_templates();
         print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()

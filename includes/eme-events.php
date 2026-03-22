@@ -6836,7 +6836,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 <?php
         $eme_wp_user_arr = [];
         if ( $event_author > 0 ) {
-            $user_info                        = get_userdata( $event_author );
+            $user_info = get_userdata( $event_author );
             if ($user_info !== false)
                 $eme_wp_user_arr[ $event_author ] = $user_info->display_name;
         }

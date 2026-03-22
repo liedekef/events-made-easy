@@ -443,12 +443,13 @@ function eme_locations_edit_layout( $location, $message = '' ) {
                 <div class="inside">
                 <p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
 <?php
-    wp_dropdown_users(
-        [
-            'name'     => 'location_author',
-            'selected' => $location_author,
-        ]
-    );
+    $eme_wp_user_arr = [];
+    if ( $location_author > 0 ) {
+        $user_info = get_userdata( $location_author );
+        if ($user_info !== false)
+            $eme_wp_user_arr[ $location_author ] = $user_info->display_name;
+    }
+    echo eme_ui_select( $location_author, 'location_author', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
                 </p>
                 </div>
@@ -464,12 +465,9 @@ function eme_locations_edit_layout( $location, $message = '' ) {
                         <span><?php esc_html_e( 'No categories defined.', 'events-made-easy' ); ?></span>
 <?php
     } else {
-        foreach ( $categories as $category ) {
-?>
-                            <input type="checkbox" name="location_category_ids[]" value="<?php echo esc_attr( $category['category_id'] ); ?>" <?php checked( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ); ?>><?php echo esc_html( eme_translate( $category['category_name'] ) ); ?><br>
-<?php
-        } // end foreach
-    } // end if
+        $loc_cat_arr = explode(",",$location['location_category_ids']);
+        echo eme_ui_multiselect_key_value( $loc_cat_arr, 'location_category_ids', $categories, 'category_id', 'category_name', 3, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
+    }
 ?>
                 </div>
             </div>

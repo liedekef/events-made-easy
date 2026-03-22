@@ -249,6 +249,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    initSnapSelectRemote('#location_author.eme_snapselect_wpuser_class', {
+        data: {
+            action: 'eme_wpuser_snapselect',
+            eme_admin_nonce: emelocations.translate_adminnonce,
+        }
+    });
+
     if (EME.$('select.eme_snapselect_location')) {
         initSnapSelectRemote('select.eme_snapselect_location', {
             showClearButton: true,

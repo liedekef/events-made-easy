@@ -2658,7 +2658,7 @@ function eme_nl2br_save_html( $string ) {
         $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
         $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
         // if br is found, replace it by BREAK
-        $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
+        $string = preg_replace( '/\n*<br\W*?\/?>\n*/', '__EMEBREAKEME__', $string );
     }
 
     $lines      = explode( "\n", $string );
@@ -2696,7 +2696,7 @@ function eme_nl2br_save_html( $string ) {
     // since we call this function in eme_wysiwyg_textarea too, we keep the carriage returns
     $res = implode( "\n", $lines );
     if ($htmleditor == 'tinymce') {
-        $res = str_replace( 'BREAK', "<br>\n", $res );
+        $res = str_replace( '__EMEBREAKEME__', "<br>\n", $res );
     }
     return $res;
 }
@@ -2902,21 +2902,6 @@ function eme_sort_stringlenth( $a, $b ) {
 function eme_rss_cdata( $value ) {
     #$value =  str_replace ( ">", "&gt;", str_replace ( "<", "&lt;", $value ) );
     return '<![CDATA[' . $value . ']]>';
-}
-
-function eme_esc_html_keep_br( $value ) {
-    if ( is_null( $value ) || $value === '' ) {
-        return $value;
-    }
-    if ( is_array( $value ) ) {
-        return array_map( 'eme_esc_html_keep_br', $value );
-    } else {
-        // if br is found, replace it by BREAK
-        $value = preg_replace( "/<br\W*?\/?>/", 'BREAK', $value );
-        $value = esc_html( $value );
-        $value = str_replace( 'BREAK', "<br>", $value );
-        return $value;
-    }
 }
 
 function eme_esc_html( $value ) {

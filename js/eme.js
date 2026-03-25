@@ -207,13 +207,12 @@ function eme_init_widgets(dynamicOnly = false) {
     EME.$$('.eme_formfield_fdatetime' + dynamicSelector).forEach(el => {
         if (typeof FDatepicker !== 'undefined') {
             new FDatepicker(el, {
-                todayButton: new Date(),
+                todayButton: true,
                 clearButton: true,
                 closeButton: true,
                 fieldSizing: true,
                 timepicker: true,
                 minutesStep: parseInt(emebasic.translate_minutesStep),
-                language: emebasic.translate_flanguage,
                 firstDayOfWeek: parseInt(emebasic.translate_firstDayOfWeek),
                 altFormat: 'Y-m-d H:i:00',
                 multipleSeparator: ", ",
@@ -226,12 +225,11 @@ function eme_init_widgets(dynamicOnly = false) {
     EME.$$('.eme_formfield_fdate' + dynamicSelector).forEach(el => {
         if (typeof FDatepicker !== 'undefined') {
             new FDatepicker(el, {
-                todayButton: new Date(),
+                todayButton: true,
                 clearButton: true,
                 closeButton: true,
                 autoClose: true,
                 fieldSizing: true,
-                language: emebasic.translate_flanguage,
                 firstDayOfWeek: parseInt(emebasic.translate_firstDayOfWeek),
                 altFormat: 'Y-m-d',
                 multipleSeparator: ", ",
@@ -249,7 +247,6 @@ function eme_init_widgets(dynamicOnly = false) {
                 clearButton: true,
                 closeButton: true,
                 minutesStep: parseInt(emebasic.translate_minutesStep),
-                language: emebasic.translate_flanguage,
                 altFormat: 'H:i:00',
                 format: emebasic.translate_ftimeformat
             });

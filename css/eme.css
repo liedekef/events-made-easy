@@ -789,5 +789,6 @@ div#eme_div_import {
 
 /* fix a WP issue on the navbar for options, causing tabs on the next line to appear too much to the right */
 a.nav-tab.nav-tab-active {
+    margin-bottom: 0px;
     border-bottom: none;
 }

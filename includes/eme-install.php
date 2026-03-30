@@ -157,7 +157,7 @@ function _eme_install() {
         // make sure queue sending is configured properly
         if ( $is_action_planned ) {
             $planned_schedule = wp_get_schedule( $cron_action );
-            if ( $planned_schedule != $wanted_schedule ) {
+            if ( $planned_schedule && $planned_schedule != $wanted_schedule ) {
                 update_option( $cron_action, $planned_schedule );
             }
         }

@@ -5625,13 +5625,14 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         }
 
         if ( $search_customfields != '' && eme_is_list_of_int( $search_customfieldids ) ) {
-            $search_customfields = esc_sql( $wpdb->esc_like($search_customfields) );
-            $sql_join            = "
-           INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-             WHERE answer LIKE '%$search_customfields%' AND field_id IN ($search_customfieldids) AND type='event'
-             GROUP BY related_id
+            $sql_join = $wpdb->prepare(
+                "INNER JOIN (SELECT {$group_concat_sql} related_id FROM $answers_table
+                WHERE answer LIKE %s AND field_id IN ($search_customfieldids) AND type='event'
+                GROUP BY related_id
             ) ans
-           ON $events_table.event_id=ans.related_id";
+            ON $events_table.event_id=ans.related_id",
+            '%' . $wpdb->esc_like( $search_customfields ) . '%'
+            ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names and group_concat_sql are safe
         } else {
             $sql_join = "
            LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='event'
@@ -10129,44 +10130,45 @@ function eme_ajax_events_list() {
     }
     $wp_id = get_current_user_id();
 
-    // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
-    $PageSize          = isset( $_POST['jtPageSize'] ) ? intval( $_POST['jtPageSize'] ) : 0;
-    $StartIndex        = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
+    $PageSize   = isset( $_POST['jtPageSize'] ) ? intval( $_POST['jtPageSize'] ) : 0;
+    $StartIndex = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
 
-    $scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
+    // Raw sanitized values — no esc_sql, prepare() will handle escaping
+    $scope             = isset( $_POST['scope'] ) ? eme_sanitize_request( $_POST['scope'] ) : 'future';
     $orderby           = eme_get_datatables_orderby() ?: '';
-    $scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
-    $category          = isset( $_POST['category'] ) ? esc_sql( eme_sanitize_request( $_POST['category'] ) ) : '';
+    $category          = isset( $_POST['category'] ) ? eme_sanitize_request( $_POST['category'] ) : '';
     $status            = isset( $_POST['status'] ) ? intval( $_POST['status'] ) : '';
-    $search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
-    $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql(eme_sanitize_request( $_POST['search_start_date']) ) : '';
-    $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date']) ) : '';
-    $search_location   = isset( $_POST['search_location'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_location'] ) ) ) : '';
+    $search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+    $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request( $_POST['search_start_date'] ) : '';
+    $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request( $_POST['search_end_date'] ) : '';
+    $search_location   = isset( $_POST['search_location'] ) ? eme_sanitize_request( $_POST['search_location'] ) : '';
 
-    $where             = '';
-    $where_arr         = [];
+    $where     = '';
+    $where_arr = [];
+
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "event_name like '%" . $search_name . "%'";
+        $where_arr[] = $wpdb->prepare( 'event_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
     }
     if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
-        $where_arr[] = "event_start >= '$search_start_date'";
-        $where_arr[] = "event_end <= '$search_end_date 23:59:59'";
+        $where_arr[] = $wpdb->prepare( 'event_start >= %s', $search_start_date );
+        $where_arr[] = $wpdb->prepare( 'event_end <= %s', $search_end_date . ' 23:59:59' );
         $scope       = 'all';
     } elseif ( ! empty( $search_start_date ) ) {
-        $where_arr[] = "event_start LIKE '$search_start_date%'";
+        $where_arr[] = $wpdb->prepare( 'event_start LIKE %s', $wpdb->esc_like( $search_start_date ) . '%' );
         $scope       = 'all';
     } elseif ( ! empty( $search_end_date ) ) {
-        $where_arr[] = "event_end LIKE '$search_end_date%'";
+        $where_arr[] = $wpdb->prepare( 'event_end LIKE %s', $wpdb->esc_like( $search_end_date ) . '%' );
         $scope       = 'all';
     }
-    $location_ids = "";
+
+    $location_ids = '';
     if ( ! empty( $search_location ) ) {
-        $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-        $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $location_table WHERE location_name LIKE %s", '%' . $wpdb->esc_like( $search_location ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $location_table   = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+        $prepared_sql     = $wpdb->prepare( "SELECT location_id FROM $location_table WHERE location_name LIKE %s", '%' . $wpdb->esc_like( $search_location ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $location_ids_arr = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $location_ids = -1;
-        if (!empty($location_ids_arr)) {
-            $location_ids = join(',',$location_ids_arr);
+        $location_ids     = -1;
+        if ( ! empty( $location_ids_arr ) ) {
+            $location_ids = join( ',', $location_ids_arr );
         }
     }
 
@@ -10210,7 +10212,7 @@ function eme_ajax_events_list() {
         $field_ids = join( ',', $field_ids_arr );
     }
     if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
-        $search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_customfields'] ) ) );
+        $search_customfields = eme_sanitize_request( $_POST['search_customfields'] );
     } else {
         $search_customfields = '';
     }
@@ -10787,7 +10789,7 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
     if ( ! empty( $conditions ) ) {
         $condition = 'AND (' . join( ' OR ', $conditions ) . ')';
     }
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='event' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='event' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared )-- $condition built from esc_sql'd values; REGEXP patterns cannot use %s placeholders
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

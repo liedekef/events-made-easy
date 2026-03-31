@@ -2947,7 +2947,7 @@ function eme_ajax_locations_list() {
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
-        $where_arr[] = "(location_author=$wp_id)";
+        $where_arr[] = $wpdb->prepare( 'location_author = %d', $wp_id );
     }
 
     if ( $where_arr ) {

@@ -5828,11 +5828,11 @@ function eme_ajax_bookings_list() {
     }
 
     if ( $trash ) {
-        $where_arr[] = 'bookings.status=' . EME_RSVP_STATUS_TRASH;
+        $where_arr[] = $wpdb->prepare('bookings.status = %d', EME_RSVP_STATUS_TRASH);
     } elseif ( $booking_status == 'APPROVED' ) {
-        $where_arr[] = 'bookings.status=' . EME_RSVP_STATUS_APPROVED;
+        $where_arr[] = $wpdb->prepare('bookings.status = %d', EME_RSVP_STATUS_APPROVED);
     } elseif ( $booking_status == 'PENDING' ) {
-        $where_arr[] = '(bookings.status=' . EME_RSVP_STATUS_PENDING . ' OR bookings.status=' . EME_RSVP_STATUS_USERPENDING . ')';
+        $where_arr[] = $wpdb->prepare('(bookings.status = %d OR bookings.status = %d ', EME_RSVP_STATUS_PENDING , EME_RSVP_STATUS_USERPENDING );
     }
 
     if ( $q ) {

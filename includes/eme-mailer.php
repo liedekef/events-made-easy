@@ -1547,7 +1547,7 @@ function eme_mailingreport_list() {
     $search_name = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
     $where       = '';
     $where_arr   = [];
-    $where_arr[] = '(mailing_id=' . $mailing_id . ')';
+    $where_arr[] = $wpdb->prepare( 'mailing_id = %d' , $mailing_id );
     if ( ! empty( $search_name ) ) {
         $like = '%' . $wpdb->esc_like( $search_name ) . '%';
         $where_arr[] = $wpdb->prepare( '(receivername LIKE %s OR receiveremail LIKE %s)', $like, $like);

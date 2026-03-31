@@ -5703,11 +5703,11 @@ function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
 
     // if an event id is provided, it takes precedence
     if ( ! empty( $event_id ) ) {
-        $where_arr[] = "event_id=$event_id";
+        $where_arr[] = $wpdb->prepare( 'event_id = %d', $event_id );
     } elseif ( $scope == 'past' ) {
-        $where_arr[] = "event_end < '$this_datetime'";
+        $where_arr[] = $wpdb->prepare( 'event_end < %s', $this_datetime );
     } elseif ( $scope == 'future' ) {
-        $where_arr[] = "event_end >= '$this_datetime'";
+        $where_arr[] = $wpdb->prepare( 'event_end >= %s', $this_datetime );
     }
     if ( ! empty( $where_arr ) ) {
         $where = ' AND ' . implode( ' AND ', $where_arr );

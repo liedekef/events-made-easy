@@ -425,22 +425,22 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
     }
 
     $wp_id     = intval( $wp_id );
-    $where_arr = [ "$people_table.wp_id=$wp_id" ];
+    $where_arr = [ $wpdb->prepare( "$people_table.wp_id = %d", $wp_id ) ];
     if ( empty( $event_id ) ) {
         if ( $scope == 'future' ) {
             $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
             $search_end_date  = $eme_date_obj_now->getDateTime();
-            $where_arr[]      = "$events_table.event_end >= '$search_end_date'";
+            $where_arr[]      = $wpdb->prepare( "$events_table.event_end >= %s", $search_end_date );
         } elseif ( $scope == 'past' ) {
             $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
             $search_end_date  = $eme_date_obj_now->getDateTime();
-            $where_arr[]      = "$events_table.event_end <= '$search_end_date'";
+            $where_arr[]      = $wpdb->prepare( "$events_table.event_end <= %s", $search_end_date );
         }
     } else {
-        $where_arr[] = "$table.event_id = " . intval( $event_id );
+        $where_arr[] = $wpdb->prepare( "$table.event_id = %d", $event_id );
     }
     if ( ! empty( $task_id ) ) {
-        $where_arr[] = "$table.task_id = " . intval( $task_id );
+        $where_arr[] = $wpdb->prepare( "$table.task_id = %d", $task_id );
     }
     $where = 'WHERE ' . implode( ' AND ', $where_arr );
 

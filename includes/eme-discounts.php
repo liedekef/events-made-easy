@@ -1751,10 +1751,15 @@ function eme_ajax_discounts_list() {
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
-		for ( $i = 0; $i < count( $opt ); $i++ ) {
-				$fld           = esc_sql( $opt[ $i ] );
-				$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
-		}
+        $allowed_columns = eme_get_table_columns( $table );
+
+        $fld = $opt[ $i ];
+        if ( in_array( $fld, $allowed_columns, true ) ) {
+            $where_array[] = $wpdb->prepare(
+                "`$fld` LIKE %s",
+                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+            );
+        }
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
@@ -1816,10 +1821,15 @@ function eme_ajax_discountgroups_list() {
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
-		for ( $i = 0; $i < count( $opt ); $i++ ) {
-				$fld           = esc_sql( $opt[ $i ] );
-				$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
-		}
+        $allowed_columns = eme_get_table_columns( $table );
+
+        $fld = $opt[ $i ];
+        if ( in_array( $fld, $allowed_columns, true ) ) {
+            $where_array[] = $wpdb->prepare(
+                "`$fld` LIKE %s",
+                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+            );
+        }
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
@@ -1854,9 +1864,9 @@ function eme_ajax_discounts_snapselect() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
+        $where = $wpdb->prepare("name LIKE %s", '%' . $wpdb->esc_like( $q ) . '%');
 	} else {
-			$where = '(1=1)';
+        $where = '(1=1)';
 	}
 
 	$pagesize    = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
@@ -1890,9 +1900,9 @@ function eme_ajax_dgroups_snapselect() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
+        $where = $wpdb->prepare("name LIKE %s", '%' . $wpdb->esc_like( $q ) . '%');
 	} else {
-			$where = '(1=1)';
+        $where = '(1=1)';
 	}
 
     $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;

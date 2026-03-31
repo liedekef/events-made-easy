@@ -2075,47 +2075,47 @@ function eme_ajax_task_signups_list() {
         $search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
     } else {
         $search_eventid    = 0;
-        $search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
-        $search_scope      = isset( $_POST['search_scope'] ) ? esc_sql( eme_sanitize_request( $_POST['search_scope'] ) ) : 'future';
-        $search_event      = isset( $_POST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_event'] ) ) ) : '';
-        $search_person     = isset( $_POST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_person'] ) ) ) : '';
-        $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( $_POST['search_start_date'] ) : '';
-        $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( $_POST['search_end_date'] ) : '';
+        $search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+        $search_scope      = isset( $_POST['search_scope'] ) ? eme_sanitize_request( $_POST['search_scope'] ) : 'future';
+        $search_event      = isset( $_POST['search_event'] ) ? eme_sanitize_request( $_POST['search_event'] ) : '';
+        $search_person     = isset( $_POST['search_person'] ) ? eme_sanitize_request( $_POST['search_person'] ) : '';
+        $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request( $_POST['search_start_date'] ) : '';
+        $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request( $_POST['search_end_date'] ) : '';
         $search_status     = isset( $_POST['search_signup_status'] ) ? intval( $_POST['search_signup_status'] ) : -1;
     }
 
     $where     = '';
     $where_arr = [];
     if ( $search_status >= 0 ) {
-        $where_arr[] = "signups.signup_status = $search_status";
+        $where_arr[] = $wpdb->prepare( 'signups.signup_status = %d', $search_status );
     }
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "tasks.name like '%" . $search_name . "%'";
+        $where_arr[] = $wpdb->prepare( 'tasks.name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
     }
     if ( ! empty( $search_eventid ) ) {
-        $where_arr[] = "events.event_id = $search_eventid";
+        $where_arr[] = $wpdb->prepare( 'events.event_id = %d', $search_eventid );
     } elseif ( ! empty( $search_event ) ) {
-        $where_arr[] = "events.event_name like '%" . $search_event . "%'";
+        $where_arr[] = $wpdb->prepare( 'events.event_name LIKE %s', '%' . $wpdb->esc_like( $search_event ) . '%' );
     }
     if ( ! empty( $search_person ) ) {
-        $where_arr[] = "(people.lastname like '%" . $search_person . "%' OR people.firstname like '%" . $search_person . "%' OR people.email like '%" . $search_person . "%')";
+        $where_arr[] = wpdb->prepare( "(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $search_person, $search_person, $search_person);
     }
 
     if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
-        $where_arr[] = "events.event_start >= '$search_start_date'";
-        $where_arr[] = "events.event_end <= '$search_end_date 23:59:59'";
+        $where_arr[] = $wpdb->prepare( "events.event_start >= %s", $search_start_date);
+        $where_arr[] = $wpdb->prepare( "events.event_end <= %s", $search_end_date . ' 23:59:59');
     } elseif ( ! empty( $search_start_date ) ) {
-        $where_arr[] = "events.event_start LIKE '$search_start_date%'";
+        $where_arr[] = $wpdb->prepare( 'events.event_start LIKE %s', $wpdb->esc_like( $search_start_date ) . '%' );
     } elseif ( ! empty( $search_end_date ) ) {
-        $where_arr[] = "events.event_end LIKE '$search_end_date%'";
+        $where_arr[] = $wpdb->prepare( 'events.event_end LIKE %s', $wpdb->esc_like( $search_end_date ) . '%' );
     } elseif ( $search_scope == 'future' ) {
         $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $search_end_date  = $eme_date_obj_now->getDateTime();
-        $where_arr[]      = "events.event_end >= '$search_end_date'";
+        $where_arr[]      = $wpdb->prepare( "events.event_end >= %s", $search_end_date);
     } elseif ( $search_scope == 'past' ) {
         $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $search_end_date  = $eme_date_obj_now->getDateTime();
-        $where_arr[]      = "events.event_end <= '$search_end_date'";
+        $where_arr[]      = $wpdb->prepare( "events.event_end <= %s", $search_end_date);
     }
 
     if ( $where_arr ) {

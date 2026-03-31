@@ -4904,17 +4904,17 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
     $now = $eme_date_obj->getDateTime();
     $where = [];
     if ( $scope == 'past' ) {
-        $where[] = "event_start < '$now'";
+        $where[] = $wpdb->prepare( 'event_start < %s', $now);
     } elseif ( $scope == 'future' ) {
-        $where[] = "event_start >= '$now'";
+        $where[] = $wpdb->prepare( 'event_start >= %s', $now);
     }
     if ( $exclude_id ) {
-        $where[] = 'event_id != ' . intval( $exclude_id );
+        $where[] = $wpdb->prepare( 'event_id != %d', $exclude_id);
     }
     if ( $only_rsvp ) {
         $where[] = 'event_rsvp = 1';
     }
-    $where[] = 'event_status != '.EME_EVENT_STATUS_TRASH;
+    $where[] = $wpdb->prepare( 'event_status != %d', .EME_EVENT_STATUS_TRASH);
 
     $condition = '';
     if ( ! empty( $where ) ) {
@@ -10133,7 +10133,6 @@ function eme_ajax_events_list() {
     $PageSize   = isset( $_POST['jtPageSize'] ) ? intval( $_POST['jtPageSize'] ) : 0;
     $StartIndex = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
 
-    // Raw sanitized values — no esc_sql, prepare() will handle escaping
     $scope             = isset( $_POST['scope'] ) ? eme_sanitize_request( $_POST['scope'] ) : 'future';
     $orderby           = eme_get_datatables_orderby() ?: '';
     $category          = isset( $_POST['category'] ) ? eme_sanitize_request( $_POST['category'] ) : '';

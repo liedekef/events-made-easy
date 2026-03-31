@@ -3393,9 +3393,14 @@ function eme_ajax_record_list( $tablename, $cap ) {
     $where       = '';
     $where_array = [];
     if ( $q ) {
-        for ( $i = 0; $i < count( $opt ); $i++ ) {
-            $fld           = esc_sql( $opt[ $i ] );
-            $where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
+        $allowed_columns = eme_get_table_columns( $table );
+
+        $fld = $opt[ $i ];
+        if ( in_array( $fld, $allowed_columns, true ) ) {
+            $where_array[] = $wpdb->prepare(
+                "`$fld` LIKE %s",
+                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+            );
         }
         $where = ' WHERE ' . implode( ' AND ', $where_array );
     }

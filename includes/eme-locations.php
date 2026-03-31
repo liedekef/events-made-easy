@@ -1258,11 +1258,11 @@ function eme_get_city_location_ids( $cities ) {
     if ( is_array( $cities ) ) {
         $city_conditions = [];
         foreach ( $cities as $city ) {
-            $city_conditions[] = " location_city = '" . esc_sql( $city ) . "'";
+            $city_conditions[] = $wpdb->prepare( 'location_city = %s', $city);
         }
         $conditions = '(' . implode( ' OR', $city_conditions ) . ')';
     } elseif ( ! empty( $cities ) ) {
-        $conditions = " location_city = '" . esc_sql( $cities ) . "'";
+        $conditions = $wpdb->prepare( 'location_city = %s', $cities);
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
@@ -1279,11 +1279,11 @@ function eme_get_country_location_ids( $countries ) {
     if ( is_array( $countries ) ) {
         $country_conditions = [];
         foreach ( $countries as $country ) {
-            $country_conditions[] = " location_country = '" . esc_sql( $country ) . "'";
+            $country_conditions[] = $wpdb->prepare( 'location_country = %s', $country);
         }
         $conditions = '(' . implode( ' OR', $country_conditions ) . ')';
     } elseif ( ! empty( $countries ) ) {
-        $conditions = " location_country = '" . esc_sql( $countries ) . "'";
+        $conditions = $wpdb->prepare( 'location_country = %s', $countries);
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
@@ -2930,11 +2930,11 @@ function eme_ajax_locations_list() {
 
     $table         = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $search_name   = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+    $search_name   = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
     $where         = '';
     $where_arr     = [];
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "(locations.location_name like '%" . $search_name . "%')";
+        $where_arr[] = $wpdb->prepare( 'locations.location_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
     }
 
     // if the person is not allowed to manage all locations, show only events he can edit
@@ -2981,10 +2981,10 @@ function eme_ajax_locations_list() {
             $field_ids = join( ',', $field_ids_arr );
         }
         if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
-            $search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_customfields'] ) ) );
+            $search_customfields = $wpdb->prepare( "answer LIKE %s", '%'.$wpdb->esc_like(eme_sanitize_request($_POST['search_customfields'])).'%' );
             $sql_join        = "
                    INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-                         WHERE answer LIKE '%$search_customfields%' AND field_id IN ($field_ids) AND type='location'
+                         WHERE $search_customfields AND field_id IN ($field_ids) AND type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
@@ -3119,7 +3119,7 @@ function eme_ajax_chooselocation_snapselect() {
     $start    = ( $page - 1 ) * $pagesize;
 
     $where = ! empty( $q )
-        ? "(locations.location_name like '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')"
+        ? $wpdb->prepare( "locations.location_name LIKE %s", '%'.$wpdb->esc_like($q).'%' );
         : "(1=1)";
     if ( ! empty( $_REQUEST['exclude_locationids'] ) ) {
         $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );
@@ -3223,32 +3223,72 @@ function eme_location_store_answers( $location_id ) {
 
 function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
     global $wpdb;
-    $table      = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $conditions = [];
-    $val        = eme_kses( $val );
 
-    if ( is_array( $val ) ) {
-        foreach ( $val as $tmpval ) {
-            $tmpval = esc_sql( $tmpval );
-            if ( $is_multi ) {
-                $conditions[] = "answer REGEXP '^" . $tmpval . '|\\\\|' . $tmpval . '\\\\||\\\\|' . $tmpval . '$' . "'";
-            } else {
-                $conditions[] = "answer LIKE '%$tmpval%'";
-            }
+    // Sanitize input
+    $field_id = absint( $field_id );
+    $val      = eme_kses( $val );
+    $is_multi = absint( $is_multi );
+
+    // Ensure val is an array for consistent processing
+    if ( ! is_array( $val ) ) {
+        $val = [ $val ];
+    }
+
+    // Filter out empty values
+    $val = array_filter( $val, static function ( $v ) {
+        return ! empty( $v );
+    });
+
+    if ( empty( $val ) ) {
+        return [];
+    }
+
+    $table = $wpdb->prefix . 'eme_answers';
+
+    // Build the query using proper prepared statements
+    $base_query = "SELECT DISTINCT related_id FROM {$table} WHERE field_id = %d AND type = %s";
+    $query_vars = [ $field_id, 'location' ];
+
+    // Build WHERE conditions for answer values
+    if ( $is_multi ) {
+        // For multi-value fields, use REGEXP to match values separated by pipe characters
+        $conditions   = [];
+        $regex_values = [];
+
+        foreach ( $val as $search_val ) {
+            // Sanitize each value for use in regex
+            $sanitized_val = preg_quote( $search_val, '/' );
+            // Match value at start, middle, or end of pipe-separated string
+            $regex_values[] = '(^' . $sanitized_val . '(\\||$)|\\|' . $sanitized_val . '(\\||$))';
+        }
+
+        if ( ! empty( $regex_values ) ) {
+            $regex_pattern = implode( '|', $regex_values );
+            $base_query   .= ' AND answer REGEXP %s';
+            $query_vars[]  = $regex_pattern;
         }
     } else {
-        $val = esc_sql( $val );
-        if ( $is_multi ) {
-            $conditions[] = "answer REGEXP '^" . $val . '|\\\\|' . $val . '\\\\||\\\\|' . $val . '$' . "'";
-        } else {
-            $conditions[] = "answer LIKE '%$val%'";
+        // For single-value fields, use LIKE for substring matching
+        $like_conditions = [];
+        foreach ( $val as $search_val ) {
+            $like_conditions[] = $wpdb->prepare( 'answer LIKE %s', '%' . $wpdb->esc_like( $search_val ) . '%' );
+        }
+
+        if ( ! empty( $like_conditions ) ) {
+            $base_query .= ' AND (' . implode( ' OR ', $like_conditions ) . ')';
         }
     }
-    $condition = '';
-    if ( ! empty( $conditions ) ) {
-        $condition = 'AND (' . join( ' OR ', $conditions ) . ')';
+
+    // Execute the query
+    if ( $is_multi ) {
+        // For regex patterns, we need to build the full query manually since REGEXP can't use %s placeholders
+        $prepared_sql = $wpdb->prepare( $base_query, ...$query_vars ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    } else {
+        $prepared_sql = $base_query;
+        // Build query variables array and prepare the statement
+        $prepared_sql = $wpdb->prepare( $prepared_sql, ...$query_vars ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='location' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

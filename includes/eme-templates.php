@@ -444,20 +444,20 @@ function eme_ajax_templates_list() {
     $table          = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     $template_types = eme_template_types();
     $fTableResult   = [];
-    $search_type    = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
-    $search_content = isset( $_POST['search_content'] ) ? esc_sql( eme_sanitize_request( $_POST['search_content'] ) ) : '';
-    $search_name    = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+    $search_type    = isset( $_POST['search_type'] ) ? eme_sanitize_request( $_POST['search_type'] ) : '';
+    $search_content = isset( $_POST['search_content'] ) ? eme_sanitize_request( $_POST['search_content'] ) : '';
+    $search_name    = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
 
     $where     = '';
     $where_arr = [];
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "name like '%" . $search_name . "%'";
+        $where_arr[] = $wpdb->prepare( 'name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
     }
     if ( ! empty( $search_content ) ) {
-        $where_arr[] = "format like '%" . $search_content . "%'";
+        $where_arr[] = $wpdb->prepare( 'format LIKE %s', '%' . $wpdb->esc_like( $search_content ) . '%' );
     }
     if ( ! empty( $search_type ) ) {
-        $where_arr[] = "(type = '$search_type')";
+        $where_arr[] = $wpdb->prepare( 'type = %s', $search_type );
     }
     if ( $where_arr ) {
         $where = 'WHERE ' . implode( ' AND ', $where_arr );

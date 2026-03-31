@@ -9,7 +9,7 @@ function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $re
 	$table_name = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
 
 	$line              = [];
-	$line['type']      = esc_sql( $type );
+	$line['type']      = $type;
 	$line['person_id'] = intval( $person_id );
 	if ( ! empty( $attendance_date ) && ( eme_is_date( $attendance_date ) || eme_is_datetime( $attendance_date ) ) ) {
 		$line['creation_date'] = $attendance_date;

@@ -4972,7 +4972,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     if ( ! eme_is_empty_string( $order )) {
         if ( $order == 'ASC' || $order == 'DESC' ) {
             $orderby = "ORDER BY event_start $order, event_name $order";
-        } elseif ( eme_verify_sql_orderby( $order ) ) {
+        } elseif ( eme_sanitize_sql_orderby( $order ) ) {
             $orderby = 'ORDER BY ' . $order;
         } else {
             $orderby = 'ORDER BY event_start ASC, event_name ASC';

@@ -474,7 +474,7 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
         $purposes     = explode( ',', $purpose );
         $purposes_arr = [];
         foreach ( $purposes as $tmp_p ) {
-            $purposes_arr[] = "field_purpose='" . esc_sql( $tmp_p ) . "'";
+            $purposes_arr[] = $wpdb->prepare("field_purpose = %s", $tmp_p );
         }
         $where_arr[] = '(' . join( ' OR ', $purposes_arr ) . ')';
     }
@@ -493,9 +493,9 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
     $where_arr[]      = "field_type <> 'file' AND field_type <> 'multifile'";
     if ( ! empty( $purpose ) ) {
         if ( $include_generic ) {
-            $where_arr[] = "(field_purpose='" . esc_sql( $purpose ) . "' OR field_purpose='generic')";
+            $where_arr[] = $wpdb->prepare("(field_purpose = %s OR field_purpose='generic')", $purpose );
         } else {
-            $where_arr[] = "field_purpose='" . esc_sql( $purpose ) . "'";
+            $where_arr[] = $wpdb->prepare("field_purpose = %s", $purpose );
         }
     }
     if ( ! empty( $where_arr ) ) {
@@ -5135,19 +5135,19 @@ function eme_ajax_formfields_list() {
     $table              = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
     $used_formfield_ids = eme_get_used_formfield_ids();
     $fTableResult       = [];
-    $search_type        = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
-    $search_purpose     = isset( $_POST['search_purpose'] ) ? esc_sql( eme_sanitize_request( $_POST['search_purpose'] ) ) : '';
-    $search_name        = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+    $search_type        = isset( $_POST['search_type'] ) ? eme_sanitize_request( $_POST['search_type'] ) : '';
+    $search_purpose     = isset( $_POST['search_purpose'] ) ? eme_sanitize_request( $_POST['search_purpose'] ) : '';
+    $search_name        = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
     $where              = '';
     $where_arr          = [];
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "field_name like '%" . $search_name . "%'";
+        $where_arr[] = $wpdb->prepare( 'field_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
     }
     if ( ! empty( $search_type ) ) {
-        $where_arr[] = "(field_type = '$search_type')";
+        $where_arr[] = $wpdb->prepare( "field_type = %s", $search_type);
     }
     if ( ! empty( $search_purpose ) ) {
-        $where_arr[] = "(field_purpose = '$search_purpose')";
+        $where_arr[] = $wpdb->prepare( "field_purpose = %s", $search_purpose);
     }
     if ( $where_arr ) {
         $where = 'WHERE ' . implode( ' AND ', $where_arr );

@@ -2226,7 +2226,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     $members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
     // trim the search_person param too
-    $search_person = isset( $search_terms['search_person'] ) ? esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) : '';
+    $search_person = isset( $search_terms['search_person'] ) ? $search_terms['search_person'] : '';
 
     // if the person is not allowed to manage all people, show only himself
     if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -2243,7 +2243,8 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     $where_arr[] = "people.status=$status";
 
     if ( ! empty( $search_person ) ) {
-        $where_arr[] = "(people.lastname like '%" . $search_person . "%' OR people.firstname like '%" . $search_person . "%' OR people.email like '%" . $search_person . "%')";
+        $like = '%' . $wpdb->esc_like( $search_person ) . '%';
+        $where_arr[] = $wpdb->prepare( '(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)', $like, $like, $like);
     }
     $usergroup_join = '';
     if ( ! empty( $search_terms['search_groups'] ) && eme_is_numeric_array( $search_terms['search_groups'] ) ) {
@@ -2303,11 +2304,9 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
             $search_customfields = '';
             $search_formfield_sql = " AND answer = '' ";
         } elseif (! empty($search_terms['search_exactmatch']))  {
-            $search_customfields = esc_sql( $search_terms['search_customfields'] );
-            $search_formfield_sql = " AND answer = '$search_customfields' ";
+            $search_formfield_sql = $wpdb->prepare(" AND answer = %s", $search_terms['search_customfields'] );
         } else  {
-            $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
-            $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
+            $search_formfield_sql = $wpdb->prepare(" AND answer LIKE %s", '%'. $wpdb->esc_like($search_terms['search_customfields']) .'%' );
         }
         if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
             $field_ids = join( ',', $search_terms['search_customfieldids'] );
@@ -4272,7 +4271,7 @@ function eme_add_update_group( $group_id = 0 ) {
     $search_fields   = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
     foreach ( $search_fields as $search_field ) {
         if ( isset( $_POST[ $search_field ] ) ) {
-            $search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
+            $search_terms[ $search_field ] = eme_sanitize_request( $_POST[ $search_field ] );
         }
     }
     $group['search_terms'] = eme_serialize( $search_terms );
@@ -5248,9 +5247,10 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
 
     $wp_ids_seen = [];
     if ( $search_tables == 'people' || $search_tables == 'both' ) {
-        $search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%')";
+        $like = '%' . $wpdb->esc_like( $lastname ) . '%';
+        $where_arr[] = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s)', $like, $like, $like);
         if ( ! empty( $exclude_personids ) ) {
-            $search .= " AND person_id NOT IN ($exclude_personids)";
+            $search .= " AND person_id NOT IN ($exclude_personids)"; // guaranteed list of integers
         }
         $persons = eme_get_persons( '', $search );
         foreach ( $persons as $item ) {
@@ -5516,9 +5516,12 @@ function eme_ajax_chooseperson_snapselect() {
     $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $start    = ( $page - 1 ) * $pagesize;
 
-    $where = ! empty( $q )
-        ? "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND status=" . EME_PEOPLE_STATUS_ACTIVE
-        : 'status=' . EME_PEOPLE_STATUS_ACTIVE;
+    if (!empty($q)) {
+        $like = '%' . $wpdb->esc_like( $q ) . '%';
+        $where = $wpdb->prepare("lastname LIKE %s OR firstname LIKE %s OR email LIKE %s AND status = %d", $like, $like, $like, EME_PEOPLE_STATUS_ACTIVE);
+    } else {
+        $where = $wpdb->prepare("status = %d", EME_PEOPLE_STATUS_ACTIVE);
+    }
 
     if ( ! empty( $_REQUEST['exclude_personids'] ) ) {
         $exclude_personids     = eme_sanitize_request( $_REQUEST['exclude_personids'] );
@@ -5528,7 +5531,7 @@ function eme_ajax_chooseperson_snapselect() {
         }
     }
 
-    $persons     = eme_get_persons( '', $where, "LIMIT $start,$mysql_pagesize" );
+    $persons = eme_get_persons( '', $where, "LIMIT $start,$mysql_pagesize" );
 
     $records = [];
     foreach ( $persons as $person ) {
@@ -5624,13 +5627,13 @@ function eme_ajax_store_people_query() {
     if ( ! empty( $_POST['dynamicgroupname'] ) ) {
         $group         = [];
         $group['type'] = 'dynamic_people';
-        $group['name'] = esc_sql(eme_sanitize_request($_POST['dynamicgroupname']) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
+        $group['name'] = eme_sanitize_request($_POST['dynamicgroupname']) . ' ' . __( '(Dynamic)', 'events-made-easy' );
         $search_terms  = [];
         // the same as in add_update_group
         $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
         foreach ( $search_fields as $search_field ) {
             if ( isset( $_POST[ $search_field ] ) ) {
-                $search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
+                $search_terms[ $search_field ] = eme_sanitize_request( $_POST[ $search_field ] );
             }
         }
         $group['search_terms'] = eme_serialize( $search_terms );

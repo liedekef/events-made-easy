@@ -659,28 +659,30 @@ function eme_ajax_recurrences_list() {
 
     $limit             = eme_get_datatables_limit();
 	$orderby           = eme_get_datatables_orderby();
-	$scope             = ( isset( $_POST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'ongoing';
-	$search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
-	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_start_date']) ) : '';
-	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date'])) : '';
+	$scope             = ( isset( $_POST['scope'] ) ) ? eme_sanitize_request( $_POST['scope'] ) : 'ongoing';
+	$search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request($_POST['search_start_date']) : '';
+	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request($_POST['search_end_date']) : '';
 
 	$where     = '';
 	$where_arr = [];
+    }
 	if ( ! empty( $search_name ) ) {
-		$where_arr[] = "event_name like '%" . $search_name . "%'";
+        $where_arr[] = $wpdb->prepare( 'event_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
 	}
+
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
-		$where_arr[] = "recurrence_start_date >= '$search_start_date'";
-		$where_arr[] = "(recurrence_end_date <= '$search_end_date' OR recurrence_end_date IS NULL)";
+        $where_arr[] = $wpdb->prepare( "recurrence_start_date >= %s", $search_start_date);
+        $where_arr[] = $wpdb->prepare( "(recurrence_end_date <= %s OR recurrence_end_date IS NULL)", $search_start_date);
 	} elseif ( ! empty( $search_start_date ) ) {
-		$where_arr[] = "recurrence_start_date = '$search_start_date'";
+        $where_arr[] = $wpdb->prepare( "recurrence_start_date = %s", $search_start_date);
 	} elseif ( ! empty( $search_end_date ) ) {
-		$where_arr[] = "recurrence_end_date = '$search_end_date'";
+        $where_arr[] = $wpdb->prepare( "recurrence_end_date = %s", $search_start_date);
 	} elseif ( ! empty( $scope ) ) {
 		if ( $scope == 'ongoing' ) {
-			$where_arr[] = "(recurrence_end_date >= '$today' OR recurrence_end_date IS NULL)";
+            $where_arr[] = $wpdb->prepare( "(recurrence_end_date >= %s OR recurrence_end_date IS NULL)", $today);
 		} elseif ( $scope == 'past' ) {
-			$where_arr[] = "recurrence_end_date < '$today'";
+            $where_arr[] = $wpdb->prepare( "recurrence_end_date < %s", $today);
 		}
 	}
 	if ( $where_arr ) {

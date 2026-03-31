@@ -610,7 +610,7 @@ function eme_mark_mail_fail( $id, $random_id = '', $error_msg = '' ) {
         $where['id'] = intval( $id );
     }
     $fields['status']        = EME_MAIL_STATUS_FAILED;
-    $fields['error_msg']     = esc_sql( $error_msg );
+    $fields['error_msg']     = $error_msg;
     $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
@@ -1544,12 +1544,13 @@ function eme_mailingreport_list() {
         return;
     }
     $mailing_id  = intval( $_POST['mailing_id'] );
-    $search_name = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+    $search_name = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
     $where       = '';
     $where_arr   = [];
     $where_arr[] = '(mailing_id=' . $mailing_id . ')';
     if ( ! empty( $search_name ) ) {
-        $where_arr[] = "(receivername like '%$search_name%' OR receiveremail like '%$search_name%')";
+        $like = '%' . $wpdb->esc_like( $search_name ) . '%';
+        $where_arr[] = $wpdb->prepare( '(receivername LIKE %s OR receiveremail LIKE %s)', $like, $like);
     }
 
     if ( ! empty( $where_arr ) ) {

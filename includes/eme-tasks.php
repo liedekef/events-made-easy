@@ -2098,7 +2098,8 @@ function eme_ajax_task_signups_list() {
         $where_arr[] = $wpdb->prepare( 'events.event_name LIKE %s', '%' . $wpdb->esc_like( $search_event ) . '%' );
     }
     if ( ! empty( $search_person ) ) {
-        $where_arr[] = wpdb->prepare( "(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $search_person, $search_person, $search_person);
+        $like = '%' . $wpdb->esc_like( $search_person ) . '%';
+        $where_arr[] = wpdb->prepare( "(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     }
 
     if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {

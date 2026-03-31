@@ -2906,7 +2906,7 @@ function eme_sanitize_email( $email ) {
 }
 
 // same as wp sanitize_sql_orderby function, but also allow the "." for table names
-function eme_verify_sql_orderby( $orderby ) {
+function eme_sanitize_sql_orderby( $orderby ) {
     if ( preg_match( '/^\s*(([a-z0-9_\.\=]+|`[a-z0-9_\.\=]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.\=`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
         return $orderby;
     }
@@ -4281,20 +4281,21 @@ function eme_get_datatables_limit() {
     return $limit;
 }
 
-function eme_get_datatables_orderby($preferred_sorting='') {
-    if ( ! empty( $_REQUEST['jtSorting'] ) ) {
-        $orderby = '';
-        $sanitized_sorting = eme_verify_sql_orderby( sanitize_text_field( wp_unslash( $_REQUEST['jtSorting'] ) ) );
-        if ( ! empty( $sanitized_sorting ) ) {
-            if ( ! empty( $preferred_sorting ) ) {
-                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($sanitized_sorting);
-            } else {
-                $orderby = "ORDER BY " . esc_sql($sanitized_sorting);
-            } 
+function eme_get_datatables_orderby($preferred_sorting = '') {
+    $preferred_sorting = eme_sanitize_sql_orderby( $preferred_sorting );
+    $sanitized_sorting = eme_sanitize_sql_orderby(
+        sanitize_text_field( wp_unslash( $_REQUEST['jtSorting'] ?? '' ) )
+    );
+
+    $orderby = '';
+    if ( ! empty( $sanitized_sorting ) ) {
+        if ( ! empty( $preferred_sorting ) ) {
+            $orderby = "ORDER BY $preferred_sorting, $sanitized_sorting";
+        } else {
+            $orderby = "ORDER BY $sanitized_sorting";
         }
-        return $orderby;
     }
-    return '';
+    return $orderby;
 }
 
 function eme_rightclickhint() {

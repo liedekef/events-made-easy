@@ -3061,7 +3061,7 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     $people_join = "LEFT JOIN $people_table AS people ON members.person_id=people.person_id";
     // trim the search_person too
     if ( ! empty( $search_terms['search_person'] ) ) {
-        $like = '%' . $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) . '%';
+        $like = '%' . $wpdb->esc_like( trim( $search_terms['search_person'] ) ) . '%';
         $where_arr[]   = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     }
     if ( ! empty( $search_terms['search_groups'] ) && is_numeric( $search_terms['search_groups'] ) ) {
@@ -6792,9 +6792,9 @@ function eme_ajax_members_snapselect() {
     $q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
     if (!empty($q)) {
         $like = '%' . $wpdb->esc_like( $q ) . '%';
-        $search = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
+        $where = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     } else {
-        $search = '(1=1)';
+        $where = '(1=1)';
     }
 	$pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
     $mysql_pagesize = $pagesize+1;

@@ -666,18 +666,17 @@ function eme_ajax_recurrences_list() {
 
 	$where     = '';
 	$where_arr = [];
-    }
 	if ( ! empty( $search_name ) ) {
         $where_arr[] = $wpdb->prepare( 'event_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
 	}
 
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
         $where_arr[] = $wpdb->prepare( "recurrence_start_date >= %s", $search_start_date);
-        $where_arr[] = $wpdb->prepare( "(recurrence_end_date <= %s OR recurrence_end_date IS NULL)", $search_start_date);
+        $where_arr[] = $wpdb->prepare( "(recurrence_end_date <= %s OR recurrence_end_date IS NULL)", $search_end_date);
 	} elseif ( ! empty( $search_start_date ) ) {
         $where_arr[] = $wpdb->prepare( "recurrence_start_date = %s", $search_start_date);
 	} elseif ( ! empty( $search_end_date ) ) {
-        $where_arr[] = $wpdb->prepare( "recurrence_end_date = %s", $search_start_date);
+        $where_arr[] = $wpdb->prepare( "recurrence_end_date = %s", $search_end_date);
 	} elseif ( ! empty( $scope ) ) {
 		if ( $scope == 'ongoing' ) {
             $where_arr[] = $wpdb->prepare( "(recurrence_end_date >= %s OR recurrence_end_date IS NULL)", $today);

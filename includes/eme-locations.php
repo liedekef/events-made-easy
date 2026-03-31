@@ -3119,7 +3119,7 @@ function eme_ajax_chooselocation_snapselect() {
     $start    = ( $page - 1 ) * $pagesize;
 
     $where = ! empty( $q )
-        ? $wpdb->prepare( "locations.location_name LIKE %s", '%'.$wpdb->esc_like($q).'%' );
+        ? $wpdb->prepare( "locations.location_name LIKE %s", '%'.$wpdb->esc_like($q).'%' )
         : "(1=1)";
     if ( ! empty( $_REQUEST['exclude_locationids'] ) ) {
         $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );

@@ -866,18 +866,20 @@ function eme_ajax_countries_list() {
 	$fTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
-	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
+	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : [];
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
         $allowed_columns = eme_get_table_columns( $table );
 
-        $fld = $opt[ $i ];
-        if ( in_array( $fld, $allowed_columns, true ) ) {
-            $where_array[] = $wpdb->prepare(
-                "`$fld` LIKE %s",
-                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
-            );
+        for ( $i = 0; $i < count( $opt ); $i++ ) {
+            $fld = $opt[ $i ];
+            if ( in_array( $fld, $allowed_columns, true ) ) {
+                $where_array[] = $wpdb->prepare(
+                    "`$fld` LIKE %s",
+                    '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+                );
+            }
         }
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}

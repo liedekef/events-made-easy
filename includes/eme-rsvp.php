@@ -5906,10 +5906,10 @@ function eme_ajax_bookings_list() {
             $where_arr[] = $wpdb->prepare("events.event_end <= %s", $search_end_date . ' 23:59:59');
             $scope       = 'all';
         } elseif ( ! empty( $search_start_date ) ) {
-            $where_arr[] = $wpdb->prepare("events.event_start LIKE %s", '%' . $wpdb->esc_like( $search_start_date ) . '%');
+            $where_arr[] = $wpdb->prepare("DATE(events.event_start) = %s", $search_start_date);
             $scope       = 'all';
         } elseif ( ! empty( $search_end_date ) ) {
-            $where_arr[] = $wpdb->prepare("events.event_end LIKE %s", '%' . $wpdb->esc_like( $search_end_date ) . '%');
+            $where_arr[] = $wpdb->prepare("DATE(events.event_end) = %s", $search_end_date);
             $scope       = 'all';
         } elseif ( $scope == 'past' ) {
             $where_arr[] = $wpdb->prepare("events.event_end < %s", $today);

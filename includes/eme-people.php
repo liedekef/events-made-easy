@@ -5518,7 +5518,7 @@ function eme_ajax_chooseperson_snapselect() {
 
     if (!empty($q)) {
         $like = '%' . $wpdb->esc_like( $q ) . '%';
-        $where = $wpdb->prepare("lastname LIKE %s OR firstname LIKE %s OR email LIKE %s AND status = %d", $like, $like, $like, EME_PEOPLE_STATUS_ACTIVE);
+        $where = $wpdb->prepare("(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s) AND status = %d", $like, $like, $like, EME_PEOPLE_STATUS_ACTIVE);
     } else {
         $where = $wpdb->prepare("status = %d", EME_PEOPLE_STATUS_ACTIVE);
     }

@@ -2099,16 +2099,16 @@ function eme_ajax_task_signups_list() {
     }
     if ( ! empty( $search_person ) ) {
         $like = '%' . $wpdb->esc_like( $search_person ) . '%';
-        $where_arr[] = wpdb->prepare( "(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
+        $where_arr[] = $wpdb->prepare( "(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     }
 
     if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
         $where_arr[] = $wpdb->prepare( "events.event_start >= %s", $search_start_date);
         $where_arr[] = $wpdb->prepare( "events.event_end <= %s", $search_end_date . ' 23:59:59');
     } elseif ( ! empty( $search_start_date ) ) {
-        $where_arr[] = $wpdb->prepare( 'events.event_start LIKE %s', $wpdb->esc_like( $search_start_date ) . '%' );
+        $where_arr[] = $wpdb->prepare( 'DATE(events.event_start) = %s', $search_start_date);
     } elseif ( ! empty( $search_end_date ) ) {
-        $where_arr[] = $wpdb->prepare( 'events.event_end LIKE %s', $wpdb->esc_like( $search_end_date ) . '%' );
+        $where_arr[] = $wpdb->prepare( 'DATE(events.event_end) = %s', $search_end_date );
     } elseif ( $search_scope == 'future' ) {
         $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $search_end_date  = $eme_date_obj_now->getDateTime();

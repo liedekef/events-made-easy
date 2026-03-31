@@ -1753,12 +1753,14 @@ function eme_ajax_discounts_list() {
 	if ( $q ) {
         $allowed_columns = eme_get_table_columns( $table );
 
-        $fld = $opt[ $i ];
-        if ( in_array( $fld, $allowed_columns, true ) ) {
-            $where_array[] = $wpdb->prepare(
-                "`$fld` LIKE %s",
-                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
-            );
+        for ( $i = 0; $i < count( $opt ); $i++ ) {
+            $fld = $opt[ $i ];
+            if ( in_array( $fld, $allowed_columns, true ) ) {
+                $where_array[] = $wpdb->prepare(
+                    "`$fld` LIKE %s",
+                    '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+                );
+            }
         }
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}

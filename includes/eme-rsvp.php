@@ -5737,16 +5737,16 @@ function eme_ajax_bookings_list() {
     $limit          = eme_get_datatables_limit();
     $orderby        = eme_get_datatables_orderby() ?: 'ORDER BY creation_date ASC';
     $booking_status = ( isset( $_POST['booking_status'] ) ) ? eme_sanitize_request( $_POST['booking_status'] ) : 'APPROVED';
-    $search_event   = isset( $_POST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_POST['search_event']) ) ) : '';
-    $search_person  = isset( $_POST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_POST['search_person']) ) ) : '';
+    $search_event   = isset( $_POST['search_event'] ) ? eme_sanitize_request($_POST['search_event'])  : '';
+    $search_person  = isset( $_POST['search_person'] ) ? eme_sanitize_request($_POST['search_person']) : '';
     // the unique number can contain text (+, /, ...), but we only need the numbers, so lets do that
-    $search_unique     = isset( $_POST['search_unique'] ) ? esc_sql(eme_str_numbers_only( $_POST['search_unique']) ) : '';
+    $search_unique     = isset( $_POST['search_unique'] ) ? eme_str_numbers_only( $_POST['search_unique']) : '';
     $search_paymentid  = isset( $_POST['search_paymentid'] ) ? intval( $_POST['search_paymentid'] ) : 0;
-    $search_pg_pid     = isset( $_POST['search_pg_pid'] ) ? esc_sql( eme_sanitize_request($_POST['search_pg_pid']) ) : '';
-    $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_start_date']) ) : '';
-    $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date']) ) : '';
-    $scope             = ( isset( $_POST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
-    $category          = isset( $_POST['category'] ) ? esc_sql( eme_sanitize_request( $_POST['category'] ) ) : '';
+    $search_pg_pid     = isset( $_POST['search_pg_pid'] ) ? eme_sanitize_request($_POST['search_pg_pid']) : '';
+    $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request($_POST['search_start_date']) : '';
+    $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request($_POST['search_end_date']) : '';
+    $scope             = ( isset( $_POST['scope'] ) ) ? eme_sanitize_request( $_POST['scope'] ) : 'future';
+    $category          = isset( $_POST['category'] ) ? eme_sanitize_request( $_POST['category']) : '';
     $person_id         = isset( $_POST['person_id'] ) ? intval( $_POST['person_id'] ) : 0;
     $event_id          = isset( $_POST['event_id'] ) ? intval( $_POST['event_id'] ) : 0;
     if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
@@ -5812,7 +5812,7 @@ function eme_ajax_bookings_list() {
     $group_concat_sql      = '';
     $field_ids_arr         = [];
     foreach ( $formfields_searchable as $formfield ) {
-        $field_id          = $formfield['field_id'];
+        $field_id          = $formfield['field_id']; // guaranteed integers
         $field_ids_arr[]   = $field_id;
         $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
     }
@@ -5836,18 +5836,26 @@ function eme_ajax_bookings_list() {
     }
 
     if ( $q ) {
+        $allowed_columns = eme_get_table_columns( $bookings_table );
+
         for ( $i = 0; $i < count( $opt ); $i++ ) {
-            $fld = esc_sql( $opt[ $i ] );
-            if ( $fld == 'booker' ) {
-                $where_arr[] = "(lastname like '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%' OR firstname '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%')";
+            $fld = $opt[ $i ];
+
+            if ( ! in_array( $fld, $allowed_columns, true ) ) {
+                continue;
+            }
+
+            if ( $fld === 'booker' ) {
+                $like = '%' . $wpdb->esc_like( $q[ $i ] ) . '%';
+                $where_arr[] = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s)', $like, $like);
             } else {
-                $where_arr[] = "`$fld` like '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
+                $where_arr[] = $wpdb->prepare( "`$fld` LIKE %s", '%' . $wpdb->esc_like( $q[ $i ] ) . '%');
             }
         }
     }
     if ( ! empty( $_POST['search_customfields'] ) ) {
-        $search_customfields = $wpdb->esc_like( eme_sanitize_request($_POST['search_customfields']) );
-        $prepared_sql        = $wpdb->prepare("SELECT related_id FROM $answers_table WHERE answer LIKE %s AND type='booking' GROUP BY related_id", "%$search_customfields%"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $search_customfields = '%' . $wpdb->esc_like( eme_sanitize_request($_POST['search_customfields']) ) . '%';
+        $prepared_sql        = $wpdb->prepare("SELECT related_id FROM $answers_table WHERE answer LIKE %s AND type='booking' GROUP BY related_id", $search_customfields); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $booking_ids         = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( ! empty( $booking_ids ) ) {
             $where_arr[] = '(bookings.booking_id IN (' . join( ',', $booking_ids ) . '))';
@@ -5862,51 +5870,55 @@ function eme_ajax_bookings_list() {
     $eme_date_obj_now      = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $today                 = $eme_date_obj_now->getDateTime();
     if ( ! empty( $search_person ) ) {
-        $where_arr[] = "(lastname like '%$search_person%' OR firstname like '%$search_person%' OR email like '%$search_person%')";
+        $where_arr[] = $wpdb->prepare("(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s)", 
+            '%' . $wpdb->esc_like( $search_person ) . '%',
+            '%' . $wpdb->esc_like( $search_person ) . '%',
+            '%' . $wpdb->esc_like( $search_person ) . '%'
+        );
     }
     if ( ! empty( $search_unique ) ) {
-        $where_arr[] = "unique_nbr like '%$search_unique%'";
+        $where_arr[] = $wpdb->prepare("unique_nbr LIKE %s", '%' . $wpdb->esc_like( $search_unique ) . '%');
         // for this search, don't limit the scope
         $scope = 'all';
     }
     if ( ! empty( $search_paymentid ) ) {
-        $where_arr[] = "payment_id=$search_paymentid";
+        $where_arr[] = $wpdb->prepare("payment_id=%d", $search_paymentid);
         // for this search, don't limit the scope
         $scope = 'all';
     }
     if ( ! empty( $search_pg_pid ) ) {
-        $where_arr[] = "pg_pid like '%$search_pg_pid%'";
+        $where_arr[] = $wpdb->prepare("pg_pid LIKE %s", '%' . $wpdb->esc_like( $search_pg_pid ) . '%');
         // for this search, don't limit the scope
         $scope = 'all';
     }
 
     if ( ! empty( $person_id ) ) {
-        $where_arr[] = "bookings.person_id=$person_id";
+        $where_arr[] = $wpdb->prepare("bookings.person_id=%d", $person_id);
         // for this search, don't limit the scope
         $scope = 'all';
     }
     // the event_id overrides the search for event and the start/end dates
     if ( ! empty( $event_id ) ) {
-        $where_arr[] = "bookings.event_id=$event_id";
+        $where_arr[] = $wpdb->prepare("bookings.event_id=%d", $event_id);
     } else {
         if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
-            $where_arr[] = "events.event_start >= '$search_start_date 00:00:00'";
-            $where_arr[] = "events.event_end <= '$search_end_date 23:59:59'";
+            $where_arr[] = $wpdb->prepare("events.event_start >= %s", $search_start_date . ' 00:00:00');
+            $where_arr[] = $wpdb->prepare("events.event_end <= %s", $search_end_date . ' 23:59:59');
             $scope       = 'all';
         } elseif ( ! empty( $search_start_date ) ) {
-            $where_arr[] = "events.event_start LIKE '$search_start_date%'";
+            $where_arr[] = $wpdb->prepare("events.event_start LIKE %s", '%' . $wpdb->esc_like( $search_start_date ) . '%');
             $scope       = 'all';
         } elseif ( ! empty( $search_end_date ) ) {
-            $where_arr[] = "events.event_end LIKE '$search_end_date%'";
+            $where_arr[] = $wpdb->prepare("events.event_end LIKE %s", '%' . $wpdb->esc_like( $search_end_date ) . '%');
             $scope       = 'all';
         } elseif ( $scope == 'past' ) {
-            $where_arr[] = "events.event_end < '$today'";
+            $where_arr[] = $wpdb->prepare("events.event_end < %s", $today);
         } elseif ( $scope == 'future' ) {
-            $where_arr[] = "events.event_end >= '$today'";
+            $where_arr[] = $wpdb->prepare("events.event_end >= %s", $today);
         }
 
         if ( ! empty( $search_event ) ) {
-            $where_arr[] = "events.event_name LIKE '%$search_event%'";
+            $where_arr[] = $wpdb->prepare("events.event_name LIKE %s", '%' . $wpdb->esc_like( $search_event ) . '%');
         }
     }
 

@@ -10175,20 +10175,20 @@ function eme_ajax_events_list() {
     // override in case of trash
     if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
         $view_trash  = 1;
-        $where_arr[] = 'event_status = ' . EME_EVENT_STATUS_TRASH;
+        $where_arr[] = $wpdb->prepare( 'event_status = %d', EME_EVENT_STATUS_TRASH);
     } else {
         $view_trash = 0;
         if ( ! empty( $status ) ) {
-            $where_arr[] = 'event_status = ' . $status;
+            $where_arr[] = $wpdb->prepare( 'event_status = %d', $status);
         } else {
-            $where_arr[] = 'event_status != ' . EME_EVENT_STATUS_TRASH;
+            $where_arr[] = $wpdb->prepare( 'event_status != %d', EME_EVENT_STATUS_TRASH);
         }
     }
 
     // if the person is not allowed to manage all events, we'll limit the links
     if ( ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
         if (get_option('eme_limit_admin_event_listing'))
-            $where_arr[] = "(event_author=$wp_id || event_contactperson_id=$wp_id)";
+            $where_arr[] = $wpdb->prepare( "(event_author=%d || event_contactperson_id=%d)", $wp_id, $wp_id);
         $limited_links = 1;
     } else {
         $limited_links = 0;

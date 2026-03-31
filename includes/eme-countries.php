@@ -870,19 +870,24 @@ function eme_ajax_countries_list() {
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
-		for ( $i = 0; $i < count( $opt ); $i++ ) {
-			$fld           = esc_sql( $opt[ $i ] );
-			$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
-		}
+        $allowed_columns = eme_get_table_columns( $table );
+
+        $fld = $opt[ $i ];
+        if ( in_array( $fld, $allowed_columns, true ) ) {
+            $where_array[] = $wpdb->prepare(
+                "`$fld` LIKE %s",
+                '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+            );
+        }
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
-		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable and all is prepared above
         $limit       = eme_get_datatables_limit();
 		$orderby     = eme_get_datatables_orderby();
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
-		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable and all is prepared above
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-countries&eme_admin_action=edit_country&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}

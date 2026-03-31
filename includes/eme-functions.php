@@ -2829,6 +2829,24 @@ function eme_table_exists( $table_name ) {
     }
 }
 
+/**
+ * Get allowed columns for a table (cached)
+ */
+function eme_get_table_columns( $table ) {
+    global $wpdb;
+
+    static $cache = [];
+
+    if ( isset( $cache[ $table ] ) ) {
+        return $cache[ $table ];
+    }
+
+    $cols = $wpdb->get_col( "DESCRIBE `$table`", 0 ); // table is internal constant
+    $cache[ $table ] = $cols;
+
+    return $cols;
+}
+
 function eme_maybe_drop_column( $table_name, $column_name ) {
     global $wpdb;
     if ( eme_column_exists( $table_name, $column_name ) ) {

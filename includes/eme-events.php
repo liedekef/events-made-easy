@@ -10762,34 +10762,87 @@ function eme_event_store_answers( $event_id ) {
     wp_cache_delete( "eme_event_cf $event_id" );
 }
 
+/**
+ * Get event IDs based on custom field values.
+ *
+ * This function retrieves event IDs that match specific custom field values.
+ * It properly handles both single and multi-value fields while maintaining
+ * WordPress database security standards.
+ *
+ * @param mixed  $val       The value to search for (string or array of strings).
+ * @param int    $field_id  The custom field ID to search within.
+ * @param int    $is_multi  Whether the field uses multi-value format (0 or 1).
+ *
+ * @return array An array of event IDs that match the criteria.
+ */
 function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
     global $wpdb;
-    $table      = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $conditions = [];
-    $val        = eme_kses( $val );
 
-    if ( is_array( $val ) ) {
-        foreach ( $val as $tmpval ) {
-            $tmpval = esc_sql( $tmpval );
-            if ( $is_multi ) {
-                $conditions[] = "answer REGEXP '^" . $tmpval . '|\\\\|' . $tmpval . '\\\\||\\\\|' . $tmpval . '$' . "'";
-            } else {
-                $conditions[] = "answer LIKE '%$tmpval%'";
-            }
+    // Sanitize input
+    $field_id = absint( $field_id );
+    $val      = eme_kses( $val );
+    $is_multi = absint( $is_multi );
+
+    // Ensure val is an array for consistent processing
+    if ( ! is_array( $val ) ) {
+        $val = [ $val ];
+    }
+
+    // Filter out empty values
+    $val = array_filter( $val, static function ( $v ) {
+        return ! empty( $v );
+    });
+
+    if ( empty( $val ) ) {
+        return [];
+    }
+
+    $table = $wpdb->prefix . 'eme_answers';
+
+    // Build the query using proper prepared statements
+    $base_query = "SELECT DISTINCT related_id FROM {$table} WHERE field_id = %d AND type = %s";
+    $query_vars = [ $field_id, 'event' ];
+
+    // Build WHERE conditions for answer values
+    if ( $is_multi ) {
+        // For multi-value fields, use REGEXP to match values separated by pipe characters
+        $conditions   = [];
+        $regex_values = [];
+
+        foreach ( $val as $search_val ) {
+            // Sanitize each value for use in regex
+            $sanitized_val = preg_quote( $search_val, '/' );
+            // Match value at start, middle, or end of pipe-separated string
+            $regex_values[] = '(^' . $sanitized_val . '(\\||$)|\\|' . $sanitized_val . '(\\||$))';
+        }
+
+        if ( ! empty( $regex_values ) ) {
+            $regex_pattern = implode( '|', $regex_values );
+            $base_query   .= ' AND answer REGEXP %s';
+            $query_vars[]  = $regex_pattern;
         }
     } else {
-        $val = esc_sql( $val );
-        if ( $is_multi ) {
-            $conditions[] = "answer REGEXP '^" . $val . '|\\\\|' . $val . '\\\\||\\\\|' . $val . '$' . "'";
-        } else {
-            $conditions[] = "answer LIKE '%$val%'";
+        // For single-value fields, use LIKE for substring matching
+        $like_conditions = [];
+        foreach ( $val as $search_val ) {
+            $like_conditions[] = $wpdb->prepare( 'answer LIKE %s', '%' . $wpdb->esc_like( $search_val ) . '%' );
+        }
+
+        if ( ! empty( $like_conditions ) ) {
+            $base_query .= ' AND (' . implode( ' OR ', $like_conditions ) . ')';
         }
     }
-    $condition = '';
-    if ( ! empty( $conditions ) ) {
-        $condition = 'AND (' . join( ' OR ', $conditions ) . ')';
+
+    // Execute the query
+    if ( $is_multi ) {
+        // For regex patterns, we need to build the full query manually since REGEXP can't use %s placeholders
+        $prepared_sql = $wpdb->prepare( $base_query, ...$query_vars ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    } else {
+        $prepared_sql = $base_query;
+        // Build query variables array and prepare the statement
+        $prepared_sql = $wpdb->prepare( $prepared_sql, ...$query_vars ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT related_id FROM $table WHERE field_id=%d AND type='event' $condition", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared )-- $condition built from esc_sql'd values; REGEXP patterns cannot use %s placeholders
+
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

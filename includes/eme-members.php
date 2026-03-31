@@ -3061,8 +3061,8 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     $people_join = "LEFT JOIN $people_table AS people ON members.person_id=people.person_id";
     // trim the search_person too
     if ( ! empty( $search_terms['search_person'] ) ) {
-        $search_person = esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) );
-        $where_arr[]   = "(people.lastname LIKE '%$search_person%' OR people.firstname LIKE '%$search_person%' OR people.email LIKE '%$search_person%')";
+        $like = '%' . $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) . '%';
+        $where_arr[]   = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     }
     if ( ! empty( $search_terms['search_groups'] ) && is_numeric( $search_terms['search_groups'] ) ) {
         $tmp_group = eme_get_group($search_terms['search_groups'] );
@@ -3102,8 +3102,8 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $where_arr[]      = "(payment_id=$search_paymentid)";
     }
     if ( ! empty( $search_terms['search_pg_pid'] ) ) {
-        $search_pg_pid = esc_sql( $wpdb->esc_like( $search_terms['search_pg_pid'] ) );
-        $where_arr[]   = "(pg_pid like '%$search_pg_pid%')";
+        $like = '%' . $wpdb->esc_like( $search_terms['search_pg_pid'] ) . '%';
+        $where_arr[]   = $wpdb->prepare("pg_pid LIKE %s", $like );
     }
     $where_arr = eme_array_remove_empty_elements($where_arr);
     if ( ! empty( $where_arr ) ) {
@@ -3133,11 +3133,9 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
             $search_customfields = '';
             $search_formfield_sql = " AND answer = '' ";
         } elseif (! empty($search_terms['search_exactmatch']))  {
-            $search_customfields = esc_sql( $search_terms['search_customfields'] );
-            $search_formfield_sql = " AND answer = '$search_customfields' ";
+            $search_formfield_sql = $wpdb->prepare(" AND answer = %s", $search_terms['search_customfields'] );
         } else  {
-            $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
-            $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
+            $search_formfield_sql = $wpdb->prepare(" AND answer LIKE %s", '%' . $wpdb->esc_like($search_terms['search_customfields']) . '%');
         }
         if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
             $field_ids = join( ',', $search_terms['search_customfieldids'] );
@@ -6429,17 +6427,21 @@ function eme_ajax_memberperson_snapselect() {
     $page              = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $start             = ( $page - 1 ) * $pagesize;
 
-    $search = ! empty( $q )
-        ? "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')"
-        : '(1=1)';
+    if (!empty($q)) {
+        $like = '%' . $wpdb->esc_like( $q ) . '%';
+        $search = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
+    } else {
+        $search = '(1=1)';
+    }
+
     if ( $exclude_personid > 0 ) {
-        $search .= " AND people.person_id <> $exclude_personid";
+        $search .= $wpdb->prepare(" AND people.person_id != %d", $exclude_personid);
     }
     if ( $related_member_id > 0 ) {
-        $search .= " AND members.member_id <> $related_member_id";
+        $search .= $wpdb->prepare(" AND members.member_id != %d", $related_member_id);
     }
     if ( $membership_id > 0 ) {
-        $search .= " AND (members.membership_id <> $membership_id OR members.membership_id IS NULL OR members.status = " . EME_MEMBER_STATUS_EXPIRED . ' OR members.status IS NULL)';
+        $search .= $wpdb->prepare(" AND (members.membership_id != %d OR members.membership_id IS NULL OR members.status = %d OR members.status IS NULL)", $membership_id, EME_MEMBER_STATUS_EXPIRED);
     }
 
     $sql       = "SELECT people.person_id, people.lastname, people.firstname, people.email
@@ -6481,12 +6483,13 @@ function eme_ajax_membermainaccount_snapselect() {
     $page          = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
     $offset        = ( $page - 1 ) * $pagesize;
 
-    $search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND members.related_member_id=0";
+    $like = '%' . $wpdb->esc_like( $q ) . '%';
+    $search = $wpdb->prepare("(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s) AND members.related_member_id=0", $like, $like, $like);
     if ( $member_id > 0 ) {
-        $search .= " AND members.member_id <> $member_id";
+        $search .= $wpdb->prepare(" AND members.member_id != %d", $member_id);
     }
     if ( $membership_id > 0 ) {
-        $search .= " AND members.membership_id = $membership_id";
+        $search .= $wpdb->prepare(" AND members.membership_id != %d", $membership_id);
     }
 
     $paged   = eme_get_members( '', $search, $offset, $pagesize + 1 ); // get 1 element more so the hasMore calc works
@@ -6787,10 +6790,11 @@ function eme_ajax_members_snapselect() {
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
     $q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    if ( ! empty( $q ) ) {
-        $where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+    if (!empty($q)) {
+        $like = '%' . $wpdb->esc_like( $q ) . '%';
+        $search = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     } else {
-        $where = '(1=1)';
+        $search = '(1=1)';
     }
 	$pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
     $mysql_pagesize = $pagesize+1;
@@ -6825,13 +6829,13 @@ function eme_ajax_store_members_query() {
     if ( ! empty( $_POST['dynamicgroupname'] ) ) {
         $group         = [];
         $group['type'] = 'dynamic_members';
-        $group['name']     = esc_sql( eme_sanitize_request( $_POST['dynamicgroupname'] ) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
+        $group['name']     = eme_sanitize_request( $_POST['dynamicgroupname'] ) . ' ' . __( '(Dynamic)', 'events-made-easy' );
         $search_terms      = [];
         // the same as in add_update_group
         $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
         foreach ( $search_fields as $search_field ) {
             if ( isset( $_POST[ $search_field ] ) ) {
-                $search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
+                $search_terms[ $search_field ] = eme_sanitize_request( $_POST[ $search_field ] );
             }
         }
         $group['search_terms'] = eme_serialize( $search_terms );

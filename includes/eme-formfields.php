@@ -468,7 +468,9 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
     $where            = '';
     $where_arr        = [];
     if ( ! empty( $ids ) && eme_is_list_of_int( $ids ) ) {
-        $where_arr[] = "field_id IN ($ids)";
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+        $where_arr[]  = $wpdb->prepare( "field_id IN ($placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     if ( ! empty( $purpose ) ) {
         $purposes     = explode( ',', $purpose );
@@ -530,11 +532,12 @@ function eme_delete_formfields( $ids_arr ) {
     global $wpdb;
     $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
     if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
-        $ids_list = implode(',', $ids_arr);
-        $validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $ids_arr_int  = array_map( 'intval', $ids_arr );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $validation_result = $wpdb->query( $wpdb->prepare( "DELETE FROM $formfields_table WHERE field_id IN ($placeholders)", ...$ids_arr_int ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if ( $validation_result !== false ) {
             $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-            $wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $wpdb->query( $wpdb->prepare( "DELETE FROM $answers_table WHERE field_id IN ($placeholders)", ...$ids_arr_int ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             return true;
         } else {
             return false;
@@ -4934,8 +4937,10 @@ function eme_get_booking_answers_fieldids( $ids_arr ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     # use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
     if (!empty($ids_arr) &&  eme_is_numeric_array( $ids_arr ) ) {
-        $ids_list = implode(',', $ids_arr);
-        return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $ids_arr_int  = array_map( 'intval', $ids_arr );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return [];
     }
@@ -4946,8 +4951,10 @@ function eme_get_tasksignups_answers_fieldids( $ids_arr ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     # use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
     if (!empty($ids_arr) &&  eme_is_numeric_array( $ids_arr ) ) {
-        $ids_list = implode(',', $ids_arr);
-        return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='tasksignup' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $ids_arr_int  = array_map( 'intval', $ids_arr );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='tasksignup' AND eme_grouping=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return [];
     }

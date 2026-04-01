@@ -1147,7 +1147,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
         if ( ! empty( $location_id ) ) {
             $location_ids = explode( ',', $location_id );
             if ( eme_is_numeric_array( $location_ids ) ) {
-                $conditions [] = "(location_id IN ($location_id))";
+                $loc_ids_int  = array_map( 'intval', $location_ids );
+                $placeholders = implode( ',', array_fill( 0, count( $loc_ids_int ), '%d' ) );
+                $conditions[] = $wpdb->prepare( "(location_id IN ($placeholders))", ...$loc_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             }
         }
 
@@ -1897,6 +1899,7 @@ function eme_replace_event_location_placeholders( $format, $event, $target = 'ht
 }
 
 function eme_replace_locations_placeholders( $format, $location = '', $target = 'html', $do_shortcode = 1, $lang = '', $avoid_double_code = 0 ) {
+    global $wpdb;
     // replace EME language tags as early as possible
         $format = eme_translate_string( $format );
 
@@ -2338,11 +2341,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $extra_conditions_arr = [];
                 $order_by             = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id IN ($inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $exc_arr      = array_map( 'intval', explode( ',', $exclude_cats ) );
+                    $exc_ph       = implode( ',', array_fill( 0, count( $exc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
                 $categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
@@ -2372,11 +2379,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $extra_conditions_arr = [];
                 $order_by             = '';
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $include_cats )) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id IN ($inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $exc_arr      = array_map( 'intval', explode( ',', $exclude_cats ) );
+                    $exc_ph       = implode( ',', array_fill( 0, count( $exc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
                 $categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
@@ -2396,11 +2407,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 $extra_conditions_arr = [];
                 $order_by             = '';
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $include_cats )) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id IN ($inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $exc_arr      = array_map( 'intval', explode( ',', $exclude_cats ) );
+                    $exc_ph       = implode( ',', array_fill( 0, count( $exc_arr ), '%d' ) );
+                    $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
                 $categories       = eme_get_location_category_descriptions( $location['location_id'], $extra_conditions, $order_by );
@@ -2972,19 +2987,22 @@ function eme_ajax_locations_list() {
             $field_id        = $formfield['field_id'];
             // we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
             // but we'll do the GROUP_CONCAT only when needed of course
-            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
+            $field_id          = intval( $field_id );
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
 
         if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
-            $field_ids = join( ',', array_map( 'intval', $_POST['search_customfieldids'] ) );
+            $cf_ids_int = array_map( 'intval', $_POST['search_customfieldids'] );
         } else {
-            $field_ids = join( ',', $field_ids_arr );
+            $cf_ids_int = array_map( 'intval', $field_ids_arr );
         }
+        $cf_placeholders = implode( ',', array_fill( 0, count( $cf_ids_int ), '%d' ) );
+        $field_ids_prepared = $wpdb->prepare( "field_id IN ($cf_placeholders)", ...$cf_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
             $search_customfields = $wpdb->prepare( "answer LIKE %s", '%'.$wpdb->esc_like(eme_sanitize_request($_POST['search_customfields'])).'%' );
             $sql_join        = "
                    INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-                         WHERE $search_customfields AND field_id IN ($field_ids) AND type='location'
+                         WHERE $search_customfields AND $field_ids_prepared AND type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
@@ -3125,7 +3143,9 @@ function eme_ajax_chooselocation_snapselect() {
         $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );
         $exclude_locationids_arr = explode( ',', $exclude_locationids );
         if ( eme_is_numeric_array( $exclude_locationids_arr ) ) {
-            $where .= " AND location_id NOT IN ($exclude_locationids)";
+            $exclude_ids_int = array_map( 'intval', $exclude_locationids_arr );
+            $placeholders    = implode( ',', array_fill( 0, count( $exclude_ids_int ), '%d' ) );
+            $where .= $wpdb->prepare( " AND location_id NOT IN ($placeholders)", ...$exclude_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         }
     }
 

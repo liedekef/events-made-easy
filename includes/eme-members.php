@@ -426,12 +426,13 @@ function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesiz
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
     if ( ! empty( $member_ids ) && eme_is_numeric_array( $member_ids ) ) {
-        $ids_list = implode(',', $member_ids);
-        $sql     = "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
+        $member_ids_int = array_map( 'intval', $member_ids );
+        $placeholders   = implode( ',', array_fill( 0, count( $member_ids_int ), '%d' ) );
+        $sql     = $wpdb->prepare( "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
             FROM $members_table AS members
             LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
             LEFT JOIN $people_table AS people ON members.person_id=people.person_id
-            WHERE members.member_id IN ($ids_list)";
+            WHERE members.member_id IN ($placeholders)", ...$member_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if ( ! empty( $extra_search ) ) {
             $sql .= " AND $extra_search";
         }
@@ -505,6 +506,8 @@ function eme_get_membership_stats( $ids ) {
     if ( ! eme_is_list_of_int( $ids ) ) {
         return false;
     }
+    $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+    $in_placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
 
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -526,22 +529,22 @@ function eme_get_membership_stats( $ids ) {
         $limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
         if ( $counter == $difference ) {
             // for current month: just count active members
-            $prepared_sql = "SELECT COUNT(*) FROM $table WHERE status=1 AND membership_id IN ($ids)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=1 AND membership_id IN ($in_placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $member_nbr = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         } else {
             // for previous months: take members that started before the end of the month and were still a member after the end of the month
             // Always ignore pending (a member could've signed up months ago and still not paid)
-            $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $member_nbr = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         }
         // sql for new members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($ids)", $limit_start, $limit_end ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $member_nbr_new = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         // sql for expired members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $member_nbr_expired = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         // sql for renewed members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($ids)", $limit_start, $limit_end ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $member_nbr_renewed = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr_expired</td><td>$member_nbr_renewed</td><td>$member_nbr</td></tr>";
         $eme_date_obj->startOfMonth()->modifyMonths(+1);
@@ -592,9 +595,7 @@ function eme_get_member( $id ) {
 function eme_get_active_member_by_personid_membershipid( $person_id, $membership_id ) {
     global $wpdb;
     $table         = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $status_active = EME_MEMBER_STATUS_ACTIVE;
-    $status_grace  = EME_MEMBER_STATUS_GRACE;
-    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $table WHERE person_id=%d AND membership_id=%d AND status IN ($status_active,$status_grace) LIMIT 1", $person_id, $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $table WHERE person_id=%d AND membership_id=%d AND status IN (%d,%d) LIMIT 1", $person_id, $membership_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $member        = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $member        = eme_get_extra_member_data( $member );
     return $member;
@@ -610,10 +611,12 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
     if ( $status == 'all' ) {
         $cond_status = '';
     } else {
-        if ( strstr( $status, ',' ) ) {
-            $cond_status = "AND members.status IN ($status)";
+        $status_arr = array_map( 'intval', explode( ',', $status ) );
+        if ( count( $status_arr ) > 1 ) {
+            $status_ph   = implode( ',', array_fill( 0, count( $status_arr ), '%d' ) );
+            $cond_status = $wpdb->prepare( "AND members.status IN ($status_ph)", ...$status_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         } else {
-            $cond_status = "AND members.status = $status";
+            $cond_status = $wpdb->prepare( "AND members.status = %d", $status_arr[0] );
         }
     }
     $prepared_sql = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $people_table AS people WHERE members.membership_id=%d $cond_status AND members.person_id=people.person_id AND people.wp_id=%d LIMIT 1", $membership_id, $wp_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -625,11 +628,9 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
 
 function eme_get_activemembership_names_by_personid( $person_id ) {
     global $wpdb;
-    $status_active     = EME_MEMBER_STATUS_ACTIVE;
-    $status_grace      = EME_MEMBER_STATUS_GRACE;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN (%d,%d)", $person_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $res = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( ! empty( $res ) ) {
         $memberships_list = join( ', ', $res );
@@ -642,11 +643,9 @@ function eme_get_activemembership_names_by_personid( $person_id ) {
 
 function eme_get_linked_activemembership_names_by_personid( $person_id ) {
     global $wpdb;
-    $status_active     = EME_MEMBER_STATUS_ACTIVE;
-    $status_grace      = EME_MEMBER_STATUS_GRACE;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.name, members.member_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.name, members.member_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN (%d,%d)", $person_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $memberships_list = '';
     foreach ($rows as $item) {
@@ -657,21 +656,17 @@ function eme_get_linked_activemembership_names_by_personid( $person_id ) {
 
 function eme_get_active_membershipids_by_wpid( $wp_id ) {
     global $wpdb;
-    $status_active = EME_MEMBER_STATUS_ACTIVE;
-    $status_grace  = EME_MEMBER_STATUS_GRACE;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS people WHERE members.status IN ($status_active,$status_grace) AND members.person_id=people.person_id AND people.wp_id=%d", $wp_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS people WHERE members.status IN (%d,%d) AND members.person_id=people.person_id AND people.wp_id=%d", EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE, $wp_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_active_membershipids_by_personid( $person_id ) {
     global $wpdb;
-    $status_active     = EME_MEMBER_STATUS_ACTIVE;
-    $status_grace      = EME_MEMBER_STATUS_GRACE;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.membership_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql      = $wpdb->prepare( "SELECT DISTINCT memberships.membership_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN (%d,%d)", $person_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -1355,8 +1350,10 @@ function eme_memberships_exists( $ids_arr ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
     if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
-        $ids_list = join( ',', $ids_arr );
-        return $wpdb->get_col( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr_int  = array_map( 'intval', $ids_arr );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($placeholders)", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return false;
     }
@@ -3085,26 +3082,24 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         } else {
             $ids_arr_int = array_map('intval', $member_ids_arr);
             $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-            $where_arr[] = $wpdb->prepare( "(members.member_id IN ($placeholders))", ...$ids_arr_int );
+            $where_arr[] = $wpdb->prepare( "(members.member_id IN ($placeholders))", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         }
     } elseif ( ! empty( $search_terms['search_memberid'] ) ) {
-        $search_memberid = intval( $search_terms['search_memberid'] );
-        $where_arr[] = $wpdb->prepare( "(members.member_id = %d)", $search_memberid );
+        $where_arr[] = $wpdb->prepare( "(members.member_id = %d)", intval( $search_terms['search_memberid'] ) );
     }
     if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
         $ids_arr_int = array_map('intval', $search_terms['search_membershipids']);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-        $where_arr[] = $wpdb->prepare( "(members.membership_id IN ($placeholders))", ...$ids_arr_int );
+        $where_arr[] = $wpdb->prepare( "(members.membership_id IN ($placeholders))", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     // search_status can be 0 too, for pending
     if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_numeric_array( $search_terms['search_memberstatus'] ) ) {
         $ids_arr_int = array_map('intval', $search_terms['search_memberstatus']);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-        $where_arr[] = $wpdb->prepare( "(members.status IN ($placeholders))", ...$ids_arr_int );
+        $where_arr[] = $wpdb->prepare( "(members.status IN ($placeholders))", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     if ( ! empty( $search_terms['search_paymentid'] ) ) {
-        $search_paymentid = intval( $search_terms['search_paymentid'] );
-        $where_arr[] = $wpdb->prepare( "(payment_id = %d)", $search_paymentid );
+        $where_arr[] = $wpdb->prepare( "(payment_id = %d)", intval( $search_terms['search_paymentid'] ) );
     }
     if ( ! empty( $search_terms['search_pg_pid'] ) ) {
         $like = '%' . $wpdb->esc_like( $search_terms['search_pg_pid'] ) . '%';
@@ -3127,7 +3122,8 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $field_id        = $formfield['field_id'];
         $field_ids_arr[] = $field_id;
         if ( ! ( $memberids_only || $peopleids_only || $emails_only ) ) {
-            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
+            $field_id          = intval( $field_id );
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
     }
 
@@ -3145,16 +3141,16 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
             $ids_arr_int = array_map('intval', $search_terms['search_customfieldids']);
             $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-            $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int );
+            $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         } else {
             // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
             // so if it is empty, set this var to empty
             if ($search_terms['search_customfields'] == '' ) {
                 $search_formfield_sql = "";
-            } else {
+            } elseif ( ! empty( $field_ids_arr ) ) {
                 $ids_arr_int = array_map('intval', $field_ids_arr);
                 $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-                $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int );
+                $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             }
         }
     }
@@ -3871,8 +3867,10 @@ function eme_store_member_answers( $member, $do_update = 1, $original_post_membe
 function eme_get_person_ids_from_member_ids( $member_ids ) {
     global $wpdb;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $sql           = "SELECT person_id from $members_table WHERE member_id IN ($member_ids)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $member_ids_arr = array_map( 'intval', explode( ',', $member_ids ) );
+    $placeholders   = implode( ',', array_fill( 0, count( $member_ids_arr ), '%d' ) );
+    $prepared_sql   = $wpdb->prepare( "SELECT person_id from $members_table WHERE member_id IN ($placeholders)", ...$member_ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_member_answers( $member_id ) {
@@ -4000,7 +3998,7 @@ function eme_member_recalculate_status( $member_id = 0 ) {
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
     // we only recalculate member status if status_automatic=1 and the member has paid
     if ( $member_id ) {
-        $sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE b.status=1 AND a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND a.related_member_id=0"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare( "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE b.status=1 AND a.member_id=%d AND a.status_automatic=1 AND a.paid=1 AND a.related_member_id=0", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE b.status=1 AND a.status_automatic=1 AND a.paid=1 AND a.related_member_id=0"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
@@ -4118,7 +4116,7 @@ function eme_member_send_expiration_reminders() {
             foreach ( $reminder_days as $reminder_day ) {
                 $day = intval( $reminder_day );
                 // only send a reminder if really needed, and reminder can be negative (meaning the membership is in 'grace' state)
-                $prepared_sql = $wpdb->prepare( "SELECT member_id from $table WHERE membership_id=$membership_id AND related_member_id=0 AND status IN (%d,%d) AND DATEDIFF(end_date,%s)=%d", EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE, $today, $day ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                $prepared_sql = $wpdb->prepare( "SELECT member_id from $table WHERE membership_id=%d AND related_member_id=0 AND status IN (%d,%d) AND DATEDIFF(end_date,%s)=%d", $membership_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE, $today, $day ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 $member_ids = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 foreach ( $member_ids as $member_id ) {
                     eme_member_send_expiration_reminder( $member_id );

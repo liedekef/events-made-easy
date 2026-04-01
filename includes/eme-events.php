@@ -2371,6 +2371,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 }
 
 function eme_replace_event_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
+    global $wpdb;
     $orig_target  = $target;
     if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
         $target = 'html';
@@ -5619,17 +5620,20 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         $group_concat_sql = '';
         foreach ( $formfields_searchable as $formfield ) {
             $field_id        = $formfield['field_id'];
-            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
+            $field_id          = intval( $field_id );
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
 
         if ( $search_customfields != '' && eme_is_list_of_int( $search_customfieldids ) ) {
+            $cf_ids_arr   = array_map( 'intval', explode( ',', $search_customfieldids ) );
+            $cf_ph        = implode( ',', array_fill( 0, count( $cf_ids_arr ), '%d' ) );
             $sql_join = $wpdb->prepare(
                 "INNER JOIN (SELECT {$group_concat_sql} related_id FROM $answers_table
-                WHERE answer LIKE %s AND field_id IN ($search_customfieldids) AND type='event'
+                WHERE answer LIKE %s AND field_id IN ($cf_ph) AND type='event'
                 GROUP BY related_id
             ) ans
             ON $events_table.event_id=ans.related_id",
-            '%' . $wpdb->esc_like( $search_customfields ) . '%'
+            array_merge( [ '%' . $wpdb->esc_like( $search_customfields ) . '%' ], $cf_ids_arr )
             ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names and group_concat_sql are safe
         } else {
             $sql_join = "
@@ -10622,9 +10626,11 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
         $sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
-            WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+            WHERE event_id IN ($placeholders) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", array_merge( [ $category_id ], $ids_arr, [ $category_id ] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     $ajaxResult['Result']  = 'OK';
     $ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
@@ -10646,7 +10652,9 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
         }
     }
 
-    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+    $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
     if ( $send_trashmails || has_action( 'eme_trash_rsvp_action' ) ) {
@@ -10676,7 +10684,9 @@ function eme_untrash_events( $ids ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
-        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_DRAFT ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }
@@ -10925,7 +10935,9 @@ function eme_get_author_event_ids( $event_ids, $userid = 0 ) {
     if ( ! $user_id ) {
         $user_id = get_current_user_id();
     }
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($event_ids)", $user_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $ids_arr      = array_map( 'intval', explode( ',', $event_ids ) );
+    $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($placeholders)", array_merge( [ $user_id ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

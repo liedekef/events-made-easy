@@ -2976,15 +2976,17 @@ function eme_ajax_locations_list() {
         }
 
         if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
-            $field_ids = join( ',', array_map( 'intval', $_POST['search_customfieldids'] ) );
+            $cf_ids_int = array_map( 'intval', $_POST['search_customfieldids'] );
         } else {
-            $field_ids = join( ',', $field_ids_arr );
+            $cf_ids_int = array_map( 'intval', $field_ids_arr );
         }
+        $cf_placeholders = implode( ',', array_fill( 0, count( $cf_ids_int ), '%d' ) );
+        $field_ids_prepared = $wpdb->prepare( "field_id IN ($cf_placeholders)", ...$cf_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
             $search_customfields = $wpdb->prepare( "answer LIKE %s", '%'.$wpdb->esc_like(eme_sanitize_request($_POST['search_customfields'])).'%' );
             $sql_join        = "
                    INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-                         WHERE $search_customfields AND field_id IN ($field_ids) AND type='location'
+                         WHERE $search_customfields AND $field_ids_prepared AND type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
@@ -3125,7 +3127,9 @@ function eme_ajax_chooselocation_snapselect() {
         $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );
         $exclude_locationids_arr = explode( ',', $exclude_locationids );
         if ( eme_is_numeric_array( $exclude_locationids_arr ) ) {
-            $where .= " AND location_id NOT IN ($exclude_locationids)";
+            $exclude_ids_int = array_map( 'intval', $exclude_locationids_arr );
+            $placeholders    = implode( ',', array_fill( 0, count( $exclude_ids_int ), '%d' ) );
+            $where .= $wpdb->prepare( " AND location_id NOT IN ($placeholders)", ...$exclude_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         }
     }
 

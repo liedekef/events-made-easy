@@ -147,6 +147,7 @@ function eme_create_year_scope( $past_count, $future_count, $eventful = 0 ) {
 }
 
 function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory, $old_select ) {
+	global $wpdb;
 	// if one of these changes, also the eme_events.php needs changing for the "Next page" part
 	$author_post_name          = 'eme_author_filter';
 	$contact_post_name         = 'eme_contact_filter';
@@ -178,11 +179,15 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$selected_contact  = isset( $_REQUEST[ $contact_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $contact_post_name ] ) : 0;
 
 	$extra_conditions_arr = [];
-	if ( $category != '' ) {
-		$extra_conditions_arr[] = "(category_id IN ($category))";
+	if ( $category != '' && eme_is_list_of_int( $category ) ) {
+		$cat_arr      = array_map( 'intval', explode( ',', $category ) );
+		$placeholders = implode( ',', array_fill( 0, count( $cat_arr ), '%d' ) );
+		$extra_conditions_arr[] = $wpdb->prepare( "(category_id IN ($placeholders))", ...$cat_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
-	if ( $notcategory != '' ) {
-		$extra_conditions_arr[] = "(category_id NOT IN ($notcategory))";
+	if ( $notcategory != '' && eme_is_list_of_int( $notcategory ) ) {
+		$notcat_arr   = array_map( 'intval', explode( ',', $notcategory ) );
+		$placeholders = implode( ',', array_fill( 0, count( $notcat_arr ), '%d' ) );
+		$extra_conditions_arr[] = $wpdb->prepare( "(category_id NOT IN ($placeholders))", ...$notcat_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 	$extra_conditions = implode( ' AND ', $extra_conditions_arr );
 

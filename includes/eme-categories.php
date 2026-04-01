@@ -233,11 +233,13 @@ function eme_get_categories( $eventful = false, $scope = 'future', $extra_condit
 			}
 		}
 		if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
-			$event_cats = join( ',', $categories );
+			$categories_int = array_map( 'intval', $categories );
+			$placeholders   = implode( ',', array_fill( 0, count( $categories_int ), '%d' ) );
 			if ( $extra_conditions != '' ) {
 				$extra_conditions = " AND ($extra_conditions)";
 			}
-			$result = $wpdb->get_results( "SELECT * FROM $categories_table WHERE category_id IN ( $event_cats ) $extra_conditions $order_by", ARRAY_A); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$prepared_sql = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id IN ( $placeholders ) $extra_conditions $order_by", ...$categories_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$result = $wpdb->get_results( $prepared_sql, ARRAY_A); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 	} else {
 		if ( $extra_conditions != '' ) {

@@ -10592,9 +10592,11 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
         $sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
-            WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+            WHERE event_id IN ($placeholders) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", array_merge( [ $category_id ], $ids_arr, [ $category_id ] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     $ajaxResult['Result']  = 'OK';
     $ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
@@ -10616,7 +10618,9 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
         }
     }
 
-    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+    $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
     if ( $send_trashmails || has_action( 'eme_trash_rsvp_action' ) ) {
@@ -10646,7 +10650,9 @@ function eme_untrash_events( $ids ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (eme_is_list_of_int( $ids ) ) {
-        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_DRAFT ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
 }

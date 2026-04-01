@@ -3299,8 +3299,9 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
-        $ids_list = implode(',', $event_id);
-        $sql = "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($ids_list) AND bookings.person_id>0"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $event_ids_int = array_map( 'intval', $event_id );
+        $placeholders  = implode( ',', array_fill( 0, count( $event_ids_int ), '%d' ) );
+        $sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($placeholders) AND bookings.person_id>0", ...$event_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
@@ -3332,8 +3333,9 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
-        $ids_list = implode(',', $event_id);
-        $sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($ids_list)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $event_ids_int = array_map( 'intval', $event_id );
+        $placeholders  = implode( ',', array_fill( 0, count( $event_ids_int ), '%d' ) );
+        $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($placeholders)", ...$event_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }

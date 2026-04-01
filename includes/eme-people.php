@@ -2257,7 +2257,9 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
         if ( $tmp_group['type'] == "dynamic_people" ) {
             $person_ids_arr = eme_get_groups_person_ids($search_terms['search_groups'] );
             if (!empty($person_ids_arr)) {
-                $where_arr[]    = "people.person_id IN ( ".join(',',$person_ids_arr) .")";
+                $ids_arr_int  = array_map('intval', $person_ids_arr);
+                $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+                $where_arr[]  = $wpdb->prepare( "people.person_id IN ($placeholders)", ...$ids_arr_int );
             }
         } elseif ( $tmp_group['type'] == "static" ) {
             $where_arr[]    = "ugroups.group_id = ".$search_terms['search_groups'];
@@ -2266,14 +2268,15 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     }
     $member_join = '';
     if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
-        $search_membershipids = join( ',', $search_terms['search_membershipids'] );
-        $where_arr[]          = "(members.membership_id IN ($search_membershipids))";
-        $member_join          = "INNER JOIN $members_table AS members ON people.person_id=members.person_id";
+        $ids_arr_int  = array_map('intval', $search_terms['search_membershipids']);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $where_arr[]  = $wpdb->prepare( "members.membership_id IN ($placeholders)", ...$ids_arr_int );
     }
     // search_status can be 0 too, for pending
     if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_numeric_array( $search_terms['search_memberstatus'] ) ) {
-        $search_memberstatus = join( ',', $search_terms['search_memberstatus'] );
-        $where_arr[]         = "(members.status IN ($search_memberstatus))";
+        $ids_arr_int  = array_map('intval', $search_terms['search_memberstatus']);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $where_arr[]  = $wpdb->prepare( "members.status IN ($placeholders)", ...$ids_arr_int );
         if ( empty( $member_join ) ) {
             $member_join = "INNER JOIN $members_table AS members ON people.person_id=members.person_id";
         }
@@ -2309,16 +2312,18 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
             $search_formfield_sql = $wpdb->prepare(" AND answer LIKE %s", '%'. $wpdb->esc_like($search_terms['search_customfields']) .'%' );
         }
         if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
-            $field_ids = join( ',', $search_terms['search_customfieldids'] );
-            $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+            $ids_arr_int = array_map('intval', $search_terms['search_customfieldids']);
+            $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+            $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int );
         } else {
             // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
             // so if it is empty, set this var to empty
-            $field_ids = join( ',', $field_ids_arr );
             if ($search_terms['search_customfields'] == '' ) {
                 $search_formfield_sql = "";
             } else {
-                $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+                $ids_arr_int = array_map('intval', $field_ids_arr);
+                $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+                $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int );
             }
         }
     }

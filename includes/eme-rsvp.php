@@ -3146,17 +3146,23 @@ function eme_count_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 
 
     $where = [];
     if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
-        $where[] = 'bookings.event_id IN (' . join( ',', $event_ids ) . ')';
+        $ids_arr_int = array_map('intval', $event_ids);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $where[] = $wpdb->prepare( 'bookings.event_id IN (' . $placeholders . ')', ...$ids_arr_int );
     } elseif ( is_numeric( $event_ids ) ) {
-        $where[] = "bookings.event_id = $event_ids";
+        $event_id = intval( $event_ids );
+        $where[] = $wpdb->prepare( 'bookings.event_id = %d', $event_id );
     } else {
         $where[] = 'bookings.event_id = 0';
     }
+
     if ( $rsvp_status ) {
-        $where[] = "bookings.status=$rsvp_status";
+        $rsvp_status_int = intval( $rsvp_status );
+        $where[] = $wpdb->prepare( 'bookings.status = %d', $rsvp_status_int );
     } else {
-        $where[] = 'bookings.status!=' . EME_RSVP_STATUS_TRASH;
+        $where[] = $wpdb->prepare( 'bookings.status != %d', EME_RSVP_STATUS_TRASH );
     }
+
     if ( $paid_status == 1 ) {
         $where[] = 'bookings.booking_paid=0';
     } elseif ( $paid_status == 2 ) {
@@ -3180,16 +3186,20 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0, $
 
     $where = [];
     if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
-        $where[] = 'bookings.event_id IN (' . join( ',', $event_ids ) . ')';
+        $ids_arr_int = array_map('intval', $event_ids);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $where[] = $wpdb->prepare( 'bookings.event_id IN (' . $placeholders . ')', ...$ids_arr_int );
     } elseif ( is_numeric( $event_ids ) ) {
-        $where[] = "bookings.event_id = $event_ids";
+        $event_id = intval( $event_ids );
+        $where[] = $wpdb->prepare( 'bookings.event_id = %d', $event_id );
     } else {
         $where[] = 'bookings.event_id = 0';
     }
     if ( $rsvp_status ) {
-        $where[] = "bookings.status=$rsvp_status";
+        $rsvp_status_int = intval( $rsvp_status );
+        $where[] = $wpdb->prepare( 'bookings.status = %d', $rsvp_status_int );
     } else {
-        $where[] = 'bookings.status!=' . EME_RSVP_STATUS_TRASH;
+        $where[] = $wpdb->prepare( 'bookings.status != %d', EME_RSVP_STATUS_TRASH );
     }
     if ( $paid_status == 1 ) {
         $where[] = 'bookings.booking_paid=0';
@@ -3299,16 +3309,22 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
-        $ids_list = implode(',', $event_id);
-        $sql = "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($ids_list) AND bookings.person_id>0"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr_int = array_map('intval', $event_id);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $sql = $wpdb->prepare(
+            "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($placeholders) AND bookings.person_id>0",
+            ...$ids_arr_int
+        );
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     if ( $rsvp_status ) {
-        $sql .= " AND bookings.status=$rsvp_status";
+        $rsvp_status_int = intval( $rsvp_status );
+        $sql .= $wpdb->prepare( ' AND bookings.status = %d', $rsvp_status_int );
     } else {
-        $sql .= ' AND bookings.status!=' . EME_RSVP_STATUS_TRASH;
+        $sql .= $wpdb->prepare( ' AND bookings.status != %d', EME_RSVP_STATUS_TRASH );
     }
+
     if ( $paid_status == 1 ) {
         $sql .= ' AND bookings.booking_paid=0';
     } elseif ( $paid_status == 2 ) {
@@ -5780,7 +5796,9 @@ function eme_ajax_bookings_list() {
                 print wp_json_encode( $fTableResult );
                 wp_die();
             } else {
-                $where_arr[] = '(bookings.event_id IN (' . join( ',', $event_ids_arr ) . '))';
+                $ids_arr_int = array_map('intval', $event_ids_arr);
+                $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+                $where_arr[] = $wpdb->prepare( "(bookings.event_id IN ($placeholders))", ...$ids_arr_int );
             }
         }
     } elseif ( $booking_status == 'APPROVED' ) {
@@ -5802,7 +5820,9 @@ function eme_ajax_bookings_list() {
                 print wp_json_encode( $fTableResult );
                 wp_die();
             } else {
-                $where_arr[] = '(bookings.event_id IN (' . join( ',', $event_ids_arr ) . '))';
+                $ids_arr_int = array_map('intval', $event_ids_arr);
+                $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+                $where_arr[] = $wpdb->prepare( "(bookings.event_id IN ($placeholders))", ...$ids_arr_int );
             }
         }
     }
@@ -5858,7 +5878,9 @@ function eme_ajax_bookings_list() {
         $prepared_sql        = $wpdb->prepare("SELECT related_id FROM $answers_table WHERE answer LIKE %s AND type='booking' GROUP BY related_id", $search_customfields); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $booking_ids         = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( ! empty( $booking_ids ) ) {
-            $where_arr[] = '(bookings.booking_id IN (' . join( ',', $booking_ids ) . '))';
+            $ids_arr_int = array_map('intval', $booking_ids);
+            $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+            $where_arr[] = $wpdb->prepare( "(bookings.booking_id IN ($placeholders))", ...$ids_arr_int );
         }
     }
 

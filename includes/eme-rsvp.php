@@ -3314,7 +3314,7 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
         $sql = $wpdb->prepare(
             "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($placeholders) AND bookings.person_id>0",
             ...$ids_arr_int
-        );
+        ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
@@ -3353,7 +3353,7 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
         $sql = $wpdb->prepare(
             "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($placeholders)",
             ...$ids_arr_int
-        );
+        ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
@@ -5839,7 +5839,8 @@ function eme_ajax_bookings_list() {
     foreach ( $formfields_searchable as $formfield ) {
         $field_id          = $formfield['field_id']; // guaranteed integers
         $field_ids_arr[]   = $field_id;
-        $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
+        $field_id          = intval( $field_id );
+        $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
     }
     if ( ! empty( $group_concat_sql ) ) {
         $sql_join = "

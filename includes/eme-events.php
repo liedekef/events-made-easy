@@ -4314,27 +4314,19 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     }
 
     // for registered users: we'll add a list of event_id's for that user only
-    $extra_conditions     = '';
-    $extra_conditions_arr = [];
+    $extra_conditions = [ 'exclude_status' => EME_EVENT_STATUS_TRASH ];
     if ( $user_registered_only == 1 && is_user_logged_in() ) {
         $current_userid        = get_current_user_id();
         $list_of_event_ids_arr = eme_get_event_ids_for( $current_userid );
         if ( eme_is_numeric_array( $list_of_event_ids_arr ) ) {
-            $list_of_event_ids      = join( ',', eme_get_event_ids_for( $current_userid ) );
-            $extra_conditions_arr[] = "event_id in ($list_of_event_ids)";
+            $extra_conditions['event_id'] = array_map( 'intval', $list_of_event_ids_arr );
         } else {
             // user has no registered events, then make sure none are shown
-            $extra_conditions_arr[] = 'event_id = 0';
+            $extra_conditions['event_id'] = [ 0 ];
         }
     }
-    if ( ! empty( $event_ids ) ) {
-        $extra_conditions_arr[] = "event_id in ($event_ids)";
-    }
-    // never trashed events in the list
-    $extra_conditions_arr[] = 'event_status != '.EME_EVENT_STATUS_TRASH;
-
-    if ( ! empty( $extra_conditions_arr ) ) {
-        $extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
+    if ( ! empty( $event_ids ) && eme_is_list_of_int( $event_ids ) ) {
+        $extra_conditions['event_id'] = array_map( 'intval', explode( ',', $event_ids ) );
     }
 
     $this_page_url = ''; // this var is only used when paging=1, so not needed but to be sure
@@ -4958,7 +4950,7 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 }
 
 // main function querying the database event table
-function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
+function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = [], $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
     global $wpdb;
 
     $events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
@@ -5008,8 +5000,27 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     $conditions = [];
     // extra sql conditions we put in front, most of the time this is the most
     // effective place
-    if ( $extra_conditions != '' ) {
-        $conditions[] = $extra_conditions;
+    if ( ! empty( $extra_conditions ) ) {
+        if ( ! empty( $extra_conditions['event_id'] ) ) {
+            $ids = array_map( 'intval', (array) $extra_conditions['event_id'] );
+            $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+            $conditions[] = $wpdb->prepare( "event_id IN ($placeholders)", ...$ids ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        }
+        if ( isset( $extra_conditions['event_rsvp'] ) ) {
+            $conditions[] = $wpdb->prepare( 'event_rsvp = %d', intval( $extra_conditions['event_rsvp'] ) );
+        }
+        if ( isset( $extra_conditions['event_tasks'] ) ) {
+            $conditions[] = $wpdb->prepare( 'event_tasks = %d', intval( $extra_conditions['event_tasks'] ) );
+        }
+        if ( isset( $extra_conditions['exclude_status'] ) ) {
+            $conditions[] = $wpdb->prepare( 'event_status != %d', intval( $extra_conditions['exclude_status'] ) );
+        }
+        // for callers that already have prepared SQL fragments (e.g. admin datatable)
+        if ( ! empty( $extra_conditions['prepared'] ) ) {
+            foreach ( (array) $extra_conditions['prepared'] as $fragment ) {
+                $conditions[] = $fragment;
+            }
+        }
     }
 
     // if we're not in the admin itf, we don't want draft or unlisted events
@@ -10206,9 +10217,7 @@ function eme_ajax_events_list() {
         $limited_links = 0;
     }
 
-    if ( $where_arr ) {
-        $where = implode( ' AND ', $where_arr );
-    }
+    // $where_arr contains already-prepared SQL fragments, passed via extra_conditions['prepared']
 
     // we ask only for the event_id column here, more efficient
     $count_only            = 1;
@@ -10229,9 +10238,10 @@ function eme_ajax_events_list() {
         $search_customfields = '';
     }
 
-    $events_count = eme_get_events( scope: $scope, order: '', location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
+    $extra_cond = ! empty( $where_arr ) ? [ 'prepared' => $where_arr ] : [];
+    $events_count = eme_get_events( scope: $scope, order: '', location_id: $location_ids, category: $category, extra_conditions: $extra_cond, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 
-    $events  = eme_get_events( limit: $PageSize, scope: $scope, order: $orderby, offset: $StartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
+    $events  = eme_get_events( limit: $PageSize, scope: $scope, order: $orderby, offset: $StartIndex, location_id: $location_ids, category: $category, extra_conditions: $extra_cond, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
     $event_status_array = eme_status_array();
     $eme_date_obj_now   = new emeExpressiveDate( 'now', EME_TIMEZONE );
 

@@ -213,42 +213,82 @@ function eme_get_cached_categories() {
 	return $cats;
 }
 
-function eme_get_categories( $eventful = false, $scope = 'future', $extra_conditions = '' ) {
-	global $wpdb;
-	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-	$categories       = [];
-	$order_by         = ' ORDER BY category_name ASC';
-	if ( $eventful ) {
-		$events = eme_get_events( scope: $scope, order: 'ASC' );
-		if ( $events ) {
-			foreach ( $events as $event ) {
-				if ( ! empty( $event['event_category_ids'] ) ) {
-					$event_cats = explode( ',', $event['event_category_ids'] );
-					if ( ! empty( $event_cats ) ) {
-						foreach ( $event_cats as $category_id ) {
-							$categories[ $category_id ] = $category_id;
-						}
-					}
-				}
-			}
-		}
-		if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
-			$event_cats = join( ',', $categories );
-			if ( $extra_conditions != '' ) {
-				$extra_conditions = " AND ($extra_conditions)";
-			}
-			$result = $wpdb->get_results( "SELECT * FROM $categories_table WHERE category_id IN ( $event_cats ) $extra_conditions $order_by", ARRAY_A); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		}
-	} else {
-		if ( $extra_conditions != '' ) {
-			$extra_conditions = " WHERE ($extra_conditions)";
-		}
-		$result = $wpdb->get_results( "SELECT * FROM $categories_table $extra_conditions $order_by", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	}
-	if ( has_filter( 'eme_categories_filter' ) ) {
-		$result = apply_filters( 'eme_categories_filter', $result );
-	}
-	return $result;
+function eme_get_categories( $eventful = false, $scope = 'future', $conditions = [] ) {
+    global $wpdb;
+    $categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+    $categories       = [];
+    $order_by         = ' ORDER BY category_name ASC';
+    $sql_params       = [];
+    $where_clauses    = [];
+
+    // Build WHERE clauses from conditions array
+    if ( ! empty( $conditions['category'] ) ) {
+        $category_ids = array_map('intval', (array) $conditions['category']);
+        $placeholders = implode(',', array_fill(0, count($category_ids), '%d'));
+        $where_clauses[] = "category_id IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $category_ids );
+    }
+
+    if ( ! empty( $conditions['notcategory'] ) ) {
+        $notcategory_ids = array_map('intval', (array) $conditions['notcategory']);
+        $placeholders = implode(',', array_fill(0, count($notcategory_ids), '%d'));
+        $where_clauses[] = "category_id NOT IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $notcategory_ids );
+    }
+
+    if ( $eventful ) {
+        $events = eme_get_events( scope: $scope, order: 'ASC' );
+        if ( $events ) {
+            foreach ( $events as $event ) {
+                if ( ! empty( $event['event_category_ids'] ) ) {
+                    $event_cats = explode( ',', $event['event_category_ids'] );
+                    if ( ! empty( $event_cats ) ) {
+                        foreach ( $event_cats as $category_id ) {
+                            $categories[ $category_id ] = $category_id;
+                        }
+                    }
+                }
+            }
+        }
+        if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
+            $event_cats = array_map('intval', $categories);
+            $event_cats_placeholders = implode(',', array_fill(0, count($event_cats), '%d'));
+
+            $sql = "SELECT * FROM $categories_table WHERE category_id IN ($event_cats_placeholders)";
+            $sql_params = array_merge( $event_cats, $sql_params );
+
+            // Add additional WHERE clauses if any
+            if ( ! empty( $where_clauses ) ) {
+                $sql .= " AND " . implode( ' AND ', $where_clauses );
+            }
+
+            $sql .= $order_by;
+
+            $result = $wpdb->get_results( $wpdb->prepare( $sql, ...$sql_params ), ARRAY_A );
+        } else {
+            $result = [];
+        }
+    } else {
+        $sql = "SELECT * FROM $categories_table";
+
+        // Add WHERE clauses if any
+        if ( ! empty( $where_clauses ) ) {
+            $sql .= " WHERE " . implode( ' AND ', $where_clauses );
+        }
+
+        $sql .= $order_by;
+
+        if ( ! empty( $sql_params ) ) {
+            $result = $wpdb->get_results( $wpdb->prepare( $sql, ...$sql_params ), ARRAY_A );
+        } else {
+            $result = $wpdb->get_results( $sql, ARRAY_A );
+        }
+    }
+
+    if ( has_filter( 'eme_categories_filter' ) ) {
+        $result = apply_filters( 'eme_categories_filter', $result );
+    }
+    return $result;
 }
 
 function eme_get_categories_filtered( $category_ids, $categories ) {
@@ -269,46 +309,118 @@ function eme_get_category( $category_id ) {
 	return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_get_event_category_names( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb;
-	$event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-	if ( $extra_conditions != '' ) {
-		$extra_conditions = " AND ($extra_conditions)";
-	}
-	if ( $order_by != '' ) {
-		$order_by = " ORDER BY $order_by";
-	}
-	$prepared_sql = $wpdb->prepare( "SELECT category_name FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+function eme_get_event_category_names( $event_id, $conditions = [], $order_by = '' ) {
+    global $wpdb;
+    $event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+
+    $sql_params = [ $event_id ];
+    $where_clauses = [];
+
+    // Build WHERE clauses from conditions array
+    if ( ! empty( $conditions['category'] ) ) {
+        $category_ids = array_map('intval', (array) $conditions['category']);
+        $placeholders = implode(',', array_fill(0, count($category_ids), '%d'));
+        $where_clauses[] = "category_id IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $category_ids );
+    }
+
+    if ( ! empty( $conditions['notcategory'] ) ) {
+        $notcategory_ids = array_map('intval', (array) $conditions['notcategory']);
+        $placeholders = implode(',', array_fill(0, count($notcategory_ids), '%d'));
+        $where_clauses[] = "category_id NOT IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $notcategory_ids );
+    }
+
+    $extra_conditions_sql = '';
+    if ( ! empty( $where_clauses ) ) {
+        $extra_conditions_sql = ' AND ' . implode( ' AND ', $where_clauses );
+    }
+
+    if ( $order_by != '' ) {
+        $order_by = " ORDER BY $order_by";
+    }
+
+    $sql = "SELECT category_name FROM $categories_table, $event_table WHERE event_id = %d AND FIND_IN_SET(category_id, event_category_ids) $extra_conditions_sql $order_by";
+
+    $prepared_sql = $wpdb->prepare( $sql, ...$sql_params );
+    return $wpdb->get_col( $prepared_sql );
 }
 
-function eme_get_event_category_descriptions( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb;
-	$event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-	if ( $extra_conditions != '' ) {
-		$extra_conditions = " AND ($extra_conditions)";
-	}
-	if ( $order_by != '' ) {
-		$order_by = " ORDER BY $order_by";
-	}
-	$prepared_sql = $wpdb->prepare( "SELECT description FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+function eme_get_event_category_descriptions( $event_id, $conditions = [], $order_by = '' ) {
+    global $wpdb;
+    $event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+
+    $sql_params = [ $event_id ];
+    $where_clauses = [];
+
+    // Build WHERE clauses from conditions array
+    if ( ! empty( $conditions['category'] ) ) {
+        $category_ids = array_map('intval', (array) $conditions['category']);
+        $placeholders = implode(',', array_fill(0, count($category_ids), '%d'));
+        $where_clauses[] = "category_id IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $category_ids );
+    }
+
+    if ( ! empty( $conditions['notcategory'] ) ) {
+        $notcategory_ids = array_map('intval', (array) $conditions['notcategory']);
+        $placeholders = implode(',', array_fill(0, count($notcategory_ids), '%d'));
+        $where_clauses[] = "category_id NOT IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $notcategory_ids );
+    }
+
+    $extra_conditions_sql = '';
+    if ( ! empty( $where_clauses ) ) {
+        $extra_conditions_sql = ' AND ' . implode( ' AND ', $where_clauses );
+    }
+
+    if ( $order_by != '' ) {
+        $order_by = " ORDER BY $order_by";
+    }
+
+    $sql = "SELECT description FROM $categories_table, $event_table WHERE event_id = %d AND FIND_IN_SET(category_id, event_category_ids) $extra_conditions_sql $order_by";
+
+    $prepared_sql = $wpdb->prepare( $sql, ...$sql_params );
+    return $wpdb->get_col( $prepared_sql );
 }
 
-function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb;
-	$event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-	if ( $extra_conditions != '' ) {
-		$extra_conditions = " AND ($extra_conditions)";
-	}
-	if ( $order_by != '' ) {
-		$order_by = " ORDER BY $order_by";
-	}
-	$prepared_sql = $wpdb->prepare( "SELECT $categories_table.* FROM $categories_table, $event_table where event_id = %d AND FIND_IN_SET(category_id,event_category_ids) $extra_conditions $order_by", $event_id );
-	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+function eme_get_event_categories( $event_id, $conditions = [], $order_by = '' ) {
+    global $wpdb;
+    $event_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+
+    $sql_params = [ $event_id ];
+    $where_clauses = [];
+
+    // Build WHERE clauses from conditions array
+    if ( ! empty( $conditions['category'] ) ) {
+        $category_ids = array_map('intval', (array) $conditions['category']);
+        $placeholders = implode(',', array_fill(0, count($category_ids), '%d'));
+        $where_clauses[] = "category_id IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $category_ids );
+    }
+
+    if ( ! empty( $conditions['notcategory'] ) ) {
+        $notcategory_ids = array_map('intval', (array) $conditions['notcategory']);
+        $placeholders = implode(',', array_fill(0, count($notcategory_ids), '%d'));
+        $where_clauses[] = "category_id NOT IN ($placeholders)";
+        $sql_params = array_merge( $sql_params, $notcategory_ids );
+    }
+
+    $extra_conditions_sql = '';
+    if ( ! empty( $where_clauses ) ) {
+        $extra_conditions_sql = ' AND ' . implode( ' AND ', $where_clauses );
+    }
+
+    if ( $order_by != '' ) {
+        $order_by = " ORDER BY $order_by";
+    }
+
+    $sql = "SELECT $categories_table.* FROM $categories_table, $event_table WHERE event_id = %d AND FIND_IN_SET(category_id, event_category_ids) $extra_conditions_sql $order_by";
+
+    $prepared_sql = $wpdb->prepare( $sql, ...$sql_params );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A );
 }
 
 function eme_get_category_eventids( $category_id, $future_only = 1 ) {

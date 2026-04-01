@@ -177,14 +177,15 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$selected_author   = isset( $_REQUEST[ $author_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $author_post_name ] ) : 0;
 	$selected_contact  = isset( $_REQUEST[ $contact_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $contact_post_name ] ) : 0;
 
-	$extra_conditions_arr = [];
-	if ( $category != '' ) {
-		$extra_conditions_arr[] = "(category_id IN ($category))";
-	}
-	if ( $notcategory != '' ) {
-		$extra_conditions_arr[] = "(category_id NOT IN ($notcategory))";
-	}
-	$extra_conditions = implode( ' AND ', $extra_conditions_arr );
+    $extra_conditions_arr = [];
+    if ( $category != '' ) {
+        // Convert comma-separated string to array
+        $extra_conditions_arr['category'] = explode( ',', $category );
+    }
+    if ( $notcategory != '' ) {
+        // Convert comma-separated string to array
+        $extra_conditions_arr['notcategory'] = explode( ',', $notcategory );
+    }
 
 	$scope_fieldcount = 0;
 	$needle_offset    = 0;
@@ -222,7 +223,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			}
 			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
 
-			$categories = eme_get_categories( $eventful, 'future', $extra_conditions );
+			$categories = eme_get_categories( $eventful, 'future', $extra_conditions_arr );
 			if ( $categories ) {
 				$cat_list = [];
 				foreach ( $categories as $this_category ) {

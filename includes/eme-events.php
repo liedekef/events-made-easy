@@ -1393,19 +1393,32 @@ function eme_events_count_for( $date ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $conditions = [];
+    $sql_params = [];
+
     if ( ! eme_is_admin_request() ) {
         if ( is_user_logged_in() ) {
-            $conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
+            $conditions[] = 'event_status IN (%d, %d)';
+            $sql_params[] = EME_EVENT_STATUS_PUBLIC;
+            $sql_params[] = EME_EVENT_STATUS_PRIVATE;
         } else {
-            $conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
+            $conditions[] = 'event_status = %d';
+            $sql_params[] = EME_EVENT_STATUS_PUBLIC;
         }
     }
+
     $conditions[] = '((DATE(event_start) = %s) OR (event_start <= %s AND event_end >= %s))';
-    $where        = implode( ' AND ', $conditions );
+    $sql_params[] = $date;
+    $sql_params[] = $date . ' 00:00:00';
+    $sql_params[] = $date . ' 23:59:59';
+
+    $where = implode( ' AND ', $conditions );
     if ( $where != '' ) {
         $where = ' WHERE ' . $where;
     }
-    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM  $table_name $where", $date, $date . ' 00:00:00', $date . ' 23:59:59' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+    $sql = "SELECT COUNT(*) FROM $table_name $where";
+    $prepared_sql = $wpdb->prepare( $sql, ...$sql_params ); // / phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -3668,14 +3681,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $extra_conditions_arr = [];
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
+                    $extra_conditions_arr['category'] = explode( ',', $include_cats );
                     $order_by = "FIELD(category_id,$include_cats)";
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
                 }
-                $extra_conditions = join( ' AND ', $extra_conditions_arr );
-                $t_categories     = eme_get_event_category_names( $event['event_id'], $extra_conditions, $order_by );
+                $t_categories     = eme_get_event_category_names( $event['event_id'], $extra_conditions_arr, $order_by );
                 $cat_names        = [];
                 foreach ( $t_categories as $cat_name ) {
                     if ( $target == 'html' ) {
@@ -3702,14 +3714,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $extra_conditions_arr = [];
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
+                    $extra_conditions_arr['category'] = explode( ',', $include_cats );
                     $order_by = "FIELD(category_id,$include_cats)";
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
                 }
-                $extra_conditions = join( ' AND ', $extra_conditions_arr );
-                $t_categories     = eme_get_event_category_names( $event['event_id'], $extra_conditions, $order_by );
+                $t_categories     = eme_get_event_category_names( $event['event_id'], $extra_conditions_arr, $order_by );
                 if ( $target == 'html' ) {
                     $replacement = esc_html( eme_translate( join( ' ', $t_categories ), $lang ) );
                     $replacement = apply_filters( 'eme_general', $replacement );
@@ -3726,14 +3737,14 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $extra_conditions_arr = [];
                 $order_by             = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
+                    $extra_conditions_arr['category'] = explode( ',', $include_cats );
                     $order_by = "FIELD(category_id,$include_cats)";
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
                 }
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
-                $t_categories     = eme_get_event_category_descriptions( $event['event_id'], $extra_conditions, $order_by );
+                $t_categories     = eme_get_event_category_descriptions( $event['event_id'], $extra_conditions_arr, $order_by );
                 $sep              = ', ';
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
@@ -3752,14 +3763,14 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $extra_conditions_arr = [];
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
-                    $extra_conditions_arr[] = "category_id IN ($include_cats)";
+                    $extra_conditions_arr['category'] = explode( ',', $include_cats );
                     $order_by = "FIELD(category_id,$include_cats)";
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
-                    $extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
+                    $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
                 }
                 $extra_conditions = join( ' AND ', $extra_conditions_arr );
-                $t_categories     = eme_get_event_categories( $event['event_id'], $extra_conditions, $order_by );
+                $t_categories     = eme_get_event_categories( $event['event_id'], $extra_conditions_arr, $order_by );
                 $cat_links        = [];
                 foreach ( $t_categories as $category ) {
                     $cat_link = eme_category_url( $category );
@@ -4994,19 +5005,19 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 
     // if we're not in the admin itf, we don't want draft or unlisted events
     if ( ! eme_is_admin_request() ) {
+        $statuses = [];
         if ( is_user_logged_in() ) {
-            if ($include_unlisted) {
-                $conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ',' . EME_EVENT_STATUS_UNLISTED . ')';
-            } else {
-                $conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
-            }
+            $statuses = $include_unlisted
+                ? [EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_PRIVATE, EME_EVENT_STATUS_UNLISTED]
+                : [EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_PRIVATE];
         } else {
-            if ($include_unlisted) {
-                $conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_UNLISTED . ')';
-            } else {
-                $conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
-            }
+            $statuses = $include_unlisted
+                ? [EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_UNLISTED]
+                : [EME_EVENT_STATUS_PUBLIC];
         }
+        $placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%d' ) );
+        $conditions[] = $wpdb->prepare( "event_status IN ($placeholders)", ...$statuses );
+
         if ( get_option( 'eme_rsvp_hide_full_events' ) ) {
             // COALESCE is used in case the SUM returns NULL
             // this is a correlated subquery, so the FROM clause should specify events_table again, so it will search in the outer query for events_table.event_id
@@ -5784,31 +5795,42 @@ function eme_get_rsvp_event_arr( $event_ids ) {
         return $events;
     }
 
-    $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $conditions       = [];
-    $event_ids        = array_map( 'intval', $event_ids );
-    $event_ids_joined = join( ',', $event_ids );
-    $placeholders_in  = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
-    $conditions[]     = "event_id IN ($placeholders_in)";
+    $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $conditions = [];
+    $sql_params = [];
+
+    // Sanitize event IDs
+    $event_ids = array_map( 'intval', $event_ids );
+    $placeholders_in = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $conditions[] = "event_id IN ($placeholders_in)";
+    $sql_params = array_merge( $sql_params, $event_ids );
+
     // rsvp is required
-    $conditions[]     = 'event_rsvp = 1';
+    $conditions[] = 'event_rsvp = 1';
 
     // in the frontend and not logged in, only show public events
     // since this function is only called from the frontend for the multibooking form, we can drop the is_admin, but hey ...
     if ( ! eme_is_admin_request() ) {
         if ( is_user_logged_in() ) {
-            $conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
+            $conditions[] = 'event_status IN (%d, %d)';
+            $sql_params = array_merge( $sql_params, [EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_PRIVATE] );
         } else {
-            $conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
+            $conditions[] = 'event_status = %d';
+            $sql_params[] = EME_EVENT_STATUS_PUBLIC;
         }
     }
+
     $where = implode( ' AND ', $conditions );
     if ( $where != '' ) {
         $where = ' WHERE ' . $where;
     }
 
-    // the 'order by' is of course only useful if the event_id argument for the function was an array of event id's
-    $prepared_sql = $wpdb->prepare( "SELECT * FROM $events_table $where ORDER BY FIELD(event_id,$event_ids_joined)", ...$event_ids ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    // Build the ORDER BY FIELD clause with proper placeholders
+    $field_placeholders = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $sql = "SELECT * FROM $events_table $where ORDER BY FIELD(event_id, $field_placeholders)";
+
+    // Merge all parameters
+    $prepared_sql = $wpdb->prepare( $sql, ...$sql_params, ...$event_ids );
 
     $events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $events as $key => $event ) {

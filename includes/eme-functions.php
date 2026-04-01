@@ -3433,11 +3433,30 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
     $fTableResult = [];
 
     if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
-        // check the POST var
-        $ids_arr = explode( ',', eme_sanitize_request($_POST[ $postvar ]) );
-        if ( eme_is_numeric_array( $ids_arr ) ) {
-            $wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+        // Validate that the column name exists in the table
+        $table_columns = eme_get_table_columns( $table );
+        if ( ! in_array( $postvar, $table_columns ) ) {
+            $fTableResult['Result']      = 'Error';
+            $fTableResult['Message']     = __( 'Invalid column name!', 'events-made-easy' );
+            $fTableResult['htmlmessage'] = __( 'Invalid column name!', 'events-made-easy' );
+            print wp_json_encode( $fTableResult );
+            wp_die();
         }
+
+        // Get and sanitize the POST values
+        $ids_string = eme_sanitize_request( $_POST[ $postvar ] );
+        $ids_arr = explode( ',', $ids_string );
+
+        if ( eme_is_numeric_array( $ids_arr ) ) {
+            // Convert all IDs to integers
+            $ids_arr_int = array_map( 'intval', $ids_arr );
+            $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+
+            // Build and execute the query with proper preparation
+            $sql = "DELETE FROM $table WHERE $postvar IN ($placeholders)";
+            $wpdb->query( $wpdb->prepare( $sql, ...$ids_arr_int ) );
+        }
+
         $fTableResult['Result']      = 'OK';
         $fTableResult['Message']     = __( 'Records deleted!', 'events-made-easy' );
         $fTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );

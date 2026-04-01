@@ -3348,15 +3348,20 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
-        $ids_list = implode(',', $event_id);
-        $sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($ids_list)"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids_arr_int = array_map('intval', $event_id);
+        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
+        $sql = $wpdb->prepare(
+            "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($placeholders)",
+            ...$ids_arr_int
+        );
     } else {
         $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     if ( $rsvp_status ) {
-        $sql .= " AND status=$rsvp_status";
+        $rsvp_status_int = intval( $rsvp_status );
+        $sql .= $wpdb->prepare( " AND status=%d", $rsvp_status_int );
     } else {
-        $sql .= ' AND status!=' . EME_RSVP_STATUS_TRASH;
+        $sql .= $wpdb->prepare( " AND status!=%d", EME_RSVP_STATUS_TRASH );
     }
     if ( $paid_status == 1 ) {
         $sql .= ' AND booking_paid=0';

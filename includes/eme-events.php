@@ -3682,7 +3682,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
                     $extra_conditions_arr['category'] = explode( ',', $include_cats );
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                     $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
@@ -3715,7 +3717,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
                     $extra_conditions_arr['category'] = explode( ',', $include_cats );
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                     $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
@@ -3738,7 +3742,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $order_by             = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
                     $extra_conditions_arr['category'] = explode( ',', $include_cats );
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                     $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
@@ -3764,7 +3770,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $order_by                 = '';
                 if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
                     $extra_conditions_arr['category'] = explode( ',', $include_cats );
-                    $order_by = "FIELD(category_id,$include_cats)";
+                    $inc_arr      = array_map( 'intval', explode( ',', $include_cats ) );
+                    $inc_ph       = implode( ',', array_fill( 0, count( $inc_arr ), '%d' ) );
+                    $order_by = $wpdb->prepare( "FIELD(category_id,$inc_ph)", ...$inc_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
                 if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                     $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );

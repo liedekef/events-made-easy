@@ -391,7 +391,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
         $ids    = eme_get_recurrence_eventids( $atts['recurrence_id'], 1 );
         $events = eme_get_rsvp_event_arr( $ids );
     } elseif ( ! empty( $atts['category_id'] ) || ! empty( $atts['scope'] ) ) {
-        $events = eme_get_events( scope: $atts['scope'], order: $atts['order'], category: $atts['category_id'], extra_conditions: 'event_rsvp=1' );
+        $events = eme_get_events( scope: $atts['scope'], order: $atts['order'], category: $atts['category_id'], extra_conditions: [ 'event_rsvp' => 1 ] );
     } else {
         $events = eme_get_rsvp_event_arr( $ids );
     }
@@ -447,7 +447,7 @@ function eme_booking_list_shortcode( $atts ) {
         }
         return $res;
     } elseif ( ! empty( $atts['scope'] ) ) {
-        $events = eme_get_events( scope: $atts['scope'], extra_conditions: 'event_rsvp=1' );
+        $events = eme_get_events( scope: $atts['scope'], extra_conditions: [ 'event_rsvp' => 1 ] );
         $res = '';
         foreach ($events as $event) {
             $res .= eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, 0, $atts['order'], $always_header_footer );
@@ -551,7 +551,7 @@ function eme_attendee_list_shortcode( $atts ) {
             return eme_get_attendees_list( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, $atts['order'], $always_header_footer );
         }
     } elseif( ! empty( $atts['scope'] ) ) {
-        $events = eme_get_events( scope: $atts['scope'], extra_conditions: 'event_rsvp=1' );
+        $events = eme_get_events( scope: $atts['scope'], extra_conditions: [ 'event_rsvp' => 1 ] );
         $res = '';
         foreach ($events as $event) {
             $res .= eme_get_attendees_list( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, $atts['order'], $always_header_footer );
@@ -7124,7 +7124,7 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 function eme_rsvp_send_pending_reminders() {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // this gets us future and ongoing events with rsvp enabled
-    $events = eme_get_events( extra_conditions: 'event_rsvp=1' );
+    $events = eme_get_events( extra_conditions: [ 'event_rsvp' => 1 ] );
     foreach ( $events as $event ) {
         if ( eme_is_empty_string( $event['event_properties']['rsvp_pending_reminder_days'] ) ) {
             continue;
@@ -7151,7 +7151,7 @@ function eme_rsvp_send_pending_reminders() {
 function eme_rsvp_send_approved_reminders() {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // this gets us future and ongoing events with tasks enabled
-    $events = eme_get_events( extra_conditions: 'event_rsvp=1' );
+    $events = eme_get_events( extra_conditions: [ 'event_rsvp' => 1 ] );
     foreach ( $events as $event ) {
         if ( eme_is_empty_string( $event['event_properties']['rsvp_approved_reminder_days'] ) ) {
             continue;

@@ -510,7 +510,7 @@ function eme_check_task_signup_overlap( $task, $person_id ) {
 function eme_tasks_send_signup_reminders() {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     // this gets us future and ongoing events with tasks enabled
-    $events = eme_get_events( extra_conditions: 'event_tasks=1' );
+    $events = eme_get_events( extra_conditions: [ 'event_tasks' => 1 ] );
     foreach ( $events as $event ) {
         if ( eme_is_empty_string( $event['event_properties']['task_reminder_days'] ) ) {
             continue;
@@ -1261,22 +1261,11 @@ function eme_tasks_signups_shortcode( $atts ) {
         $location_id = join( ',', $location_id_arr );
     }
 
-    $extra_conditions_arr = [];
-    $extra_conditions     = '';
-    if ( ! empty( $event_id ) ) {
-        if ( strstr( ',', $event_id ) ) {
-            $extra_conditions_arr[] = "event_id in (".$event_id.")";
-        } else {
-            $extra_conditions_arr[] = 'event_id = ' . intval( $event_id );
-        }
+    $extra_conditions = [ 'event_tasks' => 1 ];
+    if ( ! empty( $event_id ) && eme_is_list_of_int( $event_id ) ) {
+        $extra_conditions['event_id'] = array_map( 'intval', explode( ',', $event_id ) );
     }
-
-    if ( ! empty( $extra_conditions_arr ) ) {
-        $extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
-    }
-
-    $extra_conditions_arr[] = 'event_tasks = 1';
-    $events                 = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
+    $events = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 
     $lang = eme_detect_lang();
     foreach ( $events as $event ) {
@@ -1455,23 +1444,13 @@ function eme_tasks_signupform_shortcode( $atts ) {
         $location_id = join( ',', $location_id_arr );
     }
 
-    $extra_conditions_arr = [];
-    $extra_conditions     = '';
+    $extra_conditions = [ 'event_tasks' => 1 ];
     // by default we only show tasks for public events (or private if logged in, see the function eme_get_events)
     // but if the event_id is not empty we include unlisted (hidden) events too
     $include_unlisted = 0;
-    if ( ! empty( $event_id ) ) {
-        if ( strstr( ',', $event_id ) ) {
-            $extra_conditions_arr[] = "event_id in ($event_id)";
-        } else {
-            $extra_conditions_arr[] = 'event_id = ' . intval( $event_id );
-        }
+    if ( ! empty( $event_id ) && eme_is_list_of_int( $event_id ) ) {
+        $extra_conditions['event_id'] = array_map( 'intval', explode( ',', $event_id ) );
         $include_unlisted = 1;
-    }
-    $extra_conditions_arr[] = 'event_tasks = 1';
-
-    if ( ! empty( $extra_conditions_arr ) ) {
-        $extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
     }
 
     $events = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_unlisted: $include_unlisted);

@@ -5858,7 +5858,7 @@ function eme_ajax_bookings_list() {
     } elseif ( $booking_status == 'APPROVED' ) {
         $where_arr[] = $wpdb->prepare('bookings.status = %d', EME_RSVP_STATUS_APPROVED);
     } elseif ( $booking_status == 'PENDING' ) {
-        $where_arr[] = $wpdb->prepare('(bookings.status = %d OR bookings.status = %d ', EME_RSVP_STATUS_PENDING , EME_RSVP_STATUS_USERPENDING );
+        $where_arr[] = $wpdb->prepare('(bookings.status = %d OR bookings.status = %d)', EME_RSVP_STATUS_PENDING , EME_RSVP_STATUS_USERPENDING );
     }
 
     if ( $q ) {

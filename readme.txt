@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.58
+Stable tag: 3.0.59
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,8 +96,15 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.58  (2026/04/03) =
-= 3.0.57  (2026/04/02) =
+= 3.0.59  (2026/04/03) =
+* Table query speedup
+
+= 3.0.58  (2026/04/02) =
+* Fix for pending query
+
+= 3.0.57  (2026/04/01) =
+* 100% WP compliant
+
 = 3.0.56  (2026/03/20) =
 * Move files in subdirs
 * Fix some url escaping being done too much

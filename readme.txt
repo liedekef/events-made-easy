@@ -49,7 +49,7 @@ For documentation on all shortcodes and placeholders, visit the [Official site](
 
 Always take a backup of your db before doing the upgrade, just in case ...  
 
-1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
+1. Download the zip "events-made-easy.zip" from the Wordpress plugin repo or [latest release on github](https://github.com/liedekef/events-made-easy/releases). The nuance is that the github version will upgrade from github, not Wordpress.
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded
    If the file is too big, or you need to use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
@@ -96,6 +96,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.58  (2026/04/03) =
+= 3.0.57  (2026/04/02) =
 = 3.0.56  (2026/03/20) =
 * Move files in subdirs
 * Fix some url escaping being done too much

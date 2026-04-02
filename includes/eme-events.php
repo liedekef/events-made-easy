@@ -5640,18 +5640,24 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $cf_ph        = implode( ',', array_fill( 0, count( $cf_ids_arr ), '%d' ) );
             $sql_join = $wpdb->prepare(
                 "INNER JOIN (SELECT {$group_concat_sql} related_id FROM $answers_table
-                WHERE answer LIKE %s AND field_id IN ($cf_ph) AND type='event'
-                GROUP BY related_id
-            ) ans
-            ON $events_table.event_id=ans.related_id",
-            array_merge( [ '%' . $wpdb->esc_like( $search_customfields ) . '%' ], $cf_ids_arr )
+                WHERE type='event' AND field_id IN ($cf_ph) AND answer LIKE %s
+                GROUP BY related_id) ans ON $events_table.event_id=ans.related_id",
+                array_merge( $cf_ids_arr, [ '%' . $wpdb->esc_like( $search_customfields ) . '%' ] )
             ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names and group_concat_sql are safe
         } else {
-            $sql_join = "
-           LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='event'
-             GROUP BY related_id
-            ) ans
-           ON $events_table.event_id=ans.related_id";
+            if ( ! empty( $formfields_searchable ) ) {
+                // Only fetch the field_ids actually needed for GROUP_CONCAT
+                $cf_ids_arr = array_column( $formfields_searchable, 'field_id' );
+                $cf_ph      = implode( ',', array_fill( 0, count( $cf_ids_arr ), '%d' ) );
+                $sql_join   = $wpdb->prepare(
+                    "LEFT JOIN (SELECT {$group_concat_sql} related_id FROM $answers_table
+                    WHERE type='event' AND field_id IN ($cf_ph)
+                    GROUP BY related_id) ans ON $events_table.event_id=ans.related_id", $cf_ids_arr
+                ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names and group_concat_sql are safe
+            } else {
+                // No custom fields configured at all — skip the join entirely
+                $sql_join = '';
+            }
         }
     }
 

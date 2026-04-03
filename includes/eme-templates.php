@@ -296,7 +296,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
             <tr class='form-field'>
             <th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF margins', 'events-made-easy' ); ?></th>
             <td><input type='text' name='properties[pdf_margins]' id='properties[pdf_margins]' value='<?php echo esc_html( $template['properties']['pdf_margins'] ); ?>' size='40'><br>
-            <?php esc_html_e( "See <a href='https://www.w3schools.com/cssref/pr_margin.asp'>this page</a> for info on what you can enter here.", 'events-made-easy' ); ?></td>
+            <?php sprintf( __( 'See <a target="_blank" href="%s">this page</a> for info on what you can enter here.', 'events-made-easy' ), 'https://www.w3schools.com/cssref/pr_margin.asp'); ?></td>
             </tr>
             <tr class='form-field template-pdf-custom'>
             <th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF width', 'events-made-easy' ); ?></th>

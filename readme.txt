@@ -1,19 +1,19 @@
 === Events Made Easy ===  
 Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
-Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
-Requires at least: 6.8
+Tags: events, memberships, bookings, maps, payment gateways
+Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.50
+Stable tag: 3.0.59
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Manage and display events, memberships, recurring events, locations and maps, volunteers, widgets, RSVP, ICAL and RSS feeds, payment gateways support. SEO compatible.
+Manage and display (recurring) events, memberships, locations and maps, volunteers, widgets, RSVP, ICAL and RSS feeds, payment gateways. SEO ready.
              
 == Description ==
 
-Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, 2Checkout, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
+Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
 
 Main features:
 * Public, private, draft and recurring events with custom and dynamic fields in the RSVP form
@@ -34,7 +34,7 @@ Main features:
 * Protection of forms with internal captcha, Google reCaptcha or hCaptcha
 * Templating for emails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
 * Lots of shortcodes and options
-* Payment gateways: Paypal, FirstData, 2CheckOut, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
+* Payment gateways: Paypal, FirstData, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
 * Send emails to registered people, automatically send reminders for payments
 * Automatically send reminders for memberships that are about to expire or have expired
 * Mail queueing and newsletter functionality
@@ -43,13 +43,13 @@ Main features:
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
 * Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and [qtranslate-xt](https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking emails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
 
-For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
+For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/eme-docs/) .
 
 == Installation ==
 
 Always take a backup of your db before doing the upgrade, just in case ...  
 
-1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
+1. Download the zip "events-made-easy.zip" from the Wordpress plugin repo or [latest release on github](https://github.com/liedekef/events-made-easy/releases). The nuance is that the github version will upgrade from github, not Wordpress.
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded
    If the file is too big, or you need to use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
@@ -82,11 +82,11 @@ After the installation, Events Made Easy add a top level "Events" menu to your W
 *  The *Settings* page is used to set generic EME defaults for events, payment gateways, emailserver info, mail templates, ...
 *  Fine-grainded configurable access control (ACL) for managing events, locations, bookings, members, ...
 
-Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/).
+Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/eme-docs/).
  
 == Frequently Asked Questions ==
 
-See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
+See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/eme-docs/).
 
 == Screenshots ==
 
@@ -96,11 +96,37 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.51  (2026//) =
+= 3.0.59  (2026/04/03) =
+* Table query speedup
+
+= 3.0.58  (2026/04/02) =
+* Fix for pending query
+
+= 3.0.57  (2026/04/01) =
+* 100% WP compliant
+
+= 3.0.56  (2026/03/20) =
+* Move files in subdirs
+* Fix some url escaping being done too much
+
+= 3.0.55  (2026/03/17) =
+* Bring minimal required WP version back down to 6.0
+
+= 3.0.54  (2026/03/15) =
+* Fix getting contacts/authors from wp (wrongly excluded too much)
+
+= 3.0.53  (2026/03/13) =
+* Several small html fixes
+
+= 3.0.52  (2026/03/10) =
+* Correct snapselect CSS
+
+= 3.0.51  (2026/03/10) =
 * Update Stripe API to 19.4.1
 * Update Mollie API to 3.9.0
 * Update Braintree API to 6.32.0
 * Update DomPDF API to 3.1.5
+* Fix custom fields for events/locations/memberships
 
 = 3.0.50  (2026/03/05) =
 * ftable update

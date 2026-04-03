@@ -20,7 +20,7 @@ if ( ! function_exists( 'mailparse_msg_create' ) ) {
 }
 
 function eme_help( $progname ) {
-	echo "For all doc, see https://www.e-dynamics.be/wordpress/category/documentation/21-command-line-mail-script/\n";
+	echo "For all doc, see https://www.e-dynamics.be/wordpress/eme-docs/send-mail-to-group-via-script/\n";
 	echo "Usage: $progname -d <email>\n";
 	echo "Or   : $progname --groupid=<groupid>\n";
 	echo "-d <email>\tCauses the email to be forwarded to the EME group with the specified email address\n";
@@ -64,6 +64,7 @@ function eme_mail_read( $iKlimit = '' ) {
 	$sErrorSTDINFail = 'Error - failed to read mail from STDIN!';
 
 	// Attempt to connect to STDIN
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- STDIN handling
 	$fp = fopen( 'php://stdin', 'r' );
 
 	// Failed to connect to STDIN? (shouldn't really happen)
@@ -78,17 +79,20 @@ function eme_mail_read( $iKlimit = '' ) {
 	// Read message up until limit (if any)
 	if ( $iKlimit == -1 ) {
 		while ( ! feof( $fp ) ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- binary read
 			$sEmail .= fread( $fp, 1024 );
 		}
 	} else {
 		$i_limit = 0;
 		while ( ! feof( $fp ) && $i_limit < $iKlimit ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- binary read
 			$sEmail .= fread( $fp, 1024 );
 			++$i_limit;
 		}
 	}
 
 	// Close connection to STDIN
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- STDIN handling
 	fclose( $fp );
 
 	// Return message

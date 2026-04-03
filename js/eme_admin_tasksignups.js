@@ -4,12 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Task Signups Table with ftable ---
     if (TaskSignupsTableContainer) {
-        // Insert sorting info element before table
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'tasksignupstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        TaskSignupsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let taskSignupFields = {
             id: {
                 key: true,
@@ -71,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: emetasks.translate_signups,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'event_name ASC, task_start ASC, task_name ASC, signup_status',
             selecting: true,
@@ -96,11 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_signup_status: eme_getValue(EME.$('#search_signup_status'))
                 };
             },
-            fields: taskSignupFields,
-            sortingInfoSelector: '#tasksignupstablesortingInfo',
-            messages: {
-                sortingInfoNone: ''
-            }
+            fields: taskSignupFields
         });
 
         // Load the table

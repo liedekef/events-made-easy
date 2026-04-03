@@ -6,15 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Countries Table ---
     if (CountriesTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'countriestablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        CountriesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         CountriesTable = new FTable('#CountriesTableContainer', {
             title: emecountries.translate_countries,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -37,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alpha_3: { title: emecountries.translate_alpha_3 },
                 num_3: { title: emecountries.translate_num_3 },
                 lang: { title: emecountries.translate_lang }
-            },
-            sortingInfoSelector: '#countriestablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         CountriesTable.load();
@@ -47,15 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize States Table ---
     if (StatesTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'statestablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        StatesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         StatesTable = new FTable('#StatesTableContainer', {
             title: emecountries.translate_states,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -85,9 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 code: { title: emecountries.translate_code },
                 country_name: { title: emecountries.translate_country },
                 locale: { title: emecountries.translate_locale }
-            },
-            sortingInfoSelector: '#statestablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         StatesTable.load();

@@ -3,15 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let HolidaysTable;
 
     if (HolidaysTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'holidaystablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        HolidaysTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         HolidaysTable = new FTable('#HolidaysTableContainer', {
             title: emeholidays.translate_holidaylists,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -35,9 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: {
                     title: emeholidays.translate_name
                 }
-            },
-            sortingInfoSelector: '#holidaystablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         HolidaysTable.load();

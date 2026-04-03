@@ -1,0 +1,648 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+function eme_option_items( $arr, $saved_value ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $arr ) ) {
+        return;
+    }
+
+    $output = '';
+    foreach ( $arr as $key => $item ) {
+        $selected = '';
+        if ( is_array( $saved_value ) ) {
+            in_array( $key, $saved_value ) ? $selected = "selected='selected' " : $selected = '';
+        } else {
+            "$key" == $saved_value ? $selected = "selected='selected' " : $selected = '';
+        }
+        $output .= "<option value='" . esc_html( $key ) . "' $selected >" . esc_html( $item ) . "</option>\n";
+    }
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_html() in this function
+}
+
+function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $arr ) ) {
+        return;
+    }
+
+    $output = '';
+    $name   = wp_strip_all_tags( $name );
+    foreach ( $arr as $key => $item ) {
+        $checked = '';
+        if ( in_array( $key, $saved_values ) ) {
+            $checked = "checked='checked'";
+        }
+        $id = esc_attr( eme_get_field_id( $name, $key ));
+        $output .= "<input type='checkbox' name='$name' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . $item . '</label>';
+        if ( $horizontal ) {
+            $output .= "&nbsp;";
+        } else {
+            $output .= "<br>\n";
+        }
+    }
+    echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_html() in this function
+}
+
+function eme_options_input_type( $title, $name, $description, $type = 'text', $option_value = false ) {
+    $name = wp_strip_all_tags( $name );
+    if ( $option_value === false ) {
+        $option_value = eme_nl2br( get_option( $name ) );
+    }
+    $autocomplete = '';
+    if ( $type == "password" ) {
+        $autocomplete = 'autocomplete="new-password"';
+    }
+?>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+        <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+        <td>
+<?php echo "<input $autocomplete name='" . esc_attr( $name ) . "' type='" . esc_attr( $type ) . "' id='" . esc_attr( $name ) . "' style='width: 95%;' value='" . esc_html( $option_value ) . "' size='45'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $autocomplete is hardcoded
+if ( ! empty( $description ) ) {
+    echo '<br>' . wp_kses_post( $description );
+}
+?>
+        </td>
+    </tr>
+<?php
+}
+
+function eme_options_input_text( $title, $name, $description, $option_value = false ) {
+    eme_options_input_type( $title, $name, $description, "text", $option_value);
+}
+
+function eme_options_input_int( $title, $name, $description, $option_value = false ) {
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = intval( get_option( $name ) );
+    }
+    eme_options_input_type( $title, $name, $description, "number", $option_value);
+}
+
+function eme_options_input_password( $title, $name, $description ) {
+    $name = wp_strip_all_tags( $name );
+    $option_value = get_option( $name );
+    eme_options_input_type( $title, $name, $description, "password", $option_value);
+}
+
+function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0, $show_full = 0, $option_value = false ) {
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = get_option( $name );
+    }
+?>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <td>
+<?php
+    eme_wysiwyg_textarea( $name, $option_value, $show_wp_editor, $show_full);
+    if ( ! empty( $description ) ) {
+        echo '<br>' . wp_kses_post( $description );
+    }
+?>
+    </td>
+    </tr>
+<?php
+}
+
+function eme_options_toggle($title, $name, $description = '', $option_value = false) {
+    $name = wp_strip_all_tags($name);
+    if (!$option_value) {
+        $option_value = get_option($name);
+    }
+
+    $id = esc_attr(sanitize_html_class($name));
+    $yes_label = esc_attr('Yes', 'events-made-easy');
+    $no_label  = esc_attr('No', 'events-made-easy');
+?>
+<tr style="vertical-align:top" id="<?php echo esc_attr( $id ); ?>_row">
+    <th scope="row"><?php echo esc_html($title); ?></th>
+    <td>
+        <input type="checkbox" class="eme-yesno-check-input"
+            name="<?php echo esc_attr($name); ?>"
+            id="<?php echo esc_attr( $id ); ?>"
+            value="1"
+            <?php checked( $option_value ); ?>
+        >
+        <label for="<?php echo esc_attr( $id ); ?>" class="eme-yesno-check-text" data-yes="<?php echo esc_attr( $yes_label ); ?>" data-no="<?php echo esc_attr( $no_label ); ?>"></label>
+        <?php if (!empty($description)): ?>
+            <div class="eme-toggle-description"><?php echo wp_kses_post( $description ); ?></div>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php
+}
+
+function eme_options_radio_binary( $title, $name, $description, $option_value = false ) {
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = get_option( $name );
+    }
+?>
+        <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+            <th scope="row"><?php echo esc_html( $title ); ?></th>
+            <td>
+            <input id="<?php echo esc_attr( $name ); ?>_yes" name="<?php echo esc_attr( $name ); ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_yes'><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
+            <input  id="<?php echo esc_attr( $name ); ?>_no" name="<?php echo esc_attr( $name ); ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_no'><?php esc_html_e( 'No', 'events-made-easy' ); ?>
+<?php
+    if ( ! empty( $description ) ) {
+        echo '<br>' . wp_kses_post( $description );
+    }
+?>
+        </td>
+        </tr>
+<?php
+}
+
+function eme_options_input_list( $title, $name, $list, $description, $option_value = false ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = get_option( $name );
+    }
+?>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <td>
+<?php
+    echo eme_ui_list( $option_value, $name, $list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_list()
+    if ( ! empty( $description ) ) {
+        echo '<br>' . wp_kses_post( $description );
+    }
+?>
+    </td>
+    </tr>
+<?php
+}
+
+function eme_options_select( $title, $name, $list, $description, $option_value = false, $add_empty_first = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = get_option( $name );
+    }
+?>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <td>
+<?php
+    echo eme_ui_select( $option_value, $name, $list, $add_empty_first ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+    if ( ! empty( $description ) ) {
+        echo '<br>' . wp_kses_post( $description );
+    }
+?>
+    </td>
+    </tr>
+<?php
+}
+
+function eme_options_multiselect( $title, $name, $list, $description, $option_value = false, $class = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! $option_value ) {
+        $option_value = get_option( $name );
+    }
+    if ( ! empty( $option_value ) && ! is_array( $option_value ) && strstr( $option_value, ',' ) ) {
+        $tmp_arr          = explode( ',', $option_value );
+        $option_value_arr = [];
+        foreach ( $tmp_arr as $val ) {
+            $option_value_arr[ $val ] = $val;
+        }
+    } else {
+        $option_value_arr = $option_value;
+    }
+?>
+    <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <td>
+<?php
+    echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
+    if ( ! empty( $description ) ) {
+        echo '<br>' . wp_kses_post( $description );
+    }
+?>
+    </td>
+    </tr>
+<?php
+}
+
+function eme_ui_select_binary( $option_value, $name, $required = 0, $class = '', $extra_attributes = '' ) {
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $name         = wp_strip_all_tags( $name );
+    $val          = "<select name='$name' id='$name' $extra_attributes >";
+    $selected_YES = '';
+    $selected_NO  = '';
+    if ( $option_value ) {
+        $selected_YES = "selected='selected'";
+    } else {
+        $selected_NO = "selected='selected'";
+    }
+    $val .= "<option value='0' $selected_NO>" . __( 'No', 'events-made-easy' ) . '</option>';
+    $val .= "<option value='1' $selected_YES>" . __( 'Yes', 'events-made-easy' ) . '</option>';
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select id='$id' name='$name' $extra_attributes >";
+    if ( $add_empty_first != '' ) {
+        $val .= "<option value=''>$add_empty_first</option>";
+    }
+    foreach ( $list as $key => $value ) {
+        if ( is_array( $value ) ) {
+            $t_key   = $value[0];
+            $t_value = esc_html( $value[1] );
+        } else {
+            $t_key   = $key;
+            $t_value = esc_html( $value );
+        }
+        if ( empty( $t_value ) && $t_value !== '0' ) {
+            $t_value = '&nbsp;';
+        }
+        "$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
+        $val                                    .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $extra_attributes = '') {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $random_id = eme_random_id();
+    $datalist_id = $name."_".$random_id;
+    $val = "<input list='$datalist_id' id='$name' name='$name' value='$option_value' $extra_attributes >";
+    $val .= "<datalist id='$datalist_id'>";
+    foreach ( $list as $key => $value ) {
+        $val .= "<option value='".esc_html( $value )."'>";
+    }
+    $val .= "</datalist>";
+    return $val;
+}
+
+function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select id='$name' name='$name' $extra_attributes >";
+    if ( $add_empty_first != '' ) {
+        $val .= "<option value=''>$add_empty_first</option>";
+    }
+    foreach ( $list as $key => $value ) {
+        if ( is_array( $value ) ) {
+            $t_key   = $value[0];
+            $t_value = esc_html( $value[1] );
+        } else {
+            $t_key   = $key;
+            $t_value = esc_html( $value );
+        }
+        if ( empty( $t_value ) && $t_value !== '0' ) {
+            $t_value = '&nbsp;';
+        }
+        if ( $t_key == 'BEGINOPTGROUP' ) {
+            $val .= "<optgroup label='" . esc_html( $t_value ) . "'>";
+        } elseif ( $t_key == 'ENDOPTGROUP' ) {
+            $val .= "</optgroup>";
+        } else {
+            "$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
+            $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
+        }
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select id='$name' name='$name' $extra_attributes >";
+    if ( ! empty( $add_empty_first ) ) {
+        $val .= "<option value=''>$add_empty_first</option>";
+    }
+    foreach ( $list as $value => $key ) {
+        $t_value = esc_html( $value );
+        if ( empty( $t_value ) ) {
+            $t_value = '&nbsp;';
+        }
+        "$key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
+        $val                                  .= "<option value='" . esc_html( $key ) . "' $selected>$t_value</option>";
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select id='$name' name='$name' $extra_attributes >";
+    if ( $add_empty_first != '' ) {
+        $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
+    }
+    foreach ( $list as $line ) {
+        $t_key   = $line[ $key ];
+        $t_value = esc_html( $line[ $value ] );
+        if ( empty( $t_value ) && $t_value !== '0' ) {
+            $t_value = '&nbsp;';
+        }
+        "$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
+        $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0, $id_prefix = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    if ( $add_empty_first != '' ) {
+        if ($disable_first_option) {
+            $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
+        } else {
+            $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
+        }
+    }
+    foreach ( $list as $key => $value ) {
+        $selected = '';
+        if ( is_array( $value ) ) {
+            $t_key   = $value[0];
+            $t_value = esc_html( $value[1] );
+        } else {
+            $t_key   = $key;
+            $t_value = esc_html( $value );
+        }
+        if ( ! empty( $t_key ) ) {
+            if ( is_array( $option_value ) ) {
+                if (in_array( $t_key, $option_value )) $selected = "selected='selected' ";
+            } else {
+                if ("$t_key" == $option_value) $selected = "selected='selected' ";
+            }
+        }
+        if ( $t_key == 'BEGINOPTGROUP' ) {
+            $val .= "<optgroup label='" . esc_html( $t_value ) . "'>";
+        } elseif ( $t_key == 'ENDOPTGROUP' ) {
+            $val .= "</optgroup>";
+        } else {
+            $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
+        }
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value, $size = 3, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0, $id_prefix = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $name = wp_strip_all_tags( $name );
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    if ( ! empty( $add_empty_first ) ) {
+        if ($disable_first_option) {
+            $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
+        } else {
+            $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
+        }
+    }
+    foreach ( $list as $line ) {
+        $selected = '';
+        $t_key   = $line[ $key ];
+        $t_value = esc_html( $line[ $value ] );
+        if ( ! empty( $t_key ) ) {
+            if ( is_array( $option_value ) ) {
+                if (in_array( $t_key, $option_value )) $selected = "selected='selected' ";
+            } else {
+                if ("$t_key" == $option_value) $selected = "selected='selected' ";
+            }
+        }
+        if ( empty( $t_value ) ) {
+            $t_value = '&nbsp;';
+        }
+        $val .= "<option value='" . esc_html( $t_key ) . "' $selected>$t_value</option>";
+    }
+    $val .= ' </select>';
+    return $val;
+}
+
+function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $val     = '';
+    $counter = 0;
+    $name    = wp_strip_all_tags( $name );
+    foreach ( $list as $key => $value ) {
+        if ( is_array( $value ) ) {
+            $t_key   = $value[0];
+            $t_value = $value[1];
+        } else {
+            $t_key   = $key;
+            $t_value = $value;
+        }
+        "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
+        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . $t_value . '</label>';
+        if (  $horizontal ) {
+            $val .= "&nbsp;";
+        } else {
+            $val .= "<br>\n";
+        }
+        ++$counter;
+    }
+    return $val;
+}
+
+function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 0, $class='', $extra_attributes = '' ) {
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $option_value ? $selected = "checked='checked' " : $selected = '';
+
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $name = wp_strip_all_tags( $name );
+    $val  = "<input type='checkbox' name='{$name}' id='{$name}' value='1' $selected $extra_attributes>";
+    if ( ! empty( $label ) ) {
+        $val .= "&nbsp;<label for='{$name}'>" . $label . '</label>';
+    }
+    return $val;
+}
+
+function eme_nobreak_checkbox_binary( $option_value, $name, $label = '', $required = 0, $class = '', $extra_attributes = '' ) {
+    $val  = "<div class='eme-item'>";
+    $val .= eme_ui_checkbox_binary( $option_value, $name, $label, $required, $class, $extra_attributes);
+    $val .= "</div>";
+    return $val;
+}
+
+function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $required = 0, $class = '', $extra_attributes = '' ) {
+    // make sure it is an array, otherwise just go back
+    if ( ! is_array( $list ) ) {
+        return;
+    }
+
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    $val     = '';
+    $counter = 0;
+    $name    = wp_strip_all_tags( $name );
+    foreach ( $list as $key => $value ) {
+        if ( is_array( $option_value ) ) {
+            in_array( $key, $option_value ) ? $selected = "checked='checked' " : $selected = '';
+        } else {
+            "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
+        }
+        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . $value . '</label>';
+        if ( $horizontal ) {
+            $val .= "&nbsp;";
+        } else {
+            $val .= "<br>\n";
+        }
+        ++$counter;
+    }
+    return $val;
+}
+
+function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra_attributes = '' ) {
+    if ( $required ) {
+        $extra_attributes .= " required='required'";
+    }
+    $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
+
+    if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+        $extra_attributes .= ' aria-label="' . $name . '"';
+    }
+
+    $name = wp_strip_all_tags( $name );
+    return "<input type='number' $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
+}
+
+function eme_get_field_id ( $field_name, $number = 1) {
+    $field_name = str_replace( [ '[]', '[', ']' ], [ '', '-', '' ], $field_name );
+    $field_name = trim( $field_name, '-' );
+    return 'emefield-' . $number . '-' . $field_name;
+}

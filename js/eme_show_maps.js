@@ -130,9 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (linkElement) {
                         linkElement.addEventListener('click', function() {
                             const mapDiv = document.getElementById('eme_global_map_' + map_id);
-                            const scrollTop = mapDiv.offsetTop - window.innerHeight/2 + mapDiv.offsetHeight/2;
-                            document.documentElement.scrollTop = scrollTop;
-                            
+                            eme_scrollToEl(mapDiv);
                             if (marker_clustering == 'true' ) {
                                 let m = markersList[item.location_id];
                                 markers.zoomToShowLayer(m, function() {

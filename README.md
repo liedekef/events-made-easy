@@ -1,86 +1,222 @@
-# Events Made Easy
+<p align="center">
+  <img src="assets/readme_imgs/banner.png" alt="Events Made Easy — The complete event management toolkit for WordPress" width="900">
+</p>
 
-## Description
+<div align="center">
 
-Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, 2Checkout, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
+[![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
+[![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-21759B?logo=wordpress&logoColor=white)](https://wordpress.org/)
+[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![ClassicPress](https://img.shields.io/badge/ClassicPress-compatible-057f99)](https://www.classicpress.net/)
 
-Main features:
-* Public, private, draft and recurring events with custom and dynamic fields in the RSVP form
-* Membership management with custom and dynamic fields
-* Volunteer management for events (using event tasks)
-* Attendance reporting for events and memberships if the rsvp or member qrcode is scanned by someone with enough rights
-* Page and post content protection through memberships or via shortcodes
-* Drip content via memberships
-* People and groups with custom fields per person
-* PDF creation for membership, bookings and people info
-* Membership card or booking ticket can be sent as PDF via mail automatically, with optional QR code to scan for attendance/payment info
-* RSS and ICAL feeds
-* Calendar management, with holidays integration
-* Several widgets for event listings and calendar
-* Location management, with optional OpenStreetMap integration
-* RSVP bookings with custom fields and dynamic fields, payment tracking, optional approval, discounts
-* Protection of forms with internal captcha, Google reCaptcha or hCaptcha
-* Templating for emails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
-* Lots of shortcodes and options
-* Payment gateways: Paypal, FirstData, 2CheckOut, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
-* Send emails to registered people, automatically send reminders for payments
-* Automatically send reminders for memberships that are about to expire or have expired
-* Mail queueing and newsletter functionality
-* Mailings can be planned in the future, cancelled ... and can include extra attacments
-* Multi-site compatible
-* Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
-* Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking emails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
+[Documentation](https://www.e-dynamics.be/wordpress/eme-docs/) &middot; [Report Issue](https://github.com/liedekef/events-made-easy/issues) &middot; [Sponsor](https://github.com/sponsors/liedekef)
 
-For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
+---
 
-## Installation
+</div>
 
-Always take a backup of your db before doing the upgrade, just in case ...  
+## Features at a glance
 
-1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
-2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
-3. Select the zip you downloaded  
-   If the file is too big, or you need to use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
-4. Activate the plugin through the 'Plugins' menu in WordPress (make sure your configured database user has the right to create/modify tables and columns) 
-5. Add events list or calendars following the instructions in the Usage section.  
-## Usage
+| | Feature | Description |
+|:---:|---|---|
+| :calendar: | **Events** | Public, private, draft & recurring events with daily/weekly/monthly/custom recurrence |
+| :ticket: | **Bookings & RSVP** | Custom booking forms, seat management, optional approval, waiting list |
+| :credit_card: | **16 Payment Gateways** | Stripe, Mollie, PayPal, Braintree, SumUp, Opayo, and 10 more |
+| :busts_in_silhouette: | **Memberships** | Recurring subscriptions, content protection, PDF membership cards |
+| :world_map: | **Maps** | OpenStreetMap integration with clustered markers |
+| :date: | **Calendar** | Interactive calendar widget with month navigation |
+| :email: | **Email** | Mail queue, newsletters, scheduled reminders, SMTP support |
+| :wrench: | **200+ Placeholders** | Full control over every piece of output |
+| :jigsaw: | **68 Shortcodes** | A shortcode for every use case |
+| :shield: | **GDPR** | Data requests, secure view/edit links, automated cleanup |
 
-After the installation, Events Made Easy add a top level "Events" menu to your Wordpress Administration.
+## See it in action
 
-*  The *Events* page lets you manage your events. The *Add new* page lets you insert a new event.
-   Generic EME settings concerning RSVP emails and templates can be overriden per event.
-*  The *Locations* page lets you add, delete and edit locations directly. Locations are automatically added with events if not present, but this interface lets you customise your locations data and add a picture.
-*  The *Categories* page lets you add, delete and edit categories (if Categories are activated in the Settings page).
-*  The *Holidays* page is used to define and manage holiday lists used in a calendar
-*  The *Custom fields* page lets you manage custom fields that can be used for events, locations, people, members, memberships and RSVP definitions
-*  The *Template* page lets you manage templates for events, memberships, emails, pdf creation, ...
-*  The *Discounts* page lets you manage discounts and discount groups used in RSVP or membership definitions
-*  The *People* page serves as a gathering point for the information about the people who booked a space for one of your events or for members personal info.
-   It can also be used to add custom info for a person based on the group he's in, so as to reflect the structure of an organization or just store extra info
-*  The *Groups* page
-*  The *Pending bookings* page is used to manage bookings for events that require approval.
-*  The *Change bookings* page is used to change bookings for events.
-*  The *Members* page is used to manage all your members (e.g. membership status, custom member info).
-*  The *Memberships* page is used to define and manage your memberships. 
-*  The *Countries/states* page can be used to define countries and states (in different languages) for personal info in membership and RSVP forms
-*  The *Send emails* page allows the planning, creation and management of mailings for events or generic info (many options possible)
-*  The *Scheduled actions* page is used to plan automated EME tasks (like sending reminders, cancel unpaid bookings, newsletter)).
-*  The *Cleanup actions* page
-*  The *Settings* page is used to set generic EME defaults for events, payment gateways, emailserver info, mail templates, ...
-*  Fine-grainded configurable access control (ACL) for managing events, locations, bookings, members, ...
+### Admin — events dashboard
 
-Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/).
- 
-## Translations and how to translate
+<p align="center">
+  <img src="assets/readme_imgs/screenshot-admin.png" alt="WordPress admin events dashboard showing event list with RSVP status, prices, locations, and dates" width="750">
+</p>
 
-You can find the latest versions of language files [here](https://github.com/liedekef/events-made-easy/tree/main/langs)
+### Frontend — shortcode output
 
-Here is how to translate any string in a language of your choice:
+Events list, calendar, and location map — all generated by shortcodes:
 
-First, download and install poedit (or any language editor that can handle ".po" files). Then open the .po language file of choice (it is already merged with the “template file” events-made-easy.pot). Then you’ll see all strings not correctly translated/fuzzy/... . It’s very easy (and exactly like the web interface on the wordpress translation site). Once you press save (after you finished editing), poedit created (compiles) the .mo file for you, so you can then send me the .po and .mo file. Or create a pull request on github with the new files.
+<p align="center">
+  <img src="assets/readme_imgs/screenshot-frontend.png" alt="Frontend shortcode output showing upcoming events list, interactive calendar, and OpenStreetMap locations" width="750">
+</p>
 
-I sometimes forget to update the language files, so drop me a hint me when you think something is out of date 🙂
+### Dynamic booking forms
 
-## Frequently Asked Questions
+The **dyndata engine** shows and hides form fields in real time based on visitor selections:
 
-See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
+<p align="center">
+  <img src="assets/readme_imgs/dynform-demo.gif" alt="Animated demo: booking form dynamically adapts fields and pricing as ticket type cycles between Standard, VIP, and Group" width="700">
+</p>
+
+## Quick start
+
+> **Always back up your database before upgrading, just in case.**
+
+```
+1. Download events-made-easy.zip from the latest release
+2. WordPress admin -> Plugins -> Add New -> Upload Plugin
+3. Activate -> done!
+```
+
+If the file is too large for the upload form, use FTP/SSH to extract the zip into `/wp-content/plugins/events-made-easy` (remove the old files first).
+
+After activation, an **Events** menu appears in your admin sidebar with 19 dedicated pages for managing events, locations, bookings, members, templates, and more. You can also add events and calendars using **sidebar widgets**.
+
+> **Important:** EME creates a special "Events" page on activation. Don't change it, don't use it in menus, don't delete it. EME uses it internally for rendering events and processing payments.
+
+## Essential shortcodes
+
+| Shortcode | What it does |
+|---|---|
+| `[eme_events scope="future" limit="5"]` | List upcoming events |
+| `[eme_calendar full=1]` | Interactive month calendar |
+| `[eme_locations_map]` | OpenStreetMap with all locations |
+| `[eme_add_booking_form id=42]` | Booking form for a specific event |
+| `[eme_filterform]` | Search & filter form for events |
+| `[eme_mybookings]` | Logged-in user's bookings |
+| `[eme_add_member_form]` | Membership signup form |
+| `[eme_countdown id=42]` | Countdown timer to an event |
+
+68 shortcodes total — [see the full reference](https://www.e-dynamics.be/wordpress/eme-docs/shortcodes/)
+
+## Payment gateways
+
+<p align="center">
+
+**Stripe** &middot; **Mollie** &middot; **PayPal** &middot; **Braintree** &middot; **SumUp** &middot; **Opayo** &middot; **Worldpay** &middot; **Payconiq** &middot; **Instamojo** &middot; **Mercado Pago** &middot; **Fondy** &middot; **FirstData** &middot; **Bancontact/Wero** &middot; **Webmoney** &middot; **Offline**
+
+</p>
+
+No fees from EME. Free events skip payment entirely.
+
+## What happens when someone books?
+
+```
+Visitor         Validation       Person record
+fills form  ->  (16 checks)  ->  + booking created
+                                      |
+Event day       Reminders        Payment via
+QR check-in <-  (automated)  <-  chosen gateway
+                                      |
+                Emails sent      Auto-approved
+                (PDF ticket) <-  (or manual review)
+```
+
+<details>
+<summary><strong>Full feature list</strong></summary>
+
+### Events & locations
+- Public, private, draft and recurring events (daily/weekly/monthly/custom)
+- Location management with addresses, coordinates, and OpenStreetMap
+- Categories, holidays, and custom fields
+- Copy events, CSV import/export
+- SEO-friendly permalinks
+- RSS and iCal feeds
+- Sidebar widgets for event lists and calendars
+
+### Bookings & RSVP
+- Custom booking forms with unlimited fields
+- Dynamic fields (show/hide based on selections)
+- Multi-price seat categories
+- Waiting list (auto-switches when full)
+- Booking approval workflow
+- Discount codes (fixed, percentage, code-based, per-seat)
+- CAPTCHA protection (built-in, reCAPTCHA, hCaptcha, CF Turnstile)
+
+### Memberships
+- Recurring subscriptions with payment tracking
+- Content protection (gate pages/posts behind membership)
+- Drip content over time
+- PDF membership cards with QR codes
+- Family/group memberships
+
+### Payments
+- 16 payment gateways, zero EME fees
+- Automatic payment reminders
+- Cancel unpaid bookings automatically
+- Offline payment support
+
+### Email & communication
+- Mail queue with scheduling
+- Newsletter functionality
+- Per-event email templates
+- Booking confirmations, reminders, cancellations
+- PDF ticket attachments
+- SMTP support with debugging
+
+### People & groups
+- People database with custom fields per group
+- Groups for organizing contacts
+- Volunteer task management per event
+- Attendance tracking via QR code scanning
+
+### Developer features
+- 200+ placeholders for templating
+- 68 shortcodes
+- 40+ action/filter hooks
+- REST API
+- Conditional logic with `[eme_if]` shortcode
+- Template system for reusable formats
+- Multi-site compatible
+
+### Privacy & compliance
+- GDPR data request/view/edit via secure links
+- Automated cleanup of old records
+- Privacy-aware email handling
+
+### Localization
+- Fully localized in German, Swedish, French, Dutch
+- Compatible with qTranslate-XT and Polylang
+- In-text language tags for multilingual content
+
+</details>
+
+<details>
+<summary><strong>Translations</strong></summary>
+
+Language files are in the [`langs/`](langs/) directory.
+
+**To translate:**
+1. Download [Poedit](https://poedit.net/) (or any `.po` editor)
+2. Open the `.po` file for your language
+3. Translate the untranslated strings
+4. Save (Poedit compiles the `.mo` automatically)
+5. Submit a pull request with both `.po` and `.mo` files
+
+Or contribute via the [WordPress translation platform](https://translate.wordpress.org/projects/wp-plugins/events-made-easy/).
+
+</details>
+
+<details>
+<summary><strong>FAQ</strong></summary>
+
+See the [FAQ documentation](https://www.e-dynamics.be/wordpress/eme-docs/faq/).
+
+</details>
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+GPLv2 or later. See [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+
+**Events Made Easy** is free, open source, and sustained by donations.
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/liedekef)
+[![PayPal](https://img.shields.io/badge/Donate-PayPal-003087?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR)
+
+*Built for the WordPress community for 10+ years.*
+
+</div>

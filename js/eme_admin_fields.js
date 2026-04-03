@@ -135,15 +135,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Form Fields Table ---
     if (FormfieldsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'fieldstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        FormfieldsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         FormfieldsTable = new FTable('#FormfieldsTableContainer', {
             title: emeformfields.translate_formfields,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'field_name ASC',
             selecting: true,
@@ -202,9 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     sorting: false,
                     width: '2%'
                 }
-            },
-            sortingInfoSelector: '#fieldstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
         FormfieldsTable.load();
     }

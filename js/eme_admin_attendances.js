@@ -4,15 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Attendances Table ---
     if (AttendancesTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'attendancestablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        AttendancesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         AttendancesTable = new FTable('#AttendancesTableContainer', {
             title: emeattendances.translate_attendance_reports,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'creation_date ASC',
             csvExport: true,
@@ -50,9 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     sorting: false,
                     title: emeattendances.translate_name
                 }
-            },
-            sortingInfoSelector: '#attendancestablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         AttendancesTable.load();

@@ -4,11 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Bookings Table ---
     if (BookingsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'bookingsrsvptablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        BookingsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let bookingFields = {
             booking_id: {
                 key: true,
@@ -171,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: emersvp.translate_bookings,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'booking_date DESC',
             selecting: true,
@@ -291,9 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 event_id: EME.$('#event_id')?.value || '',
                 person_id: $_GET['person_id']
             }),
-            fields: bookingFields,
-            sortingInfoSelector: '#bookingsrsvptablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            fields: bookingFields
         });
 
         BookingsTable.load();

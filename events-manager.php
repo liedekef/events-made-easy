@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 Plugin Name: Events Made Easy
-Version: 3.0.50
+Version: 3.0.59
 Plugin URI: https://www.e-dynamics.be/wordpress
 Update URI: https://github.com/liedekef/events-made-easy/
-Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, 2Checkout and others.
+Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others.
 Author: Franky Van Liedekerke
 Author URI: https://www.e-dynamics.be/
 Text Domain: events-made-easy
@@ -19,7 +19,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 /*
-Copyright (c) 2010-2021, Franky Van Liedekerke.
+Copyright (c) 2010-2026, Franky Van Liedekerke.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -36,48 +36,51 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+define( 'EME_VERSION', '3.0.59' );
+define( 'EME_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'EME_INCLUDE_DIR', EME_PLUGIN_DIR . 'includes/' );
+define( 'EME_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
 // INCLUDES
-require_once 'eme-install.php';
-require_once 'eme-options.php';
-require_once 'eme-functions.php';
-require_once 'eme-filters.php';
-require_once 'eme-events.php';
-require_once 'eme-calendar.php';
-require_once 'eme-widgets.php';
-require_once 'eme-rsvp.php';
-require_once 'eme-locations.php';
-require_once 'eme-people.php';
-require_once 'eme-recurrence.php';
-require_once 'eme-ui-helpers.php';
-require_once 'eme-categories.php';
-require_once 'eme-holidays.php';
-require_once 'eme-templates.php';
-require_once 'eme-attributes.php';
-require_once 'eme-attendances.php';
-require_once 'eme-ical.php';
-require_once 'eme-cleanup.php';
-require_once 'eme-cron.php';
-require_once 'eme-formfields.php';
-require_once 'eme-shortcodes.php';
-require_once 'eme-actions.php';
-require_once 'eme-payments.php';
-require_once 'eme-discounts.php';
-require_once 'eme-members.php';
-require_once 'eme-mailer.php';
-require_once 'eme-countries.php';
-require_once 'eme-gdpr.php';
-require_once 'eme-tasks.php';
-require_once 'eme-todos.php';
-require_once 'eme-translate.php';
-require_once 'eme-fs.php';
+require_once EME_INCLUDE_DIR . 'eme-install.php';
+require_once EME_INCLUDE_DIR . 'eme-options.php';
+require_once EME_INCLUDE_DIR . 'eme-functions.php';
+require_once EME_INCLUDE_DIR . 'eme-filters.php';
+require_once EME_INCLUDE_DIR . 'eme-events.php';
+require_once EME_INCLUDE_DIR . 'eme-calendar.php';
+require_once EME_INCLUDE_DIR . 'eme-widgets.php';
+require_once EME_INCLUDE_DIR . 'eme-rsvp.php';
+require_once EME_INCLUDE_DIR . 'eme-locations.php';
+require_once EME_INCLUDE_DIR . 'eme-people.php';
+require_once EME_INCLUDE_DIR . 'eme-recurrence.php';
+require_once EME_INCLUDE_DIR . 'eme-ui-helpers.php';
+require_once EME_INCLUDE_DIR . 'eme-categories.php';
+require_once EME_INCLUDE_DIR . 'eme-holidays.php';
+require_once EME_INCLUDE_DIR . 'eme-templates.php';
+require_once EME_INCLUDE_DIR . 'eme-attributes.php';
+require_once EME_INCLUDE_DIR . 'eme-attendances.php';
+require_once EME_INCLUDE_DIR . 'eme-ical.php';
+require_once EME_INCLUDE_DIR . 'eme-cleanup.php';
+require_once EME_INCLUDE_DIR . 'eme-cron.php';
+require_once EME_INCLUDE_DIR . 'eme-formfields.php';
+require_once EME_INCLUDE_DIR . 'eme-shortcodes.php';
+require_once EME_INCLUDE_DIR . 'eme-actions.php';
+require_once EME_INCLUDE_DIR . 'eme-payments.php';
+require_once EME_INCLUDE_DIR . 'eme-discounts.php';
+require_once EME_INCLUDE_DIR . 'eme-members.php';
+require_once EME_INCLUDE_DIR . 'eme-mailer.php';
+require_once EME_INCLUDE_DIR . 'eme-countries.php';
+require_once EME_INCLUDE_DIR . 'eme-gdpr.php';
+require_once EME_INCLUDE_DIR . 'eme-tasks.php';
+require_once EME_INCLUDE_DIR . 'eme-todos.php';
+require_once EME_INCLUDE_DIR . 'eme-translate.php';
+require_once EME_INCLUDE_DIR . 'eme-fs.php';
 if ( ! class_exists( 'emeExpressiveDate' ) ) {
-    require_once 'class-expressivedate.php';
+    require_once EME_INCLUDE_DIR . 'class-expressivedate.php';
 }
 
 // Setting constants, no calls to "__" here!!!
-define( 'EME_VERSION', '3.0.50' );
-define( 'EME_PLUGIN_FILE_PATH', __FILE__ );
-define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
 define( 'DEFAULT_CAP_AUTHOR_EVENT', 'publish_posts' );
 define( 'DEFAULT_CAP_PUBLISH_EVENT', 'publish_posts' );
@@ -158,14 +161,11 @@ define( 'EME_DISCOUNT_TYPE_FIXED', 1 );
 define( 'EME_DISCOUNT_TYPE_PCT', 2 );
 define( 'EME_DISCOUNT_TYPE_CODE', 3 );
 define( 'EME_DISCOUNT_TYPE_FIXED_PER_SEAT', 4 );
-#define('EME_LANGUAGE_REGEX','[a-z]{2,3}([_\-][a-z]{2,3})?');
-#define('EME_LANGUAGE_REGEX','[a-z]{2}(_[a-z]{2})?');
 define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );
 define( 'EME_UPLOAD_URL', $upload_info['baseurl'] . '/events-made-easy' );
-define( 'EME_INCLUDE_DIR', $upload_info['basedir'] . '/events-made-easy/includes' );
-define( 'EME_PLUGIN_URL',  eme_plugin_url() );
+define( 'EME_EXTRA_INCLUDE_DIR', $upload_info['basedir'] . '/events-made-easy/includes' );
 define( 'EME_DB_PREFIX',  eme_get_db_prefix() );
 define( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
 define( 'EME_WP_TIME_FORMAT', get_option( 'time_format' ) );
@@ -295,11 +295,10 @@ $myUpdateChecker = PucFactory::buildUpdateChecker(
 $myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
  */
 // BEGIN NOT FOR WP
-require_once("class-eme-updater.php");
-$plugin_file = EME_PLUGIN_FILE_PATH;
+require_once("includes/class-eme-updater.php");
 $github_username = 'liedekef';
 $github_repository = 'events-made-easy';
-new EME_GitHub_Updater($plugin_file, $github_username, $github_repository);
+new EME_GitHub_Updater(__FILE__, $github_username, $github_repository);
 // END NOT FOR WP
 
 // Create the Manage Events and the Options submenus
@@ -410,8 +409,8 @@ function eme_explain_events_page_missing() {
 	<?php
 }
 
-if (file_exists(EME_INCLUDE_DIR) && is_dir(EME_INCLUDE_DIR)) {
-	foreach ( glob( EME_INCLUDE_DIR . '/eme_*.php' ) as $file ) {
+if (file_exists(EME_EXTRA_INCLUDE_DIR) && is_dir(EME_EXTRA_INCLUDE_DIR)) {
+	foreach ( glob( EME_EXTRA_INCLUDE_DIR . '/eme_*.php' ) as $file ) {
 		require_once($file);
 	}
 }

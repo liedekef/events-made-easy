@@ -4,11 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Locations Table ---
     if (LocationsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'locationstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        LocationsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         let locationFields = {
             location_id: {
                 key: true,
@@ -98,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: emelocations.translate_locations,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'location_name ASC',
             selecting: true,
@@ -115,9 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_customfields: EME.$('#search_customfields')?.value || '',
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
             }),
-            fields: locationFields,
-            sortingInfoSelector: '#locationstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            fields: locationFields
         });
 
         LocationsTable.load();
@@ -254,6 +248,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (imageExample) eme_toggle(imageExample, false);
         }
     }
+
+    initSnapSelectRemote('#location_author.eme_snapselect_wpuser_class', {
+        data: {
+            action: 'eme_wpuser_snapselect',
+            eme_admin_nonce: emelocations.translate_adminnonce,
+        }
+    });
 
     if (EME.$('select.eme_snapselect_location')) {
         initSnapSelectRemote('select.eme_snapselect_location', {

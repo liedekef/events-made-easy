@@ -6,15 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Discounts Table ---
     if (DiscountsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'discountstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        DiscountsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         DiscountsTable = new FTable('#DiscountsTableContainer', {
             title: emediscounts.translate_discounts,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             toolbarsearch: true,
@@ -71,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 valid_to: {
                     title: emediscounts.translate_validto
                 }
-            },
-            sortingInfoSelector: '#discountstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         DiscountsTable.load();
@@ -81,15 +75,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Initialize Discount Groups Table ---
     if (DiscountGroupsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'discountgroupstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        DiscountGroupsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         DiscountGroupsTable = new FTable('#DiscountGroupsTableContainer', {
             title: emediscounts.translate_discountgroups,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -110,9 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: { title: emediscounts.translate_name },
                 description: { title: emediscounts.translate_description },
                 maxdiscounts: { title: emediscounts.translate_maxdiscounts }
-            },
-            sortingInfoSelector: '#discountgroupstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         DiscountGroupsTable.load();

@@ -2,18 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const TemplatesTableContainer = EME.$('#TemplatesTableContainer');
     let TemplatesTable;
 
-    // --- ftable: Initialize Templates Table ---
     if (TemplatesTableContainer) {
-        // Insert sorting info element before table container
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'templatestablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        TemplatesTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         TemplatesTable = new FTable('#TemplatesTableContainer', {
             title: emetemplates.translate_templates,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true,
@@ -31,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     action: 'eme_templates_list',
                     eme_admin_nonce: emetemplates.translate_adminnonce,
                     search_name: EME.$('#search_name')?.value || '',
+                    search_content: EME.$('#search_content')?.value || '',
                     search_type: EME.$('#search_type')?.value || ''
                 };
             },
@@ -59,10 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     listClass: 'eme-ftable-center',
                     columnResizable: false
                 }
-            },
-            sortingInfoSelector: '#templatestablesortingInfo',
-            messages: {
-                sortingInfoNone: ''
             }
         });
 

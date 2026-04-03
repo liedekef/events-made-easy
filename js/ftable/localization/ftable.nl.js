@@ -3,13 +3,15 @@
 // fTable localization file for 'Dutch - The Netherlands' language.
 //    Author: Bert Janssen
 FTable.setMessages({
-serverCommunicationError: 'Fout bij het communiceren met de server',
+        serverCommunicationError: 'Fout bij het communiceren met de server',
         loadingMessage: 'Laden...',
         noDataAvailable: 'Geen gegevens beschikbaar!',
         addNewRecord: 'Toevoegen',
         editRecord: 'Bewerken',
         areYouSure: 'Weet u het zeker?',
         deleteConfirmation: 'Gegevens verwijderen?',
+        no: 'Nee',
+        yes: 'Ja',
         save: 'Opslaan',
         saving: 'Gegevens opslaan',
         cancel: 'Annuleren',
@@ -26,8 +28,11 @@ serverCommunicationError: 'Fout bij het communiceren met de server',
         sortingInfoPrefix: 'Sortering toegepast: ',
         ascending: 'Oplopend',
         descending: 'Aflopend',
+        resetTableConfirm: 'Hiermee worden de kolomzichtbaarheid, kolombreedtes en paginagrootte teruggezet naar de standaardinstellingen. Wilt u doorgaan?',
         sortingInfoNone: 'Geen sortering toegepast',
         csvExport: 'CSV',
         printTable: '🖨️  Print',
-        cloneRecord: 'Clone Record'
+        cloneRecord: 'Clone Record',
+        resetSorting: 'Reset sorteren',
+        resetTable: 'Reset tabel'
 });

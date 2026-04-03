@@ -268,15 +268,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- ftable: Mailing Report Table ---
     if (MailingReportTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'mailingreporttablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        MailingReportTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         MailingReportTable = new FTable('#MailingReportTableContainer', {
             title: ememails.translate_mailingreport,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'sent_datetime ASC',
             actions: {
@@ -298,9 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 read_count: { title: ememails.translate_total_readcount },
                 error_msg: { title: ememails.translate_errormessage, visibility: 'hidden', sorting: false },
                 action: { title: ememails.translate_action, listClass: 'eme-wsnobreak', visibility: 'fixed', sorting: false }
-            },
-            sortingInfoSelector: '#mailingreporttablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         MailingReportTable.load();
@@ -317,15 +311,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- ftable: Mails Table ---
     if (MailsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'mailstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        MailsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         MailsTable = new FTable('#MailsTableContainer', {
             title: ememails.translate_mails,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: "creation_date DESC",
             selecting: true,
@@ -355,9 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 read_count: { title: ememails.translate_total_readcount, visibility: 'hidden' },
                 error_msg: { title: ememails.translate_errormessage, visibility: 'hidden', sorting: false },
                 action: { title: ememails.translate_action, listClass: 'eme-wsnobreak', visibility: 'fixed', sorting: false }
-            },
-            sortingInfoSelector: '#mailstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         //MailsTable.load();
@@ -422,15 +410,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- ftable: Mailings Table ---
     if (MailingsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'mailingstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        MailingsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         MailingsTable = new FTable('#MailingsTableContainer', {
             title: ememails.translate_mailings,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'planned_on DESC, name',
             selecting: true,
@@ -489,9 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     columnResizable: false,
                     sorting: false
                 }
-            },
-            sortingInfoSelector: '#mailingstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         //MailingsTable.load();
@@ -537,15 +519,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- ftable: Archived Mailings Table ---
     if (ArchivedMailingsTableContainer) {
-        const sortingInfo = document.createElement('div');
-        sortingInfo.id = 'archivedmailingstablesortingInfo';
-        sortingInfo.style.cssText = 'margin-top: 0px; font-weight: bold;';
-        ArchivedMailingsTableContainer.insertAdjacentElement('beforebegin', sortingInfo);
-
         ArchivedMailingsTable = new FTable('#ArchivedMailingsTableContainer', {
             title: ememails.translate_archivedmailings,
             paging: true,
             sorting: true,
+            sortingResetButton: true,
             multiSorting: true,
             defaultSorting: 'planned_on DESC, name',
             selecting: true,
@@ -593,9 +571,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     columnResizable: false,
                     sorting: false
                 }
-            },
-            sortingInfoSelector: '#archivedmailingstablesortingInfo',
-            messages: { sortingInfoNone: '' }
+            }
         });
 
         //ArchivedMailingsTable.load();

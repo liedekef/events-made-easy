@@ -6101,7 +6101,6 @@ function eme_events_table( $message = '' ) {
     $scope_names['all']    = __( 'All events', 'events-made-easy' );
     $scope_names['future'] = __( 'Future events', 'events-made-easy' );
 
-    $event_status_array = eme_status_array();
     $categories         = eme_get_categories();
 
 ?>
@@ -6180,19 +6179,13 @@ function eme_events_table( $message = '' ) {
     <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
     <a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
     <div id="extra_searchfields" class='eme-hidden'>
-    <select id="status" name="status">
-        <option value="0"><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></option>
 <?php
-    if ( isset( $_GET['status'] ) ) {
-        $get_status = intval( $_GET['status'] );
-    } else {
-        $get_status = 0;
-    }
-    foreach ( $event_status_array as $event_status_key => $event_status_value ) {
-        echo "<option value='" . esc_attr($event_status_key)."' " . selected( $get_status, $event_status_key ) . "> ".esc_html($event_status_value)."</option>";
+    if ( !isset( $_GET['trash'] ) ) {
+        $event_status_array = eme_status_array();
+        unset ($event_status_array[0]); // remove the trash status
+        echo eme_ui_select( '', 'status', $event_status_array, __( 'Event Status', 'events-made-easy' ));
     }
 ?>
-    </select>
         <input type="search" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" class="eme_searchfilter">
 <?php
     $formfields_searchable = eme_get_searchable_formfields( 'events' );

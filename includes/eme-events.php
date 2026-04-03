@@ -6180,7 +6180,7 @@ function eme_events_table( $message = '' ) {
     <a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
     <div id="extra_searchfields" class='eme-hidden'>
 <?php
-    if ( !isset( $_GET['trash'] ) ) {
+    if (empty( $_GET['trash'] ) ) {
         $event_status_array = eme_status_array();
         unset ($event_status_array[0]); // remove the trash status
         echo eme_ui_select( '', 'status', $event_status_array, __( 'Event Status', 'events-made-easy' ));

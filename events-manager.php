@@ -294,11 +294,13 @@ $myUpdateChecker = PucFactory::buildUpdateChecker(
 // we'll use a release asset
 $myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
  */
+// BEGIN NOT FOR WP
 require_once("class-eme-updater.php");
 $plugin_file = EME_PLUGIN_FILE_PATH;
 $github_username = 'liedekef';
 $github_repository = 'events-made-easy';
 new EME_GitHub_Updater($plugin_file, $github_username, $github_repository);
+// END NOT FOR WP
 
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );

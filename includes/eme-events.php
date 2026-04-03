@@ -6346,7 +6346,6 @@ function eme_recurrences_table( $message = '' ) {
 }
 
 function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
-    $event_status_array = eme_status_array();
     if ( ! isset( $info['feedback'] ) ) {
         $hidden_class = 'eme-hidden';
         $message      = '';
@@ -6718,19 +6717,10 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     <h2 class='hndle'><span><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></span></h2>
                     <div class="inside">
                         <p><?php esc_html_e( 'Status', 'events-made-easy' ); ?>
-                        <select id="status" name="event_status">
 <?php
-        foreach ( $event_status_array as $key => $value ) {
-            if ( $event['event_status'] == $key ) {
-                $selected = "selected='selected'";
-            } else {
-                $selected = '';
-            }
-            echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
-        }
-?>
-                        </select><br>
-<?php
+        $event_status_array = eme_status_array();
+        unset ($event_status_array[0]); // remove the trash status
+        echo eme_ui_select( '', 'event_status', $event_status_array, __( 'Event Status', 'events-made-easy' ));
         esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form.', 'events-made-easy' );
 ?>
                         </p>

@@ -6719,7 +6719,9 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                         <p><?php esc_html_e( 'Status', 'events-made-easy' ); ?>
 <?php
         $event_status_array = eme_status_array();
-        unset ($event_status_array[0]); // remove the trash status
+        if ($event['event_status'] != EME_EVENT_STATUS_TRASH) { 
+            unset ($event_status_array[0]); // remove the trash status for non-trashed events
+        }
         echo eme_ui_select( '', 'event_status', $event_status_array, __( 'Event Status', 'events-made-easy' ));
         esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form.', 'events-made-easy' );
 ?>

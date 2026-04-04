@@ -282,18 +282,6 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 }
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
-/*
-// include our custom update checker code
-require_once 'plugin-update-checker/plugin-update-checker.php';
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-$myUpdateChecker = PucFactory::buildUpdateChecker(
-        'https://github.com/liedekef/events-made-easy/',
-        __FILE__,
-        'events-made-easy'
-);
-// we'll use a release asset
-$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
- */
 // BEGIN NOT FOR WP
 require_once("includes/class-eme-updater.php");
 $github_username = 'liedekef';

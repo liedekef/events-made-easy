@@ -2043,14 +2043,14 @@ function eme_is_multi( $element ) {
 }
 
 function eme_convert_multi2br( $multistring ) {
-    if (empty($multistring)) {
+    if ($multistring === '' || $multistring === null) {
         return '';
     }
     return str_replace( '||', '<br>', $multistring );
 }
 
 function eme_convert_multi2array( $multistring ) {
-    if (empty($multistring)) {
+    if ($multistring === '' || $multistring === null) {
         return [];
     }
     return explode( '||', $multistring );

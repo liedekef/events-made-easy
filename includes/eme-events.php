@@ -9529,6 +9529,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
         eme_delete_uploaded_files( $event_id, 'events' );
         eme_delete_event_tasks( $event_id );
         eme_delete_event_todos( $event_id );
+        wp_cache_delete( "eme_event $event_id" );
     }
 }
 
@@ -9537,6 +9538,7 @@ function eme_delete_event_answers( $event_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    wp_cache_delete( "eme_event_cf $event_id" );
 }
 
 function eme_check_event_external_ref( $id ) {

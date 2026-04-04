@@ -3911,6 +3911,7 @@ function eme_delete_membership_answers( $membership_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    wp_cache_delete( "eme_membership_cf $membership_id" );
 }
 
 // for backwards compatibility

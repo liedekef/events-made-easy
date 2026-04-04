@@ -3103,7 +3103,7 @@ function eme_get_used_wpids( $exclude_id = 0 ) {
         $prepared_sql = "SELECT DISTINCT wp_id FROM $people_table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $result = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    wp_cache_set( $cache_key, $result, 'eme' );
+    wp_cache_set( $cache_key, $result, 'eme', 60 );
     return $result;
 }
 

@@ -1456,6 +1456,7 @@ function eme_delete_location( $location_id, $transfer_id = 0 ) {
     $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $wpdb->update( $events_table, ['location_id'=>$transfer_id], ['location_id'=>$location_id] );
 
+    wp_cache_delete( "eme_location $location_id" );
     eme_delete_location_answers( $location_id );
     eme_delete_uploaded_files( $location_id, 'locations' );
 }
@@ -1464,6 +1465,7 @@ function eme_delete_location_answers( $location_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $wpdb->delete( $answers_table, ['related_id'=>$location_id, 'type'=>'location'], ['%d', '%s'] );
+    wp_cache_delete( "eme_location_cf $location_id" );
 }
 
 function eme_check_location_external_ref( $id ) {

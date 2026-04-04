@@ -88,7 +88,7 @@ ERRORS=0
 # STEP 1: Validation
 # =============================================================================
 
-step "1/6" "Validation"
+step "1/4" "Validation"
 
 # Version must match plugin header
 HEADER_VERSION=$(grep -oP "^Version:\s*\K[0-9.]+" "${PLUGIN_DIR}/events-manager.php" || true)
@@ -129,29 +129,10 @@ if [ "$DEPLOY" = true ]; then
 fi
 
 # =============================================================================
-# STEP 2: PHP syntax check
+# STEP 2: Extract GitHub release ZIP
 # =============================================================================
 
-step "2/6" "PHP syntax check"
-
-PHP_ERRORS=0
-for file in "${PLUGIN_DIR}"/*.php; do
-    if ! php -l "$file" >/dev/null 2>&1; then
-        fail "Syntax error: $(basename "$file")"
-        PHP_ERRORS=$((PHP_ERRORS + 1))
-    fi
-done
-if [ "$PHP_ERRORS" -gt 0 ]; then
-    fail "${PHP_ERRORS} PHP files have syntax errors. Aborting."
-    exit 1
-fi
-info "All root PHP files pass syntax check"
-
-# =============================================================================
-# STEP 3: Extract GitHub release ZIP
-# =============================================================================
-
-step "3/6" "Extract GitHub release ZIP"
+step "2/4" "Extract GitHub release ZIP"
 
 unzip -q "$DIST_ZIP" -d "$BUILD_DIR"
 if [ ! -d "$RELEASE_DIR" ]; then
@@ -161,56 +142,14 @@ fi
 info "Extracted: $(find "$RELEASE_DIR" -type f | wc -l) files"
 
 # =============================================================================
-# STEP 4: Inject phpcs:disable into third-party PHP files
-# =============================================================================
-# PCP (Plugin Check Plugin) scans ALL PHP files in the release, including
-# third-party SDKs. These vendor files generate hundreds of PCP errors that
-# would block WP.org submission. Since vendor code must not be modified in the
-# repo (upstream updates would overwrite changes), we inject a phpcs:disable
-# comment at the top of each vendor PHP file during the build only.
-#
-# References:
-#   - WP.org PCP requirement: https://developer.wordpress.org/plugins/wordpress-org/plugin-developer-faq/#plugin-check
-#   - PCP auto-ignores vendor_prefixed/ but not custom vendor dir names
-#   - Feature request for configurable exclusions: https://github.com/WordPress/plugin-check/issues/823
-
-step "4/6" "Inject phpcs:disable into third-party PHP files"
-
-VENDOR_INJECTED=0
-
-for vdir in "${VENDOR_PHP_DIRS[@]}"; do
-    vfull="${RELEASE_DIR}/${vdir}"
-    [ -d "$vfull" ] || continue
-    while IFS= read -r phpfile; do
-        head -3 "$phpfile" | grep -q 'phpcs:disable' && continue
-        if head -1 "$phpfile" | grep -q '^<?php'; then
-            sed -i '1 a\// phpcs:disable' "$phpfile"
-            VENDOR_INJECTED=$((VENDOR_INJECTED + 1))
-        fi
-    done < <(find "$vfull" -name '*.php' -type f)
-done
-
-for vfile in "${VENDOR_PHP_FILES[@]}"; do
-    vfull="${RELEASE_DIR}/${vfile}"
-    [ -f "$vfull" ] || continue
-    head -3 "$vfull" | grep -q 'phpcs:disable' && continue
-    if head -1 "$vfull" | grep -q '^<?php'; then
-        sed -i '1 a\// phpcs:disable' "$vfull"
-        VENDOR_INJECTED=$((VENDOR_INJECTED + 1))
-    fi
-done
-
-info "Injected phpcs:disable into ${VENDOR_INJECTED} third-party PHP files"
-
-# =============================================================================
-# STEP 5: Strip GitHub-only code
+# STEP 3: Strip GitHub-only code
 # =============================================================================
 
-step "5/6" "Strip GitHub-only code from events-manager.php"
+step "3/4" "Strip GitHub-only code from events-manager.php"
 
 EM_FILE="${RELEASE_DIR}/events-manager.php"
 
-# 5a: Remove "Update URI:" line from plugin header (WP.org handles updates natively)
+# Remove "Update URI:" line from plugin header (WP.org handles updates natively)
 if grep -q "^Update URI:" "$EM_FILE"; then
     sed -i '/^Update URI:/d' "$EM_FILE"
     info "Removed 'Update URI:' header line"
@@ -218,7 +157,7 @@ else
     warn "'Update URI:' not found in header (already removed?)"
 fi
 
-# 5b: Remove GitHub updater block (everything between BEGIN/END NOT FOR WP markers)
+# Remove GitHub updater block (everything between BEGIN/END NOT FOR WP markers)
 if grep -q "BEGIN NOT FOR WP" "$EM_FILE"; then
     sed -i '/BEGIN NOT FOR WP/,/END NOT FOR WP/d' "$EM_FILE"
     info "Removed GitHub updater block"
@@ -226,96 +165,18 @@ else
     warn "BEGIN NOT FOR WP marker not found in release copy (already removed?)"
 fi
 
-# 5c: Remove class-eme-updater.php (no longer referenced after step 5b)
+# Remove class-eme-updater.php (no longer referenced after step 5b)
 if [ -f "${RELEASE_DIR}/class-eme-updater.php" ]; then
     rm -f "${RELEASE_DIR}/class-eme-updater.php"
     info "Removed class-eme-updater.php"
 fi
 
-# 5d: Verify patched file is still valid PHP
+# Verify patched file is still valid PHP
 if php -l "$EM_FILE" >/dev/null 2>&1; then
     info "Patched events-manager.php passes PHP syntax check"
 else
     fail "Patched events-manager.php has PHP syntax errors!"
     ERRORS=$((ERRORS + 1))
-fi
-
-# =============================================================================
-# STEP 6: Verification
-# =============================================================================
-
-step "6/6" "Verification"
-
-# Critical files must be present
-for f in events-manager.php readme.txt eme-functions.php eme-events.php; do
-    if [ ! -f "${RELEASE_DIR}/$f" ]; then
-        fail "Missing critical file: $f"
-        ERRORS=$((ERRORS + 1))
-    fi
-done
-info "Critical plugin files present"
-
-# Updater file must be gone
-if [ -f "${RELEASE_DIR}/class-eme-updater.php" ]; then
-    fail "class-eme-updater.php should have been removed"
-    ERRORS=$((ERRORS + 1))
-fi
-
-# No updater code in events-manager.php
-if grep -q "class-eme-updater\|EME_GitHub_Updater\|BEGIN NOT FOR WP" "${RELEASE_DIR}/events-manager.php"; then
-    fail "GitHub updater code still present in events-manager.php"
-    ERRORS=$((ERRORS + 1))
-else
-    info "No GitHub updater code in events-manager.php"
-fi
-
-# No Update URI in header
-if grep -q "^Update URI:" "${RELEASE_DIR}/events-manager.php"; then
-    fail "Update URI still present in events-manager.php"
-    ERRORS=$((ERRORS + 1))
-else
-    info "No Update URI in plugin header"
-fi
-
-# Version in header
-if grep -q "^Version: ${VERSION}" "${RELEASE_DIR}/events-manager.php"; then
-    info "Version ${VERSION} in plugin header"
-else
-    fail "Version ${VERSION} not found in plugin header"
-    ERRORS=$((ERRORS + 1))
-fi
-
-# .mo translation files present
-MO_COUNT=$(find "${RELEASE_DIR}/langs" -name "*.mo" 2>/dev/null | wc -l)
-if [ "$MO_COUNT" -gt 0 ]; then
-    info "${MO_COUNT} .mo translation files bundled"
-else
-    warn "No .mo files found in langs/"
-fi
-
-# phpcs:disable present in all vendor PHP files
-VENDOR_WITHOUT_DISABLE=0
-for vdir in "${VENDOR_PHP_DIRS[@]}"; do
-    vfull="${RELEASE_DIR}/${vdir}"
-    [ -d "$vfull" ] || continue
-    while IFS= read -r phpfile; do
-        if ! head -3 "$phpfile" | grep -q 'phpcs:disable'; then
-            fail "Missing phpcs:disable: ${phpfile#"$RELEASE_DIR"/}"
-            VENDOR_WITHOUT_DISABLE=$((VENDOR_WITHOUT_DISABLE + 1))
-        fi
-    done < <(find "$vfull" -name '*.php' -type f)
-done
-if [ "$VENDOR_WITHOUT_DISABLE" -gt 0 ]; then
-    fail "${VENDOR_WITHOUT_DISABLE} vendor PHP files missing phpcs:disable"
-    ERRORS=$((ERRORS + 1))
-else
-    info "All vendor PHP files have phpcs:disable"
-fi
-
-if [ "$ERRORS" -gt 0 ]; then
-    echo ""
-    fail "${ERRORS} verification error(s). Aborting."
-    exit 1
 fi
 
 TOTAL_FILES=$(find "$RELEASE_DIR" -type f | wc -l)

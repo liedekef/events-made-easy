@@ -6610,7 +6610,7 @@ function eme_ajax_memberships_list() {
         $answers           = eme_get_membership_answers( $item['membership_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $answers as $val ) {
-                if ( $val['field_id'] == $formfield['field_id'] && $val['answer'] != '' ) {
+                if ( $val['field_id'] == $formfield['field_id']) {
                     $tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
                     // the 'FIELD_' value is used by the container-js
                     $key = 'FIELD_' . $val['field_id'];
@@ -6753,7 +6753,7 @@ function eme_ajax_members_list( ) {
         $answers          = eme_get_member_answers( $item['member_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $answers as $val ) {
-                if ( $val['field_id'] == $formfield['field_id'] && $val['answer'] != '' ) {
+                if ( $val['field_id'] == $formfield['field_id']) {
                     $tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
                     // the 'FIELD_' value is used by the container-js
                     $key = 'FIELD_' . $val['field_id'];

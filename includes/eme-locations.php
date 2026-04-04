@@ -3067,7 +3067,7 @@ function eme_ajax_locations_list() {
         $location_cf_values           = eme_get_location_answers( $location['location_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $location_cf_values as $val ) {
-                if ( $val['field_id'] == $formfield['field_id'] && ! empty( $val['answer'] ) ) {
+                if ( $val['field_id'] == $formfield['field_id'] ) {
                     $tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
                     // the 'FIELD_' value is used by the container-js
                     $key = 'FIELD_' . $val['field_id'];

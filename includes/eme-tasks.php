@@ -2138,7 +2138,7 @@ function eme_ajax_task_signups_list() {
 
             foreach ( $formfields as $formfield ) {
                 foreach ( $answers as $answer ) {
-                    if ( $answer['field_id'] == $formfield['field_id'] && $answer['answer'] != '' ) {
+                    if ( $answer['field_id'] == $formfield['field_id']) {
                         $val = eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'text', 1 );
                         // the 'FIELD_' value is used by the container-js
                         $answerkey = 'FIELD_' . $answer['field_id'];

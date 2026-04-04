@@ -160,7 +160,7 @@ else
     warn "BEGIN NOT FOR WP marker not found in release copy (already removed?)"
 fi
 
-# Remove class-eme-updater.php (no longer referenced after step 5b)
+# Remove class-eme-updater.php
 if [ -f "${RELEASE_DIR}/class-eme-updater.php" ]; then
     rm -f "${RELEASE_DIR}/class-eme-updater.php"
     info "Removed class-eme-updater.php"
@@ -202,7 +202,6 @@ SVN_TAGS="${SVN_WC}/tags"
 # Update existing working copy
 echo "  Updating SVN trunk..."
 svn update "$SVN_TRUNK" -q
-svn update "$SVN_TAGS" --depth=empty -q
 info "SVN working copy updated"
 
 # Check if tag already exists

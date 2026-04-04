@@ -96,6 +96,14 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.60  (2026//) =
+* wp_cache delete fixes, better for caching plugins
+* fix empty strings as value for answers and show tag in bookings/events/locations/... ajax lists
+* make sure current event is filtered out when moving a booking
+* fix link to site explaining pdf margins
+* event status can not be set to deleted when editing an event
+* language updates
+
 = 3.0.59  (2026/04/03) =
 * Table query speedup
 

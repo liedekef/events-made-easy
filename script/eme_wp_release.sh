@@ -29,13 +29,8 @@ SVN_URL="https://plugins.svn.wordpress.org/${PLUGIN_SLUG}"
 
 # Local SVN working copy — override with EME_SVN_DIR env var if needed.
 # Expected layout: $SVN_WC/trunk/ and $SVN_WC/tags/
-SVN_WC="${EME_SVN_DIR:-${HOME}/svn/${PLUGIN_SLUG}}"
-
-# Third-party directories/files that get phpcs:disable injected in the build.
-# PCP scans all PHP files including vendor SDKs we don't control. Injecting
-# only in the build (not in source) keeps the repo clean and is idempotent.
-VENDOR_PHP_DIRS=(payment_gateways dompdf)
-VENDOR_PHP_FILES=(class-expressivedate.php)
+#SVN_WC="${EME_SVN_DIR:-${HOME}/svn/${PLUGIN_SLUG}}"
+SVN_WC="/home/liedekef/wordpress/svn/events-made-easy"
 
 # --- Argument parsing --------------------------------------------------------
 
@@ -88,7 +83,7 @@ ERRORS=0
 # STEP 1: Validation
 # =============================================================================
 
-step "1/4" "Validation"
+step "1" "Validation"
 
 # Version must match plugin header
 HEADER_VERSION=$(grep -oP "^Version:\s*\K[0-9.]+" "${PLUGIN_DIR}/events-manager.php" || true)
@@ -132,7 +127,7 @@ fi
 # STEP 2: Extract GitHub release ZIP
 # =============================================================================
 
-step "2/4" "Extract GitHub release ZIP"
+step "2" "Extract GitHub release ZIP"
 
 unzip -q "$DIST_ZIP" -d "$BUILD_DIR"
 if [ ! -d "$RELEASE_DIR" ]; then
@@ -145,7 +140,7 @@ info "Extracted: $(find "$RELEASE_DIR" -type f | wc -l) files"
 # STEP 3: Strip GitHub-only code
 # =============================================================================
 
-step "3/4" "Strip GitHub-only code from events-manager.php"
+step "3" "Strip GitHub-only code from events-manager.php"
 
 EM_FILE="${RELEASE_DIR}/events-manager.php"
 
@@ -199,8 +194,7 @@ if [ "$DEPLOY" = false ]; then
     exit 0
 fi
 
-echo ""
-echo -e "${BOLD}SVN Deploy${NC}"
+step "4" "SVN Deploy"
 
 SVN_TRUNK="${SVN_WC}/trunk"
 SVN_TAGS="${SVN_WC}/tags"

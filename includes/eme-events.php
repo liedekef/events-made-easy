@@ -10886,8 +10886,8 @@ function eme_ajax_events_snapselect() {
     $mysql_pagesize = $pagesize+1;
     $start     = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
-    $exclude_id  = isset( $_POST['exclude_id'] ) ? intval( $_POST['exclude_id'] ) : 0;
-    $only_rsvp   = isset( $_POST['only_rsvp'] ) ? intval( $_POST['only_rsvp'] ) : 0;
+    $exclude_id  = isset( $_REQUEST['exclude_id'] ) ? intval( $_REQUEST['exclude_id'] ) : 0;
+    $only_rsvp   = isset( $_REQUEST['only_rsvp'] ) ? intval( $_REQUEST['only_rsvp'] ) : 0;
     $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp, "LIMIT $start,$mysql_pagesize" );
     $records     = [];
     foreach ( $events as $event ) {

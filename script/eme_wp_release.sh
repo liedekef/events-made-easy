@@ -101,14 +101,6 @@ if [ ! -f "$DIST_ZIP" ]; then
 fi
 info "GitHub release ZIP: ${DIST_ZIP}"
 
-# BEGIN/END NOT FOR WP markers must be present
-if ! grep -q "BEGIN NOT FOR WP" "${PLUGIN_DIR}/events-manager.php"; then
-    fail "Missing '// BEGIN NOT FOR WP' marker in events-manager.php"
-    fail "Add markers around the GitHub updater code block."
-    exit 1
-fi
-info "BEGIN/END NOT FOR WP markers present"
-
 # SVN working copy must exist for --deploy
 if [ "$DEPLOY" = true ]; then
     if ! command -v svn &>/dev/null; then
@@ -157,12 +149,13 @@ if grep -q "BEGIN NOT FOR WP" "$EM_FILE"; then
     sed -i '/BEGIN NOT FOR WP/,/END NOT FOR WP/d' "$EM_FILE"
     info "Removed GitHub updater block"
 else
-    warn "BEGIN NOT FOR WP marker not found in release copy (already removed?)"
+    fail "BEGIN NOT FOR WP marker not found in release copy"
+    ERRORS=$((ERRORS + 1))
 fi
 
 # Remove class-eme-updater.php
-if [ -f "${RELEASE_DIR}/class-eme-updater.php" ]; then
-    rm -f "${RELEASE_DIR}/class-eme-updater.php"
+if [ -f "${RELEASE_DIR}/includes/class-eme-updater.php" ]; then
+    rm -f "${RELEASE_DIR}/includes/class-eme-updater.php"
     info "Removed class-eme-updater.php"
 fi
 
@@ -178,6 +171,13 @@ TOTAL_FILES=$(find "$RELEASE_DIR" -type f | wc -l)
 echo ""
 info "Release build verified — ${TOTAL_FILES} files"
 info "Build: ${RELEASE_DIR}"
+
+if [ "$ERRORS" -gt 0 ]; then
+    echo ""
+    fail "Build had ${ERRORS} error(s). Aborting."
+    echo "  To inspect:  ls ${RELEASE_DIR}"
+    exit 1
+fi
 
 # =============================================================================
 # SVN Deploy
@@ -212,13 +212,12 @@ fi
 info "Tag ${VERSION} does not exist yet"
 
 # Sync release build to trunk
-find "$SVN_TRUNK" -mindepth 1 -maxdepth 1 ! -name '.svn' -exec rm -rf {} +
-cp -a "${RELEASE_DIR}"/* "${SVN_TRUNK}/"
+rsync -a --delete --exclude='.svn' "${RELEASE_DIR}/" "${SVN_TRUNK}/"
 
 # Handle SVN adds/deletes
 cd "$SVN_TRUNK"
 svn add --force . 2>/dev/null || true
-svn status | grep '^\!' | awk '{print $2}' | xargs -r svn delete --force 2>/dev/null || true
+svn status | grep '^!' | awk '{print $NF}' | xargs -r svn delete
 info "Trunk synced with release build"
 
 # Create the tag

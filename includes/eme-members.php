@@ -2920,10 +2920,15 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     } else {
         $formfields = eme_get_formfields( '', 'members,generic' );
     }
-    foreach ( $formfields as $formfield ) {
-        $extrafields_arr[]      = $formfield['field_id'];
-        $extrafieldnames_arr[]  = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
-        $extrafieldsearchable_arr[] = $formfield['searchable'];
+    if ( ! empty( $formfields ) ) {
+        $extrafields_arr[]          = 'SEPARATOR';
+        $extrafieldnames_arr[]      = __('Member fields','events-made-easy');
+        $extrafieldsearchable_arr[] = 0;
+        foreach ( $formfields as $formfield ) {
+            $extrafields_arr[]      = $formfield['field_id'];
+            $extrafieldnames_arr[]  = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
+            $extrafieldsearchable_arr[] = $formfield['searchable'];
+        }
     }
     // these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
     $extrafields          = join( ',', $extrafields_arr );
@@ -3306,14 +3311,19 @@ function eme_manage_memberships_layout( $message ) {
     </form>
     </div>
 <?php
-    $formfields               = eme_get_formfields( '', 'memberships' );
     $extrafields_arr          = [];
     $extrafieldnames_arr      = [];
     $extrafieldsearchable_arr = [];
-    foreach ( $formfields as $formfield ) {
-        $extrafields_arr[]          = $formfield['field_id'];
-        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
-        $extrafieldsearchable_arr[] = $formfield['searchable'];
+    $formfields               = eme_get_formfields( '', 'memberships' );
+    if ( ! empty( $formfields ) ) {
+        $extrafields_arr[]          = 'SEPARATOR';
+        $extrafieldnames_arr[]      = __('Membership fields','events-made-easy');
+        $extrafieldsearchable_arr[] = 0;
+        foreach ( $formfields as $formfield ) {
+            $extrafields_arr[]          = $formfield['field_id'];
+            $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
+            $extrafieldsearchable_arr[] = $formfield['searchable'];
+        }
     }
     // these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
     $extrafields          = join( ',', $extrafields_arr );

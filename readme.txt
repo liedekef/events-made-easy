@@ -13,6 +13,8 @@ Manage and display (recurring) events, memberships, locations and maps, voluntee
              
 == Description ==
 
+To try it out on your free dummy site, [Click here](https://tastewp.org/plugins/events-made-easy/) (courtesy of TasteWP)
+
 Events Made Easy is a full-featured event and membership management solution for Wordpress and ClassicPress. Events Made Easy supports public, private, draft and recurring events, membership and locations management, RSVP (+ optional approval), several payment gateways (Paypal, FirstData, Mollie and others) and OpenStreetMap integration. With Events Made Easy you can plan and publish your event, let people book spaces for your weekly meetings or manage volunteers and memberships. You can add events list, calendars and description to your blog using multiple sidebar widgets or shortcodes; if you are a web designer you can simply employ the placeholders provided by Events Made Easy. 
 
 Main features:

@@ -914,14 +914,19 @@ function eme_locations_table( $message = '' ) {
     </form>
     </div>
 <?php
-    $formfields               = eme_get_formfields( '', 'locations' );
     $extrafields_arr          = [];
     $extrafieldnames_arr      = [];
     $extrafieldsearchable_arr = [];
-    foreach ( $formfields as $formfield ) {
-        $extrafields_arr[]          = $formfield['field_id'];
-        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
-        $extrafieldsearchable_arr[] = $formfield['searchable'];
+    $formfields               = eme_get_formfields( '', 'locations' );
+    if ( ! empty( $formfields ) ) {
+        $extrafields_arr[]          = 'SEPARATOR';
+        $extrafieldnames_arr[]      = __('Location fields','events-made-easy');
+        $extrafieldsearchable_arr[] = 0;
+        foreach ( $formfields as $formfield ) {
+            $extrafields_arr[]          = $formfield['field_id'];
+            $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_translate( $formfield['field_name'] ));
+            $extrafieldsearchable_arr[] = $formfield['searchable'];
+        }
     }
     // these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
     $extrafields          = join( ',', $extrafields_arr );

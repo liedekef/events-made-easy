@@ -792,3 +792,7 @@ a.nav-tab.nav-tab-active {
     margin-bottom: 0px;
     border-bottom: none;
 }
+a.nav-tab {
+    margin-left: 0em;
+    margin-right: .5em;
+}

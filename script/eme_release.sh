@@ -15,7 +15,7 @@ cd $basedir
 
 has_error=0
 # do a syntax check
-for file in *.php; do
+for file in *.php includes/*.php; do
     echo "Checking: $file"
     if ! php -l "$file" > /dev/null; then
         echo "Syntax error in file: $file"

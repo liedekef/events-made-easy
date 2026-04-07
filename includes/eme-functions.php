@@ -4399,7 +4399,14 @@ function eme_sanitize_attr_string( $attributes, $extra_class = '' ) {
 
         // Determine value (group 2=single-quoted, 3=double-quoted, 4=unquoted, empty=boolean)
         $has_value = isset( $m[2] ) || isset( $m[3] ) || isset( $m[4] );
-        $attr_val  = $m[2] ?? $m[3] ?? $m[4] ?? '';
+        $attr_val = '';
+        if (isset($m[2]) && $m[2] !== '') {
+            $attr_val = $m[2];  // single-quoted
+        } elseif (isset($m[3]) && $m[3] !== '') {
+            $attr_val = $m[3];  // double-quoted
+        } elseif (isset($m[4]) && $m[4] !== '') {
+            $attr_val = $m[4];  // unquoted
+        }
 
         if ( $attr_name === 'class' ) {
             $class_val = trim( $class_val . ' ' . $attr_val );

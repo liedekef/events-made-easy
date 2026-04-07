@@ -10492,7 +10492,7 @@ function eme_ajax_events_list() {
             $record['recinfo'] = '';
         }
 
-        $event_cf_values = $answers_map[ intval( $event['event_id'] ) ] ?? eme_get_event_answers( $event['event_id'] );
+        $event_cf_values = $answers_map[ intval( $event['event_id'] ) ] ?? 0;
         foreach ( $formfields as $formfield ) {
             foreach ( $event_cf_values as $val ) {
                 if ( $val['field_id'] == $formfield['field_id']) {

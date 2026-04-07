@@ -2365,6 +2365,23 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
     return $extra_charge;
 }
 
+// Bulk-fetch custom field answers for a list of booking_ids in a single query.
+function eme_prefetch_booking_answers( $booking_ids ) {
+    if ( empty( $booking_ids ) ) {
+        return [];
+    }
+    global $wpdb;
+    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    $ids_in        = implode( ',', array_map( 'intval', $booking_ids ) );
+    $sql           = "SELECT * FROM $answers_table WHERE related_id IN ($ids_in) AND type='booking'"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $result        = array_fill_keys( array_map( 'intval', $booking_ids ), [] );
+    foreach ( $rows as $row ) {
+        $result[ intval( $row['related_id'] ) ][] = $row;
+    }
+    return $result;
+}
+
 function eme_get_booking_answers( $booking_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
@@ -6005,24 +6022,26 @@ function eme_ajax_bookings_list() {
     $event_name_info = [];
 
     // prefetch some info
-    $page_event_ids    = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'event_id' ) ) : [];
-    $approved_seats_map = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
-    $pending_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
+    $page_event_ids      = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'event_id' ) ) : [];
+    $page_booking_ids    = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'booking_id' ) ) : [];
+    $approved_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
+    $pending_seats_map   = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
+    $booking_answers_map = eme_prefetch_booking_answers( $page_booking_ids );
+    $event_answers_map   = eme_prefetch_event_answers( $page_event_ids );
 
     foreach ( $bookings as $booking ) {
         $line      = [];
-        $event_id  = $booking['event_id'];
-        $person_id = $booking['person_id'];
+        $event_id  = intval($booking['event_id']);
+        $person_id = intval($booking['person_id']);
         $event     = eme_get_event( $event_id );
         if (!empty($event) && !empty($event['location_id'])) {
-            $location = eme_get_location( $event['location_id'] );
+            $location = eme_get_location( intval($event['location_id']) );
         } else {
             $location = [];
         }
-        $answers  = eme_get_event_answers( $event_id );
-        $answers  = array_merge($answers,eme_get_booking_answers( $booking['booking_id'] ));
-        if ( ! empty( $booking['person_id'] ) ) {
-            $person = eme_get_person( $booking['person_id'] );
+        $answers  = array_merge($event_answers_map[$event_id] ?? [], $booking_answers_map[$booking['booking_id']] ?? []);
+        if ( ! empty( $person_id ) ) {
+            $person = eme_get_person( $person_id );
             // if a booking person_id gets removed for some reason, this is a non-existing person, so let's take a new one to avoid php warnings
             if ( empty( $person ) ) {
                 $person = eme_new_person();

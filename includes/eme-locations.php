@@ -1680,9 +1680,14 @@ function eme_global_map_shortcode( $atts ) {
         $result           = "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
         $locations_string = 'global_map_info_' . $id_base;
         $locations_val    = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
-        $result          .= "<script type='text/javascript'>
-            $locations_string = $locations_val;
-         </script>";
+
+        // using wp_add_inline_script and "before", so we're sure this code is always there before the maps code
+        // we need to do this for minifiers that might otherwise reorder code if inline scripts are used
+        wp_add_inline_script(
+            'eme-show-maps', // dependent on eme-show-maps, so this inline script comes before that
+            "window.$locations_string = $locations_val;",
+            'before' // ensures availability before init runs
+        );
     }
 
     if ( $atts['paging'] == 1 ) {

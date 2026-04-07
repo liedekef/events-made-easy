@@ -679,15 +679,18 @@ document.addEventListener('DOMContentLoaded', function () {
             // return false to make sure the real form doesn't submit
             return false;
         }
-        if (e.target.matches('.eme_del_upload-button')) {
+
+        // closest, so the click on the img matches the parent (that has del_upload-button)
+        if (e.target.closest('.eme_del_upload-button')) {
             e.preventDefault();
             if (confirm(emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
-                const id = e.target.dataset.id;
-                const name = e.target.dataset.name;
-                const type = e.target.dataset.type;
-                const randomId = e.target.dataset.random_id;
-                const fieldId = e.target.dataset.field_id;
-                const extraId = e.target.dataset.extra_id;
+                const parentlink = e.target.closest('.eme_del_upload-button');
+                const id = parentlink.dataset.id;
+                const name = parentlink.dataset.name;
+                const type = parentlink.dataset.type;
+                const randomId = parentlink.dataset.random_id;
+                const fieldId = parentlink.dataset.field_id;
+                const extraId = parentlink.dataset.extra_id;
 
                 const formData = new URLSearchParams({
                     id: id,

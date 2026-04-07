@@ -98,6 +98,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.61  (2026//) =
+* Improve event and booking list loading time by optimizing sql a bit
+* Fix frontend submit form fields with third param
+
 = 3.0.60  (2026/04/06) =
 * wp_cache delete fixes, better for caching plugins
 * fix empty strings as value for answers and show tag in bookings/events/locations/... ajax lists

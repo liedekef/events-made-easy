@@ -487,6 +487,11 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
 }
 
 function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
+    $cache_key = 'eme_searchable_formfields ' . $purpose . '_' . intval( $include_generic );
+    $cached    = wp_cache_get( $cache_key );
+    if ( false !== $cached ) {
+        return $cached;
+    }
     global $wpdb;
     $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
     $where            = '';
@@ -495,15 +500,17 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
     $where_arr[]      = "field_type <> 'file' AND field_type <> 'multifile'";
     if ( ! empty( $purpose ) ) {
         if ( $include_generic ) {
-            $where_arr[] = $wpdb->prepare("(field_purpose = %s OR field_purpose='generic')", $purpose );
+            $where_arr[] = $wpdb->prepare( "(field_purpose = %s OR field_purpose='generic')", $purpose );
         } else {
-            $where_arr[] = $wpdb->prepare("field_purpose = %s", $purpose );
+            $where_arr[] = $wpdb->prepare( "field_purpose = %s", $purpose );
         }
     }
     if ( ! empty( $where_arr ) ) {
         $where = 'WHERE ' . join( ' AND ', $where_arr );
     }
-    return $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name and conditions are safe variables
+    $result = $wpdb->get_results( "SELECT * FROM $formfields_table $where", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name and conditions are safe variables
+    wp_cache_set( $cache_key, $result, '', 60 );
+    return $result;
 }
 
 function eme_get_formfield( $field_info ) {

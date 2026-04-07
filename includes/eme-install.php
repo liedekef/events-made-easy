@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 422 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 423 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -681,6 +681,7 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          attend_count INT(11) DEFAULT 0,
          pending_mailid int(11) DEFAULT 0,
          UNIQUE KEY  (booking_id),
+         KEY (event_id),
          KEY (status),
          KEY (person_id)
          ) $charset $collate;";
@@ -776,6 +777,9 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		}
 		if ( $db_version < 415 ) {
 			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
+		if ( $db_version < 423 ) {
+			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 	}
 }

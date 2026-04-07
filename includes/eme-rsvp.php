@@ -3057,6 +3057,31 @@ function eme_get_pending_multiseats( $event_id, $old_date = '', $exclude_booking
     return $result;
 }
 
+// Bulk-fetch booking seat counts for a list of event_ids in a single query.
+// $status: 'approved' or 'pending'
+// Returns an array keyed by event_id with the seat count as value.
+function eme_prefetch_booking_seats( $event_ids, $status = 'approved' ) {
+    if ( empty( $event_ids ) ) {
+        return [];
+    }
+    global $wpdb;
+    $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+    $ids_in         = implode( ',', array_map( 'intval', $event_ids ) );
+    if ( $status === 'approved' ) {
+        $status_sql = $wpdb->prepare( 'status = %d', EME_RSVP_STATUS_APPROVED ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    } else {
+        $status_sql = $wpdb->prepare( 'status IN (%d,%d)', EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    }
+    $sql  = "SELECT event_id, COALESCE(SUM(booking_seats),0) AS seats FROM $bookings_table WHERE $status_sql AND event_id IN ($ids_in) GROUP BY event_id"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    // Start with 0 for every requested id so missing rows (no bookings) return 0
+    $result = array_fill_keys( array_map( 'intval', $event_ids ), 0 );
+    foreach ( $rows as $row ) {
+        $result[ intval( $row['event_id'] ) ] = $row['seats'];
+    }
+    return $result;
+}
+
 function eme_are_seats_available( $event ) {
     // you can book the available number of seats, with a max of x per time
     $min_allowed = $event['event_properties']['min_allowed'];
@@ -5978,6 +6003,12 @@ function eme_ajax_bookings_list() {
     $rows = [];
     // the array $event_name_info will be used to store the event info for bookings, so we don't need to recalculate that for each booking
     $event_name_info = [];
+
+    // prefetch some info
+    $page_event_ids    = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'event_id' ) ) : [];
+    $approved_seats_map = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
+    $pending_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
+
     foreach ( $bookings as $booking ) {
         $line      = [];
         $event_id  = $booking['event_id'];
@@ -6046,19 +6077,16 @@ function eme_ajax_bookings_list() {
             $line['edit_link'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=editBooking&booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
         }
         if ( ! isset( $event_name_info[ $event_id ] ) ) {
-            $event_name_info[ $event_id ] = '';
+            $event_name_info[ $event_id ] = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
             $add_event_info               = 1;
         } else {
             $add_event_info = 0;
         }
-        if ( $add_event_info ) {
-            $event_name_info[ $event_id ] .= "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';
-        }
         if ( $event['event_rsvp'] ) {
             if ( $add_event_info ) {
                 $event_name_info[ $event_id ] .= '<br>' . esc_html__( 'RSVP Info: ', 'events-made-easy' );
-                $booked_seats  = eme_get_approved_seats( $event['event_id'] );
-                $pending_seats = eme_get_pending_seats( $event['event_id'] );
+                $booked_seats  = $approved_seats_map[ $event_id ] ?? 0;
+                $pending_seats = $pending_seats_map[ $event_id ] ?? 0;
                 $booked_string = esc_html__( 'Approved:', 'events-made-easy' );
                 $total_seats   = eme_get_total( $event['event_seats'] );
                 if ( eme_is_multi( $event['event_seats'] ) ) {
@@ -6079,16 +6107,9 @@ function eme_ajax_bookings_list() {
                     $booked_seats_string  = $booked_seats;
                 }
                 if ( $total_seats > 0 ) {
-                    $available_seats = eme_get_available_seats( $event['event_id'] );
-                    if ( eme_is_multi( $event['event_seats'] ) ) {
-                        $available_seats_string = $available_seats . ' (' . eme_convert_array2multi( eme_get_available_multiseats( $event['event_id'] ) ) . ')';
-                    } else {
-                        $available_seats_string = $available_seats;
-                    }
-                    $event_name_info[ $event_id ] .= esc_html__( 'Free:', 'events-made-easy' ) .' '. $available_seats_string;
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>$booked_string $booked_seats_string</a>";
+                    $event_name_info[ $event_id ] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>$booked_string $booked_seats_string</a>";
                 } else {
-                    $total_seats_string                    = '&infin;';
+                    $total_seats_string            = '&infin;';
                     $event_name_info[ $event_id ] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>$booked_string $booked_seats_string</a>";
                 }
 

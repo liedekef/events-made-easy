@@ -23,9 +23,14 @@ function eme_new_recurrence() {
 
 function eme_get_recurrence( $recurrence_id ) {
 	global $wpdb;
+	$recurrence = wp_cache_get( "eme_recurrence $recurrence_id" );
+	if ( false !== $recurrence ) {
+		return $recurrence;
+	}
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$prepared_sql     = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$recurrence       = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	wp_cache_set( "eme_recurrence $recurrence_id", $recurrence, '', 10 );
 	return $recurrence;
 }
 
@@ -286,6 +291,7 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 
 	$wpdb->insert( $recurrence_table, $recurrence );
 	$recurrence_id = $wpdb->insert_id;
+	wp_cache_delete( "eme_recurrence $recurrence_id" );
 
 	$recurrence['recurrence_id'] = $recurrence_id;
 	$event['recurrence_id']      = $recurrence['recurrence_id'];
@@ -377,6 +383,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 
 	$where = [ 'recurrence_id' => $recurrence['recurrence_id'] ];
 	$wpdb->update( $recurrence_table, $recurrence, $where );
+	wp_cache_delete( "eme_recurrence {$recurrence['recurrence_id']}" );
 	$event['recurrence_id'] = $recurrence['recurrence_id'];
 	$count                  = eme_update_events_for_recurrence( $recurrence, $event, $only_change_recdates );
 	if ( $count ) {
@@ -479,6 +486,7 @@ function eme_db_delete_recurrence( $recurrence_id ) {
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$prepared_sql     = $wpdb->prepare( "DELETE FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	wp_cache_delete( "eme_recurrence $recurrence_id" );
 	eme_trash_events_for_recurrence_id( $recurrence_id );
 	return true;
 }

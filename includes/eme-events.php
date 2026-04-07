@@ -10246,6 +10246,14 @@ function eme_ajax_events_list() {
     // no searchable formfields yet, so we use eme_get_formfields here
     $formfields = eme_get_formfields( '', 'events' );
     $rows       = [];
+
+    // Bulk-prefetch booking seats and answers for all events on this page,
+    // replacing ~3N individual queries with 3 queries total.
+    $page_event_ids    = ! empty( $events ) ? array_map( 'intval', array_column( $events, 'event_id' ) ) : [];
+    $approved_seats_map = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
+    $pending_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
+    $answers_map        = eme_prefetch_event_answers( $page_event_ids );
+
     foreach ( $events as $event ) {
         if ($limited_links && $event['event_author']!=$wp_id && $event['event_contactperson_id']!=$wp_id) {
             $no_edit_links = 1;
@@ -10279,8 +10287,9 @@ function eme_ajax_events_list() {
         }
         if ( $event['event_rsvp'] && ! $view_trash ) {
             $record['event_name'] .= '<br>' . __( 'RSVP Info: ', 'events-made-easy' );
-            $booked_seats          = eme_get_approved_seats( $event['event_id'] );
-            $pending_seats         = eme_get_pending_seats( $event['event_id'] );
+            $event_id_int          = intval( $event['event_id'] );
+            $booked_seats          = $approved_seats_map[ $event_id_int ] ?? 0;
+            $pending_seats         = $pending_seats_map[ $event_id_int ] ?? 0;
             $total_seats           = eme_get_total( $event['event_seats'] );
             if ( eme_is_multi( $event['event_seats'] ) ) {
                 if ( $pending_seats > 0 ) {
@@ -10300,17 +10309,10 @@ function eme_ajax_events_list() {
                 $booked_seats_string  = $booked_seats;
             }
             if ( $total_seats > 0 ) {
-                $available_seats = eme_get_available_seats( $event['event_id'] );
-                if ( eme_is_multi( $event['event_seats'] ) ) {
-                    $available_seats_string = $available_seats . ' (' . eme_convert_array2multi( eme_get_available_multiseats( $event['event_id'] ) ) . ')';
-                } else {
-                    $available_seats_string = $available_seats;
-                }
-                $record['event_name'] .= __( 'Free:', 'events-made-easy' ) . ' ' . $available_seats_string;
                 if ($no_edit_links==1) {
-                    $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
+                    $record['event_name'] .= __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
                 } else {
-                    $record['event_name'] .= ', ' . "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+                    $record['event_name'] .= "<a href='" . esc_url( admin_url( 'admin.php?page=eme-registration-seats&event_id=' . $event['event_id'] ) ) . "'>" . esc_html__( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
                 }
             } else {
                 $total_seats_string    = '&infin;';
@@ -10490,7 +10492,7 @@ function eme_ajax_events_list() {
             $record['recinfo'] = '';
         }
 
-        $event_cf_values = eme_get_event_answers( $event['event_id'] );
+        $event_cf_values = $answers_map[ intval( $event['event_id'] ) ] ?? eme_get_event_answers( $event['event_id'] );
         foreach ( $formfields as $formfield ) {
             foreach ( $event_cf_values as $val ) {
                 if ( $val['field_id'] == $formfield['field_id']) {
@@ -10742,6 +10744,24 @@ function eme_get_event_post_answers() {
 
 function eme_get_event_cf_answers( $event_id ) {
     return eme_get_event_answers( $event_id );
+}
+
+// Bulk-fetch custom field answers for a list of event_ids in a single query.
+// Returns an array keyed by event_id, each value is the array of answer rows for that event.
+function eme_prefetch_event_answers( $event_ids ) {
+    if ( empty( $event_ids ) ) {
+        return [];
+    }
+    global $wpdb;
+    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    $ids_in        = implode( ',', array_map( 'intval', $event_ids ) );
+    $sql           = "SELECT * FROM $answers_table WHERE related_id IN ($ids_in) AND type='event'"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $result        = array_fill_keys( array_map( 'intval', $event_ids ), [] );
+    foreach ( $rows as $row ) {
+        $result[ intval( $row['related_id'] ) ][] = $row;
+    }
+    return $result;
 }
 
 function eme_get_event_answers( $event_id ) {

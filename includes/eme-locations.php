@@ -1302,7 +1302,18 @@ function eme_get_country_location_ids( $countries ) {
 function eme_get_identical_location_id( $location ) {
     global $wpdb;
     $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-    $prepared_sql    = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s AND location_latitude = %s AND location_longitude = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ), stripcslashes( $location['location_latitude'] ), stripcslashes( $location['location_longitude'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql    = $wpdb->prepare(
+        "SELECT location_id FROM $locations_table WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s AND location_latitude = %s AND location_longitude = %s LIMIT 1",
+        $location['location_name'],
+        $location['location_address1'],
+        $location['location_address2'],
+        $location['location_city'],
+        $location['location_state'],
+        $location['location_zip'],
+        $location['location_country'],
+        $location['location_latitude'],
+        $location['location_longitude']
+    ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -1504,7 +1515,16 @@ function eme_check_location_name_address( $location ) {
     if ( ! isset( $location['location_country'] ) ) {
         $location['location_country'] = '';
     }
-    $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare(
+        "SELECT location_id FROM $table_name WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s LIMIT 1",
+        $location['location_name'],
+        $location['location_address1'],
+        $location['location_address2'],
+        $location['location_city'],
+        $location['location_state'],
+        $location['location_zip'],
+        $location['location_country']
+    ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

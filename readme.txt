@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.60
+Stable tag: 3.0.61
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.61  (2026//) =
+= 3.0.61  (2026/04/08) =
 * Improve event and booking list loading time by optimizing sql a bit
 * Fix frontend submit form fields with third param
 * Fix delete of uploaded files

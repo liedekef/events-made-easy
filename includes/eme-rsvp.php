@@ -2372,8 +2372,9 @@ function eme_prefetch_booking_answers( $booking_ids ) {
     }
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $ids_in        = implode( ',', array_map( 'intval', $booking_ids ) );
-    $sql           = "SELECT * FROM $answers_table WHERE related_id IN ($ids_in) AND type='booking'"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $placeholders  = implode( ',', array_fill( 0, count( $booking_ids ), '%d' ) );
+    $ids_arr       = array_map( 'intval', $booking_ids );
+    $sql           = $wpdb->prepare("SELECT * FROM $answers_table WHERE related_id IN ($placeholders) AND type='booking'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $result        = array_fill_keys( array_map( 'intval', $booking_ids ), [] );
     foreach ( $rows as $row ) {
@@ -3083,14 +3084,17 @@ function eme_prefetch_booking_seats( $event_ids, $status = 'approved' ) {
     }
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $ids_in         = implode( ',', array_map( 'intval', $event_ids ) );
     if ( $status === 'approved' ) {
-        $status_sql = $wpdb->prepare( 'status = %d', EME_RSVP_STATUS_APPROVED ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $status_sql = $wpdb->prepare( 'status = %d', EME_RSVP_STATUS_APPROVED );
     } else {
-        $status_sql = $wpdb->prepare( 'status IN (%d,%d)', EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $status_sql = $wpdb->prepare( 'status IN (%d,%d)', EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING );
     }
-    $sql  = "SELECT event_id, COALESCE(SUM(booking_seats),0) AS seats FROM $bookings_table WHERE $status_sql AND event_id IN ($ids_in) GROUP BY event_id"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+    $placeholders = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $ids_arr      = array_map( 'intval', $event_ids );
+    $sql          = $wpdb->prepare( "SELECT event_id, COALESCE(SUM(booking_seats),0) AS seats FROM $bookings_table WHERE $status_sql AND event_id IN ($placeholders) GROUP BY event_id", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+    $rows   = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     // Start with 0 for every requested id so missing rows (no bookings) return 0
     $result = array_fill_keys( array_map( 'intval', $event_ids ), 0 );
     foreach ( $rows as $row ) {
@@ -6022,8 +6026,8 @@ function eme_ajax_bookings_list() {
     $event_name_info = [];
 
     // prefetch some info
-    $page_event_ids      = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'event_id' ) ) : [];
-    $page_booking_ids    = ! empty( $bookings ) ? array_map( 'intval', array_column( $bookings, 'booking_id' ) ) : [];
+    $page_event_ids      = ! empty( $bookings ) ? array_column( $bookings, 'event_id' ) : [];
+    $page_booking_ids    = ! empty( $bookings ) ? array_column( $bookings, 'booking_id' ) : [];
     $approved_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
     $pending_seats_map   = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
     $booking_answers_map = eme_prefetch_booking_answers( $page_booking_ids );

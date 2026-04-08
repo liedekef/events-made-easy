@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.0.61  (2026//) =
 * Improve event and booking list loading time by optimizing sql a bit
 * Fix frontend submit form fields with third param
+* Fix delete of uploaded files
 
 = 3.0.60  (2026/04/06) =
 * wp_cache delete fixes, better for caching plugins

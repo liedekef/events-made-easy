@@ -10249,7 +10249,7 @@ function eme_ajax_events_list() {
 
     // Bulk-prefetch booking seats and answers for all events on this page,
     // replacing ~3N individual queries with 3 queries total.
-    $page_event_ids    = ! empty( $events ) ? array_map( 'intval', array_column( $events, 'event_id' ) ) : [];
+    $page_event_ids    = ! empty( $events ) ? array_column( $events, 'event_id' ) : [];
     $approved_seats_map = eme_prefetch_booking_seats( $page_event_ids, 'approved' );
     $pending_seats_map  = eme_prefetch_booking_seats( $page_event_ids, 'pending' );
     $answers_map        = eme_prefetch_event_answers( $page_event_ids );
@@ -10754,8 +10754,9 @@ function eme_prefetch_event_answers( $event_ids ) {
     }
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $ids_in        = implode( ',', array_map( 'intval', $event_ids ) );
-    $sql           = "SELECT * FROM $answers_table WHERE related_id IN ($ids_in) AND type='event'"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $placeholders  = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $ids_arr       = array_map( 'intval', $event_ids );
+    $sql           = $wpdb->prepare("SELECT * FROM $answers_table WHERE related_id IN ($placeholders) AND type='event'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $result        = array_fill_keys( array_map( 'intval', $event_ids ), [] );
     foreach ( $rows as $row ) {

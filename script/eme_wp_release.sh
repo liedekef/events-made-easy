@@ -219,7 +219,9 @@ rsync -a --delete --exclude='.svn' "${RELEASE_DIR}/" "${SVN_TRUNK}/"
 # Handle SVN adds/deletes
 cd "$SVN_TRUNK"
 svn add --force . 2>/dev/null || true
-svn status | grep '^!' | awk '{print $NF}' | xargs -r svn delete
+if svn status | grep -q '^!'; then
+    svn status | grep '^!' | awk '{print $NF}' | xargs svn delete
+fi
 info "Trunk synced with release build"
 
 # Create the tag

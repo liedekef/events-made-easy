@@ -3385,8 +3385,13 @@ function eme_untrash_people( $person_ids ) {
 function eme_add_personid_to_newsletter( $person_id ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $sql_res      = $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $sql_res = $wpdb->update(
+        $people_table,
+        [ 'newsletter' => 1 ],
+        [ 'person_id' => $person_id ],
+        [ '%d' ],
+        [ '%d' ]
+    );
     if ( $sql_res === false ) {
         return false;
     } else {
@@ -3402,8 +3407,7 @@ function eme_remove_email_from_newsletter( $email ) {
     $fields = [
 	    'newsletter' => 0,
     ];
-
-    return $wpdb->update( $people_table, $fields, $where ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->update( $people_table, $fields, $where );
 }
 
 function eme_delete_people( $person_ids ) {
@@ -3597,8 +3601,11 @@ function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
                 continue; // the continue-statement continues the higher foreach-loop
             }
             if ( ! in_array( $group['group_id'], $current_group_ids ) ) {
-                $prepared_sql = $wpdb->prepare( "INSERT INTO $table (person_id,group_id) VALUES (%d,%d)", $person_id, $group['group_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                $sql_res = $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $sql_res = $wpdb->insert(
+                    $table,
+                    [ 'person_id' => $person_id, 'group_id'  => $group['group_id'] ],
+                    [ '%d', '%d' ]
+                );
                 if ( $sql_res === false ) {
                     $res = false;
                 }
@@ -4791,8 +4798,13 @@ function eme_update_person_wp_id( $person_id, $wp_id ) {
             return $wpdb->update( $table, $person_update, $where ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
     } else {
-        $prepared_sql = $wpdb->prepare( "UPDATE $table SET wp_id = 0 WHERE person_id = %d", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        return $wpdb->update(
+            $table,
+            [ 'wp_id' => 0 ],
+            [ 'person_id' => $person_id ],
+            [ '%d' ],
+            [ '%d' ]
+        );
     }
 }
 
@@ -4800,8 +4812,16 @@ function eme_update_email_gdpr( $email ) {
     global $wpdb;
     $table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $gdpr_date = current_time( 'mysql', false );
-    $prepared_sql = $wpdb->prepare( "UPDATE $table SET gdpr = 1, gdpr_date=%s WHERE email = %s", $gdpr_date, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->update(
+        $table,
+        [
+            'gdpr'      => 1,
+            'gdpr_date' => $gdpr_date
+        ],
+        [ 'email' => $email ],
+        [ '%d', '%s' ],
+        [ '%s' ]
+    );
 }
 
 function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
@@ -4819,8 +4839,11 @@ function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
 function eme_update_email_massmail( $email, $massmail ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "UPDATE $table SET massmail = %d WHERE email = %s", $massmail, $email ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    return $wpdb->update(
+        $table,
+        [ 'massmail' => $massmail ],
+        [ 'email' => $email ]
+    );
 }
 
 function eme_update_people_massmail( $person_ids, $massmail = 1 ) {

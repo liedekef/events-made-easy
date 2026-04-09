@@ -715,19 +715,35 @@ function eme_db_update_country( $id, $line ) {
 	$line['alpha_3'] = strtoupper( $line['alpha_3'] );
 	// first get the existing country, compary the alpha_2 and change ALL countries and people from the old to new alpha_2 if not the same
 	$country = eme_get_country( $id );
-	if ( $country['alpha_2'] != $line['alpha_2'] ) {
-		$prepared_sql = $wpdb->prepare( "UPDATE $people_table SET country_code=%s WHERE country_code=%s", $line['alpha_2'], $country['alpha_2'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET alpha_2=%s WHERE alpha_2=%s", $line['alpha_2'], $country['alpha_2'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	}
-	if ( $country['alpha_3'] != $line['alpha_3'] ) {
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET alpha_3=%s WHERE alpha_3=%s", $line['alpha_3'], $country['alpha_3'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	}
+    if ( $country['alpha_2'] != $line['alpha_2'] ) {
+        $wpdb->update(
+            $people_table,
+            [ 'country_code' => $line['alpha_2'] ],
+            [ 'country_code' => $country['alpha_2'] ],
+            [ '%s' ],
+            [ '%s' ]
+        );
+
+        $wpdb->update(
+            $table,
+            [ 'alpha_2' => $line['alpha_2'] ],
+            [ 'alpha_2' => $country['alpha_2'] ],
+            [ '%s' ],
+            [ '%s' ]
+        );
+    }
+    if ( $country['alpha_3'] != $line['alpha_3'] ) {
+        $wpdb->update(
+            $table,
+            [ 'alpha_3' => $line['alpha_3'] ],
+            [ 'alpha_3' => $country['alpha_3'] ],
+            [ '%s' ],
+            [ '%s' ]
+        );
+    }
 	if ( $country['num_3'] != $line['num_3'] ) {
 		// we take into account that old values were not correctly prefixed by a 0
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET num_3=%03d WHERE num_3=%03d or num_3=%s", $line['num_3'], $country['num_3'], $country['num_3'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$prepared_sql = $wpdb->prepare( "UPDATE $table SET num_3=%03d WHERE num_3=%03d OR num_3=%s", $line['num_3'], $country['num_3'], $country['num_3'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
@@ -771,10 +787,20 @@ function eme_db_update_state( $id, $line ) {
 	// first get the existing state, compary the state code and change ALL relevant states and people from the old to new code if not the same
 	$state = eme_get_state( $id );
 	if ( $state['code'] != $line['code'] ) {
-		$prepared_sql = $wpdb->prepare( "UPDATE $people_table SET state_code=%s WHERE state_code=%s", $line['code'], $state['code'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET code=%s WHERE code=%s AND country_id=%d", $line['code'], $state['code'], $state['country_id'] ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $wpdb->update(
+            $people_table,
+            [ 'state_code' => $line['code'] ],
+            [ 'state_code' => $state['code'] ]
+        );
+
+        $wpdb->update(
+            $table,
+            [ 'code' => $line['code'] ],
+            [
+                'code'       => $state['code'],
+                'country_id' => $state['country_id']
+            ]
+        );
 	}
 
 	// we only want the columns that interest us
@@ -986,8 +1012,8 @@ function eme_ajax_country_delete() {
 	if ( eme_is_list_of_int( $ids_list ) ) {
 		$ids_arr = array_map( 'intval', explode( ',', $ids_list ) );
 		$placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM $countries_table WHERE id in ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query( $wpdb->prepare( "UPDATE $states_table SET country_id=0 where country_id in ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $countries_table WHERE id IN ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "UPDATE $states_table SET country_id=0 WHERE country_id IN ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 	$fTableResult['Result']  = 'OK';
 	$fTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );

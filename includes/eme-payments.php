@@ -3598,16 +3598,26 @@ function eme_get_attendance_count( $booking_id ) {
 function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->update(
+        $table,
+        [ 'pg_pid' => $pg_pid, 'pg_handled' => 0 ],
+        [ 'id' => $payment_id ],
+        [ '%s', '%d' ],
+        [ '%d' ]
+    );
     wp_cache_delete( "eme_payment ".$payment_id );
 }
 
 function eme_update_payment_pg_handled( $payment_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->update(
+        $table,
+        [ 'pg_handled' => 1 ],
+        [ 'id' => $payment_id ],
+        [ '%d' ],
+        [ '%d' ]
+    );
     wp_cache_delete( "eme_payment ".$payment_id );
 }
 

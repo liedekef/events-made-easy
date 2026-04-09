@@ -1196,21 +1196,31 @@ function eme_remove_discount_from_group( $discount_id, $group_id ) {
 }
 
 function eme_change_discount_validfrom( $discount_id, $date ) {
-		global $wpdb;
-		$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET valid_from = %s WHERE id = %d", $date, $discount_id );
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $wpdb->update(
+            $table,
+            [ 'valid_from' => $date ],
+            [ 'id' => $discount_id ],
+            [ '%s' ],
+            [ '%d' ]
+        );
 	}
 }
 function eme_change_discount_validto( $discount_id, $date ) {
-		global $wpdb;
-		$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
-		$prepared_sql = $wpdb->prepare( "UPDATE $table SET valid_to = %s WHERE id = %d", $date, $discount_id );
-		$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $wpdb->update(
+            $table,
+            [ 'valid_to' => $date ],
+            [ 'id' => $discount_id ],
+            [ '%s' ],
+            [ '%d' ]
+        );
 	}
 }
 

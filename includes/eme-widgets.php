@@ -207,8 +207,8 @@ class WP_Widget_eme_list extends WP_Widget {
 		<?php
 		wp_dropdown_users(
 		    [
-				'id'               => esc_attr( $this->get_field_id( 'authorid' ) ),
-				'name'             => esc_attr( $this->get_field_name( 'authorid' ) ),
+				'id'               => $this->get_field_id( 'authorid' ),
+				'name'             => $this->get_field_name( 'authorid' ),
 				'show_option_none' => __( 'Select...', 'events-made-easy' ),
 				'selected'         => intval($authorid),
 			]
@@ -314,11 +314,11 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	public function form( $instance ) {
 		//Defaults
 		$instance             = wp_parse_args( (array) $instance, [ 'long_events' => 0 ] );
-		$title                = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		$category             = empty( $instance['category'] ) ? '' : esc_html( $instance['category'] );
-		$notcategory          = empty( $instance['notcategory'] ) ? '' : esc_html( $instance['notcategory'] );
-		$long_events          = isset( $instance['long_events'] ) ? esc_html( $instance['long_events'] ) : false;
-		$authorid             = isset( $instance['authorid'] ) ? esc_html( $instance['authorid'] ) : '';
+		$title                = isset( $instance['title'] ) ? $instance['title'] : '';
+		$category             = empty( $instance['category'] ) ? '' : $instance['category'];
+		$notcategory          = empty( $instance['notcategory'] ) ? '' : $instance['notcategory'];
+		$long_events          = isset( $instance['long_events'] ) ? $instance['long_events'] : false;
+		$authorid             = isset( $instance['authorid'] ) ? $instance['authorid'] : '';
 		$holiday_id           = isset( $instance['holiday_id'] ) ? intval( $instance['holiday_id'] ) : 0;
 		$categories           = eme_get_categories();
 		$holidays_array_by_id = eme_get_holidays_array_by_id();
@@ -373,10 +373,10 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		<?php
 		wp_dropdown_users(
 		    [
-				'id'               => esc_attr( $this->get_field_id( 'authorid' ) ),
-				'name'             => esc_attr( $this->get_field_name( 'authorid' ) ),
+				'id'               => $this->get_field_id( 'authorid' ),
+				'name'             => $this->get_field_name( 'authorid' ),
 				'show_option_none' => __( 'Select...', 'events-made-easy' ),
-				'selected'         => $authorid,
+				'selected'         => intval($authorid),
 			]
 		);
 		?>

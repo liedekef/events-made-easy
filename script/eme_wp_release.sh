@@ -211,8 +211,6 @@ if svn ls "${SVN_URL}/tags/${VERSION}" &>/dev/null; then
 fi
 info "Tag ${VERSION} does not exist yet"
 
-# adding set -x, to see where it stops ..., probably "|| true" after the xargs
-set -x
 # Sync release build to trunk
 rsync -a --delete --exclude='.svn' "${RELEASE_DIR}/" "${SVN_TRUNK}/"
 

@@ -249,14 +249,9 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
-                        $ret_string .= '<script type="text/javascript">
-                                setTimeout(function() {
-                                    const form = document.getElementById("eme_' . $pg . '_form");
-                                    if (form) {
-                                        form.submit();
-                                    }
-                                }, ' . (int)$waitperiod . ');
-                            </script>';
+                        $form_id     = "eme_{$pg}_form";
+                        $inline_js   = "eme_auto_submit_form('" . esc_js( $form_id ) . "', " . intval( $waitperiod ) . ");";
+                        wp_add_inline_script( 'eme-basic', $inline_js );
                     }
                 }
             }
@@ -397,14 +392,9 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
                     if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
-                        $ret_string .= '<script type="text/javascript">
-                                setTimeout(function() {
-                                    const form = document.getElementById("eme_' . $pg . '_form");
-                                    if (form) {
-                                        form.submit();
-                                    }
-                                }, ' . (int)$waitperiod . ');
-                            </script>';
+                        $form_id     = "eme_{$pg}_form";
+                        $inline_js   = "eme_auto_submit_form('" . esc_js( $form_id ) . "', " . intval( $waitperiod ) . ");";
+                        wp_add_inline_script( 'eme-basic', $inline_js );
                     }
                 }
             }
@@ -516,14 +506,9 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $vat_pct );
                     if ( $eme_pg_submit_immediately ) {
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
-                        $ret_string .= '<script type="text/javascript">
-                                setTimeout(function() {
-                                    const form = document.getElementById("eme_' . $pg . '_form");
-                                    if (form) {
-                                        form.submit();
-                                    }
-                                }, ' . (int)$waitperiod . ');
-                            </script>';
+                        $form_id     = "eme_{$pg}_form";
+                        $inline_js   = "eme_auto_submit_form('" . esc_js( $form_id ) . "', " . intval( $waitperiod ) . ");";
+                        wp_add_inline_script( 'eme-basic', $inline_js );
                     }
                 }
             }
@@ -881,7 +866,7 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
         <input type='hidden' name='payment_id' value='$payment_id'>
         <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
         <input type='hidden' name='eme_multibooking' value='$multi_booking'>
-        <input type='hidden' name='eme_{$gateway}_nonce' id='eme_{$gateway}_nonce'>
+        <input type='hidden' name='braintree_nonce' id='braintree_nonce'>
         <input type='hidden' name='price' value='$price'>
         <input type='hidden' name='cur' value='$cur'>
 ";
@@ -892,66 +877,13 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
     } else {
         $form_html .= "<input type='button' value='$button_label' id='braintree_submit_button' class='button-primary eme_submit_button'><br>";
     }
-    $form_html .= '</form>
-    <script type="text/javascript">
-            // Load Braintree Drop-in SDK dynamically
-            const script = document.createElement("script");
-            script.src = "https://js.braintreegateway.com/web/dropin/1.33.0/js/dropin.min.js";
-            script.async = true;
-            script.onload = function () {
-                const clientToken = "' . esc_html($clientToken) . '";
-                const container = document.getElementById("braintree-payment-form-div");
-    
-                if (!container) {
-                    console.error("Braintree container #braintree-payment-form-div not found");
-                    return;
-                }
-    
-                braintree.dropin.create({
-                    authorization: clientToken,
-                    container: container
-                }, function (createErr, instance) {
-                    if (createErr) {
-                        console.error("Braintree create error:", createErr);
-                        return;
-                    }
-    
-                    const submitButton = document.getElementById("braintree_submit_button");
-                    if (!submitButton) {
-                        console.error("Submit button #braintree_submit_button not found");
-                        return;
-                    }
-    
-                    submitButton.addEventListener("click", function (event) {
-                        event.preventDefault(); // Prevent accidental form submission
-    
-                        instance.requestPaymentMethod(function (err, payload) {
-                            if (err) {
-                                console.error("Request payment method error:", err);
-                                return;
-                            }
-    
-                            // Insert nonce and submit form
-                            const nonceInput = document.getElementById("braintree_nonce");
-                            if (nonceInput) {
-                                nonceInput.value = payload.nonce;
-                            }
-    
-                            const form = document.getElementById("eme_braintree_form");
-                            if (form) {
-                                form.submit();
-                            } else {
-                                console.error("Form #eme_braintree_form not found");
-                            }
-                        });
-                    });
-                });
-            };
-            script.onerror = function () {
-                console.error("Failed to load Braintree Drop-in SDK");
-            };
-            document.head.appendChild(script);
-    </script>';
+    $form_html .= '</form>';
+
+    // Enqueue the Braintree script and pass the clientToken via inline script
+    wp_enqueue_script( 'eme-pg-braintree' );
+    $inline_js = 'window.emePgData = window.emePgData || {}; window.emePgData.braintree = { "clientToken": "' . esc_js( $clientToken ) . '" };';
+    wp_add_inline_script( 'eme-pg-braintree', $inline_js );
+
     $form_html .= $button_below;
     return $form_html;
 }
@@ -1027,21 +959,13 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
     eme_update_payment_pg_pid( $payment['id'], $checkoutId );
 
     $form_html  = $button_above;
-    // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript -- SumUp payment SDK, must be loaded inline for payment form
-    $form_html .= '
-    <div id="sumup-card"></div>
-    <script type="text/javascript" src="https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js" ></script>
-    <script type="text/javascript">
-        SumUpCard.mount({
-            checkoutId: "' . $checkoutId . '",
-            onResponse: function (type, body) {
-                if (type == "success" || type == "error") {
-                    window.location.href = body.redirect_url;
-                }
-            },
-        });
-    </script>';
-    // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript
+    $form_html .= '<div id="sumup-card"></div>';
+
+    // Enqueue the SumUp script and pass the checkoutId via inline script
+    wp_enqueue_script( 'eme-pg-sumup' );
+    $inline_js = 'window.emePgData = window.emePgData || {}; window.emePgData.sumup = { "checkoutId": "' . esc_js( $checkoutId ) . '" };';
+    wp_add_inline_script( 'eme-pg-sumup', $inline_js );
+
     $form_html .= $button_below;
     return $form_html;
 }

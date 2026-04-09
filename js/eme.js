@@ -436,6 +436,13 @@ function eme_scrollToEl(sel) {
     }
 }
 
+function eme_auto_submit_form(formId, waitperiod) {
+    setTimeout(function() {
+        var form = document.getElementById(formId);
+        if (form) form.submit();
+    }, waitperiod);
+}
+
 // --- Unified Dynamic Data/Price AJAX ---
 function eme_dynamic_price_json(form_id, isBooking = true) {
     const form = document.getElementById(form_id);

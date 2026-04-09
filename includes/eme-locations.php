@@ -330,11 +330,16 @@ function eme_import_csv_locations() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
-                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                $wpdb->delete(
+                                    $answers_table,
+                                    [
+                                        'related_id' => $location_id,
+                                        'field_id'   => $field_id,
+                                        'type'       => 'location'
+                                    ],
+                                    [ '%d', '%d', '%s' ]
+                                );
+                                eme_insert_answer( 'location', $location_id, $field_id, $value);
                             }
                         }
                     }

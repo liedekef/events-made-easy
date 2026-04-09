@@ -82,16 +82,20 @@ function eme_delete_person_attendances( $ids ) {
 
 function eme_delete_event_attendances( $event_id ) {
 	global $wpdb;
-	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	$prepared_sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d", $event_id);
-	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete(
+        EME_DB_PREFIX . EME_ATTENDANCES_TBNAME,
+        [ 'related_id' => $event_id, 'type' => 'event' ],
+        [ '%d', '%s' ]
+    );
 }
 
 function eme_delete_membership_attendances( $membership_id ) {
 	global $wpdb;
-	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	$prepared_sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d", $membership_id);
-	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete(
+        EME_DB_PREFIX . EME_ATTENDANCES_TBNAME,
+        [ 'related_id' => $membership_id, 'type' => 'membership' ],
+        [ '%d', '%s' ]
+    );
 }
 
 function eme_attendances_page() {

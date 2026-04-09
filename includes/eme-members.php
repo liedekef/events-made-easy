@@ -746,8 +746,11 @@ function eme_delete_member( $member_id, $send_mail=0 ) {
         // first we delete the answers
         eme_delete_member_answers( $member_id );
         // then we delete the member itself
-        $prepared_sql = $wpdb->prepare( "DELETE FROM $members_table WHERE member_id = %d", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $wpdb->delete(
+            $members_table,
+            [ 'member_id' => $member_id ],
+            [ '%d' ]
+        );
         // also delete any uploaded files
         eme_delete_uploaded_files( $member_id, 'members' );
         // remove the linked payment too, but only for the head of the family, not related members
@@ -773,13 +776,9 @@ function eme_delete_membership( $membership_id ) {
     }
     $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='member' AND related_id IN (SELECT member_id from $members_table WHERE membership_id = %d)", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $members_table WHERE membership_id = %d", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d AND type='membership'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $memberships_table WHERE membership_id = %d", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
+    $wpdb->delete( $members_table, [ 'membership_id' => $membership_id ], [ '%d' ]);
+    $wpdb->delete( $answers_table, [ 'related_id' => $membership_id, 'type' => 'membership' ], [ '%d', '%s' ]);
+    $wpdb->delete( $memberships_table, [ 'membership_id' => $membership_id ], [ '%d' ]);
     eme_delete_membership_attendances( $membership_id );
     eme_delete_membership_answers( $membership_id );
     eme_delete_uploaded_files( $membership_id, 'memberships' );
@@ -3913,14 +3912,20 @@ function eme_get_dyndata_member_answer( $member_id, $grouping = 0, $occurence = 
 function eme_delete_member_answers( $member_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='member'", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete(
+        $answers_table,
+        [ 'related_id' => $member_id ],
+        [ '%d' ]
+    );
 }
 function eme_delete_membership_answers( $membership_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete(
+        $answers_table,
+        [ 'related_id' => $membership_id, 'type' => 'membership' ],
+        [ '%d', '%s' ]
+    );
     wp_cache_delete( "eme_membership_cf $membership_id" );
 }
 
@@ -6229,10 +6234,16 @@ function eme_import_csv_members() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) ) {
                                 $field_id = $formfield['field_id'];
-                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d and field_id=%d and type='member'", $member_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,type) VALUES (%d,%d,%s,%d,%s)", $member_id, $field_id, $value, $grouping, 'member' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                $wpdb->delete(
+                                    $answers_table,
+                                    [
+                                        'related_id' => $member_id,
+                                        'field_id'   => $field_id,
+                                        'type'       => 'member'
+                                    ],
+                                    [ '%d', '%d', '%s' ]
+                                );
+                                eme_insert_answer( 'member', $member_id, $field_id, $value);
                             }
                         }
                     }
@@ -6390,8 +6401,18 @@ function eme_import_csv_member_dynamic_answers() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) ) {
                                 $field_id = $formfield['field_id'];
-                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,occurence,type) VALUES (%d,%d,%s,%d,%d,%s)", $member_id, $field_id, $value, $grouping, $occurence, 'member' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                $wpdb->insert(
+                                    $answers_table,
+                                    [
+                                        'related_id'    => $member_id,
+                                        'field_id'      => $field_id,
+                                        'answer'        => $value,
+                                        'eme_grouping'  => $grouping,
+                                        'occurence'     => $occurence,
+                                        'type'          => 'member'
+                                    ],
+                                    [ '%d', '%d', '%s', '%d', '%d', '%s' ]
+                                );
                                 ++$inserted;
                             }
                         }

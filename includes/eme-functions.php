@@ -4149,8 +4149,25 @@ function eme_get_answerid( $answers, $related_id, $type, $field_id, $grouping = 
 function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id = 0, $occurence = 0 ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "INSERT INTO $answers_table (type,related_id,field_id,answer,eme_grouping,occurence) VALUES (%s,%d,%d,%s,%d,%d)", $type, $related_id, $field_id, $answer, $grouping_id, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->insert(
+        $answers_table,
+        array(
+            'type'         => $type,
+            'related_id'   => $related_id,
+            'field_id'     => $field_id,
+            'answer'       => $answer,
+            'eme_grouping' => $grouping_id,
+            'occurence'    => $occurence
+        ),
+        array(
+            '%s', // type
+            '%d', // related_id
+            '%d', // field_id
+            '%s', // answer
+            '%d', // eme_grouping
+            '%d'  // occurence
+        )
+    );
     return $wpdb->insert_id;
 }
 

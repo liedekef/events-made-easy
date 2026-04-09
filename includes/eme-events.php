@@ -5980,11 +5980,16 @@ function eme_import_csv_events() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
-                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                $wpdb->delete(
+                                    $answers_table,
+                                    [
+                                        'related_id' => $location_id,
+                                        'field_id'   => $field_id,
+                                        'type'       => 'location'
+                                    ],
+                                    [ '%d', '%d', '%s' ]
+                                );
+                                eme_insert_answer( 'location', $location_id, $field_id, $value);
                             }
                         }
                     }
@@ -6061,11 +6066,16 @@ function eme_import_csv_events() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
                                 $field_id = $formfield['field_id'];
-                                $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='event'", $event_id, $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
-                                $prepared_sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $event_id, $field_id, $value, 'event' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                                $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                $wpdb->delete(
+                                    $answers_table,
+                                    [
+                                        'related_id' => $event_id,
+                                        'field_id'   => $field_id,
+                                        'type'       => 'event'
+                                    ],
+                                    [ '%d', '%d', '%s' ]
+                                );
+                                eme_insert_answer( 'event', $event_id, $field_id, $value);
                             }
                         }
                     }
@@ -9526,8 +9536,9 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
     }
 
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $table_name WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    if ( $wpdb->query( $prepared_sql ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+    $res = $wpdb->delete( $table_name, [ 'event_id' => $event_id ], ['%d'] );
+    if ( $res ) {
         eme_delete_all_bookings_for_event_id( $event_id );
         eme_delete_event_attendances( $event_id );
         eme_delete_event_answers( $event_id );
@@ -9541,8 +9552,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 function eme_delete_event_answers( $event_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $answers_table, [ 'related_id' => $event_id, 'type' => 'event' ], ['%d', '%s'] );
     wp_cache_delete( "eme_event_cf $event_id" );
 }
 

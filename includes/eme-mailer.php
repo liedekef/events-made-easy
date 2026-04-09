@@ -993,23 +993,20 @@ function eme_resend_mail( $id ) {
 function eme_delete_mail( $id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $queue_table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $queue_table, [ 'id' => $id ], ['%d'] );
 }
 
 function eme_delete_mailing_mails( $id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $queue_table, [ 'mailing_id' => $id ], ['%d'] );
 }
 
 function eme_delete_mailing( $id ) {
     global $wpdb;
     eme_delete_mailing_mails( $id );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $prepared_sql   = $wpdb->prepare( "DELETE FROM $mailings_table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $mailings_table, [ 'id' => $id ], ['%d'] );
 }
 
 function eme_get_mail( $id ) {

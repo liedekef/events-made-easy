@@ -3482,9 +3482,8 @@ function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 
 function eme_delete_payment( $payment_id ) {
     global $wpdb;
     $payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
-    $prepared_sql   = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->delete( $payments_table, [ 'id' => $payment_id ], ['%d'] );
     wp_cache_delete( "eme_payment ".$payment_id );
-    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_payment_paid( $payment ) {

@@ -484,8 +484,7 @@ function eme_db_delete_recurrence( $recurrence_id ) {
 	}
 
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
-	$prepared_sql     = $wpdb->prepare( "DELETE FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $recurrence_table, [ 'recurrence_id' => $recurrence_id ], ['%d'] );
 	wp_cache_delete( "eme_recurrence $recurrence_id" );
 	eme_trash_events_for_recurrence_id( $recurrence_id );
 	return true;

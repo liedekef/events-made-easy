@@ -136,8 +136,7 @@ function eme_db_delete_todo( $todo_id ) {
 function eme_delete_event_todos( $event_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-	$wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$wpdb->delete( $table, [ 'event_id' => $event_id ], ['%d'] );
 }
 
 function eme_delete_event_old_todos( $event_id, $ids_arr ) {

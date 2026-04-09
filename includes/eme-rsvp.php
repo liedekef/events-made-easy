@@ -2413,8 +2413,7 @@ function eme_get_dyndata_booking_answer( $booking_id, $grouping = 0, $occurence 
 function eme_delete_booking_answers( $booking_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='booking'", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $answers_table, [ 'related_id' => $booking_id, 'type' => 'booking' ], ['%d', '%s'] );
 }
 
 function eme_delete_all_bookings_for_event_id( $event_id ) {
@@ -2423,9 +2422,7 @@ function eme_delete_all_bookings_for_event_id( $event_id ) {
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $prepared_sql   = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE event_id = %d)", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $bookings_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    return 1;
+    $wpdb->delete( $bookings_table, [ 'event_id' => $event_id ], ['%d'] );
 }
 
 function eme_trash_person_bookings_future_events( $person_ids ) {
@@ -2510,8 +2507,7 @@ function eme_delete_booking( $booking_id ) {
     if ( has_action( 'eme_delete_rsvp_action' ) ) {
         do_action( 'eme_delete_rsvp_action', $booking );
     }
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $bookings_table WHERE booking_id = %d", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $res = $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $wpdb->delete( $bookings_table, [ 'booking_id' => $booking_id ], ['%d'] );
     // delete optional attachments
     eme_delete_uploaded_files( $booking_id, 'bookings' );
     eme_delete_booking_answers( $booking_id );

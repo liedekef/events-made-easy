@@ -150,13 +150,11 @@ function eme_delete_event_tasks( $event_id ) {
     }
     
     // Delete the tasks
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $tasks_table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$wpdb->delete( $tasks_table, [ 'event_id' => $event_id ], ['%d'] );
     
     // Delete the task signups
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id = %d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$wpdb->delete( $table, [ 'event_id' => $event_id ], ['%d'] );
 }
 
 function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
@@ -180,8 +178,7 @@ function eme_cancel_task_signup( $signup_randomid ) {
     if (empty($signup_randomid)) {
         return;
     }
-    $prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE random_id=%s", $signup_randomid ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    return $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	return $wpdb->delete( $table, [ 'random_id' => $signup_randomid ], ['%s'] );
 }
 
 function eme_get_tasksignup_post_answers( $task_signup ) {

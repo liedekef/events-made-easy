@@ -461,7 +461,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 33 ) {
 			$post_table_name = $db_prefix . 'posts';
-			$wpdb->query( "UPDATE $table_name SET event_image_id = (SELECT id FROM $post_table_name WHERE post_type = 'attachment' AND guid = $table_name.event_image_url);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+			$wpdb->query( "UPDATE $table_name SET event_image_id = (SELECT ID FROM $post_table_name WHERE post_type = 'attachment' AND guid = $table_name.event_image_url);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 38 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_seats text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -923,7 +923,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $grouptable_name, 'stored_sql', "ALTER TABLE $grouptable_name ADD stored_sql text;" );
 		maybe_add_column( $grouptable_name, 'search_terms', "ALTER TABLE $grouptable_name ADD search_terms text;" );
 		if ( $db_version < 175 ) {
-            $wpdb->update( $grouptable_name, [ 'type' => 'static' ]);
+            $wpdb->update( $grouptable_name, [ 'type' => 'static' ]); // no WHERE on purpose, bulk update wanted
 		}
 		if ( $db_version < 344 ) {
 			$wpdb->query( "ALTER TABLE $grouptable_name CHANGE mail_only public bool DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable

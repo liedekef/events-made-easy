@@ -9538,7 +9538,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
     $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
     $res = $wpdb->delete( $table_name, [ 'event_id' => $event_id ], ['%d'] );
-    if ( $res ) {
+    if ( $res ) { // we need at least 1 row deleted ...
         eme_delete_all_bookings_for_event_id( $event_id );
         eme_delete_event_attendances( $event_id );
         eme_delete_event_answers( $event_id );

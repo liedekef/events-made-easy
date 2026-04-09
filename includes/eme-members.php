@@ -3914,8 +3914,8 @@ function eme_delete_member_answers( $member_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $wpdb->delete(
         $answers_table,
-        [ 'related_id' => $member_id ],
-        [ '%d' ]
+        [ 'related_id' => $member_id, 'type' => 'member' ],
+        [ '%d', '%s' ]
     );
 }
 function eme_delete_membership_answers( $membership_id ) {

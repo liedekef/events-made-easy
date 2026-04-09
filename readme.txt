@@ -2,7 +2,7 @@
 Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
-Requires at least: 6.0
+Requires at least: 6.2
 Tested up to: 6.9
 Stable tag: 3.0.61
 Requires PHP: 8.1

@@ -187,17 +187,15 @@ class EME_GitHub_Updater {
             );
         }
 
-        /* the rest is not really needed and by not asking it, we skip on a github call to readme.txt too
         // Get readme data for version requirements
+        // All these are optional, but better to set them to avoid php/wp version issues on upgrade if we ever decide to stop supporting older php/wp
         $this->get_readme_data();
 
         $update->tested = !empty($this->readme_data['tested']) ? $this->readme_data['tested'] : $this->get_tested_wp_version();
         $update->requires_php = !empty($this->readme_data['requires_php']) ? $this->readme_data['requires_php'] : $this->get_requires_php($plugin_data);
         $update->requires = !empty($this->readme_data['requires']) ? $this->readme_data['requires'] : $this->get_requires_wp_version($plugin_data);
         $update->donate_link = !empty($this->readme_data['donate_link']) ? $this->readme_data['donate_link'] : '';
-         */
 
-        $update->tested = $this->get_tested_wp_version();
         // Add icons and banners for update notification
         $update->icons = $this->get_icons();
         $update->banners = $this->get_banners();

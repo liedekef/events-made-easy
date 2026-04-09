@@ -111,23 +111,23 @@ class WP_Widget_eme_list extends WP_Widget {
 				'show_ongoing' => 1,
 			]
 		);
-		$title      = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		$format_tpl = isset( $instance['format_tpl'] ) ? intval( $instance['format_tpl'] ) : 0;
-		$limit      = isset( $instance['limit'] ) ? intval( $instance['limit'] ) : 5;
-		$scope      = empty( $instance['scope'] ) ? 'future' : esc_html( $instance['scope'] );
-		$showperiod = empty( $instance['showperiod'] ) ? '' : esc_html( $instance['showperiod'] );
+		$title      = isset( $instance['title'] ) ? $instance['title'] : '';
+		$format_tpl = isset( $instance['format_tpl'] ) ? $instance['format_tpl'] : 0;
+		$limit      = isset( $instance['limit'] ) ? $instance['limit'] : 5;
+		$scope      = empty( $instance['scope'] ) ? 'future' : $instance['scope'];
+		$showperiod = empty( $instance['showperiod'] ) ? '' : $instance['showperiod'];
 		if ( isset( $instance['show_ongoing'] ) && ( $instance['show_ongoing'] != false ) ) {
 			$show_ongoing = true;
 		} else {
 			$show_ongoing = false;
 		}
-		$order                = empty( $instance['order'] ) ? 'ASC' : esc_html( $instance['order'] );
-		$header               = empty( $instance['header'] ) ? '<ul>' : esc_html( $instance['header'] );
-		$footer               = empty( $instance['footer'] ) ? '</ul>' : esc_html( $instance['footer'] );
-		$category             = empty( $instance['category'] ) ? '' : esc_html( $instance['category'] );
-		$notcategory          = empty( $instance['notcategory'] ) ? '' : esc_html( $instance['notcategory'] );
-		$recurrence_only_once = empty( $instance['recurrence_only_once'] ) ? '' : esc_html( $instance['recurrence_only_once'] );
-		$authorid             = empty( $instance['authorid'] ) ? '' : esc_html( $instance['authorid'] );
+		$order                = empty( $instance['order'] ) ? 'ASC' : $instance['order'];
+		$header               = empty( $instance['header'] ) ? '<ul>' : $instance['header'];
+		$footer               = empty( $instance['footer'] ) ? '</ul>' : $instance['footer'];
+		$category             = empty( $instance['category'] ) ? '' : $instance['category'];
+		$notcategory          = empty( $instance['notcategory'] ) ? '' : $instance['notcategory'];
+		$recurrence_only_once = empty( $instance['recurrence_only_once'] ) ? '' : $instance['recurrence_only_once'];
+		$authorid             = empty( $instance['authorid'] ) ? '' : $instance['authorid'];
 		$categories           = eme_get_categories();
 		$option_categories    = [];
 		foreach ( $categories as $cat ) {
@@ -135,9 +135,9 @@ class WP_Widget_eme_list extends WP_Widget {
 			$option_categories[ $id ] = $cat['category_name'];
 		}
 		if ( empty( $instance['format_tpl'] ) && eme_is_empty_string( $instance['format'] ) ) {
-			$format = esc_html( DEFAULT_WIDGET_EVENT_LIST_ITEM_FORMAT );
+			$format = DEFAULT_WIDGET_EVENT_LIST_ITEM_FORMAT;
 		} elseif ( empty( $instance['format_tpl'] ) && ! eme_is_empty_string( $instance['format'] ) ) {
-			$format = esc_html( $instance['format'] );
+			$format = $instance['format'];
 		} else {
 			$format = '';
 		}
@@ -150,11 +150,11 @@ class WP_Widget_eme_list extends WP_Widget {
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Number of events', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo $limit; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already intval() on line 116 ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" value="<?php echo intval($limit); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>"><?php esc_html_e( 'Scope of the events', 'events-made-easy' ); ?><br><?php esc_html_e( '(See the doc for &#91;eme_events] for all possible values)', 'events-made-easy' ); ?>:</label><br>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo $scope; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already esc_html() on line 117 ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'scope' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'scope' ) ); ?>" value="<?php echo esc_html($scope); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'showperiod' ) ); ?>"><?php esc_html_e( 'Show events per period', 'events-made-easy' ); ?>:</label><br>
@@ -210,29 +210,29 @@ class WP_Widget_eme_list extends WP_Widget {
 				'id'               => esc_attr( $this->get_field_id( 'authorid' ) ),
 				'name'             => esc_attr( $this->get_field_name( 'authorid' ) ),
 				'show_option_none' => __( 'Select...', 'events-made-easy' ),
-				'selected'         => $authorid,
+				'selected'         => intval($authorid),
 			]
 		);
 		?>
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>"><?php esc_html_e( 'List header format<br>(if empty &lt;ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo $header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already esc_html() on line 125 ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'header' ) ); ?>" value="<?php echo esc_html($header); ?>">
 	</p>
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format_tpl' ) ); ?>"><?php esc_html_e( 'List item format', 'events-made-easy' ); ?>:</label>
 		<?php
 		esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-		echo eme_ui_select( $format_tpl, $this->get_field_name( 'format_tpl' ), $templates_array ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+		echo eme_ui_select( intval($format_tpl), $this->get_field_name( 'format_tpl' ), $templates_array ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 		?>
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>"><?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>:</label>
-	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo $format; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already esc_html() on lines 138/140 ?></textarea>
+	<textarea id="<?php echo esc_attr( $this->get_field_id( 'format' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>" rows="5" cols="24"><?php echo esc_html($format); ?></textarea>
 	</p> 
 	<p>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>"><?php esc_html_e( 'List footer format<br>(if empty &lt;/ul&gt; is used)', 'events-made-easy' ); ?>: </label>
-	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo $footer; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already esc_html() on line 126 ?>">
+	<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'footer' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'footer' ) ); ?>" value="<?php echo esc_html($footer); ?>">
 	</p>
 		<?php
 	}

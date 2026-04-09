@@ -566,7 +566,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		}
 		if ( $db_version < 416 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_end_date date DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-            $wpdb->update( $table_name, [ 'recurrence_end_date' => null ], [ 'recurrence_end_date' => '' ], [ '%s' ], [ '%s' ]);
+            $wpdb->update( $table_name, [ 'recurrence_end_date' => null ], [ 'recurrence_end_date' => '' ], [ '%s' ], [ '%s' ]); // null is converted to SQL NULL, format ignored
 		}
 		if ( $db_version < 417 ) {
             eme_paypal_webhook();
@@ -1018,7 +1018,7 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 		}
 		if ( $db_version < 144 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY type tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-            $wpdb->update( $table_name, [ 'type' => '' ], [ 'type' => null ], [ '%s' ], [ '%s' ]);
+            $wpdb->update( $table_name, [ 'type' => '' ], [ 'type' => null ], [ '%s' ], [ '%s' ]); // null is converted to SQL NULL, format ignored
 		}
 		if ( $db_version < 151 ) {
 			if ( ! eme_column_exists( $table_name, 'name' ) ) {
@@ -1102,7 +1102,7 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 			eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
 		}
 		if ( $db_version < 214 ) {
-            $wpdb->update( $table_name, [ 'field_purpose' => 'generic' ], [ 'field_purpose' => null ], [ '%s' ], [ '%s' ]);
+            $wpdb->update( $table_name, [ 'field_purpose' => 'generic' ], [ 'field_purpose' => null ], [ '%s' ], [ '%s' ]); // null is converted to SQL NULL, format ignored
 		}
 		if ( $db_version < 215 ) {
 			eme_maybe_drop_column( $table_name, 'old_type' );

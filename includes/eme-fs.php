@@ -693,20 +693,12 @@ function eme_fs_process_newevent() {
     if ( !isset($event_data['event_name']) || empty($event_data['event_name']) ) {
         $eme_fs_event_errors[] = __('Please enter a name for the event', 'events-made-easy');
     }
-
-    if ( isset($event_data['event_notes']) && empty($event_data['event_notes']) ) {
-        $eme_fs_event_errors[] = __('Please enter an event description', 'events-made-easy');
-    }
-    if ( isset($event_data['location_description']) && empty($event_data['location_description']) ) {
-        $eme_fs_event_errors[] = __('Please enter a location description', 'events-made-easy');
-    }
     if ( !isset($event_data['event_start_date']) || empty($event_data['event_start_date']) ) {
         $eme_fs_event_errors[] = __('Enter the event\'s start date', 'events-made-easy');
     }
     if ( !isset($event_data['event_end_date']) || empty($event_data['event_end_date']) ) {
         $event_data['event_end_date'] = $event_data['event_start_date'];
     }
-
     if ( isset( $event_data['event_category_ids'] ) && eme_is_numeric_array( eme_sanitize_request( $event_data['event_category_ids'] ) ) ) {
         $event_data['event_category_ids'] = join( ',', eme_sanitize_request( $event_data['event_category_ids'] ) );
     }

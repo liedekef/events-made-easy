@@ -20,7 +20,7 @@
 #   2. bash script/eme_wp_release.sh <new_ver> --deploy # WP.org SVN deploy
 # =============================================================================
 
-set -euo pipefail
+set -eu
 
 # --- Configuration -----------------------------------------------------------
 
@@ -216,7 +216,7 @@ rsync -a --delete --exclude='.svn' "${RELEASE_DIR}/" "${SVN_TRUNK}/"
 
 # Handle SVN adds/deletes
 cd "$SVN_TRUNK"
-svn add --force . 2>/dev/null || true
+svn add --force . 2>/dev/null
 if svn status | grep -q '^!'; then
     svn status | grep '^!' | awk '{print $NF}' | xargs svn delete
 fi
@@ -230,7 +230,7 @@ info "Created SVN tag ${VERSION}"
 # Show what will be committed
 echo ""
 echo -e "  ${BOLD}SVN changes:${NC}"
-svn status | head -30 || true
+svn status | head -30
 CHANGE_COUNT=$(svn status | wc -l)
 if [ "$CHANGE_COUNT" -gt 30 ]; then
     echo "  ... and $((CHANGE_COUNT - 30)) more"

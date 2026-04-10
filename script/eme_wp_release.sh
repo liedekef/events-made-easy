@@ -230,7 +230,7 @@ info "Created SVN tag ${VERSION}"
 # Show what will be committed
 echo ""
 echo -e "  ${BOLD}SVN changes:${NC}"
-svn status | head -30
+svn status | head -30 || true
 CHANGE_COUNT=$(svn status | wc -l)
 if [ "$CHANGE_COUNT" -gt 30 ]; then
     echo "  ... and $((CHANGE_COUNT - 30)) more"

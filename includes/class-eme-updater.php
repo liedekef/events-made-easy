@@ -189,7 +189,7 @@ class EME_GitHub_Updater {
 
         // Get readme data for version requirements
         // All these are optional, but better to set them to avoid php/wp version issues on upgrade if we ever decide to stop supporting older php/wp
-        $this->get_readme_data();
+        $this->get_readme_data($current_version, $latest_version);
 
         $update->tested = !empty($this->readme_data['tested']) ? $this->readme_data['tested'] : $this->get_tested_wp_version();
         $update->requires_php = !empty($this->readme_data['requires_php']) ? $this->readme_data['requires_php'] : $this->get_requires_php($plugin_data);

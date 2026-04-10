@@ -2374,6 +2374,23 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
         }
     }
     $format = eme_replace_membership_placeholders( $format, $membership );
+
+    // In the admin member-edit form, wrap each occurrence in a labelled, deletable container
+    if ( ! empty( $member['member_id'] ) && current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+        $del_label = esc_attr( __( 'Delete this group', 'events-made-easy' ) );
+        $del_text  = esc_html( __( 'Delete this group', 'events-made-easy' ) );
+        $format =
+            "<fieldset class='eme_dyndata_occurence_block'"
+            . " data-member-id='" . intval( $member['member_id'] ) . "'"
+            . " data-grouping='"  . intval( $grouping ) . "'"
+            . " data-occurence='" . intval( $i ) . "'>"
+            . "<legend class='eme_dyndata_occurence_label'>"
+            .   " <button type='button' class='button button-small eme_delete_dyndata_occurence'"
+            .     " title='$del_label'>&#x2715; $del_text</button>"
+            . "</legend>"
+            . $format
+            . "</fieldset>";
+    }
     return $format;
 }
 

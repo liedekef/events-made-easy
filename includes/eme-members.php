@@ -7123,6 +7123,43 @@ function eme_ajax_action_resend_paid_member( $ids_arr, $action ) {
     print wp_json_encode( $ajaxResult );
 }
 
+add_action( 'wp_ajax_eme_delete_dyndata_occurence', 'eme_delete_dyndata_occurence_ajax' );
+function eme_delete_dyndata_occurence_ajax() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => __( 'No permission', 'events-made-easy' ) ] );
+    }
+
+    global $wpdb;
+    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+
+    $member_id = intval( $_POST['member_id'] ?? 0 );
+    $grouping  = intval( $_POST['grouping']  ?? 0 );
+    $occurence = intval( $_POST['occurence'] ?? 0 );
+
+    if ( ! $member_id || ! $grouping ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => __( 'Invalid parameters', 'events-made-easy' ) ] );
+    }
+
+    // 1. Delete all answers for this (member, grouping, occurence)
+    $wpdb->delete(
+        $answers_table,
+        [ 'related_id' => $member_id, 'type' => 'member', 'eme_grouping' => $grouping, 'occurence' => $occurence ],
+        [ '%d', '%s', '%d', '%d' ]
+    );
+
+    // 2. Shift higher occurrences down by 1 so there are no gaps
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE $answers_table SET occurence = occurence - 1 WHERE related_id = %d AND type = 'member' AND eme_grouping = %d AND occurence > %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $member_id, $grouping, $occurence
+        )
+    );
+
+    wp_cache_delete( "eme_member $member_id" );
+    wp_send_json( [ 'Result' => 'OK', 'htmlmessage' => __( 'Occurrence deleted and remaining occurrences renumbered.', 'events-made-easy' ) ] );
+}
+
 function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
     $member = eme_get_member_by_paymentid( $payment_id );
     // we don't accept payments for family members, only the head of the family

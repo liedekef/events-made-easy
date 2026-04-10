@@ -796,3 +796,21 @@ a.nav-tab {
     margin-left: 0em;
     margin-right: .5em;
 }
+
+.eme_dyndata_occurence_block {
+    border: 1px solid #c3c4c7;
+    border-radius: 3px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+}
+.eme_dyndata_occurence_label {
+    font-weight: 600;
+}
+.eme_delete_dyndata_occurence {
+    color: #b32d2e !important;
+    border-color: #b32d2e !important;
+}
+.eme_delete_dyndata_occurence:hover {
+    background: #b32d2e !important;
+    color: #fff !important;
+}

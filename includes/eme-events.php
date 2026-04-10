@@ -10177,6 +10177,7 @@ function eme_admin_enqueue_js() {
             'translate_dcodes_used'                => __( 'Used discount codes', 'events-made-easy' ),
             'translate_totalprice'                 => __( 'Total price', 'events-made-easy' ),
             'translate_membershipprice'            => __( 'Membership price', 'events-made-easy' ),
+            'translate_areyousure_group'           => __( 'Are you sure you want to delete this group? This cannot be undone.', 'events-made-easy' )
         ];
         wp_localize_script( 'eme-members', 'ememembers', $translation_array );
         wp_enqueue_script( 'eme-members' );

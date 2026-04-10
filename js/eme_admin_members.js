@@ -603,4 +603,67 @@ document.addEventListener('DOMContentLoaded', function () {
     eme_admin_init_attachment_ui('#newmember_attach_button', '#newmember_attach_links', '#eme_newmember_attach_ids', '#newmember_remove_attach_button');
     eme_admin_init_attachment_ui('#extended_attach_button', '#extended_attach_links', '#eme_extended_attach_ids', '#extended_remove_attach_button');
     eme_admin_init_attachment_ui('#paid_attach_button', '#paid_attach_links', '#eme_paid_attach_ids', '#paid_remove_attach_button');
+
+    // --- Delete a dyndata occurrence block from the admin member-edit form ---
+    document.addEventListener('click', function (e) {
+        if (!e.target.matches('.eme_delete_dyndata_occurence')) return;
+
+        const block     = e.target.closest('.eme_dyndata_occurence_block');
+        const grouping  = block.dataset.grouping;
+        const occurence = block.dataset.occurence;
+        const memberId  = block.dataset.memberId;
+
+        const confirmMsg = ememembers.translate_areyousure_group;
+        if (!confirm(confirmMsg)) return;
+
+        e.target.disabled    = true;
+        e.target.textContent = '…';
+
+        const fd = new FormData();
+        fd.append('action',          'eme_delete_dyndata_occurence');
+        fd.append('eme_admin_nonce', ememembers.translate_adminnonce);
+        fd.append('member_id',       memberId);
+        fd.append('grouping',        grouping);
+        fd.append('occurence',       occurence);
+
+        eme_postJSON(ajaxurl, fd, (data) => {
+            if (data.Result !== 'OK') {
+                alert(data.htmlmessage);
+                e.target.disabled    = false;
+                e.target.textContent = '✕';
+                return;
+            }
+
+            // Remove the deleted block from the DOM
+            block.remove();
+
+            // Re-index the remaining blocks in this group: update data-occurence,
+            // labels and input names so the form POSTs correct indices on save
+            const form = document.getElementById('eme-member-adminform');
+            if (!form) return;
+            const remaining = form.querySelectorAll(
+                `.eme_dyndata_occurence_block[data-grouping="${grouping}"]`
+            );
+            remaining.forEach((b, idx) => {
+                b.dataset.occurence = idx;
+
+                // Update the visible label
+                const lbl = b.querySelector('.eme_dyndata_occurence_label');
+                if (lbl) {
+                    const base = ememembers.translate_occurrence || 'Occurrence';
+                    lbl.textContent = base + ' ' + (idx + 1);
+                }
+
+                // Re-index input/select/textarea names:
+                // dynamic_member[mid][grouping][OLD_OCC][FIELDx]  →  [...][idx][FIELDx]
+                b.querySelectorAll('[name]').forEach(input => {
+                    input.name = input.name.replace(
+                        /^(dynamic_member\[\d+\]\[\d+\]\[)\d+(\].*)$/,
+                        '$1' + idx + '$2'
+                    );
+                });
+            });
+        });
+    });
+
 });

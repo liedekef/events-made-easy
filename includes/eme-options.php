@@ -3263,6 +3263,11 @@ $categories=eme_get_categories();
 $fs_options=get_option('eme_fs');
 if (!isset($fs_options['payment_gateways']))
     $fs_options['payment_gateways'] = [];
+$fs_bool_options = ['force_location_creation', 'always_success_message', 'redirect_to_login'];
+foreach ($fs_bool_options as $fs_bool_option) {
+    if (!isset($fs_options[$fs_bool_option]))
+        $fs_options[$fs_bool_option] = 0;
+}
 $category_arr = [];
 $category_arr[0]='';
 if ( $categories ) {
@@ -3283,7 +3288,7 @@ eme_options_select (__('Default category for new event','events-made-easy'), eme
 eme_options_toggle (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), $fs_options['force_location_creation']);
 eme_options_toggle (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), $fs_options['guest_submit']);
 eme_options_textarea ( __ ( 'Success Message','events-made-easy'), eme_get_field_name('eme_fs','success_message'), __ ( 'The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders.','events-made-easy'), 1, 0, $fs_options['success_message']);
-eme_options_input_int( __( 'Redirect wait period', 'events-made-easy' ), eme_get_field_name('eme_fs','redirect_timeout'), __( 'Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately.', 'events-made-easy' ), 'text', $fs_options['redirect_timeout'] );
+eme_options_input_int( __( 'Redirect wait period', 'events-made-easy' ), eme_get_field_name('eme_fs','redirect_timeout'), __( 'Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately.', 'events-made-easy' ), $fs_options['redirect_timeout'] );
 eme_options_toggle (__('Always show success message','events-made-easy'), eme_get_field_name('eme_fs','always_success_message'), __ ( 'Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen.', 'events-made-easy' ), $fs_options['always_success_message']);
 eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set.','events-made-easy'), 1, 0, $fs_options['guest_not_allowed_text']);
 eme_options_toggle (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events.', 'events-made-easy' ), $fs_options['redirect_to_login']);

@@ -174,7 +174,7 @@ function eme_add_event_form_shortcode( $atts ) {
     $is_user_logged_in=is_user_logged_in();
 
     if ((!$is_user_logged_in && !$eme_fs_options['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
-        if ($eme_fs_options['redirect_to_login']) {
+        if (!empty($eme_fs_options['redirect_to_login'])) {
             //auth_redirect();
             global $wp;
             $current_url = home_url( add_query_arg( [], $wp->request ) );
@@ -410,7 +410,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
         switch ( $field ) {
             case 'event_notes':
             case 'location_description':
-                $type = $eme_fs_options['use_wysiwyg'] ? 'wysiwyg_textarea' : 'textarea';
+                $type = !empty($eme_fs_options['use_wysiwyg']) ? 'wysiwyg_textarea' : 'textarea';
                 break;
             case 'event_category_ids':
                 $type = ( $type !== 'radio' ) ? 'category_select' : 'category_radio';
@@ -509,7 +509,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
     $res = '';
     switch ( $type ) {
         case 'wysiwyg_textarea':
-            if ( $eme_fs_options['allow_upload'] && is_user_logged_in() ) {
+            if ( !empty($eme_fs_options['allow_upload']) && is_user_logged_in() ) {
                 $editor_settings = [ 'media_buttons' => true, 'textarea_name' => "event[$field]" ];
                 $allow_upload    = 'yes';
             } else {
@@ -729,7 +729,7 @@ function eme_fs_process_newevent() {
     $res_code = 'OK';
     if ( empty($eme_fs_event_errors) ) {
         $force=0;
-        if ($eme_fs_options['force_location_creation'])
+        if (!empty($eme_fs_options['force_location_creation']))
             $force=1;
         if (empty($event_data['location_id']))
             $event_data['location_id'] = eme_fs_processlocation($event_data, $force);
@@ -782,7 +782,7 @@ function eme_fs_process_newevent() {
                     } else {
                         $res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                     }
-                } elseif ($eme_fs_options['always_success_message']) {
+                } elseif (!empty($eme_fs_options['always_success_message'])) {
                     $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                 } elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
                     $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
@@ -878,7 +878,7 @@ function eme_frontend_submit_ajax() {
 
     $eme_fs_options = get_option('eme_fs');
     $is_user_logged_in=is_user_logged_in();
-    if ((!$is_user_logged_in && !$eme_fs_options['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+    if ((!$is_user_logged_in && empty($eme_fs_options['guest_submit'])) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
         $form_html = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
         echo wp_json_encode(
             [

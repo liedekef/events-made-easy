@@ -600,16 +600,16 @@ function eme_add_options( $reset = 0 ) {
             'auto_publish' => EME_EVENT_STATUS_PUBLIC,
             'guest_submit' => false,
             'success_message' => __('New event succesfully created.','events-made-easy'),
-            'always_success_message' => 0,
+            'always_success_message' => false,
             'redirect_timeout' => 0,
             'default_cat' => 0,
             'guest_not_allowed_text' => '',
-            'redirect_to_login' => 0,
+            'redirect_to_login' => false,
             'cap_add_event' => 'edit_posts',
-            'force_location_creation' => 0,
+            'force_location_creation' => false,
             'selected_captcha' => '',
-            'use_wysiwyg' => 0,
-            'allow_upload' => 0,
+            'use_wysiwyg' => false,
+            'allow_upload' => false,
             'price' => 0,
             'currency' => '',
             'payment_gateways' => [],
@@ -3259,15 +3259,15 @@ esc_html_e("Also check out the 'Email templates' and the 'Payment' sections for 
 ?>
 <table class='form-table'>
 <?php
-$categories=eme_get_categories();
 $fs_options=get_option('eme_fs');
 if (!isset($fs_options['payment_gateways']))
     $fs_options['payment_gateways'] = [];
-$fs_bool_options = ['force_location_creation', 'always_success_message', 'redirect_to_login'];
+$fs_bool_options = ['guest_submit', 'always_success_message', 'redirect_to_login','force_location_creation','use_wysiwyg','allow_upload'];
 foreach ($fs_bool_options as $fs_bool_option) {
     if (!isset($fs_options[$fs_bool_option]))
-        $fs_options[$fs_bool_option] = 0;
+        $fs_options[$fs_bool_option] = false;
 }
+$categories=eme_get_categories();
 $category_arr = [];
 $category_arr[0]='';
 if ( $categories ) {

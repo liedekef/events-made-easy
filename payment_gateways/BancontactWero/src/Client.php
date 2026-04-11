@@ -266,7 +266,7 @@ class Client {
         $details = $response->details;
         if ( !empty( $response->totalPages ) && $response->totalPages > 1 ) {
             while ($page < $response->totalPages-1) {
-                $page=$response->number+1;
+                $page++;
                 $response = $this->makeRequest( 'POST', $this->getEndpoint( '/payments/search?page=' . intval( $page ) . '&size=' . intval( $size ) ), $param_arr );
                 $details = array_merge($details,$response->details );
             }

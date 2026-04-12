@@ -1084,7 +1084,7 @@ function eme_add_bookings_ajax() {
                         'keep_form'       => 0,
                         'htmlmessage'     => $form_result_message,
                         'waitperiod'      => $waitperiod,
-                        'paymentredirect' => $payment_url,
+                        'redirect'        => $payment_url,
                     ]
                 );
             } else {

@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.0.65  (2026//) =
 * Make redirect after frontend submit work again
+* Add filter eme_fs_event_insert_return_filter
 
 = 3.0.64  (2026/04/12) =
 * Bancontact update

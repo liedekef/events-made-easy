@@ -725,10 +725,11 @@ function eme_fs_process_newevent() {
         $eme_fs_event_errors[] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy');
     }
 
-    $res_html = '';
-    $res_code = 'OK';
-    $res_waitperiod = '';
-    $res_redirect = '';
+    $res = [
+        'htmlmessage' => '',
+        'waitperiod' => '',
+        'redirect' => ''
+    ];
     if ( empty($eme_fs_event_errors) ) {
         $force=0;
         if (!empty($eme_fs_options['force_location_creation']))
@@ -778,22 +779,22 @@ function eme_fs_process_newevent() {
                 if ($eme_fs_options['price']>0 && $pg_count>0) {
                     $payment_id  = eme_create_fs_event_payment($event_id);
                     $payment     = eme_get_payment( $payment_id );
-                    $res_redirect = eme_payment_url($payment);
-                    $res_waitperiod = $eme_fs_options['redirect_timeout'];
+                    $res['redirect'] = eme_payment_url($payment);
+                    $res['waitperiod'] = $eme_fs_options['redirect_timeout'];
                     if ($eme_fs_options['redirect_timeout'] != 0) {
-                        $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                        $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                     }
                 } elseif (!empty($eme_fs_options['always_success_message'])) {
-                    $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                 } elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
                     $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
-                    $res_redirect = eme_event_url($event);
-                    $res_waitperiod = $eme_fs_options['redirect_timeout'];
+                    $res['redirect'] = eme_event_url($event);
+                    $res['waitperiod'] = $eme_fs_options['redirect_timeout'];
                     if ($eme_fs_options['redirect_timeout'] != 0) {
-                        $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                        $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                     }
                 } else {
-                    $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                 }
             } else {
                 $eme_fs_event_errors[] = __('Database insert failed!','events-made-easy');
@@ -804,13 +805,9 @@ function eme_fs_process_newevent() {
     }
 
     if (empty($eme_fs_event_errors)) {
-        return [
-            'Result'      => $res_code,
-            'htmlmessage' => $res_html,
-            'waitperiod'  => $res_waitperiod,
-            'redirect'    => $res_redirect,
-        ];
-
+        if (has_filter('eme_fs_event_insert_return_filter')) $res=apply_filters('eme_fs_event_insert_return_filter',$res);
+        $res['Result'] = 'OK';
+        return $res;
     } else {
         return [
             'Result'      => 'NOK',

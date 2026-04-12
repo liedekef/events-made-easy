@@ -30,15 +30,15 @@ msgstr "au nom de %s"
 #: includes/eme-countries.php:1028
 #: includes/eme-discounts.php:1818
 #: includes/eme-discounts.php:1863
-#: includes/eme-events.php:10362
-#: includes/eme-events.php:10759
-#: includes/eme-events.php:10768
-#: includes/eme-events.php:10774
-#: includes/eme-events.php:11115
-#: includes/eme-formfields.php:5144
-#: includes/eme-formfields.php:5199
-#: includes/eme-formfields.php:5210
-#: includes/eme-formfields.php:5232
+#: includes/eme-events.php:10363
+#: includes/eme-events.php:10760
+#: includes/eme-events.php:10769
+#: includes/eme-events.php:10775
+#: includes/eme-events.php:11116
+#: includes/eme-formfields.php:5161
+#: includes/eme-formfields.php:5216
+#: includes/eme-formfields.php:5227
+#: includes/eme-formfields.php:5249
 #: includes/eme-functions.php:3424
 #: includes/eme-functions.php:3465
 #: includes/eme-functions.php:3466
@@ -265,7 +265,7 @@ msgid "Edit person"
 msgstr "Editer une personne"
 
 #: includes/eme-attendances.php:263
-#: includes/eme-events.php:10681
+#: includes/eme-events.php:10682
 #: includes/eme-rsvp.php:6213
 msgid "All day"
 msgstr "Toute la journée"
@@ -275,7 +275,7 @@ msgid "Manual entry"
 msgstr "Entrée manuelle"
 
 #: includes/eme-attendances.php:310
-#: includes/eme-events.php:10820
+#: includes/eme-events.php:10821
 msgid "Events deleted"
 msgstr "Événements supprimés"
 
@@ -298,7 +298,7 @@ msgstr "Pas de modèle defini"
 
 #: includes/eme-attributes.php:123
 #: includes/eme-attributes.php:143
-#: includes/eme-formfields.php:5048
+#: includes/eme-formfields.php:5065
 #: includes/eme-tasks.php:965
 #: includes/eme-todos.php:221
 msgid "Remove"
@@ -351,10 +351,10 @@ msgstr "Ajouter une catégorie"
 #: includes/eme-events.php:10021
 #: includes/eme-events.php:10046
 #: includes/eme-events.php:10133
-#: includes/eme-events.php:10188
-#: includes/eme-events.php:10232
-#: includes/eme-events.php:10246
-#: includes/eme-events.php:10260
+#: includes/eme-events.php:10189
+#: includes/eme-events.php:10233
+#: includes/eme-events.php:10247
+#: includes/eme-events.php:10261
 #: includes/eme-gdpr.php:425
 #: includes/eme-gdpr.php:465
 #: includes/eme-people.php:1064
@@ -374,10 +374,10 @@ msgstr "ID"
 #: includes/eme-events.php:10047
 #: includes/eme-events.php:10084
 #: includes/eme-events.php:10137
-#: includes/eme-events.php:10237
-#: includes/eme-events.php:10251
-#: includes/eme-events.php:10279
+#: includes/eme-events.php:10238
+#: includes/eme-events.php:10252
 #: includes/eme-events.php:10280
+#: includes/eme-events.php:10281
 #: includes/eme-members.php:1899
 #: includes/eme-people.php:2828
 #: includes/eme-tasks.php:902
@@ -387,8 +387,8 @@ msgid "Name"
 msgstr "Nom"
 
 #: includes/eme-categories.php:679
-#: includes/eme-events.php:10479
-#: includes/eme-formfields.php:5180
+#: includes/eme-events.php:10480
+#: includes/eme-formfields.php:5197
 #: includes/eme-holidays.php:282
 #: includes/eme-locations.php:3063
 #: includes/eme-members.php:6600
@@ -550,10 +550,10 @@ msgstr "Mois"
 #: includes/eme-events.php:10064
 #: includes/eme-events.php:10100
 #: includes/eme-events.php:10151
-#: includes/eme-events.php:10219
-#: includes/eme-events.php:10235
-#: includes/eme-events.php:10249
-#: includes/eme-events.php:10262
+#: includes/eme-events.php:10220
+#: includes/eme-events.php:10236
+#: includes/eme-events.php:10250
+#: includes/eme-events.php:10263
 #: includes/eme-formfields.php:241
 #: includes/eme-holidays.php:98
 #: includes/eme-locations.php:917
@@ -1505,17 +1505,17 @@ msgstr "Fixe par siège"
 #: includes/eme-discounts.php:1810
 #: includes/eme-formfields.php:1343
 #: includes/eme-formfields.php:1354
-#: includes/eme-formfields.php:3083
-#: includes/eme-formfields.php:3096
-#: includes/eme-formfields.php:4034
-#: includes/eme-formfields.php:4045
-#: includes/eme-formfields.php:4690
-#: includes/eme-formfields.php:4700
-#: includes/eme-formfields.php:4710
-#: includes/eme-formfields.php:5183
-#: includes/eme-formfields.php:5185
-#: includes/eme-formfields.php:5186
-#: includes/eme-formfields.php:5187
+#: includes/eme-formfields.php:3100
+#: includes/eme-formfields.php:3113
+#: includes/eme-formfields.php:4051
+#: includes/eme-formfields.php:4062
+#: includes/eme-formfields.php:4707
+#: includes/eme-formfields.php:4717
+#: includes/eme-formfields.php:4727
+#: includes/eme-formfields.php:5200
+#: includes/eme-formfields.php:5202
+#: includes/eme-formfields.php:5203
+#: includes/eme-formfields.php:5204
 #: includes/eme-fs.php:664
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
@@ -1552,17 +1552,17 @@ msgstr "Oui"
 #: includes/eme-discounts.php:1810
 #: includes/eme-formfields.php:1344
 #: includes/eme-formfields.php:1355
-#: includes/eme-formfields.php:3084
-#: includes/eme-formfields.php:3097
-#: includes/eme-formfields.php:4035
-#: includes/eme-formfields.php:4046
-#: includes/eme-formfields.php:4691
-#: includes/eme-formfields.php:4701
-#: includes/eme-formfields.php:4711
-#: includes/eme-formfields.php:5183
-#: includes/eme-formfields.php:5185
-#: includes/eme-formfields.php:5186
-#: includes/eme-formfields.php:5187
+#: includes/eme-formfields.php:3101
+#: includes/eme-formfields.php:3114
+#: includes/eme-formfields.php:4052
+#: includes/eme-formfields.php:4063
+#: includes/eme-formfields.php:4708
+#: includes/eme-formfields.php:4718
+#: includes/eme-formfields.php:4728
+#: includes/eme-formfields.php:5200
+#: includes/eme-formfields.php:5202
+#: includes/eme-formfields.php:5203
+#: includes/eme-formfields.php:5204
 #: includes/eme-fs.php:663
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
@@ -1667,7 +1667,7 @@ msgstr "Nouvelle répétition insérée contenant des évènements %d"
 #: includes/eme-events.php:729
 #: includes/eme-events.php:882
 #: includes/eme-events.php:6678
-#: includes/eme-events.php:10701
+#: includes/eme-events.php:10702
 msgid "Edit Recurrence"
 msgstr "Modifier la périodicité"
 
@@ -1951,7 +1951,7 @@ msgstr "Page de l’extension Events Made Easy"
 #: includes/eme-events.php:10005
 #: includes/eme-events.php:10028
 #: includes/eme-events.php:10156
-#: includes/eme-events.php:10211
+#: includes/eme-events.php:10212
 #: includes/eme-locations.php:2479
 #: includes/eme-rsvp.php:6096
 msgid "Edit"
@@ -2334,8 +2334,8 @@ msgstr "Si vous modifiez cet évènement, il deviendra un évènement indépenda
 
 #: includes/eme-events.php:6697
 #: includes/eme-events.php:9869
-#: includes/eme-events.php:10191
-#: includes/eme-events.php:10651
+#: includes/eme-events.php:10192
+#: includes/eme-events.php:10652
 #: includes/eme-options.php:1333
 #: includes/eme-rsvp.php:6171
 msgid "RSVP"
@@ -2369,7 +2369,7 @@ msgstr "Info RSVP générique"
 
 #: includes/eme-events.php:6736
 #: includes/eme-members.php:2180
-#: includes/eme-options.php:3277
+#: includes/eme-options.php:3275
 msgid "Payment methods"
 msgstr "Méthodes de payement"
 
@@ -2508,7 +2508,7 @@ msgstr "Supprimer la récurrence"
 #: includes/eme-events.php:9941
 #: includes/eme-events.php:10158
 #: includes/eme-events.php:10172
-#: includes/eme-events.php:10283
+#: includes/eme-events.php:10284
 #: includes/eme-members.php:1779
 #: includes/eme-members.php:1911
 #: includes/eme-people.php:1091
@@ -2541,8 +2541,8 @@ msgid "Since the author is undefined for this event, any reference to the contac
 msgstr "Puisque l'auteur n'est pas défini pour cet évènement, toute référence à la personne de contact (comme lors de l'utilisation de #_CONTACTPERSON lors de l'envoi d'e-mails) utilisera les informations de l'utilisateur admin ."
 
 #: includes/eme-events.php:7108
-#: includes/eme-events.php:10199
-#: includes/eme-events.php:10490
+#: includes/eme-events.php:10200
+#: includes/eme-events.php:10491
 #: includes/eme-locations.php:464
 #: includes/eme-locations.php:3073
 #: includes/eme-recurrence.php:767
@@ -3064,7 +3064,7 @@ msgstr "Fichiers joints a l'e-mail de réservation"
 #: includes/eme-events.php:8439
 #: includes/eme-events.php:9809
 #: includes/eme-events.php:10175
-#: includes/eme-events.php:10294
+#: includes/eme-events.php:10295
 #: includes/eme-mailer.php:2916
 #: includes/eme-mailer.php:3098
 #: includes/eme-members.php:2302
@@ -3544,7 +3544,7 @@ msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "Autoriser uniquement une réservation par personne (combo e-mail/nom de famille/prénom)"
 
 #: includes/eme-events.php:9003
-#: includes/eme-events.php:10197
+#: includes/eme-events.php:10198
 #: includes/eme-options.php:38
 #: includes/eme-people.php:1279
 #: includes/eme-people.php:1598
@@ -3575,7 +3575,7 @@ msgstr "Pour les évènements multiprix, séparez les valeurs par '||'"
 #: includes/eme-members.php:1993
 #: includes/eme-members.php:1999
 #: includes/eme-options.php:2658
-#: includes/eme-options.php:3275
+#: includes/eme-options.php:3273
 msgid "Use the point as decimal separator"
 msgstr "Utiliser le point comme séparateur décimal"
 
@@ -3901,7 +3901,7 @@ msgstr "Sélectionnez une réduction"
 msgid "Select a discountgroup"
 msgstr "Sélectionnez un groupe de réduction"
 
-#: includes/eme-events.php:10186
+#: includes/eme-events.php:10187
 msgid "No matching event found"
 msgstr "Aucun évènement correspondant trouvé"
 
@@ -3910,7 +3910,7 @@ msgid "Recurrences"
 msgstr "Récurrences"
 
 #: includes/eme-events.php:9870
-#: includes/eme-events.php:10198
+#: includes/eme-events.php:10199
 msgid "Event price"
 msgstr "Prix de l’évènement"
 
@@ -3918,7 +3918,7 @@ msgstr "Prix de l’évènement"
 #: includes/eme-events.php:9961
 #: includes/eme-events.php:9972
 #: includes/eme-events.php:10051
-#: includes/eme-formfields.php:5191
+#: includes/eme-formfields.php:5208
 msgid "Copy"
 msgstr "Copier"
 
@@ -3929,7 +3929,7 @@ msgstr "Copier"
 #: includes/eme-events.php:10066
 #: includes/eme-events.php:10106
 #: includes/eme-events.php:10153
-#: includes/eme-events.php:10212
+#: includes/eme-events.php:10213
 msgid "CSV"
 msgstr "CSV"
 
@@ -3940,7 +3940,7 @@ msgstr "CSV"
 #: includes/eme-events.php:10067
 #: includes/eme-events.php:10107
 #: includes/eme-events.php:10154
-#: includes/eme-events.php:10213
+#: includes/eme-events.php:10214
 msgid "Print"
 msgstr "Impression"
 
@@ -3958,12 +3958,12 @@ msgid "Date"
 msgstr "Date"
 
 #: includes/eme-events.php:9871
-#: includes/eme-events.php:10193
+#: includes/eme-events.php:10194
 msgid "Date and time"
 msgstr "Date et heure"
 
 #: includes/eme-events.php:9886
-#: includes/eme-events.php:10295
+#: includes/eme-events.php:10296
 msgid "Selected dates:"
 msgstr "Dates sélectionnées :"
 
@@ -3988,10 +3988,10 @@ msgstr "Modifié le"
 #: includes/eme-events.php:10063
 #: includes/eme-events.php:10099
 #: includes/eme-events.php:10150
-#: includes/eme-events.php:10218
-#: includes/eme-events.php:10234
-#: includes/eme-events.php:10248
-#: includes/eme-events.php:10261
+#: includes/eme-events.php:10219
+#: includes/eme-events.php:10235
+#: includes/eme-events.php:10249
+#: includes/eme-events.php:10262
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
@@ -4047,7 +4047,7 @@ msgstr "Êtes-vous sûr de supprimer cet enregistrement ?"
 #: includes/eme-events.php:9918
 #: includes/eme-events.php:10077
 #: includes/eme-events.php:10126
-#: includes/eme-events.php:10274
+#: includes/eme-events.php:10275
 msgid "No matching person found"
 msgstr "Aucune personne correspondante trouvée"
 
@@ -4073,10 +4073,10 @@ msgid "Task end date"
 msgstr "Date de fin de la tâche"
 
 #: includes/eme-events.php:9931
-#: includes/eme-events.php:10214
+#: includes/eme-events.php:10215
 #: includes/eme-formfields.php:1235
 #: includes/eme-formfields.php:2068
-#: includes/eme-formfields.php:3254
+#: includes/eme-formfields.php:3271
 #: includes/eme-options.php:39
 #: includes/eme-people.php:1092
 #: includes/eme-people.php:1292
@@ -4092,16 +4092,16 @@ msgstr "Commentaire"
 #: includes/eme-events.php:10036
 #: includes/eme-events.php:10101
 #: includes/eme-events.php:10152
-#: includes/eme-events.php:10220
-#: includes/eme-events.php:10236
-#: includes/eme-events.php:10250
-#: includes/eme-events.php:10263
+#: includes/eme-events.php:10221
+#: includes/eme-events.php:10237
+#: includes/eme-events.php:10251
+#: includes/eme-events.php:10264
 msgid "Are you sure to delete the selected records?"
 msgstr "Confirmez-vous vouloir supprimer les enregistrements sélectionnés ?"
 
 #: events-manager.php:368
 #: includes/eme-events.php:9950
-#: includes/eme-formfields.php:4989
+#: includes/eme-formfields.php:5006
 #: includes/eme-options.php:1618
 msgid "Templates"
 msgstr "Modèles"
@@ -4217,9 +4217,9 @@ msgstr "Modifier l’emplacement '%s'."
 #: includes/eme-events.php:10146
 #: includes/eme-formfields.php:1296
 #: includes/eme-formfields.php:1909
-#: includes/eme-formfields.php:2988
-#: includes/eme-formfields.php:3954
-#: includes/eme-formfields.php:4619
+#: includes/eme-formfields.php:3005
+#: includes/eme-formfields.php:3971
+#: includes/eme-formfields.php:4636
 #: includes/eme-gdpr.php:431
 #: includes/eme-gdpr.php:570
 #: includes/eme-locations.php:574
@@ -4235,9 +4235,9 @@ msgstr "Ville"
 #: includes/eme-events.php:10147
 #: includes/eme-formfields.php:1306
 #: includes/eme-formfields.php:1931
-#: includes/eme-formfields.php:3000
-#: includes/eme-formfields.php:3964
-#: includes/eme-formfields.php:4635
+#: includes/eme-formfields.php:3017
+#: includes/eme-formfields.php:3981
+#: includes/eme-formfields.php:4652
 #: includes/eme-gdpr.php:432
 #: includes/eme-gdpr.php:574
 #: includes/eme-locations.php:582
@@ -4263,7 +4263,7 @@ msgid "Online only"
 msgstr "En ligne uniquement"
 
 #: includes/eme-events.php:10079
-#: includes/eme-events.php:10190
+#: includes/eme-events.php:10191
 #: includes/eme-gdpr.php:546
 #: includes/eme-people.php:1065
 #: includes/eme-people.php:1244
@@ -4293,11 +4293,11 @@ msgstr "Groupes"
 #: includes/eme-formfields.php:1188
 #: includes/eme-formfields.php:1534
 #: includes/eme-formfields.php:1847
-#: includes/eme-formfields.php:2900
-#: includes/eme-formfields.php:3498
-#: includes/eme-formfields.php:3878
-#: includes/eme-formfields.php:4354
-#: includes/eme-formfields.php:4553
+#: includes/eme-formfields.php:2917
+#: includes/eme-formfields.php:3515
+#: includes/eme-formfields.php:3895
+#: includes/eme-formfields.php:4371
+#: includes/eme-formfields.php:4570
 #: includes/eme-gdpr.php:247
 #: includes/eme-gdpr.php:426
 #: includes/eme-gdpr.php:550
@@ -4323,12 +4323,12 @@ msgstr "Nom de famille"
 #: includes/eme-formfields.php:1204
 #: includes/eme-formfields.php:1546
 #: includes/eme-formfields.php:1863
-#: includes/eme-formfields.php:2927
-#: includes/eme-formfields.php:3162
-#: includes/eme-formfields.php:3514
-#: includes/eme-formfields.php:3902
-#: includes/eme-formfields.php:4368
-#: includes/eme-formfields.php:4568
+#: includes/eme-formfields.php:2944
+#: includes/eme-formfields.php:3179
+#: includes/eme-formfields.php:3531
+#: includes/eme-formfields.php:3919
+#: includes/eme-formfields.php:4385
+#: includes/eme-formfields.php:4585
 #: includes/eme-gdpr.php:247
 #: includes/eme-gdpr.php:427
 #: includes/eme-gdpr.php:554
@@ -4352,16 +4352,16 @@ msgstr "Prénom"
 #: includes/eme-cleanup.php:315
 #: includes/eme-events.php:10093
 #: includes/eme-events.php:10140
-#: includes/eme-events.php:10281
+#: includes/eme-events.php:10282
 #: includes/eme-formfields.php:602
 #: includes/eme-formfields.php:1213
 #: includes/eme-formfields.php:1555
 #: includes/eme-formfields.php:1976
-#: includes/eme-formfields.php:3051
-#: includes/eme-formfields.php:3545
-#: includes/eme-formfields.php:4012
-#: includes/eme-formfields.php:4381
-#: includes/eme-formfields.php:4664
+#: includes/eme-formfields.php:3068
+#: includes/eme-formfields.php:3562
+#: includes/eme-formfields.php:4029
+#: includes/eme-formfields.php:4398
+#: includes/eme-formfields.php:4681
 #: includes/eme-gdpr.php:128
 #: includes/eme-gdpr.php:202
 #: includes/eme-gdpr.php:318
@@ -4387,10 +4387,10 @@ msgstr "E-mail"
 #: includes/eme-events.php:10094
 #: includes/eme-formfields.php:1226
 #: includes/eme-formfields.php:2059
-#: includes/eme-formfields.php:3070
-#: includes/eme-formfields.php:3530
-#: includes/eme-formfields.php:4023
-#: includes/eme-formfields.php:4678
+#: includes/eme-formfields.php:3087
+#: includes/eme-formfields.php:3547
+#: includes/eme-formfields.php:4040
+#: includes/eme-formfields.php:4695
 #: includes/eme-gdpr.php:435
 #: includes/eme-gdpr.php:586
 #: includes/eme-options.php:37
@@ -4414,7 +4414,7 @@ msgstr "Lieu de naissance"
 
 #: includes/eme-events.php:10098
 #: includes/eme-events.php:10135
-#: includes/eme-events.php:10195
+#: includes/eme-events.php:10196
 #: includes/eme-people.php:1889
 #: includes/eme-people.php:2703
 msgid "Linked WP user"
@@ -4530,35 +4530,35 @@ msgid "Paid on"
 msgstr "Payé le"
 
 #: includes/eme-events.php:10165
-#: includes/eme-events.php:10201
+#: includes/eme-events.php:10202
 #: includes/eme-people.php:1290
 msgid "Unique nbr"
 msgstr "Numéro unique"
 
 #: includes/eme-events.php:10166
-#: includes/eme-events.php:10202
+#: includes/eme-events.php:10203
 msgid "Payment ID"
 msgstr "ID de paiement"
 
 #: includes/eme-events.php:10167
-#: includes/eme-events.php:10203
+#: includes/eme-events.php:10204
 #: includes/eme-people.php:1282
 #: includes/eme-people.php:1619
 msgid "Paid"
 msgstr "Payé"
 
 #: includes/eme-events.php:10168
-#: includes/eme-events.php:10206
+#: includes/eme-events.php:10207
 msgid "Payment GW"
 msgstr "Paiement GW"
 
 #: includes/eme-events.php:10169
-#: includes/eme-events.php:10207
+#: includes/eme-events.php:10208
 msgid "Payment GW ID"
 msgstr "ID de paiement GW"
 
 #: includes/eme-events.php:10170
-#: includes/eme-events.php:10215
+#: includes/eme-events.php:10216
 msgid "Last reminder"
 msgstr "Dernier rappel"
 
@@ -4567,19 +4567,19 @@ msgid "Reminders sent"
 msgstr "Rappels envoyés"
 
 #: includes/eme-events.php:10176
-#: includes/eme-events.php:10216
+#: includes/eme-events.php:10217
 #: includes/eme-people.php:1287
 #: includes/eme-people.php:1631
 msgid "Discount"
 msgstr "Remise"
 
 #: includes/eme-events.php:10177
-#: includes/eme-events.php:10217
+#: includes/eme-events.php:10218
 msgid "Used discount codes"
 msgstr "Codes de remise utilisés"
 
 #: includes/eme-events.php:10178
-#: includes/eme-events.php:10200
+#: includes/eme-events.php:10201
 #: includes/eme-people.php:1286
 #: includes/eme-people.php:1637
 msgid "Total price"
@@ -4589,113 +4589,113 @@ msgstr "Prix total"
 msgid "Membership price"
 msgstr "Prix de l’adhésion"
 
-#: includes/eme-events.php:10187
+#: includes/eme-events.php:10188
 #: includes/eme-options.php:1676
 msgid "Bookings"
 msgstr "Les réservations"
 
-#: includes/eme-events.php:10189
+#: includes/eme-events.php:10190
 msgid "Event ID"
 msgstr "ID de l’évènement"
 
-#: includes/eme-events.php:10192
+#: includes/eme-events.php:10193
 msgid "Event info"
 msgstr "Informations sur l'évènement"
 
-#: includes/eme-events.php:10194
+#: includes/eme-events.php:10195
 msgid "Booker"
 msgstr "Client"
 
-#: includes/eme-events.php:10196
+#: includes/eme-events.php:10197
 #: includes/eme-people.php:1285
 #: includes/eme-people.php:1625
 msgid "Booking date"
 msgstr "Date de la réservation"
 
-#: includes/eme-events.php:10204
+#: includes/eme-events.php:10205
 #: includes/eme-people.php:1284
 msgid "Remaining"
 msgstr "Restant"
 
-#: includes/eme-events.php:10205
+#: includes/eme-events.php:10206
 #: includes/eme-people.php:1283
 msgid "Received"
 msgstr "Reçu"
 
-#: includes/eme-events.php:10208
+#: includes/eme-events.php:10209
 msgid "Payment date"
 msgstr "Date de paiement"
 
-#: includes/eme-events.php:10209
+#: includes/eme-events.php:10210
 msgid "Mark paid and approve"
 msgstr "Marque de paiement et d’approbation"
 
-#: includes/eme-events.php:10210
+#: includes/eme-events.php:10211
 #: includes/eme-rsvp.php:5484
 #: includes/eme-rsvp.php:5502
 msgid "Mark paid"
 msgstr "Marquer comme payé"
 
-#: includes/eme-events.php:10223
+#: includes/eme-events.php:10224
 #: includes/eme-people.php:1291
 msgid "Attendance count"
 msgstr "Décompte des présences"
 
-#: includes/eme-events.php:10224
+#: includes/eme-events.php:10225
 msgid "Please select only one record in order to do partial payments"
 msgstr "Veuillez ne sélectionner qu’un seul enregistrement afin d’effectuer des paiements partiels"
 
-#: includes/eme-events.php:10264
+#: includes/eme-events.php:10265
 #: includes/eme-mailer.php:2950
 #: includes/eme-mailer.php:3133
 msgid "Send email"
 msgstr "Envoyer un email"
 
-#: includes/eme-events.php:10265
+#: includes/eme-events.php:10266
 msgid "Queue email"
 msgstr "Mettre l’e-mail en file d’attente"
 
-#: includes/eme-events.php:10268
+#: includes/eme-events.php:10269
 msgid "Sent on"
 msgstr "Envoyé sur"
 
-#: includes/eme-events.php:10269
+#: includes/eme-events.php:10270
 msgid "First read on"
 msgstr "Première lecture sur"
 
-#: includes/eme-events.php:10270
+#: includes/eme-events.php:10271
 msgid "Last read on"
 msgstr "Dernière lecture sur"
 
-#: includes/eme-events.php:10272
+#: includes/eme-events.php:10273
 msgid "Read count"
 msgstr "Compteur de vue"
 
-#: includes/eme-events.php:10273
+#: includes/eme-events.php:10274
 msgid "Error message"
 msgstr "Message d’erreur"
 
-#: includes/eme-events.php:10284
+#: includes/eme-events.php:10285
 msgid "Action"
 msgstr "Action"
 
-#: includes/eme-events.php:10287
+#: includes/eme-events.php:10288
 #: includes/eme-mailer.php:2723
 msgid "Mailing report"
 msgstr "Rapport d’envoi"
 
-#: includes/eme-events.php:10291
+#: includes/eme-events.php:10292
 msgid "Select one or more events"
 msgstr "Sélectionner un ou plusieurs évènements"
 
-#: includes/eme-events.php:10486
+#: includes/eme-events.php:10487
 #: includes/eme-rsvp.php:6099
 #: includes/eme-tasks.php:2121
 msgid "Edit event"
 msgstr "Modifier l'évènement"
 
 #: includes/eme-events.php:6963
-#: includes/eme-events.php:10502
+#: includes/eme-events.php:10503
 #: includes/eme-rsvp.php:6106
 msgid "RSVP Info: "
 msgstr "RSVP-information : "
@@ -4707,12 +4707,12 @@ msgstr "Places libres :"
 #: includes/eme-events.php:6992
 #: includes/eme-events.php:6995
 #: includes/eme-events.php:7049
-#: includes/eme-events.php:10526
-#: includes/eme-events.php:10528
-#: includes/eme-events.php:10533
-#: includes/eme-events.php:10535
-#: includes/eme-events.php:10599
-#: includes/eme-events.php:10601
+#: includes/eme-events.php:10527
+#: includes/eme-events.php:10529
+#: includes/eme-events.php:10534
+#: includes/eme-events.php:10536
+#: includes/eme-events.php:10600
+#: includes/eme-events.php:10602
 #: includes/eme-rsvp.php:6109
 #: includes/eme-rsvp.php:6199
 msgid "Approved:"
@@ -4720,26 +4720,26 @@ msgstr "Approuvé :"
 
 #: includes/eme-events.php:6999
 #: includes/eme-events.php:7047
-#: includes/eme-events.php:10541
-#: includes/eme-events.php:10543
-#: includes/eme-events.php:10593
-#: includes/eme-events.php:10595
+#: includes/eme-events.php:10542
+#: includes/eme-events.php:10544
+#: includes/eme-events.php:10594
+#: includes/eme-events.php:10596
 #: includes/eme-rsvp.php:6136
 #: includes/eme-rsvp.php:6197
 msgid "Pending:"
 msgstr "En attente :"
 
 #: includes/eme-events.php:7004
-#: includes/eme-events.php:10550
-#: includes/eme-events.php:10552
+#: includes/eme-events.php:10551
+#: includes/eme-events.php:10553
 #: includes/eme-rsvp.php:6141
 msgid "Absent:"
 msgstr "Absent :"
 
 #: includes/eme-events.php:7009
 #: includes/eme-events.php:7012
-#: includes/eme-events.php:10557
-#: includes/eme-events.php:10560
+#: includes/eme-events.php:10558
+#: includes/eme-events.php:10561
 #: includes/eme-members.php:6748
 #: includes/eme-recurrence.php:755
 #: includes/eme-rsvp.php:6145
@@ -4749,19 +4749,19 @@ msgstr "Max :"
 
 #. translators: %d is the number of waiting list seats
 #: includes/eme-events.php:7017
-#: includes/eme-events.php:10565
+#: includes/eme-events.php:10566
 #: includes/eme-rsvp.php:6154
 msgid "(%d waiting list seats included)"
 msgstr "(%d sièges sur liste d’attente inclus)"
 
 #: includes/eme-events.php:7022
-#: includes/eme-events.php:10570
+#: includes/eme-events.php:10571
 #: includes/eme-rsvp.php:6160
 msgid "Printable view"
 msgstr "Version à imprimer"
 
 #: includes/eme-events.php:7023
-#: includes/eme-events.php:10571
+#: includes/eme-events.php:10572
 #: includes/eme-rsvp.php:6161
 #: includes/eme-tasks.php:2123
 msgid "CSV export"
@@ -4769,65 +4769,65 @@ msgstr "Export CSV"
 
 #. translators: %d is the number of tasks
 #: includes/eme-events.php:7045
-#: includes/eme-events.php:10590
+#: includes/eme-events.php:10591
 #: includes/eme-rsvp.php:6195
 msgid "Task Info: %d tasks"
 msgstr "Info sur les tâches : %d tâches"
 
-#: includes/eme-events.php:10609
+#: includes/eme-events.php:10610
 #: includes/eme-locations.php:541
 #: includes/eme-locations.php:3067
 #: includes/eme-recurrence.php:785
 msgid "Edit location"
 msgstr "Editer le lieu"
 
-#: includes/eme-events.php:10611
+#: includes/eme-events.php:10612
 #: includes/eme-locations.php:3069
 #: includes/eme-recurrence.php:787
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Les coordonnées de la carte de localisation sont vides ! Veuillez modifier l’emplacement pour corriger ceci, sinon il ne s’affichera pas correctement sur votre site Web."
 
-#: includes/eme-events.php:10630
+#: includes/eme-events.php:10631
 msgid "Preview event"
 msgstr "Aperçu de l'évènement"
 
-#: includes/eme-events.php:10632
+#: includes/eme-events.php:10633
 msgid "View event"
 msgstr "Voir l’évènement"
 
-#: includes/eme-events.php:10639
+#: includes/eme-events.php:10640
 msgid "Duplicate this event"
 msgstr "Dupliquer cet évènement"
 
-#: includes/eme-events.php:10651
+#: includes/eme-events.php:10652
 #: includes/eme-rsvp.php:6171
 msgid "Add booking for this event"
 msgstr "Ajouter une réservation pour cet événement"
 
-#: includes/eme-events.php:10653
+#: includes/eme-events.php:10654
 #: includes/eme-rsvp.php:6173
 msgid "Password protected"
 msgstr "Mot de passe protégé"
 
-#: includes/eme-events.php:10661
+#: includes/eme-events.php:10662
 #: includes/eme-recurrence.php:757
 msgid "Free"
 msgstr "Gratuit"
 
-#: includes/eme-events.php:10810
+#: includes/eme-events.php:10811
 #: includes/eme-recurrence.php:852
 msgid "No action defined!"
 msgstr "Aucune action définie !"
 
-#: includes/eme-events.php:10836
+#: includes/eme-events.php:10837
 msgid "Restored selected events to draft status"
 msgstr "Mettre les évènements sélectionnés à l'état de brouillon"
 
-#: includes/eme-events.php:10844
+#: includes/eme-events.php:10845
 msgid "Events status updated"
 msgstr "État des évènements mis à jour"
 
-#: includes/eme-events.php:10859
+#: includes/eme-events.php:10860
 msgid "Events added to category"
 msgstr "Événements ajoutés à la catégorie"
 
@@ -4995,7 +4995,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Incluez ce champ dans l'exportation CSV pour les réservations."
 
 #: includes/eme-formfields.php:351
-#: includes/eme-formfields.php:4988
+#: includes/eme-formfields.php:5005
 msgid "Field condition"
 msgstr "Condition du champ"
 
@@ -5318,7 +5318,7 @@ msgstr "Case à cocher (verticale)"
 
 #: includes/eme-formfields.php:588
 #: includes/eme-formfields.php:2047
-#: includes/eme-formfields.php:3164
+#: includes/eme-formfields.php:3181
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -5355,24 +5355,24 @@ msgid "This is a hidden field, but in the backend it is shown as text so an admi
 msgstr "C’est un champ caché, mais dans l’interface d’administration, il est affiché sous forme de texte afin qu’un administrateur puisse voir sa valeur et éventuellement la modifier"
 
 #: includes/eme-formfields.php:1192
-#: includes/eme-formfields.php:2904
+#: includes/eme-formfields.php:2921
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Notification : puisque vous êtes connecté en tant que personne ayant le droit de modifier ou de créer cet évènement, le champ 'Nom de famille' est également un champ à complétion automatique vous permettant de sélectionner des personnes existantes si vous le souhaitez. Ou effacez simplement le champ et commencez à taper."
 
 #: includes/eme-formfields.php:1243
 #: includes/eme-formfields.php:2010
-#: includes/eme-formfields.php:3121
-#: includes/eme-formfields.php:4066
-#: includes/eme-formfields.php:4443
+#: includes/eme-formfields.php:3138
+#: includes/eme-formfields.php:4083
+#: includes/eme-formfields.php:4460
 msgid "Remember me?"
 msgstr "Souviens-toi de moi ?"
 
 #: includes/eme-formfields.php:1254
 #: includes/eme-formfields.php:1872
-#: includes/eme-formfields.php:2938
-#: includes/eme-formfields.php:3602
-#: includes/eme-formfields.php:3913
-#: includes/eme-formfields.php:4582
+#: includes/eme-formfields.php:2955
+#: includes/eme-formfields.php:3619
+#: includes/eme-formfields.php:3930
+#: includes/eme-formfields.php:4599
 #: includes/eme-people.php:1080
 #: includes/eme-people.php:1255
 #: includes/eme-people.php:2643
@@ -5382,10 +5382,10 @@ msgstr "Date de naissance"
 
 #: includes/eme-formfields.php:1266
 #: includes/eme-formfields.php:1882
-#: includes/eme-formfields.php:2952
-#: includes/eme-formfields.php:3586
-#: includes/eme-formfields.php:3924
-#: includes/eme-formfields.php:4593
+#: includes/eme-formfields.php:2969
+#: includes/eme-formfields.php:3603
+#: includes/eme-formfields.php:3941
+#: includes/eme-formfields.php:4610
 #: includes/eme-people.php:1081
 #: includes/eme-people.php:1256
 #: includes/eme-people.php:2658
@@ -5394,7 +5394,7 @@ msgid "Place of birth"
 msgstr "Lieu de naissance"
 
 #: includes/eme-formfields.php:1381
-#: includes/eme-formfields.php:4461
+#: includes/eme-formfields.php:4478
 msgid "Subscribe"
 msgstr "Souscrire"
 
@@ -5412,56 +5412,56 @@ msgid "Not all required fields are present in the form. We need at least #_CANCE
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Nous avons besoin au moins des espaces réservés #_CANCEL_PAYMENT_LINE et de #_SUBMIT (ou similaire)."
 
 #: includes/eme-formfields.php:2023
-#: includes/eme-formfields.php:3136
-#: includes/eme-formfields.php:4079
+#: includes/eme-formfields.php:3153
+#: includes/eme-formfields.php:4096
 msgid "Group is not public"
 msgstr "Le groupe n’est pas public"
 
 #: includes/eme-formfields.php:2038
-#: includes/eme-formfields.php:3151
-#: includes/eme-formfields.php:4094
+#: includes/eme-formfields.php:3168
+#: includes/eme-formfields.php:4111
 msgid "Group does not exist"
 msgstr "Le groupe n’existe pas"
 
-#: includes/eme-formfields.php:3229
+#: includes/eme-formfields.php:3246
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "En utilisant #_SEATS {xx}, vous utilisez plusieurs catégories de places dans votre modèle de RSVP, mais vous n'avez pas défini de prix pour chaque catégorie dans les paramètres de RSVP de votre évènement. Veuillez corriger les paramètres d'évènement RSVP."
 
-#: includes/eme-formfields.php:3355
-#: includes/eme-formfields.php:4110
+#: includes/eme-formfields.php:3372
+#: includes/eme-formfields.php:4127
 msgid "Discount code"
 msgstr "Code de remise"
 
 #. translators: %s is the calculated discount value
-#: includes/eme-formfields.php:3362
-#: includes/eme-formfields.php:4117
+#: includes/eme-formfields.php:3379
+#: includes/eme-formfields.php:4134
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Saisissez une nouvelle valeur de remise fixe si vous le souhaitez ou laissez comme telle pour conserver la valeur calculée %s selon les remises appliquées suivantes :"
 
-#: includes/eme-formfields.php:3365
-#: includes/eme-formfields.php:4120
+#: includes/eme-formfields.php:3382
+#: includes/eme-formfields.php:4137
 msgid "Enter a fixed discount value if wanted"
 msgstr "Entrez une valeur de remise fixe si vous le souhaitez"
 
 #. translators: %s is the discount group name
-#: includes/eme-formfields.php:3371
-#: includes/eme-formfields.php:4126
+#: includes/eme-formfields.php:3388
+#: includes/eme-formfields.php:4143
 #: includes/eme-people.php:1393
 #: includes/eme-people.php:1714
 msgid "Discountgroup %s"
 msgstr "Groupe de remises %s"
 
 #. translators: %d is the discount group ID
-#: includes/eme-formfields.php:3374
-#: includes/eme-formfields.php:4129
+#: includes/eme-formfields.php:3391
+#: includes/eme-formfields.php:4146
 #: includes/eme-people.php:1396
 #: includes/eme-people.php:1717
 msgid "Applied discount group %d no longer exists"
 msgstr "Groupe de remise appliqué %d n’existe plus"
 
 #. translators: %d is the discount ID
-#: includes/eme-formfields.php:3390
-#: includes/eme-formfields.php:4147
+#: includes/eme-formfields.php:3407
+#: includes/eme-formfields.php:4164
 #: includes/eme-members.php:5311
 #: includes/eme-people.php:1412
 #: includes/eme-people.php:1733
@@ -5469,162 +5469,162 @@ msgstr "Groupe de remise appliqué %d n’existe plus"
 msgid "Applied discount %d no longer exists"
 msgstr "Remise appliquée %d n'existe plus"
 
-#: includes/eme-formfields.php:3397
-#: includes/eme-formfields.php:4154
+#: includes/eme-formfields.php:3414
+#: includes/eme-formfields.php:4171
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "Un seul des champs de réduction peut être utilisé dans l'interface d'administration, les autres ne le seront pas"
 
-#: includes/eme-formfields.php:3403
+#: includes/eme-formfields.php:3420
 msgid "Update booking"
 msgstr "Mise à jour de la réservation"
 
-#: includes/eme-formfields.php:3451
+#: includes/eme-formfields.php:3468
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il est nécessaire d'avoir au moins #_LASTNAME, #_EMAIL, #_SEATS et #_SUBMIT (ou similaires)."
 
-#: includes/eme-formfields.php:3454
+#: includes/eme-formfields.php:3471
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Comme c'est un évènement multiprix, assurez-vous que vous avez modifié le paramètre « formulaire de réservation » pour l'évènement afin d'inclure #_SEAT{xx} siège(s) réservé(s) pour chaque prix."
 
-#: includes/eme-formfields.php:3457
+#: includes/eme-formfields.php:3474
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Vérifiez que l'espace réservé #_PASSWORD est présent dans le formulaire."
 
-#: includes/eme-formfields.php:3659
+#: includes/eme-formfields.php:3676
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Nous avons besoin d’au moins les espaces réservés #_LASTNAME et #_FIRSTNAME."
 
-#: includes/eme-formfields.php:3882
+#: includes/eme-formfields.php:3899
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Notification : puisque vous êtes connecté en tant que personne ayant le droit de gérer des membres et des adhésions, le champ 'Nom de famille' est également un champ à complétion automatique vous permettant de sélectionner des personnes existantes si vous le souhaitez. Ou effacez simplement le champ et commencez à taper."
 
-#: includes/eme-formfields.php:4185
+#: includes/eme-formfields.php:4202
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "Dans l’interface d’administration, vous ne pouvez pas ajouter ou modifier les informations relatives aux membres de la famille, utilisez le formulaire du site public pour cela."
 
-#: includes/eme-formfields.php:4250
+#: includes/eme-formfields.php:4267
 msgid "Update member"
 msgstr "Mise à jour du membre"
 
-#: includes/eme-formfields.php:4255
+#: includes/eme-formfields.php:4272
 msgid "Become member"
 msgstr "Devenir membre"
 
-#: includes/eme-formfields.php:4287
-#: includes/eme-formfields.php:4808
+#: includes/eme-formfields.php:4304
+#: includes/eme-formfields.php:4825
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il faut au moins les champs #_LASTNAME, #_FIRSTNAME, #_EMAIL et #_SUBMIT (ou similaire)."
 
-#: includes/eme-formfields.php:4410
+#: includes/eme-formfields.php:4427
 #: includes/eme-tasks.php:597
 #: includes/eme-templates.php:43
 msgid "All"
 msgstr "Tous"
 
-#: includes/eme-formfields.php:4396
-#: includes/eme-formfields.php:4415
+#: includes/eme-formfields.php:4413
+#: includes/eme-formfields.php:4432
 msgid "Newsletter concerning new events"
 msgstr "Lettre d’information sur les évènements à venir"
 
-#: includes/eme-formfields.php:4358
-#: includes/eme-formfields.php:4557
+#: includes/eme-formfields.php:4375
+#: includes/eme-formfields.php:4574
 msgid "You can change your last name in your WP profile."
 msgstr "Vous pouvez modifier votre nom de famille dans votre profil WP."
 
-#: includes/eme-formfields.php:4372
-#: includes/eme-formfields.php:4572
+#: includes/eme-formfields.php:4389
+#: includes/eme-formfields.php:4589
 msgid "You can change your first name in your WP profile."
 msgstr "Vous pouvez modifier votre prénom dans votre profil WP."
 
-#: includes/eme-formfields.php:4385
-#: includes/eme-formfields.php:4668
+#: includes/eme-formfields.php:4402
+#: includes/eme-formfields.php:4685
 msgid "You can change your email in your WP profile."
 msgstr "Vous pouvez modifier votre e-mail dans votre profil WP."
 
-#: includes/eme-formfields.php:4459
+#: includes/eme-formfields.php:4476
 msgid "Unsubscribe"
 msgstr "Se désabonner"
 
-#: includes/eme-formfields.php:4484
+#: includes/eme-formfields.php:4501
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il faut au moins les champs #_EMAIL et #_SUBMIT (ou similaires)."
 
-#: includes/eme-formfields.php:4779
+#: includes/eme-formfields.php:4796
 msgid "Save personal info"
 msgstr "Enregistrer les informations personnelles"
 
-#: includes/eme-formfields.php:4982
+#: includes/eme-formfields.php:4999
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Afficher dynamiquement les champs en fonction d’un certain nombre de conditions"
 
-#: includes/eme-formfields.php:4987
+#: includes/eme-formfields.php:5004
 msgid "Index"
 msgstr "Index"
 
-#: includes/eme-formfields.php:5033
+#: includes/eme-formfields.php:5050
 msgid "Field"
 msgstr "Champ"
 
-#: includes/eme-formfields.php:5034
+#: includes/eme-formfields.php:5051
 msgid "Condition"
 msgstr "Condition"
 
-#: includes/eme-formfields.php:5035
+#: includes/eme-formfields.php:5052
 msgid "Condition value"
 msgstr "Valeur de la condition"
 
-#: includes/eme-formfields.php:4990
+#: includes/eme-formfields.php:5007
 msgid "Repeat"
 msgstr "Répéter"
 
-#: includes/eme-formfields.php:5020
+#: includes/eme-formfields.php:5037
 #: includes/eme-tasks.php:924
 #: includes/eme-todos.php:203
 msgid "Reorder"
 msgstr "Réorganiser"
 
-#: includes/eme-formfields.php:5039
+#: includes/eme-formfields.php:5056
 msgid "Header template"
 msgstr "Modèle d’en-tête"
 
-#: includes/eme-formfields.php:5040
+#: includes/eme-formfields.php:5057
 msgid "Template"
 msgstr "Modèle"
 
-#: includes/eme-formfields.php:5041
+#: includes/eme-formfields.php:5058
 msgid "Footer template"
 msgstr "Modèle de pied de page"
 
-#: includes/eme-formfields.php:5048
+#: includes/eme-formfields.php:5065
 msgid "Add new condition"
 msgstr "Ajouter une nouvelle condition"
 
-#: includes/eme-formfields.php:5051
+#: includes/eme-formfields.php:5068
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Avertissement : des réponses ont déjà été saisies sur la base de cette condition, modifier ou supprimer cette condition peut entraîner des effets secondaires indésirables."
 
-#: includes/eme-formfields.php:5062
+#: includes/eme-formfields.php:5079
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Cela affichera en outre le modèle sélectionné dans le formulaire si la condition est remplie."
 
-#: includes/eme-formfields.php:5064
+#: includes/eme-formfields.php:5081
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Le paramètre « Champ » doit être rempli avec tous les espaces réservés valides autorisés dans le formulaire."
 
-#: includes/eme-formfields.php:5066
+#: includes/eme-formfields.php:5083
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Le modèle sélectionné sera affiché plusieurs fois si l’option de répétition est utilisée (en fonction du nombre de fois où le champ est différent de la valeur de la condition. Ceci n’est pas utilisé pour le sélecteur de condition « égal à »)."
 
-#: includes/eme-formfields.php:5068
+#: includes/eme-formfields.php:5085
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Le modèle sélectionné peut contenir du HTML et des espaces réservés pour les champs de formulaire personnalisés (aucun autre espace réservé n’est autorisé)."
 
-#: includes/eme-formfields.php:5069
+#: includes/eme-formfields.php:5086
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Utilisez l’espace réservé #_DYNAMICDATA pour afficher un formulaire dynamique dans le formulaire de réservation."
 
-#: includes/eme-formfields.php:5219
-#: includes/eme-formfields.php:5229
+#: includes/eme-formfields.php:5236
+#: includes/eme-formfields.php:5246
 #: includes/eme-functions.php:3461
 #: includes/eme-functions.php:3462
 msgid "Records deleted!"
@@ -5851,7 +5851,7 @@ msgstr "Franc CFP (Franc Pacifique)"
 msgid "South African Rand"
 msgstr "Rand Sud-africain"
 
-#: includes/eme-events.php:10285
+#: includes/eme-events.php:10286
 #: includes/eme-functions.php:2286
 msgid "Extra info"
 msgstr "Informaitons supplémentaires"
@@ -6350,7 +6350,7 @@ msgstr "Dupliquer ce lieu"
 #: includes/eme-mailer.php:2425
 #: includes/eme-members.php:7041
 #: includes/eme-members.php:7120
-#: includes/eme-members.php:7239
+#: includes/eme-members.php:7276
 #: includes/eme-rsvp.php:1275
 #: includes/eme-rsvp.php:5176
 #: includes/eme-rsvp.php:6874
@@ -6402,23 +6402,23 @@ msgstr "Ignoré"
 msgid "Reuse"
 msgstr "Réutiliser"
 
-#: includes/eme-events.php:10275
+#: includes/eme-events.php:10276
 #: includes/eme-mailer.php:3042
 msgid "Sender name"
 msgstr "Nom de l’expéditeur"
 
-#: includes/eme-events.php:10276
+#: includes/eme-events.php:10277
 #: includes/eme-mailer.php:3046
 msgid "Sender email"
 msgstr "E-mail de l’expéditeur"
 
-#: includes/eme-events.php:10282
+#: includes/eme-events.php:10283
 #: includes/eme-mailer.php:2865
 #: includes/eme-mailer.php:3053
 msgid "Subject"
 msgstr "Sujet"
 
-#: includes/eme-events.php:10267
+#: includes/eme-events.php:10268
 msgid "Queued on"
 msgstr "En file d’attente"
 
@@ -6525,7 +6525,7 @@ msgstr "E-mail lié à un évènement"
 msgid "Generic email"
 msgstr "E-mail générique"
 
-#: includes/eme-events.php:10289
+#: includes/eme-events.php:10290
 #: includes/eme-mailer.php:2746
 msgid "Mailings"
 msgstr "Mailings"
@@ -6796,15 +6796,15 @@ msgstr "Supprimer les envois sélectionnés"
 msgid "Archive selected mailings"
 msgstr "Archiver les envois sélectionnés"
 
-#: includes/eme-events.php:10266
+#: includes/eme-events.php:10267
 msgid "Planned execution time"
 msgstr "Temps d'exécution prévu"
 
-#: includes/eme-events.php:10271
+#: includes/eme-events.php:10272
 msgid "Unique read count"
 msgstr "Nombre de lectures unique"
 
-#: includes/eme-events.php:10286
+#: includes/eme-events.php:10287
 #: includes/eme-mailer.php:1712
 msgid "Report"
 msgstr "Rapport"
@@ -7276,7 +7276,7 @@ msgid "This will create a WP user after the membership signup is completed, as i
 msgstr "Cela créera un utilisateur WP une fois l’inscription terminée, comme si la personne s’était enregistrée dans WP. Cela ne créera un utilisateur que si la personne qui s’inscrit n’était pas connectée et que l’e-mail n’est pas encore pris par un autre utilisateur WP."
 
 #: includes/eme-members.php:1991
-#: includes/eme-options.php:3275
+#: includes/eme-options.php:3273
 msgid "Price"
 msgstr "Prix"
 
@@ -7285,7 +7285,7 @@ msgid "Extra charge for new members"
 msgstr "Supplément pour les nouveaux membres"
 
 #: includes/eme-members.php:2003
-#: includes/eme-options.php:3276
+#: includes/eme-options.php:3274
 msgid "Currency"
 msgstr "Devise"
 
@@ -7294,7 +7294,7 @@ msgid "The price you indicate for memberships is VAT included, special placehold
 msgstr "Le prix que vous indiquez pour les adhésions est TVA comprise, des espaces réservés spéciaux sont prévus pour indiquer le prix sans TVA."
 
 #: includes/eme-members.php:2021
-#: includes/eme-options.php:3281
+#: includes/eme-options.php:3279
 msgid "Contact person"
 msgstr "Personne de contact"
 
@@ -8132,10 +8132,10 @@ msgstr "Membres supprimés."
 
 #: includes/eme-members.php:7091
 #: includes/eme-members.php:7117
-#: includes/eme-members.php:7180
-#: includes/eme-members.php:7211
-#: includes/eme-members.php:7236
-#: includes/eme-members.php:7253
+#: includes/eme-members.php:7217
+#: includes/eme-members.php:7248
+#: includes/eme-members.php:7273
+#: includes/eme-members.php:7290
 #: includes/eme-rsvp.php:6505
 #: includes/eme-rsvp.php:6539
 #: includes/eme-rsvp.php:6583
@@ -8154,7 +8154,7 @@ msgid "The action has been executed successfully."
 msgstr "L’action a bien été exécutée."
 
 #: includes/eme-members.php:7094
-#: includes/eme-members.php:7214
+#: includes/eme-members.php:7251
 #: includes/eme-rsvp.php:6508
 #: includes/eme-rsvp.php:6542
 #: includes/eme-rsvp.php:6586
@@ -8168,7 +8168,7 @@ msgid "The action has been executed successfully but there were some problems wh
 msgstr "L’action a bien été exécutée, mais des problèmes sont survenus lors de l’envoi du courrier."
 
 #: includes/eme-members.php:7097
-#: includes/eme-members.php:7217
+#: includes/eme-members.php:7254
 #: includes/eme-rsvp.php:6511
 #: includes/eme-rsvp.php:6545
 #: includes/eme-rsvp.php:6580
@@ -8725,7 +8725,7 @@ msgstr "Sources de saisie semi-automatique"
 #: includes/eme-members.php:1976
 #: includes/eme-options.php:1512
 #: includes/eme-options.php:2109
-#: includes/eme-options.php:3295
+#: includes/eme-options.php:3293
 msgid "None"
 msgstr "Aucun"
 
@@ -8963,7 +8963,7 @@ msgid "Permission needed to edit all locations. Default: %s"
 msgstr "Permission nécessaire pour modifier tous les lieux. Par défaut: %s"
 
 #: events-manager.php:364
-#: includes/eme-events.php:10233
+#: includes/eme-events.php:10234
 #: includes/eme-options.php:1596
 msgid "Categories"
 msgstr "Catégories"
@@ -10955,7 +10955,7 @@ msgid "Select yes to redirect to the payment page after a successfull booking or
 msgstr "Sélectionner oui pour rediriger vers la page de paiement après une réservation réussie ou une adhésion, sélectionner non pour afficher la page de paiement en ligne. Il est recommandé de laisser cette option sur oui, afin que les utilisateurs puissent utiliser leur bouton précédent du navigateur pour revenir à la page de paiement."
 
 #: includes/eme-options.php:2661
-#: includes/eme-options.php:3286
+#: includes/eme-options.php:3284
 msgid "Redirect wait period"
 msgstr "Période d’attente avant redirection"
 
@@ -11731,208 +11731,208 @@ msgstr "Format par défaut pour le ballon du lieu"
 msgid "The format of the text appearing in the balloon describing the location in the map."
 msgstr "Le format du texte apparaissant dans la bulle décrivant l’emplacement sur la carte."
 
-#: includes/eme-options.php:3306
+#: includes/eme-options.php:3304
 msgid "Other settings"
 msgstr "Autres réglages"
 
-#: includes/eme-options.php:3309
+#: includes/eme-options.php:3307
 msgid "Stay on edit page after save?"
 msgstr "Rester sur la page de modification après l’enregistrement ?"
 
-#: includes/eme-options.php:3309
+#: includes/eme-options.php:3307
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr "Cela vous permet de rester sur la page d'édition après avoir enregistré des événements, des emplacements, des modèles, des champs de formulaire, des personnes, des groupes ou des appartenances."
 
-#: includes/eme-options.php:3310
+#: includes/eme-options.php:3308
 msgid "Remove leading zeros from minutes?"
 msgstr "Suppression des zéros des minutes ?"
 
-#: includes/eme-options.php:3310
+#: includes/eme-options.php:3308
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr "Les fonctions de date/heure de PHP n’ont aucune notation pour afficher les minutes sans zéros en tête. En cochant cette option, vous recevrez par exemple 9 pour 09 et vide pour 00. Ce paramètre affecte les espaces réservés d’heure personnalisés ainsi que *DATE et *TIME"
 
-#: includes/eme-options.php:3312
+#: includes/eme-options.php:3310
 msgid "Localize price"
 msgstr "Prix localisé"
 
-#: includes/eme-options.php:3312
+#: includes/eme-options.php:3310
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr "Si cette option est sélectionnée, tous les prix seront affichés dans la langue courante avec le symbole de la devise. Si vous ne le souhaitez pas, désélectionnez cette option pour retrouver l’ancien comportement des prix localisés où vous devez vous occuper de la précision décimale, du symbole monétaire et de son emplacement. Cette option ne fonctionne que si la classe php NumberFormatter est présente, ce qui est toujours le cas dans les nouvelles versions de PHP, mais n’oubliez pas de charger l’extension INTL dans php."
 
-#: includes/eme-options.php:3313
+#: includes/eme-options.php:3311
 msgid "Decimals accuracy"
 msgstr "Précision décimale"
 
-#: includes/eme-options.php:3313
+#: includes/eme-options.php:3311
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr "EME tente d'afficher les prix en fonction de la localisation du navigateur, avec la précision décimale définie ici. La valeur par défaut est 2."
 
-#: includes/eme-options.php:3313
+#: includes/eme-options.php:3311
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr "Cette option n’est pas utilisée si l’option de prix localisé ci-dessus est active et que la classe php NumberFormatter est présente."
 
-#: includes/eme-options.php:3314
+#: includes/eme-options.php:3312
 msgid "Timepicker step interval"
 msgstr "Intervalle de temps du sélecteur d’heure"
 
-#: includes/eme-options.php:3314
+#: includes/eme-options.php:3312
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr "L’intervalle de pas du sélecteur d’heure. Par défaut, intervalle de 5 minutes (des pas de 5 minutes seront alors pris)"
 
-#: includes/eme-options.php:3315
+#: includes/eme-options.php:3313
 msgid "Required field text"
 msgstr "Texte du champ obligatoire"
 
-#: includes/eme-options.php:3315
+#: includes/eme-options.php:3313
 msgid "The text shown next to a form field when it is a required field"
 msgstr "Le texte affiché à côté d’un champ de formulaire lorsqu’il s’agit d’un champ obligatoire"
 
-#: includes/eme-options.php:3316
+#: includes/eme-options.php:3314
 msgid "Address line 1 text"
 msgstr "Texte de la ligne d’adresse 1"
 
-#: includes/eme-options.php:3316
+#: includes/eme-options.php:3314
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr "Par défaut, le texte affiché pour la deuxième ligne d’adresse est « Ligne d’adresse 1 », mais cela peut ne pas être très informatif pour les personnes, alors n’hésitez pas à mettre quelque chose d’autre ici, comme « nom de la rue »."
 
-#: includes/eme-options.php:3317
+#: includes/eme-options.php:3315
 msgid "Address line 2 text"
 msgstr "Texte de la ligne d’adresse 2"
 
-#: includes/eme-options.php:3317
+#: includes/eme-options.php:3315
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr "Par défaut, le texte affiché pour la deuxième ligne d’adresse est « Ligne d’adresse 2 », mais cela peut ne pas être très informatif pour les personnes, alors n’hésitez pas à mettre quelque chose d’autre ici, comme « numéro de maison »."
 
-#: includes/eme-options.php:3318
+#: includes/eme-options.php:3316
 msgid "Thumbnail size"
 msgstr "Taille des miniatures"
 
-#: includes/eme-options.php:3318
+#: includes/eme-options.php:3316
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr "Choisissez la taille de miniature par défaut  à afficher lorsque vous utilisez des espaces réservés impliquant des miniatures, par exemple #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, …"
 
-#: includes/eme-options.php:3319
+#: includes/eme-options.php:3317
 msgid "Use external url for single events or locations?"
 msgstr "Utiliser une URL externe pour des évènements ou des lieux uniques ?"
 
-#: includes/eme-options.php:3319
+#: includes/eme-options.php:3317
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr "Si cette option est sélectionnée, le fait de cliquer sur l'URL d'évènement ou d'emplacement unique pour accéder aux détails permet d'accéder à l'URL externe définie pour cet évènement ou cet emplacement, le cas échéant."
 
-#: includes/eme-options.php:3320
+#: includes/eme-options.php:3318
 msgid "By default send out birthday email for new persons?"
 msgstr "Envoyer par défaut un e-mail d’anniversaire pour les nouvelles personnes ?"
 
-#: includes/eme-options.php:3320
+#: includes/eme-options.php:3318
 msgid "If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email."
 msgstr "Si cette option est sélectionnée, les nouvelles personnes enregistrées avec un anniversaire non vide recevront un e-mail d’anniversaire. Allez dans les réglages des modèles d’e-mail pour modifier l’apparence de cet e-mail."
 
-#: includes/eme-options.php:3321
+#: includes/eme-options.php:3319
 msgid "Limit birthday emails to active members?"
 msgstr "Limiter les e-mails d’anniversaire aux membres actifs ?"
 
-#: includes/eme-options.php:3321
+#: includes/eme-options.php:3319
 msgid "If selected and birthday emails are to be send, only persons with an active membership will get a birthday email."
 msgstr "Si cette option est sélectionnée et que des e-mails d’anniversaire doivent être envoyés, seules les personnes ayant une adhésion active recevront un e-mail d’anniversaire."
 
-#: includes/eme-options.php:3322
+#: includes/eme-options.php:3320
 msgid "EME backend date format"
 msgstr "Format de date dans l’interface d’administration EME"
 
-#: includes/eme-options.php:3322
+#: includes/eme-options.php:3320
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Le format de date utilisé dans les tables EME. Laissez ce champ vide pour utiliser les réglages de WordPress."
 
-#: includes/eme-options.php:3323
+#: includes/eme-options.php:3321
 msgid "EME backend time format"
 msgstr "Format de l’heure dans l’interface d’administration EME"
 
-#: includes/eme-options.php:3323
+#: includes/eme-options.php:3321
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Le format de l’heure utilisé dans les tables EME. Laissez ce champ vide pour utiliser les réglages de WordPress."
 
-#: includes/eme-options.php:3331
+#: includes/eme-options.php:3329
 msgid "PDF font"
 msgstr "Police PDF"
 
-#: includes/eme-options.php:3331
+#: includes/eme-options.php:3329
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr "Définissez la police à utiliser dans les fichiers PDF générés. Il est parfois nécessaire d’utiliser une police différente car tous les caractères ne sont pas forcément définis dans la police actuellement sélectionnée."
 
-#: includes/eme-options.php:3332
+#: includes/eme-options.php:3330
 msgid "EME DB version"
 msgstr "Version de la base de donnée EME"
 
-#: includes/eme-options.php:3332
+#: includes/eme-options.php:3330
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr "Ceci est la version actuelle de la base de données EME. Vous pouvez l'utiliser pour mettre une version plus ancienne. Lors de l'enregistrement, EME rétablira les mises à niveau manquantes à partir de cette version si elles ne se sont pas déroulées correctement et rétablira la valeur à la dernière version. Dans une situation normale, vous n’avez pas besoin de changer cette valeur."
 
-#: includes/eme-options.php:3345
-#: includes/eme-options.php:3348
+#: includes/eme-options.php:3343
+#: includes/eme-options.php:3346
 msgid "Extra html tags"
 msgstr "Balises HTML supplémentaire"
 
-#: includes/eme-options.php:3348
+#: includes/eme-options.php:3346
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr "Par défaut, WordPress est strict quant aux attributs et étiquettes HTML autorisés. Vous pouvez ici ajouter une liste d’étiquettes + attributs que vous souhaitez autoriser dans les paramètres EME qui autorisent le langage HTML (en plus des valeurs par défaut, rien n’est supprimé). La liste doit contenir une étiquette par ligne, suivie de ses attributs facultatifs, tous séparés par « , ». Par exemple, pour autoriser la balise iframe et certains attributs, vous devez ajouter : « iframe, src, height, width, frameborder » "
 
-#: includes/eme-options.php:3349
+#: includes/eme-options.php:3347
 msgid "Extra style attributes"
 msgstr "Attributs de style supplémentaires"
 
-#: includes/eme-options.php:3349
+#: includes/eme-options.php:3347
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr "Si le réglage ci-dessus permet d’ajouter des balises et des attributs HTML supplémentaires, WordPress est encore plus strict en ce qui concerne les attributs autorisés dans la balise style. Vous pouvez ajouter ici une liste d’attributs de style supplémentaire que vous souhaitez autoriser dans les réglages d’EME qui autorisent le HTML (en plus des valeurs par défaut, rien n’est supprimé). La liste doit avoir un attribut par ligne. Par exemple, pour autoriser l’attribut de visibilité pour l’étiquette style, vous pouvez ajouter : \"visibility\" "
 
-#: includes/eme-options.php:3352
+#: includes/eme-options.php:3350
 msgid "Extra html headers"
 msgstr "Headers html ajoutés"
 
-#: includes/eme-options.php:3355
+#: includes/eme-options.php:3353
 msgid "Extra html header"
 msgstr "En-tête HTML supplémentaire"
 
-#: includes/eme-options.php:3355
+#: includes/eme-options.php:3353
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Vous pouvez définir ici des en-têtes HTML supplémentaires, aucun espace réservé ne peut être utilisé."
 
-#: includes/eme-options.php:3356
+#: includes/eme-options.php:3354
 msgid "Extra html footer"
 msgstr "Pied de page html supplémentaire"
 
-#: includes/eme-options.php:3356
+#: includes/eme-options.php:3354
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr "Ici, vous pouvez définir un pied de page HTML supplémentaire, aucun espace réservé ne peut être utilisé."
 
-#: includes/eme-options.php:3357
+#: includes/eme-options.php:3355
 msgid "Extra event html headers"
 msgstr "Headers html ajoutés pour un évènement"
 
-#: includes/eme-options.php:3357
+#: includes/eme-options.php:3355
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr "Ici vous pouvez définir des headers html supplémentaires utilisés lors de la visualisation d'un seul événement, généralement utilisé pour ajouter des meta tags pour facebook ou SEO. Tous les placeholders  d'événements peuvent être utilisés, mais ils seront éliminés du code HTML résultant."
 
-#: includes/eme-options.php:3358
+#: includes/eme-options.php:3356
 msgid "Extra location html headers"
 msgstr "Headers supplémentaires pour un lieu"
 
-#: includes/eme-options.php:3358
+#: includes/eme-options.php:3356
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr "Ici vous pouvez définir des headers html supplémentaires utilisés lors de la visualisation d'un seul lieu, généralement utilisé pour ajouter des meta tags pour facebook ou SEO. Tous les placeholders  de lieu peuvent être utilisés, mais ils seront éliminés du code HTML résultant.."
 
-#: includes/eme-options.php:3361
+#: includes/eme-options.php:3359
 msgid "Multisite options"
 msgstr "Options multisites"
 
-#: includes/eme-options.php:3364
+#: includes/eme-options.php:3362
 msgid "Activate multisite data sharing?"
 msgstr "Activer le partage de données multisite ?"
 
-#: includes/eme-options.php:3364
+#: includes/eme-options.php:3362
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr "Si cette option est sélectionnée et que WordPress multisite est actif, cette instance EME utilisera les tables de la base de données de l’instance multisite principale. Ainsi, tous les évènements, emplacements, réservations, adhésions, modèles, etc... seront partagés avec le site principal. La chose qui reste uniquement locale, ce sont toutes les options de EME, qui vous permettent de créer des sous-sites linguistiques ou autres. Faites également attention aux actions planifiées : elles seront uniquement exécutées sur la base des options définies dans le site principal, et non par sous-site. Si vous ne souhaitez pas partager les données entre les sous-sites, cette option n’est pas nécessaire."
 
-#: includes/eme-options.php:3375
+#: includes/eme-options.php:3373
 msgid "Save Changes"
 msgstr "Enregistrer les modifications"
 
@@ -13618,64 +13618,64 @@ msgstr "Liste des 10 prochains évènements"
 msgid "Frontend Submit options"
 msgstr "Options de la soumission à partir du Frontend"
 
-#: includes/eme-options.php:3274
+#: includes/eme-options.php:3272
 msgid "State for new event"
 msgstr "État du nouvel évènement"
 
-#: includes/eme-options.php:3274
+#: includes/eme-options.php:3272
 msgid "The state for a newly submitted event."
 msgstr "L'état d'un événement nouvellement soumis."
 
-#: includes/eme-options.php:3282
+#: includes/eme-options.php:3280
 msgid "Default category for new event"
 msgstr "Catégorie par défaut pour le nouvel événement"
 
-#: includes/eme-options.php:3282
+#: includes/eme-options.php:3280
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr "Catégorie par défaut attribuée à un événement si rien n'est sélectionné dans le formulaire."
 
-#: includes/eme-options.php:3283
+#: includes/eme-options.php:3281
 msgid "Force location creation?"
 msgstr "Forcer la création d’un emplacement ?"
 
-#: includes/eme-options.php:3283
+#: includes/eme-options.php:3281
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr "Cochez cette option si vous souhaitez que l’emplacement soit toujours créé, même si l'utilisateur n'a pas les capacités nécessaires dans EME pour créer des emplacements."
 
-#: includes/eme-options.php:3284
+#: includes/eme-options.php:3282
 msgid "Allow guest submit?"
 msgstr "Autorisé la soumission par un invité ?"
 
-#: includes/eme-options.php:3284
+#: includes/eme-options.php:3282
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr "Cochez cette option si vous souhaitez que les invités puissent également ajouter de nouveaux événements."
 
-#: includes/eme-options.php:3288
+#: includes/eme-options.php:3286
 msgid "Guests not allowed text"
 msgstr "Texte affiché aux invités non autorisés"
 
-#: includes/eme-options.php:3289
+#: includes/eme-options.php:3287
 msgid "Redirect to login page"
 msgstr "Redirection vers la page de login"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3291
+#: includes/eme-options.php:3289
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr "Permission nécessaire pour soumettre un nouvel évènement quand la soumission par des invités n’est pas autorisée. Par défaut : %s"
 
-#: includes/eme-options.php:3296
+#: includes/eme-options.php:3294
 msgid "Use wysiwyg?"
 msgstr "Utiliser le wysiwyg ?"
 
-#: includes/eme-options.php:3296
+#: includes/eme-options.php:3294
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr "Cocher cette option si vous voulez utiliser un éditeur wysiwig sur le frontend pour les notes d’évènement."
 
-#: includes/eme-options.php:3297
+#: includes/eme-options.php:3295
 msgid "Allow image upload?"
 msgstr "Permettre le téléchargement d’image ?"
 
-#: includes/eme-options.php:3297
+#: includes/eme-options.php:3295
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr "Cocher cette option si vous souhaitez permettre le téléchargement d’image dans l’éditeur wysiwig sur le frontend pour les notes d’évènement."
 
@@ -13709,11 +13709,11 @@ msgstr "La date/heure de fin de l’évènement doit être <strong>postérieure<
 msgid "Frontend Submit"
 msgstr "Soumission à partir du Frontend"
 
-#: includes/eme-options.php:3285
+#: includes/eme-options.php:3283
 msgid "Success Message"
 msgstr "Message de réussite"
 
-#: includes/eme-options.php:3286
+#: includes/eme-options.php:3284
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr "Indiquez le nombre de secondes avant la redirection vers la page de l’évènement nouvellement créé après l’affichage du message de succès. Si 0, le message de réussite ne sera pas affiché et la redirection sera immédiate."
 
@@ -13722,32 +13722,32 @@ msgstr "Indiquez le nombre de secondes avant la redirection vers la page de l’
 msgid "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>"
 msgstr "Pour toute information concernant la soumission à partir du frontend, voir <a target=‘_blank’ href=‘%s’>la documentation</a>"
 
-#: includes/eme-options.php:3298
+#: includes/eme-options.php:3296
 msgid "Default form format"
 msgstr "Format du formulaire par défaut"
 
-#: includes/eme-options.php:3298
+#: includes/eme-options.php:3296
 msgid "The default form format for submitting a new event."
 msgstr "Format du formulaire par défaut pour soumettre un nouvel évènement."
 
-#: includes/eme-options.php:3287
+#: includes/eme-options.php:3285
 msgid "Always show success message"
 msgstr "Toujours afficher le message de succès"
 
-#: includes/eme-options.php:3287
+#: includes/eme-options.php:3285
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr "Cocher cette option si vous voulez toujours afficher le message de succès, même si la personne qui soumet l’évènement a les droits pour voir la page du nouvel évènement soumis. Ça veut dire qu’il n’y aura pas de redirection après."
 
-#: includes/eme-options.php:3288
+#: includes/eme-options.php:3286
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr "Le texte affiché à un invité qui essaierait de soumettre un nouvel évènement sans y être autorisé, et que l’option de redirection vers la page de login n’a pas été cochée."
 
-#: includes/eme-options.php:3289
+#: includes/eme-options.php:3287
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr "Cochez cette option si vous voulez que le soumissionnaire soit redirigé vers la page de login s’il n’est pas identifié (ou qu’il n’a pas les droits nécessaires) et que les invités ne sont pas autorisés à soumettre de nouveaux évènements."
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3291
+#: includes/eme-options.php:3289
 msgid "Access right to submit new events"
 msgstr "Droit nécessaire pour soumettre un nouvel évènement"
 
@@ -13774,7 +13774,7 @@ msgstr "Page de paiement de l’évènement soumis"
 
 #: includes/eme-events.php:8580
 #: includes/eme-members.php:1976
-#: includes/eme-options.php:3295
+#: includes/eme-options.php:3293
 msgid "Select a captcha to use"
 msgstr "Sélectionner un captcha à utiliser"
 
@@ -13870,15 +13870,15 @@ msgstr "Le format du texte montré au dessus des boutons de paiement si le formu
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
 msgstr "Consultez également les sections \"Modèles d'e-mail\" et \"Paiement\" pour obtenir des paramètres de soumission frontaux supplémentaires."
 
-#: includes/eme-options.php:3281
+#: includes/eme-options.php:3279
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr "Sélectionnez la personne de contact qui recevra des notifications par courrier électronique lorsqu'un événement est soumis ou payé. Les modèles de courrier doivent être configurés dans la section \"Modèles de courrier\"."
 
-#: includes/eme-options.php:3281
+#: includes/eme-options.php:3279
 msgid "No contact"
 msgstr "Aucun contact"
 
-#: includes/eme-options.php:3285
+#: includes/eme-options.php:3283
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "Le message affiché après la soumission réussie d’un nouvel évènement si la personne qui soumet n’a pas le droit de voir le nouvel évènement soumis. Le message est aussi affiché si la soumission de l’évènement nécessite le paiement et si le temps d’attente avant la redirection (indiquée ci-dessous) n’est pas à 0. Ce message peut contenir tout espace réservé d’évènement."
 
@@ -13890,15 +13890,15 @@ msgstr "Aucun évènement lié à ce paiement n’a été trouvé. Si vous pense
 msgid "Incorrect currency."
 msgstr "Devise incorrecte."
 
-#: includes/eme-options.php:3275
+#: includes/eme-options.php:3273
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr "Le prix à payer pour soumettre un nouvel événement. Laisser vide ou 0 si aucun prix ne doit être payé. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même ! Configurez les sections optionnelles d'en-tête et de pied de page du formulaire de paiement dans les paramètres de paiement de l'EME."
 
-#: includes/eme-options.php:3276
+#: includes/eme-options.php:3274
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "La devise utilisée lorsque les événements soumis doivent être payés. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même !"
 
-#: includes/eme-options.php:3277
+#: includes/eme-options.php:3275
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Le(s) mode(s) de paiement à utiliser lorsque les événements soumis doivent être payés. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même !"
 
@@ -13914,11 +13914,11 @@ msgstr "Par défaut, une personne ne peut s'inscrire qu'une seule fois à des t�
 msgid "Check this option if you want by default that a person can only signup for one task per event."
 msgstr "Cochez cette option si vous souhaitez que, par défaut, une personne ne puisse s'inscrire qu'à une seule tâche par événement."
 
-#: includes/eme-options.php:3311
+#: includes/eme-options.php:3309
 msgid "CSV delimiter"
 msgstr "Délimiteur CSV"
 
-#: includes/eme-options.php:3311
+#: includes/eme-options.php:3309
 msgid "Set the delimiter used in CSV exports."
 msgstr "Définir le délimiteur utilisé dans les exportations CSV."
 
@@ -14144,15 +14144,15 @@ msgstr "Supprimer les catégories sélectionnées"
 msgid "Categories deleted"
 msgstr "Catégories effacées"
 
-#: includes/eme-events.php:10247
+#: includes/eme-events.php:10248
 msgid "Holiday lists"
 msgstr "Listes de vacances"
 
-#: includes/eme-events.php:10288
+#: includes/eme-events.php:10289
 msgid "Mails"
 msgstr "E-mails"
 
-#: includes/eme-events.php:10290
+#: includes/eme-events.php:10291
 #: includes/eme-mailer.php:3282
 msgid "Archived mailings"
 msgstr "Mailings archivés"
@@ -14261,7 +14261,7 @@ msgstr "Êtes-vous sûr de vouloir déplacer cet événement dans la corbeille ?
 msgid "Move event to trash bin"
 msgstr "Déplacer l’évènement vers la corbeille"
 
-#: includes/eme-events.php:10828
+#: includes/eme-events.php:10829
 msgid "Events moved to the trash bin"
 msgstr "Évènements déplacés vers la corbeille"
 
@@ -14306,7 +14306,7 @@ msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price cate
 msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_SEATS{xx} pour toutes les catégories de prix."
 
 #: includes/eme-events.php:7010
-#: includes/eme-events.php:10558
+#: includes/eme-events.php:10559
 #: includes/eme-rsvp.php:6146
 msgid "Max (from location):"
 msgstr "Max (depuis le lieu) :"
@@ -14480,11 +14480,11 @@ msgstr "Lorsqu'un événement est configuré pour approuver automatiquement les 
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
 msgstr "Étant donné que les notifications RSVP après paiement ne sont pas actives, cet e-mail sera également envoyé lorsqu'une réservation est marquée comme payée."
 
-#: includes/eme-events.php:10277
+#: includes/eme-events.php:10278
 msgid "Recipient name"
 msgstr "Nom du destinataire"
 
-#: includes/eme-events.php:10278
+#: includes/eme-events.php:10279
 msgid "Recipient email"
 msgstr "E-mail du destinataire"
 
@@ -14540,19 +14540,19 @@ msgstr "Insérer une espace insécable"
 msgid "Contact SumUp to make sure your created application has the rights needed to create and process checkout payments."
 msgstr "Contactez SumUp pour vous assurer que votre application dispose des droits nécessaires pour créer et traiter les paiements."
 
-#: includes/eme-options.php:3334
+#: includes/eme-options.php:3332
 msgid "HTML Editor"
 msgstr "Éditeur HTML"
 
-#: includes/eme-options.php:3337
+#: includes/eme-options.php:3335
 msgid "TinyMCE"
 msgstr "TinyMCE"
 
-#: includes/eme-options.php:3338
+#: includes/eme-options.php:3336
 msgid "Jodit"
 msgstr "Jodit"
 
-#: includes/eme-options.php:3340
+#: includes/eme-options.php:3338
 msgid "The HTML editor used by the plugin."
 msgstr "L'éditeur HTML utilisé par le plugin."
 
@@ -15031,8 +15031,8 @@ msgstr "Envoyer à plusieurs groupes de membres"
 msgid "Send to active members belonging to"
 msgstr "Envoyer aux membres actifs appartenant à"
 
-#: includes/eme-options.php:3322
-#: includes/eme-options.php:3323
+#: includes/eme-options.php:3320
+#: includes/eme-options.php:3321
 msgid "Documentation on date and time formatting."
 msgstr "Documentation sur le formatage de date et heure."
 
@@ -15081,4 +15081,25 @@ msgstr ""
 
 #: includes/eme-rsvp.php:5573
 msgid "RSVP and generic fields"
+msgstr ""
+
+#: includes/eme-events.php:10180
+msgid "Are you sure you want to delete this group? This cannot be undone."
+msgstr ""
+
+#: includes/eme-formfields.php:2380
+#: includes/eme-formfields.php:2381
+msgid "Delete this group"
+msgstr ""
+
+#: includes/eme-members.php:7130
+msgid "No permission"
+msgstr ""
+
+#: includes/eme-members.php:7141
+msgid "Invalid parameters"
+msgstr ""
+
+#: includes/eme-members.php:7160
+msgid "Occurrence deleted and remaining occurrences renumbered."
 msgstr ""

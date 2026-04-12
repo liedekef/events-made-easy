@@ -15,13 +15,6 @@
 @media only screen and (max-width: 600px) {
     .rightclickhint {display:none;}
     .eme_import_form_img {display:none;}
-    .jtable-page-list {display:none !important;}
-    .jtable-page-info {display:none !important;}
-}
-
-/* print: don't show table command columns */
-@media print {
-    .jtable-command-column {display:none;}
 }
 
 #eme_person_image_example {
@@ -64,12 +57,6 @@ table.eme_membership_admin_table td {
     vertical-align: top;
 }
 
-table#eme-bookings-table tfoot td.booking-result {
-    font-weight: bold;
-    background:#6D6D6D url("../images/menu-bits.gif") repeat-x scroll left top;
-    color: #eee;
-}
-
 div#eme_printable_container {
     width: 100%;
     text-align: center;
@@ -82,15 +69,6 @@ table#eme_printable_table {
 
 tr#eme_printable_booked-seats td {
     border-top: 2px solid grey;
-}
-
-table#eme-bookings-table tfoot th {
-    text-align: right;
-    padding-right: 1em;
-}
-
-table#event_attributes tr {
-    vertical-align: top;
 }
 
 table.eme-rsvp-form, table.eme-member-form {
@@ -133,33 +111,6 @@ body#printable #container {
     margin: 0 auto;
     width: 780px;
     text-align: left;
-}
-table#bookings-table {
-    width: 600px;
-    border-spacing: 0px;
-
-}
-table#bookings-table td {
-    padding: 5px 0;
-}
-table#bookings-table td.seats-number {
-    text-align: right;
-    padding-right: 20px;
-}
-table#bookings-table th {
-    text-align: left;
-    margin-left: 5px;
-}
-table#bookings-table tr#booked-seats td{
-    border-top: 2px solid #999;
-}
-
-table#bookings-table td.total-label {
-    text-align: right;
-}
-
-table#bookings-table tr#booked-seats td.seats-number, table#bookings-table tr#available-seats td.seats-number {
-    font-weight: bold;
 }
 
 p#recurrence_warning {

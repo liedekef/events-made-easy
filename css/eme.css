@@ -702,23 +702,6 @@ div#eme_div_import {
   overflow: auto;
 }
 
-.datalist-input {
-  /* Set minimum width based on placeholder */
-  min-width: calc(15ch + 2em); /* Adjust '15ch' to match your placeholder length */
-
-  /* Optional styling */
-  padding: 0.5em;
-  font: inherit;
-}
-
-/* For browsers supporting field-sizing (Chrome 119+) */
-@supports (field-sizing: content) {
-  .datalist-input {
-    field-sizing: content;
-    min-width: fit-content;
-  }
-}
-
 .eme-yesno-check-text:before {
   content: attr(data-no);
 }
@@ -727,13 +710,6 @@ div#eme_div_import {
   content: attr(data-yes);
 }
 
-.ts-wrapper {
-    display: inline-block;
-}
-.ts-wrapper .ts-dropdown {
-    white-space: nowrap;
-    min-width: max-content !important;
-}
 .eme-ftable-center {
     text-align: center;
 }

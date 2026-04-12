@@ -725,8 +725,11 @@ function eme_fs_process_newevent() {
         $eme_fs_event_errors[] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy');
     }
 
-    $res_html = '';
-    $res_code = 'OK';
+    $res = [
+        'htmlmessage' => '',
+        'waitperiod' => '',
+        'redirect' => ''
+    ];
     if ( empty($eme_fs_event_errors) ) {
         $force=0;
         if (!empty($eme_fs_options['force_location_creation']))
@@ -753,10 +756,10 @@ function eme_fs_process_newevent() {
             $event_data['event_status'] = EME_EVENT_STATUS_FS_DRAFT;
         }
         $event_data = eme_sanitize_event($event_data);
-	$validation_result = '';
-	if (has_filter('eme_fs_validate_event_filter')) {
-		$validation_result = apply_filters( 'eme_fs_validate_event_filter', $event_data );
-	}
+        $validation_result = '';
+        if (has_filter('eme_fs_validate_event_filter')) {
+            $validation_result = apply_filters( 'eme_fs_validate_event_filter', $event_data );
+        }
         if (empty($validation_result)) {
             $validation_result = eme_validate_event ( $event_data );
         }
@@ -776,24 +779,22 @@ function eme_fs_process_newevent() {
                 if ($eme_fs_options['price']>0 && $pg_count>0) {
                     $payment_id  = eme_create_fs_event_payment($event_id);
                     $payment     = eme_get_payment( $payment_id );
-                    $res_html = eme_js_redirect(eme_payment_url($payment), $eme_fs_options['redirect_timeout']);
-                    if ($eme_fs_options['redirect_timeout'] == 0) {
-                        $res_code = 'REDIRECT_IMM';
-                    } else {
-                        $res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['redirect'] = eme_payment_url($payment);
+                    $res['waitperiod'] = $eme_fs_options['redirect_timeout'];
+                    if ($eme_fs_options['redirect_timeout'] != 0) {
+                        $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                     }
                 } elseif (!empty($eme_fs_options['always_success_message'])) {
-                    $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                 } elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
                     $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
-                    $res_html = eme_js_redirect(eme_event_url($event), $eme_fs_options['redirect_timeout']);
-                    if ($eme_fs_options['redirect_timeout'] == 0) {
-                        $res_code = 'REDIRECT_IMM';
-                    } else {
-                        $res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['redirect'] = eme_event_url($event);
+                    $res['waitperiod'] = $eme_fs_options['redirect_timeout'];
+                    if ($eme_fs_options['redirect_timeout'] != 0) {
+                        $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                     }
                 } else {
-                    $res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+                    $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
                 }
             } else {
                 $eme_fs_event_errors[] = __('Database insert failed!','events-made-easy');
@@ -804,11 +805,9 @@ function eme_fs_process_newevent() {
     }
 
     if (empty($eme_fs_event_errors)) {
-        return [
-            'Result'      => $res_code,
-            'htmlmessage' => $res_html
-        ];
-
+        if (has_filter('eme_fs_event_insert_return_filter')) $res=apply_filters('eme_fs_event_insert_return_filter',$res);
+        $res['Result'] = 'OK';
+        return $res;
     } else {
         return [
             'Result'      => 'NOK',

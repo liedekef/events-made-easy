@@ -5174,7 +5174,7 @@ function eme_add_member_ajax() {
                         'Result'          => 'OK',
                         'htmlmessage'     => $form_result_message,
                         'waitperiod'      => $waitperiod,
-                        'paymentredirect' => $payment_url,
+                        'redirect'        => $payment_url,
                     ]
                 );
             } else {

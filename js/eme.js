@@ -361,7 +361,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                     if (errEl) eme_toggle(errEl, false);
                 }
                 if (okSel) {
-                    if (okEl && (!data.redirect || ( data.redirect && parseInt(data.waitperiod)>0 ) ) ) {
+                    if (okEl && data.htmlmessage && (!data.redirect || ( data.redirect && parseInt(data.waitperiod)>0 ) ) ) {
                         okEl.innerHTML = data.htmlmessage;
                         eme_toggle(okEl, true);
                     }
@@ -375,7 +375,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                 }
                 if (data.paymentform) {
                     const paymentDiv = EME.$(`#div_eme-payment-form-${form_id}`);
-                    if (paymentDiv) {
+                    if (paymentDiv && data.paymentform) {
                         paymentDiv.innerHTML = data.paymentform;
                         eme_toggle(paymentDiv, true);
                         eme_executeScriptsInElement(paymentDiv);
@@ -387,7 +387,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
                 eme_scrollToEl(okEl);
             } else {
                 if (errSel) {
-                    if (errEl) {
+                    if (errEl && data.htmlmessage) {
                         errEl.innerHTML = data.htmlmessage;
                         eme_toggle(errEl, true);
                     }

@@ -49,11 +49,7 @@ textarea.eme_formfield {
     resize: both; 
 }
 
-table.eme_event_admin_table td {
-    vertical-align: top;
-}
-
-table.eme_membership_admin_table td {
+table.eme_event_admin_table td, table.eme_membership_admin_table td {
     vertical-align: top;
 }
 

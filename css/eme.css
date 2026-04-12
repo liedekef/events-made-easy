@@ -119,9 +119,6 @@ p#recurrence_warning {
 input#event_url {
     width: 100%
 }
-div#icon-events{
-    background:url('../images/calendar-32.png') no-repeat center;
-}
 
 table#eme-location-data th {
     text-align: right;
@@ -324,31 +321,6 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 }
 /* for the honeypot, render it invisible */
 #honeypot_check { display: none; }
-/* for the datepicker at the bottom of the edit/new event page, render it invisible */
-#ui-datepicker-div { display: none; }
-.eme_formfield_date {
-    background-image: url("../images/calendar-16.png");
-    background-position: right center;
-    background-repeat: no-repeat;
-    padding-right: 18px;
-}
-
-/* datatable */
-div.dt-length select.dt-input {
-    -webkit-appearance: auto;
-    background: none;
-}
-/* to disable WP checkbox styles */
-.dt-select-checkbox:checked::before {
-    content: none !important;
-}
-/* better background */
-.eme-dt-row-selected{
-    background: #F2F5A9 !important;
-}
-.dataTable tr:hover {
-    background: #AAF5F3 !important;
-}
 
 /* clear X */
 .clearable{

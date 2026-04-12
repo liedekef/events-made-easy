@@ -357,16 +357,16 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
             form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
 
             if (data.Result === "OK") {
+                if (errSel) {
+                    if (errEl) eme_toggle(errEl, false);
+                }
                 if (okSel) {
-                    if (okEl) {
+                    if (okEl && (!data.redirect || ( data.redirect && parseInt(data.waitperiod)>0 ) ) ) {
                         okEl.innerHTML = data.htmlmessage;
                         eme_toggle(okEl, true);
                     }
                 }
-                if (errSel) {
-                    if (errEl) eme_toggle(errEl, false);
-                }
-                if (data.keep_form == 1) {
+                if (parseInt(data.keep_form) == 1) {
                     form.reset();
                     eme_refresh_captcha(form_id);
                 } else {

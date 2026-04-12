@@ -730,6 +730,7 @@ function eme_fs_process_newevent() {
         'waitperiod' => '',
         'redirect' => ''
     ];
+    $event = '';
     if ( empty($eme_fs_event_errors) ) {
         $force=0;
         if (!empty($eme_fs_options['force_location_creation']))
@@ -805,7 +806,7 @@ function eme_fs_process_newevent() {
     }
 
     if (empty($eme_fs_event_errors)) {
-        if (has_filter('eme_fs_event_insert_return_filter')) $res=apply_filters('eme_fs_event_insert_return_filter',$res);
+        if (has_filter('eme_fs_event_insert_return_filter')) $res=apply_filters('eme_fs_event_insert_return_filter',$event, $res);
         $res['Result'] = 'OK';
         return $res;
     } else {

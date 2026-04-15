@@ -98,7 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.65  (2026//) =
+= 3.0.65  (2026/04/16) =
 * Make redirect after frontend submit work again
 * Add filter eme_fs_event_insert_return_filter. Has 2 params: $event (the newly created event), $res (the return array given to the calling ajax function)
   The result of this filter should be an array like $res. The default empty array is:
@@ -107,6 +107,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
         'waitperiod' => '',
         'redirect' => ''
     ];
+* no wp_add_inline_script for ajax, this caused some payment gateways to not work if they were the only one and automatic redirection was requested
 
 = 3.0.64  (2026/04/12) =
 * Bancontact update

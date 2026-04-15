@@ -462,10 +462,6 @@ function eme_register_scripts() {
         wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
         wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
     }
-
-    // Payment gateway JS files - registered here but enqueued only when needed in eme-payments.php
-    wp_register_script( 'eme-pg-braintree', EME_PLUGIN_URL . 'js/eme-pg-braintree.js', [ 'eme-basic' ], EME_VERSION, true );
-    wp_register_script( 'eme-pg-sumup', EME_PLUGIN_URL . 'js/eme-pg-sumup.js', [ 'eme-basic' ], EME_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
 

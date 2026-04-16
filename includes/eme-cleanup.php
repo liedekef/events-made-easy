@@ -47,7 +47,7 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
         break;
     }
     $datetime   = $eme_date_obj->getDateTime();
-    $prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE modif_date < %s AND status = %d", $datetime, EME_PEOPLE_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( 'SELECT person_id FROM %i WHERE modif_date < %s AND status = %d', $people_table, $datetime, EME_PEOPLE_STATUS_TRASH );
     $person_ids   = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $count      = count( $person_ids );
     $tmp_ids    = join( ',', $person_ids );
@@ -181,11 +181,11 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
     }
     $end_datetime = $eme_date_obj->getDateTime();
     $end_date     = $eme_date_obj->getDate();
-    $wpdb->query( $wpdb->prepare( "DELETE FROM $bookings_table WHERE event_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $wpdb->prepare( "DELETE FROM $answers_table WHERE type='event' AND related_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id in (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $wpdb->prepare( "DELETE FROM $events_table WHERE event_end<%s", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $wpdb->prepare( "DELETE FROM $recurrence_table where recurrence_freq <> 'specific' AND recurrence_end_date<%s", $end_date ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $wpdb->prepare( 'DELETE FROM %i WHERE event_id IN (SELECT event_id FROM %i WHERE event_end<%s)', $bookings_table, $events_table, $end_datetime ) );
+    $wpdb->query( $wpdb->prepare( "DELETE FROM %i WHERE type='event' AND related_id IN (SELECT event_id FROM %i WHERE event_end<%s)", $answers_table, $events_table, $end_datetime ) );
+    $wpdb->query( $wpdb->prepare( "DELETE FROM %i WHERE type='event' AND related_id in (SELECT event_id FROM %i WHERE event_end<%s)", $attendances_table, $events_table, $end_datetime ) );
+    $wpdb->query( $wpdb->prepare( 'DELETE FROM %i WHERE event_end<%s', $events_table, $end_datetime ) );
+    $wpdb->query( $wpdb->prepare( "DELETE FROM %i where recurrence_freq <> 'specific' AND recurrence_end_date<%s", $recurrence_table, $end_date ) );
 }
 
 function eme_cleanup_all_event_related_data( $other_data ) {
@@ -197,7 +197,7 @@ function eme_cleanup_all_event_related_data( $other_data ) {
         $tables  = array_merge( $tables, $tables2 );
     }
     foreach ( $tables as $table ) {
-        $wpdb->query( 'DELETE FROM ' . EME_DB_PREFIX . $table ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+        $wpdb->query( $wpdb->prepare( 'DELETE FROM %i', EME_DB_PREFIX . $table ) );
     }
 }
 

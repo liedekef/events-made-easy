@@ -76,7 +76,7 @@ function initSnapSelect(selector, options = {}) {
         const config = {
             placeholder:    options.placeholder    || undefined,
             defaultText:    options.defaultText    || emebasic.translate_optionselect,
-            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : undefined,
+            liveSearch:     options.liveSearch     !== undefined ? options.liveSearch     : el.multiple ? true : undefined,
             closeOnSelect:  options.closeOnSelect  !== undefined ? options.closeOnSelect  : undefined,
             showClearButton:     options.showClearButton     !== undefined ? options.showClearButton     : undefined,
         };

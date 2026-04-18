@@ -5289,7 +5289,7 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
     $wp_ids_seen = [];
     if ( $search_tables == 'people' || $search_tables == 'both' ) {
         $like = '%' . $wpdb->esc_like( $lastname ) . '%';
-        $where_arr[] = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s)', $like, $like, $like);
+        $search = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s OR email LIKE %s)', $like, $like, $like);
         if ( ! empty( $exclude_personids ) ) {
             $exc_ids      = array_map( 'intval', explode( ',', $exclude_personids ) );
             $exc_ph       = implode( ',', array_fill( 0, count( $exc_ids ), '%d' ) );

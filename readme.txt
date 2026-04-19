@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.0.67  (2026/04/) =
 * make people autocomplete work again
+* snapselect update to allow keyboard nav in searched results too
 
 = 3.0.66  (2026/04/18) =
 * snapselect and ftable updates

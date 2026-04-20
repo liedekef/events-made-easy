@@ -1587,7 +1587,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		if ( $db_version < 386 ) {
 			$modif_date = current_time( 'mysql', false );
-            $wpdb->update( $table_name, [ 'modif_date' => $modif_date ], [ '1' => '1' ] );
+            $wpdb->query( $wpdb->prepare("UPDATE $table_name SET modif_date = %s", $modif_date ) );
 		}
 	}
 }

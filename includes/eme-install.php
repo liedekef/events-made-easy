@@ -1028,7 +1028,7 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 		}
 		if ( $db_version < 385 ) {
 			$modif_date = current_time( 'mysql', false );
-            $wpdb->update( $table_name, [ 'modif_date' => $modif_date ]);
+            $wpdb->query( $wpdb->prepare("UPDATE $table_name SET modif_date = %s", $modif_date ) );
 		}
 	}
 }

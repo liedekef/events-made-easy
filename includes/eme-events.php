@@ -4907,7 +4907,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
     }
 }
 
-function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0, $limit='' ) {
+function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0, int $start=0, int $pagesize=0 ) {
     global $wpdb;
     $table         = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -4933,6 +4933,10 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
         $condition = 'AND ' . implode( ' AND ', $where );
     }
 
+    $limit="";
+    if ($start>0 && $pagesize>0) {
+        $limit = "LIMIT $start,$pagesize";
+    }
     if ( ! empty( $name ) ) {
         if ( $name_only ) {
             $query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start $limit";
@@ -11133,7 +11137,7 @@ function eme_ajax_events_snapselect() {
 
     $exclude_id  = isset( $_REQUEST['exclude_id'] ) ? intval( $_REQUEST['exclude_id'] ) : 0;
     $only_rsvp   = isset( $_REQUEST['only_rsvp'] ) ? intval( $_REQUEST['only_rsvp'] ) : 0;
-    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp, "LIMIT $start,$mysql_pagesize" );
+    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp, $start, $mysql_pagesize );
     $records     = [];
     foreach ( $events as $event ) {
         $records[] = [

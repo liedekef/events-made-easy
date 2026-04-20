@@ -492,8 +492,8 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			$wpdb->query( "UPDATE $table_name SET event_start = CONCAT(event_start_date,' ',event_start_time), event_end = CONCAT(event_end_date,' ',event_end_time) WHERE event_start_date IS NOT NULL and event_start_date <> '0000-00-00';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 303 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_start` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_end` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'event_start');
+            eme_add_index_if_not_exists($table_name, 'event_end');
 		}
 		if ( $db_version < 311 ) {
 			eme_maybe_drop_column( $table_name, 'event_start_date' );
@@ -789,7 +789,7 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		}
 		if ( $db_version < 302 ) {
 			// we forgot to add the index in the past when adding the table, so: drop the index and set it again
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'status');
 		}
 		if ( $db_version < 345 ) {
 			// old records that were marked as active and not approved, now get PENDING as status
@@ -806,10 +806,10 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			eme_maybe_drop_column( $table_name, 'booking_approved' );
 		}
 		if ( $db_version < 415 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'person_id');
 		}
 		if ( $db_version < 423 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `event_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'event_id');
 		}
 	}
 }
@@ -899,7 +899,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 			$wpdb->query( "ALTER TABLE $table_name MODIFY modif_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 306 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'related_person_id');
 		}
 	}
 
@@ -1168,8 +1168,8 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 		if ( $db_version < 304 ) {
 			maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
 			maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type VARCHAR(20) DEFAULT NULL;" );
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `type` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'related_id');
+            eme_add_index_if_not_exists($table_name, 'type');
 			$wpdb->query( "UPDATE $table_name SET related_id=person_id,type='person' WHERE person_id>0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'person_id' );
 			$wpdb->query( "UPDATE $table_name SET related_id=member_id,type='member' WHERE member_id>0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -1551,11 +1551,11 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 			$wpdb->query( "ALTER TABLE $table_name MODIFY extra_charge tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 306 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_member_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'related_member_id');
 		}
 		if ( $db_version < 415 ) {
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `person_id` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `status` )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            eme_add_index_if_not_exists($table_name, 'person_id');
+            eme_add_index_if_not_exists($table_name, 'status');
 		}
 	}
 

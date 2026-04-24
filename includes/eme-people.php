@@ -5580,14 +5580,16 @@ function eme_ajax_chooseperson_snapselect() {
 
     $records = [];
     foreach ( $persons as $person ) {
-        $records[] = [
-            'id'        => intval( $person['person_id'] ),
-            'text'      => eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')',
-            'firstname' => esc_html( $person['firstname'] ),
-            'lastname'  => esc_html( $person['lastname'] ),
-            'email'     => esc_html( $person['email'] ),
-            'wpid'      => intval( $person['wp_id'] ),
+        $record = [
+            'id'   => intval( $person['person_id'] ),
+            'text' => eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')',
+            'wpid' => intval( $person['wp_id'] ),
         ];
+        $extra_info = ['firstname', 'lastname', 'email', 'phone', 'birthdate', 'birthplace', 'address1', 'address2', 'city', 'zip', 'state', 'country' ];
+        foreach ($extra_info as $extra_field) {
+            $record[$extra_field] = esc_html( $person[$extra_field]);
+        }
+        $records[] = $record;
     }
     $hasMore = count($records) > $pagesize;
     if ($hasMore)

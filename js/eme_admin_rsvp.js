@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_unique: eme_getValue(EME.$('#search_unique')),
                 search_paymentid: eme_getValue(EME.$('#search_paymentid')),
                 search_pg_pid: eme_getValue(EME.$('#search_pg_pid')),
-                search_start_date: eme_getValue(EME.$('#search_start_date')),
-                search_end_date: eme_getValue(EME.$('#search_end_date')),
+                search_start_date: eme_getValue(EME.$('[name=search_start_date]')),
+                search_end_date: eme_getValue(EME.$('[name=search_end_date]')),
                 event_id: EME.$('#event_id')?.value || '',
                 person_id: $_GET['person_id']
             }),

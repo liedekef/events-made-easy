@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_eventid: eme_getValue(EME.$('#search_eventid')),
                     search_person: eme_getValue(EME.$('#search_person')),
                     search_scope: eme_getValue(EME.$('#search_scope')),
-                    search_start_date: EME.$('#search_start_date')?.value || '',
-                    search_end_date: EME.$('#search_end_date')?.value || '',
+                    search_start_date: EME.$('[name=search_start_date]')?.value || '',
+                    search_end_date: EME.$('[name=search_end_date]')?.value || '',
                     search_signup_status: eme_getValue(EME.$('#search_signup_status'))
                 };
             },

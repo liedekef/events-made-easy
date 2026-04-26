@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 action: 'eme_attendances_list',
                 eme_admin_nonce: emeattendances.translate_adminnonce,
                 search_type: EME.$('#search_type')?.value || '',
-                search_start_date: EME.$('#search_start_date')?.value || '',
-                search_end_date: EME.$('#search_end_date')?.value || ''
+                search_start_date: EME.$('[name=search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=search_end_date]')?.value || ''
             }),
             fields: {
                 id: {

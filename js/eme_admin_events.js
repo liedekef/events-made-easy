@@ -969,8 +969,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 category: EME.$('#category')?.value || '',
                 search_name: EME.$('#search_name')?.value || '',
                 search_location: EME.$('#search_location')?.value || '',
-                search_start_date: EME.$('#search_start_date')?.value || '',
-                search_end_date: EME.$('#search_end_date')?.value || '',
+                search_start_date: EME.$('[name=search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=search_end_date]')?.value || '',
                 search_customfields: eme_getValue(EME.$('#search_customfields')),
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
             }),
@@ -998,8 +998,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 eme_admin_nonce: emeevents.translate_adminnonce,
                 scope: EME.$('#scope')?.value || '',
                 search_name: EME.$('#search_name')?.value || '',
-                search_start_date: EME.$('#search_start_date')?.value || '',
-                search_end_date: EME.$('#search_end_date')?.value || ''
+                search_start_date: EME.$('[name=search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=search_end_date]')?.value || ''
             }),
             fields: {
                 recurrence_id: {

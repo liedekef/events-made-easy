@@ -469,12 +469,10 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 	</span>
 	<span id="span_newvalidfrom" class="eme-hidden">
-	<input id="new_validfrom" type="hidden" name="new_validfrom" value="">
-	<input id="eme_localized_new_validfrom" type="text" name="eme_localized_new_validfrom" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validfrom' class='eme_formfield_fdatetime'>
+	<input id="new_validfrom" type="text" name="new_validfrom" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdatetime'>
 	</span>
 	<span id="span_newvalidto" class="eme-hidden">
-	<input id="new_validto" type="hidden" name="new_validto" value="">
-	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
+	<input id="new_validto" type="text" name="new_validto" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdatetime'>
 	</span>
 	<button id="DiscountsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -902,15 +900,15 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='dp_valid_from'><?php esc_html_e( 'Valid from', 'events-made-easy' ); ?></label></th>
-			<td><input type='hidden' readonly='readonly' name='valid_from' id='valid_from'>
-			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo esc_attr( eme_js_datetime( $discount['valid_from'] ) );} ?>' data-alt-field='valid_from' class='eme_formfield_fdatetime'>
+			<td>
+			<input type='text' readonly='readonly' name='valid_from' id='valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo esc_attr( eme_js_datetime( $discount['valid_from'] ) );} ?>' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon start date and time, if entered the coupon is not valid before this date and time.', 'events-made-easy' ); ?>
 			</td>
 		</tr>
 		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='dp_valid_to'><?php esc_html_e( 'Valid until', 'events-made-easy' ); ?></label></th>
-			<td><input type='hidden' readonly='readonly' name='valid_to' id='valid_to'>
-			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo esc_attr( eme_js_datetime( $discount['valid_to'] ) );} ?>' data-alt-field='valid_to' class='eme_formfield_fdatetime'>
+			<td>
+			<input type='text' readonly='readonly' name='valid_to' id='valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo esc_attr( eme_js_datetime( $discount['valid_to'] ) );} ?>' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon expiration date and time, if entered the coupon is not valid after this date and time.', 'events-made-easy' ); ?>
 			</td>
 		</tr>

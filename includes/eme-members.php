@@ -1648,24 +1648,22 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     <?php } ?>
         <tr><td><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='start_date' id='start_date' value='<?php echo esc_attr( $member['start_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo esc_html( eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
-                 <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['start_date'] ) ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
+                 <input type='text' readonly='readonly' name='start_date' id='start_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['start_date'] ) ); ?>' class='eme_formfield_fdate'>
 <?php       } ?>
     </td></tr>
     <tr><td><?php esc_html_e( 'End date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='end_date' id='end_date' value='<?php echo esc_attr( $member['end_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo esc_html( eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
-                <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['end_date'] ) ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
+                <input type='text' readonly='readonly' name='end_date' id='end_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['end_date'] ) ); ?>' class='eme_formfield_fdate'>
 <?php       } ?>
     </td></tr>
 <?php if ( $membership['properties']['max_usage_count'] > 0 ) { ?>
@@ -1699,13 +1697,12 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </td></tr>
     <tr><td><?php esc_html_e( 'Last payment received date', 'events-made-easy' ); ?></td>
         <td>
-            <input type='hidden' name='payment_date' id='payment_date' value='<?php echo esc_attr( $member['payment_date'] ); ?>'>
 <?php
             if ( $limited ) {
                 echo esc_html( eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 ) );
             } else {
 ?>
-                <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['payment_date'] ) ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
+                <input type='text' readonly='readonly' name='payment_date' id='payment_date' data-date='<?php echo esc_attr( eme_js_datetime( $member['payment_date'] ) ); ?>' class='eme_formfield_fdatetime'>
 <?php       } ?>
         <br>
         <?php echo "<p class='eme_smaller'>" . esc_html__( 'This indicates the last date a payment was received. Changing this will only change that date, no new payment will actually be processed and the membership state is not influenced by this.', 'events-made-easy' ) . '</p>'; ?>
@@ -1915,8 +1912,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='startdate'>
     <td><label for="start_date"><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></label></td>
-    <td><input type='hidden' name='start_date' id='start_date' value='<?php echo esc_attr( $membership['start_date'] ); ?>'>
-        <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo esc_attr( eme_js_datetime( $membership['start_date'] ) ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
+        <input type='text' readonly='readonly' name='start_date' id='start_date' data-date='<?php echo esc_attr( eme_js_datetime( $membership['start_date'] ) ); ?>' class='eme_formfield_fdate'>
     </td>
     </tr>
     <tr>

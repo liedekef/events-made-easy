@@ -604,10 +604,8 @@ function eme_task_signups_table_layout( ) {
             echo eme_ui_select( -1, 'search_signup_status', $eme_signup_status_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
 
-        <input id="search_start_date" type="hidden" name="search_start_date" value="">
-        <input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
-        <input id="search_end_date" type="hidden" name="search_end_date" value="">
-        <input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
+        <input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
+        <input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
         <button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
     <?php } ?>
     </form>
@@ -945,14 +943,12 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 ?>
                 </td>
                 <td>
-                <input type='hidden' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]'>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo esc_attr( eme_js_datetime( $task['task_start'] ) );} ?>' data-alt-field='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' class='eme_formfield_fdatetime'>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' data-date='<?php if ( $task['task_start'] ) { echo esc_attr( eme_js_datetime( $task['task_start'] ) );} ?>'  class='eme_formfield_fdatetime'>
                 </td>
                 <td>
-                <input type='hidden' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]'>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' data-alt-field='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' class='eme_formfield_fdatetime'>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' class='eme_formfield_fdatetime'>
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>

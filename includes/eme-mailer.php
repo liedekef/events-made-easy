@@ -2926,8 +2926,7 @@ function eme_emails_page() {
         <b><?php esc_html_e( 'Set mailing name and start date and time', 'events-made-easy' ); ?></b><br>
                 <label for='eventmail_mailing_name'><?php esc_html_e( 'Mailing name: ', 'events-made-easy' ); ?></label> <input type='text' name='eventmail_mailing_name' id='eventmail_mailing_name' value='' required='required'><br>
                 <?php esc_html_e( 'Start date and time: ', 'events-made-easy' ); ?>
-        <input type='hidden' name='eventmail_actualstartdate' id='eventmail_actualstartdate' value=''>
-                <input type='text' readonly='readonly' name='eventmail_startdate' id='eventmail_startdate' data-date='' data-alt-field='eventmail_actualstartdate' data-multiple="true" data-multiple-display-selector='#eventmail-specificdates' class="eme_formfield_fdatetime">&nbsp;<?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
+                <input type='text' readonly='readonly' name='eventmail_actualstartdate' id='eventmail_actualstartdate' data-date='' data-multiple="true" data-multiple-display-selector='#eventmail-specificdates' class="eme_formfield_fdatetime">&nbsp;<?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
         <span id='eventmail-specificdates' class="eme_smaller"></span>
         <span id='eventmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>
@@ -3108,8 +3107,7 @@ function eme_emails_page() {
         <b><?php esc_html_e( 'Set mailing name and start date and time', 'events-made-easy' ); ?></b><br>
                 <label for='genericmail_mailing_name'><?php esc_html_e( 'Mailing name: ', 'events-made-easy' ); ?></label> <input type='text' name='genericmail_mailing_name' id='genericmail_mailing_name' value='' required='required'><br>
                 <?php esc_html_e( 'Start date and time: ', 'events-made-easy' ); ?>
-        <input type='hidden' name='genericmail_actualstartdate' id='genericmail_actualstartdate' value=''>
-                <input type='text' readonly='readonly' name='genericmail_startdate' id='genericmail_startdate' data-date='' data-alt-field='genericmail_actualstartdate' data-multiple="true" data-multiple-display-selector='#genericmail-specificdates' class="eme_formfield_fdatetime"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
+                <input type='text' readonly='readonly' name='genericmail_actualstartdate' id='genericmail_actualstartdate' data-date='' data-multiple="true" data-multiple-display-selector='#genericmail-specificdates' class="eme_formfield_fdatetime"><?php esc_html_e( 'Leave empty to send the mail immediately', 'events-made-easy' ); ?><br>
         <span id='genericmail-specificdates' class="eme_smaller"></span><br>
         <span id='genericmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>

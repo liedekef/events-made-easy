@@ -156,7 +156,6 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$country_post_name         = 'eme_country_filter';
 	$scope_post_name           = 'eme_scope_filter';
 	$customfield_post_name     = 'eme_customfield_filter';
-	$localized_scope_post_name = 'eme_localized_scope_filter';
 
 	$selected_scope    = isset( $_REQUEST[ $scope_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $scope_post_name ] ) : '';
 	$selected_location = isset( $_REQUEST[ $loc_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $loc_post_name ] ) : 0;
@@ -391,8 +390,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 		} elseif ( preg_match( '/#_FILTER_MONTHRANGE/', $result ) ) {
 			if ( $scope_fieldcount == 0 ) {
 				$select_scope = __( 'Select a daterange', 'events-made-easy' );
-				$replacement  = "<input type='hidden' id='$scope_post_name' name='$scope_post_name'>";
-				$replacement .= "<input type='text' id='$localized_scope_post_name' name='$localized_scope_post_name' placeholder='$select_scope' readonly='readonly' data-alt-field='$scope_post_name' data-autoclose='false' data-range='true' data-multiple-separator=' -- ' data-alt-field-multiple-separator='--' data-date='' style='width: 30ch;' class='eme_formfield_fdate' >";
+				$replacement .= "<input type='text' id='$scope_post_name' name='$scope_post_name' placeholder='$select_scope' readonly='readonly' data-autoclose='false' data-range='true' data-multiple-separator=' -- ' data-alt-field-multiple-separator='--' data-date='' style='width: 30ch;' class='eme_formfield_fdate' >";
 				eme_enqueue_datetimepicker();
 				++$scope_fieldcount;
 			}

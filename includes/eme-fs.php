@@ -427,25 +427,21 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
                 $type = 'hidden';
                 break;
             case 'event_start_time':
-                $localized_field_id = 'localized-start-time';
-                $more .= " required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
-                $type = 'localized_datetime';
+                $more .= " required='required' readonly='readonly' class='eme_formfield_ftime'";
+                $type = 'datetime';
                 break;
             case 'event_end_time':
-                $localized_field_id = 'localized-end-time';
-                $more .= " readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
-                $type = 'localized_datetime';
+                $more .= " readonly='readonly' class='eme_formfield_ftime'";
+                $type = 'datetime';
                 break;
             case 'event_start_date':
-                $localized_field_id = 'localized-start-date';
-                $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
-                $type     = 'localized_datetime';
+                $more .= " readonly='readonly' class='eme_formfield_fdate'";
+                $type     = 'datetime';
                 $required = 1;
                 break;
             case 'event_end_date':
-                $localized_field_id = 'localized-end-date';
-                $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
-                $type = 'localized_datetime';
+                $more .= " readonly='readonly' class='eme_formfield_fdate'";
+                $type = 'datetime';
                 break;
             case 'location_name':
                 $required = 1;
@@ -493,7 +489,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
         'search'           => '<input type="search" id="%1$s" name="event[%2$s]" %3$s/>',
         'url'              => '<input type="url" id="%1$s" name="event[%2$s]" %3$s/>',
         'localized_time'   => '<input type="text" id="%1$s" name="%2$s" %3$s/>',
-        'localized_datetime' => '<input type="text" id="%1$s" name="%2$s" %3$s/>',
+        'datetime'         => '<input type="text" id="%1$s" name="event[%2$s]" %3$s/>',
         'textarea'         => '<textarea id="%1$s" name="event[%2$s]" %3$s></textarea>',
         'hidden'           => '<input type="hidden" id="%1$s" name="event[%2$s]" %3$s/>',
         'attr-textarea'    => '<textarea id="%1$s" name="event_attributes[%2$s]" %3$s></textarea>',
@@ -532,13 +528,12 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
             }
             break;
 
-        case 'localized_datetime':
+        case 'datetime':
             // Hidden input for the raw value, visible input for the localized display
-            $res  = sprintf( '<input type="hidden" id="%s" name="event[%s]"/>', $esc_field_id, $esc_field );
-            $res .= sprintf(
-                $html_by_type['localized_datetime'],
-                $esc_localized_field_id,
-                esc_attr( "event[$localized_field_id]" ),
+            $res = sprintf(
+                $html_by_type['datetime'],
+                $esc_field_id,
+                $esc_field,
                 $safe_more
             );
             break;

@@ -941,8 +941,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $dateformat ) ) {
                 $dateformat = EME_WP_DATE_FORMAT;
             }
-            $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield eme_formfield_fdate $class'>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$value' data-format='$dateformat' class='eme_formfield eme_formfield_fdate $class'>";
             break;
         case 'datetime_js':
             # for datetime JS field
@@ -964,8 +963,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $dateformat = EME_WP_DATE_FORMAT .' '. EME_WP_TIME_FORMAT;
             }
             $dateformat = $field_attributes;
-            $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield eme_formfield_fdatetime $class'>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield eme_formfield_fdatetime $class'>";
             break;
         case 'time_js':
             # for time JS field
@@ -986,8 +984,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $dateformat ) ) {
                 $dateformat = EME_WP_TIME_FORMAT;
             }
-            $html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-format='$dateformat' data-alt-field='$field_name' class='eme_formfield_ftime $class'>";
+            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield_ftime $class'>";
             break;
         case 'datalist':
             # for text fields
@@ -1254,8 +1251,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
             $fieldname    = 'task_birthdate';
-            $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $fieldname = 'task_birthplace';
             if ( isset( $matches[1] ) ) {
@@ -1871,8 +1867,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
-            $replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-alt-field='birthdate' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='birthdate' id='birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
@@ -2955,8 +2950,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
                 }
                 $fieldname    = 'birthdate';
-                $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-                $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
+                $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
             }
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             if ( ! $is_multibooking ) {
@@ -3618,8 +3612,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
-            $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$entered_val'>";
-            $replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='$fieldname' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
+            $replacement .= "<input required='required' readonly='readonly' type='text' name='{$fieldname}' id='{$fieldname}' data-date='$entered_val' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
             $required     = 1;
         } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
             $field_key = $matches[1];
@@ -3929,8 +3922,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
-            $replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $fieldname = 'birthplace';
             if ( isset( $matches[1] ) ) {
@@ -4598,8 +4590,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
             } else {
                 $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
             }
-            $replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='birthdate' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
+            $replacement .= "<input $required_att readonly='readonly' type='text' name='birthdate' id='birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
             $replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
             if ( isset( $matches[1] ) ) {

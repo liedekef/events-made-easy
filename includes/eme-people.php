@@ -2641,8 +2641,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         </tr>
         <tr>
         <td><label for="dp_birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
-        <td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo esc_html( $person['birthdate'] ); ?>'>
-        <input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo esc_html( $person['birthdate'] ); ?>' data-format='<?php echo esc_attr( EME_WP_DATE_FORMAT ); ?>' data-alt-field='birthdate' data-view='years' class='eme_formfield_fdate'></td>
+        <td><input readonly='readonly' type='text' name='birthdate' id='birthdate' data-date='<?php echo esc_html( $person['birthdate'] ); ?>' data-format='<?php echo esc_attr( EME_WP_DATE_FORMAT ); ?>' data-view='years' class='eme_formfield_fdate'></td>
         <td></td>
         </tr>
         <tr>

@@ -214,10 +214,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateShowHideRecurrenceSpecificDays() {
         const frequency = EME.$('#recurrence-frequency')?.value;
         const intervalsDiv = EME.$('#recurrence-intervals');
-        const endDateInput = EME.$('#localized-rec-end-date');
+        const endDateInput = EME.$('#recurrence_end_date');
         const explanationP = EME.$('p#recurrence-dates-explanation');
         const specificSpan = EME.$('span#recurrence-dates-explanation-specificdates');
-        const startDateInput = EME.$('#localized-rec-start-date');
+        const startDateInput = EME.$('#recurrence_start_date');
         
         if (frequency === 'specific') {
             if (intervalsDiv) eme_toggle(intervalsDiv, false);
@@ -629,9 +629,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validateEventForm() {
         const recurrenceChecked = EME.$('#event-recurrence')?.checked;
-        const startDate = EME.$('#localized-rec-start-date')?.value;
-        const endDate = EME.$('#localized-rec-end-date')?.value;
-        const endDateField = EME.$('#localized-rec-end-date');
+        const startDate = EME.$('#recurrence_start_date')?.value;
+        const endDate = EME.$('#recurrence_end_date')?.value;
+        const endDateField = EME.$('#recurrence_end_date');
         
         if (recurrenceChecked && startDate === endDate) {
             alert(emeevents.translate_startenddate_identical || 'Start and end dates cannot be identical');
@@ -675,15 +675,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Initialize date pickers
-    if (EME.$('#localized-start-date')) {
-        new FDatepicker('#localized-start-date',{
+    if (EME.$('#event_start_date')) {
+        new FDatepicker('#event_start_date',{
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!date) {
                     return;
                 }
-                const endDatePicker = EME.$('#localized-end-date');
+                const endDatePicker = EME.$('#event_end_date');
                 if (endDatePicker && endDatePicker._fdatepicker) {
                     const endDate = endDatePicker._fdatepicker.selectedDate;
                     if (endDate) {
@@ -696,15 +696,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if (EME.$('#localized-end-date')) {
-        new FDatepicker('#localized-end-date',{
+    if (EME.$('#event_end_date')) {
+        new FDatepicker('#event_end_date',{
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!date) {
                     return;
                 }
-                const startDatePicker = EME.$('#localized-start-date');
+                const startDatePicker = EME.$('#event_start_date');
                 if (startDatePicker && startDatePicker._fdatepicker) {
                     const startDate = startDatePicker._fdatepicker.selectedDate;
                     if (startDate) {
@@ -717,15 +717,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if (EME.$('#localized-rec-start-date')) {
-        new FDatepicker('#localized-rec-start-date',{
+    if (EME.$('#recurrence_start_date')) {
+        new FDatepicker('#recurrence_start_date',{
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek)
         });
     }
 
-    if (EME.$('#localized-rec-end-date')) {
-        new FDatepicker('#localized-rec-end-date',{
+    if (EME.$('#recurrence_end_date')) {
+        new FDatepicker('#recurrence_end_date',{
             format: emeevents.translate_fdateformat,
             firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
@@ -733,7 +733,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
                 if (!Array.isArray(date)) {
-                    const startDatePicker = EME.$('#localized-rec-start-date');
+                    const startDatePicker = EME.$('#recurrence_start_date');
                     if (startDatePicker && startDatePicker._fdatepicker) {
                         const startDate = startDatePicker._fdatepicker.selectedDate;
                         if (startDate) {

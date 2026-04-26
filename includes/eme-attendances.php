@@ -137,8 +137,7 @@ function eme_attendances_table_layout( $message = '' ) {
          "
          . eme_ui_select( '', 'person_id', [], '', 1, 'eme_snapselect_people_class', $snapselect_attributes ) //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
          . ' '. esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
-         <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
-         <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple='false' class='eme_formfield_fdatetime'><br>
+         <input type='text' readonly='readonly' name='attendance_actualdate' id='attendance_date' data-date='' data-multiple='false' class='eme_formfield_fdatetime'><br>
          <input type='submit' class='button-primary' name='submit' value='" . esc_attr__( 'Add attendance', 'events-made-easy' ) . "'>
          </form>
          <h1>" . esc_html__( 'Consult attendances', 'events-made-easy' ) . '</h1>
@@ -160,10 +159,8 @@ function eme_attendances_table_layout( $message = '' ) {
 	}
 	?>
 	</select>
-	<input id="search_start_date" type="hidden" name="search_start_date" value="">
-	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
-	<input id="search_end_date" type="hidden" name="search_end_date" value="">
-	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+	<input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
+	<input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
 	<button id="AttendancesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter attendances', 'events-made-easy' ); ?></button>
 	</form>
 

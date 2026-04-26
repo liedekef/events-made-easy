@@ -67,7 +67,7 @@ function eme_add_task_function(element) {
     const signupCount = metaCopy.querySelector(`[name="eme_tasks[${currentId}][signup_count]"]`);
     if (signupCount) signupCount.remove();
 
-    const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'dp_task_start', 'dp_task_end', 'description'];
+    const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
     metafields.forEach(f => {
         const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
         if (field) {
@@ -75,12 +75,6 @@ function eme_add_task_function(element) {
             field.id = `eme_tasks[${newId}][${f}]`;
         }
     });
-
-    // Update data-alt-field attributes
-    const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
-    const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-    if (dpStart) dpStart.setAttribute('data-alt-field', `eme_tasks[${newId}][task_start]`);
-    if (dpEnd) dpEnd.setAttribute('data-alt-field', `eme_tasks[${newId}][task_end]`);
 
     // Clear values
     const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
@@ -93,30 +87,21 @@ function eme_add_task_function(element) {
     if (descField) descField.value = '';
     if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
 
+    // Remove the stale FDatepicker auto-created hidden fields from the clone;
+    // eme_init_widgets() will let FDatepicker recreate them with the correct ids.
+    metaCopy.querySelectorAll('input[id$="-fdp-alt"]').forEach(el => el.remove());
+
+    // Clear date values on the visible datepicker inputs so the clone starts empty.
+    ['task_start', 'task_end'].forEach(f => {
+        const field = metaCopy.querySelector(`[name="eme_tasks[${newId}][${f}]"]`);
+        if (field) { field.value = ''; field.removeAttribute('data-date'); }
+    });
+
     const tbody = EME.$('#eme_tasks_tbody');
     if (tbody) tbody.appendChild(metaCopy);
 
-    // Initialize date picker for added row
+    // Re-initialise datepickers in the cloned row so FDatepicker binds to the renamed fields.
     eme_init_widgets();
-
-    // Set existing dates
-    const currentStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_start]"]`)?.value;
-    if (currentStart) {
-        const jsStartObj = new Date(currentStart);
-        const dpStartField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
-        if (dpStartField && dpStartField._fdatepicker) {
-            dpStartField._fdatepicker.setDate(jsStartObj);
-        }
-    }
-
-    const currentEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_end]"]`)?.value;
-    if (currentEnd) {
-        const jsEndObj = new Date(currentEnd);
-        const dpEndField = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-        if (dpEndField && dpEndField._fdatepicker) {
-            dpEndField._fdatepicker.setDate(jsEndObj);
-        }
-    }
 }
 
 function eme_remove_task_function(element) {
@@ -136,7 +121,7 @@ function eme_remove_task_function(element) {
         const relElements = metaCopy.querySelectorAll('a');
         relElements.forEach(a => a.setAttribute('rel', newId));
 
-        const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'dp_task_start', 'dp_task_end', 'description'];
+        const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
         metafields.forEach(f => {
             const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
             if (field) {
@@ -144,12 +129,6 @@ function eme_remove_task_function(element) {
                 field.id = `eme_tasks[${newId}][${f}]`;
             }
         });
-
-        // Update data-alt-field attributes
-        const dpStart = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_start]"]`);
-        const dpEnd = metaCopy.querySelector(`[name="eme_tasks[${newId}][dp_task_end]"]`);
-        if (dpStart) dpStart.setAttribute('data-alt-field', `eme_tasks[${newId}][task_start]`);
-        if (dpEnd) dpEnd.setAttribute('data-alt-field', `eme_tasks[${newId}][task_end]`);
 
         // Clear values
         const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
@@ -451,20 +430,19 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const offset = parseInt(EME.$('#task_offset').value);
             let myId = 0;
-
-            while (document.querySelector(`[name="eme_tasks[${myId}][task_start]"]`)) {
-                const dpStartField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_start]"]`);
-                if (dpStartField && dpStartField._fdatepicker) {
-                    const startObj = dpStartField._fdatepicker.selectedDate;
+            while (document.querySelector('#eme_tasks[' + myId + '][task_start]')) {
+                const startField = document.querySelector('#eme_tasks[' + myId + '][task_start]');
+                if (startField && startField._fdatepicker) {
+                    const startObj = startField._fdatepicker.selectedDate;
                     startObj.setDate(startObj.getDate() + offset);
-                    dpStartField._fdatepicker.setDate(startObj);
+                    startField._fdatepicker.setDate(startObj);
                 }
 
-                const dpEndField = document.querySelector(`[name="eme_tasks[${myId}][dp_task_end]"]`);
-                if (dpEndField && dpEndField._fdatepicker) {
-                    const endObj = dpEndField._fdatepicker.selectedDate;
+                const endField = document.querySelector('#eme_tasks[' + myId + '][task_end]');
+                if (endField && endField._fdatepicker) {
+                    const endObj = endField._fdatepicker.selectedDate;
                     endObj.setDate(endObj.getDate() + offset);
-                    dpEndField._fdatepicker.setDate(endObj);
+                    endField._fdatepicker.setDate(endObj);
                 }
                 myId++;
             }

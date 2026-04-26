@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             target.required = false;
                                         }
                                         if (formKey == 'birthdate') {
-                                            const target2 = EME.$('input[name="dp_birthdate"]');
+                                            const target2 = EME.$('input#birthdate');
                                             if (target2._fdatepicker) {
                                                 const startObj = new Date(value);
                                                 target2._fdatepicker.setDate(startObj);

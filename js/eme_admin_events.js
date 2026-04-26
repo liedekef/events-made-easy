@@ -9,11 +9,11 @@ function calculateRsvpStart() {
 
     // Get hidden date and time values
     const dateField = target === 'start'
-        ? document.getElementById('start-date-to-submit')
-        : document.getElementById('end-date-to-submit');
+        ? EME.$('[name=event_start_date]')
+        : EME.$('[name=event_end_date]');
     const timeField = target === 'start'
-        ? document.getElementById('start-time-to-submit')
-        : document.getElementById('end-time-to-submit');
+        ? EME.$('[name=event_start_time]')
+        : EME.$('[name=event_end_date]');
 
     if (!dateField || !timeField) {
         displayElement.textContent = '';
@@ -62,11 +62,11 @@ function calculateRsvpEnd() {
 
     // Get hidden date and time values
     const dateField = target === 'start'
-        ? document.getElementById('start-date-to-submit')
-        : document.getElementById('end-date-to-submit');
+        ? EME.$('[name=event_start_date]')
+        : EME.$('[name=event_end_date]');
     const timeField = target === 'start'
-        ? document.getElementById('start-time-to-submit')
-        : document.getElementById('end-time-to-submit');
+        ? EME.$('[name=event_start_time]')
+        : EME.$('[name=event_end_date]');
 
     if (!dateField || !timeField) {
         displayElement.textContent = '';
@@ -107,8 +107,8 @@ function calculateRsvpCutoffDisplay() {
     }
 
     // Get hidden date and time values
-    const dateField = document.getElementById('start-date-to-submit');
-    const timeField = document.getElementById('start-time-to-submit');
+    const dateField = EME.$('[name=event_start_date]');
+    const timeField = EME.$('[name=event_start_time]');
 
     if (!dateField || !timeField) {
         displayElement.textContent = '';
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     startDateInput._fdatepicker.setOption('multiple', false);
                 }
                 // if the recurrence contained specific days before, clear those
-                const submitInput = EME.$('#rec-start-date-to-submit');
+                const submitInput = EME.$('[name=recurrence_start_date]');
                 if (submitInput?.value.includes(',')) {
                     startDateInput._fdatepicker.clear();
                 }
@@ -1201,13 +1201,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     const rsvpstartendinputs = [
-        'start-date-to-submit',
-        'end-date-to-submit',
-        'start-time-to-submit',
-        'end-time-to-submit',
+        'event_start_date',
+        'event_end_date',
+        'event_start_time',
+        'event_end_time',
     ];
     rsvpstartendinputs.forEach(selector => {
-        const el = document.getElementById(selector);
+        const el = EME.$('[name='+selector+']');
         if (el) {
             el.addEventListener('change', () => {
                 calculateRsvpStart();

@@ -424,22 +424,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // change_task_days snippet (for reference)
     const changeTaskDaysBtn = EME.$('#change_task_days');
     if (changeTaskDaysBtn) {
         changeTaskDaysBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const offset = parseInt(EME.$('#task_offset').value);
             let myId = 0;
-            while (document.querySelector('#eme_tasks[' + myId + '][task_start]')) {
-                const startField = document.querySelector('#eme_tasks[' + myId + '][task_start]');
-                if (startField && startField._fdatepicker) {
+
+            while (EME.$(`#eme_row_task_${myId}`)) {
+                const startField = EME.$(`#eme_tasks_${myId}_task_start`);
+                if (startField?._fdatepicker) {
                     const startObj = startField._fdatepicker.selectedDate;
                     startObj.setDate(startObj.getDate() + offset);
                     startField._fdatepicker.setDate(startObj);
                 }
 
-                const endField = document.querySelector('#eme_tasks[' + myId + '][task_end]');
-                if (endField && endField._fdatepicker) {
+                const endField = EME.$(`#eme_tasks_${myId}_task_end`);
+                if (endField?._fdatepicker) {
                     const endObj = endField._fdatepicker.selectedDate;
                     endObj.setDate(endObj.getDate() + offset);
                     endField._fdatepicker.setDate(endObj);

@@ -948,7 +948,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks_<?php echo esc_attr( $count ); ?>_task_end_' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' class='eme_formfield_fdatetime'>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks_<?php echo esc_attr( $count ); ?>_task_end' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' class='eme_formfield_fdatetime'>
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>

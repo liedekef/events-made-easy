@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             toolbarsearch: true,
             selecting: true,
             multiselect: true,
+            defaultDateFormat: emediscounts.translate_fdateformat,
             selectingCheckboxes: true,
             actions: {
                 listAction: ajaxurl+'?action=eme_discounts_list&eme_admin_nonce='+emediscounts.translate_adminnonce,
@@ -62,10 +63,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emediscounts.translate_usage
                 },
                 valid_from: {
-                    title: emediscounts.translate_validfrom
+                    title: emediscounts.translate_validfrom,
+                    type: 'date',
+                    dateFormat: emediscounts.translate_fdatetimeformat
                 },
                 valid_to: {
-                    title: emediscounts.translate_validto
+                    title: emediscounts.translate_validto,
+                    type: 'date',
+                    dateFormat: emediscounts.translate_fdatetimeformat,
                 }
             }
         });

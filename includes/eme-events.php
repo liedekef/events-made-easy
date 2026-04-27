@@ -10005,6 +10005,9 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
+            'translate_fdateformat'                => EME_WP_DATE_FORMAT,
+            'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
+            'translate_fdatetimeformat'            => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
         ];
         wp_localize_script( 'eme-discounts', 'emediscounts', $translation_array );
         wp_enqueue_script( 'eme-discounts' );

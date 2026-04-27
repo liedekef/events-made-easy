@@ -1780,7 +1780,7 @@ function eme_ajax_discounts_list() {
 
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where/orderby/limit are safe variables
-		foreach ( $rows as $key => $row ) {
+		foreach ( $rows as $key => &$row ) {
 			$selected_dgroup = $row['dgroup'];
 			// let's see if the dgroup is an csv of integers, if so: convert to names
 			$selected_dgroup_arr = explode( ',', $selected_dgroup );
@@ -1792,22 +1792,13 @@ function eme_ajax_discounts_list() {
                 }
             }
             $selected_dgroup = join( ',', $res_arr );
-			$rows[ $key ]['dgroup'] = $selected_dgroup;
-			if ( ! empty( $row['valid_from'] ) ) {
-				$rows[ $key ]['valid_from'] = eme_localized_datetime( $row['valid_from'], EME_TIMEZONE, 1 );
-			} else {
-				$rows[ $key ]['valid_from'] = '';
-			}
-			if ( ! empty( $row['valid_to'] ) ) {
-				$rows[ $key ]['valid_to'] = eme_localized_datetime( $row['valid_to'], EME_TIMEZONE, 1 );
-			} else {
-				$rows[ $key ]['valid_to'] = '';
-			}
-			$rows[ $key ]['type']             = eme_get_discounttype( $row['type'] );
-				$rows[ $key ]['strcase']      = ( $row['strcase'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-				$rows[ $key ]['use_per_seat'] = ( $row['use_per_seat'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-				$rows[ $key ]['name']         = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&eme_admin_action=edit_discount&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
+			$row['dgroup'] = $selected_dgroup;
+			$row['type']             = eme_get_discounttype( $row['type'] );
+            $row['strcase']      = ( $row['strcase'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $row['use_per_seat'] = ( $row['use_per_seat'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $row['name']         = "<a href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&eme_admin_action=edit_discount&id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . $row['name'] . '</a>';
 		}
+        unset($row);
 		$fTableResult['Result']           = 'OK';
 		$fTableResult['Records']          = $rows;
 		$fTableResult['TotalRecordCount'] = $recordCount;

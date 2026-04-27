@@ -408,12 +408,12 @@ input[type="checkbox"] {
 }
 
 /* some plugins set readonly pointer-events to none, but for our datetime fields this is not ok */
-.eme_formfield_fdatetime, .eme_formfield_fdate, .eme_formfield_ftime, #localized-start-date, #localized-end-date, #localized-rec-start-date, #localized-rec-end-date {
+.eme_formfield_fdatetime, .eme_formfield_fdate, .eme_formfield_ftime, #event_start_date, #event_end_date, #recurrence_start_date, #recurrence_end_date {
     pointer-events: auto !important;
     opacity: 1 !important;
     max-width: 100%;
 }
-.eme_formfield_fdatetime, .eme_formfield_fdate, .eme_formfield_ftime, #localized-start-date, #localized-end-date, #localized-rec-start-date, #localized-rec-end-date {
+.eme_formfield_fdatetime, .eme_formfield_fdate, .eme_formfield_ftime, #event_start_date, #event_end_date, #recurrence_start_date, #recurrence_end_date {
     background: #FCFFAA !important;
     field-sizing: content;
     min-inline-size: 10ch;

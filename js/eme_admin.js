@@ -64,27 +64,27 @@ function eme_add_task_function(element) {
     relElements.forEach(a => a.setAttribute('rel', newId));
 
     // Remove signup_count field
-    const signupCount = metaCopy.querySelector(`[name="eme_tasks[${currentId}][signup_count]"]`);
+    const signupCount = metaCopy.querySelector(`#eme_tasks_${currentId}_signup_count`);
     if (signupCount) signupCount.remove();
 
     const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
     metafields.forEach(f => {
-        const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
+        const field = metaCopy.querySelector(`#eme_tasks_${currentId}_${f}`);
         if (field) {
+            field.id   = `eme_tasks_${newId}_${f}`;
             field.name = `eme_tasks[${newId}][${f}]`;
-            field.id = `eme_tasks[${newId}][${f}]`;
         }
     });
 
     // Clear values
-    const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
-    const spacesField = metaCopy.querySelector(`[name="eme_tasks[${newId}][spaces]"]`);
-    const descField = metaCopy.querySelector(`[name="eme_tasks[${newId}][description]"]`);
-    const taskIdField = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_id]"]`);
+    const nameField   = metaCopy.querySelector(`#eme_tasks_${newId}_name`);
+    const spacesField = metaCopy.querySelector(`#eme_tasks_${newId}_spaces`);
+    const descField   = metaCopy.querySelector(`#eme_tasks_${newId}_description`);
+    const taskIdField = metaCopy.querySelector(`#eme_tasks_${newId}_task_id`);
 
-    if (nameField) nameField.value = '';
+    if (nameField)   nameField.value   = '';
     if (spacesField) spacesField.value = '1';
-    if (descField) descField.value = '';
+    if (descField)   descField.value   = '';
     if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
 
     // Remove the stale FDatepicker auto-created hidden fields from the clone;
@@ -93,7 +93,7 @@ function eme_add_task_function(element) {
 
     // Clear date values on the visible datepicker inputs so the clone starts empty.
     ['task_start', 'task_end'].forEach(f => {
-        const field = metaCopy.querySelector(`[name="eme_tasks[${newId}][${f}]"]`);
+        const field = metaCopy.querySelector(`#eme_tasks_${newId}_${f}`);
         if (field) { field.value = ''; field.removeAttribute('data-date'); }
     });
 
@@ -123,27 +123,27 @@ function eme_remove_task_function(element) {
 
         const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
         metafields.forEach(f => {
-            const field = metaCopy.querySelector(`[name="eme_tasks[${currentId}][${f}]"]`);
+            const field = metaCopy.querySelector(`#eme_tasks_${currentId}_${f}`);
             if (field) {
+                field.id   = `eme_tasks_${newId}_${f}`;
                 field.name = `eme_tasks[${newId}][${f}]`;
-                field.id = `eme_tasks[${newId}][${f}]`;
             }
         });
 
         // Clear values
-        const nameField = metaCopy.querySelector(`[name="eme_tasks[${newId}][name]"]`);
-        const spacesField = metaCopy.querySelector(`[name="eme_tasks[${newId}][spaces]"]`);
-        const descField = metaCopy.querySelector(`[name="eme_tasks[${newId}][description]"]`);
-        const taskIdField = metaCopy.querySelector(`[name="eme_tasks[${newId}][task_id]"]`);
+        const nameField   = metaCopy.querySelector(`#eme_tasks_${newId}_name`);
+        const spacesField = metaCopy.querySelector(`#eme_tasks_${newId}_spaces`);
+        const descField   = metaCopy.querySelector(`#eme_tasks_${newId}_description`);
+        const taskIdField = metaCopy.querySelector(`#eme_tasks_${newId}_task_id`);
 
-        if (nameField) nameField.value = '';
+        if (nameField)   nameField.value   = '';
         if (spacesField) spacesField.value = '1';
-        if (descField) descField.value = '';
+        if (descField)   descField.value   = '';
         if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
 
         // Remove required attributes
         metafields.forEach(f => {
-            const field = metaCopy.querySelector(`[name="eme_tasks[${newId}][${f}]"]`);
+            const field = metaCopy.querySelector(`#eme_tasks_${newId}_${f}`);
             if (field) field.removeAttribute('required');
         });
     }

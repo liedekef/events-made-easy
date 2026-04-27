@@ -654,6 +654,11 @@ function eme_attach_dynamic_handlers(selector, isBooking) {
         const debounced_family = !isBooking ? eme_debounce(() => eme_dynamic_familymemberdata_json(form_id), 500) : null;
 
         form.addEventListener('input', function(event) {
+            // Ignore events from hidden fields (e.g. FDatepicker auto-created altField);
+            // those are internal implementation details and should not trigger a dynamic refresh.
+            if (event.target.type === 'hidden') {
+                return;
+            }
             if (debounced_family && event.target.id === 'familycount') {
                 debounced_family();
             }

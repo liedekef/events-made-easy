@@ -164,22 +164,22 @@ function eme_add_todo_function(element) {
 
     const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
     metafields.forEach(f => {
-        const field = metaCopy.querySelector(`[name="eme_todos[${currentId}][${f}]"]`);
+        const field = metaCopy.querySelector(`#eme_todos_${currentId}_${f}`);
         if (field) {
+            field.id   = `eme_todos_${newId}_${f}`;
             field.name = `eme_todos[${newId}][${f}]`;
-            field.id = `eme_todos[${newId}][${f}]`;
         }
     });
 
     // Clear values
-    const nameField = metaCopy.querySelector(`[name="eme_todos[${newId}][name]"]`);
-    const offsetField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_offset]"]`);
-    const descField = metaCopy.querySelector(`[name="eme_todos[${newId}][description]"]`);
-    const todoIdField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_id]"]`);
+    const nameField   = metaCopy.querySelector(`#eme_todos_${newId}_name`);
+    const offsetField = metaCopy.querySelector(`#eme_todos_${newId}_todo_offset`);
+    const descField   = metaCopy.querySelector(`#eme_todos_${newId}_description`);
+    const todoIdField = metaCopy.querySelector(`#eme_todos_${newId}_todo_id`);
 
-    if (nameField) nameField.value = '';
+    if (nameField)   nameField.value   = '';
     if (offsetField) offsetField.value = '0';
-    if (descField) descField.value = '';
+    if (descField)   descField.value   = '';
     if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
 
     const tbody = EME.$('#eme_todos_tbody');
@@ -205,27 +205,27 @@ function eme_remove_todo_function(element) {
 
         const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
         metafields.forEach(f => {
-            const field = metaCopy.querySelector(`[name="eme_todos[${currentId}][${f}]"]`);
+            const field = metaCopy.querySelector(`#eme_todos_${currentId}_${f}`);
             if (field) {
+                field.id   = `eme_todos_${newId}_${f}`;
                 field.name = `eme_todos[${newId}][${f}]`;
-                field.id = `eme_todos[${newId}][${f}]`;
             }
         });
 
         // Clear values
-        const nameField = metaCopy.querySelector(`[name="eme_todos[${newId}][name]"]`);
-        const offsetField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_offset]"]`);
-        const descField = metaCopy.querySelector(`[name="eme_todos[${newId}][description]"]`);
-        const todoIdField = metaCopy.querySelector(`[name="eme_todos[${newId}][todo_id]"]`);
+        const nameField   = metaCopy.querySelector(`#eme_todos_${newId}_name`);
+        const offsetField = metaCopy.querySelector(`#eme_todos_${newId}_todo_offset`);
+        const descField   = metaCopy.querySelector(`#eme_todos_${newId}_description`);
+        const todoIdField = metaCopy.querySelector(`#eme_todos_${newId}_todo_id`);
 
-        if (nameField) nameField.value = '';
+        if (nameField)   nameField.value   = '';
         if (offsetField) offsetField.value = '0';
-        if (descField) descField.value = '';
+        if (descField)   descField.value   = '';
         if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
 
         // Remove required attributes
         metafields.forEach(f => {
-            const field = metaCopy.querySelector(`[name="eme_todos[${newId}][${f}]"]`);
+            const field = metaCopy.querySelector(`#eme_todos_${newId}_${f}`);
             if (field) field.removeAttribute('required');
         });
     }

@@ -923,18 +923,18 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                 </td>
                 <td>
                 <?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the task ids only if it is not a duplicate event ?>
-                    <input type='hidden' id="eme_tasks[<?php echo esc_attr( $count ); ?>][task_id]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_id]" aria-label="hidden index" value="<?php if ( isset( $task['task_id'] ) ) { echo esc_attr( $task['task_id'] );} ?>">
-                    <input type='hidden' id="eme_tasks[<?php echo esc_attr( $count ); ?>][task_nbr]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_nbr]" aria-label="hidden index" value="<?php if ( isset( $task['task_nbr'] ) ) { echo esc_attr( $task['task_nbr'] );} ?>">
+                    <input type='hidden' id="eme_tasks_<?php echo esc_attr( $count ); ?>_task_id" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_id]" aria-label="hidden index" value="<?php if ( isset( $task['task_id'] ) ) { echo esc_attr( $task['task_id'] );} ?>">
+                    <input type='hidden' id="eme_tasks_<?php echo esc_attr( $count ); ?>_task_nbr" name="eme_tasks[<?php echo esc_attr( $count ); ?>][task_nbr]" aria-label="hidden index" value="<?php if ( isset( $task['task_nbr'] ) ) { echo esc_attr( $task['task_nbr'] );} ?>">
                 <?php endif; ?>
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> id="eme_tasks[<?php echo esc_attr( $count ); ?>][name]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][name]" size="15" aria-label="name" value="<?php echo esc_attr( $task['name'] ); ?>">
+                <input <?php echo $required; ?> id="eme_tasks_<?php echo esc_attr( $count ); ?>_name" name="eme_tasks[<?php echo esc_attr( $count ); ?>][name]" size="15" aria-label="name" value="<?php echo esc_attr( $task['name'] ); ?>">
 <?php
                 if (!empty($task['task_id'])) {
                     $count_signups = eme_count_task_signups($task['task_id']);
                     if ($count_signups>0) {
-                        echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks[" . intval($count) . "][signup_count]'><br>";
+                        echo "<span name='eme_tasks[" . intval($count) . "][signup_count]' id='eme_tasks_" . intval($count) . "_signup_count_'><br>";
                         // translators: %d is the number of persons signed up
                         echo esc_html(sprintf( _n( '%d person already signed up for this task','%d persons already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
                         echo "</span>";
@@ -944,18 +944,18 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' data-date='<?php if ( $task['task_start'] ) { echo esc_attr( eme_js_datetime( $task['task_start'] ) );} ?>'  class='eme_formfield_fdatetime'>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_start]' id='eme_tasks_<?php echo esc_attr( $count ); ?>_task_start' data-date='<?php if ( $task['task_start'] ) { echo esc_attr( eme_js_datetime( $task['task_start'] ) );} ?>'  class='eme_formfield_fdatetime'>
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' class='eme_formfield_fdatetime'>
+                <input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo esc_attr( $count ); ?>][task_end]' id='eme_tasks_<?php echo esc_attr( $count ); ?>_task_end_' data-date='<?php if ( $task['task_end'] ) { echo esc_attr( eme_js_datetime( $task['task_end'] ) );} ?>' class='eme_formfield_fdatetime'>
                 </td>
                 <td>
                 <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $required is hardcoded attribute ?>
-                <input <?php echo $required; ?> id="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" size="12" aria-label="spaces" value="<?php echo esc_attr( $task['spaces'] ); ?>">
+                <input <?php echo $required; ?> id="eme_tasks_<?php echo esc_attr( $count ); ?>_spaces" name="eme_tasks[<?php echo esc_attr( $count ); ?>][spaces]" size="12" aria-label="spaces" value="<?php echo esc_attr( $task['spaces'] ); ?>">
                 </td>
                 <td>
-                <textarea class="eme_fullresizable" id="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" name="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $task['description'] ); ?></textarea>
+                <textarea class="eme_fullresizable" id="eme_tasks_<?php echo esc_attr( $count ); ?>_description" name="eme_tasks[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $task['description'] ); ?></textarea>
                 </td>
                 <td>
                 <a href="#" class='eme_remove_task'><?php echo "<img class='eme_remove_task' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img class='eme_add_task' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>

@@ -3010,8 +3010,8 @@ function eme_ajax_locations_list() {
     $formfields            = eme_get_formfields( '', 'locations' );
 
     $fTableResult = [];
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
 
     if ( empty( $formfields_searchable ) ) {
         $count_sql = "SELECT COUNT(*) FROM $table AS locations $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared

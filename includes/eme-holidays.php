@@ -267,8 +267,8 @@ function eme_ajax_action_holidays_list() {
     }
 
     $table = EME_DB_PREFIX . EME_HOLIDAYS_TBNAME;
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
 
     $count_sql  = "SELECT COUNT(*) FROM $table";
     $sql  = "SELECT * FROM $table $orderby $limit";

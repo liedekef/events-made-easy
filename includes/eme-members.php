@@ -3046,8 +3046,8 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     $answers_table     = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 
-    $limit   = eme_get_datatables_limit();
-    $orderby = eme_get_datatables_orderby();
+    $limit   = eme_get_ftable_limit();
+    $orderby = eme_get_ftable_orderby();
     // if we don't sort on membership_name, we don't need to JOIN on the memberships table too, a bit more efficient then
     if (preg_match('/membership_name/', $orderby ) ) {
         $orderby = str_replace( 'membership_name', 'memberships.name', $orderby );
@@ -6572,8 +6572,8 @@ function eme_ajax_memberships_list() {
 
     $prepared_sql = "SELECT COUNT(*) FROM $table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $recordCount = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $limit       = eme_get_datatables_limit();
-    $orderby     = eme_get_datatables_orderby('status DESC') ?: 'ORDER BY status DESC, name ASC';
+    $limit       = eme_get_ftable_limit();
+    $orderby     = eme_get_ftable_orderby('status DESC') ?: 'ORDER BY status DESC, name ASC';
 
     $prepared_sql = $wpdb->prepare("SELECT membership_id,COUNT(*) AS familymembercount FROM $members_table WHERE status IN (%d,%d) AND related_member_id>0 GROUP BY membership_id", $status_active, $status_grace); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $res         = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

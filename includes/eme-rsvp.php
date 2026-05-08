@@ -5799,8 +5799,8 @@ function eme_ajax_bookings_list() {
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
-    $limit          = eme_get_datatables_limit();
-    $orderby        = eme_get_datatables_orderby() ?: 'ORDER BY creation_date ASC';
+    $limit          = eme_get_ftable_limit();
+    $orderby        = eme_get_ftable_orderby() ?: 'ORDER BY creation_date ASC';
     $booking_status = ( isset( $_POST['booking_status'] ) ) ? eme_sanitize_request( $_POST['booking_status'] ) : 'APPROVED';
     $search_event   = isset( $_POST['search_event'] ) ? eme_sanitize_request($_POST['search_event'])  : '';
     $search_person  = isset( $_POST['search_person'] ) ? eme_sanitize_request($_POST['search_person']) : '';

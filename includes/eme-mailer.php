@@ -1556,8 +1556,8 @@ function eme_mailingreport_list() {
 
     $sql          = "SELECT COUNT(*) FROM $table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $recordCount  = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $limit        = eme_get_datatables_limit();
-    $orderby      = eme_get_datatables_orderby();
+    $limit        = eme_get_ftable_limit();
+    $orderby      = eme_get_ftable_orderby();
     $sql          = "SELECT * FROM $table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows         = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $records      = [];
@@ -1630,8 +1630,8 @@ function eme_ajax_mailings_list() {
         wp_die();
     }
 
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
     $where = " WHERE status<>'archived' ";
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         $count_sql = "SELECT COUNT(*) FROM $mailings_table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1776,8 +1776,8 @@ function eme_ajax_archivedmailings_list() {
         wp_die();
     }
 
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
     $where = " WHERE status='archived' ";
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         $count_sql = "SELECT COUNT(*) FROM $mailings_table $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1869,8 +1869,8 @@ function eme_ajax_mails_list() {
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where = '';
 
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
 
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         if ( ! empty( $_POST['search_failed'] ) ) {

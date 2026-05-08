@@ -2367,8 +2367,8 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     } elseif ( $emails_only ) {
         $sql = "SELECT people.email FROM $people_table AS people $usergroup_join $member_join $sql_join $where GROUP BY people.person_id";
     } else {
-        $limit   = eme_get_datatables_limit();
-        $orderby = eme_get_datatables_orderby();
+        $limit   = eme_get_ftable_limit();
+        $orderby = eme_get_ftable_orderby();
         $sql = "SELECT people.* FROM $people_table AS people $usergroup_join $member_join $sql_join $where GROUP BY people.person_id $orderby $limit";
     }
     return $sql;
@@ -5372,8 +5372,8 @@ function eme_ajax_people_list( ) {
     $formfields = eme_get_formfields( '', 'people' );
 
     $fTableResult = [];
-    $limit        = eme_get_datatables_limit();
-    $orderby      = eme_get_datatables_orderby();
+    $limit        = eme_get_ftable_limit();
+    $orderby      = eme_get_ftable_orderby();
     $search_terms = eme_unserialize(eme_sanitize_request($_POST));
     $count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
     $sql          = eme_get_sql_people_searchfields( $search_terms );
@@ -5485,8 +5485,8 @@ function eme_ajax_groups_list() {
         $groupcount[ $val['group_id'] ] = $val['eme_groupcount'];
     }
 
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
     $sql      = "SELECT * FROM $table $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $groups   = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $records  = [];

@@ -466,8 +466,8 @@ function eme_ajax_templates_list() {
     if ( current_user_can( get_option( 'eme_cap_templates' ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
         $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
-        $limit       = eme_get_datatables_limit();
-        $orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+        $orderby     = eme_get_ftable_orderby();
         $sql         = "SELECT * FROM $table $where $orderby $limit";
         $res         = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and conditions are safe variables
         $rows        = [];

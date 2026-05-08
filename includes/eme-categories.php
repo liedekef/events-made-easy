@@ -664,8 +664,8 @@ function eme_ajax_action_categories_list() {
     }
 
     $table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
-    $limit    = eme_get_datatables_limit();
-    $orderby  = eme_get_datatables_orderby();
+    $limit    = eme_get_ftable_limit();
+    $orderby  = eme_get_ftable_orderby();
 
     $count_sql  = "SELECT COUNT(*) FROM $table";
     $sql  = "SELECT * FROM $table $orderby $limit";

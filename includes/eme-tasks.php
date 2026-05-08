@@ -2103,8 +2103,8 @@ function eme_ajax_task_signups_list() {
         $formfields  = eme_get_formfields( '', 'generic,events,tasksignup' ); 
         $sql         = "SELECT COUNT(*) FROM $signups_table AS signups $join $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $limit       = eme_get_datatables_limit();
-        $orderby     = eme_get_datatables_orderby() ?: 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
+        $limit       = eme_get_ftable_limit();
+        $orderby     = eme_get_ftable_orderby() ?: 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
         $sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         foreach ( $rows as $key => $row ) {

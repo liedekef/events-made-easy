@@ -664,8 +664,8 @@ function eme_ajax_recurrences_list() {
 	$today              = $eme_date_obj->getDate();
 	$event_status_array = eme_status_array();
 
-    $limit             = eme_get_datatables_limit();
-	$orderby           = eme_get_datatables_orderby();
+    $limit             = eme_get_ftable_limit();
+	$orderby           = eme_get_ftable_orderby();
 	$scope             = ( isset( $_POST['scope'] ) ) ? eme_sanitize_request( $_POST['scope'] ) : 'ongoing';
 	$search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
 	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request($_POST['search_start_date']) : '';

@@ -1775,8 +1775,8 @@ function eme_ajax_discounts_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where clause are safe variables
-        $limit       = eme_get_datatables_limit();
-		$orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+		$orderby     = eme_get_ftable_orderby();
 
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where/orderby/limit are safe variables
@@ -1836,8 +1836,8 @@ function eme_ajax_discountgroups_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where clause are safe variables
-        $limit       = eme_get_datatables_limit();
-		$orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+		$orderby     = eme_get_ftable_orderby();
 
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped where/orderby/limit are safe variables

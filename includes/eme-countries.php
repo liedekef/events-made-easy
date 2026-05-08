@@ -912,8 +912,8 @@ function eme_ajax_countries_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable and all is prepared above
-        $limit       = eme_get_datatables_limit();
-		$orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+		$orderby     = eme_get_ftable_orderby();
 		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable and all is prepared above
 		foreach ( $rows as $key => $row ) {
@@ -940,8 +940,8 @@ function eme_ajax_states_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
 		$recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
-        $limit       = eme_get_datatables_limit();
-		$orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+		$orderby     = eme_get_ftable_orderby();
 		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		foreach ( $rows as $key => $row ) {

@@ -10367,7 +10367,7 @@ function eme_ajax_events_list() {
     $StartIndex = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
 
     $scope             = isset( $_POST['scope'] ) ? eme_sanitize_request( $_POST['scope'] ) : 'future';
-    $orderby           = eme_get_datatables_orderby() ?: '';
+    $orderby           = eme_get_ftable_orderby() ?: '';
     $category          = isset( $_POST['category'] ) ? eme_sanitize_request( $_POST['category'] ) : '';
     $status            = isset( $_POST['status'] ) ? intval( $_POST['status'] ) : '';
     $search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';

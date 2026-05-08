@@ -3418,8 +3418,8 @@ function eme_ajax_record_list( $tablename, $cap ) {
     if ( current_user_can( get_option( $cap ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
         $recordCount = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
-        $limit       = eme_get_datatables_limit();
-        $orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+        $orderby     = eme_get_ftable_orderby();
 
         $sql                    = "SELECT * FROM $table $where $orderby $limit";
         $rows                   = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
@@ -4320,7 +4320,7 @@ function eme_get_selected_captcha($properties) {
     return $selected_captcha;
 }
 
-function eme_get_datatables_limit() {
+function eme_get_ftable_limit() {
     $limit = '';
     if ( isset( $_REQUEST['jtStartIndex'] ) && ! empty( $_REQUEST['jtPageSize'] ) ) {
         $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
@@ -4328,7 +4328,7 @@ function eme_get_datatables_limit() {
     return $limit;
 }
 
-function eme_get_datatables_orderby($preferred_sorting = '') {
+function eme_get_ftable_orderby($preferred_sorting = '') {
     $preferred_sorting = eme_sanitize_sql_orderby( $preferred_sorting );
     $sanitized_sorting = eme_sanitize_sql_orderby(
         sanitize_text_field( wp_unslash( $_REQUEST['jtSorting'] ?? '' ) )

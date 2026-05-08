@@ -221,8 +221,8 @@ function eme_ajax_attendances_list() {
 			$prepared_sql         = "SELECT COUNT(*) FROM $table";
 		}
 		$recordCount = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $limit       = eme_get_datatables_limit();
-		$orderby     = eme_get_datatables_orderby();
+        $limit       = eme_get_ftable_limit();
+		$orderby     = eme_get_ftable_orderby();
 		if ( ! empty( $prepare_values ) ) {
 			$prepared_sql     = $wpdb->prepare( "SELECT * FROM $table $where", $prepare_values ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$prepared_sql    .= " $orderby $limit";

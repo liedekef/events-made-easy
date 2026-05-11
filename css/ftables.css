@@ -40,7 +40,6 @@ div.ftable-main-container table.ftable tbody>tr {
     }
     .ftable-toolbar-item-csv,
     .ftable-toolbar-item-print,
-    .ftable-toolbar-item-column-select,
     .ftable-page-info {display:none !important;}
 }
 @media (max-width: 768px) {

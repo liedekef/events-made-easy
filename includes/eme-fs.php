@@ -427,7 +427,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
                 $type = 'hidden';
                 break;
             case 'event_start_time':
-                $more .= " required='required' readonly='readonly' class='eme_formfield_ftime'";
+                $more .= " readonly='readonly' class='eme_formfield_ftime'";
                 $type = 'datetime';
                 break;
             case 'event_end_time':

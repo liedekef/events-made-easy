@@ -1702,17 +1702,8 @@ function eme_global_map_shortcode( $atts ) {
 
     $result = '';
     if ( ! empty( $locations ) ) {
-        $result           = "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
-        $locations_string = 'global_map_info_' . $id_base;
-        $locations_val    = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
-
-        // using wp_add_inline_script and "before", so we're sure this code is always there before the maps code
-        // we need to do this for minifiers that might otherwise reorder code if inline scripts are used
-        wp_add_inline_script(
-            'eme-show-maps', // dependent on eme-show-maps, so this inline script comes before that
-            "window.$locations_string = $locations_val;",
-            'before' // ensures availability before init runs
-        );
+        $result = "<script>window.global_map_info_{$id_base} = " . eme_global_map_json( $locations, $marker_clustering, $letter_icons ) . ";</script>";
+        $result .= "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
     }
 
     if ( $atts['paging'] == 1 ) {
@@ -1761,7 +1752,12 @@ function eme_global_map_shortcode( $atts ) {
             $loc_list .= '</ol>';
         }
         if ( $letter_icons ) {
-            ++$firstletter;
+            if (function_exists('str_increment')) {
+                $firstletter = str_increment($firstletter);
+            } else {
+                // older php doesn't know str_increment
+                ++$firstletter;
+            }
         }
     }
     $loc_list .= '</ol></div>';

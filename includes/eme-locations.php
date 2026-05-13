@@ -1702,7 +1702,8 @@ function eme_global_map_shortcode( $atts ) {
 
     $result = '';
     if ( ! empty( $locations ) ) {
-        $result = "<script>window.global_map_info_{$id_base} = " . eme_global_map_json( $locations, $marker_clustering, $letter_icons ) . ";</script>";
+        $locations_val = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
+        $result  = "<script>window.global_map_info_{$id_base} = {$locations_val};</script>";
         $result .= "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
     }
 

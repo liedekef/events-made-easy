@@ -98,7 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.68  (2026/05/) =
+= 3.0.68  (2026/05/13) =
 * ftable/fdatepicker updates
 * for frontend submit: start time is no longer required. Add REQ to the field if needed
 * allow #_PROP{xx} placeholders to access event/location properties in mails/...

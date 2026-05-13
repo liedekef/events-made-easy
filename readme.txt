@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.0.68  (2026/05/) =
 * ftable/fdatepicker updates
 * for frontend submit: start time is no longer required. Add REQ to the field if needed
+* allow #_PROP{xx} placeholders to access event/location properties in mails/...
 
 = 3.0.67  (2026/04/21) =
 * make people autocomplete work again

@@ -2282,7 +2282,23 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     $replacement = apply_filters( 'eme_general', $replacement );
                 }
                 # until I find something easy not-google related, this is returning the google form
-
+            } elseif ( preg_match( '/#_PROP\{(.+?)\}$/', $result, $matches ) ) {
+                $tmp_attkey = $matches[1];
+                if ( isset( $location['location_attributes'][ $tmp_attkey ] ) && ! is_array( $location['location_attributes'][ $tmp_attkey ] ) ) {
+                    $replacement = $location['location_attributes'][ $tmp_attkey ];
+                    if ( $target == 'html' ) {
+                        $replacement = esc_html( eme_translate( $replacement, $lang ) );
+                        $replacement = apply_filters( 'eme_general', $replacement );
+                    } elseif ( $target == 'rss' ) {
+                        $replacement = eme_translate( $replacement, $lang );
+                        $replacement = apply_filters( 'the_content_rss', $replacement );
+                    } else {
+                        $replacement = eme_translate( $replacement, $lang );
+                        $replacement = apply_filters( 'eme_text', $replacement );
+                    }
+                } else {
+                    $found = 0;
+                }
             } elseif ( preg_match( '/#_DBFIELD\{(.+?)\}/', $result, $matches ) ) {
                 $tmp_attkey = $matches[1];
                 if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
@@ -2297,6 +2313,8 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                         $replacement = eme_translate( $replacement, $lang );
                         $replacement = apply_filters( 'eme_text', $replacement );
                     }
+                } else {
+                    $found = 0;
                 }
             } elseif ( preg_match( '/#_MYLOCATIONATT\{(.+?)\}/', $result, $matches ) ) {
                 $tmp_attkey = $matches[1];

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Attendances Table ---
     if (AttendancesTableContainer) {
         AttendancesTable = new FTable('#AttendancesTableContainer', {
-            title: emeattendances.translate_attendance_reports,
+            title: emeadmin.translate_attendance_reports,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
             printTable: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_attendances&do_action=deleteAttendances&eme_admin_nonce='+emeattendances.translate_adminnonce
+                deleteAction: ajaxurl+'?action=eme_manage_attendances&do_action=deleteAttendances&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             listQueryParams: () => ({
                 action: 'eme_attendances_list',
-                eme_admin_nonce: emeattendances.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 search_type: EME.$('#search_type')?.value || '',
                 search_start_date: EME.$('[name=search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=search_end_date]')?.value || ''
@@ -29,22 +29,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emeattendances.translate_id,
+                    title: emeadmin.translate_id,
                     visibility: 'hidden'
                 },
                 creation_date: {
-                    title: emeattendances.translate_attendancedate
+                    title: emeadmin.translate_attendancedate
                 },
                 type: {
-                    title: emeattendances.translate_type
+                    title: emeadmin.translate_type
                 },
                 person: {
                     sorting: false,
-                    title: emeattendances.translate_personinfo
+                    title: emeadmin.translate_personinfo
                 },
                 related_name: {
                     sorting: false,
-                    title: emeattendances.translate_name
+                    title: emeadmin.translate_name
                 }
             }
         });

@@ -53,7 +53,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     }
     let myOptions = {
         zoom: 13,
-        scrollWheelZoom: emeeditmaps.translate_map_zooming,
+        scrollWheelZoom: emeadmin.translate_map_zooming,
         doubleClickZoom: false
     }
     // to avoid the leaflet error 'Map container is already initialized'
@@ -107,8 +107,8 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                     let myIcon;
                     if (map_icon !== '') {
                         myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-                    } else if (emeeditmaps.translate_default_map_icon !== '') {
-                        myIcon = L.icon({iconUrl: emeeditmaps.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+                    } else if (emeadmin.translate_default_map_icon !== '') {
+                        myIcon = L.icon({iconUrl: emeadmin.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                     } else {
                         myIcon = new L.Icon.Default();
                     }
@@ -153,7 +153,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         let myOptions = {
             zoom: 13,
             center: latlng,
-            scrollWheelZoom: emeeditmaps.translate_map_zooming,
+            scrollWheelZoom: emeadmin.translate_map_zooming,
             doubleClickZoom: false
         }
         // to avoid the leaflet error 'Map container is already initialized'
@@ -171,8 +171,8 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         let myIcon;
         if (map_icon !== '') {
             myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-        } else if (emeeditmaps.translate_default_map_icon !== '') {
-            myIcon = L.icon({iconUrl: emeeditmaps.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+        } else if (emeadmin.translate_default_map_icon !== '') {
+            myIcon = L.icon({iconUrl: emeadmin.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
         } else {
             myIcon = new L.Icon.Default();
         }

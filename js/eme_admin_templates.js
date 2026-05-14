@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (TemplatesTableContainer) {
         TemplatesTable = new FTable('#TemplatesTableContainer', {
-            title: emetemplates.translate_templates,
+            title: emeadmin.translate_templates,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             deleteConfirmation: function(data) {
-                data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"'
+                data.deleteConfirmMessage = emeadmin.translate_pressdeletetoremove + ' "' + data.record.name + '"'
             },
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emeadmin.translate_adminnonce,
             },
             listQueryParams: function () {
                 return {
                     action: 'eme_templates_list',
-                    eme_admin_nonce: emetemplates.translate_adminnonce,
+                    eme_admin_nonce: emeadmin.translate_adminnonce,
                     search_name: EME.$('#search_name')?.value || '',
                     search_content: EME.$('#search_content')?.value || '',
                     search_type: EME.$('#search_type')?.value || ''
@@ -35,20 +35,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     list: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emetemplates.translate_id
+                    title: emeadmin.translate_id
                 },
                 name: {
                     visibility: 'fixed',
-                    title: emetemplates.translate_name
+                    title: emeadmin.translate_name
                 },
                 description: {
-                    title: emetemplates.translate_description
+                    title: emeadmin.translate_description
                 },
                 type: {
-                    title: emetemplates.translate_type
+                    title: emeadmin.translate_type
                 },
                 copy: {
-                    title: emetemplates.translate_copy,
+                    title: emeadmin.translate_copy,
                     sorting: false,
                     width: '1%',
                     listClass: 'eme-ftable-center',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            actionsButton.textContent = emetemplates.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -86,11 +86,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_templates');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emetemplates.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 TemplatesTable.reload();
-                actionsButton.textContent = emetemplates.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
 
                 const messageDiv = EME.$('#templates-message');

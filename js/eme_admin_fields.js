@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Form Fields Table ---
     if (FormfieldsTableContainer) {
         FormfieldsTable = new FTable('#FormfieldsTableContainer', {
-            title: emeformfields.translate_formfields,
+            title: emeadmin.translate_formfields,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -147,54 +147,54 @@ document.addEventListener('DOMContentLoaded', function () {
             selectingCheckboxes: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl + '?action=eme_manage_formfields&do_action=deleteFormfield&eme_admin_nonce=' + emeformfields.translate_adminnonce
+                deleteAction: ajaxurl + '?action=eme_manage_formfields&do_action=deleteFormfield&eme_admin_nonce=' + emeadmin.translate_adminnonce
             },
             listQueryParams: () => ({
                 action: 'eme_formfields_list',
                 search_name: EME.$('#search_name')?.value || '',
                 search_type: EME.$('#search_type')?.value || '',
                 search_purpose: EME.$('#search_purpose')?.value || '',
-                eme_admin_nonce: emeformfields.translate_adminnonce
+                eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
                 field_id: {
                     key: true,
-                    title: emeformfields.translate_id,
+                    title: emeadmin.translate_id,
                     width: '1%',
                     columnResizable: false,
                     visibility: 'hidden'
                 },
                 field_name: {
-                    title: emeformfields.translate_name,
+                    title: emeadmin.translate_name,
                     visibility: 'fixed',
                 },
                 copy: {
-                    title: emeformfields.translate_copy,
+                    title: emeadmin.translate_copy,
                     sorting: false,
                     columnResizable: false,
                     width: '2%',
                     listClass: 'eme-ftable-center'
                 },
                 field_type: {
-                    title: emeformfields.translate_type
+                    title: emeadmin.translate_type
                 },
                 field_required: {
-                    title: emeformfields.translate_required,
+                    title: emeadmin.translate_required,
                     width: '2%'
                 },
                 field_purpose: {
-                    title: emeformfields.translate_purpose
+                    title: emeadmin.translate_purpose
                 },
                 extra_charge: {
-                    title: emeformfields.translate_extracharge,
+                    title: emeadmin.translate_extracharge,
                     visibility: 'hidden'
                 },
                 searchable: {
-                    title: emeformfields.translate_searchable,
+                    title: emeadmin.translate_searchable,
                     visibility: 'hidden'
                 },
                 used: {
-                    title: emeformfields.translate_used,
+                    title: emeadmin.translate_used,
                     sorting: false,
                     width: '2%'
                 }
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            actionsButton.textContent = emeformfields.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -227,11 +227,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('field_id', idsJoined);
             formData.append('action', 'eme_manage_formfields');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emeformfields.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 FormfieldsTable.reload();
-                actionsButton.textContent = emeformfields.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
                 const msg = EME.$('#formfields-message');
                 if (msg) {

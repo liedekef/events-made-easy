@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Countries Table ---
     if (CountriesTableContainer) {
         CountriesTable = new FTable('#CountriesTableContainer', {
-            title: emecountries.translate_countries,
+            title: emeadmin.translate_countries,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -17,22 +17,22 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_countries_list&eme_admin_nonce='+emecountries.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&eme_admin_nonce='+emecountries.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_countries_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emecountries.translate_id,
+                    title: emeadmin.translate_id,
                     list: false
                 },
-                name: { title: emecountries.translate_name },
-                alpha_2: { title: emecountries.translate_alpha_2 },
-                alpha_3: { title: emecountries.translate_alpha_3 },
-                num_3: { title: emecountries.translate_num_3 },
-                lang: { title: emecountries.translate_lang }
+                name: { title: emeadmin.translate_name },
+                alpha_2: { title: emeadmin.translate_alpha_2 },
+                alpha_3: { title: emeadmin.translate_alpha_3 },
+                num_3: { title: emeadmin.translate_num_3 },
+                lang: { title: emeadmin.translate_lang }
             }
         });
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize States Table ---
     if (StatesTableContainer) {
         StatesTable = new FTable('#StatesTableContainer', {
-            title: emecountries.translate_states,
+            title: emeadmin.translate_states,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -52,29 +52,29 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_states_list&eme_admin_nonce='+emecountries.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_states&do_action=deleteStates&eme_admin_nonce='+emecountries.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_states_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_states&do_action=deleteStates&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emecountries.translate_id,
+                    title: emeadmin.translate_id,
                     list: false
                 },
                 name: {
-                    title: emecountries.translate_name,
+                    title: emeadmin.translate_name,
                     value: record => {
                         if (record.country_id == 0) {
-                            return `${record.name} ${emecountries.translate_missingcountry}`;
+                            return `${record.name} ${emeadmin.translate_missingcountry}`;
                         }
                         return record.name;
                     }
                 },
-                code: { title: emecountries.translate_code },
-                country_name: { title: emecountries.translate_country },
-                locale: { title: emecountries.translate_locale }
+                code: { title: emeadmin.translate_code },
+                country_name: { title: emeadmin.translate_country },
+                locale: { title: emeadmin.translate_locale }
             }
         });
 
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            countriesButton.textContent = emecountries.translate_pleasewait;
+            countriesButton.textContent = emeadmin.translate_pleasewait;
             countriesButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_countries');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emecountries.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 CountriesTable.reload();
-                countriesButton.textContent = emecountries.translate_apply;
+                countriesButton.textContent = emeadmin.translate_apply;
                 countriesButton.disabled = false;
 
                 const msg = EME.$('#countries-message');
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            statesButton.textContent = emecountries.translate_pleasewait;
+            statesButton.textContent = emeadmin.translate_pleasewait;
             statesButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_states');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emecountries.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 StatesTable.reload();
-                statesButton.textContent = emecountries.translate_apply;
+                statesButton.textContent = emeadmin.translate_apply;
                 statesButton.disabled = false;
 
                 const msg = EME.$('#states-message');

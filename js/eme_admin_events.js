@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (inputValue.length >= 2) {
                     timeout = setTimeout(() => {
                         const formData = new URLSearchParams({
-                            eme_admin_nonce: emeevents.translate_adminnonce || '',
+                            eme_admin_nonce: emeadmin.translate_adminnonce || '',
                             name: inputValue,
                             action: 'eme_autocomplete_locations'
                         });
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     const editImg = EME.$('#img_edit_location');
                                     if (editImg) eme_toggle(editImg, true);
                                     
-                                    if (typeof L !== 'undefined' && emeevents.translate_map_is_active === "true") {
+                                    if (typeof L !== 'undefined' && emeadmin.translate_map_is_active === "true") {
                                         eme_displayAddress(0);
                                     }
                                 });
@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (!data.length) {
                                 const noMatch = document.createElement('div');
                                 noMatch.className = 'eme-autocomplete-suggestion';
-                                noMatch.innerHTML = `<strong>${emeevents.translate_nomatchlocation || 'No matches found'}</strong>`;
+                                noMatch.innerHTML = `<strong>${emeadmin.translate_nomatchlocation || 'No matches found'}</strong>`;
                                 suggestions.appendChild(noMatch);
                             }
 
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 locationSelect.addEventListener('change', function() {
                     const formData = new URLSearchParams({
                         eme_admin_action: 'autocomplete_locations',
-                        eme_admin_nonce: emeevents.translate_adminnonce || '',
+                        eme_admin_nonce: emeadmin.translate_adminnonce || '',
                         id: this.value
                     });
 
@@ -577,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             EME.$('input[name="location-select-latitude"]').value = item.latitude;
                             EME.$('input[name="location-select-longitude"]').value = item.longitude;
                             
-                            if (emeevents.translate_map_is_active === 'true') {
+                            if (emeadmin.translate_map_is_active === 'true') {
                                 loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
                             }
                         });
@@ -604,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // the next is only for tinymce, jodit has specific code for this
-        if (emeevents.translate_htmleditor === 'tinymce') {
+        if (emeadmin.translate_htmleditor === 'tinymce') {
             EME.$$('span[data-default]').forEach(span => {
                 const defaultValue = span.dataset.default.replace(/<br\s*\/?>/gi, '<br>');
                 const targetId = span.dataset.targetid;
@@ -634,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const endDateField = EME.$('#recurrence_end_date');
         
         if (recurrenceChecked && startDate === endDate) {
-            alert(emeevents.translate_startenddate_identical || 'Start and end dates cannot be identical');
+            alert(emeadmin.translate_startenddate_identical || 'Start and end dates cannot be identical');
             if (endDateField) endDateField.style.border = '2px solid red';
             return false;
         } else {
@@ -654,9 +654,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (eventNameInput) {
             const eventName = eventNameInput.value;
             if (!eventName) {
-                title = emeevents.translate_insertnewevent || 'Insert New Event';
+                title = emeadmin.translate_insertnewevent || 'Insert New Event';
             } else {
-                title = emeevents.translate_editeventstring || 'Edit Event: %s';
+                title = emeadmin.translate_editeventstring || 'Edit Event: %s';
                 title = title.replace(/%s/g, eventName);
             }
             document.title = eme_htmlDecode(title);
@@ -677,8 +677,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize date pickers
     if (EME.$('#event_start_date')) {
         new FDatepicker('#event_start_date',{
-            format: emeevents.translate_fdateformat,
-            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
+            format: emeadmin.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeadmin.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!date) {
                     return;
@@ -698,8 +698,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (EME.$('#event_end_date')) {
         new FDatepicker('#event_end_date',{
-            format: emeevents.translate_fdateformat,
-            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
+            format: emeadmin.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeadmin.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!date) {
                     return;
@@ -719,15 +719,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (EME.$('#recurrence_start_date')) {
         new FDatepicker('#recurrence_start_date',{
-            format: emeevents.translate_fdateformat,
-            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek)
+            format: emeadmin.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeadmin.translate_firstDayOfWeek)
         });
     }
 
     if (EME.$('#recurrence_end_date')) {
         new FDatepicker('#recurrence_end_date',{
-            format: emeevents.translate_fdateformat,
-            firstDayOfWeek: parseInt(emeevents.translate_firstDayOfWeek),
+            format: emeadmin.translate_fdateformat,
+            firstDayOfWeek: parseInt(emeadmin.translate_firstDayOfWeek),
             onSelect: function(formattedDate, date, inst) {
                 if (!date) {
                     return;
@@ -812,8 +812,8 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             if (window.wp && window.wp.media) {
                 const customUploader = window.wp.media({
-                    title: emeevents.translate_selectfeaturedimg || 'Select Featured Image',
-                    button: { text: emeevents.translate_setfeaturedimg || 'Set Featured Image' },
+                    title: emeadmin.translate_selectfeaturedimg || 'Select Featured Image',
+                    button: { text: emeadmin.translate_setfeaturedimg || 'Set Featured Image' },
                     library: { type: 'image' },
                     multiple: false
                 }).on('select', function() {
@@ -850,15 +850,15 @@ document.addEventListener('DOMContentLoaded', function () {
     initSnapSelectRemote('#event_author.eme_snapselect_wpuser_class', {
         data: {
             action: 'eme_wpuser_snapselect',
-            eme_admin_nonce: emeevents.translate_adminnonce,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
     initSnapSelectRemote('#event_contactperson_id.eme_snapselect_wpuser_class', {
-        placeholder: emeevents.translate_selectcontact,
+        placeholder: emeadmin.translate_selectcontact,
         showClearButton: true,
         data: {
             action: 'eme_wpuser_snapselect',
-            eme_admin_nonce: emeevents.translate_adminnonce
+            eme_admin_nonce: emeadmin.translate_adminnonce
         }
     });
 
@@ -874,56 +874,56 @@ document.addEventListener('DOMContentLoaded', function () {
         let eventFields = {
             event_id: {
                 key: true,
-                title: emeevents.translate_id,
+                title: emeadmin.translate_id,
                 width: '1%',
                 columnResizable: false,
                 visibility: 'hidden'
             },
             event_name: {
-                title: emeevents.translate_name,
+                title: emeadmin.translate_name,
                 visibility: 'fixed'
             },
             event_status: {
-                title: emeevents.translate_status,
+                title: emeadmin.translate_status,
                 width: '5%'
             },
             copy: {
-                title: emeevents.translate_copy,
+                title: emeadmin.translate_copy,
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
                 listClass: 'eme-ftable-center',
             },
             rsvp: {
-                title: emeevents.translate_rsvp,
+                title: emeadmin.translate_rsvp,
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
                 listClass: 'eme-ftable-center'
             },
             eventprice: {
-                title: emeevents.translate_eventprice,
+                title: emeadmin.translate_eventprice,
                 sorting: false
             },
             location_name: {
-                title: emeevents.translate_location
+                title: emeadmin.translate_location
             },
             event_start: {
-                title: emeevents.translate_eventstart,
+                title: emeadmin.translate_eventstart,
                 width: '5%'
             },
             creation_date: {
-                title: emeevents.translate_created_on,
+                title: emeadmin.translate_created_on,
                 visibility: 'hidden',
                 width: '5%'
             },
             modif_date: {
-                title: emeevents.translate_modified_on,
+                title: emeadmin.translate_modified_on,
                 visibility: 'hidden',
                 width: '5%'
             },
             recinfo: {
-                title: emeevents.translate_recinfo,
+                title: emeadmin.translate_recinfo,
                 sorting: false
             }
         };
@@ -948,7 +948,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         EventsTable = new FTable('#EventsTableContainer', {
-            title: emeevents.translate_events,
+            title: emeadmin.translate_events,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_events_list',
-                eme_admin_nonce: emeevents.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 trash: $_GET['trash'] || '',
                 scope: EME.$('#scope')?.value || '',
                 status: EME.$('#status')?.value || '',
@@ -983,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Recurrences Table ---
     if (RecurrencesTableContainer) {
         RecurrencesTable = new FTable('#RecurrencesTableContainer', {
-            title: emeevents.translate_recurrences,
+            title: emeadmin.translate_recurrences,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -995,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_recurrences_list',
-                eme_admin_nonce: emeevents.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 scope: EME.$('#scope')?.value || '',
                 search_name: EME.$('#search_name')?.value || '',
                 search_start_date: EME.$('[name=search_start_date]')?.value || '',
@@ -1004,50 +1004,50 @@ document.addEventListener('DOMContentLoaded', function () {
             fields: {
                 recurrence_id: {
                     key: true,
-                    title: emeevents.translate_id,
+                    title: emeadmin.translate_id,
                     width: '1%',
                     columnResizable: false
                 },
                 event_name: {
-                    title: emeevents.translate_name,
+                    title: emeadmin.translate_name,
                     sorting: false,
                     visibility: 'fixed'
                 },
                 event_status: {
-                    title: emeevents.translate_status,
+                    title: emeadmin.translate_status,
                     sorting: false,
                     width: '5%'
                 },
                 copy: {
-                    title: emeevents.translate_copy,
+                    title: emeadmin.translate_copy,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-ftable-center'
                 },
                 eventprice: {
-                    title: emeevents.translate_eventprice,
+                    title: emeadmin.translate_eventprice,
                     sorting: false
                 },
                 location_name: {
-                    title: emeevents.translate_location,
+                    title: emeadmin.translate_location,
                     sorting: false,
                 },
                 creation_date: {
-                    title: emeevents.translate_created_on,
+                    title: emeadmin.translate_created_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 modif_date: {
-                    title: emeevents.translate_modified_on,
+                    title: emeadmin.translate_modified_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 recinfo: {
-                    title: emeevents.translate_recinfo,
+                    title: emeadmin.translate_recinfo,
                     sorting: false
                 },
                 rec_singledur: {
-                    title: emeevents.translate_rec_singledur,
+                    title: emeadmin.translate_rec_singledur,
                     sorting: false
                 }
             }
@@ -1073,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            eventsButton.textContent = emeevents.translate_pleasewait;
+            eventsButton.textContent = emeadmin.translate_pleasewait;
             eventsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -1085,11 +1085,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('do_action', doAction);
             formData.append('send_trashmails', sendTrashMails);
             formData.append('addtocategory', addCategory);
-            formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 EventsTable.reload();
-                eventsButton.textContent = emeevents.translate_apply;
+                eventsButton.textContent = emeadmin.translate_apply;
                 eventsButton.disabled = false;
 
                 const msg = EME.$('#events-message');
@@ -1119,7 +1119,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            recurrencesButton.textContent = emeevents.translate_pleasewait;
+            recurrencesButton.textContent = emeadmin.translate_pleasewait;
             recurrencesButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -1131,11 +1131,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('do_action', doAction);
             formData.append('rec_new_start_date', recNewStartDate);
             formData.append('rec_new_end_date', recNewEndDate);
-            formData.append('eme_admin_nonce', emeevents.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 RecurrencesTable.reload();
-                recurrencesButton.textContent = emeevents.translate_apply;
+                recurrencesButton.textContent = emeadmin.translate_apply;
                 recurrencesButton.disabled = false;
 
                 const msg = EME.$('#recurrences-message');

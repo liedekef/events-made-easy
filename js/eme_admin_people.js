@@ -9,110 +9,110 @@ document.addEventListener('DOMContentLoaded', function () {
         let personFields = {
             'people.person_id': {
                 key: true,
-                title: emepeople.translate_personid,
+                title: emeadmin.translate_personid,
                 width: '1%',
                 columnResizable: false,
                 visibility: 'hidden'
             },
             'people.lastname': {
-                title: emepeople.translate_lastname,
+                title: emeadmin.translate_lastname,
             },
             'people.firstname': {
-                title: emepeople.translate_firstname
+                title: emeadmin.translate_firstname
             },
             'people.address1': {
-                title: emepeople.translate_address1,
+                title: emeadmin.translate_address1,
                 visibility: 'hidden'
             },
             'people.address2': {
-                title: emepeople.translate_address2,
+                title: emeadmin.translate_address2,
                 visibility: 'hidden'
             },
             'people.city': {
-                title: emepeople.translate_city,
+                title: emeadmin.translate_city,
                 visibility: 'hidden'
             },
             'people.zip': {
-                title: emepeople.translate_zip,
+                title: emeadmin.translate_zip,
                 visibility: 'hidden'
             },
             'people.state': {
-                title: emepeople.translate_state,
+                title: emeadmin.translate_state,
                 visibility: 'hidden'
             },
             'people.country': {
-                title: emepeople.translate_country,
+                title: emeadmin.translate_country,
                 visibility: 'hidden'
             },
             'people.email': {
-                title: emepeople.translate_email,
+                title: emeadmin.translate_email,
             },
             'people.phone': {
-                title: emepeople.translate_phone,
+                title: emeadmin.translate_phone,
                 visibility: 'hidden'
             },
             'people.birthdate': {
-                title: emepeople.translate_birthdate,
+                title: emeadmin.translate_birthdate,
                 visibility: 'hidden'
             },
             'people.birthplace': {
-                title: emepeople.translate_birthplace,
+                title: emeadmin.translate_birthplace,
                 visibility: 'hidden'
             },
             'people.lang': {
-                title: emepeople.translate_lang,
+                title: emeadmin.translate_lang,
                 visibility: 'hidden',
             },
             'people.massmail': {
-                title: emepeople.translate_massmail,
+                title: emeadmin.translate_massmail,
                 visibility: 'hidden'
             },
             'people.bd_email': {
-                title: emepeople.translate_bd_email,
+                title: emeadmin.translate_bd_email,
                 visibility: 'hidden'
             },
             'people.gdpr': {
-                title: emepeople.translate_gdpr,
+                title: emeadmin.translate_gdpr,
                 visibility: 'hidden'
             },
             'people.gdpr_date': {
-                title: emepeople.translate_gdpr_date,
+                title: emeadmin.translate_gdpr_date,
                 visibility: 'hidden'
             },
             'people.creation_date': {
-                title: emepeople.translate_created_on,
+                title: emeadmin.translate_created_on,
                 visibility: 'hidden'
             },
             'people.modif_date': {
-                title: emepeople.translate_modified_on,
+                title: emeadmin.translate_modified_on,
                 visibility: 'hidden'
             },
             'people.related_to': {
-                title: emepeople.translate_related_to,
+                title: emeadmin.translate_related_to,
                 sorting: false,
                 visibility: 'hidden'
             },
             'people.groups': {
-                title: emepeople.translate_persongroups,
+                title: emeadmin.translate_persongroups,
                 sorting: false,
                 visibility: 'hidden'
             },
             'people.memberships': {
-                title: emepeople.translate_personmemberships,
+                title: emeadmin.translate_personmemberships,
                 sorting: false,
                 visibility: 'hidden'
             },
             'people.wp_user': {
-                title: emepeople.translate_wpuser,
+                title: emeadmin.translate_wpuser,
                 sorting: false,
                 visibility: 'hidden'
             },
             'bookingsmade': {
-                title: emepeople.translate_bookingsmade,
+                title: emeadmin.translate_bookingsmade,
                 sorting: false,
                 visibility: 'hidden',
                 display: function (data) {
-                    return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emepeople.translate_showallbookings + '</a>';
+                    return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emeadmin.translate_showallbookings + '</a>';
                 }
             }
         };
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         PeopleTable = new FTable('#PeopleTableContainer', {
-            title: emepeople.translate_people,
+            title: emeadmin.translate_people,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_people_list',
-                eme_admin_nonce: emepeople.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 trash: $_GET['trash'] || '',
                 search_person: eme_getValue(EME.$('#search_person')),
                 search_groups: eme_getValue(EME.$('#search_groups')),
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Groups Table ---
     if (GroupsTableContainer) {
         GroupsTable = new FTable('#GroupsTableContainer', {
-            title: emepeople.translate_groups,
+            title: emeadmin.translate_groups,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -180,29 +180,29 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,
+                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emeadmin.translate_adminnonce,
             },
             fields: {
                 'group_id': {
-                    title: emepeople.translate_groupid,
+                    title: emeadmin.translate_groupid,
                     key: true,
                     create: false,
                     edit: false,
                     visibility: 'hidden'
                 },
                 'name': {
-                    title: emepeople.translate_name,
+                    title: emeadmin.translate_name,
                 },
                 'description': {
-                    title: emepeople.translate_description
+                    title: emeadmin.translate_description
                 },
                 'public': {
-                    title: emepeople.translate_publicgroup,
+                    title: emeadmin.translate_publicgroup,
                     visibility: 'hidden'
                 },
                 'groupcount': {
-                    title: emepeople.translate_groupcount,
+                    title: emeadmin.translate_groupcount,
                     sorting: false
                 }
             }
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(form);
         formData.append('action', 'eme_people_dyndata');
-        formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+        formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
         eme_postJSON(ajaxurl, formData, (data) => {
             if (data && data.Result) {
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return {
                     action:             'eme_chooseperson_snapselect',
-                    eme_admin_nonce:    emepeople.translate_adminnonce,
+                    eme_admin_nonce:    emeadmin.translate_adminnonce,
                     exclude_personids:  excludeIds,
                 };
             }
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: function(search, page) {
                 return {
                     action:            'eme_chooseperson_snapselect',
-                    eme_admin_nonce:   emepeople.translate_adminnonce,
+                    eme_admin_nonce:   emeadmin.translate_adminnonce,
                     exclude_personids: this.dataset.personId || '',
                 };
             }
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: function(search, page) {
             return {
                 action: 'eme_wpuser_snapselect_exclude_linked',
-                eme_admin_nonce: emepeople.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 person_wpid: this.dataset.person_wpid || 0
             };
         }
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            peopleButton.textContent = emepeople.translate_pleasewait;
+            peopleButton.textContent = emeadmin.translate_pleasewait;
             peopleButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -333,12 +333,12 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('html_template_footer', EME.$('#html_template_footer')?.value || '');
             formData.append('addtogroup', EME.$('#addtogroup')?.value || '');
             formData.append('removefromgroup', EME.$('#removefromgroup')?.value || '');
-            formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             if (doAction === 'sendMails') {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = emepeople.translate_admin_sendmails_url;
+                form.action = emeadmin.translate_admin_sendmails_url;
                 ['person_ids', 'eme_admin_action'].forEach(key => {
                     const val = key === 'person_ids' ? idsJoined : 'new_mailing';
                     const input = document.createElement('input');
@@ -365,14 +365,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 document.body.appendChild(form);
                 form.submit();
-                peopleButton.textContent = emepeople.translate_apply;
+                peopleButton.textContent = emeadmin.translate_apply;
                 peopleButton.disabled = false;
                 return;
             }
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 PeopleTable.reload();
-                peopleButton.textContent = emepeople.translate_apply;
+                peopleButton.textContent = emeadmin.translate_apply;
                 peopleButton.disabled = false;
 
                 const msg = EME.$('#people-message');
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            groupsButton.textContent = emepeople.translate_pleasewait;
+            groupsButton.textContent = emeadmin.translate_pleasewait;
             groupsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -410,11 +410,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('group_id', idsJoined);
             formData.append('action', 'eme_manage_groups');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emepeople.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 GroupsTable.reload();
-                groupsButton.textContent = emepeople.translate_apply;
+                groupsButton.textContent = emeadmin.translate_apply;
                 groupsButton.disabled = false;
 
                 const msg = EME.$('#groups-message');
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'search_customfieldids': eme_getValue(EME.$('#search_customfieldids')),
             'search_exactmatch': exactmatch,
             'action': 'eme_store_people_query',
-            'eme_admin_nonce': emepeople.translate_adminnonce,
+            'eme_admin_nonce': emeadmin.translate_adminnonce,
             'dynamicgroupname': EME.$('#dynamicgroupname').value
         };
 

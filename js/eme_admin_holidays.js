@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (HolidaysTableContainer) {
         HolidaysTable = new FTable('#HolidaysTableContainer', {
-            title: emeholidays.translate_holidaylists,
+            title: emeadmin.translate_holidaylists,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -18,18 +18,18 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: 'eme_holidays_list',
-                eme_admin_nonce: emeholidays.translate_adminnonce
+                eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
                 id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emeholidays.translate_id,
+                    title: emeadmin.translate_id,
                     list: false
                 },
                 name: {
-                    title: emeholidays.translate_name
+                    title: emeadmin.translate_name
                 }
             }
         });
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            actionsButton.textContent = emeholidays.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -62,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_holidays');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emeholidays.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 HolidaysTable.reload();
-                actionsButton.textContent = emeholidays.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
 
                 const msg = EME.$('#holidays-message');

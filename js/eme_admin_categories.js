@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (CategoriesTableContainer) {
         CategoriesTable = new FTable('#CategoriesTableContainer', {
-            title: emecategories.translate_categories,
+            title: emeadmin.translate_categories,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -17,17 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: 'eme_categories_list',
-                eme_admin_nonce: emecategories.translate_adminnonce
+                eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
                 category_id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emecategories.translate_id
+                    title: emeadmin.translate_id
                 },
                 category_name: {
-                    title: emecategories.translate_name
+                    title: emeadmin.translate_name
                 }
             }
         });
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-                actionsButton.textContent = emecategories.translate_pleasewait;
+                actionsButton.textContent = emeadmin.translate_pleasewait;
                 actionsButton.disabled = true;
 
                 const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('category_ids', idsJoined);
                 formData.append('action', 'eme_manage_categories');
                 formData.append('do_action', doAction);
-                formData.append('eme_admin_nonce', emecategories.translate_adminnonce);
+                formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
                 eme_postJSON(ajaxurl, formData, (data) => {
                     CategoriesTable.reload();
-                    actionsButton.textContent = emecategories.translate_apply;
+                    actionsButton.textContent = emeadmin.translate_apply;
                     actionsButton.disabled = false;
 
                     const msg = EME.$('#categories-message');

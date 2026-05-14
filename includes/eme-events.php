@@ -9832,54 +9832,21 @@ function eme_admin_enqueue_js() {
             'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
             'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
-            'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
-        ];
-        wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
-        wp_enqueue_script( 'eme-admin' );
-        wp_enqueue_style( 'eme-ftable-css' );
-        wp_enqueue_style( 'eme-ftables-css' );
-        wp_enqueue_style( 'eme-select-css' );
-        if ( wp_script_is( 'eme-ftable-locale', 'registered' ) ) {
-            wp_enqueue_script( 'eme-ftable-locale' );
-        }
-
-        if (get_option( 'eme_htmleditor' ) == 'jodit') {
-            $translation_array = [
-                'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-                'translate_flanguage'       => $language,
-                'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
-                'translate_insert'          => __('Insert', 'events-made-easy' ),
-                'translate_cancel'          => __('Cancel', 'events-made-easy' ),
-                'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-                'translate_preview'         => __('Preview', 'events-made-easy' ),
-                'translate_visual'          => __('Visual', 'events-made-easy' ),
-                'translate_code'            => __('Code', 'events-made-easy' ),
-                'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-            ];
-            wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
-            wp_enqueue_script('eme-jodit');
-            wp_enqueue_style('jodit-css');
-        }
-    }
-    if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {
-        // we need this to have the "postbox" javascript loaded, so closing/opening works for those divs
-        // wp_enqueue_script('post');
-        if ( get_option( 'eme_map_is_active' ) ) {
-            wp_enqueue_style( 'eme-leaflet-css' );
-            $translation_array = [
-                'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
-                'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
-            ];
-            wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
-            wp_enqueue_script( 'eme-edit-maps' );
-        }
-    }
-    if ( in_array( $plugin_page, [ 'eme-new_event', 'eme-manager' ] ) ) {
-        // Now we can localize the script with our data.
-        $translation_array = [
+            // jodit
+            'translate_insertimage'                => __('Insert image', 'events-made-easy' ),
+            'translate_insert'                     => __('Insert', 'events-made-easy' ),
+            'translate_cancel'                     => __('Cancel', 'events-made-easy' ),
+            'translate_insertfrommedia'            => __('Insert from Media Library', 'events-made-easy' ),
+            'translate_preview'                    => __('Preview', 'events-made-easy' ),
+            'translate_visual'                     => __('Visual', 'events-made-easy' ),
+            'translate_code'                       => __('Code', 'events-made-easy' ),
+            'translate_insertnbsp'                 => __('Insert non-breaking space', 'events-made-easy' ),
+            // edit-maps
+            'translate_map_zooming'                => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
+            'translate_default_map_icon'           => get_option( 'eme_location_map_icon' ),
+            // events
             'translate_nomatchlocation'            => __( 'No matching location found', 'events-made-easy' ),
-            'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_events'                     => __( 'Events', 'events-made-easy' ),
             'translate_recurrences'                => __( 'Recurrences', 'events-made-easy' ),
             'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
@@ -9898,7 +9865,6 @@ function eme_admin_enqueue_js() {
             'translate_recinfo'                    => __( 'Recurrence info', 'events-made-easy' ),
             'translate_rec_singledur'              => __( 'Single event duration', 'events-made-easy' ),
             'translate_date'                       => __( 'Date', 'events-made-easy' ),
-            'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_selecteddates'              => __( 'Selected dates:', 'events-made-easy' ),
             'translate_created_on'                 => __( 'Created on', 'events-made-easy' ),
             'translate_modified_on'                => __( 'Modified on', 'events-made-easy' ),
@@ -9908,37 +9874,15 @@ function eme_admin_enqueue_js() {
             'translate_setfeaturedimg'             => __( 'Set featured image', 'events-made-easy' ),
             'translate_enddate_required'           => __( 'Since the event is repeated, you must specify an end date', 'events-made-easy' ),
             'translate_startenddate_identical'     => __( "In a recurrence, start and end date can't be identical", 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_selectcontact'              => __( 'Event author', 'events-made-easy' ),
-            'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
-            'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
-        ];
-        wp_localize_script( 'eme-events', 'emeevents', $translation_array );
-        wp_enqueue_script( 'eme-events' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-options' ] ) ) {
-        wp_enqueue_script( 'eme-options' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-attendance-reports' ] ) ) {
-        $translation_array = [
-            'translate_id'                     => __( 'ID', 'events-made-easy' ),
-            'translate_type'                   => __( 'Type', 'events-made-easy' ),
-            'translate_attendancedate'         => __( 'Recorded on', 'events-made-easy' ),
-            'translate_personinfo'             => __( 'Person', 'events-made-easy' ),
-            'translate_name'                   => __( 'Event/Membership name', 'events-made-easy' ),
-            'translate_attendance_reports'     => __( 'Attendance reports', 'events-made-easy' ),
-            'translate_csv'                    => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                  => __( 'Print', 'events-made-easy' ),
-            'translate_areyousuretodeletethis' => __( 'Are you sure to delete this record?', 'events-made-easy' ),
-            'translate_nomatchperson'          => __( 'No matching person found', 'events-made-easy' ),
-            'translate_adminnonce'             => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-attendances', 'emeattendances', $translation_array );
-        wp_enqueue_script( 'eme-attendances' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-task-signups' ] ) ) {
-        $translation_array = [
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
+            // attendances
+            'translate_type'                       => __( 'Type', 'events-made-easy' ),
+            'translate_attendancedate'             => __( 'Recorded on', 'events-made-easy' ),
+            'translate_personinfo'                 => __( 'Person', 'events-made-easy' ),
+            'translate_attendance_reports'         => __( 'Attendance reports', 'events-made-easy' ),
+            'translate_areyousuretodeletethis'     => __( 'Are you sure to delete this record?', 'events-made-easy' ),
+            'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),
+            // task signups
             'translate_signups'                    => __( 'Task signups', 'events-made-easy' ),
             'translate_taskname'                   => __( 'Task name', 'events-made-easy' ),
             'translate_taskstart'                  => __( 'Task start date', 'events-made-easy' ),
@@ -9946,226 +9890,98 @@ function eme_admin_enqueue_js() {
             'translate_comment'                    => __( 'Comment', 'events-made-easy' ),
             'translate_event'                      => __( 'Event', 'events-made-easy' ),
             'translate_person'                     => __( 'Person', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),
             'translate_tasksignup_date'            => __( 'Signup date', 'events-made-easy' ),
-        ];
-        wp_localize_script( 'eme-tasksignups', 'emetasks', $translation_array );
-        wp_enqueue_script( 'eme-tasksignups' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-templates' ] ) ) {
-        $translation_array = [
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
+            // templates
             'translate_templates'                  => __( 'Templates', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_description'                => __( 'Description', 'events-made-easy' ),
-            'translate_type'                       => __( 'Type', 'events-made-easy' ),
             'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_pressdeletetoremove'        => __( 'Press the delete button to remove', 'events-made-easy' ),
-            'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-templates', 'emetemplates', $translation_array );
-        wp_enqueue_script( 'eme-templates' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-formfields' ] ) ) {
-        $translation_array = [
+            // formfields
             'translate_formfields'                 => __( 'Custom Fields', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
-            'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
-            'translate_type'                       => __( 'Type', 'events-made-easy' ),
             'translate_extracharge'                => __( 'Extra charge', 'events-made-easy' ),
             'translate_searchable'                 => __( 'Searchable', 'events-made-easy' ),
             'translate_purpose'                    => __( 'Purpose', 'events-made-easy' ),
             'translate_used'                       => __( 'Used in replies', 'events-made-easy' ),
             'translate_required'                   => __( 'Required', 'events-made-easy' ),
-            'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-formfields', 'emeformfields', $translation_array );
-        wp_enqueue_script( 'eme-formfields' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-discounts' ] ) ) {
-        $translation_array = [
+            // discounts
             'translate_discounts'                  => __( 'Discounts', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
-            'translate_description'                => __( 'Description', 'events-made-easy' ),
             'translate_discountgroups'             => __( 'Discount groups', 'events-made-easy' ),
             'translate_coupon'                     => __( 'Coupon', 'events-made-easy' ),
             'translate_casesensitive'              => __( 'Case sensitive', 'events-made-easy' ),
             'translate_use_per_seat'               => __( 'Track discount usage per booked seat', 'events-made-easy' ),
             'translate_value'                      => __( 'Value', 'events-made-easy' ),
-            'translate_type'                       => __( 'Type', 'events-made-easy' ),
             'translate_maxusage'                   => __( 'Max Usage', 'events-made-easy' ),
             'translate_usage'                      => __( 'Usage', 'events-made-easy' ),
             'translate_validfrom'                  => __( 'Valid from', 'events-made-easy' ),
             'translate_validto'                    => __( 'Valid until', 'events-made-easy' ),
             'translate_maxdiscounts'               => __( 'Max Discounts', 'events-made-easy' ),
-            'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
             'translate_fixed'                      => __( 'Fixed', 'events-made-easy' ),
             'translate_fixed_per_seat'             => __( 'Fixed per seat', 'events-made-easy' ),
             'translate_percentage'                 => __( 'Percentage', 'events-made-easy' ),
-            'translate_code'                       => __( 'Code', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
             'translate_fdatetimeformat'            => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
-        ];
-        wp_localize_script( 'eme-discounts', 'emediscounts', $translation_array );
-        wp_enqueue_script( 'eme-discounts' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-countries' ] ) ) {
-        $translation_array = [
+            // countries
             'translate_countries'                  => __( 'Countries', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_country_id'                 => __( 'Country ID', 'events-made-easy' ),
             'translate_states'                     => __( 'States', 'events-made-easy' ),
             'translate_country'                    => __( 'Country', 'events-made-easy' ),
             'translate_state'                      => __( 'State', 'events-made-easy' ),
             'translate_lang'                       => __( 'Language', 'events-made-easy' ),
-            'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
             'translate_missingcountry'             => "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info.', 'events-made-easy' ) . "'>",
-            'translate_code'                       => __( 'Code', 'events-made-easy' ),
             'translate_alpha_2'                    => __( 'Alpha-2', 'events-made-easy' ),
             'translate_alpha_3'                    => __( 'Alpha-3', 'events-made-easy' ),
             'translate_num_3'                      => __( 'Num-3', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-countries', 'emecountries', $translation_array );
-        wp_enqueue_script( 'eme-countries' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-locations' ] ) ) {
-        $translation_array = [
-            'translate_nomatchlocation'            => __( 'No matching location found', 'events-made-easy' ),
+            // locations
             'translate_locations'                  => __( 'Locations', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_insertnewlocation'          => __( 'Insert New Location', 'events-made-easy' ),
             // translators: %s is the location name
             'translate_editlocationstring'         => __( "Edit Location '%s'", 'events-made-easy' ),
-            'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
             'translate_view'                       => __( 'View', 'events-made-easy' ),
             'translate_address1'                   => get_option( 'eme_address1_string' ),
             'translate_address2'                   => get_option( 'eme_address2_string' ),
             'translate_city'                       => __( 'City', 'events-made-easy' ),
             'translate_zip'                        => __( 'Postal code', 'events-made-easy' ),
-            'translate_state'                      => __( 'State', 'events-made-easy' ),
-            'translate_country'                    => __( 'Country', 'events-made-easy' ),
             'translate_latitude'                   => __( 'Latitude', 'events-made-easy' ),
             'translate_longitude'                  => __( 'Longitude', 'events-made-easy' ),
             'translate_external_url'               => __( 'External URL', 'events-made-easy' ),
             'translate_online_only'                => __( 'Online only', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_selectfeaturedimage'        => __( 'Select the image to be used as featured image', 'events-made-easy' ),
             'translate_setfeaturedimage'           => __( 'Set featured image', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-locations', 'emelocations', $translation_array );
-        wp_enqueue_script( 'eme-locations' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-people', 'eme-groups' ] ) ) {
-        $translation_array = [
-            'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),
+            // people/groups
             'translate_plugin_url'                 => esc_url(EME_PLUGIN_URL),
             'translate_personid'                   => __( 'Person ID', 'events-made-easy' ),
             'translate_groupid'                    => __( 'Group ID', 'events-made-easy' ),
             'translate_people'                     => __( 'People', 'events-made-easy' ),
             'translate_groups'                     => __( 'Groups', 'events-made-easy' ),
-            'translate_description'                => __( 'Description', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_lastname'                   => __( 'Last name', 'events-made-easy' ),
             'translate_firstname'                  => __( 'First name', 'events-made-easy' ),
-            'translate_address1'                   => get_option( 'eme_address1_string' ),
-            'translate_address2'                   => get_option( 'eme_address2_string' ),
-            'translate_city'                       => __( 'City', 'events-made-easy' ),
-            'translate_zip'                        => __( 'Postal code', 'events-made-easy' ),
-            'translate_state'                      => __( 'State', 'events-made-easy' ),
-            'translate_country'                    => __( 'Country', 'events-made-easy' ),
             'translate_email'                      => __( 'Email', 'events-made-easy' ),
             'translate_phone'                      => __( 'Phone number', 'events-made-easy' ),
             'translate_birthdate'                  => __( 'Birth date', 'events-made-easy' ),
             'translate_birthplace'                 => __( 'Birth place', 'events-made-easy' ),
-            'translate_lang'                       => __( 'Language', 'events-made-easy' ),
             'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_showallbookings'            => __( 'Show all bookings', 'events-made-easy' ),
             'translate_personmemberships'          => __( 'Member of', 'events-made-easy' ),
             'translate_persongroups'               => __( 'Groups', 'events-made-easy' ),
             'translate_bookingsmade'               => __( 'Bookings made', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_answers'                    => __( 'Answers', 'events-made-easy' ),
             'translate_gdpr'                       => __( 'GDPR', 'events-made-easy' ),
             'translate_gdpr_date'                  => __( 'GDPR modification date', 'events-made-easy' ),
-            'translate_created_on'                 => __( 'Created on', 'events-made-easy' ),
-            'translate_modified_on'                => __( 'Modified on', 'events-made-easy' ),
             'translate_related_to'                 => __( 'Related to', 'events-made-easy' ),
             'translate_massmail'                   => __( 'MassMail', 'events-made-easy' ),
             'translate_bd_email'                   => __( 'Birthday Email', 'events-made-easy' ),
             'translate_publicgroup'                => __( 'Public group', 'events-made-easy' ),
             'translate_groupcount'                 => __( 'Nbr People', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
-        ];
-        wp_localize_script( 'eme-people', 'emepeople', $translation_array );
-        wp_enqueue_script( 'eme-people' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships', 'eme-groups' ] ) ) {
-        $translation_array = [
-            'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),
+            // members
             'translate_nomatchmember'              => __( 'No matching member found', 'events-made-easy' ),
-            'translate_plugin_url'                 => esc_url(EME_PLUGIN_URL),
             'translate_members'                    => __( 'Members', 'events-made-easy' ),
             'translate_memberships'                => __( 'Memberships', 'events-made-easy' ),
             'translate_membership'                 => __( 'Membership', 'events-made-easy' ),
-            'translate_description'                => __( 'Description', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
             'translate_memberid'                   => __( 'Member ID', 'events-made-easy' ),
-            'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
             'translate_contact'                    => __( 'Contact', 'events-made-easy' ),
-            'translate_name'                       => __( 'Name', 'events-made-easy' ),
-            'translate_lastname'                   => __( 'Last name', 'events-made-easy' ),
-            'translate_firstname'                  => __( 'First name', 'events-made-easy' ),
-            'translate_email'                      => __( 'Email', 'events-made-easy' ),
-            'translate_related_to'                 => __( 'Related to', 'events-made-easy' ),
-            'translate_address1'                   => get_option( 'eme_address1_string' ),
-            'translate_address2'                   => get_option( 'eme_address2_string' ),
-            'translate_birthdate'                  => __( 'Birth date', 'events-made-easy' ),
-            'translate_birthplace'                 => __( 'Birth place', 'events-made-easy' ),
-            'translate_city'                       => __( 'City', 'events-made-easy' ),
-            'translate_zip'                        => __( 'Postal code', 'events-made-easy' ),
-            'translate_state'                      => __( 'State', 'events-made-easy' ),
-            'translate_country'                    => __( 'Country', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
-            'translate_answers'                    => __( 'Answers', 'events-made-easy' ),
-            'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
             'translate_membercount'                => __( 'Nbr Active Members', 'events-made-easy' ),
-            'translate_status'                     => __( 'Status', 'events-made-easy' ),
             'translate_startdate'                  => __( 'Start', 'events-made-easy' ),
             'translate_enddate'                    => __( 'End', 'events-made-easy' ),
             'translate_usage_count'                => __( 'Usage count', 'events-made-easy' ),
@@ -10179,131 +9995,127 @@ function eme_admin_enqueue_js() {
             'translate_pg_pid'                     => __( 'Payment GW ID', 'events-made-easy' ),
             'translate_lastreminder'               => __( 'Last reminder', 'events-made-easy' ),
             'translate_nbrreminder'                => __( 'Reminders sent', 'events-made-easy' ),
-            'translate_status'                     => __( 'Status', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
-            'translate_addatachments'              => __( 'Add attachments', 'events-made-easy' ),
             'translate_discount'                   => __( 'Discount', 'events-made-easy' ),
             'translate_dcodes_used'                => __( 'Used discount codes', 'events-made-easy' ),
             'translate_totalprice'                 => __( 'Total price', 'events-made-easy' ),
             'translate_membershipprice'            => __( 'Membership price', 'events-made-easy' ),
-            'translate_areyousure_group'           => __( 'Are you sure you want to delete this group? This cannot be undone.', 'events-made-easy' )
+            'translate_areyousure_group'           => __( 'Are you sure you want to delete this group? This cannot be undone.', 'events-made-easy' ),
+            // rsvp
+            'translate_nomatchevent'               => __( 'No matching event found', 'events-made-easy' ),
+            'translate_bookings'                   => __( 'Bookings', 'events-made-easy' ),
+            'translate_event_id'                   => __( 'Event ID', 'events-made-easy' ),
+            'translate_person_id'                  => __( 'Person ID', 'events-made-easy' ),
+            'translate_eventinfo'                  => __( 'Event info', 'events-made-easy' ),
+            'translate_booker'                     => __( 'Booker', 'events-made-easy' ),
+            'translate_bookingdate'                => __( 'Booking date', 'events-made-easy' ),
+            'translate_seats'                      => __( 'Seats', 'events-made-easy' ),
+            'translate_event_cats'                 => __( 'Category', 'events-made-easy' ),
+            'translate_remaining'                  => __( 'Remaining', 'events-made-easy' ),
+            'translate_received'                   => __( 'Received', 'events-made-easy' ),
+            'translate_markpaidandapprove'         => __( 'Mark paid and approve', 'events-made-easy' ),
+            'translate_markpaid'                   => __( 'Mark paid', 'events-made-easy' ),
+            'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
+            'translate_selectonerowonlyforpartial' => __( 'Please select only one record in order to do partial payments', 'events-made-easy' ),
+            // categories
+            'translate_categories'                 => __( 'Categories', 'events-made-easy' ),
+            // holidays
+            'translate_holidaylists'               => __( 'Holiday lists', 'events-made-easy' ),
+            // sendmails
+            'translate_sendmail'                   => __( 'Send email', 'events-made-easy' ),
+            'translate_planmail'                   => __( 'Queue email', 'events-made-easy' ),
+            'translate_planneddatetime'            => __( 'Planned execution time', 'events-made-easy' ),
+            'translate_queueddatetime'             => __( 'Queued on', 'events-made-easy' ),
+            'translate_sentdatetime'               => __( 'Sent on', 'events-made-easy' ),
+            'translate_first_read_on'              => __( 'First read on', 'events-made-easy' ),
+            'translate_last_read_on'               => __( 'Last read on', 'events-made-easy' ),
+            'translate_unique_readcount'           => __( 'Unique read count', 'events-made-easy' ),
+            'translate_total_readcount'            => __( 'Read count', 'events-made-easy' ),
+            'translate_errormessage'               => __( 'Error message', 'events-made-easy' ),
+            'translate_sendername'                 => __( 'Sender name', 'events-made-easy' ),
+            'translate_senderemail'                => __( 'Sender email', 'events-made-easy' ),
+            'translate_recipientname'              => __( 'Recipient name', 'events-made-easy' ),
+            'translate_recipientemail'             => __( 'Recipient email', 'events-made-easy' ),
+            'translate_mailingname'                => __( 'Name', 'events-made-easy' ),
+            'translate_subject'                    => __( 'Subject', 'events-made-easy' ),
+            'translate_action'                     => __( 'Action', 'events-made-easy' ),
+            'translate_extrainfo'                  => __( 'Extra info', 'events-made-easy' ),
+            'translate_report'                     => __( 'Report', 'events-made-easy' ),
+            'translate_mailingreport'              => __( 'Mailing report', 'events-made-easy' ),
+            'translate_mails'                      => __( 'Mails', 'events-made-easy' ),
+            'translate_mailings'                   => __( 'Mailings', 'events-made-easy' ),
+            'translate_archivedmailings'           => __( 'Archived mailings', 'events-made-easy' ),
+            'translate_selectevents'               => __( 'Select one or more events', 'events-made-easy' ),
+            'translate_htmlmail'                   => get_option( 'eme_mail_send_html' ) ? 'yes' : 'no',
         ];
-        wp_localize_script( 'eme-members', 'ememembers', $translation_array );
+        wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
+        wp_enqueue_script( 'eme-admin' );
+        wp_enqueue_style( 'eme-ftable-css' );
+        wp_enqueue_style( 'eme-ftables-css' );
+        wp_enqueue_style( 'eme-select-css' );
+        if ( wp_script_is( 'eme-ftable-locale', 'registered' ) ) {
+            wp_enqueue_script( 'eme-ftable-locale' );
+        }
+
+        if (get_option( 'eme_htmleditor' ) == 'jodit') {
+            wp_enqueue_script('eme-jodit');
+            wp_enqueue_style('jodit-css');
+        }
+    }
+    if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {
+        // we need this to have the "postbox" javascript loaded, so closing/opening works for those divs
+        // wp_enqueue_script('post');
+        if ( get_option( 'eme_map_is_active' ) ) {
+            wp_enqueue_style( 'eme-leaflet-css' );
+            wp_enqueue_script( 'eme-edit-maps' );
+        }
+    }
+    if ( in_array( $plugin_page, [ 'eme-new_event', 'eme-manager' ] ) ) {
+        // Now we can localize the script with our data.
+        wp_enqueue_script( 'eme-events' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-options' ] ) ) {
+        wp_enqueue_script( 'eme-options' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-attendance-reports' ] ) ) {
+        wp_enqueue_script( 'eme-attendances' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-task-signups' ] ) ) {
+        wp_enqueue_script( 'eme-tasksignups' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-templates' ] ) ) {
+        wp_enqueue_script( 'eme-templates' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-formfields' ] ) ) {
+        wp_enqueue_script( 'eme-formfields' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-discounts' ] ) ) {
+        wp_enqueue_script( 'eme-discounts' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-countries' ] ) ) {
+        wp_enqueue_script( 'eme-countries' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-locations' ] ) ) {
+        wp_enqueue_script( 'eme-locations' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-people', 'eme-groups' ] ) ) {
+        wp_enqueue_script( 'eme-people' );
+    }
+    if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships', 'eme-groups' ] ) ) {
         wp_enqueue_script( 'eme-members' );
     }
     if ( in_array( $plugin_page, [ 'eme-registration-approval', 'eme-registration-seats' ] ) ) {
-        $translation_array = [
-            'translate_nomatchevent'               => __( 'No matching event found', 'events-made-easy' ),
-            'translate_bookings'                   => __( 'Bookings', 'events-made-easy' ),
-            'translate_id'                         => __( 'ID', 'events-made-easy' ),
-            'translate_event_id'                   => __( 'Event ID', 'events-made-easy' ),
-            'translate_person_id'                  => __( 'Person ID', 'events-made-easy' ),
-            'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
-            'translate_eventinfo'                  => __( 'Event info', 'events-made-easy' ),
-            'translate_eventstart'                 => __( 'Date and time', 'events-made-easy' ),
-            'translate_booker'                     => __( 'Booker', 'events-made-easy' ),
-            'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
-            'translate_bookingdate'                => __( 'Booking date', 'events-made-easy' ),
-            'translate_seats'                      => __( 'Seats', 'events-made-easy' ),
-            'translate_eventprice'                 => __( 'Event price', 'events-made-easy' ),
-            'translate_event_cats'                 => __( 'Category', 'events-made-easy' ),
-            'translate_totalprice'                 => __( 'Total price', 'events-made-easy' ),
-            'translate_uniquenbr'                  => __( 'Unique nbr', 'events-made-easy' ),
-            'translate_paymentid'                  => __( 'Payment ID', 'events-made-easy' ),
-            'translate_paid'                       => __( 'Paid', 'events-made-easy' ),
-            'translate_remaining'                  => __( 'Remaining', 'events-made-easy' ),
-            'translate_received'                   => __( 'Received', 'events-made-easy' ),
-            'translate_pg'                         => __( 'Payment GW', 'events-made-easy' ),
-            'translate_pg_pid'                     => __( 'Payment GW ID', 'events-made-easy' ),
-            'translate_paymentdate'                => __( 'Payment date', 'events-made-easy' ),
-            'translate_markpaidandapprove'         => __( 'Mark paid and approve', 'events-made-easy' ),
-            'translate_markpaid'                   => __( 'Mark paid', 'events-made-easy' ),
-            'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
-            'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
-            'translate_print'                      => __( 'Print', 'events-made-easy' ),
-            'translate_comment'                    => __( 'Comment', 'events-made-easy' ),
-            'translate_lastreminder'               => __( 'Last reminder', 'events-made-easy' ),
-            'translate_discount'                   => __( 'Discount', 'events-made-easy' ),
-            'translate_dcodes_used'                => __( 'Used discount codes', 'events-made-easy' ),
-            'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
-            'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
-            'translate_selectonerowonlyforpartial' => __( 'Please select only one record in order to do partial payments', 'events-made-easy' ),
-        ];
-        wp_localize_script( 'eme-rsvp', 'emersvp', $translation_array );
         wp_enqueue_script( 'eme-rsvp' );
     }
     if ( in_array( $plugin_page, [ 'eme-categories' ] ) ) {
         // if html emails are disabled, this is needed
-        $translation_array = [
-            'translate_id'              => __( 'ID', 'events-made-easy' ),
-            'translate_categories'      => __( 'Categories', 'events-made-easy' ),
-            'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_name'            => __( 'Name', 'events-made-easy' ),
-            'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-categories', 'emecategories', $translation_array );
         wp_enqueue_script( 'eme-categories' );
     }
     if ( in_array( $plugin_page, [ 'eme-holidays' ] ) ) {
         // if html emails are disabled, this is needed
-        $translation_array = [
-            'translate_id'              => __( 'ID', 'events-made-easy' ),
-            'translate_holidaylists'    => __( 'Holiday lists', 'events-made-easy' ),
-            'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_name'            => __( 'Name', 'events-made-easy' ),
-            'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-        ];
-        wp_localize_script( 'eme-holidays', 'emeholidays', $translation_array );
         wp_enqueue_script( 'eme-holidays' );
     }
     if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
         // if html emails are disabled, this is needed
-        $translation_array = [
-            'translate_id'              => __( 'ID', 'events-made-easy' ),
-            'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
-            'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_sendmail'        => __( 'Send email', 'events-made-easy' ),
-            'translate_planmail'        => __( 'Queue email', 'events-made-easy' ),
-            'translate_planneddatetime' => __( 'Planned execution time', 'events-made-easy' ),
-            'translate_queueddatetime'  => __( 'Queued on', 'events-made-easy' ),
-            'translate_sentdatetime'    => __( 'Sent on', 'events-made-easy' ),
-            'translate_first_read_on'   => __( 'First read on', 'events-made-easy' ),
-            'translate_last_read_on'    => __( 'Last read on', 'events-made-easy' ),
-            'translate_unique_readcount'=> __( 'Unique read count', 'events-made-easy' ),
-            'translate_total_readcount' => __( 'Read count', 'events-made-easy' ),
-            'translate_errormessage'    => __( 'Error message', 'events-made-easy' ),
-            'translate_nomatchperson'   => __( 'No matching person found', 'events-made-easy' ),
-            'translate_sendername'      => __( 'Sender name', 'events-made-easy' ),
-            'translate_senderemail'     => __( 'Sender email', 'events-made-easy' ),
-            'translate_recipientname'   => __( 'Recipient name', 'events-made-easy' ),
-            'translate_recipientemail'  => __( 'Recipient email', 'events-made-easy' ),
-            'translate_mailingname'     => __( 'Name', 'events-made-easy' ),
-            'translate_name'            => __( 'Name', 'events-made-easy' ),
-            'translate_email'           => __( 'Email', 'events-made-easy' ),
-            'translate_subject'         => __( 'Subject', 'events-made-easy' ),
-            'translate_status'          => __( 'Status', 'events-made-easy' ),
-            'translate_action'          => __( 'Action', 'events-made-easy' ),
-            'translate_extrainfo'       => __( 'Extra info', 'events-made-easy' ),
-            'translate_report'          => __( 'Report', 'events-made-easy' ),
-            'translate_mailingreport'   => __( 'Mailing report', 'events-made-easy' ),
-            'translate_mails'           => __( 'Mails', 'events-made-easy' ),
-            'translate_mailings'        => __( 'Mailings', 'events-made-easy' ),
-            'translate_archivedmailings'=> __( 'Archived mailings', 'events-made-easy' ),
-            'translate_selectevents'    => __( 'Select one or more events', 'events-made-easy' ),
-            'translate_htmlmail'        => get_option( 'eme_mail_send_html' ) ? 'yes' : 'no',
-            'translate_htmleditor'      => get_option( 'eme_htmleditor' ),
-            'translate_addatachments'   => __( 'Add attachments', 'events-made-easy' ),
-            'translate_selecteddates'   => __( 'Selected dates:', 'events-made-easy' ),
-            'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-            'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
-        ];
-        wp_localize_script( 'eme-sendmails', 'ememails', $translation_array );
         wp_enqueue_script( 'eme-sendmails' );
     }
 

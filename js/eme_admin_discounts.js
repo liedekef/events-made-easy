@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Discounts Table ---
     if (DiscountsTableContainer) {
         DiscountsTable = new FTable('#DiscountsTableContainer', {
-            title: emediscounts.translate_discounts,
+            title: emeadmin.translate_discounts,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
             toolbarsearch: true,
             selecting: true,
             multiselect: true,
-            defaultDateFormat: emediscounts.translate_fdateformat,
+            defaultDateFormat: emeadmin.translate_fdateformat,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_discounts_list&eme_admin_nonce='+emediscounts.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_discounts&do_action=deleteDiscounts&eme_admin_nonce='+emediscounts.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_discounts_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_discounts&do_action=deleteDiscounts&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
@@ -30,47 +30,47 @@ document.addEventListener('DOMContentLoaded', function () {
                     list: false
                 },
                 name: {
-                    title: emediscounts.translate_name
+                    title: emeadmin.translate_name
                 },
                 description: {
-                    title: emediscounts.translate_description
+                    title: emeadmin.translate_description
                 },
                 dgroup: {
-                    title: emediscounts.translate_discountgroups
+                    title: emeadmin.translate_discountgroups
                 },
                 coupon: {
-                    title: emediscounts.translate_coupon
+                    title: emeadmin.translate_coupon
                 },
                 strcase: {
-                    title: emediscounts.translate_casesensitive,
+                    title: emeadmin.translate_casesensitive,
                     searchable: false
                 },
                 use_per_seat: {
-                    title: emediscounts.translate_use_per_seat,
+                    title: emeadmin.translate_use_per_seat,
                     searchable: false
                 },
                 value: {
-                    title: emediscounts.translate_value
+                    title: emeadmin.translate_value
                 },
                 type: {
-                    title: emediscounts.translate_type,
+                    title: emeadmin.translate_type,
                     searchable: false
                 },
                 maxcount: {
-                    title: emediscounts.translate_maxusage
+                    title: emeadmin.translate_maxusage
                 },
                 count: {
-                    title: emediscounts.translate_usage
+                    title: emeadmin.translate_usage
                 },
                 valid_from: {
-                    title: emediscounts.translate_validfrom,
+                    title: emeadmin.translate_validfrom,
                     type: 'date',
-                    dateFormat: emediscounts.translate_fdatetimeformat
+                    dateFormat: emeadmin.translate_fdatetimeformat
                 },
                 valid_to: {
-                    title: emediscounts.translate_validto,
+                    title: emeadmin.translate_validto,
                     type: 'date',
-                    dateFormat: emediscounts.translate_fdatetimeformat,
+                    dateFormat: emeadmin.translate_fdatetimeformat,
                 }
             }
         });
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Initialize Discount Groups Table ---
     if (DiscountGroupsTableContainer) {
         DiscountGroupsTable = new FTable('#DiscountGroupsTableContainer', {
-            title: emediscounts.translate_discountgroups,
+            title: emeadmin.translate_discountgroups,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -91,20 +91,20 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_discountgroups_list&eme_admin_nonce='+emediscounts.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_discountgroups&do_action=deleteDiscountGroups&eme_admin_nonce='+emediscounts.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_discountgroups_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_discountgroups&do_action=deleteDiscountGroups&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
                     key: true,
                     width: '1%',
                     columnResizable: false,
-                    title: emediscounts.translate_id,
+                    title: emeadmin.translate_id,
                     list: false
                 },
-                name: { title: emediscounts.translate_name },
-                description: { title: emediscounts.translate_description },
-                maxdiscounts: { title: emediscounts.translate_maxdiscounts }
+                name: { title: emeadmin.translate_name },
+                description: { title: emeadmin.translate_description },
+                maxdiscounts: { title: emeadmin.translate_maxdiscounts }
             }
         });
 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            discountsButton.textContent = emediscounts.translate_pleasewait;
+            discountsButton.textContent = emeadmin.translate_pleasewait;
             discountsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -150,11 +150,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_discounts');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 DiscountsTable.reload();
-                discountsButton.textContent = emediscounts.translate_apply;
+                discountsButton.textContent = emeadmin.translate_apply;
                 discountsButton.disabled = false;
 
                 const msg = EME.$('#discounts-message');
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            groupsButton.textContent = emediscounts.translate_pleasewait;
+            groupsButton.textContent = emeadmin.translate_pleasewait;
             groupsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -192,11 +192,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('id', idsJoined);
             formData.append('action', 'eme_manage_discountgroups');
             formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emediscounts.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 DiscountGroupsTable.reload();
-                groupsButton.textContent = emediscounts.translate_apply;
+                groupsButton.textContent = emeadmin.translate_apply;
                 groupsButton.disabled = false;
 
                 const msg = EME.$('#discountgroups-message');

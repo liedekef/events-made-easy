@@ -13,33 +13,33 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             event_name: {
                 visibility: 'fixed',
-                title: emetasks.translate_event
+                title: emeadmin.translate_event
             },
             task_name: {
                 visibility: 'fixed',
-                title: emetasks.translate_taskname
+                title: emeadmin.translate_taskname
             },
             task_start: {
-                title: emetasks.translate_taskstart
+                title: emeadmin.translate_taskstart
             },
             task_end: {
-                title: emetasks.translate_taskend
+                title: emeadmin.translate_taskend
             },
             signup_status: {
-                title: emetasks.translate_tasksignup_status
+                title: emeadmin.translate_tasksignup_status
             },
             signup_date: {
                 visibility: 'hidden',
-                title: emetasks.translate_tasksignup_date
+                title: emeadmin.translate_tasksignup_date
             },
             comment: {
-                title: emetasks.translate_comment,
+                title: emeadmin.translate_comment,
                 sorting: false,
                 visibility: 'hidden'
             },
             person_info: {
                 sorting: false,
-                title: emetasks.translate_person
+                title: emeadmin.translate_person
             }
         }
         // Add extra fields
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         TaskSignupsTable = new FTable('#TaskSignupsTableContainer', {
-            title: emetasks.translate_signups,
+            title: emeadmin.translate_signups,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -75,12 +75,12 @@ document.addEventListener('DOMContentLoaded', function () {
             printTable: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emetasks.translate_adminnonce
+                deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             listQueryParams: function () {
                 return {
                     action: 'eme_task_signups_list',
-                    eme_admin_nonce: emetasks.translate_adminnonce,
+                    eme_admin_nonce: emeadmin.translate_adminnonce,
                     search_name: eme_getValue(EME.$('#search_name')),
                     search_event: eme_getValue(EME.$('#search_event')),
                     search_eventid: eme_getValue(EME.$('#search_eventid')),
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            actionsButton.textContent = emetasks.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (doAction === 'sendMails') {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = emetasks.translate_admin_sendmails_url;
+                form.action = emeadmin.translate_admin_sendmails_url;
                 ['tasksignup_ids', 'eme_admin_action'].forEach(key => {
                     const val = key === 'tasksignup_ids' ? idsJoined : 'new_mailing';
                     const input = document.createElement('input');
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('action', 'eme_manage_task_signups');
             formData.append('do_action', doAction);
             formData.append('send_mail', sendMail);
-            formData.append('eme_admin_nonce', emetasks.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 if (data.Result === 'ERROR') {
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     TaskSignupsTable.showInfo(data.htmlmessage);
                 }
                 TaskSignupsTable.reload();
-                actionsButton.textContent = emetasks.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
             });
         });

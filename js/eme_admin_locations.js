@@ -9,63 +9,63 @@ document.addEventListener('DOMContentLoaded', function () {
                 key: true,
                 width: '1%',
                 columnResizable: false,
-                title: emelocations.translate_id,
+                title: emeadmin.translate_id,
                 visibility: 'hidden'
             },
             location_name: {
-                title: emelocations.translate_name
+                title: emeadmin.translate_name
             },
             view: {
-                title: emelocations.translate_view,
+                title: emeadmin.translate_view,
                 sorting: false,
                 listClass: 'eme-ftable-center'
             },
             copy: {
-                title: emelocations.translate_copy,
+                title: emeadmin.translate_copy,
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
                 listClass: 'eme-ftable-center'
             },
             location_address1: {
-                title: emelocations.translate_address1,
+                title: emeadmin.translate_address1,
                 visibility: 'hidden'
             },
             location_address2: {
-                title: emelocations.translate_address2,
+                title: emeadmin.translate_address2,
                 visibility: 'hidden'
             },
             location_zip: {
-                title: emelocations.translate_zip,
+                title: emeadmin.translate_zip,
                 visibility: 'hidden'
             },
             location_city: {
-                title: emelocations.translate_city,
+                title: emeadmin.translate_city,
                 visibility: 'hidden'
             },
             location_state: {
-                title: emelocations.translate_state,
+                title: emeadmin.translate_state,
                 visibility: 'hidden'
             },
             location_country: {
-                title: emelocations.translate_country,
+                title: emeadmin.translate_country,
                 visibility: 'hidden'
             },
             location_longitude: {
-                title: emelocations.translate_longitude,
+                title: emeadmin.translate_longitude,
                 visibility: 'hidden'
             },
             location_latitude: {
-                title: emelocations.translate_latitude,
+                title: emeadmin.translate_latitude,
                 visibility: 'hidden'
             },
             external_url: {
-                title: emelocations.translate_external_url,
+                title: emeadmin.translate_external_url,
                 visibility: 'hidden'
             },
             online_only: {
                 sorting: false,
-                title: emelocations.translate_online_only,
+                title: emeadmin.translate_online_only,
                 visibility: 'hidden'
             }
         };
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         LocationsTable = new FTable('#LocationsTableContainer', {
-            title: emelocations.translate_locations,
+            title: emeadmin.translate_locations,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: 'eme_locations_list',
-                eme_admin_nonce: emelocations.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 search_name: EME.$('#search_name')?.value || '',
                 search_customfields: EME.$('#search_customfields')?.value || '',
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
 
-            actionsButton.textContent = emelocations.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const ids = selectedRows.map(row => row.dataset.recordKey);
@@ -153,11 +153,11 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('action', 'eme_manage_locations');
             formData.append('do_action', doAction);
             formData.append('transferto_id', transfertoId);
-            formData.append('eme_admin_nonce', emelocations.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             eme_postJSON(ajaxurl, formData, (data) => {
                 LocationsTable.reload();
-                actionsButton.textContent = emelocations.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
 
                 const msg = EME.$('#locations-message');
@@ -217,8 +217,8 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             if (window.wp && window.wp.media) {
                 const customUploader = window.wp.media({
-                    title: emelocations.translate_selectfeaturedimg || 'Select Featured Image',
-                    button: { text: emelocations.translate_setfeaturedimg || 'Set Featured Image' },
+                    title: emeadmin.translate_selectfeaturedimg || 'Select Featured Image',
+                    button: { text: emeadmin.translate_setfeaturedimg || 'Set Featured Image' },
                     library: { type: 'image' },
                     multiple: false
                 }).on('select', function() {
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initSnapSelectRemote('#location_author.eme_snapselect_wpuser_class', {
         data: {
             action: 'eme_wpuser_snapselect',
-            eme_admin_nonce: emelocations.translate_adminnonce,
+            eme_admin_nonce: emeadmin.translate_adminnonce,
         }
     });
 
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return {
                     action: 'eme_chooselocation_snapselect',
-                    eme_admin_nonce: emelocations.translate_adminnonce,
+                    eme_admin_nonce: emeadmin.translate_adminnonce,
                     exclude_locationids: excludeIds
                 };
             }

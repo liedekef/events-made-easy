@@ -12,113 +12,113 @@ document.addEventListener('DOMContentLoaded', function () {
                 list: false,
             },
             event_name: {
-                title: emersvp.translate_eventinfo
+                title: emeadmin.translate_eventinfo
             },
             event_id: {
-                title: emersvp.translate_event_id,
+                title: emeadmin.translate_event_id,
                 sorting: false,
                 visibility: 'hidden'
             },
             person_id: {
-                title: emersvp.translate_person_id,
+                title: emeadmin.translate_person_id,
                 sorting: false,
                 width: '1%',
                 columnResizable: false,
                 visibility: 'hidden'
             },
             rsvp: {
-                title: emersvp.translate_rsvp,
+                title: emeadmin.translate_rsvp,
                 sorting: false,
                 width: '2%',
                 columnResizable: false,
                 listClass: 'eme-ftable-center'
             },
             event_start: {
-                title: emersvp.translate_eventstart,
+                title: emeadmin.translate_eventstart,
             },
             booker: {
-                title: emersvp.translate_booker
+                title: emeadmin.translate_booker
             },
             creation_date: {
-                title: emersvp.translate_bookingdate
+                title: emeadmin.translate_bookingdate
             },
             seats: {
-                title: emersvp.translate_seats,
+                title: emeadmin.translate_seats,
                 sorting: false,
                 listClass: 'eme-ftable-center'
             },
             eventprice: {
-                title: emersvp.translate_eventprice,
+                title: emeadmin.translate_eventprice,
                 sorting: false
             },
             event_cats: {
-                title: emersvp.translate_event_cats,
+                title: emeadmin.translate_event_cats,
                 sorting: false,
                 visibility: 'hidden'
             },
             discount: {
-                title: emersvp.translate_discount,
+                title: emeadmin.translate_discount,
                 sorting: false,
                 visibility: 'hidden'
             },
             dcodes_used: {
-                title: emersvp.translate_dcodes_used,
+                title: emeadmin.translate_dcodes_used,
                 sorting: false,
                 visibility: 'hidden'
             },
             totalprice: {
-                title: emersvp.translate_totalprice,
+                title: emeadmin.translate_totalprice,
                 sorting: false
             },
             unique_nbr: {
-                title: emersvp.translate_uniquenbr,
+                title: emeadmin.translate_uniquenbr,
                 visibility: 'hidden'
             },
             booking_paid: {
-                title: emersvp.translate_paid,
+                title: emeadmin.translate_paid,
                 visibility: 'hidden'
             },
             remaining: {
-                title: emersvp.translate_remaining,
+                title: emeadmin.translate_remaining,
                 sorting: false,
                 visibility: 'hidden'
             },
             received: {
-                title: emersvp.translate_received,
+                title: emeadmin.translate_received,
                 sorting: false,
                 visibility: 'hidden'
             },
             payment_date: {
-                title: emersvp.translate_paymentdate,
+                title: emeadmin.translate_paymentdate,
                 visibility: 'hidden'
             },
             pg: {
-                title: emersvp.translate_pg,
+                title: emeadmin.translate_pg,
                 visibility: 'hidden'
             },
             pg_pid: {
-                title: emersvp.translate_pg_pid,
+                title: emeadmin.translate_pg_pid,
                 visibility: 'hidden'
             },
             payment_id: {
-                title: emersvp.translate_paymentid
+                title: emeadmin.translate_paymentid
             },
             attend_count: {
-                title: emersvp.translate_attend_count,
+                title: emeadmin.translate_attend_count,
                 visibility: 'hidden'
             },
             lastreminder: {
-                title: emersvp.translate_lastreminder,
+                title: emeadmin.translate_lastreminder,
                 sorting: false,
                 visibility: 'hidden'
             },
             booking_comment: {
-                title: emersvp.translate_comment,
+                title: emeadmin.translate_comment,
                 sorting: false,
                 visibility: 'hidden'
             },
             wp_user: {
-                title: emersvp.translate_wpuser,
+                title: emeadmin.translate_wpuser,
                 sorting: false,
                 visibility: 'hidden'
             }
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add edit link field if not trash
         if (eme_isFalsey($_GET['trash'])) {
             bookingFields.edit_link = {
-                title: emersvp.translate_edit,
+                title: emeadmin.translate_edit,
                 sorting: false,
                 visibility: 'fixed',
                 columnResizable: false,
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 value: record => {
                     const a = document.createElement('a');
                     a.href = record.edit_link_url;
-                    a.textContent = emersvp.translate_edit;
+                    a.textContent = emeadmin.translate_edit;
                     a.className = 'button';
                     return a;
                 }
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         BookingsTable = new FTable('#BookingsTableContainer', {
-            title: emersvp.translate_bookings,
+            title: emeadmin.translate_bookings,
             paging: true,
             sorting: true,
             sortingResetButton: true,
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
             toolbar: {
                 items: [
                     {
-                        text: emersvp.translate_markpaidandapprove,
+                        text: emeadmin.translate_markpaidandapprove,
                         buttonClass: 'eme_ftable_button_for_pending_only',
                         click: function() {
                             const selectedRows = BookingsTable.getSelectedRows();
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const idsjoined = ids.join(',');
 
                             const button = EME.$('.eme_ftable_button_for_pending_only .ftable-toolbar-item-text');
-                            if (button) button.textContent = emersvp.translate_pleasewait;
+                            if (button) button.textContent = emeadmin.translate_pleasewait;
 
                             fetch(ajaxurl, {
                                 method: 'POST',
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     'booking_ids': idsjoined,
                                     'action': 'eme_manage_bookings',
                                     'do_action': 'markpaidandapprove',
-                                    'eme_admin_nonce': emersvp.translate_adminnonce
+                                    'eme_admin_nonce': emeadmin.translate_adminnonce
                                 })
                             })
                                 .then(response => response.json())
@@ -217,12 +217,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                     BookingsTable.reload();
                                 })
                                 .finally(() => {
-                                    if (button) button.textContent = emersvp.translate_markpaidandapprove;
+                                    if (button) button.textContent = emeadmin.translate_markpaidandapprove;
                                 });
                         }
                     },
                     {
-                        text: emersvp.translate_markpaid,
+                        text: emeadmin.translate_markpaid,
                         buttonClass: 'eme_ftable_button_for_approved_only',
                         click: function() {
                             const selectedRows = BookingsTable.getSelectedRows();
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const idsjoined = ids.join();
 
                             const button = EME.$('.eme_ftable_button_for_approved_only .ftable-toolbar-item-text');
-                            if (button) button.textContent = emersvp.translate_pleasewait;
+                            if (button) button.textContent = emeadmin.translate_pleasewait;
 
                             fetch(ajaxurl, {
                                 method: 'POST',
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     'booking_ids': idsjoined,
                                     'action': 'eme_manage_bookings',
                                     'do_action': 'markPaid',
-                                    'eme_admin_nonce': emersvp.translate_adminnonce
+                                    'eme_admin_nonce': emeadmin.translate_adminnonce
                                 })
                             })
                                 .then(response => response.json())
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     BookingsTable.reload();
                                 })
                                 .finally(() => {
-                                    if (button) button.textContent = emersvp.translate_markpaid;
+                                    if (button) button.textContent = emeadmin.translate_markpaid;
                                 });
                         }
                     }
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_bookings_list',
-                eme_admin_nonce: emersvp.translate_adminnonce,
+                eme_admin_nonce: emeadmin.translate_adminnonce,
                 trash: $_GET['trash'] || '',
                 scope: eme_getValue(EME.$('#scope')),
                 category: eme_getValue(EME.$('#category')),
@@ -338,11 +338,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!ok) return;
             }
             if (doAction == 'partialPayment' && selectedRows.length > 1) {
-                alert(emersvp.translate_selectonerowonlyforpartial);
+                alert(emeadmin.translate_selectonerowonlyforpartial);
                 return;
             }
 
-            actionsButton.textContent = emersvp.translate_pleasewait;
+            actionsButton.textContent = emeadmin.translate_pleasewait;
             actionsButton.disabled = true;
 
             const formData = new FormData();
@@ -374,12 +374,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('html_template_header', EME.$('#html_template_header')?.value || '');
                 formData.append('html_template_footer', EME.$('#html_template_footer')?.value || '');
             }
-            formData.append('eme_admin_nonce', emersvp.translate_adminnonce);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
             if (doAction === 'sendMails') {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = emersvp.translate_admin_sendmails_url;
+                form.action = emeadmin.translate_admin_sendmails_url;
                 ['booking_ids', 'eme_admin_action'].forEach(key => {
                     const val = key === 'booking_ids' ? idsJoined : 'new_mailing';
                     const input = document.createElement('input');
@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 document.body.appendChild(form);
                 form.submit();
-                actionsButton.textContent = emersvp.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
                 return;
             }
@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     BookingsTable.showInfo(data.htmlmessage);
                 }
                 BookingsTable.reload();
-                actionsButton.textContent = emersvp.translate_apply;
+                actionsButton.textContent = emeadmin.translate_apply;
                 actionsButton.disabled = false;
             });
         });
@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 only_rsvp: 1,
                 action: 'eme_events_snapselect',
                 search_all: EME.$('#eventsearch_all')?.checked ? 1 : 0,
-                eme_admin_nonce: emersvp.translate_adminnonce
+                eme_admin_nonce: emeadmin.translate_adminnonce
             };
         }
     });

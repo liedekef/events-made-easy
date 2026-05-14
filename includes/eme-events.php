@@ -9817,6 +9817,7 @@ function eme_admin_enqueue_js() {
         wp_localize_script( 'eme-basic', 'emebasic', $translation_array );
         wp_enqueue_script( 'eme-basic' );
         $translation_array = [
+            'translate_confirmdelete'              => __( 'Confirm delete', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure you want to delete the selected records?', 'events-made-easy' ),
             'translate_areyousuretodeletefile'     => __( 'Are you sure you want to delete this file?', 'events-made-easy' ),
             'translate_selectpersons'              => __( 'Select one or more persons', 'events-made-easy' ),
@@ -9905,7 +9906,6 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_selectfeaturedimg'          => __( 'Select the image to be used as featured image', 'events-made-easy' ),
             'translate_setfeaturedimg'             => __( 'Set featured image', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure you want to delete the selected records?', 'events-made-easy' ),
             'translate_enddate_required'           => __( 'Since the event is repeated, you must specify an end date', 'events-made-easy' ),
             'translate_startenddate_identical'     => __( "In a recurrence, start and end date can't be identical", 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
@@ -9950,7 +9950,6 @@ function eme_admin_enqueue_js() {
             'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),
@@ -9971,7 +9970,6 @@ function eme_admin_enqueue_js() {
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
             'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
             'translate_print'                      => __( 'Print', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_pressdeletetoremove'        => __( 'Press the delete button to remove', 'events-made-easy' ),
             'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
@@ -9994,7 +9992,6 @@ function eme_admin_enqueue_js() {
             'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
         ];
         wp_localize_script( 'eme-formfields', 'emeformfields', $translation_array );
@@ -10024,7 +10021,6 @@ function eme_admin_enqueue_js() {
             'translate_code'                       => __( 'Code', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
@@ -10051,7 +10047,6 @@ function eme_admin_enqueue_js() {
             'translate_num_3'                      => __( 'Num-3', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
         ];
         wp_localize_script( 'eme-countries', 'emecountries', $translation_array );
@@ -10080,7 +10075,6 @@ function eme_admin_enqueue_js() {
             'translate_online_only'                => __( 'Online only', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure you want to delete the selected records?', 'events-made-easy' ),
             'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
             'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_selectfeaturedimage'        => __( 'Select the image to be used as featured image', 'events-made-easy' ),
@@ -10116,7 +10110,6 @@ function eme_admin_enqueue_js() {
             'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_showallbookings'            => __( 'Show all bookings', 'events-made-easy' ),
             'translate_personmemberships'          => __( 'Member of', 'events-made-easy' ),
             'translate_persongroups'               => __( 'Groups', 'events-made-easy' ),
@@ -10167,7 +10160,6 @@ function eme_admin_enqueue_js() {
             'translate_country'                    => __( 'Country', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_csv'                        => __( 'CSV', 'events-made-easy' ),
             'translate_print'                      => __( 'Print', 'events-made-easy' ),
             'translate_answers'                    => __( 'Answers', 'events-made-easy' ),
@@ -10236,7 +10228,6 @@ function eme_admin_enqueue_js() {
             'translate_dcodes_used'                => __( 'Used discount codes', 'events-made-easy' ),
             'translate_pleasewait'                 => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'                      => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
             'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
@@ -10252,7 +10243,6 @@ function eme_admin_enqueue_js() {
             'translate_categories'      => __( 'Categories', 'events-made-easy' ),
             'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_name'            => __( 'Name', 'events-made-easy' ),
             'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
         ];
@@ -10266,7 +10256,6 @@ function eme_admin_enqueue_js() {
             'translate_holidaylists'    => __( 'Holiday lists', 'events-made-easy' ),
             'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_name'            => __( 'Name', 'events-made-easy' ),
             'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
         ];
@@ -10279,7 +10268,6 @@ function eme_admin_enqueue_js() {
             'translate_id'              => __( 'ID', 'events-made-easy' ),
             'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
             'translate_apply'           => __( 'Apply', 'events-made-easy' ),
-            'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
             'translate_sendmail'        => __( 'Send email', 'events-made-easy' ),
             'translate_planmail'        => __( 'Queue email', 'events-made-easy' ),
             'translate_planneddatetime' => __( 'Planned execution time', 'events-made-easy' ),

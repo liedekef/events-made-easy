@@ -40,14 +40,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions ---
     const actionsButton = EME.$('#HolidaysActionsButton');
     if (actionsButton) {
-        actionsButton.addEventListener('click', function (e) {
+        actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = HolidaysTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteHolidays' && !confirm(emeholidays.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteHolidays') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             actionsButton.textContent = emeholidays.translate_pleasewait;
             actionsButton.disabled = true;

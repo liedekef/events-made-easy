@@ -1059,7 +1059,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Events Bulk Actions ---
     const eventsButton = EME.$('#EventsActionsButton');
     if (eventsButton) {
-        eventsButton.addEventListener('click', function (e) {
+        eventsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = EventsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
@@ -1068,7 +1068,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction) && !confirm(emeevents.translate_areyousuretodeleteselected)) return;
+            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             eventsButton.textContent = emeevents.translate_pleasewait;
             eventsButton.disabled = true;
@@ -1102,7 +1105,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Recurrences Bulk Actions ---
     const recurrencesButton = EME.$('#RecurrencesActionsButton');
     if (recurrencesButton) {
-        recurrencesButton.addEventListener('click', function (e) {
+        recurrencesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = RecurrencesTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
@@ -1111,7 +1114,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction === 'deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteRecurrences') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             recurrencesButton.textContent = emeevents.translate_pleasewait;
             recurrencesButton.disabled = true;

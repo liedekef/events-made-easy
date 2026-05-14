@@ -48,14 +48,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Memberships Bulk Actions ---
     const membershipsButton = EME.$('#MembershipsActionsButton');
     if (membershipsButton) {
-        membershipsButton.addEventListener('click', function (e) {
+        membershipsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MembershipsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['deleteMemberships'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) return;
+            if (['deleteMemberships'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             membershipsButton.textContent = ememembers.translate_pleasewait;
             membershipsButton.disabled = true;
@@ -354,14 +357,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions ---
     const membersButton = EME.$('#MembersActionsButton');
     if (membersButton) {
-        membersButton.addEventListener('click', function (e) {
+        membersButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MembersTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['deleteMembers'].includes(doAction) && !confirm(ememembers.translate_areyousuretodeleteselected)) return;
+            if (['deleteMembers'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             membersButton.textContent = ememembers.translate_pleasewait;
             membersButton.disabled = true;
@@ -605,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
     eme_admin_init_attachment_ui('#paid_attach_button', '#paid_attach_links', '#eme_paid_attach_ids', '#paid_remove_attach_button');
 
     // --- Delete a dyndata occurrence block from the admin member-edit form ---
-    document.addEventListener('click', function (e) {
+    document.addEventListener('click', async function (e) {
         if (!e.target.matches('.eme_delete_dyndata_occurence')) return;
 
         const block     = e.target.closest('.eme_dyndata_occurence_block');
@@ -614,7 +620,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const memberId  = block.dataset.memberId;
 
         const confirmMsg = ememembers.translate_areyousure_group;
-        if (!confirm(confirmMsg)) return;
+        const ok = await FTable.confirm(emeadmin.translate_confirmdelete, confirmMsg);
+        if (!ok) return;
 
         e.target.disabled    = true;
         e.target.textContent = '…';

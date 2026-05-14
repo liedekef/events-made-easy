@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions Button ---
     const actionsButton = EME.$('#TaskSignupsActionsButton');
     if (actionsButton) {
-        actionsButton.addEventListener('click', function (e) {
+        actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = TaskSignupsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action')?.value;
@@ -126,7 +126,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!selectedRows.length || !doAction) return;
 
-            if (doAction === 'deleteTaskSignups' && !confirm(emetasks.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteTaskSignups') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             actionsButton.textContent = emetasks.translate_pleasewait;
             actionsButton.disabled = true;

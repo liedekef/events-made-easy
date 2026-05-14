@@ -128,14 +128,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Discounts Bulk Actions ---
     const discountsButton = EME.$('#DiscountsActionsButton');
     if (discountsButton) {
-        discountsButton.addEventListener('click', function (e) {
+        discountsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = DiscountsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction === 'deleteDiscounts' && !confirm(emediscounts.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteDiscounts') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             discountsButton.textContent = emediscounts.translate_pleasewait;
             discountsButton.disabled = true;
@@ -167,14 +170,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Discount Groups Bulk Actions ---
     const groupsButton = EME.$('#DiscountGroupsActionsButton');
     if (groupsButton) {
-        groupsButton.addEventListener('click', function (e) {
+        groupsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = DiscountGroupsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction === 'deleteDiscountGroups' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteDiscountGroups') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             groupsButton.textContent = emediscounts.translate_pleasewait;
             groupsButton.disabled = true;

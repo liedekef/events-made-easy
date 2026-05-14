@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions ---
     const actionsButton = EME.$('#LocationsActionsButton');
     if (actionsButton) {
-        actionsButton.addEventListener('click', function (e) {
+        actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = LocationsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
@@ -137,7 +137,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashLocations', 'deleteLocations'].includes(doAction) && !confirm(emelocations.translate_areyousuretodeleteselected)) return;
+            if (['trashLocations', 'deleteLocations'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             actionsButton.textContent = emelocations.translate_pleasewait;
             actionsButton.disabled = true;

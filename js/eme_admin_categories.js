@@ -37,14 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // --- Bulk Actions ---
         const actionsButton = EME.$('#CategoriesActionsButton');
         if (actionsButton) {
-            actionsButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                const selectedRows = CategoriesTable.getSelectedRows();
-                const doAction = EME.$('#eme_admin_action').value;
+        actionsButton.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const selectedRows = CategoriesTable.getSelectedRows();
+            const doAction = EME.$('#eme_admin_action').value;
 
-                if (selectedRows.length === 0 || !doAction) return;
+            if (selectedRows.length === 0 || !doAction) return;
 
-                if (doAction === 'deleteCategories' && !confirm(emecategories.translate_areyousuretodeleteselected)) return;
+            if (doAction === 'deleteCategories') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
                 actionsButton.textContent = emecategories.translate_pleasewait;
                 actionsButton.disabled = true;

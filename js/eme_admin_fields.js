@@ -206,13 +206,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions ---
     const actionsButton = EME.$('#FormfieldsActionsButton');
     if (actionsButton) {
-        actionsButton.addEventListener('click', function (e) {
+        actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = FormfieldsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteFormfields' && !confirm(emeformfields.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteFormfields') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             actionsButton.textContent = emeformfields.translate_pleasewait;
             actionsButton.disabled = true;

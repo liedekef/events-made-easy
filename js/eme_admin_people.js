@@ -301,14 +301,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- People Bulk Actions ---
     const peopleButton = EME.$('#PeopleActionsButton');
     if (peopleButton) {
-        peopleButton.addEventListener('click', function (e) {
+        peopleButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = PeopleTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashPeople', 'deletePeople'].includes(doAction) && !confirm(emepeople.translate_areyousuretodeleteselected)) return;
+            if (['trashPeople', 'deletePeople'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             peopleButton.textContent = emepeople.translate_pleasewait;
             peopleButton.disabled = true;
@@ -385,14 +388,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Groups Bulk Actions ---
     const groupsButton = EME.$('#GroupsActionsButton');
     if (groupsButton) {
-        groupsButton.addEventListener('click', function (e) {
+        groupsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = GroupsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteGroups' && !confirm(emepeople.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteGroups') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             groupsButton.textContent = emepeople.translate_pleasewait;
             groupsButton.disabled = true;

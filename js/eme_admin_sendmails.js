@@ -358,13 +358,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        EME.$('#MailsActionsButton')?.addEventListener('click', function (e) {
+        EME.$('#MailsActionsButton')?.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MailsTable.getSelectedRows();
             const do_action = EME.$('#eme_admin_action_mails').value;
             if (!selectedRows.length || !do_action) return;
 
-            if (do_action === 'deleteMails' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
+            if (do_action === 'deleteMails') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             this.textContent = ememails.translate_pleasewait;
             this.disabled = true;
@@ -485,13 +488,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 MailingsTable.load();
             });
         }
-        EME.$('#MailingsActionsButton')?.addEventListener('click', function (e) {
+        EME.$('#MailingsActionsButton')?.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MailingsTable.getSelectedRows();
             const do_action = EME.$('#eme_admin_action_mailings').value;
             if (!selectedRows.length || !do_action) return;
 
-            if (do_action === 'deleteMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
+            if (do_action === 'deleteMailings') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             this.textContent = ememails.translate_pleasewait;
             this.disabled = true;
@@ -584,13 +590,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        EME.$('#ArchivedMailingsActionsButton')?.addEventListener('click', function (e) {
+        EME.$('#ArchivedMailingsActionsButton')?.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = ArchivedMailingsTable.getSelectedRows();
             const do_action = EME.$('#eme_admin_action_archivedmailings').value;
             if (!selectedRows.length || !do_action) return;
 
-            if (do_action === 'deleteArchivedMailings' && !confirm(ememails.translate_areyousuretodeleteselected)) return;
+            if (do_action === 'deleteArchivedMailings') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             this.textContent = ememails.translate_pleasewait;
             this.disabled = true;

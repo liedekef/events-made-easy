@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
    
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
         if (e.target.matches('.eme-dismiss-notice')) {
             e.preventDefault();
             const notice = e.target.dataset.notice;
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // closest, so the click on the img matches the parent (that has del_upload-button)
         if (e.target.closest('.eme_del_upload-button')) {
             e.preventDefault();
-            if (confirm(emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
+            if (await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeletefile || 'Are you sure you want to delete this file?')) {
                 const parentlink = e.target.closest('.eme_del_upload-button');
                 const id = parentlink.dataset.id;
                 const name = parentlink.dataset.name;

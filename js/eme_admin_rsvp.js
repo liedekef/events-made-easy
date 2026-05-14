@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Bulk Actions ---
     const actionsButton = EME.$('#BookingsActionsButton');
     if (actionsButton) {
-        actionsButton.addEventListener('click', function (e) {
+        actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = BookingsTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
@@ -333,7 +333,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashBookings', 'deleteBookings'].includes(doAction) && !confirm(emersvp.translate_areyousuretodeleteselected)) return;
+            if (['trashBookings', 'deleteBookings'].includes(doAction)) {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
             if (doAction == 'partialPayment' && selectedRows.length > 1) {
                 alert(emersvp.translate_selectonerowonlyforpartial);
                 return;

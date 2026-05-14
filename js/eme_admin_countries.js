@@ -84,14 +84,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Countries Bulk Actions ---
     const countriesButton = EME.$('#CountriesActionsButton');
     if (countriesButton) {
-        countriesButton.addEventListener('click', function (e) {
+        countriesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = CountriesTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteCountries' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteCountries') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             countriesButton.textContent = emecountries.translate_pleasewait;
             countriesButton.disabled = true;
@@ -123,14 +126,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- States Bulk Actions ---
     const statesButton = EME.$('#StatesActionsButton');
     if (statesButton) {
-        statesButton.addEventListener('click', function (e) {
+        statesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = StatesTable.getSelectedRows();
             const doAction = EME.$('#eme_admin_action').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (doAction==='deleteStates' && !confirm(emecountries.translate_areyousuretodeleteselected)) return;
+            if (doAction==='deleteStates') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
 
             statesButton.textContent = emecountries.translate_pleasewait;
             statesButton.disabled = true;

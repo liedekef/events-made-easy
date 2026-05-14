@@ -2860,15 +2860,28 @@ function eme_drop_table( $table ) {
     $wpdb->query( "DROP TABLE IF EXISTS $table" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
-function eme_add_index_if_not_exists( $table_name, $column, $index_name='' ) {
+function eme_add_index_if_not_exists( $table_name, $columns, $index_name = '' ) {
     global $wpdb;
 
-    if (empty($index_name)) $index_name=$column;
-    // Check if index exists using SHOW INDEX
-    $exists = $wpdb->get_var( $wpdb->prepare( "SHOW INDEX FROM `$table_name` WHERE Key_name = %s", $index_name ) );
-    if ( ! $exists ) {
-        $wpdb->query( "ALTER TABLE `$table_name` ADD INDEX `$index_name` ( `$column` )" );
+    // Handle both string (single column) and array (multiple columns)
+    if ( is_string( $columns ) ) {
+        $columns = array( $columns );
     }
+
+    // Generate index name if not provided
+    if ( empty( $index_name ) ) {
+        $index_name = implode( '_', $columns );
+    }
+
+    // Check if index exists using SHOW INDEX
+    $exists = $wpdb->get_var( $wpdb->prepare( "SHOW INDEX FROM `$table_name` WHERE Key_name = %s", $index_name) );
+
+    if ( ! $exists ) {
+        $columns_sql = '`' . implode( '`, `', $columns ) . '`';
+        $wpdb->query( "ALTER TABLE `$table_name` ADD INDEX `$index_name` ( $columns_sql )" );
+        return true;
+    }
+    return false;
 }
 
 function eme_convert_charset( $table, $charset, $collate ) {

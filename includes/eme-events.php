@@ -10060,6 +10060,9 @@ function eme_admin_enqueue_js() {
             wp_enqueue_script('eme-jodit');
             wp_enqueue_style('jodit-css');
         }
+        wp_enqueue_style( 'eme_textsec' );
+        wp_enqueue_style( 'eme_stylesheet' );
+        wp_enqueue_style( 'eme_stylesheet_extra' );
     }
     if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {
         // we need this to have the "postbox" javascript loaded, so closing/opening works for those divs
@@ -10069,60 +10072,29 @@ function eme_admin_enqueue_js() {
             wp_enqueue_script( 'eme-edit-maps' );
         }
     }
-    if ( in_array( $plugin_page, [ 'eme-new_event', 'eme-manager' ] ) ) {
-        // Now we can localize the script with our data.
-        wp_enqueue_script( 'eme-events' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-options' ] ) ) {
-        wp_enqueue_script( 'eme-options' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-attendance-reports' ] ) ) {
-        wp_enqueue_script( 'eme-attendances' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-task-signups' ] ) ) {
-        wp_enqueue_script( 'eme-tasksignups' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-templates' ] ) ) {
-        wp_enqueue_script( 'eme-templates' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-formfields' ] ) ) {
-        wp_enqueue_script( 'eme-formfields' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-discounts' ] ) ) {
-        wp_enqueue_script( 'eme-discounts' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-countries' ] ) ) {
-        wp_enqueue_script( 'eme-countries' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-locations' ] ) ) {
-        wp_enqueue_script( 'eme-locations' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-people', 'eme-groups' ] ) ) {
-        wp_enqueue_script( 'eme-people' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships', 'eme-groups' ] ) ) {
-        wp_enqueue_script( 'eme-members' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-registration-approval', 'eme-registration-seats' ] ) ) {
-        wp_enqueue_script( 'eme-rsvp' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-categories' ] ) ) {
-        // if html emails are disabled, this is needed
-        wp_enqueue_script( 'eme-categories' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-holidays' ] ) ) {
-        // if html emails are disabled, this is needed
-        wp_enqueue_script( 'eme-holidays' );
-    }
-    if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
-        // if html emails are disabled, this is needed
-        wp_enqueue_script( 'eme-sendmails' );
-    }
-
-    if ( preg_match( '/^eme-/', $plugin_page ) ) {
-        wp_enqueue_style( 'eme_textsec' );
-        wp_enqueue_style( 'eme_stylesheet' );
-        wp_enqueue_style( 'eme_stylesheet_extra' );
+    // Map pages to their required scripts
+    $scripts_to_enqueue = match($plugin_page) {
+        'eme-new_event', 'eme-manager' => ['eme-events'],
+        'eme-options' => ['eme-options'],
+        'eme-attendance-reports' => ['eme-attendances'],
+        'eme-task-signups' => ['eme-tasksignups'],
+        'eme-templates' => ['eme-templates'],
+        'eme-formfields' => ['eme-formfields'],
+        'eme-discounts' => ['eme-discounts'],
+        'eme-countries' => ['eme-countries'],
+        'eme-locations' => ['eme-locations'],
+        'eme-people' => ['eme-people'],
+        'eme-groups' => ['eme-people', 'eme-members'],
+        'eme-members', 'eme-memberships' => ['eme-members'],
+        'eme-registration-approval', 'eme-registration-seats' => ['eme-rsvp'],
+        'eme-categories' => ['eme-categories'],
+        'eme-holidays' => ['eme-holidays'],
+        'eme-emails' => ['eme-sendmails'],
+        default => []
+    };
+    // Enqueue all scripts for the current page
+    foreach ($scripts_to_enqueue as $script) {
+        wp_enqueue_script($script);
     }
 }
 

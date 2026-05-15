@@ -1970,7 +1970,7 @@ function eme_get_generic_placeholder_handler_definitions() {
     }
 
     $handlers = [
-        '/#_CURDATE(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_CURDATE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
@@ -1978,7 +1978,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return eme_localized_date( $ctx['eme_date_obj_now']->getDateTime(), EME_TIMEZONE, $date_format );
         },
-        '/#_CURTIME(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_CURTIME(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
@@ -1986,7 +1986,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return eme_localized_time( $ctx['eme_date_obj_now']->getDateTime(), EME_TIMEZONE, $date_format );
         },
-        '/#_DATE\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
+        '/#_DATE\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) {
             $date = $matches[1];
             if ( isset( $matches[2] ) ) {
                 $date_format = substr( $matches[2], 1, -1 );
@@ -1995,7 +1995,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return eme_localized_date( $date, EME_TIMEZONE, $date_format );
         },
-        '/#_SINGLE_EVENTPAGE_EVENTID/' => function( $result, $matches, &$ctx ) {
+        '/#_SINGLE_EVENTPAGE_EVENTID/' => function( $result, $matches, $ctx ) {
             if ( eme_is_single_event_page() ) {
                 $eventid_or_slug = eme_sanitize_request( get_query_var( 'event_id' ) );
                 $event           = eme_get_event( $eventid_or_slug );
@@ -2005,18 +2005,18 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CALENDAR_DAY/' => function( $result, $matches, &$ctx ) {
+        '/#_CALENDAR_DAY/' => function( $result, $matches, $ctx ) {
             $day_key     = get_query_var( 'calendar_day' );
             $replacement = eme_localized_date( $day_key, EME_TIMEZONE );
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
-        '/^#_WPID$/' => function( $result, $matches, &$ctx ) {
+        '/^#_WPID$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['wp_id'] ) {
                 return $ctx['wp_id'];
             }
             return '';
         },
-        '/^#_WPUSERDATA\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_WPUSERDATA\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $fieldname = $matches[1];
             $wp_user = $ctx['wp_user'];
             if ( $wp_user && isset( $wp_user->$fieldname ) ) {
@@ -2027,14 +2027,14 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/^#_WPUSERMETA\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_WPUSERMETA\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $fieldname = $matches[1];
             if ( $ctx['wp_id'] ) {
                 return join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) );
             }
             return '';
         },
-        '/^#_USER_HAS_CAP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_USER_HAS_CAP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $caps = $matches[1];
             if ( preg_match( '/#_/', $caps ) ) {
                 return null;
@@ -2050,7 +2050,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_USER_HAS_ROLE\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_USER_HAS_ROLE\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $roles = $matches[1];
             if ( preg_match( '/#_/', $roles ) ) {
                 return null;
@@ -2066,7 +2066,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_IS_USER_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_USER_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $groups = $matches[1];
             if ( preg_match( '/#_/', $groups ) ) {
                 return null;
@@ -2088,7 +2088,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_IS_USER_MEMBER_PENDING\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_USER_MEMBER_PENDING\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
             if ( preg_match( '/#_/', $memberships ) ) {
                 return null;
@@ -2107,7 +2107,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_IS_USER_MEMBER_EXPIRED\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_USER_MEMBER_EXPIRED\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
             if ( preg_match( '/#_/', $memberships ) ) {
                 return null;
@@ -2126,7 +2126,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_IS_USER_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_USER_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
             if ( preg_match( '/#_/', $memberships ) ) {
                 return null;
@@ -2145,7 +2145,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$|^#_EXPIRED_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$|^#_EXPIRED_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $match = $matches[1];
             if ( preg_match( '/#_/', $match ) ) {
                 return null;
@@ -2169,7 +2169,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/^#_HAS_USER_REGISTERED\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_HAS_USER_REGISTERED\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event_ids = $matches[1];
             if ( preg_match( '/#_/', $event_ids ) ) {
                 return null;
@@ -2184,7 +2184,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_HAS_USER_TASK_REGISTERED\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_HAS_USER_TASK_REGISTERED\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $tasks = $matches[1];
             if ( preg_match( '/#_/', $tasks ) ) {
                 return null;
@@ -2200,7 +2200,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_USER_GROUPS/' => function( $result, $matches, &$ctx ) {
+        '/#_USER_GROUPS/' => function( $result, $matches, $ctx ) {
             $wp_id = $ctx['wp_id'];
             if ( $wp_id ) {
                 $t_person = eme_get_person_by_wp_id( $wp_id );
@@ -2213,7 +2213,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_USER_MEMBERSHIPS/' => function( $result, $matches, &$ctx ) {
+        '/#_USER_MEMBERSHIPS/' => function( $result, $matches, $ctx ) {
             $wp_id = $ctx['wp_id'];
             if ( $wp_id ) {
                 $t_person = eme_get_person_by_wp_id( $wp_id );
@@ -2226,41 +2226,41 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_INCLUDE_TEMPLATE\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_INCLUDE_TEMPLATE\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $template_id = $matches[1];
             if ( preg_match( '/#_/', $template_id ) ) {
                 return null;
             }
             return eme_get_template_format( intval( $template_id ) );
         },
-        '/#_IS_SINGLE_DAY/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_SINGLE_DAY/' => function( $result, $matches, $ctx ) {
             return eme_is_single_day_page() ? 1 : 0;
         },
-        '/#_IS_SINGLE_EVENT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_SINGLE_EVENT/' => function( $result, $matches, $ctx ) {
             return eme_is_single_event_page() ? 1 : 0;
         },
-        '/#_IS_SINGLE_LOC/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_SINGLE_LOC/' => function( $result, $matches, $ctx ) {
             return eme_is_single_location_page() ? 1 : 0;
         },
-        '/#_IS_LOGGED_IN/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_LOGGED_IN/' => function( $result, $matches, $ctx ) {
             return is_user_logged_in() ? 1 : 0;
         },
-        '/#_IS_ADMIN|#_IS_ADMIN_PAGE/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_ADMIN|#_IS_ADMIN_PAGE/' => function( $result, $matches, $ctx ) {
             return eme_is_admin_request() ? 1 : 0;
         },
-        '/#_LOCALE/' => function( $result, $matches, &$ctx ) {
+        '/#_LOCALE/' => function( $result, $matches, $ctx ) {
             return determine_locale();
         },
-        '/#_LANG/' => function( $result, $matches, &$ctx ) {
+        '/#_LANG/' => function( $result, $matches, $ctx ) {
             if ( empty( $ctx['lang'] ) ) {
                 return eme_detect_lang();
             }
             return $ctx['lang'];
         },
-        '/#_UNSUB_URL$/' => function( $result, $matches, &$ctx ) {
+        '/#_UNSUB_URL$/' => function( $result, $matches, $ctx ) {
             return eme_unsub_url();
         },
-        '/#_ALLCATEGORYIDS/' => function( $result, $matches, &$ctx ) {
+        '/#_ALLCATEGORYIDS/' => function( $result, $matches, $ctx ) {
             return join( ',', eme_get_category_ids() );
         },
     ];
@@ -2379,7 +2379,7 @@ function eme_get_event_placeholder_handler_definitions() {
 
     $handlers = [
         /* Edit/admin links */
-        '/#_EDITEVENTLINK/' => function( $result, $matches, &$ctx ) {
+        '/#_EDITEVENTLINK/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $ctx['current_userid'] ) ) {
@@ -2388,7 +2388,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_EDITEVENTURL/' => function( $result, $matches, &$ctx ) {
+        '/#_EDITEVENTURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $ctx['current_userid'] ) ) {
@@ -2400,7 +2400,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRINTBOOKINGSLINK/' => function( $result, $matches, &$ctx ) {
+        '/#_PRINTBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2409,7 +2409,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRINTBOOKINGSURL/' => function( $result, $matches, &$ctx ) {
+        '/#_PRINTBOOKINGSURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2421,7 +2421,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CSVBOOKINGSLINK/' => function( $result, $matches, &$ctx ) {
+        '/#_CSVBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2430,7 +2430,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CSVBOOKINGSURL/' => function( $result, $matches, &$ctx ) {
+        '/#_CSVBOOKINGSURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2444,13 +2444,13 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Date/time placeholders */
-        '/#_STARTDATETIME_8601/' => function( $result, $matches, &$ctx ) {
+        '/#_STARTDATETIME_8601/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, 'c' );
         },
-        '/#_ENDDATETIME_8601/' => function( $result, $matches, &$ctx ) {
+        '/#_ENDDATETIME_8601/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, 'c' );
         },
-        '/#_STARTDATE(\{(.+?)\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_STARTDATE(\{(.+?)\})?$/' => function( $result, $matches, $ctx ) {
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
@@ -2458,7 +2458,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, $date_format );
         },
-        '/#_ENDDATE(\{(.+?)\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_ENDDATE(\{(.+?)\})?$/' => function( $result, $matches, $ctx ) {
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
@@ -2466,19 +2466,19 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, $date_format );
         },
-        '/#_STARTTIME/' => function( $result, $matches, &$ctx ) {
+        '/#_STARTTIME/' => function( $result, $matches, $ctx ) {
             return eme_localized_time( $ctx['event']['event_start'], EME_TIMEZONE );
         },
-        '/#_ENDTIME/' => function( $result, $matches, &$ctx ) {
+        '/#_ENDTIME/' => function( $result, $matches, $ctx ) {
             return eme_localized_time( $ctx['event']['event_end'], EME_TIMEZONE );
         },
-        '/#_24HSTARTTIME/' => function( $result, $matches, &$ctx ) {
+        '/#_24HSTARTTIME/' => function( $result, $matches, $ctx ) {
             return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
         },
-        '/#_24HENDTIME$/' => function( $result, $matches, &$ctx ) {
+        '/#_24HENDTIME$/' => function( $result, $matches, $ctx ) {
             return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
         },
-        '/#_PAST_FUTURE_CLASS/' => function( $result, $matches, &$ctx ) {
+        '/#_PAST_FUTURE_CLASS/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $eme_date_obj_now = $ctx['eme_date_obj_now'];
             $eme_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
@@ -2490,13 +2490,13 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 'eme-past-event';
         },
-        '/#_12HSTARTTIME$/' => function( $result, $matches, &$ctx ) {
+        '/#_12HSTARTTIME$/' => function( $result, $matches, $ctx ) {
             return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
         },
-        '/#_12HENDTIME$/' => function( $result, $matches, &$ctx ) {
+        '/#_12HENDTIME$/' => function( $result, $matches, $ctx ) {
             return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
         },
-        '/#_12HSTARTTIME_NOLEADINGZERO/' => function( $result, $matches, &$ctx ) {
+        '/#_12HSTARTTIME_NOLEADINGZERO/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
             if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
                 $replacement = str_replace( ':00', '', $replacement );
@@ -2504,7 +2504,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return $replacement;
         },
-        '/#_12HENDTIME_NOLEADINGZERO/' => function( $result, $matches, &$ctx ) {
+        '/#_12HENDTIME_NOLEADINGZERO/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
             if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
                 $replacement = str_replace( ':00', '', $replacement );
@@ -2514,19 +2514,19 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Form/filter placeholders */
-        '/#_S_FILTERFORM|#_FILTERFORM/' => function( $result, $matches, &$ctx ) {
+        '/#_S_FILTERFORM|#_FILTERFORM/' => function( $result, $matches, $ctx ) {
             if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' || eme_is_single_event_page() ) {
                 return '';
             }
             return eme_filter_form();
         },
-        '/#_ADDBOOKINGFORM$/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             return eme_add_booking_form( $ctx['event']['event_id'] );
         },
-        '/#_ADDBOOKINGFORM_IF_LOGGED_IN/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_LOGGED_IN/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() ) {
                 if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                     return '';
@@ -2535,7 +2535,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ADDBOOKINGFORM_IF_USER_HAS_CAP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_USER_HAS_CAP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $caps = $matches[1];
             if ( is_user_logged_in() && $ctx['target'] == 'html' ) {
                 $caps_arr  = explode( ',', $caps );
@@ -2552,7 +2552,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ADDBOOKINGFORM_IF_USER_HAS_ROLE\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_USER_HAS_ROLE\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $roles = $matches[1];
             if ( is_user_logged_in() && $ctx['target'] == 'html' ) {
                 $wp_user   = wp_get_current_user();
@@ -2570,7 +2570,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ADDBOOKINGFORM_IF_USER_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_USER_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $groups = $matches[1];
             if ( is_user_logged_in() && $ctx['target'] == 'html' ) {
                 $wp_id      = get_current_user_id();
@@ -2591,7 +2591,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
             if ( is_user_logged_in() && $ctx['target'] == 'html' ) {
                 $wp_id           = get_current_user_id();
@@ -2611,14 +2611,14 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ADDBOOKINGFORM_IF_NOT_REGISTERED/' => function( $result, $matches, &$ctx ) {
+        '/#_ADDBOOKINGFORM_IF_NOT_REGISTERED/' => function( $result, $matches, $ctx ) {
             if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             $only_if_not_registered = 1;
             return eme_add_booking_form( $ctx['event']['event_id'], $only_if_not_registered );
         },
-        '/#_REMOVEBOOKINGFORM$|#_DELBOOKINGFORM$|#_DELETEBOOKINGFORM$|#_CANCELBOOKINGFORM$|#_CANCEL_ALL_BOOKINGS_FORM$/' => function( $result, $matches, &$ctx ) {
+        '/#_REMOVEBOOKINGFORM$|#_DELBOOKINGFORM$|#_DELETEBOOKINGFORM$|#_CANCELBOOKINGFORM$|#_CANCEL_ALL_BOOKINGS_FORM$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
@@ -2627,7 +2627,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_cancel_bookings_form( $ctx['event']['event_id'] );
         },
-        '/#_REMOVEBOOKINGFORM_IF_REGISTERED|#_DELBOOKINGFORM_IF_REGISTERED|#_DELETEBOOKINGFORM_IF_REGISTERED|#_CANCELBOOKINGFORM_IF_REGISTERED|#_CANCEL_ALL_BOOKINGS_FORM_IF_REGISTERED/' => function( $result, $matches, &$ctx ) {
+        '/#_REMOVEBOOKINGFORM_IF_REGISTERED|#_DELBOOKINGFORM_IF_REGISTERED|#_DELETEBOOKINGFORM_IF_REGISTERED|#_CANCELBOOKINGFORM_IF_REGISTERED|#_CANCEL_ALL_BOOKINGS_FORM_IF_REGISTERED/' => function( $result, $matches, $ctx ) {
             if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
@@ -2644,7 +2644,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Seats/capacity placeholders */
-        '/#_WAITING_LIST_ACTIVATED$/' => function( $result, $matches, &$ctx ) {
+        '/#_WAITING_LIST_ACTIVATED$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
             $avail_seats = eme_get_available_seats( $event['event_id'], 1 );
@@ -2653,7 +2653,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_WAITING_LIST_CLOSED$/' => function( $result, $matches, &$ctx ) {
+        '/#_WAITING_LIST_CLOSED$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
             $avail_seats       = eme_get_available_seats( $event['event_id'] );
@@ -2662,10 +2662,10 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_WAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
+        '/#_WAITINGLISTSEATS$/' => function( $result, $matches, $ctx ) {
             return $ctx['event']['event_properties']['waitinglist_seats'];
         },
-        '/#_AVAILABLEWAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
+        '/#_AVAILABLEWAITINGLISTSEATS$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $ctx['total_seats'] == 0 || eme_is_multi( $event['event_seats'] ) ) {
                 return 0;
@@ -2681,7 +2681,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_BOOKEDWAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
+        '/#_BOOKEDWAITINGLISTSEATS$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $ctx['total_seats'] == 0 || eme_is_multi( $event['event_seats'] ) ) {
                 return 0;
@@ -2693,13 +2693,13 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['total_seats'] == 0 ) {
                 return '&infin;';
             }
             return eme_get_available_seats( $ctx['event']['event_id'], 1 );
         },
-        '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['total_seats'] == 0 ) {
                 if ( $ctx['target'] == 'html' ) {
                     return '&infin;';
@@ -2713,7 +2713,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(TOTALSPACES|TOTALSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(TOTALSPACES|TOTALSEATS)$/' => function( $result, $matches, $ctx ) {
             $total_seats = $ctx['total_seats'];
             if ( $total_seats == 0 ) {
                 if ( $ctx['need_escape'] ) {
@@ -2726,7 +2726,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $waitinglist_seats = $ctx['event']['event_properties']['waitinglist_seats'];
             return $total_seats - $waitinglist_seats;
         },
-        '/#_(TOTALSPACES|TOTALSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(TOTALSPACES|TOTALSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $total_seats = $ctx['total_seats'];
             if ( $total_seats == 0 ) {
                 if ( $ctx['need_escape'] ) {
@@ -2743,10 +2743,10 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/' => function( $result, $matches, $ctx ) {
             return eme_get_booked_seats( $ctx['event']['event_id'] );
         },
-        '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $field_id    = intval( $matches[2] ) - 1;
             $seats       = eme_get_booked_multiseats( $ctx['event']['event_id'] );
             if ( array_key_exists( $field_id, $seats ) ) {
@@ -2754,10 +2754,10 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(PAIDSPACES|PAIDSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(PAIDSPACES|PAIDSEATS)$/' => function( $result, $matches, $ctx ) {
             return eme_get_paid_seats( $ctx['event']['event_id'] );
         },
-        '/#_(PAIDSPACES|PAIDSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(PAIDSPACES|PAIDSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $field_id    = intval( $matches[2] ) - 1;
             $seats       = eme_get_paid_multiseats( $ctx['event']['event_id'] );
             if ( array_key_exists( $field_id, $seats ) ) {
@@ -2765,11 +2765,11 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(YOUNGPENDINGSPACES|YOUNGPENDINGSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(YOUNGPENDINGSPACES|YOUNGPENDINGSEATS)$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             return eme_get_young_pending_seats( $event['event_id'] );
         },
-        '/#_(YOUNGPENDINGSPACES|YOUNGPENDINGSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(YOUNGPENDINGSPACES|YOUNGPENDINGSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id    = intval( $matches[2] ) - 1;
             $seats       = eme_get_young_pending_multiseats( $event['event_id'] );
@@ -2778,11 +2778,11 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(PENDINGSPACES|PENDINGSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(PENDINGSPACES|PENDINGSEATS)$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             return eme_get_pending_seats( $event['event_id'] );
         },
-        '/#_(PENDINGSPACES|PENDINGSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(PENDINGSPACES|PENDINGSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id    = intval( $matches[2] ) - 1;
             $seats       = eme_get_pending_multiseats( $event['event_id'] );
@@ -2791,11 +2791,11 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_(APPROVEDSPACES|APPROVEDSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(APPROVEDSPACES|APPROVEDSEATS)$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             return eme_get_approved_seats( $event['event_id'] );
         },
-        '/#_(APPROVEDSPACES|APPROVEDSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_(APPROVEDSPACES|APPROVEDSEATS)\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id    = intval( $matches[2] ) - 1;
             $seats       = eme_get_approved_multiseats( $event['event_id'] );
@@ -2804,13 +2804,13 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_USER_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/' => function( $result, $matches, &$ctx ) {
+        '/#_USER_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() ) {
                 return eme_get_booked_seats_by_wp_event_id( $ctx['current_userid'], $ctx['event']['event_id'] );
             }
             return '';
         },
-        '/#_AVAILABLETASKS|#_FREETASKS$/' => function( $result, $matches, &$ctx ) {
+        '/#_AVAILABLETASKS|#_FREETASKS$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event['event_tasks'] ) {
                 $tasks = eme_get_event_tasks( $event['event_id'] );
@@ -2831,7 +2831,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Link/name/ID placeholders */
-        '/#_LINKEDNAME/' => function( $result, $matches, &$ctx ) {
+        '/#_LINKEDNAME/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $target = $ctx['target'];
             $lang = $ctx['lang'];
@@ -2847,7 +2847,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_apply_output_filters( eme_translate( $event['event_name'], $lang ), $target );
         },
-        '/#_EXTERNALURL/' => function( $result, $matches, &$ctx ) {
+        '/#_EXTERNALURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event['event_url'] != '' ) {
                 $replacement = $event['event_url'];
@@ -2858,21 +2858,21 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ICALLINK$/' => function( $result, $matches, &$ctx ) {
+        '/#_ICALLINK$/' => function( $result, $matches, $ctx ) {
             $url = eme_single_event_ical_url( $ctx['event']['event_id'] );
             if ( $ctx['target'] == 'html' ) {
                 $url = esc_url( $url );
             }
             return eme_apply_output_filters( "<a href='$url'>ICAL</a>", $ctx['target'] );
         },
-        '/#_ICALURL/' => function( $result, $matches, &$ctx ) {
+        '/#_ICALURL/' => function( $result, $matches, $ctx ) {
             $url = eme_single_event_ical_url( $ctx['event']['event_id'] );
             if ( $ctx['target'] == 'html' ) {
                 return esc_url( $url );
             }
             return $url;
         },
-        '/#_IMAGEURL$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEURL$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_image_id'] ) ) {
                 $replacement = wp_get_attachment_image_url( $event['event_image_id'], 'full' );
@@ -2889,7 +2889,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return $replacement;
         },
-        '/#_PAGEURL\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_PAGEURL\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $lang = $ctx['lang'];
             $events_page_link = eme_get_events_page();
             $replacement      = add_query_arg( [ 'event_id' => intval( $matches[1] ) ], $events_page_link );
@@ -2901,14 +2901,14 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return $replacement;
         },
-        '/#_PAGEURL|#_LINK$|#_URL$/' => function( $result, $matches, &$ctx ) {
+        '/#_PAGEURL|#_LINK$|#_URL$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_event_url( $ctx['event'], $ctx['lang'] );
             if ( $ctx['target'] == 'html' ) {
                 $replacement = esc_url( $replacement );
             }
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
-        '/#_NAME$/' => function( $result, $matches, &$ctx ) {
+        '/#_NAME$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'event_name';
             $replacement = '';
@@ -2918,11 +2918,11 @@ function eme_get_event_placeholder_handler_definitions() {
             $replacement = eme_translate( $replacement, $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_ID/' => function( $result, $matches, &$ctx ) {
+        '/#_ID/' => function( $result, $matches, $ctx ) {
             return intval( $ctx['event']['event_id'] );
         },
         /* Note: escaping $ in regex */
-        '/#_IMAGETITLE$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETITLE$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
@@ -2932,7 +2932,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGEALT$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEALT$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
@@ -2942,7 +2942,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGECAPTION$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGECAPTION$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
@@ -2952,7 +2952,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGEDESCRIPTION$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEDESCRIPTION$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
@@ -2962,7 +2962,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGE$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGE$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $replacement = '';
             if ( ! empty( $event['event_image_id'] ) ) {
@@ -2982,7 +2982,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGETHUMB(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETHUMB(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -3000,7 +3000,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGETHUMBURL(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETHUMBURL(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -3019,7 +3019,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PROP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_PROP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $tmp_attkey = $matches[1];
             if ( isset( $event['event_attributes'][ $tmp_attkey ] ) && ! is_array( $event['event_attributes'][ $tmp_attkey ] ) ) {
@@ -3029,7 +3029,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_DBFIELD\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_DBFIELD\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $tmp_attkey = $matches[1];
             if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
@@ -3039,7 +3039,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_ATT\{(.+?)\}\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_ATT\{(.+?)\}\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $tmp_event_id     = intval( $matches[1] );
             $tmp_event_attkey = $matches[2];
             $tmp_event        = eme_get_event( $tmp_event_id );
@@ -3050,7 +3050,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_FIELDNAME\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_FIELDNAME\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
@@ -3059,7 +3059,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $target = $ctx['target'];
             $field_key = $matches[2];
             if ( isset( $matches[3] ) ) {
@@ -3104,7 +3104,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Date diff placeholders */
-        '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/' => function( $result, $matches, &$ctx ) {
+        '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/' => function( $result, $matches, $ctx ) {
             $date_key = ( $matches[2] === 'START' ) ? 'event_start' : 'event_end';
             $eme_date_obj = new emeExpressiveDate( $ctx['event'][ $date_key ], EME_TIMEZONE );
             $diff = $ctx['eme_date_obj_now']->diff( $eme_date_obj );
@@ -3133,7 +3133,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $matches[2] == 'START' ) {
                 $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
@@ -3142,7 +3142,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return $ctx['eme_date_obj_now']->diff( $eme_date_obj )->format( $matches[3] );
         },
-        '/#_DATETIMEDIFF_START_END(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_DATETIMEDIFF_START_END(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $diff_format = substr( $matches[1], 1, -1 );
@@ -3153,39 +3153,39 @@ function eme_get_event_placeholder_handler_definitions() {
             $eme_date_obj_end   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             return $eme_date_obj_start->diff( $eme_date_obj_end )->format( $diff_format );
         },
-        '/#_DAYS_TILL_START$/' => function( $result, $matches, &$ctx ) {
+        '/#_DAYS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
             return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
         },
-        '/#_NIGHTS_TILL_START$/' => function( $result, $matches, &$ctx ) {
+        '/#_NIGHTS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
             return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
-        '/#_DAYS_FROM_START$/' => function( $result, $matches, &$ctx ) {
+        '/#_DAYS_FROM_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
             return $eme_date_obj->getDifferenceInDays( $ctx['eme_date_obj_now'] );
         },
-        '/#_DAYS_TILL_END$/' => function( $result, $matches, &$ctx ) {
+        '/#_DAYS_TILL_END$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
             return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
         },
-        '/#_NIGHTS_TILL_END$/' => function( $result, $matches, &$ctx ) {
+        '/#_NIGHTS_TILL_END$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
             return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
-        '/#_HOURS_TILL_START$/' => function( $result, $matches, &$ctx ) {
+        '/#_HOURS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
             return round( $ctx['eme_date_obj_now']->getDifferenceInHours( $eme_date_obj ) );
         },
-        '/#_HOURS_FROM_START$/' => function( $result, $matches, &$ctx ) {
+        '/#_HOURS_FROM_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
             return round( $eme_date_obj->getDifferenceInHours( $ctx['eme_date_obj_now'] ) );
         },
-        '/#_HOURS_TILL_END$/' => function( $result, $matches, &$ctx ) {
+        '/#_HOURS_TILL_END$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
             return round( $ctx['eme_date_obj_now']->getDifferenceInHours( $eme_date_obj ) );
         },
-        '/#_DISCOUNT_VALID_(TILL|FROM)\{(\d+)\}\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_DISCOUNT_VALID_(TILL|FROM)\{(\d+)\}\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $discount_id = intval( $matches[2] );
             $valid_discount = 0;
@@ -3216,7 +3216,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Price placeholders */
-        '/#_PRICE$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICE$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'price';
             if ( $event[ $field ] ) {
@@ -3228,7 +3228,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICE\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICE\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id = intval( $matches[1] - 1 );
             if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
@@ -3242,7 +3242,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICE_NO_VAT$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICE_NO_VAT$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'price';
             if ( $event[ $field ] ) {
@@ -3255,7 +3255,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICE_NO_VAT\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICE_NO_VAT\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id = intval( $matches[1] - 1 );
             if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
@@ -3271,7 +3271,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICE_VAT_ONLY$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICE_VAT_ONLY$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'price';
             if ( $event[ $field ] ) {
@@ -3284,7 +3284,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICEDESCRIPTION\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICEDESCRIPTION\{(\d+)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field_id = intval( $matches[1] - 1 );
             if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
@@ -3295,14 +3295,14 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRICEDESCRIPTION$/' => function( $result, $matches, &$ctx ) {
+        '/#_PRICEDESCRIPTION$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! eme_is_multi( $event['price'] ) ) {
                 return eme_apply_output_filters( $event['event_properties']['price_desc'], $ctx['target'] );
             }
             return '';
         },
-        '/#_CURRENCY$/' => function( $result, $matches, &$ctx ) {
+        '/#_CURRENCY$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'currency';
             if ( $event['price'] ) {
@@ -3310,10 +3310,10 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_VAT_PCT$/' => function( $result, $matches, &$ctx ) {
+        '/#_VAT_PCT$/' => function( $result, $matches, $ctx ) {
             return eme_apply_output_filters( $ctx['event']['event_properties']['vat_pct'], $ctx['target'] );
         },
-        '/#_CURRENCYSYMBOL$/' => function( $result, $matches, &$ctx ) {
+        '/#_CURRENCYSYMBOL$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'currency';
             if ( $event['price'] ) {
@@ -3321,49 +3321,42 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_ATTENDEES/' => function( $result, $matches, &$ctx ) {
+        '/#_ATTENDEES/' => function( $result, $matches, $ctx ) {
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
             return eme_apply_output_filters( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
-        '/#_BOOKINGS/' => function( $result, $matches, &$ctx ) {
+        '/#_BOOKINGS/' => function( $result, $matches, $ctx ) {
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
             return eme_apply_output_filters( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
-        '/#_(CONTACT|AUTHOR)/' => function( $result, $matches, &$ctx ) {
+        '/#_(CONTACT|AUTHOR)/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $current_userid = $ctx['current_userid'];
-            if ( preg_match( '/#_CONTACT/', $result ) ) {
-                if ( is_null( $ctx['contact'] ) ) {
-                    $ctx['contact'] = eme_get_event_contact( $event );
-                }
-                if ( ! empty( $ctx['contact'] ) && is_null( $ctx['contact_person'] ) ) {
-                    $ctx['contact_person'] = eme_get_person_by_wp_id( $ctx['contact']->ID );
-                    if ( empty( $ctx['contact_person'] ) ) {
-                        $ctx['contact_person'] = eme_fake_person_by_wp_id( $ctx['contact']->ID );
+            $contact_person = null;
+            if ( str_starts_with( $result, '#_CONTACT' ) ) {
+                $contact = eme_get_event_contact( $event );
+                if ( ! empty( $contact ) ) {
+                    $contact_person = eme_get_person_by_wp_id( $contact->ID );
+                    if ( empty( $contact_person ) ) {
+                        $contact_person = eme_fake_person_by_wp_id( $contact->ID );
                     }
                 }
-                $t_contact = $ctx['contact'];
-                $t_person  = $ctx['contact_person'];
             } else {
-                if ( is_null( $ctx['author'] ) ) {
-                    $ctx['author'] = eme_get_author( $event );
-                }
-                if ( ! empty( $ctx['author'] ) && is_null( $ctx['author_person'] ) ) {
-                    $ctx['author_person'] = eme_get_person_by_wp_id( $ctx['author']->ID );
-                    if ( empty( $ctx['author_person'] ) ) {
-                        $ctx['author_person'] = eme_fake_person_by_wp_id( $ctx['author']->ID );
+                $author = eme_get_author( $event );
+                if ( ! empty( $author ) ) {
+                    $contact_person = eme_get_person_by_wp_id( $author->ID );
+                    if ( empty( $contact_person ) ) {
+                        $contact_person = eme_fake_person_by_wp_id( $author->ID );
                     }
                 }
-                $t_contact = $ctx['author'];
-                $t_person  = $ctx['author_person'];
             }
-            if ( ! empty( $t_contact ) ) {
+            if ( ! empty( $contact_person ) ) {
                 if ( $result == '#_CONTACTPERSON' ) {
                     $t_format = '#_NAME';
                 } elseif ( $result == '#_CONTACTEMAIL' ) {
@@ -3376,36 +3369,36 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( $t_format == '#_NAME' ) {
                     $t_format = '#_FULLNAME';
                 }
-                return eme_replace_people_placeholders( $t_format, $t_person, $ctx['target'], $ctx['lang'] );
+                return eme_replace_people_placeholders( $t_format, $contact_person, $ctx['target'], $ctx['lang'] );
             }
             return '';
         },
-        '/#_CREATIONDATE\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_CREATIONDATE\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['creation_date'], EME_TIMEZONE, $matches[1] );
         },
-        '/#_MODIFDATE\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_MODIFDATE\{(.+?)\}/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['modif_date'], EME_TIMEZONE, $matches[1] );
         },
-        '/#_CREATIONDATE$/' => function( $result, $matches, &$ctx ) {
+        '/#_CREATIONDATE$/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['creation_date'], EME_TIMEZONE );
         },
-        '/#_MODIFDATE$/' => function( $result, $matches, &$ctx ) {
+        '/#_MODIFDATE$/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['event']['modif_date'], EME_TIMEZONE );
         },
-        '/#_CREATIONTIME/' => function( $result, $matches, &$ctx ) {
+        '/#_CREATIONTIME/' => function( $result, $matches, $ctx ) {
             return eme_localized_time( $ctx['event']['creation_date'], EME_TIMEZONE );
         },
-        '/#_MODIFTIME/' => function( $result, $matches, &$ctx ) {
+        '/#_MODIFTIME/' => function( $result, $matches, $ctx ) {
             return eme_localized_time( $ctx['event']['modif_date'], EME_TIMEZONE );
         },
-        '/#[A-Za-z]$/' => function( $result, $matches, &$ctx ) {
+        '/#[A-Za-z]$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, ltrim( $result, '#' ) );
             if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#i' ) {
                 $replacement = ltrim( $replacement, '0' );
             }
             return $replacement;
         },
-        '/#@[A-Za-z]$/' => function( $result, $matches, &$ctx ) {
+        '/#@[A-Za-z]$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
             if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#@i' ) {
                 $replacement = ltrim( $replacement, '0' );
@@ -3414,7 +3407,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Category placeholders */
-        '/#_CATEGORYIDS$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORYIDS$/' => function( $result, $matches, $ctx ) {
             if ( get_option( 'eme_categories_enabled' ) ) {
                 $category_ids = $ctx['event']['event_category_ids'];
                 $replacement = eme_translate( $category_ids, $ctx['lang'] );
@@ -3422,7 +3415,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CATEGORIES$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORIES$/' => function( $result, $matches, $ctx ) {
             $lang = $ctx['lang'];
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
@@ -3444,7 +3437,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CATEGORIES_CSS$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORIES_CSS$/' => function( $result, $matches, $ctx ) {
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
                     $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
@@ -3455,7 +3448,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CATEGORYDESCRIPTIONS$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORYDESCRIPTIONS$/' => function( $result, $matches, $ctx ) {
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
                     $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
@@ -3469,7 +3462,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
@@ -3503,7 +3496,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_apply_output_filters( join( $sep, $cat_names ), $ctx['target'] );
         },
-        '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
@@ -3525,7 +3518,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $replacement = eme_translate( join( ' ', $t_categories ), $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
@@ -3550,7 +3543,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return eme_apply_output_filters( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'] );
         },
-        '/#_LINKED(EVENT)?CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/#_LINKED(EVENT)?CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
@@ -3589,14 +3582,14 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Recurrence placeholders */
-        '/#_RECURRENCE_DESC|#_RECURRENCEDESC/' => function( $result, $matches, &$ctx ) {
+        '/#_RECURRENCE_DESC|#_RECURRENCEDESC/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['recurrence_id'] ) {
                 return eme_apply_output_filters( eme_get_recurrence_desc( $event ['recurrence_id'] ), $ctx['target'] );
             }
             return '';
         },
-        '/#_RECURRENCE_NBR/' => function( $result, $matches, &$ctx ) {
+        '/#_RECURRENCE_NBR/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['recurrence_id'] ) {
                 $event_ids = eme_get_recurrence_eventids( $event ['recurrence_id'] );
@@ -3609,14 +3602,14 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Password/RSVP placeholders */
-        '/#_PASSWORD$/' => function( $result, $matches, &$ctx ) {
+        '/#_PASSWORD$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( eme_is_event_rsvp( $event ) && ! empty( $event['event_properties']['rsvp_password'] ) ) {
                 return eme_apply_output_filters( $event['event_properties']['rsvp_password'], $ctx['target'] );
             }
             return '';
         },
-        '/#_RSVPSTART(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_RSVPSTART(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
@@ -3636,7 +3629,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_RSVPEND(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_RSVPEND(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
@@ -3656,7 +3649,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CANCELEND/' => function( $result, $matches, &$ctx ) {
+        '/#_CANCELEND/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( eme_is_event_rsvp( $event ) ) {
                 $eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_days'];
@@ -3666,16 +3659,16 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_RSVP_STATUS/' => function( $result, $matches, &$ctx ) {
+        '/#_RSVP_STATUS/' => function( $result, $matches, $ctx ) {
             return eme_event_rsvp_status( $ctx['event'] );
         },
-        '/#_IS_RSVP_STARTED/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_RSVP_STARTED/' => function( $result, $matches, $ctx ) {
             return eme_is_event_rsvp_started( $ctx['event'] );
         },
-        '/#_IS_RSVP_ENDED/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_RSVP_ENDED/' => function( $result, $matches, $ctx ) {
             return eme_is_event_rsvp_ended( $ctx['event'] );
         },
-        '/#_EXTERNAL_REF/' => function( $result, $matches, &$ctx ) {
+        '/#_EXTERNAL_REF/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_external_ref'] ) ) {
                 return eme_apply_output_filters( preg_replace( '/fb_/', '', $event['event_external_ref'] ), $ctx['target'] );
@@ -3684,38 +3677,38 @@ function eme_get_event_placeholder_handler_definitions() {
         },
 
         /* Boolean/status placeholders */
-        '/#_IS_RSVP_PASSWORD_ENABLED/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_RSVP_PASSWORD_ENABLED/' => function( $result, $matches, $ctx ) {
             if ( eme_is_event_rsvp( $ctx['event'] ) && ! empty( $ctx['event']['event_properties']['rsvp_password'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_RSVP_ENABLED/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_RSVP_ENABLED/' => function( $result, $matches, $ctx ) {
             if ( eme_is_event_rsvp( $ctx['event'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_LOGIN_REQUIRED/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_LOGIN_REQUIRED/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['registration_wp_users_only'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_PRIVATE_EVENT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_PRIVATE_EVENT/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['event_status'] == EME_EVENT_STATUS_PRIVATE ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_RECURRENT_EVENT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_RECURRENT_EVENT/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['recurrence_id'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_ONGOING_EVENT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_ONGOING_EVENT/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $eme_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
             $eme_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
@@ -3724,20 +3717,20 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_ENDED_EVENT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_ENDED_EVENT/' => function( $result, $matches, $ctx ) {
             $eme_end_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
             if ( $eme_end_obj < $ctx['eme_date_obj_now'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_REGISTERED$/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_REGISTERED$/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() && eme_get_booking_ids_by_wp_event_id( $ctx['current_userid'], $ctx['event']['event_id'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_REGISTERED_PAID$/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_REGISTERED_PAID$/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() ) {
                 $booking_ids_arr = eme_get_booking_ids_by_wp_event_id( $ctx['current_userid'], $ctx['event']['event_id'] );
                 if ( ! empty( $booking_ids_arr ) ) {
@@ -3750,7 +3743,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_REGISTERED_PENDING$/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_REGISTERED_PENDING$/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() ) {
                 $booking_ids_arr = eme_get_booking_ids_by_wp_event_id( $ctx['current_userid'], $ctx['event']['event_id'] );
                 if ( ! empty( $booking_ids_arr ) ) {
@@ -3763,7 +3756,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_REGISTERED_APPROVED$/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_REGISTERED_APPROVED$/' => function( $result, $matches, $ctx ) {
             if ( is_user_logged_in() ) {
                 $booking_ids_arr = eme_get_booking_ids_by_wp_event_id( $ctx['current_userid'], $ctx['event']['event_id'] );
                 if ( ! empty( $booking_ids_arr ) ) {
@@ -3776,58 +3769,58 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_MULTIPRICE/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_MULTIPRICE/' => function( $result, $matches, $ctx ) {
             if ( eme_is_multi( $ctx['event']['price'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_MULTISEAT/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_MULTISEAT/' => function( $result, $matches, $ctx ) {
             if ( eme_is_multi( $ctx['event']['event_seats'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_ALLDAY/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_ALLDAY/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['event_properties']['all_day'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_ATTENDANCE/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_ATTENDANCE/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['event_properties']['take_attendance'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_AUTHOR$/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_AUTHOR$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['event_author'] == $ctx['current_userid'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_CONTACTPERSON/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_CONTACTPERSON/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event['event_contactperson_id'] == $ctx['current_userid'] || ( $event['event_contactperson_id'] == -1 && $event['event_author'] == $ctx['current_userid'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_AUTHOR_OR_CONTACTPERSON/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_AUTHOR_OR_CONTACTPERSON/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] || ( $event['event_contactperson_id'] == -1 && $event['event_author'] == $ctx['current_userid'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_MULTIDAY/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_MULTIDAY/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( eme_get_date_from_dt( $event['event_start'] ) != eme_get_date_from_dt( $event['event_end'] ) ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_FIRST_RECURRENCE/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_FIRST_RECURRENCE/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['recurrence_id'] ) {
                 $event_ids = eme_get_recurrence_eventids( $event ['recurrence_id'] );
@@ -3838,7 +3831,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_LAST_RECURRENCE/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_LAST_RECURRENCE/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['recurrence_id'] ) {
                 $event_ids  = eme_get_recurrence_eventids( $event ['recurrence_id'] );
@@ -3850,13 +3843,13 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_IS_INVITE_ONLY/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_INVITE_ONLY/' => function( $result, $matches, $ctx ) {
             if ( $ctx['event']['event_properties']['invite_only'] ) {
                 return 1;
             }
             return 0;
         },
-        '/#_IS_INVITE_URL/' => function( $result, $matches, &$ctx ) {
+        '/#_IS_INVITE_URL/' => function( $result, $matches, $ctx ) {
             if ( eme_check_invite_url( $ctx['event']['event_id'] ) ) {
                 return 1;
             }

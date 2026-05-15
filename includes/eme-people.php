@@ -321,20 +321,20 @@ function eme_get_people_placeholder_handler_definitions() {
     }
 
     $handlers = [
-        '/#_ID/' => function( $result, $matches, &$ctx ) {
+        '/#_ID/' => function( $result, $matches, $ctx ) {
             if (!empty($ctx['person']['person_id']))
                 return intval( $ctx['person']['person_id'] );
             return '';
         },
-        '/#_WPID/' => function( $result, $matches, &$ctx ) {
+        '/#_WPID/' => function( $result, $matches, $ctx ) {
             return intval( $ctx['person']['wp_id'] );
         },
-        '/#_FULLNAME/' => function( $result, $matches, &$ctx ) {
+        '/#_FULLNAME/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_(NAME|LASTNAME|FIRSTNAME|ZIP|POSTAL|CITY|ADDRESS1|ADDRESS2|PHONE|BIRTHPLACE)$/' => function( $result, $matches, &$ctx ) {
+        '/#_(NAME|LASTNAME|FIRSTNAME|ZIP|POSTAL|CITY|ADDRESS1|ADDRESS2|PHONE|BIRTHPLACE)$/' => function( $result, $matches, $ctx ) {
             $field = str_replace( '#_', '', $result );
             $field = strtolower( $field );
             if ( $field == 'name' ) {
@@ -346,62 +346,62 @@ function eme_get_people_placeholder_handler_definitions() {
             $replacement = $ctx['person'][ $field ];
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_BIRTHDATE$/' => function( $result, $matches, &$ctx ) {
+        '/#_BIRTHDATE$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_date( $ctx['person']['birthdate'], EME_TIMEZONE, 1 );
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
-        '/#_EMAIL$/' => function( $result, $matches, &$ctx ) {
+        '/#_EMAIL$/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['email'];
             if ( $ctx['target'] == 'html' ) {
                 $replacement = eme_email_obfuscate( $replacement, $ctx['orig_target'] );
             }
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
-        '/#_FIRSTNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_FIRSTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['firstname'], 0, $length );
             $replacement .= ( substr( $replacement, -1 ) == '.' ? '' : '.' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_LASTNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_LASTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['lastname'], 0, $length );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_INITIALS/' => function( $result, $matches, &$ctx ) {
+        '/#_INITIALS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $fullname = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $replacement = eme_get_initials( $fullname );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_LASTNAME_INITIALS/' => function( $result, $matches, &$ctx ) {
+        '/#_LASTNAME_INITIALS/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_initials( $ctx['person']['lastname'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_COUNTRY/' => function( $result, $matches, &$ctx ) {
+        '/#_COUNTRY/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_country_name( $ctx['person']['country_code'], $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_STATE/' => function( $result, $matches, &$ctx ) {
+        '/#_STATE/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = eme_get_state_name( $person['state_code'], $person['country_code'], $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_GROUPS/' => function( $result, $matches, &$ctx ) {
+        '/#_GROUPS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if (!empty($person['person_id']))
                 $replacement = join( ', ', eme_get_persongroup_names( $person['person_id'] ) );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_MEMBERSHIPS/' => function( $result, $matches, &$ctx ) {
+        '/#_MEMBERSHIPS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if (!empty($person['person_id']))
                 $replacement = eme_get_activemembership_names_by_personid( $person['person_id'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
             $active_membershipids = eme_get_active_membershipids_by_personid( $ctx['person']['person_id'] );
             $memberships_arr = explode( ',', $memberships );
@@ -422,7 +422,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/^#_IS_PERSON_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
+        '/^#_IS_PERSON_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $groups = $matches[1];
             $groupids_arr = explode( ',', $groups );
             $person_groupids = eme_get_persongroup_ids( $ctx['person']['person_id'] );
@@ -436,19 +436,19 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return 0;
         },
-        '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, &$ctx ) {
+        '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_MASSMAIL|#_OPT_IN|#_OPT_OUT/' => function( $result, $matches, &$ctx ) {
+        '/#_MASSMAIL|#_OPT_IN|#_OPT_OUT/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_GDPR|#_CONSENT/' => function( $result, $matches, &$ctx ) {
+        '/#_GDPR|#_CONSENT/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_IMAGETITLE$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETITLE$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( ! empty( $person['properties']['image_id'] ) ) {
@@ -460,7 +460,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGEALT$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEALT$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( ! empty( $person['properties']['image_id'] ) ) {
@@ -472,7 +472,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGECAPTION$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGECAPTION$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( ! empty( $person['properties']['image_id'] ) ) {
@@ -484,7 +484,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGEDESCRIPTION$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEDESCRIPTION$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( ! empty( $person['properties']['image_id'] ) ) {
@@ -496,7 +496,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGE$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGE$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if ( ! empty( $person['properties']['image_id'] ) ) {
                 $replacement = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
@@ -507,7 +507,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGEURL$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGEURL$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if ( ! empty( $person['properties']['image_id'] ) ) {
                 $replacement = wp_get_attachment_image_url( $person['properties']['image_id'], 'full' );
@@ -521,7 +521,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGETHUMB(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETHUMB(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if ( isset( $matches[1] ) ) {
                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -537,7 +537,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_IMAGETHUMBURL(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
+        '/#_IMAGETHUMBURL(\{.+?\})?/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if ( isset( $matches[1] ) ) {
                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -556,7 +556,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_INVITEURL\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_INVITEURL\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $event = eme_get_event( $matches[1] );
             if ( ! empty( $event ) ) {
@@ -568,7 +568,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_DBFIELD\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_DBFIELD\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $tmp_attkey = $matches[1];
             if ( isset( $person[ $tmp_attkey ] ) && ! is_array( $person[ $tmp_attkey ] ) ) {
@@ -578,7 +578,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PERSONAL_FILES/' => function( $result, $matches, &$ctx ) {
+        '/#_PERSONAL_FILES/' => function( $result, $matches, $ctx ) {
             $res_files = [];
             foreach ( $ctx['files'] as $file ) {
                 if ( $ctx['target'] == 'html' ) {
@@ -592,7 +592,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return join( "\n", $res_files );
         },
-        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
@@ -601,7 +601,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
+        '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) {
             $target = $ctx['target'];
             $field_key = $matches[2];
             if ( isset( $matches[3] ) ) {
@@ -645,7 +645,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return null;
         },
-        '/#_NICKNAME$/' => function( $result, $matches, &$ctx ) {
+        '/#_NICKNAME$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( $person['wp_id'] > 0 ) {
@@ -657,7 +657,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_DISPNAME$/' => function( $result, $matches, &$ctx ) {
+        '/#_DISPNAME$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if ( $person['wp_id'] > 0 ) {
@@ -669,7 +669,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_RANDOMID$/' => function( $result, $matches, &$ctx ) {
+        '/#_RANDOMID$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if ( empty( $person['random_id'] ) && !empty($person['person_id']) ) {
                 $person['random_id'] = eme_random_id();
@@ -679,7 +679,7 @@ function eme_get_people_placeholder_handler_definitions() {
             $replacement = $person['random_id']."&eme_frontend_nonce=$my_nonce";
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_FAMILYCOUNT/' => function( $result, $matches, &$ctx ) {
+        '/#_FAMILYCOUNT/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             if (!empty($person['person_id'])) {
                 $familymember_person_ids = eme_get_family_person_ids( $person['person_id'] );
@@ -690,7 +690,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_FAMILYMEMBERS/' => function( $result, $matches, &$ctx ) {
+        '/#_FAMILYMEMBERS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if (!empty($person['person_id'])) {

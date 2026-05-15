@@ -335,7 +335,6 @@ function eme_get_people_placeholder_handler_definitions() {
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_(NAME|LASTNAME|FIRSTNAME|ZIP|POSTAL|CITY|ADDRESS1|ADDRESS2|PHONE|BIRTHPLACE)$/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
             $field = str_replace( '#_', '', $result );
             $field = strtolower( $field );
             if ( $field == 'name' ) {
@@ -344,33 +343,29 @@ function eme_get_people_placeholder_handler_definitions() {
             if ( $field == 'postal' ) {
                 $field = 'zip';
             }
-            $replacement = $person[ $field ];
+            $replacement = $ctx['person'][ $field ];
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_BIRTHDATE$/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = eme_localized_date( $person['birthdate'], EME_TIMEZONE, 1 );
+            $replacement = eme_localized_date( $ctx['person']['birthdate'], EME_TIMEZONE, 1 );
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
         '/#_EMAIL$/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = $person['email'];
+            $replacement = $ctx['person']['email'];
             if ( $ctx['target'] == 'html' ) {
                 $replacement = eme_email_obfuscate( $replacement, $ctx['orig_target'] );
             }
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
         '/#_FIRSTNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
             $length = intval( $matches[1] );
-            $replacement = substr( $person['firstname'], 0, $length );
+            $replacement = substr( $ctx['person']['firstname'], 0, $length );
             $replacement .= ( substr( $replacement, -1 ) == '.' ? '' : '.' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_LASTNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
             $length = intval( $matches[1] );
-            $replacement = substr( $person['lastname'], 0, $length );
+            $replacement = substr( $ctx['person']['lastname'], 0, $length );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_INITIALS/' => function( $result, $matches, &$ctx ) {
@@ -380,20 +375,16 @@ function eme_get_people_placeholder_handler_definitions() {
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_LASTNAME_INITIALS/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = eme_get_initials( $person['lastname'] );
+            $replacement = eme_get_initials( $ctx['person']['lastname'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_COUNTRY/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $lang = $ctx['lang'];
-            $replacement = eme_get_country_name( $person['country_code'], $lang );
+            $replacement = eme_get_country_name( $ctx['person']['country_code'], $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_STATE/' => function( $result, $matches, &$ctx ) {
             $person = $ctx['person'];
-            $lang = $ctx['lang'];
-            $replacement = eme_get_state_name( $person['state_code'], $person['country_code'], $lang );
+            $replacement = eme_get_state_name( $person['state_code'], $person['country_code'], $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_GROUPS/' => function( $result, $matches, &$ctx ) {
@@ -411,9 +402,8 @@ function eme_get_people_placeholder_handler_definitions() {
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
             $memberships = $matches[1];
-            $active_membershipids = eme_get_active_membershipids_by_personid( $person['person_id'] );
+            $active_membershipids = eme_get_active_membershipids_by_personid( $ctx['person']['person_id'] );
             $memberships_arr = explode( ',', $memberships );
             foreach ( $memberships_arr as $membership_t ) {
                 if (!is_numeric($membership_t)) {
@@ -433,10 +423,9 @@ function eme_get_people_placeholder_handler_definitions() {
             return 0;
         },
         '/^#_IS_PERSON_IN_GROUP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
             $groups = $matches[1];
             $groupids_arr = explode( ',', $groups );
-            $person_groupids = eme_get_persongroup_ids( $person['person_id'] );
+            $person_groupids = eme_get_persongroup_ids( $ctx['person']['person_id'] );
             if ( ! empty($person_groupids ) ) {
                 $res_intersect = array_intersect( $person_groupids, $groupids_arr );
             } else {
@@ -448,18 +437,15 @@ function eme_get_people_placeholder_handler_definitions() {
             return 0;
         },
         '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $replacement = $ctx['person']['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_MASSMAIL|#_OPT_IN|#_OPT_OUT/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = $person['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $replacement = $ctx['person']['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_GDPR|#_CONSENT/' => function( $result, $matches, &$ctx ) {
-            $person = $ctx['person'];
-            $replacement = $person['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $replacement = $ctx['person']['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_IMAGETITLE$/' => function( $result, $matches, &$ctx ) {
@@ -572,10 +558,9 @@ function eme_get_people_placeholder_handler_definitions() {
         },
         '/#_INVITEURL\{(.+)\}/' => function( $result, $matches, &$ctx ) {
             $person = $ctx['person'];
-            $lang = $ctx['lang'];
             $event = eme_get_event( $matches[1] );
             if ( ! empty( $event ) ) {
-                $replacement = eme_invite_url( $event, $person['email'], $person['lastname'], $person['firstname'], $lang );
+                $replacement = eme_invite_url( $event, $person['email'], $person['lastname'], $person['firstname'], $ctx['lang'] );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }
@@ -585,19 +570,17 @@ function eme_get_people_placeholder_handler_definitions() {
         },
         '/#_DBFIELD\{(.+)\}/' => function( $result, $matches, &$ctx ) {
             $person = $ctx['person'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $person[ $tmp_attkey ] ) && ! is_array( $person[ $tmp_attkey ] ) ) {
                 $replacement = $person[ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_PERSONAL_FILES/' => function( $result, $matches, &$ctx ) {
-            $files = $ctx['files'];
             $res_files = [];
-            foreach ( $files as $file ) {
+            foreach ( $ctx['files'] as $file ) {
                 if ( $ctx['target'] == 'html' ) {
                     $res_files[] = eme_get_uploaded_file_html( $file );
                 } else {
@@ -610,20 +593,16 @@ function eme_get_people_placeholder_handler_definitions() {
             return join( "\n", $res_files );
         },
         '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
-            $lang = $ctx['lang'];
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_translate( $formfield['field_name'], $lang );
+                $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
             $target = $ctx['target'];
-            $lang = $ctx['lang'];
-            $answers = $ctx['answers'];
-            $files = $ctx['files'];
             $field_key = $matches[2];
             if ( isset( $matches[3] ) ) {
                 $sep = substr( $matches[3], 1, -1 );
@@ -634,7 +613,7 @@ function eme_get_people_placeholder_handler_definitions() {
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
                 $field_id      = $formfield['field_id'];
                 $field_replace = '';
-                foreach ( $answers as $answer ) {
+                foreach ( $ctx['answers'] as $answer ) {
                     if ( $answer['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' ) {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
@@ -645,7 +624,7 @@ function eme_get_people_placeholder_handler_definitions() {
                         break;
                     }
                 }
-                foreach ( $files as $file ) {
+                foreach ( $ctx['files'] as $file ) {
                     if ( $file['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                             if ( $target == 'html' ) {
@@ -662,7 +641,7 @@ function eme_get_people_placeholder_handler_definitions() {
                         }
                     }
                 }
-                return eme_translate( $field_replace, $lang );
+                return eme_translate( $field_replace, $ctx['lang'] );
             }
             return null;
         },

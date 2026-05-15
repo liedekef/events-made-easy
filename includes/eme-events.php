@@ -2445,48 +2445,38 @@ function eme_get_event_placeholder_handler_definitions() {
 
         /* Date/time placeholders */
         '/#_STARTDATETIME_8601/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['event_start'], EME_TIMEZONE, 'c' );
+            return eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, 'c' );
         },
         '/#_ENDDATETIME_8601/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['event_end'], EME_TIMEZONE, 'c' );
+            return eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, 'c' );
         },
         '/#_STARTDATE(\{(.+?)\})?$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
                 $date_format = '';
             }
-            return eme_localized_date( $event['event_start'], EME_TIMEZONE, $date_format );
+            return eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, $date_format );
         },
         '/#_ENDDATE(\{(.+?)\})?$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             if ( isset( $matches[1] ) ) {
                 $date_format = substr( $matches[1], 1, -1 );
             } else {
                 $date_format = '';
             }
-            return eme_localized_date( $event['event_end'], EME_TIMEZONE, $date_format );
+            return eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, $date_format );
         },
         '/#_STARTTIME/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_time( $event['event_start'], EME_TIMEZONE );
+            return eme_localized_time( $ctx['event']['event_start'], EME_TIMEZONE );
         },
         '/#_ENDTIME/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_time( $event['event_end'], EME_TIMEZONE );
+            return eme_localized_time( $ctx['event']['event_end'], EME_TIMEZONE );
         },
         '/#_24HSTARTTIME/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            return $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
+            return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
         },
         '/#_24HENDTIME$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            return $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
+            return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
         },
         '/#_PAST_FUTURE_CLASS/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
@@ -2501,19 +2491,13 @@ function eme_get_event_placeholder_handler_definitions() {
             return 'eme-past-event';
         },
         '/#_12HSTARTTIME$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            return $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
+            return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
         },
         '/#_12HENDTIME$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            return $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
+            return $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
         },
         '/#_12HSTARTTIME_NOLEADINGZERO/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
+            $replacement = $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_start'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
             if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
                 $replacement = str_replace( ':00', '', $replacement );
                 $replacement = str_replace( ':0', ':', $replacement );
@@ -2521,9 +2505,7 @@ function eme_get_event_placeholder_handler_definitions() {
             return $replacement;
         },
         '/#_12HENDTIME_NOLEADINGZERO/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
+            $replacement = $ctx['eme_date_obj_now']->copy()->setTimestampFromString( $ctx['event']['event_end'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
             if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
                 $replacement = str_replace( ':00', '', $replacement );
                 $replacement = str_replace( ':0', ':', $replacement );
@@ -2533,23 +2515,20 @@ function eme_get_event_placeholder_handler_definitions() {
 
         /* Form/filter placeholders */
         '/#_S_FILTERFORM|#_FILTERFORM/' => function( $result, $matches, &$ctx ) {
-            $target = $ctx['target'];
-            if ( $target == 'rss' || $target == 'text' || eme_is_single_event_page() ) {
+            if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' || eme_is_single_event_page() ) {
                 return '';
             }
             return eme_filter_form();
         },
         '/#_ADDBOOKINGFORM$/' => function( $result, $matches, &$ctx ) {
-            $target = $ctx['target'];
-            if ( $target == 'rss' || $target == 'text' ) {
+            if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             return eme_add_booking_form( $ctx['event']['event_id'] );
         },
         '/#_ADDBOOKINGFORM_IF_LOGGED_IN/' => function( $result, $matches, &$ctx ) {
             if ( is_user_logged_in() ) {
-                $target = $ctx['target'];
-                if ( $target == 'rss' || $target == 'text' ) {
+                if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                     return '';
                 }
                 return eme_add_booking_form( $ctx['event']['event_id'] );
@@ -2633,16 +2612,14 @@ function eme_get_event_placeholder_handler_definitions() {
             return '';
         },
         '/#_ADDBOOKINGFORM_IF_NOT_REGISTERED/' => function( $result, $matches, &$ctx ) {
-            $target = $ctx['target'];
-            if ( $target == 'rss' || $target == 'text' ) {
+            if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             $only_if_not_registered = 1;
             return eme_add_booking_form( $ctx['event']['event_id'], $only_if_not_registered );
         },
         '/#_REMOVEBOOKINGFORM$|#_DELBOOKINGFORM$|#_DELETEBOOKINGFORM$|#_CANCELBOOKINGFORM$|#_CANCEL_ALL_BOOKINGS_FORM$/' => function( $result, $matches, &$ctx ) {
-            $target = $ctx['target'];
-            if ( $target == 'rss' || $target == 'text' ) {
+            if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
@@ -2651,8 +2628,7 @@ function eme_get_event_placeholder_handler_definitions() {
             return eme_cancel_bookings_form( $ctx['event']['event_id'] );
         },
         '/#_REMOVEBOOKINGFORM_IF_REGISTERED|#_DELBOOKINGFORM_IF_REGISTERED|#_DELETEBOOKINGFORM_IF_REGISTERED|#_CANCELBOOKINGFORM_IF_REGISTERED|#_CANCEL_ALL_BOOKINGS_FORM_IF_REGISTERED/' => function( $result, $matches, &$ctx ) {
-            $target = $ctx['target'];
-            if ( $target == 'rss' || $target == 'text' ) {
+            if ( $ctx['target'] == 'rss' || $ctx['target'] == 'text' ) {
                 return '';
             }
             if ( is_user_logged_in() ) {
@@ -2687,13 +2663,11 @@ function eme_get_event_placeholder_handler_definitions() {
             return 0;
         },
         '/#_WAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return $event['event_properties']['waitinglist_seats'];
+            return $ctx['event']['event_properties']['waitinglist_seats'];
         },
         '/#_AVAILABLEWAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $total_seats = $ctx['total_seats'];
-            if ( $total_seats == 0 || eme_is_multi( $event['event_seats'] ) ) {
+            if ( $ctx['total_seats'] == 0 || eme_is_multi( $event['event_seats'] ) ) {
                 return 0;
             }
             $waitinglist_seats   = $event['event_properties']['waitinglist_seats'];
@@ -2709,8 +2683,7 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_BOOKEDWAITINGLISTSEATS$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $total_seats = $ctx['total_seats'];
-            if ( $total_seats == 0 || eme_is_multi( $event['event_seats'] ) ) {
+            if ( $ctx['total_seats'] == 0 || eme_is_multi( $event['event_seats'] ) ) {
                 return 0;
             }
             $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
@@ -2721,31 +2694,26 @@ function eme_get_event_placeholder_handler_definitions() {
             return 0;
         },
         '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $total_seats = $ctx['total_seats'];
-            if ( $total_seats == 0 ) {
+            if ( $ctx['total_seats'] == 0 ) {
                 return '&infin;';
             }
-            return eme_get_available_seats( $event['event_id'], 1 );
+            return eme_get_available_seats( $ctx['event']['event_id'], 1 );
         },
         '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $total_seats = $ctx['total_seats'];
-            if ( $total_seats == 0 ) {
+            if ( $ctx['total_seats'] == 0 ) {
                 if ( $ctx['target'] == 'html' ) {
                     return '&infin;';
                 }
                 return __( 'No limit', 'events-made-easy' );
             }
             $field_id    = intval( $matches[2] ) - 1;
-            $seats       = eme_get_available_multiseats( $event['event_id'], 1 );
+            $seats       = eme_get_available_multiseats( $ctx['event']['event_id'], 1 );
             if ( array_key_exists( $field_id, $seats ) ) {
                 return $seats[ $field_id ];
             }
             return 0;
         },
         '/#_(TOTALSPACES|TOTALSEATS)$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $total_seats = $ctx['total_seats'];
             if ( $total_seats == 0 ) {
                 if ( $ctx['need_escape'] ) {
@@ -2755,11 +2723,10 @@ function eme_get_event_placeholder_handler_definitions() {
                 }
                 return __( 'No limit', 'events-made-easy' );
             }
-            $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
+            $waitinglist_seats = $ctx['event']['event_properties']['waitinglist_seats'];
             return $total_seats - $waitinglist_seats;
         },
         '/#_(TOTALSPACES|TOTALSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $total_seats = $ctx['total_seats'];
             if ( $total_seats == 0 ) {
                 if ( $ctx['need_escape'] ) {
@@ -2770,33 +2737,29 @@ function eme_get_event_placeholder_handler_definitions() {
                 return __( 'No limit', 'events-made-easy' );
             }
             $field_id    = intval( $matches[2] ) - 1;
-            $seats       = eme_convert_multi2array( $event['event_seats'] );
+            $seats       = eme_convert_multi2array( $ctx['event']['event_seats'] );
             if ( array_key_exists( $field_id, $seats ) ) {
                 return $seats[ $field_id ];
             }
             return 0;
         },
         '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_get_booked_seats( $event['event_id'] );
+            return eme_get_booked_seats( $ctx['event']['event_id'] );
         },
         '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $field_id    = intval( $matches[2] ) - 1;
-            $seats       = eme_get_booked_multiseats( $event['event_id'] );
+            $seats       = eme_get_booked_multiseats( $ctx['event']['event_id'] );
             if ( array_key_exists( $field_id, $seats ) ) {
                 return $seats[ $field_id ];
             }
             return 0;
         },
         '/#_(PAIDSPACES|PAIDSEATS)$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_get_paid_seats( $event['event_id'] );
+            return eme_get_paid_seats( $ctx['event']['event_id'] );
         },
         '/#_(PAIDSPACES|PAIDSEATS)\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $field_id    = intval( $matches[2] ) - 1;
-            $seats       = eme_get_paid_multiseats( $event['event_id'] );
+            $seats       = eme_get_paid_multiseats( $ctx['event']['event_id'] );
             if ( array_key_exists( $field_id, $seats ) ) {
                 return $seats[ $field_id ];
             }
@@ -2896,16 +2859,14 @@ function eme_get_event_placeholder_handler_definitions() {
             return '';
         },
         '/#_ICALLINK$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $url = eme_single_event_ical_url( $event['event_id'] );
+            $url = eme_single_event_ical_url( $ctx['event']['event_id'] );
             if ( $ctx['target'] == 'html' ) {
                 $url = esc_url( $url );
             }
             return eme_apply_output_filters( "<a href='$url'>ICAL</a>", $ctx['target'] );
         },
         '/#_ICALURL/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $url = eme_single_event_ical_url( $event['event_id'] );
+            $url = eme_single_event_ical_url( $ctx['event']['event_id'] );
             if ( $ctx['target'] == 'html' ) {
                 return esc_url( $url );
             }
@@ -2941,9 +2902,7 @@ function eme_get_event_placeholder_handler_definitions() {
             return $replacement;
         },
         '/#_PAGEURL|#_LINK$|#_URL$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
-            $replacement = eme_event_url( $event, $lang );
+            $replacement = eme_event_url( $ctx['event'], $ctx['lang'] );
             if ( $ctx['target'] == 'html' ) {
                 $replacement = esc_url( $replacement );
             }
@@ -2951,13 +2910,12 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_NAME$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $lang = $ctx['lang'];
             $field = 'event_name';
             $replacement = '';
             if ( isset( $event[ $field ] ) ) {
                 $replacement = $event[ $field ];
             }
-            $replacement = eme_translate( $replacement, $lang );
+            $replacement = eme_translate( $replacement, $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_ID/' => function( $result, $matches, &$ctx ) {
@@ -3006,7 +2964,6 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_IMAGE$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $lang = $ctx['lang'];
             $replacement = '';
             if ( ! empty( $event['event_image_id'] ) ) {
                 $replacement = wp_get_attachment_image( $event['event_image_id'], 'full', 0, [ 'class' => 'eme_event_image' ] );
@@ -3018,7 +2975,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( $ctx['target'] == 'html' ) {
                     $url = esc_url( $url );
                 }
-                $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>";
+                $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $event['event_name'], $ctx['lang'] ) ) . "'>";
             }
             if ( ! empty( $replacement ) ) {
                 return eme_apply_output_filters( $replacement, $ctx['target'] );
@@ -3064,53 +3021,46 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_PROP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $event['event_attributes'][ $tmp_attkey ] ) && ! is_array( $event['event_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $event['event_attributes'][ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_DBFIELD\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
                 $replacement = $event[ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_ATT\{(.+?)\}\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
-            $lang = $ctx['lang'];
             $tmp_event_id     = intval( $matches[1] );
             $tmp_event_attkey = $matches[2];
             $tmp_event        = eme_get_event( $tmp_event_id );
             if ( ! empty( $tmp_event ) && isset( $tmp_event['event_attributes'][ $tmp_event_attkey ] ) ) {
                 $replacement = $tmp_event['event_attributes'][ $tmp_event_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_FIELDNAME\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
-            $lang = $ctx['lang'];
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_translate( $formfield['field_name'], $lang );
+                $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
             $target = $ctx['target'];
-            $lang = $ctx['lang'];
-            $answers = $ctx['answers'];
-            $files = $ctx['files'];
             $field_key = $matches[2];
             if ( isset( $matches[3] ) ) {
                 $sep = substr( $matches[3], 1, -1 );
@@ -3121,7 +3071,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
                 $field_id      = $formfield['field_id'];
                 $field_replace = '';
-                foreach ( $answers as $answer ) {
+                foreach ( $ctx['answers'] as $answer ) {
                     if ( $answer['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' ) {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
@@ -3131,7 +3081,7 @@ function eme_get_event_placeholder_handler_definitions() {
                         $field_replace = eme_apply_output_filters( $field_replace, $target );
                     }
                 }
-                foreach ( $files as $file ) {
+                foreach ( $ctx['files'] as $file ) {
                     if ( $file['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                             if ( $target == 'html' ) {
@@ -3148,18 +3098,16 @@ function eme_get_event_placeholder_handler_definitions() {
                         }
                     }
                 }
-                return eme_translate( $field_replace, $lang );
+                return eme_translate( $field_replace, $ctx['lang'] );
             }
             return null;
         },
 
         /* Date diff placeholders */
         '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
             $date_key = ( $matches[2] === 'START' ) ? 'event_start' : 'event_end';
-            $eme_date_obj = new emeExpressiveDate( $event[ $date_key ], EME_TIMEZONE );
-            $diff = $eme_date_obj_now->diff( $eme_date_obj );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event'][ $date_key ], EME_TIMEZONE );
+            $diff = $ctx['eme_date_obj_now']->diff( $eme_date_obj );
             $is_future = $diff->invert === 0;
             if ( ( $matches[1] === 'TILL' && $is_future ) || ( $matches[1] === 'FROM' && ! $is_future ) ) {
                 $parts = [];
@@ -3187,13 +3135,12 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
             if ( $matches[2] == 'START' ) {
                 $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
             } else {
                 $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
             }
-            return $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
+            return $ctx['eme_date_obj_now']->diff( $eme_date_obj )->format( $matches[3] );
         },
         '/#_DATETIMEDIFF_START_END(\{.+?\})?$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
@@ -3207,56 +3154,39 @@ function eme_get_event_placeholder_handler_definitions() {
             return $eme_date_obj_start->diff( $eme_date_obj_end )->format( $diff_format );
         },
         '/#_DAYS_TILL_START$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            return $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
+            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
         },
         '/#_NIGHTS_TILL_START$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            return $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
+            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
         '/#_DAYS_FROM_START$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            return $eme_date_obj->getDifferenceInDays( $eme_date_obj_now );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
+            return $eme_date_obj->getDifferenceInDays( $ctx['eme_date_obj_now'] );
         },
         '/#_DAYS_TILL_END$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
-            return $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
+            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
         },
         '/#_NIGHTS_TILL_END$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
-            return $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
+            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
         '/#_HOURS_TILL_START$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            return round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
+            return round( $ctx['eme_date_obj_now']->getDifferenceInHours( $eme_date_obj ) );
         },
         '/#_HOURS_FROM_START$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
-            return round( $eme_date_obj->getDifferenceInHours( $eme_date_obj_now ) );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
+            return round( $eme_date_obj->getDifferenceInHours( $ctx['eme_date_obj_now'] ) );
         },
         '/#_HOURS_TILL_END$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_date_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
-            return round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
+            $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
+            return round( $ctx['eme_date_obj_now']->getDifferenceInHours( $eme_date_obj ) );
         },
         '/#_DISCOUNT_VALID_(TILL|FROM)\{(\d+)\}\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
             $discount_id = intval( $matches[2] );
             $valid_discount = 0;
             if ( ! empty( $event['event_properties']['rsvp_discountgroup'] ) ) {
@@ -3280,7 +3210,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 } else {
                     $eme_date_obj = new emeExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
                 }
-                return $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
+                return $ctx['eme_date_obj_now']->diff( $eme_date_obj )->format( $matches[3] );
             }
             return '';
         },
@@ -3392,24 +3322,21 @@ function eme_get_event_placeholder_handler_definitions() {
             return '';
         },
         '/#_ATTENDEES/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_apply_output_filters( eme_get_attendees_list( event: $event, rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_apply_output_filters( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
         '/#_BOOKINGS/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_apply_output_filters( eme_get_bookings_list_for_event( event: $event, rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_apply_output_filters( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
         '/#_(CONTACT|AUTHOR)/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $lang = $ctx['lang'];
             $current_userid = $ctx['current_userid'];
             if ( preg_match( '/#_CONTACT/', $result ) ) {
                 if ( is_null( $ctx['contact'] ) ) {
@@ -3449,45 +3376,37 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( $t_format == '#_NAME' ) {
                     $t_format = '#_FULLNAME';
                 }
-                return eme_replace_people_placeholders( $t_format, $t_person, $ctx['target'], $lang );
+                return eme_replace_people_placeholders( $t_format, $t_person, $ctx['target'], $ctx['lang'] );
             }
             return '';
         },
         '/#_CREATIONDATE\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['creation_date'], EME_TIMEZONE, $matches[1] );
+            return eme_localized_date( $ctx['event']['creation_date'], EME_TIMEZONE, $matches[1] );
         },
         '/#_MODIFDATE\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['modif_date'], EME_TIMEZONE, $matches[1] );
+            return eme_localized_date( $ctx['event']['modif_date'], EME_TIMEZONE, $matches[1] );
         },
         '/#_CREATIONDATE$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['creation_date'], EME_TIMEZONE );
+            return eme_localized_date( $ctx['event']['creation_date'], EME_TIMEZONE );
         },
         '/#_MODIFDATE$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_date( $event['modif_date'], EME_TIMEZONE );
+            return eme_localized_date( $ctx['event']['modif_date'], EME_TIMEZONE );
         },
         '/#_CREATIONTIME/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_time( $event['creation_date'], EME_TIMEZONE );
+            return eme_localized_time( $ctx['event']['creation_date'], EME_TIMEZONE );
         },
         '/#_MODIFTIME/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            return eme_localized_time( $event['modif_date'], EME_TIMEZONE );
+            return eme_localized_time( $ctx['event']['modif_date'], EME_TIMEZONE );
         },
         '/#[A-Za-z]$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $replacement = eme_localized_date( $event['event_start'], EME_TIMEZONE, ltrim( $result, '#' ) );
+            $replacement = eme_localized_date( $ctx['event']['event_start'], EME_TIMEZONE, ltrim( $result, '#' ) );
             if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#i' ) {
                 $replacement = ltrim( $replacement, '0' );
             }
             return $replacement;
         },
         '/#@[A-Za-z]$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
+            $replacement = eme_localized_date( $ctx['event']['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
             if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#@i' ) {
                 $replacement = ltrim( $replacement, '0' );
             }
@@ -3496,22 +3415,18 @@ function eme_get_event_placeholder_handler_definitions() {
 
         /* Category placeholders */
         '/#_CATEGORYIDS$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
             if ( get_option( 'eme_categories_enabled' ) ) {
-                $category_ids = $event['event_category_ids'];
-                $replacement = eme_translate( $category_ids, $lang );
+                $category_ids = $ctx['event']['event_category_ids'];
+                $replacement = eme_translate( $category_ids, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_CATEGORIES$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
             $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $event['event_category_ids'], $all_categories );
+                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_names = array_column( $ctx['event_categories'], 'category_name' );
                 foreach ( $cat_names as $key => $cat_name ) {
@@ -3530,39 +3445,32 @@ function eme_get_event_placeholder_handler_definitions() {
             return '';
         },
         '/#_CATEGORIES_CSS$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $event['event_category_ids'], $all_categories );
+                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_names = array_column( $ctx['event_categories'], 'category_name' );
-                $replacement = eme_translate( join( ' ', $cat_names ), $lang );
+                $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_CATEGORYDESCRIPTIONS$/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             if ( get_option( 'eme_categories_enabled' ) ) {
                 if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $event['event_category_ids'], $all_categories );
+                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_descs = array_column( $ctx['event_categories'], 'description' );
                 $sep       = ', ';
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
-                return eme_apply_output_filters( eme_translate( join( $sep, $cat_descs ), $lang ), $ctx['target'] );
+                return eme_apply_output_filters( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'] );
             }
             return '';
         },
         '/#_CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
             global $wpdb;
-            $event = $ctx['event'];
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
@@ -3580,7 +3488,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                 $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
             }
-            $t_categories = eme_get_event_category_names( $event['event_id'], $extra_conditions_arr, $order_by );
+            $t_categories = eme_get_event_category_names( $ctx['event']['event_id'], $extra_conditions_arr, $order_by );
             $cat_names    = [];
             foreach ( $t_categories as $cat_name ) {
                 if ( $ctx['target'] == 'html' ) {
@@ -3597,8 +3505,6 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
             global $wpdb;
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
             }
@@ -3615,14 +3521,12 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                 $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
             }
-            $t_categories = eme_get_event_category_names( $event['event_id'], $extra_conditions_arr, $order_by );
-            $replacement = eme_translate( join( ' ', $t_categories ), $lang );
+            $t_categories = eme_get_event_category_names( $ctx['event']['event_id'], $extra_conditions_arr, $order_by );
+            $replacement = eme_translate( join( ' ', $t_categories ), $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
             global $wpdb;
-            $event = $ctx['event'];
-            $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
             }
@@ -3639,16 +3543,15 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                 $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
             }
-            $t_categories = eme_get_event_category_descriptions( $event['event_id'], $extra_conditions_arr, $order_by );
+            $t_categories = eme_get_event_category_descriptions( $ctx['event']['event_id'], $extra_conditions_arr, $order_by );
             $sep          = ', ';
             if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
             }
-            return eme_apply_output_filters( eme_translate( join( $sep, $t_categories ), $lang ), $ctx['target'] );
+            return eme_apply_output_filters( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'] );
         },
         '/#_LINKED(EVENT)?CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
             global $wpdb;
-            $event = $ctx['event'];
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return '';
@@ -3666,7 +3569,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
                 $extra_conditions_arr['notcategory'] = explode( ',', $exclude_cats );
             }
-            $t_categories = eme_get_event_categories( $event['event_id'], $extra_conditions_arr, $order_by );
+            $t_categories = eme_get_event_categories( $ctx['event']['event_id'], $extra_conditions_arr, $order_by );
             $cat_links    = [];
             foreach ( $t_categories as $category ) {
                 $cat_link = eme_category_url( $category );
@@ -3814,19 +3717,16 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_IS_ONGOING_EVENT/' => function( $result, $matches, &$ctx ) {
             $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
             $eme_start_obj = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
             $eme_end_obj   = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
-            if ( $eme_start_obj <= $eme_date_obj_now && $eme_end_obj >= $eme_date_obj_now ) {
+            if ( $eme_start_obj <= $ctx['eme_date_obj_now'] && $eme_end_obj >= $ctx['eme_date_obj_now'] ) {
                 return 1;
             }
             return 0;
         },
         '/#_IS_ENDED_EVENT/' => function( $result, $matches, &$ctx ) {
-            $event = $ctx['event'];
-            $eme_date_obj_now = $ctx['eme_date_obj_now'];
-            $eme_end_obj = new emeExpressiveDate( $event['event_end'], EME_TIMEZONE );
-            if ( $eme_end_obj < $eme_date_obj_now ) {
+            $eme_end_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
+            if ( $eme_end_obj < $ctx['eme_date_obj_now'] ) {
                 return 1;
             }
             return 0;

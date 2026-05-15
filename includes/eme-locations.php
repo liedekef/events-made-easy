@@ -1989,7 +1989,6 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_(ADDRESS|TOWN|CITY|STATE|ZIP|COUNTRY|LATITUDE|LONGITUDE|POSTAL)/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $field = 'location_' . ltrim( strtolower( $result ), '#_' );
             if ( $field == 'location_address' ) {
                 $field = 'location_address1';
@@ -2004,29 +2003,27 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location[ $field ] ) ) {
                 $replacement = $location[ $field ];
             }
-            $replacement = eme_translate( $replacement, $lang );
+            $replacement = eme_translate( $replacement, $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_NAME$/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $field = 'location_name';
             $replacement = '';
             if ( isset( $location[ $field ] ) ) {
                 $replacement = $location[ $field ];
             }
-            $replacement = eme_translate( $replacement, $lang );
+            $replacement = eme_translate( $replacement, $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_ID/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $field = 'location_id';
             $replacement = '';
             if ( isset( $location[ $field ] ) ) {
                 $replacement = $location[ $field ];
             }
-            $replacement = eme_translate( $replacement, $lang );
+            $replacement = eme_translate( $replacement, $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/#_IMAGETITLE$/' => function( $result, $matches, &$ctx ) {
@@ -2079,7 +2076,6 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_IMAGE$/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $replacement = '';
             if ( ! empty( $location['location_image_id'] ) ) {
                 $replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
@@ -2091,7 +2087,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 if ( $ctx['target'] == 'html' ) {
                     $url = esc_url( $url );
                 }
-                $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $location['location_name'], $lang ) ) . "'>";
+                $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $location['location_name'], $ctx['lang'] ) ) . "'>";
             }
             if ( ! empty( $replacement ) ) {
                 return eme_apply_output_filters( $replacement, $ctx['target'] );
@@ -2151,10 +2147,9 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_PAGEURL/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $replacement = '';
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-                $replacement = eme_location_url( $location, $lang );
+                $replacement = eme_location_url( $location, $ctx['lang'] );
             }
             if ( $ctx['target'] == 'html' ) {
                 $replacement = esc_url( $replacement );
@@ -2171,41 +2166,36 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_PROP\{(.+?)\}$/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) && ! is_array( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_DBFIELD\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
                 $replacement = $location[ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_MYLOCATIONATT\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
             $tmp_attkey = $matches[1];
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
-                $replacement = eme_translate( $replacement, $lang );
+                $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_CATEGORIES$/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
@@ -2216,36 +2206,32 @@ function eme_get_locations_placeholder_handler_definitions() {
                     $sep = apply_filters( 'eme_categories_sep_filter', $sep );
                 }
                 if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_names = array_column( $location_categories, 'category_name' );
-                $replacement = eme_translate( join( $sep, $cat_names ), $lang );
+                $replacement = eme_translate( join( $sep, $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_CATEGORIES_CSS/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_names = array_column( $location_categories, 'category_name' );
-                $replacement = eme_translate( join( ' ', $cat_names ), $lang );
+                $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/#_CATEGORYDESCRIPTIONS/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $lang = $ctx['lang'];
-            $all_categories = $ctx['all_categories'];
             $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
@@ -2256,16 +2242,15 @@ function eme_get_locations_placeholder_handler_definitions() {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
                 if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 }
                 $cat_descs = array_column( $location_categories, 'description' );
-                $replacement = eme_translate( join( $sep, $cat_descs ), $lang );
+                $replacement = eme_translate( join( $sep, $cat_descs ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return '';
         },
         '/^#_CATEGORIES\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, &$ctx ) {
-            $location = $ctx['location'];
             $target = $ctx['target'];
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
@@ -2288,7 +2273,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr );
             }
             $extra_conditions = join( ' AND ', $extra_conditions_arr );
-            $categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
+            $categories       = eme_get_location_category_names( $ctx['location']['location_id'], $extra_conditions, $order_by );
             $cat_names        = [];
             foreach ( $categories as $cat_name ) {
                 if ( $target == 'html' ) {
@@ -2305,8 +2290,6 @@ function eme_get_locations_placeholder_handler_definitions() {
             return eme_apply_output_filters( $replacement, $target );
         },
         '/^#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, &$ctx ) {
-            $location = $ctx['location'];
-            $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
@@ -2327,13 +2310,11 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr );
             }
             $extra_conditions = join( ' AND ', $extra_conditions_arr );
-            $categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
-            $replacement = eme_translate( join( ' ', $categories ), $lang );
+            $categories       = eme_get_location_category_names( $ctx['location']['location_id'], $extra_conditions, $order_by );
+            $replacement = eme_translate( join( ' ', $categories ), $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
         '/^#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, &$ctx ) {
-            $location = $ctx['location'];
-            $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
@@ -2354,21 +2335,20 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $extra_conditions_arr[] = $wpdb->prepare( "category_id NOT IN ($exc_ph)", ...$exc_arr );
             }
             $extra_conditions = join( ' AND ', $extra_conditions_arr );
-            $categories       = eme_get_location_category_descriptions( $location['location_id'], $extra_conditions, $order_by );
+            $categories       = eme_get_location_category_descriptions( $ctx['location']['location_id'], $extra_conditions, $order_by );
             $sep              = ', ';
             if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
             }
-            $replacement = eme_translate( join( $sep, $categories ), $lang );
+            $replacement = eme_translate( join( $sep, $categories ), $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'] );
         },
         '/#_EDITLOCATIONLINK/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $current_userid = $ctx['current_userid'];
             $replacement = '';
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
-                    ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
+                    ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $ctx['current_userid'] ) ) ) {
                     $url = admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] );
                     if ( $ctx['target'] == 'html' ) {
                         $url = esc_url( $url );
@@ -2380,11 +2360,10 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_EDITLOCATIONURL/' => function( $result, $matches, &$ctx ) {
             $location = $ctx['location'];
-            $current_userid = $ctx['current_userid'];
             $replacement = '';
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
-                    ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
+                    ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $ctx['current_userid'] ) ) ) {
                     $replacement = admin_url( 'admin.php?page=eme-locations&eme_admin_action=edit_location&location_id=' . $location['location_id'] );
                     if ( $ctx['target'] == 'html' ) {
                         $replacement = esc_url( $replacement );
@@ -2416,20 +2395,16 @@ function eme_get_locations_placeholder_handler_definitions() {
             return '';
         },
         '/#_FIELDNAME\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
-            $lang = $ctx['lang'];
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                $replacement = eme_translate( $formfield['field_name'], $lang );
+                $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
             return null;
         },
         '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
             $target = $ctx['target'];
-            $lang = $ctx['lang'];
-            $answers = $ctx['answers'];
-            $files = $ctx['files'];
             $field_key = $matches[2];
             if ( isset( $matches[3] ) ) {
                 $sep = substr( $matches[3], 1, -1 );
@@ -2440,7 +2415,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                 $field_id      = $formfield['field_id'];
                 $field_replace = '';
-                foreach ( $answers as $answer ) {
+                foreach ( $ctx['answers'] as $answer ) {
                     if ( $answer['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' ) {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
@@ -2450,7 +2425,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                     }
                     $field_replace = eme_apply_output_filters( $field_replace, $target );
                 }
-                foreach ( $files as $file ) {
+                foreach ( $ctx['files'] as $file ) {
                     if ( $file['field_id'] == $field_id ) {
                         if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                             if ( $target == 'html' ) {
@@ -2467,7 +2442,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                         }
                     }
                 }
-                return eme_translate( $field_replace, $lang );
+                return eme_translate( $field_replace, $ctx['lang'] );
             }
             return null;
         },

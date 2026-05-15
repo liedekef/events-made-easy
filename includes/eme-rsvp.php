@@ -3565,6 +3565,751 @@ function eme_get_bookings_list_for_wp_id( $wp_id, $scope, $template = '', $templ
     return $res;
 }
 
+function eme_get_booking_placeholder_handler_definitions() {
+    static $handlers = [];
+    if ( ! empty( $handlers ) ) {
+        return $handlers;
+    }
+
+    $handlers = [
+        '/#_(RESP)?COMMENT/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $target = $ctx['target'];
+            return eme_apply_output_filters( $booking['booking_comment'], $target, true );
+        },
+        '/#_(RESP)?CANCELCOMMENT/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $replacement = '';
+            if ( isset( $_POST['eme_cancelcomment'] ) ) {
+                $replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
+            }
+            return eme_apply_output_filters( $replacement, $target, true );
+        },
+        '/(#_RESPSPACES|#_SPACES|#_RESPSEATS|#_SEATS)\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $field_id = intval( $matches[2] ) - 1;
+            if ( eme_is_multi( $booking['event_price'] ) ) {
+                $seats = eme_convert_multi2array( $booking['booking_seats_mp'] );
+                if ( array_key_exists( $field_id, $seats ) ) {
+                    return $seats[ $field_id ];
+                }
+            }
+            return '';
+        },
+        '/#_(RESP)?DYNAMICFIELD\{(.*?)\}$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $lang = $ctx['lang'];
+            $dyn_answers = $ctx['dyn_answers'];
+            $field_key = $matches[2];
+            $formfield = eme_get_formfield( $field_key );
+            $replacement = '';
+            if ( ! empty( $formfield ) && ! empty( $dyn_answers ) ) {
+                foreach ( $dyn_answers as $answer ) {
+                    if ( $answer['field_id'] != $formfield['field_id'] ) {
+                        continue;
+                    }
+                    if ( $target == 'html' ) {
+                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '<br>', $target );
+                    } else {
+                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '||', $target ) . "\n";
+                    }
+                }
+                $replacement = eme_translate( $replacement, $lang );
+                return eme_apply_output_filters( $replacement, $target );
+            }
+            return '';
+        },
+        '/#_(RESP)?DYNAMICDATA/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $dyn_answers = $ctx['dyn_answers'];
+            $replacement = '';
+            if ( ! empty( $dyn_answers ) ) {
+                if ( $target == 'html' ) {
+                    $replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
+                }
+                $old_grouping  = 1;
+                $old_occurence = 0;
+                foreach ( $dyn_answers as $answer ) {
+                    $grouping      = $answer['eme_grouping'];
+                    $occurence     = $answer['occurence'];
+                    $tmp_formfield = eme_get_formfield( $answer['field_id'] );
+                    if ( ! empty( $tmp_formfield ) ) {
+                        if ( $target == 'html' ) {
+                            if ( $old_grouping != $grouping || $old_occurence != $occurence ) {
+                                $replacement  .= "</table><br><table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
+                                $old_grouping  = $grouping;
+                                $old_occurence = $occurence;
+                            }
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( $tmp_formfield['field_name'] ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
+                        } else {
+                            $replacement .= $tmp_formfield['field_name'] . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
+                        }
+                    }
+                }
+                if ( $target == 'html' ) {
+                    $replacement .= '</table>';
+                }
+                return eme_apply_output_filters( $replacement, $target );
+            }
+            return '';
+        },
+        '/#_TOTALPRICE$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            if ( $need_escape ) {
+                return $total_booking_price;
+            }
+            return eme_localized_price( $total_booking_price, $event['currency'], $target );
+        },
+        '/#_TOTALPRICE_NO_VAT$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            $price = $total_booking_price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+            if ( $need_escape ) {
+                return $price;
+            }
+            return eme_localized_price( $price, $event['currency'], $target );
+        },
+        '/#_TOTALPRICE_VAT_ONLY$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            $price = $total_booking_price - $total_booking_price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+            if ( $need_escape ) {
+                return $price;
+            }
+            return eme_localized_price( $price, $event['currency'], $target );
+        },
+        '/#_TOTALPRICE\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $total_prices = eme_get_total_booking_multiprice_arr( $booking );
+            $field_id     = intval( $matches[1] ) - 1;
+            if ( array_key_exists( $field_id, $total_prices ) ) {
+                $price = $total_prices[ $field_id ];
+                if ( $need_escape ) {
+                    return $price;
+                }
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return '';
+        },
+        '/#_TOTALPRICE\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            $charge = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
+            if ( $need_escape ) {
+                return $total_booking_price + $charge;
+            }
+            return eme_localized_price( $total_booking_price + $charge, $event['currency'], $target );
+        },
+        '/#_CHARGE\{(.+)\}$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            if ( $need_escape ) {
+                return eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
+            }
+            return eme_localized_price( eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] ), $event['currency'], $target );
+        },
+        '/#_AMOUNTRECEIVED$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            return eme_localized_price( $booking['received'], $event['currency'], $target );
+        },
+        '/#_AMOUNTREMAINING$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $total_booking_price = $ctx['total_booking_price'];
+            $need_escape = $ctx['need_escape'];
+            if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
+                $remaining = $total_booking_price;
+            } else {
+                $remaining = $booking['remaining'];
+            }
+            if ( $need_escape ) {
+                return $remaining;
+            }
+            return eme_localized_price( $remaining, $event['currency'], $target );
+        },
+        '/#_TOTALDISCOUNT$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            if ( $need_escape ) {
+                return $booking['discount'];
+            }
+            return eme_localized_price( $booking['discount'], $event['currency'], $target );
+        },
+        '/#_APPLIEDDISCOUNTNAMES$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $booking = $ctx['booking'];
+            if ( ! empty( $booking['discountids'] ) ) {
+                if ( eme_is_serialized( $booking['discountids'] ) ) {
+                    $applied_discounts = eme_unserialize( $booking['discountids'] );
+                    $applied_discountids = array_keys( $applied_discounts );
+                } else {
+                    $applied_discountids = explode( ',', $booking['discountids'] );
+                }
+                $discount_names = [];
+                foreach ( $applied_discountids as $discount_id ) {
+                    $discount = eme_get_discount( $discount_id );
+                    if ( $discount && isset( $discount['name'] ) ) {
+                        $discount_names[] = esc_html( $discount['name'] );
+                    } else {
+                        $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
+                    }
+                }
+                return eme_apply_output_filters( join( ', ', $discount_names ), $target );
+            }
+            return '';
+        },
+        '/#_DISCOUNTCODES_ENTERED$/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $dcodes_entered = $booking['dcodes_entered'];
+            return join( ', ', $dcodes_entered );
+        },
+        '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $dcodes_used = $booking['dcodes_used'];
+            return join( ', ', $dcodes_used );
+        },
+        '/#_PRICEPERSEAT$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $price = eme_get_seat_booking_price( $booking );
+            if ( $need_escape ) {
+                return $price;
+            }
+            return eme_localized_price( $price, $event['currency'], $target );
+        },
+        '/#_PRICEPERSEAT_NO_VAT$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $price = eme_get_seat_booking_price( $booking ) / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+            if ( $need_escape ) {
+                return $price;
+            }
+            return eme_localized_price( $price, $event['currency'], $target );
+        },
+        '/#_PRICEPERSEAT_VAT_ONLY$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $price = eme_get_seat_booking_price( $booking );
+            $price = $price - $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+            if ( $need_escape ) {
+                return $price;
+            }
+            return eme_localized_price( $price, $event['currency'], $target );
+        },
+        '/#_PRICEPERSEAT\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
+            $field_id     = intval( $matches[1] ) - 1;
+            if ( array_key_exists( $field_id, $total_prices ) ) {
+                $price = $total_prices[ $field_id ];
+                if ( $need_escape ) {
+                    return $price;
+                }
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return '';
+        },
+        '/#_PRICEPERSEAT_NO_VAT\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
+            $field_id     = intval( $matches[1] ) - 1;
+            if ( array_key_exists( $field_id, $total_prices ) ) {
+                $price = $total_prices[ $field_id ] / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+                if ( $need_escape ) {
+                    return $price;
+                }
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return '';
+        },
+        '/#_PRICEPERSEAT_VAT_ONLY\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $booking = $ctx['booking'];
+            $need_escape = $ctx['need_escape'];
+            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
+            $field_id     = intval( $matches[1] ) - 1;
+            if ( array_key_exists( $field_id, $total_prices ) ) {
+                $price = $total_prices[ $field_id ];
+                $price = $price - $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+                if ( $need_escape ) {
+                    return $price;
+                }
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return '';
+        },
+        '/#_PDF_URL\{(\d+)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $event = $ctx['event'];
+            $template_id = intval( $matches[1] );
+            $generated_pdf = eme_generate_booking_pdf( $booking, $event, $template_id );
+            if ( ! empty( $generated_pdf ) ) {
+                return EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $generated_pdf[1] );
+            }
+            return '';
+        },
+        '/#_RESPSPACES$|#_SPACES$|#_RESPSEATS$|#_SEATS$/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_get_total( $booking['booking_seats'] );
+        },
+        '/#_CREATIONDATE\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_localized_date( $booking['creation_date'], EME_TIMEZONE, $matches[1] );
+        },
+        '/#_CREATIONDATE/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_localized_date( $booking['creation_date'], EME_TIMEZONE );
+        },
+        '/#_CREATIONTIME\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_localized_time( $booking['creation_date'], EME_TIMEZONE, $matches[1] );
+        },
+        '/#_CREATIONTIME/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_localized_time( $booking['creation_date'], EME_TIMEZONE );
+        },
+        '/#_PAYMENTDATE\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return eme_localized_date( $booking['payment_date'], EME_TIMEZONE, $matches[1] );
+            }
+            return null;
+        },
+        '/#_PAYMENTDATE/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return eme_localized_date( $booking['payment_date'], EME_TIMEZONE );
+            }
+            return null;
+        },
+        '/#_PAYMENTTIME\{(.+?)\}/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return eme_localized_time( $booking['payment_date'], EME_TIMEZONE, $matches[1] );
+            }
+            return null;
+        },
+        '/#_PAYMENTTIME/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return eme_localized_time( $booking['payment_date'], EME_TIMEZONE );
+            }
+            return null;
+        },
+        '/#_ID/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return $booking['booking_id'];
+        },
+        '/#_TRANSFER_NBR_BE97|UNIQUE_NBR/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return eme_unique_nbr_formatted( $booking['unique_nbr'] );
+        },
+        '/#_DBFIELD\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $lang = $ctx['lang'];
+            $booking = $ctx['booking'];
+            $tmp_attkey = $matches[1];
+            if ( isset( $booking[ $tmp_attkey ] ) && ! is_array( $booking[ $tmp_attkey ] ) ) {
+                return eme_apply_output_filters( eme_translate( $booking[ $tmp_attkey ], $lang ), $target, true );
+            }
+            return null;
+        },
+        '/#_PAYMENTID/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return $booking['payment_id'];
+        },
+        '/#_PAYMENT_URL/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $booking = $ctx['booking'];
+            $event = $ctx['event'];
+            $payment = $ctx['payment'];
+            if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
+                $replacement = eme_booking_confirm_url( $payment );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            } elseif ( ! $booking['waitinglist'] && $payment && eme_event_has_pgs_configured( $event ) ) {
+                $replacement = eme_payment_url( $payment );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return '';
+        },
+        '/#_CONFIRM_URL/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
+                $replacement = eme_booking_confirm_url( $payment );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return '';
+        },
+        '/#_(ATTENDANCE_)?QRCODE({.*?\})?$/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                if ( isset( $matches[2] ) ) {
+                    $size = substr( $matches[2], 1, -1 );
+                } else {
+                    $size = 'medium';
+                }
+                $targetBasePath             = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
+                $targetBaseUrl              = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
+                $url_to_encode              = eme_check_rsvp_url( $booking['booking_id'] );
+                [$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
+                if ( is_file( $target_file ) ) {
+                    [$width, $height, $type, $attr] = getimagesize( $target_file );
+                    return "<img width='$width' height='$height' src='$target_url'>";
+                }
+            }
+            return '';
+        },
+        '/#_ATTENDANCE_URL$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                $replacement = eme_check_rsvp_url( $booking['booking_id'] );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return null;
+        },
+        '/#_ATTENDANCEPROOF_URL$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $booking = $ctx['booking'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                $replacement = eme_rsvp_proof_url( $booking['booking_id'] );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return null;
+        },
+        '/#_CANCEL_URL$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                $replacement = eme_cancel_url( $payment );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return null;
+        },
+        '/#_CANCEL_LINK$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                $url = eme_cancel_url( $payment );
+                if ( $target == 'html' ) {
+                    $url = esc_url( $url );
+                }
+                return "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
+            }
+            return null;
+        },
+        '/#_CANCEL_OWN_URL$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $payment = $ctx['payment'];
+            $current_userid = $ctx['current_userid'];
+            $person = $ctx['person'];
+            if ( $payment && ( $person['wp_id'] == $current_userid || $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) {
+                $replacement = eme_cancel_url( $payment );
+                if ( $target == 'html' ) {
+                    $replacement = esc_url( $replacement );
+                }
+                return $replacement;
+            }
+            return null;
+        },
+        '/#_CANCEL_OWN_LINK$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $payment = $ctx['payment'];
+            $current_userid = $ctx['current_userid'];
+            $person = $ctx['person'];
+            if ( $payment && ( $person['wp_id'] == $current_userid || $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) {
+                $url = eme_cancel_url( $payment );
+                if ( $target == 'html' ) {
+                    $url = esc_url( $url );
+                }
+                return "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
+            }
+            return null;
+        },
+        '/#_CANCEL_CODE$/' => function( $result, $matches, &$ctx ) {
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return $payment['random_id'];
+            }
+            return null;
+        },
+        '/#_FILES/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $files = $ctx['files'];
+            $res_files = [];
+            foreach ( $files as $file ) {
+                if ( $target == 'html' ) {
+                    $res_files[] = eme_get_uploaded_file_html( $file );
+                } else {
+                    $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
+                }
+            }
+            if ( $target == 'html' ) {
+                return join( '<br>', $res_files );
+            }
+            return join( "\n", $res_files );
+        },
+        '/#_FIELDS/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $lang = $ctx['lang'];
+            $answers = $ctx['answers'];
+            $field_replace = '';
+            if ( $target == 'html' ) {
+                $sep     = '<br>';
+                $eol_sep = '<br>';
+            } else {
+                $sep     = '||';
+                $eol_sep = "\n";
+            }
+            foreach ( $answers as $answer ) {
+                $tmp_formfield = eme_get_formfield( $answer['field_id'] );
+                if ( ! empty( $tmp_formfield ) ) {
+                    $tmp_answer     = eme_answer2readable( $answer['answer'], $tmp_formfield, 1, $sep, $target );
+                    $field_replace .= $tmp_formfield['field_name'] . ": $tmp_answer" . $eol_sep;
+                }
+            }
+            return eme_apply_output_filters( eme_translate( $field_replace, $lang ), $target );
+        },
+        '/#_PAID|#_PAYED/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['booking_paid'] ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+        },
+        '/#_IS_PAID|#_IS_PAYED/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['booking_paid'] ) ? 1 : 0;
+        },
+        '/#_IS_PENDING/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['status'] == EME_RSVP_STATUS_PENDING ) ? 1 : 0;
+        },
+        '/#_IS_USERPENDING/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) ? 1 : 0;
+        },
+        '/#_IS_APPROVED/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['status'] == EME_RSVP_STATUS_APPROVED ) ? 1 : 0;
+        },
+        '/#_ON_WAITINGLIST/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            return ( $booking['waitinglist'] ) ? 1 : 0;
+        },
+        '/#_WAITINGLIST_POSITION/' => function( $result, $matches, &$ctx ) {
+            $booking = $ctx['booking'];
+            $basic_bookings = eme_get_basic_bookings_on_waitinglist( $booking['event_id'] );
+            $position       = 1;
+            foreach ( $basic_bookings as $basic_booking ) {
+                if ( $basic_booking['booking_id'] == $booking['booking_id'] ) {
+                    return $position;
+                }
+                ++$position;
+            }
+            return '';
+        },
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $lang = $ctx['lang'];
+            $field_key = $matches[1];
+            $formfield = eme_get_formfield( $field_key );
+            if ( ! empty( $formfield ) ) {
+                return eme_apply_output_filters( eme_translate( $formfield['field_name'], $lang ), $target );
+            }
+            return null;
+        },
+        '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $lang = $ctx['lang'];
+            $answers = $ctx['answers'];
+            $files = $ctx['files'];
+            $dyn_answers = $ctx['dyn_answers'];
+            $take_answers_from_post = $ctx['take_answers_from_post'];
+            $field_key = $matches[2];
+            $eol_sep = '';
+            if ( isset( $matches[3] ) ) {
+                $sep = substr( $matches[3], 1, -1 );
+            } else {
+                $sep = '||';
+                if ( $target == 'html' ) {
+                    $eol_sep = '<br>';
+                } else {
+                    $eol_sep = "\n";
+                }
+            }
+            $formfield = eme_get_formfield( $field_key );
+            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp' ] ) ) {
+                $matched_answers = [];
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $formfield['field_id'] ) {
+                        if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                        } else {
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        $matched_answers[] = eme_apply_output_filters( $replacement, $field_replace );
+                        break;
+                    }
+                }
+                foreach ( $files as $file ) {
+                    if ( $file['field_id'] == $formfield['field_id'] ) {
+                        if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
+                            $matched_answers[] = $file['url'];
+                            if ( $target == 'html' ) {
+                                $matched_answers[] = esc_url( $file['url'] );
+                            } else {
+                                $matched_answers[] = $file['url'];
+                            }
+                        } else {
+                            if ( $target == 'html' ) {
+                                $matched_answers[] = eme_get_uploaded_file_html( $file );
+                            } else {
+                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
+                            }
+                        }
+                    }
+                }
+                if ( empty( $matched_answers ) && ! empty( $dyn_answers ) ) {
+                    foreach ( $dyn_answers as $answer ) {
+                        if ( $answer['field_id'] != $formfield['field_id'] ) {
+                            continue;
+                        }
+                        if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                        } else {
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        $matched_answers[] = eme_apply_output_filters( $replacement, $field_replace );
+                    }
+                }
+                $replacement = join( $eol_sep, $matched_answers );
+                return eme_translate( $replacement, $lang );
+            }
+            return null;
+        },
+        '/#_MULTIBOOKING_SEATS$/' => function( $result, $matches, &$ctx ) {
+            $payment = $ctx['payment'];
+            if ( $payment ) {
+                return eme_get_payment_seats( $payment );
+            }
+            return null;
+        },
+        '/#_MULTIBOOKING_TOTALPRICE$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $payment_id = $ctx['payment_id'];
+            if ( $payment_id ) {
+                $price = eme_get_payment_price( $payment_id );
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return null;
+        },
+        '/#_MULTIBOOKING_TOTALPRICE_NO_VAT$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $payment_id = $ctx['payment_id'];
+            if ( $payment_id ) {
+                $price = eme_get_payment_price_novat( $payment_id );
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return null;
+        },
+        '/#_MULTIBOOKING_TOTALPRICE_VAT_ONLY$/' => function( $result, $matches, &$ctx ) {
+            $target = $ctx['target'];
+            $event = $ctx['event'];
+            $payment_id = $ctx['payment_id'];
+            if ( $payment_id ) {
+                $price = eme_get_payment_price_vatonly( $payment_id );
+                return eme_localized_price( $price, $event['currency'], $target );
+            }
+            return null;
+        },
+        '/#_MULTIBOOKING_DETAILS_TEMPLATE\{(\d+)\}$/' => function( $result, $matches, &$ctx ) {
+            $lang = $ctx['lang'];
+            $payment_id = $ctx['payment_id'];
+            if ( $payment_id ) {
+                $template_id = intval( $matches[1] );
+                $template    = eme_get_template_format( $template_id );
+                $res         = '';
+                if ( $template ) {
+                    $bookings = eme_get_bookings_by_paymentid( $payment_id );
+                    foreach ( $bookings as $tmp_booking ) {
+                        $tmp_event = eme_get_event( $tmp_booking['event_id'] );
+                        if ( ! empty( $tmp_event ) ) {
+                            $res .= eme_replace_booking_placeholders( $template, $tmp_event, $tmp_booking, $ctx['is_multibooking'], 'text', $lang ) . "\n";
+                        }
+                    }
+                }
+                return $res;
+            }
+            return null;
+        },
+        '/#_IS_MULTIBOOKING/' => function( $result, $matches, &$ctx ) {
+            return $ctx['is_multibooking'];
+        },
+    ];
+
+    return $handlers;
+}
 function eme_replace_booking_placeholders( $format, $event, $booking, $is_multibooking = 0, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
     // replace EME language tags as early as possible
     $format = eme_translate_string( $format );
@@ -3625,7 +4370,6 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
         $orig_result_needle = $orig_result[1] - $needle_offset;
         $orig_result_length = strlen( $orig_result[0] );
         $replacement        = '';
-        $found              = 1;
         $need_escape        = 0;
         $need_urlencode     = 0;
         if ( strstr( $result, '#ESC' ) ) {
@@ -3639,541 +4383,35 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
         // support for #_BOOKING and #_BOOKING_
         $result = preg_replace( '/#_BOOKING(_)?/', '#_', $result );
 
-        if ( preg_match( '/#_(RESP)?COMMENT/', $result ) ) {
-            $replacement = $booking['booking_comment'];
-            if ( $target == 'html' ) {
-                $replacement = esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
-        } elseif ( preg_match( '/#_(RESP)?CANCELCOMMENT/', $result ) ) {
-            if ( isset( $_POST['eme_cancelcomment'] ) ) {
-                $replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
-            }
-            if ( $target == 'html' ) {
-                $replacement = esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
-        } elseif ( preg_match( '/(#_RESPSPACES|#_SPACES|#_RESPSEATS|#_SEATS)\{(\d+)\}/', $result, $matches ) ) {
-            $field_id = intval( $matches[2] ) - 1;
-            if ( eme_is_multi( $booking['event_price'] ) ) {
-                $seats = eme_convert_multi2array( $booking['booking_seats_mp'] );
-                if ( array_key_exists( $field_id, $seats ) ) {
-                    $replacement = $seats[ $field_id ];
-                }
-            }
-        } elseif ( preg_match( '/#_(RESP)?DYNAMICFIELD\{(.*?)\}$/', $result, $matches ) ) {
-            $field_key = $matches[2];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && ! empty( $dyn_answers ) ) {
-                foreach ( $dyn_answers as $answer ) {
-                    if ( $answer['field_id'] != $formfield['field_id'] ) {
-                        continue;
-                    }
-                    if ( $target == 'html' ) {
-                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '<br>', $target );
-                    } else {
-                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '||', $target ) . "\n";
-                    }
-                }
-                $replacement = eme_translate( $replacement, $lang );
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
-            }
-        } elseif ( preg_match( '/#_(RESP)?DYNAMICDATA/', $result ) ) {
-            # this should return something without br-tags, so html-mails don't get confused and
-            # the function eme_nl2br_save_html can still do it's stuff based on the rest of the mail content/templates
-            if ( ! empty( $dyn_answers ) ) {
-                if ( $target == 'html' ) {
-                    $replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
-                }
-                $old_grouping  = 1;
-                $old_occurence = 0;
-                foreach ( $dyn_answers as $answer ) {
-                    $grouping      = $answer['eme_grouping'];
-                    $occurence     = $answer['occurence'];
-                    //$class         = 'eme_print_formfield' . $answer['field_id'];
-                    $tmp_formfield = eme_get_formfield( $answer['field_id'] );
-                    if ( ! empty( $tmp_formfield ) ) {
-                        if ( $target == 'html' ) {
-                            if ( $old_grouping != $grouping || $old_occurence != $occurence ) {
-                                $replacement  .= "</table><br><table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
-                                $old_grouping  = $grouping;
-                                $old_occurence = $occurence;
-                            }
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . esc_html( $tmp_formfield['field_name'] ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'> " . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target ) . '</td></tr>';
-                        } else {
-                            $replacement .= $tmp_formfield['field_name'] . ': ' . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
-                        }
-                    }
-                }
-                if ( $target == 'html' ) {
-                    $replacement .= '</table>';
-                }
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE$/', $result ) ) {
-            if ( $need_escape ) {
-                $replacement = $total_booking_price;
-            } else {
-                $replacement = eme_localized_price( $total_booking_price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE_NO_VAT$/', $result ) ) {
-            $price = $total_booking_price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-            if ( $need_escape ) {
-                $replacement = $price;
-            } else {
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE_VAT_ONLY$/', $result ) ) {
-            $price = $total_booking_price - $total_booking_price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-            if ( $need_escape ) {
-                $replacement = $price;
-            } else {
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE\{(\d+)\}/', $result, $matches ) ) {
-            // total price to pay per price if multiprice
-            $total_prices = eme_get_total_booking_multiprice_arr( $booking );
-            $field_id     = intval( $matches[1] ) - 1;
-            if ( array_key_exists( $field_id, $total_prices ) ) {
-                $price = $total_prices[ $field_id ];
-                if ( $need_escape ) {
-                    $replacement = $price;
-                } else {
-                    $replacement = eme_localized_price( $price, $event['currency'], $target );
-                }
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE\{(.+)\}/', $result, $matches ) ) {
-            $charge = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
-            if ( $need_escape ) {
-                $replacement = $total_booking_price+$charge;
-            } else {
-                $replacement = eme_localized_price( $total_booking_price+$charge, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_CHARGE\{(.+)\}$/', $result, $matches ) ) {
-            if ( $need_escape ) {
-                $replacement = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
-            } else {
-                $replacement = eme_localized_price( eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] ), $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_AMOUNTRECEIVED$/', $result ) ) {
-            $replacement = eme_localized_price( $booking['received'], $event['currency'], $target );
-        } elseif ( preg_match( '/#_AMOUNTREMAINING$/', $result ) ) {
-            if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
-                $remaining = $total_booking_price;
-            } else {
-                $remaining = $booking['remaining'];
-            }
-            if ( $need_escape ) {
-                $replacement = $remaining;
-            } else {
-                $replacement = eme_localized_price( $remaining, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_TOTALDISCOUNT$/', $result ) ) {
-            if ( $need_escape ) {
-                $replacement = $booking['discount'];
-            } else {
-                $replacement = eme_localized_price( $booking['discount'], $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_APPLIEDDISCOUNTNAMES$/', $result ) ) {
-            if ( ! empty( $booking['discountids'] ) ) {
-                if ( eme_is_serialized( $booking['discountids'] ) ) {
-                    $applied_discounts = eme_unserialize( $booking['discountids'] );
-                    $applied_discountids = array_keys($applied_discounts);
-                } else {
-                    $applied_discountids = explode( ',', $booking['discountids'] );
-                }
-                $discount_names = [];
-                foreach ( $applied_discountids as $discount_id ) {
-                    $discount = eme_get_discount( $discount_id );
-                    if ( $discount && isset( $discount['name'] ) ) {
-                        $discount_names[] = esc_html( $discount['name'] );
-                    } else {
-                        // translators: %d is the discount ID
-                        $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
-                    }
-                }
-                $replacement = join( ', ', $discount_names );
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
-            }
-        } elseif ( preg_match( '/#_DISCOUNTCODES_ENTERED$/', $result ) ) {
-            $dcodes_entered = $booking['dcodes_entered'];
-            $replacement    = join( ', ', $dcodes_entered );
-        } elseif ( preg_match( '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/', $result ) ) {
-            $dcodes_used = $booking['dcodes_used'];
-            $replacement = join( ', ', $dcodes_used );
-        } elseif ( preg_match( '/#_PRICEPERSEAT$/', $result ) ) {
-            $price = eme_get_seat_booking_price( $booking );
-            if ( $need_escape ) {
-                $replacement = $price;
-            } else {
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_PRICEPERSEAT_NO_VAT$/', $result ) ) {
-            $price = eme_get_seat_booking_price( $booking ) / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-            if ( $need_escape ) {
-                $replacement = $price;
-            } else {
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_PRICEPERSEAT_VAT_ONLY$/', $result ) ) {
-            $price = eme_get_seat_booking_price( $booking );
-            $price = $price - $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-            if ( $need_escape ) {
-                $replacement = $price;
-            } else {
-                $replacement = eme_localized_price( $price, $event['currency'], $target );
-            }
-        } elseif ( preg_match( '/#_PRICEPERSEAT\{(\d+)\}/', $result, $matches ) ) {
-            // total price to pay per price if multiprice
-            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
-            $field_id     = intval( $matches[1] ) - 1;
-            if ( array_key_exists( $field_id, $total_prices ) ) {
-                $price = $total_prices[ $field_id ];
-                if ( $need_escape ) {
-                    $replacement = $price;
-                } else {
-                    $replacement = eme_localized_price( $price, $event['currency'], $target );
-                }
-            }
-        } elseif ( preg_match( '/#_PRICEPERSEAT_NO_VAT\{(\d+)\}/', $result, $matches ) ) {
-            // total price to pay per price if multiprice
-            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
-            $field_id     = intval( $matches[1] ) - 1;
-            if ( array_key_exists( $field_id, $total_prices ) ) {
-                $price = $total_prices[ $field_id ] / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-                if ( $need_escape ) {
-                    $replacement = $price;
-                } else {
-                    $replacement = eme_localized_price( $price, $event['currency'], $target );
-                }
-            }
-        } elseif ( preg_match( '/#_PRICEPERSEAT_VAT_ONLY\{(\d+)\}/', $result, $matches ) ) {
-            // total price to pay per price if multiprice
-            $total_prices = eme_get_seat_booking_multiprice_arr( $booking );
-            $field_id     = intval( $matches[1] ) - 1;
-            if ( array_key_exists( $field_id, $total_prices ) ) {
-                $price = $total_prices[ $field_id ];
-                $price = $price - $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
-                if ( $need_escape ) {
-                    $replacement = $price;
-                } else {
-                    $replacement = eme_localized_price( $price, $event['currency'], $target );
-                }
-            }
-        } elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
-            $template_id = intval( $matches[1] );
-            $generated_pdf = eme_generate_booking_pdf( $booking, $event, $template_id );
-            if ( ! empty( $generated_pdf ) ) {
-                $replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $generated_pdf[1] );
-            }
-        } elseif ( preg_match( '/#_RESPSPACES$|#_SPACES$|#_RESPSEATS$|#_SEATS$/', $result ) ) {
-            $replacement = eme_get_total( $booking['booking_seats'] );
-        } elseif ( preg_match( '/#_CREATIONDATE\{(.+?)\}/', $result, $matches ) ) {
-            $replacement = eme_localized_date( $booking['creation_date'], EME_TIMEZONE, $matches[1] );
-        } elseif ( preg_match( '/#_CREATIONDATE/', $result ) ) {
-            $replacement = eme_localized_date( $booking['creation_date'], EME_TIMEZONE );
-        } elseif ( preg_match( '/#_CREATIONTIME\{(.+?)\}/', $result, $matches ) ) {
-            $replacement = eme_localized_time( $booking['creation_date'], EME_TIMEZONE, $matches[1] );
-        } elseif ( preg_match( '/#_CREATIONTIME/', $result ) ) {
-            $replacement = eme_localized_time( $booking['creation_date'], EME_TIMEZONE );
-        } elseif ( $payment && preg_match( '/#_PAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
-            $replacement = eme_localized_date( $booking['payment_date'], EME_TIMEZONE, $matches[1] );
-        } elseif ( $payment && preg_match( '/#_PAYMENTDATE/', $result ) ) {
-            $replacement = eme_localized_date( $booking['payment_date'], EME_TIMEZONE );
-        } elseif ( $payment && preg_match( '/#_PAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
-            $replacement = eme_localized_time( $booking['payment_date'], EME_TIMEZONE, $matches[1] );
-        } elseif ( $payment && preg_match( '/#_PAYMENTTIME/', $result ) ) {
-            $replacement = eme_localized_time( $booking['payment_date'], EME_TIMEZONE );
-        } elseif ( preg_match( '/#_ID/', $result ) ) {
-            $replacement = $booking['booking_id'];
-        } elseif ( preg_match( '/#_TRANSFER_NBR_BE97|UNIQUE_NBR/', $result ) ) {
-            $replacement = eme_unique_nbr_formatted( $booking['unique_nbr'] );
-        } elseif ( preg_match( '/#_DBFIELD\{(.+)\}/', $result, $matches ) ) {
-            $tmp_attkey = $matches[1];
-            if ( isset( $booking[ $tmp_attkey ] ) && ! is_array( $booking[ $tmp_attkey ] ) ) {
-                $replacement = $booking[ $tmp_attkey ];
-                if ( $target == 'html' ) {
-                    $replacement = esc_html( eme_translate( $replacement, $lang ) );
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } elseif ( $target == 'rss' ) {
-                    $replacement = eme_translate( $replacement, $lang );
-                    $replacement = apply_filters( 'the_content_rss', $replacement );
-                } else {
-                    $replacement = eme_translate( $replacement, $lang );
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
-            }
-        } elseif ( preg_match( '/#_PAYMENTID/', $result ) ) {
-            $replacement = $booking['payment_id'];
-        } elseif ( preg_match( '/#_PAYMENT_URL/', $result ) ) {
-            // the payment url is also used for user confirmation of a booking
-            if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
-                $replacement = eme_booking_confirm_url( $payment );
-                if ( $target == 'html' ) {
-                    $replacement = esc_url( $replacement );
-                }
-            } elseif ( ! $booking['waitinglist'] && $payment && eme_event_has_pgs_configured( $event ) ) {
-                $replacement = eme_payment_url( $payment );
-                if ( $target == 'html' ) {
-                    $replacement = esc_url( $replacement );
-                }
-            }
-        } elseif ( preg_match( '/#_CONFIRM_URL/', $result ) ) {
-            if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
-                $replacement = eme_booking_confirm_url( $payment );
-                if ( $target == 'html' ) {
-                    $replacement = esc_url( $replacement );
-                }
-            }
-        } elseif ( $payment && preg_match( '/#_(ATTENDANCE_)?QRCODE({.*?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $size = substr( $matches[2], 1, -1 );
-            } else {
-                $size = 'medium';
-            }
-            $targetBasePath             = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
-            $targetBaseUrl              = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
-            $url_to_encode              = eme_check_rsvp_url( $booking['booking_id'] );
-            [$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
-            if ( is_file( $target_file ) ) {
-                [$width, $height, $type, $attr] = getimagesize( $target_file );
-                $replacement                    = "<img width='$width' height='$height' src='$target_url'>";
-            }
-        } elseif ( $payment && preg_match( '/#_ATTENDANCE_URL$/', $result ) ) {
-            $replacement = eme_check_rsvp_url( $booking['booking_id'] );
-            if ( $target == 'html' ) {
-                $replacement = esc_url( $replacement );
-            }
-        } elseif ( $payment && preg_match( '/#_ATTENDANCEPROOF_URL$/', $result ) ) {
-            $replacement = eme_rsvp_proof_url( $booking['booking_id'] );
-            if ( $target == 'html' ) {
-                $replacement = esc_url( $replacement );
-            }
-        } elseif ( $payment && preg_match( '/#_CANCEL_URL$/', $result ) ) {
-            $replacement = eme_cancel_url( $payment );
-            if ( $target == 'html' ) {
-                $replacement = esc_url( $replacement );
-            }
-        } elseif ( $payment && preg_match( '/#_CANCEL_LINK$/', $result ) ) {
-            $url = eme_cancel_url( $payment );
-            if ( $target == 'html' ) {
-                $url = esc_url( $url );
-            }
-            $replacement = "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
-        } elseif ( $payment && preg_match( '/#_CANCEL_OWN_URL$/', $result ) ) {
-            if ( $person['wp_id'] == $current_userid || $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) {
-                $replacement = eme_cancel_url( $payment );
-                if ( $target == 'html' ) {
-                    $replacement = esc_url( $replacement );
-                }
-            }
-        } elseif ( $payment && preg_match( '/#_CANCEL_OWN_LINK$/', $result ) ) {
-            if ( $person['wp_id'] == $current_userid || $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) {
-                $url = eme_cancel_url( $payment );
-                if ( $target == 'html' ) {
-                    $url = esc_url( $url );
-                }
-                $replacement = "<a href='$url'>" . esc_html__( 'Cancel booking', 'events-made-easy' ) . '</a>';
-            }
-        } elseif ( $payment && preg_match( '/#_CANCEL_CODE$/', $result ) ) {
-            $replacement = $payment['random_id'];
-        } elseif ( preg_match( '/#_FILES/', $result ) ) {
-            $res_files = [];
-            foreach ( $files as $file ) {
-                if ( $target == 'html' ) {
-                    $res_files[] = eme_get_uploaded_file_html( $file );
-                } else {
-                    $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
-                }
-            }
-            if ( $target == 'html' ) {
-                $replacement = join( '<br>', $res_files );
-            } else {
-                $replacement = join( "\n", $res_files );
-            }
-        } elseif ( preg_match( '/#_FIELDS/', $result ) ) {
-            $field_replace = '';
-            if ( $target == 'html' ) {
-                $sep     = '<br>';
-                $eol_sep = '<br>';
-            } else {
-                $sep     = '||';
-                $eol_sep = "\n";
-            }
-            foreach ( $answers as $answer ) {
-                $tmp_formfield = eme_get_formfield( $answer['field_id'] );
-                if ( ! empty( $tmp_formfield ) ) {
-                    $tmp_answer     = eme_answer2readable( $answer['answer'], $tmp_formfield, 1, $sep, $target );
-                    $field_replace .= $tmp_formfield['field_name'] . ": $tmp_answer" . $eol_sep;
-                }
-            }
-            $replacement = eme_translate( $field_replace, $lang );
-            if ( $target == 'html' ) {
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
-        } elseif ( preg_match( '/#_PAID|#_PAYED/', $result ) ) {
-            $replacement = ( $booking['booking_paid'] ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-        } elseif ( preg_match( '/#_IS_PAID|#_IS_PAYED/', $result ) ) {
-            $replacement = ( $booking['booking_paid'] ) ? 1 : 0;
-        } elseif ( preg_match( '/#_IS_PENDING/', $result ) ) {
-            $replacement = ( $booking['status'] == EME_RSVP_STATUS_PENDING ) ? 1 : 0;
-        } elseif ( preg_match( '/#_IS_USERPENDING/', $result ) ) {
-            $replacement = ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) ? 1 : 0;
-        } elseif ( preg_match( '/#_IS_APPROVED/', $result ) ) {
-            $replacement = ( $booking['status'] == EME_RSVP_STATUS_APPROVED ) ? 1 : 0;
-        } elseif ( preg_match( '/#_ON_WAITINGLIST/', $result ) ) {
-            $replacement = ( $booking['waitinglist'] ) ? 1 : 0;
-        } elseif ( preg_match( '/#_WAITINGLIST_POSITION/', $result ) ) {
-            $basic_bookings = eme_get_basic_bookings_on_waitinglist( $booking['event_id'] );
-            $position       = 1;
-            foreach ( $basic_bookings as $basic_booking ) {
-                if ( $basic_booking['booking_id'] == $booking['booking_id'] ) {
-                    $replacement = $position;
+        $ph_handlers = eme_get_booking_placeholder_handler_definitions();
+        $ctx = [
+            'event' => $event,
+            'booking' => $booking,
+            'target' => $target,
+            'orig_target' => $orig_target,
+            'lang' => $lang,
+            'answers' => $answers,
+            'files' => $files,
+            'dyn_answers' => $dyn_answers,
+            'total_booking_price' => $total_booking_price,
+            'need_escape' => $need_escape,
+            'need_urlencode' => $need_urlencode,
+            'current_userid' => $current_userid,
+            'payment' => $payment,
+            'payment_id' => $payment_id,
+            'is_multibooking' => $is_multibooking,
+            'take_answers_from_post' => $take_answers_from_post,
+            'person' => $person,
+        ];
+        $found = 0;
+        foreach ( $ph_handlers as $pattern => $handler ) {
+            if ( preg_match( $pattern, $result, $matches ) ) {
+                $replacement = $handler( $result, $matches, $ctx );
+                if ( $replacement !== null ) {
+                    $found = 1;
                     break;
                 }
-                ++$position;
             }
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                if ( $target == 'html' ) {
-                    $replacement = esc_html( eme_translate( $formfield['field_name'], $lang ) );
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = eme_translate( $formfield['field_name'], $lang );
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
-            $field_key = $matches[2];
-            if ( isset( $matches[3] ) ) {
-                // remove { and } (first and last char of second match)
-                $sep = substr( $matches[3], 1, -1 );
-            } else {
-                $sep = '||';
-                if ( $target == 'html' ) {
-                    $eol_sep = '<br>';
-                } else {
-                    $eol_sep = "\n";
-                }
-            }
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp' ] ) ) {
-                $matched_answers = []; 
-                foreach ( $answers as $answer ) {
-                    if ( $answer['field_id'] == $formfield['field_id'] ) {
-                        if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
-                        } else {
-                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
-                        }
-                        if ( $target == 'html' ) {
-                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
-                        } else {
-                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
-                        }
-                        break; // only one is allowed
-                    }
-                }
-
-                foreach ( $files as $file ) {
-                    if ( $file['field_id'] == $formfield['field_id'] ) {
-                        if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
-                            // for file, we can show the url. For multifile this would not make any sense
-                            $matched_answers[] = $file['url'];
-                            if ( $target == 'html' ) {
-                                $matched_answers[] = esc_url($file['url']) ;
-                            } else {
-                                $matched_answers[] = $file['url'] ;
-                            }
-                        } else {
-                            if ( $target == 'html' ) {
-                                $matched_answers[] = eme_get_uploaded_file_html( $file );
-                            } else {
-                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
-                            }
-                        }
-                    }
-                }
-
-                // nothing found, then also check the dynamic answers
-                if ( empty( $matched_answers ) && ! empty( $dyn_answers ) ) {
-                    foreach ( $dyn_answers as $answer ) {
-                        if ( $answer['field_id'] != $formfield['field_id'] ) {
-                            continue;
-                        }
-                        if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
-                        } else {
-                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
-                        }
-                        if ( $target == 'html' ) {
-                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
-                        } else {
-                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
-                        }
-                    }
-                }
-                $replacement = join($eol_sep, $matched_answers);
-                $replacement = eme_translate( $replacement, $lang );
-            } else {
-                $found = 0;
-            }
-        } elseif ( $payment && preg_match( '/#_MULTIBOOKING_SEATS$/', $result ) ) {
-            // returns the total of all seats for all bookings in the payment id related to this booking
-            $replacement = eme_get_payment_seats( $payment );
-        } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE$/', $result ) ) {
-            // returns the price for all bookings in the payment id related to this booking
-            $price       = eme_get_payment_price( $payment_id );
-            $replacement = eme_localized_price( $price, $event['currency'], $target );
-        } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_NO_VAT$/', $result ) ) {
-            // returns the price for all bookings in the payment id related to this booking
-            $price       = eme_get_payment_price_novat( $payment_id );
-            $replacement = eme_localized_price( $price, $event['currency'], $target );
-        } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_VAT_ONLY$/', $result ) ) {
-            // returns the price for all bookings in the payment id related to this booking
-            $price       = eme_get_payment_price_vatonly( $payment_id );
-            $replacement = eme_localized_price( $price, $event['currency'], $target );
-        } elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_DETAILS_TEMPLATE\{(\d+)\}$/', $result, $matches ) ) {
-            $template_id = intval( $matches[1] );
-            $template    = eme_get_template_format( $template_id );
-            $res         = '';
-            if ( $template) {
-                $bookings = eme_get_bookings_by_paymentid( $payment_id );
-                foreach ( $bookings as $tmp_booking ) {
-                    $tmp_event = eme_get_event( $tmp_booking['event_id'] );
-                    if ( ! empty( $event ) ) {
-                        $res .= eme_replace_booking_placeholders( $template, $tmp_event, $tmp_booking, $is_multibooking, 'text', $lang ) . "\n";
-                    }
-                }
-            }
-            $replacement = $res;
-        } elseif ( preg_match( '/#_IS_MULTIBOOKING/', $result ) ) {
-            $replacement = $is_multibooking;
-        } else {
-            $found = 0;
         }
 
         if ( $found ) {

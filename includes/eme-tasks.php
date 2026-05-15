@@ -1672,20 +1672,10 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 
         if ( preg_match( '/#_TASKNAME$/', $result ) ) {
             $replacement = eme_translate( $task['name'], $lang );
-            if ( $target == 'html' ) {
-                $replacement = esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
+            $replacement = eme_apply_output_filters( $replacement, $target );
         } elseif ( preg_match( '/#_TASKDESCRIPTION$/', $result ) ) {
             $replacement = eme_translate( $task['description'], $lang );
-            if ( $target == 'html' ) {
-                $replacement = esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
+            $replacement = eme_apply_output_filters( $replacement, $target );
         } elseif ( preg_match( '/#_(TASKBEGIN|TASKSTARTDATE)(\{(.+?)\})?$/', $result, $matches ) ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
@@ -1779,12 +1769,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
             }
         } elseif ( preg_match( '/#_(TASK)?COMMENT/', $result ) ) {
             $replacement = $signup['comment'];
-            if ( $target == 'html' ) {
-                $replacement = esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
+            $replacement = eme_apply_output_filters( $replacement, $target );
         } else {
             $found = 0;
         }

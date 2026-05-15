@@ -4508,3 +4508,16 @@ function eme_message_ok_div($message) {
 function eme_message_error_div($message) {
     return "<div class='notice notice-error eme-message-admin is-dismissible'><p>" .$message.'</p></div>';
 }
+
+function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
+    if ( $target == 'html' ) {
+        if ( $esc_html ) {
+            $replacement = esc_html( $replacement );
+        }
+        return apply_filters( 'eme_general', $replacement );
+    } elseif ( $target == 'rss' ) {
+        return apply_filters( 'the_content_rss', $replacement );
+    }
+    return apply_filters( 'eme_text', $replacement );
+}
+

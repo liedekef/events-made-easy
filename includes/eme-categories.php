@@ -614,16 +614,8 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 		}
 
 		if ( $found ) {
-			if ( $target == 'html' ) {
-				$replacement = esc_html( eme_translate( $replacement, $lang ) );
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = eme_translate( $replacement, $lang );
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = eme_translate( $replacement, $lang );
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
+            $replacement = eme_translate( $replacement, $lang );
+            $replacement = eme_apply_output_filters( $replacement, $target, true );
 			if ( $need_escape ) {
 				$replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 			}

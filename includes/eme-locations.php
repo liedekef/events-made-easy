@@ -1933,6 +1933,7 @@ function eme_replace_event_location_placeholders( $format, $event, $target = 'ht
 }
 
 function eme_get_locations_placeholder_handler_definitions() {
+    global $wpdb;
     static $handlers = [];
     if ( ! empty( $handlers ) ) {
         return $handlers;
@@ -2196,7 +2197,6 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_CATEGORIES$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
-            $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
@@ -2205,9 +2205,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categories_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categories_sep_filter', $sep );
                 }
-                if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
-                }
+                $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_names = array_column( $location_categories, 'category_name' );
                 $replacement = eme_translate( join( $sep, $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
@@ -2216,14 +2214,11 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_CATEGORIES_CSS/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
-            $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-                if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
-                }
+                $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_names = array_column( $location_categories, 'category_name' );
                 $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
@@ -2232,7 +2227,6 @@ function eme_get_locations_placeholder_handler_definitions() {
         },
         '/#_CATEGORYDESCRIPTIONS/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
-            $location_categories = $ctx['location_categories'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
@@ -2241,9 +2235,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
-                if ( is_null( $location_categories ) ) {
-                    $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
-                }
+                $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_descs = array_column( $location_categories, 'description' );
                 $replacement = eme_translate( join( $sep, $cat_descs ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
@@ -2256,7 +2248,6 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
-            $wpdb = $ctx['wpdb'];
             $include_cats = $matches[1];
             $exclude_cats = $matches[2];
             $extra_conditions_arr = [];
@@ -2293,7 +2284,6 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
-            $wpdb = $ctx['wpdb'];
             $include_cats = $matches[1];
             $exclude_cats = $matches[2];
             $extra_conditions_arr = [];
@@ -2318,7 +2308,6 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
-            $wpdb = $ctx['wpdb'];
             $include_cats = $matches[1];
             $exclude_cats = $matches[2];
             $extra_conditions_arr = [];
@@ -2519,7 +2508,6 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
         $files = [];
     }
     $all_categories      = eme_get_cached_categories();
-    $location_categories = null;
     // and now all the other placeholders
     $ph_handlers = eme_get_locations_placeholder_handler_definitions();
     if ($location && preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE )) {
@@ -2557,8 +2545,6 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 'need_urlencode' => $need_urlencode,
                 'current_userid' => $current_userid,
                 'all_categories' => $all_categories,
-                'location_categories' => $location_categories,
-                'wpdb' => $wpdb,
             ];
             foreach ( $ph_handlers as $pattern => $handler ) {
                 if ( preg_match( $pattern, $result, $matches ) ) {

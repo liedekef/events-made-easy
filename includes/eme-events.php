@@ -3418,10 +3418,8 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_CATEGORIES$/' => function( $result, $matches, $ctx ) {
             $lang = $ctx['lang'];
             if ( get_option( 'eme_categories_enabled' ) ) {
-                if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
-                }
-                $cat_names = array_column( $ctx['event_categories'], 'category_name' );
+                $event_categories = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
+                $cat_names = array_column( $event_categories, 'category_name' );
                 foreach ( $cat_names as $key => $cat_name ) {
                     if ( $ctx['target'] == 'html' ) {
                         $cat_names[ $key ] = esc_html( eme_translate( $cat_name, $lang ) );
@@ -3439,10 +3437,8 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_CATEGORIES_CSS$/' => function( $result, $matches, $ctx ) {
             if ( get_option( 'eme_categories_enabled' ) ) {
-                if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
-                }
-                $cat_names = array_column( $ctx['event_categories'], 'category_name' );
+                $event_categories = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
+                $cat_names = array_column( $event_categories, 'category_name' );
                 $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
                 return eme_apply_output_filters( $replacement, $ctx['target'], true );
             }
@@ -3450,15 +3446,35 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_CATEGORYDESCRIPTIONS$/' => function( $result, $matches, $ctx ) {
             if ( get_option( 'eme_categories_enabled' ) ) {
-                if ( is_null( $ctx['event_categories'] ) ) {
-                    $ctx['event_categories'] = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
-                }
-                $cat_descs = array_column( $ctx['event_categories'], 'description' );
+                $event_categories = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
+                $cat_descs = array_column( $event_categories, 'description' );
                 $sep       = ', ';
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
                 return eme_apply_output_filters( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'] );
+            }
+            return '';
+        },
+        '/#_LINKED(EVENT)?CATEGORIES$/' => function( $result, $matches, $ctx ) {
+            if ( get_option( 'eme_categories_enabled' ) ) {
+                $event_categories = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
+                $cat_links = [];
+                foreach ( $event_categories as $category ) {
+                    $cat_link = eme_category_url( $category );
+                    $cat_name = $category['category_name'];
+                    if ( $ctx['target'] == 'html' ) {  // Use $ctx['target']
+                        $cat_link = esc_url( $cat_link );
+                        $cat_links[] = "<a href='$cat_link' title='" . esc_attr( eme_translate( $cat_name, $ctx['lang'] ) ) . "'>" . esc_html( eme_translate( $cat_name, $ctx['lang'] ) ) . '</a>';
+                    } else {
+                        $cat_links[] = eme_translate( $cat_name, $ctx['lang'] );
+                    }
+                }
+                $sep = ', ';
+                if ( has_filter( 'eme_categories_sep_filter' ) ) {
+                    $sep = apply_filters( 'eme_categories_sep_filter', $sep );
+                }
+                return eme_apply_output_filters( join( $sep, $cat_links ), $ctx['target'] );
             }
             return '';
         },
@@ -3971,14 +3987,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
         $files = [];
     }
 
-    // some vars that will get filled when needed/used
     $all_categories   = eme_get_cached_categories();
-    $event_categories = null;
-    $contact          = null;
-    $contact_person   = null;
-    $author           = null;
-    $author_person    = null;
-
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 
     // dispatch array for placeholder matching
@@ -4018,11 +4027,6 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 'answers' => $answers,
                 'files' => $files,
                 'all_categories' => $all_categories,
-                'event_categories' => $event_categories,
-                'contact' => $contact,
-                'contact_person' => $contact_person,
-                'author' => $author,
-                'author_person' => $author_person,
                 'need_escape' => $need_escape,
                 'need_urlencode' => $need_urlencode,
             ];

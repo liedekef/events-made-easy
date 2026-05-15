@@ -2242,7 +2242,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/^#_CATEGORIES\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
+        '/#_CATEGORIES\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
             $target = $ctx['target'];
             $lang = $ctx['lang'];
             if ( ! get_option( 'eme_categories_enabled' ) ) {
@@ -2280,7 +2280,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             $replacement = join( $sep, $cat_names );
             return eme_apply_output_filters( $replacement, $target );
         },
-        '/^#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
+        '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }
@@ -2304,7 +2304,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             $replacement = eme_translate( join( ' ', $categories ), $ctx['lang'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/^#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
+        '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
             if ( ! get_option( 'eme_categories_enabled' ) ) {
                 return null;
             }

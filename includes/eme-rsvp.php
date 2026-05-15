@@ -4102,7 +4102,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_apply_output_filters( $replacement, $field_replace );
+                        $matched_answers[] = eme_apply_output_filters( $field_replace, $target );
                         break;
                     }
                 }
@@ -4134,7 +4134,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_apply_output_filters( $replacement, $field_replace );
+                        $matched_answers[] = eme_apply_output_filters( $field_replace, $target );
                     }
                 }
                 $replacement = join( $eol_sep, $matched_answers );

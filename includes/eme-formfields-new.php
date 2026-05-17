@@ -1325,9 +1325,9 @@ function eme_esc_person_for_form( $person = [] ) {
     } else {
         $person['birthdate'] = isset( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
     }
-    $person['massmail'] = isset( $person['massmail'] ) ? intval( $person['massmail'] ) : null;
-    $person['bd_email'] = isset( $person['bd_email'] )  ? intval( $person['bd_email'] )  : 0;
-    $person['gdpr']     = isset( $person['gdpr'] )      ? intval( $person['gdpr'] )      : 0;
+    $person['massmail'] = intval( $person['massmail'] ?? get_option('eme_people_massmail') );
+    $person['bd_email'] = isset( $person['bd_email'] ) ? intval( $person['bd_email'] ) : 0;
+    $person['gdpr']     = isset( $person['gdpr'] )     ? intval( $person['gdpr'] )     : 0;
     return $person;
 }
 
@@ -1353,25 +1353,28 @@ function eme_esc_person_for_form( $person = [] ) {
  *   - a plain string (the HTML replacement)
  *   - an array with keys: 'html', and optionally:
  *       'not_found'     => true   (treat as unmatched placeholder)
- *       'set_required'=> true   (mark $required = true after handler)
+ *       'set_required'  => true   (mark $required = true after handler)
+ *       'early_return'  => string (return immediately with this value)
  */
-function eme_get_person_formfield_handler_definitions( $ctx ) {
-    $p           = $ctx['person'];
-    $fn          = $ctx['fn_prefix'];
-    $form_id     = $ctx['form_id'];
-    $is_admin    = $ctx['eme_is_admin'];
-    $readonly    = $ctx['readonly'];
-    $disabled    = $ctx['disabled'];
-    $dfc_basic   = $ctx['dfc_basic'];
-    $xcss        = $ctx['extra_css'];
-    $allow_clear = $ctx['allow_clear'];
-    $invite_ro   = $ctx['invite_readonly'];
-    $sel_captcha = $ctx['selected_captcha'];
+function eme_get_person_formfield_handler_definitions() {
+    static $handlers = [];
+    if ( ! empty( $handlers ) ) {
+        return $handlers;
+    }
 
-    return [
+    $handlers = [
 
         // ── #_NAME / #_LASTNAME ──────────────────────────────────────────────
-        '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $readonly, $dfc_basic, $xcss, $allow_clear, $invite_ro ) {
+        '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn          = $ctx['fn_prefix'];
+            $p           = $ctx['person'];
+            $is_admin    = $ctx['eme_is_admin'];
+            $readonly    = $ctx['readonly'];
+            $dfc_basic   = $ctx['dfc_basic'];
+            $xcss        = $ctx['extra_css'];
+            $allow_clear = $ctx['allow_clear'];
+            $invite_ro   = $ctx['invite_readonly'];
+
             $fieldname = $fn . 'lastname';
             if ( is_user_logged_in() && ! $is_admin ) {
                 $this_readonly = "readonly='readonly'";
@@ -1391,11 +1394,22 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
                 $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
+            }
             return [ 'html' => $replacement, 'set_required' => true ];
         },
 
         // ── #_FIRSTNAME ──────────────────────────────────────────────────────
-        '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $readonly, $dfc_basic, $xcss, $invite_ro ) {
+        '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $is_admin  = $ctx['eme_is_admin'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+            $invite_ro = $ctx['invite_readonly'];
+
             $fieldname = $fn . 'firstname';
             if ( is_user_logged_in() && ! $is_admin ) {
                 $this_readonly = "readonly='readonly'";
@@ -1409,12 +1423,20 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
                 : esc_html__( 'First name', 'events-made-easy' );
             $class       = trim( "$dfc_basic $xcss" );
             $replacement = "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['firstname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
+            }
             return [ 'html' => $replacement ];
         },
 
         // ── #_BIRTHDATE ──────────────────────────────────────────────────────
-        '/#_BIRTHDATE(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $disabled, $xcss ) {
-            $fieldname        = $fn . 'birthdate';
+        '/#_BIRTHDATE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $disabled  = $ctx['disabled'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'birthdate';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Date of birth', 'events-made-easy' );
@@ -1423,8 +1445,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_BIRTHPLACE ─────────────────────────────────────────────────────
-        '/#_BIRTHPLACE(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'birthplace';
+        '/#_BIRTHPLACE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'birthplace';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Place of birth', 'events-made-easy' );
@@ -1433,8 +1461,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_ADDRESS1 ───────────────────────────────────────────────────────
-        '/#_ADDRESS1(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'address1';
+        '/#_ADDRESS1(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'address1';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
@@ -1443,8 +1477,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_ADDRESS2 ───────────────────────────────────────────────────────
-        '/#_ADDRESS2(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'address2';
+        '/#_ADDRESS2(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'address2';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
@@ -1453,8 +1493,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_CITY ───────────────────────────────────────────────────────────
-        '/#_CITY(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'city';
+        '/#_CITY(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'city';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'City', 'events-made-easy' );
@@ -1463,8 +1509,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_ZIP / #_POSTAL ─────────────────────────────────────────────────
-        '/#_(ZIP|POSTAL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'zip';
+        '/#_(ZIP|POSTAL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'zip';
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Postal code', 'events-made-easy' );
@@ -1473,7 +1525,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_STATE ──────────────────────────────────────────────────────────
-        '/#_STATE$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $form_id, $disabled, $dfc_basic, $xcss ) {
+        '/#_STATE$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $form_id   = $ctx['form_id'];
+            $disabled  = $ctx['disabled'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
             $fieldname = $fn . 'state_code';
             $fieldid   = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
             $state_arr = ! empty( $p['state_code'] ) ? [ $p['state_code'] => eme_get_state_name( $p['state_code'], $p['country_code'] ) ] : [];
@@ -1482,7 +1541,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_COUNTRY (plain) ────────────────────────────────────────────────
-        '/#_COUNTRY$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $form_id, $disabled, $dfc_basic, $xcss ) {
+        '/#_COUNTRY$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $form_id   = $ctx['form_id'];
+            $disabled  = $ctx['disabled'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
             $fieldname   = $fn . 'country_code';
             $fieldid     = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
             $country_arr = ! empty( $p['country_code'] ) ? [ $p['country_code'] => eme_get_country_name( $p['country_code'] ) ] : [];
@@ -1491,7 +1557,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_COUNTRY{code} (with fallback country code) ─────────────────────
-        '/#_COUNTRY\{(.+)\}$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $form_id, $disabled, $dfc_basic, $xcss ) {
+        '/#_COUNTRY\{(.+)\}$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $form_id   = $ctx['form_id'];
+            $disabled  = $ctx['disabled'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
             $fieldname = $fn . 'country_code';
             $fieldid   = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
             $class     = trim( "eme_snapselect_country_class $dfc_basic $xcss" );
@@ -1509,7 +1582,15 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_EMAIL / #_HTML5_EMAIL ──────────────────────────────────────────
-        '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $readonly, $dfc_basic, $xcss, $invite_ro ) {
+        '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn          = $ctx['fn_prefix'];
+            $p           = $ctx['person'];
+            $is_admin    = $ctx['eme_is_admin'];
+            $readonly    = $ctx['readonly'];
+            $dfc_basic   = $ctx['dfc_basic'];
+            $xcss        = $ctx['extra_css'];
+            $invite_ro   = $ctx['invite_readonly'];
+
             $fieldname = $fn . 'email';
             if ( is_user_logged_in() && ! $is_admin ) {
                 $this_readonly = "readonly='readonly'";
@@ -1522,15 +1603,23 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Email', 'events-made-easy' );
             $class = trim( "$dfc_basic $xcss" );
-            // there still exist people without email, so in the backend we allow it optional
-            $req_att     = $is_admin ? '' : "required='required'";
+            $req_att = $is_admin ? '' : "required='required'";
             $replacement = "<input $req_att type='email' name='$fieldname' id='$fieldname' value='{$p['email']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'set_required' => !empty($req_att) ];
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
+            }
+            return [ 'html' => $replacement, 'set_required' => ! empty( $req_att ) ];
         },
 
         // ── #_PHONE / #_HTML5_PHONE ──────────────────────────────────────────
-        '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $readonly, $dfc_basic, $xcss ) {
-            $fieldname        = $fn . 'phone';
+        '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $readonly  = $ctx['readonly'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+
+            $fieldname = $fn . 'phone';
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Phone number', 'events-made-easy' );
@@ -1539,36 +1628,52 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_BIRTHDAY_EMAIL ─────────────────────────────────────────────────
-        '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) use ( $fn, $p ) {
+        '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) {
+            $fn = $ctx['fn_prefix'];
+            $p  = $ctx['person'];
             return eme_ui_select_binary( $p['bd_email'], $fn . 'bd_email' );
         },
 
-        // ── #_OPT_OUT ────────────────────────────────────────────────────────
-        '/#_OPT_OUT$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $dfc_basic, $xcss, $disabled ) {
-            $selected    = isset( $p['massmail'] ) ? $p['massmail'] : 1;
-            $class       = trim( "$dfc_basic $xcss eme_snapselect" );
+        // ── #_OPT_IN ─────────────────────────────────────────────────────────
+        '/#_OPT_IN$/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $is_admin  = $ctx['eme_is_admin'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+            $disabled  = $ctx['disabled'];
+
+            $selected = $p['massmail'] ?? 0;
+            $class    = trim( "$dfc_basic $xcss eme_snapselect" );
             $replacement = eme_ui_select_binary( $selected, $fn . 'massmail', 0, $class, $disabled );
             if ( ! $is_admin && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__( 'Yes', 'events-made-easy' );
-                $cancel  = esc_html__( 'No', 'events-made-easy' );
+                $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 if ( ! eme_is_empty_string( $popup ) ) {
+                    $confirm = esc_html__( 'Yes', 'events-made-easy' );
+                    $cancel  = esc_html__( 'No', 'events-made-easy' );
                     $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
                 }
             }
             return $replacement;
         },
 
-        // ── #_OPT_IN ─────────────────────────────────────────────────────────
-        '/#_OPT_IN$/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $dfc_basic, $xcss, $disabled ) {
-            $selected    = isset( $p['massmail'] ) ? $p['massmail'] : 0;
-            $class       = trim( "$dfc_basic $xcss eme_snapselect" );
+        // ── #_OPT_OUT / #_MASSMAIL ───────────────────────────────────────────
+        '/#_OPT_OUT|#_MASSMAIL/' => function( $result, $matches, $ctx ) {
+            $fn        = $ctx['fn_prefix'];
+            $p         = $ctx['person'];
+            $is_admin  = $ctx['eme_is_admin'];
+            $dfc_basic = $ctx['dfc_basic'];
+            $xcss      = $ctx['extra_css'];
+            $disabled  = $ctx['disabled'];
+
+            $selected = $p['massmail'] ?? 1;
+            $class    = trim( "$dfc_basic $xcss eme_snapselect" );
             $replacement = eme_ui_select_binary( $selected, $fn . 'massmail', 0, $class, $disabled );
             if ( ! $is_admin && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__( 'Yes', 'events-made-easy' );
-                $cancel  = esc_html__( 'No', 'events-made-easy' );
+                $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 if ( ! eme_is_empty_string( $popup ) ) {
+                    $confirm = esc_html__( 'Yes', 'events-made-easy' );
+                    $cancel  = esc_html__( 'No', 'events-made-easy' );
                     $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
                 }
             }
@@ -1576,8 +1681,14 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_GDPR ───────────────────────────────────────────────────────────
-        '/#_GDPR(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $fn, $p, $is_admin, $xcss, $disabled ) {
-            $label     = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
+        '/#_GDPR(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $fn       = $ctx['fn_prefix'];
+            $p        = $ctx['person'];
+            $is_admin = $ctx['eme_is_admin'];
+            $xcss     = $ctx['extra_css'];
+            $disabled = $ctx['disabled'];
+
+            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
             $fieldname = $fn . 'gdpr';
             if ( ! $is_admin ) {
                 $class = trim( "eme-gdpr-field nodynamicupdates $xcss" );
@@ -1587,7 +1698,8 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_REMEMBERME ─────────────────────────────────────────────────────
-        '/#_REMEMBERME(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $is_admin ) {
+        '/#_REMEMBERME(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $is_admin = $ctx['eme_is_admin'];
             $label = isset( $matches[1] )
                 ? substr( $matches[1], 1, -1 )
                 : __( 'Remember me?', 'events-made-easy' );
@@ -1598,7 +1710,8 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_SUBSCRIBE_TO_GROUP{id}{label?} ─────────────────────────────────
-        '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $xcss ) {
+        '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $xcss = $ctx['extra_css'];
             $group = is_numeric( $matches[1] )
                 ? eme_get_group( $matches[1] )
                 : eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
@@ -1608,9 +1721,9 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             if ( ! $group['public'] ) {
                 return __( 'Group is not public', 'events-made-easy' );
             }
-            $group_id    = $group['group_id'];
-            $label       = isset( $matches[2] ) ? substr( $matches[2], 1, -1 ) : $group['name'];
-            $class       = trim( "nodynamicupdates $xcss" );
+            $group_id = $group['group_id'];
+            $label = isset( $matches[2] ) ? substr( $matches[2], 1, -1 ) : $group['name'];
+            $class = trim( "nodynamicupdates $xcss" );
             $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='$class'>";
             if ( ! empty( $label ) ) {
                 $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
@@ -1619,7 +1732,8 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
         },
 
         // ── #_CAPTCHA / #_HCAPTCHA / #_RECAPTCHA / #_CFCAPTCHA ──────────────
-        '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $sel_captcha ) {
+        '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) {
+            $sel_captcha = $ctx['selected_captcha'];
             if ( ! empty( $sel_captcha ) ) {
                 $html = eme_generate_captchas_html( $sel_captcha );
                 if ( ! empty( $html ) ) {
@@ -1638,7 +1752,9 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             return [ 'html' => '', 'not_found' => true ];
         },
 
-    ]; // end shared handler table
+    ];
+
+    return $handlers;
 }
 
 /**
@@ -1926,7 +2042,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     if ( $editing_booking_from_backend && ! empty( $booking['person_id'] ) ) {
         $person = eme_get_person( $booking['person_id'] );
     }
-    $person       = eme_esc_person_for_form( $person );
+    $person        = eme_esc_person_for_form( $person );
     $bookerComment = $editing_booking_from_backend ? esc_html( $booking['booking_comment'] ) : '';
     $bookedSeats   = $editing_booking_from_backend ? esc_html( $booking['booking_seats'] ) : 0;
     $booking_seats_mp = [];
@@ -2172,7 +2288,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         'required_att'    => '',
     ];
 
-    $handlers = eme_get_person_formfield_handler_definitions( $ctx );
+    $handlers = eme_get_person_formfield_handler_definitions();
 
     // ── rsvp-specific handlers ───────────────────────────────────────────────
 
@@ -2587,7 +2703,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
 
     // Membership REQ handling: #REQ only applies outside admin
     // Override #_NAME and #_EMAIL handlers to enforce required only outside admin
-    $handlers = eme_get_person_formfield_handler_definitions( $ctx );
+    $handlers = eme_get_person_formfield_handler_definitions();
 
     $handlers['/#_DYNAMICPRICE$/'] = function( $result, $matches, $ctx ) {
         return "<span id='eme_calc_memberprice'></span>";
@@ -2820,7 +2936,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         'required_att'     => '',
     ];
 
-    $handlers = eme_get_person_formfield_handler_definitions( $ctx );
+    $handlers = eme_get_person_formfield_handler_definitions();
 
     $handlers['/#_COMMENT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) {
         $placeholder_text = isset( $matches[1] )
@@ -2894,7 +3010,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         'required_att'     => '',
     ];
 
-    $handlers = eme_get_person_formfield_handler_definitions( $ctx );
+    $handlers = eme_get_person_formfield_handler_definitions();
 
     $handlers['/#_COMMENT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person ) {
         $placeholder_text = isset( $matches[1] )
@@ -3145,80 +3261,11 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         'invite_readonly'  => '',
         'selected_captcha' => $selected_captcha,
         'required'         => false,
-        'required_att'     => '',
+        'required_att'     => "",
+        'wp_profile_warning' => $wp_profile_warning,
     ];
 
-    // cpiform overrides: always required, wp-profile warning on readonly
-    $handlers = [];
-
-    $handlers['/#_(NAME|LASTNAME)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
-        $placeholder_text = isset( $matches[2] )
-            ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
-            : esc_html__( 'Last name', 'events-made-easy' );
-        $replacement = "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>";
-        if ( $wp_profile_warning ) {
-            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
-        }
-        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
-    };
-    $handlers['/#_FIRSTNAME(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
-        $placeholder_text = isset( $matches[1] )
-            ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
-            : esc_html__( 'First name', 'events-made-easy' );
-        $replacement = "<input required='required' type='text' name='firstname' id='firstname' value='{$person['firstname']}' $readonly placeholder='$placeholder_text'>";
-        if ( $wp_profile_warning ) {
-            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
-        }
-        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
-    };
-    $handlers['/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
-        $placeholder_text = isset( $matches[2] )
-            ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
-            : esc_html__( 'Email', 'events-made-easy' );
-        $replacement = "<input required='required' type='email' id='email' name='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>";
-        if ( $wp_profile_warning ) {
-            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
-        }
-        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
-    };
-
-    // remaining shared handlers (BIRTHDATE, ADDRESS, COUNTRY, etc.)
-    $shared = eme_get_person_formfield_handler_definitions( $ctx );
-    foreach ( [ '/#_BIRTHDATE(\{.+?\})?$/', '/#_BIRTHPLACE(\{.+?\})?$/', '/#_ADDRESS1(\{.+?\})?$/',
-                '/#_ADDRESS2(\{.+?\})?$/', '/#_CITY(\{.+?\})?$/', '/#_(ZIP|POSTAL)(\{.+?\})?$/',
-                '/#_STATE$/', '/#_COUNTRY$/', '/#_COUNTRY\{(.+)\}$/', '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/',
-                '/#_BIRTHDAY_EMAIL$/', '/#_OPT_IN$/', '/#_OPT_OUT$/',
-                '/#_FIELDNAME\{(.+)\}/', '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' ] as $pat ) {
-        if ( isset( $shared[ $pat ] ) ) {
-            $handlers[ $pat ] = $shared[ $pat ];
-        }
-    }
-
-    $handlers['/#_MASSMAIL$/'] = function( $result, $matches, $ctx ) use ( $person, $eme_is_admin_request ) {
-        $replacement = eme_ui_select_binary( $person['massmail'], 'massmail', 0, 'eme_snapselect' );
-        if ( get_option( 'eme_massmail_popup' ) ) {
-            $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-            $confirm = esc_html__( 'Yes', 'events-made-easy' );
-            $cancel  = esc_html__( 'No', 'events-made-easy' );
-            if ( ! eme_is_empty_string( $popup ) ) {
-                $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        }
-        return $replacement;
-    };
-    $handlers['/#_OPT_OUT$/'] = function( $result, $matches, $ctx ) use ( $person ) {
-        $selected    = isset( $person['massmail'] ) ? $person['massmail'] : 1;
-        $replacement = eme_ui_select_binary( $selected, 'massmail', 0, 'eme_snapselect' );
-        if ( get_option( 'eme_massmail_popup' ) ) {
-            $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-            $confirm = esc_html__( 'Yes', 'events-made-easy' );
-            $cancel  = esc_html__( 'No', 'events-made-easy' );
-            if ( ! eme_is_empty_string( $popup ) ) {
-                $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        }
-        return $replacement;
-    };
+    $handlers = eme_get_person_formfield_handler_definitions();
     $handlers['/#_IMAGE/'] = function( $result, $matches, $ctx ) use ( $person ) {
         return eme_person_replace_image_input_div( $person, 1 );
     };
@@ -3257,7 +3304,6 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
     $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     return $format;
 }
-
 
 function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
     $dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
@@ -3309,7 +3355,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 : esc_html__( 'Email', 'events-made-easy' );
             return [ 'html' => "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
         },
-        '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+        '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr     = [ 'familymember', $counter, 'bd_email' ];
             $entered_val     = eme_getValueFromPath( $_POST, $postvar_arr );
             $selected_bd_email = ( $entered_val === false ) ? 1 : $entered_val;
@@ -3321,7 +3367,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             $selected_massmail = ( $entered_val === false ) ? 1 : $entered_val;
             return eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
         },
-        '/#_OPT_IN$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+        '/#_OPT_IN/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr      = [ 'familymember', $counter, 'massmail' ];
             $entered_val      = eme_getValueFromPath( $_POST, $postvar_arr );
             $selected_massmail = ( $entered_val === false ) ? 0 : $entered_val;

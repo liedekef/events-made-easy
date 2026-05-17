@@ -1109,7 +1109,6 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     }
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
         $format = eme_add_captcha_submit( $format );
     } else {
@@ -1133,7 +1132,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     }
     $person = eme_esc_person_for_form( $person );
 
-    $ctx      = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
+    $ctx      = [ 'required' => false, 'required_att' => '' ];
 
     // Pre-validate required placeholders before running the dispatch
     $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
@@ -1149,7 +1148,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Last name', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>", 'set_required' => true ];
         },
         '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
             $placeholder_text = isset( $matches[1] )
@@ -1161,7 +1160,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Email', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='email' name='email' id='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='email' name='email' id='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>", 'set_required' => true ];
         },
         '/#_CANCELCOMMENT(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $placeholder_text = isset( $matches[1] )
@@ -1170,10 +1169,10 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             return "<textarea {$ctx['required_att']} name='eme_cancelcomment' placeholder='$placeholder_text'></textarea>";
         },
         '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $selected_captcha ) {
-            if ( ! empty( $selected_captcha ) && ! $ctx['captcha_set'] ) {
+            if ( ! empty( $selected_captcha ) ) {
                 $html = eme_generate_captchas_html( $selected_captcha );
                 if ( ! empty( $html ) ) {
-                    return [ 'html' => $html, 'set_captcha' => true ];
+                    return $html;
                 }
             }
             return '';
@@ -1184,7 +1183,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
         },
     ];
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format = eme_replace_event_placeholders( $format, $event );
     $format = eme_translate( $format );
 
@@ -1193,7 +1192,6 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
         $format = eme_add_captcha_submit( $format );
     } else {
@@ -1211,7 +1209,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
             : preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
     }
 
-    $ctx      = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
+    $ctx      = [ 'required' => false, 'required_att' => '' ];
 
     if ( ! str_contains( $format, '#_CANCEL_PAYMENT_LINE' ) ) {
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
@@ -1248,10 +1246,10 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
             return [ 'html' => $replacement ];
         },
         '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $selected_captcha ) {
-            if ( ! empty( $selected_captcha ) && ! $ctx['captcha_set'] ) {
+            if ( ! empty( $selected_captcha ) ) {
                 $html = eme_generate_captchas_html( $selected_captcha );
                 if ( ! empty( $html ) ) {
-                    return [ 'html' => $html, 'set_captcha' => true ];
+                    return $html;
                 }
             }
             return '';
@@ -1271,7 +1269,6 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
         $orig_result_length = strlen( $orig_result[0] );
         $found              = false;
         $replacement        = '';
-        $ctx['captcha_set'] = $captcha_set;
 
         foreach ( $handlers as $pattern => $handler ) {
             if ( preg_match( $pattern, $result, $matches ) ) {
@@ -1281,8 +1278,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
                     if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
                     if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -1349,7 +1345,6 @@ function eme_esc_person_for_form( $person = [] ) {
  *   extra_css        string  additional CSS classes to append ('' for now)
  *   allow_clear      bool    show data-clearable on readonly name/email fields
  *   invite_readonly  string  readonly attr when invite URL is followed (rsvp only)
- *   captcha_set      bool    whether captcha has already been rendered
  *   selected_captcha string
  *   required         bool    set by dispatch loop each iteration
  *   required_att     string  set by dispatch loop each iteration
@@ -1358,8 +1353,7 @@ function eme_esc_person_for_form( $person = [] ) {
  *   - a plain string (the HTML replacement)
  *   - an array with keys: 'html', and optionally:
  *       'not_found'     => true   (treat as unmatched placeholder)
- *       'force_required'=> true   (mark $required = true after handler)
- *       'set_captcha'   => true   (set $captcha_set = true after handler)
+ *       'set_required'=> true   (mark $required = true after handler)
  */
 function eme_get_person_formfield_handler_definitions( $ctx ) {
     $p           = $ctx['person'];
@@ -1397,7 +1391,7 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
                 $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
-            return [ 'html' => $replacement, 'force_required' => true ];
+            return [ 'html' => $replacement, 'set_required' => true ];
         },
 
         // ── #_FIRSTNAME ──────────────────────────────────────────────────────
@@ -1531,7 +1525,7 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             // there still exist people without email, so in the backend we allow it optional
             $req_att     = $is_admin ? '' : "required='required'";
             $replacement = "<input $req_att type='email' name='$fieldname' id='$fieldname' value='{$p['email']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'force_required' => true ];
+            return [ 'html' => $replacement, 'set_required' => !empty($req_att) ];
         },
 
         // ── #_PHONE / #_HTML5_PHONE ──────────────────────────────────────────
@@ -1626,10 +1620,10 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
 
         // ── #_CAPTCHA / #_HCAPTCHA / #_RECAPTCHA / #_CFCAPTCHA ──────────────
         '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $sel_captcha ) {
-            if ( ! empty( $sel_captcha ) && ! $ctx['captcha_set'] ) {
+            if ( ! empty( $sel_captcha ) ) {
                 $html = eme_generate_captchas_html( $sel_captcha );
                 if ( ! empty( $html ) ) {
-                    return [ 'html' => $html, 'set_captcha' => true ];
+                    return $html;
                 }
             }
             return '';
@@ -1654,10 +1648,9 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
  * @param array  $handlers    Merged handler table (shared + function-specific).
  * @param array  $ctx         Context array; 'required' and 'required_att' are
  *                            updated per iteration by this function.
- * @param bool   $captcha_set Whether captcha has been rendered (modified in place).
  * @return string             The processed format string.
  */
-function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$captcha_set ) {
+function eme_run_formfield_dispatch( $format, $handlers, $ctx ) {
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
 
@@ -1686,7 +1679,6 @@ function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$captcha_set ) {
 
         $ctx['required']     = $required;
         $ctx['required_att'] = $required_att;
-        $ctx['captcha_set']  = $captcha_set;
 
         foreach ( $handlers as $pattern => $handler ) {
             if ( preg_match( $pattern, $result, $matches ) ) {
@@ -1696,8 +1688,7 @@ function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$captcha_set ) {
                     if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
                     if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -1779,9 +1770,9 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
                     }
                     $entered_val = $entered_files;
                 }
-                $required = (bool) $formfield['field_required'];
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
                 $class    = $formfield['extra_charge'] ? "$dynamic_price_class $dynamic_field_class" : $dynamic_field_class;
-                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class ), 'force_required' => $required ];
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class ), 'set_required' => $required ];
             }
             return [ 'html' => '', 'not_found' => true ];
         },
@@ -1793,9 +1784,8 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
         },
     ];
 
-    $captcha_set = false;
-    $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format      = eme_replace_event_placeholders( $format, $event );
     return $format;
 }
@@ -1849,9 +1839,9 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
                     }
                     $entered_val = $entered_files;
                 }
-                $required = (bool) $formfield['field_required'];
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
                 $class    = $formfield['extra_charge'] ? "$dynamic_price_class $dynamic_field_class" : $dynamic_field_class;
-                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class, 0, 0, $member_edit ), 'force_required' => $required ];
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class, 0, 0, $member_edit ), 'set_required' => $required ];
             }
             return [ 'html' => '', 'not_found' => true ];
         },
@@ -1863,9 +1853,8 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
         },
     ];
 
-    $captcha_set = false;
-    $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format      = eme_replace_membership_placeholders( $format, $membership );
 
     // In the admin member-edit form, wrap each occurrence in a labelled deletable container
@@ -1988,7 +1977,6 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     $add_dyndata = ! empty( $eme_dyndatafields );
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( ! $is_multibooking ) {
         if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
             $format = eme_add_captcha_submit( $format );
@@ -2177,7 +2165,6 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         'extra_css'       => '',
         'allow_clear'     => $allow_clear,
         'invite_readonly' => $invite_readonly,
-        'captcha_set'     => $captcha_set,
         'selected_captcha'=> $selected_captcha,
         'required'        => false,
         'required_att'    => '',
@@ -2256,7 +2243,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
             $dfc = "class='{$ctx['dfc_basic']}'";
             $replacement = "<input required='required' type='text' class='eme_passwordfield' autocomplete='off' name='rsvp_password' value='' $dfc placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'force_required' => true ];
+            return [ 'html' => $replacement, 'set_required' => true ];
         }
         return '';
     };
@@ -2371,9 +2358,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     $entered_val = $entered_files;
                 }
             }
-            $required = (bool) $formfield['field_required'];
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
             $class    = $formfield['extra_charge'] ? "$dynamic_price_class_basic $dfc_basic" : $dfc_basic;
-            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly ), 'force_required' => $required ];
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly ), 'set_required' => $required ];
         }
         return [ 'html' => '', 'not_found' => true ];
     };
@@ -2453,7 +2440,6 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         $ctx['dfc_basic']    = $dfc_basic;
         $ctx['required']     = $required;
         $ctx['required_att'] = $required_att;
-        $ctx['captcha_set']  = $captcha_set;
 
         foreach ( $handlers as $pattern => $handler ) {
             if ( preg_match( $pattern, $result, $matches ) ) {
@@ -2463,8 +2449,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                     if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
                     if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; $required_att = "required='required'"; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -2561,7 +2546,6 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     }
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && $membership['properties']['captcha_only_logged_out'] ) {
         $format = eme_add_captcha_submit( $format, '', $add_dyndata );
     } else {
@@ -2594,7 +2578,6 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         'extra_css'        => $personal_info_class,
         'allow_clear'      => $allow_clear,
         'invite_readonly'  => '',
-        'captcha_set'      => $captcha_set,
         'selected_captcha' => $selected_captcha,
         'required'         => false,
         'required_att'     => '',
@@ -2707,11 +2690,11 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
                 }
             }
-            $required = $formfield['field_required'] && ( ! $eme_is_admin_request || $formfield['field_purpose'] != 'people' );
+            $required = ($formfield['field_required'] || $ctx['required']) && ( ! $eme_is_admin_request || $formfield['field_purpose'] != 'people' );
             $class    = $dfc_basic;
             if ( $formfield['field_purpose'] == 'people' ) { $class .= " $personal_info_class"; }
             if ( $formfield['extra_charge'] )               { $class .= " $dynamic_price_class_basic"; }
-            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly, 0, $editing_member ), 'force_required' => $required ];
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly, 0, $editing_member ), 'set_required' => $required ];
         }
         return [ 'html' => '', 'not_found' => true ];
     };
@@ -2755,7 +2738,6 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         $ctx['dfc_basic']    = $dfc_basic;
         $ctx['required']     = $required;
         $ctx['required_att'] = $required_att;
-        $ctx['captcha_set']  = $captcha_set;
 
         foreach ( $handlers as $pattern => $handler ) {
             if ( preg_match( $pattern, $result, $matches ) ) {
@@ -2765,8 +2747,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                     if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
                     if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -2795,7 +2776,6 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     $readonly             = is_user_logged_in() ? "readonly='readonly'" : '';
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
         $format = eme_add_captcha_submit( $format );
     } else {
@@ -2833,7 +2813,6 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         'extra_css'        => '',
         'allow_clear'      => false,
         'invite_readonly'  => '',
-        'captcha_set'      => $captcha_set,
         'selected_captcha' => $selected_captcha,
         'required'         => false,
         'required_att'     => '',
@@ -2850,9 +2829,9 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) {
         $formfield = eme_get_formfield( $matches[1] );
         if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'tasksignup', 'people' ] ) ) {
-            $required  = (bool) $formfield['field_required'];
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
             $fieldname = 'FIELD' . $formfield['field_id'];
-            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required ), 'force_required' => $required ];
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required ), 'set_required' => $required ];
         }
         return [ 'html' => '', 'not_found' => true ];
     };
@@ -2861,7 +2840,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         return "<img id='task_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format = eme_translate( $format );
 
     return $format;
@@ -2884,7 +2863,6 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
     $person = eme_esc_person_for_form( $person );
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( ! ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) ) {
         $configured_captchas = eme_get_configured_captchas();
         if ( ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
@@ -2909,7 +2887,6 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         'extra_css'        => '',
         'allow_clear'      => $allow_clear,
         'invite_readonly'  => '',
-        'captcha_set'      => $captcha_set,
         'selected_captcha' => $selected_captcha,
         'required'         => false,
         'required_att'     => '',
@@ -2928,7 +2905,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Password', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='text' name='rsvp_password' value='' class='eme_passwordfield' autocomplete='off' placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='text' name='rsvp_password' value='' class='eme_passwordfield' autocomplete='off' placeholder='$placeholder_text'>", 'set_required' => true ];
         }
         return '';
     };
@@ -2943,9 +2920,9 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
             $field_id  = $formfield['field_id'];
             $fieldname = 'FIELD' . $field_id;
-            $required  = (bool) $formfield['field_required'];
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
             $class     = $formfield['extra_charge'] ? "$dynamic_price_class_basic" : '';
-            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required, $class ), 'force_required' => $required ];
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required, $class ), 'set_required' => $required ];
         }
         return [ 'html' => '', 'not_found' => true ];
     };
@@ -2954,7 +2931,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format = eme_replace_event_placeholders( $format, $event );
     $format = eme_translate( $format );
     return $format;
@@ -2964,7 +2941,6 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
         $format = eme_add_captcha_submit( $format );
     } else {
@@ -3009,7 +2985,6 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         'extra_css'        => '',
         'allow_clear'      => false,
         'invite_readonly'  => '',
-        'captcha_set'      => $captcha_set,
         'selected_captcha' => $selected_captcha,
         'required'         => false,
         'required_att'     => '',
@@ -3053,7 +3028,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'force_required' => true ];
+        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
     };
     $handlers['/#_MAILGROUPS(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
         if ( isset( $matches[1] ) ) {
@@ -3099,10 +3074,10 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         return '';
     };
     $handlers['/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/'] = function( $result, $matches, $ctx ) use ( $selected_captcha ) {
-        if ( ! empty( $selected_captcha ) && ! $ctx['captcha_set'] ) {
+        if ( ! empty( $selected_captcha ) ) {
             $html = eme_generate_captchas_html( $selected_captcha );
             if ( ! empty( $html ) ) {
-                return [ 'html' => $html, 'set_captcha' => true ];
+                return $html;
             }
         }
         return '';
@@ -3118,7 +3093,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
 
     return $format;
 }
@@ -3127,7 +3102,6 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
     $eme_is_admin_request = eme_is_admin_request();
 
     $selected_captcha = '';
-    $captcha_set      = false;
     if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
         $format = eme_add_captcha_submit( $format );
     } else {
@@ -3167,7 +3141,6 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         'extra_css'        => '',
         'allow_clear'      => false,
         'invite_readonly'  => '',
-        'captcha_set'      => $captcha_set,
         'selected_captcha' => $selected_captcha,
         'required'         => false,
         'required_att'     => '',
@@ -3184,7 +3157,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'force_required' => true ];
+        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
     };
     $handlers['/#_FIRSTNAME(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
         $placeholder_text = isset( $matches[1] )
@@ -3194,7 +3167,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'force_required' => true ];
+        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
     };
     $handlers['/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
         $placeholder_text = isset( $matches[2] )
@@ -3204,7 +3177,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'force_required' => true ];
+        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
     };
 
     // remaining shared handlers (BIRTHDATE, ADDRESS, COUNTRY, etc.)
@@ -3269,8 +3242,8 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
                 }
                 $entered_val = $entered_files;
             }
-            $required = (bool) $formfield['field_required'];
-            return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required ), 'force_required' => $required ];
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+            return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required ), 'set_required' => $required ];
         }
         return [ 'html' => '', 'not_found' => true ];
     };
@@ -3279,7 +3252,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     return $format;
 }
 
@@ -3304,7 +3277,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Last name', 'events-made-easy' );
             $html = "<input required='required' type='text' name='familymember[$counter][lastname]' id='familymember[$counter][lastname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
-            return [ 'html' => $html, 'force_required' => true ];
+            return [ 'html' => $html, 'set_required' => true ];
         },
         '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr = [ 'familymember', $counter, 'firstname' ];
@@ -3314,7 +3287,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'First name', 'events-made-easy' );
             $html = "<input required='required' type='text' name='familymember[$counter][firstname]' id='familymember[$counter][firstname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
-            return [ 'html' => $html, 'force_required' => true ];
+            return [ 'html' => $html, 'set_required' => true ];
         },
         '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr = [ 'familymember', $counter, 'phone' ];
@@ -3332,7 +3305,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Email', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
         },
         '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr     = [ 'familymember', $counter, 'bd_email' ];
@@ -3359,7 +3332,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Place of birth', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='text' name='familymember[$counter][birthplace]' id='familymember[$counter][birthplace]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='text' name='familymember[$counter][birthplace]' id='familymember[$counter][birthplace]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
         },
         '/#_BIRTHDATE(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $fieldname   = "familymember[$counter][birthdate]";
@@ -3369,7 +3342,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Date of birth', 'events-made-easy' );
-            return [ 'html' => "<input required='required' readonly='readonly' type='text' name='$fieldname' id='$fieldname' data-date='$entered_val' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>", 'force_required' => true ];
+            return [ 'html' => "<input required='required' readonly='readonly' type='text' name='$fieldname' id='$fieldname' data-date='$entered_val' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
         },
         '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $formfield = eme_get_formfield( $matches[1] );
@@ -3385,16 +3358,15 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 $postfield_name = "familymember[$counter][FIELD{$field_id}]";
                 $postvar_arr    = [ 'familymember', $counter, 'FIELD' . $field_id ];
                 $entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
-                $required       = (bool) $formfield['field_required'];
-                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class_basic ), 'force_required' => $required ];
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class_basic ), 'set_required' => $required ];
             }
             return [ 'html' => '', 'not_found' => true ];
         },
     ];
 
-    $captcha_set = false;
-    $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
 
     return $format;
 }

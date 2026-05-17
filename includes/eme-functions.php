@@ -188,7 +188,6 @@ function eme_captcha_generate( $file ) {
     // give image back
     header( 'Content-type: image/gif' );
     imagegif( $im );
-    imagedestroy( $im );
     exit;
 }
 
@@ -3956,7 +3955,6 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
         $qr = QRCode::getMinimumQRCode( $url_to_encode, $qr_error_level );
         $im = $qr->createImage( $real_size );
         imagegif( $im, $target_file );
-        imagedestroy( $im );
     } else {
         $target_file = $targetBasePath . '/' . basename( $existing_file );
         $target_url  = $targetBaseUrl . '/' . basename( $existing_file );

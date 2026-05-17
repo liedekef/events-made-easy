@@ -2053,6 +2053,8 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     $booked_seats_options = [];
     $max_allowed_is_multi = eme_is_multi( $max_allowed );
     $min_allowed_is_multi = eme_is_multi( $min_allowed );
+    $multi_min_allowed = [];
+    $multi_max_allowed = [];
     if ( $max_allowed_is_multi ) {
         $multi_max_allowed = eme_convert_multi2array( $max_allowed );
     }

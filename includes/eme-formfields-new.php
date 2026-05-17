@@ -1133,15 +1133,23 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     }
     $person = eme_esc_person_for_form( $person );
 
-    $counters = [ 'lastname_found' => 0, 'email_found' => 0 ];
     $ctx      = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
+
+    // Pre-validate required placeholders before running the dispatch
+    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = str_contains( $format, '#_EMAIL' )     || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
 
     $handlers = [
         '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Last name', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>", 'increment' => 'lastname_found', 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>", 'force_required' => true ];
         },
         '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
             $placeholder_text = isset( $matches[1] )
@@ -1153,7 +1161,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Email', 'events-made-easy' );
-            return [ 'html' => "<input required='required' type='email' name='email' id='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>", 'increment' => 'email_found', 'force_required' => true ];
+            return [ 'html' => "<input required='required' type='email' name='email' id='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>", 'force_required' => true ];
         },
         '/#_CANCELCOMMENT(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $placeholder_text = isset( $matches[1] )
@@ -1176,16 +1184,11 @@ function eme_replace_cancelformfields_placeholders( $event ) {
         },
     ];
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
     $format = eme_replace_event_placeholders( $format, $event );
     $format = eme_translate( $format );
 
-    if ( $counters['lastname_found'] && $counters['email_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
@@ -1208,8 +1211,13 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
             : preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
     }
 
-    $counters = [ 'line_found' => 0 ];
     $ctx      = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
+
+    if ( ! str_contains( $format, '#_CANCEL_PAYMENT_LINE' ) ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
 
     $handlers = [
         '/#_CANCEL_PAYMENT_LINE$/' => function( $result, $matches, $ctx ) use ( $booking_ids ) {
@@ -1237,7 +1245,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
                 }
                 $replacement .= eme_replace_booking_placeholders( $tmp_format, $event, $booking );
             }
-            return [ 'html' => $replacement, 'increment' => 'line_found' ];
+            return [ 'html' => $replacement ];
         },
         '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $selected_captcha ) {
             if ( ! empty( $selected_captcha ) && ! $ctx['captcha_set'] ) {
@@ -1270,11 +1278,11 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
                 $found = true;
                 $ret   = $handler( $result, $matches, $ctx );
                 if ( is_array( $ret ) ) {
-                    if ( ! empty( $ret['early_return'] ) ) { return $ret['early_return']; }
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
-                    if ( ! empty( $ret['not_found'] ) )   { $found = false; }
-                    if ( ! empty( $ret['increment'] ) && array_key_exists( $ret['increment'], $counters ) ) { ++$counters[ $ret['increment'] ]; }
-                    if ( ! empty( $ret['set_captcha'] ) ) { $captcha_set = true; }
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
+                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -1291,12 +1299,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
     $format = eme_replace_people_placeholders( $format, $person );
     $format = eme_translate( $format );
 
-    if ( $counters['line_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 /**
@@ -1355,7 +1358,6 @@ function eme_esc_person_for_form( $person = [] ) {
  *   - a plain string (the HTML replacement)
  *   - an array with keys: 'html', and optionally:
  *       'not_found'     => true   (treat as unmatched placeholder)
- *       'increment'     => string (counter name to bump in $counters)
  *       'force_required'=> true   (mark $required = true after handler)
  *       'set_captcha'   => true   (set $captcha_set = true after handler)
  */
@@ -1395,7 +1397,7 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
                 $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
-            return [ 'html' => $replacement, 'increment' => 'lastname_found', 'force_required' => true ];
+            return [ 'html' => $replacement, 'force_required' => true ];
         },
 
         // ── #_FIRSTNAME ──────────────────────────────────────────────────────
@@ -1413,7 +1415,7 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
                 : esc_html__( 'First name', 'events-made-easy' );
             $class       = trim( "$dfc_basic $xcss" );
             $replacement = "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['firstname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'increment' => 'firstname_found' ];
+            return [ 'html' => $replacement ];
         },
 
         // ── #_BIRTHDATE ──────────────────────────────────────────────────────
@@ -1529,7 +1531,7 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
             // there still exist people without email, so in the backend we allow it optional
             $req_att     = $is_admin ? '' : "required='required'";
             $replacement = "<input $req_att type='email' name='$fieldname' id='$fieldname' value='{$p['email']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'increment' => 'email_found', 'force_required' => true ];
+            return [ 'html' => $replacement, 'force_required' => true ];
         },
 
         // ── #_PHONE / #_HTML5_PHONE ──────────────────────────────────────────
@@ -1652,11 +1654,10 @@ function eme_get_person_formfield_handler_definitions( $ctx ) {
  * @param array  $handlers    Merged handler table (shared + function-specific).
  * @param array  $ctx         Context array; 'required' and 'required_att' are
  *                            updated per iteration by this function.
- * @param array  $counters    Associative array of counter names => int (modified in place).
  * @param bool   $captcha_set Whether captcha has been rendered (modified in place).
  * @return string             The processed format string.
  */
-function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$counters, &$captcha_set ) {
+function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$captcha_set ) {
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
 
@@ -1691,23 +1692,12 @@ function eme_run_formfield_dispatch( $format, $handlers, $ctx, &$counters, &$cap
             if ( preg_match( $pattern, $result, $matches ) ) {
                 $found = true;
                 $ret   = $handler( $result, $matches, $ctx );
-
                 if ( is_array( $ret ) ) {
-                    if ( ! empty( $ret['early_return'] ) ) { return $ret['early_return']; }
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
-                    if ( ! empty( $ret['not_found'] ) ) {
-                        $found = false;
-                    }
-                    if ( ! empty( $ret['force_required'] ) ) {
-                        $required     = true;
-                        $required_att = "required='required'";
-                    }
-                    if ( ! empty( $ret['increment'] ) && array_key_exists( $ret['increment'], $counters ) ) {
-                        ++$counters[ $ret['increment'] ];
-                    }
-                    if ( ! empty( $ret['set_captcha'] ) ) {
-                        $captcha_set = true;
-                    }
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
+                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -1803,10 +1793,9 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
         },
     ];
 
-    $counters    = [];
     $captcha_set = false;
     $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
     $format      = eme_replace_event_placeholders( $format, $event );
     return $format;
 }
@@ -1874,10 +1863,9 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
         },
     ];
 
-    $counters    = [];
     $captcha_set = false;
     $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
     $format      = eme_replace_membership_placeholders( $format, $membership );
 
     // In the admin member-edit form, wrap each occurrence in a labelled deletable container
@@ -2176,17 +2164,6 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     }
 
     $discount_fields_count = 0;
-    $error_msg             = '';
-
-    // for multi booking forms, fake all required fields present
-    // password needs to be present in the frontend only
-    $counters = [
-        'password_found'  = ( empty( $event['event_properties']['rsvp_password'] ) || $eme_is_admin_request ) ? 1 : 0,
-        'lastname_found'  => $is_multibooking ? 1 : 0,
-        'email_found'     => $is_multibooking ? 1 : 0,
-        'seats_found'     => 0,
-        'firstname_found' => 0,
-    ];
 
     // Build $ctx
     $ctx = [
@@ -2221,7 +2198,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         return "<textarea {$ctx['required_att']} name='eme_rsvpcomment' $dfc placeholder='$placeholder_text' >$bookerComment</textarea>";
     };
 
-    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic, &$counters ) {
+    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic ) {
         $var_prefix  = "bookings[$event_id][";
         $var_postfix = ']';
         $fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
@@ -2246,10 +2223,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
             }
         }
-        return [ 'html' => $replacement, 'increment' => 'seats_found' ];
+        return [ 'html' => $replacement ];
     };
 
-    $handlers['/#_(SEATS|SPACES)\{(\d+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $editing_booking_from_backend, $booking_seats_mp, $booked_seats_options, $min_allowed_is_multi, $multi_min_allowed, $multi_max_allowed, $dynamic_price_class_basic, &$error_msg, &$counters ) {
+    $handlers['/#_(SEATS|SPACES)\{(\d+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $editing_booking_from_backend, $booking_seats_mp, $booked_seats_options, $min_allowed_is_multi, $multi_min_allowed, $multi_max_allowed, $dynamic_price_class_basic ) {
         $field_id    = intval( $matches[2] );
         $fieldname   = "bookings[$event_id][bookedSeats{$field_id}]";
         $entered_val = ( $editing_booking_from_backend && $field_id > 0 && isset( $booking_seats_mp[ $field_id - 1 ] ) )
@@ -2257,7 +2234,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         $dfc_basic   = $ctx['dfc_basic'];
         if ( ! eme_is_multi( $event['price'] ) ) {
             $error_msg = __( 'By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings.', 'events-made-easy' );
-            return '';
+            return [ 'html' => '', 'early_return' => "<div class='eme-message-error eme-rsvp-message-error'>$error_msg</div>" ];
         } elseif ( $event['event_properties']['take_attendance'] ) {
             if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
                 $replacement = "<input type='hidden' name='$fieldname' value='1'>";
@@ -2271,7 +2248,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
             }
         }
-        return [ 'html' => $replacement, 'increment' => 'seats_found' ];
+        return [ 'html' => $replacement ];
     };
 
     $handlers['/#_PASSWORD(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $event, $eme_is_admin_request, $is_multibooking ) {
@@ -2279,7 +2256,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
             $dfc = "class='{$ctx['dfc_basic']}'";
             $replacement = "<input required='required' type='text' class='eme_passwordfield' autocomplete='off' name='rsvp_password' value='' $dfc placeholder='$placeholder_text'>";
-            return [ 'html' => $replacement, 'increment' => 'password_found', 'force_required' => true ];
+            return [ 'html' => $replacement, 'force_required' => true ];
         }
         return '';
     };
@@ -2418,6 +2395,29 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     // ── Run dispatch, updating dfc_basic per-iteration via a wrapper ─────────
     // Because dfc_basic changes per iteration (based on dyndata), we run a
     // custom loop here instead of eme_run_formfield_dispatch.
+ 
+    // pre-validate required placeholders
+    $has_lastname = $is_multibooking || str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = $is_multibooking || str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_password = $eme_is_admin_request || $is_multibooking || empty( $event['event_properties']['rsvp_password'] ) || str_contains( $format, '#_PASSWORD' );
+
+    preg_match_all( '/#_(SEATS|SPACES)(\{(\d+)\})?/', $format, $seats_matches );
+    $seats_found = count( $seats_matches[0] );
+
+    if ( ! $has_lastname || ! $has_email || ! $has_password || $seats_found < 1 ) {
+        $res = '';
+        if ( ! $has_lastname || ! $has_email || $seats_found < 1 ) {
+            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
+        }
+        if ( eme_is_multi( $event['price'] ) ) {
+            $res .= __( "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price.", 'events-made-easy' ) . '<br>';
+        }
+        if ( ! $has_password && ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
+            $res .= __( 'Check that the placeholder #_PASSWORD is present in the form.', 'events-made-easy' ) . '<br>';
+        }
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
+    }
+
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
 
@@ -2460,12 +2460,11 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $found = true;
                 $ret   = $handler( $result, $matches, $ctx );
                 if ( is_array( $ret ) ) {
-                    if ( ! empty( $ret['early_return'] ) ) { return $ret['early_return']; }
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
                     if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['force_required'] ) )  { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['increment'] ) && array_key_exists( $ret['increment'], $counters ) ) { ++$counters[ $ret['increment'] ]; }
-                    if ( ! empty( $ret['set_captcha'] ) )     { $captcha_set = true; }
+                    if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
+                    if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
                 } else {
                     $replacement = (string) $ret;
                 }
@@ -2488,29 +2487,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
 
     $format = eme_replace_event_placeholders( $format, $event );
 
-    if ( eme_is_multi( $event['price'] ) ) {
-        $seats_count = count( eme_convert_multi2array( $event['price'] ) );
-    } else {
-        $seats_count = 1;
-    }
-
-    if ( ! empty( $error_msg ) ) {
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$error_msg</div>";
-    } elseif ( $counters['lastname_found'] && $counters['email_found'] && $counters['password_found'] && $counters['seats_found'] >= $seats_count ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $counters['lastname_found'] || ! $counters['email_found'] || $counters['seats_found'] < $seats_count ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        if ( eme_is_multi( $event['price'] ) ) {
-            $res .= __( "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price.", 'events-made-easy' ) . '<br>';
-        }
-        if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $counters['password_found'] ) {
-            $res .= __( 'Check that the placeholder #_PASSWORD is present in the form.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
-    }
+    return $format;
 }
 
 function eme_replace_membership_formfields_placeholders( $form_id, $membership, $member, $format ) {
@@ -2523,6 +2500,15 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     }
     if ( eme_is_empty_string( $format ) ) {
         return;
+    }
+
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    $has_email     = str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
     }
 
     $allow_clear    = false;
@@ -2596,8 +2582,6 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     $dynamic_data_rendered     = false;
     $personal_info_class       = 'personal_info';
     $discount_fields_count     = 0;
-
-    $counters = [ 'lastname_found' => 0, 'firstname_found' => 0, 'email_found' => 0 ];
 
     $ctx = [
         'person'           => $person,
@@ -2778,11 +2762,10 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
                 $found = true;
                 $ret   = $handler( $result, $matches, $ctx );
                 if ( is_array( $ret ) ) {
-                    if ( ! empty( $ret['early_return'] ) ) { return $ret['early_return']; }
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
-                    if ( ! empty( $ret['not_found'] ) )     { $found = false; }
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
                     if ( ! empty( $ret['force_required'] ) ) { $required = true; $required_att = "required='required'"; }
-                    if ( ! empty( $ret['increment'] ) && array_key_exists( $ret['increment'], $counters ) ) { ++$counters[ $ret['increment'] ]; }
                     if ( ! empty( $ret['set_captcha'] ) )    { $captcha_set = true; }
                 } else {
                     $replacement = (string) $ret;
@@ -2804,12 +2787,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
 
     $format = eme_replace_membership_placeholders( $format, $membership );
 
-    if ( $counters['lastname_found'] && $counters['firstname_found'] && $counters['email_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
@@ -2836,7 +2814,13 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     }
     $person = eme_esc_person_for_form( $person );
 
-    $counters = [ 'lastname_found' => 0, 'email_found' => 0 ];
+    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
 
     $ctx = [
         'person'           => $person,
@@ -2877,15 +2861,10 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
         return "<img id='task_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
     $format = eme_translate( $format );
 
-    if ( $counters['lastname_found'] && $counters['email_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format, $event ) {
@@ -2919,7 +2898,6 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
             : preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
     }
 
-    $counters = [];
     $ctx = [
         'person'           => $person,
         'fn_prefix'        => '',
@@ -2976,7 +2954,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
     $format = eme_replace_event_placeholders( $format, $event );
     $format = eme_translate( $format );
     return $format;
@@ -3014,7 +2992,12 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
         : '';
 
-    $counters = [ 'email_found' => 0 ];
+    if ( ! str_contains( $format, '#_EMAIL' ) && ! str_contains( $format, '#_HTML5_EMAIL' ) ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
     $ctx = [
         'person'           => $person,
         'fn_prefix'        => '',
@@ -3070,7 +3053,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'increment' => 'email_found', 'force_required' => true ];
+        return [ 'html' => $replacement, 'force_required' => true ];
     };
     $handlers['/#_MAILGROUPS(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
         if ( isset( $matches[1] ) ) {
@@ -3135,14 +3118,9 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
 
-    if ( $counters['email_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 function eme_replace_cpiform_placeholders( $format, $person ) {
@@ -3169,7 +3147,15 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
         : '';
 
-    $counters = [ 'lastname_found' => 0, 'firstname_found' => 0, 'email_found' => 0 ];
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    $has_email     = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-cpi-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
     $ctx = [
         'person'           => $person,
         'fn_prefix'        => '',
@@ -3198,7 +3184,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'increment' => 'lastname_found', 'force_required' => true ];
+        return [ 'html' => $replacement, 'force_required' => true ];
     };
     $handlers['/#_FIRSTNAME(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
         $placeholder_text = isset( $matches[1] )
@@ -3208,7 +3194,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'increment' => 'firstname_found', 'force_required' => true ];
+        return [ 'html' => $replacement, 'force_required' => true ];
     };
     $handlers['/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
         $placeholder_text = isset( $matches[2] )
@@ -3218,7 +3204,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         if ( $wp_profile_warning ) {
             $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
         }
-        return [ 'html' => $replacement, 'increment' => 'email_found', 'force_required' => true ];
+        return [ 'html' => $replacement, 'force_required' => true ];
     };
 
     // remaining shared handlers (BIRTHDATE, ADDRESS, COUNTRY, etc.)
@@ -3293,19 +3279,21 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
-    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
-
-    if ( $counters['lastname_found'] && $counters['firstname_found'] && $counters['email_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-cpi-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
-        . '</div>';
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
+    return $format;
 }
 
 
 function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
     $dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
+
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    if ( ! $has_lastname || ! $has_firstname ) {
+        return "<div id='message' class='eme-message-error eme-family-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
 
     $handlers = [
         '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
@@ -3316,7 +3304,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Last name', 'events-made-easy' );
             $html = "<input required='required' type='text' name='familymember[$counter][lastname]' id='familymember[$counter][lastname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
-            return [ 'html' => $html, 'increment' => 'lastname_found', 'force_required' => true ];
+            return [ 'html' => $html, 'force_required' => true ];
         },
         '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr = [ 'familymember', $counter, 'firstname' ];
@@ -3326,7 +3314,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'First name', 'events-made-easy' );
             $html = "<input required='required' type='text' name='familymember[$counter][firstname]' id='familymember[$counter][firstname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
-            return [ 'html' => $html, 'increment' => 'firstname_found', 'force_required' => true ];
+            return [ 'html' => $html, 'force_required' => true ];
         },
         '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
             $postvar_arr = [ 'familymember', $counter, 'phone' ];
@@ -3404,17 +3392,11 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
         },
     ];
 
-    $counters    = [ 'lastname_found' => 0, 'firstname_found' => 0 ];
     $captcha_set = false;
     $ctx         = [ 'required' => false, 'required_att' => '', 'captcha_set' => false ];
-    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $counters, $captcha_set );
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx, $captcha_set );
 
-    if ( $counters['lastname_found'] && $counters['firstname_found'] ) {
-        return $format;
-    }
-    return "<div id='message' class='eme-message-error eme-family-message-error'>"
-        . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders.', 'events-made-easy' )
-        . '</div>';
+    return $format;
 }
 
 function eme_find_required_formfields( $format ) {

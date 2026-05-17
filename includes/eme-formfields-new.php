@@ -1363,33 +1363,24 @@ function eme_get_person_formfield_handler_definitions() {
     }
 
     $handlers = [
-
-        // ── #_NAME / #_LASTNAME ──────────────────────────────────────────────
         '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn          = $ctx['fn_prefix'];
-            $p           = $ctx['person'];
-            $is_admin    = $ctx['eme_is_admin'];
-            $readonly    = $ctx['readonly'];
-            $dfc_basic   = $ctx['dfc_basic'];
-            $xcss        = $ctx['extra_css'];
-            $allow_clear = $ctx['allow_clear'];
-            $invite_ro   = $ctx['invite_readonly'];
+            $p = $ctx['person'];
 
-            $fieldname = $fn . 'lastname';
-            if ( is_user_logged_in() && ! $is_admin ) {
+            $fieldname = $ctx['fn_prefix'] . 'lastname';
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
                 $this_readonly = "readonly='readonly'";
-                if ( $allow_clear ) {
+                if ( $ctx['allow_clear'] ) {
                     $this_readonly .= " data-clearable='true'";
                 }
-            } elseif ( ! empty( $invite_ro ) && ! empty( $p['lastname'] ) ) {
-                $this_readonly = $invite_ro;
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['lastname'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
             } else {
-                $this_readonly = $readonly;
+                $this_readonly = $ctx['readonly'];
             }
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Last name', 'events-made-easy' );
-            $class       = trim( "$dfc_basic $xcss" );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
             $replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='{$p['lastname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
             if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
                 $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
@@ -1399,254 +1390,153 @@ function eme_get_person_formfield_handler_definitions() {
             }
             return [ 'html' => $replacement, 'set_required' => true ];
         },
-
-        // ── #_FIRSTNAME ──────────────────────────────────────────────────────
         '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $is_admin  = $ctx['eme_is_admin'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-            $invite_ro = $ctx['invite_readonly'];
+            $p = $ctx['person'];
 
-            $fieldname = $fn . 'firstname';
-            if ( is_user_logged_in() && ! $is_admin ) {
+            $fieldname = $ctx['fn_prefix'] . 'firstname';
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
                 $this_readonly = "readonly='readonly'";
-            } elseif ( ! empty( $invite_ro ) && ! empty( $p['firstname'] ) ) {
-                $this_readonly = $invite_ro;
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['firstname'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
             } else {
-                $this_readonly = $readonly;
+                $this_readonly = $ctx['readonly'];
             }
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'First name', 'events-made-easy' );
-            $class       = trim( "$dfc_basic $xcss" );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
             $replacement = "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['firstname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
             if ( ! empty( $ctx['wp_profile_warning'] ) ) {
                 $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
             }
             return [ 'html' => $replacement ];
         },
-
-        // ── #_BIRTHDATE ──────────────────────────────────────────────────────
         '/#_BIRTHDATE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $disabled  = $ctx['disabled'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'birthdate';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'birthdate';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Date of birth', 'events-made-easy' );
-            $class = trim( "eme_formfield eme_formfield_fdate $xcss" );
-            return "<input {$ctx['required_att']} readonly='readonly' $disabled type='text' name='$fieldname' id='$fieldname' data-date='{$p['birthdate']}' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='$class' placeholder='$placeholder_text'>";
+            $class = trim( "eme_formfield eme_formfield_fdate {$ctx['extra_css']}" );
+            return "<input {$ctx['required_att']} readonly='readonly' {$ctx['disabled']} type='text' name='$fieldname' id='$fieldname' data-date='{$p['birthdate']}' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_BIRTHPLACE ─────────────────────────────────────────────────────
         '/#_BIRTHPLACE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'birthplace';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'birthplace';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'Place of birth', 'events-made-easy' );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['birthplace']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['birthplace']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_ADDRESS1 ───────────────────────────────────────────────────────
         '/#_ADDRESS1(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'address1';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'address1';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address1']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address1']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_ADDRESS2 ───────────────────────────────────────────────────────
         '/#_ADDRESS2(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'address2';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'address2';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address2']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address2']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_CITY ───────────────────────────────────────────────────────────
         '/#_CITY(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'city';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'city';
             $placeholder_text = isset( $matches[1] )
                 ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
                 : esc_html__( 'City', 'events-made-easy' );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['city']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['city']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_ZIP / #_POSTAL ─────────────────────────────────────────────────
         '/#_(ZIP|POSTAL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'zip';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'zip';
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Postal code', 'events-made-easy' );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['zip']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['zip']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_STATE ──────────────────────────────────────────────────────────
         '/#_STATE$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $form_id   = $ctx['form_id'];
-            $disabled  = $ctx['disabled'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'state_code';
-            $fieldid   = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'state_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
             $state_arr = ! empty( $p['state_code'] ) ? [ $p['state_code'] => eme_get_state_name( $p['state_code'], $p['country_code'] ) ] : [];
-            $class     = trim( "eme_snapselect_state_class $dfc_basic $xcss" );
-            return eme_form_select( $p['state_code'], $fieldname, $fieldid, $state_arr, '', $ctx['required'], $class, $disabled );
+            $class     = trim( "eme_snapselect_state_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
+            return eme_form_select( $p['state_code'], $fieldname, $fieldid, $state_arr, '', $ctx['required'], $class, $ctx['disabled'] );
         },
-
-        // ── #_COUNTRY (plain) ────────────────────────────────────────────────
         '/#_COUNTRY$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $form_id   = $ctx['form_id'];
-            $disabled  = $ctx['disabled'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname   = $fn . 'country_code';
-            $fieldid     = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'country_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
             $country_arr = ! empty( $p['country_code'] ) ? [ $p['country_code'] => eme_get_country_name( $p['country_code'] ) ] : [];
-            $class       = trim( "eme_snapselect_country_class $dfc_basic $xcss" );
-            return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $disabled );
+            $class     = trim( "eme_snapselect_country_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
+            return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
         },
-
-        // ── #_COUNTRY{code} (with fallback country code) ─────────────────────
         '/#_COUNTRY\{(.+)\}$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $form_id   = $ctx['form_id'];
-            $disabled  = $ctx['disabled'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'country_code';
-            $fieldid   = ! empty( $form_id ) ? $form_id . '-' . $fieldname : $fieldname;
-            $class     = trim( "eme_snapselect_country_class $dfc_basic $xcss" );
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'country_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
+            $class     = trim( "eme_snapselect_country_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
             if ( ! empty( $p['country_code'] ) ) {
                 $country_arr = [ $p['country_code'] => eme_get_country_name( $p['country_code'] ) ];
-                return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $disabled );
+                return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
             }
             $country_code = $matches[1];
             $country_name = eme_get_country_name( $country_code );
             if ( ! empty( $country_name ) ) {
                 $country_arr = [ $country_code => $country_name ];
-                return eme_form_select( $country_code, $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $disabled );
+                return eme_form_select( $country_code, $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
             }
             return '';
         },
-
-        // ── #_EMAIL / #_HTML5_EMAIL ──────────────────────────────────────────
         '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn          = $ctx['fn_prefix'];
-            $p           = $ctx['person'];
-            $is_admin    = $ctx['eme_is_admin'];
-            $readonly    = $ctx['readonly'];
-            $dfc_basic   = $ctx['dfc_basic'];
-            $xcss        = $ctx['extra_css'];
-            $invite_ro   = $ctx['invite_readonly'];
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'email';
 
-            $fieldname = $fn . 'email';
-            if ( is_user_logged_in() && ! $is_admin ) {
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
                 $this_readonly = "readonly='readonly'";
-            } elseif ( ! empty( $invite_ro ) && ! empty( $p['email'] ) ) {
-                $this_readonly = $invite_ro;
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['email'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
             } else {
-                $this_readonly = $readonly;
+                $this_readonly = $ctx['readonly'];
             }
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Email', 'events-made-easy' );
-            $class = trim( "$dfc_basic $xcss" );
-            $req_att = $is_admin ? '' : "required='required'";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            $req_att = $ctx['eme_is_admin'] ? '' : "required='required'";
             $replacement = "<input $req_att type='email' name='$fieldname' id='$fieldname' value='{$p['email']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
             if ( ! empty( $ctx['wp_profile_warning'] ) ) {
                 $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
             }
             return [ 'html' => $replacement, 'set_required' => ! empty( $req_att ) ];
         },
-
-        // ── #_PHONE / #_HTML5_PHONE ──────────────────────────────────────────
         '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $readonly  = $ctx['readonly'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-
-            $fieldname = $fn . 'phone';
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'phone';
             $placeholder_text = isset( $matches[2] )
                 ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
                 : esc_html__( 'Phone number', 'events-made-easy' );
-            $class = trim( "$dfc_basic $xcss" );
-            return "<input {$ctx['required_att']} type='tel' name='$fieldname' id='$fieldname' value='{$p['phone']}' $readonly class='$class' placeholder='$placeholder_text'>";
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='tel' name='$fieldname' id='$fieldname' value='{$p['phone']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
         },
-
-        // ── #_BIRTHDAY_EMAIL ─────────────────────────────────────────────────
         '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) {
-            $fn = $ctx['fn_prefix'];
-            $p  = $ctx['person'];
-            return eme_ui_select_binary( $p['bd_email'], $fn . 'bd_email' );
+            return eme_ui_select_binary( $ctx['person']['bd_email'], $ctx['fn_prefix'] . 'bd_email' );
         },
-
-        // ── #_OPT_IN ─────────────────────────────────────────────────────────
         '/#_OPT_IN$/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $is_admin  = $ctx['eme_is_admin'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-            $disabled  = $ctx['disabled'];
-
-            $selected = $p['massmail'] ?? 0;
-            $class    = trim( "$dfc_basic $xcss eme_snapselect" );
-            $replacement = eme_ui_select_binary( $selected, $fn . 'massmail', 0, $class, $disabled );
-            if ( ! $is_admin && get_option( 'eme_massmail_popup' ) ) {
+            $selected = $ctx['person']['massmail'] ?? 0;
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] . ' eme_snapselect' );
+            $replacement = eme_ui_select_binary( $selected, $ctx['fn_prefix'] . 'massmail', 0, $class, $ctx['disabled'] );
+            if ( ! $ctx['eme_is_admin'] && get_option( 'eme_massmail_popup' ) ) {
                 $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 if ( ! eme_is_empty_string( $popup ) ) {
                     $confirm = esc_html__( 'Yes', 'events-made-easy' );
@@ -1656,20 +1546,11 @@ function eme_get_person_formfield_handler_definitions() {
             }
             return $replacement;
         },
-
-        // ── #_OPT_OUT / #_MASSMAIL ───────────────────────────────────────────
         '/#_OPT_OUT|#_MASSMAIL/' => function( $result, $matches, $ctx ) {
-            $fn        = $ctx['fn_prefix'];
-            $p         = $ctx['person'];
-            $is_admin  = $ctx['eme_is_admin'];
-            $dfc_basic = $ctx['dfc_basic'];
-            $xcss      = $ctx['extra_css'];
-            $disabled  = $ctx['disabled'];
-
-            $selected = $p['massmail'] ?? 1;
-            $class    = trim( "$dfc_basic $xcss eme_snapselect" );
-            $replacement = eme_ui_select_binary( $selected, $fn . 'massmail', 0, $class, $disabled );
-            if ( ! $is_admin && get_option( 'eme_massmail_popup' ) ) {
+            $selected = $ctx['person']['massmail'] ?? 1;
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] . ' eme_snapselect' );
+            $replacement = eme_ui_select_binary( $selected, $ctx['fn_prefix'] . 'massmail', 0, $class, $ctx['disabled'] );
+            if ( ! $ctx['eme_is_admin'] && get_option( 'eme_massmail_popup' ) ) {
                 $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
                 if ( ! eme_is_empty_string( $popup ) ) {
                     $confirm = esc_html__( 'Yes', 'events-made-easy' );
@@ -1679,39 +1560,24 @@ function eme_get_person_formfield_handler_definitions() {
             }
             return $replacement;
         },
-
-        // ── #_GDPR ───────────────────────────────────────────────────────────
         '/#_GDPR(\{.+?\})?/' => function( $result, $matches, $ctx ) {
-            $fn       = $ctx['fn_prefix'];
-            $p        = $ctx['person'];
-            $is_admin = $ctx['eme_is_admin'];
-            $xcss     = $ctx['extra_css'];
-            $disabled = $ctx['disabled'];
-
-            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
-            $fieldname = $fn . 'gdpr';
-            if ( ! $is_admin ) {
-                $class = trim( "eme-gdpr-field nodynamicupdates $xcss" );
-                return eme_ui_checkbox_binary( $p['gdpr'], $fieldname, $label, 1, $class, $disabled );
+            if ( $ctx['eme_is_admin'] ) {
+                return '';
             }
-            return '';
+            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
+            $class = trim( "eme-gdpr-field nodynamicupdates {$ctx['extra_css']}" );
+            return eme_ui_checkbox_binary( $ctx['person']['gdpr'], $ctx['fn_prefix'] . 'gdpr', $label, 1, $class, $ctx['disabled'] );
         },
-
-        // ── #_REMEMBERME ─────────────────────────────────────────────────────
         '/#_REMEMBERME(\{.+?\})?/' => function( $result, $matches, $ctx ) {
-            $is_admin = $ctx['eme_is_admin'];
+            if ( $ctx['eme_is_admin'] || is_user_logged_in() ) {
+                return '';
+            }
             $label = isset( $matches[1] )
                 ? substr( $matches[1], 1, -1 )
                 : __( 'Remember me?', 'events-made-easy' );
-            if ( ! $is_admin && ! is_user_logged_in() ) {
-                return eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
-            }
-            return '';
+            return eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
         },
-
-        // ── #_SUBSCRIBE_TO_GROUP{id}{label?} ─────────────────────────────────
         '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) {
-            $xcss = $ctx['extra_css'];
             $group = is_numeric( $matches[1] )
                 ? eme_get_group( $matches[1] )
                 : eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
@@ -1723,27 +1589,20 @@ function eme_get_person_formfield_handler_definitions() {
             }
             $group_id = $group['group_id'];
             $label = isset( $matches[2] ) ? substr( $matches[2], 1, -1 ) : $group['name'];
-            $class = trim( "nodynamicupdates $xcss" );
+            $class = trim( "nodynamicupdates {$ctx['extra_css']}" );
             $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='$class'>";
             if ( ! empty( $label ) ) {
                 $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
             }
             return $replacement;
         },
-
-        // ── #_CAPTCHA / #_HCAPTCHA / #_RECAPTCHA / #_CFCAPTCHA ──────────────
         '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) {
-            $sel_captcha = $ctx['selected_captcha'];
-            if ( ! empty( $sel_captcha ) ) {
-                $html = eme_generate_captchas_html( $sel_captcha );
-                if ( ! empty( $html ) ) {
-                    return $html;
-                }
+            if ( empty( $ctx['selected_captcha'] ) ) {
+                return '';
             }
-            return '';
+            $html = eme_generate_captchas_html( $ctx['selected_captcha'] );
+            return ! empty( $html ) ? $html : '';
         },
-
-        // ── #_FIELDNAME{key} ─────────────────────────────────────────────────
         '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) ) {
@@ -1751,7 +1610,6 @@ function eme_get_person_formfield_handler_definitions() {
             }
             return [ 'html' => '', 'not_found' => true ];
         },
-
     ];
 
     return $handlers;

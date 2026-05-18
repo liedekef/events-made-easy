@@ -1087,7 +1087,6 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
     return $format;
 }
 
-
 function eme_replace_cancelformfields_placeholders( $event ) {
     $eme_is_admin_request = eme_is_admin_request();
     if ( $eme_is_admin_request ) {
@@ -1611,7 +1610,6 @@ function eme_get_person_formfield_handler_definitions() {
             return [ 'html' => '', 'not_found' => true ];
         },
     ];
-
     return $handlers;
 }
 
@@ -1687,11 +1685,6 @@ function eme_run_formfield_dispatch( $format, $handlers, $ctx ) {
 
     return $format;
 }
-
-
-// ════════════════════════════════════════════════════════════════════════════
-// DYNAMIC FIELD FUNCTIONS (small, self-contained — no shared handlers needed)
-// ════════════════════════════════════════════════════════════════════════════
 
 function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $format, $grouping, $i = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();
@@ -1849,11 +1842,6 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
     }
     return $format;
 }
-
-
-// ════════════════════════════════════════════════════════════════════════════
-// MAIN FORM RENDERING FUNCTIONS
-// ════════════════════════════════════════════════════════════════════════════
 
 function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $format = '', $is_multibooking = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();

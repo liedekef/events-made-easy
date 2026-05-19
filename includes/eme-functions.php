@@ -462,10 +462,17 @@ function eme_check_captcha( $properties = [], $remove_captcha_if_ok = 0 ) {
     return $captcha_res;
 }
 
-function eme_generate_captchas_html($selected_captcha = '') {
+function eme_generate_captchas_html($selected_captcha = '', $eme_captcha_only_logged_out = null) {
     if ( eme_is_admin_request() ) {
         return '';
     }
+    if ( is_null($eme_captcha_only_logged_out)) {
+        $eme_captcha_only_logged_out = get_option( 'eme_captcha_only_logged_out' );
+    }
+    if ( $eme_captcha_only_logged_out && is_user_logged_in() ) {
+        return '';
+    }
+
     $configured_captchas = eme_get_configured_captchas();
     if (!empty($configured_captchas)) {
         if (empty($selected_captcha))
@@ -479,7 +486,8 @@ function eme_generate_captchas_html($selected_captcha = '') {
     return '';
 }
 
-function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
+function eme_add_missing_placeholders( $format, $add_captcha = 0, $add_dyndata = 0 ) {
+
     if ( $add_dyndata && ! preg_match( '/#_DYNAMICDATA/', $format ) ) {
         $text = '#_DYNAMICDATA';
         if ( preg_match( '/#_SUBMIT/', $format ) ) {
@@ -488,7 +496,9 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
             $format .= $text;
         }
     }
-    if ( !empty($captcha) && !empty($configured_captchas) && !preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA/', $format ) ) {
+
+    $configured_captchas = eme_get_configured_captchas();
+    if ( $add_captcha && !empty($configured_captchas) && !preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA/', $format ) ) {
         $captcha_text = '#_CAPTCHA';
         if ( preg_match( '/#_SUBMIT/', $format ) ) {
             $format = preg_replace( '/#_SUBMIT/', "$captcha_text<br>#_SUBMIT", $format );
@@ -496,6 +506,12 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
             $format .= $captcha_text;
         }
     }
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
+        $format = $add_captcha && !empty($configured_captchas)
+            ? preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format )
+            : preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
+    }
+
     if ( ! preg_match( '/#_SUBMIT/', $format ) ) {
         $format .= '<br>#_SUBMIT';
     }

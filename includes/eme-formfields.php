@@ -1087,355 +1087,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
     return $format;
 }
 
-function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
-    $eme_is_admin_request = eme_is_admin_request();
-
-    if ( is_user_logged_in() ) {
-        $readonly = "readonly='readonly'";
-    } else {
-        $readonly = '';
-    }
-
-    $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        $configured_captchas = eme_get_configured_captchas();
-        if (!empty($configured_captchas) && !$eme_is_admin_request)
-            $selected_captcha = array_key_first($configured_captchas);
-        $format = eme_add_captcha_submit( $format, $selected_captcha );
-    }
-
-    // We need at least #_LASTNAME, #_EMAIL
-    $lastname_found = 0;
-    $email_found    = 0;
-
-    $bookerLastName  = '';
-    $bookerFirstName = '';
-    $bookerBirthdate    = '';
-    $bookerBirthplace   = '';
-    $bookerAddress1     = '';
-    $bookerAddress2     = '';
-    $bookerCity         = '';
-    $bookerZip          = '';
-    $bookerState_code   = '';
-    $bookerCountry_code = '';
-    // if only 1 country, set it as default
-    $countries_alpha2 = eme_get_countries_alpha2();
-    if ( count( $countries_alpha2 ) == 1 ) {
-        $bookerCountry_code = $countries_alpha2[0];
-    }
-    $bookerEmail   = '';
-    $bookerComment = '';
-    $bookerPhone   = '';
-    $bd_email      = 0;
-    $gdpr          = 0;
-    if ( is_user_logged_in() ) {
-        $current_user       = wp_get_current_user();
-        $person             = eme_get_person_by_wp_id( $current_user->ID );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_user->ID );
-        }
-        $bookerLastName     = esc_html( $person['lastname'] );
-        $bookerFirstName    = esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = esc_html( $person['birthplace'] );
-        $bookerAddress1     = esc_html( $person['address1'] );
-        $bookerAddress2     = esc_html( $person['address2'] );
-        $bookerCity         = esc_html( $person['city'] );
-        $bookerZip          = esc_html( $person['zip'] );
-        $bookerState_code   = esc_html( $person['state_code'] );
-        $bookerCountry_code = esc_html( $person['country_code'] );
-        $bookerEmail        = esc_html( $person['email'] );
-        $bookerPhone        = esc_html( $person['phone'] );
-        $bd_email           = intval( $person['bd_email'] );
-        $gdpr               = intval( $person['gdpr'] );
-    }
-
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    $needle_offset = 0;
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
-        $replacement        = '';
-        $var_prefix  = '';
-        $var_postfix = '';
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
-
-        // also support RESPNAME, RESPEMAIL, ...
-        if ( strstr( $result, '#_RESP' ) ) {
-            $result = str_replace( '#_RESP', '#_', $result );
-        }
-
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='task_lastname' id='task_lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
-            if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
-            }
-
-            ++$lastname_found;
-            // #_NAME is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='task_firstname' id='task_firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' name='task_email' id='task_email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
-            ++$email_found;
-            // #_EMAIL is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_phone';
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='$bookerPhone' placeholder='$placeholder_text' $required_att>";
-        } elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
-            }
-            $replacement = "<textarea name='task_comment' id='task_comment' placeholder='$placeholder_text' ></textarea>";
-        } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __('Remember me?','events-made-easy');
-            }
-            if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
-            }
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-            }
-            $fieldname    = 'task_birthdate';
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_birthplace';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_address1';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' placeholder='$placeholder_text' >";
-        } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_address2';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' placeholder='$placeholder_text' $readonly >";
-        } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_city';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'City', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerCity' placeholder='$placeholder_text' $readonly >";
-        } elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'task_zip';
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' placeholder='$placeholder_text' $readonly >";
-        } elseif ( preg_match( '/#_STATE$/', $result ) ) {
-            $fieldname = 'task_state_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerState_code ) ) {
-                $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
-            } else {
-                $state_arr = [];
-            }
-            $replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_snapselect_state_class" );
-        } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
-            $fieldname = 'task_country_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-            } else {
-                $country_arr = [];
-            }
-            $replacement = eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_snapselect_country_class" );
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $bd_email, 'task_bd_email' );
-        } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-            $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
-            if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-            $fieldname         = 'task_massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, 'eme_snapselect' );
-            if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = '';
-            }
-            $fieldname = 'task_gdpr';
-            if ( ! $eme_is_admin_request ) {
-                $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
-            }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
-            if ( !empty($selected_captcha) && ! $captcha_set ) {
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __( 'Subscribe', 'events-made-easy' );
-            }
-            $replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'tasksignup', 'people' ] ) ) {
-                $field_id       = $formfield['field_id'];
-                $fieldname      = "{$var_prefix}FIELD" . $field_id . $var_postfix;
-                $entered_val    = '';
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                $replacement = eme_get_formfield_html( $formfield, $fieldname, '', $required );
-            } else {
-                $found = 0;
-            }
-        } else {
-            $found = 0;
-        }
-
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
-
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-
-    // now, replace any language tags found in the format itself
-    $format = eme_translate( $format );
-
-    // now check we found all the required placeholders for the form to work
-    if ( $lastname_found && $email_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $lastname_found || ! $email_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
-    }
-}
 function eme_replace_cancelformfields_placeholders( $event ) {
-    // not used from the admin backend, but we check to be sure
     $eme_is_admin_request = eme_is_admin_request();
     if ( $eme_is_admin_request ) {
         return;
@@ -1445,12 +1097,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     if ( $registration_wp_users_only && ! is_user_logged_in() ) {
         return '';
     }
-
-    if ( $registration_wp_users_only ) {
-        $readonly = "readonly='readonly'";
-    } else {
-        $readonly = '';
-    }
+    $readonly = $registration_wp_users_only ? "readonly='readonly'" : '';
 
     if ( ! eme_is_empty_string( $event['event_cancel_form_format'] ) ) {
         $format = $event['event_cancel_form_format'];
@@ -1461,745 +1108,593 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     }
 
     $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        if (!$eme_is_admin_request)
-            $selected_captcha = $event['event_properties']['selected_captcha'];
-        $format = eme_add_captcha_submit( $format, $selected_captcha );
+    $add_captcha = !(is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] );
+    $format = eme_add_missing_placeholders( $format, $add_captcha );
+    if ($add_captcha && ! $eme_is_admin_request ) {
+        $selected_captcha = $event['event_properties']['selected_captcha'];
     }
 
-    // We need at least #_LASTNAME, #_EMAIL
-    $lastname_found = 0;
-    $email_found    = 0;
-
-    $bookerLastName      = '';
-    $bookerFirstName     = '';
-    $bookerEmail         = '';
-    $bookerCancelComment = '';
+    $person = eme_new_person();
     if ( is_user_logged_in() ) {
-        $current_user    = wp_get_current_user();
-        $person          = eme_get_person_by_wp_id( $current_user->ID );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_user->ID );
-        }
-        $bookerLastName  = esc_html($person['lastname']);
-        $bookerFirstName = esc_html($person['firstname']);
-        $bookerEmail     = esc_html($person['email']);
+        $current_user = wp_get_current_user();
+        $fetched      = eme_get_person_by_wp_id( $current_user->ID );
+        $person       = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
+    }
+    $person = eme_esc_person_for_form( $person );
+
+    $ctx      = [ 'required' => false, 'required_att' => '' ];
+
+    // Pre-validate required placeholders before running the dispatch
+    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = str_contains( $format, '#_EMAIL' )     || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
+            . '</div>';
     }
 
-    // the 2 placeholders that can contain extra text are treated separately first
-    // the question mark is used for non greedy (minimal) matching
-    // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
-        if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
-        } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
-        }
-    }
+    $handlers = [
+        '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Last name', 'events-made-easy' );
+            return [ 'html' => "<input required='required' type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>", 'set_required' => true ];
+        },
+        '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'First name', 'events-made-easy' );
+            return "<input {$ctx['required_att']} type='text' name='firstname' id='firstname' value='{$person['firstname']}' $readonly placeholder='$placeholder_text'>";
+        },
+        '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $person, $readonly ) {
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Email', 'events-made-easy' );
+            return [ 'html' => "<input required='required' type='email' name='email' id='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>", 'set_required' => true ];
+        },
+        '/#_CANCELCOMMENT(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Cancel reason', 'events-made-easy' );
+            return "<textarea {$ctx['required_att']} name='eme_cancelcomment' placeholder='$placeholder_text'></textarea>";
+        },
+        '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $selected_captcha ) {
+            if ( ! empty( $selected_captcha ) ) {
+                return eme_generate_captchas_html( $selected_captcha );
+            }
+            return '';
+        },
+        '/#_SUBMIT(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_delbooking_submit_string' );
+            return "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        },
+    ];
 
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    $needle_offset = 0;
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
-        $replacement        = '';
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
-
-        // also support RESPNAME, RESPEMAIL, ...
-        if ( strstr( $result, '#_RESP' ) ) {
-            $result = str_replace( '#_RESP', '#_', $result );
-        }
-
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='lastname' id='lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
-            ++$lastname_found;
-            // #_NAME is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='firstname' id='firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' name='email' id='email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
-            ++$email_found;
-            // #_EMAIL is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_CANCELCOMMENT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Cancel reason', 'events-made-easy' );
-            }
-            $replacement = "<textarea $required_att name='eme_cancelcomment' placeholder='$placeholder_text'>$bookerCancelComment</textarea>";
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
-            if ( !empty($selected_captcha) && ! $captcha_set ) {
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = get_option( 'eme_rsvp_delbooking_submit_string' );
-            }
-            $replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } else {
-            $found = 0;
-        }
-
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                    $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
-
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-
-    // now any leftover event placeholders
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
     $format = eme_replace_event_placeholders( $format, $event );
-
-    // now, replace any language tags found in the format itself
     $format = eme_translate( $format );
 
-    // now check we found all the required placeholders for the form to work
-    if ( $lastname_found && $email_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $lastname_found || ! $email_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
-    }
+    return $format;
 }
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
-    // We need at least #_CANCEL_PAYMENT_LINE
-    $line_found = 0;
-
     $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        $configured_captchas = eme_get_configured_captchas();
-        $eme_is_admin_request = eme_is_admin_request();
-        if (!empty($configured_captchas) && !$eme_is_admin_request)
-            $selected_captcha = array_key_first($configured_captchas);
-        $format = eme_add_captcha_submit( $format, $selected_captcha );
+    $add_captcha = !(is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ));
+    $format = eme_add_missing_placeholders( $format, $add_captcha );
+    if ($add_captcha && ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
+        $selected_captcha = array_key_first( $configured_captchas );
     }
 
-    // the 2 placeholders that can contain extra text are treated separately first
-    // the question mark is used for non greedy (minimal) matching
-    // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
-        if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
-        } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
-        }
+    $ctx      = [ 'required' => false, 'required_att' => '' ];
+
+    if ( ! str_contains( $format, '#_CANCEL_PAYMENT_LINE' ) ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
     }
 
-    // make sure we set the largest matched placeholders first, otherwise if you found e.g.
-    // #_LOCATION, part of #_LOCATIONPAGEURL would get replaced as well ...
-    $needle_offset = 0;
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $replacement        = '';
-        if ( preg_match( '/#_CANCEL_PAYMENT_LINE$/', $result ) ) {
-            $tmp_format = get_option( 'eme_cancel_payment_line_format' );
-            ++$line_found;
+    $handlers = [
+        '/#_CANCEL_PAYMENT_LINE$/' => function( $result, $matches, $ctx ) use ( $booking_ids ) {
+            $tmp_format       = get_option( 'eme_cancel_payment_line_format' );
+            $replacement      = '';
             $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
             foreach ( $booking_ids as $booking_id ) {
                 $booking = eme_get_booking( $booking_id );
                 $event   = eme_get_event( $booking['event_id'] );
-                if ( empty( $event ) ) {
-                    continue;
-                }
-                // first the rsvp cutoff based on event start date
+                if ( empty( $event ) ) { continue; }
                 $cancel_cutofftime    = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );
                 $eme_cancel_rsvp_days = -1 * $event['event_properties']['cancel_rsvp_days'];
                 $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
                 if ( $cancel_cutofftime < $eme_date_obj_now ) {
                     $no_longer_allowed = eme_translate( get_option( 'eme_rsvp_cancel_no_longer_allowed_string' ) );
-                    return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
+                    // signal early return via a special key
+                    return [ 'html' => '', 'early_return' => "<div class='eme-message-error eme-rsvp-message-error'>$no_longer_allowed</div>" ];
                 }
-                // second the rsvp cutoff based on booking age
                 $cancel_cutofftime    = new emeExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
                 $eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_age'];
                 $cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
                 if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {
                     $no_longer_allowed = eme_translate( get_option( 'eme_rsvp_cancel_no_longer_allowed_string' ) );
-                    return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
+                    return [ 'html' => '', 'early_return' => "<div class='eme-message-error eme-rsvp-message-error'>$no_longer_allowed</div>" ];
                 }
                 $replacement .= eme_replace_booking_placeholders( $tmp_format, $event, $booking );
             }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
-            if ( !empty($selected_captcha) && ! $captcha_set ) { 
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }       
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = get_option( 'eme_rsvp_delbooking_submit_string' );
+            return [ 'html' => $replacement ];
+        },
+        '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) use ( $selected_captcha ) {
+            if ( ! empty( $selected_captcha ) ) {
+                return eme_generate_captchas_html( $selected_captcha );
             }
-            $replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } else {
-            $found = 0;
-        }
+            return '';
+        },
+        '/#_SUBMIT(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_delbooking_submit_string' );
+            return "<img id='cancel_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        },
+    ];
 
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-
-    // now any leftover placeholders
-    $format = eme_replace_people_placeholders( $format, $person );
-
-    // now, replace any language tags found in the format itself
-    $format = eme_translate( $format );
-
-    // only if #_CANCEL_PAYMENT_LINE is present, we return the format
-    if ( $line_found ) {
-        return $format;
-    } else {
-        $res = __( 'Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
-    }
-}
-
-// the event param in eme_replace_extra_multibooking_formfields_placeholders
-// is only there for generic replacements, like e.g. currency
-function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format, $event ) {
-    $bookerLastName     = '';
-    $bookerFirstName    = '';
-    $bookerBirthdate    = '';
-    $bookerBirthplace   = '';
-    $bookerAddress1     = '';
-    $bookerAddress2     = '';
-    $bookerCity         = '';
-    $bookerZip          = '';
-    $bookerState_code   = '';
-    $bookerCountry_code = '';
-    // if only 1 country, set it as default
-    $countries_alpha2 = eme_get_countries_alpha2();
-    if ( count( $countries_alpha2 ) == 1 ) {
-        $bookerCountry_code = $countries_alpha2[0];
-    }
-    $bookerEmail   = '';
-    $bookerComment = '';
-    $bookerPhone   = '';
-    $bd_email      = 0;
-    $gdpr          = 0;
-
-    $eme_is_admin_request = eme_is_admin_request();
-
-    $allow_clear = 0;
-    if ( is_user_logged_in() ) {
-        $current_user       = wp_get_current_user();
-        $person             = eme_get_person_by_wp_id( $current_user->ID );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_user->ID );
-        }
-        $bookerLastName     = esc_html( $person['lastname'] );
-        $bookerFirstName    = esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = esc_html( $person['birthplace'] );
-        $bookerAddress1     = esc_html( $person['address1'] );
-        $bookerAddress2     = esc_html( $person['address2'] );
-        $bookerCity         = esc_html( $person['city'] );
-        $bookerZip          = esc_html( $person['zip'] );
-        $bookerState_code   = esc_html( $person['state_code'] );
-        $bookerCountry_code = esc_html( $person['country_code'] );
-        $bookerEmail        = esc_html( $person['email'] );
-        $bookerPhone        = esc_html( $person['phone'] );
-        $bd_email           = intval( $person['bd_email'] );
-        $gdpr               = intval( $person['gdpr'] );
-
-        if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
-            $allow_clear = 1;
-        }
-    }
-
-    $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $selected_captcha = '';
-        } else {
-        $configured_captchas = eme_get_configured_captchas();
-        if (!empty($configured_captchas) && !$eme_is_admin_request)
-            $selected_captcha = array_key_first($configured_captchas);
-        }
-
-    // the 2 placeholders that can contain extra text are treated separately first
-    // the question mark is used for non greedy (minimal) matching
-    // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
-        if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
-        } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
-        }
-    }
-
-    // let us always set the dynamic price class, since the js checks if the dynamic price html-span exists anyway
-    $dynamic_price_class_basic = 'dynamicprice';
-
-    $needle_offset = 0;
+    // eme_replace_cancel_payment_placeholders needs early-return support; run inline
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+    $needle_offset = 0;
     foreach ( $placeholders[0] as $orig_result ) {
         $result             = $orig_result[0];
         $orig_result_needle = $orig_result[1] - $needle_offset;
         $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
+        $found              = false;
         $replacement        = '';
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
 
-        // also support RESPNAME, RESPEMAIL, ...
-        if ( strstr( $result, '#_RESP' ) ) {
-            $result = str_replace( '#_RESP', '#_', $result );
-        }
-        // also support CONSENT
-        if ( strstr( $result, '#_CONSENT' ) ) {
-            $result = str_replace( '#_CONSENT', '#_GDPR', $result );
-        }
-
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            $this_readonly = '';
-            if ( is_user_logged_in() ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-                if ( $allow_clear ) {
-                    $this_readonly .= " data-clearable='true'";
-                }
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='lastname' id='lastname' value='$bookerLastName' $this_readonly placeholder='$placeholder_text'>";
-            // #_NAME is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            $this_readonly = '';
-            if ( is_user_logged_in() ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-            }
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='firstname' id='firstname' value='$bookerFirstName' $this_readonly placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-            }
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='birthdate' id='birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='address1' id='address1' value='$bookerAddress1' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='address2' id='address2' value='$bookerAddress2' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'City', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='city' id='city' value='$bookerCity' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_STATE$/', $result ) ) {
-            $fieldname = 'state_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerState_code ) ) {
-                $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
-            } else {
-                $state_arr = [];
-            }
-            $replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, 'eme_snapselect_state_class' );
-        } elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='zip' id='zip' value='$bookerZip' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_COUNTRY\{(.+)\}$/', $result, $matches ) ) {
-            $fieldname = 'country_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-                $replacement = eme_ui_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_snapselect_country_class' );
-            } else {
-                $country_code = $matches[1];
-                $country_name = eme_get_country_name( $country_code );
-                if ( ! empty( $country_name ) ) {
-                    $country_arr = [ $country_code => $country_name ];
-                    $replacement = eme_ui_select( $country_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_snapselect_country_class' );
-                }
-            }
-        } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
-            $fieldname = 'country_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-            } else {
-                $country_arr = [];
-            }
-            $replacement = eme_ui_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_snapselect_country_class' );
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            $this_readonly = '';
-            if ( is_user_logged_in() ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' name='email' id='email' value='$bookerEmail' $this_readonly placeholder='$placeholder_text'>";
-            // #_EMAIL is always required
-            $required = 1;
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
-        } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
-            $selected_massmail = 1;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
-            if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
-            }
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            $selected_massmail = 0;
-            $replacement = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
-            if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
-            }
-        } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = '';
-            }
-            if ( ! $eme_is_admin_request ) {
-                $replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
-            }
-        } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __('Remember me?','events-made-easy');
-            }
-            if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
-            }
-        } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
-            if ( is_numeric( $matches[1] ) ) {
-                    $group = eme_get_group( $matches[1] );
-            } else {
-                $group = eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
-            }
-            if ( ! empty( $group ) ) {
-                if ( ! $group['public'] ) {
-                    $replacement = __( 'Group is not public', 'events-made-easy' );
+        foreach ( $handlers as $pattern => $handler ) {
+            if ( preg_match( $pattern, $result, $matches ) ) {
+                $found = true;
+                $ret   = $handler( $result, $matches, $ctx );
+                if ( is_array( $ret ) ) {
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
+                    $replacement = $ret['html'] ?? '';
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
                 } else {
-                    $group_id = $group['group_id'];
-                    if ( isset( $matches[2] ) ) {
-                        // remove { and } (first and last char of second match)
-                        $label = substr( $matches[2], 1, -1 );
-                    } else {
-                        $label = $group['name'];
-                    }
-                    $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates'>";
-                    if ( ! empty( $label ) ) {
-                        $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
-                    }
+                    $replacement = (string) $ret;
                 }
-            } else {
-                $replacement = __( 'Group does not exist', 'events-made-easy' );
-            }
-        } elseif ( preg_match( '/#_PASSWORD(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
-                }
-                $fieldname   = 'rsvp_password';
-                $replacement = "<input required='required' type='text' name='$fieldname' value='' class='eme_passwordfield' autocomplete='off' placeholder='$placeholder_text'>";
-                $required    = 1;
-            }
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='tel' name='phone' id='phone' value='$bookerPhone' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
-            }
-            $replacement = "<textarea $required_att name='eme_rsvpcomment' placeholder='$placeholder_text' >$bookerComment</textarea>";
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
-            if ( !empty($selected_captcha) && ! $captcha_set ) { 
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }       
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = get_option( 'eme_rsvp_addbooking_submit_string' );
-            }
-            $replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
-            $replacement = "<span id='eme_calc_bookingprice'></span>";
-        } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/', $result ) ) {
-            $replacement = "<span id='eme_calc_bookingprice_detail'></span>";
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
-                $field_id       = $formfield['field_id'];
-                $postfield_name = 'FIELD' . $field_id;
-                $entered_val    = '';
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                if ( $formfield['extra_charge'] ) {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_price_class_basic );
-                } else {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
-                }
-            } else {
-                $found = 0;
-            }
-        } else {
-            $found = 0;
-        }
-
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                    $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+                break;
             }
         }
-
         if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+            if ( is_null( $replacement ) ) { $replacement = ''; }
+            $format        = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
         }
     }
 
-    // now any leftover event placeholders
-    $format = eme_replace_event_placeholders( $format, $event );
-
-    // now, replace any language tags found in the format itself
+    $format = eme_replace_people_placeholders( $format, $person );
     $format = eme_translate( $format );
+
     return $format;
 }
 
-function eme_get_dyndata_people_fields( $condition ) {
-    global $wpdb;
-    $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
-    $prepared_sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
-    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+/**
+ * Build a person array pre-escaped for use as form field values.
+ * Wraps eme_new_person() defaults with esc_html() on all string fields,
+ * and applies the single-country-default for country_code.
+ * Pass a real $person array to fill from existing data.
+ */
+function eme_esc_person_for_form( $person = [] ) {
+    if ( empty( $person ) ) {
+        $person = eme_new_person();
+    }
+    // apply single-country default when nothing is set
+    if ( empty( $person['country_code'] ) ) {
+        $countries_alpha2 = eme_get_countries_alpha2();
+        if ( count( $countries_alpha2 ) === 1 ) {
+            $person['country_code'] = $countries_alpha2[0];
+        }
+    }
+    // escape all string fields used as HTML attribute values
+    foreach ( [ 'lastname', 'firstname', 'birthplace', 'address1', 'address2',
+                'city', 'zip', 'state_code', 'country_code', 'email', 'phone' ] as $key ) {
+        $person[ $key ] = isset( $person[ $key ] ) ? esc_html( $person[ $key ] ) : '';
+    }
+    if ( isset( $person['birthdate'] ) && ! eme_is_date( $person['birthdate'] ) ) {
+        $person['birthdate'] = '';
+    } else {
+        $person['birthdate'] = isset( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
+    }
+    $person['massmail'] = intval( $person['massmail'] ?? get_option('eme_people_massmail') );
+    $person['bd_email'] = isset( $person['bd_email'] ) ? intval( $person['bd_email'] ) : 0;
+    $person['gdpr']     = isset( $person['gdpr'] )     ? intval( $person['gdpr'] )     : 0;
+    return $person;
+}
+
+/**
+ * Shared handler definitions for person/contact form fields.
+ *
+ * $ctx keys used here:
+ *   person           array   esc_html'd person (from eme_esc_person_for_form)
+ *   fn_prefix        string  field-name prefix: '' or 'task_'
+ *   form_id          mixed   used for building unique element ids (state/country)
+ *   eme_is_admin     bool
+ *   readonly         string  global readonly attr for this form context
+ *   disabled         string  global disabled attr
+ *   dfc_basic        string  bare dynamic-field class name(s), e.g. 'dynamicupdates'
+ *   extra_css        string  additional CSS classes to append ('' for now)
+ *   allow_clear      bool    show data-clearable on readonly name/email fields
+ *   invite_readonly  string  readonly attr when invite URL is followed (rsvp only)
+ *   selected_captcha string
+ *   required         bool    set by dispatch loop each iteration
+ *   required_att     string  set by dispatch loop each iteration
+ *
+ * Handlers return either:
+ *   - a plain string (the HTML replacement)
+ *   - an array with keys: 'html', and optionally:
+ *       'not_found'     => true   (treat as unmatched placeholder)
+ *       'set_required'  => true   (mark $required = true after handler)
+ *       'early_return'  => string (return immediately with this value)
+ */
+function eme_get_person_formfield_handler_definitions() {
+    static $handlers = [];
+    if ( ! empty( $handlers ) ) {
+        return $handlers;
+    }
+
+    $handlers = [
+        '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+
+            $fieldname = $ctx['fn_prefix'] . 'lastname';
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
+                $this_readonly = "readonly='readonly'";
+                if ( $ctx['allow_clear'] ) {
+                    $this_readonly .= " data-clearable='true'";
+                }
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['lastname'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
+            } else {
+                $this_readonly = $ctx['readonly'];
+            }
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Last name', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            $replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='{$p['lastname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
+            if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
+                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+            }
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
+            }
+            return [ 'html' => $replacement, 'set_required' => true ];
+        },
+        '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+
+            $fieldname = $ctx['fn_prefix'] . 'firstname';
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
+                $this_readonly = "readonly='readonly'";
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['firstname'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
+            } else {
+                $this_readonly = $ctx['readonly'];
+            }
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'First name', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            $replacement = "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['firstname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
+            }
+            return [ 'html' => $replacement ];
+        },
+        '/#_BIRTHDATE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'birthdate';
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Date of birth', 'events-made-easy' );
+            $class = trim( "eme_formfield eme_formfield_fdate {$ctx['extra_css']}" );
+            return "<input {$ctx['required_att']} readonly='readonly' {$ctx['disabled']} type='text' name='$fieldname' id='$fieldname' data-date='{$p['birthdate']}' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_BIRTHPLACE(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'birthplace';
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Place of birth', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['birthplace']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_ADDRESS1(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'address1';
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address1']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_ADDRESS2(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'address2';
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['address2']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_CITY(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'city';
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'City', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['city']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_(ZIP|POSTAL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'zip';
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Postal code', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='text' name='$fieldname' id='$fieldname' value='{$p['zip']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_STATE$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'state_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
+            $state_arr = ! empty( $p['state_code'] ) ? [ $p['state_code'] => eme_get_state_name( $p['state_code'], $p['country_code'] ) ] : [];
+            $class     = trim( "eme_snapselect_state_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
+            return eme_form_select( $p['state_code'], $fieldname, $fieldid, $state_arr, '', $ctx['required'], $class, $ctx['disabled'] );
+        },
+        '/#_COUNTRY$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'country_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
+            $country_arr = ! empty( $p['country_code'] ) ? [ $p['country_code'] => eme_get_country_name( $p['country_code'] ) ] : [];
+            $class     = trim( "eme_snapselect_country_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
+            return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
+        },
+        '/#_COUNTRY\{(.+)\}$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'country_code';
+            $fieldid   = ! empty( $ctx['form_id'] ) ? $ctx['form_id'] . '-' . $fieldname : $fieldname;
+            $class     = trim( "eme_snapselect_country_class {$ctx['dfc_basic']} {$ctx['extra_css']}" );
+            if ( ! empty( $p['country_code'] ) ) {
+                $country_arr = [ $p['country_code'] => eme_get_country_name( $p['country_code'] ) ];
+                return eme_form_select( $p['country_code'], $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
+            }
+            $country_code = $matches[1];
+            $country_name = eme_get_country_name( $country_code );
+            if ( ! empty( $country_name ) ) {
+                $country_arr = [ $country_code => $country_name ];
+                return eme_form_select( $country_code, $fieldname, $fieldid, $country_arr, '', $ctx['required'], $class, $ctx['disabled'] );
+            }
+            return '';
+        },
+        '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'email';
+
+            if ( is_user_logged_in() && ! $ctx['eme_is_admin'] ) {
+                $this_readonly = "readonly='readonly'";
+            } elseif ( ! empty( $ctx['invite_readonly'] ) && ! empty( $p['email'] ) ) {
+                $this_readonly = $ctx['invite_readonly'];
+            } else {
+                $this_readonly = $ctx['readonly'];
+            }
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Email', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            $req_att = $ctx['eme_is_admin'] ? '' : "required='required'";
+            $replacement = "<input $req_att type='email' name='$fieldname' id='$fieldname' value='{$p['email']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
+            if ( ! empty( $ctx['wp_profile_warning'] ) ) {
+                $replacement .= sprintf( $ctx['wp_profile_warning'], esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
+            }
+            return [ 'html' => $replacement, 'set_required' => ! empty( $req_att ) ];
+        },
+        '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
+            $p = $ctx['person'];
+            $fieldname = $ctx['fn_prefix'] . 'phone';
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Phone number', 'events-made-easy' );
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
+            return "<input {$ctx['required_att']} type='tel' name='$fieldname' id='$fieldname' value='{$p['phone']}' {$ctx['readonly']} class='$class' placeholder='$placeholder_text'>";
+        },
+        '/#_BIRTHDAY_EMAIL$/' => function( $result, $matches, $ctx ) {
+            return eme_ui_select_binary( $ctx['person']['bd_email'], $ctx['fn_prefix'] . 'bd_email' );
+        },
+        '/#_OPT_IN$/' => function( $result, $matches, $ctx ) {
+            $selected = $ctx['person']['massmail'] ?? 0;
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] . ' eme_snapselect' );
+            $replacement = eme_ui_select_binary( $selected, $ctx['fn_prefix'] . 'massmail', 0, $class, $ctx['disabled'] );
+            if ( ! $ctx['eme_is_admin'] && get_option( 'eme_massmail_popup' ) ) {
+                $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
+                if ( ! eme_is_empty_string( $popup ) ) {
+                    $confirm = esc_html__( 'Yes', 'events-made-easy' );
+                    $cancel  = esc_html__( 'No', 'events-made-easy' );
+                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
+                }
+            }
+            return $replacement;
+        },
+        '/#_OPT_OUT|#_MASSMAIL/' => function( $result, $matches, $ctx ) {
+            $selected = $ctx['person']['massmail'] ?? 1;
+            $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] . ' eme_snapselect' );
+            $replacement = eme_ui_select_binary( $selected, $ctx['fn_prefix'] . 'massmail', 0, $class, $ctx['disabled'] );
+            if ( ! $ctx['eme_is_admin'] && get_option( 'eme_massmail_popup' ) ) {
+                $popup = esc_html( get_option( 'eme_massmail_popup_text' ) );
+                if ( ! eme_is_empty_string( $popup ) ) {
+                    $confirm = esc_html__( 'Yes', 'events-made-easy' );
+                    $cancel  = esc_html__( 'No', 'events-made-easy' );
+                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
+                }
+            }
+            return $replacement;
+        },
+        '/#_GDPR(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            if ( $ctx['eme_is_admin'] ) {
+                return '';
+            }
+            $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
+            $class = trim( "eme-gdpr-field nodynamicupdates {$ctx['extra_css']}" );
+            return eme_ui_checkbox_binary( $ctx['person']['gdpr'], $ctx['fn_prefix'] . 'gdpr', $label, 1, $class, $ctx['disabled'] );
+        },
+        '/#_REMEMBERME(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            if ( $ctx['eme_is_admin'] || is_user_logged_in() ) {
+                return '';
+            }
+            $label = isset( $matches[1] )
+                ? substr( $matches[1], 1, -1 )
+                : __( 'Remember me?', 'events-made-easy' );
+            return eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+        },
+        '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/' => function( $result, $matches, $ctx ) {
+            $group = is_numeric( $matches[1] )
+                ? eme_get_group( $matches[1] )
+                : eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
+            if ( empty( $group ) ) {
+                return __( 'Group does not exist', 'events-made-easy' );
+            }
+            if ( ! $group['public'] ) {
+                return __( 'Group is not public', 'events-made-easy' );
+            }
+            $group_id = $group['group_id'];
+            $label = isset( $matches[2] ) ? substr( $matches[2], 1, -1 ) : $group['name'];
+            $class = trim( "nodynamicupdates {$ctx['extra_css']}" );
+            $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='$class'>";
+            if ( ! empty( $label ) ) {
+                $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
+            }
+            return $replacement;
+        },
+        '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/' => function( $result, $matches, $ctx ) {
+            if ( ! empty( $ctx['selected_captcha'] ) ) {
+                $captcha_only_logged_out = $ctx['captcha_only_logged_out'] ?? null;
+                return eme_generate_captchas_html( $ctx['selected_captcha'], $captcha_only_logged_out );
+            }
+            return '';
+        },
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
+            $formfield = eme_get_formfield( $matches[1] );
+            if ( ! empty( $formfield ) ) {
+                return esc_html( eme_translate( $formfield['field_name'] ) );
+            }
+            return [ 'html' => '', 'not_found' => true ];
+        },
+    ];
+    return $handlers;
+}
+
+/**
+ * Generic dispatch loop shared by all form-rendering functions.
+ *
+ * @param string $format      The format string being processed.
+ * @param array  $handlers    Merged handler table (shared + function-specific).
+ * @param array  $ctx         Context array; 'required' and 'required_att' are
+ *                            updated per iteration by this function.
+ * @return string             The processed format string.
+ */
+function eme_run_formfield_dispatch( $format, $handlers, $ctx ) {
+    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+    $needle_offset = 0;
+
+    foreach ( $placeholders[0] as $orig_result ) {
+        $result             = $orig_result[0];
+        $orig_result_needle = $orig_result[1] - $needle_offset;
+        $orig_result_length = strlen( $orig_result[0] );
+        $found              = false;
+        $required           = false;
+        $required_att       = '';
+        $replacement        = '';
+
+        if ( strstr( $result, '#REQ' ) ) {
+            $result       = str_replace( '#REQ', '#', $result );
+            $required     = true;
+            $required_att = "required='required'";
+        }
+        // support #_RESP* aliases
+        if ( strstr( $result, '#_RESP' ) ) {
+            $result = str_replace( '#_RESP', '#_', $result );
+        }
+        // support #_CONSENT as alias for #_GDPR
+        if ( strstr( $result, '#_CONSENT' ) ) {
+            $result = str_replace( '#_CONSENT', '#_GDPR', $result );
+        }
+
+        $ctx['required']     = $required;
+        $ctx['required_att'] = $required_att;
+
+        foreach ( $handlers as $pattern => $handler ) {
+            if ( preg_match( $pattern, $result, $matches ) ) {
+                $found = true;
+                $ret   = $handler( $result, $matches, $ctx );
+                if ( is_array( $ret ) ) {
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
+                    $replacement = $ret['html'] ?? '';
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
+                } else {
+                    $replacement = (string) $ret;
+                }
+                break;
+            }
+        }
+
+        if ( $found ) {
+            if ( $required ) {
+                $req_str = eme_translate( get_option( 'eme_form_required_field_string' ) );
+                if ( ! empty( $req_str ) ) {
+                    $replacement .= "<div class='eme-required-field'>$req_str</div>";
+                }
+            }
+            if ( is_null( $replacement ) ) {
+                $replacement = '';
+            }
+            $format        = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+            $needle_offset += $orig_result_length - strlen( $replacement );
+        }
+    }
+
+    return $format;
 }
 
 function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $format, $grouping, $i = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();
     $event_id             = $event['event_id'];
     $dynamic_price_class  = 'dynamicprice';
-    // the dynamic field class is used to indicate this is a dynamically added field and we don't allow extra dynamic actions on it (except the price)
-    // this helps limitting the amount of ajax requests
+    // dynamic_field_class: dynamically added field, no extra ajax actions except price
     $dynamic_field_class = 'nodynamicupdates dynamicfield';
+
     if ( $eme_is_admin_request && ! empty( $booking['booking_id'] ) ) {
-        $editing_booking_from_backend = 1;
+        $editing_booking_from_backend = true;
         $dyn_answers                  = eme_get_dyndata_booking_answer( $booking['booking_id'], $grouping, $i );
         $files1                       = eme_get_uploaded_files( $booking['person_id'], 'people' );
         $files2                       = eme_get_uploaded_files( $booking['booking_id'], 'bookings' );
         $files                        = array_merge( $files1, $files2 );
     } else {
-        $editing_booking_from_backend = 0;
+        $editing_booking_from_backend = false;
         $dyn_answers                  = [];
         $files                        = [];
     }
 
-    $needle_offset = 0;
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
-        $replacement        = '';
-
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
-        if ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
+    $handlers = [
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
+            $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
+                return esc_html( eme_translate( $formfield['field_name'] ) );
             }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
+            return [ 'html' => '', 'not_found' => true ];
+        },
+        '/#_FIELD\{(.+)\}/' => function( $result, $matches, $ctx ) use ( $event_id, $grouping, $i, $dynamic_price_class, $dynamic_field_class, $editing_booking_from_backend, $dyn_answers, $files ) {
+            $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
                 $field_id       = $formfield['field_id'];
                 $var_prefix     = "dynamic_bookings[$event_id][$grouping][$i][";
-                $var_postfix    = ']';
-                $postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+                $postfield_name = "{$var_prefix}FIELD{$field_id}]";
                 $postvar_arr    = [ 'dynamic_bookings', $event_id, $grouping, $i, 'FIELD' . $field_id ];
-
-                // when we edit a booking, there's nothing in $_POST until a field condition changes
-                // so the first time entered_val=''
-                $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-                // if from backend and entered_val ===false, then get it from the stored answer
+                $entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
                 if ( $editing_booking_from_backend && $entered_val === false ) {
                     foreach ( $dyn_answers as $answer ) {
                         if ( $answer['field_id'] == $field_id ) {
@@ -2207,114 +1702,68 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
                         }
                     }
                 }
-                if ( $editing_booking_from_backend ) {
-                    if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-                        $entered_files = [];
-                        foreach ( $files as $file ) {
-                            if ( $file['field_id'] == $field_id && $file['extra_id'] == "$event_id$grouping$i" ) {
-                                $entered_files[] = $file;
-                            }
+                if ( $editing_booking_from_backend && ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) ) {
+                    $entered_files = [];
+                    foreach ( $files as $file ) {
+                        if ( $file['field_id'] == $field_id && $file['extra_id'] == "$event_id$grouping$i" ) {
+                            $entered_files[] = $file;
                         }
-                        $entered_val = $entered_files;
                     }
+                    $entered_val = $entered_files;
                 }
-
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                if ( $formfield['extra_charge'] ) {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_price_class . ' ' . $dynamic_field_class );
-                } else {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class );
-                }
-            } else {
-                $found = 0;
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+                $class    = $formfield['extra_charge'] ? "$dynamic_price_class $dynamic_field_class" : $dynamic_field_class;
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class ), 'set_required' => $required ];
             }
-        } elseif ( preg_match( '/#_FIELDCOUNTER$/', $result, $matches ) ) {
-            $replacement = intval( $i ) + 1;
-        } elseif ( preg_match( '/#_FIELDGROUPINDEX$/', $result, $matches ) ) {
-            $replacement = intval( $grouping ) + 1;
-        } else {
-            $found = 0;
-        }
+            return [ 'html' => '', 'not_found' => true ];
+        },
+        '/#_FIELDCOUNTER$/' => function( $result, $matches, $ctx ) use ( $i ) {
+            return intval( $i ) + 1;
+        },
+        '/#_FIELDGROUPINDEX$/' => function( $result, $matches, $ctx ) use ( $grouping ) {
+            return intval( $grouping ) + 1;
+        },
+    ];
 
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
-
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-    // now any leftover event placeholders
-    $format = eme_replace_event_placeholders( $format, $event );
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
+    $format      = eme_replace_event_placeholders( $format, $event );
     return $format;
 }
 
 function eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $format, $grouping, $i = 0 ) {
-    $membership_id        = $membership['membership_id'];
-    $dynamic_price_class  = 'dynamicprice';
-    // the dynamic field class is used to indicate this is a dynamically added field and we don't allow extra dynamic actions on it (except the price)
-    // this helps limitting the amount of ajax requests
+    $membership_id       = $membership['membership_id'];
+    $dynamic_price_class = 'dynamicprice';
     $dynamic_field_class = 'nodynamicupdates dynamicfield';
-    if ( ! empty( $member['member_id'] ) && current_user_can(get_option( 'eme_cap_edit_members' ) ) ) {
+
+    if ( ! empty( $member['member_id'] ) && current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
         $dyn_answers = eme_get_dyndata_member_answer( $member['member_id'], $grouping, $i );
         $files1      = eme_get_uploaded_files( $member['person_id'], 'people' );
         $files2      = eme_get_uploaded_files( $member['member_id'], 'members' );
         $files       = array_merge( $files1, $files2 );
-        $member_edit = 1;
+        $member_edit = true;
     } else {
         $dyn_answers = [];
         $files       = [];
-        $member_edit = 0;
+        $member_edit = false;
     }
 
-    $needle_offset = 0;
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
-        $replacement        = '';
-
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
-        if ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
+    $handlers = [
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
+            $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
+                return esc_html( eme_translate( $formfield['field_name'] ) );
             }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
+            return [ 'html' => '', 'not_found' => true ];
+        },
+        '/#_FIELD\{(.+)\}/' => function( $result, $matches, $ctx ) use ( $membership_id, $grouping, $i, $dynamic_price_class, $dynamic_field_class, $dyn_answers, $files, $member_edit ) {
+            $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ] ) ) {
                 $field_id       = $formfield['field_id'];
                 $var_prefix     = "dynamic_member[$membership_id][$grouping][$i][";
-                $var_postfix    = ']';
-                $postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+                $postfield_name = "{$var_prefix}FIELD{$field_id}]";
                 $postvar_arr    = [ 'dynamic_member', $membership_id, $grouping, $i, 'FIELD' . $field_id ];
-
-                // when we edit a booking, there's nothing in $_POST until a field condition changes
-                // so the first time entered_val=''
-                $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-                // if entered_val ===false, then get it from the stored answer
+                $entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
                 if ( $entered_val === false ) {
                     foreach ( $dyn_answers as $answer ) {
                         if ( $answer['field_id'] == $field_id ) {
@@ -2322,7 +1771,6 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
                         }
                     }
                 }
-
                 if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
                     $entered_files = [];
                     foreach ( $files as $file ) {
@@ -2332,49 +1780,29 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
                     }
                     $entered_val = $entered_files;
                 }
-
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                if ( $formfield['extra_charge'] ) {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_price_class . ' ' . $dynamic_field_class, 0, 0, $member_edit );
-                } else {
-                    $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class, 0, 0, $member_edit );
-                }
-            } else {
-                $found = 0;
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+                $class    = $formfield['extra_charge'] ? "$dynamic_price_class $dynamic_field_class" : $dynamic_field_class;
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $class, 0, 0, $member_edit ), 'set_required' => $required ];
             }
-        } elseif ( preg_match( '/#_FIELDCOUNTER$/', $result, $matches ) ) {
-            $replacement = intval( $i ) + 1;
-        } elseif ( preg_match( '/#_FIELDGROUPINDEX$/', $result, $matches ) ) {
-            $replacement = intval( $grouping ) + 1;
-        } else {
-            $found = 0;
-        }
+            return [ 'html' => '', 'not_found' => true ];
+        },
+        '/#_FIELDCOUNTER$/' => function( $result, $matches, $ctx ) use ( $i ) {
+            return intval( $i ) + 1;
+        },
+        '/#_FIELDGROUPINDEX$/' => function( $result, $matches, $ctx ) use ( $grouping ) {
+            return intval( $grouping ) + 1;
+        },
+    ];
 
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
+    $format      = eme_replace_membership_placeholders( $format, $membership );
 
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-    $format = eme_replace_membership_placeholders( $format, $membership );
-
-    // In the admin member-edit form, wrap each occurrence in a labelled, deletable container
+    // In the admin member-edit form, wrap each occurrence in a labelled deletable container
     if ( ! empty( $member['member_id'] ) && current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
         $del_label = esc_attr( __( 'Delete this group', 'events-made-easy' ) );
         $del_text  = esc_html( __( 'Delete this group', 'events-made-easy' ) );
-        $format =
+        $format    =
             "<fieldset class='eme_dyndata_occurence_block'"
             . " data-member-id='" . intval( $member['member_id'] ) . "'"
             . " data-grouping='"  . intval( $grouping ) . "'"
@@ -2391,149 +1819,78 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 
 function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $format = '', $is_multibooking = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();
-    // the next can happen if we would be editing a booking where the event has been deleted but somehow the booking remains
+
     if ( isset( $event['event_id'] ) ) {
         $event_id = $event['event_id'];
     } else {
         $event_id = 0;
     }
-    if (!empty($event['location_id'] )) {
+    if ( ! empty( $event['location_id'] ) ) {
         $location = eme_get_location( $event['location_id'] );
     } else {
         $location = [];
     }
+
     $registration_wp_users_only = $event['registration_wp_users_only'];
     if ( $registration_wp_users_only && ! is_user_logged_in() ) {
         return '';
     }
 
-    $allow_clear  = 0;
+    $allow_clear = false;
     if ( is_user_logged_in() ) {
         $current_user = wp_get_current_user();
         if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_user->ID || $event['event_contactperson_id'] == $current_user->ID ) ) ) {
-            $allow_clear = 1;
+            $allow_clear = true;
         } elseif ( ! $registration_wp_users_only ) {
-            $allow_clear = 1;
+            $allow_clear = true;
         }
     } else {
         $current_user = 0;
     }
-    if ( !$eme_is_admin_request && empty( $booking['booking_id'] ) ) {
-        $new_booking_in_frontend = 1;
-    } else {
-        $new_booking_in_frontend = 0;
-    }
-    if ( $eme_is_admin_request && ! empty( $booking['booking_id'] ) ) {
-        $editing_booking_from_backend = 1;
-    } else {
-        $editing_booking_from_backend = 0;
-    }
-    if ( $eme_is_admin_request && get_option( 'eme_rsvp_admin_allow_overbooking' ) ) {
-        $allow_overbooking = 1;
-    } else {
-        $allow_overbooking = 0;
-    }
 
-    $bookerLastName     = '';
-    $bookerFirstName    = '';
-    $bookerBirthdate    = '';
-    $bookerBirthplace   = '';
-    $bookerAddress1     = '';
-    $bookerAddress2     = '';
-    $bookerCity         = '';
-    $bookerZip          = '';
-    $bookerState_code   = '';
-    $bookerCountry_code = '';
-    // if only 1 country, set it as default
-    $countries_alpha2 = eme_get_countries_alpha2();
-    if ( count( $countries_alpha2 ) == 1 ) {
-        $bookerCountry_code = $countries_alpha2[0];
-    }
-    $bookerEmail      = '';
-    $bookerComment    = '';
-    $bookerPhone      = '';
-    $bookedSeats      = 0;
-    $booking_seats_mp = [];
-    $massmail         = null;
-    $bd_email         = 0;
-    $gdpr             = 0;
+    $new_booking_in_frontend      = ! $eme_is_admin_request && empty( $booking['booking_id'] );
+    $editing_booking_from_backend = $eme_is_admin_request && ! empty( $booking['booking_id'] );
+    $allow_overbooking            = $eme_is_admin_request && get_option( 'eme_rsvp_admin_allow_overbooking' );
 
-    // don't fill out the basic info if in the backend, but do it only if in the frontend
+    // Build person data
+    $person = eme_new_person();
     if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-        $person             = eme_get_person_by_wp_id( $current_user->ID );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_user->ID );
-        }
-        $bookerLastName     = esc_html( $person['lastname'] );
-        $bookerFirstName    = esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = esc_html( $person['birthplace'] );
-        $bookerAddress1     = esc_html( $person['address1'] );
-        $bookerAddress2     = esc_html( $person['address2'] );
-        $bookerCity         = esc_html( $person['city'] );
-        $bookerZip          = esc_html( $person['zip'] );
-        $bookerState_code   = esc_html( $person['state_code'] );
-        $bookerCountry_code = esc_html( $person['country_code'] );
-        $bookerEmail        = esc_html( $person['email'] );
-        $bookerPhone        = esc_html( $person['phone'] );
-        $massmail           = intval( $person['massmail'] );
-        $bd_email           = intval( $person['bd_email'] );
-        $gdpr               = intval( $person['gdpr'] );
+        $fetched = eme_get_person_by_wp_id( $current_user->ID );
+        $person  = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
+    }
+    if ( $editing_booking_from_backend && ! empty( $booking['person_id'] ) ) {
+        $person = eme_get_person( $booking['person_id'] );
+    }
+    $person        = eme_esc_person_for_form( $person );
+    $bookerComment = $editing_booking_from_backend ? esc_html( $booking['booking_comment'] ) : '';
+    $bookedSeats   = $editing_booking_from_backend ? esc_html( $booking['booking_seats'] ) : 0;
+    $booking_seats_mp = [];
+    if ( $editing_booking_from_backend && $booking['booking_seats_mp'] ) {
+        $booking_seats_mp = eme_convert_multi2array( $booking['booking_seats_mp'] );
     }
 
-    if ( $editing_booking_from_backend ) {
-        if ( ! empty( $booking['person_id'] ) ) {
-            $person = eme_get_person( $booking['person_id'] );
-            // when editing a booking
-            $bookerLastName     = esc_html( $person['lastname'] );
-            $bookerFirstName    = esc_html( $person['firstname'] );
-            $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-            $bookerBirthplace   = esc_html( $person['birthplace'] );
-            $bookerAddress1     = esc_html( $person['address1'] );
-            $bookerAddress2     = esc_html( $person['address2'] );
-            $bookerCity         = esc_html( $person['city'] );
-            $bookerZip          = esc_html( $person['zip'] );
-            $bookerState_code   = esc_html( $person['state_code'] );
-            $bookerCountry_code = esc_html( $person['country_code'] );
-            $bookerEmail        = esc_html( $person['email'] );
-            $bookerPhone        = esc_html( $person['phone'] );
-            $massmail           = intval( $person['massmail'] );
-            $bd_email           = intval( $person['bd_email'] );
-            $gdpr               = intval( $person['gdpr'] );
+    // invite URL overrides
+    $invite_readonly = '';
+    if ( eme_check_invite_url( $event['event_id'] ) && ! $eme_is_admin_request ) {
+        if ( ! empty( $_GET['eme_email'] ) ) {
+            $person['email'] = eme_sanitize_email( $_GET['eme_email'] );
         }
-        $bookerComment = esc_html( $booking['booking_comment'] );
-        $bookedSeats   = esc_html( $booking['booking_seats'] );
-        if ( $booking['booking_seats_mp'] ) {
-            $booking_seats_mp = eme_convert_multi2array( $booking['booking_seats_mp'] );
+        if ( ! empty( $_GET['eme_ln'] ) ) {
+            $person['lastname'] = eme_sanitize_request( $_GET['eme_ln'] );
         }
+        if ( ! empty( $_GET['eme_fn'] ) ) {
+            $person['firstname'] = eme_sanitize_request( $_GET['eme_fn'] );
+        }
+        $invite_readonly = "readonly='readonly'";
     }
 
-    // if not in the backend and wp membership is required
-    // or when editing an existing booking via backend (not a new)
-    $disabled = '';
     if ( $editing_booking_from_backend ) {
         $readonly = "readonly='readonly'";
         $disabled = "disabled='disabled'";
     } else {
         $readonly = '';
         $disabled = '';
-    }
-
-    // now one final case: if invite url is followed, use the set email from the invite link and make the email field readonly
-    if ( eme_check_invite_url( $event['event_id'] ) && ! $eme_is_admin_request ) {
-        if ( ! empty( $_GET['eme_email'] ) ) {
-            $bookerEmail = eme_sanitize_email( $_GET['eme_email'] );
-        }
-        if ( ! empty( $_GET['eme_ln'] ) ) {
-            $bookerLastName = eme_sanitize_request( $_GET['eme_ln'] );
-        }
-        if ( ! empty( $_GET['eme_fn'] ) ) {
-            $bookerFirstName = eme_sanitize_request( $_GET['eme_fn'] );
-        }
-        $invite_readonly = "readonly='readonly'";
-    } else {
-        $invite_readonly = '';
     }
 
     if ( eme_is_empty_string( $format ) ) {
@@ -2546,276 +1903,48 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         }
     }
 
-    // check which fields are used in the event definition for dynamic data
+    // Dynamic data fields
     $eme_dyndatafields = [];
     if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
         foreach ( $event['event_properties']['rsvp_dyndata'] as $dynfield ) {
             $eme_dyndatafields[] = $dynfield['field'];
         }
     }
-    if ( ! empty( $eme_dyndatafields ) ) {
-        $add_dyndata = 1;
-    } else {
-        $add_dyndata = 0;
-    }
+    $add_dyndata = ! empty( $eme_dyndatafields );
 
     $selected_captcha = '';
-    $captcha_set = 0;
+    if ( $is_multibooking ) { // done in eme_replace_extra_multibooking_formfields_placeholders
+        $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
+    }
     if ( ! $is_multibooking ) {
-        if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
-            $format = eme_add_captcha_submit( $format );
-        } else {
-            if (!$eme_is_admin_request)
-                $selected_captcha = $event['event_properties']['selected_captcha'];
-            $format = eme_add_captcha_submit( $format, $selected_captcha, $add_dyndata );
+        $add_captcha = !( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] );
+        $format = eme_add_missing_placeholders( $format, $add_captcha, $add_dyndata );
+        if ($add_captcha && ! $eme_is_admin_request ) {
+            $selected_captcha = $event['event_properties']['selected_captcha'];
         }
     }
 
-    $min_allowed = $event['event_properties']['min_allowed']; // it is a string (can be a number or some multi-format)
-    $max_allowed = $event['event_properties']['max_allowed']; // it is a string (can be a number or some multi-format)
-    //if ($event['event_properties']['take_attendance']) {
-    //   $min_allowed = 0;
-    //   $max_allowed = 1;
-    //}
-
-    $waitinglist       = 0;
-    $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
-    $event_seats       = eme_get_total( $event['event_seats'] );
-    if ( $allow_overbooking ) {
-        // allowing overbooking
-        // then the avail seats are the total seats
-        $avail_seats = $event_seats;
-    } else {
-        // the next gives the number of available seats excluding waitinglist, even for multiprice
-        $avail_seats = eme_get_available_seats( $event_id, 1 );
-        if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
-            $waitinglist = 1;
-            $avail_seats = eme_get_available_seats( $event_id );
-        }
-    }
-
-    $booked_seats_options = [];
-    if ( eme_is_multi( $max_allowed ) ) {
-        $multi_max_allowed    = eme_convert_multi2array( $max_allowed );
-        $max_allowed_is_multi = 1;
-    } else {
-        $max_allowed_is_multi = 0;
-    }
-    if ( eme_is_multi( $min_allowed ) ) {
-        $multi_min_allowed    = eme_convert_multi2array( $min_allowed );
-        $min_allowed_is_multi = 1;
-    } else {
-        $min_allowed_is_multi = 0;
-    }
-    if ( eme_is_multi( $event['event_seats'] ) ) {
-        // if allowing overbooking
-        // then the avail seats are the total seats
-        $event_multiseats = eme_convert_multi2array( $event['event_seats'] );
-        if ( $allow_overbooking ) {
-            $multi_avail = $event_multiseats;
-        } else {
-            $multi_avail = eme_get_available_multiseats( $event_id );
-        }
-
-        foreach ( $multi_avail as $key => $avail_seats ) {
-            $booked_seats_options[ $key ] = [];
-            if ( $max_allowed_is_multi ) {
-                $real_max_allowed = (int) $multi_max_allowed[ $key ];
-            } else {
-                $real_max_allowed = (int) $max_allowed;
-            }
-
-            // don't let people choose more seats than available
-            if ( $event_multiseats[ $key ] > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
-                $real_max_allowed = $avail_seats;
-            }
-
-            if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-                $used_capacity = eme_get_event_location_used_capacity( $event );
-                $free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
-                if ($free_location_capacity < 0) {
-                    $free_location_capacity=0;
-                }
-                if ($real_max_allowed > $free_location_capacity) {
-                    $real_max_allowed = $free_location_capacity;
-                }
-            }
-
-            // 0 means no limit, but we need a sensible max to show ...
-            if ( $event_multiseats[ $key ] == 0 && $real_max_allowed == 0 ) {
-                $real_max_allowed = 10;
-            }
-
-            if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
-                // when editing a booking in the backend, the number available seats are in fact the number of free seats+number of booked seat
-                $real_max_allowed += intval( $booking_seats_mp[ $key ] );
-                // now also respect the set max for the event
-                if ( $max_allowed_is_multi && $real_max_allowed > intval( $multi_max_allowed[ $key ] ) && intval( $multi_max_allowed[ $key ] ) > 0 ) {
-                    $real_max_allowed = intval( $multi_max_allowed[ $key ] );
-                } elseif ( $real_max_allowed > $max_allowed && $max_allowed > 0 ) {
-                    $real_max_allowed = $max_allowed;
-                }
-            }
-
-            if ( $min_allowed_is_multi ) {
-                $real_min_allowed = $multi_min_allowed[ $key ];
-            } else {            // it's no use to have a non-multi minimum for multiseats
-                $real_min_allowed = 0;
-            }
-
-            for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
-                $booked_seats_options[ $key ][ $i ] = $i;
-            }
-        }
-    } elseif ( eme_is_multi( $event['price'] ) ) {
-        // we just need to loop through the same amount of seats as there are prices
-        foreach ( eme_convert_multi2array( $event['price'] ) as $key => $value ) {
-            $booked_seats_options[ $key ] = [];
-            if ( $max_allowed_is_multi ) {
-                $real_max_allowed = (int) $multi_max_allowed[ $key ];
-            } else {
-                $real_max_allowed = (int) $max_allowed;
-            }
-
-            // don't let people choose more seats than available
-            if ( $event_seats > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
-                $real_max_allowed = $avail_seats;
-            }
-
-            // limit to free location capacity too
-            if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-                $used_capacity = eme_get_event_location_used_capacity( $event );
-                $free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
-                if ($free_location_capacity < 0) {
-                    $free_location_capacity=0;
-                }
-                if ($real_max_allowed > $free_location_capacity) {
-                    $real_max_allowed = $free_location_capacity;
-                }
-            }
-
-            // 0 means no limit, but we need a sensible max to show ...
-            if ( $event_seats == 0 && $real_max_allowed == 0 ) {
-                $real_max_allowed = 10;
-            }
-
-            if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
-                // when editing a booking in the backend, the number available seats are in fact the number of free seats+number of booked seat
-                $real_max_allowed += $booking_seats_mp[ $key ];
-                // now also respect the set max for the event
-                if ( $max_allowed_is_multi && $real_max_allowed > intval( $multi_max_allowed[ $key ] ) && intval( $multi_max_allowed[ $key ] ) > 0 ) {
-                    $real_max_allowed = intval( $multi_max_allowed[ $key ] );
-                } elseif ( $real_max_allowed > $max_allowed && $max_allowed > 0 ) {
-                    $real_max_allowed = $max_allowed;
-                }
-            }
-
-            if ( $min_allowed_is_multi ) {
-                $real_min_allowed = intval( $multi_min_allowed[ $key ] );
-            } else {            // it's no use to have a non-multi minimum for multiseats/multiprice
-                $real_min_allowed = 0;
-            }
-
-            for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
-                $booked_seats_options[ $key ][ $i ] = $i;
-            }
-        }
-    } else {
-        if ( $max_allowed_is_multi ) {
-            $real_max_allowed = $multi_max_allowed[0];
-        } else {
-            $real_max_allowed = $max_allowed;
-        }
-
-        // don't let people choose more seats than available
-        if ( $event_seats > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
-            $real_max_allowed = $avail_seats;
-        }
-
-        // limit to free location capacity too
-        if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-                        $used_capacity = eme_get_event_location_used_capacity( $event );
-            $free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
-            if ($free_location_capacity < 0) {
-                $free_location_capacity=0;
-            }
-                        if ($real_max_allowed > $free_location_capacity) {
-                $real_max_allowed = $free_location_capacity;
-                        }
-                }
-
-        // 0 means no limit, but we need a sensible max to show ...
-        if ( $event_seats == 0 && $real_max_allowed == 0 ) {
-            $real_max_allowed = 10;
-        }
-
-        // let's make sure that when editing a booking in the backend, at least the same amount of seats are shown as there were booked seats
-        if ( $editing_booking_from_backend && $real_max_allowed < $bookedSeats ) {
-            $real_max_allowed += $bookedSeats;
-            if ( $max_allowed_is_multi && $real_max_allowed > $multi_max_allowed[0] ) {
-                $real_max_allowed = $multi_max_allowed[0];
-            } elseif ( $real_max_allowed > $max_allowed ) {
-                $real_max_allowed = $max_allowed;
-            }
-        }
-
-        if ( $min_allowed_is_multi ) {
-            $real_min_allowed = $multi_min_allowed[0];
-        } else {
-            $real_min_allowed = $min_allowed;
-        }
-
-        for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
-            $booked_seats_options[ $i ] = $i;
-        }
-    }
-
-    $discount_fields_count = 0;
-    $error_msg             = '';
-    // We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT
-    $lastname_found = 0;
-    $email_found    = 0;
-    $seats_found    = 0;
-
-    if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
-        $password_found = 0;
-    } else {
-        $password_found = 1;
-    }
-
-    // for multi booking forms, let's fake that all are present
-    if ( ! $eme_is_admin_request && $is_multibooking ) {
-        $lastname_found = 1;
-        $email_found    = 1;
-        $seats_found    = 1;
-    }
-
-    // first we do the custom attributes, since these can contain other placeholders
+    // Custom event attribute placeholders
     preg_match_all( '/#(ESC|URL)?_ATT\{.+?\}(\{.+?\})?/', $format, $results );
     foreach ( $results[0] as $resultKey => $result ) {
-        $need_escape    = 0;
-        $need_urlencode = 0;
+        $need_escape    = false;
+        $need_urlencode = false;
         $orig_result    = $result;
         if ( strstr( $result, '#ESC' ) ) {
             $result      = str_replace( '#ESC', '#', $result );
-            $need_escape = 1;
+            $need_escape = true;
         } elseif ( strstr( $result, '#URL' ) ) {
             $result         = str_replace( '#URL', '#', $result );
-            $need_urlencode = 1;
+            $need_urlencode = true;
         }
         $replacement = '';
-        //Strip string of placeholder and just leave the reference
-        $attRef = substr( substr( $result, 0, strpos( $result, '}' ) ), 6 );
+        $attRef      = substr( substr( $result, 0, strpos( $result, '}' ) ), 6 );
         if ( isset( $event['event_attributes'][ $attRef ] ) ) {
             $replacement = $event['event_attributes'][ $attRef ];
         }
-        if ( trim( $replacement ) == ''
-            && isset( $results[2][ $resultKey ] )
-            && $results[2][ $resultKey ] != '' ) {
-            //Check to see if we have a second set of braces;
+        if ( trim( $replacement ) == '' && isset( $results[2][ $resultKey ] ) && $results[2][ $resultKey ] != '' ) {
             $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
         }
-
         if ( $need_escape ) {
             $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
         }
@@ -2825,1020 +1954,684 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         $format = str_replace( $orig_result, $replacement, $format );
     }
 
-    // the 2 placeholders that can contain extra text are treated separately first
-    // the question mark is used for non greedy (minimal) matching
-    // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
-        // only show the captcha when booking via the frontend, not the admin backend
+    $dynamic_price_class_basic = 'dynamicprice'; // js checks for this span regardless
+    $dynamic_data_wanted       = ( strstr( $format, '#_DYNAMICDATA' ) && ! empty( $eme_dyndatafields ) ) || $event['event_properties']['dyndata_all_fields'];
+    $dynamic_data_rendered     = false;
+
+    // Seat options
+    $min_allowed       = $event['event_properties']['min_allowed'];
+    $max_allowed       = $event['event_properties']['max_allowed'];
+    $waitinglist       = false;
+    $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
+    $event_seats       = eme_get_total( $event['event_seats'] );
+
+    if ( $allow_overbooking ) {
+        $avail_seats = $event_seats;
+    } else {
+        $avail_seats = eme_get_available_seats( $event_id, 1 );
+        if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
+            $waitinglist = true;
+            $avail_seats = eme_get_available_seats( $event_id );
+        }
+    }
+
+    $booked_seats_options = [];
+    $max_allowed_is_multi = eme_is_multi( $max_allowed );
+    $min_allowed_is_multi = eme_is_multi( $min_allowed );
+    $multi_min_allowed = [];
+    $multi_max_allowed = [];
+    if ( $max_allowed_is_multi ) {
+        $multi_max_allowed = eme_convert_multi2array( $max_allowed );
+    }
+    if ( $min_allowed_is_multi ) {
+        $multi_min_allowed = eme_convert_multi2array( $min_allowed );
+    }
+
+    if ( eme_is_multi( $event['event_seats'] ) ) {
+        $event_multiseats = eme_convert_multi2array( $event['event_seats'] );
+        $multi_avail      = $allow_overbooking ? $event_multiseats : eme_get_available_multiseats( $event_id );
+        foreach ( $multi_avail as $key => $avail_seats ) {
+            $booked_seats_options[ $key ] = [];
+            $real_max_allowed             = $max_allowed_is_multi ? (int) $multi_max_allowed[ $key ] : (int) $max_allowed;
+            if ( $event_multiseats[ $key ] > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
+                $real_max_allowed = $avail_seats;
+            }
+            if ( ! empty( $location ) && ! empty( $location['location_properties']['max_capacity'] ) ) {
+                $used_capacity          = eme_get_event_location_used_capacity( $event );
+                $free_location_capacity = max( 0, $location['location_properties']['max_capacity'] - $used_capacity );
+                if ( $real_max_allowed > $free_location_capacity ) {
+                    $real_max_allowed = $free_location_capacity;
+                }
+            }
+            if ( $event_multiseats[ $key ] == 0 && $real_max_allowed == 0 ) {
+                $real_max_allowed = 10;
+            }
+            if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
+                $real_max_allowed += intval( $booking_seats_mp[ $key ] );
+                if ( $max_allowed_is_multi && $real_max_allowed > intval( $multi_max_allowed[ $key ] ) && intval( $multi_max_allowed[ $key ] ) > 0 ) {
+                    $real_max_allowed = intval( $multi_max_allowed[ $key ] );
+                } elseif ( $real_max_allowed > $max_allowed && $max_allowed > 0 ) {
+                    $real_max_allowed = $max_allowed;
+                }
+            }
+            $real_min_allowed = $min_allowed_is_multi ? $multi_min_allowed[ $key ] : 0;
+            for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
+                $booked_seats_options[ $key ][ $i ] = $i;
+            }
+        }
+    } elseif ( eme_is_multi( $event['price'] ) ) {
+        foreach ( eme_convert_multi2array( $event['price'] ) as $key => $value ) {
+            $booked_seats_options[ $key ] = [];
+            $real_max_allowed             = $max_allowed_is_multi ? (int) $multi_max_allowed[ $key ] : (int) $max_allowed;
+            if ( $event_seats > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
+                $real_max_allowed = $avail_seats;
+            }
+            if ( ! empty( $location ) && ! empty( $location['location_properties']['max_capacity'] ) ) {
+                $used_capacity          = eme_get_event_location_used_capacity( $event );
+                $free_location_capacity = max( 0, $location['location_properties']['max_capacity'] - $used_capacity );
+                if ( $real_max_allowed > $free_location_capacity ) {
+                    $real_max_allowed = $free_location_capacity;
+                }
+            }
+            if ( $event_seats == 0 && $real_max_allowed == 0 ) {
+                $real_max_allowed = 10;
+            }
+            if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
+                $real_max_allowed += $booking_seats_mp[ $key ];
+                if ( $max_allowed_is_multi && $real_max_allowed > intval( $multi_max_allowed[ $key ] ) && intval( $multi_max_allowed[ $key ] ) > 0 ) {
+                    $real_max_allowed = intval( $multi_max_allowed[ $key ] );
+                } elseif ( $real_max_allowed > $max_allowed && $max_allowed > 0 ) {
+                    $real_max_allowed = $max_allowed;
+                }
+            }
+            $real_min_allowed = $min_allowed_is_multi ? intval( $multi_min_allowed[ $key ] ) : 0;
+            for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
+                $booked_seats_options[ $key ][ $i ] = $i;
+            }
+        }
+    } else {
+        $real_max_allowed = $max_allowed_is_multi ? $multi_max_allowed[0] : $max_allowed;
+        if ( $event_seats > 0 && ( $real_max_allowed > $avail_seats || $real_max_allowed == 0 ) ) {
+            $real_max_allowed = $avail_seats;
+        }
+        if ( ! empty( $location ) && ! empty( $location['location_properties']['max_capacity'] ) ) {
+            $used_capacity          = eme_get_event_location_used_capacity( $event );
+            $free_location_capacity = max( 0, $location['location_properties']['max_capacity'] - $used_capacity );
+            if ( $real_max_allowed > $free_location_capacity ) {
+                $real_max_allowed = $free_location_capacity;
+            }
+        }
+        if ( $event_seats == 0 && $real_max_allowed == 0 ) {
+            $real_max_allowed = 10;
+        }
+        if ( $editing_booking_from_backend && $real_max_allowed < $bookedSeats ) {
+            $real_max_allowed += $bookedSeats;
+            if ( $max_allowed_is_multi && $real_max_allowed > $multi_max_allowed[0] ) {
+                $real_max_allowed = $multi_max_allowed[0];
+            } elseif ( $real_max_allowed > $max_allowed ) {
+                $real_max_allowed = $max_allowed;
+            }
+        }
+        $real_min_allowed = $min_allowed_is_multi ? $multi_min_allowed[0] : $min_allowed;
+        for ( $i = $real_min_allowed; $i <= $real_max_allowed; $i++ ) {
+            $booked_seats_options[ $i ] = $i;
+        }
+    }
+
+    $discount_fields_count = 0;
+
+    // Build $ctx
+    $ctx = [
+        'person'          => $person,
+        'fn_prefix'       => '',
+        'form_id'         => $form_id,
+        'eme_is_admin'    => $eme_is_admin_request,
+        'readonly'        => $readonly,
+        'disabled'        => $disabled,
+        'dfc_basic'       => 'nodynamicupdates', // updated per-iteration below via closure
+        'extra_css'       => '',
+        'allow_clear'     => $allow_clear,
+        'invite_readonly' => $invite_readonly,
+        'selected_captcha'=> $selected_captcha,
+        'captcha_only_logged_out'=> $event['event_properties']['captcha_only_logged_out'],
+        'required'        => false,
+        'required_att'    => '',
+    ];
+
+    $handlers = eme_get_person_formfield_handler_definitions();
+
+    // ── rsvp-specific handlers ───────────────────────────────────────────────
+
+    $handlers['/#_COMMENT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $is_multibooking, $bookerComment ) {
         if ( $is_multibooking ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
-        } elseif ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
+            return '';
+        }
+        $placeholder_text = isset( $matches[1] )
+            ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+            : esc_html__( 'Comment', 'events-made-easy' );
+        $dfc = "class='{$ctx['dfc_basic']}'";
+        return "<textarea {$ctx['required_att']} name='eme_rsvpcomment' $dfc placeholder='$placeholder_text' >$bookerComment</textarea>";
+    };
+
+    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic ) {
+        $var_prefix  = "bookings[$event_id][";
+        $var_postfix = ']';
+        $fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
+        $entered_val = ( $editing_booking_from_backend && isset( $bookedSeats ) ) ? $bookedSeats : 0;
+        $dfc_basic   = $ctx['dfc_basic'];
+        if ( $event['event_properties']['take_attendance'] ?? false ) {
+            if ( ! $min_allowed_is_multi && $min_allowed > 0 ) {
+                $replacement = "<input type='hidden' name='$fieldname' value='1'>";
+            } else {
+                if ( $new_booking_in_frontend ) {
+                    $entered_val = 1;
+                }
+                $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, '', "class='eme-attendance-field $dynamic_price_class_basic $dfc_basic eme_snapselect'" );
+            }
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
+            if ( ! $min_allowed_is_multi && $min_allowed > 0 && $min_allowed == $max_allowed ) {
+                $replacement = "<input type='hidden' name='$fieldname' value='$min_allowed'>";
+            } else {
+                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
+            }
+            if ( $waitinglist && ! $editing_booking_from_backend ) {
+                $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
+            }
         }
-    }
+        return [ 'html' => $replacement ];
+    };
 
-    // let us always set the dynamic price class, since the js checks if the dynamic price html-span exists anyway
-    $dynamic_price_class       = "class='dynamicprice'";
-    $dynamic_price_class_basic = 'dynamicprice';
-
-    # check if dynamic data is requested
-    if ( ( strstr( $format, '#_DYNAMICDATA' ) && ! empty( $eme_dyndatafields ) ) || $event['event_properties']['dyndata_all_fields'] ) {
-        $dynamic_data_wanted = 1;
-    } else {
-        $dynamic_data_wanted = 0;
-    }
-    # the next is to make sure we render #_DYNAMICDATA only once
-    $dynamic_data_rendered = 0;
-
-    $needle_offset = 0;
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
-        $required_att       = '';
-        $replacement        = '';
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
-
-        // also support RESPNAME, RESPEMAIL, ...
-        if ( strstr( $result, '#_RESP' ) ) {
-            $result = str_replace( '#_RESP', '#_', $result );
-        }
-
-        // check for dynamic field class for this field
-        if ( $dynamic_data_wanted && ! $is_multibooking && ( in_array( $result, $eme_dyndatafields ) || $event['event_properties']['dyndata_all_fields'] ) ) {
-            $dynamic_field_class       = "class='dynamicupdates'";
-            $dynamic_field_class_basic = 'dynamicupdates';
+    $handlers['/#_(SEATS|SPACES)\{(\d+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $editing_booking_from_backend, $booking_seats_mp, $booked_seats_options, $min_allowed_is_multi, $multi_min_allowed, $multi_max_allowed, $dynamic_price_class_basic ) {
+        $field_id    = intval( $matches[2] );
+        $fieldname   = "bookings[$event_id][bookedSeats{$field_id}]";
+        $entered_val = ( $editing_booking_from_backend && $field_id > 0 && isset( $booking_seats_mp[ $field_id - 1 ] ) )
+            ? intval( $booking_seats_mp[ $field_id - 1 ] ) : 0;
+        $dfc_basic   = $ctx['dfc_basic'];
+        if ( ! eme_is_multi( $event['price'] ) ) {
+            $error_msg = __( 'By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings.', 'events-made-easy' );
+            return [ 'html' => '', 'early_return' => "<div class='eme-message-error eme-rsvp-message-error'>$error_msg</div>" ];
+        } elseif ( $event['event_properties']['take_attendance'] ) {
+            if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
+                $replacement = "<input type='hidden' name='$fieldname' value='1'>";
+            } else {
+                $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
+            }
         } else {
-            $dynamic_field_class       = "class='nodynamicupdates'";
-            $dynamic_field_class_basic = 'nodynamicupdates';
+            if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
+                $replacement = "<input type='hidden' name='$fieldname' value='{$multi_min_allowed[$field_id-1]}'>";
+            } else {
+                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
+            }
         }
+        return [ 'html' => $replacement ];
+    };
 
+    $handlers['/#_PASSWORD(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $event, $eme_is_admin_request, $is_multibooking ) {
+        if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $is_multibooking ) {
+            $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
+            $dfc = "class='{$ctx['dfc_basic']}'";
+            $replacement = "<input required='required' type='text' class='eme_passwordfield' autocomplete='off' name='rsvp_password' value='' $dfc placeholder='$placeholder_text'>";
+            return [ 'html' => $replacement, 'set_required' => true ];
+        }
+        return '';
+    };
+
+    $handlers['/#_DYNAMICPRICE$/'] = function( $result, $matches, $ctx ) use ( $is_multibooking ) {
+        return $is_multibooking ? '' : "<span id='eme_calc_bookingprice'></span>";
+    };
+
+    $handlers['/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/'] = function( $result, $matches, $ctx ) use ( $is_multibooking ) {
+        return $is_multibooking ? '' : "<span id='eme_calc_bookingprice_detail'></span>";
+    };
+
+    $handlers['/#_DYNAMICDATA$/'] = function( $result, $matches, $ctx ) use ( $event, &$dynamic_data_rendered ) {
+        if ( ! $dynamic_data_rendered && ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
+            $dynamic_data_rendered = true;
+            return "<div id='eme_dyndata'></div>";
+        }
+        return '';
+    };
+
+    $handlers['/#_DISCOUNT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $event, $event_id, $is_multibooking, $eme_is_admin_request, $booking, $dynamic_price_class_basic, &$discount_fields_count ) {
+        if ( ! $event['event_properties']['rsvp_discount'] && ! $event['event_properties']['rsvp_discountgroup'] ) {
+            return [ 'html' => '', 'not_found' => true ];
+        }
+        ++$discount_fields_count;
+        if ( ! $eme_is_admin_request ) {
+            $var_prefix     = "bookings[$event_id][";
+            $postfield_name = "{$var_prefix}DISCOUNT{$discount_fields_count}]";
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Discount code', 'events-made-easy' );
+            return "<input class='$dynamic_price_class_basic' type='text' name='$postfield_name' value='' {$ctx['required_att']} placeholder='$placeholder_text'>";
+        } elseif ( $discount_fields_count == 1 ) {
+            if ( $booking['discount'] ) {
+                $replacement = "<input class='$dynamic_price_class_basic' type='text' name='DISCOUNT' value='{$booking['discount']}'><br>"
+                    . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $booking['discount'], $event['currency'] ) );
+                $replacement .= '<ul>';
+            } else {
+                $replacement = "<input class='$dynamic_price_class_basic' type='text' name='DISCOUNT' value=''><br>"
+                    . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
+            }
+            if ( $booking['dgroupid'] ) {
+                $dgroup       = eme_get_discountgroup( $booking['dgroupid'] );
+                $replacement .= $dgroup && isset( $dgroup['name'] )
+                    ? '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>'
+                    : '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ) . '</li>';
+            }
+            if ( ! empty( $booking['discountids'] ) ) {
+                $applied_discountids = eme_is_serialized( $booking['discountids'] )
+                    ? array_keys( eme_unserialize( $booking['discountids'] ) )
+                    : explode( ',', $booking['discountids'] );
+                foreach ( $applied_discountids as $discount_id ) {
+                    $discount     = eme_get_discount( $discount_id );
+                    $replacement .= $discount && isset( $discount['name'] )
+                        ? '<li>' . esc_html( $discount['name'] ) . '</li>'
+                        : '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
+                }
+            }
+            if ( $booking['discount'] ) {
+                $replacement .= '</ul>';
+            }
+            $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
+            return $replacement;
+        }
+        return '';
+    };
+
+    $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $is_multibooking, $editing_booking_from_backend, $booking, $person, $dynamic_price_class_basic ) {
+        $dfc_basic = $ctx['dfc_basic'];
+        $formfield = eme_get_formfield( $matches[1] );
+        if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
+            if ( ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) && $is_multibooking ) {
+                return '';
+            }
+            $field_id    = $formfield['field_id'];
+            $var_prefix  = $is_multibooking ? "bookings[$event_id][" : '';
+            $var_postfix = $is_multibooking ? ']' : '';
+            $fieldname   = "{$var_prefix}FIELD{$field_id}{$var_postfix}";
+            $entered_val = '';
+            $field_readonly = false;
+            if ( $editing_booking_from_backend ) {
+                if ( $formfield['field_purpose'] == 'people' ) {
+                    $answers        = eme_get_person_answers( $booking['person_id'] );
+                    $field_readonly = true;
+                } else {
+                    $answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
+                }
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
+                }
+                $files1 = eme_get_uploaded_files( $booking['person_id'], 'people' );
+                $files2 = eme_get_uploaded_files( $booking['booking_id'], 'bookings' );
+                $files  = array_merge( $files1, $files2 );
+                if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+                    $entered_files = [];
+                    foreach ( $files as $file ) {
+                        if ( $file['field_id'] == $field_id ) { $entered_files[] = $file; }
+                    }
+                    $entered_val = $entered_files;
+                }
+            } elseif ( $formfield['field_purpose'] == 'people' && is_user_logged_in() && ! empty( $person['person_id'] ) ) {
+                $answers = eme_get_person_answers( $person['person_id'] );
+                $files   = eme_get_uploaded_files( $booking['person_id'] ?? 0, 'people' );
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
+                }
+                if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+                    $entered_files = [];
+                    foreach ( $files as $file ) {
+                        if ( $file['field_id'] == $field_id ) { $entered_files[] = $file; }
+                    }
+                    $entered_val = $entered_files;
+                }
+            }
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+            $class    = $formfield['extra_charge'] ? "$dynamic_price_class_basic $dfc_basic" : $dfc_basic;
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly ), 'set_required' => $required ];
+        }
+        return [ 'html' => '', 'not_found' => true ];
+    };
+
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) use ( $is_multibooking, $editing_booking_from_backend ) {
         if ( $is_multibooking ) {
-            $var_prefix  = "bookings[$event_id][";
-            $var_postfix = ']';
+            return '';
+        }
+        if ( $editing_booking_from_backend ) {
+            $label = __( 'Update booking', 'events-made-easy' );
+        } elseif ( isset( $matches[1] ) ) {
+            $label = substr( $matches[1], 1, -1 );
         } else {
-            $var_prefix  = '';
-            $var_postfix = '';
+            $label = get_option( 'eme_rsvp_addbooking_submit_string' );
         }
+        return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
 
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'lastname';
-                if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                    // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                    $this_readonly = "readonly='readonly'";
-                    if ( $allow_clear ) {
-                        $this_readonly .= " data-clearable='true'";
-                    }
-                } elseif ( ! empty( $invite_readonly ) && ! empty( $bookerLastName ) ) {
-                    $this_readonly = $invite_readonly;
-                } else {
-                    $this_readonly = $readonly;
-                }
-                if ( isset( $matches[2] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-                }
-                $replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
-                if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                    $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
-                }
+    // ── Run dispatch, updating dfc_basic per-iteration via a wrapper ─────────
+    // Because dfc_basic changes per iteration (based on dyndata), we run a
+    // custom loop here instead of eme_run_formfield_dispatch.
+ 
+    // pre-validate required placeholders
+    $has_lastname = $is_multibooking || str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = $is_multibooking || str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_password = $eme_is_admin_request || $is_multibooking || empty( $event['event_properties']['rsvp_password'] ) || str_contains( $format, '#_PASSWORD' );
 
-                ++$lastname_found;
-                // #_NAME is always required
-                $required = 1;
-            }
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'firstname';
-                if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                    // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                    $this_readonly = "readonly='readonly'";
-                } elseif ( ! empty( $invite_readonly ) && ! empty( $bookerFirstName ) ) {
-                    $this_readonly = $invite_readonly;
-                } else {
-                    $this_readonly = $readonly;
-                }
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerFirstName' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
-            }
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-                }
-                $fieldname    = 'birthdate';
-                $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
-            }
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'birthplace';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
-            }
-        } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'address1';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
-            }
-        } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'address2';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
-            }
-        } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'city';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'City', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerCity' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
-            }
-        } elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'zip';
-                if ( isset( $matches[2] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' placeholder='$placeholder_text' $readonly $dynamic_field_class>";
-            }
-        } elseif ( preg_match( '/#_STATE$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'state_code';
-                if (!empty($form_id)) {
-                    $fieldid = $form_id.'-'.$fieldname;
-                } else {
-                    $fieldid = $fieldname;
-                }
-                if ( ! empty( $bookerState_code ) ) {
-                    $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
-                } else {
-                    $state_arr = [];
-                }
-                $replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_snapselect_state_class $dynamic_field_class_basic", $disabled );
-            }
-        } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'country_code';
-                if (!empty($form_id)) {
-                    $fieldid = $form_id.'-'.$fieldname;
-                } else {
-                    $fieldid = $fieldname;
-                }
-                if ( ! empty( $bookerCountry_code ) ) {
-                        $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-                } else {
-                    $country_arr = [];
-                }
-                $replacement = eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_snapselect_country_class $dynamic_field_class_basic", $disabled );
-            }
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'email';
-                if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                    // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                    $this_readonly = "readonly='readonly'";
-                } elseif ( ! empty( $invite_readonly ) && ! empty( $bookerEmail ) ) {
-                    $this_readonly = $invite_readonly;
-                } else {
-                    $this_readonly = $readonly;
-                }
-                // there still exist people without email, so in the backend we allow it ...
-                if ( isset( $matches[2] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-                }
-                if ( $eme_is_admin_request ) {
-                    $replacement = "<input type='email' name='$fieldname' value='$bookerEmail' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
-                } else {
-                    $replacement = "<input required='required' type='email' name='$fieldname' value='$bookerEmail' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
-                }
-                ++$email_found;
-                // #_EMAIL is always required
-                $required = 1;
-            }
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'phone';
-                if ( isset( $matches[2] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='tel' name='$fieldname' value='$bookerPhone' $readonly $dynamic_field_class placeholder='$placeholder_text'>";
-            }
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
-        } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-                $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
-                if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                    $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                    $confirm = esc_html__('Yes','events-made-easy');
-                    $cancel  = esc_html__('No','events-made-easy');
-                    if (!eme_is_empty_string($popup))
-                        $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-                }
-            }
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-                $fieldname         = 'massmail';
-                $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic . ' eme_snapselect', $disabled );
-                if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                    $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                    $confirm = esc_html__('Yes','events-made-easy');
-                    $cancel  = esc_html__('No','events-made-easy');
-                    if (!eme_is_empty_string($popup))
-                        $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-                }
-            }
-        } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $label = substr( $matches[1], 1, -1 );
-                } else {
-                    $label = '';
-                }
-                $fieldname = 'gdpr';
-                if ( ! $eme_is_admin_request ) {
-                    $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
-                }
-            }
-        } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $label = substr( $matches[1], 1, -1 );
-                } else {
-                    $label = __('Remember me?','events-made-easy');
-                }
-                if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                    $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
-                }
-            }
-        } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                if ( is_numeric( $matches[1] ) ) {
-                    $group = eme_get_group( $matches[1] );
-                } else {
-                    $group = eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
-                }
-                if ( ! empty( $group ) ) {
-                    if ( ! $group['public'] ) {
-                        $replacement = __( 'Group is not public', 'events-made-easy' );
-                    } else {
-                        $group_id = $group['group_id'];
-                        if ( isset( $matches[2] ) ) {
-                            // remove { and } (first and last char of second match)
-                            $label = substr( $matches[2], 1, -1 );
-                        } else {
-                            $label = $group['name'];
-                        }
-                        $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates'>";
-                        if ( ! empty( $label ) ) {
-                            $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
-                        }
-                    }
-                } else {
-                    $replacement = __( 'Group does not exist', 'events-made-easy' );
-                }
-            }
-        } elseif ( preg_match( '/#_PASSWORD(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $is_multibooking ) {
-                $fieldname = 'rsvp_password';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-                }
-                $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
-                $replacement      = "<input required='required' type='text' class='eme_passwordfield' autocomplete='off' name='$fieldname' value='' $dynamic_field_class placeholder='$placeholder_text'>";
-                ++$password_found;
-                $required = 1;
-            }
-        } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $replacement = "<span id='eme_calc_bookingprice'></span>";
-            }
-        } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/', $result ) ) {
-            if ( ! $is_multibooking ) {
-                $replacement = "<span id='eme_calc_bookingprice_detail'></span>";
-            }
-        } elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
-            if ( !$dynamic_data_rendered && ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
-                $replacement = "<div id='eme_dyndata'></div>";
-                $dynamic_data_rendered = 1;
-            }
-        } elseif ( preg_match( '/#_SEATS$|#_SPACES$/', $result ) ) {
-            $var_prefix  = "bookings[$event_id][";
-            $var_postfix = ']';
-            $fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
-            if ( $editing_booking_from_backend && isset( $bookedSeats ) ) {
-                $entered_val = $bookedSeats;
-            } else {
-                $entered_val = 0;
-            }
+    preg_match_all( '/#_(SEATS|SPACES)(\{(\d+)\})?/', $format, $seats_matches );
+    $seats_found = count( $seats_matches[0] );
 
-            if ( $event['event_properties']['take_attendance'] ) {
-                // if we require 1 seat at the minimum, we set it to that and hide it for take_attendance
-                if ( ! $min_allowed_is_multi && $min_allowed > 0 ) {
-                    $replacement = "<input type='hidden' name='$fieldname' value='1'>";
-                } else {
-                    if ($new_booking_in_frontend) {
-                        $entered_val = 1; // by default people attend :-)
-                    }
-                    $replacement = eme_ui_checkbox_binary( $entered_val, $fieldname, '', 0, '', "class='eme-attendance-field $dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect'" );
-                }
-                ++$seats_found;
-            } else {
-                if ( ! $min_allowed_is_multi && $min_allowed > 0 && $min_allowed == $max_allowed ) {
-                    $replacement = "<input type='hidden' name='$fieldname' value='$min_allowed'>";
-                } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
-                }
-                if ( $waitinglist && !$editing_booking_from_backend ) {
-                    $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
-                }
-                ++$seats_found;
-            }
-        } elseif ( preg_match( '/#_(SEATS|SPACES)\{(\d+)\}/', $result, $matches ) ) {
-            $field_id    = intval( $matches[2] );
-            $var_prefix  = "bookings[$event_id][";
-            $var_postfix = ']';
-            $fieldname   = "{$var_prefix}bookedSeats" . $field_id . $var_postfix;
-
-            // for multiseats, the index starts at 1 (#_SEATS1, #_SEATS2, etc ...) but in booking_seats_mp the index starts at 0, so we do -1
-            if ( $editing_booking_from_backend && $field_id > 0 && isset( $booking_seats_mp[ $field_id - 1 ] ) ) {
-                $entered_val = intval( $booking_seats_mp[ $field_id - 1 ] );
-            } else {
-                $entered_val = 0;
-            }
-
-            if ( ! eme_is_multi( $event['price'] ) ) {
-                // this will show if people mix #_SEATS and #_SEATS{xx}
-                $error_msg = __( 'By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings.', 'events-made-easy' );
-            } elseif ( $event['event_properties']['take_attendance'] ) {
-                // if we require 1 seat at the minimum, we set it to that and hide it for take_attendance
-                if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
-                    $replacement = "<input type='hidden' name='$fieldname' value='1'>";
-                } else {
-                    $replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
-                }
-                ++$seats_found;
-            } else {
-                if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
-                    $replacement = "<input type='hidden' name='$fieldname' value='" . $multi_min_allowed[ $field_id - 1 ] . "'>";
-                } else {
-                    $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dynamic_field_class_basic eme_snapselect" );
-                }
-                ++$seats_found;
-            }
-        } elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'eme_rsvpcomment';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
-                }
-                $replacement = "<textarea $required_att name='$fieldname' $dynamic_field_class placeholder='$placeholder_text' >$bookerComment</textarea>";
-            }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
-            if ( !empty($selected_captcha) && ! $captcha_set ) { 
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }       
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
-                if ( ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) && $is_multibooking ) {
-                    // for file uploads we expect just FIELDxx as name (also for members, see function eme_upload_files), so not allowed for multibooking
-                    $replacement = '';
-                } else {
-                    $field_id       = $formfield['field_id'];
-                    $fieldname      = "{$var_prefix}FIELD" . $field_id . $var_postfix;
-                    $entered_val    = '';
-                    $field_readonly = 0;
-                    if ( $editing_booking_from_backend ) {
-                        if ( $formfield['field_purpose'] == 'people' ) {
-                            $answers        = eme_get_person_answers( $booking['person_id'] );
-                            $field_readonly = 1;
-                        } else {
-                            $answers        = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
-                            $field_readonly = 0;
-                        }
-                        foreach ( $answers as $answer ) {
-                            if ( $answer['field_id'] == $field_id ) {
-                                $entered_val = $answer['answer'];
-                                break;
-                            }
-                        }
-                        $files1 = eme_get_uploaded_files( $booking['person_id'], 'people' );
-                        $files2 = eme_get_uploaded_files( $booking['booking_id'], 'bookings' );
-                        $files  = array_merge( $files1, $files2 );
-                        if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-                            $entered_files = [];
-                            foreach ( $files as $file ) {
-                                if ( $file['field_id'] == $field_id ) {
-                                    $entered_files[] = $file;
-                                }
-                            }
-                            $entered_val = $entered_files;
-                        }
-                    } elseif ( $formfield['field_purpose'] == 'people' && is_user_logged_in() && ! empty( $person['person_id'] ) ) {
-                            $answers = eme_get_person_answers( $person['person_id'] );
-                            $files   = eme_get_uploaded_files( $booking['person_id'], 'people' );
-                        foreach ( $answers as $answer ) {
-                            if ( $answer['field_id'] == $field_id ) {
-                                $entered_val = $answer['answer'];
-                                break;
-                            }
-                        }
-                        if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-                            $entered_files = [];
-                            foreach ( $files as $file ) {
-                                if ( $file['field_id'] == $field_id ) {
-                                    $entered_files[] = $file;
-                                }
-                            }
-                            $entered_val = $entered_files;
-                        }
-                    }
-                    if ( $formfield['field_required'] ) {
-                        $required = 1;
-                    }
-                    if ( $formfield['extra_charge'] ) {
-                        $replacement = eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic, $field_readonly );
-                    } else {
-                        $replacement = eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $dynamic_field_class_basic, $field_readonly );
-                    }
-                }
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_DISCOUNT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( $event['event_properties']['rsvp_discount'] || $event['event_properties']['rsvp_discountgroup'] ) {
-                // we need an ID to have a unique name per DISCOUNT input field
-                ++$discount_fields_count;
-                if ( ! $eme_is_admin_request ) {
-                    $var_prefix     = "bookings[$event_id][";
-                    $var_postfix    = ']';
-                    $postfield_name = "{$var_prefix}DISCOUNT{$discount_fields_count}{$var_postfix}";
-                    $entered_val    = '';
-                    if ( isset( $matches[1] ) ) {
-                        // remove { and } (first and last char of second match)
-                        $placeholder_text = substr( $matches[1], 1, -1 );
-                        $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                    } else {
-                        $placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
-                    }
-                    $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='$entered_val' $required_att placeholder='$placeholder_text'>";
-                } elseif ( $eme_is_admin_request && $discount_fields_count == 1 ) {
-                    $postfield_name = 'DISCOUNT';
-                    if ( $booking['discount'] ) {
-                        // translators: %s is the calculated discount value
-                        $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $booking['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $booking['discount'], $event['currency'] ) );
-                        $replacement .= '<ul>';
-                    } else {
-                        $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value=''><br>" . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
-                    }
-                    if ( $booking['dgroupid'] ) {
-                        $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
-                        if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            // translators: %s is the discount group name
-                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
-                        } else {
-                            // translators: %d is the discount group ID
-                            $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] ) . '</li>';
-                        }
-                    }
-                    if ( ! empty( $booking['discountids'] ) ) {
-                        if ( eme_is_serialized( $booking['discountids'] ) ) {
-                            $applied_discounts = eme_unserialize( $booking['discountids'] );
-                            $applied_discountids = array_keys($applied_discounts);
-                        } else {
-                            $applied_discountids = explode( ',', $booking['discountids'] );
-                        }
-                        foreach ( $applied_discountids as $discount_id ) {
-                            $discount = eme_get_discount( $discount_id );
-                            if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
-                            } else {
-                                // translators: %d is the discount ID
-                                $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
-                            }
-                        }
-                    }
-                    if ( $booking['discount'] ) {
-                        $replacement .= '</ul>';
-                    }
-                    $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
-                }
-            }
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                if ( $editing_booking_from_backend ) {
-                    $label = __( 'Update booking', 'events-made-easy' );
-                } elseif ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $label = substr( $matches[1], 1, -1 );
-                } else {
-                    $label = get_option( 'eme_rsvp_addbooking_submit_string' );
-                }
-                $replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-            }
-        } else {
-            $found = 0;
-        }
-
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
-
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-
-    // now any leftover event placeholders
-    $format = eme_replace_event_placeholders( $format, $event );
-
-    if ( eme_is_multi( $event['price'] ) ) {
-        $matches     = eme_convert_multi2array( $event['price'] );
-        $seats_count = count( $matches );
-    } else {
-        $seats_count = 1;
-    }
-
-    // now check we found all the required placeholders for the form to work
-    if ( ! empty( $error_msg ) ) {
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$error_msg</div>";
-    } elseif ( $lastname_found && $email_found && $password_found && $seats_found >= $seats_count ) {
-        return $format;
-    } else {
+    if ( ! $has_lastname || ! $has_email || ! $has_password || $seats_found < 1 ) {
         $res = '';
-        if ( ! $lastname_found || ! $email_found || $seats_found < $seats_count ) {
+        if ( ! $has_lastname || ! $has_email || $seats_found < 1 ) {
             $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
         }
         if ( eme_is_multi( $event['price'] ) ) {
             $res .= __( "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price.", 'events-made-easy' ) . '<br>';
         }
-        if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $password_found ) {
-                $res .= __( 'Check that the placeholder #_PASSWORD is present in the form.', 'events-made-easy' ) . '<br>';
+        if ( ! $has_password && ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
+            $res .= __( 'Check that the placeholder #_PASSWORD is present in the form.', 'events-made-easy' ) . '<br>';
         }
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
     }
-}
 
-function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
-    $lastname_found  = 0;
-    $firstname_found = 0;
-
-    // all these are dynamic fields
-    $dynamic_field_class       = "class='nodynamicupdates dynamicfield'";
-    $dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
-
-    $needle_offset = 0;
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+    $needle_offset = 0;
+
     foreach ( $placeholders[0] as $orig_result ) {
         $result             = $orig_result[0];
         $orig_result_needle = $orig_result[1] - $needle_offset;
         $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $replacement        = '';
-        $required           = 0;
+        $found              = false;
+        $required           = false;
         $required_att       = '';
+        $replacement        = '';
+
         if ( strstr( $result, '#REQ' ) ) {
             $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
+            $required     = true;
             $required_att = "required='required'";
         }
+        if ( strstr( $result, '#_RESP' ) ) {
+            $result = str_replace( '#_RESP', '#_', $result );
+        }
 
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'lastname' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='familymember[$counter][lastname]' id='familymember[$counter][lastname]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
-            ++$lastname_found;
-            $required = 1;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'firstname' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='familymember[$counter][firstname]' id='familymember[$counter][firstname]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
-            ++$firstname_found;
-            $required = 1;
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'phone' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='tel' name='familymember[$counter][phone]' id='familymember[$counter][phone]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
-            $required    = 1;
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'email' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
-            $required    = 1;
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'bd_email' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $selected_bd_email = 1;
-            } else {
-                $selected_bd_email = $entered_val;
-            }
-            $replacement = eme_ui_select_binary( $selected_bd_email, "familymember[$counter][bd_email]", 0, $dynamic_field_class_basic );
-        } elseif ( preg_match( '/#_OPT_OUT/', $result ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'massmail' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $selected_massmail = 1;
-            } else {
-                $selected_massmail = $entered_val;
-            }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            if ( $entered_val === false ) {
-                $selected_massmail = 0;
-            } else {
-                $selected_massmail = $entered_val;
-            }
-            $replacement = eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
-            $required     = 1;
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?/', $result, $matches ) ) {
-            $postvar_arr = [ 'familymember', $counter, 'birthplace' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='familymember[$counter][birthplace]' id='familymember[$counter][birthplace]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
-            $required    = 1;
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?/', $result, $matches ) ) {
-            $fieldname   = "familymember[$counter][birthdate]";
-            $postvar_arr = [ 'familymember', $counter, 'birthdate' ];
-            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-            if ( $entered_val === false ) {
-                $entered_val = '';
-            }
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-            }
-            $replacement .= "<input required='required' readonly='readonly' type='text' name='{$fieldname}' id='{$fieldname}' data-date='$entered_val' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
-            $required     = 1;
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'members', 'people' ] ) ) {
-                $field_id = $formfield['field_id'];
-                // all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
-                $var_prefix     = "familymember[$counter][";
-                $var_postfix    = ']';
-                $postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
-                $postvar_arr    = [ 'familymember', $counter, 'FIELD' . $field_id ];
-                $entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class );
-            } else {
-                $found = 0;
-            }
+        // per-iteration dynamic field class
+        if ( $dynamic_data_wanted && ! $is_multibooking && ( in_array( $result, $eme_dyndatafields ) || $event['event_properties']['dyndata_all_fields'] ) ) {
+            $dfc_basic = 'dynamicupdates';
         } else {
-            $found = 0;
+            $dfc_basic = 'nodynamicupdates';
         }
 
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                    $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+        // multibooking field prefix
+        $var_prefix  = $is_multibooking ? "bookings[$event_id][" : '';
+        $var_postfix = $is_multibooking ? ']' : '';
+
+        $ctx['dfc_basic']    = $dfc_basic;
+        $ctx['required']     = $required;
+        $ctx['required_att'] = $required_att;
+
+        foreach ( $handlers as $pattern => $handler ) {
+            if ( preg_match( $pattern, $result, $matches ) ) {
+                $found = true;
+                $ret   = $handler( $result, $matches, $ctx );
+                if ( is_array( $ret ) ) {
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
+                    $replacement = $ret['html'] ?? '';
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; $required_att = "required='required'"; }
+                } else {
+                    $replacement = (string) $ret;
+                }
+                break;
             }
         }
+
         if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
+            if ( $required ) {
+                $req_str = eme_translate( get_option( 'eme_form_required_field_string' ) );
+                if ( ! empty( $req_str ) ) {
+                    $replacement .= "<div class='eme-required-field'>$req_str</div>";
+                }
             }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+            if ( is_null( $replacement ) ) { $replacement = ''; }
+            $format        = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
         }
     }
 
-    // now check we found all the required placeholders for the form to work
-    if ( $lastname_found && $firstname_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $lastname_found || ! $firstname_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-family-message-error'>$res</div>";
-    }
+    $format = eme_replace_event_placeholders( $format, $event );
+
+    return $format;
 }
 
 function eme_replace_membership_formfields_placeholders( $form_id, $membership, $member, $format ) {
     $eme_is_admin_request = eme_is_admin_request();
     $membership_id        = $membership['membership_id'];
 
-    // check if logged in if required
     $registration_wp_users_only = $membership['properties']['registration_wp_users_only'];
-    if ( !$eme_is_admin_request && $registration_wp_users_only && ! is_user_logged_in() ) {
+    if ( ! $eme_is_admin_request && $registration_wp_users_only && ! is_user_logged_in() ) {
         return '';
     }
-
-    // format is required
     if ( eme_is_empty_string( $format ) ) {
         return;
     }
 
-    $allow_clear    = 0;
-    $editing_member = 0;
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    $has_email     = str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
+    $allow_clear    = false;
+    $editing_member = false;
     $current_userid = get_current_user_id();
-    if ( !empty($current_userid) ) {
-        if (current_user_can( get_option( 'eme_cap_edit_members' ) ) && ! empty( $member['member_id'] ) && !empty( $member['person_id'] )) {
-            $editing_member = 1;
+    if ( ! empty( $current_userid ) ) {
+        if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) && ! empty( $member['member_id'] ) && ! empty( $member['person_id'] ) ) {
+            $editing_member = true;
         }
-        if ( !$editing_member && (! $registration_wp_users_only || current_user_can( get_option( 'eme_cap_edit_members' ))) ) {
-            $allow_clear = 1;
+        if ( ! $editing_member && ( ! $registration_wp_users_only || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) ) {
+            $allow_clear = true;
         }
     }
 
-    $bookerLastName     = '';
-    $bookerFirstName    = '';
-    $bookerBirthdate    = '';
-    $bookerBirthplace   = '';
-    $bookerAddress1     = '';
-    $bookerAddress2     = '';
-    $bookerCity         = '';
-    $bookerZip          = '';
-    $bookerState_code   = '';
-    $bookerCountry_code = '';
-    // if only 1 country, set it as default
-    $countries_alpha2 = eme_get_countries_alpha2();
-    if ( count( $countries_alpha2 ) == 1 ) {
-        $bookerCountry_code = $countries_alpha2[0];
+    $person = eme_new_person();
+    if ( $editing_member ) {
+        $person = eme_get_person( $member['person_id'] );
+    } elseif ( ! empty( $current_userid ) && ! $eme_is_admin_request ) {
+        $fetched = eme_get_person_by_wp_id( $current_userid );
+        $person  = $fetched ?: eme_fake_person_by_wp_id( $current_userid );
     }
-    $bookerEmail = '';
-    $bookerPhone = '';
-    $massmail    = null;
-    $bd_email    = 0;
-    $gdpr        = 0;
+    $person = eme_esc_person_for_form( $person );
 
-    // don't fill out the basic info if in the backend, but do it only if in the frontend
     $readonly = '';
     $disabled = '';
-    $person = [];
-    if ($editing_member) {
-        $person = eme_get_person( $member['person_id'] );
-    } elseif (! empty( $current_userid ) && !$eme_is_admin_request) {
-        // this will also fill person with wp info if logged in and person doesn't exist in EME
-        $person = eme_get_person_by_wp_id( $current_userid );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_userid );
-        }
-    }
-    if ( ! empty( $person ) ) {
-        $bookerLastName     = esc_html( $person['lastname'] );
-        $bookerFirstName    = esc_html( $person['firstname'] );
-        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-        $bookerBirthplace   = esc_html( $person['birthplace'] );
-        $bookerAddress1     = esc_html( $person['address1'] );
-        $bookerAddress2     = esc_html( $person['address2'] );
-        $bookerCity         = esc_html( $person['city'] );
-        $bookerZip          = esc_html( $person['zip'] );
-        $bookerState_code   = esc_html( $person['state_code'] );
-        $bookerCountry_code = esc_html( $person['country_code'] );
-        $bookerEmail        = esc_html( $person['email'] );
-        $bookerPhone        = esc_html( $person['phone'] );
-        $massmail           = intval( $person['massmail'] );
-        $bd_email           = intval( $person['bd_email'] );
-        $gdpr               = intval( $person['gdpr'] );
-    }
-
     if ( $editing_member ) {
-        // when editing an existing member (not a new)
-        // we disable the editing of person info completely
-        // we also set the width to 100% because otherwise the size of the placeholder is used to render the width of readonly fields ...
         $readonly = "readonly='readonly' style='width: 100%;'";
         $disabled = "disabled='disabled'";
     }
 
-    // check which fields are used in the event definition for dynamic data
     $eme_dyndatafields = [];
     if ( isset( $membership['properties']['dyndata'] ) ) {
         foreach ( $membership['properties']['dyndata'] as $dynfield ) {
             $eme_dyndatafields[] = $dynfield['field'];
         }
     }
-    if ( ! empty( $eme_dyndatafields ) ) {
-        $add_dyndata = 1;
-    } else {
-        $add_dyndata = 0;
-    }
+    $add_dyndata = ! empty( $eme_dyndatafields );
 
     if ( $membership['properties']['family_membership'] && ! preg_match( '/#_FAMILYCOUNT/', $format ) ) {
-        $text = '#_FAMILYCOUNT';
-        if ( preg_match( '/#_SUBMIT/', $format ) ) {
-            $format = preg_replace( '/#_SUBMIT/', "$text<br>#_SUBMIT", $format );
-        } else {
-            $format .= $text;
-        }
+        $text   = '#_FAMILYCOUNT';
+        $format = preg_match( '/#_SUBMIT/', $format )
+            ? preg_replace( '/#_SUBMIT/', "$text<br>#_SUBMIT", $format )
+            : $format . $text;
     }
     if ( $membership['properties']['family_membership'] && ! preg_match( '/#_FAMILYMEMBERS/', $format ) ) {
-        $text = '#_FAMILYMEMBERS';
-        if ( preg_match( '/#_SUBMIT/', $format ) ) {
-            $format = preg_replace( '/#_SUBMIT/', "$text<br>#_SUBMIT", $format );
-        } else {
-            $format .= $text;
-        }
+        $text   = '#_FAMILYMEMBERS';
+        $format = preg_match( '/#_SUBMIT/', $format )
+            ? preg_replace( '/#_SUBMIT/', "$text<br>#_SUBMIT", $format )
+            : $format . $text;
     }
 
     $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && $membership['properties']['captcha_only_logged_out'] ) {
-        $format = eme_add_captcha_submit( $format, '', $add_dyndata );
-    } else {
-        if (!$eme_is_admin_request)
-            $selected_captcha = $membership['properties']['selected_captcha'];
-        $format = eme_add_captcha_submit( $format, $selected_captcha, $add_dyndata  );
+    $add_captcha = !(is_user_logged_in() && $membership['properties']['captcha_only_logged_out'] ) ;
+    $format = eme_add_missing_placeholders( $format, $add_captcha, $add_dyndata );
+    if ($add_captcha && ! $eme_is_admin_request ) {
+        $selected_captcha = $membership['properties']['selected_captcha'];
     }
 
-    // the placeholders that can contain extra text are treated separately first
-    // the question mark is used for non greedy (minimal) matching
-    // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
-        // only show the captcha when booking via the frontend, not the admin backend
-        if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
-        } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
+    $dynamic_price_class_basic = str_contains( $format, '#_DYNAMICPRICE' ) ? 'dynamicprice' : '';
+    $dynamic_data_wanted       = ( strstr( $format, '#_DYNAMICDATA' ) && ! empty( $eme_dyndatafields ) ) || $membership['properties']['dyndata_all_fields'];
+    $dynamic_data_rendered     = false;
+    $personal_info_class       = 'personal_info';
+    $discount_fields_count     = 0;
+
+    $ctx = [
+        'person'           => $person,
+        'fn_prefix'        => '',
+        'form_id'          => $form_id,
+        'eme_is_admin'     => $eme_is_admin_request,
+        'readonly'         => $readonly,
+        'disabled'         => $disabled,
+        'dfc_basic'        => 'nodynamicupdates',
+        'extra_css'        => $personal_info_class,
+        'allow_clear'      => $allow_clear,
+        'invite_readonly'  => '',
+        'selected_captcha' => $selected_captcha,
+        'captcha_only_logged_out' => $membership['properties']['captcha_only_logged_out'],
+        'required'         => false,
+        'required_att'     => '',
+    ];
+
+    // Membership REQ handling: #REQ only applies outside admin
+    // Override #_NAME and #_EMAIL handlers to enforce required only outside admin
+    $handlers = eme_get_person_formfield_handler_definitions();
+
+    $handlers['/#_DYNAMICPRICE$/'] = function( $result, $matches, $ctx ) {
+        return "<span id='eme_calc_memberprice'></span>";
+    };
+    $handlers['/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/'] = function( $result, $matches, $ctx ) {
+        return "<span id='eme_calc_memberprice_detail'></span>";
+    };
+    $handlers['/#_DYNAMICDATA$/'] = function( $result, $matches, $ctx ) use ( $membership, &$dynamic_data_rendered ) {
+        if ( ! $dynamic_data_rendered && ! empty( $membership['properties']['dyndata'] ) ) {
+            $dynamic_data_rendered = true;
+            return "<div id='eme_dyndata'></div>";
         }
-    }
+        return '';
+    };
+    $handlers['/#_FAMILYCOUNT/'] = function( $result, $matches, $ctx ) use ( $membership, $eme_is_admin_request, &$familycount_found ) {
+        if ( ! $eme_is_admin_request ) {
+            if ( empty( $familycount_found ) ) {
+                $familycount_found = true;
+                $range_arr = [];
+                for ( $i = 0; $i <= $membership['properties']['family_maxmembers']; $i++ ) {
+                    $range_arr[ $i ] = $i;
+                }
+                return eme_ui_select( 1, 'familycount', $range_arr );
+            }
+            return '';
+        }
+        return __( "In the backend you can't add or edit family member info, use the frontend form for that.", 'events-made-easy' );
+    };
+    $handlers['/#_FAMILYMEMBERS/'] = function( $result, $matches, $ctx ) use ( $eme_is_admin_request, &$familymembers_found ) {
+        if ( ! $eme_is_admin_request && empty( $familymembers_found ) ) {
+            $familymembers_found = true;
+            return "<div id='eme_dyndata_family'></div>";
+        }
+        return '';
+    };
+    $handlers['/#_DISCOUNT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $membership, $membership_id, $member, $eme_is_admin_request, $dynamic_price_class_basic, &$discount_fields_count ) {
+        if ( ! $membership['properties']['discount'] && ! $membership['properties']['discountgroup'] ) {
+            return [ 'html' => '', 'not_found' => true ];
+        }
+        ++$discount_fields_count;
+        if ( ! $eme_is_admin_request ) {
+            $postfield_name   = "members[$membership_id][DISCOUNT{$discount_fields_count}]";
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Discount code', 'events-made-easy' );
+            return "<input class='$dynamic_price_class_basic' type='text' name='$postfield_name' value='' {$ctx['required_att']} placeholder='$placeholder_text'>";
+        } elseif ( $discount_fields_count == 1 ) {
+            if ( $member['discount'] ) {
+                $replacement = "<input class='$dynamic_price_class_basic' type='text' name='DISCOUNT' value='{$member['discount']}'><br>"
+                    . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $member['discount'], $membership['properties']['currency'] ) );
+                $replacement .= '<ul>';
+            } else {
+                $replacement = "<input class='$dynamic_price_class_basic' type='text' name='DISCOUNT' value=''><br>"
+                    . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
+            }
+            if ( $member['dgroupid'] ) {
+                $dgroup       = eme_get_discountgroup( $member['dgroupid'] );
+                $replacement .= $dgroup && isset( $dgroup['name'] )
+                    ? '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>'
+                    : '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] ) . '</li>';
+            }
+            if ( ! empty( $member['discountids'] ) ) {
+                $applied_discountids = eme_is_serialized( $member['discountids'] )
+                    ? array_keys( eme_unserialize( $member['discountids'] ) )
+                    : explode( ',', $member['discountids'] );
+                foreach ( $applied_discountids as $discount_id ) {
+                    $discount     = eme_get_discount( $discount_id );
+                    $replacement .= $discount && isset( $discount['name'] )
+                        ? '<li>' . esc_html( $discount['name'] ) . '</li>'
+                        : '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
+                }
+            }
+            if ( $member['discount'] ) {
+                $replacement .= '</ul>';
+            }
+            $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
+            return $replacement;
+        }
+        return '';
+    };
+    $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) use ( $member, $person, $editing_member, $eme_is_admin_request, $dynamic_price_class_basic, $personal_info_class ) {
+        $dfc_basic = $ctx['dfc_basic'];
+        $formfield = eme_get_formfield( $matches[1] );
+        if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ] ) ) {
+            $field_id    = $formfield['field_id'];
+            $fieldname   = 'FIELD' . $field_id;
+            $entered_val = '';
+            $field_readonly = false;
+            if ( $editing_member ) {
+                if ( $formfield['field_purpose'] == 'people' ) {
+                    $answers        = eme_get_person_answers( $member['person_id'] );
+                    $field_readonly = true;
+                } else {
+                    $answers = eme_get_nodyndata_member_answers( $member['member_id'] );
+                }
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
+                }
+            } elseif ( $formfield['field_purpose'] == 'people' && is_user_logged_in() && ! empty( $person['person_id'] ) ) {
+                $answers = eme_get_person_answers( $person['person_id'] );
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
+                }
+            }
+            $required = ($formfield['field_required'] || $ctx['required']) && ( ! $eme_is_admin_request || $formfield['field_purpose'] != 'people' );
+            $class    = $dfc_basic;
+            if ( $formfield['field_purpose'] == 'people' ) { $class .= " $personal_info_class"; }
+            if ( $formfield['extra_charge'] )               { $class .= " $dynamic_price_class_basic"; }
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly, 0, $editing_member ), 'set_required' => $required ];
+        }
+        return [ 'html' => '', 'not_found' => true ];
+    };
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) use ( $editing_member ) {
+        if ( $editing_member ) {
+            $label = __( 'Update member', 'events-made-easy' );
+        } elseif ( isset( $matches[1] ) ) {
+            $label = substr( $matches[1], 1, -1 );
+        } else {
+            $label = __( 'Become member', 'events-made-easy' );
+        }
+        return "<img id='member_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
 
-    // We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT
-    $lastname_found  = 0;
-    $firstname_found = 0;
-    $email_found     = 0;
-    // #_FAMILYCOUNT and #_FAMILYMEMBERS can only be present once
-    $familycount_found   = 0;
-    $familymembers_found = 0;
-
-    # first we check if people desire dynamic pricing on it's own, if not: we set the relevant price class to empty
-    if ( str_contains( $format, '#_DYNAMICPRICE' ) ) {
-        $dynamic_price_class       = "class='dynamicprice'";
-        $dynamic_price_class_basic = 'dynamicprice';
-    } else {
-        $dynamic_price_class       = '';
-        $dynamic_price_class_basic = '';
-    }
-
-    # check also if dynamic data is requested
-    if ( ( strstr( $format, '#_DYNAMICDATA' ) && ! empty( $eme_dyndatafields ) ) || $membership['properties']['dyndata_all_fields'] ) {
-        $dynamic_data_wanted = 1;
-    } else {
-        $dynamic_data_wanted = 0;
-    }
-    # the next is to make sure we render #_DYNAMICDATA only once
-    $dynamic_data_rendered = 0;
-
-    $personal_info_class   = 'personal_info';
-    $discount_fields_count = 0;
+    // per-iteration dfc_basic update (same pattern as rsvp)
+    $familycount_found   = false;
+    $familymembers_found = false;
 
     preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
     $needle_offset = 0;
@@ -3846,977 +2639,574 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         $result             = $orig_result[0];
         $orig_result_needle = $orig_result[1] - $needle_offset;
         $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $required           = 0;
+        $found              = false;
+        $required           = false;
         $required_att       = '';
         $replacement        = '';
+
         if ( strstr( $result, '#REQ' ) ) {
             $result = str_replace( '#REQ', '#', $result );
             if ( ! $eme_is_admin_request ) {
-                $required     = 1;
+                $required     = true;
                 $required_att = "required='required'";
             }
         }
 
-        // check for dynamic field class
-        $dynamic_field_class_basic = "nodynamicupdates";
-        if ( $dynamic_data_wanted && ( in_array( $result, $eme_dyndatafields ) || $membership['properties']['dyndata_all_fields'] ) ) {
-            $dynamic_field_class_basic = "dynamicupdates";
-        }
+        $dfc_basic = ( $dynamic_data_wanted && ( in_array( $result, $eme_dyndatafields ) || $membership['properties']['dyndata_all_fields'] ) )
+            ? 'dynamicupdates' : 'nodynamicupdates';
 
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'lastname';
-            if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-                if ( $allow_clear ) {
-                    $this_readonly .= " data-clearable='true'";
-                }
-            } else {
-                $this_readonly = $readonly;
-            }
+        $ctx['dfc_basic']    = $dfc_basic;
+        $ctx['required']     = $required;
+        $ctx['required_att'] = $required_att;
 
-            if ( ! $eme_is_admin_request ) {
-                $required_att = "required='required'";
-                $required     = 1;
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-            if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-                $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
-            }
-            ++$lastname_found;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'firstname';
-            if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-            } else {
-                $this_readonly = $readonly;
-            }
-            if ( ! $eme_is_admin_request ) {
-                $required_att = "required='required'";
-                $required     = 1;
-            }
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerFirstName' $this_readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-            ++$firstname_found;
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'birthdate';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-            }
-            $replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='{$fieldname}' id='{$fieldname}' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'birthplace';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'address1';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'address2';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'city';
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'City', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerCity' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'zip';
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_STATE$/', $result ) ) {
-            $fieldname = 'state_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerState_code ) ) {
-                $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
-            } else {
-                $state_arr = [];
-            }
-            $replacement = "<div class=$personal_info_class>" . eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_snapselect_state_class $dynamic_field_class_basic $personal_info_class", $disabled ) . '</div>';
-        } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
-            $fieldname = 'country_code';
-            if (!empty($form_id)) {
-                $fieldid = $form_id.'-'.$fieldname;
-            } else {
-                $fieldid = $fieldname;
-            }
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-            } else {
-                $country_arr = [];
-            }
-            $replacement = "<div class=$personal_info_class>" . eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_snapselect_country_class $dynamic_field_class_basic $personal_info_class", $disabled ) . '</div>';
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'email';
-            if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-                // in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-                $this_readonly = "readonly='readonly'";
-            } else {
-                $this_readonly = $readonly;
-            }
-
-            // there still exist people without email, so in the backend we allow it ...
-            if ( ! $eme_is_admin_request ) {
-                $required_att = "required='required'";
-                $required     = 1;
-            }
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='email' id='$fieldname' name='$fieldname' value='$bookerEmail' $this_readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-            ++$email_found;
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            $fieldname = 'phone';
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='tel' id='$fieldname' name='$fieldname' value='$bookerPhone' $readonly class='$dynamic_field_class_basic $personal_info_class' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $bd_email, 'bd_email', 0, "$dynamic_field__class_basic $personal_info_class", $disabled );
-        } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-            $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
-            if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-            $fieldname         = 'massmail';
-            $replacement       = eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class eme_snapselect", $disabled );
-            if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = '';
-            }
-            $fieldname = 'gdpr';
-            if ( ! $eme_is_admin_request ) {
-                $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
-            }
-        } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __('Remember me?','events-made-easy');
-            }
-            if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
-            }
-        } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
-            if ( is_numeric( $matches[1] ) ) {
-                $group = eme_get_group( $matches[1] );
-            } else {
-                $group = eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
-            }
-            if ( ! empty( $group ) ) {
-                if ( ! $group['public'] ) {
-                    $replacement = __( 'Group is not public', 'events-made-easy' );
+        foreach ( $handlers as $pattern => $handler ) {
+            if ( preg_match( $pattern, $result, $matches ) ) {
+                $found = true;
+                $ret   = $handler( $result, $matches, $ctx );
+                if ( is_array( $ret ) ) {
+                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
+                    $replacement = $ret['html'] ?? '';
+                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; }
                 } else {
-                    $group_id = $group['group_id'];
-                    if ( isset( $matches[2] ) ) {
-                        // remove { and } (first and last char of second match)
-                        $label = substr( $matches[2], 1, -1 );
-                    } else {
-                        $label = $group['name'];
-                    }
-                    $replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates $personal_info_class'>";
-                    if ( ! empty( $label ) ) {
-                        $replacement .= "<label for='subscribe_groups_$group_id'>" . esc_html( $label ) . '</label>';
-                    }
+                    $replacement = (string) $ret;
                 }
-            } else {
-                $replacement = __( 'Group does not exist', 'events-made-easy' );
-            }
-        } elseif ( preg_match( '/#_DISCOUNT(\{.+?\})?$/', $result, $matches ) ) {
-            if ( $membership['properties']['discount'] || $membership['properties']['discountgroup'] ) {
-                // we need an ID to have a unique name per DISCOUNT input field
-                ++$discount_fields_count;
-                if ( ! $eme_is_admin_request ) {
-                    $var_prefix     = "members[$membership_id][";
-                    $var_postfix    = ']';
-                    $postfield_name = "{$var_prefix}DISCOUNT{$discount_fields_count}{$var_postfix}";
-                    $entered_val    = '';
-                    if ( isset( $matches[1] ) ) {
-                        // remove { and } (first and last char of second match)
-                        $placeholder_text = substr( $matches[1], 1, -1 );
-                        $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                    } else {
-                        $placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
-                    }
-                    $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='$entered_val' $required_att placeholder='$placeholder_text'>";
-                } elseif ( $eme_is_admin_request && $discount_fields_count == 1 ) {
-                    $postfield_name = 'DISCOUNT';
-                    if ( $member['discount'] ) {
-                        // translators: %s is the calculated discount value
-                        $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='" . $member['discount'] . "'><br>" . sprintf( __( 'Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:', 'events-made-easy' ), eme_localized_price( $member['discount'], $membership['properties']['currency'] ) );
-                        $replacement .= '<ul>';
-                    } else {
-                        $replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value=''><br>" . __( 'Enter a fixed discount value if wanted', 'events-made-easy' );
-                    }
-                    if ( $member['dgroupid'] ) {
-                        $dgroup = eme_get_discountgroup( $member['dgroupid'] );
-                        if ( $dgroup && isset( $dgroup['name'] ) ) {
-                            // translators: %s is the discount group name
-                            $replacement .= '<li>' . sprintf( __( 'Discountgroup %s', 'events-made-easy' ), esc_html( $dgroup['name'] ) ) . '</li>';
-                        } else {
-                            // translators: %d is the discount group ID
-                            $replacement .= '<li>' . sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $member['dgroupid'] ) . '</li>';
-                        }
-                    }
-                    if ( ! empty( $member['discountids'] ) ) {
-                        if ( eme_is_serialized( $member['discountids'] ) ) {
-                            $applied_discounts = eme_unserialize( $member['discountids'] );
-                            $applied_discountids = array_keys($applied_discounts);
-                        } else {
-                            $applied_discountids = explode( ',', $member['discountids'] );
-                        }
-
-                        $discount_ids = explode( ',', $member['discountids'] );
-                        foreach ( $discount_ids as $discount_id ) {
-                            $discount = eme_get_discount( $discount_id );
-                            if ( $discount && isset( $discount['name'] ) ) {
-                                $replacement .= '<li>' . esc_html( $discount['name'] ) . '</li>';
-                            } else {
-                                // translators: %d is the discount ID
-                                $replacement .= '<li>' . sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id ) . '</li>';
-                            }
-                        }
-                    }
-                    if ( $member['discount'] ) {
-                        $replacement .= '</ul>';
-                    }
-                    $replacement .= '<br>' . __( 'Only one discount field can be used in the admin backend, the others are not rendered', 'events-made-easy' ) . '<br>';
-                }
-            }
-        } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
-            $replacement = "<span id='eme_calc_memberprice'></span>";
-        } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/', $result ) ) {
-            $replacement = "<span id='eme_calc_memberprice_detail'></span>";
-        } elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
-            if ( !$dynamic_data_rendered && ! empty( $membership['properties']['dyndata'] ) ) {
-                $replacement = "<div id='eme_dyndata'></div>";
-                $dynamic_data_rendered = 1;
-            }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
-            if ( !empty($selected_captcha) && ! $captcha_set ) { 
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }       
-        } elseif ( preg_match( '/#_FAMILYCOUNT/', $result, $matches ) ) {
-            $fieldname = 'familycount';
-            if ( ! $eme_is_admin_request ) { 
-                if ( ! $familycount_found ) {
-                    $range_arr = [];
-                    for ( $i = 0;$i <= $membership['properties']['family_maxmembers'];$i++ ) {
-                        $range_arr[ $i ] = $i;
-                    }
-                    $replacement = eme_ui_select( 1, 'familycount', $range_arr );
-                    #$replacement= "<input type='number' name='familycount' id='familycount' value='' min='1' max='50'>";
-                    $familycount_found = 1;
-                }
-            } else {
-                $replacement = __( "In the backend you can't add or edit family member info, use the frontend form for that.", 'events-made-easy' );
-            }
-        } elseif ( preg_match( '/#_FAMILYMEMBERS/', $result, $matches ) ) {
-            if ( ! $eme_is_admin_request ) {
-                if ( ! $familymembers_found ) {
-                    $replacement = "<div id='eme_dyndata_family'></div>";
-                    $familymembers_found = 1;
-                }
-            }
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) ) {
-                $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ] ) ) {
-                $field_id       = $formfield['field_id'];
-                $fieldname      = 'FIELD' . $field_id;
-                $entered_val    = '';
-                $field_readonly = 0;
-                if ( $editing_member ) {
-                    if ( $formfield['field_purpose'] == 'people' ) {
-                        $answers        = eme_get_person_answers( $member['person_id'] );
-                        $field_readonly = 1;
-                    } else {
-                        $answers        = eme_get_nodyndata_member_answers( $member['member_id'] );
-                        $field_readonly = 0;
-                    }
-                    foreach ( $answers as $answer ) {
-                        if ( $answer['field_id'] == $field_id ) {
-                            $entered_val = $answer['answer'];
-                            break;
-                        }
-                    }
-                } elseif ( $formfield['field_purpose'] == 'people' && is_user_logged_in() && ! empty( $person['person_id'] ) ) {
-                    $answers = eme_get_person_answers( $person['person_id'] );
-                    foreach ( $answers as $answer ) {
-                        if ( $answer['field_id'] == $field_id ) {
-                            $entered_val = $answer['answer'];
-                            break;
-                        }
-                    }
-                }
-                // people fields can be hidden for members in the admin backend
-                if ( $formfield['field_required'] && ( ! $eme_is_admin_request || ( $eme_is_admin_request && $formfield['field_purpose'] != 'people' ) ) ) {
-                    $required = 1;
-                }
-                $class = $dynamic_field_class_basic;
-                if ( $formfield['field_purpose'] == 'people' ) {
-                    $class .= " $personal_info_class";
-                }
-                if ( $formfield['extra_charge'] ) {
-                    $class .= " $dynamic_price_class_basic";
-                }
-                $replacement = eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly, 0, $editing_member );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( $editing_member ) {
-                $label = __( 'Update member', 'events-made-easy' );
-            } elseif ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __( 'Become member', 'events-made-easy' );
-            }
-            $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } else {
-            $found = 0;
-        }
-
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+                break;
             }
         }
 
         if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
+            if ( $required ) {
+                $req_str = eme_translate( get_option( 'eme_form_required_field_string' ) );
+                if ( ! empty( $req_str ) ) { $replacement .= "<div class='eme-required-field'>$req_str</div>"; }
             }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+            if ( is_null( $replacement ) ) { $replacement = ''; }
+            $format        = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
         }
     }
 
     $format = eme_replace_membership_placeholders( $format, $membership );
 
-    // now check we found all the required placeholders for the form to work
-    if ( $lastname_found && $firstname_found && $email_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $lastname_found || ! $firstname_found || ! $email_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
+    return $format;
+}
+
+function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
+    $eme_is_admin_request = eme_is_admin_request();
+    $readonly             = is_user_logged_in() ? "readonly='readonly'" : '';
+
+    $selected_captcha = '';
+    $add_captcha = !(is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ));
+    $format = eme_add_missing_placeholders( $format, $add_captcha );
+    $configured_captchas = eme_get_configured_captchas();
+    if ($add_captcha && ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
+        $selected_captcha = array_key_first( $configured_captchas );
     }
+
+    $person = eme_new_person();
+    if ( is_user_logged_in() ) {
+        $current_user = wp_get_current_user();
+        $fetched      = eme_get_person_by_wp_id( $current_user->ID );
+        $person       = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
+    }
+    $person = eme_esc_person_for_form( $person );
+
+    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_email    = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
+    $ctx = [
+        'person'           => $person,
+        'fn_prefix'        => 'task_',
+        'form_id'          => $form_id,
+        'eme_is_admin'     => $eme_is_admin_request,
+        'readonly'         => $readonly,
+        'disabled'         => '',
+        'dfc_basic'        => '',
+        'extra_css'        => '',
+        'allow_clear'      => false,
+        'invite_readonly'  => '',
+        'selected_captcha' => $selected_captcha,
+        'required'         => false,
+        'required_att'     => '',
+    ];
+
+    $handlers = eme_get_person_formfield_handler_definitions();
+
+    $handlers['/#_COMMENT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) {
+        $placeholder_text = isset( $matches[1] )
+            ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+            : esc_html__( 'Comment', 'events-made-easy' );
+        return "<textarea name='task_comment' id='task_comment' placeholder='$placeholder_text' ></textarea>";
+    };
+    $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) {
+        $formfield = eme_get_formfield( $matches[1] );
+        if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'tasksignup', 'people' ] ) ) {
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+            $fieldname = 'FIELD' . $formfield['field_id'];
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required ), 'set_required' => $required ];
+        }
+        return [ 'html' => '', 'not_found' => true ];
+    };
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
+        $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : __( 'Subscribe', 'events-made-easy' );
+        return "<img id='task_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
+
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
+    $format = eme_translate( $format );
+
+    return $format;
+}
+
+function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format, $event ) {
+    $eme_is_admin_request      = eme_is_admin_request();
+    $dynamic_price_class_basic = 'dynamicprice';
+
+    $allow_clear = false;
+    $person      = eme_new_person();
+    if ( is_user_logged_in() ) {
+        $current_user = wp_get_current_user();
+        $fetched      = eme_get_person_by_wp_id( $current_user->ID );
+        $person       = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
+        if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+            $allow_clear = true;
+        }
+    }
+    $person = eme_esc_person_for_form( $person );
+
+    $selected_captcha = '';
+    if ( ! ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) ) {
+        $configured_captchas = eme_get_configured_captchas();
+        if ( ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
+            $selected_captcha = array_key_first( $configured_captchas );
+        }
+    }
+
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
+        $format = ! empty( $selected_captcha )
+            ? preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format )
+            : preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
+    }
+
+    $ctx = [
+        'person'           => $person,
+        'fn_prefix'        => '',
+        'form_id'          => $form_id,
+        'eme_is_admin'     => $eme_is_admin_request,
+        'readonly'         => '',
+        'disabled'         => '',
+        'dfc_basic'        => '',
+        'extra_css'        => '',
+        'allow_clear'      => $allow_clear,
+        'invite_readonly'  => '',
+        'selected_captcha' => $selected_captcha,
+        'required'         => false,
+        'required_att'     => '',
+    ];
+
+    $handlers = eme_get_person_formfield_handler_definitions();
+
+    $handlers['/#_COMMENT(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person ) {
+        $placeholder_text = isset( $matches[1] )
+            ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+            : esc_html__( 'Comment', 'events-made-easy' );
+        return "<textarea {$ctx['required_att']} name='eme_rsvpcomment' placeholder='$placeholder_text' ></textarea>";
+    };
+    $handlers['/#_PASSWORD(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $event, $eme_is_admin_request ) {
+        if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Password', 'events-made-easy' );
+            return [ 'html' => "<input required='required' type='text' name='rsvp_password' value='' class='eme_passwordfield' autocomplete='off' placeholder='$placeholder_text'>", 'set_required' => true ];
+        }
+        return '';
+    };
+    $handlers['/#_DYNAMICPRICE$/'] = function( $result, $matches, $ctx ) {
+        return "<span id='eme_calc_bookingprice'></span>";
+    };
+    $handlers['/#_DYNAMICPRICE_PER_PG|#_DYNAMICPRICE_DETAILED$/'] = function( $result, $matches, $ctx ) {
+        return "<span id='eme_calc_bookingprice_detail'></span>";
+    };
+    $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) use ( $dynamic_price_class_basic ) {
+        $formfield = eme_get_formfield( $matches[1] );
+        if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
+            $field_id  = $formfield['field_id'];
+            $fieldname = 'FIELD' . $field_id;
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+            $class     = $formfield['extra_charge'] ? "$dynamic_price_class_basic" : '';
+            return [ 'html' => eme_get_formfield_html( $formfield, $fieldname, '', $required, $class ), 'set_required' => $required ];
+        }
+        return [ 'html' => '', 'not_found' => true ];
+    };
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
+        $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_addbooking_submit_string' );
+        return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
+
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
+    $format = eme_replace_event_placeholders( $format, $event );
+    $format = eme_translate( $format );
+    return $format;
 }
 
 function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
     $eme_is_admin_request = eme_is_admin_request();
+
     $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        $configured_captchas = eme_get_configured_captchas();
-        if (!empty($configured_captchas) && !$eme_is_admin_request)
-            $selected_captcha = array_key_first($configured_captchas);
-        $format = eme_add_captcha_submit( $format, $selected_captcha );
+    $add_captcha = !(is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ));
+    $format = eme_add_missing_placeholders( $format, $add_captcha );
+    $configured_captchas = eme_get_configured_captchas();
+    if ($add_captcha && ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
+        $selected_captcha = array_key_first( $configured_captchas );
     }
 
-    $bookerLastName  = '';
-    $bookerFirstName = '';
-    $bookerEmail     = '';
-    $readonly        = '';
-    $gdpr            = 0;
+    $person   = eme_new_person();
+    $readonly = '';
     if ( is_user_logged_in() ) {
-        $readonly        = "readonly='readonly'";
-        $current_user    = wp_get_current_user();
-        $person          = eme_get_person_by_wp_id( $current_user->ID );
-        if ( empty( $person ) ) {
-            $person = eme_fake_person_by_wp_id( $current_user->ID );
-        }
-        $bookerLastName  = $person['lastname'];
-        $bookerFirstName = $person['firstname'];
-        $bookerEmail     = $person['email'];
-        $gdpr            = intval( $person['gdpr'] );
+        $readonly     = "readonly='readonly'";
+        $current_user = wp_get_current_user();
+        $fetched      = eme_get_person_by_wp_id( $current_user->ID );
+        $person       = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
     } elseif ( isset( $_GET['eme_email'] ) ) {
-        $bookerEmail = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+        $person['email'] = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+    }
+    $person = eme_esc_person_for_form( $person );
+
+    // wp-profile warning appended to readonly fields
+    $wp_profile_warning = ! empty( $readonly )
+        ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
+        : '';
+
+    if ( ! str_contains( $format, '#_EMAIL' ) && ! str_contains( $format, '#_HTML5_EMAIL' ) ) {
+        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
     }
 
-    // We need at least #_EMAIL
-    $email_found   = 0;
-    $needle_offset = 0;
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
+    $ctx = [
+        'person'           => $person,
+        'fn_prefix'        => '',
+        'form_id'          => '',
+        'eme_is_admin'     => $eme_is_admin_request,
+        'readonly'         => $readonly,
+        'disabled'         => '',
+        'dfc_basic'        => '',
+        'extra_css'        => '',
+        'allow_clear'      => false,
+        'invite_readonly'  => '',
+        'selected_captcha' => $selected_captcha,
+        'required'         => false,
+        'required_att'     => '',
+    ];
 
-        $found        = 1;
-        $required     = 0;
-        $required     = 0;
-        $required_att = '';
-        $replacement  = '';
+    // subscribeform only uses NAME, FIRSTNAME, EMAIL, MAILGROUPS, GDPR, REMEMBERME, CAPTCHA, SUBMIT
+    // Override NAME/FIRSTNAME/EMAIL to add the wp-profile warning and handle $unsubscribe
+    $handlers = [];
 
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
+    $handlers['/#_(NAME|LASTNAME)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $unsubscribe, $wp_profile_warning ) {
+        if ( $unsubscribe ) {
+            return '';
         }
-
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $unsubscribe ) {
-                if ( isset( $matches[2] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[2], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
+        $placeholder_text = isset( $matches[2] )
+            ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+            : esc_html__( 'Last name', 'events-made-easy' );
+        $replacement = "<input {$ctx['required_att']} type='text' name='lastname' id='lastname' value='{$person['lastname']}' $readonly placeholder='$placeholder_text'>";
+        if ( $wp_profile_warning ) {
+            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) );
+        }
+        return $replacement;
+    };
+    $handlers['/#_FIRSTNAME(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $unsubscribe, $wp_profile_warning ) {
+        if ( $unsubscribe ) {
+            return '';
+        }
+        $placeholder_text = isset( $matches[1] )
+            ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+            : esc_html__( 'First name', 'events-made-easy' );
+        $replacement = "<input {$ctx['required_att']} type='text' name='firstname' id='firstname' value='{$person['firstname']}' $readonly placeholder='$placeholder_text'>";
+        if ( $wp_profile_warning ) {
+            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) );
+        }
+        return $replacement;
+    };
+    $handlers['/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $person, $readonly, $wp_profile_warning ) {
+        $placeholder_text = isset( $matches[2] )
+            ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+            : esc_html__( 'Email', 'events-made-easy' );
+        $replacement = "<input required='required' type='email' name='email' value='{$person['email']}' $readonly placeholder='$placeholder_text'>";
+        if ( $wp_profile_warning ) {
+            $replacement .= sprintf( $wp_profile_warning, esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) );
+        }
+        return [ 'html' => $replacement, 'set_required' => true ]; // unconditional true, since the form only exists in the frontend
+    };
+    $handlers['/#_MAILGROUPS(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
+        if ( isset( $matches[1] ) ) {
+            $group_ids = substr( $matches[1], 1, -1 );
+            if ( eme_is_list_of_int( $group_ids ) ) {
+                $groups  = eme_get_subscribable_groups( $group_ids );
+                $ids_arr = explode( ',', $group_ids );
+                if ( in_array( '-1', $ids_arr ) && wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+                    $groups[] = [ 'group_id' => -1, 'name' => __( 'Newsletter concerning new events', 'events-made-easy' ) ];
                 }
-                $replacement = "<input $required_att type='text' name='lastname' id='lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
-                if ( ! empty( $readonly ) ) {
-                    $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
-                }
+                return count( $ids_arr ) == 1
+                    ? eme_ui_select_key_value( $ids_arr[0], 'email_group', $groups, 'group_id', 'name', '', 1 )
+                    : eme_ui_multiselect_key_value( '', 'email_groups', $groups, 'group_id', 'name', 5, '', 1 );
             }
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $unsubscribe ) {
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-                } else {
-                    $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='firstname' id='firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
-                if ( ! empty( $readonly ) ) {
-                    $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
-                }
-            }
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' name='email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
-            if ( ! empty( $readonly ) ) {
-                $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
-            }
-            ++$email_found;
-        } elseif ( preg_match( '/#_MAILGROUPS(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of match)
-                $group_ids = substr( $matches[1], 1, -1 );
-                if ( eme_is_list_of_int( $group_ids ) ) {
-                    $groups  = eme_get_subscribable_groups( $group_ids );
-                    $ids_arr = explode( ',', $group_ids );
-                    if (in_array('-1',$ids_arr) && wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-                        $groups[] = [ 'group_id'=>-1, 'name' => __( 'Newsletter concerning new events', 'events-made-easy' )];
-                    }
-                    if ( count( $ids_arr ) == 1 ) {
-                        // if only 1 group id, take that one and no need for multiselect
-                        $selected_value = $ids_arr[0];
-                        $replacement    = eme_ui_select_key_value( $selected_value, 'email_group', $groups, 'group_id', 'name', '', 1 );
-                    } else {
-                        $replacement = eme_ui_multiselect_key_value( '', 'email_groups', $groups, 'group_id', 'name', 5, '', 1 );
-                    }
-                }
-            } else {
-                $tmp_groups = eme_get_subscribable_groups();
-                $eme_cron_send_new_events = wp_next_scheduled( 'eme_cron_send_new_events');
-                if ( ! empty( $tmp_groups ) && (count( $tmp_groups)>1 || $eme_cron_send_new_events ) ) {
-                    $subscribable_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
-                } else {
-                    $subscribable_groups = [];
-                }
-                if ( $eme_cron_send_new_events ) {
-                    $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
-                }
-                foreach ( $tmp_groups as $group ) {
-                    $subscribable_groups[ $group['group_id'] ] = esc_html( $group['name'] );
-                }
-
-                if ( ! empty( $subscribable_groups ) ) {
-                    if ( count( $subscribable_groups ) == 1 ) {
-                        $selected_value = $subscribable_groups[0];
-                        $replacement    = eme_ui_select( '', 'email_group', $subscribable_groups, '', 1 );
-                    } else {
-                        $replacement = eme_ui_multiselect( '', 'email_groups', $subscribable_groups, 5, '', 1 );
-                    }
-                }
-            }
-        } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = '';
-            }
-            $replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
-        } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __('Remember me?','events-made-easy');
-            }
-            if ( ! is_user_logged_in()) {
-                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
-            }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
-            if ( !empty($selected_captcha) && ! $captcha_set ) { 
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }       
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } elseif ( $unsubscribe ) {
-                $label = __( 'Unsubscribe', 'events-made-easy' );
-            } else {
-                $label = __( 'Subscribe', 'events-made-easy' );
-            }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+            return '';
+        }
+        $tmp_groups               = eme_get_subscribable_groups();
+        $eme_cron_send_new_events = wp_next_scheduled( 'eme_cron_send_new_events' );
+        $subscribable_groups      = ( ! empty( $tmp_groups ) && ( count( $tmp_groups ) > 1 || $eme_cron_send_new_events ) )
+            ? [ '' => esc_html__( 'All', 'events-made-easy' ) ] : [];
+        if ( $eme_cron_send_new_events ) {
+            $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
+        }
+        foreach ( $tmp_groups as $group ) {
+            $subscribable_groups[ $group['group_id'] ] = esc_html( $group['name'] );
+        }
+        if ( ! empty( $subscribable_groups ) ) {
+            return count( $subscribable_groups ) == 1
+                ? eme_ui_select( '', 'email_group', $subscribable_groups, '', 1 )
+                : eme_ui_multiselect( '', 'email_groups', $subscribable_groups, 5, '', 1 );
+        }
+        return '';
+    };
+    $handlers['/#_GDPR(\{.+?\})?/'] = function( $result, $matches, $ctx ) use ( $person ) {
+        $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : '';
+        return eme_ui_checkbox_binary( $person['gdpr'], 'gdpr', $label, 1, 'eme-gdpr-field' );
+    };
+    $handlers['/#_REMEMBERME(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
+        $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : __( 'Remember me?', 'events-made-easy' );
+        if ( ! is_user_logged_in() ) {
+            return eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+        }
+        return '';
+    };
+    $handlers['/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/'] = function( $result, $matches, $ctx ) use ( $selected_captcha ) {
+        if ( ! empty( $selected_captcha ) ) {
+            return eme_generate_captchas_html( $selected_captcha );
+        }
+        return '';
+    };
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) use ( $unsubscribe ) {
+        if ( isset( $matches[1] ) ) {
+            $label = substr( $matches[1], 1, -1 );
+        } elseif ( $unsubscribe ) {
+            $label = __( 'Unsubscribe', 'events-made-easy' );
         } else {
-            $found = 0;
+            $label = __( 'Subscribe', 'events-made-easy' );
         }
+        return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
 
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
 
-    // now check we found all the required placeholders for the form to work
-    if ( $email_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $email_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-rsvp-message-error'>$res</div>";
-    }
+    return $format;
 }
 
 function eme_replace_cpiform_placeholders( $format, $person ) {
     $eme_is_admin_request = eme_is_admin_request();
 
     $selected_captcha = '';
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        $configured_captchas = eme_get_configured_captchas();
-        if (!empty($configured_captchas) && !$eme_is_admin_request)
-            $selected_captcha = array_key_first($configured_captchas);
-        $format = eme_add_captcha_submit( $format, $selected_captcha );
+    $add_captcha = !(is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ));
+    $format = eme_add_missing_placeholders( $format, $add_captcha );
+    $configured_captchas = eme_get_configured_captchas();
+    if ($add_captcha && ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
+        $selected_captcha = array_key_first( $configured_captchas );
     }
-
-    $bookerLastName     = esc_html( $person['lastname'] );
-    $bookerFirstName    = esc_html( $person['firstname'] );
-    $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? esc_html( $person['birthdate'] ) : '';
-    $bookerBirthplace   = esc_html( $person['birthplace'] );
-    $bookerAddress1     = esc_html( $person['address1'] );
-    $bookerAddress2     = esc_html( $person['address2'] );
-    $bookerCity         = esc_html( $person['city'] );
-    $bookerZip          = esc_html( $person['zip'] );
-    $bookerState_code   = esc_html( $person['state_code'] );
-    $bookerCountry_code = esc_html( $person['country_code'] );
-    $bookerEmail        = esc_html( $person['email'] );
-    $bookerPhone        = esc_html( $person['phone'] );
-    $massmail           = intval( $person['massmail'] );
-    $bd_email           = intval( $person['bd_email'] );
-
-    // We need at least #_EMAIL and #_SUBMIT
-    $email_found     = 0;
-    $lastname_found  = 0;
-    $firstname_found = 0;
 
     $current_userid = get_current_user_id();
+    $readonly       = ( is_user_logged_in() && $person['wp_id'] == $current_userid ) ? "readonly='readonly'" : '';
+    $person         = eme_esc_person_for_form( $person );
 
-    preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-    $needle_offset = 0;
-    foreach ( $placeholders[0] as $orig_result ) {
-        $result             = $orig_result[0];
-        $orig_result_needle = $orig_result[1] - $needle_offset;
-        $orig_result_length = strlen( $orig_result[0] );
-        $found              = 1;
-        $replacement        = '';
-        $required           = 0;
-        $required_att       = '';
-        if ( is_user_logged_in() && $person['wp_id'] == $current_userid ) {
-            $readonly = "readonly='readonly'";
-        } else {
-            $readonly = '';
-        }
-        if ( strstr( $result, '#REQ' ) ) {
-            $result       = str_replace( '#REQ', '#', $result );
-            $required     = 1;
-            $required_att = "required='required'";
-        }
+    // wp-profile warning for readonly fields
+    $wp_profile_warning = ! empty( $readonly )
+        ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
+        : '';
 
-        if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='lastname' id='lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
-            if ( ! empty( $readonly ) ) {
-                $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
-            }
-            // #_NAME is always required
-            ++$lastname_found;
-            $required = 1;
-        } elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'First name', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='text' name='firstname' id='firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
-            if ( ! empty( $readonly ) ) {
-                $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
-            }
-            ++$firstname_found;
-            $required = 1;
-        } elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
-            }
-            $replacement .= "<input $required_att readonly='readonly' type='text' name='birthdate' id='birthdate' data-date='$bookerBirthdate' data-format='".EME_WP_DATE_FORMAT."' data-view='years' class='eme_formfield eme_formfield_fdate' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
-            $replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
-            }
-        } elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address1_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='address1' id='address1' value='$bookerAddress1' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_attr( eme_translate( get_option( 'eme_address2_string' ) ) );
-            }
-            $replacement = "<input $required_att type='text' name='address2' id='address2' value='$bookerAddress2' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'City', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='city' id='city' value='$bookerCity' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_STATE$/', $result ) ) {
-            if ( ! empty( $bookerState_code ) ) {
-                $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
-            } else {
-                $state_arr = [];
-            }
-            $replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, 'eme_snapselect_state_class' );
-        } elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='zip' id='zip' value='$bookerZip' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_COUNTRY\{(.+)\}$/', $result, $matches ) ) {
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-                $replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_snapselect_country_class' );
-            } else {
-                $country_code = $matches[1];
-                $country_name = eme_get_country_name( $country_code );
-                if ( ! empty( $country_name ) ) {
-                    $country_arr = [ $country_code => $country_name ];
-                    $replacement = eme_ui_select( $country_code, 'country_code', $country_arr, '', $required, 'eme_snapselect_country_class' );
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    $has_email     = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
+        return "<div id='message' class='eme-message-error eme-cpi-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
+    $ctx = [
+        'person'           => $person,
+        'fn_prefix'        => '',
+        'form_id'          => '',
+        'eme_is_admin'     => $eme_is_admin_request,
+        'readonly'         => $readonly,
+        'disabled'         => '',
+        'dfc_basic'        => '',
+        'extra_css'        => '',
+        'allow_clear'      => false,
+        'invite_readonly'  => '',
+        'selected_captcha' => $selected_captcha,
+        'required'         => false,
+        'required_att'     => "",
+        'wp_profile_warning' => $wp_profile_warning,
+    ];
+
+    $handlers = eme_get_person_formfield_handler_definitions();
+    $handlers['/#_IMAGE/'] = function( $result, $matches, $ctx ) use ( $person ) {
+        return eme_person_replace_image_input_div( $person, 1 );
+    };
+    $handlers['/#_FIELD\{(.+)\}/'] = function( $result, $matches, $ctx ) use ( $person ) {
+        $formfield = eme_get_formfield( $matches[1] );
+        if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
+            $field_id       = $formfield['field_id'];
+            $person_id      = $person['person_id'];
+            $postfield_name = "dynamic_personfields[$person_id][FIELD{$field_id}]";
+            $postvar_arr    = [ 'dynamic_personfields', $person_id, 'FIELD' . $field_id ];
+            $entered_val    = ! empty( $_POST ) ? eme_getValueFromPath( $_POST, $postvar_arr ) : false;
+            if ( $entered_val === false ) {
+                $answers = eme_get_person_answers( $person_id );
+                foreach ( $answers as $answer ) {
+                    if ( $answer['field_id'] == $field_id ) { $entered_val = $answer['answer']; break; }
                 }
             }
-        } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
-            if ( ! empty( $bookerCountry_code ) ) {
-                $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-            } else {
-                $country_arr = [];
+            $files = eme_get_uploaded_files( $person_id, 'people' );
+            if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+                $entered_files = [];
+                foreach ( $files as $file ) {
+                    if ( $file['field_id'] == $field_id ) { $entered_files[] = $file; }
+                }
+                $entered_val = $entered_files;
             }
-            $replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_snapselect_country_class' );
+            $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+            return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required ), 'set_required' => $required ];
+        }
+        return [ 'html' => '', 'not_found' => true ];
+    };
+    $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
+        $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : __( 'Save personal info', 'events-made-easy' );
+        return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+    };
 
-        } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Email', 'events-made-easy' );
-            }
-            $replacement = "<input required='required' type='email' id='email' name='email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
-            if ( ! empty( $readonly ) ) {
-                $replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
-            }
-            ++$email_found;
-            $required = 1;
-        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[2] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[2], 1, -1 );
-                $placeholder_text = esc_attr( eme_translate( $placeholder_text ) );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='tel' id='phone' name='phone' value='$bookerPhone' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_IMAGE/', $result ) ) {
-            // add the 1 as second argument to have a relative positioned div, by default it is absolute
-            $replacement = eme_person_replace_image_input_div( $person, 1 );
-        } elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
-        } elseif ( preg_match( '/#_MASSMAIL$/', $result ) ) {
-            $replacement = eme_ui_select_binary( $massmail, 'massmail', 0, 'eme_snapselect' );
-            if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup       = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
-            if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
-            $selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
-            $replacement       = eme_ui_select_binary( $selected_massmail, 'massmail', 0, 'eme_snapselect' );
-            if ( get_option( 'eme_massmail_popup' ) ) {
-                $popup   = esc_html( get_option( 'eme_massmail_popup_text' ) );
-                $confirm = esc_html__('Yes','events-made-easy');
-                $cancel  = esc_html__('No','events-made-easy');
-                if (!eme_is_empty_string($popup))
-                    $replacement .= "<dialog id='MassMailDialog' style='border: solid 1px #ccc;'><p>$popup</p><button id='dialog-confirm'>$confirm</button> <button id='dialog-cancel'>$cancel</button></dialog>";
-            }
-        } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
-            if ( !empty($selected_captcha) && ! $captcha_set ) {
-                $replacement = eme_generate_captchas_html($selected_captcha);
-                if (!empty($replacement))
-                    $captcha_set = 1;
-            }
-        } elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
+    $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
+    return $format;
+}
+
+function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
+    $dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
+
+    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
+    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    if ( ! $has_lastname || ! $has_firstname ) {
+        return "<div id='message' class='eme-message-error eme-family-message-error'>"
+            . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders.', 'events-made-easy' )
+            . '</div>';
+    }
+
+    $handlers = [
+        '/#_(NAME|LASTNAME)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr = [ 'familymember', $counter, 'lastname' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Last name', 'events-made-easy' );
+            $html = "<input required='required' type='text' name='familymember[$counter][lastname]' id='familymember[$counter][lastname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
+            return [ 'html' => $html, 'set_required' => true ];
+        },
+        '/#_FIRSTNAME(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr = [ 'familymember', $counter, 'firstname' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'First name', 'events-made-easy' );
+            $html = "<input required='required' type='text' name='familymember[$counter][firstname]' id='familymember[$counter][firstname]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>";
+            return [ 'html' => $html, 'set_required' => true ];
+        },
+        '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr = [ 'familymember', $counter, 'phone' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Phone number', 'events-made-easy' );
+            return [ 'html' => "<input {$ctx['required_att']} type='tel' name='familymember[$counter][phone]' id='familymember[$counter][phone]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>" ];
+        },
+        '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr = [ 'familymember', $counter, 'email' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[2] )
+                ? esc_attr( eme_translate( substr( $matches[2], 1, -1 ) ) )
+                : esc_html__( 'Email', 'events-made-easy' );
+            return [ 'html' => "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
+        },
+        '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr     = [ 'familymember', $counter, 'bd_email' ];
+            $entered_val     = eme_getValueFromPath( $_POST, $postvar_arr );
+            $selected_bd_email = ( $entered_val === false ) ? 1 : $entered_val;
+            return eme_ui_select_binary( $selected_bd_email, "familymember[$counter][bd_email]", 0, $dynamic_field_class_basic );
+        },
+        '/#_OPT_OUT/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr      = [ 'familymember', $counter, 'massmail' ];
+            $entered_val      = eme_getValueFromPath( $_POST, $postvar_arr );
+            $selected_massmail = ( $entered_val === false ) ? 1 : $entered_val;
+            return eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
+        },
+        '/#_OPT_IN/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr      = [ 'familymember', $counter, 'massmail' ];
+            $entered_val      = eme_getValueFromPath( $_POST, $postvar_arr );
+            $selected_massmail = ( $entered_val === false ) ? 0 : $entered_val;
+            return eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic . ' eme_snapselect' );
+        },
+        '/#_BIRTHPLACE(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $postvar_arr = [ 'familymember', $counter, 'birthplace' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Place of birth', 'events-made-easy' );
+            return [ 'html' => "<input required='required' type='text' name='familymember[$counter][birthplace]' id='familymember[$counter][birthplace]' value='$entered_val' class='$dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
+        },
+        '/#_BIRTHDATE(\{.+?\})?/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $fieldname   = "familymember[$counter][birthdate]";
+            $postvar_arr = [ 'familymember', $counter, 'birthdate' ];
+            $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+            if ( $entered_val === false ) { $entered_val = ''; }
+            $placeholder_text = isset( $matches[1] )
+                ? esc_attr( eme_translate( substr( $matches[1], 1, -1 ) ) )
+                : esc_html__( 'Date of birth', 'events-made-easy' );
+            return [ 'html' => "<input required='required' readonly='readonly' type='text' name='$fieldname' id='$fieldname' data-date='$entered_val' data-format='" . EME_WP_DATE_FORMAT . "' data-view='years' class='eme_formfield eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>", 'set_required' => true ];
+        },
+        '/#_FIELDNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
+            $formfield = eme_get_formfield( $matches[1] );
             if ( ! empty( $formfield ) ) {
-                    $replacement = esc_html( eme_translate( $formfield['field_name'] ) );
-            } else {
-                $found = 0;
+                return esc_html( eme_translate( $formfield['field_name'] ) );
             }
-        } elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
-            $field_key = $matches[1];
-            $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
-                    $field_id = $formfield['field_id'];
-                    // all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
-                    $person_id      = $person['person_id'];
-                    $var_prefix     = "dynamic_personfields[$person_id][";
-                    $var_postfix    = ']';
-                    $postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
-                    $postvar_arr    = [ 'dynamic_personfields', $person_id, 'FIELD' . $field_id ];
-                    // the first time there's no $_POST yet
-                if ( ! empty( $_POST ) ) {
-                    $entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-                } else {
-                    $entered_val = false;
-                }
-                // if entered_val ===false, then get it from the stored answer
-                if ( $entered_val === false ) {
-                    $answers = eme_get_person_answers( $person['person_id'] );
-                    foreach ( $answers as $answer ) {
-                        if ( $answer['field_id'] == $field_id ) {
-                            $entered_val = $answer['answer'];
-                            break;
-                        }
-                    }
-                }
-                $files = eme_get_uploaded_files( $person['person_id'], 'people' );
-                if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-                    $entered_files = [];
-                    foreach ( $files as $file ) {
-                        if ( $file['field_id'] == $field_id ) {
-                            $entered_files[] = $file;
-                        }
-                    }
-                    $entered_val = $entered_files;
-                }
+            return [ 'html' => '', 'not_found' => true ];
+        },
+        '/#_FIELD\{(.+)\}/' => function( $result, $matches, $ctx ) use ( $counter, $dynamic_field_class_basic ) {
+            $formfield = eme_get_formfield( $matches[1] );
+            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'members', 'people' ] ) ) {
+                $field_id       = $formfield['field_id'];
+                $postfield_name = "familymember[$counter][FIELD{$field_id}]";
+                $postvar_arr    = [ 'familymember', $counter, 'FIELD' . $field_id ];
+                $entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
+                $required = (bool) $formfield['field_required'] || (bool) $ctx['required'];
+                return [ 'html' => eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class_basic ), 'set_required' => $required ];
+            }
+            return [ 'html' => '', 'not_found' => true ];
+        },
+    ];
 
-                if ( $formfield['field_required'] ) {
-                    $required = 1;
-                }
-                $replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
-            } else {
-                $found = 0;
-            }
-        } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $label = substr( $matches[1], 1, -1 );
-            } else {
-                $label = __( 'Save personal info', 'events-made-easy' );
-            }
-            $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
-        } else {
-            $found = 0;
-        }
+    $ctx         = [ 'required' => false, 'required_att' => '' ];
+    $format      = eme_run_formfield_dispatch( $format, $handlers, $ctx );
 
-        if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
-            if ( ! empty( $eme_form_required_field_string ) ) {
-                $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
-            }
-        }
-        if ( $found ) {
-            // to be sure
-            if (is_null($replacement)) {
-                $replacement = "";
-            }
-            $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-            $needle_offset += $orig_result_length - strlen( $replacement );
-        }
-    }
-
-    // now check we found all the required placeholders for the form to work
-    if ( $lastname_found && $firstname_found && $email_found ) {
-        return $format;
-    } else {
-        $res = '';
-        if ( ! $lastname_found || ! $firstname_found || ! $email_found ) {
-            $res .= __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' ) . '<br>';
-        }
-        return "<div id='message' class='eme-message-error eme-cpi-message-error'>$res</div>";
-    }
+    return $format;
 }
 
 function eme_find_required_formfields( $format ) {

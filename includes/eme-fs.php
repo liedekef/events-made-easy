@@ -243,12 +243,8 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
         $data_time = "value='".$eme_date_obj_now->format( EME_WP_TIME_FORMAT )."'";
     }
 
-    $captcha_set = 0;
-    if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-        $format = eme_add_captcha_submit( $format );
-    } else {
-        $format = eme_add_captcha_submit( $format, eme_get_selected_captcha($eme_fs_options) );
-    }
+    $add_captcha = is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' );
+    $format = eme_add_missing_placeholders( $format, $add_captcha);
 
     $latitude_added = 0;
     $longitude_added = 0;
@@ -356,13 +352,8 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
         } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
             if (is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' )) {
                 $replacement = '';
-            } elseif ( !empty($eme_fs_options['selected_captcha']) && ! $captcha_set ) {
-                $configured_captchas = eme_get_configured_captchas();
-                if (!array_key_exists($eme_fs_options['selected_captcha'], $configured_captchas))
-                    $eme_fs_options['selected_captcha'] = array_key_first($configured_captchas);
+            } elseif ( !empty($eme_fs_options['selected_captcha']) ) {
                 $replacement = eme_generate_captchas_html($eme_fs_options['selected_captcha']);
-                if (!empty($replacement))
-                    $captcha_set = 1;
             }
         } elseif ( preg_match( '/#_MAP$/', $result ) ) {
             $replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map'></div>";
@@ -554,11 +545,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
         case 'hcaptcha':
         case 'cfcaptcha':
         case 'captcha':
-            if (is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' )) {
-                $res = '';
-            } else {
-                $res = eme_generate_captchas_html();
-            }
+            $res = eme_generate_captchas_html();
             break;
 
         case 'binary':

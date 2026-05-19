@@ -2731,7 +2731,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     return $format;
 }
 
-function eme_replace_task_signupformfields_placeholders( $form_id, $format, $event ) {
+function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     $eme_is_admin_request = eme_is_admin_request();
     $readonly             = is_user_logged_in() ? "readonly='readonly'" : '';
 

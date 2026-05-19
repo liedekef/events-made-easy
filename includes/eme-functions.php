@@ -195,7 +195,8 @@ function eme_load_captcha_html() {
     $captcha_id  = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
     $captcha_url = eme_captcha_url( $captcha_id );
     if ( $captcha_url ) {
-        $replacement = "<input type='hidden' name='eme_captcha_id' value='$captcha_id'><img class='eme-captcha-img' src='$captcha_url'><br><input required='required' type='text' name='captcha_check' id='captcha_check' autocomplete='off' class='nodynamicupdates'>";
+        $replacement = '<p>' . __( 'Please enter the displayed code.', 'events-made-easy' ) . '</p>';
+        $replacement .= "<input type='hidden' name='eme_captcha_id' value='$captcha_id'><img class='eme-captcha-img' src='$captcha_url'><br><input required='required' type='text' name='captcha_check' id='captcha_check' autocomplete='off' class='nodynamicupdates'>";
     } else {
         $replacement = __( 'Problem while generating the captcha, please check with the site administrator', 'events-made-easy' );
     }
@@ -465,10 +466,6 @@ function eme_generate_captchas_html($selected_captcha = '') {
     if ( eme_is_admin_request() ) {
         return '';
     }
-    if ( get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) {
-        return '';
-    }
-
     $configured_captchas = eme_get_configured_captchas();
     if (!empty($configured_captchas)) {
         if (empty($selected_captcha))
@@ -479,6 +476,7 @@ function eme_generate_captchas_html($selected_captcha = '') {
         if (function_exists($captcha_function))
             return $captcha_function();
     }
+    return '';
 }
 
 function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
@@ -490,17 +488,8 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
             $format .= $text;
         }
     }
-    $configured_captchas = eme_get_configured_captchas();
-    if (empty($configured_captchas)) {
-        $captcha = "";
-    } elseif (!empty($captcha) && !array_key_exists($captcha, $configured_captchas)) {
-        $captcha = array_key_first($configured_captchas);
-    }
-    if ( !empty($captcha) && ! preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA/', $format ) ) {
-        if ($captcha == 'captcha')
-            $captcha_text = '<p>' . __( 'Please enter the displayed code.', 'events-made-easy' ) . '</p> #_CAPTCHA';
-        else
-            $captcha_text = '#_CAPTCHA';
+    if ( !empty($captcha) && !empty($configured_captchas) && !preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA/', $format ) ) {
+        $captcha_text = '#_CAPTCHA';
         if ( preg_match( '/#_SUBMIT/', $format ) ) {
             $format = preg_replace( '/#_SUBMIT/', "$captcha_text<br>#_SUBMIT", $format );
         } else {

@@ -554,7 +554,11 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
         case 'hcaptcha':
         case 'cfcaptcha':
         case 'captcha':
-            $res = eme_generate_captchas_html();
+            if (is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' )) {
+                $res = '';
+            } else {
+                $res = eme_generate_captchas_html();
+            }
             break;
 
         case 'binary':

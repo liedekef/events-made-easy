@@ -117,7 +117,10 @@ function eme_rpi_shortcode( $atts ) {
 		}
 	}
 
-	$captcha_html = eme_generate_captchas_html();
+    $captcha_html = '';
+    if ( ! (get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) ) {
+        $captcha_html = eme_generate_captchas_html();
+    }
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
@@ -191,7 +194,10 @@ function eme_gdpr_approve_shortcode() {
 		$email = '';
 	}
 
-	$captcha_html = eme_generate_captchas_html();
+    $captcha_html = '';
+    if ( ! (get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) ) {
+        $captcha_html = eme_generate_captchas_html();
+    }
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
@@ -307,7 +313,10 @@ function eme_cpi_shortcode( $atts ) {
 
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 
-	$captcha_html = eme_generate_captchas_html();
+    $captcha_html = '';
+    if ( ! (get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) ) {
+        $captcha_html = eme_generate_captchas_html();
+    }
 
 	usleep( 2 );
 	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it

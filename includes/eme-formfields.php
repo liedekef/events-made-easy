@@ -1087,7 +1087,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
     return $format;
 }
 
-function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
+function eme_replace_task_signupformfields_placeholders( $form_id, $format, $event ) {
     $eme_is_admin_request = eme_is_admin_request();
 
     if ( is_user_logged_in() ) {

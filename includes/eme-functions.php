@@ -4530,4 +4530,3 @@ function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
     }
     return apply_filters( 'eme_text', $replacement );
 }
-

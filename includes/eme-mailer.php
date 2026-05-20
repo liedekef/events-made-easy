@@ -1635,14 +1635,8 @@ function eme_mailingreport_list() {
     global $wpdb;
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    header( 'Content-type: application/json; charset=utf-8' );
-    $fTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
-        $fTableResult            = [];
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
 
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
@@ -1704,39 +1698,34 @@ function eme_mailingreport_list() {
         }
         $records[] = $record;
     }
-    $fTableResult['Result']           = 'OK';
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( [
+        'Result'           => 'OK',
+        'Records'          => $records,
+        'TotalRecordCount' => $recordCount,
+    ] );
 }
 
-add_action( 'wp_ajax_eme_previeweventmail', 'eme_send_mails_ajax_action_previeweventmail' );
-add_action( 'wp_ajax_eme_previewmail', 'eme_send_mails_ajax_action_previewmail' );
-add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
-add_action( 'wp_ajax_eme_genericmail', 'eme_send_mails_ajax_action_genericmail' );
-add_action( 'wp_ajax_eme_testmail', 'eme_send_mails_ajax_action_testmail' );
+add_action( 'wp_ajax_eme_testmail',         'eme_ajax_testmail' );
+add_action( 'wp_ajax_eme_previewmail',      'eme_ajax_previewmail' );
+add_action( 'wp_ajax_eme_genericmail',      'eme_ajax_genericmail' );
+add_action( 'wp_ajax_eme_eventmail',        'eme_ajax_eventmail' );
+add_action( 'wp_ajax_eme_previeweventmail', 'eme_ajax_previeweventmail' );
 
-add_action( 'wp_ajax_eme_mails_list', 'eme_ajax_mails_list' );
-add_action( 'wp_ajax_eme_mailings_list', 'eme_ajax_mailings_list' );
-add_action( 'wp_ajax_eme_archivedmailings_list', 'eme_ajax_archivedmailings_list' );
-add_action( 'wp_ajax_eme_manage_mails', 'eme_ajax_manage_mails' );
-add_action( 'wp_ajax_eme_manage_mailings', 'eme_ajax_manage_mailings' );
+add_action( 'wp_ajax_eme_mails_list',              'eme_ajax_mails_list' );
+add_action( 'wp_ajax_eme_mailings_list',           'eme_ajax_mailings_list' );
+add_action( 'wp_ajax_eme_archivedmailings_list',   'eme_ajax_archivedmailings_list' );
+add_action( 'wp_ajax_eme_manage_mails',            'eme_ajax_manage_mails' );
+add_action( 'wp_ajax_eme_manage_mailings',         'eme_ajax_manage_mailings' );
 add_action( 'wp_ajax_eme_manage_archivedmailings', 'eme_ajax_manage_archivedmailings' );
 
 function eme_ajax_mailings_list() {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $fTableResult = [];
-    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ){
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
 
     $limit    = eme_get_ftable_limit();
@@ -1824,23 +1813,19 @@ function eme_ajax_mailings_list() {
         $records[] = $record;
     }
 
-    $fTableResult['Result']           = 'OK';
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( [
+        'Result'           => 'OK',
+        'Records'          => $records,
+        'TotalRecordCount' => $recordCount,
+    ] );
 }
 
 function eme_ajax_manage_mailings() {
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    $fTableResult = [];
-    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
+    $fTableResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
@@ -1866,23 +1851,17 @@ function eme_ajax_manage_mailings() {
                 break;
         }
     }
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( $fTableResult );
 }
 
 function eme_ajax_archivedmailings_list() {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
-    $fTableResult = [];
-    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
 
     $limit    = eme_get_ftable_limit();
@@ -1924,24 +1903,19 @@ function eme_ajax_archivedmailings_list() {
         $records[] = $record;
     }
 
-    $fTableResult['Result']           = 'OK';
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( [
+        'Result'           => 'OK',
+        'Records'          => $records,
+        'TotalRecordCount' => $recordCount,
+    ] );
 }
 
 function eme_ajax_manage_archivedmailings() {
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-
-    $fTableResult = [];
-    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
+    $fTableResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
@@ -1957,22 +1931,15 @@ function eme_ajax_manage_archivedmailings() {
                 break;
         }
     }
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( $fTableResult );
 }
 
 function eme_ajax_mails_list() {
     global $wpdb;
 
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-
-    $fTableResult = [];
-    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
 
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
@@ -2045,23 +2012,19 @@ function eme_ajax_mails_list() {
         }
         $records[] = $record;
     }
-    $fTableResult['Result']           = 'OK';
-    $fTableResult['Records']          = $records;
-    $fTableResult['TotalRecordCount'] = $recordCount;
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( [
+        'Result'           => 'OK',
+        'Records'          => $records,
+        'TotalRecordCount' => $recordCount,
+    ] );
 }
 
 function eme_ajax_manage_mails() {
-    header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    $fTableResult = [];
-    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
-        print wp_json_encode( $fTableResult );
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json( [ 'Result' => 'Error', 'htmlmessage' => "<div class='error eme-message-admin'>" . __( 'Access denied!', 'events-made-easy' ) . "</div>" ] );
     }
+    $fTableResult = [];
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
@@ -2087,461 +2050,496 @@ function eme_ajax_manage_mails() {
                 break;
         }
     }
-    print wp_json_encode( $fTableResult );
-    wp_die();
+    wp_send_json( $fTableResult );
 }
 
-function eme_send_mails_ajax_action_testmail() {
-    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
-        wp_die();
-    }
-    eme_send_mails_ajax_actions( 'testmail' );
-}
-function eme_send_mails_ajax_action_eventmail() {
-    if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
-        current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
-        eme_send_mails_ajax_actions( 'eventmail' );
-    } else {
-        wp_die();
-    }
-}
-function eme_send_mails_ajax_action_genericmail() {
-    if ( !current_user_can( get_option( 'eme_cap_send_generic_mails' ) )) {
-        wp_die();
-    }
-    eme_send_mails_ajax_actions( 'genericmail' );
-}
-function eme_send_mails_ajax_action_previewmail() {
-    if ( !current_user_can( get_option( 'eme_cap_send_generic_mails' ) )) {
-        wp_die();
-    }
-    eme_send_mails_ajax_actions( 'previewmail' );
-}
-function eme_send_mails_ajax_action_previeweventmail() {
-    if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
-        current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
-        eme_send_mails_ajax_actions( 'previeweventmail' );
-    } else {
-        wp_die();
-    }
-}
-
-function eme_send_mails_ajax_actions( $action ) {
-    global $wpdb;
-    header( 'Content-type: application/json; charset=utf-8' );
+function eme_ajax_testmail() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    // the access check is done when the function is invoked, not needed here
-    /*
-    if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
-        print "<div class='error eme-message-admin'>";
-        esc_html_e( 'Access denied!', 'events-made-easy' );
-        print "</div>";
-        wp_die();
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
+        wp_send_json_error( __( 'Access denied!', 'events-made-easy' ) );
     }
-     */
-    $ajaxResult       = [];
-    $conditions       = [];
+
+    $testmail_to = eme_sanitize_email( $_POST['testmail_to'] );
+    if ( ! eme_is_email( $testmail_to ) ) {
+        wp_send_json(
+            [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a valid email address', 'events-made-easy' ) . '</p></div>' ]
+        );
+    }
+
+    $contact       = eme_get_contact();
+    $contact_email = $contact->user_email;
+    $contact_name  = $contact->display_name;
+    $mail_res_arr  = eme_send_mail(
+        'EME test subject',
+        'This is a test message from Events Made Easy.',
+        $testmail_to,
+        'EME test recipient',
+        $contact_email,
+        $contact_name
+    );
+    $extra_html = esc_html( $mail_res_arr[1] );
+    if ( ! empty( $mail_res_arr[2] ) ) {
+        $extra_html .= nl2br( esc_html( $mail_res_arr[2] ) );
+    }
+    if ( $mail_res_arr[0] ) {
+        wp_send_json( [ 'Result' => 'OK',    'htmlmessage' => "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>" ] );
+    } else {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>" ] );
+    }
+}
+
+function eme_ajax_previewmail() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_send_generic_mails' ) ) ) {
+        wp_send_json_error( __( 'Access denied!', 'events-made-easy' ) );
+    }
+
+    $parsed = eme_parse_generic_mail_post();
+    if ( isset( $parsed['error'] ) ) {
+        wp_send_json( [
+            'Result' => 'ERROR',
+            'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . esc_html( $parsed['error'] ) . '</p></div>'
+        ] );
+    }
+
+    // Extract values
+    $conditions      = $parsed['conditions'];
+    $mail_subject    = $parsed['mail_subject'];
+    $mail_message    = $parsed['mail_message'];
+    $contact_name    = $parsed['contact_name'];
+    $contact_email   = $parsed['contact_email'];
+
+    $attachment_ids_arr = [];
+    if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
+        $attachment_ids_arr = explode( ',', $conditions['eme_generic_attach_ids'] );
+    }
+
+    $preview_mail_to = intval( $_POST['send_previewmailto_id'] );
+    if ( $preview_mail_to == 0 ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>' ] );
+    }
+
+    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+    $person       = eme_get_person( $preview_mail_to );
+    $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+    $mail_subject = eme_replace_generic_placeholders( $mail_subject, 'text' );
+    $mail_message = eme_replace_generic_placeholders( $mail_message, $mail_text_html );
+    $mail_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
+    $mail_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
+
+    $res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
+    if ( $res ) {
+        wp_send_json( [ 'Result' => 'OK',    'htmlmessage' => "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>' ] );
+    } else {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>' ] );
+    }
+}
+
+function eme_ajax_genericmail() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_send_generic_mails' ) ) ) {
+        wp_send_json_error( __( 'Access denied!', 'events-made-easy' ) );
+    }
+
+    $result = eme_send_generic_mail( $_POST );
+    wp_send_json( [ 'Result' => $result['success'] ? 'OK' : 'ERROR', 'htmlmessage' => $result['message'] ] );
+}
+
+function eme_ajax_previeweventmail() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_send_other_mails' ) ) &&
+         ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+        wp_send_json_error( __( 'Access denied!', 'events-made-easy' ) );
+    }
+
+    $parsed = eme_parse_event_mail_post();
+    if ( isset( $parsed['error'] ) ) {
+        wp_send_json( [
+            'Result' => 'ERROR',
+            'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . esc_html( $parsed['error'] ) . '</p></div>'
+        ] );
+    }
+
+    // Extract values
+    $conditions      = $parsed['conditions'];
+    $mail_subject    = $parsed['mail_subject'];
+    $mail_message    = $parsed['mail_message'];
+
+    $event_ids = isset( $_POST['event_ids'] ) ? wp_parse_id_list( $_POST['event_ids'] ) : [];
+    if ( ! eme_is_numeric_array( $event_ids ) ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one event.', 'events-made-easy' ) . '</p></div>' ] );
+    }
+
+    $attachment_ids_arr = [];
+    if ( isset( $conditions['eme_eventmail_attach_ids'] ) && ! empty( $conditions['eme_eventmail_attach_ids'] ) ) {
+        $attachment_ids_arr = explode( ',', $conditions['eme_eventmail_attach_ids'] );
+    }
+
+    $preview_mail_to = intval( $_POST['send_previeweventmailto_id'] );
+    if ( $preview_mail_to == 0 ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>' ] );
+    }
+
+    $person      = eme_get_person( $preview_mail_to );
+    $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+    $event       = eme_get_event( $event_ids[0] );
+    if ( empty( $event ) ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'No such event', 'events-made-easy' ) . '</p></div>' ] );
+    }
+
+    $contact        = eme_get_event_contact( $event );
+    $contact_email  = $contact->user_email;
+    $contact_name   = $contact->display_name;
+    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+    $mail_subject   = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+    $mail_message   = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+    $mail_message   = eme_replace_email_event_placeholders( $mail_message, $person['email'], $person['lastname'], $person['firstname'], $event, $person['lang'] );
+    $mail_subject   = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
+    $mail_message   = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
+
+    $res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
+    if ( $res ) {
+        wp_send_json( [ 'Result' => 'OK',    'htmlmessage' => "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>' ] );
+    } else {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>' ] );
+    }
+}
+
+function eme_ajax_eventmail() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_send_other_mails' ) ) &&
+         ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+        wp_send_json_error( __( 'Access denied!', 'events-made-easy' ) );
+    }
+
+    $result = eme_send_event_mail( $_POST );
+    wp_send_json( [ 'Result' => $result['success'] ? 'OK' : 'ERROR', 'htmlmessage' => $result['message'] ] );
+}
+
+/**
+ * Parse and validate the POST fields shared by genericmail and previewmail.
+ *
+ * Returns [ $conditions, $mail_subject, $mail_message, $mail_text_html, $contact_name, $contact_email ]
+ * on success, or [ null, $error_message, ... ] on validation failure.
+ */
+function eme_parse_generic_mail_post() {
+    $conditions = [ 'action' => 'genericmail' ];
+
+    if ( ! empty( $_POST['genericmail_ignore_massmail_setting'] ) ) {
+        $conditions['ignore_massmail_setting'] = 1;
+    }
+    if ( ! empty( $_POST['eme_generic_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_generic_attach_ids'] ) ) {
+        $conditions['eme_generic_attach_ids'] = eme_sanitize_request( $_POST['eme_generic_attach_ids'] );
+    }
+
+    if ( ! empty( $_POST['generic_mail_subject'] ) ) {
+        $mail_subject = eme_sanitize_request( $_POST['generic_mail_subject'] );
+    } elseif ( isset( $_POST['generic_subject_template'] ) && intval( $_POST['generic_subject_template'] ) > 0 ) {
+        $mail_subject = eme_get_template_format_plain( intval( $_POST['generic_subject_template'] ) );
+    } else {
+        $mail_subject = '';
+    }
+
+    if ( ! empty( $_POST['generic_mail_message'] ) ) {
+        $mail_message = eme_kses_maybe_unfiltered( $_POST['generic_mail_message'] );
+    } elseif ( isset( $_POST['generic_message_template'] ) && intval( $_POST['generic_message_template'] ) > 0 ) {
+        $mail_message = eme_get_template_format_plain( intval( $_POST['generic_message_template'] ) );
+    } else {
+        $mail_message = '';
+    }
+
+    $mail_subject = apply_filters( 'eme_generic_email_subject_filter', $mail_subject );
+    $mail_message = apply_filters( 'eme_generic_email_body_filter', $mail_message );
+
+    if ( empty( $mail_subject ) || empty( $mail_message ) ) {
+        return [ 'error' => __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) ];
+    }
+
+    if ( ! empty( $_POST['generic_mail_from_name'] ) && ! empty( $_POST['generic_mail_from_email'] ) && eme_is_email( $_POST['generic_mail_from_email'] ) ) {
+        $contact_name  = eme_sanitize_request( $_POST['generic_mail_from_name'] );
+        $contact_email = eme_sanitize_request( $_POST['generic_mail_from_email'] );
+    } else {
+        [ $contact_name, $contact_email ] = eme_get_default_mailer_info();
+    }
+
+    if ( empty( $contact_email ) ) {
+        return [ 'error' => __( 'No default sender defined and no event contact email found, bailing out', 'events-made-easy' ) ];
+    }
+
+    return [
+        'conditions'      => $conditions,
+        'mail_subject'    => $mail_subject,
+        'mail_message'    => $mail_message,
+        'contact_name'    => $contact_name,
+        'contact_email'   => $contact_email,
+    ];
+}
+
+/**
+ * Parse and validate the POST fields shared by eventmail and previeweventmail.
+ *
+ * Returns [ $conditions, $mail_subject, $mail_message ] on success,
+ * or [ null, $error_message, '' ] on validation failure.
+ */
+function eme_parse_event_mail_post() {
+    $conditions = [ 'action' => 'eventmail' ];
+
+    if ( ! empty( $_POST['eventmail_ignore_massmail_setting'] ) ) {
+        $conditions['ignore_massmail_setting'] = 1;
+    }
+    if ( ! empty( $_POST['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_eventmail_attach_ids'] ) ) {
+        $conditions['eme_eventmail_attach_ids'] = eme_sanitize_request( $_POST['eme_eventmail_attach_ids'] );
+    }
+
+    if ( ! empty( $_POST['event_mail_subject'] ) ) {
+        $mail_subject = eme_sanitize_request( $_POST['event_mail_subject'] );
+    } elseif ( isset( $_POST['event_subject_template'] ) && intval( $_POST['event_subject_template'] ) > 0 ) {
+        $mail_subject = eme_get_template_format_plain( intval( $_POST['event_subject_template'] ) );
+    } else {
+        $mail_subject = '';
+    }
+
+    if ( ! empty( $_POST['event_mail_message'] ) ) {
+        $mail_message = eme_kses_maybe_unfiltered( $_POST['event_mail_message'] );
+    } elseif ( isset( $_POST['event_message_template'] ) && intval( $_POST['event_message_template'] ) > 0 ) {
+        $mail_message = eme_get_template_format_plain( intval( $_POST['event_message_template'] ) );
+    } else {
+        $mail_message = '';
+    }
+
+    $mail_subject = apply_filters( 'eme_event_email_subject_filter', $mail_subject );
+    $mail_message = apply_filters( 'eme_event_email_body_filter', $mail_message );
+
+    if ( empty( $mail_subject ) || empty( $mail_message ) ) {
+        return [ 'error' => __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) ];
+    }
+
+    return [
+        'conditions'      => $conditions,
+        'mail_subject'    => $mail_subject,
+        'mail_message'    => $mail_message,
+    ];
+}
+
+/**
+ * Core logic for sending a generic mail (non-preview).
+ * Returns [ 'success' => bool, 'message' => string ].
+ */
+function eme_send_generic_mail( $post_data ) {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $queue            = intval( get_option( 'eme_queue_mails' ) );
+    $fast_queue       = 0;
 
-    if ( $action == 'testmail' ) {
-        $testmail_to = eme_sanitize_email( $_POST['testmail_to'] );
-        if ( ! eme_is_email( $testmail_to ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a valid email address', 'events-made-easy' ) . '</p></div>';
-            $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
-        }
-
-        $contact       = eme_get_contact();
-        $contact_email = $contact->user_email;
-        $contact_name  = $contact->display_name;
-        $person_name   = 'EME test recipient';
-        $tmp_subject   = 'EME test subject';
-        $tmp_message   = 'This is a test message from Events Made Easy.';
-        $mail_res_arr  = eme_send_mail( $tmp_subject, $tmp_message, $testmail_to, $person_name, $contact_email, $contact_name );
-        $mail_res      = $mail_res_arr[0];
-        $extra_html    = esc_html( $mail_res_arr[1] );
-        if ( ! empty( $mail_res_arr[2] ) ) {
-            // this contains debug messages
-            $extra_html .= nl2br( esc_html( $mail_res_arr[2] ) );
-        }
-        if ( $mail_res ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>";
-            $ajaxResult['Result']      = 'OK';
-        } else {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>";
-            $ajaxResult['Result']      = 'ERROR';
-        }
-        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-        wp_die();
+    $parsed = eme_parse_generic_mail_post();
+    if ( isset( $parsed['error'] ) ) {
+        return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . esc_html( $parsed['error'] ) . '</p></div>' ];
     }
 
-    $queue = intval( get_option( 'eme_queue_mails' ) );
-    $fast_queue = 0;
-    $conditions['action'] = $action;
-    if ( $action == 'genericmail' || $action == 'previewmail' ) {
-        if ( ! empty( $_POST['genericmail_ignore_massmail_setting'] ) ) {
-            $conditions['ignore_massmail_setting'] = 1;
-        }
-        if ( ! empty( $_POST['eme_generic_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_generic_attach_ids'] ) ) {
-            $conditions['eme_generic_attach_ids'] = eme_sanitize_request( $_POST['eme_generic_attach_ids'] );
-        }
-        if ( ! empty( $_POST['generic_mail_subject'] ) ) {
-            $mail_subject = eme_sanitize_request( $_POST['generic_mail_subject'] );
-        } elseif ( isset( $_POST['generic_subject_template'] ) && intval( $_POST['generic_subject_template'] ) > 0 ) {
-            $mail_subject = eme_get_template_format_plain( intval( $_POST['generic_subject_template'] ) );
-        } else {
-            $mail_subject = '';
-        }
+    // Extract values
+    $conditions      = $parsed['conditions'];
+    $mail_subject    = $parsed['mail_subject'];
+    $mail_message    = $parsed['mail_message'];
+    $contact_name    = $parsed['contact_name'];
+    $contact_email   = $parsed['contact_email'];
 
-        if ( ! empty( $_POST['generic_mail_message'] ) ) {
-            $mail_message = eme_kses_maybe_unfiltered( $_POST['generic_mail_message'] );
-        } elseif ( isset( $_POST['generic_message_template'] ) && intval( $_POST['generic_message_template'] ) > 0 ) {
-            $mail_message = eme_get_template_format_plain( intval( $_POST['generic_message_template'] ) );
-        } else {
-            $mail_message = '';
-        }
+    if ( ! empty( $post_data['genericmail_mailing_name'] ) ) {
+        $mailing_name = eme_sanitize_request( $post_data['genericmail_mailing_name'] );
+    } else {
+        $mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
+    }
+    if ( ! empty( $post_data['genericmail_actualstartdate'] ) ) {
+        $mailing_datetime = eme_sanitize_request( $post_data['genericmail_actualstartdate'] );
+    } else {
+        $mailing_datetime = $eme_date_obj_now->getDateTime();
+        $fast_queue       = 1;
+    }
 
-        // mail filters
-        $mail_subject = apply_filters( 'eme_generic_email_subject_filter', $mail_subject );
-        $mail_message = apply_filters( 'eme_generic_email_body_filter', $mail_message );
-
-        if ( empty( $mail_subject ) || empty( $mail_message ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
-            $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
+    $recipients_configured = 0;
+    if ( isset( $post_data['eme_send_all_people'] ) ) {
+        $conditions['eme_send_all_people'] = 1;
+        $recipients_configured             = 1;
+    } else {
+        if ( ! empty( $post_data['eme_genericmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_persons'] ) ) {
+            $conditions['eme_genericmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_persons'] ) );
+            $recipients_configured = 1;
         }
-
-        $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
-        if ( ! empty( $_POST['generic_mail_from_name'] ) && ! empty( $_POST['generic_mail_from_email'] ) && eme_is_email( $_POST['generic_mail_from_email'] ) ) {
-            $contact_name  = eme_sanitize_request( $_POST['generic_mail_from_name'] );
-            $contact_email = eme_sanitize_request( $_POST['generic_mail_from_email'] );
-        } else {
-            [$contact_name, $contact_email] = eme_get_default_mailer_info();
+        if ( ! empty( $post_data['eme_send_members'] ) && eme_is_numeric_array( $post_data['eme_send_members'] ) ) {
+            $conditions['eme_send_members'] = join( ',', array_map( 'intval', $post_data['eme_send_members'] ) );
+            $recipients_configured = 1;
         }
-
-        if ( empty( $contact_email ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'No default sender defined and no event contact email found, bailing out', 'events-made-easy' ) . '</p></div>';
-            $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
+        if ( ! empty( $post_data['eme_genericmail_send_peoplegroups'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_peoplegroups'] ) ) {
+            $conditions['eme_genericmail_send_peoplegroups'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_peoplegroups'] ) );
+            $recipients_configured = 1;
         }
-        $mailing_id = 0;
-        if ( $action == 'previewmail' ) {
-            // let's add attachments too
-            $attachment_ids_arr = [];
-            if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
-                $attachment_ids = $conditions['eme_generic_attach_ids'];
-                if ( ! empty( $attachment_ids ) ) {
-                    $attachment_ids_arr = explode( ',', $attachment_ids );
-                }
-            }
-            $preview_mail_to = intval( $_POST['send_previewmailto_id'] );
-            if ( $preview_mail_to == 0 ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>';
-                $ajaxResult['Result']      = 'ERROR';
-            } else {
-                $person       = eme_get_person( $preview_mail_to );
-                $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-                $mail_subject = eme_replace_generic_placeholders( $mail_subject, 'text' );
-                $mail_message = eme_replace_generic_placeholders( $mail_message, $mail_text_html );
-                $mail_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
-                $mail_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-                // no queueing for preview email
-                $res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
-                if ( $res ) {
-                    $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
-                    $ajaxResult['Result']      = 'OK';
-                } else {
-                    $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-                    $ajaxResult['Result']      = 'ERROR';
-                }
-            }
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
-        } else {
-            if ( ! empty( $_POST['genericmail_mailing_name'] ) ) {
-                $mailing_name = eme_sanitize_request( $_POST['genericmail_mailing_name'] );
-            } else {
-                $mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
-            }
-            if ( ! empty( $_POST['genericmail_actualstartdate'] ) ) {
-                $mailing_datetime = eme_sanitize_request( $_POST['genericmail_actualstartdate'] );
-            } else {
-                $mailing_datetime = $eme_date_obj_now->getDateTime();
-                $fast_queue=1;
-            }
-            $recipients_configured=0;
-            if ( isset( $_POST['eme_send_all_people'] ) ) {
-                $conditions['eme_send_all_people'] = 1;
-                $recipients_configured = 1;
-            } else {
-                if ( ! empty( $_POST['eme_genericmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_persons'] ) ) {
-                    $conditions['eme_genericmail_send_persons'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_persons'] ) );
-                    $recipients_configured = 1;
-                }
-                if ( ! empty( $_POST['eme_send_members'] ) && eme_is_numeric_array( $_POST['eme_send_members'] ) ) {
-                    $conditions['eme_send_members'] = join( ',', array_map( 'intval', $_POST['eme_send_members'] ) );
-                    $recipients_configured = 1;
-                }
-                if ( ! empty( $_POST['eme_genericmail_send_peoplegroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_peoplegroups'] ) ) {
-                    $conditions['eme_genericmail_send_peoplegroups'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_peoplegroups'] ) );
-                    $recipients_configured = 1;
-                }
-                if ( ! empty( $_POST['eme_genericmail_send_membergroups'] ) && eme_is_numeric_array( $_POST['eme_genericmail_send_membergroups'] ) ) {
-                    $conditions['eme_genericmail_send_membergroups'] = join( ',', array_map( 'intval', $_POST['eme_genericmail_send_membergroups'] ) );
-                    $recipients_configured = 1;
-                }
-                if ( ! empty( $_POST['eme_send_memberships'] ) && eme_is_numeric_array( $_POST['eme_send_memberships'] ) ) {
-                    $conditions['eme_send_memberships'] = join( ',', array_map( 'intval', $_POST['eme_send_memberships'] ) );
-                    $recipients_configured = 1;
-                }
-            }
-            if ( ! $recipients_configured ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one recipient.', 'events-made-easy' ) . '</p></div>';
-                $ajaxResult['Result']      = 'ERROR';
-                echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-                wp_die();
-            }
+        if ( ! empty( $post_data['eme_genericmail_send_membergroups'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_membergroups'] ) ) {
+            $conditions['eme_genericmail_send_membergroups'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_membergroups'] ) );
+            $recipients_configured = 1;
+        }
+        if ( ! empty( $post_data['eme_send_memberships'] ) && eme_is_numeric_array( $post_data['eme_send_memberships'] ) ) {
+            $conditions['eme_send_memberships'] = join( ',', array_map( 'intval', $post_data['eme_send_memberships'] ) );
+            $recipients_configured = 1;
+        }
+    }
+
+    if ( ! $recipients_configured ) {
+        return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one recipient.', 'events-made-easy' ) . '</p></div>' ];
+    }
+
+    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+    if ( $queue && $fast_queue ) {
+        $mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+        $res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+    } elseif ( $queue ) {
+        $dates = explode( ',', $mailing_datetime );
+        foreach ( $dates as $datetime ) {
+            $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+            $res        = eme_count_planned_mailing_receivers( $conditions );
+            eme_mark_mailing_planned( $mailing_id, $res['total'] );
+        }
+    } else {
+        $res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+    }
+
+    if ( ! $res['mail_problems'] ) {
+        $msg = $queue
+            ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
+            : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        return [ 'success' => true, 'message' => $msg ];
+    }
+
+    if ( $queue ) {
+        $msg = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been put on the queue, but not all persons will receive it.', 'events-made-easy' ) . '</p></div>';
+        if ( ! empty( $res['not_sent'] ) ) {
+            $msg .= "<div id='message' class='error eme-message-admin'><p>" . __( 'The following persons will not receive the mail:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
+        }
+    } else {
+        $msg = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        if ( ! empty( $res['not_sent'] ) ) {
+            $msg .= "<div id='message' class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
+        }
+    }
+    return [ 'success' => false, 'message' => $msg ];
+}
+
+/**
+ * Core logic for sending an event mail (non-preview).
+ * Returns [ 'success' => bool, 'message' => string ].
+ */
+function eme_send_event_mail( $post_data ) {
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $queue            = intval( get_option( 'eme_queue_mails' ) );
+    $fast_queue       = 0;
+
+    $parsed = eme_parse_event_mail_post();
+    if ( isset( $parsed['error'] ) ) {
+        return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . esc_html( $parsed['error'] ) . '</p></div>' ];
+    }
+
+    // Extract values
+    $conditions      = $parsed['conditions'];
+    $mail_subject    = $parsed['mail_subject'];
+    $mail_message    = $parsed['mail_message'];
+
+    $event_ids = isset( $post_data['event_ids'] ) ? wp_parse_id_list( $post_data['event_ids'] ) : [];
+    if ( ! eme_is_numeric_array( $event_ids ) ) {
+        return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one event.', 'events-made-easy' ) . '</p></div>' ];
+    }
+
+    if ( ! empty( $post_data['eventmail_mailing_name'] ) ) {
+        $mailing_name = eme_sanitize_request( $post_data['eventmail_mailing_name'] );
+    } else {
+        $mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
+    }
+    if ( ! empty( $post_data['eventmail_actualstartdate'] ) ) {
+        $mailing_datetime = eme_sanitize_request( $post_data['eventmail_actualstartdate'] );
+    } else {
+        $mailing_datetime = $eme_date_obj_now->getDateTime();
+        $fast_queue       = 1;
+    }
+
+    if ( ! empty( $post_data['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_persons'] ) ) {
+        $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_persons'] ) );
+    }
+    if ( ! empty( $post_data['eme_eventmail_send_groups'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_groups'] ) ) {
+        $conditions['eme_eventmail_send_groups'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_groups'] ) );
+    }
+    if ( ! empty( $post_data['eme_eventmail_send_members'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_members'] ) ) {
+        $conditions['eme_eventmail_send_members'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_members'] ) );
+    }
+    if ( ! empty( $post_data['eme_eventmail_send_membergroups'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_membergroups'] ) ) {
+        $conditions['eme_eventmail_send_membergroups'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_membergroups'] ) );
+    }
+    if ( ! empty( $post_data['eme_eventmail_send_memberships'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_memberships'] ) ) {
+        $conditions['eme_eventmail_send_memberships'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_memberships'] ) );
+    }
+
+    $eme_mail_type = isset( $post_data['eme_mail_type'] ) ? eme_sanitize_request( $post_data['eme_mail_type'] ) : 'attendees';
+    if ( empty( $eme_mail_type ) ) {
+        return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select the type of mail to be sent.', 'events-made-easy' ) . '</p></div>' ];
+    }
+    $conditions['eme_mail_type']        = $eme_mail_type;
+    $conditions['rsvp_status']          = isset( $post_data['rsvp_status'] )        ? intval( $post_data['rsvp_status'] )        : 0;
+    $conditions['only_unpaid']          = isset( $post_data['only_unpaid'] )         ? intval( $post_data['only_unpaid'] )         : 0;
+    $conditions['exclude_registered']   = isset( $post_data['exclude_registered'] )  ? intval( $post_data['exclude_registered'] )  : 0;
+
+    $current_userid     = get_current_user_id();
+    $mail_problems      = 0;
+    $mail_access_problems = 0;
+    $not_sent           = [];
+    $count_event_ids    = count( $event_ids );
+    $mail_text_html     = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+
+    foreach ( $event_ids as $event_id ) {
+        $conditions['event_id'] = $event_id;
+        $event                  = eme_get_event( $event_id );
+        if ( empty( $event ) ) {
+            continue;
+        }
+        $loop_mailing_name = $count_event_ids > 1 ? $mailing_name . " ($event_id)" : $mailing_name;
+
+        if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
+             ( current_user_can( get_option( 'eme_cap_send_mails' ) ) &&
+               ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
+            $contact       = eme_get_event_contact( $event );
+            $contact_email = $contact->user_email;
+            $contact_name  = $contact->display_name;
+
             if ( $queue && $fast_queue ) {
-                $mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                $res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+                $mailing_id = eme_db_insert_ongoing_mailing( $loop_mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+                $res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
             } elseif ( $queue ) {
-                // in case we want a mailing to be done at multiple times, the times are separated by ","
                 $dates = explode( ',', $mailing_datetime );
                 foreach ( $dates as $datetime ) {
-                    $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                    // we just need the count of receivers here, the actual insert of individual emails happens when the mailing starts
+                    $mailing_id = eme_db_insert_mailing( $loop_mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
                     $res        = eme_count_planned_mailing_receivers( $conditions );
                     eme_mark_mailing_planned( $mailing_id, $res['total'] );
                 }
             } else {
                 $res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
             }
-        }
-
-        //now, we use the res output from the last call of eme_update_mailing_receivers (in case of multiple planned mailings, possible problems are the same for all anyway)
-        if ( ! $res['mail_problems'] ) {
-            if ( $queue ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
-            } else {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
-            }
-            $ajaxResult['Result'] = 'OK';
+            $mail_problems += $res['mail_problems'];
+            $not_sent[]     = $res['not_sent'];
         } else {
-            if ( $queue ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been put on the queue, but not all persons will receive it.', 'events-made-easy' ) . '</p></div>';
-                if ( ! empty( $res['not_sent'] ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'The following persons will not receive the mail:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
-                }
-            } else {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-                if ( ! empty( $res['not_sent'] ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div id='message' class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . esc_html( $res['not_sent'] ) . '</p></div>';
-                }
-            }
-            $ajaxResult['Result'] = 'ERROR';
+            $mail_access_problems = 1;
         }
-        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-        wp_die();
     }
 
-    if ( $action == 'eventmail' || $action == 'previeweventmail' ) {
-        if ( ! empty( $_POST['eventmail_ignore_massmail_setting'] ) ) {
-            $conditions['ignore_massmail_setting'] = 1;
-        }
-        if ( ! empty( $_POST['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_eventmail_attach_ids'] ) ) {
-            $conditions['eme_eventmail_attach_ids'] = eme_sanitize_request( $_POST['eme_eventmail_attach_ids'] );
-        }
-        if ( ! empty( $_POST ['event_mail_subject'] ) ) {
-            $mail_subject = eme_sanitize_request( $_POST ['event_mail_subject'] );
-        } elseif ( isset( $_POST ['event_subject_template'] ) && intval( $_POST ['event_subject_template'] ) > 0 ) {
-            $mail_subject = eme_get_template_format_plain( intval( $_POST ['event_subject_template'] ) );
-        } else {
-            $mail_subject = '';
-        }
-
-        if ( ! empty( $_POST ['event_mail_message'] ) ) {
-            $mail_message = eme_kses_maybe_unfiltered( $_POST ['event_mail_message'] );
-        } elseif ( isset( $_POST ['event_message_template'] ) && intval( $_POST ['event_message_template'] ) > 0 ) {
-            $mail_message = eme_get_template_format_plain( intval( $_POST ['event_message_template'] ) );
-        } else {
-            $mail_message = '';
-        }
-
-        // mail filters
-        $mail_subject = apply_filters( 'eme_event_email_subject_filter', $mail_subject );
-        $mail_message = apply_filters( 'eme_event_email_body_filter', $mail_message );
-
-        if ( empty( $mail_subject ) || empty( $mail_message ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
-            $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
-        }
-
-        $event_ids = isset( $_POST['event_ids'] ) ? wp_parse_id_list($_POST['event_ids']) : 0;
-        if ( ! eme_is_numeric_array( $event_ids ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one event.', 'events-made-easy' ) . '</p></div>';
-            $ajaxResult['Result']      = 'ERROR';
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
-        }
-
-        if ( ! empty( $_POST['eventmail_mailing_name'] ) ) {
-            $mailing_name = eme_sanitize_request( $_POST['eventmail_mailing_name'] );
-        } else {
-            $mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
-        }
-        if ( ! empty( $_POST['eventmail_actualstartdate'] ) ) {
-            $mailing_datetime = eme_sanitize_request( $_POST['eventmail_actualstartdate'] );
-        } else {
-            $mailing_datetime = $eme_date_obj_now->getDateTime();
-            $fast_queue=1;
-        }
-        if ( $action == 'previeweventmail' ) {
-            // let's add attachments too
-            $attachment_ids_arr = [];
-            if ( isset( $conditions['eme_eventmail_attach_ids'] ) ) {
-                $attachment_ids = $conditions['eme_eventmail_attach_ids'];
-                if ( ! empty( $attachment_ids ) ) {
-                    $attachment_ids_arr = explode( ',', $attachment_ids );
-                }
-            }
-            $preview_mail_to = intval( $_POST['send_previeweventmailto_id'] );
-            if ( $preview_mail_to == 0 ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>';
-                $ajaxResult['Result']      = 'ERROR';
-            } else {
-                $person      = eme_get_person( $preview_mail_to );
-                $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-                $event       = eme_get_event( $event_ids[0] );
-                if ( ! empty( $event ) ) {
-                    $contact       = eme_get_event_contact( $event );
-                    $contact_email = $contact->user_email;
-                    $contact_name  = $contact->display_name;
-                    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
-                    $mail_subject  = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-                    $mail_message  = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-                    $mail_message  = eme_replace_email_event_placeholders( $mail_message, $person['email'], $person['lastname'], $person['firstname'], $event, $person['lang'] );
-                    $mail_subject  = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
-                    $mail_message  = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-                    // no queueing for preview email
-                    $res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
-                    if ( $res ) {
-                        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
-                        $ajaxResult['Result']      = 'OK';
-                    } else {
-                        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-                        $ajaxResult['Result']      = 'ERROR';
-                    }
-                } else {
-                    $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'No such event', 'events-made-easy' ) . '</p></div>';
-                    $ajaxResult['Result']      = 'ERROR';
-                }
-            }
-            echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-            wp_die();
-        } else {
-            if ( ! empty( $_POST['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_persons'] ) ) {
-                $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_persons'] ) );
-            }
-            if ( ! empty( $_POST['eme_eventmail_send_groups'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_groups'] ) ) {
-                $conditions['eme_eventmail_send_groups'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_groups'] ) );
-            }
-            if ( ! empty( $_POST['eme_eventmail_send_members'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_members'] ) ) {
-                $conditions['eme_eventmail_send_members'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_members'] ) );
-            }
-            if ( ! empty( $_POST['eme_eventmail_send_membergroups'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_membergroups'] ) ) {
-                $conditions['eme_eventmail_send_membergroups'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_membergroups'] ) );
-            }
-            if ( ! empty( $_POST['eme_eventmail_send_memberships'] ) && eme_is_numeric_array( $_POST['eme_eventmail_send_memberships'] ) ) {
-                $conditions['eme_eventmail_send_memberships'] = join( ',', array_map( 'intval', $_POST['eme_eventmail_send_memberships'] ) );
-            }
-            $eme_mail_type = isset( $_POST ['eme_mail_type'] ) ? eme_sanitize_request($_POST ['eme_mail_type']) : 'attendees';
-            if ( empty( $eme_mail_type ) ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select the type of mail to be sent.', 'events-made-easy' ) . '</p></div>';
-                $ajaxResult['Result']      = 'ERROR';
-                echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-                wp_die();
-            }
-            $conditions['eme_mail_type'] = $eme_mail_type;
-        }
-
-        $mailing_id                       = 0;
-        $rsvp_status                      = isset( $_POST ['rsvp_status'] ) ? intval( $_POST ['rsvp_status'] ) : 0;
-        $only_unpaid                      = isset( $_POST ['only_unpaid'] ) ? intval( $_POST ['only_unpaid'] ) : 0;
-        $exclude_registered               = isset( $_POST ['exclude_registered'] ) ? intval( $_POST ['exclude_registered'] ) : 0;
-        $conditions['rsvp_status']        = $rsvp_status;
-        $conditions['only_unpaid']        = $only_unpaid;
-        $conditions['exclude_registered'] = $exclude_registered;
-        $current_userid                   = get_current_user_id();
-        $mail_problems                    = 0;
-        $mail_access_problems             = 0;
-        $not_sent                         = [];
-        $count_event_ids                  = count( $event_ids );
-        foreach ( $event_ids as $event_id ) {
-            $conditions['event_id'] = $event_id;
-            $event                  = eme_get_event( $event_id );
-            if ( empty( $event ) ) {
-                continue;
-            }
-            $mailing_id = 0;
-            if ( $count_event_ids > 1 ) {
-                $mailing_name .= " ($event_id)";
-            }
-            if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
-                ( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
-                $contact        = eme_get_event_contact( $event );
-                $contact_email  = $contact->user_email;
-                $contact_name   = $contact->display_name;
-                $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
-
-                if ( $queue && $fast_queue ) {
-                    $mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                    $res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
-                } elseif ( $queue ) {
-                    // in case we want a mailing to be done at multiple times, the times are separated by ","
-                    $dates = explode( ',', $mailing_datetime );
-                    foreach ( $dates as $datetime ) {
-                        $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                        // we just need the count of receivers here, the actual insert of individual emails happens when the mailing starts
-                        $res        = eme_count_planned_mailing_receivers( $conditions );
-                        eme_mark_mailing_planned( $mailing_id, $res['total'] );
-                    }
-                } else {
-                    $res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                }
-                $mail_problems += $res['mail_problems'];
-                $not_sent[]     = $res['not_sent'];
-            } else {
-                $mail_access_problems = 1;
-            }
-        }
-
-        if ( ! $mail_problems ) {
-            if ( $queue ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
-            } else {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
-            }
-            $ajaxResult['Result'] = 'OK';
-        } else {
-            if ( $mail_access_problems ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Only emails for events you have the right to send emails for have been sent.', 'events-made-easy' ) . '</p></div>';
-            } else {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-                if ( ! empty( $not_sent ) ) {
-                    $ajaxResult['htmlmessage'] .= "<div class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . join( ', ', array_map( 'esc_html', $not_sent ) ) . '</p></div>';
-                }
-            }
-            $ajaxResult['Result'] = 'ERROR';
-        }
-        echo wp_json_encode( $ajaxResult ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() returns safe JSON
-        wp_die();
+    if ( ! $mail_problems ) {
+        $msg = $queue
+            ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
+            : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        return [ 'success' => true, 'message' => $msg ];
     }
-    wp_die();
+
+    if ( $mail_access_problems ) {
+        $msg = "<div id='message' class='error eme-message-admin'><p>" . __( 'Only emails for events you have the right to send emails for have been sent.', 'events-made-easy' ) . '</p></div>';
+    } else {
+        $msg = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        if ( ! empty( $not_sent ) ) {
+            $msg .= "<div class='error eme-message-admin'><p>" . __( 'Email to the following persons has not been sent:', 'events-made-easy' ) . ' ' . join( ', ', array_map( 'esc_html', $not_sent ) ) . '</p></div>';
+        }
+    }
+    return [ 'success' => false, 'message' => $msg ];
 }
 
 function eme_emails_page() {

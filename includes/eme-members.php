@@ -259,7 +259,7 @@ function eme_db_insert_membership( $membership ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
     if ( ! eme_is_serialized( $membership['properties'] ) ) {
-        $membership['properties'] = eme_serialize( $membership['properties'] );
+        $membership['properties'] = eme_json_encode_safe( $membership['properties'] );
     }
     $membership['modif_date'] = current_time( 'mysql', false );
     if ( ! $wpdb->insert( $table, $membership ) ) {
@@ -297,10 +297,10 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
     $member['modif_date']    = $member['creation_date'];
     $member['membership_id'] = $membership['membership_id'];
 
-    // eme_serialize if needed
-    $member['dcodes_entered'] = eme_serialize( $member['dcodes_entered'] );
-    $member['dcodes_used']    = eme_serialize( $member['dcodes_used'] );
-    $member['properties']     = eme_serialize( $member['properties'] );
+    // eme_json_encode_safe if needed
+    $member['dcodes_entered'] = eme_json_encode_safe( $member['dcodes_entered'] );
+    $member['dcodes_used']    = eme_json_encode_safe( $member['dcodes_used'] );
+    $member['properties']     = eme_json_encode_safe( $member['properties'] );
 
     // add the memberid if wanted
     if ( ! empty( $member_id ) ) {
@@ -345,10 +345,10 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
     // make sure we always have the correct membership id
     $member['membership_id'] = $membership['membership_id'];
 
-    // eme_serialize if needed
-    $member['dcodes_entered'] = eme_serialize( $member['dcodes_entered'] );
-    $member['dcodes_used']    = eme_serialize( $member['dcodes_used'] );
-    $member['properties']     = eme_serialize( $member['properties'] );
+    // eme_json_encode_safe if needed
+    $member['dcodes_entered'] = eme_json_encode_safe( $member['dcodes_entered'] );
+    $member['dcodes_used']    = eme_json_encode_safe( $member['dcodes_used'] );
+    $member['properties']     = eme_json_encode_safe( $member['properties'] );
 
     if ( ! empty( $member ) && $wpdb->update( $table, $member, $where ) === false ) {
         return false;
@@ -384,7 +384,7 @@ function eme_db_update_membership( $membership_id, $line ) {
     $new_line = array_merge( $membership, $keys );
 
     if ( ! eme_is_serialized( $new_line['properties'] ) ) {
-        $new_line['properties'] = eme_serialize( $new_line['properties'] );
+        $new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );
     }
 
     if ( ! empty( $new_line ) && $wpdb->update( $table, $new_line, $where ) === false ) {
@@ -467,7 +467,7 @@ function eme_get_memberships( $exclude_id = 0 ) {
     }
     $memberships = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $memberships as $key => $membership ) {
-        $membership['properties'] = eme_init_membership_props( eme_unserialize( $membership['properties'] ) );
+        $membership['properties'] = eme_init_membership_props( eme_json_decode_safe( $membership['properties'] ) );
         $memberships[ $key ]      = $membership;
     }
     return $memberships;
@@ -488,7 +488,7 @@ function eme_get_membership( $id ) {
     if ( $membership === false ) {
         $membership = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ( $membership ) {
-            $membership['properties'] = eme_init_membership_props( eme_unserialize( $membership['properties'] ) );
+            $membership['properties'] = eme_init_membership_props( eme_json_decode_safe( $membership['properties'] ) );
             wp_cache_set( "eme_membership $id", $membership, '', 15 );
         }
     }
@@ -707,16 +707,16 @@ function eme_get_member_by_personid_membershipid( $person_id, $membership_id ) {
 function eme_get_extra_member_data( $member ) {
     if ( ! empty( $member ) ) {
         if ( eme_is_serialized( $member['dcodes_used'] ) ) {
-            $member['dcodes_used'] = eme_unserialize( $member['dcodes_used'] );
+            $member['dcodes_used'] = eme_json_decode_safe( $member['dcodes_used'] );
         } else {
             $member['dcodes_used'] = [];
         }
         if ( eme_is_serialized( $member['dcodes_entered'] ) ) {
-            $member['dcodes_entered'] = eme_unserialize( $member['dcodes_entered'] );
+            $member['dcodes_entered'] = eme_json_decode_safe( $member['dcodes_entered'] );
         } else {
             $member['dcodes_entered'] = [];
         }
-        $member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
+        $member['properties'] = eme_init_member_props( eme_json_decode_safe( $member['properties'] ) );
     }
     return $member;
 }
@@ -4016,10 +4016,10 @@ function eme_member_recalculate_status( $member_id = 0 ) {
     }
     $rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $rows as $item ) {
-        $properties        = eme_init_membership_props( eme_unserialize( $item['properties'] ) );
+        $properties        = eme_init_membership_props( eme_json_decode_safe( $item['properties'] ) );
         $status_calculated = eme_member_calc_status( $item['start_date'], $item['end_date'], $item['duration_period'], $properties['grace_period'] );
         if ($properties['max_usage_count'] > 0 ) {
-            $memberprops = eme_unserialize( $item['memberprops'] );
+            $memberprops = eme_json_decode_safe( $item['memberprops'] );
             if ($memberprops['usage_count'] >= $properties['max_usage_count'] ) {
                 $status_calculated = EME_MEMBER_STATUS_EXPIRED;
             }
@@ -4346,7 +4346,7 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 
     // also set the usage_count propertie to 0
     $member['properties']['usage_count'] = 0;
-    $fields['properties'] = eme_serialize( $member['properties'] );
+    $fields['properties'] = eme_json_encode_safe( $member['properties'] );
 
     // now update
     $res = $wpdb->update( $table, $fields, $where );
@@ -4979,12 +4979,12 @@ function eme_access_meta_box_cb( $post ) {
     $access_denied_tpl      = ! empty( $custom_values['eme_access_denied'] ) ? intval( $custom_values['eme_access_denied'][0] ) : 0;
     $drip_counter           = ! empty( $custom_values['eme_drip_counter'] ) ? intval( $custom_values['eme_drip_counter'][0] ) : 0;
     if ( eme_is_serialized( $selected_membershipids ) ) {
-        $selected_membershipids_arr = eme_unserialize( $selected_membershipids );
+        $selected_membershipids_arr = eme_json_decode_safe( $selected_membershipids );
     } else {
         $selected_membershipids_arr = [ $selected_membershipids ];
     }
     if ( eme_is_serialized( $selected_groupids ) ) {
-        $selected_groupids_arr = eme_unserialize( $selected_groupids );
+        $selected_groupids_arr = eme_json_decode_safe( $selected_groupids );
     } else {
         $selected_groupids_arr = [ $selected_groupids ];
     }
@@ -5235,7 +5235,7 @@ function eme_get_member_placeholder_handler_definitions() {
             $replacement = '';
             if ( ! empty( $member['discountids'] ) ) {
                 if ( eme_is_serialized( $member['discountids'] ) ) {
-                    $applied_discounts = eme_unserialize( $member['discountids'] );
+                    $applied_discounts = eme_json_decode_safe( $member['discountids'] );
                     $applied_discountids = array_keys($applied_discounts);
                 } else {
                     $applied_discountids = explode( ',', $member['discountids'] );
@@ -6586,7 +6586,7 @@ function eme_ajax_memberships_list() {
         if ( empty( $item['name'] ) ) {
             $item['name'] = __( 'No name', 'events-made-easy' );
         }
-        $item['properties'] = eme_init_membership_props( eme_unserialize( $item['properties'] ) );
+        $item['properties'] = eme_init_membership_props( eme_json_decode_safe( $item['properties'] ) );
         $contact            = eme_get_contact( $item['properties']['contact_id'] );
         $contact_email      = $contact->user_email;
         $contact_name       = $contact->display_name;
@@ -6671,7 +6671,7 @@ function eme_ajax_members_list( ) {
         wp_die();
     }
 
-    $search_terms = eme_unserialize(eme_sanitize_request($_POST));
+    $search_terms = eme_json_decode_safe(eme_sanitize_request($_POST));
     $count_sql = eme_get_sql_members_searchfields( $search_terms, 1 );
     $sql       = eme_get_sql_members_searchfields( $search_terms);
 
@@ -6741,8 +6741,8 @@ function eme_ajax_members_list( ) {
         $record['membershipprice'] = eme_localized_price( $membership['properties']['price'], $membership['properties']['currency'] );
         $record['totalprice']      = eme_localized_price( eme_get_total_member_price( $item ), $membership['properties']['currency'] );
         $record['discount']        = eme_localized_price( $item['discount'], $membership['properties']['currency'] );
-        // dcodes_used is still eme_serialized here
-        $record['dcodes_used']   = eme_esc_html( eme_unserialize( $item['dcodes_used'] ) );
+        // dcodes_used is still eme_json_encode_safed here
+        $record['dcodes_used']   = eme_esc_html( eme_json_decode_safe( $item['dcodes_used'] ) );
         $record['renewal_count'] = intval( $item['renewal_count'] );
         $record['paid']          = ( $item['paid'] == 1 ) ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
         $record['payment_id']    = esc_html( $item['payment_id'] );
@@ -6862,7 +6862,7 @@ function eme_ajax_store_members_query() {
                 $search_terms[ $search_field ] = eme_sanitize_request( $_POST[ $search_field ] );
             }
         }
-        $group['search_terms'] = eme_serialize( $search_terms );
+        $group['search_terms'] = eme_json_encode_safe( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
             $fTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';

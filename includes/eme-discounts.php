@@ -555,7 +555,7 @@ function eme_booking_discount( $event, $booking ) {
     $applied_discountids = [];
 	if ( ! empty( $booking['discountids'] ) ) {
         if ( eme_is_serialized( $booking['discountids'] ) ) {
-            $applied_discounts = eme_unserialize( $booking['discountids'] );
+            $applied_discounts = eme_json_decode_safe( $booking['discountids'] );
             $applied_discountids = array_keys($applied_discounts);
         } else {
             $applied_discountids = explode( ',', $booking['discountids'] );
@@ -636,7 +636,7 @@ function eme_booking_discount( $event, $booking ) {
     if ($legacy_format) {
         $discountids = join( ',', array_unique( $applied_discountids ) );
     } else {
-        $discountids = eme_serialize( $applied_discounts );
+        $discountids = eme_json_encode_safe( $applied_discounts );
     }
 	return [
 		'discount'    => $total_discount,
@@ -654,7 +654,7 @@ function eme_member_discount( $membership, $member ) {
     $applied_discounts = [];
     if ( ! empty( $member['discountids'] ) ) {
         if ( eme_is_serialized( $member['discountids'] ) ) {
-            $applied_discounts = eme_unserialize( $member['discountids'] );
+            $applied_discounts = eme_json_decode_safe( $member['discountids'] );
             $applied_discountids = array_keys($applied_discounts);
         } else {
             $applied_discountids = explode( ',', $member['discountids'] );
@@ -734,7 +734,7 @@ function eme_member_discount( $membership, $member ) {
     if ($legacy_format) {
         $discountids = join( ',', array_unique( $applied_discountids ) );
     } else {
-        $discountids = eme_serialize( $applied_discounts );
+        $discountids = eme_json_encode_safe( $applied_discounts );
     }
 	return [
 		'discount'    => $total_discount,
@@ -760,13 +760,13 @@ function eme_check_booking_discount( $booking ) {
 	$where['booking_id']   = $booking['booking_id'];
 	$fields['discount']    = $calc_discount['discount'];
 	$fields['discountids'] = $calc_discount['discountids'];
-	$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
+	$fields['dcodes_used'] = eme_json_encode_safe( $calc_discount['dcodes_used'] );
 	$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount['discount'] != $booking['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
 		// so we also decrease the usage count of the discount ids
         if ( eme_is_serialized( $booking['discountids'] ) ) {
-            $applied_discounts = eme_unserialize( $booking['discountids'] );
+            $applied_discounts = eme_json_decode_safe( $booking['discountids'] );
             $applied_discountids = array_keys($applied_discounts);
         } else {
             $applied_discountids = explode( ',', $booking['discountids'] );
@@ -790,13 +790,13 @@ function eme_check_member_discount( $member ) {
 	$where['member_id']    = $member['member_id'];
 	$fields['discount']    = $calc_discount['discount'];
 	$fields['discountids'] = $calc_discount['discountids'];
-	$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
+	$fields['dcodes_used'] = eme_json_encode_safe( $calc_discount['dcodes_used'] );
 	$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount != $member['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
         // so we also decrease the usage count of the discount ids
         if ( eme_is_serialized( $member['discountids'] ) ) {
-            $applied_discounts = eme_unserialize( $member['discountids'] );
+            $applied_discounts = eme_json_decode_safe( $member['discountids'] );
             $applied_discountids = array_keys($applied_discounts);
         } else {
             $applied_discountids = explode( ',', $member['discountids'] );
@@ -1060,7 +1060,7 @@ function eme_get_discounts( $extra_search = '' ) {
 	}
 	$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name and pre-escaped search are safe variables
 	foreach ( $rows as $key => $discount ) {
-			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_json_decode_safe( $discount['properties'] ) );
 			$rows[ $key ]           = $discount;
 	}
 	return $rows;
@@ -1089,7 +1089,7 @@ function eme_db_insert_discount( $line ) {
 	}
 
 	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
-		$new_line['properties'] = eme_serialize( $new_line['properties'] );
+		$new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );
 	}
 
 	if ( $wpdb->insert( $table, $new_line ) === false ) {
@@ -1108,7 +1108,7 @@ function eme_db_update_discount( $id, $line ) {
     $keys     = array_intersect_key( $line, $discount );
     $new_line = array_merge( $discount, $keys );
 	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
-        $new_line['properties'] = eme_serialize( $new_line['properties'] );
+        $new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );
 	}
     $where = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
@@ -1268,7 +1268,7 @@ function eme_update_booking_discounts( $booking ) {
         return;
     }
     if ( eme_is_serialized( $booking['discountids'] ) ) {
-        $applied_discounts = eme_unserialize( $booking['discountids'] );
+        $applied_discounts = eme_json_decode_safe( $booking['discountids'] );
         $applied_discountids = array_keys($applied_discounts);
     } else {
         $applied_discountids = explode( ',', $booking['discountids'] );
@@ -1302,7 +1302,7 @@ function eme_update_member_discounts( $member ) {
         return;
     }
     if ( eme_is_serialized( $member['discountids'] ) ) {
-        $applied_discounts = eme_unserialize( $member['discountids'] );
+        $applied_discounts = eme_json_decode_safe( $member['discountids'] );
         $applied_discountids = array_keys($applied_discounts);
     } else {
         $applied_discountids = explode( ',', $member['discountids'] );
@@ -1361,7 +1361,7 @@ function eme_get_discount( $id ) {
 	$prepared_sql      = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( $discount ) {
-			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_json_decode_safe( $discount['properties'] ) );
 			return $discount;
 	} else {
 			return false;
@@ -1389,7 +1389,7 @@ function eme_get_discount_by_name( $name ) {
 	$prepared_sql      = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	$discount = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	if ( $discount ) {
-			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_json_decode_safe( $discount['properties'] ) );
 			return $discount;
 	} else {
 			return false;
@@ -1423,7 +1423,7 @@ function eme_get_person_used_discount_count( $person_id, $discount_id) {
     foreach ( $discountids_results as $discountids ) {
         if ( eme_is_serialized( $discountids ) ) {
             // Serialized format: unserialize and check keys
-            $applied_discounts = eme_unserialize( $discountids );
+            $applied_discounts = eme_json_decode_safe( $discountids );
             if ( is_array( $applied_discounts ) && array_key_exists( $discount_id, $applied_discounts ) ) {
                 $count++;
             }

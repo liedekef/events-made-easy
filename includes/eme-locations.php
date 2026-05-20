@@ -200,8 +200,8 @@ function eme_locations_page() {
             } else {
                 // validation failed, show why and return to the edit
                 $message                         = $validation_result;
-                $location['location_attributes'] = eme_unserialize( $location_attributes );
-                $location['location_properties'] = eme_unserialize( $location_properties );
+                $location['location_attributes'] = eme_json_decode_safe( $location_attributes );
+                $location['location_properties'] = eme_json_decode_safe( $location_properties );
                 eme_locations_edit_layout( $location, $message );
             }
         }
@@ -1248,10 +1248,10 @@ function eme_get_extra_location_data( $location ) {
             $location[ $key ] = '';
         }
     }
-    $location['location_attributes'] = eme_unserialize( $location['location_attributes'] );
+    $location['location_attributes'] = eme_json_decode_safe( $location['location_attributes'] );
     $location['location_attributes'] = ( ! is_array( $location['location_attributes'] ) ) ? [] : $location['location_attributes'];
 
-    $location['location_properties'] = eme_unserialize( $location['location_properties'] );
+    $location['location_properties'] = eme_json_decode_safe( $location['location_properties'] );
     $location['location_properties'] = ( ! is_array( $location['location_properties'] ) ) ? [] : $location['location_properties'];
     $location['location_properties'] = eme_init_location_props( $location['location_properties'] );
 
@@ -1414,8 +1414,8 @@ function eme_update_location( $line, $location_id ) {
     // we need to do this since this function is also called for csv import
     $keys                            = array_intersect_key( $line, $location );
     $new_line                        = array_merge( $location, $keys );
-    $new_line['location_attributes'] = eme_serialize( $new_line['location_attributes'] );
-    $new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
+    $new_line['location_attributes'] = eme_json_encode_safe( $new_line['location_attributes'] );
+    $new_line['location_properties'] = eme_json_encode_safe( $new_line['location_properties'] );
 
     $where = [ 'location_id' => $location_id ];
     if ( $wpdb->update( $table_name, $new_line, $where ) === false ) {
@@ -1448,8 +1448,8 @@ function eme_insert_location( $line, $force = 0 ) {
     if ( has_filter( 'eme_insert_location_filter' ) ) {
         $new_line = apply_filters( 'eme_insert_location_filter', $new_line );
     }
-    $new_line['location_attributes'] = eme_serialize( $new_line['location_attributes'] );
-    $new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
+    $new_line['location_attributes'] = eme_json_encode_safe( $new_line['location_attributes'] );
+    $new_line['location_properties'] = eme_json_encode_safe( $new_line['location_properties'] );
 
     if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) || $force ) {
         if ( ! $wpdb->insert( $table_name, $new_line ) ) {
@@ -2916,7 +2916,7 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
     );
 
     foreach ( $locations as $item ) {
-        $properties = eme_init_location_props(eme_unserialize($item['location_properties']));
+        $properties = eme_init_location_props(eme_json_decode_safe($item['location_properties']));
         $record                = [];
         $record['location_id'] = $item['location_id'];
         $record['name']        = esc_html( eme_translate( $item['location_name'] ) );

@@ -2221,7 +2221,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             }
             if ( ! empty( $booking['discountids'] ) ) {
                 $applied_discountids = eme_is_serialized( $booking['discountids'] )
-                    ? array_keys( eme_unserialize( $booking['discountids'] ) )
+                    ? array_keys( eme_json_decode_safe( $booking['discountids'] ) )
                     : explode( ',', $booking['discountids'] );
                 foreach ( $applied_discountids as $discount_id ) {
                     $discount     = eme_get_discount( $discount_id );
@@ -2569,7 +2569,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             }
             if ( ! empty( $member['discountids'] ) ) {
                 $applied_discountids = eme_is_serialized( $member['discountids'] )
-                    ? array_keys( eme_unserialize( $member['discountids'] ) )
+                    ? array_keys( eme_json_decode_safe( $member['discountids'] ) )
                     : explode( ',', $member['discountids'] );
                 foreach ( $applied_discountids as $discount_id ) {
                     $discount     = eme_get_discount( $discount_id );

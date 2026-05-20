@@ -4,45 +4,169 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+class EMEMailBatch {
+    private $mails = [];
+    private $count_only;
+    private $mailing_id;
+    private $add_listhdrs;
+    private $from_email, $from_name, $replyto_email, $replyto_name;
+    private $result = [ 'mail_problems' => 0, 'total' => 0, 'not_sent' => [] ];
+    private const BATCH_CHUNK_SIZE = 500;
+
+    public function __construct( $mailing_id, $add_listhdrs, $count_only ) {
+        $this->mailing_id = $mailing_id;
+        $this->add_listhdrs = $add_listhdrs;
+        $this->count_only = $count_only;
+    }
+
+    public function set_sender_info( $from_email, $from_name, $replyto_email, $replyto_name ) {
+        $this->from_email = $from_email;
+        $this->from_name = $from_name;
+        $this->replyto_email = $replyto_email;
+        $this->replyto_name = $replyto_name;
+    }
+
+    public function increase_count($receiver_email, $receiver_name='') {
+        if ( $this->count_only ) {
+            if ( eme_is_email( $receiver_email ) ) {
+                $this->result['total']++;
+            } else {
+                $this->result['mail_problems'] = 1;
+                $this->result['not_sent'][] = $receiver_name ?: $receiver_email;
+            }
+        }
+    }
+
+    public function add( $receiver_email, $receiver_name, $subject, $body, $person_id = 0, $member_id = 0, $attachments = [] ) {
+        if ( $this->count_only ) {
+            return $this->increase_count($receiver_email, $receiver_name);
+        }
+
+        // If not queueing, send immediately
+        if ( ! get_option( 'eme_queue_mails' ) ) {
+            $res = eme_queue_mail( $subject, $body, $this->from_email, $this->from_name,
+                $receiver_email, $receiver_name, $this->replyto_email, $this->replyto_name,
+                $this->mailing_id, $person_id, $member_id, $attachments, 1, $this->add_listhdrs );
+            if ( $res ) {
+                $this->result['total']++;
+            } else {
+                $this->result['mail_problems'] = 1;
+                $this->result['not_sent'][] = $receiver_name;
+            }
+            return;
+        }
+
+        // Queue mode: collect for batch insert
+        $this->mails[] = [
+            'subject'       => $subject,
+            'body'          => $body,
+            'fromemail'     => $this->from_email,
+            'fromname'      => $this->from_name,
+            'receiveremail' => $receiver_email,
+            'receivername'  => $receiver_name,
+            'replytoemail'  => $this->replyto_email,
+            'replytoname'   => $this->replyto_name,
+            'person_id'     => $person_id,
+            'member_id'     => $member_id,
+            'attachments'   => $attachments,
+        ];
+        // for total sent: we look at flush, which checks the batch insert result
+        // $this->result['total']++;
+    }
+
+    public function flush() {
+        if ( $this->count_only || empty( $this->mails ) ) {
+            return;
+        }
+        $total_inserted = 0;
+        $chunks = array_chunk( $this->mails, self::BATCH_CHUNK_SIZE );
+        foreach ( $chunks as $chunk ) {
+            $inserted = eme_batch_insert_mails( $chunk, $this->mailing_id, $this->add_listhdrs );
+            if ( $inserted === false ) {
+                // If a chunk fails, we stop and mark problems.
+                $this->result['mail_problems'] = 1;
+                break;
+            }
+            $total_inserted += $inserted;
+        }
+        $this->result['total'] += $total_inserted;
+        $this->mails = []; // free mem
+    }
+
+    public function get_result() {
+        $this->flush(); // ensure any remaining mails are inserted
+        return $this->result;
+    }
+
+    public function is_count_only() {
+        return $this->count_only;
+    }
+}
+
 function eme_set_wpmail_html_content_type() {
     return 'text/html';
 }
 
 // for backwards compat, the fromname and email are after the replyto and can be empty
+/**
+ * Main send mail function (backward compatible).
+ */
 function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts_arr = [], $custom_headers = [] ) {
-    $subject  = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
-    $res      = true;
-    $message  = '';
+    $subject = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
+    $res     = true;
+    $message = '';
     $debugtxt = '';
 
-    // nothing to send? Then act as if all is ok
+    // Nothing to send? Act as if all is ok
     if ( empty( $body ) || empty( $subject ) || empty( $receiveremail ) ) {
         return [ $res, $message ];
     }
 
+    // Normalise from/reply-to addresses (shared logic)
+    eme_normalize_sender_and_replyto( $fromemail, $fromname, $replytoemail, $replytoname );
+
+    // Build mail options array (with filter)
+    $mailoptions = eme_build_mail_options( $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname );
+
+    // Build attachments array from given IDs/paths
+    $attachment_paths_arr = eme_build_attachment_paths( $atts_arr );
+
+    // Sanitise body (remove iframes)
+    $body = eme_replaceiframe( $body );
+
+    // Choose sending method
+    if ( $mailoptions['mail_send_method'] === 'wp_mail' ) {
+        return eme_send_via_wpmail( $subject, $body, $mailoptions, $attachment_paths_arr, $custom_headers );
+    } else {
+        return eme_send_via_phpmailer( $subject, $body, $mailoptions, $attachment_paths_arr, $custom_headers );
+    }
+}
+
+/**
+ * Normalise sender and reply-to addresses (replaces repeated code).
+ */
+function eme_normalize_sender_and_replyto( &$fromemail, &$fromname, &$replytoemail, &$replytoname ) {
     if ( empty( $fromemail ) ) {
         $fromemail = $replytoemail;
         $fromname  = $replytoname;
     }
-    // if forced or fromemail is still empty
     if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-        // if the from and reply-to were identical, we will force the reply-to to be the same too
-        if ( $fromemail == $replytoemail ) {
-            $replytoemail = "";
-            $replytoname = "";
+        if ( $fromemail === $replytoemail ) {
+            $replytoemail = '';
+            $replytoname  = '';
         }
-        [$fromname, $fromemail] = eme_get_default_mailer_info();
+        [ $fromname, $fromemail ] = eme_get_default_mailer_info();
     }
-    // now the from should never be empty, so just check replyto again
     if ( empty( $replytoemail ) ) {
         $replytoemail = $fromemail;
+        $replytoname  = $fromname;
     }
-    if ( empty( $replytoname ) ) {
-        $replytoname = $fromname;
-    }
+}
 
-    // get all mail options, put them in an array and apply filter
-    // if you change this array, don't forget to update the doc
+/**
+ * Build the mail options array, apply filter, and set defaults.
+ */
+function eme_build_mail_options( $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname ) {
     $mailoptions = [
         'fromMail'         => $fromemail,
         'fromName'         => $fromname,
@@ -51,16 +175,16 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
         'replytoMail'      => $replytoemail,
         'replytoName'      => $replytoname,
         'bcc_addresses'    => get_option( 'eme_mail_bcc_address', '' ),
-        'mail_send_method' => get_option( 'eme_mail_send_method' ), // smtp, mail, sendmail, qmail, wp_mail
-        'send_html'        => get_option( 'eme_mail_send_html' ), // true or false
+        'mail_send_method' => get_option( 'eme_mail_send_method' ),
+        'send_html'        => get_option( 'eme_mail_send_html' ),
         'smtp_host'        => get_option( 'eme_smtp_host', 'localhost' ),
-        'smtp_encryption'  => get_option( 'eme_smtp_encryption' ), // none, tls or ssl
-        'smtp_verify_cert' => get_option( 'eme_smtp_verify_cert' ),  // true or false
-        'smtp_port'        => intval(get_option( 'eme_smtp_port', 25 )),
-        'smtp_auth'        => get_option( 'eme_smtp_auth' ), // 0 or 1, false or true
+        'smtp_encryption'  => get_option( 'eme_smtp_encryption' ),
+        'smtp_verify_cert' => get_option( 'eme_smtp_verify_cert' ),
+        'smtp_port'        => intval( get_option( 'eme_smtp_port', 25 ) ),
+        'smtp_auth'        => get_option( 'eme_smtp_auth' ),
         'smtp_username'    => get_option( 'eme_smtp_username', '' ),
         'smtp_password'    => get_option( 'eme_smtp_password', '' ),
-        'smtp_debug'       => get_option( 'eme_smtp_debug' ),  // true or false
+        'smtp_debug'       => get_option( 'eme_smtp_debug' ),
     ];
     $mailoptions = apply_filters( 'eme_filter_mail_options', $mailoptions );
 
@@ -70,268 +194,253 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
     if ( empty( $mailoptions['smtp_port'] ) ) {
         $mailoptions['smtp_port'] = 25;
     }
+    return $mailoptions;
+}
 
-    $bcc_addresses = preg_split( '/,|;/', $mailoptions['bcc_addresses'] );
-
-    // allow either an array of file paths or of attachment ids
+/**
+ * Convert attachment IDs or file paths to an array of name => path.
+ */
+function eme_build_attachment_paths( $atts_arr ) {
     $attachment_paths_arr = [];
     if ( ! is_array( $atts_arr ) ) {
         $atts_arr = [];
     }
     foreach ( $atts_arr as $attachment ) {
-        if ( ! empty( $attachment ) ) {
-            if ( is_numeric( $attachment ) ) {
-                $file_path = get_attached_file( $attachment );
-                if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
-                    $attach_name = eme_sanitize_attach_filename(basename($file_path));
-                    if (!empty($attach_name))
-                        $attachment_paths_arr[$attach_name] = $file_path;
+        if ( empty( $attachment ) ) {
+            continue;
+        }
+        if ( is_numeric( $attachment ) ) {
+            $file_path = get_attached_file( $attachment );
+            if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
+                $attach_name = eme_sanitize_attach_filename( basename( $file_path ) );
+                if ( ! empty( $attach_name ) ) {
+                    $attachment_paths_arr[ $attach_name ] = $file_path;
                 }
-            } elseif ( is_array( $attachment ) ) {
-                // an array: the first element is the desired attach name, the second the real path of the file to attach
-                if ( file_exists( $attachment[1] ) ) {
-                    if (eme_is_empty_string($attachment[0])) {
-                        // if no desired name, we base ourselves on the real path but remove some ugly parts
-                        $filename = pathinfo($attachment[1], PATHINFO_FILENAME);
-                        $extension = pathinfo($attachment[1], PATHINFO_EXTENSION);
-                        if (empty($extension))
-                            $extension = "none";
-                        // now remove parts of the file
-                        $filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
-                        $filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-                        $attach_name = eme_sanitize_attach_filename($filename.'.'.$extension);
-                        $attachment_paths_arr[$attach_name] = $attachment[1];
-                    } else {
-                        $filename = eme_sanitize_attach_filename($attachment[0]);
-                        $attachment_paths_arr[$filename] = $attachment[1];
+            }
+        } elseif ( is_array( $attachment ) ) {
+            if ( file_exists( $attachment[1] ) ) {
+                if ( eme_is_empty_string( $attachment[0] ) ) {
+                    $filename = pathinfo( $attachment[1], PATHINFO_FILENAME );
+                    $extension = pathinfo( $attachment[1], PATHINFO_EXTENSION );
+                    if ( empty( $extension ) ) {
+                        $extension = 'none';
                     }
-                }
-            } else {
-                // if it is not a numeric id, it is a file path (like for pdf tickets)
-                if ( file_exists( $attachment ) ) {
-                    $filename = pathinfo($attachment, PATHINFO_FILENAME);
-                    $extension = pathinfo($filename, PATHINFO_EXTENSION);
-                    if (empty($extension))
-                        $extension = "none";
-                    // now remove parts of the file
                     $filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
                     $filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-                    $attach_name = eme_sanitize_attach_filename($filename.'.'.$extension);
-                    $attachment_paths_arr[$attach_name] = $attachment;
+                    $attach_name = eme_sanitize_attach_filename( $filename . '.' . $extension );
+                    $attachment_paths_arr[ $attach_name ] = $attachment[1];
+                } else {
+                    $filename = eme_sanitize_attach_filename( $attachment[0] );
+                    $attachment_paths_arr[ $filename ] = $attachment[1];
                 }
+            }
+        } else {
+            if ( file_exists( $attachment ) ) {
+                $filename = pathinfo( $attachment, PATHINFO_FILENAME );
+                $extension = pathinfo( $attachment, PATHINFO_EXTENSION );
+                if ( empty( $extension ) ) {
+                    $extension = 'none';
+                }
+                $filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
+                $filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
+                $attach_name = eme_sanitize_attach_filename( $filename . '.' . $extension );
+                $attachment_paths_arr[ $attach_name ] = $attachment;
             }
         }
     }
+    return $attachment_paths_arr;
+}
 
-    if ( ! in_array( $mailoptions['mail_send_method'], [ 'smtp', 'mail', 'sendmail', 'qmail', 'wp_mail' ] ) ) {
-        $mailoptions['mail_send_method'] = 'wp_mail';
+/**
+ * Send email using wp_mail().
+ */
+function eme_send_via_wpmail( $subject, $body, $mailoptions, $attachment_paths_arr, $custom_headers ) {
+    $headers = [];
+    $headers[] = 'Auto-Submitted: auto-generated';
+    $headers[] = 'X-Auto-Response-Suppress: all';
+    $headers[] = 'From: ' . $mailoptions['fromName'] . ' <' . $mailoptions['fromMail'] . '>';
+    if ( ! empty( $mailoptions['replytoMail'] ) && eme_is_email( $mailoptions['replytoMail'] ) ) {
+        $headers[] = 'Reply-To: ' . $mailoptions['replytoName'] . ' <' . $mailoptions['replytoMail'] . '>';
+    }
+    if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
+        $bcc_addresses = preg_split( '/,|;/', $mailoptions['bcc_addresses'] );
+        foreach ( $bcc_addresses as $bcc_address ) {
+            if ( eme_is_email( $bcc_address ) ) {
+                $headers[] = 'Bcc: ' . trim( $bcc_address );
+            }
+        }
+    }
+    if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
+        foreach ( $custom_headers as $custom_header ) {
+            $headers[] = $custom_header;
+        }
     }
 
-    // body is not allowed to contain iframes
-    $body = eme_replaceiframe($body);
-
-    if ( $mailoptions['mail_send_method'] == 'wp_mail' ) {
-        // Set the correct mail headers (the first 2 are to try to avoid auto-repliers)
-        $headers[] = 'Auto-Submitted: auto-generated';
-        $headers[] = 'X-Auto-Response-Suppress: all';
-        $headers[] = 'From: '.$mailoptions['fromName'].' <'.$mailoptions['fromMail'].'>';
-        if ( !empty($mailoptions['replytoMail']) && eme_is_email($mailoptions['replytoMail'])) {
-            $headers[] = 'Reply-To: '.$mailoptions['replytoName'].' <'.$mailoptions['replytoMail'].'>';
-        }
-        if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
-            foreach ( $bcc_addresses as $bcc_address ) {
-                if (eme_is_email($bcc_address)) {
-                    $headers[] = 'Bcc: ' . trim( $bcc_address );
-                }
-            }
-        }
-        if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
-            foreach ( $custom_headers as $custom_header ) {
-                $headers[] = $custom_header;
-            }
-        }
-
-        // set the correct content type
-        if ( $mailoptions['send_html'] ) {
-            $body = eme_nl2br_save_html( $body );
-            // set the content-type header, wp-mail knows about this one
-            // it is cleaner than add_filter/remove_filter of wp_mail_content_type ...
-            $headers[] = 'Content-type: text/html';
-            //add_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
-        } else {
-            // use phpmailer to convert html
-            require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-            require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-            require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
-            $body = $mail->html2text( eme_replacelinks( $body ) );
-        }
-
-        // now send it
-        if ( ! empty( $mailoptions['toMail'] ) ) {
-            $res = wp_mail( $mailoptions['toMail'], $subject, $body, $headers, $attachment_paths_arr );
-            if ( ! $res ) {
-                $message = __( 'There were some problems while sending mail.', 'events-made-easy' );
-            }
-        } else {
-            $res     = false;
-            $message = __( 'Empty email', 'events-made-easy' );
-        }
-
-        // Reset content-type to avoid conflicts
-        //if ( $mailoptions['send_html'] ) {
-        //	remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
-        //}
+    if ( $mailoptions['send_html'] ) {
+        $body = eme_nl2br_save_html( $body );
+        $headers[] = 'Content-type: text/html';
     } else {
         require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
         require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
         require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
         $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $body = $mail->html2text( eme_replacelinks( $body ) );
+    }
 
-        $mail->ClearAllRecipients();
-        $mail->ClearAddresses();
-        $mail->ClearAttachments();
-        $mail->clearCustomHeaders();
-        $mail->clearReplyTos();
-        $mail->CharSet = 'utf-8';
-        // avoid the x-mailer header
-        $mail->XMailer = ' ';
-        // Set the correct mail headers (the first 2 are to try to avoid auto-repliers)
-        $mail->addCustomHeader('Auto-Submitted: auto-generated');
-        $mail->addCustomHeader('X-Auto-Response-Suppress: all');
-        // add custom headers
-        if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
-            foreach ( $custom_headers as $custom_header ) {
-                $mail->addCustomHeader( $custom_header );
-            }
-        }
-        //$mail->SetLanguage( 'en', __DIR__ . '/' );
+    if ( empty( $mailoptions['toMail'] ) ) {
+        return [ false, __( 'Empty email', 'events-made-easy' ), '' ];
+    }
 
-        if ( $mailoptions['mail_send_method'] == 'qmail' ) {
-            $mail->IsQmail();
-        } else {
-            $mail->Mailer = $mailoptions['mail_send_method'];
-        }
+    $res = wp_mail( $mailoptions['toMail'], $subject, $body, $headers, $attachment_paths_arr );
+    if ( ! $res ) {
+        $message = __( 'There were some problems while sending mail.', 'events-made-easy' );
+    } else {
+        $message = '';
+    }
+    return [ $res, $message, '' ];
+}
 
-        if ( $mailoptions['mail_send_method'] == 'smtp' ) {
-            // let us keep a normal smtp timeout ...
-            $mail->Timeout = 10;
-            $mail->Host    = $mailoptions['smtp_host'];
+/**
+ * Send email using PHPMailer directly (smtp, mail, sendmail, qmail).
+ */
+function eme_send_via_phpmailer( $subject, $body, $mailoptions, $attachment_paths_arr, $custom_headers ) {
+    require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+    require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+    require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
 
-            // we set optional encryption and port settings
-            // but if the Host contains ssl://, tls:// or port info, it will take precedence over these anyway
-            // so it is not bad at all :-)
-            if ( $mailoptions['smtp_encryption'] == 'tls' || $mailoptions['smtp_encryption'] == 'ssl' ) {
-                $mail->SMTPSecure = $mailoptions['smtp_encryption'];
-            } else {
-                // if we don't want encryption, let's disable autotls too, since that might be a problem
-                $mail->SMTPAutoTLS = false;
-            }
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->ClearAllRecipients();
+    $mail->ClearAddresses();
+    $mail->ClearAttachments();
+    $mail->clearCustomHeaders();
+    $mail->clearReplyTos();
+    $mail->CharSet = 'utf-8';
+    $mail->XMailer = ' ';
 
-            if ( ! $mailoptions['smtp_verify_cert'] ) {
-                // let's disable certificate verification, but only for reserved ranges
-                // weirdly the private range filter doesn't contain 127.0.0.0/8, so we use reserved
-                //    range which is still internal
-                $tmp_ip = $mail->Host;
-                // remove the possible ssl:// or tls://
-                $tmp_ip = preg_replace( '/.*?:\/\//', '', $tmp_ip );
-                // if the host setting is not an ip, resolve it and get the ip
-                if ( ! filter_var( $tmp_ip, FILTER_VALIDATE_IP ) ) {
-                    $lookup = dns_get_record( $tmp_ip );
-                    if ( $lookup ) {
-                        foreach ( $lookup as $res ) {
-                            if ( isset( $res['ip'] ) ) {
-                                $tmp_ip = $res['ip'];
-
-                            } elseif ( isset( $res['ipv6'] ) ) {
-                                $tmp_ip = $res['ipv6'];
-
-                            }
-                            // we're only interested in 1 result
-                            break;
-                        }
-                    }
-                }
-
-                $in_reserved_range = 0;
-                if ( filter_var( $tmp_ip, FILTER_VALIDATE_IP )
-                    && ! filter_var( $tmp_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE ) ) {
-                    // ip in the reserved range? then we still set it only if the ip is valid
-                    $in_reserved_range = 1;
-                }
-
-                // so now we disable cert verification as requested and allow self signed
-                // but only for ip's in the reserved range
-                if ( $in_reserved_range ) {
-                    $mail->SMTPOptions = [
-                        'ssl' => [
-                            'verify_peer'       => false,
-                            'verify_peer_name'  => false,
-                            'allow_self_signed' => true,
-                        ],
-                    ];
-                }
-            }
-
-            $mail->Port = intval( $mailoptions['smtp_port'] );
-
-            if ( $mailoptions['smtp_auth'] ) {
-                $mail->SMTPAuth = true;
-                $mail->Username = $mailoptions['smtp_username'];
-                $mail->Password = $mailoptions['smtp_password'];
-            }
-            if ( $mailoptions['smtp_debug'] ) {
-                $mail->SMTPDebug           = 2;
-                $mail->Debugoutput         = function( $str, $level ) use (&$debugtxt) {
-                    $debugtxt .= "$level: $str\n";
-                };
-            }
-        }
-        $mail->setFrom( $mailoptions['fromMail'], $mailoptions['fromName'] );
-        $altbody = $mail->html2text( eme_replacelinks( $body ) );
-        if ( $mailoptions['send_html'] ) {
-            $mail->isHTML( true );
-            // Convert all message body line breaks to CRLF, makes quoted-printable encoding work much better
-            $mail->AltBody = $mail->normalizeBreaks( $altbody );
-            $mail->Body    = $mail->normalizeBreaks( eme_nl2br_save_html( $body ) );
-        } else {
-            $mail->Body = $mail->normalizeBreaks( $altbody );
-        }
-        $mail->Subject = $subject;
-        if ( ! empty( $mailoptions['replytoMail'] ) && eme_is_email($mailoptions['replytoMail'] ) ) {
-            $mail->addReplyTo( $mailoptions['replytoMail'], $mailoptions['replytoName'] );
-        }
-        if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
-            foreach ( $bcc_addresses as $bcc_address ) {
-                if (eme_is_email($bcc_address)) {
-                    $mail->addBCC( trim( $bcc_address ) );
-                }
-            }
-        }
-
-        if ( ! empty( $attachment_paths_arr ) ) {
-            foreach ( $attachment_paths_arr as $filename => $att ) {
-                $filename = is_string( $filename ) ? $filename : '';
-                $mail->addAttachment( $att, $filename );
-            }
-        }
-
-        if ( ! empty( $mailoptions['toMail'] ) ) {
-            $mail->addAddress( $mailoptions['toMail'], $mailoptions['toName'] );
-            if ( ! $mail->send() ) {
-                $res     = false;
-                $message = $mail->ErrorInfo;
-            } else {
-                $res = true;
-            }
-        } else {
-            $res     = false;
-            $message = __( 'Empty email', 'events-made-easy' );
+    $mail->addCustomHeader( 'Auto-Submitted: auto-generated' );
+    $mail->addCustomHeader( 'X-Auto-Response-Suppress: all' );
+    if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
+        foreach ( $custom_headers as $custom_header ) {
+            $mail->addCustomHeader( $custom_header );
         }
     }
-    // remove the phpmailer url added for some errors
+
+    // Set mailer type
+    if ( $mailoptions['mail_send_method'] === 'qmail' ) {
+        $mail->IsQmail();
+    } else {
+        $mail->Mailer = $mailoptions['mail_send_method'];
+    }
+
+    // SMTP specific configuration
+    $debugtxt = '';
+    if ( $mailoptions['mail_send_method'] === 'smtp' ) {
+        eme_configure_phpmailer_smtp( $mail, $mailoptions );
+        if ( $mailoptions['smtp_debug'] ) {
+            $mail->SMTPDebug   = 2;
+            $mail->Debugoutput = function( $str, $level ) use ( &$debugtxt ) {
+                $debugtxt .= "$level: $str\n";
+            };
+        }
+    }
+
+    $mail->setFrom( $mailoptions['fromMail'], $mailoptions['fromName'] );
+    $altbody = $mail->html2text( eme_replacelinks( $body ) );
+
+    if ( $mailoptions['send_html'] ) {
+        $mail->isHTML( true );
+        $mail->AltBody = $mail->normalizeBreaks( $altbody );
+        $mail->Body    = $mail->normalizeBreaks( eme_nl2br_save_html( $body ) );
+    } else {
+        $mail->Body = $mail->normalizeBreaks( $altbody );
+    }
+
+    $mail->Subject = $subject;
+
+    if ( ! empty( $mailoptions['replytoMail'] ) && eme_is_email( $mailoptions['replytoMail'] ) ) {
+        $mail->addReplyTo( $mailoptions['replytoMail'], $mailoptions['replytoName'] );
+    }
+
+    if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
+        $bcc_addresses = preg_split( '/,|;/', $mailoptions['bcc_addresses'] );
+        foreach ( $bcc_addresses as $bcc_address ) {
+            if ( eme_is_email( $bcc_address ) ) {
+                $mail->addBCC( trim( $bcc_address ) );
+            }
+        }
+    }
+
+    foreach ( $attachment_paths_arr as $filename => $att ) {
+        $mail->addAttachment( $att, is_string( $filename ) ? $filename : '' );
+    }
+
+    if ( empty( $mailoptions['toMail'] ) ) {
+        return [ false, __( 'Empty email', 'events-made-easy' ), '' ];
+    }
+
+    $mail->addAddress( $mailoptions['toMail'], $mailoptions['toName'] );
+    if ( ! $mail->send() ) {
+        $message = $mail->ErrorInfo;
+        $res = false;
+    } else {
+        $res = true;
+        $message = '';
+    }
+
     $message = str_replace( 'https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting', '', $message );
     return [ $res, $message, $debugtxt ];
+}
+
+/**
+ * Configure PHPMailer for SMTP.
+ */
+function eme_configure_phpmailer_smtp( &$mail, $mailoptions ) {
+    $mail->Timeout = 10;
+    $mail->Host    = $mailoptions['smtp_host'];
+
+    if ( $mailoptions['smtp_encryption'] === 'tls' || $mailoptions['smtp_encryption'] === 'ssl' ) {
+        $mail->SMTPSecure = $mailoptions['smtp_encryption'];
+    } else {
+        $mail->SMTPAutoTLS = false;
+    }
+
+    if ( ! $mailoptions['smtp_verify_cert'] ) {
+        $tmp_ip = $mail->Host;
+        $tmp_ip = preg_replace( '/.*?:\/\//', '', $tmp_ip );
+        if ( ! filter_var( $tmp_ip, FILTER_VALIDATE_IP ) ) {
+            $lookup = dns_get_record( $tmp_ip );
+            if ( $lookup ) {
+                foreach ( $lookup as $res ) {
+                    if ( isset( $res['ip'] ) ) {
+                        $tmp_ip = $res['ip'];
+                    } elseif ( isset( $res['ipv6'] ) ) {
+                        $tmp_ip = $res['ipv6'];
+                    }
+                    break;
+                }
+            }
+        }
+        $in_reserved_range = 0;
+        if ( filter_var( $tmp_ip, FILTER_VALIDATE_IP ) && ! filter_var( $tmp_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE ) ) {
+            $in_reserved_range = 1;
+        }
+        if ( $in_reserved_range ) {
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true,
+                ],
+            ];
+        }
+    }
+
+    $mail->Port = intval( $mailoptions['smtp_port'] );
+    if ( $mailoptions['smtp_auth'] ) {
+        $mail->SMTPAuth = true;
+        $mail->Username = $mailoptions['smtp_username'];
+        $mail->Password = $mailoptions['smtp_password'];
+    }
 }
 
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
@@ -343,26 +452,8 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
     global $wpdb;
     $mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
-    if ( empty( $fromemail ) ) {
-        $fromemail = $replytoemail;
-        $fromname  = $replytoname;
-    }
-    // if forced or fromemail is still empty
-    if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-        // if the from and reply-to were identical, we will force the reply-to to be the same too
-        if ( $fromemail == $replytoemail ) {
-            $replytoemail = "";
-            $replytoname = "";
-        }
-        [$fromname, $fromemail] = eme_get_default_mailer_info();
-    }
-    // now the from should never be empty, so just check replyto again
-    if ( empty( $replytoemail ) ) {
-        $replytoemail = $fromemail;
-    }
-    if ( empty( $replytoname ) ) {
-        $replytoname = $fromname;
-    }
+    // Normalise sender and reply-to
+    eme_normalize_sender_and_replyto( $fromemail, $fromname, $replytoemail, $replytoname );
 
     $now           = current_time( 'mysql', false );
     $mailing       = [
@@ -377,7 +468,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
         'replytoname'    => mb_substr( $replytoname, 0, 255 ),
         'mail_text_html' => $mail_text_html,
         'creation_date'  => $now,
-        'conditions'     => eme_serialize( $conditions ),
+        'conditions'     => eme_json_encode_safe( $conditions ),
     ];
 
     // add userid if possible
@@ -471,26 +562,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
     // the next checks are normally not needed if part of a mailing: then this is already done
     // but when calling eme_queue_mail directly (the case for eme_db_insert_ongoing_mailing) it needs to be done
     // so we do it again here (identical as for eme_db_insert_mailing)
-    if ( empty( $fromemail ) ) {
-        $fromemail = $replytoemail;
-        $fromname  = $replytoname;
-    }
-    // if forced or fromemail is still empty
-    if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-        // if the from and reply-to were identical, we will force the reply-to to be the same too
-        if ( $fromemail == $replytoemail ) {
-            $replytoemail = "";
-            $replytoname = "";
-        }
-        [$fromname, $fromemail] = eme_get_default_mailer_info();
-    }
-    // now the from should never be empty, so just check replyto again
-    if ( empty( $replytoemail ) ) {
-        $replytoemail = $fromemail;
-    }
-    if ( empty( $replytoname ) ) {
-        $replytoname = $fromname;
-    }
+    eme_normalize_sender_and_replyto( $fromemail, $fromname, $replytoemail, $replytoname );
 
     if ( $add_listhdrs == -1) {
         if ( ! empty( $mailing_id ) && eme_mailing_requires_listhdrs( $mailing_id ) ) {
@@ -513,13 +585,14 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         'mailing_id'    => $mailing_id,
         'person_id'     => $person_id,
         'member_id'     => $member_id,
-        'attachments'   => eme_serialize( $atts_arr ),
+        'attachments'   => eme_json_encode_safe( $atts_arr ),
         'add_listhdrs'  => $add_listhdrs,
         'creation_date' => $now,
         'random_id'     => $random_id,
     ];
 
     // add userid if possible
+    $current_userid = get_current_user_id();
     if (!empty($current_userid)) {
         $mail['created_by'] = $current_userid;
     }
@@ -652,7 +725,7 @@ function eme_get_queued_count() {
         if (empty($mailing['stats'])) {
             $stats = eme_get_mailing_stats( $mailing['id'] );
         } else {
-            $stats = eme_unserialize( $mailing['stats'] );
+            $stats = eme_json_decode_safe( $mailing['stats'] );
         }
         $count += $stats['planned'];
     }
@@ -696,7 +769,7 @@ function eme_process_single_mail( $mail ) {
     }
     $body = $mail['body'];
     if (eme_is_serialized( $mail['attachments'] )) {
-        $atts_arr = eme_unserialize( $mail['attachments'] );
+        $atts_arr = eme_json_decode_safe( $mail['attachments'] );
     } else {
         $atts_arr = [];
     }
@@ -836,7 +909,7 @@ function eme_mark_mailing_planned( $mailing_id, $planned_count ) {
     ];
     $fields = [
 	    'status' => 'planned',
-	    'stats' => eme_serialize( $stats )
+	    'stats' => eme_json_encode_safe( $stats )
     ];
     $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
@@ -864,7 +937,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
     ];
     $fields = [
 	    'status' => 'completed',
-	    'stats' => eme_serialize( $stats )
+	    'stats' => eme_json_encode_safe( $stats )
     ];
     $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
@@ -890,10 +963,10 @@ function eme_archive_mailing( $mailing_id ) {
 		'status' => 'archived',
 	];
     } else {
-        $stats = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
+        $stats = eme_json_encode_safe( eme_get_mailing_stats( $mailing_id ) );
 	$fields = [
 		'status' => 'archived',
-		'stats' => eme_serialize( $stats )
+		'stats' => eme_json_encode_safe( $stats )
 	];
     }
     $where = [
@@ -970,7 +1043,7 @@ function eme_cancel_mailing( $mailing_id ) {
     ];
     $fields = ['status' => EME_MAIL_STATUS_CANCELLED ];
     $wpdb->update( $queue_table, $fields, $where );
-    $stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
+    $stats          = eme_json_encode_safe( eme_get_mailing_stats( $mailing_id ) );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $where = [
 	    'id' => $mailing_id,
@@ -986,7 +1059,7 @@ function eme_cancel_mailing( $mailing_id ) {
 function eme_resend_mail( $id ) {
     $mail = eme_get_mail( $id );
     if (!empty($mail)) {
-        eme_queue_mail( $mail['subject'], $mail['body'], $mail['fromemail'], $mail['fromname'], $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['mailing_id'], $mail['person_id'], $mail['member_id'], eme_unserialize($mail['attachments']), add_listhdrs: $mail['add_listhdrs'] );
+        eme_queue_mail( $mail['subject'], $mail['body'], $mail['fromemail'], $mail['fromname'], $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['mailing_id'], $mail['person_id'], $mail['member_id'], eme_json_decode_safe($mail['attachments']), add_listhdrs: $mail['add_listhdrs'] );
     }
 }
 
@@ -1193,7 +1266,7 @@ function eme_check_mailing_receivers( $mailing_id ) {
     if ( ! $mailing || empty( $mailing['conditions'] ) ) {
         return;
     }
-    $conditions = eme_unserialize( $mailing['conditions'] );
+    $conditions = eme_json_decode_safe( $mailing['conditions'] );
     eme_update_mailing_receivers( $mailing['subject'], $mailing['body'], $mailing['fromemail'], $mailing['fromname'], $mailing['replytoemail'], $mailing['replytoname'], $mailing['mail_text_html'], $conditions, $mailing_id );
 }
 
@@ -1202,323 +1275,359 @@ function eme_count_planned_mailing_receivers( $conditions ) {
 }
 
 function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $from_email = '', $from_name = '', $replyto_email = '', $replyto_name = '', $mail_text_html = 'html', $conditions = [], $mailing_id = 0, $count_only = 0 ) {
-    $res = [
-        'mail_problems' => 0,
-        'total'		=> 0,
-        'not_sent'      => ''
-    ];
-    if (!$count_only) {
+    // Prepare common data
+    if ( ! $count_only ) {
         $mail_subject = eme_replace_generic_placeholders( $mail_subject );
         $mail_message = eme_replace_generic_placeholders( $mail_message );
     }
-    $not_sent             = [];
-    $emails_handled       = [];
-    if ( isset( $conditions['ignore_massmail_setting'] ) && $conditions['ignore_massmail_setting'] == 1 ) {
-        $ignore_massmail_setting = 1;
-    } else {
-        $ignore_massmail_setting = 0;
-    }
-
-    $attachment_ids      = '';
-    $person_ids          = [];
-    $member_ids          = [];
-    $cond_person_ids_arr = [];
-    $cond_member_ids_arr = [];
-    $atts_arr            = [];
-    $add_listhdrs        = eme_add_listhdrs( $conditions );
-
+    
+    $ignore_massmail = ! empty( $conditions['ignore_massmail_setting'] ) ? 1 : 0;
+    $add_listhdrs = eme_add_listhdrs( $conditions ) ? 1 : 0;
+    $atts_arr = eme_extract_attachments_from_conditions( $conditions );
+    
+    $batch = new EMEMailBatch( $mailing_id, $add_listhdrs, $count_only );
+    $batch->set_sender_info( $from_email, $from_name, $replyto_email, $replyto_name );
+    
+    // Dispatch to action handler (count_only handled via $batch)
     if ( $conditions['action'] == 'genericmail' ) {
-        if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
-            $attachment_ids = $conditions['eme_generic_attach_ids'];
-            if ( ! empty( $attachment_ids ) ) {
-                $atts_arr = explode( ',', $attachment_ids );
-            }
-        }
-
-        if ( isset( $conditions['eme_send_all_people'] ) ) {
-            // although we check later on the massmail preference per person too, we optimize the sql load a bit
-            if ( $ignore_massmail_setting ) {
-                $person_ids = eme_get_allmail_person_ids();
-            } else {
-                $person_ids = eme_get_massmail_person_ids();
-            }
-        } else {
-            if ( ! empty( $conditions['eme_genericmail_send_persons'] ) ) {
-                $cond_person_ids_arr = explode( ',', $conditions['eme_genericmail_send_persons'] );
-                $person_ids          = $cond_person_ids_arr;
-            }
-            if ( ! empty( $conditions['eme_send_members'] ) ) {
-                $cond_member_ids_arr = explode( ',', $conditions['eme_send_members'] );
-                $member_ids          = $cond_member_ids_arr;
-            }
-            if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {
-                $person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_genericmail_send_peoplegroups'] ) ) );
-            }
-            if ( ! empty( $conditions['eme_genericmail_send_membergroups'] ) ) {
-                $member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_genericmail_send_membergroups'] ) ) );
-            }
-            if ( ! empty( $conditions['eme_send_memberships'] ) ) {
-                $member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_send_memberships'] ) ) );
-            }
-        }
-        foreach ( $member_ids as $member_id ) {
-            $member = eme_get_member( $member_id );
-            $person = eme_get_person( $member['person_id'] );
-            // if corresponding person has no massmail preference, then skip him unless the name was speficially defined as standalone member to mail to
-            if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
-                continue;
-            }
-            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-            // we will NOT ignore double emails for member-related emails
-            // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
-            // but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
-            // Once I hit execution timeouts I'll rethink it again
-            if ($count_only) {
-                $mail_res    = eme_is_email($person['email']);
-            } else {
-                $membership  = eme_get_membership( $member['membership_id'] );
-                $tmp_subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
-                $tmp_message = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
-                $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr, add_listhdrs: $add_listhdrs );
-            }
-            if ( ! $mail_res ) {
-                $res['mail_problems'] = 1;
-                $not_sent[]           = $person_name;
-            } else {
-                $emails_handled[] = $person['email'];
-            }
-        }
-        foreach ( $person_ids as $person_id ) {
-            $person = eme_get_person( $person_id );
-            // if person has no massmail preference, then skip him unless the name was speficially defined as standalone person to mail to
-            if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $person_id, $cond_person_ids_arr ) ) {
-                continue;
-            }
-            $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-            // we will ignore double emails
-            if ( ! in_array( $person['email'], $emails_handled ) ) {
-                if ($count_only) {
-                    $mail_res    = eme_is_email($person['email']);
-                } else {
-                    $tmp_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
-                    $tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-                    $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
-                }
-                if ( ! $mail_res ) {
-                    $res['mail_problems'] = 1;
-                    $not_sent[]           = $person_name;
-                } else {
-                    $emails_handled[] = $person['email'];
-                }
-            }
-        }
+        eme_process_generic_mail_recipients( $mail_subject, $mail_message, $mail_text_html, $conditions, $ignore_massmail, $atts_arr, $batch );
     } elseif ( $conditions['action'] == 'eventmail' ) {
-        if ( ! isset( $conditions['rsvp_status'] ) ) {
-            $conditions['rsvp_status'] = 0;
-        }
-        if ( ! empty( $conditions['pending_approved'] ) ) {
-            if ( $conditions['pending_approved'] == 1 ) {
-                $conditions['rsvp_status'] == EME_RSVP_STATUS_PENDING;
-            }
-            if ( $conditions['pending_approved'] == 2 ) {
-                $conditions['rsvp_status'] == EME_RSVP_STATUS_APPROVED;
-            }
-        }
-        if ( ! isset( $conditions['only_unpaid'] ) ) {
-            $conditions['only_unpaid'] = 0;
-        }
-        if ( ! isset( $conditions['exclude_registered'] ) ) {
-            $conditions['exclude_registered'] = 0;
-        }
-        if ( isset( $conditions['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_eventmail_attach_ids'] ) ) {
-            $attachment_ids = $conditions['eme_eventmail_attach_ids'];
-            if ( ! empty( $attachment_ids ) ) {
-                $atts_arr = explode( ',', $attachment_ids );
-            }
-        }
+        eme_process_event_mail_recipients( $mail_subject, $mail_message, $mail_text_html, $conditions, $ignore_massmail, $atts_arr, $batch );
+    }
+    
+    // Finalise and return result
+    $result = $batch->get_result();
+    $result['not_sent'] = join( ', ', array_unique( $result['not_sent'] ) );
+    return $result;
+}
 
-        // conditions event_id can be multiple ids
-        $event_ids = explode( ',', $conditions['event_id'] );
-        foreach ($event_ids as $event_id) {
-            $event = eme_get_event( $event_id );
-            if ( empty( $event ) ) {
-                $res['mail_problems'] = 1;
-            } elseif ( $conditions['eme_mail_type'] == 'attendees' ) {
-                $attendee_ids = eme_get_attendee_ids( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
-                foreach ( $attendee_ids as $attendee_id ) {
-                    $attendee    = eme_get_person( $attendee_id );
-                    if ($count_only) {
-                        $mail_res    = eme_is_email($attendee['email']);
-                    } else {
-                        $tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
-                        $tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
-                        $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'], $attendee['email'] );
-                        $person_id   = $attendee['person_id'];
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
-                    }
-                    if ( ! $mail_res ) {
-                        $res['mail_problems'] = 1;
-                        $not_sent[]           = $person_name;
-                    } else {
-                        $emails_handled[] = $attendee['email'];
-                    }
-                }
-            } elseif ( $conditions['eme_mail_type'] == 'bookings' ) {
-                $bookings = eme_get_bookings_for( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
-                foreach ( $bookings as $booking ) {
-                    // we use the language done in the booking for the emails, not the attendee lang in this case
-                    $attendee = eme_get_person( $booking['person_id'] );
-                    if ( $attendee && is_array( $attendee ) ) {
-                        if ($count_only) {
-                            $mail_res    = eme_is_email($attendee['email']);
-                        } else {
-                            $tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
-                            $tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
-                            $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'], $attendee['email'] );
-                            $person_id   = $attendee['person_id'];
-                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
-                        }
-                        if ( ! $mail_res ) {
-                            $res['mail_problems'] = 1;
-                            $not_sent[]           = $person_name;
-                        } else {
-                            $emails_handled[] = $attendee['email'];
-                        }
-                    }
-                }
-            } elseif ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'people_and_groups' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-                if ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-                    // although we check later on the massmail preference per person too, we optimize the sql load a bit
-                    if ( $ignore_massmail_setting ) {
-                        $person_ids = eme_get_allmail_person_ids();
-                    } else {
-                        $person_ids = eme_get_massmail_person_ids();
-                    }
-                } elseif ( $conditions['eme_mail_type'] == 'people_and_groups' ) {
-                    if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
-                        $person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
-                    }
-                    if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {
-                        $person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_eventmail_send_groups'] ) ) );
-                    }
-                    if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
-                        $cond_member_ids_arr = explode( ',', $conditions['eme_eventmail_send_members'] );
-                        $member_ids          = $cond_member_ids_arr;
-                    }
-                    if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
-                        $member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
-                    }
-                    if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
-                        $member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
-                    }
-                }
-                if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-                    $registered_ids = eme_get_attendee_ids( $event_id );
-                } else {
-                    $registered_ids = [];
-                }
-                foreach ( $member_ids as $member_id ) {
-                    $member = eme_get_member( $member_id );
-                    if ( in_array( $member['person_id'], $registered_ids ) ) {
-                        continue;
-                    }
-                    $person = eme_get_person( $member['person_id'] );
-                    // if corresponding person has no massmail preference, then skip him unless the name was speficially defined as standalone member to mail to
-                    if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
-                        continue;
-                    }
-                    $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+function eme_extract_attachments_from_conditions( $conditions ) {
+    $atts_arr = [];
+    if ( $conditions['action'] == 'genericmail' && ! empty( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
+        $atts_arr = explode( ',', $conditions['eme_generic_attach_ids'] );
+    } elseif ( $conditions['action'] == 'eventmail' && ! empty( $conditions['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_eventmail_attach_ids'] ) ) {
+        $atts_arr = explode( ',', $conditions['eme_eventmail_attach_ids'] );
+    }
+    return $atts_arr;
+}
 
-                    // we will NOT ignore double emails for member-related emails
-                    // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
-                    // but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
-                    // Once I hit execution timeouts I'll rethink it again
-                    if ($count_only) {
-                        $mail_res    = eme_is_email($person['email']);
-                    } else {
-                        $tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-                        $tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-                        $tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-                        $membership  = eme_get_membership( $member['membership_id'] );
-                        $tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
-                        $tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr, add_listhdrs: $add_listhdrs );
-                    }
+function eme_process_generic_mail_recipients( $mail_subject, $mail_message, $mail_text_html, $conditions, $ignore_massmail, $atts_arr, EMEMailBatch $batch ) {
+    $person_ids = [];
+    $member_ids = [];
+    $cond_person_ids = [];
+    $cond_member_ids = [];
 
-                    if ( ! $mail_res ) {
-                        $res['mail_problems'] = 1;
-                        $not_sent[]           = $person_name;
-                    } else {
-                        $emails_handled[] = $person['email'];
-                    }
-                }
-                foreach ( $person_ids as $person_id ) {
-                    if ( in_array( $person_id, $registered_ids ) ) {
-                        continue;
-                    }
-                    $person = eme_get_person( $person_id );
-                    // we will ignore double emails
-                    if ( ! in_array( $person['email'], $emails_handled ) ) {
-                        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-                        if ( ! $ignore_massmail_setting && ! $person['massmail'] ) {
-                            continue;
-                        }
-                        if ($count_only) {
-                            $mail_res    = eme_is_email($person['email']);
-                        } else {
-                            $tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-                            $tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-                            $tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-                            $tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
-                            $tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
-                            $person_id   = $person['person_id'];
-                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
-                        }
-                        if ( ! $mail_res ) {
-                            $res['mail_problems'] = 1;
-                            $not_sent[]           = $person_name;
-                        } else {
-                            $emails_handled[] = $person['email'];
-                        }
-                    }
-                }
-            } elseif ( $conditions['eme_mail_type'] == 'all_wp' || $conditions['eme_mail_type'] == 'all_wp_not_registered' ) {
-                $wp_users = get_users();
-                if ( $conditions['eme_mail_type'] == 'all_wp_not_registered' || $conditions['exclude_registered'] ) {
-                    $attendee_wp_ids = eme_get_wp_ids_for( $event_id );
-                } else {
-                    $attendee_wp_ids = [];
-                }
-                $lang = eme_detect_lang();
-                foreach ( $wp_users as $wp_user ) {
-                    if ( in_array( $wp_user->user_email, $emails_handled ) ) {
-                        continue;
-                    }
-                    if ( in_array( $wp_user->ID, $attendee_wp_ids ) ) {
-                        continue;
-                    }
-                    if ($count_only) {
-                        // wp email is always considered valid, but let's keep the code identical
-                        $mail_res    = eme_is_email($wp_user->user_email);
-                    } else {
-                        $tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
-                        $tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
-                        $tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $atts_arr, add_listhdrs: $add_listhdrs );
-                    }
-                    if ( ! $mail_res ) {
-                        $res['mail_problems'] = 1;
-                        $not_sent[]           = $wp_user->display_name;
-                    } else {
-                        $emails_handled[] = $wp_user->user_email;
-                    }
-                }
-            }
+    if ( isset( $conditions['eme_send_all_people'] ) ) {
+        $person_ids = $ignore_massmail ? eme_get_allmail_person_ids() : eme_get_massmail_person_ids();
+    } else {
+        if ( ! empty( $conditions['eme_genericmail_send_persons'] ) ) {
+            $cond_person_ids = explode( ',', $conditions['eme_genericmail_send_persons'] );
+            $person_ids = $cond_person_ids;
+        }
+        if ( ! empty( $conditions['eme_send_members'] ) ) {
+            $cond_member_ids = explode( ',', $conditions['eme_send_members'] );
+            $member_ids = $cond_member_ids;
+        }
+        if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {
+            $person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_genericmail_send_peoplegroups'] ) ) );
+        }
+        if ( ! empty( $conditions['eme_genericmail_send_membergroups'] ) ) {
+            $member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_genericmail_send_membergroups'] ) ) );
+        }
+        if ( ! empty( $conditions['eme_send_memberships'] ) ) {
+            $member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_send_memberships'] ) ) );
         }
     }
-    $res['not_sent'] = join( ', ', $not_sent );
-    $res['total'] = count($emails_handled);
-    return $res;
+
+    // Process members
+    $handled_emails = [];
+    foreach ( $member_ids as $member_id ) {
+        $member = eme_get_member( $member_id );
+        $person = eme_get_person( $member['person_id'] );
+        if ( ! $ignore_massmail && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids ) ) {
+            continue;
+        }
+        $handled_emails[] = $person['email'];
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            $membership = eme_get_membership( $member['membership_id'] );
+            $subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
+            $body = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, 0, $member_id, $atts_arr );
+        }
+    }
+
+    // Process people
+    foreach ( $person_ids as $person_id ) {
+        $person = eme_get_person( $person_id );
+        if ( ! $ignore_massmail && ! $person['massmail'] && ! in_array( $person_id, $cond_person_ids ) ) {
+            continue;
+        }
+        if ( in_array( $person['email'], $handled_emails ) ) {
+            continue;
+        }
+        $handled_emails[] = $person['email'];
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            $subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
+            $body = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, $person_id, 0, $atts_arr );
+        }
+    }
+}
+
+function eme_process_event_mail_recipients( $mail_subject, $mail_message, $mail_text_html, $conditions, $ignore_massmail, $atts_arr, EMEMailBatch $batch ) {
+    // Set defaults
+    $rsvp_status = $conditions['rsvp_status'] ?? 0;
+    $only_unpaid = $conditions['only_unpaid'] ?? 0;
+    $exclude_registered = $conditions['exclude_registered'] ?? 0;
+
+    if ( ! empty( $conditions['pending_approved'] ) ) {
+        if ( $conditions['pending_approved'] == 1 ) $rsvp_status = EME_RSVP_STATUS_PENDING;
+        if ( $conditions['pending_approved'] == 2 ) $rsvp_status = EME_RSVP_STATUS_APPROVED;
+    }
+
+    $event_ids = explode( ',', $conditions['event_id'] );
+    foreach ( $event_ids as $event_id ) {
+        $event = eme_get_event( $event_id );
+        if ( empty( $event ) ) continue;
+
+        switch ( $conditions['eme_mail_type'] ) {
+            case 'attendees':
+                eme_process_event_attendees( $event, $rsvp_status, $only_unpaid, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                break;
+            case 'bookings':
+                eme_process_event_bookings( $event, $rsvp_status, $only_unpaid, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                break;
+            case 'all_people':
+            case 'all_people_not_registered':
+            case 'people_and_groups':
+                eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                break;
+            case 'all_wp':
+            case 'all_wp_not_registered':
+                eme_process_event_wp_users( $event, $conditions, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                break;
+        }
+    }
+}
+
+function eme_process_event_attendees( $event, $rsvp_status, $only_unpaid, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+    $attendee_ids = eme_get_attendee_ids( $event['event_id'], $rsvp_status, $only_unpaid );
+    foreach ( $attendee_ids as $attendee_id ) {
+        $person = eme_get_person( $attendee_id );
+        if ( ! $person ) {
+            continue;
+        }
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            $subject = eme_replace_attendees_placeholders( $mail_subject, $event, $person, 'text' );
+            $body = eme_replace_attendees_placeholders( $mail_message, $event, $person, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, $person['person_id'], 0, $atts_arr );
+        }
+    }
+}
+
+/**
+ * Process bookings of an event and add them to the mail batch.
+ */
+function eme_process_event_bookings( $event, $rsvp_status, $only_unpaid, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+    $bookings = eme_get_bookings_for( $event['event_id'], $rsvp_status, $only_unpaid );
+    foreach ( $bookings as $booking ) {
+        $person = eme_get_person( $booking['person_id'] );
+        if ( ! $person ) {
+            continue;
+        }
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            $subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
+            $body = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, $person['person_id'], 0, $atts_arr );
+        }
+    }
+}
+
+/**
+ * Process people, groups, and members for an event and add them to the mail batch.
+ */
+function eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+    $event_id = $event['event_id'];
+    $mail_type = $conditions['eme_mail_type'];
+
+    // Determine which person and member IDs to use
+    $person_ids = [];
+    $member_ids = [];
+    $cond_member_ids = [];
+
+    if ( $mail_type == 'all_people' || $mail_type == 'all_people_not_registered' ) {
+        $person_ids = $ignore_massmail ? eme_get_allmail_person_ids() : eme_get_massmail_person_ids();
+    } elseif ( $mail_type == 'people_and_groups' ) {
+        if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
+            $person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
+        }
+        if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {
+            $person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_eventmail_send_groups'] ) ) );
+        }
+        if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
+            $member_ids = explode( ',', $conditions['eme_eventmail_send_members'] );
+            $cond_member_ids = $member_ids;
+        }
+        if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
+            $member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
+        }
+        if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
+            $member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
+        }
+    }
+
+    // Get registered person IDs if we need to exclude them
+    $registered_ids = ( $exclude_registered || $mail_type == 'all_people_not_registered' ) ? eme_get_attendee_ids( $event_id ) : [];
+
+    $handled_emails = [];
+
+    // Process members
+    foreach ( $member_ids as $member_id ) {
+        $member = eme_get_member( $member_id );
+        if ( ! $member ) continue;
+        if ( in_array( $member['person_id'], $registered_ids ) ) continue;
+
+        $person = eme_get_person( $member['person_id'] );
+        if ( ! $person ) continue;
+        if ( ! $ignore_massmail && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids ) ) continue;
+
+        $handled_emails[] = $person['email'];
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            // Replace event and member placeholders
+            $subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+            $body = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+            $body = eme_replace_email_event_placeholders( $body, $person['email'], $person['lastname'], $person['firstname'], $event );
+
+            $membership = eme_get_membership( $member['membership_id'] );
+            $subject = eme_replace_member_placeholders( $subject, $membership, $member, 'text' );
+            $body = eme_replace_member_placeholders( $body, $membership, $member, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, 0, $member_id, $atts_arr );
+        }
+    }
+
+    // Process people
+    foreach ( $person_ids as $person_id ) {
+        if ( in_array( $person_id, $registered_ids ) ) continue;
+        $person = eme_get_person( $person_id );
+        if ( ! $person ) continue;
+        if ( ! $ignore_massmail && ! $person['massmail'] ) continue;
+        if ( in_array( $person['email'], $handled_emails ) ) continue;
+
+        $handled_emails[] = $person['email'];
+        $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($person['email'], $person_name);
+            continue;
+        } else {
+            $subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+            $body = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+            $body = eme_replace_email_event_placeholders( $body, $person['email'], $person['lastname'], $person['firstname'], $event );
+
+            $subject = eme_replace_people_placeholders( $subject, $person, 'text' );
+            $body = eme_replace_people_placeholders( $body, $person, $mail_text_html );
+            $batch->add( $person['email'], $person_name, $subject, $body, $person_id, 0, $atts_arr );
+        }
+    }
+}
+
+/**
+ * Process WordPress users for an event and add them to the mail batch.
+ */
+function eme_process_event_wp_users( $event, $conditions, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+    $mail_type = $conditions['eme_mail_type'];
+    $wp_users = get_users();
+    $attendee_wp_ids = ( $mail_type == 'all_wp_not_registered' || $exclude_registered ) ? eme_get_wp_ids_for( $event['event_id'] ) : [];
+    $lang = eme_detect_lang();
+    $handled_emails = [];
+
+    foreach ( $wp_users as $wp_user ) {
+        if ( in_array( $wp_user->user_email, $handled_emails ) ) continue;
+        if ( in_array( $wp_user->ID, $attendee_wp_ids ) ) continue;
+
+        $handled_emails[] = $wp_user->user_email;
+        if ($batch->is_count_only()) { // no replacements needed for count_only
+            $batch->increase_count($wp_user->user_email, $wp_user->display_name);
+            continue;
+        } else {
+            $subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
+            $body = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
+            $body = eme_replace_email_event_placeholders( $body, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
+            $batch->add( $wp_user->user_email, $wp_user->display_name, $subject, $body, 0, 0, $atts_arr );
+        }
+    }
+}
+
+/**
+ * Batch insert multiple emails into the queue table.
+ *
+ * @param array $mails_data Array of rows, each row is an associative array with keys:
+ *   'subject', 'body', 'fromemail', 'fromname', 'receiveremail', 'receivername',
+ *   'replytoemail', 'replytoname', 'person_id', 'member_id', 'attachments'
+ * @param int   $mailing_id
+ * @param int   $add_listhdrs
+ * @return int|false Number of rows inserted, or false on error.
+ */
+function eme_batch_insert_mails( $mails_data, $mailing_id, $add_listhdrs = 0 ) {
+    global $wpdb;
+    if ( empty( $mails_data ) ) {
+        return 0;
+    }
+
+    $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $now = current_time( 'mysql', false );
+    $current_user_id = get_current_user_id();
+    $values = [];
+
+    foreach ( $mails_data as $mail ) {
+        $values[] = $wpdb->prepare(
+            "(%d, %d, %d, %d, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d)",
+            $mailing_id,
+            intval( $mail['person_id'] ),
+            intval( $mail['member_id'] ),
+            EME_MAIL_STATUS_PLANNED,          // status
+            $now,                              // creation_date
+            $current_user_id ?: 0,             // created_by (0 if none)
+            $mail['fromemail'],
+            mb_substr( $mail['fromname'], 0, 255 ),
+            $mail['receiveremail'],
+            mb_substr( $mail['receivername'], 0, 255 ),
+            $mail['replytoemail'],
+            mb_substr( $mail['replytoname'], 0, 255 ),
+            mb_substr( $mail['subject'], 0, 255 ),
+            $mail['body'],
+            eme_random_id(),                   // random_id
+            eme_json_encode_safe( $mail['attachments'] ),
+            $add_listhdrs
+        );
+    }
+
+    $sql = "INSERT INTO $mqueue_table
+            (mailing_id, person_id, member_id, status, creation_date, created_by,
+             fromemail, fromname, receiveremail, receivername,
+             replytoemail, replytoname, subject, body, random_id, attachments, add_listhdrs)
+            VALUES " . implode( ',', $values );
+
+    return $wpdb->query( $sql );
 }
 
 add_action( 'wp_ajax_eme_mailingreport_list', 'eme_mailingreport_list' );
@@ -1656,7 +1765,7 @@ function eme_ajax_mailings_list() {
             $status = $mailing_states[ $mailing['status'] ];
         }
         if ( $mailing['status'] == 'cancelled' ) {
-            $stats  = eme_unserialize( $mailing['stats'] );
+            $stats  = eme_json_decode_safe( $mailing['stats'] );
             // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
             $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=archive_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Archive', 'events-made-easy' ) . '</a>';
@@ -1670,7 +1779,7 @@ function eme_ajax_mailings_list() {
             if (empty($mailing['stats'])) {
                 $stats  = eme_get_mailing_stats( $id );
             } else {
-                $stats  = eme_unserialize( $mailing['stats'] );
+                $stats  = eme_json_decode_safe( $mailing['stats'] );
             }
             // translators: %d is the number of emails left to send
             $extra  = sprintf( __( '%d emails left', 'events-made-easy' ), $stats['planned'] );
@@ -1681,7 +1790,7 @@ function eme_ajax_mailings_list() {
             $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Cancel the sending of this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=cancel_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
-            $stats  = eme_unserialize( $mailing['stats'] );
+            $stats  = eme_json_decode_safe( $mailing['stats'] );
             // translators: %1$d is the number of emails sent, %2$d is the number of emails failed
             $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Archive this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=archive_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Archive', 'events-made-easy' ) . '</a>';
@@ -1795,7 +1904,7 @@ function eme_ajax_archivedmailings_list() {
     foreach ( $mailings as $mailing ) {
         $id = $mailing['id'];
 
-        $stats  = eme_unserialize( $mailing['stats'] );
+        $stats  = eme_json_decode_safe( $mailing['stats'] );
         // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
         $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
         $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_archivedmailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . '</a>';
@@ -2542,7 +2651,7 @@ function eme_emails_page() {
             }
             // reuse the attachments too
             if ( ! empty( $mail['attachments'] ) ) {
-                $attachment_ids_arr = eme_unserialize( $mail['attachments'] );
+                $attachment_ids_arr = eme_json_decode_safe( $mail['attachments'] );
                 // now also build the attach_url_string variable
                 foreach ( $attachment_ids_arr as $attachment_id ) {
                     if (is_int( $attachment_id )) 
@@ -2572,7 +2681,7 @@ function eme_emails_page() {
         $id      = intval( $_GET['id'] );
         $mailing = eme_get_mailing( $id );
         if ( $mailing ) {
-            $conditions = eme_unserialize( $mailing['conditions'] );
+            $conditions = eme_json_decode_safe( $mailing['conditions'] );
             if ( $conditions['action'] == 'genericmail' ) {
                 if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
                     $generic_mail_ignore_massmail_setting = "checked='checked'";
@@ -3332,7 +3441,7 @@ function eme_mailing_requires_listhdrs( $mailing_id ) {
     if (empty($mailing)) {
         return false;
     }
-    $conditions = eme_unserialize($mailing['conditions']);
+    $conditions = eme_json_decode_safe($mailing['conditions']);
     return eme_add_listhdrs( $conditions );
 }
 

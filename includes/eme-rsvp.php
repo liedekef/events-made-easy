@@ -1800,12 +1800,12 @@ function eme_get_booking( $booking_id ) {
     $booking        = $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     if ( $booking !== false ) {
         if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
-            $booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
+            $booking['dcodes_used'] = eme_json_decode_safe( $booking['dcodes_used'] );
         } else {
             $booking['dcodes_used'] = [];
         }
         if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
-            $booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
+            $booking['dcodes_entered'] = eme_json_decode_safe( $booking['dcodes_entered'] );
         } else {
             $booking['dcodes_entered'] = [];
         }
@@ -1857,12 +1857,12 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
     if ( ! empty( $bookings ) ) {
         foreach ( $bookings as $key => $booking ) {
             if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
-                $booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
+                $booking['dcodes_used'] = eme_json_decode_safe( $booking['dcodes_used'] );
             } else {
                 $booking['dcodes_used'] = [];
             }
             if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
-                $booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
+                $booking['dcodes_entered'] = eme_json_decode_safe( $booking['dcodes_entered'] );
             } else {
                 $booking['dcodes_entered'] = [];
             }
@@ -1907,12 +1907,12 @@ function eme_get_bookings_by_person_id( $person_id, $scope, $rsvp_status = 0, $p
     if ( ! empty( $bookings ) ) {
         foreach ( $bookings as $key => $booking ) {
             if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
-                $booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
+                $booking['dcodes_used'] = eme_json_decode_safe( $booking['dcodes_used'] );
             } else {
                 $booking['dcodes_used'] = [];
             }
             if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
-                $booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
+                $booking['dcodes_entered'] = eme_json_decode_safe( $booking['dcodes_entered'] );
             } else {
                 $booking['dcodes_entered'] = [];
             }
@@ -2093,9 +2093,9 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
         $booking['status'] = EME_RSVP_STATUS_APPROVED;
     }
 
-    // eme_serialize if needed
-    $booking['dcodes_entered'] = eme_serialize( $booking['dcodes_entered'] );
-    $booking['dcodes_used']    = eme_serialize( $booking['dcodes_used'] );
+    // eme_json_encode_safe if needed
+    $booking['dcodes_entered'] = eme_json_encode_safe( $booking['dcodes_entered'] );
+    $booking['dcodes_used']    = eme_json_encode_safe( $booking['dcodes_used'] );
 
     $booking['creation_date'] = current_time( 'mysql', false );
     $booking['modif_date'] = $booking['creation_date'];
@@ -3307,12 +3307,12 @@ function eme_get_bookings_by_paymentid( $payment_id ) {
     $bookings = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $bookings as $key => $booking ) {
         if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
-            $booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
+            $booking['dcodes_used'] = eme_json_decode_safe( $booking['dcodes_used'] );
         } else {
             $booking['dcodes_used'] = [];
         }
         if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
-            $booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
+            $booking['dcodes_entered'] = eme_json_decode_safe( $booking['dcodes_entered'] );
         } else {
             $booking['dcodes_entered'] = [];
         }
@@ -3726,7 +3726,7 @@ function eme_get_booking_placeholder_handler_definitions() {
             $booking = $ctx['booking'];
             if ( ! empty( $booking['discountids'] ) ) {
                 if ( eme_is_serialized( $booking['discountids'] ) ) {
-                    $applied_discounts = eme_unserialize( $booking['discountids'] );
+                    $applied_discounts = eme_json_decode_safe( $booking['discountids'] );
                     $applied_discountids = array_keys( $applied_discounts );
                 } else {
                     $applied_discountids = explode( ',', $booking['discountids'] );
@@ -6368,8 +6368,8 @@ function eme_ajax_bookings_list() {
         $line['eventprice'] = eme_convert_multi2br( eme_localized_price( eme_get_booking_event_price( $booking ), $event['currency'] ) );
         $line['totalprice'] = eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] );
         $line['discount']   = eme_localized_price( $booking['discount'], $event['currency'] );
-        // dcodes_used is still eme_serialized here
-        $line['dcodes_used']  = eme_esc_html( eme_unserialize( $booking['dcodes_used'] ) );
+        // dcodes_used is still eme_json_encode_safed here
+        $line['dcodes_used']  = eme_esc_html( eme_json_decode_safe( $booking['dcodes_used'] ) );
         // translators: %d is the payment ID of the booking
         $line['unique_nbr']   = "<span title='" . esc_attr( sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) ) . "'>" . esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
         $line['booking_paid'] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );

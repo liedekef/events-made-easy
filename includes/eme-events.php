@@ -938,7 +938,7 @@ function eme_events_page_content() {
         $mail = eme_get_mail_by_rid( $random_id );
         if ( ! empty( $mail['mailing_id'] ) ) {
             $mailing = eme_get_mailing($mail['mailing_id']);
-            $conditions = eme_unserialize( $mailing['conditions'] );
+            $conditions = eme_json_decode_safe( $mailing['conditions'] );
             $eme_email_groups_arr = [];
             if ($conditions['action'] == 'newsletter') {
                 $eme_email_groups_arr = [ '-1' ];
@@ -1817,7 +1817,7 @@ function eme_template_redir() {
         if ( is_array( $custom_values ) ) {
             $eme_memberships = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
             if ( eme_is_serialized( $eme_memberships ) ) {
-                $page_membershipids = eme_unserialize( $eme_memberships );
+                $page_membershipids = eme_json_decode_safe( $eme_memberships );
             } else {
                 $page_membershipids = [];
             }
@@ -5839,10 +5839,10 @@ function eme_get_extra_event_data( $event ) {
         $event['event_end'] = $event['event_start'];
     }
 
-    $event['event_attributes'] = eme_unserialize( $event['event_attributes'] );
+    $event['event_attributes'] = eme_json_decode_safe( $event['event_attributes'] );
     $event['event_attributes'] = ( ! is_array( $event['event_attributes'] ) ) ? [] : $event['event_attributes'];
 
-    $event['event_properties'] = eme_unserialize( $event['event_properties'] );
+    $event['event_properties'] = eme_json_decode_safe( $event['event_properties'] );
     $event['event_properties'] = ( ! is_array( $event['event_properties'] ) ) ? [] : $event['event_properties'];
     $event['event_properties'] = eme_init_event_props( $event['event_properties'] );
 
@@ -6359,7 +6359,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         $action        = '';
         $recurrence_ID = '';
     }
-    // some checks and eme_unserialize if needed
+    // some checks and eme_json_decode_safe if needed
     $event = eme_get_extra_event_data( $event );
 
     $pdf_templates_array = eme_get_templates_array_by_id( 'pdf', 1 );
@@ -9354,8 +9354,8 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
         $new_line = apply_filters( 'eme_insert_event_filter', $new_line );
     }
 
-    $new_line['event_attributes'] = eme_serialize( $new_line['event_attributes'] );
-    $new_line['event_properties'] = eme_serialize( $new_line['event_properties'] );
+    $new_line['event_attributes'] = eme_json_encode_safe( $new_line['event_attributes'] );
+    $new_line['event_properties'] = eme_json_encode_safe( $new_line['event_properties'] );
 
     if ( empty( $new_line['creation_date'] ) || ! ( eme_is_date( $new_line['creation_date'] ) || eme_is_datetime( $new_line['creation_date'] ) ) ) {
         $new_line['creation_date'] = current_time( 'mysql', false );
@@ -9414,8 +9414,8 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
     // we need to do this since this function is also called for csv import
     $keys                              = array_intersect_key( $line, $event );
     $updated_event                     = array_merge( $event, $keys );
-    $updated_event['event_attributes'] = eme_serialize( $updated_event['event_attributes'] );
-    $updated_event['event_properties'] = eme_serialize( $updated_event['event_properties'] );
+    $updated_event['event_attributes'] = eme_json_encode_safe( $updated_event['event_attributes'] );
+    $updated_event['event_properties'] = eme_json_encode_safe( $updated_event['event_properties'] );
 
     $updated_event['modif_date'] = current_time( 'mysql', false );
 

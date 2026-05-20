@@ -57,7 +57,7 @@ function eme_attributes_form( $eme_array ) {
 	}
 	if ( isset( $eme_array['event_properties'] ) ) {
 		# we know it is an event then
-		$event_props = eme_unserialize( $eme_array['event_properties'] );
+		$event_props = eme_json_decode_safe( $eme_array['event_properties'] );
 		foreach ( $event_props as $key => $val ) {
 			if ( strstr( $key, '_tpl' ) ) {
 				$formats .= $val;
@@ -66,7 +66,7 @@ function eme_attributes_form( $eme_array ) {
 	}
 	if ( isset( $eme_array['location_properties'] ) ) {
 		# we know it is a location then
-		$location_props = eme_unserialize( $eme_array['location_properties'] );
+		$location_props = eme_json_decode_safe( $eme_array['location_properties'] );
 		foreach ( $location_props as $key => $val ) {
 			if ( strstr( $key, '_tpl' ) ) {
 				$formats .= $val;

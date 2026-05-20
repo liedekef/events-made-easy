@@ -112,7 +112,7 @@ function eme_templates_page() {
             if ( isset( $_POST['properties'] ) ) {
                 $properties = eme_sanitize_request( $_POST['properties'] );
             }
-            $template['properties'] = eme_serialize( eme_init_template_props( $properties ) );
+            $template['properties'] = eme_json_encode_safe( eme_init_template_props( $properties ) );
 
             $template_id = 0;
             if ( $properties['pdf_size'] == 'custom' && ( empty( $properties['pdf_width'] ) || empty( $properties['pdf_height'] ) ) ) {
@@ -204,7 +204,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 
     if ( ! empty( $template ) ) {
         if ( eme_is_serialized( $template['properties'] ) ) {
-            $template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
+            $template['properties'] = eme_init_template_props( eme_json_decode_safe( $template['properties'] ) );
         }
     }
     if ( $template_id ) {
@@ -378,7 +378,7 @@ function eme_get_template( $template_id ) {
             if ( empty( $template['properties'] ) ) {
                 $template['properties'] = [];
             }
-            $template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
+            $template['properties'] = eme_init_template_props( eme_json_decode_safe( $template['properties'] ) );
             wp_cache_set( "eme_template $template_id", $template, '', 10 );
         }
     }

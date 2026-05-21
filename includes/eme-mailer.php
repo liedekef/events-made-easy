@@ -3076,7 +3076,7 @@ function eme_emails_page() {
 ?>
     </div>
     </form>
-    <div id="eventmail-message" class="eme-hidden" ></div>
+    <div id="eventmail-result" class="eme-hidden" ></div>
 </div>
 
 <div class="eme-tab-content" id="tab-genericmails">
@@ -3257,12 +3257,12 @@ function eme_emails_page() {
             }
 ?>
     </form>
-    <div id="genericmail-message" class="eme-hidden" ></div>
+    <div id="genericmail-result" class="eme-hidden" ></div>
 </div>
 
 <div class="eme-tab-content" id="tab-testmail">
     <h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
-    <div id="testmail-message" class="eme-hidden" ></div>
+    <div id="testmail-result" class="eme-hidden" ></div>
     <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
     <form id='send_testmail' name='send_testmail' action="#" method="post" onsubmit="return false;">
     <label for='testmail_to'><?php esc_html_e( 'Enter the recipient', 'events-made-easy' ); ?></label>
@@ -3303,7 +3303,7 @@ function eme_mails_div() {
     <button id='MailsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter emails', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="mails-message" class="eme-hidden" ></div>
+    <div id="mails-result" class="eme-hidden" ></div>
     <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_mails" name="eme_admin_action_mails">
@@ -3360,7 +3360,7 @@ function eme_mailings_div() {
     <button id='MailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="mailings-message" class="eme-hidden" ></div>
+    <div id="mailings-result" class="eme-hidden" ></div>
     <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_mailings" name="eme_admin_action_mailings">
@@ -3394,7 +3394,7 @@ function eme_mailings_archive_div() {
     <input type="search" name="search_archivedmailingstext" id="search_archivedmailingstext" value="">
     <button id='ArchivedMailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
     </form>
-    <div id="archivedmailings-message" class="eme-hidden" ></div>
+    <div id="archivedmailings-result" class="eme-hidden" ></div>
     <div class="bulkactions">
     <form action="#" method="post">
     <select id="eme_admin_action_archivedmailings" name="eme_admin_action_archivedmailings">

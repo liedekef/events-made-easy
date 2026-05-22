@@ -1125,8 +1125,8 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     $ctx      = [ 'required' => false, 'required_att' => '' ];
 
     // Pre-validate required placeholders before running the dispatch
-    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_email    = str_contains( $format, '#_EMAIL' )     || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_lastname = preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_email    = preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
     if ( ! $has_lastname || ! $has_email ) {
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
@@ -2312,9 +2312,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     // custom loop here instead of eme_run_formfield_dispatch.
  
     // pre-validate required placeholders
-    $has_lastname = $is_multibooking || str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_email    = $is_multibooking || str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
-    $has_password = $eme_is_admin_request || $is_multibooking || empty( $event['event_properties']['rsvp_password'] ) || str_contains( $format, '#_PASSWORD' );
+    $has_lastname = $is_multibooking || preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_email    = $is_multibooking || preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
+    $has_password = $eme_is_admin_request || $is_multibooking || empty( $event['event_properties']['rsvp_password'] ) || preg_match( '/#(REQ|ESC)?_PASSWORD/', $format );
 
     preg_match_all( '/#_(SEATS|SPACES)(\{(\d+)\})?/', $format, $seats_matches );
     $seats_found = count( $seats_matches[0] );
@@ -2415,9 +2415,9 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         return;
     }
 
-    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
-    $has_email     = str_contains( $format, '#_EMAIL' ) || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_lastname  = preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_firstname = preg_match( '/#(REQ|ESC)?_FIRSTNAME/', $format );
+    $has_email     = preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
     if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
@@ -2711,8 +2711,8 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     }
     $person = eme_esc_person_for_form( $person );
 
-    $has_lastname = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_email    = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_lastname = preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_email    = preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
     if ( ! $has_lastname || ! $has_email ) {
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders.', 'events-made-easy' )
@@ -3029,9 +3029,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
         ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
         : '';
 
-    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
-    $has_email     = str_contains( $format, '#_EMAIL' )    || str_contains( $format, '#_HTML5_EMAIL' );
+    $has_lastname  = preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_firstname = preg_match( '/#(REQ|ESC)?_FIRSTNAME/', $format );
+    $has_email     = preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
     if ( ! $has_lastname || ! $has_firstname || ! $has_email ) {
         return "<div id='message' class='eme-message-error eme-cpi-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
@@ -3098,8 +3098,8 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
     $dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
 
-    $has_lastname  = str_contains( $format, '#_LASTNAME' ) || str_contains( $format, '#_NAME' );
-    $has_firstname = str_contains( $format, '#_FIRSTNAME' );
+    $has_lastname  = preg_match( '/#(REQ|ESC)?_(LASTNAME|NAME)/', $format );
+    $has_firstname = preg_match( '/#(REQ|ESC)?_FIRSTNAME/', $format );
     if ( ! $has_lastname || ! $has_firstname ) {
         return "<div id='message' class='eme-message-error eme-family-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders.', 'events-made-easy' )

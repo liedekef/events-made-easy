@@ -289,7 +289,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 
     if ( $used ) {
         $layout .= "
-      <div id='eme_formfield_warning' class='updated below-h1 eme-message-admin'>
+      <div id='eme_formfield_warning' class='notice below-h1 eme-message-admin'>
          <p>" . __( 'Warning: this field is already used in RSVP replies, member signups, event or location definitions. Changing the field type or values might result in unwanted side effects.', 'events-made-easy' ) . '</p>
       </div>';
     }

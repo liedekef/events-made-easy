@@ -1086,7 +1086,6 @@ function eme_ajax_state_edit() {
 		}
 	}
 
-	//Return result to jTable
 	print wp_json_encode( $fTableResult );
 	wp_die();
 }

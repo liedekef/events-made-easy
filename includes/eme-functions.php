@@ -3537,7 +3537,6 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
 
-    //Return result to jTable
     print wp_json_encode( $fTableResult );
     wp_die();
 }

@@ -2822,23 +2822,9 @@ function eme_emails_page() {
         $data_forced_tab    = 'data-showtab="tab-allmail"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'report_mailing' && isset( $_GET['id'] ) ) {
-        // the id param will be captured by js to fill out the report table via jtable
+        // the id param will be captured by js to fill out the report table
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-?>
-        <div class="wrap nosubsub">
-        <div id="poststuff">
-        <h1><?php esc_html_e( 'Mailing report', 'events-made-easy' ); ?></h1>
-    <form action="#" method="post">
-    <input type="search" class="eme_searchfilter" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
-    <button id="ReportLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
-    </form>
-    <!--
-    <p><?php esc_html_e( 'Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with.', 'events-made-easy' ); ?></p>
-    -->
-    <div id="MailingReportTableContainer"></div>
-        </div>
-        </div>
-<?php
+        eme_mailingreport_div();
         return;
     }
 
@@ -2871,10 +2857,10 @@ function eme_emails_page() {
         <table>
         <tr>
         <td><?php
-    $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
-    $aria_label = 'aria-label="' . $label . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+            $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
+            $aria_label = 'aria-label="' . $label . '"';
+            echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+        ?>
         </td>
         <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
         <br><label><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?> </label>
@@ -2884,16 +2870,16 @@ function eme_emails_page() {
         <tr>
         <td><?php esc_html_e( 'Select the type of mail', 'events-made-easy' ); ?></td>
         <td>
-<?php
-    $eme_mail_type_arr = [
-        'attendees' => __( 'Attendee emails', 'events-made-easy' ),
-        'bookings' => __('Booking emails', 'events-made-easy'),
-        'all_people' => __('Email to all people registered in EME', 'events-made-easy'),
-        'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
-        'all_wp' => __('Email to all WP users', 'events-made-easy'),
-    ];
-    echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
-?>
+        <?php
+            $eme_mail_type_arr = [
+                'attendees' => __( 'Attendee emails', 'events-made-easy' ),
+                'bookings' => __('Booking emails', 'events-made-easy'),
+                'all_people' => __('Email to all people registered in EME', 'events-made-easy'),
+                'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
+                'all_wp' => __('Email to all WP users', 'events-made-easy'),
+            ];
+            echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+        ?>
         </td>
         </tr>
         <tr id="eme_rsvp_status_row">
@@ -2923,73 +2909,73 @@ function eme_emails_page() {
         </tr>
         <tr id="eme_people_row">
         <td>
-<?php
-    $label      = esc_html__( 'Send to a number of people', 'events-made-easy' );
-    $aria_label = 'aria-label="' . $label . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+        <?php
+            $label      = esc_html__( 'Send to a number of people', 'events-made-easy' );
+            $aria_label = 'aria-label="' . $label . '"';
+            echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+        ?>
         </td>
         <td><?php echo eme_ui_multiselect( $person_ids, 'eme_eventmail_send_persons', $mygroups, 5, '', 0, 'eme_snapselect_people_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td>
         </tr>
         <tr id="eme_groups_row">
         <td class="eme-wsnobreak">
-<?php
-    $label      = esc_html__( 'Send to a number of groups', 'events-made-easy' );
-    $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+        <?php
+            $label      = esc_html__( 'Send to a number of groups', 'events-made-easy' );
+            $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
+            echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+        ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_eventmail_send_groups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td>
         </tr>
-    <tr id="eme_members_row1"><td class="eme-wsnobreak">
-<?php
-    $label      = esc_html__( 'Send to a number of members', 'events-made-easy' );
-    $aria_label = 'aria-label="' . $label . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+    <tr id="eme_members_row1">
+    <td class="eme-wsnobreak">
+        <?php
+            $label      = esc_html__( 'Send to a number of members', 'events-made-easy' );
+            $aria_label = 'aria-label="' . $label . '"';
+            echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+        ?>
     </td>
     <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_snapselect_members_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?></td></tr>
-    <tr id="eme_members_row2"><td class="eme-wsnobreak">
-<?php
-    $label      = esc_html__( 'Send to a number of member groups', 'events-made-easy' );
-    $aria_label = 'aria-label="' . $label . '"';
-    $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+    <tr id="eme_members_row2">
+    <td class="eme-wsnobreak">
+    <?php
+        $label      = esc_html__( 'Send to a number of member groups', 'events-made-easy' );
+        $aria_label = 'aria-label="' . $label . '"';
+        $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more groups', 'events-made-easy' ) ) . '"';
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+    ?>
     </td>
     <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
     <tr id="eme_members_row3"><td class="eme-wsnobreak">
-<?php
-    $label      = esc_html__( 'Send to active members belonging to', 'events-made-easy' );
-    $aria_label = 'aria-label="' . $label . '"';
-    $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
-    echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-?>
+    <?php
+        $label      = esc_html__( 'Send to active members belonging to', 'events-made-easy' );
+        $aria_label = 'aria-label="' . $label . '"';
+        $extra_attributes = 'aria-label="' . esc_attr( $label ) . '" data-placeholder="' . esc_attr( __( 'Select one or more memberships', 'events-made-easy' ) ) . '"';
+        echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+    ?>
     </td>
     <td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_eventmail_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_snapselect', $extra_attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?></td></tr>
-        </table>
-        <div class="form-field"><p>
-        <b><?php esc_html_e( 'Subject', 'events-made-easy' ); ?></b><br>
-<?php
+    </table>
+    <div class="form-field"><p>
+    <b><?php esc_html_e( 'Subject', 'events-made-easy' ); ?></b><br>
+    <?php
     esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
     echo eme_ui_select( 0, 'event_subject_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
-?>
-        <br>
-        <?php esc_html_e( 'Or enter your own: ', 'events-made-easy' ); ?>
-        <input type="text" name="event_mail_subject" id="event_mail_subject" value="<?php echo esc_attr( $event_mail_subject ); ?>">
-        </p></div>
-        <div class="form-field"><p>
-        <b><?php esc_html_e( 'Message', 'events-made-easy' ); ?></b><br>
-<?php
-    esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
-    echo eme_ui_select( 0, 'event_message_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
-?>
-        <br>
-<?php
-    esc_html_e( 'Or enter your own: ', 'events-made-easy' );
-?>
-        </p>
-<?php
+    ?>
+    <br>
+    <?php esc_html_e( 'Or enter your own: ', 'events-made-easy' ); ?>
+    <input type="text" name="event_mail_subject" id="event_mail_subject" value="<?php echo esc_attr( $event_mail_subject ); ?>">
+    </p></div>
+    <div class="form-field"><p>
+    <b><?php esc_html_e( 'Message', 'events-made-easy' ); ?></b><br>
+    <?php
+        esc_html_e( 'Either choose from a template: ', 'events-made-easy' );
+        echo eme_ui_select( 0, 'event_message_template', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+    ?>
+    <br>
+    <?php esc_html_e( 'Or enter your own: ', 'events-made-easy' ); ?>
+    </p>
+    <?php
     if ( get_option( 'eme_mail_send_html' ) ) {
         // for emails, let enable the full html editor
         eme_wysiwyg_textarea( 'event_mail_message', $event_mail_message, 1, 1 );
@@ -3001,10 +2987,10 @@ function eme_emails_page() {
     } else {
         echo "<textarea name='event_mail_message' id='event_mail_message' rows='10' required='required'>" . esc_html( $event_mail_message ) . '</textarea>';
     }
-?>
-        </div>
-        <div><p>
-<?php
+    ?>
+    </div>
+    <div><p>
+    <?php
     esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
     print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/event-formatting/'>" . esc_html__( 'Event placeholders', 'events-made-easy' ) . '</a>';
     print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/people-placeholders/'>" . esc_html__( 'People placeholders', 'events-made-easy' ) . '</a>';
@@ -3012,10 +2998,10 @@ function eme_emails_page() {
     print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/registration-form-formatting/'>" . esc_html__( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'for ', 'events-made-easy' ) . esc_html__( 'Booking emails', 'events-made-easy' ) . ')';
     print "<br><a href='https://www.e-dynamics.be/wordpress/eme-docs/member-placeholders/'>" . esc_html__( 'Member placeholders', 'events-made-easy' ) . '</a> (' . esc_html__( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
     print '<br>' . esc_html__( 'You can also use any shortcode you want.', 'events-made-easy' );
-?>
-        </p></div>
-            <hr>
-        <div id='div_event_mailing_attach'>
+    ?>
+    </p></div>
+    <hr>
+    <div id='div_event_mailing_attach'>
         <p>
         <b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
         <span id="eventmail_attach_links"><?php echo $event_mail_attach_url_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_get_attachment_link() ?></span>
@@ -3023,7 +3009,7 @@ function eme_emails_page() {
         <input type="button" name="eventmail_attach_button" id="eventmail_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
         <input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
         </p>
-        </div>
+    </div>
 <?php
     if ( $eme_queue_mails ) {
 ?>
@@ -3038,42 +3024,40 @@ function eme_emails_page() {
         <span id='eventmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>
         </div>
-        <?php } ?>
-        <hr>
-        <div id='div_event_ignore_massmail_setting'>
+    <?php } ?>
+    <hr>
+    <div id='div_event_ignore_massmail_setting'>
         <p>
         <b><label for='eventmail_ignore_massmail_setting'><?php esc_html_e( 'Ignore massmail setting:', 'events-made-easy' ); ?></label></b>
                 <input id="eventmail_ignore_massmail_setting" name='eventmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $event_mail_ignore_massmail_setting; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>><br>
                 <?php esc_html_e( 'When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option.', 'events-made-easy' ); ?>
         </p>
-        </div>
-        <hr>
-        <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
-        <select id="send_previeweventmailto_id" name="send_previeweventmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
-        <button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
-        <div id="previeweventmail-result" class="eme-hidden" ></div>
+    </div>
+    <hr>
+    <?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
+    <select id="send_previeweventmailto_id" name="send_previeweventmailto_id" class="eme_snapselect_people_class" data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>" aria-label="chooseperson"></select>
+    <button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
+    <div id="previeweventmail-result" class="eme-hidden" ></div>
         <hr>
         <button id='eventmailButton' class="button-primary action"> <?php esc_html_e( 'Send email', 'events-made-easy' ); ?></button>
-<?php
-        if ( ! $eme_queue_mails ) {
-?>
-            <div class='eme-message-admin'><p>
-<?php
-            esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
-?>
+        <?php if ( ! $eme_queue_mails ) { ?>
+                <div class='eme-message-admin'><p>
+                <?php
+                esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
+                ?>
                 </p></div>
-<?php
-        } elseif ( $eme_queue_mails && ! $eme_queue_mails_configured ) {
-?>
-            <div class='eme-message-admin'><p>
-<?php
-            // translators: %s is the URL to the Email settings page
-            printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
-?>
+            <?php
+            } elseif ( $eme_queue_mails && ! $eme_queue_mails_configured ) {
+            ?>
+                <div class='eme-message-admin'><p>
+                <?php
+                // translators: %s is the URL to the Email settings page
+                printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
+                ?>
                 </p></div>
-<?php
-        }
-?>
+            <?php
+            }
+            ?>
     </div>
     </form>
     <div id="eventmail-result" class="eme-hidden" ></div>
@@ -3236,31 +3220,58 @@ function eme_emails_page() {
         <div id="previewmail-result" class="eme-hidden" ></div>
         <hr>
         <button id='genericmailButton' class="button-primary action"> <?php esc_html_e( 'Send email', 'events-made-easy' ); ?></button>
-<?php
-            if ( ! $eme_queue_mails ) {
-?>
+        <?php
+        if ( ! $eme_queue_mails ) {
+        ?>
             <div class='eme-message-admin'><p>
-<?php
-                esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
-?>
-                </p></div>
-<?php
-            } elseif ( $eme_queue_mails && ! $eme_queue_mails_configured ) {
-?>
+        <?php
+            esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
+        ?>
+            </p></div>
+        <?php
+        } elseif ( $eme_queue_mails && ! $eme_queue_mails_configured ) {
+        ?>
             <div class='eme-message-admin'><p>
-<?php
-                // translators: %s is the URL to the Email settings page
-                printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
-?>
-                </p></div>
-<?php
-            }
-?>
+        <?php
+            // translators: %s is the URL to the Email settings page
+            printf( wp_kses_post( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ) ), esc_url( admin_url( 'admin.php?page=eme-options&tab=mail' ) ) );
+        ?>
+            </p></div>
+        <?php
+        }
+        ?>
     </form>
     <div id="genericmail-result" class="eme-hidden" ></div>
 </div>
 
 <div class="eme-tab-content" id="tab-testmail">
+        <?php eme_testmail_div(); ?>
+</div>
+
+</div> <!-- wrap -->
+<?php
+}
+
+function eme_mailingreport_div() {
+?>
+<div class="wrap nosubsub">
+  <div id="poststuff">
+    <h1><?php esc_html_e( 'Mailing report', 'events-made-easy' ); ?></h1>
+    <form action="#" method="post">
+        <input type="search" class="eme_searchfilter" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
+        <button id="ReportLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
+    </form>
+    <!--
+    <p><?php esc_html_e( 'Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with.', 'events-made-easy' ); ?></p>
+    -->
+    <div id="MailingReportTableContainer"></div>
+  </div>
+</div>
+<?php
+}
+
+function eme_testmail_div() {
+?>
     <h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
     <div id="testmail-result" class="eme-hidden" ></div>
     <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
@@ -3269,9 +3280,6 @@ function eme_emails_page() {
     <input type="email" name="testmail_to" id="testmail_to" value="" placeholder="<?php esc_attr_e( 'Enter any valid mail address', 'events-made-easy' ); ?>">
     <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
     </form>
-</div>
-
-</div> <!-- wrap -->
 <?php
 }
 

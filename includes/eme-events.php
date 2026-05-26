@@ -927,10 +927,15 @@ function eme_events_page_content() {
         return eme_cancel_payment_form( $payment_randomid );
     } elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
         $signup_randomid = eme_sanitize_request( $_REQUEST['eme_cancel_signup'] );
+        $signup          = eme_get_task_by_randomid( $signup_randomid );
+        if (!$signup) {
+            return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'Task signup cancellation failed.', 'events-made-easy' ) . '</div>';
+        }
         $res             = eme_cancel_task_signup( $signup_randomid );
         if ( $res === false ) {
             return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'Task signup cancellation failed.', 'events-made-easy' ) . '</div>';
         } else {
+            eme_email_tasksignup_action( $signup, 'cancel' );
             return "<div class='eme-message-success eme-subscribe-message-success'>" . __( 'You have successfully cancelled your signup for this task.', 'events-made-easy' ) . '</div>';
         }
     } elseif ( $_SERVER['REQUEST_METHOD'] === "POST" && ! empty( $_GET['eme_unsub'] ) && $_POST['List-Unsubscribe'] == 'One-Click' ) {

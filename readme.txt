@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.0.70  (2026/05/) =
 * Code refactor for mailing, forms and placeholders
+* Make cancel task mail work when cancelling own tasks
 
 = 3.0.69  (2026/05/13) =
 * ftable/fdatepicker updates

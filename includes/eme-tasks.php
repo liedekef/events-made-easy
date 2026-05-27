@@ -359,13 +359,6 @@ function eme_get_task( $task_id ) {
     return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_get_task_by_randomid( $random_id ) {
-    global $wpdb;
-    $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-}
-
 function eme_get_event_tasks( $event_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASKS_TBNAME;
@@ -377,6 +370,13 @@ function eme_get_task_signup( $id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
+function eme_get_tasksignup_by_randomid( $random_id ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+    $prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_row( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

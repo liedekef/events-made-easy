@@ -927,7 +927,7 @@ function eme_events_page_content() {
         return eme_cancel_payment_form( $payment_randomid );
     } elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
         $signup_randomid = eme_sanitize_request( $_REQUEST['eme_cancel_signup'] );
-        $signup          = eme_get_task_by_randomid( $signup_randomid );
+        $signup          = eme_get_tasksignup_by_randomid( $signup_randomid );
         if (!$signup) {
             return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'Task signup cancellation failed.', 'events-made-easy' ) . '</div>';
         }

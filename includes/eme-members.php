@@ -6975,7 +6975,7 @@ function eme_ajax_manage_memberships() {
         case 'showMembershipStats':
             $membershipstats = eme_get_membership_stats( $ids );
             $ajaxResult['Result']      = 'OK';
-            $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . $membershipstats . '</p></div>';
+            $ajaxResult['htmlmessage'] = "<div id='message'><p>" . $membershipstats . '</p></div>';
             print wp_json_encode( $ajaxResult );
             break;
         case 'deleteMemberships':

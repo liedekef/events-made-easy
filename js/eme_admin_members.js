@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['deleteMemberships'].includes(doAction)) {
+            if (doAction === 'deleteMemberships') {
                 const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
                 if (!ok) return;
             }
@@ -80,7 +80,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     MembershipsTable.showInfo(data.htmlmessage);
                 }
-                MembershipsTable.reload();
+                if (doAction !== 'showMembershipStats') {
+                    MembershipsTable.reload();
+                }
                 membershipsButton.textContent = emeadmin.translate_apply;
                 membershipsButton.disabled = false;
             });

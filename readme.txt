@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 3.0.69
+Stable tag: 3.0.70
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.70  (2026/05/) =
+= 3.0.70  (2026/05/29) =
 * Code refactor for mailing, forms and placeholders
 * Make cancel task mail work when cancelling own tasks
 

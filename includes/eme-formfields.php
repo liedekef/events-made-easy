@@ -1304,6 +1304,13 @@ function eme_esc_person_for_form( $person = [] ) {
     return $person;
 }
 
+function eme_get_dyndata_people_fields( $condition ) {
+    global $wpdb;
+    $formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
+    $prepared_sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
+    return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
 /**
  * Shared handler definitions for person/contact form fields.
  *

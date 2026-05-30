@@ -4431,7 +4431,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     $attachment_ids         = '';
     $attachment_tmpl_ids_arr = [];
     $ticket_attachment      = '';
-    $add_pending_mailid     = 0;
+    $add_delayed_mailids    = 0;
     $send_immediately       = 0;
 
     switch ( $action ) {
@@ -4439,7 +4439,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         // can only be called from within the backend interface
         // so we don't send the mail to the event contact
         if ( $mailing_approved ) {
-            eme_ignore_pendingbooking_mail( $booking );
+            eme_ignore_delayed_booking_mails( $booking );
             $template_id = $event['event_properties']['ticket_template_id'];
             if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                 $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -4621,7 +4621,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter    = 'reminder_body';
         break;
     case 'trashBooking':
-        eme_ignore_pendingbooking_mail( $booking );
+        eme_ignore_delayed_booking_mails( $booking );
         if ( ! empty( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
             $person_subject = $event['event_properties']['event_registration_trashed_email_subject'];
         } elseif ( $event['event_properties']['event_registration_trashed_email_subject_tpl'] > 0 ) {
@@ -4660,7 +4660,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter    = 'updated_body';
         break;
     case 'cancelBooking':
-        eme_ignore_pendingbooking_mail( $booking );
+        eme_ignore_delayed_booking_mails( $booking );
         if ( ! empty( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
             $person_subject = $event['event_properties']['event_registration_cancelled_email_subject'];
         } elseif ( $event['event_properties']['event_registration_cancelled_email_subject_tpl'] > 0 ) {
@@ -4700,7 +4700,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         break;
     case 'paidBooking':
         if ( $mailing_paid ) {
-            eme_ignore_pendingbooking_mail( $booking );
+            eme_ignore_delayed_booking_mails( $booking );
             $template_id = $event['event_properties']['ticket_template_id'];
             if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'payment' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                 $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -4858,11 +4858,11 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
             // people can pay online, so we store the pending mailid in the booking in order to be able to cancel it 
             //    if the payment arrives in time
             if ( eme_event_can_pay_online( $event ) ) {
-                $add_pending_mailid     = 1;
+                $add_delayed_mailids = 1;
             }
         } else {
             if ( $mailing_approved ) {
-                eme_ignore_pendingbooking_mail( $booking );
+                eme_ignore_delayed_booking_mails( $booking );
                 $template_id = $event['event_properties']['ticket_template_id'];
                 if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                     $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -4978,10 +4978,19 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     }
 
     // now send the emails
+    $delayed_mailids = [];
     $mail_res = true; // make sure we return true if no mail is sent due to empty subject or body
     if ( ! empty( $contact_subject ) && ! empty( $contact_body ) ) {
         // from, to and replyto are all 3 identical, so the next function call seems a bit weird :-)
-        $mail_res = eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name );
+        if ( $add_delayed_mailids == 1 ) {
+            $mail_res = eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name, status: EME_MAIL_STATUS_DELAYED );
+            // store the delayed mailid for adding to the booking
+            if ($mail_res) {
+                $delayed_mailids[] = $mail_res;
+            }
+        } else {
+            $mail_res = eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name );
+        }
     }
     if ( ! empty( $person_subject ) && ! empty( $person_body ) ) {
         // this possibily overrides mail_res, but that's ok since errors for mail to people are more important than to the contact person
@@ -5005,11 +5014,12 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
             $mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
         } else {
-            if ( $add_pending_mailid == 1 ) {
+            if ( $add_delayed_mailids == 1 ) {
                 $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr, status: EME_MAIL_STATUS_DELAYED );
-                // add the pending mailid to the booking
+                // add the delayed mailid to the booking
                 if ( $mail_res ) { // if ok, mail_res contains the mail id of the inserted mail, so add it to the booking
-                    eme_add_pendingbooking_mail( $booking['booking_id'], $mail_res );
+                    $delayed_mailids[] = $mail_res;
+                    eme_add_delayedbooking_mailids( $booking['booking_id'], join( ',', $delayed_mailids ) );
                 }
             } else {
                 if ( $send_immediately ) {
@@ -7423,24 +7433,30 @@ function eme_manage_waitinglist( $event, $send_mail = 1 ) {
     }
 }
 
-function eme_add_pendingbooking_mail( $booking_id, $mailid ) {
+function eme_add_delayedbooking_mailids( $booking_id, $mailids ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $where = [
         'booking_id' => $booking_id
     ];
     $fields = [
-        'pending_mailid' => $mailid
+        'delayed_mailids' => $mailids
     ];
     return $wpdb->update( $bookings_table, $fields, $where ) !== false;
 }
 
-function eme_ignore_pendingbooking_mail( $booking ) {
-    $pending_mailid = intval ( $booking['pending_mailid'] );
-    if ( $pending_mailid > 0 ) {
-        $mail = eme_get_mail( $pending_mailid );
-        if ( !empty( $mail ) && ($mail['status'] == EME_MAIL_STATUS_DELAYED || $mail['status'] == EME_MAIL_STATUS_PLANNED )) {
-            eme_mark_mail_ignored( $pending_mailid );
+// the next function marks planned or delayed mails for a booking as ignored, causing them not to be sent (avoiding mails is good if possible)
+// reason is that payment has probably arrived and booking gets approved or so, so no approval informational mails needed anymore
+function eme_ignore_delayed_booking_mails( $booking ) {
+    if (empty($booking['delayed_mailids'])) return;
+    $delayed_mailids = explode(',', $booking['delayed_mailids'] );
+    foreach ($delayed_mailids as $delayed_mailid) {
+        $delayed_mailid = intval($delayed_mailid); // converts to int to be sure and gets rid of possible spaces
+        if ( $delayed_mailid > 0 ) {
+            $mail = eme_get_mail( $delayed_mailid );
+            if ( !empty( $mail ) && ($mail['status'] == EME_MAIL_STATUS_DELAYED || $mail['status'] == EME_MAIL_STATUS_PLANNED )) {
+                eme_mark_mail_ignored( $delayed_mailid );
+            }
         }
     }
 }

@@ -43,6 +43,17 @@ function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
 
 function eme_add_multibooking_form( $events, $template_id_header = 0, $template_id_entry = 0, $multiprice_template_id_entry = 0, $template_id_footer = 0, $eme_register_empty_seats = 0, $is_multibooking = 1, $only_if_not_registered = 0, $only_one_event = 0, $only_one_seat = 0, $simple = 0, $all_events = 0 ) {
 
+    if ( empty( $events ) || ! is_array( $events ) ) {
+        return '';
+    }
+
+    // rsvp not active or no rsvp for this event, then return
+    // let's check the first event
+    $event = $events[0];
+    if ( ! eme_is_event_rsvp( $event ) ) {
+        return '';
+    }
+
     // we need template ids
     $format_entry            = '';
     $multiprice_format_entry = '';
@@ -84,17 +95,6 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     // make sure ...
     if ( $eme_register_empty_seats != 1 ) {
         $eme_register_empty_seats = 0;
-    }
-
-    if ( empty( $events ) || ! is_array( $events ) ) {
-        return '';
-    }
-
-    // rsvp not active or no rsvp for this event, then return
-    // let's check the first event
-    $event = $events[0];
-    if ( ! eme_is_event_rsvp( $event ) ) {
-        return '';
     }
 
     $current_userid = get_current_user_id();

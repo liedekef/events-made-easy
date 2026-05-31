@@ -804,7 +804,7 @@ function eme_cancel_bookings_form( $event_id ) {
     $event               = eme_get_event( $event_id );
     // rsvp not active or no rsvp for this event, then return
     if ( empty( $event ) || ! eme_is_event_rsvp( $event ) ) {
-        return;
+        return '';
     }
 
     if ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) {

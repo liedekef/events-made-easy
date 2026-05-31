@@ -4168,7 +4168,7 @@ msgstr "Gruppen"
 #: includes/eme-people.php:1898
 #: includes/eme-people.php:1941
 #: includes/eme-people.php:2508
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 msgid "Last name"
 msgstr "Nachname"
 
@@ -4193,7 +4193,7 @@ msgstr "Nachname"
 #: includes/eme-people.php:1899
 #: includes/eme-people.php:1942
 #: includes/eme-people.php:2495
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 #: includes/eme-rsvp.php:1493
 msgid "First name"
 msgstr "Vorname"
@@ -4223,7 +4223,7 @@ msgstr "Vorname"
 #: includes/eme-people.php:1900
 #: includes/eme-people.php:1943
 #: includes/eme-people.php:2519
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 msgid "Email"
 msgstr "E-Mail"
 

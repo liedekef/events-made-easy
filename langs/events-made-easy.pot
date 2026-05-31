@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.71\n"
+"Project-Id-Version: Events Made Easy 3.0.72\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-30T14:11:52+00:00\n"
+"POT-Creation-Date: 2026-05-31T14:31:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -819,7 +819,7 @@ msgstr ""
 #: includes/eme-people.php:1899
 #: includes/eme-people.php:1942
 #: includes/eme-people.php:2495
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 #: includes/eme-rsvp.php:1493
 msgid "First name"
 msgstr ""
@@ -845,7 +845,7 @@ msgstr ""
 #: includes/eme-people.php:1898
 #: includes/eme-people.php:1941
 #: includes/eme-people.php:2508
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 msgid "Last name"
 msgstr ""
 
@@ -874,7 +874,7 @@ msgstr ""
 #: includes/eme-people.php:1900
 #: includes/eme-people.php:1943
 #: includes/eme-people.php:2519
-#: includes/eme-rsvp.php:74
+#: includes/eme-rsvp.php:85
 msgid "Email"
 msgstr ""
 

@@ -33,7 +33,7 @@ function eme_new_booking() {
 function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
     $event           = eme_get_event( $event_id );
     if ( empty( $event ) ) {
-        return;
+        return '';
     }
     $events          = [ $event ];
     $is_multibooking = 0;
@@ -87,14 +87,14 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     }
 
     if ( empty( $events ) || ! is_array( $events ) ) {
-        return;
+        return '';
     }
 
     // rsvp not active or no rsvp for this event, then return
     // let's check the first event
     $event = $events[0];
     if ( ! eme_is_event_rsvp( $event ) ) {
-        return;
+        return '';
     }
 
     $current_userid = get_current_user_id();

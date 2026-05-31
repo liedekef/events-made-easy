@@ -2889,7 +2889,8 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         ? "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning'>%s</div>"
         : '';
 
-    if ( ! str_contains( $format, '#_EMAIL' ) && ! str_contains( $format, '#_HTML5_EMAIL' ) ) {
+    $has_email     = preg_match( '/#(REQ|ESC)?_(EMAIL|HTML5_EMAIL)/', $format );
+    if ( ! $has_email ) {
         return "<div id='message' class='eme-message-error eme-rsvp-message-error'>"
             . __( 'Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders.', 'events-made-easy' )
             . '</div>';

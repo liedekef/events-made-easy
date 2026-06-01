@@ -5009,7 +5009,8 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     }
 
     // if we're not in the admin itf, we don't want draft or unlisted events
-    if ( ! eme_is_admin_request() ) {
+    // but Make sure eme_get_events can return all events during cron, important when searching for task submits
+    if ( ! eme_is_admin_request() && ! wp_doing_cron() ) {
         $statuses = [];
         if ( is_user_logged_in() ) {
             $statuses = $include_unlisted

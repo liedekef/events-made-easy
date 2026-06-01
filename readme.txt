@@ -98,7 +98,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.73  (2026/06/31) =
+= 3.0.74  (2026/06/) =
+* Make sure eme_get_events can return all events during cron, important when searching for task submits
+
+= 3.0.73  (2026/06/01) =
 * fix value for add/cancel booking form placeholders if rsvp is not active
 
 = 3.0.72  (2026/05/30) =

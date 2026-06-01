@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.0.72\n"
+"Project-Id-Version: Events Made Easy 3.0.73\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-31T14:31:39+00:00\n"
+"POT-Creation-Date: 2026-06-01T16:06:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: events-manager.php:368
 #: includes/eme-events.php:9640
-#: includes/eme-formfields.php:3394
+#: includes/eme-formfields.php:3398
 #: includes/eme-options.php:1618
 msgid "Templates"
 msgstr ""
@@ -228,10 +228,10 @@ msgstr ""
 #: includes/eme-events.php:10300
 #: includes/eme-events.php:10306
 #: includes/eme-events.php:10647
-#: includes/eme-formfields.php:3549
-#: includes/eme-formfields.php:3604
-#: includes/eme-formfields.php:3615
-#: includes/eme-formfields.php:3637
+#: includes/eme-formfields.php:3553
+#: includes/eme-formfields.php:3608
+#: includes/eme-formfields.php:3619
+#: includes/eme-formfields.php:3641
 #: includes/eme-functions.php:3452
 #: includes/eme-functions.php:3493
 #: includes/eme-functions.php:3494
@@ -561,7 +561,7 @@ msgstr ""
 
 #: includes/eme-attributes.php:123
 #: includes/eme-attributes.php:143
-#: includes/eme-formfields.php:3453
+#: includes/eme-formfields.php:3457
 #: includes/eme-tasks.php:968
 #: includes/eme-todos.php:221
 msgid "Remove"
@@ -711,7 +711,7 @@ msgstr ""
 
 #: includes/eme-categories.php:671
 #: includes/eme-events.php:10011
-#: includes/eme-formfields.php:3585
+#: includes/eme-formfields.php:3589
 #: includes/eme-holidays.php:282
 #: includes/eme-locations.php:3040
 #: includes/eme-members.php:6587
@@ -802,8 +802,8 @@ msgstr ""
 #: includes/eme-events.php:9702
 #: includes/eme-formfields.php:1146
 #: includes/eme-formfields.php:1386
-#: includes/eme-formfields.php:2937
-#: includes/eme-formfields.php:3133
+#: includes/eme-formfields.php:2941
+#: includes/eme-formfields.php:3137
 #: includes/eme-gdpr.php:247
 #: includes/eme-gdpr.php:427
 #: includes/eme-gdpr.php:554
@@ -828,8 +828,8 @@ msgstr ""
 #: includes/eme-events.php:9701
 #: includes/eme-formfields.php:1140
 #: includes/eme-formfields.php:1362
-#: includes/eme-formfields.php:2924
-#: includes/eme-formfields.php:3123
+#: includes/eme-formfields.php:2928
+#: includes/eme-formfields.php:3127
 #: includes/eme-gdpr.php:247
 #: includes/eme-gdpr.php:426
 #: includes/eme-gdpr.php:550
@@ -854,8 +854,8 @@ msgstr ""
 #: includes/eme-formfields.php:602
 #: includes/eme-formfields.php:1152
 #: includes/eme-formfields.php:1494
-#: includes/eme-formfields.php:2947
-#: includes/eme-formfields.php:3152
+#: includes/eme-formfields.php:2951
+#: includes/eme-formfields.php:3156
 #: includes/eme-gdpr.php:128
 #: includes/eme-gdpr.php:202
 #: includes/eme-gdpr.php:318
@@ -1904,10 +1904,10 @@ msgstr ""
 #: includes/eme-discounts.php:1798
 #: includes/eme-formfields.php:1522
 #: includes/eme-formfields.php:1536
-#: includes/eme-formfields.php:3588
-#: includes/eme-formfields.php:3590
-#: includes/eme-formfields.php:3591
 #: includes/eme-formfields.php:3592
+#: includes/eme-formfields.php:3594
+#: includes/eme-formfields.php:3595
+#: includes/eme-formfields.php:3596
 #: includes/eme-fs.php:650
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
@@ -1944,10 +1944,10 @@ msgstr ""
 #: includes/eme-discounts.php:1798
 #: includes/eme-formfields.php:1523
 #: includes/eme-formfields.php:1537
-#: includes/eme-formfields.php:3588
-#: includes/eme-formfields.php:3590
-#: includes/eme-formfields.php:3591
 #: includes/eme-formfields.php:3592
+#: includes/eme-formfields.php:3594
+#: includes/eme-formfields.php:3595
+#: includes/eme-formfields.php:3596
 #: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
@@ -4626,7 +4626,7 @@ msgid "Name"
 msgstr ""
 
 #: includes/eme-events.php:9604
-#: includes/eme-formfields.php:3596
+#: includes/eme-formfields.php:3600
 msgid "Copy"
 msgstr ""
 
@@ -4722,8 +4722,8 @@ msgstr ""
 
 #: includes/eme-events.php:9633
 #: includes/eme-formfields.php:2118
-#: includes/eme-formfields.php:2750
-#: includes/eme-formfields.php:2824
+#: includes/eme-formfields.php:2753
+#: includes/eme-formfields.php:2827
 #: includes/eme-options.php:39
 #: includes/eme-people.php:1055
 #: includes/eme-people.php:1255
@@ -4891,7 +4891,7 @@ msgstr ""
 
 #: includes/eme-events.php:9704
 #: includes/eme-formfields.php:1508
-#: includes/eme-formfields.php:3143
+#: includes/eme-formfields.php:3147
 #: includes/eme-gdpr.php:435
 #: includes/eme-gdpr.php:586
 #: includes/eme-options.php:37
@@ -5480,7 +5480,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr ""
 
 #: includes/eme-formfields.php:351
-#: includes/eme-formfields.php:3393
+#: includes/eme-formfields.php:3397
 msgid "Field condition"
 msgstr ""
 
@@ -5831,7 +5831,7 @@ msgstr ""
 
 #: includes/eme-formfields.php:588
 #: includes/eme-formfields.php:2178
-#: includes/eme-formfields.php:2831
+#: includes/eme-formfields.php:2834
 msgid "Password"
 msgstr ""
 
@@ -5908,7 +5908,7 @@ msgid "This is a hidden field, but in the backend it is shown as text so an admi
 msgstr ""
 
 #: includes/eme-formfields.php:1132
-#: includes/eme-formfields.php:2725
+#: includes/eme-formfields.php:2728
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr ""
 
@@ -5925,17 +5925,17 @@ msgid "Notice: since you're logged in as a person with the right to edit or auth
 msgstr ""
 
 #: includes/eme-formfields.php:1369
-#: includes/eme-formfields.php:2927
+#: includes/eme-formfields.php:2931
 msgid "You can change your last name in your WP profile."
 msgstr ""
 
 #: includes/eme-formfields.php:1390
-#: includes/eme-formfields.php:2940
+#: includes/eme-formfields.php:2944
 msgid "You can change your first name in your WP profile."
 msgstr ""
 
 #: includes/eme-formfields.php:1399
-#: includes/eme-formfields.php:3189
+#: includes/eme-formfields.php:3193
 #: includes/eme-people.php:1043
 #: includes/eme-people.php:1218
 #: includes/eme-people.php:2606
@@ -5944,7 +5944,7 @@ msgid "Date of birth"
 msgstr ""
 
 #: includes/eme-formfields.php:1408
-#: includes/eme-formfields.php:3179
+#: includes/eme-formfields.php:3183
 #: includes/eme-people.php:1044
 #: includes/eme-people.php:1219
 #: includes/eme-people.php:2620
@@ -5953,12 +5953,12 @@ msgid "Place of birth"
 msgstr ""
 
 #: includes/eme-formfields.php:1499
-#: includes/eme-formfields.php:2950
+#: includes/eme-formfields.php:2954
 msgid "You can change your email in your WP profile."
 msgstr ""
 
 #: includes/eme-formfields.php:1557
-#: includes/eme-formfields.php:2991
+#: includes/eme-formfields.php:2995
 msgid "Remember me?"
 msgstr ""
 
@@ -5980,23 +5980,23 @@ msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP
 msgstr ""
 
 #: includes/eme-formfields.php:2212
-#: includes/eme-formfields.php:2560
+#: includes/eme-formfields.php:2563
 msgid "Discount code"
 msgstr ""
 
 #: includes/eme-formfields.php:2217
-#: includes/eme-formfields.php:2565
+#: includes/eme-formfields.php:2568
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr ""
 
 #: includes/eme-formfields.php:2221
-#: includes/eme-formfields.php:2569
+#: includes/eme-formfields.php:2572
 msgid "Enter a fixed discount value if wanted"
 msgstr ""
 
 #. translators: %s is the discount group name
 #: includes/eme-formfields.php:2226
-#: includes/eme-formfields.php:2574
+#: includes/eme-formfields.php:2577
 #: includes/eme-people.php:1356
 #: includes/eme-people.php:1677
 msgid "Discountgroup %s"
@@ -6004,7 +6004,7 @@ msgstr ""
 
 #. translators: %d is the discount group ID
 #: includes/eme-formfields.php:2227
-#: includes/eme-formfields.php:2575
+#: includes/eme-formfields.php:2578
 #: includes/eme-people.php:1359
 #: includes/eme-people.php:1680
 msgid "Applied discount group %d no longer exists"
@@ -6012,7 +6012,7 @@ msgstr ""
 
 #. translators: %d is the discount ID
 #: includes/eme-formfields.php:2237
-#: includes/eme-formfields.php:2585
+#: includes/eme-formfields.php:2588
 #: includes/eme-members.php:5249
 #: includes/eme-people.php:1375
 #: includes/eme-people.php:1696
@@ -6021,7 +6021,7 @@ msgid "Applied discount %d no longer exists"
 msgstr ""
 
 #: includes/eme-formfields.php:2243
-#: includes/eme-formfields.php:2591
+#: includes/eme-formfields.php:2594
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr ""
 
@@ -6029,139 +6029,139 @@ msgstr ""
 msgid "Update booking"
 msgstr ""
 
-#: includes/eme-formfields.php:2332
+#: includes/eme-formfields.php:2335
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr ""
 
-#: includes/eme-formfields.php:2335
-msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
+#: includes/eme-formfields.php:2338
+msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
 msgstr ""
 
-#: includes/eme-formfields.php:2338
+#: includes/eme-formfields.php:2341
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr ""
 
-#: includes/eme-formfields.php:2430
-#: includes/eme-formfields.php:3044
+#: includes/eme-formfields.php:2433
+#: includes/eme-formfields.php:3048
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr ""
 
-#: includes/eme-formfields.php:2542
+#: includes/eme-formfields.php:2545
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr ""
 
-#: includes/eme-formfields.php:2630
+#: includes/eme-formfields.php:2633
 msgid "Update member"
 msgstr ""
 
-#: includes/eme-formfields.php:2634
+#: includes/eme-formfields.php:2637
 msgid "Become member"
 msgstr ""
 
-#: includes/eme-formfields.php:2763
-#: includes/eme-formfields.php:3009
+#: includes/eme-formfields.php:2766
+#: includes/eme-formfields.php:3013
 msgid "Subscribe"
 msgstr ""
 
-#: includes/eme-formfields.php:2894
+#: includes/eme-formfields.php:2898
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr ""
 
-#: includes/eme-formfields.php:2961
-#: includes/eme-formfields.php:2974
+#: includes/eme-formfields.php:2965
+#: includes/eme-formfields.php:2978
 msgid "Newsletter concerning new events"
 msgstr ""
 
-#: includes/eme-formfields.php:2972
+#: includes/eme-formfields.php:2976
 #: includes/eme-tasks.php:604
 #: includes/eme-templates.php:43
 msgid "All"
 msgstr ""
 
-#: includes/eme-formfields.php:3007
+#: includes/eme-formfields.php:3011
 msgid "Unsubscribe"
 msgstr ""
 
-#: includes/eme-formfields.php:3097
+#: includes/eme-formfields.php:3101
 msgid "Save personal info"
 msgstr ""
 
-#: includes/eme-formfields.php:3112
+#: includes/eme-formfields.php:3116
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr ""
 
-#: includes/eme-formfields.php:3387
+#: includes/eme-formfields.php:3391
 msgid "Dynamically show fields based on a number of conditions"
 msgstr ""
 
-#: includes/eme-formfields.php:3392
+#: includes/eme-formfields.php:3396
 msgid "Index"
 msgstr ""
 
-#: includes/eme-formfields.php:3395
+#: includes/eme-formfields.php:3399
 msgid "Repeat"
 msgstr ""
 
-#: includes/eme-formfields.php:3425
+#: includes/eme-formfields.php:3429
 #: includes/eme-tasks.php:929
 #: includes/eme-todos.php:203
 msgid "Reorder"
 msgstr ""
 
-#: includes/eme-formfields.php:3438
+#: includes/eme-formfields.php:3442
 msgid "Field"
 msgstr ""
 
-#: includes/eme-formfields.php:3439
+#: includes/eme-formfields.php:3443
 msgid "Condition"
 msgstr ""
 
-#: includes/eme-formfields.php:3440
+#: includes/eme-formfields.php:3444
 msgid "Condition value"
 msgstr ""
 
-#: includes/eme-formfields.php:3444
+#: includes/eme-formfields.php:3448
 msgid "Header template"
 msgstr ""
 
-#: includes/eme-formfields.php:3445
+#: includes/eme-formfields.php:3449
 msgid "Template"
 msgstr ""
 
-#: includes/eme-formfields.php:3446
+#: includes/eme-formfields.php:3450
 msgid "Footer template"
 msgstr ""
 
-#: includes/eme-formfields.php:3453
+#: includes/eme-formfields.php:3457
 msgid "Add new condition"
 msgstr ""
 
-#: includes/eme-formfields.php:3456
+#: includes/eme-formfields.php:3460
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr ""
 
-#: includes/eme-formfields.php:3467
+#: includes/eme-formfields.php:3471
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr ""
 
-#: includes/eme-formfields.php:3469
+#: includes/eme-formfields.php:3473
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr ""
 
-#: includes/eme-formfields.php:3471
+#: includes/eme-formfields.php:3475
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr ""
 
-#: includes/eme-formfields.php:3473
+#: includes/eme-formfields.php:3477
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr ""
 
-#: includes/eme-formfields.php:3474
+#: includes/eme-formfields.php:3478
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr ""
 
-#: includes/eme-formfields.php:3624
-#: includes/eme-formfields.php:3634
+#: includes/eme-formfields.php:3628
+#: includes/eme-formfields.php:3638
 #: includes/eme-functions.php:3489
 #: includes/eme-functions.php:3490
 msgid "Records deleted!"

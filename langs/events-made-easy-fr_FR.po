@@ -13561,8 +13561,8 @@ msgid "Public"
 msgstr "Public"
 
 #: includes/eme-formfields.php:2335
-msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
-msgstr "Comme c'est un évènement multiprix, assurez-vous que vous avez modifié le paramètre « formulaire de réservation » pour l'évènement afin d'inclure #_SEAT{xx} siège(s) réservé(s) pour chaque prix."
+msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
+msgstr "Comme c'est un évènement multiprix, assurez-vous que vous avez modifié le paramètre « formulaire de réservation » pour l'évènement afin d'inclure #_SEATS{xx} siège(s) réservé(s) pour chaque prix."
 
 #: includes/eme-formfields.php:2308
 msgid "Update booking"

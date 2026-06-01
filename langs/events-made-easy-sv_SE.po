@@ -5288,8 +5288,8 @@ msgid "Not all required fields are present in the form. We need at least #_LASTN
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_LASTNAME, #_EMAIL, #_SEATS, #_SUBMIT (eller motsvarande) platshållare."
 
 #: includes/eme-formfields.php:2335
-msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
-msgstr "Eftersom detta event är multipris, se till att du ändrat inställningen ”Registreringsformulär” för eventet så att platshållaren #_SEAT{xx} finns för varje pris."
+msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
+msgstr "Eftersom detta event är multipris, se till att du ändrat inställningen ”Registreringsformulär” för eventet så att platshållaren #_SEATS{xx} finns för varje pris."
 
 #: includes/eme-formfields.php:2338
 msgid "Check that the placeholder #_PASSWORD is present in the form."

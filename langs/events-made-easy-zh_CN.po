@@ -5287,8 +5287,8 @@ msgid "Not all required fields are present in the form. We need at least #_LASTN
 msgstr "不是所有的必填字段都出现在表格中。我们至少需要 #_LASTNAME、#_EMAIL、#_SEATS 和 #_SUBMIT（或类似的）占位符。"
 
 #: includes/eme-formfields.php:2335
-msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
-msgstr "由于这是一个多价格的活动，请确保您改变了该活动的 \"预订表格\" 的设置，以包括每个价格的 #_SEAT{xx} 占位符。"
+msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
+msgstr "由于这是一个多价格的活动，请确保您改变了该活动的 \"预订表格\" 的设置，以包括每个价格的 #_SEATS{xx} 占位符。"
 
 #: includes/eme-formfields.php:2338
 msgid "Check that the placeholder #_PASSWORD is present in the form."

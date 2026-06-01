@@ -5412,8 +5412,8 @@ msgid "Not all required fields are present in the form. We need at least #_LASTN
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_EMAIL, #_SEATS a #_SUBMIT (alebo podobné) zástupné výrazy."
 
 #: includes/eme-formfields.php:2335
-msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
-msgstr "Keďže ide o podujatie s rôznymi cenami, nezabudnite zmeniť nastavenie „Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy #_SEAT{xx} pre každú cenu."
+msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
+msgstr "Keďže ide o podujatie s rôznymi cenami, nezabudnite zmeniť nastavenie „Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy #_SEATS{xx} pre každú cenu."
 
 #: includes/eme-formfields.php:2338
 msgid "Check that the placeholder #_PASSWORD is present in the form."

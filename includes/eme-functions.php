@@ -3364,11 +3364,7 @@ function eme_is_admin_request() {
             return true;
         } else {
             // Check for AJAX requests.
-            if ( function_exists( 'wp_doing_ajax' ) ) {
-                return ! wp_doing_ajax();
-            } else {
-                return ! ( defined( 'DOING_AJAX' ) && DOING_AJAX );
-            }
+            return ! wp_doing_ajax();
         }
     } else {
         return false;

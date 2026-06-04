@@ -1090,7 +1090,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 function eme_replace_cancelformfields_placeholders( $event ) {
     $eme_is_admin_request = eme_is_admin_request();
     if ( $eme_is_admin_request ) {
-        return;
+        return '';
     }
 
     $registration_wp_users_only = $event['registration_wp_users_only'];
@@ -1178,9 +1178,12 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 }
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
+    $eme_is_admin_request = eme_is_admin_request();
+
     $selected_captcha = '';
     $add_captcha = !(is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ));
     $format = eme_add_missing_placeholders( $format, $add_captcha );
+    $configured_captchas = eme_get_configured_captchas();
     if ($add_captcha && ! empty( $configured_captchas ) && ! $eme_is_admin_request ) {
         $selected_captcha = array_key_first( $configured_captchas );
     }

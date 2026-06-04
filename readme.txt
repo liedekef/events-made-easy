@@ -98,6 +98,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.0.75  (2026/06/02) =
+* Make captcha work for cancel booking form too
+* Fix message when permanently deleting a booking
+
 = 3.0.74  (2026/06/02) =
 * Make sure eme_get_events can return all events during cron, important when searching for task submits
 * Make the placeholder #REQ_SEATS (with REQ prefix) work too

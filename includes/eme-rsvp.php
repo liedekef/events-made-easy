@@ -2518,7 +2518,7 @@ function eme_delete_booking( $booking_id ) {
     if ( empty( $booking_ids ) ) {
         eme_delete_payment( $booking['payment_id'] );
     }
-    return $res;
+    return true;
 }
 
 function eme_partial_payment_booking( $booking, $amount ) {

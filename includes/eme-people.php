@@ -3986,6 +3986,8 @@ function eme_db_insert_person( $line ) {
     foreach ( $props as $key => $val ) {
         if ( $key == 'image_id' || $key == 'wp_delete_user' ) {
             $new_line['properties'][ $key ] = intval( $val );
+        } else {
+            $new_line['properties'][ $key ] = $val;
         }
     }
     $new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );
@@ -4053,6 +4055,8 @@ function eme_db_update_person( $person_id, $line ) {
     foreach ( $props as $key => $val ) {
         if ( $key == 'image_id' || $key == 'wp_delete_user' ) {
             $new_line['properties'][ $key ] = intval( $val );
+        } else {
+            $new_line['properties'][ $key ] = $val;
         }
     }
     $new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );

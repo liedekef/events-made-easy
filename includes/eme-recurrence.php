@@ -350,7 +350,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	// some sanity checks
 	// if the end date is set, it should be a sensible end date
 	if ( $recurrence['recurrence_freq'] != 'specific' ) {
-	       	if ( eme_is_empty_date( $recurrence['recurrence_end_date'] ) ) {
+        if ( eme_is_empty_date( $recurrence['recurrence_end_date'] ) ) {
 			// if the end date is empty, we set the start date to the first occurence
 			// (which is 1 event in the past), this allows for cleanup
 			$matching_days = eme_get_recurrence_days( $recurrence );

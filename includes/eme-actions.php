@@ -449,8 +449,7 @@ function eme_register_scripts() {
 
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
-        //wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', ['eme-basic'], '',true);
-        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/enterprise.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
         wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion -- External CDN script, version is managed by provider.

@@ -244,22 +244,30 @@ function eme_load_friendlycaptcha_html() {
 }
 
 function eme_check_recaptcha() {
-    $eme_recaptcha     = get_option( 'eme_recaptcha_for_forms' );
-    $eme_recaptcha_key = get_option( 'eme_recaptcha_secret_key' );
-    if ( isset( $_POST['g-recaptcha-response'] ) && ! empty( $eme_recaptcha_key ) && $eme_recaptcha ) {
-        $url      = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $eme_recaptcha_key . '&response=' . eme_sanitize_request( $_POST['g-recaptcha-response'] );
-        $response = wp_remote_get( $url );
+    $eme_recaptcha            = get_option( 'eme_recaptcha_for_forms' );
+    $eme_recaptcha_site_key   = get_option( 'eme_recaptcha_site_key' );
+    $eme_recaptcha_api_key    = get_option( 'eme_recaptcha_api_key' );
+    $eme_recaptcha_project_id = get_option( 'eme_recaptcha_project_id' );
+    if ( isset( $_POST['g-recaptcha-response'] ) && ! empty( $eme_recaptcha_api_key ) && ! empty( $eme_recaptcha_project_id ) && $eme_recaptcha ) {
+        $url  = 'https://recaptchaenterprise.googleapis.com/v1/projects/' . $eme_recaptcha_project_id . '/assessments?key=' . $eme_recaptcha_api_key;
+        $data = [
+            'event' => [
+                'token'   => eme_sanitize_request( $_POST['g-recaptcha-response'] ),
+                'siteKey' => $eme_recaptcha_site_key,
+            ],
+        ];
+        $response = wp_remote_post( $url, [
+            'headers' => [ 'Content-Type' => 'application/json' ],
+            'body'    => wp_json_encode( $data ),
+        ] );
         if ( is_wp_error( $response ) ) {
             return false;
-        } else {
-            $body = wp_remote_retrieve_body( $response );
-            $responseCaptchaData = json_decode( $body );
-            if ( $responseCaptchaData->success ) {
-                return true;
-            } else {
-                return false;
-            }
         }
+        $body                = json_decode( wp_remote_retrieve_body( $response ) );
+        $score               = $body->riskAnalysis->score ?? 0;
+        $valid               = $body->tokenProperties->valid ?? false;
+        $eme_recaptcha_score = get_option( 'eme_recaptcha_score', 0.5 );
+        return $valid && $score >= (float) $eme_recaptcha_score;
     } else {
         return false;
     }

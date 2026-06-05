@@ -321,7 +321,7 @@ function eme_check_friendlycaptcha() {
     $eme_friendlycaptcha           = get_option( 'eme_friendlycaptcha_for_forms' );
     $eme_friendlycaptcha_sitekey   = get_option( 'eme_friendlycaptcha_site_key' );
     $eme_friendlycaptcha_secretkey = get_option( 'eme_friendlycaptcha_secret_key' );
-    if ( isset( $_POST['frc-captcha-response'] ) && ! empty( $eme_friendlycaptcha_key ) && $eme_cfcaptcha ) {
+    if ( isset( $_POST['frc-captcha-response'] ) && ! empty( $eme_friendlycaptcha_secretkey ) && !empty($eme_friendlycaptcha_sitekey) && $eme_friendlycaptcha ) {
         $url      = 'https://global.frcapi.com/api/v2/captcha/siteverify';
         $data     = [
             'sitekey'  => $eme_friendlycaptcha_sitekey,

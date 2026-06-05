@@ -459,8 +459,7 @@ function eme_register_scripts() {
         wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
     }
     if ( get_option( 'eme_friendlycaptcha_for_forms' ) ) {
-        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
-        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
+        wp_register_script( 'eme-friendlycaptcha', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.2.0/site.compat.min.js', [ 'eme-basic' ], false, [ 'strategy' => 'async', 'in_footer' => true ] ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion,PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- External CDN script, version is managed by provider.
     }
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );

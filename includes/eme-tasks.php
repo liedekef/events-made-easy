@@ -1774,7 +1774,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
             } else {
                 $replacement = 0;
             }
-        } elseif ( preg_match( '/#_(TASK)?COMMENT/', $result ) ) {
+        } elseif ( preg_match( '/#_(TASK|TASKSIGNUP)?COMMENT/', $result ) ) {
             $replacement = $signup['comment'];
             $replacement = eme_apply_output_filters( $replacement, $target );
         } else {

@@ -5031,186 +5031,220 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         }
     }
 
-    if ( preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope ) ) {
-        if ( $show_ongoing ) {
-            $conditions[] = $wpdb->prepare(
-                "(DATE(event_start) = %s OR (event_start <= %s AND event_end >= %s))",
-                $scope,
-                $scope . ' 23:59:59',
-                $scope . ' 00:00:00'
-            );
-        } else {
-            $conditions[] = $wpdb->prepare( "DATE(event_start) = %s", $scope );
+    if ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
+        $date = $matches[1];
+        if ( eme_is_date( $date ) ) {
+            if ( $show_ongoing ) {
+                $conditions[] = $wpdb->prepare(
+                    "(event_start <= %s AND event_end >= %s)",
+                    $date . ' 23:59:59',
+                    $date . ' 00:00:00'
+                );
+            } else {
+                $conditions[] = $wpdb->prepare(
+                    "(event_start >= %s AND event_start <= %s)",
+                    $date . ' 00:00:00',
+                    $date . ' 23:59:59'
+                );
+            }
         }
     } elseif ( preg_match( '/^--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
         $limit_start = $matches[1];
-        if ( $show_ongoing ) {
-            $conditions[] = $wpdb->prepare( "event_start < %s", $limit_start . ' 00:00:00' );
-        } else {
-            $conditions[] = $wpdb->prepare( "event_end < %s", $limit_start . ' 00:00:00' );
+        if ( eme_is_date( $limit_start ) ) {
+            if ( $show_ongoing ) {
+                $conditions[] = $wpdb->prepare( "event_start < %s", $limit_start . ' 00:00:00' );
+            } else {
+                $conditions[] = $wpdb->prepare( "event_end < %s", $limit_start . ' 00:00:00' );
+            }
         }
     } elseif ( preg_match( '/^\+\+([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-        $limit_start  = $matches[1];
-        $conditions[] = $wpdb->prepare( "event_start > %s", $limit_start . ' 23:59:59' );
+        $limit_start = $matches[1];
+        if ( eme_is_date( $limit_start ) ) {
+            $conditions[] = $wpdb->prepare( "event_start > %s", $limit_start . ' 23:59:59' );
+        }
     } elseif ( preg_match( '/^0000-([0-9]{2})$/', $scope, $matches ) ) {
         $start_month = $matches[1];
-        $cur_month = $eme_date_obj->getMonth();
-        if ($cur_month>$start_month) {
+        $cur_month   = $eme_date_obj->getMonth();
+        if ( $cur_month > $start_month ) {
             $eme_date_obj->addOneYear();
         }
         $eme_date_obj->setMonth( $start_month );
-        $limit_start = $eme_date_obj->startOfMonth()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfMonth()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^0000-([0-9]{2})--relative\+(\d+)m$/', $scope, $matches ) ) {
         $start_month = $matches[1];
-        $rel_months = $matches[2];
-        $cur_month = $eme_date_obj->getMonth();
-        if ($cur_month>$start_month+$rel_months) {
+        $rel_months  = $matches[2];
+        $cur_month   = $eme_date_obj->getMonth();
+        if ( $cur_month > $start_month + $rel_months ) {
             $eme_date_obj->addOneYear();
         }
         $eme_date_obj->setMonth( $start_month );
-        $limit_start = $eme_date_obj->startOfMonth()->getDateTime();
-        $eme_date_obj->addMonths( abs($rel_months) );
-        $limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfMonth()->getDateTime();
+        $eme_date_obj->addMonths( abs( $rel_months ) );
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_week' ) {
-        // this comes from global WordPress preferences
         $start_of_week = get_option( 'start_of_week' );
         $eme_date_obj->setWeekStartDay( $start_of_week );
-        $limit_start = $eme_date_obj->startOfWeek()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfWeek()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfWeek()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfWeek()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'next_week' ) {
-        // this comes from global WordPress preferences
         $start_of_week = get_option( 'start_of_week' );
         $eme_date_obj->setWeekStartDay( $start_of_week );
         $eme_date_obj->addOneWeek();
-        $limit_start = $eme_date_obj->startOfWeek()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfWeek()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfWeek()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfWeek()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_month' ) {
-        $limit_start = $eme_date_obj->startOfMonth()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfMonth()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'next_month' ) {
         $eme_date_obj->startOfMonth()->addOneMonth();
-        $limit_start = $eme_date_obj->startOfMonth()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_start  = $eme_date_obj->startOfMonth()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_year' ) {
-        $year        = $eme_date_obj->getYear();
-        $limit_start = "$year-01-01 00:00:00";
-        $limit_end   = "$year-12-31 23:59:59";
+        $year         = $eme_date_obj->getYear();
+        $limit_start  = "$year-01-01 00:00:00";
+        $limit_end    = "$year-12-31 23:59:59";
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'next_year' ) {
-        $year        = $eme_date_obj->getYear() + 1;
-        $limit_start = "$year-01-01 00:00:00";
-        $limit_end   = "$year-12-31 23:59:59";
+        $year         = $eme_date_obj->getYear() + 1;
+        $limit_start  = "$year-01-01 00:00:00";
+        $limit_end    = "$year-12-31 23:59:59";
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-        $limit_start = $matches[1] . ' 00:00:00';
-        $limit_end   = $matches[2] . ' 23:59:59';
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_start = $matches[1];
+        $date_end   = $matches[2];
+        if ( eme_is_date( $date_start ) && eme_is_date( $date_end ) ) {
+            $limit_start  = $date_start . ' 00:00:00';
+            $limit_end    = $date_end . ' 23:59:59';
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})$/', $scope, $matches ) ) {
-        $limit_start = $matches[1];
-        $limit_end   = $matches[2];
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $dt_start = $matches[1];
+        $dt_end   = $matches[2];
+        if ( eme_is_datetime( $dt_start ) && eme_is_datetime( $dt_end ) ) {
+            $limit_start  = $dt_start;
+            $limit_end    = $dt_end;
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--today$/', $scope, $matches ) ) {
-        $limit_start = $matches[1] . ' 00:00:00';
-        $limit_end   = $today . ' 23:59:59';
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_start = $matches[1];
+        if ( eme_is_date( $date_start ) ) {
+            $limit_start  = $date_start . ' 00:00:00';
+            $limit_end    = $today . ' 23:59:59';
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--yesterday$/', $scope, $matches ) ) {
-        $limit_start = $matches[1] . ' 00:00:00';
-        $limit_end   = $eme_date_obj->minusDays( 1 )->endOfDay()->getDateTime();
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_start = $matches[1];
+        if ( eme_is_date( $date_start ) ) {
+            $limit_start  = $date_start . ' 00:00:00';
+            $limit_end    = $eme_date_obj->minusDays( 1 )->endOfDay()->getDateTime();
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^yesterday--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-        $limit_start = $eme_date_obj->minusDays( 1 )->startOfDay()->getDateTime();
-        $limit_end   = $matches[1] . ' 23:59:59';
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_end = $matches[1];
+        if ( eme_is_date( $date_end ) ) {
+            $limit_start  = $eme_date_obj->minusDays( 1 )->startOfDay()->getDateTime();
+            $limit_end    = $date_end . ' 23:59:59';
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^today--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = $matches[1] . ' 23:59:59';
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_end = $matches[1];
+        if ( eme_is_date( $date_end ) ) {
+            $limit_start  = $today . ' 00:00:00';
+            $limit_end    = $date_end . ' 23:59:59';
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^\+(\d+)d$/', $scope, $matches ) ) {
-        $days        = $matches[1];
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
+        $days         = $matches[1];
+        $limit_start  = $today . ' 00:00:00';
+        $limit_end    = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^\-(\d+)d$/', $scope, $matches ) ) {
-        $days        = $matches[1];
-        $limit_start = $eme_date_obj->minusDays( $days )->startOfDay()->getDateTime();
-        $limit_end   = $eme_date_obj->endOfDay()->getDateTime();
+        $days         = $matches[1];
+        $limit_start  = $eme_date_obj->minusDays( $days )->startOfDay()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfDay()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^(\-?\+?\d+)d--(\-?\+?\d+)d$/', $scope, $matches ) ) {
-        $day1        = $matches[1];
-        $day2        = $matches[2];
-        $limit_start = $eme_date_obj->copy()->modifyDays( $day1 )->startOfDay()->getDateTime();
-        $limit_end   = $eme_date_obj->copy()->modifyDays( $day2 )->endOfDay()->getDateTime();
+        $day1         = $matches[1];
+        $day2         = $matches[2];
+        $limit_start  = $eme_date_obj->copy()->modifyDays( $day1 )->startOfDay()->getDateTime();
+        $limit_end    = $eme_date_obj->copy()->modifyDays( $day2 )->endOfDay()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^relative\-(\d+)d--([1-9][0-9]{3}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-        $days      = $matches[1];
-        $limit_end = $matches[2] . ' 23:59:59';
-        $eme_date_obj->setTimestampFromString( $limit_end . ' ' . EME_TIMEZONE );
-        $limit_start = $eme_date_obj->minusDays( $days )->startOfDay()->getDateTime();
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $days    = $matches[1];
+        $date_end = $matches[2];
+        if ( eme_is_date( $date_end ) ) {
+            $limit_end   = $date_end . ' 23:59:59';
+            $eme_date_obj->setTimestampFromString( $limit_end . ' ' . EME_TIMEZONE );
+            $limit_start  = $eme_date_obj->minusDays( $days )->startOfDay()->getDateTime();
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^([1-9][0-9]{3}-[0-9]{2}-[0-9]{2})--relative\+(\d+)d$/', $scope, $matches ) ) {
-        $limit_start = $matches[1] . ' 00:00:00';
-        $days        = $matches[2];
-        $eme_date_obj->setTimestampFromString( $limit_start . ' ' . EME_TIMEZONE );
-        $limit_end = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $date_start = $matches[1];
+        if ( eme_is_date( $date_start ) ) {
+            $limit_start = $date_start . ' 00:00:00';
+            $days        = $matches[2];
+            $eme_date_obj->setTimestampFromString( $limit_start . ' ' . EME_TIMEZONE );
+            $limit_end    = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
+            $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        }
     } elseif ( preg_match( '/^\+(\d+)m$/', $scope, $matches ) ) {
         $months_in_future = $matches[1]++;
         $limit_start      = $eme_date_obj->startOfMonth()->getDateTime();
         $eme_date_obj->addMonths( $months_in_future );
-        $limit_end = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^\-(\d+)m$/', $scope, $matches ) ) {
         $months_in_past = $matches[1]++;
         $limit_start    = $eme_date_obj->startOfMonth()->minusMonths( $months_in_past )->startOfMonth()->getDateTime();
         $limit_end      = $eme_date_obj->endOfMonth()->getDateTime();
-        $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
+        $conditions[]   = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( preg_match( '/^(\-?\+?\d+)m--(\-?\+?\d+)m$/', $scope, $matches ) ) {
-        $months1     = $matches[1];
-        $months2     = $matches[2];
-        $limit_start = $eme_date_obj->copy()->startOfMonth()->modifyMonths( $months1 )->startOfMonth()->getDateTime();
-        $limit_end   = $eme_date_obj->copy()->startOfMonth()->modifyMonths( $months2 )->endOfMonth()->getDateTime();
+        $months1      = $matches[1];
+        $months2      = $matches[2];
+        $limit_start  = $eme_date_obj->copy()->startOfMonth()->modifyMonths( $months1 )->startOfMonth()->getDateTime();
+        $limit_end    = $eme_date_obj->copy()->startOfMonth()->modifyMonths( $months2 )->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'today--this_week' ) {
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = $eme_date_obj->endOfWeek()->getDateTime();
+        $limit_start  = $today . ' 00:00:00';
+        $limit_end    = $eme_date_obj->endOfWeek()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'today--this_week_plus_one' ) {
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = $eme_date_obj->endOfWeek()->addOneDay()->getDateTime();
+        $limit_start  = $today . ' 00:00:00';
+        $limit_end    = $eme_date_obj->endOfWeek()->addOneDay()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'today--this_month' ) {
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+        $limit_start  = $today . ' 00:00:00';
+        $limit_end    = $eme_date_obj->endOfMonth()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'today--this_year' ) {
-        $year        = $eme_date_obj->getYear();
-        $limit_start = $today . ' 00:00:00';
-        $limit_end   = "$year-12-31 23:59:59";
+        $year         = $eme_date_obj->getYear();
+        $limit_start  = $today . ' 00:00:00';
+        $limit_end    = "$year-12-31 23:59:59";
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_week--today' ) {
-        $limit_start = $eme_date_obj->startOfWeek()->getDateTime();
-        $limit_end   = $today . ' 23:59:59';
+        $limit_start  = $eme_date_obj->startOfWeek()->getDateTime();
+        $limit_end    = $today . ' 23:59:59';
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_month--today' ) {
-        $limit_start = $eme_date_obj->startOfMonth()->getDateTime();
-        $limit_end   = $today . ' 23:59:59';
+        $limit_start  = $eme_date_obj->startOfMonth()->getDateTime();
+        $limit_end    = $today . ' 23:59:59';
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_year--today' ) {
-        $year        = $eme_date_obj->getYear();
-        $limit_start = "$year-01-01 00:00:00";
-        $limit_end   = $today . ' 23:59:59';
+        $year         = $eme_date_obj->getYear();
+        $limit_start  = "$year-01-01 00:00:00";
+        $limit_end    = $today . ' 23:59:59';
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'this_year--yesterday' ) {
-        $year        = $eme_date_obj->getYear();
-        $limit_start = "$year-01-01 00:00:00";
-        $limit_end   = $eme_date_obj->minusDays( 1 )->endOfDay()->getDateTime();
+        $year         = $eme_date_obj->getYear();
+        $limit_start  = "$year-01-01 00:00:00";
+        $limit_end    = $eme_date_obj->minusDays( 1 )->endOfDay()->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'today--future' ) {
         if ( $show_ongoing ) {
@@ -5240,50 +5274,53 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     } elseif ( $scope == 'today' ) {
         if ( $show_ongoing ) {
             $conditions[] = $wpdb->prepare(
-                "(DATE(event_start) = %s OR (event_start <= %s AND event_end >= %s))",
-                $today,
-                $today . ' 00:00:00',
+                "(event_start <= %s AND event_end >= %s)",
+                $today . ' 23:59:59',
                 $today . ' 00:00:00'
             );
         } else {
-            $conditions[] = $wpdb->prepare( "DATE(event_start) = %s", $today );
+            $conditions[] = $wpdb->prepare(
+                "(event_start >= %s AND event_start <= %s)",
+                $today . ' 00:00:00',
+                $today . ' 23:59:59'
+            );
         }
     } elseif ( $scope == 'now--today' ) {
         $today_end = $today . ' 23:59:59';
         if ( $show_ongoing ) {
             $conditions[] = $wpdb->prepare(
-                "(DATE(event_start) = %s AND event_start >= %s) OR (event_start < %s AND event_end >= %s)",
-                $today,
-                $this_datetime,
-                $today . ' 00:00:00',
+                "(event_start <= %s AND event_end >= %s)",
+                $today_end,
                 $this_datetime
             );
         } else {
             $conditions[] = $wpdb->prepare(
-                "DATE(event_start) = %s AND event_start >= %s",
-                $today,
-                $this_datetime
+                "(event_start >= %s AND event_start <= %s)",
+                $this_datetime,
+                $today_end
             );
         }
     } elseif ( preg_match( '/now--(\d+)d$/', $scope, $matches ) ) {
-        $days        = $matches[1];
-        $limit_start = $this_datetime;
-        $limit_end   = $eme_date_obj->addDays( $days )->getDateTime();
+        $days         = $matches[1];
+        $limit_start  = $this_datetime;
+        $limit_end    = $eme_date_obj->addDays( $days )->getDateTime();
         $conditions[] = eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing );
     } elseif ( $scope == 'tomorrow' ) {
         $tomorrow = $eme_date_obj->addOneDay()->getDate();
         if ( $show_ongoing ) {
             $conditions[] = $wpdb->prepare(
-                "(DATE(event_start) = %s OR (event_start <= %s AND event_end >= %s))",
-                $tomorrow,
-                $tomorrow . ' 00:00:00',
+                "(event_start <= %s AND event_end >= %s)",
+                $tomorrow . ' 23:59:59',
                 $tomorrow . ' 00:00:00'
             );
         } else {
-            $conditions[] = $wpdb->prepare( "DATE(event_start) = %s", $tomorrow );
+            $conditions[] = $wpdb->prepare(
+                "(event_start >= %s AND event_start <= %s)",
+                $tomorrow . ' 00:00:00',
+                $tomorrow . ' 23:59:59'
+            );
         }
     } elseif ( $scope == 'ongoing' ) {
-        // only shows ongoing events, for this we try to use the date and time, but it might be incorrect since there's no user timezone info
         $conditions[] = $wpdb->prepare( "(event_start <= %s AND event_end >= %s)", $this_datetime, $this_datetime );
     } else {
         if ( $scope != 'all' ) {

@@ -1415,18 +1415,10 @@ function eme_are_dates_valid( $dates ) {
 }
 
 function eme_is_date( $date ) {
-    // check the format yyyy-mm-dd
-    if ( strlen( $date ) != 10 ) {
-        return false;
-    }
-    $year  = intval( substr( $date, 0, 4 ) );
-    $month = intval( substr( $date, 5, 2 ) );
-    $day   = intval( substr( $date, 8 ) );
-    return ( checkdate( $month, $day, $year ) );
+    return eme_is_datetime( $date, 'Y-m-d');
 }
 
-function eme_is_datetime( $date ) {
-    $format = 'Y-m-d H:i:s';
+function eme_is_datetime( $date, $format = 'Y-m-d H:i:s' ) {
     $d      = DateTime::createFromFormat( $format, $date );
     return $d && $d->format( $format ) == $date;
 }

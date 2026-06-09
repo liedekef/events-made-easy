@@ -401,7 +401,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 					if ( empty( $info['link'] ) ) {
 						$holiday_text = $info['name'];
 					} else {
-						$holiday_text = "<a href='" . $info['link'] . "' target='_blank'>" . $info['name'] . '</a>';
+						$holiday_text = "<a href='" . $info['link'] . "' target='_blank' rel='noopener noreferrer'>" . $info['name'] . '</a>';
 					}
 
 					// if there's an event that day, the day-number is a link and will be set later on
@@ -413,7 +413,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 						$event_date = explode( '-', $day_key );
 						$event_day  = ltrim( $event_date[2], '0' );
 						if ( ! empty( $info['link'] ) ) {
-							$event_day = "<a href='" . $info['link'] . "' target='_blank'>" . $event_day . '</a>';
+							$event_day = "<a href='" . $info['link'] . "' target='_blank' rel='noopener noreferrer'>" . $event_day . '</a>';
 						}
 						$cells[ $day_key ] = "<span class='$eme_holiday_class' title='$holiday_title'>$event_day</span>";
 						if ( $full ) {

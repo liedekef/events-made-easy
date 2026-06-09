@@ -2842,7 +2842,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $lang = $ctx['lang'];
             $event_link = eme_event_url( $event, $lang );
             if ( $event_link == $event['event_url'] ) {
-                $linktarget = "target='_blank'";
+                $linktarget = "target='_blank' rel='noopener noreferrer'";
             } else {
                 $linktarget = '';
             }
@@ -10197,9 +10197,9 @@ function eme_ajax_events_list() {
             $event_url              = esc_url( eme_event_url( $event ) );
             if ( ! $view_trash ) {
                 if ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
-                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . esc_html__( 'Preview event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank' rel='noopener noreferrer'>" . esc_html__( 'Preview event', 'events-made-easy' ) . '</a>';
                 } else {
-                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . esc_html__( 'View event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank' rel='noopener noreferrer'>" . esc_html__( 'View event', 'events-made-easy' ) . '</a>';
                 }
             }
         }

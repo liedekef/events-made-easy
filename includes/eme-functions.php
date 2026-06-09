@@ -3303,7 +3303,7 @@ function eme_get_uploaded_file_html( $file, $new_tab = 1 ) {
     $name = esc_html($file['name']);
     $url  = esc_url($file['url']);
     if ( $new_tab ) {
-        return "<a href='$url' target='_blank'>$name</a><br>";
+        return "<a href='$url' target='_blank' rel='noopener noreferrer'>$name</a><br>";
     } else {
         return "<a href='$url'>$name</a><br>";
     }
@@ -3559,7 +3559,7 @@ function eme_get_attachment_link( $id ) {
                 if ( '' === trim( $link_text ) ) {
                     $link_text = pathinfo( get_attached_file( $_post->ID ), PATHINFO_BASENAME );
                 }
-                return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
+                return "<a target='_blank' rel='noopener noreferrer' href='$url'>".esc_html($link_text)."</a>";
             }
         } elseif ( is_array( $id ) ){
             if (eme_is_empty_string($id[0])) {
@@ -3575,7 +3575,7 @@ function eme_get_attachment_link( $id ) {
                 $link_text = pathinfo( $id[0], PATHINFO_BASENAME );
             }
             $url = esc_url( str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id[1] ) );
-            return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
+            return "<a target='_blank' rel='noopener noreferrer' href='$url'>".esc_html($link_text)."</a>";
         } else {
             // not numeric ? Then it is a path
             $link_text = pathinfo( $id, PATHINFO_FILENAME );
@@ -3586,7 +3586,7 @@ function eme_get_attachment_link( $id ) {
             $link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
             $link_text .= ".$extension";
             $url = esc_url( str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id ) );
-            return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
+            return "<a target='_blank' rel='noopener noreferrer' href='$url'>".esc_html($link_text)."</a>";
         }
     }
     return '';

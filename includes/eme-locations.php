@@ -2705,7 +2705,7 @@ function eme_add_directions_form( $location ) {
     $locale_code = substr( get_locale(), 0, 2 );
     $res         = '';
     if ( isset( $location['location_address1'] ) && isset( $location['location_city'] ) ) {
-        $res .= '<form action="//maps.google.com/maps" method="get" target="_blank" style="text-align:left;">';
+        $res .= '<form action="//maps.google.com/maps" method="get" target="_blank" rel="noopener noreferrer" style="text-align:left;">';
         $res .= '<div id="eme_direction_form"><label for="saddr">' . __( 'Your Street Address', 'events-made-easy' ) . '</label><br>';
         $res .= '<input type="text" name="saddr" id="saddr" value="">';
         $res .= '<input type="hidden" name="daddr" value="' . esc_attr( $location['location_address1'] . ', ' . $location['location_city'] ) . '">';

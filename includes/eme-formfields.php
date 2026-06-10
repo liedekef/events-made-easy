@@ -2144,8 +2144,8 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             } else {
                 $empty_first = '';
                 $seats_options = $booked_seats_options;
-                if ( $ctx['required'] && $min_allowed == 0 ) {
-                    $seats_options = array_filter( $booked_seats_options, fn( $k ) => $k !== 0, ARRAY_FILTER_USE_KEY );
+                if ( $ctx['required'] && $seats_options[0] == 0 ) {
+                    $seats_options = array_filter( $seats_options, fn( $k ) => $k !== 0, ARRAY_FILTER_USE_KEY );
                     $empty_first = __( 'Select', 'events-made-easy');
                 }
                 $replacement = eme_ui_select( $entered_val, $fieldname, $seats_options, $empty_first, $ctx['required'], "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
@@ -2178,7 +2178,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             } else {
                 $empty_first = '';
                 $seats_options = $booked_seats_options[ $field_id - 1 ];
-                if ( $ctx['required'] && $multi_min_allowed[ $field_id - 1 ] == 0 ) {
+                if ( $ctx['required'] && $seats_options[0] == 0 ) {
                     $seats_options = array_filter( $seats_options, fn( $k ) => $k !== 0, ARRAY_FILTER_USE_KEY );
                     $empty_first = __( 'Select', 'events-made-easy');
                 }

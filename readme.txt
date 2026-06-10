@@ -107,6 +107,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * support #_TASKSIGNUPCOMMENT (alias for #_TASKCOMMENT)
 * fix showing categories for locations when using #_CATEGORIES placeholders
 * event scopes including dates will now ignore the scope if the dates are not valid (so "2026-06-31" as any date-scope value will cause the scope to be ignored)
+* Fix #_DAYS_TILL_START, #_DAYS_TILL_END, #_DAYS_FROM_START, #_NIGHTS_TILL_START, #_NIGHTS_TILL_END placeholders
 
 = 3.0.75  (2026/06/05) =
 * Make captcha work for cancel booking form too

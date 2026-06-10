@@ -3160,23 +3160,23 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_DAYS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
-            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
+            return $ctx['eme_date_obj_now']->copy()->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() );
         },
         '/#_NIGHTS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
-            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
+            return $ctx['eme_date_obj_now']->copy()->startOfDay()->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
         '/#_DAYS_FROM_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );
-            return $eme_date_obj->getDifferenceInDays( $ctx['eme_date_obj_now'] );
+            return $eme_date_obj->startOfDay()->getDifferenceInDays( $ctx['eme_date_obj_now']->copy()->startOfDay() );
         },
         '/#_DAYS_TILL_END$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
-            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj );
+            return $ctx['eme_date_obj_now']->copy()->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() );
         },
         '/#_NIGHTS_TILL_END$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_end'], EME_TIMEZONE );
-            return $ctx['eme_date_obj_now']->getDifferenceInDays( $eme_date_obj->endOfDay() );
+            return $ctx['eme_date_obj_now']->copy()->startOfDay()->getDifferenceInDays( $eme_date_obj->endOfDay() );
         },
         '/#_HOURS_TILL_START$/' => function( $result, $matches, $ctx ) {
             $eme_date_obj = new emeExpressiveDate( $ctx['event']['event_start'], EME_TIMEZONE );

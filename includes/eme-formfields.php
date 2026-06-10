@@ -2142,7 +2142,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( ! $min_allowed_is_multi && $min_allowed > 0 && $min_allowed == $max_allowed ) {
                 $replacement = "<input type='hidden' name='$fieldname' value='$min_allowed'>";
             } else {
-                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
+                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options, '', $ctx['required'], "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
             }
             if ( $waitinglist && ! $editing_booking_from_backend ) {
                 $replacement .= "<span id='eme_waitinglist'><br>" . eme_translate( get_option( 'eme_rsvp_on_waiting_list_string' ) ) . '</span>';
@@ -2170,7 +2170,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
                 $replacement = "<input type='hidden' name='$fieldname' value='{$multi_min_allowed[$field_id-1]}'>";
             } else {
-                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
+                $replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', $ctx['required'], "$dynamic_price_class_basic $dfc_basic eme_snapselect" );
             }
         }
         return [ 'html' => $replacement ];
@@ -2387,10 +2387,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 $found = true;
                 $ret   = $handler( $result, $matches, $ctx );
                 if ( is_array( $ret ) ) {
-                    if ( ! empty( $ret['early_return'] ) )   { return $ret['early_return']; }
+                    if ( ! empty( $ret['early_return'] ) ) { return $ret['early_return']; }
                     $replacement = $ret['html'] ?? '';
-                    if ( ! empty( $ret['not_found'] ) )      { $found = false; }
-                    if ( ! empty( $ret['set_required'] ) ) { $required = true; $required_att = "required='required'"; }
+                    if ( ! empty( $ret['not_found'] ) )    { $found = false; }
+                    if ( ! empty( $ret['set_required'] ) ) { $required = true; } // to indicate the required flag in the found-section
                 } else {
                     $replacement = (string) $ret;
                 }

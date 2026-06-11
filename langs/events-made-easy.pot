@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-10T16:08:38+00:00\n"
+"POT-Creation-Date: 2026-06-11T18:03:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -9590,23 +9590,23 @@ msgid "Google reCAPTCHA site key"
 msgstr ""
 
 #: includes/eme-options.php:1500
-#: includes/eme-options.php:1501
-#: includes/eme-options.php:1502
-#: includes/eme-options.php:1505
-#: includes/eme-options.php:1506
-#: includes/eme-options.php:1508
-#: includes/eme-options.php:1509
-#: includes/eme-options.php:1511
-#: includes/eme-options.php:1512
-msgid "This field is required"
+msgid "Go to https://console.cloud.google.com/security/recaptcha to get your reCAPTCHA key"
 msgstr ""
 
 #: includes/eme-options.php:1501
 msgid "Google reCAPTCHA API key (Cloud project)"
 msgstr ""
 
+#: includes/eme-options.php:1501
+msgid "Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project"
+msgstr ""
+
 #: includes/eme-options.php:1502
 msgid "Google reCAPTCHA Cloud project ID"
+msgstr ""
+
+#: includes/eme-options.php:1502
+msgid "Your Google cloud project ID"
 msgstr ""
 
 #: includes/eme-options.php:1503
@@ -9627,6 +9627,15 @@ msgstr ""
 
 #: includes/eme-options.php:1505
 msgid "hCaptcha site key"
+msgstr ""
+
+#: includes/eme-options.php:1505
+#: includes/eme-options.php:1506
+#: includes/eme-options.php:1508
+#: includes/eme-options.php:1509
+#: includes/eme-options.php:1511
+#: includes/eme-options.php:1512
+msgid "This field is required"
 msgstr ""
 
 #: includes/eme-options.php:1506

@@ -8741,9 +8741,6 @@ msgstr "Používať pre formuláre Google reCAPTCHA?"
 msgid "Google reCAPTCHA site key"
 msgstr "Google reCAPTCHA kľúč stránky"
 
-#: includes/eme-options.php:1500
-#: includes/eme-options.php:1501
-#: includes/eme-options.php:1502
 #: includes/eme-options.php:1505
 #: includes/eme-options.php:1506
 #: includes/eme-options.php:1508
@@ -14925,4 +14922,16 @@ msgstr ""
 
 #: includes/eme-templates.php:299
 msgid "See <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">this page</a> for info on what you can enter here."
+msgstr ""
+
+#: includes/eme-options.php:1500
+msgid "Go to https://console.cloud.google.com/security/recaptcha to get your reCAPTCHA key"
+msgstr ""
+
+#: includes/eme-options.php:1501
+msgid "Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project"
+msgstr ""
+
+#: includes/eme-options.php:1502
+msgid "Your Google cloud project ID"
 msgstr ""

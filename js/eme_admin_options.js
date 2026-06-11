@@ -4,18 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (recaptchaEl) {
             if (recaptchaEl.checked) {
                 eme_toggle(EME.$('#eme_recaptcha_site_key_row'), true);
-                eme_toggle(EME.$('#eme_recaptcha_secret_key_row'), true);
-                const siteKeyEl = EME.$('#eme_recaptcha_site_key');
-                const secretKeyEl = EME.$('#eme_recaptcha_secret_key');
-                if (siteKeyEl) siteKeyEl.required = true;
-                if (secretKeyEl) secretKeyEl.required = true;
+                eme_toggle(EME.$('#eme_recaptcha_api_key_row'), true);
+                eme_toggle(EME.$('#eme_recaptcha_project_id_row'), true);
+                eme_toggle(EME.$('#eme_recaptcha_score_row'), true);
+                EME.$('#eme_recaptcha_site_key').required = true;
+                EME.$('#eme_recaptcha_api_key').required = true;
+                EME.$('#eme_recaptcha_project_id').required = true;
+                EME.$('#eme_recaptcha_score').required = true;
             } else {
                 eme_toggle(EME.$('#eme_recaptcha_site_key_row'), false);
-                eme_toggle(EME.$('#eme_recaptcha_secret_key_row'), false);
-                const siteKeyEl = EME.$('#eme_recaptcha_site_key');
-                const secretKeyEl = EME.$('#eme_recaptcha_secret_key');
-                if (siteKeyEl) siteKeyEl.required = false;
-                if (secretKeyEl) secretKeyEl.required = false;
+                eme_toggle(EME.$('#eme_recaptcha_api_key_row'), false);
+                eme_toggle(EME.$('#eme_recaptcha_project_id_row'), false);
+                eme_toggle(EME.$('#eme_recaptcha_score_row'), false);
+                EME.$('#eme_recaptcha_site_key').required = false;
+                EME.$('#eme_recaptcha_api_key').required = false;
+                EME.$('#eme_recaptcha_project_id').required = false;
+                EME.$('#eme_recaptcha_score').required = false;
             }
         }
         

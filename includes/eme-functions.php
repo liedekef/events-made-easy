@@ -4302,7 +4302,7 @@ function eme_get_configured_captchas() {
     $captchas = wp_cache_get( 'eme_configured_captchas' );
     if ( $captchas === false ) {
         $captchas = [];
-        if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) )
+        if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) && ! empty( get_option( 'eme_recaptcha_api_key' ) ) && ! empty( get_option( 'eme_recaptcha_project_id' ) ) )
             $captchas['recaptcha'] = __('Google reCAPTCHA','events-made-easy');
         if ( ! empty( get_option( 'eme_hcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_hcaptcha_site_key' ) ) )
             $captchas['hcaptcha'] = __('hCaptcha','events-made-easy');

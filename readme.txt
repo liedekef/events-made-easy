@@ -98,15 +98,15 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.0.76  (2026/06/) =
+= 3.1.0  (2026/06/) =
 * Migrated Google reCaptcha to their new Cloud Enterprise method.
   WARNING: old recaptcha keys will need to be migrated and the cloud keys need to be used,
            together with your cloud project. You need to change your recaptcha option settings.
   THIS IS INCOMPATIBLE with earlier releases (blame Google). I recommend to not use reCaptcha or migrate your keys per Google instructions
 * Make sure #REQ_SEATS respects the required setting (meaning you need to select at least 1 seat, even if 0 is set as minimum number of seats to book)
-* support #_TASKSIGNUPCOMMENT (alias for #_TASKCOMMENT)
-* fix showing categories for locations when using #_CATEGORIES placeholders
-* event scopes including dates will now ignore the scope if the dates are not valid (so "2026-06-31" as any date-scope value will cause the scope to be ignored)
+* Support #_TASKSIGNUPCOMMENT (alias for #_TASKCOMMENT)
+* Fix showing categories for locations when using #_CATEGORIES placeholders
+* Event scopes including dates will now ignore the scope if the dates are not valid (so "2026-06-31" as any date-scope value will cause the scope to be ignored)
 * Fix #_DAYS_TILL_START, #_DAYS_TILL_END, #_DAYS_FROM_START, #_NIGHTS_TILL_START, #_NIGHTS_TILL_END placeholders
 
 = 3.0.75  (2026/06/05) =

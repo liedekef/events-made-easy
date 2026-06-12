@@ -98,6 +98,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.1  (2026/06/) =
+* Jodit update
+* ftable update
+
 = 3.1.0  (2026/06/11) =
 * Migrated Google reCaptcha to their new Cloud Enterprise method.
   WARNING: old recaptcha keys will need to be migrated and the cloud keys need to be used,

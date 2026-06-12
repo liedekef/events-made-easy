@@ -4,18 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return eme_htmlDecode(html.replace(/"/g, "'").replace(/ \/>/g, '>'));
     }
 
-    const findMatchingFont = (computedFont, fontList) => {
-        const computedFonts = computedFont.split(',');
-        for (const computedSingleFont of computedFonts) {
-            for (const [fontValue, fontDisplay] of Object.entries(fontList)) {
-                if (fontValue.includes(computedSingleFont)) {
-                    return fontDisplay + ' \u00A0';
-                }
-            }
-        }
-        return '';
-    };
-
     const findMatchingTagName = (element, controlList) => {
         const tagName = element.tagName.toLowerCase().trim();
         for (const [value, text] of Object.entries(controlList)) {
@@ -25,62 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return '';
     };
-
-    // Debounced to avoid performance issues (e.g., during rapid selection changes)
-    const updateFontButtons = eme_debounce((editor) => {
-        let current = editor.s.current();
-        if (!current) return;
-
-        // Handle text nodes
-        if (current.nodeType === Node.TEXT_NODE) {
-            current = current.parentElement;
-        }
-        if (!(current instanceof Element)) return;
-
-        const computedStyle = window.getComputedStyle(current);
-        const defaultStyle = window.getComputedStyle(editor.editor);
-
-        // --- Font Family Button ---
-        const fontButton = editor.toolbar.buttons.find(btn => btn.name === 'font');
-        if (fontButton?.control?.list) {
-            const computedFont = computedStyle.fontFamily;
-            const matchedFont = (computedFont === defaultStyle.fontFamily)
-                ? ''
-                : findMatchingFont(computedFont, fontButton.control.list);
-            fontButton.text.textContent = matchedFont;
-        }
-
-        // --- Font Size Button (with Jodit bug workaround) ---
-        const fontSizeButton = editor.toolbar.buttons.find(btn => btn.name === 'fontsize');
-        if (fontSizeButton) {
-            const computedSize = computedStyle.fontSize;
-            if (computedSize === defaultStyle.fontSize) {
-                //fontSizeButton.state.activated = false; // Fix for Jodit bug
-                //fontSizeButton.state.active = false;
-                fontSizeButton.text.textContent = '';
-            } else {
-                fontSizeButton.text.textContent = computedSize + ' \u00A0';
-            }
-        }
-
-        // --- Paragraph/Heading Button ---
-        const fontParagraphButton = editor.toolbar.buttons.find(btn => btn.name === 'paragraph');
-        if (fontParagraphButton?.control?.list) {
-            let currentElement = current;
-            let displayText = '';
-            let maxDepth = 10;
-
-            while (maxDepth-- > 0 && currentElement && currentElement !== editor.editor) {
-                const match = findMatchingTagName(currentElement, fontParagraphButton.control.list);
-                if (match) {
-                    displayText = (currentElement?.tagName?.toLowerCase().trim() === 'p') ? '' : match;
-                    break;
-                }
-                currentElement = currentElement.parentElement;
-            }
-            fontParagraphButton.text.textContent = displayText;
-        }
-    }, 100); // Debounce delay (ms)
 
     // ===== Jodit Default Configs (Outside Loop) =====
     Jodit.modules.Icon.set('insertNbsp', '<svg viewBox="0 0 100 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="96" height="36" rx="6" ry="6" fill="#f0f0f0" stroke="#333" stroke-width="3"/></svg>');
@@ -356,12 +288,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 '|', 'hr', 'insertNbsp', 'eraser',
                 '---', 'preview',
             ],
+            controls: {
+                font:     { component: 'select' },
+                fontsize: { component: 'select' },
+                paragraph:{ component: 'select' }
+            }
         });
-
-        // ===== Editor-Specific Events (Inside Loop) =====
-        //editor.events.on('processHTML', (html) => DOMPurify.sanitize(html));
-        editor.events.on('afterUpdateToolbar', () => updateFontButtons(editor));
-        //editor.events.on('focus', () => (editor.options.enter = 'p'));
 
         // Link Popup Logic
         editor.events.on('afterOpenPopup.link', (popup) => {
@@ -457,14 +389,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 '|', 'link', 'image', 'insertFromMediaLibrary',
                 '|', 'hr', 'insertNbsp', 'eraser'
             ],
-            //events: {
-            // Sanitize all HTML output (optional but recommended)
-            //   processHTML: (html) => DOMPurify.sanitize(html),
-            //}
+            controls: {
+                font:     { component: 'select' },
+                fontsize: { component: 'select' },
+                paragraph:{ component: 'select' }
+            }
         });
-
-        // ===== Editor-Specific Events (Inside Loop) =====
-        editor.events.on('afterUpdateToolbar', () => updateFontButtons(editor));
 
         // Link Popup Logic
         editor.events.on('afterOpenPopup.link', (popup) => {

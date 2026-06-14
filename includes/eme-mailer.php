@@ -2792,24 +2792,36 @@ function eme_emails_page() {
         }
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'archive_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_archive_mailing( $id );
         $data_forced_tab    = 'data-showtab="tab-mailings"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_delete_mailing( $id );
         $data_forced_tab    = 'data-showtab="tab-mailings"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_archivedmailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_delete_mailing( $id );
         $data_forced_tab    = 'data-showtab="tab-mailingsarchive"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_cancel_mailing( $id );

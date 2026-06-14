@@ -5669,11 +5669,29 @@ function eme_ajax_manage_people() {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         $ids       = eme_sanitize_request( $_POST['person_id'] );
         $ids_arr   = explode( ',', $ids );
-        if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+        if ( ! eme_is_numeric_array( $ids_arr ) ) {
             $fTableResult['Result']  = 'ERROR';
             $fTableResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
             print wp_json_encode( $ajaxResult );
             wp_die();
+        }
+        if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+            if ( current_user_can( get_option( 'eme_cap_author_person' ) ) ) {
+                $author_person_ids = eme_get_author_person_ids( $ids );
+                if ( count( $ids_arr ) != count( $author_person_ids ) ) {
+                    $ajaxResult['Result']  = 'ERROR';
+                    $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+                    print wp_json_encode( $ajaxResult );
+                    wp_die();
+                }
+                $ids     = implode( ',', $author_person_ids );
+                $ids_arr = $author_person_ids;
+            } else {
+                $ajaxResult['Result']  = 'ERROR';
+                $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+                print wp_json_encode( $ajaxResult );
+                wp_die();
+            }
         }
 
         switch ( $do_action ) {
@@ -5974,6 +5992,18 @@ function eme_ajax_generate_people_html( $ids_arr, $template_id, $template_id_hea
     }
     $html .= "$footer</body></html>";
     print $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- full print view HTML
+}
+
+function eme_get_author_person_ids( $person_ids, $user_id = 0 ) {
+    global $wpdb;
+    $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    if ( ! $user_id ) {
+        $user_id = get_current_user_id();
+    }
+    $ids_arr      = array_map( 'intval', explode( ',', $person_ids ) );
+    $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $people_table WHERE wp_id = %d AND person_id IN ($placeholders)", array_merge( [ $user_id ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_family_person_ids( $person_id ) {

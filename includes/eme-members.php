@@ -6055,11 +6055,11 @@ function eme_import_csv_members() {
     if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
         return __( 'Access denied', 'events-made-easy' );
     }
+
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-        // translators: %s is the detected file MIME type
-        return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
+        return esc_html__( 'No CSV file detected', 'events-made-easy' );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
         return __( 'Problem detected while uploading the file', 'events-made-easy' );
@@ -6264,8 +6264,7 @@ function eme_import_csv_member_dynamic_answers() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-        // translators: %s is the detected file MIME type
-        return sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
+        return esc_html__( 'No CSV file detected', 'events-made-easy' );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
         return __( 'Problem detected while uploading the file', 'events-made-easy' );

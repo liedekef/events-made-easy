@@ -1541,7 +1541,7 @@ function eme_payment_form_fondy( $item_name, $payment, $baseprice, $cur, $multi_
     }
     $button_label   = htmlentities( $button_label );
     $button_below   = get_option( 'eme_' . $gateway . '_button_below' );
-    $button_img_url = get_option( "eme_[$gateway}_button_img_url" );
+    $button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
     if ( ! empty( $button_img_url ) ) {
         $data_logo = "data-logo='$button_img_url'";
     } else {
@@ -1790,7 +1790,7 @@ function eme_notification_instamojo() {
     $mac_calculated = hash_hmac( 'sha1', implode( '|', $data ), $instamojo_salt );
     if ( $mac_provided == $mac_calculated ) {
         if ( $data['status'] == 'Credit' ) {
-            eme_mark_payment_paid( $payment_id, 1, $gateway, $instamojo_requestid );
+            eme_mark_payment_paid( $payment['id'], 1, $gateway, $instamojo_requestid );
         }
     }
 }
@@ -2058,7 +2058,7 @@ function eme_notification_sumup() {
     if ( $checkoutbody->status == 'PAID' ) {
         $payment = eme_get_payment_by_pg_pid( $checkout_id );
         if ( ! empty( $payment ) ) {
-            eme_mark_payment_paid( $payment['id'], 1, $gateway, $checkout->id );
+            eme_mark_payment_paid( $payment['id'], 1, $gateway, $checkout_id );
         }
     }
 }

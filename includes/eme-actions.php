@@ -146,16 +146,22 @@ function eme_actions_init() {
             exit;
         }
         if ( $_GET['eme_admin_action'] == 'booking_printable' && isset( $_GET['event_id'] ) ) {
-            eme_printable_booking_report( intval( $_GET['event_id'] ) );
-            exit();
+            if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                eme_printable_booking_report( intval( $_GET['event_id'] ) );
+                exit();
+            }
         }
         if ( $_GET['eme_admin_action'] == 'booking_csv' && isset( $_GET['event_id'] ) ) {
-            eme_csv_booking_report( intval( $_GET['event_id'] ) );
-            exit();
+            if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                eme_csv_booking_report( intval( $_GET['event_id'] ) );
+                exit();
+            }
         }
         if ( $_GET['eme_admin_action'] == 'tasksignups_csv' && isset( $_GET['event_id'] ) ) {
-            eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
-            exit();
+            if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
+                exit();
+            }
         }
     }
 
@@ -714,7 +720,8 @@ add_action( 'rest_api_init', function () {
 // AJAX handler for rendering shortcodes in Jodit preview
 add_action('wp_ajax_eme_jodit_preview_render', 'eme_jodit_preview_render');
 function eme_jodit_preview_render() {
-    if (!current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if (!current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
         wp_send_json_error('Unauthorized', 403);
     }
 

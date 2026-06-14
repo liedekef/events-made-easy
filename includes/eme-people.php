@@ -5920,6 +5920,7 @@ function eme_ajax_generate_people_pdf( $ids_arr, $template_id, $template_id_head
     // instantiate and use the dompdf class
     $options = new Dompdf\Options();
     $options->set( 'isRemoteEnabled', true );
+    $options->set( 'allowedRemoteHosts', [ wp_parse_url( site_url(), PHP_URL_HOST ) ] );
     $options->set( 'isHtml5ParserEnabled', true );
     $dompdf      = new Dompdf\Dompdf( $options );
     $margin_info = 'margin: ' . $template['properties']['pdf_margins'] . ';';

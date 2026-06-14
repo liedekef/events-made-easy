@@ -7153,6 +7153,7 @@ function eme_generate_booking_pdf( $booking, $event, $template_id, $stream_direc
     // instantiate and use the dompdf class
     $options = new Dompdf\Options();
     $options->set( 'isRemoteEnabled', true );
+    $options->set( 'allowedRemoteHosts', [ wp_parse_url( site_url(), PHP_URL_HOST ) ] );
     $options->set( 'isHtml5ParserEnabled', true );
     $dompdf      = new Dompdf\Dompdf( $options );
     $margin_info = 'margin: ' . $template['properties']['pdf_margins'];
@@ -7219,6 +7220,7 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
     // instantiate and use the dompdf class
     $options = new Dompdf\Options();
     $options->set( 'isRemoteEnabled', true );
+    $options->set( 'allowedRemoteHosts', [ wp_parse_url( site_url(), PHP_URL_HOST ) ] );
     $options->set( 'isHtml5ParserEnabled', true );
     $dompdf      = new Dompdf\Dompdf( $options );
     $margin_info = 'margin: ' . $template['properties']['pdf_margins'];

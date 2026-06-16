@@ -220,6 +220,9 @@ function eme_init_widgets(dynamicOnly = false) {
                 multipleSeparator: ", ",
                 format: emebasic.translate_fdatetimeformat,
             });
+        } else {
+            el.removeAttribute('readonly');
+            el.type = 'datetime-local';
         }
     });
 
@@ -237,6 +240,9 @@ function eme_init_widgets(dynamicOnly = false) {
                 multipleSeparator: ", ",
                 format: emebasic.translate_fdateformat
             });
+        } else {
+            el.removeAttribute('readonly');
+            el.type = 'date';
         }
     });
 
@@ -252,6 +258,9 @@ function eme_init_widgets(dynamicOnly = false) {
                 altFormat: 'H:i:00',
                 format: emebasic.translate_ftimeformat
             });
+        } else {
+            el.removeAttribute('readonly');
+            el.type = 'time';
         }
     });
 

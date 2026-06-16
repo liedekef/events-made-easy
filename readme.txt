@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * ftable update
 * Typo fixes, more cap checks
 * dompdf now only loads remote sources if from the same site to prevent injection
+* account for the fact that some people block the datepicker
 
 = 3.1.0  (2026/06/11) =
 * Migrated Google reCaptcha to their new Cloud Enterprise method.

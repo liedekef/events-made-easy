@@ -1738,10 +1738,8 @@ function eme_get_discounttype( $type ) {
 
 add_action( 'wp_ajax_eme_discounts_list', 'eme_ajax_discounts_list' );
 add_action( 'wp_ajax_eme_manage_discounts', 'eme_ajax_manage_discounts' );
-add_action( 'wp_ajax_eme_discount_edit', 'eme_ajax_discount_edit' );
 add_action( 'wp_ajax_eme_discountgroups_list', 'eme_ajax_discountgroups_list' );
 add_action( 'wp_ajax_eme_manage_discountgroups', 'eme_ajax_manage_discountgroups' );
-add_action( 'wp_ajax_eme_discountgroups_edit', 'eme_ajax_discountgroups_edit' );
 add_action( 'wp_ajax_eme_discounts_snapselect', 'eme_ajax_discounts_snapselect' );
 add_action( 'wp_ajax_eme_dgroups_snapselect', 'eme_ajax_dgroups_snapselect' );
 

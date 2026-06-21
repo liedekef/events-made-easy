@@ -1194,7 +1194,7 @@ function eme_options_postsave_actions() {
 }
 
 function eme_options_register() {
-    // only the options you want changed in the Settings page, not eg. eme_hello_to_user, eme_donation_done
+    // only the options you want changed in the Settings page
     // and only those for the tab shown, otherwise the others get reset to empty values
     // The tab value is set in the form in the function eme_options_page. It needs to be set there as a hidden value when calling options.php, otherwise
     //    it won't be known here and all values will be lost.
@@ -1221,7 +1221,8 @@ function eme_options_register() {
         'maps' => [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_balloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ],
         'emefs' => [ 'eme_fs' ],
         'other' => [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_delimiter', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_htmleditor', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ],
-            // put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
+            'extensions' => [],
+        // put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
     };
 
     foreach ( $options as $opt ) {
@@ -1343,6 +1344,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
         'payments'      => __( 'Payments', 'events-made-easy' ),
         'maps'          => __( 'Maps', 'events-made-easy' ),
         'emefs'         => __( 'Frontend Submit', 'events-made-easy' ),
+        'extensions'    => __( 'Extensions', 'events-made-easy' ),
         'other'         => __( 'Other', 'events-made-easy' ),
     ];
     if ( ! get_option( 'eme_rsvp_enabled' ) ) {
@@ -3305,6 +3307,76 @@ eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_f
 </table>
 <?php
 break;
+case 'extensions':
+    if ( isset( $_POST['eme_regenerate_signatures'] ) ) {
+        check_admin_referer( 'eme_extensions_regenerate', 'eme_extensions_nonce' );
+        if ( empty( $_POST['eme_confirm_regenerate'] ) ) {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__( 'Please confirm that you have verified the file hashes before regenerating signatures.', 'events-made-easy' ) . '</p></div>';
+        } else {
+            eme_regenerate_extra_include_signatures();
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Extension file signatures regenerated.', 'events-made-easy' ) . '</p></div>';
+        }
+    }
+    $signatures = get_option( 'eme_extra_include_signatures', [] );
+    $files = [];
+    if ( file_exists( EME_EXTRA_INCLUDE_DIR ) && is_dir( EME_EXTRA_INCLUDE_DIR ) ) {
+        foreach ( glob( EME_EXTRA_INCLUDE_DIR . '/eme_*.php' ) as $filepath ) {
+            $filename = basename( $filepath );
+            $files[] = [
+                'name' => $filename,
+                'current_hash' => isset( $signatures[ $filename ] ) ? $signatures[ $filename ] : '',
+                'on_disk_hash' => hash_file( 'sha256', $filepath ),
+            ];
+        }
+    }
+    ?>
+    <h2><?php esc_html_e( 'Extensions', 'events-made-easy' ); ?></h2>
+    <p><?php esc_html_e( 'Manage Events Made Easy extension files located in the uploads includes directory.', 'events-made-easy' ); ?></p>
+    <?php if ( ! empty( $files ) ) : ?>
+        <table class="widefat striped" style="max-width:800px">
+            <thead>
+                <tr>
+                    <th><?php esc_html_e( 'File', 'events-made-easy' ); ?></th>
+                    <th><?php esc_html_e( 'Current SHA256 (stored)', 'events-made-easy' ); ?></th>
+                    <th><?php esc_html_e( 'SHA256 (on disk)', 'events-made-easy' ); ?></th>
+                    <th><?php esc_html_e( 'Status', 'events-made-easy' ); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ( $files as $f ) : ?>
+                    <tr>
+                        <td><?php echo esc_html( $f['name'] ); ?></td>
+                        <td><code><?php echo esc_html( $f['current_hash'] ?: '—' ); ?></code></td>
+                        <td><code><?php echo esc_html( $f['on_disk_hash'] ); ?></code></td>
+                        <td>
+                            <?php if ( ! $f['current_hash'] ) : ?>
+                                <span style="color:orange"><?php esc_html_e( 'Not registered', 'events-made-easy' ); ?></span>
+                            <?php elseif ( $f['current_hash'] === $f['on_disk_hash'] ) : ?>
+                                <span style="color:green"><?php esc_html_e( 'Match', 'events-made-easy' ); ?></span>
+                            <?php else : ?>
+                                <span style="color:red"><?php esc_html_e( 'Mismatch', 'events-made-easy' ); ?></span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else : ?>
+        <p><?php esc_html_e( 'No extension files found in the includes directory.', 'events-made-easy' ); ?></p>
+    <?php endif; ?>
+    <br>
+    <form method="post" action="">
+        <?php wp_nonce_field( 'eme_extensions_regenerate', 'eme_extensions_nonce' ); ?>
+        <input type="hidden" name="tab" value="extensions">
+        <label>
+            <input type="checkbox" name="eme_confirm_regenerate" value="1" required>
+            <?php esc_html_e( 'I have verified the file hashes above and confirm regenerating signatures.', 'events-made-easy' ); ?>
+        </label>
+        <br><br>
+        <?php submit_button( __( 'Regenerate signatures', 'events-made-easy' ), 'primary', 'eme_regenerate_signatures' ); ?>
+    </form>
+    <?php
+    break;
 case 'other':
 ?>
 

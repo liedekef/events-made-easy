@@ -98,6 +98,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.2  (2026/06/) =
+* price checks added for payment charging/notification
+* security added: signature now needs to be generated/verified for EME extension files (see new Extensions tab in the EME settings)
+
 = 3.1.1  (2026/06/21) =
 * Jodit update
 * ftable update

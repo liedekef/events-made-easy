@@ -392,14 +392,43 @@ function eme_create_events_submenu() {
 function eme_explain_events_page_missing() {
 	// translators: %s is the name of the settings option
 	$advice = sprintf( __( "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!", 'events-made-easy' ), __( 'Events page', 'events-made-easy' ) );
-	?>
-	<div id="message" class="error"><p> <?php echo esc_html( $advice ); ?> </p></div>
-	<?php
+    ?>
+    <div id="message" class="error"><p> <?php echo esc_html( $advice ); ?> </p></div>
+    <?php
+}
+
+function eme_check_extra_include_signatures() {
+	if ( ! file_exists( EME_EXTRA_INCLUDE_DIR ) || ! is_dir( EME_EXTRA_INCLUDE_DIR ) ) {
+		return;
+	}
+	$signatures = get_option( 'eme_extra_include_signatures', [] );
+	$failed = [];
+	foreach ( glob( EME_EXTRA_INCLUDE_DIR . '/eme_*.php' ) as $file ) {
+		$filename = basename( $file );
+		if ( ! isset( $signatures[ $filename ] ) || hash_file( 'sha256', $file ) !== $signatures[ $filename ] ) {
+			$failed[] = $filename;
+		}
+	}
+	if ( empty( $failed ) ) {
+		return;
+	}
+	echo '<div class="notice notice-warning is-dismissible"><p>';
+	echo esc_html( sprintf( __( 'Events Made Easy: the following extension file(s) failed signature verification and were not loaded: %s. Please go to the Settings &gt; Extensions tab and click "Regenerate signatures".', 'events-made-easy' ), implode( ', ', $failed ) ) );
+	echo '</p></div>';
 }
 
 if (file_exists(EME_EXTRA_INCLUDE_DIR) && is_dir(EME_EXTRA_INCLUDE_DIR)) {
+	$signatures = get_option('eme_extra_include_signatures', []);
+    $add_admin_warning_extra_include_signatures = 0;
 	foreach ( glob( EME_EXTRA_INCLUDE_DIR . '/eme_*.php' ) as $file ) {
-		require_once($file);
+		$filename = basename($file);
+		if (isset($signatures[$filename]) && hash_file('sha256', $file) === $signatures[$filename]) {
+			require_once($file);
+        } else {
+            $add_admin_warning_extra_include_signatures = 1;
+        }
 	}
+    if ($add_admin_warning_extra_include_signatures) {
+        add_action( 'admin_notices', 'eme_check_extra_include_signatures' );
+    }
 }
-?>

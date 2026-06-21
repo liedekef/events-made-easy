@@ -1344,9 +1344,17 @@ function eme_sanitize_location( $location ) {
 
     if ( empty( $location['location_longitude'] ) ) {
         $location['location_longitude'] = '';
+    } elseif ( ! is_numeric( $location['location_longitude'] ) ) {
+        $location['location_longitude'] = '';
+    } else {
+        $location['location_longitude'] = floatval( $location['location_longitude'] );
     }
     if ( empty( $location['location_latitude'] ) ) {
         $location['location_latitude'] = '';
+    } elseif ( ! is_numeric( $location['location_latitude'] ) ) {
+        $location['location_latitude'] = '';
+    } else {
+        $location['location_latitude'] = floatval( $location['location_latitude'] );
     }
 
     if ( ! empty( $location['location_slug'] ) ) {
@@ -2834,9 +2842,9 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
             }
             $style = "style='$width_style $height_style'";
         }
-        $data    = "data-lat='" . $location['location_latitude'] . "'";
-        $data   .= " data-lon='" . $location['location_longitude'] . "'";
-        $data   .= " data-map_icon='" . $location['location_properties']['map_icon'] . "'";
+        $data    = "data-lat='" . esc_attr( $location['location_latitude'] ) . "'";
+        $data   .= " data-lon='" . esc_attr( $location['location_longitude'] ) . "'";
+        $data   .= " data-map_icon='" . esc_attr( $location['location_properties']['map_icon'] ) . "'";
         $data   .= " data-map_text='" . esc_html( $map_text ) . "'";
         $data   .= " data-enable_zooming='$enable_zooming'";
         $data   .= " data-gestures='$gestures'";

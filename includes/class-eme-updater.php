@@ -27,6 +27,7 @@ class EME_GitHub_Updater {
         $this->github_repository = $github_repository;
         $this->access_token = $access_token;
         $this->plugin_active = is_plugin_active($this->plugin_basename);
+        $this->plugin_was_network_active = is_multisite() && is_plugin_active_for_network( $this->plugin_basename );
 
         add_filter("update_plugins_github.com", [$this, 'check_update'], 10, 3);
         add_filter('plugins_api', [$this, 'plugin_popup'], 10, 3);
@@ -409,7 +410,7 @@ class EME_GitHub_Updater {
         
         // Reactivate if it was active
         if ($this->plugin_active) {
-            activate_plugin($this->plugin_basename, '', is_multisite());
+            activate_plugin( $this->plugin_basename, '', $this->plugin_was_network_active );
         }
         
         return $result;

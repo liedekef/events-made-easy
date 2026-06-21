@@ -61,7 +61,6 @@ function _eme_install() {
 	}
 	if ( $db_version != EME_DB_VERSION ) {
 		eme_update_options( $db_version );
-		eme_regenerate_extra_include_signatures();
 	}
 
 	// some folders that need to be created (fsevents is for pdf creation when needed, includes is not for upload either)

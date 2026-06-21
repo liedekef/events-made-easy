@@ -1187,6 +1187,11 @@ function eme_options_postsave_actions() {
         }
     }
 
+    if ( $tab == 'extensions' && get_option('eme_confirm_regenerate')) {
+        eme_regenerate_extra_include_signatures();
+        update_option( 'eme_confirm_regenerate', 0 ); // require a fresh confirmation next time
+    }
+
     // allow custom actions
     if (has_action('eme_options_postsave_action')) {
         do_action('eme_options_postsave_action');
@@ -1221,7 +1226,7 @@ function eme_options_register() {
         'maps' => [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_balloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ],
         'emefs' => [ 'eme_fs' ],
         'other' => [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_delimiter', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_htmleditor', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ],
-            'extensions' => [],
+        'extensions' => ['eme_confirm_regenerate'],  // this sets eme_confirm_regenerate based on the checkbox value
         // put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
     };
 
@@ -3308,15 +3313,6 @@ eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_f
 <?php
 break;
 case 'extensions':
-    if ( isset( $_POST['eme_regenerate_signatures'] ) ) {
-        check_admin_referer( 'eme_extensions_regenerate', 'eme_extensions_nonce' );
-        if ( empty( $_POST['eme_confirm_regenerate'] ) ) {
-            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__( 'Please confirm that you have verified the file hashes before regenerating signatures.', 'events-made-easy' ) . '</p></div>';
-        } else {
-            eme_regenerate_extra_include_signatures();
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Extension file signatures regenerated.', 'events-made-easy' ) . '</p></div>';
-        }
-    }
     $signatures = get_option( 'eme_extra_include_signatures', [] );
     $files = [];
     if ( file_exists( EME_EXTRA_INCLUDE_DIR ) && is_dir( EME_EXTRA_INCLUDE_DIR ) ) {
@@ -3365,16 +3361,12 @@ case 'extensions':
         <p><?php esc_html_e( 'No extension files found in the includes directory.', 'events-made-easy' ); ?></p>
     <?php endif; ?>
     <br>
-    <form method="post" action="">
-        <?php wp_nonce_field( 'eme_extensions_regenerate', 'eme_extensions_nonce' ); ?>
-        <input type="hidden" name="tab" value="extensions">
         <label>
             <input type="checkbox" name="eme_confirm_regenerate" value="1" required>
             <?php esc_html_e( 'I have verified the file hashes above and confirm regenerating signatures.', 'events-made-easy' ); ?>
         </label>
         <br><br>
         <?php submit_button( __( 'Regenerate signatures', 'events-made-easy' ), 'primary', 'eme_regenerate_signatures' ); ?>
-    </form>
     <?php
     break;
 case 'other':
@@ -3442,14 +3434,19 @@ case 'other':
 ?>
 </table>
 
-
 <?php
     break;
     } // end of switch-statement
 ?>
 
-
+<?php
+    if ($tab != 'extensions'):
+?>
 <p class="submit"><input type="submit" class="button-primary" id="eme_options_submit" name="Submit" value="<?php esc_html_e( 'Save Changes', 'events-made-easy' ); ?>"></p>
+<?php
+    endif;
+?>
+
 </form>
 </div>
 <?php

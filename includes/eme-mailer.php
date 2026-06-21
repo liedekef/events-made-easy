@@ -143,7 +143,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 }
 
 /**
- * Normalise sender and reply-to addresses (replaces repeated code).
+ * Normalise sender and reply-to addresses
  */
 function eme_normalize_sender_and_replyto( &$fromemail, &$fromname, &$replytoemail, &$replytoname ) {
     if ( empty( $fromemail ) ) {
@@ -161,6 +161,9 @@ function eme_normalize_sender_and_replyto( &$fromemail, &$fromname, &$replytoema
         $replytoemail = $fromemail;
         $replytoname  = $fromname;
     }
+    // small security to prevent header injection
+    $fromname    = str_replace( ["\r", "\n"], '', $fromname );
+    $replytoname = str_replace( ["\r", "\n"], '', $replytoname );
 }
 
 /**
@@ -2828,6 +2831,9 @@ function eme_emails_page() {
         $data_forced_tab    = 'data-showtab="tab-mailings"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mail' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_cancel_mail( $id );

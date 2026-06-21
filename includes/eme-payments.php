@@ -2298,10 +2298,10 @@ function eme_charge_paypal() {
     if ( ! $client->is_configured() ) return 0;
 
     $payment_id = intval($_POST['payment_id']);
-    $cur = eme_sanitize_request($_POST['cur']);
     $description = eme_sanitize_request($_POST['description']);
     $payment = eme_get_payment($payment_id);
     $price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur   = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
 
     // Validate nonce
     if (empty($_POST["eme_{$gateway}_nonce"]) || !wp_verify_nonce($_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}")) {
@@ -2329,10 +2329,10 @@ function eme_charge_stripe() {
     $gateway = "stripe";
     $events_page_link = eme_get_events_page();
     $payment_id       = intval( $_POST['payment_id'] );
-    $cur              = eme_sanitize_request( $_POST['cur'] );
     $description      = eme_sanitize_request( $_POST['description'] );
     $payment          = eme_get_payment( $payment_id );
     $price            = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur              = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
     $success_link     = eme_payment_return_url( $payment, $gateway );
     $cancel_link      = eme_payment_url( $payment );
 
@@ -2433,11 +2433,11 @@ function eme_charge_braintree() {
     }
 
     $payment_id   = intval( $_POST['payment_id'] );
-    $cur          = eme_sanitize_request( $_POST['cur'] );
     // braintree ignores the description, but let's act as usual
     $description  = eme_sanitize_request( $_POST['description'] );
     $payment      = eme_get_payment( $payment_id );
     $price        = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur          = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
 
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
@@ -2496,10 +2496,10 @@ function eme_charge_instamojo() {
 
     $events_page_link  = eme_get_events_page();
     $payment_id        = intval( $_POST['payment_id'] );
-    $cur               = eme_sanitize_request( $_POST['cur'] );
     $description       = eme_sanitize_request( $_POST['description'] );
     $payment           = eme_get_payment( $payment_id );
     $price             = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur               = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, 1 );
@@ -2601,11 +2601,11 @@ function eme_charge_fondy() {
     }
 
     $payment_id  = intval( $_POST['payment_id'] );
-    $cur         = eme_sanitize_request( $_POST['cur'] );
     $description = eme_sanitize_request( $_POST['description'] );
 
     $payment = eme_get_payment( $payment_id );
     $price   = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur     = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
 
     $events_page_link  = eme_get_events_page();
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
@@ -2852,10 +2852,10 @@ function eme_charge_mollie() {
     $gateway = 'mollie';
     $events_page_link = eme_get_events_page();
     $payment_id       = intval( $_POST['payment_id'] );
-    $cur              = eme_sanitize_request( $_POST['cur'] );
     $description      = eme_sanitize_request( $_POST['description'] );
     $payment          = eme_get_payment( $payment_id );
     $price            = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur              = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
 
     $api_key = get_option( 'eme_mollie_api_key' );
     if ( ! $api_key ) {
@@ -2989,10 +2989,10 @@ function eme_charge_bancontactwero() {
     $gateway          = 'bancontactwero';
     $events_page_link = eme_get_events_page();
     $payment_id       = intval( $_POST['payment_id'] );
-    $cur              = eme_sanitize_request( $_POST['cur'] );
     $description      = eme_sanitize_request( $_POST['description'] );
     $payment          = eme_get_payment( $payment_id );
     $price            = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $cur              = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
     if ( $payment['target'] == 'member' ) {
         $bulkId = "members";
     } elseif ( $payment['target'] == 'fs_event' ) {

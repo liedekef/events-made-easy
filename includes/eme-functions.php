@@ -2258,6 +2258,9 @@ function eme_calc_bookingprice_detail_ajax() {
 add_action( 'wp_ajax_eme_people_dyndata', 'eme_dyndata_people_ajax' );
 function eme_dyndata_people_ajax() {
     check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_access_people' ) ) ) {
+        wp_die();
+    }
     // for new persons, the id=0
     if ( isset( $_POST['person_id'] ) ) {
         $person_id = intval( $_POST['person_id'] );

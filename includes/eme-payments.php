@@ -722,7 +722,6 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
     // for worldpay notifications to work: enable dynamic payment response in your worldpay setup, using the param MC_callback
     // also: set the Payment Response password and if wanted, the MD5 secret and field combo
     $form_html .= "<input type='hidden' name='MC_callback' value='" . esc_url( $notification_link ) . "'>";
-    $form_html .= wp_nonce_field( "eme_worldpay_{$payment_id}_{$price}_{$cur}", "eme_worldpay_nonce", true, false );
 
     if ( $worldpay_md5_secret ) {
         require_once EME_PLUGIN_DIR . 'payment_gateways/worldpay/eme-worldpay.php';
@@ -3305,10 +3304,7 @@ function eme_notification_worldpay() {
     $worldpay_instid = eme_sanitize_request( get_option( 'eme_worldpay_instid' ) );
     $payment_id      = intval( $_POST['cartId'] );
     $amount          = floatval( $_POST['amount'] );
-    $currency        = eme_sanitize_request( $_POST['currency'] );
-    if ( empty( $_POST['eme_worldpay_nonce'] ) || ! wp_verify_nonce( $_POST['eme_worldpay_nonce'], "eme_worldpay_{$payment_id}_{$amount}_{$currency}" ) ) {
-        return;
-    }
+
     $payment = eme_get_payment( $payment_id );
     if ( ! $payment ) {
         return;

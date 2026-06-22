@@ -5141,7 +5141,7 @@ function eme_add_member_ajax() {
     // let's decide for the first event wether or not payment is needed, but not when editing a member in the frontend
     if ( !$member_id && $payment_id && eme_membership_has_pgs_configured( $membership ) && !$membership['properties']['skippaymentoptions']) {
         eme_captcha_remove( $captcha_res );
-        $total_price = eme_get_member_payment_price( $payment_id );
+        $total_price = eme_get_payment_price( $payment_id );
 
         // count the payment gateways active for this membership
         $pg_count = eme_membership_count_pgs( $membership );

@@ -801,7 +801,6 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
         $person = eme_new_person();
     }
 
-    $nonce = wp_create_nonce( "eme_opayo_{$payment_id}_{$price}_{$cur}" );
     $query = [
         'VendorTxCode'       => $payment_id,
         'Amount'             => number_format( $price, 2, '.', '' ),
@@ -809,7 +808,6 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
         'Description'        => $description,
         'SuccessURL'         => $success_link,
         'FailureURL'         => $fail_link,
-        'Nonce'              => $nonce,
         'BillingSurname'     => $person['lastname'],
         'BillingFirstnames'  => $person['firstname'],
         'BillingAddress1'    => $person['address1'],
@@ -3349,9 +3347,6 @@ function eme_notification_opayo() {
                 return;
             }
             $cur = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
-            if ( empty( $decryptArr['Nonce'] ) || ! wp_verify_nonce( $decryptArr['Nonce'], "eme_opayo_{$payment_id}_{$amount}_{$cur}" ) ) {
-                return;
-            }
             $expected_price = eme_get_payment_price( $payment_id );
             if ( $amount < $expected_price - 0.01 ) {
                 error_log( "EME opayo notification price mismatch for payment $payment_id: paid $amount, expected $expected_price" );

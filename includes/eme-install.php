@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 426 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 427 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -110,6 +110,9 @@ function _eme_install() {
 		wp_unschedule_hook( 'eme_cron_gdpr_daily_actions' );
 		wp_unschedule_hook( 'eme_cron_events_daily_actions' );
 	}
+	if ( $db_version < 427 ) {
+        eme_regenerate_extra_include_signatures();
+    }
 	if ( ! wp_next_scheduled( 'eme_cron_member_daily_actions' ) ) {
 		wp_schedule_event( $timestamp, 'daily', 'eme_cron_member_daily_actions' );
 	}

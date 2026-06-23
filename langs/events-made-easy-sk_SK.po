@@ -214,7 +214,7 @@ msgstr "Akékoľvek"
 #: events-manager.php:361
 #: includes/eme-attendances.php:108
 #: includes/eme-events.php:9630
-#: includes/eme-install.php:1739
+#: includes/eme-install.php:1742
 #: includes/eme-options.php:132
 #: includes/eme-options.php:153
 #: includes/eme-options.php:154
@@ -6090,7 +6090,7 @@ msgstr "Základný formát: RRRR-MM-DD, jeden na riadok"
 msgid "For more information about holidays, see "
 msgstr "Viac informácií o sviatkoch nájdete na stránke "
 
-#: includes/eme-install.php:1740
+#: includes/eme-install.php:1743
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Táto stránka je používaná pluginom Events Made Easy. Nemeňte ju, nepoužívajte ju v ponuke, neodstraňujte ju. Len sa uistite, že nastavenie EME s názvom „Stránka podujatí“ ukazuje na túto stránku. EME používa túto stránku na vykreslenie všetkých podujatí, miest, rezervácií, máp, atď. Ak chcete túto stránku odstrániť, vytvorte novú, ktorú môže EME používať a podľa toho aktualizujte nastavenie EME „Stránka podujatí“."
 

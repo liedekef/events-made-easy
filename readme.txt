@@ -98,6 +98,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.4  (2026/06/) =
+* Add the option to exclude people with bookings from other events
+
 = 3.1.3  (2026/06/23) =
 * Make sure to regenerate extension signatures on first upgrade (and only then)
 

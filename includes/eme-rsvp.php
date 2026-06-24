@@ -3325,7 +3325,16 @@ function eme_get_wp_ids_for( $event_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql   = $wpdb->prepare( "SELECT DISTINCT people.wp_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id != 0", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+        $ids_arr_int  = array_map( 'intval', $event_id );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $prepared_sql = $wpdb->prepare(
+            "SELECT DISTINCT people.wp_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id IN ($placeholders) AND people.wp_id != 0",
+            EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, ...$ids_arr_int
+        ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    } else {
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT people.wp_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id != 0", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    }
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

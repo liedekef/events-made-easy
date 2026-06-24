@@ -13,6 +13,7 @@ class EME_GitHub_Updater {
     private $github_repository;
     private $access_token;
     private $plugin_active;
+    private $plugin_was_network_active;
     private $readme_data = null;
 
     public function __construct($plugin_file, $github_username, $github_repository, $access_token = '') {

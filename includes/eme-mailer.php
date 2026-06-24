@@ -1390,6 +1390,7 @@ function eme_process_event_mail_recipients( $mail_subject, $mail_message, $mail_
     $rsvp_status = $conditions['rsvp_status'] ?? 0;
     $only_unpaid = $conditions['only_unpaid'] ?? 0;
     $exclude_registered = $conditions['exclude_registered'] ?? 0;
+    $exclude_registered_events = $conditions['exclude_registered_events'] ?? '';
 
     if ( ! empty( $conditions['pending_approved'] ) ) {
         if ( $conditions['pending_approved'] == 1 ) $rsvp_status = EME_RSVP_STATUS_PENDING;
@@ -1411,11 +1412,11 @@ function eme_process_event_mail_recipients( $mail_subject, $mail_message, $mail_
             case 'all_people':
             case 'all_people_not_registered':
             case 'people_and_groups':
-                eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $exclude_registered_events, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
                 break;
             case 'all_wp':
             case 'all_wp_not_registered':
-                eme_process_event_wp_users( $event, $conditions, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
+                eme_process_event_wp_users( $event, $conditions, $exclude_registered, $exclude_registered_events, $mail_subject, $mail_message, $mail_text_html, $batch, $atts_arr );
                 break;
         }
     }
@@ -1465,7 +1466,7 @@ function eme_process_event_bookings( $event, $rsvp_status, $only_unpaid, $mail_s
 /**
  * Process people, groups, and members for an event and add them to the mail batch.
  */
-function eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+function eme_process_event_people_groups( $event, $conditions, $ignore_massmail, $rsvp_status, $only_unpaid, $exclude_registered, $exclude_registered_events, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
     $event_id = $event['event_id'];
     $mail_type = $conditions['eme_mail_type'];
 
@@ -1496,7 +1497,14 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
     }
 
     // Get registered person IDs if we need to exclude them
-    $registered_ids = ( $exclude_registered || $mail_type == 'all_people_not_registered' ) ? eme_get_attendee_ids( $event_id ) : [];
+    $exclude_event_ids = [];
+    if ( $exclude_registered || $mail_type == 'all_people_not_registered' ) {
+        $exclude_event_ids[] = $event_id;
+    }
+    if ( ! empty( $exclude_registered_events ) ) {
+        $exclude_event_ids = array_merge( $exclude_event_ids, explode( ',', $exclude_registered_events ) );
+    }
+    $registered_ids = ! empty( $exclude_event_ids ) ? eme_get_attendee_ids( array_unique( $exclude_event_ids ) ) : [];
 
     $handled_emails = [];
 
@@ -1556,10 +1564,17 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
 /**
  * Process WordPress users for an event and add them to the mail batch.
  */
-function eme_process_event_wp_users( $event, $conditions, $exclude_registered, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
+function eme_process_event_wp_users( $event, $conditions, $exclude_registered, $exclude_registered_events, $mail_subject, $mail_message, $mail_text_html, EMEMailBatch $batch, $atts_arr ) {
     $mail_type = $conditions['eme_mail_type'];
     $wp_users = get_users();
-    $attendee_wp_ids = ( $mail_type == 'all_wp_not_registered' || $exclude_registered ) ? eme_get_wp_ids_for( $event['event_id'] ) : [];
+    $exclude_event_ids = [];
+    if ( $mail_type == 'all_wp_not_registered' || $exclude_registered ) {
+        $exclude_event_ids[] = $event['event_id'];
+    }
+    if ( ! empty( $exclude_registered_events ) ) {
+        $exclude_event_ids = array_merge( $exclude_event_ids, explode( ',', $exclude_registered_events ) );
+    }
+    $attendee_wp_ids = ! empty( $exclude_event_ids ) ? eme_get_wp_ids_for( array_unique( $exclude_event_ids ) ) : [];
     $lang = eme_detect_lang();
     $handled_emails = [];
 
@@ -2444,7 +2459,7 @@ function eme_send_event_mail( $post_data ) {
     $mail_message    = $parsed['mail_message'];
 
     $event_ids = isset( $post_data['event_ids'] ) ? wp_parse_id_list( $post_data['event_ids'] ) : [];
-    if ( ! eme_is_numeric_array( $event_ids ) ) {
+    if ( empty($event_ids) || ! eme_is_numeric_array( $event_ids ) ) {
         return [ 'success' => false, 'message' => "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select at least one event.', 'events-made-easy' ) . '</p></div>' ];
     }
 
@@ -2484,6 +2499,9 @@ function eme_send_event_mail( $post_data ) {
     $conditions['rsvp_status']          = isset( $post_data['rsvp_status'] )        ? intval( $post_data['rsvp_status'] )        : 0;
     $conditions['only_unpaid']          = isset( $post_data['only_unpaid'] )         ? intval( $post_data['only_unpaid'] )         : 0;
     $conditions['exclude_registered']   = isset( $post_data['exclude_registered'] )  ? intval( $post_data['exclude_registered'] )  : 0;
+    $conditions['exclude_registered_events'] = ( ! empty( $post_data['exclude_registered_events'] ) && eme_is_numeric_array( $post_data['exclude_registered_events'] ) )
+        ? join( ',', array_map( 'intval', $post_data['exclude_registered_events'] ) )
+        : '';
 
     $current_userid     = get_current_user_id();
     $mail_problems      = 0;
@@ -2556,8 +2574,10 @@ function eme_emails_page() {
     $mygroups        = [];
     $mymembergroups  = [];
     $myevents        = [];
+    $myexcludeevents = [];
     $person_ids      = [];
     $event_ids       = [];
+    $exclude_registered_event_ids = [];
     $membership_ids  = [];
     $persongroup_ids = [];
     $membergroup_ids = [];
@@ -2605,6 +2625,7 @@ function eme_emails_page() {
     $exclude_registered_checked     = '';
     $only_unpaid_checked            = '';
     $eme_mail_type                  = '';
+    $eme_rsvp_status                = '';
     $send_to_all_people_checked     = '';
     $event_mail_subject             = '';
     $event_mail_message             = '';
@@ -2741,6 +2762,9 @@ function eme_emails_page() {
                 if ( ! empty( $conditions['eme_mail_type'] ) ) {
                     $eme_mail_type = $conditions['eme_mail_type'];
                 }
+                if ( ! empty( $conditions['rsvp_status'] ) ) {
+                    $eme_rsvp_status = $conditions['rsvp_status'];
+                }
                 if ( ! empty( $conditions['exclude_registered'] ) ) {
                     $exclude_registered_checked = "checked='checked'";
                 }
@@ -2753,6 +2777,13 @@ function eme_emails_page() {
                     $events    = eme_get_events( extra_conditions: [ 'event_id' => array_map( 'intval', $event_ids ) ] );
                     foreach ( $events as $event ) {
                         $myevents[ $event['event_id'] ] = $event['event_name']. ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')';
+                    }
+                }
+                if ( ! empty( $conditions['exclude_registered_events'] ) ) {
+                    $exclude_registered_event_ids = explode( ',', $conditions['exclude_registered_events'] );
+                    $exclude_events                = eme_get_events( extra_conditions: [ 'event_id' => array_map( 'intval', $exclude_registered_event_ids ) ] );
+                    foreach ( $exclude_events as $exclude_event ) {
+                        $myexcludeevents[ $exclude_event['event_id'] ] = $exclude_event['event_name']. ' (' . eme_localized_date( $exclude_event['event_start'], EME_TIMEZONE, 1 ) . ')';
                     }
                 }
                 if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
@@ -2880,7 +2911,7 @@ function eme_emails_page() {
             echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
         ?>
         </td>
-        <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
+        <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 1, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
         <br><label><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?> </label>
             <p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>
         </td>
@@ -2896,24 +2927,37 @@ function eme_emails_page() {
                 'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
                 'all_wp' => __('Email to all WP users', 'events-made-easy'),
             ];
-            echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+            echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1, 'eme_snapselect'); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         ?>
         </td>
         </tr>
         <tr id="eme_rsvp_status_row">
         <td><?php esc_html_e( 'Select your target audience', 'events-made-easy' ); ?></td>
         <td>
-            <select name="rsvp_status">
-            <option value="0"><?php esc_html_e( 'All registered persons', 'events-made-easy' ); ?></option>
-            <option value="<?php echo esc_attr( EME_RSVP_STATUS_APPROVED ); ?>"><?php esc_html_e( 'Only approved bookings', 'events-made-easy' ); ?></option>
-            <option value="<?php echo esc_attr( EME_RSVP_STATUS_PENDING ); ?>"><?php esc_html_e( 'Only pending bookings', 'events-made-easy' ); ?></option>
-            </select>
+        <?php
+            $target_audience = [
+                0 => __( 'All registered persons', 'events-made-easy' ),
+                EME_RSVP_STATUS_APPROVED => __( 'Only approved bookings', 'events-made-easy' ),
+                EME_RSVP_STATUS_PENDING => __( 'Only pending bookings', 'events-made-easy' ),
+            ];
+            echo eme_ui_select( $eme_rsvp_status, 'rsvp_status', $target_audience, '', 0, 'eme_snapselect'); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+        ?>
         </td>
         </tr>
         <tr id="eme_exclude_registered_row">
         <td><?php esc_html_e( 'Exclude people already registered for the selected event(s)', 'events-made-easy' ); ?>&nbsp;</td>
         <td>
         <input type="checkbox" name="exclude_registered" value="1" <?php echo $exclude_registered_checked; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded checked attribute ?>>
+        </td>
+        </tr>
+        <tr id="eme_exclude_registered_events_row">
+        <td><?php
+            $exclude_label      = esc_html__( 'Also exclude people already registered for these other event(s)', 'events-made-easy' );
+            $exclude_aria_label = 'aria-label="' . $exclude_label . '"';
+            echo $exclude_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+        ?>&nbsp;</td>
+        <td><?php echo eme_ui_multiselect( $exclude_registered_event_ids, 'exclude_registered_events', $myexcludeevents, 5, '', 0, 'eme_snapselect_events_class', $exclude_aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
+        <p class='eme_smaller'><?php esc_html_e( 'Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about.', 'events-made-easy' ); ?></p>
         </td>
         </tr>
         <tr id="eme_only_unpaid_row">

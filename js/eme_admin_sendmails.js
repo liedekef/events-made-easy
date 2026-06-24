@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const form = this.form;
 
+            if (!this.form.checkValidity()) {
+                this.form.reportValidity();
+                return;
+            }
+
             // the tinymce save needs to happen before the FormData-call, as it changes the form content
             if (emeadmin.translate_htmleditor === 'tinymce' && emeadmin.translate_htmlmail === 'yes') {
                 if (typeof tinymce !== 'undefined' && tinymce.get(editorTarget)) {
@@ -248,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('#eme_pending_approved_row'), isAttendeesOrBookings);
         eme_toggle(EME.$('#eme_only_unpaid_row'), isAttendeesOrBookings);
         eme_toggle(EME.$('#eme_exclude_registered_row'), mailType !== '');
+        eme_toggle(EME.$('#eme_exclude_registered_events_row'), mailType !== '');
         eme_toggle(EME.$('#eme_rsvp_status_row'), isAttendeesOrBookings);
 
         EME.$$('span[id^="span_unpaid_"]').forEach(el => eme_toggle(el, false));

@@ -1504,7 +1504,8 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
     if ( ! empty( $exclude_registered_events ) ) {
         $exclude_event_ids = array_merge( $exclude_event_ids, explode( ',', $exclude_registered_events ) );
     }
-    $registered_ids = ! empty( $exclude_event_ids ) ? eme_get_attendee_ids( array_unique( $exclude_event_ids ) ) : [];
+    //$registered_ids = ! empty( $exclude_event_ids ) ? eme_get_attendee_ids( array_unique( $exclude_event_ids ) ) : [];
+    $registered_emails = ! empty( $exclude_event_ids ) ? eme_get_attendee_emails( array_unique( $exclude_event_ids ) ) : [];
 
     $handled_emails = [];
 
@@ -1517,6 +1518,7 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
         $person = eme_get_person( $member['person_id'] );
         if ( ! $person ) continue;
         if ( ! $ignore_massmail && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids ) ) continue;
+        if ( in_array( $person['email'], $registered_emails ) ) continue;
 
         $handled_emails[] = $person['email'];
         $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
@@ -1542,6 +1544,7 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
         $person = eme_get_person( $person_id );
         if ( ! $person ) continue;
         if ( ! $ignore_massmail && ! $person['massmail'] ) continue;
+        if ( in_array( $person['email'], $registered_emails ) ) continue;
         if ( in_array( $person['email'], $handled_emails ) ) continue;
 
         $handled_emails[] = $person['email'];
@@ -2952,7 +2955,7 @@ function eme_emails_page() {
         </tr>
         <tr id="eme_exclude_registered_events_row">
         <td><?php
-            $exclude_label      = esc_html__( 'Also exclude people already registered for these other event(s)', 'events-made-easy' );
+            $exclude_label      = esc_html__( 'Also exclude emails of people already registered for these other event(s)', 'events-made-easy' );
             $exclude_aria_label = 'aria-label="' . $exclude_label . '"';
             echo $exclude_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
         ?>&nbsp;</td>

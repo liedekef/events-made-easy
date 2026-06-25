@@ -3429,6 +3429,23 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
     return $attendees;
 }
 
+function eme_get_attendee_emails( $event_id ) {
+    global $wpdb;
+    $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+    $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+        $ids_arr_int  = array_map( 'intval', $event_id );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
+        $sql = $wpdb->prepare(
+            "SELECT DISTINCT people.email FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($placeholders) AND bookings.person_id>0 AND people.email != ''",
+            ...$ids_arr_int
+        ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    } else {
+        $sql = $wpdb->prepare( "SELECT DISTINCT people.email FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0 AND people.email != ''", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    }
+    return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
 // for backwards compat
 function eme_get_attendees_list_for( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $order = '' ) {
     return eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order );

@@ -1513,7 +1513,7 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
     foreach ( $member_ids as $member_id ) {
         $member = eme_get_member( $member_id );
         if ( ! $member ) continue;
-        if ( in_array( $member['person_id'], $registered_ids ) ) continue;
+        //if ( in_array( $member['person_id'], $registered_ids ) ) continue;
 
         $person = eme_get_person( $member['person_id'] );
         if ( ! $person ) continue;
@@ -1540,7 +1540,7 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
 
     // Process people
     foreach ( $person_ids as $person_id ) {
-        if ( in_array( $person_id, $registered_ids ) ) continue;
+        //if ( in_array( $person_id, $registered_ids ) ) continue;
         $person = eme_get_person( $person_id );
         if ( ! $person ) continue;
         if ( ! $ignore_massmail && ! $person['massmail'] ) continue;

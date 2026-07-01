@@ -2709,22 +2709,66 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
 }
 
 function eme_add_directions_form( $location ) {
-    $locale_code = substr( get_locale(), 0, 2 );
-    $res         = '';
-    if ( isset( $location['location_address1'] ) && isset( $location['location_city'] ) ) {
-        $res .= '<form action="//maps.google.com/maps" method="get" target="_blank" rel="noopener noreferrer" style="text-align:left;">';
-        $res .= '<div id="eme_direction_form"><label for="saddr">' . __( 'Your Street Address', 'events-made-easy' ) . '</label><br>';
-        $res .= '<input type="text" name="saddr" id="saddr" value="">';
-        $res .= '<input type="hidden" name="daddr" value="' . esc_attr( $location['location_address1'] . ', ' . $location['location_city'] ) . '">';
-        $res .= '<input type="hidden" name="hl" value="' . esc_attr( $locale_code ) . '"></div>';
-        $res .= '<input type="submit" value="' . esc_attr__( 'Get Directions', 'events-made-easy' ) . '">';
-        $res .= '</form>';
+    if ( ! isset( $location['location_id'] ) || $location['location_id'] <= 0 ) {
+        return '';
+    }
+    if ( empty( $location['location_latitude'] ) || empty( $location['location_longitude'] ) ) {
+        return '';
     }
 
-    # some people might want to change the form to their liking
-    if ( has_filter( 'eme_directions_form_filter' ) ) {
-        $res = apply_filters( 'eme_directions_form_filter', $res );
+    wp_enqueue_style( 'eme-leaflet-css' );
+    wp_enqueue_style( 'eme-leaflet-routing-css' );
+    if ( get_option( 'eme_map_gesture_handling' ) ) {
+        wp_enqueue_script( 'eme-leaflet-gestures' );
+        wp_enqueue_style( 'eme-gestures-css' );
     }
+    wp_enqueue_script( 'eme-show-maps' );
+    wp_enqueue_script( 'eme-leaflet-routing' );
+
+    $id_base = preg_replace( '/\D/', '_', microtime( 1 ) );
+    if ( isset( $location['event_id'] ) ) {
+        $id_base = $location['event_id'] . '_' . $id_base;
+    } else {
+        $id_base = wp_rand() . '_' . $id_base;
+    }
+    $map_id         = 'eme-directions-map_' . $id_base;
+    $origin_id      = 'eme-directions-origin_' . $id_base;
+    $instructions_id = 'eme-directions-instructions_' . $id_base;
+    $enable_zooming = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
+    $gestures       = get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false';
+    $zoom_factor    = get_option( 'eme_indiv_zoom_factor' );
+    if ( $zoom_factor > 14 ) {
+        $zoom_factor = 14;
+    }
+
+    $dest_address_parts = array_filter( [ $location['location_address1'], $location['location_city'] ] );
+    $dest_address       = esc_attr( implode( ', ', $dest_address_parts ) );
+
+    // the next line is the demo site, not to be used in prod
+    //$osrm_url = apply_filters( 'eme_osrm_service_url', 'https://router.project-osrm.org/route/v1' );
+    
+    // the next one is community maintained for now
+    $osrm_url = apply_filters( 'eme_osrm_service_url', 'https://routing.openstreetmap.de/routed-car/route/v1' );
+
+    $data  = "data-zoom_factor='$zoom_factor'";
+    $data .= " data-enable_zooming='$enable_zooming'";
+    $data .= " data-gestures='$gestures'";
+    $data .= " data-osrm-url='" . esc_attr( $osrm_url ) . "'";
+
+    $res = "<div class='eme-directions-form-wrapper'>";
+    $res .= "<form class='eme-directions-form' data-map-id='$map_id' data-instructions-id='$instructions_id'>";
+    $res .= '<label for="' . $origin_id . '">' . __( 'Your Street Address', 'events-made-easy' ) . '</label><br>';
+    $res .= "<input type='text' id='$origin_id' class='eme-directions-origin' value='' placeholder='" . esc_attr__( 'e.g. 123 Main St, City', 'events-made-easy' ) . "'>";
+    $res .= "<input type='hidden' name='eme_directions_dest_lat' value='" . esc_attr( $location['location_latitude'] ) . "'>";
+    $res .= "<input type='hidden' name='eme_directions_dest_lon' value='" . esc_attr( $location['location_longitude'] ) . "'>";
+    $res .= "<input type='hidden' name='eme_directions_dest_address' value='$dest_address'>";
+    $res .= "<input type='submit' value='" . esc_attr__( 'Get Directions', 'events-made-easy' ) . "'>";
+    $res .= '</form>';
+
+    $res .= "<div id='$map_id' class='eme-directions-map' style='display:none;width:100%;height:400px;' $data></div>";
+
+    $res .= "<div id='$instructions_id' class='eme-directions-instructions' style='display:none;'></div>";
+    $res .= '</div>';
 
     return $res;
 }

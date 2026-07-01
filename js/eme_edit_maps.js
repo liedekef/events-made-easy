@@ -2,7 +2,7 @@
 let map;
 // create the tile layer with correct attribution
 let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-let osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+let osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>';
 let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
 function eme_displayAddress(ignore_coord){

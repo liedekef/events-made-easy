@@ -145,9 +145,83 @@ div.eme-adminedit-location-map {
 }
 /* for google maps to work ok in IE, we need at least 690px as max-width for the images */
 .eme_global_map img,
-.eme-location-map img {
+.eme-location-map img,
+.eme-directions-map img {
     max-width: none !important;
     background: none !important;
+}
+.eme-directions-form {
+    margin-bottom: 1em;
+}
+.eme-directions-form input[type="text"] {
+    width: 60%;
+    min-width: 200px;
+    margin-right: 0.5em;
+}
+.eme-directions-instructions {
+    margin-top: 1em;
+    font-size: 95%;
+}
+.eme-directions-instructions .eme-itinerary-summary {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+.eme-directions-instructions .eme-itinerary-steps {
+    margin: 0.5em 0 0 1.5em;
+    padding: 0;
+}
+.eme-directions-instructions .eme-itinerary-steps li {
+    padding: 0.3em 0;
+    border-bottom: 1px solid #eee;
+}
+.eme-directions-instructions .eme-itinerary-distance {
+    color: #888;
+    font-size: 90%;
+}
+.eme-directions-instructions .eme-itinerary-error {
+    color: #c00;
+    padding: 0.5em;
+}
+.eme-directions-waypoint-icon {
+    background: none !important;
+    border: none !important;
+}
+.eme-directions-waypoint-icon-inner {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background: #0078A8;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.eme-directions-remove-wp {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    background: #c00;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    display: none;
+    user-select: none;
+}
+.eme-directions-waypoint-icon-inner:hover .eme-directions-remove-wp {
+    display: block;
 }
 .eme_events_list, .eme_locations_list {
     clear:both;
@@ -358,6 +432,9 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 /* leaflet prevent a-link underline for zoom in/out */
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
     text-decoration: none !important;
+}
+.leaflet-routing-container {
+    visibility: hidden;
 }
 
 .eme_required {

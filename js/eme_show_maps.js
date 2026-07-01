@@ -1,9 +1,11 @@
+// create the tile layer with correct attribution
+let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+let osmAttrib='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+let osmAttribDirections= osmAttrib + ' | ' + '<a href="https://www.openstreetmap.org/fixthemap">Fix the map</a>';
+
 document.addEventListener('DOMContentLoaded', function() {
     // first the global map (if present)
     let divs = document.getElementsByTagName('div');
-    // create the tile layer with correct attribution
-    let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    let osmAttrib='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     let div_arr_map = new Array();
     
     for (let i = 0; i < divs.length; i++) {
@@ -202,5 +204,173 @@ document.addEventListener('DOMContentLoaded', function() {
             // now show the markter and popup
             s_marker.bindPopup(s_popcontent, { maxWidth: 1600 }).openPopup();
         }
+
     }
 });
+
+// directions form handling (separate event listener for the forms)
+document.addEventListener('DOMContentLoaded', function() {
+    let dirForms = document.querySelectorAll('.eme-directions-form');
+    let dirMaps = {};
+
+    function eme_render_instructions(instructionsDiv, route) {
+        let summary = route.summary;
+        let totalDist = summary.totalDistance;
+        let totalTime = summary.totalTime;
+
+        let distStr = totalDist >= 1000 ? (totalDist / 1000).toFixed(1) + ' km' : Math.round(totalDist) + ' m';
+        let timeStr = '';
+        if (totalTime >= 3600) {
+            timeStr = Math.floor(totalTime / 3600) + ' h ' + Math.round((totalTime % 3600) / 60) + ' min';
+        } else {
+            timeStr = Math.round(totalTime / 60) + ' min';
+        }
+
+        let html = '<div class="eme-itinerary-summary">' + distStr + ' &mdash; ' + timeStr + '</div>';
+        html += '<ol class="eme-itinerary-steps">';
+        route.instructions.forEach(function(instr) {
+            let instrDist = instr.distance >= 1000 ? (instr.distance / 1000).toFixed(1) + ' km' : Math.round(instr.distance) + ' m';
+            html += '<li>' + eme_escapeHtml(instr.text) + ' <span class="eme-itinerary-distance">(' + instrDist + ')</span></li>';
+        });
+        html += '</ol>';
+
+        instructionsDiv.innerHTML = html;
+        instructionsDiv.style.display = '';
+    }
+
+    dirForms.forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let mapId = form.dataset.mapId;
+            let instructionsId = form.dataset.instructionsId;
+            let originInput = form.querySelector('.eme-directions-origin');
+            let origin = originInput.value.trim();
+
+            if (!origin) {
+                return;
+            }
+
+            let destLat = parseFloat(form.querySelector('[name="eme_directions_dest_lat"]').value);
+            let destLon = parseFloat(form.querySelector('[name="eme_directions_dest_lon"]').value);
+            let destAddress = form.querySelector('[name="eme_directions_dest_address"]').value;
+
+            let mapDiv = document.getElementById(mapId);
+            let instructionsDiv = document.getElementById(instructionsId);
+
+            // geocode origin via Nominatim
+            let geocodeUrl = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(origin);
+
+            fetch(geocodeUrl)
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    if (!data || data.length === 0) {
+                        alert('Address not found');
+                        return;
+                    }
+
+                    let originLatLng = L.latLng(parseFloat(data[0].lat), parseFloat(data[0].lon));
+                    let destLatLng = L.latLng(destLat, destLon);
+                    let zoomFactor = parseInt(mapDiv.dataset.zoom_factor) || 10;
+                    if (zoomFactor > 14) zoomFactor = 14;
+
+                    // remove existing map if present
+                    if (dirMaps[mapId]) {
+                        dirMaps[mapId].remove();
+                        delete dirMaps[mapId];
+                    }
+
+                    mapDiv.style.display = '';
+
+                    let myOptions = {
+                        zoom: zoomFactor,
+                        center: originLatLng,
+                        doubleClickZoom: false,
+                        scrollWheelZoom: mapDiv.dataset.enable_zooming === 'true',
+                        gestureHandling: mapDiv.dataset.gestures === 'true'
+                    };
+
+                    let map = L.map(mapId, myOptions);
+                    L.tileLayer(osmUrl, {attribution: osmAttribDirections, className: 'eme-map-tiles'}).addTo(map);
+                    L.marker(destLatLng).addTo(map).bindPopup(destAddress);
+
+                    var router = L.Routing.osrmv1({
+                        serviceUrl: mapDiv.dataset.osrmUrl
+                    });
+
+                    var routingControl = L.Routing.control({
+                        router: router,
+                        waypoints: [
+                            originLatLng,
+                            destLatLng
+                        ],
+                        show: false,
+                        routeWhileDragging: true,
+                        showAlternatives: false,
+                        addWaypoints: true,
+                        createMarker: function(i, wp, n) {
+                            var iconHtml = '<div class="eme-directions-waypoint-icon-inner">' +
+                                '<span class="eme-directions-waypoint-label">' + (i + 1) + '</span>';
+                            if (n > 2 && i>0 && i<n-1) {
+                                iconHtml += '<span class="eme-directions-remove-wp">&#10005;</span>';
+                            }
+                            iconHtml += '</div>';
+                            var m = L.marker(wp.latLng, {
+                                icon: L.divIcon({
+                                    className: 'eme-directions-waypoint-icon',
+                                    html: iconHtml,
+                                    iconSize: [32, 32],
+                                    iconAnchor: [16, 16]
+                                }),
+                                draggable: true,
+                                zIndexOffset: 1000
+                            });
+                            m.on('add', function() {
+                                var el = m.getElement();
+                                if (el) {
+                                    var btn = el.querySelector('.eme-directions-remove-wp');
+                                    if (btn) {
+                                        L.DomEvent.on(btn, 'click', function(e) {
+                                            L.DomEvent.stopPropagation(e);
+                                            L.DomEvent.preventDefault(e);
+                                            routingControl.spliceWaypoints(i, 1);
+                                        });
+                                    }
+                                }
+                            });
+                            return m;
+                        }
+                    }).addTo(map);
+
+                    routingControl.on('routesfound', function(e) {
+                        let routes = e.routes;
+                        if (routes && routes.length > 0) {
+                            eme_render_instructions(instructionsDiv, routes[0]);
+                        }
+                    });
+
+                    routingControl.on('routingerror', function() {
+                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>';
+                        instructionsDiv.style.display = '';
+                    });
+
+                    dirMaps[mapId] = map;
+
+                    // scroll to the map after a brief delay to let the map render
+                    setTimeout(function() {
+                        mapDiv.scrollIntoView({behavior: 'smooth', block: 'start'});
+                        map.invalidateSize();
+                    }, 100);
+                })
+                .catch(function() {
+                    alert('Could not find your address');
+                });
+        });
+    });
+});
+
+function eme_escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}

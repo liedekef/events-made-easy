@@ -413,6 +413,8 @@ function eme_register_scripts() {
         wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
         wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
         wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-leaflet-routing', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_style( 'eme-leaflet-routing-css', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.css', [ 'eme-leaflet-css' ], EME_VERSION );
         $translation_array = [
             'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
             'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),

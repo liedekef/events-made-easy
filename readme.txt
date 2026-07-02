@@ -100,6 +100,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.1.4  (2026/06/) =
 * Add the option to exclude people with bookings from other events
+* A group is allowed to contain no members
+* Jodit editor update
 
 = 3.1.3  (2026/06/23) =
 * Make sure to regenerate extension signatures on first upgrade (and only then)

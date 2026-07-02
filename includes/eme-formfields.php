@@ -2123,7 +2123,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         return "<textarea {$ctx['required_att']} name='eme_rsvpcomment' $dfc placeholder='$placeholder_text' >$bookerComment</textarea>";
     };
 
-    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic ) {
+    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic ) {
         $var_prefix  = "bookings[$event_id][";
         $var_postfix = ']';
         $fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";

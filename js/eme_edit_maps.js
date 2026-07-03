@@ -1,12 +1,15 @@
 // Helper function to get/create map for a container
-function getOrCreateMapForContainer(containerId) {
+function createMapForContainer(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return null;
 
     // Check if map already exists on this container
-    if (container._leaflet_map) {
-        return container._leaflet_map;
-    }
+    //if (container._leaflet_map) {
+     //   container._leaflet_map.off();
+      //  container._leaflet_map.remove();
+      //  delete container._leaflet_map;
+   // }
+    destroyMap(containerId);
 
     // Create new map
     const map = L.map(containerId, {
@@ -87,13 +90,13 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     if (!mapContainer) return;
 
     // Destroy existing map if any
-    destroyMap(containerId);
+    //destroyMap(containerId);
 
     // first we show the container, so leaflet can check the size
     eme_toggle(mapContainer, true);
  
     // Create new map
-    const map = getOrCreateMapForContainer(containerId);
+    const map = createMapForContainer(containerId);
     if (!map) return;
 
     let searchKey_arr = [];
@@ -185,13 +188,13 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         if (!mapContainer) return;
 
         // Destroy existing map if any
-        destroyMap(containerId);
+        //destroyMap(containerId);
 
         // first we show the container, so leaflet can check the size
         eme_toggle(mapContainer, true);
 
         // Create new map
-        const map = getOrCreateMapForContainer(containerId);
+        const map = createMapForContainer(containerId);
         if (!map) return;
 
         // go to the coordinates

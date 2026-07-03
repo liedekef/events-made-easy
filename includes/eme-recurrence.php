@@ -409,7 +409,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	// Reason for doing this: we want to keep possible booking data for a recurrent event as well
 	// and just deleting all current events for a recurrence and inserting new ones would break the link between booking id and event id
 	// Second step: check all days of the recurrence and if no event exists yet, insert it
-	$prepared_sql = $wpdb->prepare( "SELECT event_id,event_start FROM $events_table WHERE recurrence_id = %d AND event_status <> %d", $recurrence['recurrence_id'], EME_EVENT_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$prepared_sql = $wpdb->prepare( "SELECT event_id,event_start,event_rsvp,event_tasks FROM $events_table WHERE recurrence_id = %d AND event_status <> %d", $recurrence['recurrence_id'], EME_EVENT_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events

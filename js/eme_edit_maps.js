@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mapContainer = document.querySelector('#eme-edit-location-map');
     if (mapContainer) eme_toggle(mapContainer, false);
     
-    eme_displayAddress(0);
+    //eme_displayAddress(0); // already called in eme_activateTab
     
     // Event listeners
     const mapIconInput = document.querySelector('input[name="eme_loc_prop_map_icon"]');

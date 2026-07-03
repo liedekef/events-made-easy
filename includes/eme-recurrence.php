@@ -405,10 +405,9 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	// 2 steps for updating events for a recurrence:
 	// First step: check the existing events and
 	//       if they still match the recurrence days or they have existing bookings (future events only), update them
-	// 	otherwise delete the old event
+	// 	     otherwise delete the old event
 	// Reason for doing this: we want to keep possible booking data for a recurrent event as well
-	// and just deleting all current events for a recurrence and inserting new ones would break the link
-	// between booking id and event id
+	// and just deleting all current events for a recurrence and inserting new ones would break the link between booking id and event id
 	// Second step: check all days of the recurrence and if no event exists yet, insert it
 	$prepared_sql = $wpdb->prepare( "SELECT event_id,event_start FROM $events_table WHERE recurrence_id = %d AND event_status <> %d", $recurrence['recurrence_id'], EME_EVENT_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$events = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -428,10 +427,12 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 		// if future events in the recurrence have bookings, we won't delete those but keep them in the recurrence series
 		if ( $existing_event_start_obj >= $eme_date_obj_now ) {
 			$bookings_count = eme_count_bookings_for( $existing_event['event_id'] );
+			$tasksignups_count = eme_count_tasksignups_for( $existing_event['event_id'] );
 		} else {
 			$bookings_count = 0;
+			$tasksignups_count = 0;
 		}
-		if ( $array_key !== false || $bookings_count > 0 ) {
+		if ( $array_key !== false || $bookings_count > 0 || $tasksignups_count > 0 ) {
 			if ( ! $only_change_recdates ) {
 				$event['event_start'] = "$day $event_start_time";
 				$eme_date_obj         = new emeExpressiveDate( $event['event_start'], EME_TIMEZONE );

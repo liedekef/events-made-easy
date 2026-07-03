@@ -387,6 +387,13 @@ function eme_count_task_signups( $task_id ) {
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
+function eme_count_tasksignups_for( $event_id ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+    $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE event_id=%d", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
 function eme_count_task_approved_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
@@ -463,7 +470,7 @@ function eme_get_tasksignup_personids( $signup_ids ) {
     }
 }
 
-function eme_count_event_task_signups( $event_id ) {
+function eme_count_event_task_signups_per_task( $event_id ) {
     global $wpdb;
     $table      = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     $prepared_sql = $wpdb->prepare( "SELECT task_id, COUNT(*) as signup_count FROM $table WHERE event_id=%d GROUP BY task_id", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1892,12 +1899,12 @@ function eme_tasks_ajax() {
             }
         }
         // the next is an array with as key the task id and value the number of signups for it
-        $event_task_count_signups = eme_count_event_task_signups( $event_id );
+        $event_count_signups_per_task = eme_count_event_task_signups_per_task( $event_id );
         foreach ( $task_id_arr as $task_id ) {
             $task_id = intval( $task_id );
             $task    = eme_get_task( $task_id );
             // if full, continue
-            if ( isset( $event_task_count_signups[ $task_id ] ) && $event_task_count_signups[ $task_id ] >= $task['spaces'] ) {
+            if ( isset( $event_count_signups_per_task[ $task_id ] ) && $event_count_signups_per_task[ $task_id ] >= $task['spaces'] ) {
                 $message .= __( 'No more open spaces for this task', 'events-made-easy' );
                 $message .= '<br>';
                 $nok      = 1;

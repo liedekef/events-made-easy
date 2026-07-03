@@ -3177,41 +3177,23 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
     return $bookings;
 }
 
-function eme_count_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) {
+function eme_count_bookings_for( $event_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
-    $bookings = [];
     if ( ! $event_ids ) {
-        return $bookings;
+        return false;
     }
 
-    $where = [];
-    if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
-        $ids_arr_int = array_map('intval', $event_ids);
-        $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-        $where[] = $wpdb->prepare( 'bookings.event_id IN (' . $placeholders . ')', ...$ids_arr_int );
-    } elseif ( is_numeric( $event_ids ) ) {
-        $event_id = intval( $event_ids );
-        $where[] = $wpdb->prepare( 'bookings.event_id = %d', $event_id );
+    $where_arr = [];
+    if ( is_numeric( $event_id ) ) {
+        $where_arr[] = $wpdb->prepare( 'bookings.event_id = %d', $event_id );
     } else {
-        $where[] = 'bookings.event_id = 0';
+        $where_arr[] = 'bookings.event_id = 0';
     }
+    $where_arr[] = $wpdb->prepare( 'bookings.status != %d', EME_RSVP_STATUS_TRASH );
 
-    if ( $rsvp_status ) {
-        $rsvp_status_int = intval( $rsvp_status );
-        $where[] = $wpdb->prepare( 'bookings.status = %d', $rsvp_status_int );
-    } else {
-        $where[] = $wpdb->prepare( 'bookings.status != %d', EME_RSVP_STATUS_TRASH );
-    }
-
-    if ( $paid_status == 1 ) {
-        $where[] = 'bookings.booking_paid=0';
-    } elseif ( $paid_status == 2 ) {
-        $where[] = 'bookings.booking_paid=1';
-    }
-    $where = 'WHERE ' . implode( ' AND ', $where );
-    #$sql = "SELECT * FROM $bookings_table $where ORDER BY booking_id";
+    $where = 'WHERE ' . implode( ' AND ', $where_arr );
     $sql = "SELECT COUNT(*) FROM $bookings_table AS bookings $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }

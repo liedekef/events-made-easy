@@ -1,9 +1,39 @@
-// to avoid the leaflet error 'Map container is already initialized' we use a global var to create the map later on
-let map;
-// create the tile layer with correct attribution
-let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-let osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>';
-let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+// Helper function to get/create map for a container
+function getOrCreateMapForContainer(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return null;
+
+    // Check if map already exists on this container
+    if (container._leaflet_map) {
+        return container._leaflet_map;
+    }
+
+    // Create new map
+    const map = L.map(containerId, {
+        zoom: 13,
+        scrollWheelZoom: emeadmin.translate_map_zooming,
+        doubleClickZoom: false
+    });
+
+    // create the tile layer with correct attribution
+    let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib = 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>';
+    let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+
+    map.addLayer(osm);
+    container._leaflet_map = map;
+    return map;
+}
+
+function destroyMap(containerId) {
+    const container = document.getElementById(containerId);
+    if (container && container._leaflet_map) {
+        container._leaflet_map.off();
+        container._leaflet_map.remove();
+        delete container._leaflet_map;
+    }
+}
+
 
 function eme_displayAddress(ignore_coord){
     const locationNameInput = document.querySelector('input#location_name');
@@ -51,23 +81,21 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     if (map_icon === undefined) {
         map_icon = '';
     }
-    let myOptions = {
-        zoom: 13,
-        scrollWheelZoom: emeadmin.translate_map_zooming,
-        doubleClickZoom: false
-    }
-    // to avoid the leaflet error 'Map container is already initialized'
-    if (map) {
-        map.off();
-        map.remove();
-    }
     
-    // first we show the map, so leaflet can check the size
-    const mapContainer = document.querySelector('#eme-edit-location-map');
+    const containerId = 'eme-edit-location-map';
+    const mapContainer = document.getElementById(containerId);
+    if (!mapContainer) return;
+
+    // Destroy existing map if any
+    destroyMap(containerId);
+
+    // first we show the container, so leaflet can check the size
     eme_toggle(mapContainer, true);
-    map = L.map('eme-edit-location-map', myOptions);
-    map.addLayer(osm);
-    
+ 
+    // Create new map
+    const map = getOrCreateMapForContainer(containerId);
+    if (!map) return;
+
     let searchKey_arr = [];
     if (address1) {
         searchKey_arr.push(address1);
@@ -150,24 +178,25 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
 
     if (lat != 0 && lng != 0) {
         let latlng = L.latLng(lat, lng);
-        let myOptions = {
-            zoom: 13,
-            center: latlng,
-            scrollWheelZoom: emeadmin.translate_map_zooming,
-            doubleClickZoom: false
-        }
-        // to avoid the leaflet error 'Map container is already initialized'
-        if (map) {
-            map.off();
-            map.remove();
-        }
         
+        const containerId = 'eme-edit-location-map';
         // first we show the map, so leaflet can check the size
-        const mapContainer = document.querySelector('#eme-edit-location-map');
+        const mapContainer = document.getElementById(containerId);
+        if (!mapContainer) return;
+
+        // Destroy existing map if any
+        destroyMap(containerId);
+
+        // first we show the container, so leaflet can check the size
         eme_toggle(mapContainer, true);
-        map = L.map('eme-edit-location-map', myOptions);
-        map.addLayer(osm);
-        
+
+        // Create new map
+        const map = getOrCreateMapForContainer(containerId);
+        if (!map) return;
+
+        // go to the coordinates
+        map.panTo(latlng);
+
         let myIcon;
         if (map_icon !== '') {
             myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});

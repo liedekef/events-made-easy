@@ -3181,7 +3181,7 @@ function eme_count_bookings_for( $event_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
-    if ( ! $event_ids ) {
+    if ( ! $event_id ) {
         return false;
     }
 

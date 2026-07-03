@@ -2906,7 +2906,7 @@ function eme_emails_page() {
     <h1><?php esc_html_e( 'Send event related emails', 'events-made-easy' ); ?></h1>
     <form id='send_mail' name='send_mail' action="#" method="post" onsubmit="return false;">
     <div id='send_event_mail_div'>
-        <table>
+        <table class='widefat'>
         <tr>
         <td><?php
             $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );

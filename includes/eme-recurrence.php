@@ -424,13 +424,16 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 		$day       = eme_get_date_from_dt( $existing_event['event_start'] );
 		$array_key = array_search( $day, $matching_days );
 		$existing_event_start_obj = new emeExpressiveDate( $existing_event['event_start'], EME_TIMEZONE );
-		// if future events in the recurrence have bookings, we won't delete those but keep them in the recurrence series
+		// if future events in the recurrence have bookings or task signups, we won't delete those but keep them in the recurrence series
+        $bookings_count = 0;
+        $tasksignups_count = 0;
 		if ( $existing_event_start_obj >= $eme_date_obj_now ) {
-			$bookings_count = eme_count_bookings_for( $existing_event['event_id'] );
-			$tasksignups_count = eme_count_tasksignups_for( $existing_event['event_id'] );
-		} else {
-			$bookings_count = 0;
-			$tasksignups_count = 0;
+            if ($existing_event['event_rsvp']) {
+                $bookings_count = eme_count_bookings_for( $existing_event['event_id'] );
+            }
+            if ($existing_event['event_tasks']) {
+                $tasksignups_count = eme_count_tasksignups_for( $existing_event['event_id'] );
+            }
 		}
 		if ( $array_key !== false || $bookings_count > 0 || $tasksignups_count > 0 ) {
 			if ( ! $only_change_recdates ) {

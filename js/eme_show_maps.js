@@ -1,9 +1,9 @@
-// create the tile layer with correct attribution
-let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-let osmAttrib='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-let osmAttribDirections= osmAttrib + ' | ' + '<a href="https://www.openstreetmap.org/fixthemap">Fix the map</a>';
-
 document.addEventListener('DOMContentLoaded', function() {
+    // create the tile layer with correct attribution
+    let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    let osmAttribDirections= osmAttrib + ' | ' + '<a href="https://www.openstreetmap.org/fixthemap">Fix the map</a>';
+
     // first the global map (if present)
     let divs = document.getElementsByTagName('div');
     let div_arr_map = new Array();
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let destLat = parseFloat(form.querySelector('[name="eme_directions_dest_lat"]').value);
             let destLon = parseFloat(form.querySelector('[name="eme_directions_dest_lon"]').value);
-            let destAddress = form.querySelector('[name="eme_directions_dest_address"]').value;
+            let destAddress = eme_escapeHtml(form.querySelector('[name="eme_directions_dest_address"]').value);
 
             let mapDiv = document.getElementById(mapId);
             let instructionsDiv = document.getElementById(instructionsId);

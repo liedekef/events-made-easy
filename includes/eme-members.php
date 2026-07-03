@@ -1113,10 +1113,10 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         } elseif ( eme_is_empty_string( $_POST['lastname'] ) ) {
             // we need at least lastname
             $err = __( 'Please enter at least the last name for a new member', 'events-made-easy' );
-        } elseif ( ! $eme_is_admin_request && ! eme_is_email_frontend( sanitize_text_field( wp_unslash( $_POST['email'] ) ) ) ) {
+        } elseif ( ! $eme_is_admin_request && ! eme_is_email_frontend( eme_sanitize_email( $_POST['email'] ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
-        } elseif ( $membership['properties']['create_wp_user'] && ! eme_is_email( sanitize_text_field( wp_unslash( $_POST['email'] ) ) ) ) {
+        } elseif ( $membership['properties']['create_wp_user'] && ! eme_is_email( eme_sanitize_email( $_POST['email'] ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } else {

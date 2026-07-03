@@ -1882,7 +1882,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
 
     // invite URL overrides
     $invite_readonly = '';
-    if ( eme_check_invite_url( $event['event_id'] ) && ! $eme_is_admin_request ) {
+    if ( eme_check_invite_url( $event_id ) && ! $eme_is_admin_request ) {
         if ( ! empty( $_GET['eme_email'] ) ) {
             $person['email'] = eme_sanitize_email( $_GET['eme_email'] );
         }

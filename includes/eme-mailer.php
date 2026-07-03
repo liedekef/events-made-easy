@@ -1504,7 +1504,6 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
     if ( ! empty( $exclude_registered_events ) ) {
         $exclude_event_ids = array_merge( $exclude_event_ids, explode( ',', $exclude_registered_events ) );
     }
-    //$registered_ids = ! empty( $exclude_event_ids ) ? eme_get_attendee_ids( array_unique( $exclude_event_ids ) ) : [];
     $registered_emails = ! empty( $exclude_event_ids ) ? eme_get_attendee_emails( array_unique( $exclude_event_ids ) ) : [];
 
     $handled_emails = [];
@@ -1513,7 +1512,6 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
     foreach ( $member_ids as $member_id ) {
         $member = eme_get_member( $member_id );
         if ( ! $member ) continue;
-        //if ( in_array( $member['person_id'], $registered_ids ) ) continue;
 
         $person = eme_get_person( $member['person_id'] );
         if ( ! $person ) continue;
@@ -1540,7 +1538,6 @@ function eme_process_event_people_groups( $event, $conditions, $ignore_massmail,
 
     // Process people
     foreach ( $person_ids as $person_id ) {
-        //if ( in_array( $person_id, $registered_ids ) ) continue;
         $person = eme_get_person( $person_id );
         if ( ! $person ) continue;
         if ( ! $ignore_massmail && ! $person['massmail'] ) continue;

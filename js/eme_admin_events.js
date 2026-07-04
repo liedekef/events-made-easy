@@ -650,19 +650,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function changeEventAdminPageTitle() {
         let title;
-        function eme_escapeHtml(str) {
-            var div = document.createElement('div');
-            div.appendChild(document.createTextNode(str));
-            return div.innerHTML;
-        }
-
         const eventNameInput = EME.$('input[name=event_name]');
         if (eventNameInput) {
             const eventName = eventNameInput.value;
             if (!eventName) {
                 title = emeadmin.translate_insertnewevent;
             } else {
-                title = emeadmin.translate_editeventstring + eme_escapeHtml(eventName) ;
+                title = emeadmin.translate_editeventstring + ' ' + eventName;
             }
             document.title = eme_htmlDecode(title);
         }

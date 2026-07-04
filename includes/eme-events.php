@@ -9636,7 +9636,7 @@ function eme_admin_enqueue_js() {
             'translate_name'                       => __( 'Name', 'events-made-easy' ),
             'translate_insertnewevent'             => __( 'Insert New Event', 'events-made-easy' ),
             // translators: %s is the event name
-            'translate_editeventstring'            => __( "Edit Event '%s'", 'events-made-easy' ),
+            'translate_editeventstring'            => __( "Edit Event", 'events-made-easy' ),
             'translate_status'                     => __( 'Status', 'events-made-easy' ),
             'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
             'translate_csv'                        => __( 'CSV', 'events-made-easy' ),

@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // directions form handling (separate event listener for the forms)
     let dirForms = document.querySelectorAll('.eme-directions-form');
-    let dirMaps = {};
+    let dirMaps = {}; // keyed by mapId: { map, routingControl }
 
     function eme_render_instructions(instructionsDiv, route) {
         let summary = route.summary;
@@ -250,10 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let instructionsId = form.dataset.instructionsId;
             let originInput = form.querySelector('.eme-directions-origin');
             let origin = originInput.value.trim();
-
-            if (!origin) {
-                return;
-            }
+            if (!origin) return;
 
             let destLat = parseFloat(form.querySelector('[name="eme_directions_dest_lat"]').value);
             let destLon = parseFloat(form.querySelector('[name="eme_directions_dest_lon"]').value);
@@ -262,7 +259,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let mapDiv = document.getElementById(mapId);
             let instructionsDiv = document.getElementById(instructionsId);
 
-            // geocode origin via Nominatim
             let geocodeUrl = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(origin);
 
             fetch(geocodeUrl)
@@ -277,96 +273,93 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     let originLatLng = L.latLng(parseFloat(data[0].lat), parseFloat(data[0].lon));
                     let destLatLng = L.latLng(destLat, destLon);
-                    let zoomFactor = parseInt(mapDiv.dataset.zoom_factor) || 10;
-                    if (zoomFactor > 14) zoomFactor = 14;
-
-                    // remove existing map if present
-                    if (dirMaps[mapId]) {
-                        dirMaps[mapId].remove();
-                        delete dirMaps[mapId];
-                    }
 
                     mapDiv.style.display = '';
 
-                    let myOptions = {
-                        zoom: zoomFactor,
-                        center: originLatLng,
-                        doubleClickZoom: false,
-                        scrollWheelZoom: mapDiv.dataset.enable_zooming === 'true',
-                        gestureHandling: mapDiv.dataset.gestures === 'true'
-                    };
+                    let entry = dirMaps[mapId];
 
-                    let map = L.map(mapId, myOptions);
-                    L.tileLayer(osmUrl, {attribution: osmAttribDirections, className: 'eme-map-tiles'}).addTo(map);
-                    L.marker(destLatLng).addTo(map).bindPopup(destAddress);
+                    if (entry) {
+                        // reuse the existing map + routing control, just recompute the route
+                        entry.routingControl.setWaypoints([originLatLng, destLatLng]);
+                        entry.map.invalidateSize();
+                        entry.map.fitBounds(L.latLngBounds([originLatLng, destLatLng]), { padding: [40, 40] });
+                    } else {
+                        let zoomFactor = parseInt(mapDiv.dataset.zoom_factor) || 10;
+                        if (zoomFactor > 14) zoomFactor = 14;
 
-                    var router = L.Routing.osrmv1({
-                        serviceUrl: mapDiv.dataset.osrmUrl
-                    });
+                        let myOptions = {
+                            zoom: zoomFactor,
+                            center: originLatLng,
+                            doubleClickZoom: false,
+                            scrollWheelZoom: mapDiv.dataset.enable_zooming === 'true',
+                            gestureHandling: mapDiv.dataset.gestures === 'true'
+                        };
 
-                    var routingControl = L.Routing.control({
-                        router: router,
-                        waypoints: [
-                            originLatLng,
-                            destLatLng
-                        ],
-                        show: false,
-                        routeWhileDragging: true,
-                        showAlternatives: false,
-                        addWaypoints: true,
-                        createMarker: function(i, wp, n) {
-                            var iconHtml = '<div class="eme-directions-waypoint-icon-inner">' +
-                                '<span class="eme-directions-waypoint-label">' + (i + 1) + '</span>';
-                            if (n > 2 && i>0 && i<n-1) {
-                                iconHtml += '<span class="eme-directions-remove-wp">&#10005;</span>';
-                            }
-                            iconHtml += '</div>';
-                            var m = L.marker(wp.latLng, {
-                                icon: L.divIcon({
-                                    className: 'eme-directions-waypoint-icon',
-                                    html: iconHtml,
-                                    iconSize: [32, 32],
-                                    iconAnchor: [16, 16]
-                                }),
-                                draggable: true,
-                                zIndexOffset: 1000
-                            });
-                            m.on('add', function() {
-                                var el = m.getElement();
-                                if (el) {
-                                    var btn = el.querySelector('.eme-directions-remove-wp');
-                                    if (btn) {
-                                        L.DomEvent.on(btn, 'click', function(e) {
-                                            L.DomEvent.stopPropagation(e);
-                                            L.DomEvent.preventDefault(e);
-                                            routingControl.spliceWaypoints(i, 1);
-                                        });
-                                    }
+                        let map = L.map(mapId, myOptions);
+                        L.tileLayer(osmUrl, {attribution: osmAttribDirections, className: 'eme-map-tiles'}).addTo(map);
+                        L.marker(destLatLng).addTo(map).bindPopup(destAddress);
+
+                        var router = L.Routing.osrmv1({ serviceUrl: mapDiv.dataset.osrmUrl });
+
+                        var routingControl = L.Routing.control({
+                            router: router,
+                            waypoints: [originLatLng, destLatLng],
+                            show: false,
+                            routeWhileDragging: true,
+                            showAlternatives: false,
+                            addWaypoints: true,
+                            createMarker: function(i, wp, n) {
+                                var iconHtml = '<div class="eme-directions-waypoint-icon-inner">' +
+                                    '<span class="eme-directions-waypoint-label">' + (i + 1) + '</span>';
+                                if (n > 2 && i > 0 && i < n - 1) {
+                                    iconHtml += '<span class="eme-directions-remove-wp">&#10005;</span>';
                                 }
-                            });
-                            return m;
-                        }
-                    }).addTo(map);
+                                iconHtml += '</div>';
+                                var m = L.marker(wp.latLng, {
+                                    icon: L.divIcon({
+                                        className: 'eme-directions-waypoint-icon',
+                                        html: iconHtml,
+                                        iconSize: [32, 32],
+                                        iconAnchor: [16, 16]
+                                    }),
+                                    draggable: true,
+                                    zIndexOffset: 1000
+                                });
+                                m.on('add', function() {
+                                    var el = m.getElement();
+                                    if (el) {
+                                        var btn = el.querySelector('.eme-directions-remove-wp');
+                                        if (btn) {
+                                            L.DomEvent.on(btn, 'click', function(e) {
+                                                L.DomEvent.stopPropagation(e);
+                                                L.DomEvent.preventDefault(e);
+                                                routingControl.spliceWaypoints(i, 1);
+                                            });
+                                        }
+                                    }
+                                });
+                                return m;
+                            }
+                        }).addTo(map);
 
-                    routingControl.on('routesfound', function(e) {
-                        let routes = e.routes;
-                        if (routes && routes.length > 0) {
-                            eme_render_instructions(instructionsDiv, routes[0]);
-                        }
-                    });
+                        routingControl.on('routesfound', function(e) {
+                            let routes = e.routes;
+                            if (routes && routes.length > 0) {
+                                eme_render_instructions(instructionsDiv, routes[0]);
+                            }
+                        });
 
-                    routingControl.on('routingerror', function() {
-                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_couldnotcalcroute + '</div>';
-                        instructionsDiv.style.display = '';
-                        mapDiv.style.display = 'none';
-                    });
+                        routingControl.on('routingerror', function() {
+                            instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>';
+                            instructionsDiv.style.display = '';
+                        });
 
-                    dirMaps[mapId] = map;
+                        dirMaps[mapId] = { map: map, routingControl: routingControl };
+                    }
 
-                    // scroll to the map after a brief delay to let the map render
                     setTimeout(function() {
                         mapDiv.scrollIntoView({behavior: 'smooth', block: 'start'});
-                        map.invalidateSize();
+                        dirMaps[mapId].map.invalidateSize();
                     }, 100);
                 })
                 .catch(function() {

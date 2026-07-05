@@ -2838,7 +2838,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     if (empty($limit_to_group)) {
 ?>
     <button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
-    <div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
+    <div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="search" id="dynamicgroupname" name="dynamicgroupname" size=20>
         <button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
     </div>
 <?php

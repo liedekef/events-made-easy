@@ -37,7 +37,6 @@ function destroyMap(containerId) {
     }
 }
 
-
 function eme_displayAddress(ignore_coord){
     const locationNameInput = document.querySelector('input#location_name');
     if (locationNameInput) {

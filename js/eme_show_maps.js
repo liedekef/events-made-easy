@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    function eme_escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
     // create the tile layer with correct attribution
     let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     let osmAttrib='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -206,10 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
     }
-});
 
-// directions form handling (separate event listener for the forms)
-document.addEventListener('DOMContentLoaded', function() {
+    // directions form handling (separate event listener for the forms)
     let dirForms = document.querySelectorAll('.eme-directions-form');
     let dirMaps = {};
 
@@ -265,7 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (!data || data.length === 0) {
-                        alert('Address not found');
+                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
+                        instructionsDiv.style.display = '';
                         return;
                     }
 
@@ -350,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
 
                     routingControl.on('routingerror', function() {
-                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>';
+                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_couldnotcalcroute + '</div>';
                         instructionsDiv.style.display = '';
                     });
 
@@ -363,14 +368,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 100);
                 })
                 .catch(function() {
-                    alert('Could not find your address');
+                    instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
+                    instructionsDiv.style.display = '';
                 });
         });
     });
 });
 
-function eme_escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
-}

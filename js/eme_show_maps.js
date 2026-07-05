@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!data || data.length === 0) {
                         instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
                         instructionsDiv.style.display = '';
+                        mapDiv.style.display = 'none';
                         return;
                     }
 
@@ -357,6 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     routingControl.on('routingerror', function() {
                         instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_couldnotcalcroute + '</div>';
                         instructionsDiv.style.display = '';
+                        mapDiv.style.display = 'none';
                     });
 
                     dirMaps[mapId] = map;
@@ -370,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(function() {
                     instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
                     instructionsDiv.style.display = '';
+                    mapDiv.style.display = 'none';
                 });
         });
     });

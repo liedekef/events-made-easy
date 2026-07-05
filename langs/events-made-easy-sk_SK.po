@@ -16,7 +16,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:358
-#: includes/eme-actions.php:694
+#: includes/eme-actions.php:699
 #: includes/eme-gdpr.php:520
 #: includes/eme-gdpr.php:526
 #: includes/eme-gdpr.php:727
@@ -181,27 +181,27 @@ msgid "Yes, I'm sure"
 msgstr "Áno, som si istý"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:503
+#: includes/eme-actions.php:508
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Táto stránka zodpovedá stránke <strong>Events Made Easy</strong>. Jej obsah bude prepísaný pomocou <strong>Events Made Easy</strong>. Ak chcete zobraziť svoj obsah, môžete priradiť inú stránku pre <strong>Events Made Easy</strong> v časti <a href='%s'>Nastavenia</a>. "
 
-#: includes/eme-actions.php:552
+#: includes/eme-actions.php:557
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy bol nainštalovaný alebo aktualizovaný"
 
-#: includes/eme-actions.php:553
+#: includes/eme-actions.php:558
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Prispejte prosím na vývoj pluginu Events Made Easy"
 
-#: includes/eme-actions.php:555
+#: includes/eme-actions.php:560
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Ak považujete <strong>Events Made Easy</strong> užitočné pre vás, zvážte poskytnutie malého daru, ktorý by prispel k môjmu investovanému času a ďalšiemu rozvoju. Ďakujeme za vašu láskavú podporu!"
 
-#: includes/eme-actions.php:564
+#: includes/eme-actions.php:569
 msgid "Dismiss"
 msgstr "Zamietnuť"
 
-#: includes/eme-actions.php:699
+#: includes/eme-actions.php:704
 msgid "List of next 10 events"
 msgstr "Zoznam nasledujúcich 10 podujatí"
 
@@ -919,7 +919,7 @@ msgstr "Názov štátu"
 msgid "The name of the state"
 msgstr "Názov štátu"
 
-#: includes/eme-actions.php:453
+#: includes/eme-actions.php:458
 #: includes/eme-countries.php:509
 #: includes/eme-discounts.php:1728
 #: includes/eme-events.php:9623
@@ -1502,7 +1502,7 @@ msgstr "Pevná na miesto"
 #: includes/eme-formfields.php:3609
 #: includes/eme-formfields.php:3610
 #: includes/eme-formfields.php:3611
-#: includes/eme-fs.php:651
+#: includes/eme-fs.php:650
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
 #: includes/eme-gdpr.php:542
@@ -1542,7 +1542,7 @@ msgstr "Áno"
 #: includes/eme-formfields.php:3609
 #: includes/eme-formfields.php:3610
 #: includes/eme-formfields.php:3611
-#: includes/eme-fs.php:650
+#: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:422
 #: includes/eme-gdpr.php:423
 #: includes/eme-gdpr.php:542
@@ -1651,7 +1651,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: includes/eme-events.php:666
-#: includes/eme-fs.php:788
+#: includes/eme-fs.php:787
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -1663,7 +1663,6 @@ msgstr "Nové podujatie úspešne pridané!"
 #: includes/eme-events.php:678
 #: includes/eme-events.php:753
 #: includes/eme-events.php:815
-#: includes/eme-events.php:9639
 msgid "Edit Event '%s'"
 msgstr "Upraviť podujatie '%s'"
 
@@ -2182,7 +2181,7 @@ msgstr "Zobraziť/skryť extra filtre"
 #: includes/eme-events.php:6202
 #: includes/eme-events.php:6734
 #: includes/eme-events.php:6742
-#: includes/eme-fs.php:634
+#: includes/eme-fs.php:633
 msgid "Event Status"
 msgstr "Stav podujatia"
 
@@ -4255,7 +4254,7 @@ msgstr "Štáty"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "K tomuto štátu nie je priradená žiadna krajina, nebude sa zobrazovať v rozbaľovacích zoznamoch. Upravte tento stav a opravte informácie o krajine."
 
-#: includes/eme-actions.php:433
+#: includes/eme-actions.php:438
 #: includes/eme-events.php:9629
 msgid "No matching location found"
 msgstr "Nenašli sa vyhovujúce miesta"
@@ -5549,7 +5548,7 @@ msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
 #: includes/eme-fs.php:189
-#: includes/eme-fs.php:869
+#: includes/eme-fs.php:868
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 
@@ -5571,24 +5570,24 @@ msgstr "Na správne fungovanie tohto formulára je potrebný Javascript"
 msgid "Create event"
 msgstr "Vytvoriť podujatie"
 
-#: includes/eme-fs.php:661
+#: includes/eme-fs.php:660
 #: includes/eme-options.php:604
 msgid "New event succesfully created."
 msgstr "Nové podujatie bolo úspešne vytvorené."
 
-#: includes/eme-fs.php:681
+#: includes/eme-fs.php:680
 msgid "Please enter a name for the event"
 msgstr "Zadajte prosím názov podujatia"
 
-#: includes/eme-fs.php:684
+#: includes/eme-fs.php:683
 msgid "Enter the event's start date"
 msgstr "Zadajte dátum začiatku podujatia"
 
-#: includes/eme-fs.php:712
+#: includes/eme-fs.php:711
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase začiatku"
 
-#: includes/eme-fs.php:846
+#: includes/eme-fs.php:845
 #: includes/eme-gdpr.php:52
 #: includes/eme-gdpr.php:141
 #: includes/eme-gdpr.php:215
@@ -5603,7 +5602,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: includes/eme-fs.php:856
+#: includes/eme-fs.php:855
 #: includes/eme-gdpr.php:62
 #: includes/eme-gdpr.php:151
 #: includes/eme-gdpr.php:225
@@ -6380,7 +6379,7 @@ msgstr "Predmet"
 msgid "Queued on"
 msgstr "V poradí"
 
-#: includes/eme-actions.php:449
+#: includes/eme-actions.php:454
 #: includes/eme-cleanup.php:340
 #: includes/eme-events.php:9619
 #: includes/eme-mailer.php:1782
@@ -14271,33 +14270,33 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
-#: includes/eme-actions.php:447
+#: includes/eme-actions.php:452
 #: includes/eme-events.php:9617
 msgid "Insert image"
 msgstr ""
 
-#: includes/eme-actions.php:448
+#: includes/eme-actions.php:453
 #: includes/eme-events.php:9618
 msgid "Insert"
 msgstr ""
 
-#: includes/eme-actions.php:450
+#: includes/eme-actions.php:455
 #: includes/eme-events.php:9620
 msgid "Insert from Media Library"
 msgstr ""
 
-#: includes/eme-actions.php:451
+#: includes/eme-actions.php:456
 #: includes/eme-cleanup.php:387
 #: includes/eme-events.php:9621
 msgid "Preview"
 msgstr ""
 
-#: includes/eme-actions.php:452
+#: includes/eme-actions.php:457
 #: includes/eme-events.php:9622
 msgid "Visual"
 msgstr ""
 
-#: includes/eme-actions.php:454
+#: includes/eme-actions.php:459
 #: includes/eme-events.php:9624
 msgid "Insert non-breaking space"
 msgstr ""
@@ -14730,27 +14729,27 @@ msgstr ""
 msgid "Send the configured reminder mail for approved bookings"
 msgstr ""
 
-#: includes/eme-actions.php:531
+#: includes/eme-actions.php:536
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: includes/eme-actions.php:534
+#: includes/eme-actions.php:539
 msgid "Widgets page"
 msgstr ""
 
-#: includes/eme-actions.php:536
+#: includes/eme-actions.php:541
 msgid "Template tags documentation"
 msgstr ""
 
-#: includes/eme-actions.php:538
+#: includes/eme-actions.php:543
 msgid "Shortcodes documentation"
 msgstr ""
 
-#: includes/eme-actions.php:540
+#: includes/eme-actions.php:545
 msgid "Change settings"
 msgstr ""
 
-#: includes/eme-actions.php:541
+#: includes/eme-actions.php:546
 msgid "Don't show this advice again"
 msgstr ""
 
@@ -15001,4 +15000,17 @@ msgstr ""
 
 #: includes/eme-mailer.php:2960
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
+msgstr ""
+
+#: includes/eme-actions.php:416
+msgid "Address not found"
+msgstr ""
+
+#: includes/eme-actions.php:417
+msgid "Could not calculate route"
+msgstr ""
+
+#. translators: %s is the event name
+#: includes/eme-events.php:9639
+msgid "Edit Event"
 msgstr ""

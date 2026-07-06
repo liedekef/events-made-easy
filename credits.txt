@@ -10,4 +10,4 @@ https://www.freepik.com/free-vector/origami-ribbons-in-different-colors_724999.h
 Fondy code has been provided by Alexander Mankuta <alex@pointless.one>
 
 Security report gladly attributed to:
-- WPScan, Erwan Le Rousseau
+- WPScan, Haitam Lazaar

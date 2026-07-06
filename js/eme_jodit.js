@@ -4,71 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return eme_htmlDecode(html.replace(/"/g, "'").replace(/ \/>/g, '>'));
     }
 
-    const findMatchingTagName = (element, controlList) => {
-        const tagName = element.tagName.toLowerCase().trim();
-        for (const [value, text] of Object.entries(controlList)) {
-            if (value.toLowerCase().trim() === tagName) {
-                return text + ' \u00A0';
-            }
-        }
-        return '';
-    };
-
     // ===== Jodit Default Configs (Outside Loop) =====
-    Jodit.modules.Icon.set('insertNbsp', '<svg viewBox="0 0 100 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="96" height="36" rx="6" ry="6" fill="#f0f0f0" stroke="#333" stroke-width="3"/></svg>');
+    //Jodit.modules.Icon.set('insertNbsp', '<svg viewBox="0 0 100 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="96" height="36" rx="6" ry="6" fill="#f0f0f0" stroke="#333" stroke-width="3"/></svg>');
 
     Jodit.defaultOptions.controls.insertNbsp = {
-        icon: 'insertNbsp',
+        text: '⎵',
         tooltip: emeadmin.translate_insertnbsp,
         exec: (editor) => editor.selection.insertHTML('&nbsp;'),
-    };
-
-    Jodit.defaultOptions.controls.insertFromMediaLibrary2 = {
-        template: () => '<span style="display: flex; align-items: center;"><span style="font-size: 1.1em;">🎵 🖼️ 📎</span></span>',
-        exec: (editor) => {
-            const escapeHtml = (text) => EME.$('<div>').text(text).html();
-            // Store original handler per editor instance
-            if (!editor.mediaHandlers) {
-                editor.mediaHandlers = {
-                    originalSend: wp.media.editor.send.attachment,
-                    cleanup: function() {
-                        wp.media.editor.send.attachment = editor.mediaHandlers.originalSend;
-                        EME.$(document).off('click', editor.mediaHandlers.closeHandler);
-                    }
-                }
-            }
-
-            // Override the default WordPress media insertion handler
-            wp.media.editor.send.attachment = function(props, file) {
-                let html;
-
-                // Handle images (WordPress already applies selected size to file.url)
-                if (file.type === 'image') {
-                    html = `<img src="${file.url}" alt="${escapeHtml(file.alt) || ''}" width="${file.width || ''}" height="${file.height || ''}" />`;
-                } 
-                // Handle audio/video
-                else if (file.type === 'audio') {
-                    html = `<audio controls src="${file.url}"></audio>`;
-                }
-                else if (file.type === 'video') {
-                    html = `<video controls width="640" height="360" src="${file.url}"></video>`;
-                }
-                // Handle documents/other files
-                else {
-                    html = `<a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.filename)}</a>`;
-                }
-
-                // Insert into Jodit
-                editor.selection.insertHTML(html);
-            };
-
-            // Open the CLASSIC WordPress media modal
-            wp.media.editor.open(editor.id);
-
-            // Restore original send.attachment when modal closes
-            EME.$(document).on('click', '.media-modal-close, .media-modal-backdrop', editor.mediaHandlers.cleanup);
-        },
-        tooltip: emeadmin.translate_insertfrommedia,
     };
 
     Jodit.defaultOptions.controls.insertFromMediaLibrary = {
@@ -261,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
             toolbarAdaptive: false,
             showCharsCounter: false,
             showWordsCounter: false,
+            link: { deriveUrlFromText: true },
             hidePoweredByJodit: true,
             language: emeadmin.translate_flanguage,
             enter: 'br',
@@ -295,23 +238,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Link Popup Logic
-        editor.events.on('afterOpenPopup.link', (popup) => {
-            const urlField = popup.container.querySelector('input[data-ref="url_input"]');
-            if (!urlField) return;
-
-            const urlval = urlField.value.trim();
-            if (!urlval) {
-                const contentval = popup.container.querySelector('input[data-ref="content_input"]').value.trim();
-                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contentval)) {
-                    urlField.value = 'mailto:' + contentval;
-                } else if (/^(https?:\/\/)/i.test(contentval)) {
-                    urlField.value = contentval;
-                } else {
-                    urlField.value = 'https://'; // default: let's give a good start
-                }
-            }
-        });
         editor.events.on('blur', function () {
             textarea.value = visualBtn.classList.contains('active') ? editor.value : textarea.value;
         });
@@ -376,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showCharsCounter: false,
             showWordsCounter: false,
             hidePoweredByJodit: true,
+            link: { deriveUrlFromText: true },
             buttons: [
                 'undo', 'redo',
                 '|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
@@ -393,24 +320,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 font:     { component: 'select' },
                 fontsize: { component: 'select' },
                 paragraph:{ component: 'select' }
-            }
-        });
-
-        // Link Popup Logic
-        editor.events.on('afterOpenPopup.link', (popup) => {
-            const urlField = popup.container.querySelector('input[data-ref="url_input"]');
-            if (!urlField) return;
-
-            const urlval = urlField.value.trim();
-            if (!urlval) {
-                const contentval = popup.container.querySelector('input[data-ref="content_input"]').value.trim();
-                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contentval)) {
-                    urlField.value = 'mailto:' + contentval;
-                } else if (/^(https?:\/\/)/i.test(contentval)) {
-                    urlField.value = contentval;
-                } else {
-                    urlField.value = 'https://' + contentval;
-                }
             }
         });
     });
@@ -439,41 +348,4 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-
-
-    /*
-    // not doing this now, but if it ever becomes a problem we can trigger resize if an editor becomes visible
-
-    const isVisible = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
-    const previouslyVisible = new WeakMap();
-
-    const checkAndResizeEditors = () => {
-        Object.values(Jodit.instances).forEach(editor => {
-            const container = editor.container;
-            const wasVisible = previouslyVisible.get(container);
-            const nowVisible = isVisible(container);
-
-            if (!wasVisible && nowVisible) {
-                editor.events.fire('resize');
-            }
-
-            previouslyVisible.set(container, nowVisible);
-        });
-    };
-
-    // Observe DOM mutations that might affect visibility
-    const observer = new MutationObserver(() => {
-        checkAndResizeEditors();
-    });
-
-    observer.observe(document.body, {
-        attributes: true,
-        childList: true,
-        subtree: true
-    });
-
-    // Also run initially in case some editors are visible already
-    checkAndResizeEditors();
-
-*/
 });

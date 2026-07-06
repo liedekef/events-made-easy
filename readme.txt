@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.1.4  (2026/06/) =
+= 3.1.4  (2026/07/06) =
 * Security: Unauthenticated Person Data Modification (IDOR) fix (reported by WPScan, Erwan Le Rousseau)
 * Add the option to exclude people with bookings from other events
 * Jodit editor update

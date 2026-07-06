@@ -114,8 +114,8 @@ msgid "Location"
 msgstr "Veranstaltungsort"
 
 #: includes/eme-events.php:9710
-#: includes/eme-gdpr.php:433
-#: includes/eme-gdpr.php:578
+#: includes/eme-gdpr.php:473
+#: includes/eme-gdpr.php:618
 #: includes/eme-locations.php:577
 #: includes/eme-people.php:1038
 #: includes/eme-people.php:1213
@@ -126,8 +126,8 @@ msgstr "Provinz"
 
 #: includes/eme-countries.php:518
 #: includes/eme-events.php:9709
-#: includes/eme-gdpr.php:434
-#: includes/eme-gdpr.php:582
+#: includes/eme-gdpr.php:474
+#: includes/eme-gdpr.php:622
 #: includes/eme-locations.php:585
 #: includes/eme-people.php:1039
 #: includes/eme-people.php:1214
@@ -185,7 +185,7 @@ msgstr "Veranstaltungen"
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
 #: includes/eme-events.php:9760
-#: includes/eme-gdpr.php:460
+#: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1671
 msgid "Memberships"
 msgstr "Mitgliedschaften"
@@ -349,8 +349,8 @@ msgstr "Kategorie hinzufügen"
 
 #: includes/eme-cleanup.php:312
 #: includes/eme-events.php:9635
-#: includes/eme-gdpr.php:425
 #: includes/eme-gdpr.php:465
+#: includes/eme-gdpr.php:505
 #: includes/eme-people.php:1026
 #: includes/eme-people.php:1205
 #: includes/eme-people.php:1528
@@ -1459,10 +1459,10 @@ msgstr "Fest pro Platz"
 #: includes/eme-formfields.php:3610
 #: includes/eme-formfields.php:3611
 #: includes/eme-fs.php:650
-#: includes/eme-gdpr.php:422
-#: includes/eme-gdpr.php:423
-#: includes/eme-gdpr.php:542
-#: includes/eme-gdpr.php:543
+#: includes/eme-gdpr.php:462
+#: includes/eme-gdpr.php:463
+#: includes/eme-gdpr.php:582
+#: includes/eme-gdpr.php:583
 #: includes/eme-locations.php:3129
 #: includes/eme-members.php:6746
 #: includes/eme-people.php:440
@@ -1499,10 +1499,10 @@ msgstr "Ja"
 #: includes/eme-formfields.php:3610
 #: includes/eme-formfields.php:3611
 #: includes/eme-fs.php:649
-#: includes/eme-gdpr.php:422
-#: includes/eme-gdpr.php:423
-#: includes/eme-gdpr.php:542
-#: includes/eme-gdpr.php:543
+#: includes/eme-gdpr.php:462
+#: includes/eme-gdpr.php:463
+#: includes/eme-gdpr.php:582
+#: includes/eme-gdpr.php:583
 #: includes/eme-locations.php:3129
 #: includes/eme-members.php:6746
 #: includes/eme-people.php:440
@@ -1724,7 +1724,7 @@ msgstr "Du wurdest ausgetragen."
 #: includes/eme-events.php:1024
 #: includes/eme-events.php:1031
 #: includes/eme-events.php:1039
-#: includes/eme-gdpr.php:384
+#: includes/eme-gdpr.php:421
 msgid "This link is no longer valid, please request a new link."
 msgstr "Dieser Link ist nicht mehr gültig, bitte frage einen neuen Link an."
 
@@ -1861,8 +1861,8 @@ msgid "Membership check"
 msgstr "Mitgliedschaftsprüfung"
 
 #: includes/eme-events.php:1673
-#: includes/eme-gdpr.php:437
-#: includes/eme-gdpr.php:594
+#: includes/eme-gdpr.php:477
+#: includes/eme-gdpr.php:634
 #: includes/eme-options.php:59
 #: includes/eme-people.php:2635
 msgid "GDPR approval"
@@ -4078,8 +4078,8 @@ msgstr "Standort '%s' bearbeiten"
 
 #: includes/eme-events.php:9724
 #: includes/eme-formfields.php:1438
-#: includes/eme-gdpr.php:431
-#: includes/eme-gdpr.php:570
+#: includes/eme-gdpr.php:471
+#: includes/eme-gdpr.php:610
 #: includes/eme-locations.php:573
 #: includes/eme-people.php:1036
 #: includes/eme-people.php:1211
@@ -4090,8 +4090,8 @@ msgstr "Stadt"
 
 #: includes/eme-events.php:9725
 #: includes/eme-formfields.php:1447
-#: includes/eme-gdpr.php:432
-#: includes/eme-gdpr.php:574
+#: includes/eme-gdpr.php:472
+#: includes/eme-gdpr.php:614
 #: includes/eme-locations.php:581
 #: includes/eme-people.php:1037
 #: includes/eme-people.php:1212
@@ -4116,7 +4116,7 @@ msgstr "Nur online"
 
 #: includes/eme-events.php:9734
 #: includes/eme-events.php:9787
-#: includes/eme-gdpr.php:546
+#: includes/eme-gdpr.php:586
 #: includes/eme-people.php:1027
 #: includes/eme-people.php:1206
 msgid "Person ID"
@@ -4146,8 +4146,8 @@ msgstr "Gruppen"
 #: includes/eme-formfields.php:2943
 #: includes/eme-formfields.php:3142
 #: includes/eme-gdpr.php:247
-#: includes/eme-gdpr.php:426
-#: includes/eme-gdpr.php:550
+#: includes/eme-gdpr.php:466
+#: includes/eme-gdpr.php:590
 #: includes/eme-members.php:1790
 #: includes/eme-members.php:3473
 #: includes/eme-options.php:34
@@ -4171,8 +4171,8 @@ msgstr "Nachname"
 #: includes/eme-formfields.php:2956
 #: includes/eme-formfields.php:3152
 #: includes/eme-gdpr.php:247
-#: includes/eme-gdpr.php:427
-#: includes/eme-gdpr.php:554
+#: includes/eme-gdpr.php:467
+#: includes/eme-gdpr.php:594
 #: includes/eme-members.php:1791
 #: includes/eme-members.php:3474
 #: includes/eme-options.php:35
@@ -4200,8 +4200,8 @@ msgstr "Vorname"
 #: includes/eme-gdpr.php:128
 #: includes/eme-gdpr.php:202
 #: includes/eme-gdpr.php:318
-#: includes/eme-gdpr.php:428
-#: includes/eme-gdpr.php:558
+#: includes/eme-gdpr.php:468
+#: includes/eme-gdpr.php:598
 #: includes/eme-members.php:1792
 #: includes/eme-members.php:3475
 #: includes/eme-options.php:36
@@ -4222,8 +4222,8 @@ msgstr "E-Mail"
 #: includes/eme-events.php:9741
 #: includes/eme-formfields.php:1511
 #: includes/eme-formfields.php:3162
-#: includes/eme-gdpr.php:435
-#: includes/eme-gdpr.php:586
+#: includes/eme-gdpr.php:475
+#: includes/eme-gdpr.php:626
 #: includes/eme-options.php:37
 #: includes/eme-people.php:1041
 #: includes/eme-people.php:1216
@@ -4272,8 +4272,8 @@ msgid "Related to"
 msgstr "Verwandt mit"
 
 #: includes/eme-events.php:9753
-#: includes/eme-gdpr.php:436
-#: includes/eme-gdpr.php:590
+#: includes/eme-gdpr.php:476
+#: includes/eme-gdpr.php:630
 #: includes/eme-options.php:2097
 #: includes/eme-people.php:1044
 #: includes/eme-people.php:1219
@@ -4305,14 +4305,14 @@ msgid "Members"
 msgstr "Mitglieder"
 
 #: includes/eme-events.php:9761
-#: includes/eme-gdpr.php:466
-#: includes/eme-gdpr.php:650
+#: includes/eme-gdpr.php:506
+#: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1589
 msgid "Membership"
 msgstr "Mitgliedschaft"
 
 #: includes/eme-events.php:9762
-#: includes/eme-gdpr.php:646
+#: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr "Mitglied ID"
 
@@ -4325,14 +4325,14 @@ msgid "Nbr Active Members"
 msgstr "Anzahl aktive Mitglieder"
 
 #: includes/eme-events.php:9765
-#: includes/eme-gdpr.php:467
-#: includes/eme-gdpr.php:654
+#: includes/eme-gdpr.php:507
+#: includes/eme-gdpr.php:694
 msgid "Start"
 msgstr "Beginn"
 
 #: includes/eme-events.php:9766
-#: includes/eme-gdpr.php:468
-#: includes/eme-gdpr.php:658
+#: includes/eme-gdpr.php:508
+#: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:916
 msgid "End"
 msgstr "Ende"
@@ -5734,6 +5734,9 @@ msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlich
 #: includes/eme-gdpr.php:225
 #: includes/eme-gdpr.php:341
 #: includes/eme-gdpr.php:352
+#: includes/eme-gdpr.php:364
+#: includes/eme-gdpr.php:380
+#: includes/eme-gdpr.php:389
 #: includes/eme-members.php:1049
 #: includes/eme-members.php:4675
 #: includes/eme-members.php:5075
@@ -5756,7 +5759,7 @@ msgstr "Vielen Dank für deine Anfrage, es wird eine E-Mail mit weiteren Informa
 #: includes/eme-gdpr.php:124
 #: includes/eme-gdpr.php:198
 #: includes/eme-gdpr.php:314
-#: includes/eme-gdpr.php:395
+#: includes/eme-gdpr.php:434
 #: includes/eme-members.php:1763
 #: includes/eme-people.php:4962
 #: includes/eme-people.php:5047
@@ -5786,58 +5789,58 @@ msgstr "(Um die Informationen für diese Person zu ändern, kopiere diesen Link 
 msgid "Request to change personal info"
 msgstr "Anfrage zum Ändern persönlicher Daten"
 
-#: includes/eme-gdpr.php:366
+#: includes/eme-gdpr.php:403
 #: includes/eme-people.php:102
 msgid "Person updated"
 msgstr "Person aktualisiert"
 
-#: includes/eme-gdpr.php:369
+#: includes/eme-gdpr.php:406
 #: includes/eme-people.php:106
 msgid "Problem detected while updating person"
 msgstr "Problem bei der Aktualisierung der Person erkannt"
 
-#: includes/eme-gdpr.php:388
+#: includes/eme-gdpr.php:425
 #: includes/eme-options.php:55
 msgid "Last name: "
 msgstr "Nachname: "
 
-#: includes/eme-gdpr.php:389
+#: includes/eme-gdpr.php:426
 #: includes/eme-options.php:55
 msgid "First name: "
 msgstr "Vorname: "
 
-#: includes/eme-gdpr.php:390
+#: includes/eme-gdpr.php:427
 #: includes/eme-options.php:55
 msgid "Email: "
 msgstr "E-Mail: "
 
-#: includes/eme-gdpr.php:440
+#: includes/eme-gdpr.php:480
 msgid "Image"
 msgstr "Bild"
 
-#: includes/eme-gdpr.php:442
-#: includes/eme-gdpr.php:598
+#: includes/eme-gdpr.php:482
+#: includes/eme-gdpr.php:638
 msgid "Member of group(s)"
 msgstr "Mitglied der Gruppe(n)"
 
-#: includes/eme-gdpr.php:476
-#: includes/eme-gdpr.php:669
+#: includes/eme-gdpr.php:516
+#: includes/eme-gdpr.php:709
 msgid "Main family account for"
 msgstr "Hauptfamilienkonto für"
 
-#: includes/eme-gdpr.php:514
+#: includes/eme-gdpr.php:554
 msgid "What personal data we collect and why we collect it"
 msgstr "Welche persönlichen Daten gesammelt werden und weshalb"
 
-#: includes/eme-gdpr.php:515
+#: includes/eme-gdpr.php:555
 msgid "EME collects data based on the RSVP and member forms and optionally extra info in the backend for people. These are configured using by the person operating the site and thus should be explained in a global manner."
 msgstr "EME sammelt Daten basierend auf Buchungs-, Mitglieds- und optional gesonderte Informationen von Personen im Hintergrund. Diese werden vom Betreiber der Internetseite festgelegt und somit sollte dieser die Art und den Umfang der Datensammlung erläutern."
 
-#: includes/eme-gdpr.php:516
+#: includes/eme-gdpr.php:556
 msgid "The data export will not show the info stored by RSVP forms if that info was unique to that event, however upon deletion all that data will be removed too."
 msgstr "Der Datenexport wird keine Daten von Buchungsformularen anzeigen, da diese einzig für die Veranstaltung gültig waren, wie auch immer beim Löschen werden auch diese Informationen gelöscht."
 
-#: includes/eme-gdpr.php:517
+#: includes/eme-gdpr.php:557
 msgid "EME optionally uses a cookie to store the client date and time in order to adjust for client/server time differences when showing event dates and times."
 msgstr "EME benutzt optional Cookies um das Besucher Datum und die Zeit zu speichern und Zeitdifferenzen bei der Anzeigen von Veranstaltungsdatum/-zeiten zu berücksichtigen."
 
@@ -5845,13 +5848,13 @@ msgstr "EME benutzt optional Cookies um das Besucher Datum und die Zeit zu speic
 #: events-manager.php
 #: events-manager.php:358
 #: includes/eme-actions.php:699
-#: includes/eme-gdpr.php:520
-#: includes/eme-gdpr.php:526
-#: includes/eme-gdpr.php:727
+#: includes/eme-gdpr.php:560
+#: includes/eme-gdpr.php:566
+#: includes/eme-gdpr.php:767
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-gdpr.php:749
+#: includes/eme-gdpr.php:789
 msgid "All data from the plugin Events Made Easy related to this email has been removed, but don't forget this also cancelled the corresponding memberships!"
 msgstr "Alle Daten des Plugin Events Made Easy in Bezug auf diese E-Mail wurden gelöscht, bitte beachte das ebenfalls die zugehörigen Mitgliedschaften beendet wurden!"
 
@@ -14774,19 +14777,19 @@ msgstr ""
 msgid "Default Template"
 msgstr ""
 
-#: includes/eme-gdpr.php:612
+#: includes/eme-gdpr.php:652
 msgid "Events Made Easy Personal Data"
 msgstr ""
 
-#: includes/eme-gdpr.php:624
+#: includes/eme-gdpr.php:664
 msgid "Events Made Easy Uploaded files linked to the person"
 msgstr ""
 
-#: includes/eme-gdpr.php:687
+#: includes/eme-gdpr.php:727
 msgid "Events Made Easy Member Data"
 msgstr ""
 
-#: includes/eme-gdpr.php:698
+#: includes/eme-gdpr.php:738
 msgid "Events Made Easy Uploaded files linked to the member"
 msgstr ""
 

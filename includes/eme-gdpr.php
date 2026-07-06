@@ -359,6 +359,43 @@ function eme_cpi_ajax() {
 		wp_die();
 	}
 
+	$person = eme_get_person( $person_id );
+	if ( empty( $person ) ) {
+		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $message,
+			]
+		);
+		wp_die();
+	}
+
+	$wp_id = intval( $person['wp_id'] );
+	$current_user_id = get_current_user_id();
+
+	if ( ! empty( $wp_id ) && ! empty( $current_user_id ) && $wp_id === $current_user_id ) {
+		// logged-in user owns this person
+	} elseif ( ! isset( $_POST['eme_cpi_nonce'] ) ) {
+		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $message,
+			]
+		);
+		wp_die();
+	} elseif ( ! wp_verify_nonce( eme_sanitize_request( $_POST['eme_cpi_nonce'] ), "change_pi $person_id " . $person['email'] ) ) {
+		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $message,
+			]
+		);
+		wp_die();
+	}
+
 	$captcha_res = eme_check_captcha();
 
 	[$person_id, $add_update_message] = eme_add_update_person_from_form( $person_id );
@@ -390,6 +427,8 @@ function eme_cpi_form( $person_id ) {
 		esc_html__( 'Email: ', 'events-made-easy' ) . '#_EMAIL <br>';
 	$format         = eme_nl2br_save_html( get_option( 'eme_cpi_form', $format_default ) );
 
+	$cpi_nonce = wp_create_nonce( "change_pi $person_id " . $person['email'] );
+
 	usleep( 2 );
 	$form_id   = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
 	$form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
@@ -397,6 +436,7 @@ function eme_cpi_form( $person_id ) {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='hidden' name='person_id' value='" . $person_id . "'>
+		<input type='hidden' name='eme_cpi_nonce' value='" . $cpi_nonce . "'>
    		";
 	$form_html  .= eme_replace_cpiform_placeholders( $format, $person );
 	$form_html  .= '</form></div>';

@@ -99,6 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 
 == Changelog ==
 = 3.1.4  (2026/06/) =
+* Security: Unauthenticated Person Data Modification (IDOR) fix (reported by WPScan, Erwan Le Rousseau)
 * Add the option to exclude people with bookings from other events
 * Jodit editor update
 * bugfix: a group is allowed to contain no members

@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //vertical compensation to fit in the markers
             let vertical_compensation = lat_interval * 0.1;
 
-            // we don't use an initial zoom level, later on we zoom using fitbounds to show all locations at max allowed zoom level
+            // we don't use an initial zoom level, later on we zoom using fitBounds to show all locations at max allowed zoom level
             let myOptions = {
                 center: L.latLng(center_lat + vertical_compensation,center_lon),
                 doubleClickZoom: false,
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (zoomFactor > 14) zoomFactor = 14;
 
                         let myOptions = {
-                            zoom: zoomFactor,
+                            zoom: zoomFactor, // normally not needed, since we'll use fitBounds to show all markers on the map
                             center: originLatLng,
                             doubleClickZoom: false,
                             scrollWheelZoom: mapDiv.dataset.enable_zooming === 'true',
@@ -354,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             instructionsDiv.style.display = '';
                         });
 
+                        map.fitBounds(L.latLngBounds([originLatLng, destLatLng]), { padding: [40, 40] });
                         dirMaps[mapId] = { map: map, routingControl: routingControl };
                     }
 

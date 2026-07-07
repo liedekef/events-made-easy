@@ -441,9 +441,10 @@ function eme_refresh_captcha(form_id) {
 
 function eme_scrollToEl(sel) {
     if (sel) {
-        const rect = sel.getBoundingClientRect();
-        const scrollTop = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
-        window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+        sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //const rect = sel.getBoundingClientRect();
+        //const scrollTop = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+        //window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
 }
 

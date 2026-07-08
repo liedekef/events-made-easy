@@ -67,40 +67,6 @@ function eme_plan_queue_mails() {
     }
 }
 
-function eme_plan_bounce_processing() {
-    if ( get_option( 'eme_imap_bounce_active' ) ) {
-        $schedules = wp_get_schedules();
-        $schedule  = get_option( 'eme_cron_process_bounces' );
-        if ( empty( $schedule ) ) {
-            wp_unschedule_hook( 'eme_cron_process_bounces' );
-        } else {
-            if ( ! isset( $schedules[ $schedule ] ) ) {
-                $schedule = 'daily';
-                update_option( 'eme_cron_process_bounces', $schedule );
-            }
-            if ( ! wp_next_scheduled( 'eme_cron_process_bounces' ) ) {
-                wp_schedule_event( time(), $schedule, 'eme_cron_process_bounces' );
-            } else {
-                $current_schedule = wp_get_schedule( 'eme_cron_process_bounces' );
-                if ( $current_schedule != $schedule ) {
-                    wp_unschedule_hook( 'eme_cron_process_bounces' );
-                    wp_schedule_event( time(), $schedule, 'eme_cron_process_bounces' );
-                }
-            }
-        }
-    } elseif ( wp_next_scheduled( 'eme_cron_process_bounces' ) ) {
-        wp_unschedule_hook( 'eme_cron_process_bounces' );
-    }
-}
-
-add_action( 'eme_cron_process_bounces', 'eme_cron_process_bounces_function' );
-function eme_cron_process_bounces_function() {
-    if ( ! eme_is_datamaster() ) {
-        return;
-    }
-    eme_process_bounces();
-}
-
 add_action( 'eme_cron_send_new_events', 'eme_cron_send_new_events_function' );
 function eme_cron_send_new_events_function() {
     // if not data master, then don't do this
@@ -256,6 +222,9 @@ function eme_cron_daily_actions() {
         return;
     }
     eme_people_birthday_emails();
+    if ( get_option( 'eme_cron_process_bounces' ) ) {
+        eme_process_bounces();
+    }
     if ( has_action( 'eme_daily_action' ) ) {
         do_action( 'eme_daily_action' );
     }

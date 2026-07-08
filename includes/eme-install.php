@@ -137,7 +137,7 @@ function _eme_install() {
 	}
 
 	// we'll restore some planned actions too, if previously deactivated
-	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued', 'eme_cron_process_bounces' ];
+	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
 	foreach ( $cron_actions as $cron_action ) {
 		$wanted_schedule = get_option( $cron_action );
         // old schedule names are renamed to eme_*
@@ -166,7 +166,6 @@ function _eme_install() {
         }
 	}
 	eme_plan_queue_mails();
-	eme_plan_bounce_processing();
 
 	// remove possible translations in WP (but leave frontend submit)
 	array_map( 'wp_delete_file', preg_grep('/.*frontend.*/', glob( WP_CONTENT_DIR."/languages/plugins/events-made-easy*" ), PREG_GREP_INVERT) );

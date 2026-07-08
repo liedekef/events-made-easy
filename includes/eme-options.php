@@ -601,7 +601,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_imap_bounce_encryption'                      => 'ssl',
         'eme_imap_bounce_remove_msgs'                     => 1,
         'eme_imap_bounce_last_run'                        => '',
-        'eme_cron_process_bounces'                        => '',
+        'eme_cron_process_bounces'                        => 0,
         'eme_backend_dateformat'                          => '',
         'eme_backend_timeformat'                          => '',
         'eme_check_free_waiting'                          => 0,
@@ -2159,9 +2159,6 @@ function eme_options_page() {
             eme_options_toggle( __( 'Activate IMAP bounce handler', 'events-made-easy' ), 'eme_imap_bounce_active', __( 'Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue.', 'events-made-easy' ) );
             eme_options_input_text( __( 'IMAP server', 'events-made-easy' ), 'eme_imap_bounce_server', __( 'The hostname of your IMAP server.', 'events-made-easy' ) );
             eme_options_input_list( __( 'IMAP port', 'events-made-easy' ), 'eme_imap_bounce_port', [143, 993], __( 'The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL).', 'events-made-easy' ) );
-            eme_options_input_text( __( 'IMAP username', 'events-made-easy' ), 'eme_imap_bounce_username', __( 'The username to access the IMAP mailbox.', 'events-made-easy' ) );
-            eme_options_input_password( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox.', 'events-made-easy' ) );
-            eme_options_input_text( __( 'IMAP mailbox/folder', 'events-made-easy' ), 'eme_imap_bounce_mailbox', __( 'The mailbox or folder to check for bounced emails. Default is INBOX.', 'events-made-easy' ) );
             eme_options_select(
                 __( 'IMAP encryption', 'events-made-easy' ),
                 'eme_imap_bounce_encryption',
@@ -2172,34 +2169,12 @@ function eme_options_page() {
                 ],
                 __( 'Select the encryption method for IMAP.', 'events-made-easy' )
             );
+            eme_options_input_text( __( 'IMAP username', 'events-made-easy' ), 'eme_imap_bounce_username', __( 'The username to access the IMAP mailbox.', 'events-made-easy' ) );
+            eme_options_input_password( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox.', 'events-made-easy' ) );
+            eme_options_input_text( __( 'IMAP mailbox/folder', 'events-made-easy' ), 'eme_imap_bounce_mailbox', __( 'The mailbox or folder to check for bounced emails. Default is INBOX.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Remove bounces after processing', 'events-made-easy' ), 'eme_imap_bounce_remove_msgs', __( 'Check this option to delete bounce messages from the mailbox after they have been processed.', 'events-made-easy' ) );
-            $bounce_scheduled = wp_get_schedule( 'eme_cron_process_bounces' );
-            $schedules = wp_get_schedules();
+            eme_options_toggle( __( 'Process bounces daily', 'events-made-easy' ), 'eme_cron_process_bounces', __( 'Check this option to automatically process bounces once per day as part of the daily cron.', 'events-made-easy' ) );
 ?>
-    <tr style='vertical-align:top'>
-        <th scope="row"><?php esc_html_e( 'Bounce processing schedule', 'events-made-easy' ); ?></th>
-        <td>
-        <select name="eme_cron_process_bounces">
-        <option value=""><?php esc_html_e( 'Not scheduled', 'events-made-easy' ); ?></option>
-<?php
-            foreach ( $schedules as $key => $schedule ) {
-                printf(
-                    "<option value='%s'%s>%s</option>\n",
-                    esc_attr( $key ),
-                    selected( $bounce_scheduled, $key, false ),
-                    esc_html( $schedule['display'] )
-                );
-            }
-?>
-        </select>
-        <br>
-<?php
-            esc_html_e( 'Schedule automatic bounce processing. For most use cases, a daily schedule is sufficient.', 'events-made-easy' );
-            echo '<br>';
-            esc_html_e( 'If you plan to use the REST API call to trigger bounce processing, set this to "Not scheduled".', 'events-made-easy' );
-?>
-        </td>
-    </tr>
     <tr style='vertical-align:top'>
         <th scope="row"><?php esc_html_e( 'Manual bounce processing', 'events-made-easy' ); ?></th>
         <td>

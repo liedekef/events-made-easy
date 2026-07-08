@@ -3692,6 +3692,10 @@ function eme_process_bounces() {
 function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_no, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
     global $wpdb;
 
+    if ( empty($bounce_type) ) {
+       return;
+    }
+
     $last_run = get_option( 'eme_imap_bounce_last_run', '' );
     if ( ! empty( $last_run ) && ! empty( $headerFull ) ) {
         if ( preg_match( '/^Date:\s*(.+)$/im', $headerFull, $date_matches ) ) {
@@ -3703,32 +3707,43 @@ function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader,
         }
     }
 
-    if ( $bounce_type !== 'hard' ) {
-        return;
-    }
-
     $random_id = '';
     if ( ! empty( $bodyFull ) && preg_match( '/X-EME-mailid:\s*(\S+)/i', $bodyFull, $matches ) ) {
         $random_id = $matches[1];
     }
 
+    $mail = null;
+    $mail_id = 0;
     if ( ! empty( $random_id ) ) {
         $mail = eme_get_mail_by_rid( $random_id );
         if ( $mail && (int) $mail['status'] === EME_MAIL_STATUS_SENT ) {
-            eme_mark_mail_fail( $mail['id'], $random_id, sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat ) );
-            return;
+            $mail_id = $mail['id'];
         }
     } elseif ( ! empty( $email ) ) {
         $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
         $prepared_sql = $wpdb->prepare(
-            "SELECT id, random_id FROM $mqueue_table WHERE receiveremail = %s AND status = %d ORDER BY id DESC LIMIT 1",
+            "SELECT id FROM $mqueue_table WHERE receiveremail = %s AND status = %d ORDER BY id DESC LIMIT 1",
             $email,
             EME_MAIL_STATUS_SENT
         );
-        $mail = $wpdb->get_row( $prepared_sql, ARRAY_A );
-        if ( $mail ) {
-            eme_mark_mail_fail( $mail['id'], $mail['random_id'], sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat ) );
-        }
+        $mail_id = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    }
+
+    if ( ! $mail_id ) {
+        return;
+    }
+
+    $error_msg = sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat );
+    if ( $bounce_type === 'hard' ) {
+        eme_mark_mail_fail( $mail_id, $random_id, $error_msg );
+    } else {
+        $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+        $prepared_sql = $wpdb->prepare(
+            "UPDATE $mqueue_table SET error_msg = CONCAT(IFNULL(error_msg,''), %s) WHERE id = %d",
+            '; ' . $error_msg,
+            $mail_id
+        );
+        $wpdb->query( $prepared_sql );
     }
 }
 

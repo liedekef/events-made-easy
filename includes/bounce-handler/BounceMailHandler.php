@@ -790,6 +790,11 @@ class BounceMailHandler
                 } else {
                     $this->output('Running in disableDelete mode, not deleting messages from mailbox<br />');
                 }
+                if ($this->moveUnprocessed) {
+                    $this->output('Unprocessed mails will be moved to unprocessed folder<br />');
+		} else {
+                    $this->output('Unprocessed mails will not be touched<br />');
+		}
             } else {
                 $this->output('Processed messages will be deleted from mailbox<br />');
             }
@@ -928,6 +933,7 @@ class BounceMailHandler
                     /** @noinspection PhpUsageOfSilenceOperatorInspection */
                     @\imap_mail_move($this->mailboxLink, (string)$x, $this->unprocessedBox);
                     $moveFlag[$x] = true;
+                    ++$movedCount;
                 }
             }
 

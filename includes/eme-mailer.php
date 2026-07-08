@@ -3704,8 +3704,7 @@ function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader,
         }
     }
 
-    $hard_types = [ 'hard', 'antispam', 'content_reject', 'command_reject', 'internal_error', 'dns_loop', 'dns_unknown', 'full', 'inactive', 'latin_only', 'other', 'oversize', 'unknown', 'unrecognized', 'user_reject' ];
-    if ( ! in_array( $bounce_type, $hard_types, true ) ) {
+    if ( $bounce_type !== 'hard' ) {
         return;
     }
 

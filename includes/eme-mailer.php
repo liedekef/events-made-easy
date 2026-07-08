@@ -3733,7 +3733,7 @@ function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader,
         return;
     }
 
-    $error_msg = sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_reason );
+    $error_msg = sprintf( __( 'Bounced (type %s). Reason: %s', 'events-made-easy' ), $bounce_type, $rule_reason );
     if ( $bounce_type === 'hard' ) {
         eme_mark_mail_fail( $mail_id, $random_id, $error_msg );
     } else {

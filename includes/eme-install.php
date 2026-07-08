@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 427 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 428 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -137,7 +137,7 @@ function _eme_install() {
 	}
 
 	// we'll restore some planned actions too, if previously deactivated
-	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
+	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued', 'eme_cron_process_bounces' ];
 	foreach ( $cron_actions as $cron_action ) {
 		$wanted_schedule = get_option( $cron_action );
         // old schedule names are renamed to eme_*
@@ -166,6 +166,7 @@ function _eme_install() {
         }
 	}
 	eme_plan_queue_mails();
+	eme_plan_bounce_processing();
 
 	// remove possible translations in WP (but leave frontend submit)
 	array_map( 'wp_delete_file', preg_grep('/.*frontend.*/', glob( WP_CONTENT_DIR."/languages/plugins/events-made-easy*" ), PREG_GREP_INVERT) );
@@ -204,7 +205,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 			wp_unschedule_hook( $cron_action );
 		}
 	}
-	$cron_actions2 = [ 'eme_cron_cleanup_unpaid', 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
+	$cron_actions2 = [ 'eme_cron_cleanup_unpaid', 'eme_cron_send_new_events', 'eme_cron_send_queued', 'eme_cron_process_bounces' ];
 	foreach ( $cron_actions2 as $cron_action ) {
 		// if the action is planned, keep the planning in an option (if we're not clearing all data) and then clear the planning
 		if ( wp_next_scheduled( $cron_action ) ) {

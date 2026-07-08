@@ -3648,3 +3648,89 @@ function eme_unsub_do( $email, $group_ids ) {
     return $count;
 }
 
+function eme_process_bounces() {
+    if ( ! get_option( 'eme_imap_bounce_active' ) ) {
+        return [ 'error' => __( 'IMAP bounce handler is not active.', 'events-made-easy' ) ];
+    }
+    if ( ! eme_is_datamaster() ) {
+        return [ 'error' => __( 'Only the data master can process bounces.', 'events-made-easy' ) ];
+    }
+
+    $server    = get_option( 'eme_imap_bounce_server' );
+    $username  = get_option( 'eme_imap_bounce_username' );
+    $password  = get_option( 'eme_imap_bounce_password' );
+    if ( empty( $server ) || empty( $username ) || empty( $password ) ) {
+        return [ 'error' => __( 'IMAP bounce handler is not fully configured.', 'events-made-easy' ) ];
+    }
+
+    require_once __DIR__ . '/bounce-handler/phpmailer-bmh_rules.php';
+    require_once __DIR__ . '/bounce-handler/BounceMailHandler.php';
+
+    $bounce = new BounceMailHandler\BounceMailHandler();
+    $bounce->mailhost        = $server;
+    $bounce->port            = intval( get_option( 'eme_imap_bounce_port', 993 ) );
+    $bounce->mailboxUserName = $username;
+    $bounce->mailboxPassword = $password;
+    $bounce->boxname         = get_option( 'eme_imap_bounce_mailbox', 'INBOX' );
+    $bounce->service         = 'imap';
+    $bounce->serviceOption   = get_option( 'eme_imap_bounce_encryption', 'ssl' );
+    $bounce->testMode        = false;
+    $bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 1 );
+    $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
+    $bounce->actionFunction  = 'eme_bounce_callback';
+
+    if ( ! $bounce->openMailbox() ) {
+        return [ 'error' => $bounce->errorMessage ];
+    }
+
+    $bounce->processMailbox();
+
+    update_option( 'eme_imap_bounce_last_run', current_time( 'mysql', false ) );
+
+    return true;
+}
+
+function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_no, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
+    global $wpdb;
+
+    $last_run = get_option( 'eme_imap_bounce_last_run', '' );
+    if ( ! empty( $last_run ) && ! empty( $headerFull ) ) {
+        if ( preg_match( '/^Date:\s*(.+)$/im', $headerFull, $date_matches ) ) {
+            $msg_date   = strtotime( $date_matches[1] );
+            $last_run_ts = strtotime( $last_run );
+            if ( $msg_date !== false && $msg_date < $last_run_ts ) {
+                return;
+            }
+        }
+    }
+
+    $hard_types = [ 'hard', 'antispam', 'content_reject', 'command_reject', 'internal_error', 'dns_loop', 'dns_unknown', 'full', 'inactive', 'latin_only', 'other', 'oversize', 'unknown', 'unrecognized', 'user_reject' ];
+    if ( ! in_array( $bounce_type, $hard_types, true ) ) {
+        return;
+    }
+
+    $random_id = '';
+    if ( ! empty( $bodyFull ) && preg_match( '/X-EME-mailid:\s*(\S+)/i', $bodyFull, $matches ) ) {
+        $random_id = $matches[1];
+    }
+
+    if ( ! empty( $random_id ) ) {
+        $mail = eme_get_mail_by_rid( $random_id );
+        if ( $mail && (int) $mail['status'] === EME_MAIL_STATUS_SENT ) {
+            eme_mark_mail_fail( $mail['id'], $random_id, sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat ) );
+            return;
+        }
+    } elseif ( ! empty( $email ) ) {
+        $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+        $prepared_sql = $wpdb->prepare(
+            "SELECT id, random_id FROM $mqueue_table WHERE receiveremail = %s AND status = %d ORDER BY id DESC LIMIT 1",
+            $email,
+            EME_MAIL_STATUS_SENT
+        );
+        $mail = $wpdb->get_row( $prepared_sql, ARRAY_A );
+        if ( $mail ) {
+            eme_mark_mail_fail( $mail['id'], $mail['random_id'], sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat ) );
+        }
+    }
+}
+

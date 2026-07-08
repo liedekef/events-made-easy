@@ -722,7 +722,35 @@ add_action( 'rest_api_init', function () {
                 current_user_can( get_option( 'eme_cap_send_mails' ) );
         }
     ] );
+    register_rest_route( 'events-made-easy/v1', '/processbounces', [
+        'methods' => 'GET',
+        'callback' => function () {
+            $res = eme_process_bounces();
+            if ( isset( $res['error'] ) ) {
+                return new WP_REST_Response( [ 'error' => $res['error'] ], 500 );
+            }
+            return new WP_REST_Response( [ 'success' => true ], 200 );
+        },
+        'permission_callback' => function () {
+            return current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
+                current_user_can( get_option( 'eme_cap_send_mails' ) );
+        }
+    ] );
 } );
+
+add_action( 'wp_ajax_eme_process_bounces', 'eme_ajax_process_bounces' );
+function eme_ajax_process_bounces() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_send_other_mails' ) ) &&
+         ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+        wp_send_json_error( 'Unauthorized', 403 );
+    }
+    $res = eme_process_bounces();
+    if ( isset( $res['error'] ) ) {
+        wp_send_json_error( $res['error'] );
+    }
+    wp_send_json_success( __( 'Bounce processing completed.', 'events-made-easy' ) );
+}
 
 // AJAX handler for rendering shortcodes in Jodit preview
 add_action('wp_ajax_eme_jodit_preview_render', 'eme_jodit_preview_render');

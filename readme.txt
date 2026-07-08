@@ -98,6 +98,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.5  (2026/07/) =
+* Added IMAP bounce handling
+
 = 3.1.4  (2026/07/06) =
 * Security: Unauthenticated Person Data Modification (IDOR) fix (reported by WPScan, Haitam Lazaar)
 * Add the option to exclude people with bookings from other events

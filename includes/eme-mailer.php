@@ -3672,10 +3672,8 @@ function eme_process_bounces() {
     $bounce->mailboxUserName = $username;
     $bounce->mailboxPassword = $password;
     $bounce->boxname         = get_option( 'eme_imap_bounce_mailbox', 'INBOX' );
-    $bounce->service         = 'imap';
     $bounce->serviceOption   = get_option( 'eme_imap_bounce_encryption', 'ssl' );
-    $bounce->testMode        = false;
-    $bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 1 );
+    $bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
     $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
     $bounce->actionFunction  = 'eme_bounce_callback';
 

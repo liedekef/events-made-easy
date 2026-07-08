@@ -3663,7 +3663,7 @@ function eme_process_bounces() {
         return [ 'error' => __( 'IMAP bounce handler is not fully configured.', 'events-made-easy' ) ];
     }
 
-    require_once __DIR__ . '/bounce-handler/phpmailer-bmh_rules.php';
+    require_once __DIR__ . '/bounce-handler/bmh_rules.php';
     require_once __DIR__ . '/bounce-handler/BounceMailHandler.php';
 
     $bounce = new BounceMailHandler\BounceMailHandler();
@@ -3689,7 +3689,7 @@ function eme_process_bounces() {
     return true;
 }
 
-function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_no, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
+function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_reason, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
     global $wpdb;
 
     if ( empty($bounce_type) ) {
@@ -3733,14 +3733,16 @@ function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader,
         return;
     }
 
-    $error_msg = sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_cat );
+    $error_msg = sprintf( __( 'Bounced: %s (%s)', 'events-made-easy' ), $bounce_type, $rule_reason );
     if ( $bounce_type === 'hard' ) {
         eme_mark_mail_fail( $mail_id, $random_id, $error_msg );
     } else {
         $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+        // if we want to keep all messages:
+        // "UPDATE $mqueue_table SET error_msg = CONCAT(IFNULL(error_msg,''), %s) WHERE id = %d",
         $prepared_sql = $wpdb->prepare(
-            "UPDATE $mqueue_table SET error_msg = CONCAT(IFNULL(error_msg,''), %s) WHERE id = %d",
-            '; ' . $error_msg,
+            "UPDATE $mqueue_table SET error_msg = %s WHERE id = %d",
+            $error_msg,
             $mail_id
         );
         $wpdb->query( $prepared_sql );

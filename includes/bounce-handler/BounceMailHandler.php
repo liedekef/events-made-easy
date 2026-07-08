@@ -78,8 +78,8 @@ class BounceMailHandler
     /**
      * callback Action function name the function that handles the bounce mail. Parameters:
      *
-     * int     $msgnum        the message number returned by Bounce Mail Handler
-     * string  $bounce_type   the bounce type:
+     * int     $msgnum          the message number returned by Bounce Mail Handler
+     * string  $bounce_type     the bounce type:
      *       'antispam',
      *       'autoreply',
      *       'concurrent',
@@ -105,13 +105,19 @@ class BounceMailHandler
      *       'unrecognized',
      *       'user_reject',
      *       'warning'
-     * string  $email         the target email address
-     * string  $subject       the subject, ignore now
-     * string  $xheader       the XBounceHeader from the mail
-     * 1 or 0  $remove        delete status, 0 is not deleted, 1 is deleted
-     * string  $rule_no       bounce mail detect rule no.
-     * string  $rule_cat      bounce mail detect rule category
-     * int     $totalFetched  total number of messages in the mailbox
+     * string  $email           the target email address
+     * string  $subject         the subject, ignore now
+     * mixed   $xheader         on matched rules: the XBounceHeader from the mail; on unrecognized: the imap header object
+     * 1 or 0  $remove          delete status, 0 is not deleted, 1 is deleted
+     * string  $rule_reason     descriptive reason for the matched rule, empty string if unrecognized
+     * string  $rule_cat        bounce mail detect rule category
+     * int     $totalFetched    total number of messages in the mailbox
+     * string  $body            the message body
+     * string  $headerFull      the full email header
+     * string  $bodyFull        the full email body (may include attachments)
+     * string  $status_code     DSN status code (if available)
+     * string  $action          DSN action (if available)
+     * string  $diagnostic_code DSN diagnostic code (if available)
      *
      * @var mixed
      */
@@ -664,14 +670,14 @@ class BounceMailHandler
             $remove = $result['remove'];
         }
 
-        $ruleNumber = $result['rule_no'];
+        $ruleReason = $result['rule_reason'];
         $ruleCategory = $result['rule_cat'];
         $status_code = $result['status_code'];
         $action = $result['action'];
         $diagnostic_code = $result['diagnostic_code'];
         $xheader = false;
 
-        if ($ruleNumber === '0000') {
+        if ($ruleReason === '') {
             // unrecognized
             if (
                 \trim($email) === ''
@@ -682,7 +688,7 @@ class BounceMailHandler
             }
 
             if ($this->testMode) {
-                $this->output('Match: ' . $ruleNumber . ':' . $ruleCategory . '; ' . $bounceType . '; ' . $email);
+                $this->output('No match: ' . $ruleCategory . '; ' . $bounceType . '; ' . $email);
             } else {
                 // code below will use the Callback function, but return no value
                 $params = [
@@ -692,7 +698,7 @@ class BounceMailHandler
                     $subject,
                     $header,
                     $remove,
-                    $ruleNumber,
+                    $ruleReason,
                     $ruleCategory,
                     $totalFetched,
                     $body,
@@ -707,7 +713,7 @@ class BounceMailHandler
         } else {
             // match rule, do bounce action
             if ($this->testMode) {
-                $this->output('Match: ' . $ruleNumber . ':' . $ruleCategory . '; ' . $bounceType . '; ' . $email);
+                $this->output('Match: ' . $ruleReason . ':' . $ruleCategory . '; ' . $bounceType . '; ' . $email);
 
                 return $result;
             }
@@ -719,7 +725,7 @@ class BounceMailHandler
                 $subject,
                 $xheader,
                 $remove,
-                $ruleNumber,
+                $ruleReason,
                 $ruleCategory,
                 $totalFetched,
                 $body,

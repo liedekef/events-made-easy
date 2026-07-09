@@ -100,6 +100,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.1.5  (2026/07/) =
 * Added IMAP bounce handling
+* bugfix: authors were not able to delete/manage their own events
+* bugfix: a php warning got fixed
 
 = 3.1.4  (2026/07/06) =
 * Security: Unauthenticated Person Data Modification (IDOR) fix (reported by WPScan, Haitam Lazaar)

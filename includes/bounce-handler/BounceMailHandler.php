@@ -605,7 +605,7 @@ class BounceMailHandler
             switch ($structure->type) {
                 case 0: // Content-type = text
                     $body = \imap_fetchbody($this->mailboxLink, $pos, '1');
-                    $result = bmhBodyRules($body, $structure, $this->debugBodyRule);
+                    $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
 
                     break;
@@ -620,7 +620,7 @@ class BounceMailHandler
                         $body = \base64_decode($body, true);
                     }
 
-                    $result = bmhBodyRules($body, $structure, $this->debugBodyRule);
+                    $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
 
                     break;
@@ -635,7 +635,7 @@ class BounceMailHandler
                     }
 
                     $body = \substr($body, 0, 1000);
-                    $result = bmhBodyRules($body, $structure, $this->debugBodyRule);
+                    $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
 
                     break;

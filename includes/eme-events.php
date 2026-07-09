@@ -10750,7 +10750,7 @@ function eme_get_author_event_ids( $event_ids, $user_id = 0 ) {
     }
     $ids_arr      = array_map( 'intval', explode( ',', $event_ids ) );
     $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE author = %d AND event_id IN ($placeholders)", array_merge( [ $user_id ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT event_id FROM $table WHERE event_author = %d AND event_id IN ($placeholders)", array_merge( [ $user_id ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

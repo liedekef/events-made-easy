@@ -2727,7 +2727,7 @@ function eme_emails_page() {
                         $member_ids = explode( ',', $conditions['eme_send_members'] );
                         $members    = eme_get_members( $member_ids );
                         foreach ( $members as $member ) {
-                            $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'], $person['email'] );
+                            $mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] );
                         }
                     }
                     if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {

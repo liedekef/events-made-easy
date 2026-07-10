@@ -3663,6 +3663,7 @@ function eme_process_bounces() {
         return [ 'error' => __( 'IMAP bounce handler is not fully configured.', 'events-made-easy' ) ];
     }
 
+    require_once __DIR__ . '/bounce-handler/BounceIMAP.php';
     require_once __DIR__ . '/bounce-handler/bmh_rules.php';
     require_once __DIR__ . '/bounce-handler/BounceMailHandler.php';
 
@@ -3673,8 +3674,8 @@ function eme_process_bounces() {
     $bounce->mailboxPassword = $password;
     $bounce->boxname         = get_option( 'eme_imap_bounce_mailbox', 'INBOX' );
     $bounce->serviceOption   = get_option( 'eme_imap_bounce_encryption', 'ssl' );
-    $bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
-    $bounce->moveUnprocessed = false;
+    //$bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
+    //$bounce->moveUnprocessed = false;
     $bounce->requiredXHeader = 'X-EME-mailid';
     $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
     $bounce->actionFunction  = 'eme_bounce_callback';

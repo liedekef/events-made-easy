@@ -12,7 +12,6 @@
  */
 
 global $rule_categories;
-
 $rule_categories = [
     'antispam'       => ['remove' => 0, 'bounce_type' => 'blocked'],
     'autoreply'      => ['remove' => 0, 'bounce_type' => 'autoreply'],
@@ -36,6 +35,7 @@ $rule_categories = [
     'warning'        => ['remove' => 0, 'bounce_type' => 'soft'],
 ];
 
+global $bmh_newline;
 $bmh_newline = "<br />\n";
 
 /* =====================================================================
@@ -154,6 +154,27 @@ function bmhExtractPrecedingEmail(string $body, string $matchedText): string
 }
 
 /**
+ * Small stand-in for imap_rfc822_parse_adrlist(), scoped to exactly what
+ * bmhParseDsnRecipient() needs: pull a "mailbox@host" pair out of a string
+ * that may still carry a display name, comments, or angle brackets (e.g.
+ * "John Doe <user@example.com>" or "user@example.com (comment)").
+ *
+ * @return array{mailbox: string, host: string} empty strings if no address found
+ */
+function bmhParseAddress(string $raw): array
+{
+    if (\preg_match('/([^\s<>()"]+@[^\s<>()"]+)/', $raw, $m)) {
+        $addr = \rtrim($m[1], '.,;:');
+        $parts = \explode('@', $addr, 2);
+        if (\count($parts) === 2 && $parts[0] !== '' && $parts[1] !== '') {
+            return ['mailbox' => $parts[0], 'host' => $parts[1]];
+        }
+    }
+
+    return ['mailbox' => '', 'host' => ''];
+}
+
+/**
  * Extracts the recipient's email address from a standard DSN report,
  * preferring Original-Recipient over Final-Recipient.
  */
@@ -164,10 +185,9 @@ function bmhParseDsnRecipient(string $dsn_report): string
         || \preg_match('/Final-Recipient: rfc822;(.*)/i', $dsn_report, $match)
     ) {
         $email = \trim($match[1], "<> \t\r\n\0\x0B");
-        /** @noinspection PhpUsageOfSilenceOperatorInspection */
-        $email_arr = @\imap_rfc822_parse_adrlist($email, 'default.domain.name');
-        if (isset($email_arr[0]->host) && $email_arr[0]->host !== '.SYNTAX-ERROR.' && $email_arr[0]->host !== 'default.domain.name') {
-            return $email_arr[0]->mailbox . '@' . $email_arr[0]->host;
+        $parsed = bmhParseAddress($email);
+        if ($parsed['host'] !== '') {
+            return $parsed['mailbox'] . '@' . $parsed['host'];
         }
     }
 
@@ -182,6 +202,7 @@ function bmhParseDsnRecipient(string $dsn_report): string
  * Rules for non-standard bounces: matched against the raw message body.
  * Each row: [pattern, category, reason, emailGroup?]
  */
+global $BMH_BODY_RULES;
 $BMH_BODY_RULES = [
     ['/domain\s+name\s+not\s+found/i', 'dns_unknown', 'DNS error: domain name not found'],
     ["/no\s+such\s+address\s+here/i", 'unknown', 'No such address here'],
@@ -253,6 +274,7 @@ $BMH_BODY_RULES = [
 /**
  * Fallback rule used when a DSN report didn't yield a recipient email at all.
  */
+global $BMH_DSN_NO_EMAIL_RULES;
 $BMH_DSN_NO_EMAIL_RULES = [
     ["/quota exceed.*<(\S+@\S+\w)>/is", 'full', 'Quota exceeded (DSN message)', 1, 'dsn_msg'],
 ];
@@ -261,6 +283,7 @@ $BMH_DSN_NO_EMAIL_RULES = [
  * Rules matched against the Diagnostic-Code (falls back to $status_code for
  * one legacy rule). Used for DSN reports with Action: failed.
  */
+global $BMH_DSN_DIAG_RULES;
 $BMH_DSN_DIAG_RULES = [
     ['/over.*quota|exceed.*quota|(?:alias|account|recipient|address|email|mailbox|user).*full|Insufficient system storage|Benutzer hat zuviele Mails auf dem Server|exceeded storage allocation|Mailbox quota usage exceeded|User has exhausted allowed storage space|User mailbox exceeds allowed size|not.*enough\s+space/is', 'full', 'Mailbox full or over quota'],
     ['/File too large/i', 'full', 'File too large'],
@@ -357,6 +380,7 @@ $BMH_DSN_DIAG_RULES = [
  * Rules matched against the raw DSN message text. Used as a second pass
  * within Action: failed, after BMH_DSN_DIAG_RULES found nothing.
  */
+global $BMH_DSN_MSG_RULES;
 $BMH_DSN_MSG_RULES = [
     ['/(?:alias|account|recipient|address|email|mailbox|user)(?:.*)invalid/i', 'unknown', 'All recipients are invalid'],
     ['/Deferred.*No such.*(?:file|directory)/i', 'unknown', 'Deferred - no such file or directory'],

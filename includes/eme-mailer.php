@@ -3677,9 +3677,9 @@ function eme_process_bounces() {
     //$bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
     //$bounce->moveUnprocessed = false;
     $bounce->requiredXHeader = 'X-EME-mailid';
-    $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_DEBUG;
+    $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
     $bounce->actionFunction  = 'eme_bounce_callback';
-    //$bounce->sinceDate       = strtotime('-25 hours'); // summertime safe
+    $bounce->sinceDate       = strtotime('-25 hours'); // summertime safe
 
     if ( ! $bounce->openMailbox() ) {
         return [ 'error' => $bounce->errorMessage ];

@@ -675,7 +675,7 @@ function eme_mark_mail_sent( $id, $random_id = '' ) {
     }
 }
 
-function eme_mark_mail_fail( $id, $random_id = '', $error_msg = '' ) {
+function eme_mark_mail_fail( $id, $random_id = '', $error_msg = '', $bounce = false ) {
     global $wpdb;
     $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where                   = [];
@@ -687,7 +687,10 @@ function eme_mark_mail_fail( $id, $random_id = '', $error_msg = '' ) {
     }
     $fields['status']        = EME_MAIL_STATUS_FAILED;
     $fields['error_msg']     = $error_msg;
-    $fields['sent_datetime'] = current_time( 'mysql', false );
+    if (!$bounce) {
+        // when marking fail after bounce, don't change the sent datetime
+        $fields['sent_datetime'] = current_time( 'mysql', false );
+    }
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
     } else {
@@ -3710,7 +3713,7 @@ function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader,
 
     $error_msg = sprintf( __( 'Bounced (type %s). Reason: %s', 'events-made-easy' ), $bounce_type, $rule_reason );
     if ( $bounce_type === 'hard' ) {
-        eme_mark_mail_fail( $mail_id, $random_id, $error_msg );
+        eme_mark_mail_fail( $mail_id, $random_id, $error_msg, 1 ); // the last param so we don't change the sent datetime
     } else {
         $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
         // if we want to keep all messages:

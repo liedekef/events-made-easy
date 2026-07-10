@@ -222,9 +222,6 @@ function eme_cron_daily_actions() {
         return;
     }
     eme_people_birthday_emails();
-    if ( get_option( 'eme_cron_process_bounces' ) ) {
-        eme_process_bounces();
-    }
     if ( has_action( 'eme_daily_action' ) ) {
         do_action( 'eme_daily_action' );
     }

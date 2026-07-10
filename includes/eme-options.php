@@ -600,7 +600,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_imap_bounce_mailbox'                         => 'INBOX',
         'eme_imap_bounce_encryption'                      => 'ssl',
         'eme_imap_bounce_remove_msgs'                     => 0,
-        'eme_imap_bounce_last_run'                        => '',
         'eme_cron_process_bounces'                        => 0,
         'eme_backend_dateformat'                          => '',
         'eme_backend_timeformat'                          => '',

@@ -107,7 +107,7 @@ class BounceMailHandler
      *       'warning'
      * string  $email           the target email address
      * string  $subject         the subject, ignore now
-     * mixed   $xheader         on matched rules: the XBounceHeader from the mail; on unrecognized: the imap header object
+     * mixed   $xheader         on matched rules: the value of the $requiredXHeader header if configured, false otherwise; on unrecognized: the imap header object
      * 1 or 0  $remove          delete status, 0 is not deleted, 1 is deleted
      * string  $rule_reason     descriptive reason for the matched rule, empty string if unrecognized
      * string  $rule_cat        bounce mail detect rule category
@@ -185,6 +185,41 @@ class BounceMailHandler
     public $debugBodyRule = false;
 
     /**
+     * If set, a message is only processed (DSN or BODY rules) when this
+     * header is present - either on the bounce message itself, or on the
+     * original message embedded in it (e.g. a custom tracking header such
+     * as 'X-EME-mailid'). Messages without it are treated as unprocessed.
+     *
+     * This check is cheap: it looks at the header block already fetched
+     * for every message, and at most does one small, targeted IMAP header
+     * fetch on the embedded message/rfc822 part - it never fetches or
+     * scans the full message body.
+     *
+     * Leave empty (default) to disable and process every candidate bounce,
+     * matching the previous behaviour.
+     *
+     * @var string
+     */
+    public $requiredXHeader = '';
+
+    /**
+     * If set, only messages received on or after this date are processed
+     * at all - resolved through an IMAP SINCE search, so older messages
+     * are never fetched in the first place.
+     *
+     * NOTE: IMAP's SINCE only has day granularity (no time-of-day), so
+     * messages from the same calendar day as this timestamp will still be
+     * fetched. Combine with a precise Date-header check in your callback
+     * if you need exact time filtering.
+     *
+     * Leave null (default) to disable and process every message, matching
+     * the previous behaviour.
+     *
+     * @var int|null unix timestamp
+     */
+    public $sinceDate;
+
+    /**
      * Control the method to process the mail header
      * if set true, uses the imap_fetchstructure function
      * otherwise, detect message type directly from headers,
@@ -208,10 +243,10 @@ class BounceMailHandler
      *
      * @var string
      */
-    public $bmhNewLine = "<br />\n";
+    public $bmhNewLine = "\n";
 
     /**
-     * defines port number, default is '143', other common choices are '110' (pop3), '993' (gmail)
+     * defines port number, default is '143', other common choices are '110' (pop3), '993' (ssl)
      *
      * @var int
      */
@@ -406,6 +441,84 @@ class BounceMailHandler
     }
 
     /**
+     * Recursively walks a imap_fetchstructure() parts tree looking for an
+     * embedded message/rfc822 part (e.g. the original message attached to
+     * a bounce or NDR), and returns its IMAP body section identifier
+     * (e.g. '3', or '1.2' if nested inside another multipart).
+     *
+     * @param object[] $parts  the ->parts array from a structure object
+     * @param string   $prefix section prefix used while recursing
+     *
+     * @return string|null the section identifier, or null if not found
+     */
+    private function findMessagePartSection(array $parts, string $prefix = ''): ?string
+    {
+        foreach ($parts as $index => $part) {
+            $section = $prefix === '' ? (string) ($index + 1) : $prefix . '.' . ($index + 1);
+
+            if ($part->type == TYPEMESSAGE && isset($part->subtype) && \strtoupper($part->subtype) === 'RFC822') {
+                return $section;
+            }
+
+            if ($part->type == TYPEMULTIPART && !empty($part->parts)) { // recurse
+                $found = $this->findMessagePartSection($part->parts, $section);
+
+                if ($found !== null) {
+                    return $found;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Cheap pre-check used by $requiredXHeader: looks up the value of the
+     * configured header, either on the bounce message itself or on the
+     * original message embedded in it, and returns it so it can be handed
+     * to the callback (see $xheader in $actionFunction).
+     *
+     * This does NOT fetch or scan the full message body. It looks at the
+     * header block already fetched for every message and, if needed, does
+     * at most one small, targeted IMAP fetch for just that header on the
+     * embedded message/rfc822 part.
+     *
+     * @param int    $pos        message number
+     * @param string $headerFull the full header block of the bounce message
+     *
+     * @return string|false the header value, or false if not present anywhere
+     */
+    private function findRequiredXHeaderValue(int $pos, string $headerFull)
+    {
+        $needle = '/^' . \preg_quote($this->requiredXHeader, '/') . ':(.*)$/mi';
+
+        if (\preg_match($needle, $headerFull, $match)) {
+            return \trim($match[1]);
+        }
+
+        /** @noinspection PhpUsageOfSilenceOperatorInspection */
+        $structure = @\imap_fetchstructure($this->mailboxLink, $pos);
+
+        if (!\is_object($structure) || empty($structure->parts)) {
+            return false;
+        }
+
+        $section = $this->findMessagePartSection($structure->parts);
+
+        if ($section === null) {
+            return false;
+        }
+
+        $embeddedHeader = \imap_fetchbody($this->mailboxLink, $pos, $section);
+
+        if (\preg_match($needle, $embeddedHeader, $match)) {
+            return \trim($match[1]);
+        }
+
+        return false;
+    }
+
+    /**
      * Function to check if a mailbox exists - if not found, it will create it.
      *
      * @param string $mailbox the mailbox name, must be in 'INBOX.checkmailbox' format
@@ -417,8 +530,8 @@ class BounceMailHandler
     {
         if (\trim($mailbox) === '') {
             // this is a critical error with either the mailbox name blank or an invalid mailbox name
-            // need to stop processing and exit at this point
-            echo 'Invalid mailbox name for move operation. Cannot continue: ' . $mailbox . "<br />\n";
+            $this->errorMessage = 'Invalid mailbox name for move operation. Cannot continue: ' . $mailbox;
+            $this->output();
             exit();
         }
 
@@ -511,7 +624,7 @@ class BounceMailHandler
     {
         // before starting the processing, let's check the delete flag and do global deletes if true
         if (\trim($this->deleteMsgDate) !== '') {
-            echo 'processing global delete based on date of ' . $this->deleteMsgDate . '<br />';
+            $this->output('processing global delete based on date of ' . $this->deleteMsgDate);
             $this->globalDelete();
         }
 
@@ -567,7 +680,7 @@ class BounceMailHandler
      * @param string $type         DNS or BODY type
      * @param int    $totalFetched total number of messages in mailbox
      *
-     * @return array|false <p>"$result"-array or false</p>
+     * @return array|false $result-array or false
      */
     public function processBounce(int $pos, string $type, int $totalFetched)
     {
@@ -575,6 +688,18 @@ class BounceMailHandler
         $subject = isset($header->subject) ? \strip_tags($header->subject) : '[NO SUBJECT]';
         $body = '';
         $headerFull = \imap_fetchheader($this->mailboxLink, $pos);
+
+        $requiredXHeaderValue = false;
+
+        if (!empty($this->requiredXHeader)) {
+            $requiredXHeaderValue = $this->findRequiredXHeaderValue($pos, $headerFull);
+
+            if ($requiredXHeaderValue === false) {
+                $this->output('Msg #' . $pos . ' skipped: missing required header "' . $this->requiredXHeader . '"', self::VERBOSE_REPORT);
+                return false;
+            }
+        }
+
         $bodyFull = \imap_body($this->mailboxLink, $pos);
 
         if ($type == 'DSN') {
@@ -603,14 +728,13 @@ class BounceMailHandler
             }
 
             switch ($structure->type) {
-                case 0: // Content-type = text
+                case TYPETEXT:
                     $body = \imap_fetchbody($this->mailboxLink, $pos, '1');
                     $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
-
                     break;
 
-                case 1: // Content-type = multipart
+                case TYPEMULTIPART:
                     $body = \imap_fetchbody($this->mailboxLink, $pos, '1');
 
                     // Detect encoding and decode - only base64
@@ -622,10 +746,9 @@ class BounceMailHandler
 
                     $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
-
                     break;
 
-                case 2: // Content-type = message
+                case TYPEMESSAGE:
                     $body = \imap_body($this->mailboxLink, $pos);
 
                     if ($structure->encoding == 4) {
@@ -637,18 +760,14 @@ class BounceMailHandler
                     $body = \substr($body, 0, 1000);
                     $result = bmhBodyRules($body, $this->debugBodyRule);
                     $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $structure, $this->debugBodyRule) : $result;
-
                     break;
 
-                default: // un-support Content-type
+                default: // unsupported Content-type
                     $this->output('Msg #' . $pos . ' is unsupported Content-Type:' . $structure->type, self::VERBOSE_REPORT);
-
                     return false;
             }
         } else {
-            // internal error
             $this->errorMessage = 'Internal Error: unknown type';
-
             return false;
         }
 
@@ -675,7 +794,7 @@ class BounceMailHandler
         $status_code = $result['status_code'];
         $action = $result['action'];
         $diagnostic_code = $result['diagnostic_code'];
-        $xheader = false;
+        $xheader = $requiredXHeaderValue;
 
         if ($ruleReason === '') {
             // unrecognized
@@ -761,6 +880,7 @@ class BounceMailHandler
             $this->errorMessage = 'Action function not found!';
             $this->output();
 
+            @\imap_close($this->mailboxLink);
             return false;
         }
 
@@ -774,39 +894,51 @@ class BounceMailHandler
 
         // initialize counters
         $totalCount = \imap_num_msg($this->mailboxLink);
-        $fetchedCount = $totalCount;
+        $this->output('Total: ' . $totalCount . ' messages ');
+
+        if ($this->sinceDate !== null) {
+            $criteria = 'SINCE "' . \date('d-M-Y', $this->sinceDate) . '"';
+            /** @noinspection PhpUsageOfSilenceOperatorInspection */
+            $messageNumbers = @\imap_search($this->mailboxLink, $criteria) ?: [];
+            \sort($messageNumbers);
+            $this->output('Matching ' . $criteria . ': ' . \count($messageNumbers) . ' messages ');
+        } else {
+            $messageNumbers = $totalCount > 0 ? \range(1, $totalCount) : [];
+        }
+
+        $fetchedCount = \count($messageNumbers);
         $processedCount = 0;
         $unprocessedCount = 0;
         $deletedCount = 0;
         $movedCount = 0;
-        $this->output('Total: ' . $totalCount . ' messages ');
 
         // process maximum number of messages
         if ($fetchedCount > $this->maxMessages) {
+            $messageNumbers = \array_slice($messageNumbers, 0, $this->maxMessages);
             $fetchedCount = $this->maxMessages;
             $this->output('Processing first ' . $fetchedCount . ' messages ');
         }
 
         if ($this->testMode) {
-            $this->output('Running in test mode, not deleting messages from mailbox<br />');
+            $this->output('Running in test mode, not deleting messages from mailbox');
         } else {
             if ($this->disableDelete) {
                 if ($this->moveHard) {
-                    $this->output('Running in move mode<br />');
+                    $this->output('Running in move mode');
                 } else {
-                    $this->output('Running in disableDelete mode, not deleting messages from mailbox<br />');
+                    $this->output('Running in disableDelete mode, not deleting messages from mailbox');
                 }
                 if ($this->moveUnprocessed) {
-                    $this->output('Unprocessed mails will be moved to unprocessed folder<br />');
+                    $this->output('Unprocessed mails will be moved to unprocessed folder');
 		} else {
-                    $this->output('Unprocessed mails will not be touched<br />');
+                    $this->output('Unprocessed mails will not be touched');
 		}
             } else {
-                $this->output('Processed messages will be deleted from mailbox<br />');
+                $this->output('Processed messages will be deleted from mailbox');
             }
         }
 
-        for ($x = 1; $x <= $fetchedCount; ++$x) {
+        foreach ($messageNumbers as $x) {
             // fetch the messages one at a time
             if ($this->useFetchstructure) {
                 /** @noinspection PhpUsageOfSilenceOperatorInspection */
@@ -878,6 +1010,7 @@ class BounceMailHandler
             $moveFlag[$x] = false;
 
             if ($processedResult !== false) {
+                $this->output("Processed #$x");
                 ++$processedCount;
 
                 if (!$this->disableDelete) {
@@ -920,6 +1053,7 @@ class BounceMailHandler
                 }
             } else {
                 // not processed
+                $this->output("Ignored #$x, not a bounce");
                 ++$unprocessedCount;
                 if (!$this->disableDelete && $this->purgeUnprocessed) {
                     // delete this bounce if not in disableDelete mode, and the flag BOUNCE_PURGE_UNPROCESSED is set

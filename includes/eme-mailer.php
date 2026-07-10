@@ -3675,8 +3675,10 @@ function eme_process_bounces() {
     $bounce->serviceOption   = get_option( 'eme_imap_bounce_encryption', 'ssl' );
     $bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
     $bounce->moveUnprocessed = false;
+    $bounce->requiredXHeader = 'X-EME-mailid';
     $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
     $bounce->actionFunction  = 'eme_bounce_callback';
+    $bounce->sinceDate       = strtotime('-25 hours'); // summertime safe
 
     if ( ! $bounce->openMailbox() ) {
         return [ 'error' => $bounce->errorMessage ];
@@ -3684,49 +3686,21 @@ function eme_process_bounces() {
 
     $bounce->processMailbox();
 
-    update_option( 'eme_imap_bounce_last_run', current_time( 'mysql', false ) );
-
     return true;
 }
 
 function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_reason, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
     global $wpdb;
 
-    if ( empty($bounce_type) ) {
+    if ( empty($bounce_type) || empty($rule_reason)) {
        return;
     }
 
-    $last_run = get_option( 'eme_imap_bounce_last_run', '' );
-    if ( ! empty( $last_run ) && ! empty( $headerFull ) ) {
-        if ( preg_match( '/^Date:\s*(.+)$/im', $headerFull, $date_matches ) ) {
-            $msg_date   = strtotime( $date_matches[1] );
-            $last_run_ts = strtotime( $last_run );
-            if ( $msg_date !== false && $msg_date < $last_run_ts ) {
-                return;
-            }
-        }
-    }
-
-    $random_id = '';
-    if ( ! empty( $bodyFull ) && preg_match( '/X-EME-mailid:\s*(\S+)/i', $bodyFull, $matches ) ) {
-        $random_id = $matches[1];
-    }
-
-    $mail = null;
     $mail_id = 0;
-    if ( ! empty( $random_id ) ) {
-        $mail = eme_get_mail_by_rid( $random_id );
-        if ( $mail && (int) $mail['status'] === EME_MAIL_STATUS_SENT ) {
-            $mail_id = $mail['id'];
-        }
-    } elseif ( ! empty( $email ) ) {
-        $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-        $prepared_sql = $wpdb->prepare(
-            "SELECT id FROM $mqueue_table WHERE receiveremail = %s AND status = %d ORDER BY id DESC LIMIT 1",
-            $email,
-            EME_MAIL_STATUS_SENT
-        );
-        $mail_id = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $random_id = $xheader; // xheader contains our randomid
+    $mail = eme_get_mail_by_rid( $random_id );
+    if ( $mail && (int) $mail['status'] === EME_MAIL_STATUS_SENT ) {
+        $mail_id = $mail['id'];
     }
 
     if ( ! $mail_id ) {

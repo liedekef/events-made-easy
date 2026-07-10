@@ -192,29 +192,4 @@ document.addEventListener('DOMContentLoaded', function() {
     const queueMailsEl = EME.$('input[name=eme_queue_mails]');
     if (queueMailsEl) queueMailsEl.addEventListener("change", updateShowHideMailQueueOptions);
 
-    document.addEventListener("click", function(e) {
-        if (e.target && e.target.id === "eme_run_bounce_handler") {
-            e.target.disabled = true;
-            var resultSpan = document.getElementById("eme_bounce_result");
-            resultSpan.textContent = "Processing...";
-            var formData = new FormData();
-            formData.append("action", "eme_process_bounces");
-            formData.append("eme_admin_nonce", emeadmin.translate_adminnonce);
-            fetch(emebasic.translate_ajax_url, { method: "POST", body: formData })
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    if (data.success) {
-                        resultSpan.textContent = data.data;
-                    } else {
-                        resultSpan.textContent = data.data || "Error";
-                    }
-                    e.target.disabled = false;
-                })
-                .catch(function() {
-                    resultSpan.textContent = "Request failed";
-                    e.target.disabled = false;
-                });
-        }
-    });
-
 });

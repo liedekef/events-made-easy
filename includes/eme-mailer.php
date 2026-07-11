@@ -3677,8 +3677,6 @@ function eme_process_bounces() {
     $bounce->mailboxPassword = $password;
     $bounce->boxname         = get_option( 'eme_imap_bounce_mailbox', 'INBOX' );
     $bounce->serviceOption   = get_option( 'eme_imap_bounce_encryption', 'ssl' );
-    //$bounce->disableDelete   = ! get_option( 'eme_imap_bounce_remove_msgs', 0 );
-    //$bounce->moveUnprocessed = false;
     $bounce->requiredXHeader = 'X-EME-mailid';
     $bounce->verbose         = BounceMailHandler\BounceMailHandler::VERBOSE_QUIET;
     $bounce->actionFunction  = 'eme_bounce_callback';

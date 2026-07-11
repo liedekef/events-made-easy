@@ -3667,7 +3667,7 @@ function eme_process_bounces() {
     }
 
     require_once __DIR__ . '/bounce-handler/BounceIMAP.php';
-    require_once __DIR__ . '/bounce-handler/bmh_rules.php';
+    require_once __DIR__ . '/bounce-handler/BounceRules.php';
     require_once __DIR__ . '/bounce-handler/BounceMailHandler.php';
 
     $bounce = new BounceMailHandler\BounceMailHandler();

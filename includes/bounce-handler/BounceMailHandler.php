@@ -21,9 +21,6 @@ declare(strict_types=1);
  */
 namespace BounceMailHandler;
 
-use function bmhBodyRules;
-use function bmhDSNRules;
-
 /**
  * BounceMailHandler class
  *
@@ -231,11 +228,23 @@ class BounceMailHandler
     protected $client;
 
     /**
+     * (internal) the rule engine
+     *
+     * @var BounceRules
+     */
+    protected $rules;
+
+    /**
      * Holds Bounce Mail Handler version.
      *
      * @var string
      */
     private $version = '7.0-dev (imap-extension-free)';
+
+    public function __construct()
+    {
+        $this->rules = new BounceRules();
+    }
 
     /**
      * @return string
@@ -392,7 +401,7 @@ class BounceMailHandler
             // second part of DSN (Delivery Status Notification), delivery-status
             $dsnReport = $this->client->fetchSection($pos, '2') ?? '';
 
-            $result = bmhDSNRules($dsnMsg, $dsnReport, $this->debugDsnRule);
+            $result = $this->rules->dsnRules($dsnMsg, $dsnReport, $this->debugDsnRule);
             $result = is_callable($this->customDSNRulesCallback) ? call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
         } elseif ($type === 'BODY') {
             if (preg_match("/^Content-Type:\s*multipart\//mi", $headerFull)) {
@@ -405,7 +414,7 @@ class BounceMailHandler
                 $body = $this->decodeBySection($bodyFull, null, $headerFull);
             }
 
-            $result = bmhBodyRules($body, $this->debugBodyRule);
+            $result = $this->rules->bodyRules($body, $this->debugBodyRule);
             $result = is_callable($this->customBodyRulesCallback) ? call_user_func($this->customBodyRulesCallback, $result, $body, $this->debugBodyRule) : $result;
         } else {
             $this->errorMessage = 'Internal Error: unknown type';

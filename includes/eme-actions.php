@@ -729,7 +729,8 @@ add_action( 'rest_api_init', function () {
             if ( isset( $res['error'] ) ) {
                 return new WP_REST_Response( [ 'error' => $res['error'] ], 500 );
             }
-            return new WP_REST_Response( [ 'success' => true ], 200 );
+            $res['success'] = true;
+            return new WP_REST_Response( $res, 200 );
         },
         'permission_callback' => function () {
             return current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
@@ -749,7 +750,7 @@ function eme_ajax_process_bounces() {
     if ( isset( $res['error'] ) ) {
         wp_send_json_error( $res['error'] );
     }
-    wp_send_json_success( __( 'Bounce processing completed.', 'events-made-easy' ) );
+    wp_send_json_success( $res );
 }
 
 // AJAX handler for rendering shortcodes in Jodit preview

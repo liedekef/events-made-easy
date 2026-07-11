@@ -500,9 +500,9 @@ class BounceMailHandler
      * @param bool|int $max maximum limit messages processed in one batch,
      *                      if not given uses the property $maxMessages
      *
-     * @return bool
+     * @return array|false $result-array or false
      */
-    public function processMailbox($max = false): bool
+    public function processMailbox($max = false)
     {
         if (empty($this->actionFunction) || !is_callable($this->actionFunction)) {
             $this->errorMessage = 'Action function not found!';
@@ -598,6 +598,6 @@ class BounceMailHandler
         $this->output($processedCount . ' action taken');
         $this->output($unprocessedCount . ' no action taken');
 
-        return true;
+        return [ 'read' => $fetchedCount, 'bounces' => $processedCount, 'ignored' => $unprocessedCount ];
     }
 }

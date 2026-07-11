@@ -63,7 +63,7 @@ class BounceRules
             'cat'         => 'unknown',
             'reason'      => 'Delivery failed permanently without technical details',
             'email_group' => 1,
-            'guard'       => function (string $body): bool {
+            'guard'       => static function (string $body): bool {
                 return strpos($body, 'Technical details of permanent failure') === false;
             },
         ],
@@ -259,7 +259,7 @@ class BounceRules
             'cat'    => 'other',
             'reason' => 'Delivery to recipients failed',
             'target' => 'dsn_msg',
-            'dynamic' => function (array $result): string {
+            'dynamic' => static function (array $result): string {
                 return "/Delivery to the following recipients failed.*\n.*\n.*|Message\s+delivery\s+failed"
                     . preg_quote($result['email'], '/')
                     . '/i';

@@ -2179,7 +2179,7 @@ function eme_options_page() {
         <span id="eme_bounce_result"></span>
         <br>
 <?php
-            esc_html_e( 'Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox.', 'events-made-easy' );
+            esc_html_e( 'Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox (only messages of the last 24 hours will be taken into account).', 'events-made-easy' );
 ?>
         </td>
     </tr>

@@ -3688,9 +3688,7 @@ function eme_process_bounces() {
         return [ 'error' => $bounce->errorMessage ];
     }
 
-    $bounce->processMailbox();
-
-    return true;
+    return $bounce->processMailbox();
 }
 
 function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_reason, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {

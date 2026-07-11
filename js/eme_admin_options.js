@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (data.success) {
-                        resultSpan.textContent = data.data;
+                        resultSpan.textContent = "Processing completed. Read: "+ data.data.read + ", bounces: " + data.data.bounces + ", ignored: " + data.data.ignored ;
                     } else {
                         resultSpan.textContent = data.data || "Error";
                     }

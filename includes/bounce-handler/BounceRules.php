@@ -54,73 +54,7 @@ class BounceRules
      *
      * @var array
      */
-    public array $bodyRules = [
-        ['/domain\s+name\s+not\s+found/i', 'dns_unknown', 'DNS error: domain name not found'],
-        ["/no\s+such\s+address\s+here/i", 'unknown', 'No such address here'],
-        [
-            // guarded: only applies when there's no "Technical details" section to try first
-            'pattern'     => '/Delivery to the following (?:recipient|recipients) failed permanently\X*?(\S+@\S+\w)/ui',
-            'cat'         => 'unknown',
-            'reason'      => 'Delivery failed permanently without technical details',
-            'email_group' => 1,
-            'guard'       => static function (string $body): bool {
-                return strpos($body, 'Technical details of permanent failure') === false;
-            },
-        ],
-        ["/user.+?not\s+exist/i", 'unknown', 'User does not exist'],
-        ['/user\s+unknown|unknown\s+user/i', 'unknown', 'User unknown'],
-        ["/no\s+mailbox/i", 'unknown', 'No mailbox here by that name'],
-        ["/can't\s+find.*mailbox/i", 'unknown', "Can't find user's mailbox"],
-        ["/Can't\s+create\s+output.*<(\S+@\S+\w)>/is", 'unknown', "Can't create output for user", 1],
-        ['/=D5=CA=BA=C5=B2=BB=B4=E6=D4=DA/i', 'unknown', 'Mailbox does not exist (Chinese error)'],
-        ["/Unrouteable\s+address/i", 'unknown', 'Unrouteable address'],
-        ["/delivery[^\n\r]+failed\S*\s+(\S+@\S+\w)\s/i", 'unknown', 'Delivery failed for recipient', 1],
-        ["/unknown\s+local-part/i", 'unknown', 'Unknown local-part in address'],
-        ["/Invalid.*(?:alias|account|recipient|address|email|mailbox|user).*<(\S+@\S+\w)>/is", 'unknown', 'Invalid recipient address', 1],
-        ["/No\s+such.*(?:alias|account|recipient|address|email|mailbox|user).*<(\S+@\S+\w)>/is", 'unknown', 'No such user', 1],
-        ['/not unique.\s+Several matches found/i', 'unknown', 'Recipient name not unique'],
-        ["/quota\s+exceeded.*<(\S+@\S+\w)>/is", 'full', 'Mailbox full or over quota', 1],
-        ["/The message to (\S+@\S+\w)\s.*bounce.*Quota exceed/i", 'full', 'Mailbox full or over quota', 1],
-        ['/over.*quota|quota\s+exceeded|message\s+size\s+exceeded|mailbox.*full|not\s+enough\s+storage\s+space/i', 'full', 'Mailbox full or over quota'],
-        ['/user is inactive/i', 'inactive', 'User is inactive'],
-        ["/(\S+@\S+\w).*n? is restricted/i", 'inactive', 'Recipient is restricted', 1],
-        ['/inactive account/i', 'inactive', 'Inactive account'],
-        ["/<(\S+@\S+\w)>.*\n.*mailbox unavailable/i", 'unknown', 'Mailbox unavailable', 1],
-        ["/<(\S+@\S+\w)>.*\n?.*\n?.*account that you tried to reach does not exist/i", 'unknown', 'Account does not exist (Gmail)', 1],
-        ['/Technical details of permanent failure:\s+TEMP_FAILURE: Could not initiate SMTP conversation with any hosts/i', 'dns_unknown', 'Could not initiate SMTP conversation (permanent)'],
-        ['/Technical details of temporary failure:\s+TEMP_FAILURE: Could not initiate SMTP conversation with any hosts/i', 'delayed', 'Could not initiate SMTP conversation (temporary)'],
-        ['/Technical details of temporary failure:\s+TEMP_FAILURE: The recipient server did not accept our requests to connect./i', 'delayed', 'Recipient server refused connection'],
-        [
-            'pattern'     => "/input\/output error/i",
-            'cat'         => 'internal_error',
-            'reason'      => 'Input/output error',
-            'target'      => 'body',
-            'bounce_type' => 'hard',
-            'remove'      => 1,
-        ],
-        [
-            'pattern'     => '/can not open new email file/i',
-            'cat'         => 'internal_error',
-            'reason'      => 'Cannot open new email file',
-            'target'      => 'body',
-            'bounce_type' => 'hard',
-            'remove'      => 1,
-        ],
-        ['/Resources temporarily unavailable|Insufficient system resources/i', 'defer', 'Resources temporarily unavailable'],
-        ["/^AutoReply message from (\S+@\S+\w)/i", 'autoreply', 'Auto-reply or out-of-office message', 1],
-        ["/Your message \([^)]+\) was blocked by|message has been blocked/i", 'antispam', 'Message blocked by DNSBL'],
-        ["/Messages\s+without\s+\S+\s+fields\s+are\s+not\s+accepted\s+here/i", 'content_reject', 'Message missing required header fields'],
-        ["/(?:alias|account|recipient|address|email|mailbox|user).*no\s+longer\s+accepts\s+mail/i", 'inactive', 'Address no longer accepts mail'],
-        ["/does not accept[^\r\n]*non-Western/i", 'latin_only', 'User does not accept non-Western character sets'],
-        ["/554.*delivery error.*this user.*doesn't have.*account/is", 'unknown', 'User does not have an account (Yahoo)'],
-        ['/550.*Requested.*action.*not.*taken:.*mailbox.*unavailable/is', 'unknown', 'Mailbox unavailable (Hotmail)'],
-        ["/550 5\.1\.1.*Recipient address rejected/is", 'unknown', 'Recipient address rejected'],
-        ['/550.*in reply to end of DATA command/is', 'unknown', 'Mail rejected at DATA command'],
-        ['/550.*in reply to RCPT TO command/is', 'unknown', 'Mail rejected at RCPT TO command'],
-        ["/unrouteable\s+mail\s+domain/i", 'dns_unknown', 'Unrouteable mail domain'],
-        // Custom Massi rule: multi-language out-of-office / autoreply detector, kept last (lowest priority)
-        ["/ferie|fuori ufficio|fuori dall'ufficio|ritorno in ufficio|fuori sede|limited access to|no access to|chiuso dal|in vacanza|se urgente|per urgenze|sono assente|sar. assente|assenza|assente dal|momentaneamente assente|sar. reperibile|richieste urgenti|out of office|out of the office|the office|ll be away|able to answer|maternity leave|maternit|sar. assente|rispondo quando|automated response|back on|avermi contattat.|certezza della lettura|al mio rientro|generato automaticamente|automatically generated|dringenden|will be back|able to reply|holiday/i", 'autoreply', 'Auto-reply or out-of-office message'],
-    ];
+    public array $bodyRules = [];
 
     /**
      * Fallback rule used when a DSN report didn't yield a recipient email at all.
@@ -235,7 +169,85 @@ class BounceRules
      *
      * @var array
      */
-    public array $dsnMsgRules = [
+    public array $dsnMsgRules = [];
+
+    /**
+     * Built here rather than as property defaults: PHP's constant-expression
+     * evaluator for property defaults has support for closures only since 8.5
+     * A constructor body is ordinary runtime code, so this sidesteps
+     * that entirely regardless of PHP version.
+     */
+    public function __construct()
+    {
+        $this->bodyRules = [
+        ['/domain\s+name\s+not\s+found/i', 'dns_unknown', 'DNS error: domain name not found'],
+        ["/no\s+such\s+address\s+here/i", 'unknown', 'No such address here'],
+        [
+            // guarded: only applies when there's no "Technical details" section to try first
+            'pattern'     => '/Delivery to the following (?:recipient|recipients) failed permanently\X*?(\S+@\S+\w)/ui',
+            'cat'         => 'unknown',
+            'reason'      => 'Delivery failed permanently without technical details',
+            'email_group' => 1,
+            'guard'       => static function (string $body): bool {
+                return strpos($body, 'Technical details of permanent failure') === false;
+            },
+        ],
+        ["/user.+?not\s+exist/i", 'unknown', 'User does not exist'],
+        ['/user\s+unknown|unknown\s+user/i', 'unknown', 'User unknown'],
+        ["/no\s+mailbox/i", 'unknown', 'No mailbox here by that name'],
+        ["/can't\s+find.*mailbox/i", 'unknown', "Can't find user's mailbox"],
+        ["/Can't\s+create\s+output.*<(\S+@\S+\w)>/is", 'unknown', "Can't create output for user", 1],
+        ['/=D5=CA=BA=C5=B2=BB=B4=E6=D4=DA/i', 'unknown', 'Mailbox does not exist (Chinese error)'],
+        ["/Unrouteable\s+address/i", 'unknown', 'Unrouteable address'],
+        ["/delivery[^\n\r]+failed\S*\s+(\S+@\S+\w)\s/i", 'unknown', 'Delivery failed for recipient', 1],
+        ["/unknown\s+local-part/i", 'unknown', 'Unknown local-part in address'],
+        ["/Invalid.*(?:alias|account|recipient|address|email|mailbox|user).*<(\S+@\S+\w)>/is", 'unknown', 'Invalid recipient address', 1],
+        ["/No\s+such.*(?:alias|account|recipient|address|email|mailbox|user).*<(\S+@\S+\w)>/is", 'unknown', 'No such user', 1],
+        ['/not unique.\s+Several matches found/i', 'unknown', 'Recipient name not unique'],
+        ["/quota\s+exceeded.*<(\S+@\S+\w)>/is", 'full', 'Mailbox full or over quota', 1],
+        ["/The message to (\S+@\S+\w)\s.*bounce.*Quota exceed/i", 'full', 'Mailbox full or over quota', 1],
+        ['/over.*quota|quota\s+exceeded|message\s+size\s+exceeded|mailbox.*full|not\s+enough\s+storage\s+space/i', 'full', 'Mailbox full or over quota'],
+        ['/user is inactive/i', 'inactive', 'User is inactive'],
+        ["/(\S+@\S+\w).*n? is restricted/i", 'inactive', 'Recipient is restricted', 1],
+        ['/inactive account/i', 'inactive', 'Inactive account'],
+        ["/<(\S+@\S+\w)>.*\n.*mailbox unavailable/i", 'unknown', 'Mailbox unavailable', 1],
+        ["/<(\S+@\S+\w)>.*\n?.*\n?.*account that you tried to reach does not exist/i", 'unknown', 'Account does not exist (Gmail)', 1],
+        ['/Technical details of permanent failure:\s+TEMP_FAILURE: Could not initiate SMTP conversation with any hosts/i', 'dns_unknown', 'Could not initiate SMTP conversation (permanent)'],
+        ['/Technical details of temporary failure:\s+TEMP_FAILURE: Could not initiate SMTP conversation with any hosts/i', 'delayed', 'Could not initiate SMTP conversation (temporary)'],
+        ['/Technical details of temporary failure:\s+TEMP_FAILURE: The recipient server did not accept our requests to connect./i', 'delayed', 'Recipient server refused connection'],
+        [
+            'pattern'     => "/input\/output error/i",
+            'cat'         => 'internal_error',
+            'reason'      => 'Input/output error',
+            'target'      => 'body',
+            'bounce_type' => 'hard',
+            'remove'      => 1,
+        ],
+        [
+            'pattern'     => '/can not open new email file/i',
+            'cat'         => 'internal_error',
+            'reason'      => 'Cannot open new email file',
+            'target'      => 'body',
+            'bounce_type' => 'hard',
+            'remove'      => 1,
+        ],
+        ['/Resources temporarily unavailable|Insufficient system resources/i', 'defer', 'Resources temporarily unavailable'],
+        ["/^AutoReply message from (\S+@\S+\w)/i", 'autoreply', 'Auto-reply or out-of-office message', 1],
+        ["/Your message \([^)]+\) was blocked by|message has been blocked/i", 'antispam', 'Message blocked by DNSBL'],
+        ["/Messages\s+without\s+\S+\s+fields\s+are\s+not\s+accepted\s+here/i", 'content_reject', 'Message missing required header fields'],
+        ["/(?:alias|account|recipient|address|email|mailbox|user).*no\s+longer\s+accepts\s+mail/i", 'inactive', 'Address no longer accepts mail'],
+        ["/does not accept[^\r\n]*non-Western/i", 'latin_only', 'User does not accept non-Western character sets'],
+        ["/554.*delivery error.*this user.*doesn't have.*account/is", 'unknown', 'User does not have an account (Yahoo)'],
+        ['/550.*Requested.*action.*not.*taken:.*mailbox.*unavailable/is', 'unknown', 'Mailbox unavailable (Hotmail)'],
+        ["/550 5\.1\.1.*Recipient address rejected/is", 'unknown', 'Recipient address rejected'],
+        ['/550.*in reply to end of DATA command/is', 'unknown', 'Mail rejected at DATA command'],
+        ['/550.*in reply to RCPT TO command/is', 'unknown', 'Mail rejected at RCPT TO command'],
+        ["/unrouteable\s+mail\s+domain/i", 'dns_unknown', 'Unrouteable mail domain'],
+        // Custom Massi rule: multi-language out-of-office / autoreply detector, kept last (lowest priority)
+        ["/ferie|fuori ufficio|fuori dall'ufficio|ritorno in ufficio|fuori sede|limited access to|no access to|chiuso dal|in vacanza|se urgente|per urgenze|sono assente|sar. assente|assenza|assente dal|momentaneamente assente|sar. reperibile|richieste urgenti|out of office|out of the office|the office|ll be away|able to answer|maternity leave|maternit|sar. assente|rispondo quando|automated response|back on|avermi contattat.|certezza della lettura|al mio rientro|generato automaticamente|automatically generated|dringenden|will be back|able to reply|holiday/i", 'autoreply', 'Auto-reply or out-of-office message'],
+    ];
+
+        $this->dsnMsgRules = [
         ['/(?:alias|account|recipient|address|email|mailbox|user)(?:.*)invalid/i', 'unknown', 'All recipients are invalid'],
         ['/Deferred.*No such.*(?:file|directory)/i', 'unknown', 'Deferred - no such file or directory'],
         ['/mail receiving disabled/i', 'unknown', 'Mail receiving disabled'],
@@ -269,6 +281,7 @@ class BounceRules
         ['/(?:User unknown|Unknown user)/i', 'unknown', 'User unknown'],
         ['/Service unavailable/i', 'unknown', 'Service unavailable'],
     ];
+    }
 
     /**
      * Defined bounce parsing rules for non-standard DSN (matched against $body).

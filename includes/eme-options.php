@@ -2154,7 +2154,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 <?php
-            eme_options_toggle( __( 'Activate IMAP bounce handler', 'events-made-easy' ), 'eme_imap_bounce_active', __( 'Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue.', 'events-made-easy' ) );
+            eme_options_toggle( __( 'Activate IMAP bounce handler', 'events-made-easy' ), 'eme_imap_bounce_active', __( 'Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue.', 'events-made-easy' ). '<br>'. __("Microsoft 365 mailboxes aren't supported. Microsoft requires OAuth2 for IMAP, which this integration doesn't implement. Use a mailbox on your own hosting instead.",'events-made-easy') );
             eme_options_input_text( __( 'IMAP server', 'events-made-easy' ), 'eme_imap_bounce_server', __( 'The hostname of your IMAP server.', 'events-made-easy' ) );
             eme_options_input_list( __( 'IMAP port', 'events-made-easy' ), 'eme_imap_bounce_port', [143, 993], __( 'The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL).', 'events-made-easy' ) );
             eme_options_select(
@@ -2168,7 +2168,7 @@ function eme_options_page() {
                 __( 'Select the encryption method for IMAP.', 'events-made-easy' )
             );
             eme_options_input_text( __( 'IMAP username', 'events-made-easy' ), 'eme_imap_bounce_username', __( 'The username to access the IMAP mailbox.', 'events-made-easy' ) );
-            eme_options_input_password( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox.', 'events-made-easy' ) );
+            eme_options_input_password( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox. Only plain authentication is supported, no oauth.', 'events-made-easy' ) );
             eme_options_input_text( __( 'IMAP mailbox/folder', 'events-made-easy' ), 'eme_imap_bounce_mailbox', __( 'The mailbox or folder to check for bounced emails. Default is INBOX.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Process bounces daily', 'events-made-easy' ), 'eme_cron_process_bounces', __( 'Check this option to automatically process bounces once per day as part of the daily cron.', 'events-made-easy' ) );
 ?>
@@ -2179,7 +2179,7 @@ function eme_options_page() {
         <span id="eme_bounce_result"></span>
         <br>
 <?php
-            esc_html_e( 'Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox (only messages of the last 24 hours will be taken into account).', 'events-made-easy' );
+            esc_html_e( 'Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox.', 'events-made-easy' );
 ?>
         </td>
     </tr>

@@ -3696,10 +3696,6 @@ function eme_process_bounces() {
 function eme_bounce_callback( $msgnum, $bounce_type, $email, $subject, $xheader, $remove, $rule_reason, $rule_cat, $totalFetched, $body, $headerFull, $bodyFull, $status_code, $action, $diagnostic_code ) {
     global $wpdb;
 
-    if ( empty($bounce_type) || empty($rule_reason)) {
-       return;
-    }
-
     $mail_id = 0;
     $random_id = $xheader; // xheader contains our randomid
     $mail = eme_get_mail_by_rid( $random_id );

@@ -36,7 +36,7 @@ $rule_categories = [
 ];
 
 global $bmh_newline;
-$bmh_newline = "<br />\n";
+$bmh_newline = "\n";
 
 /* =====================================================================
  * RULE ENGINE
@@ -95,7 +95,7 @@ function bmhFindRule(array $rules, array $subjects, array $context = [], string 
         }
 
         $pattern = isset($rule['dynamic']) ? ($rule['dynamic'])($context) : $rule['pattern'];
-        if ($pattern === null || !\preg_match($pattern, $subject, $match)) {
+        if ($pattern === null || !preg_match($pattern, $subject, $match)) {
             continue;
         }
 
@@ -139,18 +139,18 @@ function bmhExtractPrecedingEmail(string $body, string $matchedText): string
         return '';
     }
 
-    $pos = \strpos($body, $matchedText);
+    $pos = strpos($body, $matchedText);
     if ($pos === false) {
         return '';
     }
 
-    $preBody = \substr($body, 0, $pos);
-    $count = \preg_match_all('/(\S+@\S+)/', $preBody, $matches);
+    $preBody = substr($body, 0, $pos);
+    $count = preg_match_all('/(\S+@\S+)/', $preBody, $matches);
     if (!$count) {
         return '';
     }
 
-    return \trim($matches[1][$count - 1], "'\"()<>.:; \t\r\n\0\x0B");
+    return trim($matches[1][$count - 1], "'\"()<>.:; \t\r\n\0\x0B");
 }
 
 /**
@@ -163,10 +163,10 @@ function bmhExtractPrecedingEmail(string $body, string $matchedText): string
  */
 function bmhParseAddress(string $raw): array
 {
-    if (\preg_match('/([^\s<>()"]+@[^\s<>()"]+)/', $raw, $m)) {
-        $addr = \rtrim($m[1], '.,;:');
-        $parts = \explode('@', $addr, 2);
-        if (\count($parts) === 2 && $parts[0] !== '' && $parts[1] !== '') {
+    if (preg_match('/([^\s<>()"]+@[^\s<>()"]+)/', $raw, $m)) {
+        $addr = rtrim($m[1], '.,;:');
+        $parts = explode('@', $addr, 2);
+        if (count($parts) === 2 && $parts[0] !== '' && $parts[1] !== '') {
             return ['mailbox' => $parts[0], 'host' => $parts[1]];
         }
     }
@@ -181,10 +181,10 @@ function bmhParseAddress(string $raw): array
 function bmhParseDsnRecipient(string $dsn_report): string
 {
     if (
-        \preg_match('/Original-Recipient: rfc822;(.*)/i', $dsn_report, $match)
-        || \preg_match('/Final-Recipient: rfc822;(.*)/i', $dsn_report, $match)
+        preg_match('/Original-Recipient: rfc822;(.*)/i', $dsn_report, $match)
+        || preg_match('/Final-Recipient: rfc822;(.*)/i', $dsn_report, $match)
     ) {
-        $email = \trim($match[1], "<> \t\r\n\0\x0B");
+        $email = trim($match[1], "<> \t\r\n\0\x0B");
         $parsed = bmhParseAddress($email);
         if ($parsed['host'] !== '') {
             return $parsed['mailbox'] . '@' . $parsed['host'];
@@ -213,7 +213,7 @@ $BMH_BODY_RULES = [
         'reason'      => 'Delivery failed permanently without technical details',
         'email_group' => 1,
         'guard'       => function (string $body): bool {
-            return \strpos($body, 'Technical details of permanent failure') === false;
+            return strpos($body, 'Technical details of permanent failure') === false;
         },
     ],
     ["/user.+?not\s+exist/i", 'unknown', 'User does not exist'],
@@ -470,20 +470,20 @@ function bmhDSNRules($dsn_msg, $dsn_report, $debug_mode = false): array
     $result['email'] = bmhParseDsnRecipient($dsn_report);
 
     $action = null;
-    if (\preg_match('/Action: (.+)/i', $dsn_report, $match)) {
-        $action = \strtolower(\trim($match[1]));
+    if (preg_match('/Action: (.+)/i', $dsn_report, $match)) {
+        $action = strtolower(trim($match[1]));
         $result['action'] = $action;
     }
 
     $status_code = '';
-    if (\preg_match("/Status: ([0-9\.]+)/i", $dsn_report, $match)) {
+    if (preg_match("/Status: ([0-9\.]+)/i", $dsn_report, $match)) {
         $status_code = $match[1];
         $result['status_code'] = $status_code;
     }
 
     // Could be multi-line, if the new line begins with SPACE or HTAB
     $diag_code = '';
-    if (\preg_match("/Diagnostic-Code:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/i", $dsn_report, $match)) {
+    if (preg_match("/Diagnostic-Code:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/i", $dsn_report, $match)) {
         $diag_code = $match[1];
     }
     if ($diag_code === '') {
@@ -532,9 +532,8 @@ function bmhDSNRules($dsn_msg, $dsn_report, $debug_mode = false): array
         echo 'Action: ' . $action . $bmh_newline;
         echo 'Status: ' . $status_code . $bmh_newline;
         echo 'Diagnostic-Code: ' . $diag_code . $bmh_newline;
-        echo "DSN Message:<br />\n" . $dsn_msg . $bmh_newline;
+        echo "DSN Message:" . $bmh_newline . $dsn_msg . $bmh_newline;
         echo $bmh_newline;
     }
-
     return $result;
 }

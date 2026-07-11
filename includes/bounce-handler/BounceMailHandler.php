@@ -143,6 +143,11 @@ class BounceMailHandler
     public $actionFunction = 'callbackAction';
 
     /**
+     * Indicates wether the callback function is called on all messages or just the bounces, default false (just bounces)
+     */
+    public $actionFunctionOnAllMessages = false;
+
+    /**
      * Callback custom body rules
      * ```
      * function customBodyRulesCallback( $result, $body, $debug )
@@ -260,7 +265,7 @@ class BounceMailHandler
      */
     public function openMailbox(): bool
     {
-        \set_time_limit(self::SECONDS_TIMEOUT);
+        set_time_limit(self::SECONDS_TIMEOUT);
 
         // 'notls' means no encryption; anything else is passed straight
         // through to BounceIMAP::connect() ('ssl' or 'tls').
@@ -293,48 +298,29 @@ class BounceMailHandler
     private function extractSubject(string $headerFull): string
     {
         // Could be multi-line, if the new line begins with SPACE or HTAB
-        if (!\preg_match("/^Subject:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
+        if (!preg_match("/^Subject:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
             return '[NO SUBJECT]';
         }
 
-        $subject = \trim(\preg_replace('/\s+/', ' ', $match[1]));
+        $subject = trim(preg_replace('/\s+/', ' ', $match[1]));
 
-        return \function_exists('iconv_mime_decode')
-            ? \iconv_mime_decode($subject, 0, 'UTF-8')
+        return function_exists('iconv_mime_decode')
+            ? iconv_mime_decode($subject, 0, 'UTF-8')
             : $subject;
     }
 
     /**
-     * Cheap pre-check used by $requiredXHeader: looks up the value of the
-     * configured header, either on the bounce message itself, or - for
-     * standard DSN messages only - on MIME part 3 (the conventional
-     * position of the embedded original message/headers in a DSN, per
-     * RFC 3462/3798). This is a targeted guess rather than a structure
-     * walk, since we no longer parse BODYSTRUCTURE.
+     * Looks up the value of the configured header in the passed text
      *
      * @return string|false the header value, or false if not present
      */
-    private function findRequiredXHeaderValue(int $pos, string $headerFull, string $type)
+    private function findRequiredXHeaderValue(string $headerFull)
     {
-        $needle = '/^' . \preg_quote($this->requiredXHeader, '/') . ':(.*)$/mi';
+        $needle = '/^' . preg_quote($this->requiredXHeader, '/') . ':(.*)$/mi';
 
-        if (\preg_match($needle, $headerFull, $match)) {
-            return \trim($match[1]);
+        if (preg_match($needle, $headerFull, $match)) {
+            return trim($match[1]);
         }
-
-        if ($type !== 'DSN') {
-            return false;
-        }
-
-        $embeddedHeader = $this->client->fetchSection($pos, '3.HEADER');
-        if ($embeddedHeader === null || $embeddedHeader === '') {
-            $embeddedHeader = $this->client->fetchSection($pos, '3');
-        }
-
-        if ($embeddedHeader !== null && \preg_match($needle, $embeddedHeader, $match)) {
-            return \trim($match[1]);
-        }
-
         return false;
     }
 
@@ -348,19 +334,16 @@ class BounceMailHandler
     {
         $source = ($mimeHeader !== null && $mimeHeader !== '') ? $mimeHeader : $fallbackHeader;
 
-        if (!\preg_match('/^Content-Transfer-Encoding:\s*(\S+)/mi', $source, $match)) {
+        if (!preg_match('/^Content-Transfer-Encoding:\s*(\S+)/mi', $source, $match)) {
             return $body;
         }
 
-        switch (\strtolower(\trim($match[1]))) {
+        switch (strtolower(trim($match[1]))) {
             case 'quoted-printable':
-                return \quoted_printable_decode($body);
-
+                return quoted_printable_decode($body);
             case 'base64':
-                $decoded = \base64_decode($body, true);
-
+                $decoded = base64_decode($body, true);
                 return $decoded !== false ? $decoded : $body;
-
             default:
                 return $body;
         }
@@ -384,11 +367,11 @@ class BounceMailHandler
 
         $bodyFull = null;
         if ($this->requiredXHeader !== '') {
-            $requiredXHeaderValue = $this->findRequiredXHeaderValue($pos, $headerFull, $type);
+            $requiredXHeaderValue = $this->findRequiredXHeaderValue($headerFull);
 
             if ($requiredXHeaderValue === false) {
                 $bodyFull = $this->client->fetchSection($pos, 'TEXT') ?? '';
-                $requiredXHeaderValue = $this->findRequiredXHeaderValue($pos, $bodyFull, $type);
+                $requiredXHeaderValue = $this->findRequiredXHeaderValue($bodyFull);
                 if ($requiredXHeaderValue === false) {
                     $this->output('Msg #' . $pos . ' skipped: missing required header "' . $this->requiredXHeader . '"', self::VERBOSE_REPORT);
                     return false;
@@ -410,16 +393,22 @@ class BounceMailHandler
             $dsnReport = $this->client->fetchSection($pos, '2') ?? '';
 
             $result = bmhDSNRules($dsnMsg, $dsnReport, $this->debugDsnRule);
-            $result = \is_callable($this->customDSNRulesCallback) ? \call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
+            $result = is_callable($this->customDSNRulesCallback) ? call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
         } elseif ($type === 'BODY') {
-            $body = $this->client->fetchSection($pos, '1') ?? $bodyFull;
-            $body = $this->decodeBySection($body, $this->client->fetchSection($pos, '1.MIME'), $headerFull);
+            if (preg_match("/^Content-Type:\s*multipart\//mi", $headerFull)) {
+                $body = $this->client->fetchSection($pos, '1') ?? $bodyFull;
+                $body = $this->decodeBySection($body, $this->client->fetchSection($pos, '1.MIME'), $headerFull);
+            } else {
+                // section '1' of a non-multipart message is byte-identical to
+                // TEXT, and it has no separate '1.MIME' sub-header - we already
+                // have everything we need in $bodyFull, no extra round trips.
+                $body = $this->decodeBySection($bodyFull, null, $headerFull);
+            }
 
             $result = bmhBodyRules($body, $this->debugBodyRule);
-            $result = \is_callable($this->customBodyRulesCallback) ? \call_user_func($this->customBodyRulesCallback, $result, $body, $this->debugBodyRule) : $result;
+            $result = is_callable($this->customBodyRulesCallback) ? call_user_func($this->customBodyRulesCallback, $result, $body, $this->debugBodyRule) : $result;
         } else {
             $this->errorMessage = 'Internal Error: unknown type';
-
             return false;
         }
 
@@ -427,8 +416,8 @@ class BounceMailHandler
         $bounceType = $result['bounce_type'];
 
         // workaround: I think there is a error in one of the reg-ex in "bmh_rules.php".
-        if ($email && \strpos($email, 'TO:<') !== false) {
-            $email = \str_replace('TO:<', '', $email);
+        if ($email && strpos($email, 'TO:<') !== false) {
+            $email = str_replace('TO:<', '', $email);
         }
 
         $remove = $result['remove'];
@@ -441,32 +430,34 @@ class BounceMailHandler
 
         if ($ruleReason === '') {
             // unrecognized
-            if (\trim($email) === '' && \preg_match('/^From:.*<(.+?)>/mi', $headerFull, $m)) {
+            if (trim($email) === '' && preg_match('/^From:.*<(.+?)>/mi', $headerFull, $m)) {
                 $email = $m[1];
-            } elseif (\trim($email) === '' && \preg_match('/^From:\s*(\S+@\S+)/mi', $headerFull, $m)) {
-                $email = \trim($m[1]);
+            } elseif (trim($email) === '' && preg_match('/^From:\s*(\S+@\S+)/mi', $headerFull, $m)) {
+                $email = trim($m[1]);
             }
 
             $this->output('No match: ' . $ruleCategory . '; ' . $bounceType . '; ' . $email, self::VERBOSE_REPORT);
 
-            $params = [
-                $pos,
-                $bounceType,
-                $email,
-                $subject,
-                $headerFull,
-                $remove,
-                $ruleReason,
-                $ruleCategory,
-                $totalFetched,
-                $body,
-                $headerFull,
-                $bodyFull,
-                $status_code,
-                $action,
-                $diagnostic_code,
-            ];
-            \call_user_func_array($this->actionFunction, $params);
+            if ($this->actionFunctionOnAllMessages) {
+                $params = [
+                    $pos,
+                    $bounceType,
+                    $email,
+                    $subject,
+                    $headerFull,
+                    $remove,
+                    $ruleReason,
+                    $ruleCategory,
+                    $totalFetched,
+                    $body,
+                    $headerFull,
+                    $bodyFull,
+                    $status_code,
+                    $action,
+                    $diagnostic_code,
+                ];
+                call_user_func_array($this->actionFunction, $params);
+            }
 
             return false;
         }
@@ -489,7 +480,7 @@ class BounceMailHandler
             $action,
             $diagnostic_code,
         ];
-        \call_user_func_array($this->actionFunction, $params);
+        call_user_func_array($this->actionFunction, $params);
 
         return $result;
     }
@@ -504,7 +495,7 @@ class BounceMailHandler
      */
     public function processMailbox($max = false): bool
     {
-        if (empty($this->actionFunction) || !\is_callable($this->actionFunction)) {
+        if (empty($this->actionFunction) || !is_callable($this->actionFunction)) {
             $this->errorMessage = 'Action function not found!';
             $this->output();
 
@@ -531,21 +522,21 @@ class BounceMailHandler
         $this->output('Total: ' . $totalCount . ' messages ');
 
         if ($this->sinceDate !== null) {
-            $criteria = 'SINCE "' . \date('d-M-Y', $this->sinceDate) . '"';
+            $criteria = 'SINCE "' . date('d-M-Y', $this->sinceDate) . '"';
             $messageNumbers = $this->client->search([$criteria]);
-            \sort($messageNumbers);
-            $this->output('Matching ' . $criteria . ': ' . \count($messageNumbers) . ' messages ');
+            sort($messageNumbers);
+            $this->output('Matching ' . $criteria . ': ' . count($messageNumbers) . ' messages ');
         } else {
-            $messageNumbers = $totalCount > 0 ? \range(1, $totalCount) : [];
+            $messageNumbers = $totalCount > 0 ? range(1, $totalCount) : [];
         }
 
-        $fetchedCount = \count($messageNumbers);
+        $fetchedCount = count($messageNumbers);
         $processedCount = 0;
         $unprocessedCount = 0;
 
         // process maximum number of messages
         if ($fetchedCount > $this->maxMessages) {
-            $messageNumbers = \array_slice($messageNumbers, 0, $this->maxMessages);
+            $messageNumbers = array_slice($messageNumbers, 0, $this->maxMessages);
             $fetchedCount = $this->maxMessages;
             $this->output('Processing first ' . $fetchedCount . ' messages ');
         }
@@ -558,8 +549,8 @@ class BounceMailHandler
             $type = 'BODY';
 
             // Could be multi-line, if the new line begins with SPACE or HTAB
-            if ($headerFull !== '' && \preg_match("/^Content-Type:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
-                if (\preg_match('/multipart\/report/i', $match[1]) && \preg_match('/report-type=["\']?delivery-status["\']?/i', $match[1])) {
+            if ($headerFull !== '' && preg_match("/^Content-Type:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
+                if (preg_match('/multipart\/report/i', $match[1]) && preg_match('/report-type=["\']?delivery-status["\']?/i', $match[1])) {
                     $type = 'DSN';
                 } else {
                     $this->output('Msg #' . $x . ' is not a standard DSN message', self::VERBOSE_REPORT);
@@ -586,7 +577,9 @@ class BounceMailHandler
                 ++$unprocessedCount;
             }
 
-            \flush();
+            if (php_sapi_name() == 'cli') {
+                flush();
+            }
         }
 
         $this->output("\n" . 'Closing mailbox');

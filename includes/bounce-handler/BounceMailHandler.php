@@ -97,6 +97,22 @@ class BounceMailHandler
     public $maxMessages = 3000;
 
     /**
+     * Maximum number of bytes fetched per IMAP section (headers, body text,
+     * individual MIME parts). Uses IMAP's own partial-fetch mechanism, so
+     * this caps what the server sends over the wire, not just what gets
+     * kept locally - a bounce carrying a large attachment (e.g. the
+     * original newsletter with embedded images) won't pull megabytes per
+     * message just so a few KB of header/text can be rule-matched.
+     *
+     * 64 KB comfortably covers headers, DSN explanation/report text, and
+     * the start of the original message - everything the rule engine and
+     * $requiredXHeader lookup actually need to see.
+     *
+     * @var int
+     */
+    public $maxFetchBytes = 65536;
+
+    /**
      * callback Action function name, the function that handles the bounce mail. Parameters:
      *
      * int     $msgnum          the message number returned by Bounce Mail Handler
@@ -351,7 +367,7 @@ class BounceMailHandler
             case 'quoted-printable':
                 return quoted_printable_decode($body);
             case 'base64':
-                $decoded = base64_decode($body, true);
+                $decoded = base64_decode($body);
                 return $decoded !== false ? $decoded : $body;
             default:
                 return $body;
@@ -379,7 +395,7 @@ class BounceMailHandler
             $requiredXHeaderValue = $this->findRequiredXHeaderValue($headerFull);
 
             if ($requiredXHeaderValue === false) {
-                $bodyFull = $this->client->fetchSection($pos, 'TEXT') ?? '';
+                $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
                 $requiredXHeaderValue = $this->findRequiredXHeaderValue($bodyFull);
                 if ($requiredXHeaderValue === false) {
                     $this->output('Msg #' . $pos . ' skipped: missing required header "' . $this->requiredXHeader . '"', self::VERBOSE_REPORT);
@@ -389,24 +405,24 @@ class BounceMailHandler
         }
 
         if ($bodyFull === null) {
-            $bodyFull = $this->client->fetchSection($pos, 'TEXT') ?? '';
+            $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
         }
         $body = '';
 
         if ($type === 'DSN') {
             // first part of DSN (Delivery Status Notification), human-readable explanation
-            $dsnMsg = $this->client->fetchSection($pos, '1') ?? '';
-            $dsnMsg = $this->decodeBySection($dsnMsg, $this->client->fetchSection($pos, '1.MIME'), $headerFull);
+            $dsnMsg = $this->client->fetchSection($pos, '1', $this->maxFetchBytes) ?? '';
+            $dsnMsg = $this->decodeBySection($dsnMsg, $this->client->fetchSection($pos, '1.MIME', $this->maxFetchBytes), $headerFull);
 
             // second part of DSN (Delivery Status Notification), delivery-status
-            $dsnReport = $this->client->fetchSection($pos, '2') ?? '';
+            $dsnReport = $this->client->fetchSection($pos, '2', $this->maxFetchBytes) ?? '';
 
             $result = $this->rules->dsnRules($dsnMsg, $dsnReport, $this->debugDsnRule);
             $result = is_callable($this->customDSNRulesCallback) ? call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
         } elseif ($type === 'BODY') {
             if (preg_match("/^Content-Type:\s*multipart\//mi", $headerFull)) {
-                $body = $this->client->fetchSection($pos, '1') ?? $bodyFull;
-                $body = $this->decodeBySection($body, $this->client->fetchSection($pos, '1.MIME'), $headerFull);
+                $body = $this->client->fetchSection($pos, '1', $this->maxFetchBytes) ?? $bodyFull;
+                $body = $this->decodeBySection($body, $this->client->fetchSection($pos, '1.MIME', $this->maxFetchBytes), $headerFull);
             } else {
                 // section '1' of a non-multipart message is byte-identical to
                 // TEXT, and it has no separate '1.MIME' sub-header - we already
@@ -553,7 +569,7 @@ class BounceMailHandler
         $this->output('Running read-only: nothing will be deleted, moved, or marked as read');
 
         foreach ($messageNumbers as $x) {
-            $headerFull = $this->client->fetchHeader($x) ?? '';
+            $headerFull = $this->client->fetchHeader($x, $this->maxFetchBytes) ?? '';
 
             $type = 'BODY';
 

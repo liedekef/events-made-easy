@@ -173,9 +173,9 @@ class BounceIMAP
      * Fetches headers only, without ever marking the message \Seen.
      * Shorthand for fetchSection($msgNum, 'HEADER').
      */
-    public function fetchHeader(int $msgNum): ?string
+    public function fetchHeader(int $msgNum, ?int $maxBytes = null): ?string
     {
-        return $this->fetchSection($msgNum, 'HEADER');
+        return $this->fetchSection($msgNum, 'HEADER', $maxBytes);
     }
 
     /**
@@ -195,11 +195,21 @@ class BounceIMAP
      *                 message/rfc822 part (e.g. the original message
      *                 embedded in a bounce)
      *
+     * $maxBytes, when given, caps how much of the section is fetched using
+     * IMAP's partial-fetch octet-range syntax (BODY.PEEK[section]<0.N>) -
+     * the server itself only sends the first N bytes, so this genuinely
+     * limits network/memory use rather than just truncating locally. Useful
+     * to avoid pulling a multi-MB attachment over the wire just to check
+     * whether a bounce message contains a particular header or phrase.
+     *
      * Returns null if the fetch failed or the section doesn't exist.
      */
-    public function fetchSection(int $msgNum, string $section = ''): ?string
+    public function fetchSection(int $msgNum, string $section = '', ?int $maxBytes = null): ?string
     {
         $spec = $section === '' ? 'BODY.PEEK[]' : 'BODY.PEEK[' . $section . ']';
+        if ($maxBytes !== null) {
+            $spec .= '<0.' . $maxBytes . '>';
+        }
 
         [$ok, , $literal, $response] = $this->command("FETCH {$msgNum} {$spec}", true);
         if (!$ok || $literal === null) {

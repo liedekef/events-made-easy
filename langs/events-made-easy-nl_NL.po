@@ -15009,108 +15009,108 @@ msgstr "Evenement bewerken"
 
 #: includes/eme-mailer.php:3656
 msgid "IMAP bounce handler is not active."
-msgstr ""
+msgstr "IMAP-bounceverwerker is niet actief."
 
 #: includes/eme-mailer.php:3659
 msgid "Only the data master can process bounces."
-msgstr ""
+msgstr "Alleen de gegevensbeheerder (data master) kan bounces verwerken."
 
 #: includes/eme-mailer.php:3666
 msgid "IMAP bounce handler is not fully configured."
-msgstr ""
+msgstr "IMAP-bounceverwerker is niet volledig geconfigureerd."
 
 #: includes/eme-mailer.php:3706
 msgid "Bounced (type %s). Reason: %s"
-msgstr ""
+msgstr "Gebounced (type %s). Reden: %s"
 
 #: includes/eme-options.php:2153
 msgid "IMAP bounce handler"
-msgstr ""
+msgstr "IMAP-bounceverwerker"
 
 #: includes/eme-options.php:2157
 msgid "Activate IMAP bounce handler"
-msgstr ""
+msgstr "IMAP-bounceverwerker activeren"
 
 #: includes/eme-options.php:2157
 msgid "Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue."
-msgstr ""
+msgstr "Vink deze optie aan om de IMAP-bounceverwerker te activeren. Wanneer actief, controleert EME de geconfigureerde IMAP-mailbox op gebouncete e-mails en markeert ze als mislukt in de mailwachtrij."
 
 #: includes/eme-options.php:2157
 msgid "Microsoft 365 mailboxes aren't supported. Microsoft requires OAuth2 for IMAP, which this integration doesn't implement. Use a mailbox on your own hosting instead."
-msgstr ""
+msgstr "Microsoft 365-mailboxen worden niet ondersteund. Microsoft vereist OAuth2 voor IMAP, wat deze integratie niet implementeert. Gebruik in plaats daarvan een mailbox op uw eigen hosting."
 
 #: includes/eme-options.php:2158
 msgid "IMAP server"
-msgstr ""
+msgstr "IMAP-server"
 
 #: includes/eme-options.php:2158
 msgid "The hostname of your IMAP server."
-msgstr ""
+msgstr "De hostnaam van uw IMAP-server."
 
 #: includes/eme-options.php:2159
 msgid "IMAP port"
-msgstr ""
+msgstr "IMAP-poort"
 
 #: includes/eme-options.php:2159
 msgid "The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL)."
-msgstr ""
+msgstr "De poort om verbinding te maken met uw IMAP-server. Typische poorten zijn 143 (zonder encryptie) en 993 (SSL)."
 
 #: includes/eme-options.php:2161
 msgid "IMAP encryption"
-msgstr ""
+msgstr "IMAP-encryptie"
 
 #: includes/eme-options.php:2168
 msgid "Select the encryption method for IMAP."
-msgstr ""
+msgstr "Selecteer de encryptiemethode voor IMAP."
 
 #: includes/eme-options.php:2170
 msgid "IMAP username"
-msgstr ""
+msgstr "IMAP-gebruikersnaam"
 
 #: includes/eme-options.php:2170
 msgid "The username to access the IMAP mailbox."
-msgstr ""
+msgstr "De gebruikersnaam voor toegang tot de IMAP-mailbox."
 
 #: includes/eme-options.php:2171
 msgid "IMAP password"
-msgstr ""
+msgstr "IMAP-wachtwoord"
 
 #: includes/eme-options.php:2171
 msgid "The password to access the IMAP mailbox. Only plain authentication is supported, no oauth."
-msgstr ""
+msgstr "Het wachtwoord voor toegang tot de IMAP-mailbox. Alleen eenvoudige authenticatie wordt ondersteund, geen OAuth."
 
 #: includes/eme-options.php:2172
 msgid "IMAP mailbox/folder"
-msgstr ""
+msgstr "IMAP-mailbox/-map"
 
 #: includes/eme-options.php:2172
 msgid "The mailbox or folder to check for bounced emails. Default is INBOX."
-msgstr ""
+msgstr "De mailbox of map om te controleren op gebounce e-mails. Standaard is INBOX."
 
 #: includes/eme-options.php:2173
 msgid "Process bounces daily"
-msgstr ""
+msgstr "Verwerk bounces dagelijks"
 
 #: includes/eme-options.php:2173
 msgid "Check this option to automatically process bounces once per day as part of the daily cron."
-msgstr ""
+msgstr "Vink deze optie aan om bounces automatisch eenmaal per dag te verwerken als onderdeel van de dagelijkse cron."
 
 #: includes/eme-options.php:2176
 msgid "Manual bounce processing"
-msgstr ""
+msgstr "Handmatige bounceverwerking"
 
 #: includes/eme-options.php:2178
 msgid "Process bounces now"
-msgstr ""
+msgstr "Verwerk bounces nu"
 
 #: includes/eme-options.php:2182
 msgid "Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox."
-msgstr ""
+msgstr "Klik op deze knop om handmatig bounceverwerking te starten. Dit kan enige tijd duren, afhankelijk van het aantal berichten in de mailbox."
 
 #: includes/eme-options.php:2188
 msgid "REST API endpoint"
-msgstr ""
+msgstr "REST API endpoint"
 
 #: includes/eme-options.php:2189
 msgid "This endpoint can be called externally (e.g. via WP-Cron) to trigger bounce processing. Requires authentication."
-msgstr ""
+msgstr "Dit eindpunt kan extern worden aangeroepen (bijv. via WP-Cron) om bounceverwerking te starten. Vereist authenticatie."

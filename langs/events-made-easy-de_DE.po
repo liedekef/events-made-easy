@@ -943,7 +943,7 @@ msgstr "Fehlerhafter 3-stelliger num. Code"
 
 #: includes/eme-countries.php:683
 msgid "Duplicate country with the same language and alpha-2 code detected"
-msgstr ""
+msgstr "Doppeltes Land mit derselben Sprache und demselben Alpha-2-Code erkannt"
 
 #: includes/eme-countries.php:1017
 msgid "Country deleted!"
@@ -4832,7 +4832,7 @@ msgstr "Wenn Du nach einem solchen Feld suchen oder sortieren möchtest, setze d
 
 #: includes/eme-formfields.php:372
 msgid "Use this if the field indicates an extra charge to the total price (can be negative to indicate a discount), in which case you should also set the field value to the charge."
-msgstr ""
+msgstr "Verwenden Sie dies, wenn das Feld eine zusätzliche Gebühr für den Gesamtpreis anzeigt (kann negativ sein, um einen Rabatt anzudeuten). In diesem Fall sollten Sie auch den Feldwert auf die Gebühr setzen."
 
 #: includes/eme-formfields.php:373
 #, fuzzy
@@ -4858,7 +4858,7 @@ msgstr "Feldbeschriftung"
 
 #: includes/eme-formfields.php:391
 msgid "This option determines the \"visible\" value people will see for the field."
-msgstr ""
+msgstr "Diese Option bestimmt den \"sichtbaren\" Wert, den Benutzer für dieses Feld sehen werden."
 
 #: includes/eme-formfields.php:392
 msgid "For multivalue fields, you can here enter the \"visible\" tag people will see per value (so, if \"Field values\" contain e.g. \"a1||a2||a3\", you can use here e.g. \"Text a1||Text a2||Text a3\")."
@@ -8651,7 +8651,7 @@ msgstr "Veranstaltungen auflisten"
 
 #: includes/eme-options.php:1585
 msgid "If Yes, the admin listing of events will be limited to those the current user can author or is contact person for."
-msgstr ""
+msgstr "Bei Ja wird die Administrator-Liste der Veranstaltungen auf jene beschränkt, deren Autor der aktuelle Benutzer ist oder für die er Kontaktperson ist."
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1587
@@ -8993,7 +8993,7 @@ msgstr "Benötigte Berechtigung um Formularfelder zu bearbeiten. Standard: %s"
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1732
 msgid "View mailings and mail queue"
-msgstr ""
+msgstr "Mailings und E-Mail-Warteschlange anzeigen"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1732
@@ -9004,7 +9004,7 @@ msgstr "Benötigte Berechtigung um E-Mails für eine beliebige Veranstaltung sen
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1734
 msgid "Manage mailings and mail queue"
-msgstr ""
+msgstr "Mailings und E-Mail-Warteschlange verwalten"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1734
@@ -9574,7 +9574,7 @@ msgstr "Per Standard Buchungen erlauben bis"
 #: includes/eme-options.php:1953
 #: includes/eme-options.php:1969
 msgid "(0 for both days and hours indicates no limit)"
-msgstr ""
+msgstr "(0 für Tage und Stunden bedeutet keine Begrenzung)"
 
 #: includes/eme-options.php:1957
 msgid "By default allow RSVP until this many"
@@ -11935,7 +11935,7 @@ msgstr "Buchungen getätigt"
 
 #: includes/eme-people.php:1866
 msgid "Non-existing WP user linked!!"
-msgstr ""
+msgstr "Nicht existierender WP-Benutzer verknüpft!!"
 
 #: includes/eme-people.php:1881
 #: includes/eme-people.php:1924
@@ -12201,7 +12201,7 @@ msgstr "Personen Bild"
 
 #: includes/eme-people.php:4199
 msgid "A person with this name and email already exists"
-msgstr ""
+msgstr "Eine Person mit diesem Namen und dieser E-Mail-Adresse existiert bereits"
 
 #: includes/eme-people.php:4348
 #: includes/eme-people.php:4492
@@ -12822,7 +12822,7 @@ msgstr "Das Layout des Aufgabenanmeldeformulars."
 #: includes/eme-tasks.php:869
 #: includes/eme-tasks.php:875
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
-msgstr ""
+msgstr "Warnung: Diese Überschreibung wird nur innerhalb einer einzelnen Veranstaltung verwendet, andernfalls wird immer die allgemeine Einstellung verwendet!"
 
 #: includes/eme-tasks.php:905
 msgid "Change the date of the listed tasks by this many days"
@@ -14236,266 +14236,266 @@ msgstr "Der Inhalt der E-Mail, die an den Empfänger gesendet wird, wenn die Auf
 #: includes/eme-events.php:7735
 #: includes/eme-options.php:2295
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
-msgstr ""
+msgstr "Wenn diese E-Mail noch nicht gesendet wurde (in der Warteschlange) und die Buchung in dieser Zeit genehmigt oder bezahlt wird und eine E-Mail für diese Aktion geplant ist, wird diese E-Mail aus der Warteschlange entfernt, damit die Personen nicht gleichzeitig 2 E-Mails erhalten."
 
 #: includes/eme-mailer.php:1154
 msgid "Delayed"
-msgstr ""
+msgstr "Verzögert"
 
 #: includes/eme-mailer.php:2893
 msgid "All emails"
-msgstr ""
+msgstr "Alle E-Mails"
 
 #: includes/eme-mailer.php:2059
 msgid "Emails scheduled to be resend"
-msgstr ""
+msgstr "E-Mails zum erneuten Versand geplant"
 
 #: includes/eme-mailer.php:2069
 msgid "Emails deleted"
-msgstr ""
+msgstr "E-Mails gelöscht"
 
 #: includes/eme-mailer.php:3385
 msgid "Resend selected emails"
-msgstr ""
+msgstr "Ausgewählte E-Mails erneut senden"
 
 #: includes/eme-events.php:7530
 #: includes/eme-options.php:2232
 msgid "When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for)."
-msgstr ""
+msgstr "Wenn eine Veranstaltung so konfiguriert ist, dass Buchungen nach der Zahlung automatisch genehmigt werden und der Gesamtbetrag 0 ist, wird diese E-Mail gesendet, wenn eine ausstehende Buchung als bezahlt markiert wird (und nicht die bezahlte-E-Mail, da nichts zu bezahlen war)."
 
 #: includes/eme-events.php:7532
 #: includes/eme-options.php:2234
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
-msgstr ""
+msgstr "Da Buchungs-Benachrichtigungen nach Zahlung nicht aktiviert sind, wird diese E-Mail auch gesendet, wenn eine Buchung als bezahlt markiert wird."
 
 #: includes/eme-events.php:9816
 msgid "Recipient name"
-msgstr ""
+msgstr "Empfängername"
 
 #: includes/eme-events.php:9817
 msgid "Recipient email"
-msgstr ""
+msgstr "Empfänger-E-Mail"
 
 #: includes/eme-options.php:1509
 msgid "Select yes to enable the members and membership features."
-msgstr ""
+msgstr "Wählen Sie Ja, um die Mitglieder- und Mitgliedschaftsfunktionen zu aktivieren."
 
 #: includes/eme-options.php:2054
 msgid "Send paid RSVP emails immediately?"
-msgstr ""
+msgstr "Bezahlte Buchungs-E-Mails sofort senden?"
 
 #: includes/eme-options.php:2054
 msgid "Check this option if you want to send out the paid emails as soon as possible and not wait for the next queue run."
-msgstr ""
+msgstr "Aktivieren Sie diese Option, wenn Sie die bezahlten E-Mails so schnell wie möglich senden möchten und nicht auf den nächsten Warteschlangenlauf warten wollen."
 
 #: includes/eme-options.php:1509
 msgid "Use membership feature?"
-msgstr ""
+msgstr "Mitgliedschaftsfunktion verwenden?"
 
 #: includes/eme-actions.php:452
 #: includes/eme-events.php:9617
 msgid "Insert image"
-msgstr ""
+msgstr "Bild einfügen"
 
 #: includes/eme-actions.php:453
 #: includes/eme-events.php:9618
 msgid "Insert"
-msgstr ""
+msgstr "Einfügen"
 
 #: includes/eme-actions.php:455
 #: includes/eme-events.php:9620
 msgid "Insert from Media Library"
-msgstr ""
+msgstr "Aus Medienbibliothek einfügen"
 
 #: includes/eme-actions.php:456
 #: includes/eme-cleanup.php:387
 #: includes/eme-events.php:9621
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: includes/eme-actions.php:457
 #: includes/eme-events.php:9622
 msgid "Visual"
-msgstr ""
+msgstr "Visuell"
 
 #: includes/eme-actions.php:459
 #: includes/eme-events.php:9624
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Geschütztes Leerzeichen einfügen"
 
 #: includes/eme-options.php:3087
 #: includes/eme-options.php:3088
 msgid "Contact SumUp to make sure your created application has the rights needed to create and process checkout payments."
-msgstr ""
+msgstr "Kontaktieren Sie SumUp, um sicherzustellen, dass Ihre erstellte Anwendung die erforderlichen Rechte zum Erstellen und Verarbeiten von Checkout-Zahlungen hat."
 
 #: includes/eme-options.php:3458
 msgid "HTML Editor"
-msgstr ""
+msgstr "HTML-Editor"
 
 #: includes/eme-options.php:3461
 msgid "TinyMCE"
-msgstr ""
+msgstr "TinyMCE"
 
 #: includes/eme-options.php:3462
 msgid "Jodit"
-msgstr ""
+msgstr "Jodit"
 
 #: includes/eme-options.php:3464
 msgid "The HTML editor used by the plugin."
-msgstr ""
+msgstr "Der vom Plugin verwendete HTML-Editor."
 
 #: payment_gateways/paypal/class_eme_paypal.php:109
 msgid "Booking cancelled and refunded"
-msgstr ""
+msgstr "Buchung storniert und erstattet"
 
 #. translators: %1$d is the person ID, %2$s is the CSV row data
 #: includes/eme-people.php:919
 msgid "Updated person %1$d: %2$s"
-msgstr ""
+msgstr "Person %1$d aktualisiert: %2$s"
 
 #: includes/eme-formfields.php:381
 msgid "Enter here the default value a field should have, or enter the list of values for fields that support multiple values."
-msgstr ""
+msgstr "Geben Sie hier den Standardwert ein, den ein Feld haben soll, oder geben Sie die Liste der Werte für Felder ein, die mehrere Werte unterstützen."
 
 #: includes/eme-formfields.php:382
 msgid "For fields that support multiple values (like Dropdown or Checkbox), enter one value per line. To include an empty first option (e.g., for a blank default in a dropdown), start with an empty line at the top."
-msgstr ""
+msgstr "Für Felder, die mehrere Werte unterstützen (z.B. Dropdown oder Checkbox), geben Sie einen Wert pro Zeile ein. Um eine leere erste Option einzuschließen (z.B. für eine leere Standardauswahl in einem Dropdown), beginnen Sie mit einer leeren Zeile am Anfang."
 
 #: includes/eme-formfields.php:383
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
-msgstr ""
+msgstr "Für die Typen 'Datum (Javascript)', 'Datum/Zeit (Javascript)' und 'Zeit (Javascript)' können Sie optional das Wort 'NOW' eingeben, um automatisch das aktuelle Datum und/oder die aktuelle Zeit zu verwenden, wenn das Feld angezeigt wird."
 
 #: includes/eme-options.php:1814
 msgid "The format of the page title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Das Format des Seitentitels bei der Anzeige einer einzelnen Veranstaltung. Befolgen Sie die vorherigen Formatierungsanweisungen."
 
 #: includes/eme-options.php:1815
 msgid "The format of the page html title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Das Format des HTML-Seitentitels bei der Anzeige einer einzelnen Veranstaltung. Befolgen Sie die vorherigen Formatierungsanweisungen."
 
 #: includes/eme-options.php:1815
 msgid "If empty (the default), the value of \"Single event page title format\" will be used."
-msgstr ""
+msgstr "Wenn leer (Standard), wird der Wert von \"Format des Seitentitels für Einzelveranstaltung\" verwendet."
 
 #: includes/eme-options.php:1865
 msgid "The format of the page title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Das Format des Seitentitels bei der Anzeige eines einzelnen Veranstaltungsorts. Befolgen Sie die vorherigen Formatierungsanweisungen."
 
 #: includes/eme-options.php:1866
 msgid "The format of the page html title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Das Format des HTML-Seitentitels bei der Anzeige eines einzelnen Veranstaltungsorts. Befolgen Sie die vorherigen Formatierungsanweisungen."
 
 #: includes/eme-options.php:1866
 msgid "If empty (the default), the value of \"Single location page title format\" will be used."
-msgstr ""
+msgstr "Wenn leer (Standard), wird der Wert von \"Format des Seitentitels für Einzelveranstaltungsort\" verwendet."
 
 #: includes/eme-people.php:1250
 msgid "Discount info"
-msgstr ""
+msgstr "Rabattinformationen"
 
 #: includes/eme-people.php:1251
 msgid "Payment Gateway"
-msgstr ""
+msgstr "Zahlungsportal"
 
 #: includes/eme-discounts.php:968
 msgid "Min #seats booked"
-msgstr ""
+msgstr "Min. gebuchte Plätze"
 
 #: includes/eme-discounts.php:974
 msgid "Max #seats booked"
-msgstr ""
+msgstr "Max. gebuchte Plätze"
 
 #: includes/eme-events.php:6241
 msgid "Private events are only accessible to logged-in users"
-msgstr ""
+msgstr "Private Veranstaltungen sind nur für angemeldete Benutzer zugänglich"
 
 #: includes/eme-events.php:6242
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
-msgstr ""
+msgstr "Versteckte Veranstaltungen sind für alle zugänglich, werden aber nicht in Veranstaltungslisten oder Kalendern angezeigt."
 
 #: includes/eme-events.php:6242
 msgid "Make selected events hidden"
-msgstr ""
+msgstr "Ausgewählte Veranstaltungen verstecken"
 
 #: includes/eme-formfields.php:596
 msgid "Datetime-local"
-msgstr ""
+msgstr "Datum/Zeit (lokal)"
 
 #: includes/eme-formfields.php:597
 msgid "Month"
-msgstr ""
+msgstr "Monat"
 
 #: includes/eme-formfields.php:598
 msgid "Week"
-msgstr ""
+msgstr "Woche"
 
 #: includes/eme-formfields.php:599
 msgid "Time"
-msgstr ""
+msgstr "Zeit"
 
 #: includes/eme-formfields.php:601
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #: includes/eme-formfields.php:603
 msgid "Number"
-msgstr ""
+msgstr "Zahl"
 
 #: includes/eme-formfields.php:604
 msgid "Range"
-msgstr ""
+msgstr "Bereich"
 
 #: includes/eme-formfields.php:605
 msgid "Tel"
-msgstr ""
+msgstr "Tel"
 
 #: includes/eme-formfields.php:606
 msgid "Url"
-msgstr ""
+msgstr "URL"
 
 #: includes/eme-formfields.php:607
 msgid "Datalist"
-msgstr ""
+msgstr "Datenliste"
 
 #: includes/eme-rsvp.php:5632
 #: includes/eme-rsvp.php:5650
 msgid "Add selected persons to group"
-msgstr ""
+msgstr "Ausgewählte Personen zur Gruppe hinzufügen"
 
 #: includes/eme-rsvp.php:5633
 #: includes/eme-rsvp.php:5651
 msgid "Remove selected persons from group"
-msgstr ""
+msgstr "Ausgewählte Personen aus der Gruppe entfernen"
 
 #: includes/eme-discounts.php:970
 msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Die Mindestanzahl der Plätze, die gebucht werden müssen, damit der Rabatt gilt. Leer lassen (nicht 0) für keine Begrenzung."
 
 #: includes/eme-discounts.php:976
 msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "Die Maximalanzahl der Plätze, die gebucht werden müssen, damit der Rabatt gilt. Leer lassen (nicht 0) für keine Begrenzung."
 
 #: includes/eme-rsvp.php:106
 #: includes/eme-rsvp.php:811
 #: includes/eme-rsvp.php:1396
 msgid "Not allowed"
-msgstr ""
+msgstr "Nicht erlaubt"
 
 #: includes/eme-discounts.php:962
 msgid "Maximum usage count per user"
-msgstr ""
+msgstr "Maximale Nutzungszahl pro Benutzer"
 
 #: includes/eme-discounts.php:964
 msgid "The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count)."
-msgstr ""
+msgstr "Die maximale Anzahl, wie oft dieser Rabatt pro Benutzer angewendet werden kann (dies setzt voraus, dass die Person angemeldet ist). Dies prüft alle Buchungen und Mitglieder, daher kann es die Datenbank stark belasten (und gelöste Buchungen wirken sich natürlich auf die Anzahl aus)."
 
 #: includes/eme-templates.php:47
 msgid "Task form"
-msgstr ""
+msgstr "Aufgabenformular"
 
 #: includes/eme-templates.php:48
 msgid "Task related mail"
-msgstr ""
+msgstr "Aufgabenbezogene E-Mail"
 
 #. translators: %d is the number of pending task signups
 #: events-manager.php:329
@@ -14506,101 +14506,101 @@ msgstr[1] ""
 
 #: includes/eme-tasks.php:1019
 msgid "Consider pending (unapproved) task signups as available for new signups"
-msgstr ""
+msgstr "Ausstehende (nicht genehmigte) Aufgabenanmeldungen als verfügbar für neue Anmeldungen betrachten"
 
 #: includes/eme-tasks.php:865
 msgid "Task Signup Form (task entry section)"
-msgstr ""
+msgstr "Aufgabenanmeldeformular (Aufgabeneingabebereich)"
 
 #: includes/eme-tasks.php:866
 msgid "The layout of the task entry section in the signup form."
-msgstr ""
+msgstr "Das Layout des Aufgabeneingabebereichs im Anmeldeformular."
 
 #: includes/eme-tasks.php:871
 msgid "Task Signup Form (personal info section)"
-msgstr ""
+msgstr "Aufgabenanmeldeformular (Bereich persönliche Daten)"
 
 #: includes/eme-events.php:8927
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
-msgstr ""
+msgstr "(Leer lassen oder 0, um diese Begrenzung zu deaktivieren. Negative Zahlen sind erlaubt, und für Stunden können Sie auch Dezimalzahlen verwenden.)"
 
 #: includes/eme-payments.php:2222
 msgid "Webhook not created: localhost not allowed."
-msgstr ""
+msgstr "Webhook nicht erstellt: Localhost nicht erlaubt."
 
 #: includes/eme-mailer.php:3284
 msgid "Small remark: the preview mail will not replace booking or attendee related placeholders."
-msgstr ""
+msgstr "Kleiner Hinweis: Die Vorschau-Mail ersetzt keine buchungs- oder teilnehmerbezogenen Platzhalter."
 
 #: includes/eme-rsvp.php:6558
 #: includes/eme-rsvp.php:6571
 #: includes/eme-rsvp.php:6584
 msgid "Nothing done."
-msgstr ""
+msgstr "Nichts ausgeführt."
 
 #. translators: %s is the membership name
 #: includes/eme-payments.php:51
 msgid "Member signup for %s"
-msgstr ""
+msgstr "Mitgliedsanmeldung für %s"
 
 #. translators: %s is the event submission name
 #: includes/eme-payments.php:55
 msgid "Event submission %s"
-msgstr ""
+msgstr "Veranstaltungseinreichung %s"
 
 #. translators: %s is the event name
 #: includes/eme-payments.php:62
 msgid "Booking for %s"
-msgstr ""
+msgstr "Buchung für %s"
 
 #: includes/eme-discounts.php:888
 msgid "Credit Voucher"
-msgstr ""
+msgstr "Gutschriftgutschein"
 
 #: includes/eme-discounts.php:890
 msgid "Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance."
-msgstr ""
+msgstr "Gilt nur für Festrabatte. Wenn als Gutschriftgutschein verwendet, kann der Rabatt mehrmals eingelöst werden, bis der volle Wert aufgebraucht ist. Der Rabattswert zeigt stets das verbleibende Guthaben des Gutscheins an."
 
 #: includes/eme-events.php:7261
 msgid "Recurrence start date"
-msgstr ""
+msgstr "Startdatum der Wiederholung"
 
 #: includes/eme-events.php:7263
 msgid "Recurrence end date"
-msgstr ""
+msgstr "Enddatum der Wiederholung"
 
 #: includes/eme-mailer.php:2406
 msgid "Please select at least one recipient."
-msgstr ""
+msgstr "Bitte wählen Sie mindestens einen Empfänger."
 
 #: includes/eme-locations.php:623
 msgid "Location balloon format"
-msgstr ""
+msgstr "Format des Standort-Hinweisfensters"
 
 #: includes/eme-locations.php:627
 msgid "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default."
-msgstr ""
+msgstr "Wenn Ihnen das Standard-Format des Hinweisfensters nicht gefällt, können Sie hier etwas anderes festlegen. Leer lassen für das Standardformat."
 
 #: includes/eme-options.php:3312
 msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zooming. A browser refresh on a page showing a map will be necessary to see the effect of this change."
-msgstr ""
+msgstr "'Ja' aktiviert das Zoomen mit dem Mausrad auf der Karte. 'Nein' deaktiviert das Zoomen mit dem Mausrad. Ein Browser-Refresh auf einer Seite mit einer Karte ist erforderlich, damit diese Änderung wirksam wird."
 
 #: includes/eme-actions.php:371
 #: includes/eme-events.php:9580
 msgid "Select country"
-msgstr ""
+msgstr "Land auswählen"
 
 #: includes/eme-discounts.php:936
 #: includes/eme-events.php:8884
 #: includes/eme-mailer.php:3018
 #: includes/eme-mailer.php:3184
 msgid "Select one or more memberships"
-msgstr ""
+msgstr "Eine oder mehrere Mitgliedschaften auswählen"
 
 #: includes/eme-actions.php:370
 #: includes/eme-events.php:9579
 msgid "Select state/province"
-msgstr ""
+msgstr "Bundesland/Region auswählen"
 
 #: includes/eme-attendances.php:127
 #: includes/eme-mailer.php:3103
@@ -14610,84 +14610,84 @@ msgstr ""
 #: includes/eme-people.php:2045
 #: includes/eme-people.php:2539
 msgid "Select a person"
-msgstr ""
+msgstr "Eine Person auswählen"
 
 #: includes/eme-options.php:2001
 msgid "In case online payment is possible, the payment redirect message will also be shown, see the payment options if you want to change that message."
-msgstr ""
+msgstr "Wenn eine Online-Zahlung möglich ist, wird auch die Zahlungsumleitungs-Nachricht angezeigt. Siehe die Zahlungsoptionen, wenn Sie diese Nachricht ändern möchten."
 
 #: includes/eme-rsvp.php:5122
 msgid "Select an event"
-msgstr ""
+msgstr "Eine Veranstaltung auswählen"
 
 #: includes/eme-formfields.php:420
 msgid "Admin HTML field attributes"
-msgstr ""
+msgstr "HTML-Feldattribute für Administratoren"
 
 #: includes/eme-formfields.php:422
 msgid "If you want different HTML attributes in the admin interface, enter these here."
-msgstr ""
+msgstr "Wenn Sie andere HTML-Attribute in der Administratoren-Oberfläche wünschen, geben Sie diese hier ein."
 
 #: includes/eme-options.php:2968
 msgid "Bancontact Pay - Wero (Payconiq)"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq)"
 
 #: includes/eme-options.php:2975
 msgid "Bancontact Pay - Wero (Payconiq) live or test"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) Live oder Test"
 
 #: includes/eme-options.php:2978
 msgid "Bancontact Pay - Wero (Payconiq) Sandbox (for testing)"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) Sandbox (zum Testen)"
 
 #: includes/eme-options.php:2979
 msgid "Bancontact Pay - Wero (Payconiq) Live"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) Live"
 
 #: includes/eme-options.php:2981
 msgid "Choose wether you want to test Bancontact Pay - Wero (Payconiq) in a sandbox or go live and really use Bancontact Pay - Wero (Payconiq)."
-msgstr ""
+msgstr "Wählen Sie, ob Sie Bancontact Pay - Wero (Payconiq) in einer Sandbox testen oder live gehen und Bancontact Pay - Wero (Payconiq) wirklich verwenden möchten."
 
 #: includes/eme-options.php:2983
 msgid "Bancontact Pay - Wero (Payconiq) API key"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) API-Schlüssel"
 
 #: includes/eme-formfields.php:314
 msgid "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder in 'HTML Field attributes' to be used when the field is shown. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show."
-msgstr ""
+msgstr "Für die Typen 'Dropdown' und 'Dropdown (mehrfach)' können Sie optional einen Platzhalter in 'HTML-Feldattributen' eingeben, der angezeigt wird, wenn das Feld angezeigt wird. Stellen Sie sicher, dass Sie dann eine leere erste Zeile (Wert & Tag) hinzufügen, da der Platzhalter sonst möglicherweise nicht angezeigt wird."
 
 #: includes/eme-formfields.php:416
 msgid "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show."
-msgstr ""
+msgstr "Für die Typen 'Dropdown' und 'Dropdown (mehrfach)' können Sie optional einen Platzhalter eingeben mit data-placeholder: data-placeholder='mein Platzhalterwert'. Stellen Sie sicher, dass Sie dann eine leere erste Zeile (Wert & Tag) hinzufügen, da der Platzhalter sonst möglicherweise nicht angezeigt wird."
 
 #: includes/eme-payments.php:14
 #: includes/eme-payments.php:15
 msgid "Bancontact Pay - Wero"
-msgstr ""
+msgstr "Bancontact Pay - Wero"
 
 #: includes/eme-formfields.php:416
 msgid "EME uses a custom snapselect version for dropdowns, see https://github.com/liedekef/snapselect for all data-related possibilities."
-msgstr ""
+msgstr "EME verwendet eine benutzerdefinierte snapselect-Version für Dropdowns, siehe https://github.com/liedekef/snapselect für alle datenbezogenen Möglichkeiten."
 
 #: includes/eme-events.php:1141
 msgid "Error updating attendance count, but ignoring"
-msgstr ""
+msgstr "Fehler beim Aktualisieren der Anwesenheitsanzahl, wird aber ignoriert"
 
 #: includes/eme-events.php:8680
 msgid "Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration."
-msgstr ""
+msgstr "Wählen Sie diese Option, wenn die Scan-Anzahl auf die Anzahl der gebuchten Plätze pro Tag beschränkt werden soll. Wenn nicht (Standard), ist die Scan-Anzahl auf die Anzahl der gebuchten Plätze für die gesamte Veranstaltungsdauer beschränkt."
 
 #: includes/eme-events.php:8688
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter."
-msgstr ""
+msgstr "Beim Scannen der von #_QRCODE oder #_ATTENDANCE_URL generierten URL können Sie auch entscheiden, dies als Eintrittskarte zu verwenden. Diese Option ermöglicht dann die Festlegung, ab welchem Zeitpunkt die Personen eintreten dürfen."
 
 #: includes/eme-events.php:8799
 msgid "For multiseat events, separate the values by '||'"
-msgstr ""
+msgstr "Für Veranstaltungen mit mehreren Sitzplatzkategorien trennen Sie die Werte mit '||'"
 
 #: includes/eme-members.php:1632
 msgid "Select a member"
-msgstr ""
+msgstr "Ein Mitglied auswählen"
 
 #. translators: %1$s is the event name, %2$d is the payment ID
 #: includes/eme-payments.php:2744
@@ -14695,259 +14695,259 @@ msgstr ""
 #: includes/eme-payments.php:3259
 #: includes/eme-payments.php:3275
 msgid "Booking refunded for %1$s, payment id %2$d"
-msgstr ""
+msgstr "Buchung erstattet für %1$s, Zahlungs-ID %2$d"
 
 #: includes/eme-people.php:996
 #: includes/eme-people.php:1175
 #: includes/eme-people.php:1455
 msgid "No access"
-msgstr ""
+msgstr "Kein Zugriff"
 
 #: includes/eme-actions.php:372
 #: includes/eme-events.php:9581
 msgid "Make your choice"
-msgstr ""
+msgstr "Treffen Sie Ihre Auswahl"
 
 #. translators: %1$d is the scan count, %2$d is the maximum allowed count
 #: includes/eme-events.php:1132
 msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
-msgstr ""
+msgstr "Zugriff verweigert: Scan-Anzahl (%1$d) überschreitet Maximalanzahl (%2$d)"
 
 #: includes/eme-events.php:8680
 msgid "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with care."
-msgstr ""
+msgstr "Dies setzt die Verwendung von Anwesenheitsdaten pro Benutzer voraus und sucht in dieser Tabelle nach der Anzahl der Scans des QR-Codes eines Benutzers. Dadurch wird die Datenbank stärker belastet, daher mit Vorsicht verwenden."
 
 #: includes/eme-cleanup.php:268
 msgid "No people found that would be moved to the trash bin."
-msgstr ""
+msgstr "Keine Personen gefunden, die in den Papierkorb verschoben würden."
 
 #: includes/eme-cleanup.php:305
 msgid "Preview: People to be trashed"
-msgstr ""
+msgstr "Vorschau: Personen, die in den Papierkorb verschoben werden"
 
 #. translators: %d is the number of people to be trashed
 #: includes/eme-cleanup.php:309
 msgid "The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:"
-msgstr ""
+msgstr "Die folgenden %d Personen werden nicht mehr in Buchungen, Mitgliedschaften oder Gruppen referenziert und in den Papierkorb verschoben:"
 
 #: includes/eme-cleanup.php:338
 msgid "Confirm: Move all to trash"
-msgstr ""
+msgstr "Bestätigen: Alle in den Papierkorb verschieben"
 
 #: includes/eme-rsvp.php:5622
 msgid "Resend the mail for pending bookings"
-msgstr ""
+msgstr "E-Mail für ausstehende Buchungen erneut senden"
 
 #: includes/eme-rsvp.php:5623
 msgid "Send the configured reminder mail for pending bookings"
-msgstr ""
+msgstr "Die konfigurierte Erinnerungs-E-Mail für ausstehende Buchungen senden"
 
 #: includes/eme-rsvp.php:5640
 msgid "Resend the mail for approved bookings"
-msgstr ""
+msgstr "E-Mail für genehmigte Buchungen erneut senden"
 
 #: includes/eme-rsvp.php:5641
 msgid "Send the configured reminder mail for approved bookings"
-msgstr ""
+msgstr "Die konfigurierte Erinnerungs-E-Mail für genehmigte Buchungen senden"
 
 #: includes/eme-actions.php:536
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
-msgstr ""
+msgstr "<p>Hallo <strong>%1$s</strong>, willkommen bei <strong>Events Made Easy</strong>! Wir hoffen, es gefällt Ihnen hier.</p><p>Jetzt ist es an der Zeit, Veranstaltungslisten über <a href='%2$s' title='%3$s'>Widgets</a>, <a href='%4$s' title='%5$s'>Vorlagen-Tags</a> oder <a href='%6$s' title='%7$s'>Shortcodes</a> einzufügen.</p><p>Übrigens, haben Sie sich die <a href='%8$s' title='%9$s'>Einstellungsseite</a> angeschaut? Dort können Sie anpassen, wie Veranstaltungen und Standorte angezeigt werden.</p><p>Was? Sie sind es leid, diesen Hinweis zu sehen? Ich verstehe Sie, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klicken Sie hier</a> und Sie sehen dies nicht wieder!</p>"
 
 #: includes/eme-actions.php:539
 msgid "Widgets page"
-msgstr ""
+msgstr "Widgets-Seite"
 
 #: includes/eme-actions.php:541
 msgid "Template tags documentation"
-msgstr ""
+msgstr "Dokumentation zu Vorlagen-Tags"
 
 #: includes/eme-actions.php:543
 msgid "Shortcodes documentation"
-msgstr ""
+msgstr "Dokumentation zu Shortcodes"
 
 #: includes/eme-actions.php:545
 msgid "Change settings"
-msgstr ""
+msgstr "Einstellungen ändern"
 
 #: includes/eme-actions.php:546
 msgid "Don't show this advice again"
-msgstr ""
+msgstr "Diesen Hinweis nicht mehr anzeigen"
 
 #: includes/eme-events.php:6928
 msgid "Default Template"
-msgstr ""
+msgstr "Standardvorlage"
 
 #: includes/eme-gdpr.php:652
 msgid "Events Made Easy Personal Data"
-msgstr ""
+msgstr "Events Made Easy Persönliche Daten"
 
 #: includes/eme-gdpr.php:664
 msgid "Events Made Easy Uploaded files linked to the person"
-msgstr ""
+msgstr "Events Made Easy hochgeladene Dateien, die mit der Person verknüpft sind"
 
 #: includes/eme-gdpr.php:727
 msgid "Events Made Easy Member Data"
-msgstr ""
+msgstr "Events Made Easy Mitgliedsdaten"
 
 #: includes/eme-gdpr.php:738
 msgid "Events Made Easy Uploaded files linked to the member"
-msgstr ""
+msgstr "Events Made Easy hochgeladene Dateien, die mit dem Mitglied verknüpft sind"
 
 #: includes/eme-mailer.php:2978
 #: includes/eme-mailer.php:3148
 msgid "Send to a number of people"
-msgstr ""
+msgstr "An eine Anzahl von Personen senden"
 
 #: includes/eme-mailer.php:2988
 #: includes/eme-mailer.php:3156
 msgid "Send to a number of groups"
-msgstr ""
+msgstr "An eine Anzahl von Gruppen senden"
 
 #: includes/eme-mailer.php:2998
 #: includes/eme-mailer.php:3165
 msgid "Send to a number of members"
-msgstr ""
+msgstr "An eine Anzahl von Mitgliedern senden"
 
 #: includes/eme-mailer.php:3007
 #: includes/eme-mailer.php:3173
 msgid "Send to a number of member groups"
-msgstr ""
+msgstr "An eine Anzahl von Mitgliedergruppen senden"
 
 #: includes/eme-mailer.php:3016
 #: includes/eme-mailer.php:3182
 msgid "Send to active members belonging to"
-msgstr ""
+msgstr "An aktive Mitglieder senden, die gehören zu"
 
 #: includes/eme-options.php:3446
 #: includes/eme-options.php:3447
 msgid "Documentation on date and time formatting."
-msgstr ""
+msgstr "Dokumentation zur Datums- und Zeitformatierung."
 
 #: includes/eme-todos.php:250
 msgid "Todo reminder for event #_EVENTNAME: "
-msgstr ""
+msgstr "Aufgabenerinnerung für Veranstaltung #_EVENTNAME: "
 
 #: includes/eme-people.php:2678
 msgid "Select a WP user"
-msgstr ""
+msgstr "Einen WP-Benutzer auswählen"
 
 #: includes/eme-options.php:507
 #: includes/eme-options.php:1093
 msgid "Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments"
-msgstr ""
+msgstr "Bezahlen Sie mit Ihrer Bancontact Pay App oder Ihrer Banking-App, die Bancontact- oder Wero-Zahlungen unterstützt"
 
 #. Description of the plugin
 #: events-manager.php
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
-msgstr ""
+msgstr "Verwalten und anzeigen Sie Veranstaltungen und Mitgliedschaften. Enthält auch wiederkehrende Veranstaltungen, Standorte, Widgets, Karten, Buchungen, ICAL- und RSS-Feeds, Paypal, Stripe, Mollie und andere."
 
 #: includes/eme-functions.php:3467
 #: includes/eme-functions.php:3468
 msgid "Invalid column name!"
-msgstr ""
+msgstr "Ungültiger Spaltenname!"
 
 #: includes/eme-templates.php:181
 msgid "Filter content"
-msgstr ""
+msgstr "Inhalt filtern"
 
 #: includes/eme-locations.php:927
 msgid "Location fields"
-msgstr ""
+msgstr "Standortfelder"
 
 #: includes/eme-members.php:2920
 msgid "Member fields"
-msgstr ""
+msgstr "Mitgliedsfelder"
 
 #: includes/eme-members.php:3315
 msgid "Membership fields"
-msgstr ""
+msgstr "Mitgliedschaftsfelder"
 
 #: includes/eme-rsvp.php:5714
 msgid "RSVP and generic fields"
-msgstr ""
+msgstr "Buchungs- und allgemeine Felder"
 
 #: includes/eme-events.php:9782
 msgid "Are you sure you want to delete this group? This cannot be undone."
-msgstr ""
+msgstr "Möchten Sie diese Gruppe wirklich löschen? Dies kann nicht rückgängig gemacht werden."
 
 #: includes/eme-formfields.php:1813
 #: includes/eme-formfields.php:1814
 msgid "Delete this group"
-msgstr ""
+msgstr "Diese Gruppe löschen"
 
 #: includes/eme-members.php:7116
 msgid "No permission"
-msgstr ""
+msgstr "Keine Berechtigung"
 
 #: includes/eme-members.php:7127
 msgid "Invalid parameters"
-msgstr ""
+msgstr "Ungültige Parameter"
 
 #: includes/eme-members.php:7146
 msgid "Occurrence deleted and remaining occurrences renumbered."
-msgstr ""
+msgstr "Vorkommen gelöscht und verbleibende Vorkommen neu nummeriert."
 
 #: includes/eme-events.php:9600
 msgid "Confirm delete"
-msgstr ""
+msgstr "Löschen bestätigen"
 
 #: includes/eme-formfields.php:2149
 #: includes/eme-formfields.php:2183
 msgid "Select"
-msgstr ""
+msgstr "Auswählen"
 
 #. translators: %s is the URL to edit the conflicting page
 #: includes/eme-options.php:1471
 msgid "The conflicting page can be edited <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
-msgstr ""
+msgstr "Die konfliktbehaftete Seite kann <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">hier</a> bearbeitet werden."
 
 #: includes/eme-options.php:1514
 msgid "Check this option if you want to use Google reCAPTCHA (Cloud Enterprise) on the booking/cancel/membership forms, to thwart spammers a bit. Currently only supports reCAPTCHA v2 Tickbox. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "Aktivieren Sie diese Option, wenn Sie Google reCAPTCHA (Cloud Enterprise) auf den Buchungs-/Stornierungs-/Mitgliedschaftsformularen verwenden möchten, um Spammer ein wenig einzudämmen. Derzeit wird nur reCAPTCHA v2 Tickbox unterstützt. Sie können dann entweder #_CAPTCHA selbst zu Ihrem Formularlayout hinzufügen, oder es wird automatisch oberhalb der Absende-Schaltfläche hinzugefügt, falls nicht vorhanden."
 
 #: includes/eme-options.php:1516
 msgid "Google reCAPTCHA API key (Cloud project)"
-msgstr ""
+msgstr "Google reCAPTCHA API-Schlüssel (Cloud-Projekt)"
 
 #: includes/eme-options.php:1517
 msgid "Google reCAPTCHA Cloud project ID"
-msgstr ""
+msgstr "Google reCAPTCHA Cloud-Projekt-ID"
 
 #: includes/eme-options.php:1518
 msgid "Google reCAPTCHA minimum score (0.0–1.0, default 0.5)"
-msgstr ""
+msgstr "Google reCAPTCHA Mindestscore (0,0–1,0, Standard 0,5)"
 
 #: includes/eme-options.php:1518
 msgid "Score threshold below which submissions are rejected"
-msgstr ""
+msgstr "Schwellenwert, unterhalb dessen Übermittlungen abgelehnt werden"
 
 #. translators: %s is the documentation URL
 #: includes/eme-options.php:1988
 #: includes/eme-options.php:1990
 msgid "For all placeholders you can use here, see <a target='_blank' rel='noopener noreferrer' href='%s'>the documentation</a>"
-msgstr ""
+msgstr "Alle Platzhalter, die Sie hier verwenden können, finden Sie in <a target='_blank' rel='noopener noreferrer' href='%s'>der Dokumentation</a>"
 
 #. translators: %s is the documentation URL
 #: includes/eme-options.php:3325
 msgid "For all information concerning frontend submit, see <a target='_blank' rel='noopener noreferrer' href='%s'>the documentation</a>"
-msgstr ""
+msgstr "Alle Informationen zum Frontend-Submit finden Sie in <a target='_blank' rel='noopener noreferrer' href='%s'>der Dokumentation</a>"
 
 #: includes/eme-templates.php:299
 msgid "See <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">this page</a> for info on what you can enter here."
-msgstr ""
+msgstr "Siehe <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">diese Seite</a> für Informationen zu dem, was Sie hier eingeben können."
 
 #: includes/eme-options.php:1515
 msgid "Go to https://console.cloud.google.com/security/recaptcha to get your reCAPTCHA key"
-msgstr ""
+msgstr "Gehen Sie zu https://console.cloud.google.com/security/recaptcha, um Ihren reCAPTCHA-Schlüssel zu erhalten"
 
 #: includes/eme-options.php:1516
 msgid "Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project"
-msgstr ""
+msgstr "Gehen Sie zu https://console.cloud.google.com/apis/credentials, um einen reCAPTCHA API-Schlüssel für Ihr Projekt zu erstellen"
 
 #: includes/eme-options.php:1517
 msgid "Your Google cloud project ID"
-msgstr ""
+msgstr "Ihre Google Cloud-Projekt-ID"
 
 #: includes/eme-countries.php:100
 #: includes/eme-countries.php:163
@@ -14960,186 +14960,186 @@ msgstr ""
 #: includes/eme-people.php:821
 #: includes/eme-rsvp.php:5348
 msgid "No CSV file detected"
-msgstr ""
+msgstr "Keine CSV-Datei erkannt"
 
 #: events-manager.php:416
 msgid "Events Made Easy: the following extension file(s) failed signature verification and were not loaded: %s. Please go to the Settings &gt; Extensions tab and click \"Regenerate signatures\"."
-msgstr ""
+msgstr "Events Made Easy: Die folgende(n) Erweiterungsdatei(en) haben die Signaturverifizierung nicht bestanden und wurden nicht geladen: %s. Bitte gehen Sie zu Einstellungen &gt; Erweiterungen und klicken Sie auf \"Signaturen neu generieren\"."
 
 #: includes/eme-options.php:1360
 #: includes/eme-options.php:3384
 msgid "Extensions"
-msgstr ""
+msgstr "Erweiterungen"
 
 #: includes/eme-options.php:3385
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
-msgstr ""
+msgstr "Verwalten Sie Events Made Easy Erweiterungsdateien im uploads/includes-Verzeichnis."
 
 #: includes/eme-options.php:3390
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 #: includes/eme-options.php:3391
 msgid "Current SHA256 (stored)"
-msgstr ""
+msgstr "Aktuelle SHA256 (gespeichert)"
 
 #: includes/eme-options.php:3392
 msgid "SHA256 (on disk)"
-msgstr ""
+msgstr "SHA256 (auf Datenträger)"
 
 #: includes/eme-options.php:3404
 msgid "Not registered"
-msgstr ""
+msgstr "Nicht registriert"
 
 #: includes/eme-options.php:3406
 msgid "Match"
-msgstr ""
+msgstr "Übereinstimmung"
 
 #: includes/eme-options.php:3408
 msgid "Mismatch"
-msgstr ""
+msgstr "Keine Übereinstimmung"
 
 #: includes/eme-options.php:3416
 msgid "No extension files found in the includes directory."
-msgstr ""
+msgstr "Keine Erweiterungsdateien im includes-Verzeichnis gefunden."
 
 #: includes/eme-options.php:3421
 msgid "I have verified the file hashes above and confirm regenerating signatures."
-msgstr ""
+msgstr "Ich habe die obigen Datei-Hashes überprüft und bestätige das Neu generieren der Signaturen."
 
 #: includes/eme-options.php:3424
 msgid "Regenerate signatures"
-msgstr ""
+msgstr "Signaturen neu generieren"
 
 #: includes/eme-locations.php:2761
 msgid "e.g. 123 Main St, City"
-msgstr ""
+msgstr "z.B. Musterstraße 1, Berlin"
 
 #: includes/eme-mailer.php:2958
 msgid "Also exclude emails of people already registered for these other event(s)"
-msgstr ""
+msgstr "Auch E-Mails von Personen ausschließen, die bereits für diese anderen Veranstaltungen registriert sind"
 
 #: includes/eme-mailer.php:2963
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
-msgstr ""
+msgstr "Optional: Wählen Sie Veranstaltungen aus, deren Teilnehmer übersprungen werden sollen, unabhängig davon, um welche(n) Veranstaltung(en) es in diesem Mailing geht."
 
 #: includes/eme-actions.php:416
 msgid "Address not found"
-msgstr ""
+msgstr "Adresse nicht gefunden"
 
 #: includes/eme-actions.php:417
 msgid "Could not calculate route"
-msgstr ""
+msgstr "Route konnte nicht berechnet werden"
 
 #. translators: %s is the event name
 #: includes/eme-events.php:9639
 msgid "Edit Event"
-msgstr ""
+msgstr "Veranstaltung bearbeiten"
 
 #: includes/eme-mailer.php:3656
 msgid "IMAP bounce handler is not active."
-msgstr ""
+msgstr "IMAP-Bounce-Handler ist nicht aktiv."
 
 #: includes/eme-mailer.php:3659
 msgid "Only the data master can process bounces."
-msgstr ""
+msgstr "Nur der Datenmaster kann Bounces verarbeiten."
 
 #: includes/eme-mailer.php:3666
 msgid "IMAP bounce handler is not fully configured."
-msgstr ""
+msgstr "IMAP-Bounce-Handler ist nicht vollständig konfiguriert."
 
 #: includes/eme-mailer.php:3706
 msgid "Bounced (type %s). Reason: %s"
-msgstr ""
+msgstr "Abgebounced (Typ %s). Grund: %s"
 
 #: includes/eme-options.php:2153
 msgid "IMAP bounce handler"
-msgstr ""
+msgstr "IMAP-Bounce-Handler"
 
 #: includes/eme-options.php:2157
 msgid "Activate IMAP bounce handler"
-msgstr ""
+msgstr "IMAP-Bounce-Handler aktivieren"
 
 #: includes/eme-options.php:2157
 msgid "Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue."
-msgstr ""
+msgstr "Aktivieren Sie diese Option, um den IMAP-Bounce-Handler zu aktivieren. Wenn aktiv, prüft EME das konfigurierte IMAP-Postfach auf abgeprallte E-Mails und markiert diese als fehlgeschlagen in der E-Mail-Warteschlange."
 
 #: includes/eme-options.php:2157
 msgid "Microsoft 365 mailboxes aren't supported. Microsoft requires OAuth2 for IMAP, which this integration doesn't implement. Use a mailbox on your own hosting instead."
-msgstr ""
+msgstr "Microsoft 365-Postfächer werden nicht unterstützt. Microsoft erfordert OAuth2 für IMAP, was diese Integration nicht implementiert. Verwenden Sie stattdessen ein Postfach auf Ihrem eigenen Hosting."
 
 #: includes/eme-options.php:2158
 msgid "IMAP server"
-msgstr ""
+msgstr "IMAP-Server"
 
 #: includes/eme-options.php:2158
 msgid "The hostname of your IMAP server."
-msgstr ""
+msgstr "Der Hostname Ihres IMAP-Servers."
 
 #: includes/eme-options.php:2159
 msgid "IMAP port"
-msgstr ""
+msgstr "IMAP-Port"
 
 #: includes/eme-options.php:2159
 msgid "The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL)."
-msgstr ""
+msgstr "Der Port für die Verbindung zu Ihrem IMAP-Server. Typische Ports sind 143 (keine Verschlüsselung) und 993 (SSL)."
 
 #: includes/eme-options.php:2161
 msgid "IMAP encryption"
-msgstr ""
+msgstr "IMAP-Verschlüsselung"
 
 #: includes/eme-options.php:2168
 msgid "Select the encryption method for IMAP."
-msgstr ""
+msgstr "Wählen Sie die Verschlüsselungsmethode für IMAP."
 
 #: includes/eme-options.php:2170
 msgid "IMAP username"
-msgstr ""
+msgstr "IMAP-Benutzername"
 
 #: includes/eme-options.php:2170
 msgid "The username to access the IMAP mailbox."
-msgstr ""
+msgstr "Der Benutzername für den Zugriff auf das IMAP-Postfach."
 
 #: includes/eme-options.php:2171
 msgid "IMAP password"
-msgstr ""
+msgstr "IMAP-Passwort"
 
 #: includes/eme-options.php:2171
 msgid "The password to access the IMAP mailbox. Only plain authentication is supported, no oauth."
-msgstr ""
+msgstr "Das Passwort für den Zugriff auf das IMAP-Postfach. Nur eine einfache Authentifizierung wird unterstützt, kein OAuth."
 
 #: includes/eme-options.php:2172
 msgid "IMAP mailbox/folder"
-msgstr ""
+msgstr "IMAP-Postfach/Ordner"
 
 #: includes/eme-options.php:2172
 msgid "The mailbox or folder to check for bounced emails. Default is INBOX."
-msgstr ""
+msgstr "Das Postfach oder der Ordner, der auf abgeprallte E-Mails geprüft wird. Standard ist INBOX."
 
 #: includes/eme-options.php:2173
 msgid "Process bounces daily"
-msgstr ""
+msgstr "Bounces täglich verarbeiten"
 
 #: includes/eme-options.php:2173
 msgid "Check this option to automatically process bounces once per day as part of the daily cron."
-msgstr ""
+msgstr "Aktivieren Sie diese Option, um Bounces einmal täglich als Teil des täglichen Cron automatisch zu verarbeiten."
 
 #: includes/eme-options.php:2176
 msgid "Manual bounce processing"
-msgstr ""
+msgstr "Manuelle Bounce-Verarbeitung"
 
 #: includes/eme-options.php:2178
 msgid "Process bounces now"
-msgstr ""
+msgstr "Bounces jetzt verarbeiten"
 
 #: includes/eme-options.php:2182
 msgid "Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox."
-msgstr ""
+msgstr "Klicken Sie auf diese Schaltfläche, um die Bounce-Verarbeitung manuell auszulösen. Dies kann einige Zeit dauern, abhängig von der Anzahl der Nachrichten im Postfach."
 
 #: includes/eme-options.php:2188
 msgid "REST API endpoint"
-msgstr ""
+msgstr "REST-API-Endpunkt"
 
 #: includes/eme-options.php:2189
 msgid "This endpoint can be called externally (e.g. via WP-Cron) to trigger bounce processing. Requires authentication."
-msgstr ""
+msgstr "Dieser Endpunkt kann extern aufgerufen werden (z.B. über WP-Cron), um die Bounce-Verarbeitung auszulösen. Erfordert eine Authentifizierung."

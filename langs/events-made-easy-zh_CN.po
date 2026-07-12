@@ -16,7 +16,7 @@ msgstr ""
 #. translators: %s: original email sender name
 #: cli_mail.php:153
 msgid "on behalf of %s"
-msgstr ""
+msgstr "代表 %s"
 
 #: includes/eme-actions.php:78
 #: includes/eme-attendances.php:281
@@ -643,7 +643,7 @@ msgstr "未被导入：%s"
 #: includes/eme-discounts.php:228
 #: includes/eme-members.php:6421
 msgid "Import finished: %1$d inserts, %2$d errors"
-msgstr ""
+msgstr "导入完成：%1$d 条插入，%2$d 个错误"
 
 #: includes/eme-countries.php:97
 #: includes/eme-countries.php:160
@@ -727,7 +727,7 @@ msgstr "目前还没有定义任何国家。首先定义一些国家，然后您
 #. translators: %s is the WordPress detected language code
 #: includes/eme-countries.php:331
 msgid "There's only one country defined, but the language of the country is not empty and doesn't match the WordPress detected language (%s), meaning it won't show up when editing people. Either add extra countries or correct the language of this country."
-msgstr ""
+msgstr "只定义了一个国家，但该国家的语言不为空且与WordPress检测到的语言（%s）不匹配，这意味着在编辑人员时不会显示该国家。请添加额外的国家或更正该国家的语言。"
 
 #: includes/eme-countries.php:343
 msgid "Add a new country"
@@ -799,7 +799,7 @@ msgstr "请参阅<a href=\"%s\">这里</a>，了解更多关于国家代码的�
 #: includes/eme-countries.php:375
 #: includes/eme-countries.php:589
 msgid "The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de"
-msgstr ""
+msgstr "语言应对应您要支持的WordPress语言之一，或留空作为默认或备用语言。一些示例：nl、fr、en、de"
 
 #: includes/eme-categories.php:107
 #: includes/eme-countries.php:382
@@ -947,7 +947,7 @@ msgstr "num-3 的代码不正确"
 
 #: includes/eme-countries.php:683
 msgid "Duplicate country with the same language and alpha-2 code detected"
-msgstr ""
+msgstr "检测到具有相同语言和alpha-2代码的重复国家"
 
 #: includes/eme-countries.php:1017
 msgid "Country deleted!"
@@ -1016,7 +1016,7 @@ msgstr "将不会对未确认的预订进行自动清理。"
 #. translators: %1$s is the check schedule, %2$d is the batch size, %3$s is the mail schedule
 #: includes/eme-cron.php:487
 msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)"
-msgstr ""
+msgstr "%1$s 将检查是否应将新活动通过电子邮件发送给EME注册者（这些邮件将被排入队列，并以每批 %2$d %3$s 的方式发送）"
 
 #: includes/eme-cron.php:289
 #: includes/eme-cron.php:292
@@ -1064,7 +1064,7 @@ msgstr "安排自动删除未经确认的预订而且时间超过"
 
 #: includes/eme-cron.php:378
 msgid "Email queue info"
-msgstr ""
+msgstr "电子邮件队列信息"
 
 #. translators: %1$d is the batch size, %2$s is the schedule frequency
 #: includes/eme-cron.php:405
@@ -1096,19 +1096,19 @@ msgstr "天"
 
 #: includes/eme-cron.php:435
 msgid "Email subject template"
-msgstr ""
+msgstr "电子邮件主题模板"
 
 #: includes/eme-cron.php:440
 msgid "Email body header"
-msgstr ""
+msgstr "电子邮件正文页眉"
 
 #: includes/eme-cron.php:445
 msgid "Email body single event entry"
-msgstr ""
+msgstr "电子邮件正文单个活动条目"
 
 #: includes/eme-cron.php:450
 msgid "Email body footer"
-msgstr ""
+msgstr "电子邮件正文页脚"
 
 #: includes/eme-cron.php:457
 #: includes/eme-options.php:2074
@@ -1117,7 +1117,7 @@ msgstr "未安排"
 
 #: includes/eme-cron.php:504
 msgid "Email queueing is not activated."
-msgstr ""
+msgstr "电子邮件排队功能未激活。"
 
 #: includes/eme-cron.php:506
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
@@ -1772,7 +1772,7 @@ msgstr "不再允许进入"
 #. translators: %1$d is the scan count, %2$d is the maximum allowed count
 #: includes/eme-events.php:1136
 msgid "Access granted: scan count=%1$d, max count=%2$d"
-msgstr ""
+msgstr "已授权访问：扫描次数=%1$d，最大次数=%2$d"
 
 #. translators: %s is the event name
 #: includes/eme-events.php:1145
@@ -1837,17 +1837,17 @@ msgstr "会籍支付页面"
 #: includes/eme-events.php:1564
 #: includes/eme-events.php:1667
 msgid "Subscribe confirmation"
-msgstr ""
+msgstr "订阅确认"
 
 #: includes/eme-events.php:1566
 #: includes/eme-events.php:1669
 msgid "Unsubscribe confirmation"
-msgstr ""
+msgstr "取消订阅确认"
 
 #: includes/eme-events.php:1568
 #: includes/eme-events.php:1671
 msgid "Unsubscribe from mailings"
-msgstr ""
+msgstr "取消订阅邮件"
 
 #: includes/eme-events.php:1576
 #: includes/eme-events.php:1679
@@ -1995,7 +1995,7 @@ msgstr "下一页"
 #: includes/eme-events.php:4444
 #: includes/eme-events.php:4456
 msgid "Page %d"
-msgstr ""
+msgstr "第 %d 页"
 
 #. translators: %s is the CSV row data
 #: includes/eme-events.php:5973
@@ -2039,7 +2039,7 @@ msgstr "未导入（并非所有必要的字段都存在）：%s"
 #: includes/eme-members.php:6248
 #: includes/eme-people.php:975
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
-msgstr ""
+msgstr "导入完成：%1$d 条插入，%2$d 条更新，%3$d 个错误"
 
 #: includes/eme-events.php:6118
 #: includes/eme-rsvp.php:5471
@@ -2315,7 +2315,7 @@ msgstr "出席设置"
 
 #: includes/eme-events.php:6561
 msgid "RSVP Email format settings"
-msgstr ""
+msgstr "回复电子邮件格式设置"
 
 #: includes/eme-events.php:6566
 #: includes/eme-options.php:2222
@@ -2383,7 +2383,7 @@ msgstr "任务表格格式"
 
 #: includes/eme-events.php:6638
 msgid "Tasks Email format settings"
-msgstr ""
+msgstr "任务电子邮件格式设置"
 
 #: includes/eme-events.php:6642
 #: includes/eme-options.php:2575
@@ -2529,7 +2529,7 @@ msgstr "您表示要使用密码，但您的活动 RSVP 表格格式不包含 #_
 
 #: includes/eme-events.php:7048
 msgid "The min amount of seats to book should not be bigger than the max amount of seats to book."
-msgstr ""
+msgstr "预订的最少座位数不应大于预订的最多座位数。"
 
 #: includes/eme-events.php:7055
 msgid "If specified, the max amount of seats to book should consist of integers only."
@@ -2935,12 +2935,12 @@ msgstr "当预订成功后显示给用户的文本（允许使用 html）。"
 #: includes/eme-options.php:2415
 #: includes/eme-options.php:2472
 msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr ""
+msgstr "回复通知未激活，因此这些电子邮件将不会发送。如需激活，请前往电子邮件设置。"
 
 #: includes/eme-events.php:7527
 #: includes/eme-options.php:2229
 msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr ""
+msgstr "已提交或已批准的预订的通知未激活，因此这些电子邮件将不会发送。如需激活，请前往电子邮件设置。"
 
 #: includes/eme-events.php:7538
 #: includes/eme-options.php:2241
@@ -3030,7 +3030,7 @@ msgstr "当有新的预订时，可以选择在邮件中添加附件。"
 #: includes/eme-events.php:8768
 #: includes/eme-options.php:2293
 msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr ""
+msgstr "待处理预订的通知未激活，因此这些电子邮件将不会发送。如需激活，请前往电子邮件设置。"
 
 #: includes/eme-events.php:7681
 #: includes/eme-options.php:2299
@@ -3200,7 +3200,7 @@ msgstr "当应答者取消其对某一事件的所有预订时，将向联系人
 #: includes/eme-events.php:8119
 #: includes/eme-options.php:2417
 msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr ""
+msgstr "已付款预订的通知未激活，因此这些电子邮件将不会发送。如需激活，请前往电子邮件设置。"
 
 #: includes/eme-events.php:8123
 #: includes/eme-options.php:2422
@@ -3311,13 +3311,13 @@ msgstr "在表格中使用 EME 的验证码？"
 #: includes/eme-members.php:1975
 #: includes/eme-options.php:1528
 msgid "Only use captcha for logged out users?"
-msgstr ""
+msgstr "仅对未登录用户使用验证码？"
 
 #: includes/eme-events.php:8377
 #: includes/eme-members.php:1977
 #: includes/eme-options.php:1528
 msgid "If this option is checked, the captcha will only be used for logged out users."
-msgstr ""
+msgstr "如果选中此选项，验证码将仅用于未登录用户。"
 
 #: includes/eme-events.php:8471
 msgid "Event description"
@@ -3627,7 +3627,7 @@ msgstr "要求预订时使用 WP 会籍"
 
 #: includes/eme-events.php:8874
 msgid "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only."
-msgstr ""
+msgstr "这将仅为登录用户显示预订表单，并使用其WordPress个人资料中的个人数据预填充表单。该数据在表单中无法更改，因此如果您不想要此功能，可以停用此选项并使用 #_ADDBOOKINGFORM_IF_LOGGED_IN 仅为登录用户显示表单。"
 
 #: includes/eme-events.php:8879
 #, fuzzy
@@ -3787,7 +3787,7 @@ msgstr "您确定要删除选定的记录吗？"
 
 #: includes/eme-events.php:9602
 msgid "Are you sure you want to delete this file?"
-msgstr ""
+msgstr "您确定要删除此文件吗？"
 
 #: includes/eme-events.php:9603
 msgid "Select one or more persons"
@@ -4579,7 +4579,7 @@ msgstr "CSV 导出"
 #: includes/eme-events.php:10159
 #: includes/eme-rsvp.php:6336
 msgid "Task Info: %d tasks"
-msgstr ""
+msgstr "任务信息：%d 个任务"
 
 #: includes/eme-events.php:10178
 #: includes/eme-locations.php:540
@@ -4842,7 +4842,7 @@ msgstr "如果您想对这样的字段进行搜索或排序，请将此参数设
 
 #: includes/eme-formfields.php:372
 msgid "Use this if the field indicates an extra charge to the total price (can be negative to indicate a discount), in which case you should also set the field value to the charge."
-msgstr ""
+msgstr "如果该字段表示对总价的额外收费（可以为负数表示折扣），请使用此选项，在这种情况下您还应将字段值设置为收费金额。"
 
 #: includes/eme-formfields.php:373
 #, fuzzy
@@ -4868,7 +4868,7 @@ msgstr "字段标签"
 
 #: includes/eme-formfields.php:391
 msgid "This option determines the \"visible\" value people will see for the field."
-msgstr ""
+msgstr "此选项决定人们将在字段中看到的 \"可见\" 值。"
 
 #: includes/eme-formfields.php:392
 msgid "For multivalue fields, you can here enter the \"visible\" tag people will see per value (so, if \"Field values\" contain e.g. \"a1||a2||a3\", you can use here e.g. \"Text a1||Text a2||Text a3\")."
@@ -4907,7 +4907,7 @@ msgstr "在这里，您可以为您的字段指定额外的 HTML 属性（如尺
 
 #: includes/eme-formfields.php:415
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' enter a valid PHP-format of the date you like to see when entering/showing the value (unrecognized characters in the format will cause the result to be empty). If left empty, the WordPress settings for date format will be used."
-msgstr ""
+msgstr "对于 \"日期（Javascript）\"、\"日期时间（Javascript）\" 和 \"时间（Javascript）\" 类型，请输入您在输入/显示值时想要看到的有效PHP日期格式（格式中无法识别的字符将导致结果为空）。如果留空，将使用WordPress的日期格式设置。"
 
 #: includes/eme-formfields.php:430
 #: includes/eme-options.php:1995
@@ -5144,11 +5144,11 @@ msgstr "只读"
 
 #: includes/eme-formfields.php:591
 msgid "File upload"
-msgstr ""
+msgstr "文件上传"
 
 #: includes/eme-formfields.php:592
 msgid "Multiple files upload"
-msgstr ""
+msgstr "多文件上传"
 
 #: includes/eme-formfields.php:594
 msgid "Date (Javascript)"
@@ -5590,7 +5590,7 @@ msgstr "波兰兹罗提"
 
 #: includes/eme-functions.php:1712
 msgid "Paraguayan Guarani"
-msgstr ""
+msgstr "巴拉圭瓜拉尼"
 
 #: includes/eme-functions.php:1713
 msgid "Russian Ruble"
@@ -5622,7 +5622,7 @@ msgstr "美元"
 
 #: includes/eme-functions.php:1720
 msgid "Vietnamese dong"
-msgstr ""
+msgstr "越南盾"
 
 #: includes/eme-functions.php:1721
 msgid "Vanuatu vatu"
@@ -5655,35 +5655,35 @@ msgstr "群组"
 
 #: includes/eme-functions.php:3049
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "上传的文件超过php.ini中的upload_max_filesize指令"
 
 #: includes/eme-functions.php:3050
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
-msgstr ""
+msgstr "上传的文件超过HTML表单中指定的MAX_FILE_SIZE指令"
 
 #: includes/eme-functions.php:3051
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "上传的文件仅部分上传"
 
 #: includes/eme-functions.php:3052
 msgid "No file was uploaded"
-msgstr ""
+msgstr "未上传任何文件"
 
 #: includes/eme-functions.php:3053
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "缺少临时文件夹"
 
 #: includes/eme-functions.php:3054
 msgid "Failed to write file to disk"
-msgstr ""
+msgstr "写入文件到磁盘失败"
 
 #: includes/eme-functions.php:3055
 msgid "File upload stopped by extension"
-msgstr ""
+msgstr "文件上传被扩展程序阻止"
 
 #: includes/eme-functions.php:3056
 msgid "Unknown upload error"
-msgstr ""
+msgstr "未知上传错误"
 
 #: includes/eme-functions.php:3096
 msgid "Failure creating upload dir, please check your permissions."
@@ -6048,11 +6048,11 @@ msgstr "地点图像"
 #: includes/eme-locations.php:3115
 #: includes/eme-locations.php:3116
 msgid "Max capacity"
-msgstr ""
+msgstr "最大容量"
 
 #: includes/eme-locations.php:661
 msgid "If setting the max capacity to something else than 0, then - for all events that are happening at the same time at this location - a check will be done to see if the location still allows extra people inside."
-msgstr ""
+msgstr "如果将最大容量设置为非0的值，则对于所有同时在该地点举行的活动，系统将检查该地点是否仍然允许额外人员进入。"
 
 #: includes/eme-locations.php:673
 msgid "Location description"
@@ -6168,7 +6168,7 @@ msgstr "完成的邮寄有错误"
 #. translators: %1$s is the mailing name, %2$d is the number of errors
 #: includes/eme-mailer.php:954
 msgid "Mailing \"%1$s\" completed with %2$d errors, please check the mailing report"
-msgstr ""
+msgstr "邮寄\"%1$s\"完成，有%2$d个错误，请检查邮寄报告"
 
 #: includes/eme-mailer.php:1149
 #: includes/eme-mailer.php:1162
@@ -6203,12 +6203,12 @@ msgstr "重用"
 #: includes/eme-events.php:9814
 #: includes/eme-mailer.php:3197
 msgid "Sender name"
-msgstr ""
+msgstr "发件人名称"
 
 #: includes/eme-events.php:9815
 #: includes/eme-mailer.php:3201
 msgid "Sender email"
-msgstr ""
+msgstr "发件人电子邮件"
 
 #: includes/eme-events.php:9819
 #: includes/eme-mailer.php:3025
@@ -6284,7 +6284,7 @@ msgstr "以下人员将不会收到邮件："
 #: includes/eme-mailer.php:2439
 #: includes/eme-mailer.php:2563
 msgid "Email to the following persons has not been sent:"
-msgstr ""
+msgstr "以下人员的电子邮件未发送："
 
 #: includes/eme-mailer.php:2191
 #: includes/eme-mailer.php:2466
@@ -6370,15 +6370,15 @@ msgstr "预订邮件"
 
 #: includes/eme-mailer.php:2929
 msgid "Email to all people registered in EME"
-msgstr ""
+msgstr "向所有在EME中注册的人员发送电子邮件"
 
 #: includes/eme-mailer.php:2930
 msgid "Email to people and/or groups registered in EME"
-msgstr ""
+msgstr "向在EME中注册的人员和/或群组发送电子邮件"
 
 #: includes/eme-mailer.php:2931
 msgid "Email to all WP users"
-msgstr ""
+msgstr "向所有WordPress用户发送电子邮件"
 
 #: includes/eme-mailer.php:2938
 msgid "Select your target audience"
@@ -6506,7 +6506,7 @@ msgstr "输入一个测试收件人"
 #: includes/eme-mailer.php:3104
 #: includes/eme-mailer.php:3283
 msgid "Send Preview Email"
-msgstr ""
+msgstr "发送预览邮件"
 
 #: includes/eme-mailer.php:3111
 #: includes/eme-mailer.php:3293
@@ -6573,7 +6573,7 @@ msgstr "输入收件人"
 
 #: includes/eme-mailer.php:3346
 msgid "Send Email"
-msgstr ""
+msgstr "发送电子邮件"
 
 #: includes/eme-mailer.php:3405
 msgid "Mailings overview"
@@ -6585,7 +6585,7 @@ msgstr "在这里，您可以找到所有计划中的、正在进行中的或已
 
 #: includes/eme-mailer.php:3425
 msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
-msgstr ""
+msgstr "电子邮件排队功能未激活，因此已发送的电子邮件将仅在\"已发送的电子邮件\"标签中可见"
 
 #: includes/eme-mailer.php:3442
 #: includes/eme-mailer.php:3475
@@ -6613,7 +6613,7 @@ msgstr "报告"
 #: includes/eme-mailer.php:1780
 #: includes/eme-mailer.php:1909
 msgid "%1$d emails sent, %2$d emails failed, %3$d emails cancelled"
-msgstr ""
+msgstr "已发送 %1$d 封邮件，%2$d 封失败，%3$d 封已取消"
 
 #: includes/eme-mailer.php:1781
 #: includes/eme-mailer.php:1806
@@ -6636,7 +6636,7 @@ msgstr "正在进行中"
 #. translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails left to send
 #: includes/eme-mailer.php:1800
 msgid "%1$d emails sent, %2$d emails failed, %3$d emails left"
-msgstr ""
+msgstr "已发送 %1$d 封邮件，%2$d 封失败，剩余 %3$d 封"
 
 #: includes/eme-mailer.php:1164
 msgid "Completed"
@@ -6645,7 +6645,7 @@ msgstr "已完成"
 #. translators: %1$d is the number of emails sent, %2$d is the number of emails failed
 #: includes/eme-mailer.php:1805
 msgid "%1$d emails sent, %2$d emails failed"
-msgstr ""
+msgstr "已发送 %1$d 封邮件，%2$d 封失败"
 
 #: includes/eme-mailer.php:1812
 #, fuzzy
@@ -6792,7 +6792,7 @@ msgstr "这个人已经是会员了"
 
 #: includes/eme-members.php:1161
 msgid "Payment not possible for this member."
-msgstr ""
+msgstr "此会员无法进行支付。"
 
 #. translators: %s is the payment URL
 #: includes/eme-members.php:1164
@@ -6921,11 +6921,11 @@ msgstr "结束日期"
 
 #: includes/eme-members.php:1673
 msgid "This indicates the amount of times this member has RSVP-ed to an event that requires this membership."
-msgstr ""
+msgstr "这表示该会员已回复需要此会员资格的活动的次数。"
 
 #: includes/eme-members.php:1676
 msgid "Warning: usage count is at its maximum, the status will therefore always be set to Expired!"
-msgstr ""
+msgstr "警告：使用次数已达到最大值，因此状态将始终设置为已过期！"
 
 #: includes/eme-members.php:1683
 msgid "Member status calculated automatically"
@@ -6975,7 +6975,7 @@ msgstr "会籍详情"
 
 #: includes/eme-members.php:1853
 msgid "Mail format settings"
-msgstr ""
+msgstr "邮件格式设置"
 
 #: includes/eme-members.php:1865
 #: includes/eme-members.php:3287
@@ -7021,7 +7021,7 @@ msgstr "最大使用数量"
 
 #: includes/eme-members.php:1941
 msgid "If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership."
-msgstr ""
+msgstr "如果设置为大于0的值，这将表示会员可以回复需要此会员资格的活动的最大次数。"
 
 #: includes/eme-members.php:1945
 msgid "Reminder"
@@ -7069,7 +7069,7 @@ msgstr "hCaptcha"
 
 #: includes/eme-functions.php:4326
 msgid "Cloudflare Turnstile"
-msgstr ""
+msgstr "Cloudflare Turnstile"
 
 #: includes/eme-members.php:1981
 msgid "Create WP user after signup"
@@ -7879,7 +7879,7 @@ msgstr "编辑会籍"
 
 #: includes/eme-members.php:6609
 msgid "No membership form has been defined for this membership, a simple default will be used."
-msgstr ""
+msgstr "此会员资格未定义会员表单，将使用简单的默认表单。"
 
 #. translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
 #: includes/eme-members.php:6623
@@ -7903,7 +7903,7 @@ msgstr "(一家之主)"
 #. translators: %d is the payment ID
 #: includes/eme-members.php:6749
 msgid "This is based on the payment ID of the member: %d"
-msgstr ""
+msgstr "这基于会员的支付ID：%d"
 
 #: includes/eme-members.php:6855
 #: includes/eme-people.php:5642
@@ -8004,7 +8004,7 @@ msgstr "对 \"#_EVENTNAME\" 的新预订"
 
 #: includes/eme-options.php:9
 msgid "#_PERSONFULLNAME (#_PERSONEMAIL) will attend #_EVENTNAME on #_STARTDATE. They want to book #_RESPSEATS seat(s).<br>Now there are #_RESERVEDSEATS seat(s) booked, #_AVAILABLESEATS are still available.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) 将参加 #_STARTDATE 的 #_EVENTNAME。他们想预订 #_RESPSEATS 个座位。<br>现在已预订 #_RESERVEDSEATS 个座位，还有 #_AVAILABLESEATS 个座位可用。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:10
 msgid "A booking has been cancelled for '#_EVENTNAME'"
@@ -8012,7 +8012,7 @@ msgstr "已取消 \"#_EVENTNAME\" 的一个预订。"
 
 #: includes/eme-options.php:11
 msgid "#_PERSONFULLNAME (#_PERSONEMAIL) has cancelled for #_EVENTNAME on #_STARTDATE. <br>Now there are #_RESERVEDSEATS seat(s) booked, #_AVAILABLESEATS are still available.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) 已取消参加 #_STARTDATE 的 #_EVENTNAME。<br>现在已预订 #_RESERVEDSEATS 个座位，还有 #_AVAILABLESEATS 个座位可用。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:12
 msgid "Approval required for new booking for '#_EVENTNAME'"
@@ -8020,7 +8020,7 @@ msgstr "对 “#_EVENTNAME” 的新预订需要批准"
 
 #: includes/eme-options.php:13
 msgid "#_PERSONFULLNAME (#_PERSONEMAIL) would like to attend #_EVENTNAME on #_STARTDATE. They want to book #_RESPSEATS seat(s).<br>Now there are #_RESERVEDSEATS seat(s) booked, #_AVAILABLESEATS are still available.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) 希望参加 #_STARTDATE 的 #_EVENTNAME。他们想预订 #_RESPSEATS 个座位。<br>现在已预订 #_RESERVEDSEATS 个座位，还有 #_AVAILABLESEATS 个座位可用。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:14
 msgid "Booking for '#_EVENTNAME' confirmed"
@@ -8028,7 +8028,7 @@ msgstr "已确认对 \"#_EVENTNAME\" 的预订"
 
 #: includes/eme-options.php:15
 msgid "Dear #_PERSONFULLNAME,<br><br>You have successfully booked #_RESPSEATS seat(s) for #_EVENTNAME.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您已成功预订 #_EVENTNAME 的 #_RESPSEATS 个座位。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:16
 msgid "Booking for '#_EVENTNAME' is pending"
@@ -8036,7 +8036,7 @@ msgstr "“#_EVENTNAME” 的预订在待订中"
 
 #: includes/eme-options.php:17
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME is pending.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求正在待处理中。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:18
 msgid "Booking for '#_EVENTNAME' requires your confirmation"
@@ -8044,7 +8044,7 @@ msgstr "\"#_EVENTNAME\" 的预订需要您的确认。"
 
 #: includes/eme-options.php:19
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME requires your confirmation.<br>Please click on this link to confirm #_BOOKING_CONFIRM_URL<br>If you did not make this booking, you don't need to do anything, it will then be removed automatically.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求需要您的确认。<br>请点击此链接确认 #_BOOKING_CONFIRM_URL<br>如果您没有进行此预订，您无需做任何操作，它将被自动删除。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:20
 msgid "Booking for '#_EVENTNAME' cancelled"
@@ -8052,7 +8052,7 @@ msgstr "已取消 \"#_EVENTNAME\" 的预订"
 
 #: includes/eme-options.php:21
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been cancelled.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求已被取消。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:22
 msgid "Booking for '#_EVENTNAME' deleted"
@@ -8060,7 +8060,7 @@ msgstr "已删除 \"#_EVENTNAME\" 的预订"
 
 #: includes/eme-options.php:23
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been deleted.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求已被删除。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:24
 msgid "Booking for '#_EVENTNAME' updated"
@@ -8068,7 +8068,7 @@ msgstr "已更新 \"#_EVENTNAME\" 的预订"
 
 #: includes/eme-options.php:25
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been updated.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求已被更新。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:26
 msgid "Booking for '#_EVENTNAME' paid"
@@ -8076,7 +8076,7 @@ msgstr "已支付 \"#_EVENTNAME\" 的预订费"
 
 #: includes/eme-options.php:27
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been paid for.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求已付款。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:28
 msgid "Reminder: pending booking for event '#_EVENTNAME'"
@@ -8084,7 +8084,7 @@ msgstr "提醒：活动 “#_EVENTNAME” 的待订尚未完成"
 
 #: includes/eme-options.php:29
 msgid "Dear #_PERSONFULLNAME,<br><br>This is a reminder that your request to book #_RESPSEATS seat(s) for #_EVENTNAME is pending.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>提醒您，您预订 #_EVENTNAME 的 #_RESPSEATS 个座位的请求仍在待处理中。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:30
 msgid "Reminder: Booking for event '#_EVENTNAME'"
@@ -8092,7 +8092,7 @@ msgstr "提醒：预订活动 \"#_EVENTNAME”"
 
 #: includes/eme-options.php:31
 msgid "Dear #_PERSONFULLNAME,<br><br>This is a reminder that you booked #_RESPSEATS seat(s) for #_EVENTNAME.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>提醒您，您已预订 #_EVENTNAME 的 #_RESPSEATS 个座位。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:32
 msgid "Your booking has been recorded"
@@ -8118,7 +8118,7 @@ msgstr "更改个人信息请求"
 
 #: includes/eme-options.php:54
 msgid "Hi,<br><br>Please find below the info needed to change the personal info for each matching person<br>#_CHANGE_PERSON_INFO<br><br>Yours faithfully"
-msgstr ""
+msgstr "您好，<br><br>请在下方查找更改每个匹配人员个人信息所需的信息<br>#_CHANGE_PERSON_INFO<br><br>此致敬礼"
 
 #: includes/eme-options.php:56
 msgid "Personal info"
@@ -8222,7 +8222,7 @@ msgstr "\"#_EVENTNAME\" 的任务 \"#_TASKNAME\" 的新报名。"
 
 #: includes/eme-options.php:94
 msgid "Approval required: #_PERSONFULLNAME (#_PERSONEMAIL) signed up for #_TASKNAME (#_TASKSTARTDATE) for #_EVENTNAME on #_STARTDATE.<br>Now there are #_FREETASKSPACES free spaces for this task.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "需要批准：#_PERSONFULLNAME (#_PERSONEMAIL) 报名参加了 #_STARTDATE 的 #_EVENTNAME 的 #_TASKNAME (#_TASKSTARTDATE)。<br>该任务目前有 #_FREETASKSPACES 个空闲名额。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:95
 msgid "New signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -8230,7 +8230,7 @@ msgstr "\"#_EVENTNAME\" 的任务 \"#_TASKNAME\" 的新报名。"
 
 #: includes/eme-options.php:96
 msgid "#_PERSONFULLNAME (#_PERSONEMAIL) signed up for #_TASKNAME (#_TASKSTARTDATE) for #_EVENTNAME on #_STARTDATE.<br>Now there are #_FREETASKSPACES free spaces for this task.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) 报名参加了 #_STARTDATE 的 #_EVENTNAME 的 #_TASKNAME (#_TASKSTARTDATE)。<br>该任务目前有 #_FREETASKSPACES 个空闲名额。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:97
 msgid "A task signup has been cancelled for '#_EVENTNAME'"
@@ -8238,7 +8238,7 @@ msgstr "一个 ”#_EVENTNAME“ 的任务报名已经被取消。"
 
 #: includes/eme-options.php:98
 msgid "#_PERSONFULLNAME (#_PERSONEMAIL) has cancelled his signup for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME on #_STARTDATE.<br>Now there are #_FREETASKSPACES free spaces for this task.<br><br>Yours faithfully,<br>Events Manager"
-msgstr ""
+msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) 已取消报名参加 #_STARTDATE 的 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN)。<br>该任务目前有 #_FREETASKSPACES 个空闲名额。<br><br>此致敬礼，<br>Events Manager"
 
 #: includes/eme-options.php:99
 #, fuzzy
@@ -8247,7 +8247,7 @@ msgstr "报名任务 “#_TASKNAME” 为 “#_EVENTNAME”。"
 
 #: includes/eme-options.php:100
 msgid "Dear #_PERSONFULLNAME,<br><br>Your signup for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME is registered and pending approval.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您报名参加 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN) 已注册，正在等待批准。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:101
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -8255,7 +8255,7 @@ msgstr "报名任务 “#_TASKNAME” 为 “#_EVENTNAME”。"
 
 #: includes/eme-options.php:102
 msgid "Dear #_PERSONFULLNAME,<br><br>You have successfully signed up for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您已成功报名参加 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN)。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:103
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME' cancelled"
@@ -8263,7 +8263,7 @@ msgstr "为 \"#_EVENTNAME\" 报名的任务 \"#_TASKNAME\" 被取消。"
 
 #: includes/eme-options.php:104
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to sign up for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME has been cancelled.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您报名参加 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN) 的请求已被取消。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:105
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME' deleted"
@@ -8271,7 +8271,7 @@ msgstr "为 \"#_EVENTNAME\" 报名任务的 \"#_TASKNAME\" 已被删除。"
 
 #: includes/eme-options.php:106
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to sign up for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME has been deleted.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>您报名参加 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN) 的请求已被删除。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:109
 msgid "Reminder: Signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -8279,7 +8279,7 @@ msgstr "提醒：报名参加 \"#_TASKNAME\" 任务的 \"#_EVENTNAME“"
 
 #: includes/eme-options.php:110
 msgid "Dear #_PERSONFULLNAME,<br><br>This is a reminder that you signed up for #_TASKNAME (#_TASKBEGIN) for #_EVENTNAME.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "尊敬的 #_PERSONFULLNAME，<br><br>提醒您，您已报名参加 #_EVENTNAME 的 #_TASKNAME (#_TASKBEGIN)。<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:111
 msgid "Happy birthday #_PERSONFIRSTNAME"
@@ -8287,7 +8287,7 @@ msgstr "生日快乐 #_PERSONFIRSTNAME"
 
 #: includes/eme-options.php:112
 msgid "Hi #_PERSONFIRSTNAME,<br><br>Congratulations on your birthday!!!<br><br>From EME"
-msgstr ""
+msgstr "你好 #_PERSONFIRSTNAME，<br><br>祝您生日快乐！！！<br><br>来自 EME"
 
 #: includes/eme-options.php:133
 msgid "No events"
@@ -8339,7 +8339,7 @@ msgstr "您选择不接收未来的邮件。您确定这样做吗？"
 
 #: includes/eme-options.php:889
 msgid "Hi,<br><br>Please find below the info needed to change the personal info for each matching person<br>#_CHANGE_PERSON_INFO<br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "您好，<br><br>请在下方查找更改每个匹配人员个人信息所需的信息<br>#_CHANGE_PERSON_INFO<br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:1344
 msgid "General"
@@ -8368,7 +8368,7 @@ msgstr "活动任务"
 
 #: includes/eme-options.php:1355
 msgid "Email templates"
-msgstr ""
+msgstr "电子邮件模板"
 
 #: includes/eme-options.php:1356
 msgid "Data protection"
@@ -8392,7 +8392,7 @@ msgstr "EME SEO 的固定链接设置与自身冲突（活动，地点或分类�
 
 #: includes/eme-options.php:1468
 msgid "The EME SEO permalink settings are conflicting with an existing page (the permalink setting for either events, locations or categories is identical with the permalink of another WordPress page). This might cause problems rendering either events or that page. Please resolve the conflict by either changing your EME SEO permalink settings or the permalink of the conflicting page."
-msgstr ""
+msgstr "EME SEO固定链接设置与现有页面冲突（活动、地点或类别的固定链接设置与另一个WordPress页面的固定链接相同）。这可能会导致渲染活动或该页面时出现问题。请通过更改EME SEO固定链接设置或冲突页面的固定链接来解决冲突。"
 
 #. translators: %s is the URL to the user profile page
 #: includes/eme-options.php:1499
@@ -8422,7 +8422,7 @@ msgstr "在 WP 链接搜索功能中添加活动和地点？"
 
 #: includes/eme-options.php:1504
 msgid "If selected, events and locations will be shown in the link search when creating links in the WordPress editor."
-msgstr ""
+msgstr "如果选中，活动和地点将在WordPress编辑器中创建链接时显示在链接搜索中。"
 
 #: includes/eme-options.php:1505
 msgid "Use RSVP?"
@@ -8507,19 +8507,19 @@ msgstr "hCaptcha 秘钥"
 
 #: includes/eme-options.php:1523
 msgid "Cloudflare Turnstile site key"
-msgstr ""
+msgstr "Cloudflare Turnstile 站点密钥"
 
 #: includes/eme-options.php:1524
 msgid "Cloudflare Turnstile secret key"
-msgstr ""
+msgstr "Cloudflare Turnstile 密钥"
 
 #: includes/eme-options.php:1529
 msgid "Enable Remember-me functionality?"
-msgstr ""
+msgstr "启用记住我功能？"
 
 #: includes/eme-options.php:1529
 msgid "Check this option to show a checkbox that allows people to choose if they want their lastname/firstname/email stored locallly, to have it prefilled next time. This also requires the use of a #_REMEMBERME placeholder in your form, and only works for not logged-in users in the frontend. If checked, the option \"Show the RSVP form again after booking\" will be ignored."
-msgstr ""
+msgstr "选中此选项将显示一个复选框，允许用户选择是否将姓氏/名字/电子邮件本地存储，以便下次自动填写。这还需要在表单中使用 #_REMEMBERME 占位符，并且仅适用于前端未登录的用户。如果选中，\"预订后再次显示回复表单\" 选项将被忽略。"
 
 #: includes/eme-options.php:1531
 msgid "Autocomplete sources"
@@ -8548,7 +8548,7 @@ msgstr "EME 人们和 WP 用户"
 
 #: includes/eme-options.php:1542
 msgid "Decide if autocompletion is used in RSVP or membership forms and select if you want to search EME people, WP users or both. The autocompletion only works on the lastname field and only if you have sufficient rights (event creator or event author)."
-msgstr ""
+msgstr "决定是否在回复或会员表单中使用自动完成，并选择是否搜索EME人员、WordPress用户或两者。自动完成仅在姓氏字段上有效，并且仅在您具有足够权限（活动创建者或活动作者）时有效。"
 
 #: includes/eme-options.php:1544
 msgid "Delete all stored EME data when upgrading or deactivating?"
@@ -8588,7 +8588,7 @@ msgstr "添加 nocache 头文件？"
 
 #: includes/eme-options.php:1548
 msgid "In the frontend WordPress allows browsers to cache content, but this can cause issues if you have shortcodes that change over time (like events). Checking this option will cause nocache headers to be sent so browsers no longer cache the content (this does not impact browser caching of CSS and JS files)."
-msgstr ""
+msgstr "在前端，WordPress允许浏览器缓存内容，但如果您有随时间变化的简码（如活动），这可能会导致问题。选中此选项将发送nocache头，使浏览器不再缓存内容（这不影响浏览器对CSS和JS文件的缓存）。"
 
 #: includes/eme-options.php:1549
 msgid "Use alternative method to set events page title?"
@@ -8596,7 +8596,7 @@ msgstr "使用替代方法来设置活动的页面标题？"
 
 #: includes/eme-options.php:1549
 msgid "A great number of themes doesn't correctly use WordPress standards to set the page title, so this provides an alternative method if the page title is not set to the event title when viewing a single event."
-msgstr ""
+msgstr "许多主题没有正确使用WordPress标准来设置页面标题，因此当查看单个活动时，如果页面标题未设置为活动标题，此选项提供了一种替代方法。"
 
 #: includes/eme-options.php:1558
 msgid "Permalink options"
@@ -8680,7 +8680,7 @@ msgstr "活动列表"
 
 #: includes/eme-options.php:1585
 msgid "If Yes, the admin listing of events will be limited to those the current user can author or is contact person for."
-msgstr ""
+msgstr "如果选\"是\"，管理员的活动列表将限制为当前用户可以编辑或作为联系人的活动。"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1587
@@ -8854,7 +8854,7 @@ msgstr "作者 个人"
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1671
 msgid "Permission needed to manage own personal info (the WordPress user logged needs to be linked to an EME user for this to work). Default: %s"
-msgstr ""
+msgstr "管理自己个人信息所需的权限（WordPress登录用户需要链接到EME用户才能正常工作）。默认：%s"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1673
@@ -8899,7 +8899,7 @@ msgstr "作者会员"
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1688
 msgid "Permission needed to manage own member info (the WordPress user logged needs to be linked to an EME user for this to work). Default: %s"
-msgstr ""
+msgstr "管理自己会员信息所需的权限（WordPress登录用户需要链接到EME用户才能正常工作）。默认：%s"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1690
@@ -8988,7 +8988,7 @@ msgstr "检查活动出席情况所需的权限（由 #_QRCODE 在 RSVP 上下�
 
 #: includes/eme-options.php:1721
 msgid "Emails"
-msgstr ""
+msgstr "电子邮件"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1726
@@ -9022,7 +9022,7 @@ msgstr "编辑表格字段所需的权限。默认值：%s"
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1732
 msgid "View mailings and mail queue"
-msgstr ""
+msgstr "查看邮寄和邮件队列"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1732
@@ -9033,7 +9033,7 @@ msgstr "为任何活动发送邮件所需的权限。默认值：%s"
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1734
 msgid "Manage mailings and mail queue"
-msgstr ""
+msgstr "管理邮寄和邮件队列"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1734
@@ -9150,7 +9150,7 @@ msgstr "链接来重定向私人活动到"
 
 #: includes/eme-options.php:1799
 msgid "When a person that is not logged-in wants to look at a private event, that person is redirected to the WordPress login page. If you want to redirect to another url, enter it here. The permalink of the current visited page will be added to the mentioned url query string with a parameter called \"redirect\"."
-msgstr ""
+msgstr "当未登录的用户想要查看私有活动时，该用户将被重定向到WordPress登录页面。如果您想重定向到其他URL，请在此输入。当前访问页面的固定链接将作为名为\"redirect\"的参数添加到上述URL查询字符串中。"
 
 #: includes/eme-options.php:1802
 msgid "Events format"
@@ -9223,23 +9223,23 @@ msgstr "默认的单项活动格式"
 
 #: includes/eme-options.php:1816
 msgid "The format of a single event page.<br>Follow the previous formatting instructions. <br>Use <code>#_MAP</code> to insert a map.<br>Use <code>#_CONTACTNAME</code>, <code>#_CONTACTEMAIL</code>, <code>#_CONTACTPHONE</code> to insert respectively the name, email address and phone number of the designated contact person. <br>Use <code>#_ADDBOOKINGFORM</code> to insert a form to allow the user to respond to your events booking one or more seats (RSVP).<br> Use <code>#_REMOVEBOOKINGFORM</code> to insert a form where users, inserting their name and email address, can remove their bookings."
-msgstr ""
+msgstr "单个活动页面的格式。<br>请遵循之前的格式说明。<br>使用 <code>#_MAP</code> 插入地图。<br>使用 <code>#_CONTACTNAME</code>、<code>#_CONTACTEMAIL</code>、<code>#_CONTACTPHONE</code> 分别插入指定联系人的姓名、电子邮件地址和电话号码。<br>使用 <code>#_ADDBOOKINGFORM</code> 插入表单，允许用户为活动预订一个或多个座位（RSVP）。<br>使用 <code>#_REMOVEBOOKINGFORM</code> 插入表单，用户可以通过输入姓名和电子邮件地址来取消预订。"
 
 #: includes/eme-options.php:1816
 msgid "<br>Use <code>#_ADDBOOKINGFORM_IF_NOT_REGISTERED</code> to insert the booking form only if the user has not registered yet. Similar use <code>#_REMOVEBOOKINGFORM_IF_REGISTERED</code> to insert the booking removal form only if the user has already registered before. These two codes only work for WP users."
-msgstr ""
+msgstr "<br>使用 <code>#_ADDBOOKINGFORM_IF_NOT_REGISTERED</code> 仅在用户尚未注册时插入预订表单。类似地，使用 <code>#_REMOVEBOOKINGFORM_IF_REGISTERED</code> 仅在用户已经注册过时插入取消预订表单。这两个代码仅适用于 WP 用户。"
 
 #: includes/eme-options.php:1816
 msgid "<br> Use <code>#_DIRECTIONS</code> to insert a form so people can ask directions to the event."
-msgstr ""
+msgstr "<br>使用 <code>#_DIRECTIONS</code> 插入表单，以便人们可以询问前往活动的路线。"
 
 #: includes/eme-options.php:1816
 msgid "<br> Use <code>#_CATEGORIES</code> to insert a comma-separated list of categories an event is in."
-msgstr ""
+msgstr "<br>使用 <code>#_CATEGORIES</code> 插入以逗号分隔的活动所属类别列表。"
 
 #: includes/eme-options.php:1816
 msgid "<br> Use <code>#_ATTENDEES</code> to get a list of the names attending the event."
-msgstr ""
+msgstr "<br>使用 <code>#_ATTENDEES</code> 获取参加活动的人员姓名列表。"
 
 #: includes/eme-options.php:1817
 msgid "Monthly period date format"
@@ -9345,7 +9345,7 @@ msgstr "默认地点列表格式的标题"
 #. translators: %s is the default format value
 #: includes/eme-options.php:1860
 msgid "This content will appear just above your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>"
-msgstr ""
+msgstr "此内容将显示在默认地点列表格式代码的正上方。如果留空，将使用值 <code>%s</code>。<br>由短代码 <code>[eme_locations]</code> 使用"
 
 #. translators: %s is the default format value
 #: includes/eme-options.php:1862
@@ -9355,7 +9355,7 @@ msgstr "默认地点列表项目的格式"
 #. translators: %s is the default format value
 #: includes/eme-options.php:1862
 msgid "The format of a location in a location list. If you leave this empty, the value <code>%s</code> will be used.<br>See the documentation for a list of available placeholders for locations.<br>Used by the shortcode <code>[eme_locations]</code>"
-msgstr ""
+msgstr "地点列表中地点的格式。如果留空，将使用值 <code>%s</code>。<br>请参阅文档获取地点可用的占位符列表。<br>由短代码 <code>[eme_locations]</code> 使用"
 
 #. translators: %s is the default format value
 #: includes/eme-options.php:1864
@@ -9365,7 +9365,7 @@ msgstr "默认地点列表格式的页脚"
 #. translators: %s is the default format value
 #: includes/eme-options.php:1864
 msgid "This content will appear just below your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>"
-msgstr ""
+msgstr "此内容将显示在默认地点列表格式代码的正下方。如果留空，将使用值 <code>%s</code>。<br>由短代码 <code>[eme_locations]</code> 使用"
 
 #: includes/eme-options.php:1865
 msgid "Single location page title format"
@@ -9389,7 +9389,7 @@ msgstr "默认的地点活动列表格式"
 
 #: includes/eme-options.php:1868
 msgid "The format of the events list inserted in the location page through the <code>#_NEXTEVENTS</code>, <code>#_PASTEVENTS</code> and <code>#_ALLEVENTS</code> element. <br> Follow the events formatting instructions"
-msgstr ""
+msgstr "通过 <code>#_NEXTEVENTS</code>、<code>#_PASTEVENTS</code> 和 <code>#_ALLEVENTS</code> 元素插入到地点页面中的活动列表格式。<br>请遵循活动格式说明"
 
 #: includes/eme-options.php:1869
 msgid "Default no events message"
@@ -9603,7 +9603,7 @@ msgstr "默认情况下，允许 RSVP，直到这个数字"
 #: includes/eme-options.php:1953
 #: includes/eme-options.php:1969
 msgid "(0 for both days and hours indicates no limit)"
-msgstr ""
+msgstr "（天和小时均为 0 表示无限制）"
 
 #: includes/eme-options.php:1957
 msgid "By default allow RSVP until this many"
@@ -9635,7 +9635,7 @@ msgstr "如果您想隐藏不再允许预订的事件，请选中该选项。"
 
 #: includes/eme-options.php:1977
 msgid "WARNING: This might throw of the limit parameter for the eme_events shortcode if that parameter is used: in case the option to hide RSVP ended events is selected, the number of events shown might be less than indicated with the limit option."
-msgstr ""
+msgstr "警告：如果使用了 eme_events 短代码的 limit 参数，这可能会影响该参数：如果选择了隐藏 RSVP 已结束活动的选项，显示的活动数量可能会少于 limit 选项指定的数量。"
 
 #: includes/eme-options.php:1978
 msgid "Add booking form submit text"
@@ -9802,7 +9802,7 @@ msgstr "如果您想在管理界面添加或编辑预订时允许超额预订，
 
 #: includes/eme-options.php:2007
 msgid "RSVP forms format"
-msgstr ""
+msgstr "回复表单格式"
 
 #: includes/eme-options.php:2010
 msgid "Booking form format"
@@ -9932,11 +9932,11 @@ msgstr "设置任务报名提醒邮件发送前的天数（从任务的开始日
 
 #: includes/eme-options.php:2043
 msgid "Email options"
-msgstr ""
+msgstr "电子邮件选项"
 
 #: includes/eme-options.php:2046
 msgid "Enable the RSVP email notifications?"
-msgstr ""
+msgstr "启用回复邮件通知？"
 
 #: includes/eme-options.php:2046
 msgid "Check this option if you want to receive an email when someone books seats for your events."
@@ -9944,7 +9944,7 @@ msgstr "如果您想在有人为您的活动预订座位时收到电子邮件，
 
 #: includes/eme-options.php:2051
 msgid "Enable pending RSVP emails?"
-msgstr ""
+msgstr "启用待处理回复邮件？"
 
 #: includes/eme-options.php:2051
 msgid "Check this option if you want to send emails for pending bookings."
@@ -9952,7 +9952,7 @@ msgstr "如果您想为待订的预订发送邮件，请选中该选项。"
 
 #: includes/eme-options.php:2052
 msgid "Enable approved RSVP emails?"
-msgstr ""
+msgstr "启用已批准回复邮件？"
 
 #: includes/eme-options.php:2052
 msgid "Check this option if you want to send emails for approved bookings."
@@ -9960,7 +9960,7 @@ msgstr "如果您想为已批准的预订发送邮件，请选中该选项。"
 
 #: includes/eme-options.php:2053
 msgid "Enable paid RSVP emails?"
-msgstr ""
+msgstr "启用已付款回复邮件？"
 
 #: includes/eme-options.php:2053
 msgid "Check this option if you want to send emails when a payment arrives via a payment gateway or when a booking is marked as paid."
@@ -9988,7 +9988,7 @@ msgstr "建议激活该选项。"
 
 #: includes/eme-options.php:2064
 msgid "Email queue settings"
-msgstr ""
+msgstr "邮件队列设置"
 
 #: includes/eme-options.php:2069
 msgid "Send out queued emails in batches of "
@@ -10019,7 +10019,7 @@ msgstr "EME 的多站点数据共享被激活，选项 \"%s\" 将使用主站点
 #. translators: %s is the name of the option
 #: includes/eme-options.php:2099
 msgid "Email queuing"
-msgstr ""
+msgstr "邮件排队"
 
 #: includes/eme-options.php:2104
 msgid "Read tracking"
@@ -10031,7 +10031,7 @@ msgstr "在 html 邮件中添加一个图像（1x1 的透明像素），这样�
 
 #: includes/eme-options.php:2105
 msgid "Should new persons in the database be considered for massmailing or not? This setting is used if you don't ask for opt-in/out info in e.g. the RSVP form. Warning: setting this to 'yes' is not GDPR compliant if you don't ask for a person's mail preferences."
-msgstr ""
+msgstr "数据库中的新人员是否应被考虑用于群发邮件？此设置用于您未在回复表单中请求选择加入/退出信息的情况。警告：如果您未询问个人的邮件偏好，将此项设置为\"是\"不符合GDPR规定。"
 
 #: includes/eme-options.php:2106
 msgid "Massmail popup"
@@ -10059,7 +10059,7 @@ msgstr "默认的电子邮件发件人名称"
 
 #: includes/eme-options.php:2109
 msgid "The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty)."
-msgstr ""
+msgstr "EME发送有关GDPR、邮件订阅/取消订阅或生日的电子邮件时的默认发件人名称。如果留空，将使用回复邮件的默认联系人姓名（如果为空则使用博客管理员）。"
 
 #: includes/eme-options.php:2110
 msgid "Default email sender address"
@@ -10067,15 +10067,15 @@ msgstr "默认的电子邮件发件人地址"
 
 #: includes/eme-options.php:2110
 msgid "The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account."
-msgstr ""
+msgstr "EME发送有关GDPR、邮件订阅/取消订阅或生日的电子邮件时使用的默认电子邮件地址。如果留空，将使用回复邮件的默认联系人地址（如果为空则使用博客管理员）。如果您使用Gmail发送邮件，此地址必须与您的Gmail帐户对应。"
 
 #: includes/eme-options.php:2111
 msgid "Force sender address everywhere"
-msgstr ""
+msgstr "全局强制使用发件人地址"
 
 #: includes/eme-options.php:2111
 msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty)."
-msgstr ""
+msgstr "强制将配置的发件人地址用于所有外发邮件。如果未激活，回复邮件的默认联系人姓名和电子邮件地址将用于通用邮件，而活动或会员相关邮件将使用配置的联系人（如果为空则使用博客管理员）。"
 
 #: includes/eme-options.php:2112
 msgid "Default email BCC"
@@ -10087,11 +10087,11 @@ msgstr "插入一个电子邮件地址，它将被添加到所有外发邮件的
 
 #: includes/eme-options.php:2114
 msgid "Email sending method"
-msgstr ""
+msgstr "邮件发送方式"
 
 #: includes/eme-options.php:2118
 msgid "PHP email function"
-msgstr ""
+msgstr "PHP邮件函数"
 
 #: includes/eme-options.php:2123
 msgid "Select how you want to send out emails."
@@ -10107,11 +10107,11 @@ msgstr "SMTP 主机。通常情况下，它对应于 \"localhost\"。"
 
 #: includes/eme-options.php:2126
 msgid "SMTP port"
-msgstr ""
+msgstr "SMTP端口"
 
 #: includes/eme-options.php:2126
 msgid "The port through which you email notifications will be sent. Make sure the firewall doesn't block this port"
-msgstr ""
+msgstr "发送邮件通知的端口。请确保防火墙未阻止此端口"
 
 #: includes/eme-options.php:2128
 msgid "SMTP encryption method"
@@ -10171,11 +10171,11 @@ msgstr "如果您在通过 SMTP 发送邮件时有问题，请检查这个选项
 
 #: includes/eme-options.php:2146
 msgid "Email blacklist"
-msgstr ""
+msgstr "电子邮件黑名单"
 
 #: includes/eme-options.php:2146
 msgid "A list of emails (one per line) that will not be accepted in EME. Examples can be \".com\" (to not accept anything from \".com\"), \"anything.com\" (to not accept addresses ending in \"anything.com\"), or even specific email addresses."
-msgstr ""
+msgstr "EME中不接受的电子邮件列表（每行一个）。示例可以是\".com\"（不接受来自\".com\"的任何邮件）、\"anything.com\"（不接受以\"anything.com\"结尾的地址），甚至是特定的电子邮件地址。"
 
 #. translators: %s is the URL to the Emails management page
 #: includes/eme-options.php:2148
@@ -11640,7 +11640,7 @@ msgstr "默认的情况下，为新人发送生日电子邮件？"
 
 #: includes/eme-options.php:3444
 msgid "If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email."
-msgstr ""
+msgstr "如果选中，注册时填写了生日的新人员将收到生日邮件。请在电子邮件模板设置中更改该邮件的外观。"
 
 #: includes/eme-options.php:3445
 msgid "Limit birthday emails to active members?"
@@ -11656,7 +11656,7 @@ msgstr "EME 后端的日期格式"
 
 #: includes/eme-options.php:3446
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
-msgstr ""
+msgstr "EME表格中使用的日期格式。留空以使用WordPress设置。"
 
 #: includes/eme-options.php:3447
 msgid "EME backend time format"
@@ -11664,7 +11664,7 @@ msgstr "EME 后端的时间格式"
 
 #: includes/eme-options.php:3447
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
-msgstr ""
+msgstr "EME表格中使用的时间格式。留空以使用WordPress设置。"
 
 #: includes/eme-options.php:3455
 msgid "PDF font"
@@ -11689,7 +11689,7 @@ msgstr "额外的 HTML 标签"
 
 #: includes/eme-options.php:3472
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
-msgstr ""
+msgstr "默认情况下，WordPress对允许的HTML标签和属性很严格。您可以在此添加要在允许HTML的EME设置中允许的标签+属性列表（除了默认值之外，不会删除任何内容）。列表应每行一个标签，后跟其可选属性，全部用逗号分隔。例如，要允许iframe标签和一些属性，您将添加：\"iframe,src,height,width,frameborder\" "
 
 #: includes/eme-options.php:3473
 msgid "Extra style attributes"
@@ -11697,7 +11697,7 @@ msgstr "额外样式的属性"
 
 #: includes/eme-options.php:3473
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
-msgstr ""
+msgstr "虽然上面的设置允许您添加额外的HTML标签和属性，但WordPress对style标签中允许的属性更加严格。您可以在此添加要在允许HTML的EME设置中允许的额外style属性列表（除了默认值之外，不会删除任何内容）。列表应每行一个属性。例如，要允许style标签的visibility属性，您将添加：\"visbility\" "
 
 #: includes/eme-options.php:3476
 msgid "Extra html headers"
@@ -11709,7 +11709,7 @@ msgstr "额外的 HTML 页头"
 
 #: includes/eme-options.php:3479
 msgid "Here you can define extra html headers, no placeholders can be used."
-msgstr ""
+msgstr "在此可以定义额外的HTML页眉，不能使用占位符。"
 
 #: includes/eme-options.php:3480
 msgid "Extra html footer"
@@ -11717,7 +11717,7 @@ msgstr "额外的 HTML 页脚"
 
 #: includes/eme-options.php:3480
 msgid "Here you can define extra html footer, no placeholders can be used."
-msgstr ""
+msgstr "在此可以定义额外的HTML页脚，不能使用占位符。"
 
 #: includes/eme-options.php:3481
 msgid "Extra event html headers"
@@ -11745,7 +11745,7 @@ msgstr "激活多站点数据共享？"
 
 #: includes/eme-options.php:3488
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
-msgstr ""
+msgstr "如果选中且WordPress多站点处于活动状态，此EME实例将使用主多站点实例的数据库表。这将导致所有活动、地点、预订、会员资格、模板等与主站点共享。唯一保持本地的是所有EME选项，允许您创建语言子站点或其他内容。还要注意计划的操作：这些操作将仅根据主站点中设置的选项执行，而不是每个子站点。如果您不想在子站点之间共享数据，则不需要此选项。"
 
 #: includes/eme-options.php:3500
 msgid "Save Changes"
@@ -11827,12 +11827,12 @@ msgstr "因为这是一个运行在 localhost 上的网站，所以不会创建�
 #: includes/eme-payments.php:4112
 #: includes/eme-payments.php:4173
 msgid "Nothing found or booking already cancelled"
-msgstr ""
+msgstr "未找到内容或预订已取消"
 
 #: includes/eme-payments.php:4115
 #: includes/eme-payments.php:4176
 msgid "Booking already cancelled"
-msgstr ""
+msgstr "预订已取消"
 
 #: includes/eme-people.php:71
 #: includes/eme-people.php:94
@@ -11952,11 +11952,11 @@ msgstr "核实人员与 WP 之间的联系"
 
 #: includes/eme-people.php:1840
 msgid "The table below shows the people that are linked to the same WordPress user"
-msgstr ""
+msgstr "下表显示与同一WordPress用户关联的人员"
 
 #: includes/eme-people.php:1842
 msgid "Please correct these errors: a WordPress user should be linked to at most one EME person."
-msgstr ""
+msgstr "请更正这些错误：一个WordPress用户最多只能链接到一个EME人员。"
 
 #: includes/eme-people.php:1852
 #: includes/eme-people.php:1900
@@ -11975,7 +11975,7 @@ msgstr "已预订"
 
 #: includes/eme-people.php:1866
 msgid "Non-existing WP user linked!!"
-msgstr ""
+msgstr "链接了不存在的WP用户！！"
 
 #: includes/eme-people.php:1881
 #: includes/eme-people.php:1924
@@ -12110,7 +12110,7 @@ msgstr "相关的家庭成员"
 
 #: includes/eme-people.php:2546
 msgid "Click here to edit that person"
-msgstr ""
+msgstr "点击此处编辑该人员"
 
 #: includes/eme-people.php:2570
 msgid "Phone Number"
@@ -12145,11 +12145,11 @@ msgstr "链接的 WP 用户"
 
 #: includes/eme-people.php:2692
 msgid "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin)."
-msgstr ""
+msgstr "如果您希望在EME人员被删除（移至回收站）时删除关联的WP用户，请将此设置为\"是\"。"
 
 #: includes/eme-people.php:2693
 msgid "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted."
-msgstr ""
+msgstr "默认情况下，仅当EME创建WP用户时（创建会员或为活动预订且设置了创建WP用户的选项时）才设置为true。管理员永远不会被删除。"
 
 #: includes/eme-people.php:2711
 msgid "Update person"
@@ -12242,7 +12242,7 @@ msgstr "人物图像"
 
 #: includes/eme-people.php:4199
 msgid "A person with this name and email already exists"
-msgstr ""
+msgstr "具有此姓名和电子邮件的人员已存在"
 
 #: includes/eme-people.php:4348
 #: includes/eme-people.php:4492
@@ -12472,7 +12472,7 @@ msgstr "循环情况更新"
 
 #: includes/eme-recurrence.php:912
 msgid "Start and end date adjusted for the selected recurrences"
-msgstr ""
+msgstr "已为选定的重复事件调整了开始和结束日期"
 
 #: includes/eme-rsvp.php:573
 msgid "Attendees CSV"
@@ -12551,7 +12551,7 @@ msgstr "不能预订：没有足够的座位!"
 
 #: includes/eme-rsvp.php:1658
 msgid "The location does not allow this many people to be present at the same time."
-msgstr ""
+msgstr "该地点不允许同时有这么多人在场。"
 
 #: includes/eme-rsvp.php:1741
 #: includes/eme-rsvp.php:1768
@@ -12614,36 +12614,36 @@ msgstr "在您更换的时候，一些免费座位被占用了，已经没有足
 #. translators: %s is the CSV row data
 #: includes/eme-rsvp.php:5428
 msgid "No linked payment found: %s"
-msgstr ""
+msgstr "未找到关联的支付：%s"
 
 #. translators: %1$s is the field name, %2$s is the CSV row data
 #: includes/eme-rsvp.php:5432
 #: includes/eme-rsvp.php:5436
 msgid "Field %1$s not valid: %2$s"
-msgstr ""
+msgstr "字段 %1$s 无效：%2$s"
 
 #. translators: %s is the CSV row data
 #: includes/eme-rsvp.php:5442
 msgid "Already paid in full: %s"
-msgstr ""
+msgstr "已全额支付：%s"
 
 #. translators: %1$s is the amount paid, %2$s is the expected amount, %3$s is the CSV row data
 #: includes/eme-rsvp.php:5449
 msgid "Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s"
-msgstr ""
+msgstr "已付金额（%1$s）与预期金额（%2$s）不相等：%3$s"
 
 #. translators: %1$d is the number of entries marked as paid, %2$d is the number ignored, %3$d is the number of errors
 #: includes/eme-rsvp.php:5454
 msgid "Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors"
-msgstr ""
+msgstr "导入完成：%1$d 条记录标记为已付款，%2$d 条已忽略，%3$d 个错误"
 
 #: includes/eme-rsvp.php:5456
 msgid "Ignored entries"
-msgstr ""
+msgstr "已忽略的条目"
 
 #: includes/eme-rsvp.php:5459
 msgid "Erronous entries"
-msgstr ""
+msgstr "有错误的条目"
 
 #. translators: %s is the event name
 #: includes/eme-rsvp.php:5508
@@ -12657,7 +12657,7 @@ msgstr "管理 %s 已批准的预订"
 
 #: includes/eme-rsvp.php:5518
 msgid "Manage trashed bookings"
-msgstr ""
+msgstr "管理已删除的预订"
 
 #: includes/eme-rsvp.php:5520
 msgid "Manage pending bookings"
@@ -12669,11 +12669,11 @@ msgstr "管理已批准的预订"
 
 #: includes/eme-rsvp.php:5532
 msgid "Click on the icon to show the import form to import payments"
-msgstr ""
+msgstr "点击图标显示导入表单以导入支付"
 
 #: includes/eme-rsvp.php:5545
 msgid "If you want, use this to import booking payments"
-msgstr ""
+msgstr "如果您需要，可使用此功能导入预订付款"
 
 #: includes/eme-rsvp.php:5601
 msgid "Filter on custom field answer"
@@ -12867,15 +12867,15 @@ msgstr "任务报名表的布局。"
 #: includes/eme-tasks.php:869
 #: includes/eme-tasks.php:875
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
-msgstr ""
+msgstr "警告：此覆盖仅在单个活动内使用，否则将始终使用通用设置！"
 
 #: includes/eme-tasks.php:905
 msgid "Change the date of the listed tasks by this many days"
-msgstr ""
+msgstr "将列出的任务的日期更改此天数"
 
 #: includes/eme-tasks.php:906
 msgid "Change"
-msgstr ""
+msgstr "更改"
 
 #: includes/eme-tasks.php:915
 msgid "Begin"
@@ -13044,7 +13044,7 @@ msgstr "形式"
 
 #: includes/eme-templates.php:271
 msgid "Newlines will get translated to HTML br-tags when/where/if appropriate but for templates that will get used in HTML output: be sure to not include newlines (certainly not empty lines) unless wanted."
-msgstr ""
+msgstr "换行符将在适当的时候/地方/情况下转换为HTML br标签，但对于将在HTML输出中使用的模板：请确保不包含换行符（特别是空行），除非需要。"
 
 #: includes/eme-templates.php:278
 msgid "The type allows you to indicate where you want to use this template. This helps to limit the dropdown list of templates to chose from in other parts of EME."
@@ -13165,7 +13165,7 @@ msgstr "只显示循环活动一次？"
 
 #: includes/eme-widgets.php:219
 msgid "List header format<br>(if empty &lt;ul&gt; is used)"
-msgstr ""
+msgstr "列表页眉格式<br>（如果为空则使用 &lt;ul&gt;）"
 
 #: includes/eme-widgets.php:223
 msgid "List item format"
@@ -13173,7 +13173,7 @@ msgstr "列表项目格式"
 
 #: includes/eme-widgets.php:234
 msgid "List footer format<br>(if empty &lt;/ul&gt; is used)"
-msgstr ""
+msgstr "列表页脚格式<br>（如果为空则使用 &lt;/ul&gt;）"
 
 #: includes/eme-widgets.php:246
 #: includes/eme-widgets.php:247
@@ -13249,24 +13249,24 @@ msgstr "https://www.e-dynamics.be/"
 
 #: includes/eme-mailer.php:2968
 msgid "Only take unpaid bookings into account"
-msgstr ""
+msgstr "仅考虑未付款的预订"
 
 #: includes/eme-members.php:1405
 msgid "The membership price is not a valid price and has been reset to 0"
-msgstr ""
+msgstr "会员价格不是有效价格，已重置为0"
 
 #: includes/eme-members.php:1413
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
-msgstr ""
+msgstr "会员资格的额外费用不是有效价格，已重置为0"
 
 #: includes/eme-events.php:6757
 msgid "Bookings and tasks"
-msgstr ""
+msgstr "预订和任务"
 
 #: includes/eme-events.php:9675
 #: includes/eme-people.php:1028
 msgid "Signup date"
-msgstr ""
+msgstr "注册日期"
 
 #: includes/eme-events.php:7650
 #: includes/eme-events.php:7851
@@ -13279,7 +13279,7 @@ msgstr ""
 #: includes/eme-options.php:2454
 #: includes/eme-options.php:2520
 msgid "PDF templates as attachments"
-msgstr ""
+msgstr "PDF模板作为附件"
 
 #: includes/eme-events.php:7655
 #: includes/eme-events.php:7856
@@ -13295,7 +13295,7 @@ msgstr ""
 #: includes/eme-options.php:2456
 #: includes/eme-options.php:2522
 msgid "Optionally add PDF templates as attachments to the mail."
-msgstr ""
+msgstr "可选择将PDF模板作为附件添加到邮件中。"
 
 #: includes/eme-events.php:7659
 #: includes/eme-events.php:7860
@@ -13308,73 +13308,73 @@ msgstr ""
 #: includes/eme-options.php:2459
 #: includes/eme-options.php:2525
 msgid "No PDF templates defined yet."
-msgstr ""
+msgstr "尚未定义PDF模板。"
 
 #: includes/eme-events.php:7849
 #: includes/eme-options.php:2329
 msgid "Optionally add attachments to the mail when a booking is pending."
-msgstr ""
+msgstr "可选择在预订待处理时添加邮件附件。"
 
 #: includes/eme-members.php:2422
 #: includes/eme-members.php:2501
 msgid "Mail attachments"
-msgstr ""
+msgstr "邮件附件"
 
 #: includes/eme-members.php:2444
 msgid "Optionally add attachments to the mail when a member extends its membership."
-msgstr ""
+msgstr "可选择在会员续期会籍时添加邮件附件。"
 
 #: includes/eme-members.php:2523
 msgid "Optionally add attachments to the mail when a member has paid for the membership."
-msgstr ""
+msgstr "可选择在会员支付会籍费用时添加邮件附件。"
 
 #: includes/eme-cleanup.php:383
 msgid "Move people who are no longer referenced in bookings, groups or memberships to the trash bin"
-msgstr ""
+msgstr "将不再在预订、群组或会员资格中引用的人员移至回收站"
 
 #: includes/eme-members.php:524
 msgid "Period"
-msgstr ""
+msgstr "期间"
 
 #: includes/eme-members.php:524
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #: includes/eme-members.php:524
 msgid "Total"
-msgstr ""
+msgstr "合计"
 
 #: includes/eme-options.php:2671
 msgid "Automatically anonymize expired members"
-msgstr ""
+msgstr "自动匿名化已过期的会员"
 
 #: includes/eme-options.php:2671
 msgid "Set the number of days after which expired members are automatically anonymized. Leave empty or 0 if not wanted."
-msgstr ""
+msgstr "设置过期会员自动匿名化的天数。留空或0表示不需要。"
 
 #: includes/eme-options.php:2672
 msgid "If set, the value must be greater than the number of days after which you want expired members to be anonymized."
-msgstr ""
+msgstr "如果设置，该值必须大于您希望过期会员被匿名化的天数。"
 
 #: includes/eme-members.php:3025
 #: includes/eme-members.php:3037
 #: includes/eme-people.php:2181
 #: includes/eme-people.php:2193
 msgid "Exact custom field search match"
-msgstr ""
+msgstr "精确自定义字段搜索匹配"
 
 #: includes/eme-members.php:3035
 #: includes/eme-people.php:2191
 msgid "Exact?"
-msgstr ""
+msgstr "精确？"
 
 #: includes/eme-members.php:524
 msgid "Renewed"
-msgstr ""
+msgstr "已续期"
 
 #: includes/eme-payments.php:296
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
-msgstr ""
+msgstr "未找到与此支付关联的会员。如果您认为收到此消息有误，请联系站点管理员。"
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
@@ -13382,751 +13382,751 @@ msgstr ""
 #: includes/eme-members.php:6321
 #: includes/eme-people.php:879
 msgid "Not imported (both email and lastname are empty): %s"
-msgstr ""
+msgstr "未导入（电子邮件和姓氏均为空）：%s"
 
 #. translators: %s is the CSV row data
 #: includes/eme-members.php:6414
 msgid "Not imported (no matching person found): %s"
-msgstr ""
+msgstr "未导入（未找到匹配的人员）：%s"
 
 #: includes/eme-events.php:7266
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
-msgstr ""
+msgstr "重复的开始和结束日期（将其视为系列中第一个活动的日期和最后一个活动的日期）。如果留空结束日期，重复将永远运行，接下来的10个活动将自动计划（每天检查），而较旧的活动将被删除，仅保留最新的。"
 
 #. translators: %s is the start date
 #: includes/eme-recurrence.php:549
 msgid "From %s onwards (automatically extended)"
-msgstr ""
+msgstr "从 %s 起（自动延长）"
 
 #: includes/eme-tasks.php:984
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
-msgstr ""
+msgstr "如果任务的空位数为0，任务描述将被视为下一组任务的章节标题。"
 
 #: includes/eme-actions.php:557
 msgid "Events Made Easy has been installed or upgraded"
-msgstr ""
+msgstr "Events Made Easy 已安装或升级"
 
 #: includes/eme-actions.php:558
 msgid "Please donate to the development of Events Made Easy"
-msgstr ""
+msgstr "请为 Events Made Easy 的开发捐赠"
 
 #: includes/eme-actions.php:569
 msgid "Dismiss"
-msgstr ""
+msgstr "关闭"
 
 #: includes/eme-members.php:232
 msgid "Member deleted"
-msgstr ""
+msgstr "会员已删除"
 
 #: includes/eme-members.php:2687
 msgid "Member deleted email"
-msgstr ""
+msgstr "会员删除电子邮件"
 
 #: includes/eme-members.php:2691
 msgid "Contactperson member deleted email subject"
-msgstr ""
+msgstr "联系人会员删除邮件主题"
 
 #: includes/eme-members.php:2693
 msgid "The subject of the mail sent to the contactperson just before a member is deleted."
-msgstr ""
+msgstr "在会员被删除之前发送给联系人的邮件主题。"
 
 #: includes/eme-members.php:2699
 msgid "Contactperson member deleted email body"
-msgstr ""
+msgstr "联系人会员删除邮件正文"
 
 #: includes/eme-members.php:2701
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
-msgstr ""
+msgstr "在会员被删除之前发送给联系人的邮件正文。"
 
 #: includes/eme-actions.php:704
 msgid "List of next 10 events"
-msgstr ""
+msgstr "接下来10个活动的列表"
 
 #: includes/eme-options.php:3323
 msgid "Frontend Submit options"
-msgstr ""
+msgstr "前端提交选项"
 
 #: includes/eme-options.php:3341
 msgid "State for new event"
-msgstr ""
+msgstr "新活动的状态"
 
 #: includes/eme-options.php:3341
 msgid "The state for a newly submitted event."
-msgstr ""
+msgstr "新提交活动的状态。"
 
 #: includes/eme-options.php:3349
 msgid "Default category for new event"
-msgstr ""
+msgstr "新活动的默认类别"
 
 #: includes/eme-options.php:3349
 msgid "The default category assigned to an event if nothing is selected in the form."
-msgstr ""
+msgstr "如果在表单中未选择任何内容，则分配给活动的默认类别。"
 
 #: includes/eme-options.php:3350
 msgid "Force location creation?"
-msgstr ""
+msgstr "强制创建地点？"
 
 #: includes/eme-options.php:3350
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
-msgstr ""
+msgstr "如果您希望始终创建地点，即使用户没有在EME中设置创建地点所需的权限，也请选中此选项。"
 
 #: includes/eme-options.php:3351
 msgid "Allow guest submit?"
-msgstr ""
+msgstr "允许访客提交？"
 
 #: includes/eme-options.php:3351
 msgid "Check this option if you want guests also to be able to add new events."
-msgstr ""
+msgstr "如果您希望访客也能够添加新活动，请选中此选项。"
 
 #: includes/eme-options.php:3355
 msgid "Guests not allowed text"
-msgstr ""
+msgstr "访客不允许文本"
 
 #: includes/eme-options.php:3356
 msgid "Redirect to login page"
-msgstr ""
+msgstr "重定向到登录页面"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:3358
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
-msgstr ""
+msgstr "不允许访客提交时提交新活动所需的权限。默认：%s"
 
 #: includes/eme-options.php:3363
 msgid "Use wysiwyg?"
-msgstr ""
+msgstr "使用所见即所得编辑器？"
 
 #: includes/eme-options.php:3363
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
-msgstr ""
+msgstr "如果您希望为活动备注使用前端所见即所得编辑器，请选中此选项。"
 
 #: includes/eme-options.php:3364
 msgid "Allow image upload?"
-msgstr ""
+msgstr "允许上传图片？"
 
 #: includes/eme-options.php:3364
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
-msgstr ""
+msgstr "如果您希望在活动备注的前端所见即所得编辑器中允许上传图片，请选中此选项。"
 
 #: includes/eme-fs.php:189
 #: includes/eme-fs.php:868
 msgid "Sorry, but you're not allowed to submit new events."
-msgstr ""
+msgstr "抱歉，您不允许提交新活动。"
 
 #: includes/eme-fs.php:366
 msgid "Create event"
-msgstr ""
+msgstr "创建活动"
 
 #: includes/eme-fs.php:660
 #: includes/eme-options.php:612
 msgid "New event succesfully created."
-msgstr ""
+msgstr "新活动已成功创建。"
 
 #: includes/eme-fs.php:680
 msgid "Please enter a name for the event"
-msgstr ""
+msgstr "请输入活动名称"
 
 #: includes/eme-fs.php:683
 msgid "Enter the event's start date"
-msgstr ""
+msgstr "输入活动的开始日期"
 
 #: includes/eme-fs.php:711
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
-msgstr ""
+msgstr "结束日期/时间必须在开始日期/时间<strong>之后</strong>"
 
 #: includes/eme-options.php:1359
 msgid "Frontend Submit"
-msgstr ""
+msgstr "前端提交"
 
 #: includes/eme-options.php:3352
 msgid "Success Message"
-msgstr ""
+msgstr "成功消息"
 
 #: includes/eme-options.php:3353
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
-msgstr ""
+msgstr "以秒为单位指定在显示成功消息后等待多少秒再重定向到新创建的活动。如果为0，将不会显示成功消息，重定向将立即发生。"
 
 #: includes/eme-options.php:3365
 msgid "Default form format"
-msgstr ""
+msgstr "默认表单格式"
 
 #: includes/eme-options.php:3365
 msgid "The default form format for submitting a new event."
-msgstr ""
+msgstr "提交新活动的默认表单格式。"
 
 #: includes/eme-options.php:3354
 msgid "Always show success message"
-msgstr ""
+msgstr "始终显示成功消息"
 
 #: includes/eme-options.php:3354
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
-msgstr ""
+msgstr "如果您希望始终显示成功消息，即使提交活动的人有权查看新提交的活动，也请选中此选项。这也意味着不会发生重定向。"
 
 #: includes/eme-options.php:3355
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
-msgstr ""
+msgstr "当访客不允许提交新活动且未设置重定向到登录页面选项时显示的文本。"
 
 #: includes/eme-options.php:3356
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
-msgstr ""
+msgstr "如果您希望提交者在未登录（或没有所需访问权限）且不允许访客提交新活动时被重定向到登录页面，请选中此选项。"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:3358
 msgid "Access right to submit new events"
-msgstr ""
+msgstr "提交新活动的访问权限"
 
 #: includes/eme-members.php:568
 msgid "Inactive"
-msgstr ""
+msgstr "未激活"
 
 #: includes/eme-members.php:1910
 msgid "Inactive memberships will not be shown in membership selection lists."
-msgstr ""
+msgstr "未激活的会员资格将不会显示在会员资格选择列表中。"
 
 #: includes/eme-events.php:1251
 msgid "Payment success for your event submission"
-msgstr ""
+msgstr "您的活动提交付款成功"
 
 #: includes/eme-events.php:1253
 msgid "Payment failed for your event submission"
-msgstr ""
+msgstr "您的活动提交付款失败"
 
 #: includes/eme-events.php:1519
 #: includes/eme-events.php:1620
 msgid "Event submit payment page"
-msgstr ""
+msgstr "活动提交付款页面"
 
 #: includes/eme-events.php:8372
 #: includes/eme-members.php:1972
 #: includes/eme-options.php:3362
 msgid "Select a captcha to use"
-msgstr ""
+msgstr "选择要使用的验证码"
 
 #: includes/eme-functions.php:1460
 msgid "Frontend Draft (unpaid)"
-msgstr ""
+msgstr "前端草稿（未付款）"
 
 #: includes/eme-functions.php:4330
 msgid "Basic EME Captcha"
-msgstr ""
+msgstr "基本 EME 验证码"
 
 #: includes/eme-options.php:113
 msgid "A new event has been submitted via the frontend"
-msgstr ""
+msgstr "已通过前端提交了一个新活动"
 
 #: includes/eme-options.php:114
 msgid "The following event has been submitted:<br>#_EVENTNAME (#_STARTDATE #_SARTTIME), edit it here: #_EDITEVENTLINK <br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "已提交以下活动：<br>#_EVENTNAME (#_STARTDATE #_SARTTIME)，请在此编辑：#_EDITEVENTLINK <br><br>此致敬礼，<br>#_CONTACTPERSON"
 
 #: includes/eme-options.php:1519
 msgid "Check this option if you want to use hCaptcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "如果您想在预订/取消/会员表单上使用hCaptcha以阻止垃圾邮件，请选中此选项。您可以自行将 #_CAPTCHA 添加到表单布局中，如果未添加，它将自动添加到提交按钮正上方。"
 
 #: includes/eme-options.php:1522
 msgid "Check this option if you want to use Cloudflare Turnstile on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "如果您想在预订/取消/会员表单上使用Cloudflare Turnstile以阻止垃圾邮件，请选中此选项。您可以自行将 #_CAPTCHA 添加到表单布局中，如果未添加，它将自动添加到提交按钮正上方。"
 
 #: includes/eme-options.php:2482
 msgid "Frontend Event Submit Notification Email"
-msgstr ""
+msgstr "前端活动提交通知电子邮件"
 
 #: includes/eme-options.php:2486
 msgid "Contact Person New Event Email Subject"
-msgstr ""
+msgstr "联系人新活动邮件主题"
 
 #: includes/eme-options.php:2486
 msgid "The subject of the email that will be sent to the contact person when a new event is submitted."
-msgstr ""
+msgstr "提交新活动时发送给联系人的邮件主题。"
 
 #: includes/eme-options.php:2487
 msgid "Contact Person New Event Email Body"
-msgstr ""
+msgstr "联系人新活动邮件正文"
 
 #: includes/eme-options.php:2487
 msgid "The body of the email that will be sent to the contact person when a new event is submitted."
-msgstr ""
+msgstr "提交新活动时发送给联系人的邮件正文。"
 
 #: includes/eme-options.php:2488
 msgid "Author Payment Notification Email Subject"
-msgstr ""
+msgstr "作者支付通知邮件主题"
 
 #: includes/eme-options.php:2488
 msgid "The subject of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
-msgstr ""
+msgstr "通过支付网关收到支付通知时发送给活动作者（通常是创建者）的邮件主题。"
 
 #: includes/eme-options.php:2489
 msgid "Author Payment Notification Email Body"
-msgstr ""
+msgstr "作者支付通知邮件正文"
 
 #: includes/eme-options.php:2489
 msgid "The body of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
-msgstr ""
+msgstr "通过支付网关收到支付通知时发送给活动作者（通常是创建者）的邮件正文。"
 
 #: includes/eme-options.php:2493
 msgid "Event paid mail attachments"
-msgstr ""
+msgstr "活动已付款邮件附件"
 
 #: includes/eme-options.php:2515
 msgid "Optionally add attachments to the mail when an event is paid for."
-msgstr ""
+msgstr "可选择在活动付款时添加邮件附件。"
 
 #: includes/eme-options.php:2737
 msgid "Frontend Event Submit Payment form header format"
-msgstr ""
+msgstr "前端活动提交付款表单页眉格式"
 
 #: includes/eme-options.php:2737
 msgid "The format of the text shown above the payment buttons if the frontend submit form for events requires payment. If left empty, a default message will be shown."
-msgstr ""
+msgstr "如果前端活动提交表单需要付款，支付按钮上方显示的文本格式。如果留空，将显示默认消息。"
 
 #: includes/eme-options.php:2738
 msgid "Frontend Event Submit Payment form footer format"
-msgstr ""
+msgstr "前端活动提交付款表单页脚格式"
 
 #: includes/eme-options.php:2738
 msgid "The format of the text shown below the payment buttons if the frontend submit form for events requires payment."
-msgstr ""
+msgstr "如果前端活动提交表单需要付款，支付按钮下方显示的文本格式。"
 
 #: includes/eme-options.php:3327
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
-msgstr ""
+msgstr "另请查看\"电子邮件模板\"和\"支付\"部分，了解一些额外的前端提交设置。"
 
 #: includes/eme-options.php:3348
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
-msgstr ""
+msgstr "选择在活动提交或付款时接收电子邮件通知的联系人。邮件模板需要在常规邮件模板部分进行配置。"
 
 #: includes/eme-options.php:3348
 msgid "No contact"
-msgstr ""
+msgstr "无联系人"
 
 #: includes/eme-options.php:3352
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
-msgstr ""
+msgstr "成功提交新活动后显示的消息，如果提交活动的人无权查看新提交的活动。如果活动提交需要付款且重定向等待时间（此设置下方的设置）不为0，也会显示此消息。此消息可以包含所有活动占位符。"
 
 #: includes/eme-payments.php:449
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
-msgstr ""
+msgstr "未找到与此支付关联的活动。如果您认为收到此消息有误，请联系站点管理员。"
 
 #: includes/eme-payments.php:2054
 msgid "Incorrect currency."
-msgstr ""
+msgstr "货币不正确。"
 
 #: includes/eme-options.php:3342
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
-msgstr ""
+msgstr "提交新活动需要支付的价格。留空或0表示不需要付款。这与提交活动本身的回复设置无关！请在EME支付设置中配置可选的支付表单页眉/页脚部分。"
 
 #: includes/eme-options.php:3343
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
-msgstr ""
+msgstr "提交活动需要付款时使用的货币。这与提交活动本身的回复设置无关！"
 
 #: includes/eme-options.php:3344
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
-msgstr ""
+msgstr "提交活动需要付款时使用的支付方式。这与提交活动本身的回复设置无关！"
 
 #: includes/eme-payments.php:4289
 msgid "Configured"
-msgstr ""
+msgstr "已配置"
 
 #: includes/eme-options.php:2027
 msgid "By default allow only one sign up for tasks per event for a person?"
-msgstr ""
+msgstr "默认情况下每人每个活动只允许报名一个任务？"
 
 #: includes/eme-options.php:2027
 msgid "Check this option if you want by default that a person can only signup for one task per event."
-msgstr ""
+msgstr "如果您希望默认情况下每人每个活动只能报名一个任务，请选中此选项。"
 
 #: includes/eme-options.php:3435
 msgid "CSV delimiter"
-msgstr ""
+msgstr "CSV分隔符"
 
 #: includes/eme-options.php:3435
 msgid "Set the delimiter used in CSV exports."
-msgstr ""
+msgstr "设置CSV导出中使用的分隔符。"
 
 #: includes/eme-tasks.php:1024
 msgid "Allow only one sign up for tasks per event for a person?"
-msgstr ""
+msgstr "允许每人每个活动只报名一个任务？"
 
 #: includes/eme-tasks.php:1896
 msgid "Only one signup allowed"
-msgstr ""
+msgstr "只允许一次报名"
 
 #: includes/eme-events.php:6501
 msgid "Todos"
-msgstr ""
+msgstr "待办事项"
 
 #: includes/eme-events.php:6615
 msgid "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task."
-msgstr ""
+msgstr "任务可用于召集志愿者帮助活动（例如每班5人在吧台后、清洁工作等），或允许人员在特定时间段内报名参加活动（类似预约）。虽然您可以对任务设置限制并要求确认，但每个任务没有价格，因此报名任务时无法付款。"
 
 #: includes/eme-events.php:6669
 msgid "Enable todos for this event"
-msgstr ""
+msgstr "为此活动启用待办事项"
 
 #: includes/eme-events.php:6672
 msgid "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started."
-msgstr ""
+msgstr "每个日期在过去的时间事项都会向联系人发送邮件，因此您可以使用此功能来计划活动并避免遗忘事项。待办事项的日期基于活动开始日期和以天为单位的偏移参数：偏移量5表示活动开始前5天，偏移量-2表示活动开始后2天。"
 
 #: includes/eme-events.php:6676
 msgid "List of todos"
-msgstr ""
+msgstr "待办事项列表"
 
 #: includes/eme-todos.php:184
 msgid "Event start offset (days)"
-msgstr ""
+msgstr "活动开始偏移（天）"
 
 #: includes/eme-todos.php:221
 msgid "Add new todo"
-msgstr ""
+msgstr "添加新的待办事项"
 
 #: includes/eme-events.php:6743
 msgid "Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form."
-msgstr ""
+msgstr "私有活动仅对登录用户可见。草稿活动从前端不可见。未列出（隐藏）的活动不会在任何列表或日历中显示。前端草稿通常是通过前端提交表单提交的活动的状态。"
 
 #: includes/eme-functions.php:1458
 msgid "Unlisted (hidden)"
-msgstr ""
+msgstr "未列出（隐藏）"
 
 #: includes/eme-tasks.php:633
 msgid "Send reminders for task signups"
-msgstr ""
+msgstr "发送任务报名提醒"
 
 #: includes/eme-templates.php:312
 msgid "PDF mail attach format"
-msgstr ""
+msgstr "PDF邮件附件格式"
 
 #: includes/eme-templates.php:314
 msgid "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the mail, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it."
-msgstr ""
+msgstr "当模板用作邮件附件时，附件有一个默认名称。如果您不喜欢邮件中附件的名称，可以在此更改。相关占位符在其上下文中允许使用（活动/会员资格/预订/会员等）。'.pdf'扩展名将自动添加，因此无需提及。"
 
 #: includes/eme-events.php:630
 msgid "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem."
-msgstr ""
+msgstr "无法为此活动创建新地点：您没有插入地点的权限或数据库存在问题。"
 
 #. translators: Accessibility text.
 #: includes/eme-events.php:6715
 msgid "(opens in a new tab)"
-msgstr ""
+msgstr "（在新标签页中打开）"
 
 #: includes/eme-options.php:1992
 msgid "Attendees/bookings list ignore pending"
-msgstr ""
+msgstr "出席者/预订列表忽略待处理"
 
 #: includes/eme-options.php:1992
 msgid "Whether or not to ignore pending bookings when using the <code>#_ATTENDEES</code> or <code>#_BOOKINGS</code> placeholders."
-msgstr ""
+msgstr "使用 <code>#_ATTENDEES</code> 或 <code>#_BOOKINGS</code> 占位符时是否忽略待处理的预订。"
 
 #: includes/eme-events.php:8726
 msgid "Attendance PDF proof"
-msgstr ""
+msgstr "出席PDF证明"
 
 #: includes/eme-events.php:8727
 msgid "When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed."
-msgstr ""
+msgstr "当访问 #_ATTENDANCEPROOF_URL 生成的URL时，选定的PDF模板将用于为用户生成可作为出席证明的PDF。所有活动和回复占位符均允许使用。"
 
 #: includes/eme-events.php:8729
 msgid "Choose from a template: "
-msgstr ""
+msgstr "从模板中选择："
 
 #: includes/eme-rsvp.php:5646
 msgid "Mark person as present (attendance record)"
-msgstr ""
+msgstr "将人员标记为出席（出勤记录）"
 
 #: includes/eme-rsvp.php:7059
 msgid "Attendance noted."
-msgstr ""
+msgstr "已记录出席。"
 
 #: includes/eme-formfields.php:217
 #: includes/eme-formfields.php:223
 msgid "Add custom field"
-msgstr ""
+msgstr "添加自定义字段"
 
 #: includes/eme-formfields.php:226
 msgid "Manage custom fields"
-msgstr ""
+msgstr "管理自定义字段"
 
 #. translators: %s is the schedule frequency
 #: includes/eme-cron.php:408
 msgid "All queued emails will be send out without limit %s."
-msgstr ""
+msgstr "所有排队的邮件将无限制地发送 %s。"
 
 #. translators: %1$s is the check schedule, %2$s is the mail schedule
 #: includes/eme-cron.php:490
 msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %2$s)"
-msgstr ""
+msgstr "%1$s 将检查是否应将新活动通过电子邮件发送给EME注册者（这些邮件将被排入队列并一次全部发送 %2$s）"
 
 #. translators: %1$s is the check schedule, %2$d is the batch size
 #: includes/eme-cron.php:495
 msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%1$s 将检查是否应将新活动通过电子邮件发送给EME注册者（每次通过REST API调用处理队列时，这些邮件将被排入队列并以每批 %2$d 的方式发送）"
 
 #. translators: %s is the check schedule
 #: includes/eme-cron.php:498
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%s 将检查是否应将新活动通过电子邮件发送给EME注册者（每次通过REST API调用处理队列时，这些邮件将被排入队列并一次全部发送）"
 
 #: includes/eme-events.php:8676
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
-msgstr ""
+msgstr "如果您希望每次授权用户扫描回复出席二维码时都保留出勤记录，请选中此选项。"
 
 #: includes/eme-members.php:2039
 msgid "Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin."
-msgstr ""
+msgstr "如果您希望每次EME管理员扫描会员二维码时都保留出勤记录，请选中此选项。"
 
 #: includes/eme-options.php:2089
 msgid "If you plan to use the registered REST API call to send your queued emails, set the schedule to \"Not scheduled\"."
-msgstr ""
+msgstr "如果您计划使用注册的REST API调用来发送排队的邮件，请将计划设置为\"未安排\"。"
 
 #: includes/eme-options.php:2091
 msgid "Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended)."
-msgstr ""
+msgstr "如果您希望每次处理队列时都发送所有排队的邮件，请将批次数设置为0（不推荐）。"
 
 #: includes/eme-cron.php:393
 msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "警告：在队列中找到消息但邮件队列未激活，因此不会发送。请确保从系统cron运行带有适当选项的注册REST API调用以处理队列。"
 
 #: includes/eme-cron.php:395
 msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "警告：在队列中找到消息但邮件队列未计划处理。请确保从系统cron运行带有适当选项的注册REST API调用以处理队列。"
 
 #. translators: %s is the URL to the Email settings page
 #: includes/eme-mailer.php:3120
 #: includes/eme-mailer.php:3302
 msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
-msgstr ""
+msgstr "邮件排队已激活但未计划。请前往<a href=\"%s\">邮件设置</a>选择计划，或确保从系统cron运行带有适当选项的注册REST API调用以处理队列。"
 
 #: includes/eme-cron.php:328
 msgid "Mail queueing is active but the mail queue is not scheduled to be processed. Make sure to either configure a schedule or run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "邮件排队已激活但邮件队列未计划处理。请确保配置计划或从系统cron运行带有适当选项的注册REST API调用以处理队列。"
 
 #: includes/eme-cron.php:333
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
-msgstr ""
+msgstr "将\"username\"更改为您的用户，将\"password\"更改为在WP用户设置中生成的应用密码。"
 
 #: includes/eme-mailer.php:3431
 #: includes/eme-mailer.php:3466
 msgid "Enter the search text (leave empty to show all)"
-msgstr ""
+msgstr "输入搜索文本（留空显示全部）"
 
 #: includes/eme-mailer.php:2912
 msgid "Select the event(s)"
-msgstr ""
+msgstr "选择活动"
 
 #: includes/eme-members.php:6765
 #: includes/eme-rsvp.php:6406
 msgid "Get IBAN"
-msgstr ""
+msgstr "获取IBAN"
 
 #: includes/eme-events.php:6700
 msgid "If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
-msgstr ""
+msgstr "如果点击保存似乎没有任何反应，请检查所有其他选项卡以确保所有必填字段已填写。"
 
 #: includes/eme-events.php:6719
 msgid "If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
-msgstr ""
+msgstr "如果点击更新似乎没有任何反应，请检查所有其他选项卡以确保所有必填字段已填写。"
 
 #: includes/eme-events.php:7330
 msgid "No events will be created on excluded days."
-msgstr ""
+msgstr "在排除的日期不会创建活动。"
 
 #: includes/eme-events.php:8647
 msgid "Select a payment method"
-msgstr ""
+msgstr "选择支付方式"
 
 #: includes/eme-mailer.php:1161
 msgid "Archived"
-msgstr ""
+msgstr "已归档"
 
 #: includes/eme-cron.php:335
 msgid "\"60\" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course."
-msgstr ""
+msgstr "\"60\"表示脚本最多可以运行55秒（=60-5，5为安全措施）。当然，永远不要将其设置为高于您的cron周期。"
 
 #: includes/eme-events.php:7326
 msgid "Excluded days:"
-msgstr ""
+msgstr "排除的日期："
 
 #: includes/eme-events.php:8773
 msgid "Extra approval settings (also check out the mail templates)"
-msgstr ""
+msgstr "额外的批准设置（也请查看邮件模板）"
 
 #: includes/eme-mailer.php:3386
 msgid "Delete selected emails"
-msgstr ""
+msgstr "删除选定的电子邮件"
 
 #: includes/eme-categories.php:85
 msgid "Add a new category"
-msgstr ""
+msgstr "添加新类别"
 
 #: includes/eme-categories.php:108
 msgid "Delete selected categories"
-msgstr ""
+msgstr "删除选定的类别"
 
 #: includes/eme-categories.php:708
 msgid "Categories deleted"
-msgstr ""
+msgstr "类别已删除"
 
 #: includes/eme-events.php:9802
 msgid "Holiday lists"
-msgstr ""
+msgstr "假日列表"
 
 #: includes/eme-events.php:9824
 msgid "Mails"
-msgstr ""
+msgstr "邮件"
 
 #: includes/eme-events.php:9826
 #: includes/eme-mailer.php:3460
 msgid "Archived mailings"
-msgstr ""
+msgstr "已归档的邮寄"
 
 #: includes/eme-holidays.php:73
 msgid "Add a new list of holidays"
-msgstr ""
+msgstr "添加新的假日列表"
 
 #: includes/eme-holidays.php:78
 msgid "Add holidays list"
-msgstr ""
+msgstr "添加假日列表"
 
 #: includes/eme-holidays.php:83
 msgid "Manage list of holidays"
-msgstr ""
+msgstr "管理假日列表"
 
 #: includes/eme-holidays.php:96
 msgid "Delete selected lists of holidays"
-msgstr ""
+msgstr "删除选定的假日列表"
 
 #: includes/eme-holidays.php:319
 msgid "Holiday lists deleted"
-msgstr ""
+msgstr "假日列表已删除"
 
 #: includes/eme-mailer.php:1860
 msgid "Mailings archived"
-msgstr ""
+msgstr "邮寄已归档"
 
 #: includes/eme-mailer.php:1870
 #: includes/eme-mailer.php:1950
 msgid "Mailings deleted"
-msgstr ""
+msgstr "邮寄已删除"
 
 #: includes/eme-mailer.php:3373
 msgid "Enter an optional search text"
-msgstr ""
+msgstr "输入可选的搜索文本"
 
 #: includes/eme-mailer.php:3376
 msgid "Filter emails"
-msgstr ""
+msgstr "筛选电子邮件"
 
 #: includes/eme-mailer.php:1712
 #: includes/eme-mailer.php:2026
 #: includes/eme-mailer.php:2032
 msgid "Reuse this mail"
-msgstr ""
+msgstr "重用此邮件"
 
 #: includes/eme-mailer.php:1796
 #: includes/eme-mailer.php:1806
 #: includes/eme-mailer.php:1910
 msgid "Delete this mailing"
-msgstr ""
+msgstr "删除此邮寄"
 
 #: includes/eme-mailer.php:1796
 #: includes/eme-mailer.php:1801
 msgid "Cancel the sending of this mailing"
-msgstr ""
+msgstr "取消此邮寄的发送"
 
 #: includes/eme-mailer.php:1806
 msgid "Archive this mailing"
-msgstr ""
+msgstr "归档此邮寄"
 
 #: includes/eme-mailer.php:1809
 #: includes/eme-mailer.php:1912
 msgid "Reuse this mailing"
-msgstr ""
+msgstr "重用此邮寄"
 
 #: includes/eme-mailer.php:1812
 msgid "Retry failed messages from this mailing"
-msgstr ""
+msgstr "重试此邮寄中失败的消息"
 
 #. translators: %s is the mailing creation date
 #: includes/eme-mailer.php:1826
 msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
-msgstr ""
+msgstr "要发送的电子邮件数量是在创建邮寄时估算的（%s）。这将在发送时重新评估。"
 
 #: includes/eme-mailer.php:1831
 msgid "Show mailing report"
-msgstr ""
+msgstr "显示邮寄报告"
 
 #: includes/eme-mailer.php:2032
 msgid "Cancel the sending of this mail"
-msgstr ""
+msgstr "取消此邮件的发送"
 
 #: includes/eme-mailer.php:3345
 msgid "Enter any valid mail address"
-msgstr ""
+msgstr "输入任何有效的邮件地址"
 
 #: includes/eme-events.php:358
 msgid "Event moved to the trash bin"
-msgstr ""
+msgstr "活动已移至回收站"
 
 #: includes/eme-events.php:6239
 msgid "Delete selected events (move to trash bin)"
-msgstr ""
+msgstr "删除选定的活动（移至回收站）"
 
 #: includes/eme-events.php:6345
 msgid "Delete selected recurrences (and move events to trash bin)"
-msgstr ""
+msgstr "删除选定的重复（并将活动移至回收站）"
 
 #: includes/eme-events.php:6703
 msgid "Are you sure you want to move this event to the trash bin?"
-msgstr ""
+msgstr "您确定要将此活动移至回收站吗？"
 
 #: includes/eme-events.php:6708
 msgid "Move event to trash bin"
-msgstr ""
+msgstr "将活动移至回收站"
 
 #: includes/eme-events.php:10399
 msgid "Events moved to the trash bin"
-msgstr ""
+msgstr "活动已移至回收站"
 
 #: includes/eme-cleanup.php:427
 msgid "Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields"
-msgstr ""
+msgstr "同时删除已定义的类别、模板、假日、折扣、状态、国家/地区和自定义表单字段"
 
 #: includes/eme-functions.php:447
 msgid "Please check the Friendly Captcha box"
-msgstr ""
+msgstr "请勾选Friendly Captcha复选框"
 
 #: includes/eme-functions.php:4328
 msgid "Friendly Captcha"
-msgstr ""
+msgstr "Friendly Captcha"
 
 #: includes/eme-options.php:1525
 msgid "Use Friendly Captcha for forms?"
-msgstr ""
+msgstr "在表单中使用Friendly Captcha？"
 
 #: includes/eme-options.php:1525
 msgid "Check this option if you want to use Friendly Captcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "如果您想在预订/取消/会员表单上使用Friendly Captcha以阻止垃圾邮件，请选中此选项。您可以自行将 #_CAPTCHA 添加到表单布局中，如果未添加，它将自动添加到提交按钮正上方。"
 
 #: includes/eme-options.php:1526
 msgid "Friendly Captcha site key"
-msgstr ""
+msgstr "Friendly Captcha 站点密钥"
 
 #: includes/eme-options.php:1527
 msgid "Friendly Captcha API key"
-msgstr ""
+msgstr "Friendly Captcha API密钥"
 
 #: includes/eme-events.php:7013
 msgid "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES)."
-msgstr ""
+msgstr "您的活动似乎只有一个价格，因此无法在活动回复表单格式中使用 #_SEATS{xx}。请更正回复表单格式以使用 #_SEATS（或 #_SPACES）。"
 
 #: includes/eme-events.php:7038
 msgid "Please correct the RSVP form format to use #_SEATS."
-msgstr ""
+msgstr "请更正回复表单格式以使用 #_SEATS。"
 
 #: includes/eme-events.php:7040
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
-msgstr ""
+msgstr "请更正回复表单格式以对所有价格类别使用 #_SEATS{xx}。"
 
 #: includes/eme-events.php:6790
 msgid "Free:"
-msgstr ""
+msgstr "免费："
 
 #: includes/eme-events.php:6808
 #: includes/eme-events.php:6811
@@ -14137,17 +14137,17 @@ msgstr ""
 #: includes/eme-rsvp.php:6286
 #: includes/eme-rsvp.php:6289
 msgid "Max:"
-msgstr ""
+msgstr "最大："
 
 #: includes/eme-events.php:6809
 #: includes/eme-events.php:10127
 #: includes/eme-rsvp.php:6287
 msgid "Max (from location):"
-msgstr ""
+msgstr "最大（来自地点）："
 
 #: includes/eme-events.php:8801
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
-msgstr ""
+msgstr "已设置地点最大容量。如果您的活动最大人数超过此容量，地点容量将优先。"
 
 #. translators: %d is the number of persons signed up
 #: includes/eme-tasks.php:953
@@ -14157,7 +14157,7 @@ msgstr[0] ""
 
 #: includes/eme-functions.php:4389
 msgid "Use Ctrl-click to sort on multiple columns"
-msgstr ""
+msgstr "使用Ctrl+点击对多列排序"
 
 #: includes/eme-options.php:2761
 #: includes/eme-options.php:2798
@@ -14175,7 +14175,7 @@ msgstr ""
 #: includes/eme-options.php:3271
 #: includes/eme-options.php:3295
 msgid "Extra payment method information"
-msgstr ""
+msgstr "额外的支付方式信息"
 
 #. translators: %s is the internal payment method name
 #: includes/eme-options.php:2763
@@ -14194,7 +14194,7 @@ msgstr ""
 #: includes/eme-options.php:3274
 #: includes/eme-options.php:3300
 msgid "Internal payment method name: %s"
-msgstr ""
+msgstr "内部支付方式名称：%s"
 
 #: includes/eme-options.php:2897
 #: includes/eme-options.php:2935
@@ -14202,7 +14202,7 @@ msgstr ""
 #: includes/eme-options.php:3072
 #: includes/eme-options.php:3099
 msgid "Refunding not implemented."
-msgstr ""
+msgstr "未实现退款功能。"
 
 #. translators: %s is the payment notification URL
 #: includes/eme-options.php:2800
@@ -14217,7 +14217,7 @@ msgstr ""
 #: includes/eme-options.php:3236
 #: includes/eme-options.php:3297
 msgid "The url for payment notifications is: %s"
-msgstr ""
+msgstr "支付通知的 URL 为：%s"
 
 #: includes/eme-options.php:2801
 #: includes/eme-options.php:2859
@@ -14228,423 +14228,423 @@ msgstr ""
 #: includes/eme-options.php:3272
 #: includes/eme-options.php:3298
 msgid "Refunding is possible."
-msgstr ""
+msgstr "可以进行退款。"
 
 #: includes/eme-options.php:2994
 msgid "Refunding is possible if funds are available on the account."
-msgstr ""
+msgstr "如果账户中有可用资金，则可以进行退款。"
 
 #: includes/eme-functions.php:4391
 msgid "All selected columns are used for sorting"
-msgstr ""
+msgstr "所有选定的列都用于排序"
 
 #: includes/eme-options.php:67
 msgid "Unsubscription confirmation"
-msgstr ""
+msgstr "退订确认"
 
 #: includes/eme-options.php:2567
 msgid "Unsubscribe confirmation email subject"
-msgstr ""
+msgstr "退订确认电子邮件主题"
 
 #: includes/eme-options.php:2567
 msgid "The subject of the email that will be sent to the person as confirmation after they unsubscribe."
-msgstr ""
+msgstr "用户退订后发送给该人员的确认电子邮件的主题。"
 
 #: includes/eme-options.php:2568
 msgid "Unsubscribe confirmation email body"
-msgstr ""
+msgstr "退订确认电子邮件正文"
 
 #: includes/eme-options.php:2568
 msgid "The body of the email that will be sent to the person as confirmation after they unsubscribe."
-msgstr ""
+msgstr "用户退订后发送给该人员的确认电子邮件的正文。"
 
 #: includes/eme-tasks.php:755
 msgid "The subject of the email that will be sent to the respondent if the task signup has been updated by an admin."
-msgstr ""
+msgstr "如果任务报名已被管理员更新，将发送给报名者的电子邮件主题。"
 
 #: includes/eme-tasks.php:764
 msgid "The body of the email that will be sent to the respondent if the task signup has been updated by an admin."
-msgstr ""
+msgstr "如果任务报名已被管理员更新，将发送给报名者的电子邮件正文。"
 
 #: includes/eme-options.php:68
 msgid "Hi,<br><br>This email is to confirm that you have been successfully unsubscribed.<br><br>If you ever wish to resubscribe or have any questions, please feel free to reach out to us at #_CONTACTPERSON<br><br>Yours faithfully"
-msgstr ""
+msgstr "您好，<br><br>此电子邮件用于确认您已成功退订。<br><br>如果您希望重新订阅或有任何问题，请随时通过 #_CONTACTPERSON 联系我们。<br><br>此致敬礼"
 
 #: includes/eme-functions.php:1461
 msgid "Trashed"
-msgstr ""
+msgstr "已移至回收站"
 
 #: includes/eme-options.php:2111
 msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
-msgstr ""
+msgstr "注意：如果某些电子邮件的回复地址与发件人地址相同，回复地址的值也将被强制设为相同。"
 
 #: includes/eme-events.php:7735
 #: includes/eme-options.php:2295
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
-msgstr ""
+msgstr "当此邮件尚未发送（在队列中）且预订在此期间被批准或支付，并且已计划为此操作发送邮件时，此邮件将从队列中移除，以免用户同时收到两封邮件。"
 
 #: includes/eme-mailer.php:1154
 msgid "Delayed"
-msgstr ""
+msgstr "已延迟"
 
 #: includes/eme-mailer.php:2893
 msgid "All emails"
-msgstr ""
+msgstr "所有电子邮件"
 
 #: includes/eme-mailer.php:2059
 msgid "Emails scheduled to be resend"
-msgstr ""
+msgstr "计划重新发送的电子邮件"
 
 #: includes/eme-mailer.php:2069
 msgid "Emails deleted"
-msgstr ""
+msgstr "已删除的电子邮件"
 
 #: includes/eme-mailer.php:3385
 msgid "Resend selected emails"
-msgstr ""
+msgstr "重新发送选定的电子邮件"
 
 #: includes/eme-events.php:7530
 #: includes/eme-options.php:2232
 msgid "When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for)."
-msgstr ""
+msgstr "当活动配置为支付后自动批准预订且应付总额为 0 时，当待处理的预订被标记为已支付时（而不是已支付电子邮件，因为无需支付任何费用），将发送此电子邮件。"
 
 #: includes/eme-events.php:7532
 #: includes/eme-options.php:2234
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
-msgstr ""
+msgstr "由于支付后的 RSVP 通知未启用，当预订被标记为已支付时，也将发送此电子邮件。"
 
 #: includes/eme-events.php:9816
 msgid "Recipient name"
-msgstr ""
+msgstr "收件人姓名"
 
 #: includes/eme-events.php:9817
 msgid "Recipient email"
-msgstr ""
+msgstr "收件人电子邮件"
 
 #: includes/eme-options.php:1509
 msgid "Select yes to enable the members and membership features."
-msgstr ""
+msgstr "选择\"是\"以启用成员和会员资格功能。"
 
 #: includes/eme-options.php:2054
 msgid "Send paid RSVP emails immediately?"
-msgstr ""
+msgstr "立即发送已支付的 RSVP 电子邮件？"
 
 #: includes/eme-options.php:2054
 msgid "Check this option if you want to send out the paid emails as soon as possible and not wait for the next queue run."
-msgstr ""
+msgstr "如果您希望尽快发送已支付的电子邮件，而不等待下一次队列运行，请选中此选项。"
 
 #: includes/eme-options.php:1509
 msgid "Use membership feature?"
-msgstr ""
+msgstr "使用会员资格功能？"
 
 #: includes/eme-actions.php:452
 #: includes/eme-events.php:9617
 msgid "Insert image"
-msgstr ""
+msgstr "插入图片"
 
 #: includes/eme-actions.php:453
 #: includes/eme-events.php:9618
 msgid "Insert"
-msgstr ""
+msgstr "插入"
 
 #: includes/eme-actions.php:455
 #: includes/eme-events.php:9620
 msgid "Insert from Media Library"
-msgstr ""
+msgstr "从媒体库插入"
 
 #: includes/eme-actions.php:456
 #: includes/eme-cleanup.php:387
 #: includes/eme-events.php:9621
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 #: includes/eme-actions.php:457
 #: includes/eme-events.php:9622
 msgid "Visual"
-msgstr ""
+msgstr "可视化"
 
 #: includes/eme-actions.php:459
 #: includes/eme-events.php:9624
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "插入不换行空格"
 
 #: includes/eme-options.php:3087
 #: includes/eme-options.php:3088
 msgid "Contact SumUp to make sure your created application has the rights needed to create and process checkout payments."
-msgstr ""
+msgstr "请联系 SumUp，确保您创建的应用程序具有创建和处理结账支付所需的权限。"
 
 #: includes/eme-options.php:3458
 msgid "HTML Editor"
-msgstr ""
+msgstr "HTML 编辑器"
 
 #: includes/eme-options.php:3461
 msgid "TinyMCE"
-msgstr ""
+msgstr "TinyMCE"
 
 #: includes/eme-options.php:3462
 msgid "Jodit"
-msgstr ""
+msgstr "Jodit"
 
 #: includes/eme-options.php:3464
 msgid "The HTML editor used by the plugin."
-msgstr ""
+msgstr "该插件使用的 HTML 编辑器。"
 
 #: payment_gateways/paypal/class_eme_paypal.php:109
 msgid "Booking cancelled and refunded"
-msgstr ""
+msgstr "预订已取消并退款"
 
 #. translators: %1$d is the person ID, %2$s is the CSV row data
 #: includes/eme-people.php:919
 msgid "Updated person %1$d: %2$s"
-msgstr ""
+msgstr "已更新人员 %1$d：%2$s"
 
 #: includes/eme-formfields.php:381
 msgid "Enter here the default value a field should have, or enter the list of values for fields that support multiple values."
-msgstr ""
+msgstr "在此处输入字段的默认值，或输入支持多个值的字段的值列表。"
 
 #: includes/eme-formfields.php:382
 msgid "For fields that support multiple values (like Dropdown or Checkbox), enter one value per line. To include an empty first option (e.g., for a blank default in a dropdown), start with an empty line at the top."
-msgstr ""
+msgstr "对于支持多个值的字段（如下拉列表或复选框），每行输入一个值。要包含一个空的首选项（例如，用于下拉列表中的空白默认值），请在顶部以空行开始。"
 
 #: includes/eme-formfields.php:383
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
-msgstr ""
+msgstr "对于\"日期（Javascript）\"、\"日期时间（Javascript）\"和\"时间（Javascript）\"类型，您可以选择输入\"NOW\"一词，以便在显示字段时自动使用当前日期和/或时间。"
 
 #: includes/eme-options.php:1814
 msgid "The format of the page title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "查看单个活动时页面标题的格式。请遵循之前的格式说明。"
 
 #: includes/eme-options.php:1815
 msgid "The format of the page html title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "查看单个活动时页面 HTML 标题的格式。请遵循之前的格式说明。"
 
 #: includes/eme-options.php:1815
 msgid "If empty (the default), the value of \"Single event page title format\" will be used."
-msgstr ""
+msgstr "如果为空（默认），将使用\"单个活动页面标题格式\"的值。"
 
 #: includes/eme-options.php:1865
 msgid "The format of the page title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "查看单个地点时页面标题的格式。请遵循之前的格式说明。"
 
 #: includes/eme-options.php:1866
 msgid "The format of the page html title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "查看单个地点时页面 HTML 标题的格式。请遵循之前的格式说明。"
 
 #: includes/eme-options.php:1866
 msgid "If empty (the default), the value of \"Single location page title format\" will be used."
-msgstr ""
+msgstr "如果为空（默认），将使用\"单个地点页面标题格式\"的值。"
 
 #: includes/eme-people.php:1250
 msgid "Discount info"
-msgstr ""
+msgstr "折扣信息"
 
 #: includes/eme-people.php:1251
 msgid "Payment Gateway"
-msgstr ""
+msgstr "支付网关"
 
 #: includes/eme-discounts.php:968
 msgid "Min #seats booked"
-msgstr ""
+msgstr "最少预订座位数"
 
 #: includes/eme-discounts.php:974
 msgid "Max #seats booked"
-msgstr ""
+msgstr "最多预订座位数"
 
 #: includes/eme-events.php:6241
 msgid "Private events are only accessible to logged-in users"
-msgstr ""
+msgstr "私有活动仅对已登录用户可访问"
 
 #: includes/eme-events.php:6242
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
-msgstr ""
+msgstr "隐藏活动对所有人可访问，但不会显示在活动列表或日历中。"
 
 #: includes/eme-events.php:6242
 msgid "Make selected events hidden"
-msgstr ""
+msgstr "将选定的活动设为隐藏"
 
 #: includes/eme-formfields.php:596
 msgid "Datetime-local"
-msgstr ""
+msgstr "日期时间-本地"
 
 #: includes/eme-formfields.php:597
 msgid "Month"
-msgstr ""
+msgstr "月份"
 
 #: includes/eme-formfields.php:598
 msgid "Week"
-msgstr ""
+msgstr "周"
 
 #: includes/eme-formfields.php:599
 msgid "Time"
-msgstr ""
+msgstr "时间"
 
 #: includes/eme-formfields.php:601
 msgid "Color"
-msgstr ""
+msgstr "颜色"
 
 #: includes/eme-formfields.php:603
 msgid "Number"
-msgstr ""
+msgstr "数字"
 
 #: includes/eme-formfields.php:604
 msgid "Range"
-msgstr ""
+msgstr "范围"
 
 #: includes/eme-formfields.php:605
 msgid "Tel"
-msgstr ""
+msgstr "电话"
 
 #: includes/eme-formfields.php:606
 msgid "Url"
-msgstr ""
+msgstr "网址"
 
 #: includes/eme-formfields.php:607
 msgid "Datalist"
-msgstr ""
+msgstr "数据列表"
 
 #: includes/eme-rsvp.php:5632
 #: includes/eme-rsvp.php:5650
 msgid "Add selected persons to group"
-msgstr ""
+msgstr "将选定的人员添加到分组"
 
 #: includes/eme-rsvp.php:5633
 #: includes/eme-rsvp.php:5651
 msgid "Remove selected persons from group"
-msgstr ""
+msgstr "从分组中移除选定的人员"
 
 #: includes/eme-discounts.php:970
 msgid "The minimum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "应用折扣所需的最少预订座位数。留空（不是 0）表示无限制。"
 
 #: includes/eme-discounts.php:976
 msgid "The maximum number of seats that need to be booked for the discount to apply. Leave empty (not 0) for no limit."
-msgstr ""
+msgstr "应用折扣所需的最大预订座位数。留空（不是 0）表示无限制。"
 
 #: includes/eme-rsvp.php:106
 #: includes/eme-rsvp.php:811
 #: includes/eme-rsvp.php:1396
 msgid "Not allowed"
-msgstr ""
+msgstr "不允许"
 
 #: includes/eme-discounts.php:962
 msgid "Maximum usage count per user"
-msgstr ""
+msgstr "每个用户的最大使用次数"
 
 #: includes/eme-discounts.php:964
 msgid "The maximum number of times this discount can be applied per user (this implies the person needs to be logged in). This checks all bookings and members, so it can be heavy on the database (and removed bookings of course impact the count)."
-msgstr ""
+msgstr "此折扣每个用户可应用的最大次数（这意味着该人员需要已登录）。这会检查所有预订和成员，因此可能对数据库有较大压力（已删除的预订当然也会影响计数）。"
 
 #: includes/eme-templates.php:47
 msgid "Task form"
-msgstr ""
+msgstr "任务表单"
 
 #: includes/eme-templates.php:48
 msgid "Task related mail"
-msgstr ""
+msgstr "任务相关邮件"
 
 #. translators: %d is the number of pending task signups
 #: events-manager.php:329
 msgid "%d pending task signup"
 msgid_plural "%d pending task signups"
-msgstr[0] ""
+msgstr[0] "%d 个待处理的任务报名"
 
 #: includes/eme-tasks.php:1019
 msgid "Consider pending (unapproved) task signups as available for new signups"
-msgstr ""
+msgstr "将待处理（未批准）的任务报名视为可用于新报名"
 
 #: includes/eme-tasks.php:865
 msgid "Task Signup Form (task entry section)"
-msgstr ""
+msgstr "任务报名表单（任务输入部分）"
 
 #: includes/eme-tasks.php:866
 msgid "The layout of the task entry section in the signup form."
-msgstr ""
+msgstr "报名表单中任务输入部分的布局。"
 
 #: includes/eme-tasks.php:871
 msgid "Task Signup Form (personal info section)"
-msgstr ""
+msgstr "任务报名表单（个人信息部分）"
 
 #: includes/eme-events.php:8927
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
-msgstr ""
+msgstr "（留空或输入 0 以禁用此限制。允许使用负数，对于小时可以使用小数。）"
 
 #: includes/eme-payments.php:2222
 msgid "Webhook not created: localhost not allowed."
-msgstr ""
+msgstr "未创建 Webhook：不允许 localhost。"
 
 #: includes/eme-mailer.php:3284
 msgid "Small remark: the preview mail will not replace booking or attendee related placeholders."
-msgstr ""
+msgstr "小提示：预览邮件不会替换与预订或出席者相关的占位符。"
 
 #: includes/eme-rsvp.php:6558
 #: includes/eme-rsvp.php:6571
 #: includes/eme-rsvp.php:6584
 msgid "Nothing done."
-msgstr ""
+msgstr "未执行任何操作。"
 
 #. translators: %s is the membership name
 #: includes/eme-payments.php:51
 msgid "Member signup for %s"
-msgstr ""
+msgstr "%s 的成员注册"
 
 #. translators: %s is the event submission name
 #: includes/eme-payments.php:55
 msgid "Event submission %s"
-msgstr ""
+msgstr "活动提交 %s"
 
 #. translators: %s is the event name
 #: includes/eme-payments.php:62
 msgid "Booking for %s"
-msgstr ""
+msgstr "%s 的预订"
 
 #: includes/eme-discounts.php:888
 msgid "Credit Voucher"
-msgstr ""
+msgstr "信用凭证"
 
 #: includes/eme-discounts.php:890
 msgid "Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance."
-msgstr ""
+msgstr "仅适用于固定折扣。用作信用凭证时，折扣可以多次兑换，直到全部金额用完。折扣值将始终显示剩余凭证余额。"
 
 #: includes/eme-events.php:7261
 msgid "Recurrence start date"
-msgstr ""
+msgstr "重复开始日期"
 
 #: includes/eme-events.php:7263
 msgid "Recurrence end date"
-msgstr ""
+msgstr "重复结束日期"
 
 #: includes/eme-mailer.php:2406
 msgid "Please select at least one recipient."
-msgstr ""
+msgstr "请至少选择一个收件人。"
 
 #: includes/eme-locations.php:623
 msgid "Location balloon format"
-msgstr ""
+msgstr "地点气泡格式"
 
 #: includes/eme-locations.php:627
 msgid "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default."
-msgstr ""
+msgstr "如果您不喜欢默认的气泡格式，可以在此处设置。留空以保持默认设置。"
 
 #: includes/eme-options.php:3312
 msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zooming. A browser refresh on a page showing a map will be necessary to see the effect of this change."
-msgstr ""
+msgstr "\"是\"启用地图滚轮缩放。\"否\"禁用地图滚轮缩放。需要在显示地图的页面上刷新浏览器才能看到此更改的效果。"
 
 #: includes/eme-actions.php:371
 #: includes/eme-events.php:9580
 msgid "Select country"
-msgstr ""
+msgstr "选择国家/地区"
 
 #: includes/eme-discounts.php:936
 #: includes/eme-events.php:8884
 #: includes/eme-mailer.php:3018
 #: includes/eme-mailer.php:3184
 msgid "Select one or more memberships"
-msgstr ""
+msgstr "选择一个或多个会员资格"
 
 #: includes/eme-actions.php:370
 #: includes/eme-events.php:9579
 msgid "Select state/province"
-msgstr ""
+msgstr "选择州/省"
 
 #: includes/eme-attendances.php:127
 #: includes/eme-mailer.php:3103
@@ -14654,84 +14654,84 @@ msgstr ""
 #: includes/eme-people.php:2045
 #: includes/eme-people.php:2539
 msgid "Select a person"
-msgstr ""
+msgstr "选择一个人员"
 
 #: includes/eme-options.php:2001
 msgid "In case online payment is possible, the payment redirect message will also be shown, see the payment options if you want to change that message."
-msgstr ""
+msgstr "如果可以进行在线支付，支付重定向消息也将显示。如果您想更改该消息，请参阅支付选项。"
 
 #: includes/eme-rsvp.php:5122
 msgid "Select an event"
-msgstr ""
+msgstr "选择一个活动"
 
 #: includes/eme-formfields.php:420
 msgid "Admin HTML field attributes"
-msgstr ""
+msgstr "管理员 HTML 字段属性"
 
 #: includes/eme-formfields.php:422
 msgid "If you want different HTML attributes in the admin interface, enter these here."
-msgstr ""
+msgstr "如果您想在管理员界面中使用不同的 HTML 属性，请在此处输入。"
 
 #: includes/eme-options.php:2968
 msgid "Bancontact Pay - Wero (Payconiq)"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq)"
 
 #: includes/eme-options.php:2975
 msgid "Bancontact Pay - Wero (Payconiq) live or test"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) 正式环境或测试环境"
 
 #: includes/eme-options.php:2978
 msgid "Bancontact Pay - Wero (Payconiq) Sandbox (for testing)"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) 沙盒（用于测试）"
 
 #: includes/eme-options.php:2979
 msgid "Bancontact Pay - Wero (Payconiq) Live"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) 正式环境"
 
 #: includes/eme-options.php:2981
 msgid "Choose wether you want to test Bancontact Pay - Wero (Payconiq) in a sandbox or go live and really use Bancontact Pay - Wero (Payconiq)."
-msgstr ""
+msgstr "选择是在沙盒中测试 Bancontact Pay - Wero (Payconiq)，还是正式上线并实际使用 Bancontact Pay - Wero (Payconiq)。"
 
 #: includes/eme-options.php:2983
 msgid "Bancontact Pay - Wero (Payconiq) API key"
-msgstr ""
+msgstr "Bancontact Pay - Wero (Payconiq) API 密钥"
 
 #: includes/eme-formfields.php:314
 msgid "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder in 'HTML Field attributes' to be used when the field is shown. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show."
-msgstr ""
+msgstr "对于\"下拉列表\"和\"下拉列表（多选）\"类型，您可以在\"HTML 字段属性\"中选择性地输入占位符，以便在显示字段时使用。请确保添加一个空的第一行（值和标签），否则占位符可能不会显示。"
 
 #: includes/eme-formfields.php:416
 msgid "For the types 'Dropdown' and 'Dropdown (multiple)' you can optionally enter a placeholder by using data-placeholder: data-placeholder='my placeholder value'. Be sure to add an empty first line (value & tag) then, otherwise the placeholder might not show."
-msgstr ""
+msgstr "对于\"下拉列表\"和\"下拉列表（多选）\"类型，您可以通过使用 data-placeholder 选择性地输入占位符：data-placeholder='我的占位符值'。请确保添加一个空的第一行（值和标签），否则占位符可能不会显示。"
 
 #: includes/eme-payments.php:14
 #: includes/eme-payments.php:15
 msgid "Bancontact Pay - Wero"
-msgstr ""
+msgstr "Bancontact Pay - Wero"
 
 #: includes/eme-formfields.php:416
 msgid "EME uses a custom snapselect version for dropdowns, see https://github.com/liedekef/snapselect for all data-related possibilities."
-msgstr ""
+msgstr "EME 使用自定义的 snapselect 版本来实现下拉列表，有关所有数据相关功能，请参阅 https://github.com/liedekef/snapselect。"
 
 #: includes/eme-events.php:1141
 msgid "Error updating attendance count, but ignoring"
-msgstr ""
+msgstr "更新出席人数时出错，但已忽略"
 
 #: includes/eme-events.php:8680
 msgid "Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration."
-msgstr ""
+msgstr "如果您希望将扫描次数限制为每天预订的座位数，请选择此选项。如果不选（默认），扫描次数将限制为整个活动期间预订的座位数。"
 
 #: includes/eme-events.php:8688
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter."
-msgstr ""
+msgstr "扫描 #_QRCODE 或 #_ATTENDANCE_URL 生成的 URL 时，您还可以选择将其用作入场券。此选项允许定义从哪个时间点开始允许人员进入。"
 
 #: includes/eme-events.php:8799
 msgid "For multiseat events, separate the values by '||'"
-msgstr ""
+msgstr "对于多座位活动，请用 '||' 分隔值"
 
 #: includes/eme-members.php:1632
 msgid "Select a member"
-msgstr ""
+msgstr "选择一个成员"
 
 #. translators: %1$s is the event name, %2$d is the payment ID
 #: includes/eme-payments.php:2744
@@ -14739,259 +14739,254 @@ msgstr ""
 #: includes/eme-payments.php:3259
 #: includes/eme-payments.php:3275
 msgid "Booking refunded for %1$s, payment id %2$d"
-msgstr ""
+msgstr "%1$s 的预订已退款，支付 ID %2$d"
 
 #: includes/eme-people.php:996
 #: includes/eme-people.php:1175
 #: includes/eme-people.php:1455
 msgid "No access"
-msgstr ""
+msgstr "无权限"
 
 #: includes/eme-actions.php:372
 #: includes/eme-events.php:9581
 msgid "Make your choice"
-msgstr ""
+msgstr "请做出选择"
 
 #. translators: %1$d is the scan count, %2$d is the maximum allowed count
 #: includes/eme-events.php:1132
 msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
-msgstr ""
+msgstr "拒绝访问：扫描次数（%1$d）超过最大次数（%2$d）"
 
 #: includes/eme-events.php:8680
 msgid "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with care."
-msgstr ""
+msgstr "这意味着使用每个用户的出席记录，并在该表中搜索用户的二维码被扫描的次数。因此，这对数据库的要求更高，请谨慎使用。"
 
 #: includes/eme-cleanup.php:268
 msgid "No people found that would be moved to the trash bin."
-msgstr ""
+msgstr "未找到将被移至回收站的人员。"
 
 #: includes/eme-cleanup.php:305
 msgid "Preview: People to be trashed"
-msgstr ""
+msgstr "预览：将被移至回收站的人员"
 
 #. translators: %d is the number of people to be trashed
 #: includes/eme-cleanup.php:309
 msgid "The following %d people are no longer referenced in any bookings, memberships or groups and will be moved to the trash bin:"
-msgstr ""
+msgstr "以下 %d 个人员不再被任何预订、会员资格或分组引用，将被移至回收站："
 
 #: includes/eme-cleanup.php:338
 msgid "Confirm: Move all to trash"
-msgstr ""
+msgstr "确认：将全部移至回收站"
 
 #: includes/eme-rsvp.php:5622
 msgid "Resend the mail for pending bookings"
-msgstr ""
+msgstr "重新发送待处理预订的邮件"
 
 #: includes/eme-rsvp.php:5623
 msgid "Send the configured reminder mail for pending bookings"
-msgstr ""
+msgstr "发送已配置的待处理预订提醒邮件"
 
 #: includes/eme-rsvp.php:5640
 msgid "Resend the mail for approved bookings"
-msgstr ""
+msgstr "重新发送已批准预订的邮件"
 
 #: includes/eme-rsvp.php:5641
 msgid "Send the configured reminder mail for approved bookings"
-msgstr ""
+msgstr "发送已配置的已批准预订提醒邮件"
 
 #: includes/eme-actions.php:536
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
-msgstr ""
+msgstr "<p>嗨，<strong>%1$s</strong>，欢迎使用 <strong>Events Made Easy</strong>！希望您喜欢这里。</p><p>现在可以通过<a href='%2$s' title='%3$s'>小工具</a>、<a href='%4$s' title='%5$s'>模板标签</a>或<a href='%6$s' title='%7$s'>短代码</a>来插入活动列表了。</p><p>顺便问一下，您看过<a href='%8$s' title='%9$s'>设置页面</a>吗？在那里您可以自定义活动和地点的显示方式。</p><p>什么？厌倦了看到这个提示？我理解您，<a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>点击此处</a>，您将不再看到此提示！</p>"
 
 #: includes/eme-actions.php:539
 msgid "Widgets page"
-msgstr ""
+msgstr "小工具页面"
 
 #: includes/eme-actions.php:541
 msgid "Template tags documentation"
-msgstr ""
+msgstr "模板标签文档"
 
 #: includes/eme-actions.php:543
 msgid "Shortcodes documentation"
-msgstr ""
+msgstr "短代码文档"
 
 #: includes/eme-actions.php:545
 msgid "Change settings"
-msgstr ""
+msgstr "更改设置"
 
 #: includes/eme-actions.php:546
 msgid "Don't show this advice again"
-msgstr ""
+msgstr "不再显示此提示"
 
 #: includes/eme-events.php:6928
 msgid "Default Template"
-msgstr ""
+msgstr "默认模板"
 
 #: includes/eme-gdpr.php:652
 msgid "Events Made Easy Personal Data"
-msgstr ""
+msgstr "Events Made Easy 个人数据"
 
 #: includes/eme-gdpr.php:664
 msgid "Events Made Easy Uploaded files linked to the person"
-msgstr ""
+msgstr "Events Made Easy 与该人员关联的上传文件"
 
 #: includes/eme-gdpr.php:727
 msgid "Events Made Easy Member Data"
-msgstr ""
+msgstr "Events Made Easy 成员数据"
 
 #: includes/eme-gdpr.php:738
 msgid "Events Made Easy Uploaded files linked to the member"
-msgstr ""
+msgstr "Events Made Easy 与该成员关联的上传文件"
 
 #: includes/eme-mailer.php:2978
 #: includes/eme-mailer.php:3148
 msgid "Send to a number of people"
-msgstr ""
+msgstr "发送给指定数量的人员"
 
 #: includes/eme-mailer.php:2988
 #: includes/eme-mailer.php:3156
 msgid "Send to a number of groups"
-msgstr ""
+msgstr "发送给指定数量的分组"
 
 #: includes/eme-mailer.php:2998
 #: includes/eme-mailer.php:3165
 msgid "Send to a number of members"
-msgstr ""
+msgstr "发送给指定数量的成员"
 
 #: includes/eme-mailer.php:3007
 #: includes/eme-mailer.php:3173
 msgid "Send to a number of member groups"
-msgstr ""
+msgstr "发送给指定数量的成员分组"
 
 #: includes/eme-mailer.php:3016
 #: includes/eme-mailer.php:3182
 msgid "Send to active members belonging to"
-msgstr ""
+msgstr "发送给属于以下类别的活跃成员"
 
 #: includes/eme-options.php:3446
 #: includes/eme-options.php:3447
 msgid "Documentation on date and time formatting."
-msgstr ""
+msgstr "关于日期和时间格式的文档。"
 
 #: includes/eme-todos.php:250
 msgid "Todo reminder for event #_EVENTNAME: "
-msgstr ""
+msgstr "活动 #_EVENTNAME 的待办提醒："
 
 #: includes/eme-people.php:2678
 msgid "Select a WP user"
-msgstr ""
-
-#: includes/eme-options.php:507
-#: includes/eme-options.php:1093
-msgid "Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments"
-msgstr ""
+msgstr "选择一个 WP 用户"
 
 #. Description of the plugin
 #: events-manager.php
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
-msgstr ""
+msgstr "管理和显示活动及会员资格。还包括重复活动、地点、小工具、地图、RSVP、ICAL 和 RSS 订阅源；PayPal、Stripe、Mollie 等。"
 
 #: includes/eme-functions.php:3467
 #: includes/eme-functions.php:3468
 msgid "Invalid column name!"
-msgstr ""
+msgstr "无效的列名！"
 
 #: includes/eme-templates.php:181
 msgid "Filter content"
-msgstr ""
+msgstr "筛选内容"
 
 #: includes/eme-locations.php:927
 msgid "Location fields"
-msgstr ""
+msgstr "地点字段"
 
 #: includes/eme-members.php:2920
 msgid "Member fields"
-msgstr ""
+msgstr "成员字段"
 
 #: includes/eme-members.php:3315
 msgid "Membership fields"
-msgstr ""
+msgstr "会员资格字段"
 
 #: includes/eme-rsvp.php:5714
 msgid "RSVP and generic fields"
-msgstr ""
+msgstr "RSVP 和通用字段"
 
 #: includes/eme-events.php:9782
 msgid "Are you sure you want to delete this group? This cannot be undone."
-msgstr ""
+msgstr "您确定要删除此分组吗？此操作无法撤销。"
 
 #: includes/eme-formfields.php:1813
 #: includes/eme-formfields.php:1814
 msgid "Delete this group"
-msgstr ""
+msgstr "删除此分组"
 
 #: includes/eme-members.php:7116
 msgid "No permission"
-msgstr ""
+msgstr "无权限"
 
 #: includes/eme-members.php:7127
 msgid "Invalid parameters"
-msgstr ""
+msgstr "无效的参数"
 
 #: includes/eme-members.php:7146
 msgid "Occurrence deleted and remaining occurrences renumbered."
-msgstr ""
+msgstr "已删除发生次数，剩余发生次数已重新编号。"
 
 #: includes/eme-events.php:9600
 msgid "Confirm delete"
-msgstr ""
+msgstr "确认删除"
 
 #: includes/eme-formfields.php:2149
 #: includes/eme-formfields.php:2183
 msgid "Select"
-msgstr ""
+msgstr "选择"
 
 #. translators: %s is the URL to edit the conflicting page
 #: includes/eme-options.php:1471
 msgid "The conflicting page can be edited <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
-msgstr ""
+msgstr "可以<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">在此处</a>编辑冲突的页面。"
 
 #: includes/eme-options.php:1514
 msgid "Check this option if you want to use Google reCAPTCHA (Cloud Enterprise) on the booking/cancel/membership forms, to thwart spammers a bit. Currently only supports reCAPTCHA v2 Tickbox. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "如果您想在预订/取消/会员资格表单上使用 Google reCAPTCHA（Cloud Enterprise）来阻止垃圾邮件发送者，请选中此选项。目前仅支持 reCAPTCHA v2 复选框。您可以自行将 #_CAPTCHA 添加到表单布局中，如果不存在，它将自动添加到提交按钮上方。"
 
 #: includes/eme-options.php:1516
 msgid "Google reCAPTCHA API key (Cloud project)"
-msgstr ""
+msgstr "Google reCAPTCHA API 密钥（Cloud 项目）"
 
 #: includes/eme-options.php:1517
 msgid "Google reCAPTCHA Cloud project ID"
-msgstr ""
+msgstr "Google reCAPTCHA Cloud 项目 ID"
 
 #: includes/eme-options.php:1518
 msgid "Google reCAPTCHA minimum score (0.0–1.0, default 0.5)"
-msgstr ""
+msgstr "Google reCAPTCHA 最低分数（0.0–1.0，默认 0.5）"
 
 #: includes/eme-options.php:1518
 msgid "Score threshold below which submissions are rejected"
-msgstr ""
+msgstr "低于此分数阈值的提交将被拒绝"
 
 #. translators: %s is the documentation URL
 #: includes/eme-options.php:1988
 #: includes/eme-options.php:1990
 msgid "For all placeholders you can use here, see <a target='_blank' rel='noopener noreferrer' href='%s'>the documentation</a>"
-msgstr ""
+msgstr "有关此处可使用的所有占位符，请参阅<a target='_blank' rel='noopener noreferrer' href='%s'>文档</a>"
 
 #. translators: %s is the documentation URL
 #: includes/eme-options.php:3325
 msgid "For all information concerning frontend submit, see <a target='_blank' rel='noopener noreferrer' href='%s'>the documentation</a>"
-msgstr ""
+msgstr "有关前端提交的所有信息，请参阅<a target='_blank' rel='noopener noreferrer' href='%s'>文档</a>"
 
 #: includes/eme-templates.php:299
 msgid "See <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">this page</a> for info on what you can enter here."
-msgstr ""
+msgstr "请参阅<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">此页面</a>了解可以在此处输入的内容。"
 
 #: includes/eme-options.php:1515
 msgid "Go to https://console.cloud.google.com/security/recaptcha to get your reCAPTCHA key"
-msgstr ""
+msgstr "访问 https://console.cloud.google.com/security/recaptcha 获取您的 reCAPTCHA 密钥"
 
 #: includes/eme-options.php:1516
 msgid "Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project"
-msgstr ""
+msgstr "访问 https://console.cloud.google.com/apis/credentials 为您的项目创建 reCAPTCHA API 密钥"
 
 #: includes/eme-options.php:1517
 msgid "Your Google cloud project ID"
-msgstr ""
+msgstr "您的 Google Cloud 项目 ID"
 
 #: includes/eme-countries.php:100
 #: includes/eme-countries.php:163
@@ -15004,186 +14999,191 @@ msgstr ""
 #: includes/eme-people.php:821
 #: includes/eme-rsvp.php:5348
 msgid "No CSV file detected"
-msgstr ""
+msgstr "未检测到 CSV 文件"
 
 #: events-manager.php:416
 msgid "Events Made Easy: the following extension file(s) failed signature verification and were not loaded: %s. Please go to the Settings &gt; Extensions tab and click \"Regenerate signatures\"."
-msgstr ""
+msgstr "Events Made Easy：以下扩展文件签名验证失败，未加载：%s。请前往\"设置 &gt; 扩展\"选项卡，然后点击\"重新生成签名\"。"
 
 #: includes/eme-options.php:1360
 #: includes/eme-options.php:3384
 msgid "Extensions"
-msgstr ""
+msgstr "扩展"
 
 #: includes/eme-options.php:3385
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
-msgstr ""
+msgstr "管理位于 uploads includes 目录中的 Events Made Easy 扩展文件。"
 
 #: includes/eme-options.php:3390
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: includes/eme-options.php:3391
 msgid "Current SHA256 (stored)"
-msgstr ""
+msgstr "当前 SHA256（已存储）"
 
 #: includes/eme-options.php:3392
 msgid "SHA256 (on disk)"
-msgstr ""
+msgstr "SHA256（磁盘上）"
 
 #: includes/eme-options.php:3404
 msgid "Not registered"
-msgstr ""
+msgstr "未注册"
 
 #: includes/eme-options.php:3406
 msgid "Match"
-msgstr ""
+msgstr "匹配"
 
 #: includes/eme-options.php:3408
 msgid "Mismatch"
-msgstr ""
+msgstr "不匹配"
 
 #: includes/eme-options.php:3416
 msgid "No extension files found in the includes directory."
-msgstr ""
+msgstr "在 includes 目录中未找到扩展文件。"
 
 #: includes/eme-options.php:3421
 msgid "I have verified the file hashes above and confirm regenerating signatures."
-msgstr ""
+msgstr "我已验证上述文件哈希值，并确认重新生成签名。"
 
 #: includes/eme-options.php:3424
 msgid "Regenerate signatures"
-msgstr ""
+msgstr "重新生成签名"
 
 #: includes/eme-locations.php:2761
 msgid "e.g. 123 Main St, City"
-msgstr ""
+msgstr "例如：某某路 123 号，某市"
 
 #: includes/eme-mailer.php:2958
 msgid "Also exclude emails of people already registered for these other event(s)"
-msgstr ""
+msgstr "同时排除已注册这些其他活动的人员的电子邮件"
 
 #: includes/eme-mailer.php:2963
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
-msgstr ""
+msgstr "可选：选择应跳过其报名者的活动，与本次群发邮件所涉及的活动无关。"
 
 #: includes/eme-actions.php:416
 msgid "Address not found"
-msgstr ""
+msgstr "未找到地址"
 
 #: includes/eme-actions.php:417
 msgid "Could not calculate route"
-msgstr ""
+msgstr "无法计算路线"
 
 #. translators: %s is the event name
 #: includes/eme-events.php:9639
 msgid "Edit Event"
-msgstr ""
+msgstr "编辑活动"
 
 #: includes/eme-mailer.php:3656
 msgid "IMAP bounce handler is not active."
-msgstr ""
+msgstr "IMAP 退信处理程序未激活。"
 
 #: includes/eme-mailer.php:3659
 msgid "Only the data master can process bounces."
-msgstr ""
+msgstr "只有数据管理员才能处理退信。"
 
 #: includes/eme-mailer.php:3666
 msgid "IMAP bounce handler is not fully configured."
-msgstr ""
+msgstr "IMAP 退信处理程序未完全配置。"
 
 #: includes/eme-mailer.php:3706
 msgid "Bounced (type %s). Reason: %s"
-msgstr ""
+msgstr "退信（类型 %s）。原因：%s"
 
 #: includes/eme-options.php:2153
 msgid "IMAP bounce handler"
-msgstr ""
+msgstr "IMAP 退信处理程序"
 
 #: includes/eme-options.php:2157
 msgid "Activate IMAP bounce handler"
-msgstr ""
+msgstr "激活 IMAP 退信处理程序"
 
 #: includes/eme-options.php:2157
 msgid "Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue."
-msgstr ""
+msgstr "选中此选项以激活 IMAP 退信处理程序。激活后，EME 将检查配置的 IMAP 邮箱中的退信，并在邮件队列中将其标记为失败。"
 
 #: includes/eme-options.php:2157
 msgid "Microsoft 365 mailboxes aren't supported. Microsoft requires OAuth2 for IMAP, which this integration doesn't implement. Use a mailbox on your own hosting instead."
-msgstr ""
+msgstr "不支持 Microsoft 365 邮箱。Microsoft 要求 IMAP 使用 OAuth2，而此集成未实现该功能。请改用您自己托管服务器上的邮箱。"
 
 #: includes/eme-options.php:2158
 msgid "IMAP server"
-msgstr ""
+msgstr "IMAP 服务器"
 
 #: includes/eme-options.php:2158
 msgid "The hostname of your IMAP server."
-msgstr ""
+msgstr "您的 IMAP 服务器主机名。"
 
 #: includes/eme-options.php:2159
 msgid "IMAP port"
-msgstr ""
+msgstr "IMAP 端口"
 
 #: includes/eme-options.php:2159
 msgid "The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL)."
-msgstr ""
+msgstr "连接到 IMAP 服务器的端口。常用端口为 143（无加密）和 993（SSL）。"
 
 #: includes/eme-options.php:2161
 msgid "IMAP encryption"
-msgstr ""
+msgstr "IMAP 加密方式"
 
 #: includes/eme-options.php:2168
 msgid "Select the encryption method for IMAP."
-msgstr ""
+msgstr "选择 IMAP 的加密方式。"
 
 #: includes/eme-options.php:2170
 msgid "IMAP username"
-msgstr ""
+msgstr "IMAP 用户名"
 
 #: includes/eme-options.php:2170
 msgid "The username to access the IMAP mailbox."
-msgstr ""
+msgstr "访问 IMAP 邮箱的用户名。"
 
 #: includes/eme-options.php:2171
 msgid "IMAP password"
-msgstr ""
+msgstr "IMAP 密码"
 
 #: includes/eme-options.php:2171
 msgid "The password to access the IMAP mailbox. Only plain authentication is supported, no oauth."
-msgstr ""
+msgstr "访问 IMAP 邮箱的密码。仅支持明文认证，不支持 OAuth。"
 
 #: includes/eme-options.php:2172
 msgid "IMAP mailbox/folder"
-msgstr ""
+msgstr "IMAP 邮箱/文件夹"
 
 #: includes/eme-options.php:2172
 msgid "The mailbox or folder to check for bounced emails. Default is INBOX."
-msgstr ""
+msgstr "用于检查退信的邮箱或文件夹。默认为 INBOX。"
 
 #: includes/eme-options.php:2173
 msgid "Process bounces daily"
-msgstr ""
+msgstr "每日处理退信"
 
 #: includes/eme-options.php:2173
 msgid "Check this option to automatically process bounces once per day as part of the daily cron."
-msgstr ""
+msgstr "选中此选项以作为每日定时任务的一部分，自动处理退信。"
 
 #: includes/eme-options.php:2176
 msgid "Manual bounce processing"
-msgstr ""
+msgstr "手动退信处理"
 
 #: includes/eme-options.php:2178
 msgid "Process bounces now"
-msgstr ""
+msgstr "立即处理退信"
 
 #: includes/eme-options.php:2182
 msgid "Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox."
-msgstr ""
+msgstr "点击此按钮手动触发退信处理。根据邮箱中的邮件数量，这可能需要一段时间。"
 
 #: includes/eme-options.php:2188
 msgid "REST API endpoint"
-msgstr ""
+msgstr "REST API 端点"
 
 #: includes/eme-options.php:2189
 msgid "This endpoint can be called externally (e.g. via WP-Cron) to trigger bounce processing. Requires authentication."
+msgstr "此端点可以外部调用（例如通过 WP-Cron）来触发退信处理。需要身份验证。"
+
+#: includes/eme-options.php:507
+#: includes/eme-options.php:1093
+msgid "Pay with your Bancontact Pay app or your banking app supporting Bancontact or Wero payments"
 msgstr ""

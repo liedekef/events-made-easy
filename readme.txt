@@ -41,6 +41,7 @@ Main features:
 * Automatically send reminders for memberships that are about to expire or have expired
 * Mail queueing and newsletter functionality
 * Mailings can be planned in the future, cancelled ... and can include extra attacments
+* IMAP bounce management
 * Multi-site compatible
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
 * Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and [qtranslate-xt](https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking emails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.

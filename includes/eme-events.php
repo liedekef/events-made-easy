@@ -9124,8 +9124,8 @@ Weblog Editor 2.0
             echo "<item>\n";
             echo "<title>$title</title>\n";
             echo "<link>$event_link</link>\n";
-            if ( $rss_options['eme_rss_show_pubdate'] ) {
-                if ( $rss_options['eme_rss_pubdate_startdate'] ) {
+            if ( !empty($rss_options['show_pubdate']) ) {
+                if ( !empty($rss_options['pubdate_startdate']) ) {
                     echo '<pubDate>' . eme_rfc822_date( $event['event_start'], EME_TIMEZONE ) . "</pubDate>\n";
                 } else {
                     echo '<pubDate>' . eme_rfc822_date( $event['modif_date'], 'GMT' ) . "</pubDate>\n";

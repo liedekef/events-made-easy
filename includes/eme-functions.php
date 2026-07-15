@@ -2519,9 +2519,9 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
     // See https://codereview.stackexchange.com/questions/30045/regex-to-remove-inline-javascript-from-string
     if ( $allow_unfiltered ) {
         // even for unfiltered: strip out javascript
-        $res = preg_replace( '#<\s*script(.*?)>(.*?)<\s*/\s*script\s*>#is', '', wp_unslash( $value ) );
+        $res = preg_replace( '#<\s*script.*?>.*?<\s*/\s*script\s*>#is', '', wp_unslash( $value ) );
         # also strip out inline javascript (onalert etc)
-        $res = preg_replace( '#\b[^(\?|\&|\S)]on\w+\s*=\s*\S+(?=.*>)#', '', $res );
+        $res = preg_replace_callback( '#<[^>]+>#', function( $m ) { return preg_replace( '#\s+on\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)#i', '', $m[0] ); }, $res );
         return $res;
     }
     $allowed_html = wp_kses_allowed_html( 'post' );

@@ -376,7 +376,7 @@ function eme_register_scripts() {
         'translate_mailingpreferences' => __( 'Mailing preferences', 'events-made-easy' ),
         'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
         'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
-        'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg']? 'true': 'false',
+        'translate_fs_wysiwyg'         => !empty($eme_fs_options['use_wysiwyg']) ? 'true': 'false',
         'translate_flanguage'          => $language,
         'translate_minutesStep'        => intval(get_option( 'eme_timepicker_minutesstep' )),
         'translate_fdateformat'        => EME_WP_DATE_FORMAT,

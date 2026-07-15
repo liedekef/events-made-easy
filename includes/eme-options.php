@@ -2106,6 +2106,14 @@ function eme_options_page() {
             eme_options_toggle( __( 'Massmail popup', 'events-made-easy' ), 'eme_massmail_popup', __( 'If a person chooses to not receive mail via #_OPT_IN or #_OPT_OUT, you can optionally show a popup asking if they are sure about this.', 'events-made-easy' ) );
             eme_options_input_text( __( 'Massmail popup text', 'events-made-easy' ), 'eme_massmail_popup_text', __( 'The text shown in the Massmail popup window.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Newsletter', 'events-made-easy' ), 'eme_people_newsletter', __( "Should new persons receive the automatic EME newsletter concerning new events if it is scheduled to go out? Warning: setting this to 'yes' is not GDPR compliant, you should ask people to subscribe to the relevant groups and/or newsletter.", 'events-made-easy' ) );
+            eme_options_textarea( __( 'Email blacklist', 'events-made-easy' ), 'eme_mail_blacklist', __( 'A list of emails (one per line) that will not be accepted in EME. Examples can be ".com" (to not accept anything from ".com"), "anything.com" (to not accept addresses ending in "anything.com"), or even specific email addresses.', 'events-made-easy' ) );
+?>
+</table>
+<details name='eme_details_options' class="eme_accordion">
+<summary><?php esc_html_e( 'Email sending configuration', 'events-made-easy' ); ?></summary>
+<div>
+<table>
+<?php
             eme_options_input_text( __( 'Default email sender name', 'events-made-easy' ), 'eme_mail_sender_name', __( 'The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty).', 'events-made-easy' ) );
             eme_options_input_type( __( 'Default email sender address', 'events-made-easy' ), 'eme_mail_sender_address', __( 'The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account.', 'events-made-easy' ), 'email' );
             eme_options_toggle( __( 'Force sender address everywhere', 'events-made-easy' ), 'eme_mail_force_from', __( 'Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty).', 'events-made-easy' ) . '<br>' . __( 'Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too.', 'events-made-easy' ) );
@@ -2143,12 +2151,13 @@ function eme_options_page() {
             eme_options_toggle( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Debug SMTP?', 'events-made-easy' ), 'eme_smtp_debug', __( 'Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!', 'events-made-easy' ) );
             $test_url = admin_url( 'admin.php?page=eme-emails#tab-testmail' );
-            eme_options_textarea( __( 'Email blacklist', 'events-made-easy' ), 'eme_mail_blacklist', __( 'A list of emails (one per line) that will not be accepted in EME. Examples can be ".com" (to not accept anything from ".com"), "anything.com" (to not accept addresses ending in "anything.com"), or even specific email addresses.', 'events-made-easy' ) );
-            // translators: %s is the URL to the Emails management page
-            echo "<tr><th colspan='2'>" . wp_kses_post( sprintf( __( "Hint: after you changed your mail settings, go to the <a href='%s'>Emails management</a> submenu to send a test mail.", 'events-made-easy' ), esc_url($test_url) ) ) . '</td></tr>';
-            if ( eme_is_datamaster() ) {
 ?>
 </table>
+</div>
+</details>
+<?php
+            if ( eme_is_datamaster() ) {
+?>
 <details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'IMAP bounce handler', 'events-made-easy' ); ?></summary>
 <div>
@@ -2193,9 +2202,9 @@ function eme_options_page() {
 </details>
 <?php
             }
-?>
-</table>
-<?php
+            // translators: %s is the URL to the Emails management page
+            echo "<tr><th colspan='2'>" . wp_kses_post( sprintf( __( "Hint: after you changed your mail settings, go to the <a href='%s'>Emails management</a> submenu to send a test mail.", 'events-made-easy' ), esc_url($test_url) ) ) . '</td></tr>';
+
             break;
         case 'mailtemplates':
             if ( get_option( 'eme_mail_send_html' ) == '1' ) {

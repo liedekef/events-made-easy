@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,6 +99,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.6  (2026/07/16) =
+* fix some php warnings in frontend submit
+* a regex filter improvement for js removal
+* language updates
+
 = 3.1.5  (2026/07/11) =
 * Added IMAP bounce handling
 * bugfix: authors were not able to delete/manage their own events

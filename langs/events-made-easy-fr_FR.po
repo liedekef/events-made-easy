@@ -13,95 +13,95 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: GlotPress/4.0.3\n"
 
-#: includes/eme-options.php:2189
+#: includes/eme-options.php:2198
 msgid "This endpoint can be called externally (e.g. via WP-Cron) to trigger bounce processing. Requires authentication."
 msgstr "Ce point de terminaison peut être appelé depuis l’extérieur (par exemple via WP-Cron) pour déclencher le traitement des rebonds. Une authentification est requise."
 
-#: includes/eme-options.php:2188
+#: includes/eme-options.php:2197
 msgid "REST API endpoint"
 msgstr "Point de terminaison API REST"
 
-#: includes/eme-options.php:2182
+#: includes/eme-options.php:2191
 msgid "Click this button to manually trigger bounce processing. This may take a while depending on the number of messages in the mailbox."
 msgstr "Cliquez sur ce bouton pour lancer manuellement le traitement des messages en rebond. Cette opération peut prendre un certain temps, selon le nombre de messages présents dans la boîte de réception."
 
-#: includes/eme-options.php:2178
+#: includes/eme-options.php:2187
 msgid "Process bounces now"
 msgstr "Le processus est désormais en attente"
 
-#: includes/eme-options.php:2176
+#: includes/eme-options.php:2185
 msgid "Manual bounce processing"
 msgstr "Traitement manuel des rebonds"
 
-#: includes/eme-options.php:2173
+#: includes/eme-options.php:2182
 msgid "Check this option to automatically process bounces once per day as part of the daily cron."
 msgstr "Cochez cette case pour traiter automatiquement les messages non remis une fois par jour dans le cadre de la tâche cron quotidienne."
 
-#: includes/eme-options.php:2173
+#: includes/eme-options.php:2182
 msgid "Process bounces daily"
 msgstr "Traiter les rebonds une fois par jour"
 
-#: includes/eme-options.php:2172
+#: includes/eme-options.php:2181
 msgid "The mailbox or folder to check for bounced emails. Default is INBOX."
 msgstr "La boîte de réception ou le dossier dans lequel rechercher les e-mails rejetés. La valeur par défaut est « Boîte de réception »."
 
-#: includes/eme-options.php:2172
+#: includes/eme-options.php:2181
 msgid "IMAP mailbox/folder"
 msgstr "Boîte aux lettres/dossier IMAP"
 
-#: includes/eme-options.php:2171
+#: includes/eme-options.php:2180
 msgid "The password to access the IMAP mailbox. Only plain authentication is supported, no oauth."
 msgstr "Le mot de passe permettant d'accéder à la boîte aux lettres IMAP. Seule l’authentification standard est prise en charge ; OAuth n'est pas pris en charge."
 
-#: includes/eme-options.php:2171
+#: includes/eme-options.php:2180
 msgid "IMAP password"
 msgstr "Mot de passe IMAP"
 
-#: includes/eme-options.php:2170
+#: includes/eme-options.php:2179
 msgid "The username to access the IMAP mailbox."
 msgstr "L’identifiant pour accéder à la boîte aux lettres IMAP."
 
-#: includes/eme-options.php:2170
+#: includes/eme-options.php:2179
 msgid "IMAP username"
 msgstr "Identifiant IMAP"
 
-#: includes/eme-options.php:2168
+#: includes/eme-options.php:2177
 msgid "Select the encryption method for IMAP."
 msgstr "Sélectionnez la méthode de chiffrement pour IMAP."
 
-#: includes/eme-options.php:2161
+#: includes/eme-options.php:2170
 msgid "IMAP encryption"
 msgstr "Chiffrement IMAP"
 
-#: includes/eme-options.php:2159
+#: includes/eme-options.php:2168
 msgid "The port to connect to your IMAP server. Typical ports are 143 (no encryption) and 993 (SSL)."
 msgstr "Le port permettant de se connecter à votre serveur IMAP. Les ports couramment utilisés sont le 143 (sans cryptage) et le 993 (SSL)."
 
-#: includes/eme-options.php:2159
+#: includes/eme-options.php:2168
 msgid "IMAP port"
 msgstr "Port IMAP"
 
-#: includes/eme-options.php:2158
+#: includes/eme-options.php:2167
 msgid "The hostname of your IMAP server."
 msgstr "Le nom d'hôte de votre serveur IMAP."
 
-#: includes/eme-options.php:2158
+#: includes/eme-options.php:2167
 msgid "IMAP server"
 msgstr "Serveur IMAP"
 
-#: includes/eme-options.php:2157
+#: includes/eme-options.php:2166
 msgid "Microsoft 365 mailboxes aren't supported. Microsoft requires OAuth2 for IMAP, which this integration doesn't implement. Use a mailbox on your own hosting instead."
 msgstr "Les boîtes mail Microsoft 365 ne sont pas prises en charge. Microsoft exige l'utilisation du protocole OAuth2 pour IMAP, ce que cette intégration ne prend pas en charge. Utilisez plutôt une boîte mail hébergée chez votre propre fournisseur d'hébergement."
 
-#: includes/eme-options.php:2157
+#: includes/eme-options.php:2166
 msgid "Check this option to activate the IMAP bounce handler. When active, EME will check the configured IMAP mailbox for bounced emails and mark them as failed in the mail queue."
 msgstr "Cochez cette case pour activer le gestionnaire de messages rejetés IMAP. Une fois cette option activée, EME vérifiera la boîte aux lettres IMAP configurée à la recherche de messages rejetés et les marquera comme ayant échoué dans la file d'attente des e-mails."
 
-#: includes/eme-options.php:2157
+#: includes/eme-options.php:2166
 msgid "Activate IMAP bounce handler"
 msgstr "Activer le gestionnaire de messages de rebond IMAP"
 
-#: includes/eme-options.php:2153
+#: includes/eme-options.php:2162
 msgid "IMAP bounce handler"
 msgstr "Gestion des messages de rebond IMAP"
 
@@ -146,44 +146,44 @@ msgstr "Impossible de calculer l’itinéraire"
 msgid "Address not found"
 msgstr "Adresse introuvable"
 
-#: includes/eme-options.php:3424
+#: includes/eme-options.php:3433
 msgid "Regenerate signatures"
 msgstr "Régénérer les signatures"
 
-#: includes/eme-options.php:3421
+#: includes/eme-options.php:3430
 msgid "I have verified the file hashes above and confirm regenerating signatures."
 msgstr "J'ai vérifié les hachages des fichiers ci-dessus et je confirme que je vais régénérer les signatures."
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3425
 msgid "No extension files found in the includes directory."
 msgstr "Aucun fichier d’extension n'a été trouvé dans le répertoire « includes »."
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3417
 msgid "Mismatch"
 msgstr "Incohérence"
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3415
 msgid "Match"
 msgstr "Cohérent"
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3413
 msgid "Not registered"
 msgstr "Non inscrit"
 
-#: includes/eme-options.php:3392
+#: includes/eme-options.php:3401
 msgid "SHA256 (on disk)"
 msgstr "SHA256 (sur disque)"
 
-#: includes/eme-options.php:3391
+#: includes/eme-options.php:3400
 msgid "Current SHA256 (stored)"
 msgstr "SHA256 actuel (enregistré)"
 
-#: includes/eme-options.php:3385
+#: includes/eme-options.php:3394
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
 msgstr "Fichiers de l'extension « Manage Events Made Easy » situés dans le répertoire « uploads/includes »."
 
 #: includes/eme-options.php:1360
-#: includes/eme-options.php:3384
+#: includes/eme-options.php:3393
 msgid "Extensions"
 msgstr "Extensions"
 
@@ -196,7 +196,7 @@ msgid "See <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">this pag
 msgstr "Consultez <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%s\">cette page</a> pour savoir ce que vous pouvez saisir ici."
 
 #. translators: %s is the documentation URL
-#: includes/eme-options.php:3325
+#: includes/eme-options.php:3334
 msgid "For all information concerning frontend submit, see <a target='_blank' rel='noopener noreferrer' href='%s'>the documentation</a>"
 msgstr "Pour toute information concernant la soumission à partir de l‘interface publique, voir <a target='_blank' rel='noopener noreferrer' href='%s'>la documentation</a>"
 
@@ -303,12 +303,12 @@ msgid "Invalid column name!"
 msgstr "Nom de colonne invalide !"
 
 #: includes/eme-events.php:7609
-#: includes/eme-options.php:2244
+#: includes/eme-options.php:2253
 msgid "The body of the email that will be sent to the contact person when a booking is made."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est faite."
 
 #: includes/eme-events.php:7587
-#: includes/eme-options.php:2243
+#: includes/eme-options.php:2252
 msgid "The subject of the email that will be sent to the contact person when a booking is made."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne de contact quand une réservation est faite."
 
@@ -317,7 +317,7 @@ msgid "If pressing Save does not seem to be doing anything, then check all other
 msgstr "Si le fait d'appuyer sur Enregistrer ne semble rien donner, vérifiez alors tous les autres onglets pour vous assurer que tous les champs obligatoires sont remplis."
 
 #: includes/eme-events.php:6642
-#: includes/eme-options.php:2575
+#: includes/eme-options.php:2584
 msgid "Task Signup Pending Email"
 msgstr "E-mail d’inscription à une tâche, en attente"
 
@@ -592,361 +592,361 @@ msgstr "Soumission d'événement %s"
 msgid "Bancontact Pay - Wero"
 msgstr "Bancontact Pay - Wero"
 
-#: includes/eme-options.php:3464
+#: includes/eme-options.php:3473
 msgid "The HTML editor used by the plugin."
 msgstr "L'éditeur HTML utilisé par le plugin."
 
-#: includes/eme-options.php:3462
+#: includes/eme-options.php:3471
 msgid "Jodit"
 msgstr "Jodit"
 
-#: includes/eme-options.php:3461
+#: includes/eme-options.php:3470
 msgid "TinyMCE"
 msgstr "TinyMCE"
 
-#: includes/eme-options.php:3458
+#: includes/eme-options.php:3467
 msgid "HTML Editor"
 msgstr "Éditeur HTML"
 
-#: includes/eme-options.php:3446
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3455
+#: includes/eme-options.php:3456
 msgid "Documentation on date and time formatting."
 msgstr "Documentation sur le formatage de date et heure."
 
-#: includes/eme-options.php:3435
+#: includes/eme-options.php:3444
 msgid "CSV delimiter"
 msgstr "Délimiteur CSV"
 
-#: includes/eme-options.php:3365
+#: includes/eme-options.php:3374
 msgid "The default form format for submitting a new event."
 msgstr "Format du formulaire par défaut pour soumettre un nouvel évènement."
 
-#: includes/eme-options.php:3365
+#: includes/eme-options.php:3374
 msgid "Default form format"
 msgstr "Format du formulaire par défaut"
 
-#: includes/eme-options.php:3364
+#: includes/eme-options.php:3373
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr "Cocher cette option si vous souhaitez permettre le téléchargement d’image dans l’éditeur wysiwig sur le frontend pour les notes d’évènement."
 
-#: includes/eme-options.php:3364
+#: includes/eme-options.php:3373
 msgid "Allow image upload?"
 msgstr "Permettre le téléchargement d’image ?"
 
-#: includes/eme-options.php:3363
+#: includes/eme-options.php:3372
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr "Cocher cette option si vous voulez utiliser un éditeur wysiwig sur le frontend pour les notes d’évènement."
 
-#: includes/eme-options.php:3363
+#: includes/eme-options.php:3372
 msgid "Use wysiwyg?"
 msgstr "Utiliser le wysiwyg ?"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3358
+#: includes/eme-options.php:3367
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr "Permission nécessaire pour soumettre un nouvel évènement quand la soumission par des invités n’est pas autorisée. Par défaut : %s"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3358
+#: includes/eme-options.php:3367
 msgid "Access right to submit new events"
 msgstr "Droit nécessaire pour soumettre un nouvel évènement"
 
-#: includes/eme-options.php:3356
+#: includes/eme-options.php:3365
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr "Cochez cette option si vous voulez que le soumissionnaire soit redirigé vers la page de login s’il n’est pas identifié (ou qu’il n’a pas les droits nécessaires) et que les invités ne sont pas autorisés à soumettre de nouveaux évènements."
 
-#: includes/eme-options.php:3356
+#: includes/eme-options.php:3365
 msgid "Redirect to login page"
 msgstr "Redirection vers la page de login"
 
-#: includes/eme-options.php:3355
+#: includes/eme-options.php:3364
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr "Le texte affiché à un invité qui essaierait de soumettre un nouvel évènement sans y être autorisé, et que l’option de redirection vers la page de login n’a pas été cochée."
 
-#: includes/eme-options.php:3355
+#: includes/eme-options.php:3364
 msgid "Guests not allowed text"
 msgstr "Texte affiché aux invités non autorisés"
 
-#: includes/eme-options.php:3354
+#: includes/eme-options.php:3363
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr "Cocher cette option si vous voulez toujours afficher le message de succès, même si la personne qui soumet l’évènement a les droits pour voir la page du nouvel évènement soumis. Ça veut dire qu’il n’y aura pas de redirection après."
 
-#: includes/eme-options.php:3354
+#: includes/eme-options.php:3363
 msgid "Always show success message"
 msgstr "Toujours afficher le message de succès"
 
-#: includes/eme-options.php:3353
+#: includes/eme-options.php:3362
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr "Indiquez le nombre de secondes avant la redirection vers la page de l’évènement nouvellement créé après l’affichage du message de succès. Si 0, le message de réussite ne sera pas affiché et la redirection sera immédiate."
 
-#: includes/eme-options.php:3352
+#: includes/eme-options.php:3361
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "Le message affiché après la soumission réussie d’un nouvel évènement si la personne qui soumet n’a pas le droit de voir le nouvel évènement soumis. Le message est aussi affiché si la soumission de l’évènement nécessite le paiement et si le temps d’attente avant la redirection (indiquée ci-dessous) n’est pas à 0. Ce message peut contenir tout espace réservé d’évènement."
 
-#: includes/eme-options.php:3352
+#: includes/eme-options.php:3361
 msgid "Success Message"
 msgstr "Message de réussite"
 
-#: includes/eme-options.php:3351
+#: includes/eme-options.php:3360
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr "Cochez cette option si vous souhaitez que les invités puissent également ajouter de nouveaux événements."
 
-#: includes/eme-options.php:3351
+#: includes/eme-options.php:3360
 msgid "Allow guest submit?"
 msgstr "Autorisé la soumission par un invité ?"
 
-#: includes/eme-options.php:3350
+#: includes/eme-options.php:3359
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr "Cochez cette option si vous souhaitez que l’emplacement soit toujours créé, même si l'utilisateur n'a pas les capacités nécessaires dans EME pour créer des emplacements."
 
-#: includes/eme-options.php:3350
+#: includes/eme-options.php:3359
 msgid "Force location creation?"
 msgstr "Forcer la création d’un emplacement ?"
 
-#: includes/eme-options.php:3349
+#: includes/eme-options.php:3358
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr "Catégorie par défaut attribuée à un événement si rien n'est sélectionné dans le formulaire."
 
-#: includes/eme-options.php:3349
+#: includes/eme-options.php:3358
 msgid "Default category for new event"
 msgstr "Catégorie par défaut pour le nouvel événement"
 
-#: includes/eme-options.php:3348
+#: includes/eme-options.php:3357
 msgid "No contact"
 msgstr "Aucun contact"
 
-#: includes/eme-options.php:3348
+#: includes/eme-options.php:3357
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr "Sélectionnez la personne de contact qui recevra des notifications par courrier électronique lorsqu'un événement est soumis ou payé. Les modèles de courrier doivent être configurés dans la section \"Modèles de courrier\"."
 
-#: includes/eme-options.php:3344
+#: includes/eme-options.php:3353
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Le(s) mode(s) de paiement à utiliser lorsque les événements soumis doivent être payés. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même !"
 
-#: includes/eme-options.php:3343
+#: includes/eme-options.php:3352
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "La devise utilisée lorsque les événements soumis doivent être payés. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même !"
 
-#: includes/eme-options.php:3342
+#: includes/eme-options.php:3351
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr "Le prix à payer pour soumettre un nouvel événement. Laisser vide ou 0 si aucun prix ne doit être payé. Cela n'a rien à voir avec les paramètres RSVP de l'événement soumis lui-même ! Configurez les sections optionnelles d'en-tête et de pied de page du formulaire de paiement dans les paramètres de paiement de l'EME."
 
-#: includes/eme-options.php:3341
+#: includes/eme-options.php:3350
 msgid "The state for a newly submitted event."
 msgstr "L'état d'un événement nouvellement soumis."
 
-#: includes/eme-options.php:3327
+#: includes/eme-options.php:3336
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
 msgstr "Consultez également les sections \"Modèles d'e-mail\" et \"Paiement\" pour obtenir des paramètres de soumission frontaux supplémentaires."
 
-#: includes/eme-options.php:3323
+#: includes/eme-options.php:3332
 msgid "Frontend Submit options"
 msgstr "Options de la soumission à partir du Frontend"
 
-#: includes/eme-options.php:3312
+#: includes/eme-options.php:3321
 msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zooming. A browser refresh on a page showing a map will be necessary to see the effect of this change."
 msgstr "« Oui » active le zoom à l'aide de la molette de la souris. « Non » désactive le zoom à l'aide de la molette de la souris. Il sera nécessaire d'actualiser la page affichant la carte dans le navigateur pour voir l'effet de cette modification."
 
-#: includes/eme-options.php:3087
-#: includes/eme-options.php:3088
+#: includes/eme-options.php:3096
+#: includes/eme-options.php:3097
 msgid "Contact SumUp to make sure your created application has the rights needed to create and process checkout payments."
 msgstr "Contactez SumUp pour vous assurer que votre application dispose des droits nécessaires pour créer et traiter les paiements."
 
-#: includes/eme-options.php:2994
+#: includes/eme-options.php:3003
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Le remboursement est possible si des fonds sont disponibles sur le compte."
 
-#: includes/eme-options.php:2983
+#: includes/eme-options.php:2992
 msgid "Bancontact Pay - Wero (Payconiq) API key"
 msgstr "Bancontact Pay - Clé API Wero (Payconiq)"
 
-#: includes/eme-options.php:2981
+#: includes/eme-options.php:2990
 msgid "Choose wether you want to test Bancontact Pay - Wero (Payconiq) in a sandbox or go live and really use Bancontact Pay - Wero (Payconiq)."
 msgstr "Choisissez si vous souhaitez tester Bancontact Pay - Wero (Payconiq) dans un environnement sandbox ou passer en production et utiliser réellement Bancontact Pay - Wero (Payconiq)."
 
-#: includes/eme-options.php:2979
+#: includes/eme-options.php:2988
 msgid "Bancontact Pay - Wero (Payconiq) Live"
 msgstr "Bancontact Pay - Wero (Payconiq) Direct"
 
-#: includes/eme-options.php:2978
+#: includes/eme-options.php:2987
 msgid "Bancontact Pay - Wero (Payconiq) Sandbox (for testing)"
 msgstr "Bancontact Pay - Wero (Payconiq) Sandbox (pour les tests)"
 
-#: includes/eme-options.php:2975
+#: includes/eme-options.php:2984
 msgid "Bancontact Pay - Wero (Payconiq) live or test"
 msgstr "Bancontact Pay - Wero (Payconiq) en direct ou en test"
 
-#: includes/eme-options.php:2968
+#: includes/eme-options.php:2977
 msgid "Bancontact Pay - Wero (Payconiq)"
 msgstr "Bancontact Pay - Wero (Payconiq)"
 
-#: includes/eme-options.php:2897
-#: includes/eme-options.php:2935
-#: includes/eme-options.php:3035
-#: includes/eme-options.php:3072
-#: includes/eme-options.php:3099
+#: includes/eme-options.php:2906
+#: includes/eme-options.php:2944
+#: includes/eme-options.php:3044
+#: includes/eme-options.php:3081
+#: includes/eme-options.php:3108
 msgid "Refunding not implemented."
 msgstr "Remboursement non implémenté."
 
-#: includes/eme-options.php:2801
-#: includes/eme-options.php:2859
-#: includes/eme-options.php:2960
-#: includes/eme-options.php:3145
-#: includes/eme-options.php:3198
-#: includes/eme-options.php:3237
-#: includes/eme-options.php:3272
-#: includes/eme-options.php:3298
+#: includes/eme-options.php:2810
+#: includes/eme-options.php:2868
+#: includes/eme-options.php:2969
+#: includes/eme-options.php:3154
+#: includes/eme-options.php:3207
+#: includes/eme-options.php:3246
+#: includes/eme-options.php:3281
+#: includes/eme-options.php:3307
 msgid "Refunding is possible."
 msgstr "Le remboursement est possible."
 
 #. translators: %s is the payment notification URL
-#: includes/eme-options.php:2800
-#: includes/eme-options.php:2858
-#: includes/eme-options.php:2896
-#: includes/eme-options.php:2934
-#: includes/eme-options.php:2959
-#: includes/eme-options.php:2993
-#: includes/eme-options.php:3034
-#: includes/eme-options.php:3098
-#: includes/eme-options.php:3144
-#: includes/eme-options.php:3236
-#: includes/eme-options.php:3297
+#: includes/eme-options.php:2809
+#: includes/eme-options.php:2867
+#: includes/eme-options.php:2905
+#: includes/eme-options.php:2943
+#: includes/eme-options.php:2968
+#: includes/eme-options.php:3002
+#: includes/eme-options.php:3043
+#: includes/eme-options.php:3107
+#: includes/eme-options.php:3153
+#: includes/eme-options.php:3245
+#: includes/eme-options.php:3306
 msgid "The url for payment notifications is: %s"
 msgstr "L'URL pour les notifications de paiement est : %s"
 
 #. translators: %s is the internal payment method name
-#: includes/eme-options.php:2763
-#: includes/eme-options.php:2803
-#: includes/eme-options.php:2861
-#: includes/eme-options.php:2899
-#: includes/eme-options.php:2937
-#: includes/eme-options.php:2962
-#: includes/eme-options.php:2996
-#: includes/eme-options.php:3037
-#: includes/eme-options.php:3074
-#: includes/eme-options.php:3101
-#: includes/eme-options.php:3147
-#: includes/eme-options.php:3200
-#: includes/eme-options.php:3239
-#: includes/eme-options.php:3274
-#: includes/eme-options.php:3300
+#: includes/eme-options.php:2772
+#: includes/eme-options.php:2812
+#: includes/eme-options.php:2870
+#: includes/eme-options.php:2908
+#: includes/eme-options.php:2946
+#: includes/eme-options.php:2971
+#: includes/eme-options.php:3005
+#: includes/eme-options.php:3046
+#: includes/eme-options.php:3083
+#: includes/eme-options.php:3110
+#: includes/eme-options.php:3156
+#: includes/eme-options.php:3209
+#: includes/eme-options.php:3248
+#: includes/eme-options.php:3283
+#: includes/eme-options.php:3309
 msgid "Internal payment method name: %s"
 msgstr "Nom interne du mode de paiement : %s"
 
-#: includes/eme-options.php:2761
-#: includes/eme-options.php:2798
-#: includes/eme-options.php:2856
-#: includes/eme-options.php:2894
-#: includes/eme-options.php:2932
-#: includes/eme-options.php:2957
-#: includes/eme-options.php:2991
-#: includes/eme-options.php:3032
-#: includes/eme-options.php:3070
-#: includes/eme-options.php:3096
-#: includes/eme-options.php:3142
-#: includes/eme-options.php:3197
-#: includes/eme-options.php:3234
-#: includes/eme-options.php:3271
-#: includes/eme-options.php:3295
+#: includes/eme-options.php:2770
+#: includes/eme-options.php:2807
+#: includes/eme-options.php:2865
+#: includes/eme-options.php:2903
+#: includes/eme-options.php:2941
+#: includes/eme-options.php:2966
+#: includes/eme-options.php:3000
+#: includes/eme-options.php:3041
+#: includes/eme-options.php:3079
+#: includes/eme-options.php:3105
+#: includes/eme-options.php:3151
+#: includes/eme-options.php:3206
+#: includes/eme-options.php:3243
+#: includes/eme-options.php:3280
+#: includes/eme-options.php:3304
 msgid "Extra payment method information"
 msgstr "Informations supplémentaires sur le mode de paiement"
 
-#: includes/eme-options.php:2738
+#: includes/eme-options.php:2747
 msgid "The format of the text shown below the payment buttons if the frontend submit form for events requires payment."
 msgstr "Le format du texte montré au dessus des boutons de paiement si le formulaire de soumission sur le frontend demande le paiement."
 
-#: includes/eme-options.php:2738
+#: includes/eme-options.php:2747
 msgid "Frontend Event Submit Payment form footer format"
 msgstr "Format du pied de l’e-mail de notification d’un évènement soumis sur le frontend"
 
-#: includes/eme-options.php:2737
+#: includes/eme-options.php:2746
 msgid "The format of the text shown above the payment buttons if the frontend submit form for events requires payment. If left empty, a default message will be shown."
 msgstr "Le format du texte montré au dessus des boutons de paiement si le formulaire de soumission sur le frontend demande un paiement. Si laissé vide, un message par défaut sera affiché."
 
-#: includes/eme-options.php:2737
+#: includes/eme-options.php:2746
 msgid "Frontend Event Submit Payment form header format"
 msgstr "Format d’entête de l’e-mail de notification d’un évènement soumis sur le frontend"
 
-#: includes/eme-options.php:2672
+#: includes/eme-options.php:2681
 msgid "If set, the value must be greater than the number of days after which you want expired members to be anonymized."
 msgstr "Déplacer vers la corbeille les personnes qui ne sont plus référencées dans les réservations, les groupes ou les adhésions."
 
-#: includes/eme-options.php:2671
+#: includes/eme-options.php:2680
 msgid "Set the number of days after which expired members are automatically anonymized. Leave empty or 0 if not wanted."
 msgstr "Définit le nombre de jours après lesquels les membres expirés sont automatiquement rendus anonymes. Laisser vide ou 0 si vous ne le souhaitez pas."
 
-#: includes/eme-options.php:2671
+#: includes/eme-options.php:2680
 msgid "Automatically anonymize expired members"
 msgstr "Anonymiser automatiquement les membres expirés"
 
-#: includes/eme-options.php:2582
+#: includes/eme-options.php:2591
 #: includes/eme-tasks.php:741
 msgid "The body of the email that will be sent to the contact person when someone signs up for a task that requires approval."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une personne s’inscrit à une tâche qui doit être approuvée."
 
-#: includes/eme-options.php:2581
+#: includes/eme-options.php:2590
 #: includes/eme-tasks.php:732
 msgid "The subject of the email that will be sent to the contact person when someone signs up for a task that requires approval."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne de contact lorsqu’une personne s’inscrit à une tâche qui doit être approuvée."
 
-#: includes/eme-options.php:2579
+#: includes/eme-options.php:2588
 #: includes/eme-tasks.php:712
 msgid "Task Signup Pending Email Subject"
 msgstr "Objet de l’e-mail d’inscription en attente à une tâche"
 
-#: includes/eme-options.php:2568
+#: includes/eme-options.php:2577
 msgid "The body of the email that will be sent to the person as confirmation after they unsubscribe."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne en guise de confirmation après qu'elle se soit désinscrite."
 
-#: includes/eme-options.php:2568
+#: includes/eme-options.php:2577
 msgid "Unsubscribe confirmation email body"
 msgstr "Corps de l'e-mail de confirmation de désinscription"
 
-#: includes/eme-options.php:2567
+#: includes/eme-options.php:2576
 msgid "The subject of the email that will be sent to the person as confirmation after they unsubscribe."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne en guise de confirmation après qu'elle se soit désinscrite."
 
-#: includes/eme-options.php:2567
+#: includes/eme-options.php:2576
 msgid "Unsubscribe confirmation email subject"
 msgstr "Objet de l'e-mail de confirmation de désinscription"
 
-#: includes/eme-options.php:2515
+#: includes/eme-options.php:2524
 msgid "Optionally add attachments to the mail when an event is paid for."
 msgstr "Possibilité d’ajouter des pièces jointes à l’e-mail lorsqu’un évènement est payé."
 
-#: includes/eme-options.php:2493
+#: includes/eme-options.php:2502
 msgid "Event paid mail attachments"
 msgstr "Pièces jointes au mail d’évènement payé"
 
-#: includes/eme-options.php:2489
+#: includes/eme-options.php:2498
 msgid "The body of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
 msgstr "Le corps de l’e-mail qui sera envoyé à l’auteur de l’événement (le créateur normalement) quand une notification de paiement est reçue d’une passerelle de paiement."
 
-#: includes/eme-options.php:2489
+#: includes/eme-options.php:2498
 msgid "Author Payment Notification Email Body"
 msgstr "Corps de l'e-mail de notification de paiement à l'auteur"
 
-#: includes/eme-options.php:2488
+#: includes/eme-options.php:2497
 msgid "The subject of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
 msgstr "Objet de l’e-mail qui sera envoyé à l’auteur de l’évènement (normalement le créateur) lorsqu’une notification de paiement est reçue via une passerelle de paiement."
 
-#: includes/eme-options.php:2488
+#: includes/eme-options.php:2497
 msgid "Author Payment Notification Email Subject"
 msgstr "Objet de l'e-mail de notification de paiement à l'auteur"
 
-#: includes/eme-options.php:2487
+#: includes/eme-options.php:2496
 msgid "Contact Person New Event Email Body"
 msgstr "Personne de contact Nouvel événement Corps de l'e-mail"
 
-#: includes/eme-options.php:2486
+#: includes/eme-options.php:2495
 msgid "Contact Person New Event Email Subject"
 msgstr "Objet de l’e-mail envoyé lors d’un nouvel évènement à la personne de contact"
 
-#: includes/eme-options.php:2482
+#: includes/eme-options.php:2491
 msgid "Frontend Event Submit Notification Email"
 msgstr "E-mail de notification d’un évènement soumis sur le frontend"
 
-#: includes/eme-options.php:2111
+#: includes/eme-options.php:2119
 msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
 msgstr "Remarque : si, pour certains e-mails, l'adresse de réponse est identique à l'adresse de départ, la valeur de l'adresse de réponse sera également forcée."
 
@@ -1719,12 +1719,12 @@ msgstr "Utiliser captcha uniquement pour les utilisateurs déconnectés ?"
 
 #: includes/eme-events.php:8372
 #: includes/eme-members.php:1972
-#: includes/eme-options.php:3362
+#: includes/eme-options.php:3371
 msgid "Select a captcha to use"
 msgstr "Sélectionner un captcha à utiliser"
 
 #: includes/eme-events.php:7735
-#: includes/eme-options.php:2295
+#: includes/eme-options.php:2304
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr "Lorsque ce courriel n'est pas encore envoyé (dans la file d'attente) et que la réservation est approuvée ou payée pendant cette période et qu'un courriel est prévu pour cette action, ce courriel est supprimé de la file d'attente afin que les personnes ne reçoivent pas deux courriels en même temps."
 
@@ -1734,10 +1734,10 @@ msgstr "Lorsque ce courriel n'est pas encore envoyé (dans la file d'attente) et
 #: includes/eme-members.php:2315
 #: includes/eme-members.php:2459
 #: includes/eme-members.php:2538
-#: includes/eme-options.php:2279
-#: includes/eme-options.php:2339
-#: includes/eme-options.php:2459
-#: includes/eme-options.php:2525
+#: includes/eme-options.php:2288
+#: includes/eme-options.php:2348
+#: includes/eme-options.php:2468
+#: includes/eme-options.php:2534
 msgid "No PDF templates defined yet."
 msgstr "Aucun modèle PDF n'a encore été défini."
 
@@ -1750,10 +1750,10 @@ msgstr "Aucun modèle PDF n'a encore été défini."
 #: includes/eme-members.php:2457
 #: includes/eme-members.php:2533
 #: includes/eme-members.php:2536
-#: includes/eme-options.php:2276
-#: includes/eme-options.php:2336
-#: includes/eme-options.php:2456
-#: includes/eme-options.php:2522
+#: includes/eme-options.php:2285
+#: includes/eme-options.php:2345
+#: includes/eme-options.php:2465
+#: includes/eme-options.php:2531
 msgid "Optionally add PDF templates as attachments to the mail."
 msgstr "Il est possible d'ajouter des modèles PDF en tant que pièces jointes aux e-mails."
 
@@ -1763,20 +1763,20 @@ msgstr "Il est possible d'ajouter des modèles PDF en tant que pièces jointes a
 #: includes/eme-members.php:2304
 #: includes/eme-members.php:2448
 #: includes/eme-members.php:2527
-#: includes/eme-options.php:2274
-#: includes/eme-options.php:2334
-#: includes/eme-options.php:2454
-#: includes/eme-options.php:2520
+#: includes/eme-options.php:2283
+#: includes/eme-options.php:2343
+#: includes/eme-options.php:2463
+#: includes/eme-options.php:2529
 msgid "PDF templates as attachments"
 msgstr "Modèles PDF en pièces jointes"
 
 #: includes/eme-events.php:7532
-#: includes/eme-options.php:2234
+#: includes/eme-options.php:2243
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
 msgstr "Étant donné que les notifications RSVP après paiement ne sont pas actives, cet e-mail sera également envoyé lorsqu'une réservation est marquée comme payée."
 
 #: includes/eme-events.php:7530
-#: includes/eme-options.php:2232
+#: includes/eme-options.php:2241
 msgid "When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for)."
 msgstr "Lorsqu'un événement est configuré pour approuver automatiquement les réservations après paiement et que le montant total à payer est égal à 0, cet e-mail sera envoyé lorsqu'une réservation en attente est marquée comme payée (et non l'e-mail payé, puisqu'il n'y avait rien à payer)."
 
@@ -2166,11 +2166,11 @@ msgstr "Non importé (champ %1$s non valide) : %2$s"
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr "Importation terminée : %1$d insertion, %2$d mises à jour, %3$d erreurs"
 
-#: includes/eme-options.php:3480
+#: includes/eme-options.php:3489
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr "Ici, vous pouvez définir un pied de page HTML supplémentaire, aucun espace réservé ne peut être utilisé."
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3488
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Vous pouvez définir ici des en-têtes HTML supplémentaires, aucun espace réservé ne peut être utilisé."
 
@@ -2221,15 +2221,15 @@ msgstr "Confirmation de désabonnement"
 msgid "Subscribe confirmation"
 msgstr "Confirmation d’abonnement"
 
-#: includes/eme-options.php:2146
+#: includes/eme-options.php:2109
 msgid "A list of emails (one per line) that will not be accepted in EME. Examples can be \".com\" (to not accept anything from \".com\"), \"anything.com\" (to not accept addresses ending in \"anything.com\"), or even specific email addresses."
 msgstr "Une liste des e-mails (un par ligne) qui ne seront pas acceptés dans EME. Les exemples peuvent être « .com » (pour ne rien accepter de « .com »), « anything.com » (pour ne pas accepter les adresses se terminant par « anything.com »), ou même des e-mails spécifiques."
 
-#: includes/eme-options.php:2146
+#: includes/eme-options.php:2109
 msgid "Email blacklist"
 msgstr "Liste noire des e-mails"
 
-#: includes/eme-options.php:2126
+#: includes/eme-options.php:2134
 msgid "SMTP port"
 msgstr "Port SMTP"
 
@@ -2243,19 +2243,19 @@ msgstr "E-mails"
 msgid "Page %d"
 msgstr "Page %d"
 
-#: includes/eme-options.php:2111
+#: includes/eme-options.php:2119
 msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty)."
 msgstr "Force l’adresse d’expéditeur configurée à être utilisée pour tous les e-mails sortants. S’ils ne sont pas activés, le nom et l’adresse e-mail de la personne de contact par défaut pour les e-mails RSVP seront utilisés pour les e-mails génériques, tandis que pour les e-mails relatifs aux évènements ou aux adhésions, la personne de contact configurée sera utilisée (ou l’administrateur du blog s’il est vide)."
 
-#: includes/eme-options.php:2111
+#: includes/eme-options.php:2119
 msgid "Force sender address everywhere"
 msgstr "Forcer l’adresse de l’expéditeur partout"
 
-#: includes/eme-options.php:2110
+#: includes/eme-options.php:2118
 msgid "The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account."
 msgstr "L’adresse e-mail par défaut avec laquelle seront envoyés les courriers d’EME concernant le RGPD, l’inscription/désinscription au mailing ou les anniversaires. Si elle est laissée vide, l’adresse de la personne de contact par défaut pour les e-mails RSVP sera utilisée (ou l’administrateur du blog si elle est vide). Si vous utilisez Gmail pour envoyer des e-mails, cette adresse doit correspondre à votre compte Gmail."
 
-#: includes/eme-options.php:2109
+#: includes/eme-options.php:2117
 msgid "The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty)."
 msgstr "Le nom par défaut sur les e-mails lorsque EME envoie des e-mails concernant le RGPD, l’inscription/désinscription à un mailing ou les anniversaires. Si laissé vide, le nom de la personne de contact par défaut pour les e-mails de RSVP sera utilisé (ou l’administrateur du blog si vide)."
 
@@ -2431,15 +2431,15 @@ msgstr "Dupliquer ce modèle"
 msgid "Leave empty to send the mail immediately"
 msgstr "Laissez vide pour envoyer l’e-mail immédiatement"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3497
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr "Si cette option est sélectionnée et que WordPress multisite est actif, cette instance EME utilisera les tables de la base de données de l’instance multisite principale. Ainsi, tous les évènements, emplacements, réservations, adhésions, modèles, etc... seront partagés avec le site principal. La chose qui reste uniquement locale, ce sont toutes les options de EME, qui vous permettent de créer des sous-sites linguistiques ou autres. Faites également attention aux actions planifiées : elles seront uniquement exécutées sur la base des options définies dans le site principal, et non par sous-site. Si vous ne souhaitez pas partager les données entre les sous-sites, cette option n’est pas nécessaire."
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3497
 msgid "Activate multisite data sharing?"
 msgstr "Activer le partage de données multisite ?"
 
-#: includes/eme-options.php:3485
+#: includes/eme-options.php:3494
 msgid "Multisite options"
 msgstr "Options multisites"
 
@@ -2451,12 +2451,12 @@ msgstr "Mise en file d’attente des e-mails"
 #. translators: %s is the name of the option
 #: includes/eme-options.php:2099
 #: includes/eme-options.php:2102
-#: includes/eme-options.php:2680
-#: includes/eme-options.php:2683
-#: includes/eme-options.php:2686
 #: includes/eme-options.php:2689
 #: includes/eme-options.php:2692
 #: includes/eme-options.php:2695
+#: includes/eme-options.php:2698
+#: includes/eme-options.php:2701
+#: includes/eme-options.php:2704
 msgid "Multisite data sharing is activated for EME, the option \"%s\" will use the settings from the main site"
 msgstr "Le partage de données multisite est activé pour EME, l’option « %s » utilisera les réglages du site principal"
 
@@ -2464,51 +2464,51 @@ msgstr "Le partage de données multisite est activé pour EME, l’option « %s
 msgid "EME multisite data sharing is active, this instance will not do any planned actions. All planned actions will be executed from the main site."
 msgstr "Le partage de données multisite de EME est actif, cette instance n’effectuera aucune action planifiée. Toutes les actions planifiées seront exécutées à partir du site principal."
 
-#: includes/eme-options.php:3441
+#: includes/eme-options.php:3450
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr "Par défaut, le texte affiché pour la deuxième ligne d’adresse est « Ligne d’adresse 2 », mais cela peut ne pas être très informatif pour les personnes, alors n’hésitez pas à mettre quelque chose d’autre ici, comme « numéro de maison »."
 
-#: includes/eme-options.php:3441
+#: includes/eme-options.php:3450
 msgid "Address line 2 text"
 msgstr "Texte de la ligne d’adresse 2"
 
-#: includes/eme-options.php:3440
+#: includes/eme-options.php:3449
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr "Par défaut, le texte affiché pour la deuxième ligne d’adresse est « Ligne d’adresse 1 », mais cela peut ne pas être très informatif pour les personnes, alors n’hésitez pas à mettre quelque chose d’autre ici, comme « nom de la rue »."
 
-#: includes/eme-options.php:3440
+#: includes/eme-options.php:3449
 msgid "Address line 1 text"
 msgstr "Texte de la ligne d’adresse 1"
 
-#: includes/eme-options.php:3062
+#: includes/eme-options.php:3071
 msgid "Opayo password when using Opayo for real"
 msgstr "Mot de passe Opayo lorsque vous utilisez Opayo pour de vrai"
 
-#: includes/eme-options.php:3062
+#: includes/eme-options.php:3071
 msgid "Opayo Live Password"
 msgstr "Mot de passe Opayo Live"
 
-#: includes/eme-options.php:3061
+#: includes/eme-options.php:3070
 msgid "Opayo Test Password"
 msgstr "Mot de passe Opayo en test"
 
-#: includes/eme-options.php:3060
+#: includes/eme-options.php:3069
 msgid "Opayo Vendor Name"
 msgstr "Opayo Nom du vendeur"
 
-#: includes/eme-options.php:3053
+#: includes/eme-options.php:3062
 msgid "Opayo Live"
 msgstr "Opayo Live"
 
-#: includes/eme-options.php:3052
+#: includes/eme-options.php:3061
 msgid "Opayo Sandbox (for testing)"
 msgstr "Opayo Bac à sable (pour les tests)"
 
-#: includes/eme-options.php:3049
+#: includes/eme-options.php:3058
 msgid "Opayo live or test"
 msgstr "Opayo en direct ou en test"
 
-#: includes/eme-options.php:3043
+#: includes/eme-options.php:3052
 #: includes/eme-payments.php:17
 msgid "Opayo"
 msgstr "Opayo"
@@ -2555,19 +2555,19 @@ msgstr "Limiter l’accès aux personnes du EME qui sont membres des groupes sui
 msgid "On waiting list"
 msgstr "Sur liste d’attente"
 
-#: includes/eme-options.php:3088
+#: includes/eme-options.php:3097
 msgid "SumUp App Secret"
 msgstr "Secret del’App SumUp"
 
-#: includes/eme-options.php:3087
+#: includes/eme-options.php:3096
 msgid "SumUp App ID"
 msgstr "ID de l’App SumUp"
 
-#: includes/eme-options.php:3086
+#: includes/eme-options.php:3095
 msgid "SumUp Merchant Code"
 msgstr "Code Marchand Sumup"
 
-#: includes/eme-options.php:3080
+#: includes/eme-options.php:3089
 #: includes/eme-payments.php:18
 msgid "SumUp"
 msgstr "SumUp"
@@ -2655,40 +2655,40 @@ msgstr "Définir l’e-mail d’anniversaire sur non"
 msgid "Set Birthday email to yes"
 msgstr "Définir l’e-mail d’anniversaire sur oui"
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3454
 msgid "If selected and birthday emails are to be send, only persons with an active membership will get a birthday email."
 msgstr "Si cette option est sélectionnée et que des e-mails d’anniversaire doivent être envoyés, seules les personnes ayant une adhésion active recevront un e-mail d’anniversaire."
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3454
 msgid "Limit birthday emails to active members?"
 msgstr "Limiter les e-mails d’anniversaire aux membres actifs ?"
 
-#: includes/eme-options.php:3444
+#: includes/eme-options.php:3453
 msgid "If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email."
 msgstr "Si cette option est sélectionnée, les nouvelles personnes enregistrées avec un anniversaire non vide recevront un e-mail d’anniversaire. Allez dans les réglages des modèles d’e-mail pour modifier l’apparence de cet e-mail."
 
-#: includes/eme-options.php:3444
+#: includes/eme-options.php:3453
 msgid "By default send out birthday email for new persons?"
 msgstr "Envoyer par défaut un e-mail d’anniversaire pour les nouvelles personnes ?"
 
-#: includes/eme-options.php:2648
+#: includes/eme-options.php:2657
 msgid "The body of the email that will be sent to  to people on their birthday (if active for them)."
 msgstr "Le corps de l’e-mail qui sera envoyé aux personnes le jour de leur anniversaire (si c’est activé pour elles)."
 
-#: includes/eme-options.php:2648
+#: includes/eme-options.php:2657
 msgid "Birthday Email Body"
 msgstr "Corps de l’e-mail d’anniversaire"
 
-#: includes/eme-options.php:2647
+#: includes/eme-options.php:2656
 msgid "The subject of the email that will be sent to people on their birthday (if active for them)."
 msgstr "L’objet de l’e-mail qui sera envoyé aux personnes le jour de leur anniversaire (si c’est activé pour elles)."
 
-#: includes/eme-options.php:2647
+#: includes/eme-options.php:2656
 msgid "Birthday Email Subject"
 msgstr "Objet de l’e-mail d’anniversaire"
 
 #: includes/eme-events.php:9754
-#: includes/eme-options.php:2643
+#: includes/eme-options.php:2652
 msgid "Birthday Email"
 msgstr "E-mail d’anniversaire"
 
@@ -2812,22 +2812,22 @@ msgid "Require user confirmation after booking"
 msgstr "Exiger la confirmation de l’utilisateur/utilisatrice après la réservation"
 
 #: includes/eme-events.php:7704
-#: includes/eme-options.php:2300
+#: includes/eme-options.php:2309
 msgid "The body of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "Le corps de l’e-mail qui sera envoyé au concerné si la réservation nécessite une confirmation de l’utilisateur/utilisatrice."
 
 #: includes/eme-events.php:7702
-#: includes/eme-options.php:2300
+#: includes/eme-options.php:2309
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr "Corps de l’e-mail de confirmation de la réservation en attente de l’utilisateur/utilisatrice"
 
 #: includes/eme-events.php:7682
-#: includes/eme-options.php:2299
+#: includes/eme-options.php:2308
 msgid "The subject of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "L’objet de l’e-mail qui sera envoyé au concerné si la réservation nécessite une confirmation de l’utilisateur/utilisatrice."
 
 #: includes/eme-events.php:7681
-#: includes/eme-options.php:2299
+#: includes/eme-options.php:2308
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr "Objet de l’e-mail de confirmation de la réservation en attente de l’utilisateur/utilisatrice"
 
@@ -2852,13 +2852,13 @@ msgstr "Aucun nettoyage automatique des réservations non confirmées ne sera ef
 msgid "Cleanup done: unconfirmed bookings older than %d minutes have been removed."
 msgstr "Le nettoyage est terminé : les réservations non confirmées datant de plus de %d minutes ont été supprimées."
 
-#: includes/eme-options.php:2676
+#: includes/eme-options.php:2685
 msgid "Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal."
 msgstr "Définir le nombre de jours après lesquels les envois sont automatiquement archivés et les anciens e-mails sont supprimés. Laissez vide ou 0 pour qu’il n’y ait aucun archivage ou suppression automatique."
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2676
-#: includes/eme-options.php:2692
+#: includes/eme-options.php:2685
+#: includes/eme-options.php:2701
 msgid "Automatically archive old mailings and remove old emails"
 msgstr "Archivage automatique des anciens mailings et retrait des anciens e-mails"
 
@@ -3006,9 +3006,9 @@ msgstr "Droit nécessaire pour accéder au menu des membres ou des adhésions. V
 msgid "There are no tasks to sign up for right now"
 msgstr "Il n’y a aucune tâche à laquelle s’inscrire pour le moment"
 
-#: includes/eme-options.php:2733
-#: includes/eme-options.php:2734
-#: includes/eme-options.php:2757
+#: includes/eme-options.php:2742
+#: includes/eme-options.php:2743
+#: includes/eme-options.php:2766
 msgid "This option is only valid for event bookings, for memberships this can be defined for each membership individually."
 msgstr "Cette option est valide uniquement pour les réservations d’évènements. Pour les adhésions, elle peut être définie individuellement pour chaque adhésion."
 
@@ -3232,22 +3232,22 @@ msgstr "Le tableau ci-dessous montre les personnes qui ont des e-mails identique
 msgid "Verify unique emails"
 msgstr "Vérifier l’unicité des e-mails"
 
-#: includes/eme-options.php:2675
+#: includes/eme-options.php:2684
 msgid "Automatically remove signups for tasks that have ended the specified number of days ago. Leave empty or 0 for no automatic removal."
 msgstr "Supprime automatiquement les inscriptions aux tâches qui se sont terminées après le nombre de jours spécifié. Laissez vide ou 0 pour aucune suppression automatique."
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2675
-#: includes/eme-options.php:2689
+#: includes/eme-options.php:2684
+#: includes/eme-options.php:2698
 msgid "Automatically remove task signups for old events"
 msgstr "Supprimer automatiquement les inscriptions aux tâches pour les anciens évènements"
 
-#: includes/eme-options.php:2595
+#: includes/eme-options.php:2604
 #: includes/eme-tasks.php:680
 msgid "The body of the email sent to the respondent when that person signs up for a task."
 msgstr "Le corps de l’e-mail envoyé au répondant lorsque celui-ci s’inscrit à une tâche."
 
-#: includes/eme-options.php:2594
+#: includes/eme-options.php:2603
 #: includes/eme-tasks.php:671
 msgid "The subject of the email sent to the respondent when that person signs up for a task."
 msgstr "L’objet de l’e-mail envoyé au répondant lorsque celui-ci s’inscrit à une tâche."
@@ -3326,52 +3326,52 @@ msgid "Set the number of days before reminder emails will be sent for pending bo
 msgstr "Définissez le nombre de jours avant la date de début de l’évènement pour l’envoi des e-mails de rappel pour les réservations en attente. Si vous souhaitez envoyer plusieurs rappels, séparez les jours par des virgules. Laissez vide pour n’envoyer aucun e-mails de rappel."
 
 #: includes/eme-events.php:7991
-#: includes/eme-options.php:2372
+#: includes/eme-options.php:2381
 msgid "The body of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler sa réservation approuvée (et non en attente)."
 
 #: includes/eme-events.php:7990
-#: includes/eme-options.php:2372
+#: includes/eme-options.php:2381
 msgid "Accepted Booking Reminder Email Body"
 msgstr "Corps de l’e-mail de rappel de réservation acceptée"
 
 #: includes/eme-events.php:7969
-#: includes/eme-options.php:2371
+#: includes/eme-options.php:2380
 msgid "The subject of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler sa réservation approuvée (et non en attente)."
 
 #: includes/eme-events.php:7968
-#: includes/eme-options.php:2371
+#: includes/eme-options.php:2380
 msgid "Accepted Booking Reminder Email Subject"
 msgstr "Objet de l’e-mail de rappel de réservation acceptée"
 
 #: includes/eme-events.php:7950
-#: includes/eme-options.php:2370
+#: includes/eme-options.php:2379
 msgid "The body of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler que sa réservation est en attente."
 
 #: includes/eme-events.php:7949
-#: includes/eme-options.php:2370
+#: includes/eme-options.php:2379
 msgid "Pending Booking Reminder Email Body"
 msgstr "Corps de l’e-mail de rappel aux réservations en attente"
 
 #: includes/eme-events.php:7928
-#: includes/eme-options.php:2369
+#: includes/eme-options.php:2378
 msgid "The subject of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne concernée pour lui rappeler que sa réservation est en attente."
 
 #: includes/eme-events.php:7927
-#: includes/eme-options.php:2369
+#: includes/eme-options.php:2378
 msgid "Pending Booking Reminder Email Subject"
 msgstr "Objet de l’e-mail de rappel de réservation en attente"
 
 #: includes/eme-events.php:6650
-#: includes/eme-options.php:2605
+#: includes/eme-options.php:2614
 msgid "Task Signup Reminder Email"
 msgstr "E-mail de rappel de l’inscription à une tâche"
 
 #: includes/eme-events.php:6646
-#: includes/eme-options.php:2590
+#: includes/eme-options.php:2599
 msgid "Task Signup Made Email"
 msgstr "E-mail d’Inscription aux tâches"
 
@@ -3384,7 +3384,7 @@ msgid "Enable tasks for this event"
 msgstr "Activer les tâches pour cet évènement"
 
 #: includes/eme-events.php:6582
-#: includes/eme-options.php:2362
+#: includes/eme-options.php:2371
 msgid "Booking Reminder Email"
 msgstr "E-mail de rappel de réservation"
 
@@ -3397,11 +3397,11 @@ msgstr "Vous avez bien annulé votre inscription à cette tâche."
 msgid "Task signup cancellation failed."
 msgstr "L’annulation de l’inscription à la tâche a échoué."
 
-#: includes/eme-options.php:2732
+#: includes/eme-options.php:2741
 msgid "By default, people get a list of payment gateways to choose from before being redirected to the payment gateway of choice. Select yes to immediately redirect to the payment gateway if there is only one payment gateway to chose from. This redirect takes also the setting  \"Redirect wait period\" into account. The text above the payment button of the relevant payment gateway will then also be shown."
 msgstr "Par défaut, les internautes reçoivent une liste de passerelles de paiement parmi lesquelles ils peuvent choisir avant d'être redirigés vers la passerelle de paiement de leur choix. Sélectionnez \"oui\" pour rediriger immédiatement vers la passerelle de paiement s’il n’y a qu'une seule passerelle de paiement à choisir. Cette redirection prend également en compte le paramètre « Période d’attente de la redirection ». Le texte au-dessus du bouton de paiement de la passerelle de paiement concernée sera alors également affiché."
 
-#: includes/eme-options.php:2732
+#: includes/eme-options.php:2741
 msgid "Redirect immediately to payment gateway?"
 msgstr "Rediriger immédiatement vers la passerelle de paiement ?"
 
@@ -3425,37 +3425,37 @@ msgstr "Votre compte a la possibilité de publier ici du contenu HTML sans restr
 msgid "Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):"
 msgstr "Transférez les réservations associées à (laissez vide pour déplacer les réservations pour les évènements futurs vers la corbeille également) :"
 
-#: includes/eme-options.php:2796
-#: includes/eme-options.php:2854
-#: includes/eme-options.php:2892
-#: includes/eme-options.php:2930
-#: includes/eme-options.php:2955
-#: includes/eme-options.php:2989
-#: includes/eme-options.php:3030
-#: includes/eme-options.php:3068
-#: includes/eme-options.php:3094
-#: includes/eme-options.php:3120
-#: includes/eme-options.php:3195
-#: includes/eme-options.php:3232
-#: includes/eme-options.php:3269
-#: includes/eme-options.php:3293
+#: includes/eme-options.php:2805
+#: includes/eme-options.php:2863
+#: includes/eme-options.php:2901
+#: includes/eme-options.php:2939
+#: includes/eme-options.php:2964
+#: includes/eme-options.php:2998
+#: includes/eme-options.php:3039
+#: includes/eme-options.php:3077
+#: includes/eme-options.php:3103
+#: includes/eme-options.php:3129
+#: includes/eme-options.php:3204
+#: includes/eme-options.php:3241
+#: includes/eme-options.php:3278
+#: includes/eme-options.php:3302
 msgid "The text shown just below the payment button"
 msgstr "Le texte affiché juste en dessous du bouton de paiement"
 
-#: includes/eme-options.php:2795
-#: includes/eme-options.php:2853
-#: includes/eme-options.php:2891
-#: includes/eme-options.php:2929
-#: includes/eme-options.php:2954
-#: includes/eme-options.php:2988
-#: includes/eme-options.php:3029
-#: includes/eme-options.php:3067
-#: includes/eme-options.php:3093
-#: includes/eme-options.php:3119
-#: includes/eme-options.php:3194
-#: includes/eme-options.php:3231
-#: includes/eme-options.php:3268
-#: includes/eme-options.php:3292
+#: includes/eme-options.php:2804
+#: includes/eme-options.php:2862
+#: includes/eme-options.php:2900
+#: includes/eme-options.php:2938
+#: includes/eme-options.php:2963
+#: includes/eme-options.php:2997
+#: includes/eme-options.php:3038
+#: includes/eme-options.php:3076
+#: includes/eme-options.php:3102
+#: includes/eme-options.php:3128
+#: includes/eme-options.php:3203
+#: includes/eme-options.php:3240
+#: includes/eme-options.php:3277
+#: includes/eme-options.php:3301
 msgid "The text shown just above the payment button"
 msgstr "Le texte affiché juste au-dessus du bouton de paiement"
 
@@ -3583,7 +3583,7 @@ msgstr "Pour les types 'Date (JavaScript)', 'Datetime (JavaScript)' et 'Time (Ja
 msgid "Current usage count"
 msgstr "Nombre d’utilisations actuelles"
 
-#: includes/eme-options.php:2538
+#: includes/eme-options.php:2547
 msgid "Should contain at least the placeholder #_SUB_CONFIRM_URL (if this placeholder is not present, people will not be able to confirm their subscription). Next to that, #_LASTNAME and #_FIRSTNAME can also be used. You should also advise the person that this subscription confirmation link is only valid for a specific amount of time (typically one day)."
 msgstr "Doit contenir au moins l’espace réservé #_SUB_CONFIRM_URL (si cet espace réservé n’est pas présent, les personnes ne seront pas en mesure de confirmer leur abonnement). En outre, #_LASTNAME et #_FIRSTNAME peuvent également être utilisés. Vous devez également informer la personne que ce lien de confirmation d’abonnement n'est valable que pour une durée déterminée (généralement un jour)."
 
@@ -3805,7 +3805,7 @@ msgstr "Paiement réussi"
 msgid "Members CSV"
 msgstr "CSV des membres"
 
-#: includes/eme-options.php:3140
+#: includes/eme-options.php:3149
 msgid "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info."
 msgstr "Les différents modes de paiement Stripe que vous souhaitez gérer/proposer. La valeur par défaut est 'card'. Consultez la <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>documentation Stripe</a> pour plus d’informations."
 
@@ -3844,7 +3844,7 @@ msgstr "(copier/coller ce lien dans votre navigateur pour modifier les informati
 msgid "Click here to change the info for this person"
 msgstr "Cliquez ici pour modifier les informations relatives à cette personne"
 
-#: includes/eme-options.php:3140
+#: includes/eme-options.php:3149
 msgid "Stripe payment methods"
 msgstr "Méthodes de paiement Stripe"
 
@@ -4011,93 +4011,93 @@ msgstr "Paiement Ok"
 msgid "Invalid URL"
 msgstr "URL non valide"
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3456
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Le format de l’heure utilisé dans les tables EME. Laissez ce champ vide pour utiliser les réglages de WordPress."
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3456
 msgid "EME backend time format"
 msgstr "Format de l’heure dans l’interface d’administration EME"
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3455
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Le format de date utilisé dans les tables EME. Laissez ce champ vide pour utiliser les réglages de WordPress."
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3455
 msgid "EME backend date format"
 msgstr "Format de date dans l’interface d’administration EME"
 
-#: includes/eme-options.php:2711
+#: includes/eme-options.php:2720
 msgid "The placeholders you can use in this setting are : #_LASTNAME, #_EMAIL, #_PHONE, #_FIRSTNAME, #_BIRTHDATE, #_BIRTHPLACE, #_ADDRESS1, #_ADDRESS2, #_CITY, #_STATE, #_ZIP, #_COUNTRY, #_OPT_IN, #_OPT_OUT, #_GDPR and all #_FIELD{xx} placeholders for custom fields of type \"person\"."
 msgstr "Les espaces réservés que vous pouvez utiliser dans ce paramètre sont : #_LASTNAME, #_EMAIL, #_PHONE, #_FIRSTNAME, #_BIRTHDATE, #_BIRTHPLACE, #_ADDRESS1, #_ADDRESS2, #_CITY, #_STATE, #_ZIP, #_COUNTRY, #_OPT_IN, #_OPT_OUT, #_GDPR et tous les espaces réservés #_FIELD{xx} pour les champs personnalisés de type « personne »."
 
-#: includes/eme-options.php:2636
+#: includes/eme-options.php:2645
 #: includes/eme-tasks.php:829
 msgid "The body of the email that will be sent to the respondent if the task signup is deleted by an admin."
 msgstr "Le corps de l'e-mail qui sera envoyé au répondant si l’inscription à la tâche est supprimée par un administrateur."
 
-#: includes/eme-options.php:2636
+#: includes/eme-options.php:2645
 #: includes/eme-tasks.php:828
 msgid "Task Signup Deleted Email Body"
 msgstr "Corps de l’e-mail supprimé pour l’inscription à une tâche"
 
-#: includes/eme-options.php:2635
+#: includes/eme-options.php:2644
 #: includes/eme-tasks.php:820
 msgid "The subject of the email that will be sent to the respondent if the task signup is deleted by an admin."
 msgstr "L’objet de l’e-mail qui sera envoyé au répondant si l’inscription à la tâche est supprimée par un administrateur."
 
-#: includes/eme-options.php:2635
+#: includes/eme-options.php:2644
 #: includes/eme-tasks.php:819
 msgid "Task Signup Deleted Email Subject"
 msgstr "Objet de l'e-mail pour la suppression d’une inscription à une tâche"
 
 #: includes/eme-events.php:6658
-#: includes/eme-options.php:2631
+#: includes/eme-options.php:2640
 msgid "Task Signup Deleted Email"
 msgstr "E-mail d’une inscription à une tâche supprimée"
 
-#: includes/eme-options.php:2624
+#: includes/eme-options.php:2633
 #: includes/eme-tasks.php:806
 msgid "The body of the email that will be sent to the contact person when a respondent cancels a task signup."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’un répondant annule une inscription à une tâche."
 
-#: includes/eme-options.php:2624
+#: includes/eme-options.php:2633
 #: includes/eme-tasks.php:805
 msgid "Contact Person Task Signup Cancelled Email Body"
 msgstr "Corps de l’e-mail à la personne de contact d’une inscription à une tâche supprimée"
 
-#: includes/eme-options.php:2623
+#: includes/eme-options.php:2632
 #: includes/eme-tasks.php:797
 msgid "The subject of the email that will be sent to the contact person when a respondent cancels a task signup."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne de contact lorsqu’un répondant annule une inscription à une tâche."
 
-#: includes/eme-options.php:2623
+#: includes/eme-options.php:2632
 #: includes/eme-tasks.php:796
 msgid "Contact Person Task Signup Cancelled Email Subject"
 msgstr "Objet de l'e-mail à la personne de contact d’une inscription à une tâche supprimée"
 
-#: includes/eme-options.php:2622
+#: includes/eme-options.php:2631
 #: includes/eme-tasks.php:787
 msgid "The body of the email that will be sent to the respondent when he himself cancels a task signup."
 msgstr "Le corps de l’e-mail qui sera envoyé au répondant lorsqu’il annule lui-même une inscription à une tâche."
 
-#: includes/eme-options.php:2622
+#: includes/eme-options.php:2631
 #: includes/eme-tasks.php:786
 msgid "Task Signup Cancelled Email Body"
 msgstr "Corps de l’e-mail d'une inscription à une tâche supprimée"
 
-#: includes/eme-options.php:2621
+#: includes/eme-options.php:2630
 #: includes/eme-tasks.php:778
 msgid "The subject of the email that will be sent to the respondent when he himself cancels a task signup."
 msgstr "L’objet de l’e-mail qui sera envoyé au répondant lorsqu’il annule lui-même une inscription à une tâche."
 
-#: includes/eme-options.php:2621
+#: includes/eme-options.php:2630
 #: includes/eme-tasks.php:777
 msgid "Task Signup Cancelled Email Subject"
 msgstr "Objet de l’e-mail d’annulation de l’inscription à une tâche"
 
 #: includes/eme-events.php:6654
-#: includes/eme-options.php:2617
+#: includes/eme-options.php:2626
 msgid "Task Signup Cancelled Email"
 msgstr "E-mail d’une inscription à une tâche annulée"
 
@@ -4117,77 +4117,77 @@ msgstr "L’objet de l’e-mail qui sera envoyé au répondant si l’inscriptio
 msgid "Task Signup Updated Email Subject"
 msgstr "Objet de l’e-mail de mise à jour de l’inscription à la tâche"
 
-#: includes/eme-options.php:2582
+#: includes/eme-options.php:2591
 #: includes/eme-tasks.php:740
 msgid "Contact Person Task Signup Pending Email Body"
 msgstr "Corps de l’e-mail, à la personne de contact, lors d’une inscription en attente à une tâche"
 
-#: includes/eme-options.php:2581
+#: includes/eme-options.php:2590
 #: includes/eme-tasks.php:731
 msgid "Contact Person Task Signup Pending Email Subject"
 msgstr "Objet de l’e-mail, à la personne de contact, lors d’une inscription en attente à une tâche"
 
-#: includes/eme-options.php:2610
+#: includes/eme-options.php:2619
 #: includes/eme-tasks.php:851
 msgid "Task Signup Reminder Email Body"
 msgstr "Corps de l’e-mail de rappel de l’inscription à une tâche"
 
-#: includes/eme-options.php:2609
+#: includes/eme-options.php:2618
 #: includes/eme-tasks.php:842
 msgid "Task Signup Reminder Email Subject"
 msgstr "Objet de l’e-mail de rappel de l’inscription à une tâche"
 
-#: includes/eme-options.php:2580
+#: includes/eme-options.php:2589
 #: includes/eme-tasks.php:721
 msgid "Task Signup Pending Email Body"
 msgstr "E-mail d'une demande d’inscription à une tâche "
 
-#: includes/eme-options.php:2597
+#: includes/eme-options.php:2606
 #: includes/eme-tasks.php:699
 msgid "The body of the email that will be sent to the contact person when someone signs up for a task."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsque quelqu’un s’inscrit à une tâche."
 
-#: includes/eme-options.php:2597
+#: includes/eme-options.php:2606
 #: includes/eme-tasks.php:698
 msgid "Contact Person Task Signup Made Email Body"
 msgstr "Corps de l’e-mail d’inscription à une tâche à la personne de contact"
 
-#: includes/eme-options.php:2596
+#: includes/eme-options.php:2605
 #: includes/eme-tasks.php:690
 msgid "The subject of the email that will be sent to the contact person when someone signs up for a task."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne de contact lorsque quelqu’un s’inscrit à une tâche."
 
-#: includes/eme-options.php:2596
+#: includes/eme-options.php:2605
 #: includes/eme-tasks.php:689
 msgid "Contact Person Task Signup Made Email Subject"
 msgstr "Objet de l’e-mail à la personne de contact lors d’une inscription à une tâche"
 
-#: includes/eme-options.php:2580
+#: includes/eme-options.php:2589
 #: includes/eme-tasks.php:722
 msgid "The body of the email sent to the respondent when that person signs up for a task that requires approval."
 msgstr "Le corps de l’-email envoyé au répondant lorsque cette personne s’inscrit à une tâche (non en attente) ou approuvée."
 
-#: includes/eme-options.php:2595
+#: includes/eme-options.php:2604
 #: includes/eme-tasks.php:679
 msgid "Task Signup Made Email Body"
 msgstr "Corps de l’e-mail de l’inscription à une tâche"
 
-#: includes/eme-options.php:2579
+#: includes/eme-options.php:2588
 #: includes/eme-tasks.php:713
 msgid "The subject of the email sent to the respondent when that person signs up for a task that requires approval."
 msgstr "Le sujet de l’e-mail envoyé au répondant lorsque cette personne s’inscrit pour une tâche (non en attente) ou approuvée."
 
-#: includes/eme-options.php:2594
+#: includes/eme-options.php:2603
 #: includes/eme-tasks.php:670
 msgid "Task Signup Made Email Subject"
 msgstr "Objet de l’e-mail d’inscription à une tâche"
 
-#: includes/eme-options.php:2215
+#: includes/eme-options.php:2224
 msgid "The format of the full name of a person, used when sending emails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
 msgstr "Le format du nom complet d’une personne, utilisé lors de l’envoi de mails à une personne ou de l’affichage de son nom complet. Seuls 2 espaces réservés peuvent et doivent être utilisés : #_FIRSTNAME et #_LASTNAME. La valeur par défaut est \"#_LASTNAME #_FIRSTNAME\"."
 
-#: includes/eme-options.php:2211
-#: includes/eme-options.php:2215
+#: includes/eme-options.php:2220
+#: includes/eme-options.php:2224
 msgid "Full name format"
 msgstr "Format du nom complet"
 
@@ -4389,8 +4389,8 @@ msgstr "Demande les informations sur les membres de la famille lorsque quelqu’
 #: includes/eme-events.php:8822
 #: includes/eme-members.php:1989
 #: includes/eme-members.php:1995
-#: includes/eme-options.php:2727
-#: includes/eme-options.php:3342
+#: includes/eme-options.php:2736
+#: includes/eme-options.php:3351
 msgid "Use the point as decimal separator"
 msgstr "Utiliser le point comme séparateur décimal"
 
@@ -4498,11 +4498,11 @@ msgid_plural "%d seconds"
 msgstr[0] "%d seconde"
 msgstr[1] "%d secondes"
 
-#: includes/eme-options.php:2728
+#: includes/eme-options.php:2737
 msgid "The default VAT percentage applied to all prices. The price you indicate for events or memberships is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr "Le pourcentage de TVA par défaut est appliqué à tous les prix. Le prix que vous indiquez pour les évènements ou les adhésions est TVA incluse, des espaces réservés spéciaux sont prévus pour indiquer le prix sans TVA."
 
-#: includes/eme-options.php:2728
+#: includes/eme-options.php:2737
 msgid "Default VAT percentage"
 msgstr "Pourcentage de TVA par défaut"
 
@@ -4610,7 +4610,7 @@ msgid "Check this option if you want to use a simple image captcha on the bookin
 msgstr "Cochez cette option si vous souhaitez utiliser un simple CAPTCHA d'image sur les formulaires de réservation/annulation/adhésion, pour déjouer un peu les spammeurs. Vous pouvez alors soit ajouter vous-même #_CAPTCHA à la mise en page de votre formulaire, soit il sera ajouté automatiquement juste au-dessus du bouton d’envoi s’il n'est pas présent."
 
 #. translators: %s is the URL to the Emails management page
-#: includes/eme-options.php:2148
+#: includes/eme-options.php:2206
 msgid "Hint: after you changed your mail settings, go to the <a href='%s'>Emails management</a> submenu to send a test mail."
 msgstr "Conseil : après avoir modifié vos réglages de messagerie, allez dans le sous-menu <a href='%s'>Gestion des e-mails</a> pour envoyer un e-mail de test."
 
@@ -4656,24 +4656,24 @@ msgstr "Si vous souhaitez passer la possibilité de payer immédiatement après 
 msgid "Skip payment methods after booking"
 msgstr "Passer les modes de paiement après la réservation"
 
-#: includes/eme-options.php:2566
+#: includes/eme-options.php:2575
 msgid "Can contain all people placeholders and one additional required placeholder, namely #_UNSUB_CONFIRM_URL (which will be replaced with the unsubscribe confirmation url)."
 msgstr "Peut contenir les espaces réservés pour toutes les personnes et un espace réservé supplémentaire obligatoire, à savoir #_UNSUB_CONFIRM_URL (qui sera remplacé par l’URL de confirmation de désabonnement)."
 
 #: includes/eme-events.php:8119
-#: includes/eme-options.php:2417
+#: includes/eme-options.php:2426
 msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations payantes, donc ces courriers ne seront pas envoyés. Allez dans les réglages de messagerie pour l’activer si vous le souhaitez."
 
 #: includes/eme-events.php:7676
 #: includes/eme-events.php:7733
 #: includes/eme-events.php:8768
-#: includes/eme-options.php:2293
+#: includes/eme-options.php:2302
 msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations en attente, donc ces courriers ne seront pas envoyés. Allez dans les réglages de messagerie pour l’activer si vous le souhaitez."
 
 #: includes/eme-events.php:7527
-#: includes/eme-options.php:2229
+#: includes/eme-options.php:2238
 msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées pour les réservations effectuées ou approuvées, donc ces courriers ne seront pas envoyés. Allez dans les réglages de messagerie pour l’activer si vous le souhaitez."
 
@@ -4681,14 +4681,14 @@ msgstr "Les notifications RSVP ne sont pas activées pour les réservations effe
 #: includes/eme-events.php:7674
 #: includes/eme-events.php:7731
 #: includes/eme-events.php:8117
-#: includes/eme-options.php:2226
-#: includes/eme-options.php:2291
-#: includes/eme-options.php:2352
-#: includes/eme-options.php:2367
-#: includes/eme-options.php:2384
-#: includes/eme-options.php:2401
-#: includes/eme-options.php:2415
-#: includes/eme-options.php:2472
+#: includes/eme-options.php:2235
+#: includes/eme-options.php:2300
+#: includes/eme-options.php:2361
+#: includes/eme-options.php:2376
+#: includes/eme-options.php:2393
+#: includes/eme-options.php:2410
+#: includes/eme-options.php:2424
+#: includes/eme-options.php:2481
 msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Les notifications RSVP ne sont pas activées, donc ces courriers ne seront pas envoyés. Allez dans les réglages de messagerie pour l’activer si vous le souhaitez."
 
@@ -4761,7 +4761,7 @@ msgstr "Non importé (problème d’insertion de l’emplacement dans la base de
 msgid "Not imported (problem updating the location in the db): %s"
 msgstr "Non importé (problème de mise à jour de l’emplacement dans la base de données) : %s"
 
-#: includes/eme-options.php:2123
+#: includes/eme-options.php:2131
 msgid "Select how you want to send out emails."
 msgstr "Sélectionnez la manière dont vous souhaitez envoyer des e-mails."
 
@@ -4804,32 +4804,32 @@ msgstr "Vous pouvez modifier votre prénom dans votre profil WP."
 msgid "You can change your last name in your WP profile."
 msgstr "Vous pouvez modifier votre nom de famille dans votre profil WP."
 
-#: includes/eme-options.php:2711
+#: includes/eme-options.php:2720
 msgid "The template of the form which will be presented to the person to actually change his personal info."
 msgstr "Le modèle du formulaire qui sera présenté à la personne pour modifier effectivement ses informations personnelles."
 
-#: includes/eme-options.php:2711
+#: includes/eme-options.php:2720
 msgid "Change personal info Form template"
 msgstr "Modèle de formulaire pour modifier les informations personnelles"
 
-#: includes/eme-options.php:2710
+#: includes/eme-options.php:2719
 msgid "The body of the email that will be sent to the person asking to change his personal info."
 msgstr "Le corps du mail qui sera envoyé à la personne qui demande de modifier ses informations personnelles."
 
-#: includes/eme-options.php:2710
+#: includes/eme-options.php:2719
 msgid "Change personal info email body"
 msgstr "Corps du mail de modification des informations personnelles"
 
-#: includes/eme-options.php:2709
-#: includes/eme-options.php:2710
+#: includes/eme-options.php:2718
+#: includes/eme-options.php:2719
 msgid "This setting is used in the mail sent as a result of submitting the form created by the shortcode [eme_change_personal_info]."
 msgstr "Ce paramètre est utilisé dans le mail envoyé à la suite de la soumission du formulaire créé par le code court [eme_change_personal_info]."
 
-#: includes/eme-options.php:2709
+#: includes/eme-options.php:2718
 msgid "The subject of the email that will be sent to the person asking to change his personal info."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne demandant de modifier ses informations personnelles."
 
-#: includes/eme-options.php:2709
+#: includes/eme-options.php:2718
 msgid "Change personal info email subject"
 msgstr "Objet de l’e-mail de modification des informations personnelles"
 
@@ -4918,40 +4918,40 @@ msgstr "L’e-mail appartient à un utilisateur/utilisatrice existant. Veuillez 
 msgid "The permalink prefix used for events, categories, payments and the calendar. You can mention multiple prefixes separated by \",\" (just make sure they do not conflict with something else) in which case the first one will be used for payments and the calendar and for each event you can then chose which prefix you like best. "
 msgstr "Le préfixe du permalien utilisé pour les évènements, les catégories, les paiements et le calendrier. Vous pouvez mentionner plusieurs préfixes séparés par « , » (assurez-vous qu’ils n’entrent pas en conflit avec autre chose). Dans ce cas, le premier sera utilisé pour les catégories, les paiements et le calendrier et pour chaque évènement vous pouvez ensuite choisir le préfixe que vous préférez. "
 
-#: includes/eme-options.php:3287
+#: includes/eme-options.php:3296
 msgid "Fondy Secret Key"
 msgstr "Clé secrète de Fondy"
 
-#: includes/eme-options.php:3286
+#: includes/eme-options.php:3295
 msgid "Fondy Merchant ID"
 msgstr "ID de Fondy"
 
-#: includes/eme-options.php:3280
+#: includes/eme-options.php:3289
 #: includes/eme-payments.php:23
 msgid "Fondy"
 msgstr "Fondy"
 
-#: includes/eme-options.php:3473
+#: includes/eme-options.php:3482
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr "Si le réglage ci-dessus permet d’ajouter des balises et des attributs HTML supplémentaires, WordPress est encore plus strict en ce qui concerne les attributs autorisés dans la balise style. Vous pouvez ajouter ici une liste d’attributs de style supplémentaire que vous souhaitez autoriser dans les réglages d’EME qui autorisent le HTML (en plus des valeurs par défaut, rien n’est supprimé). La liste doit avoir un attribut par ligne. Par exemple, pour autoriser l’attribut de visibilité pour l’étiquette style, vous pouvez ajouter : \"visibility\" "
 
-#: includes/eme-options.php:3473
+#: includes/eme-options.php:3482
 msgid "Extra style attributes"
 msgstr "Attributs de style supplémentaires"
 
-#: includes/eme-options.php:2740
+#: includes/eme-options.php:2749
 msgid "The message shown instead of the payment form if you try to pay for a booking that is on the waiting list."
 msgstr "Le message affiché à la place du formulaire de paiement si vous essayez de payer une réservation qui est sur la liste d’attente."
 
-#: includes/eme-options.php:2740
+#: includes/eme-options.php:2749
 msgid "Booking on waiting list format"
 msgstr "Réservation au format liste d'attente"
 
-#: includes/eme-options.php:2739
+#: includes/eme-options.php:2748
 msgid "The message shown instead of the payment form if payment has already been done."
 msgstr "Le message affiché à la place du formulaire de paiement si le paiement a déjà été effectué."
 
-#: includes/eme-options.php:2739
+#: includes/eme-options.php:2748
 msgid "Payment already done format"
 msgstr "Format de paiement déjà effectué"
 
@@ -5001,52 +5001,52 @@ msgstr "aucune date de fin"
 msgid "Check this box to search through all events and not just future ones."
 msgstr "Cochez cette case pour rechercher tous les évènements et pas seulement ceux à venir."
 
-#: includes/eme-options.php:2241
-#: includes/eme-options.php:2242
-#: includes/eme-options.php:2243
-#: includes/eme-options.php:2244
-#: includes/eme-options.php:2299
-#: includes/eme-options.php:2300
-#: includes/eme-options.php:2301
-#: includes/eme-options.php:2302
-#: includes/eme-options.php:2303
-#: includes/eme-options.php:2304
-#: includes/eme-options.php:2354
-#: includes/eme-options.php:2355
-#: includes/eme-options.php:2369
-#: includes/eme-options.php:2370
-#: includes/eme-options.php:2371
-#: includes/eme-options.php:2372
-#: includes/eme-options.php:2386
-#: includes/eme-options.php:2387
-#: includes/eme-options.php:2388
-#: includes/eme-options.php:2389
-#: includes/eme-options.php:2422
-#: includes/eme-options.php:2423
-#: includes/eme-options.php:2424
-#: includes/eme-options.php:2425
-#: includes/eme-options.php:2474
-#: includes/eme-options.php:2475
-#: includes/eme-options.php:2486
-#: includes/eme-options.php:2487
-#: includes/eme-options.php:2488
-#: includes/eme-options.php:2489
-#: includes/eme-options.php:2490
-#: includes/eme-options.php:2491
-#: includes/eme-options.php:2579
-#: includes/eme-options.php:2580
-#: includes/eme-options.php:2581
-#: includes/eme-options.php:2582
-#: includes/eme-options.php:2594
-#: includes/eme-options.php:2595
-#: includes/eme-options.php:2596
-#: includes/eme-options.php:2597
-#: includes/eme-options.php:2609
-#: includes/eme-options.php:2610
-#: includes/eme-options.php:2621
-#: includes/eme-options.php:2622
-#: includes/eme-options.php:2623
-#: includes/eme-options.php:2624
+#: includes/eme-options.php:2250
+#: includes/eme-options.php:2251
+#: includes/eme-options.php:2252
+#: includes/eme-options.php:2253
+#: includes/eme-options.php:2308
+#: includes/eme-options.php:2309
+#: includes/eme-options.php:2310
+#: includes/eme-options.php:2311
+#: includes/eme-options.php:2312
+#: includes/eme-options.php:2313
+#: includes/eme-options.php:2363
+#: includes/eme-options.php:2364
+#: includes/eme-options.php:2378
+#: includes/eme-options.php:2379
+#: includes/eme-options.php:2380
+#: includes/eme-options.php:2381
+#: includes/eme-options.php:2395
+#: includes/eme-options.php:2396
+#: includes/eme-options.php:2397
+#: includes/eme-options.php:2398
+#: includes/eme-options.php:2431
+#: includes/eme-options.php:2432
+#: includes/eme-options.php:2433
+#: includes/eme-options.php:2434
+#: includes/eme-options.php:2483
+#: includes/eme-options.php:2484
+#: includes/eme-options.php:2495
+#: includes/eme-options.php:2496
+#: includes/eme-options.php:2497
+#: includes/eme-options.php:2498
+#: includes/eme-options.php:2499
+#: includes/eme-options.php:2500
+#: includes/eme-options.php:2588
+#: includes/eme-options.php:2589
+#: includes/eme-options.php:2590
+#: includes/eme-options.php:2591
+#: includes/eme-options.php:2603
+#: includes/eme-options.php:2604
+#: includes/eme-options.php:2605
+#: includes/eme-options.php:2606
+#: includes/eme-options.php:2618
+#: includes/eme-options.php:2619
+#: includes/eme-options.php:2630
+#: includes/eme-options.php:2631
+#: includes/eme-options.php:2632
+#: includes/eme-options.php:2633
 msgid "If you leave this empty, this mail will not be sent."
 msgstr "Si vous laissez vide, ce courrier ne sera pas envoyé."
 
@@ -5182,8 +5182,8 @@ msgid "Attendance Reports"
 msgstr "Rapports de présence"
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2677
-#: includes/eme-options.php:2695
+#: includes/eme-options.php:2686
+#: includes/eme-options.php:2704
 msgid "Automatically delete old attendance records"
 msgstr "Supprimer automatiquement les anciennes fiches de présence"
 
@@ -5200,11 +5200,11 @@ msgstr "Tenir un registre des présences ?"
 msgid "%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)"
 msgstr "%1$s il sera vérifié si de nouveaux évènements doivent être envoyés par e-mail aux personnes EME inscrites (ceux-ci seront alors mis en file d’attente et envoyés par lots de %2$d %3$s)"
 
-#: includes/eme-options.php:2745
+#: includes/eme-options.php:2754
 msgid "In case of a cancelled booking, the option to refund is presented (if the payment gateway supports it). If you want to disable this, select No."
 msgstr "En cas d’annulation d’une réservation, l’option de remboursement est présentée (si la passerelle de paiement le prend en charge). Si vous souhaitez la désactiver, sélectionnez Non."
 
-#: includes/eme-options.php:2745
+#: includes/eme-options.php:2754
 msgid "Allow refunds?"
 msgstr "Autoriser les remboursements ?"
 
@@ -5302,11 +5302,11 @@ msgstr "(%d sièges sur liste d’attente inclus)"
 msgid "If you select 'RSVP field', 'People field' or 'Members field', this field will show up as an extra column in the overview table for bookings, people or members. Selecting 'Generic' will cause it to show up in the overview table for bookings or members."
 msgstr "Si vous sélectionnez « Champ RSVP », « Champ personnes » ou « Champ membres », ce champ s’affichera comme une colonne supplémentaire dans le tableau récapitulatif des réservations, des personnes ou des membres. Si vous sélectionnez « Générique », elle s’affichera dans le tableau récapitulatif des réservations ou des membres."
 
-#: includes/eme-options.php:3455
+#: includes/eme-options.php:3464
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr "Définissez la police à utiliser dans les fichiers PDF générés. Il est parfois nécessaire d’utiliser une police différente car tous les caractères ne sont pas forcément définis dans la police actuellement sélectionnée."
 
-#: includes/eme-options.php:3455
+#: includes/eme-options.php:3464
 msgid "PDF font"
 msgstr "Police PDF"
 
@@ -5321,31 +5321,31 @@ msgstr "RSS et ICAL"
 msgid "The amount to pay is %s"
 msgstr "Le montant à payer est de %s"
 
-#: includes/eme-options.php:3263
+#: includes/eme-options.php:3272
 msgid "Mercado Pago Live Access Token"
 msgstr "Jeton d’accès au Mercado Pago"
 
-#: includes/eme-options.php:3262
+#: includes/eme-options.php:3271
 msgid "Mercado Pago Sandbox Access Token"
 msgstr "Jeton d’accès au bac à sable Mercado Pago"
 
-#: includes/eme-options.php:3260
+#: includes/eme-options.php:3269
 msgid "Choose wether you want to test Mercado Pago in a sandbox or go live and really use Mercado Pago."
 msgstr "Choisir soit de tester Mercado Pago dans un bac à sable, soit son utilisation réelle d’emblée."
 
-#: includes/eme-options.php:3255
+#: includes/eme-options.php:3264
 msgid "Mercado Pago Live"
 msgstr "Mercado Pago en direct"
 
-#: includes/eme-options.php:3254
+#: includes/eme-options.php:3263
 msgid "Mercado Pago Sandbox (for testing)"
 msgstr "Bac à sable Mercado Pago (pour tester)"
 
-#: includes/eme-options.php:3251
+#: includes/eme-options.php:3260
 msgid "Mercado Pago live or test"
 msgstr "Mercado Pago en direct ou en test"
 
-#: includes/eme-options.php:3245
+#: includes/eme-options.php:3254
 #: includes/eme-payments.php:22
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
@@ -5681,36 +5681,36 @@ msgstr "Aucune limite"
 msgid "Membership payment page"
 msgstr "Page de paiement d’adhésion"
 
-#: includes/eme-options.php:3438
+#: includes/eme-options.php:3447
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr "L’intervalle de pas du sélecteur d’heure. Par défaut, intervalle de 5 minutes (des pas de 5 minutes seront alors pris)"
 
-#: includes/eme-options.php:3438
+#: includes/eme-options.php:3447
 msgid "Timepicker step interval"
 msgstr "Intervalle de temps du sélecteur d’heure"
 
-#: includes/eme-options.php:2731
+#: includes/eme-options.php:2740
 msgid "The message shown before redirecting to the payment page. Only one placeholder allowed (#_PAYMENT_URL)."
 msgstr "Le message affiché avant la redirection vers la page de paiement. Un seul espace réservé est autorisé (#_PAYMENT_URL)."
 
-#: includes/eme-options.php:2731
+#: includes/eme-options.php:2740
 msgid "Redirect message"
 msgstr "Rediriger le message"
 
-#: includes/eme-options.php:2730
+#: includes/eme-options.php:2739
 msgid "Indicate in seconds how many seconds to wait before redirecting to the payment page."
 msgstr "Indiquez combien de secondes attendre avant de rediriger vers la page de paiement."
 
-#: includes/eme-options.php:2730
-#: includes/eme-options.php:3353
+#: includes/eme-options.php:2739
+#: includes/eme-options.php:3362
 msgid "Redirect wait period"
 msgstr "Période d’attente avant redirection"
 
-#: includes/eme-options.php:2729
+#: includes/eme-options.php:2738
 msgid "Select yes to redirect to the payment page after a successfull booking or membership signup, select no to show the payment page inline. It is recommended to leave this at yes, so people can use their back-button in the browser to come back to the payment page."
 msgstr "Sélectionner oui pour rediriger vers la page de paiement après une réservation réussie ou une adhésion, sélectionner non pour afficher la page de paiement en ligne. Il est recommandé de laisser cette option sur oui, afin que les utilisateurs puissent utiliser leur bouton précédent du navigateur pour revenir à la page de paiement."
 
-#: includes/eme-options.php:2729
+#: includes/eme-options.php:2738
 msgid "Redirect towards payment page?"
 msgstr "Rediriger vers la page de paiement ?"
 
@@ -6101,11 +6101,11 @@ msgstr "Veuillez corriger le format du formulaire RSVP pour utiliser #_EMAIL."
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "Votre évènement semble avoir plusieurs catégories de prix, vous ne pouvez donc pas utiliser #_SEATS (ou #_SPACES) dans le format de formulaire de votre évènement RSVP. Veuillez corriger le format du formulaire RSVP pour utiliser la notation #_SEATS{xx}."
 
-#: includes/eme-options.php:3456
+#: includes/eme-options.php:3465
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr "Ceci est la version actuelle de la base de données EME. Vous pouvez l'utiliser pour mettre une version plus ancienne. Lors de l'enregistrement, EME rétablira les mises à niveau manquantes à partir de cette version si elles ne se sont pas déroulées correctement et rétablira la valeur à la dernière version. Dans une situation normale, vous n’avez pas besoin de changer cette valeur."
 
-#: includes/eme-options.php:3456
+#: includes/eme-options.php:3465
 msgid "EME DB version"
 msgstr "Version de la base de donnée EME"
 
@@ -6117,50 +6117,50 @@ msgstr "Le texte figurant sur le formulaire de réservation si cette réservatio
 msgid "Booking on waiting list text"
 msgstr "Texte sur la réservation en liste d'attente"
 
-#: includes/eme-options.php:2533
+#: includes/eme-options.php:2542
 msgid "Mailing group subscription Email"
 msgstr "E-mail d'abonnement au groupe"
 
 #: includes/eme-events.php:6598
-#: includes/eme-options.php:2467
+#: includes/eme-options.php:2476
 msgid "Booking Payment Gateway Notification Email"
 msgstr "E-mail de notification de passerelle de paiement"
 
-#: includes/eme-options.php:2425
+#: includes/eme-options.php:2434
 msgid "Contact Person Paid Email Body"
 msgstr "Corps de l'e-mail pour la personne de contact qui a payé"
 
-#: includes/eme-options.php:2424
+#: includes/eme-options.php:2433
 msgid "Contact Person Paid Email Subject"
 msgstr "Sujet de l’e-mail pour la personne de contact qui a payé"
 
 #: includes/eme-events.php:6594
-#: includes/eme-options.php:2411
+#: includes/eme-options.php:2420
 msgid "Booking Paid Email"
 msgstr "E-mail de réservation payée"
 
 #: includes/eme-events.php:6590
-#: includes/eme-options.php:2396
+#: includes/eme-options.php:2405
 msgid "Booking Deleted Email"
 msgstr "E-mail de réservation supprimée"
 
 #: includes/eme-events.php:6586
-#: includes/eme-options.php:2379
+#: includes/eme-options.php:2388
 msgid "Booking Cancelled Email"
 msgstr "E-mail de réservation annulée"
 
 #: includes/eme-events.php:6578
-#: includes/eme-options.php:2347
+#: includes/eme-options.php:2356
 msgid "Booking Updated Email"
 msgstr "E-mail de réservation mise à jour"
 
 #: includes/eme-events.php:6574
-#: includes/eme-options.php:2287
+#: includes/eme-options.php:2296
 msgid "Booking Pending Email"
 msgstr "E-mail de réservation en attente"
 
 #: includes/eme-events.php:6566
-#: includes/eme-options.php:2222
+#: includes/eme-options.php:2231
 msgid "Booking Made or Approved Email"
 msgstr "E-mail de réservation effectué ou approuvé"
 
@@ -6169,19 +6169,19 @@ msgstr "E-mail de réservation effectué ou approuvé"
 msgid "Delete booking (move to trash)"
 msgstr "Supprimer la réservation (déplacer à la corbeille)"
 
-#: includes/eme-options.php:2808
-#: includes/eme-options.php:3161
+#: includes/eme-options.php:2817
+#: includes/eme-options.php:3170
 msgid "Info: a webhook to the mentioned link has been successfully created."
 msgstr "Info : un crochet web sur le lien mentionné a bien été créé avec succès."
 
-#: includes/eme-options.php:2819
-#: includes/eme-options.php:3158
+#: includes/eme-options.php:2828
+#: includes/eme-options.php:3167
 msgid "WARNING: no webhook has been created. Press save to attempt to create one."
 msgstr "Avertissement : aucun crochet web n’a été créé. Appuyez sur enregistrer pour tenter d'en créer un."
 
 #. translators: %s is the error reason
-#: includes/eme-options.php:2815
-#: includes/eme-options.php:3156
+#: includes/eme-options.php:2824
+#: includes/eme-options.php:3165
 msgid "WARNING: webhook has not been created. Reason: %s"
 msgstr "AVERTISSEMENT : le déclencheur n'a pas été créé. Les raisons %s"
 
@@ -6222,12 +6222,12 @@ msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Objet de l’e-mail de la notification de la passerelle de paiement vers la personne qui a payé"
 
 #: includes/eme-events.php:8194
-#: includes/eme-options.php:2425
+#: includes/eme-options.php:2434
 msgid "The body of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est marquée comme payée (et non via une passerelle de paiement)."
 
 #: includes/eme-events.php:8172
-#: includes/eme-options.php:2424
+#: includes/eme-options.php:2433
 msgid "The subject of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "L’objet de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est marquée comme payée (et non via une passerelle de paiement)."
 
@@ -6295,36 +6295,36 @@ msgstr "Aucun expéditeur par défaut défini et aucun e-mail de contact d'évè
 msgid "Indian Rupee"
 msgstr "Roupie indienne"
 
-#: includes/eme-options.php:3206
+#: includes/eme-options.php:3215
 #: includes/eme-payments.php:21
 msgid "Instamojo"
 msgstr "Instamojo"
 
-#: includes/eme-options.php:3226
+#: includes/eme-options.php:3235
 msgid "Instamojo Private Salt"
 msgstr "Vente privée Instamojo"
 
-#: includes/eme-options.php:3225
+#: includes/eme-options.php:3234
 msgid "Instamojo Private Auth Token"
 msgstr "Jeton d'authentification privé Instamojo"
 
-#: includes/eme-options.php:3224
+#: includes/eme-options.php:3233
 msgid "Instamojo Private Key"
 msgstr "Clé privée Instamojo"
 
-#: includes/eme-options.php:3222
+#: includes/eme-options.php:3231
 msgid "Choose wether you want to test Instamojo in a sandbox or go live and really use Instamojo."
 msgstr "Choisissez si vous voulez tester Instamojo dans un bac à sable ou allez en direct et utilisez vraiment Instamojo."
 
-#: includes/eme-options.php:3217
+#: includes/eme-options.php:3226
 msgid "Instamojo Live"
 msgstr "Instamojo en direct"
 
-#: includes/eme-options.php:3216
+#: includes/eme-options.php:3225
 msgid "Instamojo Sandbox (for testing)"
 msgstr "Bac à sable Instamojo (pour tester)"
 
-#: includes/eme-options.php:3213
+#: includes/eme-options.php:3222
 msgid "Instamojo live or test"
 msgstr "Instamojo en direct ou en test"
 
@@ -6425,14 +6425,14 @@ msgstr "Nécessite que les utilisateurs soient connectés pour que cette réduct
 msgid "Logged-in users only"
 msgstr "Utilisateurs connectés uniquement"
 
-#: includes/eme-options.php:3472
+#: includes/eme-options.php:3481
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr ""
 "Par défaut, wordpress est strict quant aux balises et attributs HTML autorisés. Vous pouvez ici ajouter une liste de balises + attributs que vous souhaitez autoriser dans les paramètres EME qui autorisent le langage HTML (en plus des valeurs par défaut, rien n’est supprimé). La liste doit contenir une balise par ligne, suivie de ses attributs facultatifs, tous séparés par « , ». Par exemple,\n"
 "pour autoriser la balise iframe et certains attributs, vous devez ajouter : « iframe, src, height, width, frameborder » "
 
-#: includes/eme-options.php:3469
-#: includes/eme-options.php:3472
+#: includes/eme-options.php:3478
+#: includes/eme-options.php:3481
 msgid "Extra html tags"
 msgstr "Balises HTML supplémentaire"
 
@@ -6481,41 +6481,41 @@ msgstr "Ajoutez éventuellement des fichiers joints à l’e-mail lorsqu'un nouv
 msgid "New member mail attachments"
 msgstr "Fichiers joints à l'e-mail d'un nouveau membre"
 
-#: includes/eme-options.php:2829
+#: includes/eme-options.php:2838
 #: includes/eme-payments.php:10
 msgid "Legacy Paypal"
 msgstr "Héritage Paypal"
 
-#: includes/eme-options.php:2562
+#: includes/eme-options.php:2571
 msgid "Optionally add attachments to the mail when someone subscribes to a mailing group."
 msgstr "Ajoutez éventuellement un fichier joint à l’e-mail lorsque quelqu’un s'abonne à un groupe de diffusion."
 
-#: includes/eme-options.php:2540
+#: includes/eme-options.php:2549
 msgid "Subscribe mail attachments"
 msgstr "Fichiers joints a l'e-mail de souscription"
 
 #: includes/eme-events.php:8233
-#: includes/eme-options.php:2449
+#: includes/eme-options.php:2458
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr "Ajoutez éventuellement des pièces jointes à l'e-mail lorsqu'une réservation est payée."
 
 #: includes/eme-events.php:8212
-#: includes/eme-options.php:2427
+#: includes/eme-options.php:2436
 msgid "Booking paid mail attachments"
 msgstr "Fichiers joints a l'e-mail de paiement de la réservation"
 
 #: includes/eme-events.php:7849
-#: includes/eme-options.php:2329
+#: includes/eme-options.php:2338
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr "Ajoutez éventuellement un fichier joint à l’e-mail lorsqu’une réservation est approuvée."
 
 #: includes/eme-events.php:7828
-#: includes/eme-options.php:2307
+#: includes/eme-options.php:2316
 msgid "Pending mail attachments"
 msgstr "Fichiers joints des e-mails en attente"
 
 #: includes/eme-events.php:7648
-#: includes/eme-options.php:2269
+#: includes/eme-options.php:2278
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr "Ajoutez éventuellement des fichiers joints à l’e-mail lors d'une nouvelle réservation."
 
@@ -6527,11 +6527,11 @@ msgstr "Ajoutez éventuellement des fichiers joints à l’e-mail lors d'une nou
 #: includes/eme-members.php:2299
 #: includes/eme-members.php:2443
 #: includes/eme-members.php:2522
-#: includes/eme-options.php:2268
-#: includes/eme-options.php:2328
-#: includes/eme-options.php:2448
-#: includes/eme-options.php:2514
-#: includes/eme-options.php:2561
+#: includes/eme-options.php:2277
+#: includes/eme-options.php:2337
+#: includes/eme-options.php:2457
+#: includes/eme-options.php:2523
+#: includes/eme-options.php:2570
 msgid "Remove attachments"
 msgstr "Retirer des fichiers joints"
 
@@ -6544,16 +6544,16 @@ msgstr "Retirer des fichiers joints"
 #: includes/eme-members.php:2298
 #: includes/eme-members.php:2442
 #: includes/eme-members.php:2521
-#: includes/eme-options.php:2267
-#: includes/eme-options.php:2327
-#: includes/eme-options.php:2447
-#: includes/eme-options.php:2513
-#: includes/eme-options.php:2560
+#: includes/eme-options.php:2276
+#: includes/eme-options.php:2336
+#: includes/eme-options.php:2456
+#: includes/eme-options.php:2522
+#: includes/eme-options.php:2569
 msgid "Add attachments"
 msgstr "Ajouter des pièces jointes"
 
 #: includes/eme-events.php:7627
-#: includes/eme-options.php:2247
+#: includes/eme-options.php:2256
 msgid "Booking made mail attachments"
 msgstr "Fichiers joints a l'e-mail de réservation"
 
@@ -6669,48 +6669,48 @@ msgid "This is ignored for fields with purpose 'Events field', 'Locations field'
 msgstr "Ceci est ignoré pour les champs ayant pour objet «champ Événements», «champ Emplacements» ou «champ Adhésions»."
 
 #. translators: %s is the URL to the PayPal documentation page
-#: includes/eme-options.php:2790
+#: includes/eme-options.php:2799
 msgid "Paypal secret."
 msgstr "Paypal secret."
 
 #. translators: %s is the URL to the PayPal documentation page
-#: includes/eme-options.php:2790
+#: includes/eme-options.php:2799
 msgid "PayPal secret"
 msgstr "Secret de PayPal"
 
 #. translators: %s is the URL to the PayPal documentation page
-#: includes/eme-options.php:2788
-#: includes/eme-options.php:2790
+#: includes/eme-options.php:2797
+#: includes/eme-options.php:2799
 msgid "For more info on Paypal apps and credentials, see <a href=\"%s\">this page</a>"
 msgstr "Pour plus d'informations sur les applications et les informations d'identification Paypal, voir <a href=\"%s\">cette page</a>"
 
 #. translators: %s is the URL to the PayPal documentation page
-#: includes/eme-options.php:2788
+#: includes/eme-options.php:2797
 msgid "Paypal client ID."
 msgstr "Identifiant client Paypal."
 
 #. translators: %s is the URL to the PayPal documentation page
-#: includes/eme-options.php:2788
+#: includes/eme-options.php:2797
 msgid "PayPal client ID"
 msgstr "Identifiant client Paypal"
 
-#: includes/eme-options.php:2143
+#: includes/eme-options.php:2151
 msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed."
 msgstr "Décochez cette option si vous rencontrez des problèmes lors de l'envoi d'e-mail via SMTP sécurisé en raison de certificats incompatibles. Etant donné que cela va en fait à l’encontre du but d’avoir des certificats, il n'est pas recommandé de l'utiliser, mais cela est parfois nécessaire chez des fournisseurs d'hébergement spécifiques. Cela a seulement un effet pour des adresses IP privées (comme par exemple 127.0.0.1, localhost, ...), pour les serveurs d'e-mails publics ce n'est pas autorisé."
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2673
-#: includes/eme-options.php:2683
+#: includes/eme-options.php:2682
+#: includes/eme-options.php:2692
 msgid "Automatically anonimyze old bookings"
 msgstr "Anonymise automatiquement les anciennes réservations"
 
 #: includes/eme-events.php:7877
-#: includes/eme-options.php:2354
+#: includes/eme-options.php:2363
 msgid "The subject of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Le sujet de l'e-mail qui sera envoyé au réservataire si la réservation a été mise à jour par un administrateur."
 
-#: includes/eme-options.php:2474
-#: includes/eme-options.php:2490
+#: includes/eme-options.php:2483
+#: includes/eme-options.php:2499
 msgid "Contact Person Payment Notification Email Subject"
 msgstr "Sujet de l'e-mail de notification de paiement au responsable"
 
@@ -6726,54 +6726,54 @@ msgstr "Si elles sont laissées vides, les valeurs du champ seront utilisées (l
 msgid "For multivalue fields, you can here enter the \"visible\" tag people will see per value (so, if \"Field values\" contain e.g. \"a1||a2||a3\", you can use here e.g. \"Text a1||Text a2||Text a3\")."
 msgstr "Pour les champs à valeurs multiples, vous pouvez saisir ici l'étiquette «  visible » que les personnes verront par valeur (ainsi, si « valeurs de champ » contient, par exemple, « a1 || a2 || a3 », vous pouvez utiliser ici, par exemple « Texte a1 || Texte a2 || Texte a3 » )."
 
-#: includes/eme-options.php:2705
-#: includes/eme-options.php:2706
-#: includes/eme-options.php:2707
+#: includes/eme-options.php:2714
+#: includes/eme-options.php:2715
+#: includes/eme-options.php:2716
 msgid "This setting is used when rendering personal info after clicking on #_GDPR_URL."
 msgstr "Ce paramètre est utilisé lors du rendu des informations personnelles après avoir cliqué sur #_GDPR_URL."
 
-#: includes/eme-options.php:2703
-#: includes/eme-options.php:2704
+#: includes/eme-options.php:2712
+#: includes/eme-options.php:2713
 msgid "This setting is used in the mail sent as a result of submitting the form created by the shortcode [eme_gdpr]."
 msgstr "Ce paramètre est utilisé dans l'e-mail envoyé à la suite de la soumission du formulaire créé par le code court [eme_gdpr]."
 
-#: includes/eme-options.php:2701
+#: includes/eme-options.php:2710
 msgid "Content of the page after approval for personal info storage has been given."
 msgstr "Contenu de la page après approbation du stockage des informations personnelles."
 
-#: includes/eme-options.php:2700
-#: includes/eme-options.php:2701
+#: includes/eme-options.php:2709
+#: includes/eme-options.php:2710
 msgid "This setting is used after giving approval by clicking on the link generated by #_GDPR_APPROVE_URL."
 msgstr "Ce paramètre est utilisé après approbation en cliquant sur le lien généré par #_GDPR_APPROVE_URL."
 
-#: includes/eme-options.php:2700
+#: includes/eme-options.php:2709
 msgid "The title of the page after approval for personal info storage has been given."
 msgstr "Le titre de la page après que l'approbation pour le stockage des informations personnelles ait été donné."
 
-#: includes/eme-options.php:2698
-#: includes/eme-options.php:2699
+#: includes/eme-options.php:2707
+#: includes/eme-options.php:2708
 msgid "This setting is used in the mail sent as a result of submitting the form created by the shortcode [eme_gdpr_approve]."
 msgstr "Ce paramètre est utilisé dans l'e-mail envoyé à la suite de la soumission du formulaire créé par le code court [eme_gdpr_approve]."
 
-#: includes/eme-options.php:2674
+#: includes/eme-options.php:2683
 msgid "This value should be bigger than the number of days after which old bookings are anonimyzed."
 msgstr "Cette valeur doit être supérieure au nombre de jours après lesquels les anciennes réservations sont annulées."
 
-#: includes/eme-options.php:2674
+#: includes/eme-options.php:2683
 msgid "Set the number of days after which old events are automatically removed, including all their bookings. Leave empty or 0 for no automatic removal."
 msgstr "Définissez le nombre de jours après lesquels les anciens évènements sont automatiquement supprimés, y compris toutes leurs réservations. Laissez vide ou à 0 si aucune suppression automatique."
 
-#: includes/eme-options.php:2673
+#: includes/eme-options.php:2682
 msgid "Set the number of days after which old bookings for finished events are automatically anonimized. Bookings are not deleted to keep statistics and data on the old events. Leave empty or 0 if not wanted."
 msgstr "Définissez le nombre de jours après lesquels les réservations pour des évènements terminés sont automatiquement anonymisées. Les réservations ne sont pas supprimées pour conserver des statistiques et des données sur les anciens évènements. Laissez vide ou 0 si vous ne le souhaitez pas."
 
 #. translators: %s is the shortcode name
-#: includes/eme-options.php:2660
+#: includes/eme-options.php:2669
 msgid "and"
 msgstr "et"
 
 #. translators: %s is the shortcode name
-#: includes/eme-options.php:2660
+#: includes/eme-options.php:2669
 msgid "the documentation about the shortcode %s"
 msgstr "la documentation sur le code court %s"
 
@@ -7038,184 +7038,184 @@ msgid "Booking Form"
 msgstr "Formulaire de réservation"
 
 #: includes/eme-events.php:8283
-#: includes/eme-options.php:2404
+#: includes/eme-options.php:2413
 msgid "The body of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "Le corps de l'e-mail qui sera envoyé au répondant si la réservation est supprimée par un administrateur."
 
 #: includes/eme-events.php:8282
-#: includes/eme-options.php:2404
+#: includes/eme-options.php:2413
 msgid "Booking Deleted Email Body"
 msgstr "Corps de l' e-mail de réservation supprimé"
 
 #: includes/eme-events.php:8261
-#: includes/eme-options.php:2403
+#: includes/eme-options.php:2412
 msgid "The subject of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "L'objet de l'e-mail qui sera envoyé au répondant si la réservation est supprimée par un administrateur."
 
 #: includes/eme-events.php:8260
-#: includes/eme-options.php:2403
+#: includes/eme-options.php:2412
 msgid "Booking Deleted Email Subject"
 msgstr "Objet de l'e-mail de réservation supprimé"
 
 #: includes/eme-events.php:8146
-#: includes/eme-options.php:2423
+#: includes/eme-options.php:2432
 msgid "The body of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "Le corps du courrier électronique qui sera envoyé au réservataire lorsqu’une réservation est marquée comme payée."
 
 #: includes/eme-events.php:8145
-#: includes/eme-options.php:2423
+#: includes/eme-options.php:2432
 msgid "Booking Paid Email Body"
 msgstr "Corps de l’e-mail : Réservation payée"
 
 #: includes/eme-events.php:8124
-#: includes/eme-options.php:2422
+#: includes/eme-options.php:2431
 msgid "The subject of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "L'objet du courrier électronique qui sera envoyé au réservataire lorsqu'une réservation est marquée comme payée."
 
 #: includes/eme-events.php:8123
-#: includes/eme-options.php:2422
+#: includes/eme-options.php:2431
 msgid "Booking Paid Email Subject"
 msgstr "Sujet de l' e-mail : Réservation payée"
 
 #: includes/eme-events.php:8042
-#: includes/eme-options.php:2387
+#: includes/eme-options.php:2396
 msgid "The body of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "Le corps du courrier électronique qui sera envoyé au réservataire lorsqu'il annulera toutes ses réservations pour un événement ."
 
 #: includes/eme-events.php:8041
-#: includes/eme-options.php:2387
+#: includes/eme-options.php:2396
 msgid "Booking Cancelled Email Body"
 msgstr "Corps de l’e-mail d’annulation de réservation"
 
 #: includes/eme-events.php:8020
-#: includes/eme-options.php:2386
+#: includes/eme-options.php:2395
 msgid "The subject of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "L'objet de l'e-mail qui sera envoyé au réservataire lorsqu'il annule toutes ses réservations pour un évènement."
 
 #: includes/eme-events.php:8019
-#: includes/eme-options.php:2386
+#: includes/eme-options.php:2395
 msgid "Booking Cancelled Email Subject"
 msgstr "Objet de l’e-mail d’annulation de réservation"
 
 #: includes/eme-events.php:7898
-#: includes/eme-options.php:2355
+#: includes/eme-options.php:2364
 msgid "Booking Updated Email Body"
 msgstr "Corps de l’e-mail de mise à jour de la réservation"
 
 #: includes/eme-events.php:7876
-#: includes/eme-options.php:2354
+#: includes/eme-options.php:2363
 msgid "Booking Updated Email Subject"
 msgstr "Sujet de l'e-mail de mise à jour de la réservation"
 
 #: includes/eme-events.php:7762
-#: includes/eme-options.php:2302
+#: includes/eme-options.php:2311
 msgid "The body of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Le corps de l’e-mail qui sera envoyé au réservataire si la réservation nécessite une approbation."
 
 #: includes/eme-events.php:7760
-#: includes/eme-options.php:2302
+#: includes/eme-options.php:2311
 msgid "Booking Pending Email Body"
 msgstr "Corps de l’e-mail de mise en attente de réservation"
 
 #: includes/eme-events.php:7740
-#: includes/eme-options.php:2301
+#: includes/eme-options.php:2310
 msgid "The subject of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Le sujet de l'e-mail qui sera envoyé au réservataire si la réservation nécessite une approbation."
 
 #: includes/eme-events.php:7739
-#: includes/eme-options.php:2301
+#: includes/eme-options.php:2310
 msgid "Booking Pending Email Subject"
 msgstr "Sujet de l'e-mail d'attente de réservation"
 
 #: includes/eme-events.php:7561
-#: includes/eme-options.php:2242
+#: includes/eme-options.php:2251
 msgid "The body of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Le corps de l'e-mail envoyé au réservataire lorsqu'une réservation est faite (pas en attente ) ou approuvée."
 
 #: includes/eme-events.php:7560
-#: includes/eme-options.php:2242
+#: includes/eme-options.php:2251
 msgid "Booking Made Email Body"
 msgstr "Corps de l'e-mail de réservation faite"
 
 #: includes/eme-events.php:7539
-#: includes/eme-options.php:2241
+#: includes/eme-options.php:2250
 msgid "The subject of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Objet de l'e-mail envoyé au réservataire lorsqu'une réservation est faite (pas en attente) ou approuvée."
 
 #: includes/eme-events.php:7538
-#: includes/eme-options.php:2241
+#: includes/eme-options.php:2250
 msgid "Booking Made Email Subject"
 msgstr "Sujet de l'e-mail de réservation effectué"
 
 #: includes/eme-events.php:7453
 #: includes/eme-members.php:2737
-#: includes/eme-options.php:2475
-#: includes/eme-options.php:2491
+#: includes/eme-options.php:2484
+#: includes/eme-options.php:2500
 msgid "The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne de contact lors de la réception d'une notification de paiement via une passerelle de paiement."
 
 #: includes/eme-events.php:7431
 #: includes/eme-members.php:2730
-#: includes/eme-options.php:2474
-#: includes/eme-options.php:2490
+#: includes/eme-options.php:2483
+#: includes/eme-options.php:2499
 msgid "The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne de contact lors de la réception d'une notification de paiement via une passerelle de paiement."
 
 #: includes/eme-events.php:8090
-#: includes/eme-options.php:2389
+#: includes/eme-options.php:2398
 msgid "The body of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "Le corps de l'e-mail qui sera envoyé au responsable lorsqu'un répondant annule toutes ses réservations pour un évènement."
 
 #: includes/eme-events.php:8089
-#: includes/eme-options.php:2389
+#: includes/eme-options.php:2398
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr "Corps de l'e-mail d'annulation au responsable réservation"
 
 #: includes/eme-events.php:8068
-#: includes/eme-options.php:2388
+#: includes/eme-options.php:2397
 msgid "The subject of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "L'objet de l'e-mail qui sera envoyé au responsable lorsqu'un réservataire annule toutes ses réservations pour un évènement."
 
 #: includes/eme-events.php:8067
-#: includes/eme-options.php:2388
+#: includes/eme-options.php:2397
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr "Sujet de l'e-mail d'annulation au responsable réservation"
 
 #: includes/eme-events.php:7810
-#: includes/eme-options.php:2304
+#: includes/eme-options.php:2313
 msgid "The body of the email that will be sent to the contact person if a booking requires approval."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne de contact si une réservation nécessite une approbation."
 
 #: includes/eme-events.php:7809
-#: includes/eme-options.php:2304
+#: includes/eme-options.php:2313
 msgid "Contact Person Pending Booking Email Body"
 msgstr "Corps de l'e-mail d'une réservation en attente à la personne de contact"
 
 #: includes/eme-events.php:7788
-#: includes/eme-options.php:2303
+#: includes/eme-options.php:2312
 msgid "The subject of the email that will be sent to the contact person if a booking requires approval."
 msgstr "L'objet de l' e-mail qui sera envoyé au responsable si une réservation nécessite une approbation."
 
 #: includes/eme-events.php:7787
-#: includes/eme-options.php:2303
+#: includes/eme-options.php:2312
 msgid "Contact Person Pending Booking Email Subject"
 msgstr "Sujet de l’e-mail de réservation en attente à la personne de contact"
 
-#: includes/eme-options.php:2487
+#: includes/eme-options.php:2496
 msgid "The body of the email that will be sent to the contact person when a new event is submitted."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une réservation est faite."
 
 #: includes/eme-events.php:7608
-#: includes/eme-options.php:2244
+#: includes/eme-options.php:2253
 msgid "Contact Person Booking Made Email Body"
 msgstr "Corps de l’e-mail envoyé à la personne de contact lors d’une réservation"
 
-#: includes/eme-options.php:2486
+#: includes/eme-options.php:2495
 msgid "The subject of the email that will be sent to the contact person when a new event is submitted."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne de contact quand une réservation est faite."
 
 #: includes/eme-events.php:7586
-#: includes/eme-options.php:2243
+#: includes/eme-options.php:2252
 msgid "Contact Person Booking Made Email Subject"
 msgstr "Sujet de l'e-mail à la personne de contact pour une réservation effectuée"
 
@@ -7348,31 +7348,31 @@ msgstr "Informations sur l'évènement"
 msgid "Press the delete button to remove"
 msgstr "Appuyez sur le bouton supprimer pour supprimer"
 
-#: includes/eme-options.php:2677
+#: includes/eme-options.php:2686
 msgid "Set the number of days after which attendance records are automatically removed. Leave empty or 0 for no automatic removal."
 msgstr "Fixez le nombre de jours après lesquels les registres de présence sont automatiquement supprimés. Laisser vide ou 0 pour aucun retrait automatique."
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2674
-#: includes/eme-options.php:2686
+#: includes/eme-options.php:2683
+#: includes/eme-options.php:2695
 msgid "Automatically remove old events"
 msgstr "Supprimer automatiquement les anciens évènements"
 
-#: includes/eme-options.php:2671
-#: includes/eme-options.php:2672
-#: includes/eme-options.php:2673
-#: includes/eme-options.php:2676
-#: includes/eme-options.php:2677
+#: includes/eme-options.php:2680
+#: includes/eme-options.php:2681
+#: includes/eme-options.php:2682
+#: includes/eme-options.php:2685
+#: includes/eme-options.php:2686
 msgid "Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year)."
 msgstr "Définir une valeur supérieure à 0 vous aide à atteindre la conformité RGPD. Les valeurs recommandées sont 180 (6 mois) ou 365 (un an)."
 
-#: includes/eme-options.php:2672
+#: includes/eme-options.php:2681
 msgid "Set the number of days after which expired members are automatically removed. Leave empty or 0 for no automatic removal."
 msgstr "Définissez le nombre de jours après lesquels les membres expirés sont automatiquement supprimés. Laissez vide ou 0 pour aucune suppression automatique."
 
 #. translators: %s is the name of the option
-#: includes/eme-options.php:2672
-#: includes/eme-options.php:2680
+#: includes/eme-options.php:2681
+#: includes/eme-options.php:2689
 msgid "Automatically remove expired members"
 msgstr "Retirer automatiquement les membres expirés"
 
@@ -7393,31 +7393,31 @@ msgstr "Approuver le règlement RGPD"
 msgid "GDPR"
 msgstr "RGPD"
 
-#: includes/eme-options.php:2699
+#: includes/eme-options.php:2708
 msgid "Can only contain 1 placeholder, namely #_GDPR_APPROVE_URL."
 msgstr "Ne peut contenir qu'un seul espace réservé, à savoir #_GDPR_APPROVE_URL."
 
-#: includes/eme-options.php:2699
+#: includes/eme-options.php:2708
 msgid "The body of the email that will be sent to the person asking for personal info storage approval."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne demandant l'approbation du stockage des informations personnelles."
 
-#: includes/eme-options.php:2699
+#: includes/eme-options.php:2708
 msgid "Personal info approval email body"
 msgstr "Corps de l'e-mail d'approbation des informations personnelles"
 
-#: includes/eme-options.php:2698
+#: includes/eme-options.php:2707
 msgid "The subject of the email that will be sent to the person asking for personal info storage approval."
 msgstr "L'objet de l'e-mail qui sera envoyé à la personne demandant l'approbation du stockage des informations personnelles."
 
-#: includes/eme-options.php:2698
+#: includes/eme-options.php:2707
 msgid "Personal info approval email subject"
 msgstr "Objet de l'e-mail d'approbation des informations personnelles"
 
-#: includes/eme-options.php:2701
+#: includes/eme-options.php:2710
 msgid "Personal info approval page content"
 msgstr "Contenu de la page d'approbation des informations personnelles"
 
-#: includes/eme-options.php:2700
+#: includes/eme-options.php:2709
 msgid "Personal info approval page title"
 msgstr "Titre de la page d'approbation des informations personnelles"
 
@@ -7765,11 +7765,11 @@ msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. I
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "En utilisant #_SEATS {xx}, vous utilisez plusieurs catégories de places dans votre modèle de RSVP, mais vous n'avez pas défini de prix pour chaque catégorie dans les paramètres de RSVP de votre évènement. Veuillez corriger les paramètres d'évènement RSVP."
 
-#: includes/eme-options.php:3313
+#: includes/eme-options.php:3322
 msgid "If you choose to use map gestures, then on a desktop zooming must be done using ctrl+zoom, and on a mobile device the user needs to use two fingers to pan the map. This to prevent getting \"trapped\" in the map when a big map is shown."
 msgstr "Si vous choisissez d'utiliser les gestes sur la carte, vous devez effectuer un zoom sur un ordinateur de bureau à l'aide de la combinaison de touches Ctrl+Zoom. Sur un appareil mobile, l'utilisateur doit utiliser deux doigts pour effectuer un panoramique de la carte. Ceci pour éviter de se retrouver « piégé » sur une carte à l'échelle trop petite."
 
-#: includes/eme-options.php:3313
+#: includes/eme-options.php:3322
 msgid "Enable map gestures?"
 msgstr "Activer le déplacement de la carte ?"
 
@@ -7782,16 +7782,16 @@ msgid "Location map icon url"
 msgstr "URL de l'icône de la carte de localisation"
 
 #: includes/eme-locations.php:640
-#: includes/eme-options.php:3315
+#: includes/eme-options.php:3324
 msgid "Size should be 32x32, bottom center will be pointing to the location on the map."
 msgstr "La taille devrait être 32x32, le centre en bas pointera vers l'emplacement sur la carte."
 
 #: includes/eme-locations.php:639
-#: includes/eme-options.php:3315
+#: includes/eme-options.php:3324
 msgid "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here."
 msgstr "Par défaut, une épingle est affichée sur la carte où se trouve l'emplacement. Si vous n'aimez pas l'icône par défaut, vous pouvez en définir une autre ici."
 
-#: includes/eme-options.php:3315
+#: includes/eme-options.php:3324
 msgid "Default location map icon"
 msgstr "Icône de carte d'emplacement par défaut"
 
@@ -7917,7 +7917,7 @@ msgstr "Champs personnalisés"
 msgid "You did not enter a valid discount code"
 msgstr "Vous n’avez pas saisi un code de remise valide"
 
-#: includes/eme-options.php:2112
+#: includes/eme-options.php:2120
 msgid "Insert an email address that will be added in Bcc to all outgoing emails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
 msgstr "Insérez une adresse de messagerie qui sera ajoutée en Cci à tous les e-mails sortants (plusieurs adresses doivent être séparées par une virgule ou un point-virgule). Peut être laissé vide."
 
@@ -8072,7 +8072,7 @@ msgstr "Le fichier existe déjà."
 msgid "File upload is required."
 msgstr "Le téléversement de fichier est nécessaire."
 
-#: includes/eme-options.php:3390
+#: includes/eme-options.php:3399
 msgid "File"
 msgstr "Fichier"
 
@@ -8118,15 +8118,15 @@ msgstr "Nouvelle répétition insérée contenant des évènements %d"
 msgid "No recurrence created!"
 msgstr "Aucune récurrence créée !"
 
-#: includes/eme-options.php:2112
+#: includes/eme-options.php:2120
 msgid "Default email BCC"
 msgstr "E-mail CCI (Copie Carbone Invisible) par défaut"
 
-#: includes/eme-options.php:2110
+#: includes/eme-options.php:2118
 msgid "Default email sender address"
 msgstr "Adresse par défaut de l'expéditeur de l'e-mail"
 
-#: includes/eme-options.php:2109
+#: includes/eme-options.php:2117
 msgid "Default email sender name"
 msgstr "Nom par défaut de l’expéditeur de l’e-mail"
 
@@ -8263,23 +8263,23 @@ msgstr "Si vous souhaitez vous abonner aux futurs envois, veuillez le faire en s
 msgid "If you chose for this group to be a public group, then this group will appear in the list of groups to subscribe/unsubscribe in the eme_subform and eme_unsubform shortcodes (and the form generated by #_UNSUB_URL)."
 msgstr "Si vous choisissez que ce groupe soit un groupe public, ce groupe apparaîtra dans la liste des groupes à souscrire/désabonner dans les codes courts eme_subform et eme_unsubform (et le formulaire généré par #_UNSUB_URL)."
 
-#: includes/eme-options.php:2710
+#: includes/eme-options.php:2719
 msgid "Can only contain 1 placeholder, namely #_CHANGE_PERSON_INFO."
 msgstr "Peut contenir uniquement un espace réservé, à savoir #_CHANGE_PERSON_INFO."
 
-#: includes/eme-options.php:2538
+#: includes/eme-options.php:2547
 msgid "The body of the email that will be sent to the person asking to subscribe to a mailing group."
 msgstr "Le corps de l'e-mail qui sera envoyé à la personne demandant à s'abonner à un groupe de discussion."
 
-#: includes/eme-options.php:2538
+#: includes/eme-options.php:2547
 msgid "Subscribe email body"
 msgstr "Corps du courrier électronique de l'abonnement"
 
-#: includes/eme-options.php:2537
+#: includes/eme-options.php:2546
 msgid "The subject of the email that will be sent to the person asking to subscribe to a mailing group."
 msgstr "Le sujet de l’e-mail qui sera envoyé à la personne demandant à s’abonner à un groupe de discussion."
 
-#: includes/eme-options.php:2537
+#: includes/eme-options.php:2546
 msgid "Subscribe email subject"
 msgstr "Sujet de l’e-mail de l’abonnement"
 
@@ -8335,12 +8335,12 @@ msgstr "heures avant le début de l'événement jusqu'à "
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr "L’URL de présence (générée par #_ATTENDANCE_URL) est valide à partir de "
 
-#: includes/eme-options.php:2610
+#: includes/eme-options.php:2619
 #: includes/eme-tasks.php:852
 msgid "The body of the reminder email that will be sent to the respondent."
 msgstr "Le corps de l’e-mail de rappel qui sera envoyé au répondant."
 
-#: includes/eme-options.php:2609
+#: includes/eme-options.php:2618
 #: includes/eme-tasks.php:843
 msgid "The subject of the reminder email that will be sent to the respondent."
 msgstr "L’objet de l’e-mail de rappel qui sera envoyé au répondant."
@@ -8428,15 +8428,15 @@ msgstr "ID de paiement GW"
 msgid "Payment GW"
 msgstr "Paiement GW"
 
-#: includes/eme-options.php:3433
+#: includes/eme-options.php:3442
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr "Cela vous permet de rester sur la page d'édition après avoir enregistré des événements, des emplacements, des modèles, des champs de formulaire, des personnes, des groupes ou des appartenances."
 
-#: includes/eme-options.php:3434
+#: includes/eme-options.php:3443
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr "Les fonctions de date/heure de PHP n’ont aucune notation pour afficher les minutes sans zéros en tête. En cochant cette option, vous recevrez par exemple 9 pour 09 et vide pour 00. Ce paramètre affecte les espaces réservés d’heure personnalisés ainsi que *DATE et *TIME"
 
-#: includes/eme-options.php:3433
+#: includes/eme-options.php:3442
 msgid "Stay on edit page after save?"
 msgstr "Rester sur la page de modification après l’enregistrement ?"
 
@@ -8826,7 +8826,7 @@ msgstr "Cet email a déjà été enregistré."
 msgid "This person has already registered."
 msgstr "Cette personne est déjà inscrite."
 
-#: includes/eme-options.php:2707
+#: includes/eme-options.php:2716
 msgid "Text to be shown below the personal info being rendered."
 msgstr "Texte à afficher sous les informations personnelles fournies."
 
@@ -8850,32 +8850,32 @@ msgstr "Suivre l’utilisation des remises par siège réservé"
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "Autoriser uniquement une réservation par personne (combo e-mail/nom de famille/prénom)"
 
-#: includes/eme-options.php:2707
+#: includes/eme-options.php:2716
 msgid "Personal info page footer"
 msgstr "Pied de page d’informations personnelles"
 
-#: includes/eme-options.php:2706
+#: includes/eme-options.php:2715
 msgid "Text to be shown above the personal info being rendered."
 msgstr "Texte à afficher au-dessus des informations personnelles en cours de rendu."
 
-#: includes/eme-options.php:2706
+#: includes/eme-options.php:2715
 msgid "Personal info page header"
 msgstr "En-tête de la page d'informations personnelles"
 
-#: includes/eme-options.php:2705
+#: includes/eme-options.php:2714
 msgid "The title of the page when personal info is rendered."
 msgstr "Le titre de la page lorsque les informations personnelles sont fournies."
 
-#: includes/eme-options.php:2705
+#: includes/eme-options.php:2714
 msgid "Personal info page title"
 msgstr "Titre de la page d’informations personnelles"
 
 #. translators: %s is the shortcode name
-#: includes/eme-options.php:2660
+#: includes/eme-options.php:2669
 msgid "For more info concerning GDPR, see"
 msgstr "Pour plus d’informations sur le RGPD, voir"
 
-#: includes/eme-options.php:2658
+#: includes/eme-options.php:2667
 msgid "GDPR: General Data Protection Regulation options"
 msgstr "RGPD : options de règlement général sur la protection des données"
 
@@ -8917,14 +8917,14 @@ msgstr "Créé le"
 msgid "Pay %s"
 msgstr "Payer %s"
 
-#: includes/eme-options.php:3058
+#: includes/eme-options.php:3067
 msgid "Choose wether you want to test Opayo in a sandbox or go live and really use Opayo."
 msgstr "Choisissez si vous voulez tester Paymill dans un bac à sable ou si vous utilisez vraiment Paymill."
 
-#: includes/eme-options.php:2741
-#: includes/eme-options.php:2742
-#: includes/eme-options.php:2743
-#: includes/eme-options.php:2744
+#: includes/eme-options.php:2750
+#: includes/eme-options.php:2751
+#: includes/eme-options.php:2752
+#: includes/eme-options.php:2753
 msgid "If left empty, a default message will be shown."
 msgstr "Si laissé vide, un message par défaut sera affiché."
 
@@ -9015,23 +9015,23 @@ msgstr "Faire un don pour le développement d'Events Made Easy"
 msgid "Request person data"
 msgstr "Demander des données personnelles"
 
-#: includes/eme-options.php:2704
+#: includes/eme-options.php:2713
 msgid "Can only contain 1 placeholder, namely #_GDPR_URL."
 msgstr "Ne peut contenir qu’un seul espace réservé, à savoir #_GDPR_URL."
 
-#: includes/eme-options.php:2704
+#: includes/eme-options.php:2713
 msgid "The body of the email that will be sent to the person asking for his personal info."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne qui demande ses informations personnelles."
 
-#: includes/eme-options.php:2704
+#: includes/eme-options.php:2713
 msgid "Personal info email body"
 msgstr "Corps de l'e-mail d'info personnelle"
 
-#: includes/eme-options.php:2703
+#: includes/eme-options.php:2712
 msgid "The subject of the email that will be sent to the person asking for his personal info."
 msgstr "Le sujet de l’e-mail qui sera envoyé à la personne qui demande ses informations personnelles."
 
-#: includes/eme-options.php:2703
+#: includes/eme-options.php:2712
 msgid "Personal info email subject"
 msgstr "Sujet de l’e-mail d’information personnelle"
 
@@ -9467,27 +9467,27 @@ msgstr "Inscription des membres pour « %s »"
 msgid "This has already been paid for"
 msgstr "Cela a déjà été payé pour"
 
-#: includes/eme-options.php:2744
+#: includes/eme-options.php:2753
 msgid "The format of the return page when the payment failed or has been canceled for membership signup."
 msgstr "Le format de la page de retour lorsque le paiement a échoué ou a été annulé pour une inscription."
 
-#: includes/eme-options.php:2744
+#: includes/eme-options.php:2753
 msgid "Payment membership failure return page format"
 msgstr "Format de la page de retour de l’échec du paiement de l’adhésion"
 
-#: includes/eme-options.php:2743
+#: includes/eme-options.php:2752
 msgid "The format of the return page when the payment is succesfull for membership signup."
 msgstr "Le format de la page de retour lorsque le paiement de l’adhésion est réussi."
 
-#: includes/eme-options.php:2743
+#: includes/eme-options.php:2752
 msgid "Payment membership success return page format"
 msgstr "Format de la page de retour de réussite du paiement de l’adhésion"
 
-#: includes/eme-options.php:2742
+#: includes/eme-options.php:2751
 msgid "The format of the return page when the payment failed or has been canceled for RSVP bookings."
 msgstr "Le format de la page de retour lorsque le paiement a échoué ou a été annulé pour les réservations RSVP."
 
-#: includes/eme-options.php:2741
+#: includes/eme-options.php:2750
 msgid "The format of the return page when the payment is succesfull for RSVP bookings."
 msgstr "Le format de la page de retour lorsque le paiement est réussi pour les réservations RSVP."
 
@@ -9736,17 +9736,17 @@ msgid "WP Admin"
 msgstr "Admin WP"
 
 #: includes/eme-members.php:2017
-#: includes/eme-options.php:3348
+#: includes/eme-options.php:3357
 msgid "Contact person"
 msgstr "Personne de contact"
 
 #: includes/eme-members.php:1999
-#: includes/eme-options.php:3343
+#: includes/eme-options.php:3352
 msgid "Currency"
 msgstr "Devise"
 
 #: includes/eme-members.php:1987
-#: includes/eme-options.php:3342
+#: includes/eme-options.php:3351
 msgid "Price"
 msgstr "Prix"
 
@@ -10460,33 +10460,33 @@ msgstr "Aucun fichier CSV détecté"
 msgid "Problem detected while uploading the file"
 msgstr "Problème détecté lors du téléversement du fichier"
 
-#: includes/eme-options.php:2566
+#: includes/eme-options.php:2575
 msgid "The body of the email that will be sent to the person asking to unsubscribe."
 msgstr "Le corps de l’e-mail qui sera envoyé à la personne demandant à se désinscrire."
 
-#: includes/eme-options.php:2566
+#: includes/eme-options.php:2575
 msgid "Unsubscribe email body"
 msgstr "Corps de l’e-mail de désabonnement"
 
-#: includes/eme-options.php:2537
-#: includes/eme-options.php:2565
-#: includes/eme-options.php:2567
-#: includes/eme-options.php:2698
-#: includes/eme-options.php:2700
-#: includes/eme-options.php:2701
-#: includes/eme-options.php:2703
-#: includes/eme-options.php:2705
-#: includes/eme-options.php:2706
+#: includes/eme-options.php:2546
+#: includes/eme-options.php:2574
+#: includes/eme-options.php:2576
 #: includes/eme-options.php:2707
 #: includes/eme-options.php:2709
+#: includes/eme-options.php:2710
+#: includes/eme-options.php:2712
+#: includes/eme-options.php:2714
+#: includes/eme-options.php:2715
+#: includes/eme-options.php:2716
+#: includes/eme-options.php:2718
 msgid "No placeholders can be used."
 msgstr "Aucun espace réservé ne peut être utilisé."
 
-#: includes/eme-options.php:2565
+#: includes/eme-options.php:2574
 msgid "The subject of the email that will be sent to the person asking to unsubscribe."
 msgstr "Le sujet de l’e-mail qui sera envoyé à la personne demandant à se désinscrire."
 
-#: includes/eme-options.php:2565
+#: includes/eme-options.php:2574
 msgid "Unsubscribe email subject"
 msgstr "Sujet de l’e-mail de désabonnement"
 
@@ -10588,15 +10588,15 @@ msgstr "Action info"
 msgid "The mail queue has been cleared."
 msgstr "La file d’attente de courrier a été effacée."
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3446
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr "Cette option n’est pas utilisée si l’option de prix localisé ci-dessus est active et que la classe php NumberFormatter est présente."
 
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3445
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr "Si cette option est sélectionnée, tous les prix seront affichés dans la langue courante avec le symbole de la devise. Si vous ne le souhaitez pas, désélectionnez cette option pour retrouver l’ancien comportement des prix localisés où vous devez vous occuper de la précision décimale, du symbole monétaire et de son emplacement. Cette option ne fonctionne que si la classe php NumberFormatter est présente, ce qui est toujours le cas dans les nouvelles versions de PHP, mais n’oubliez pas de charger l’extension INTL dans php."
 
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3445
 msgid "Localize price"
 msgstr "Prix localisé"
 
@@ -10620,7 +10620,7 @@ msgstr "Avertissement : un problème est survenu lors de l'envoi de l'e-mail d'
 msgid "Event time"
 msgstr "Heure de l’évènement"
 
-#: includes/eme-options.php:2143
+#: includes/eme-options.php:2151
 msgid "Verify SMTP certificates?"
 msgstr "Vérifier les certificats SMTP ?"
 
@@ -10640,23 +10640,23 @@ msgstr "Sièges en liste d’attente"
 msgid "Please select at least one seat."
 msgstr "Veuillez sélectionner au moins 1 siège."
 
-#: includes/eme-options.php:2138
+#: includes/eme-options.php:2146
 msgid "Select the SMTP encryption method."
 msgstr "Sélectionnez la méthode de cryptage SMTP."
 
-#: includes/eme-options.php:2133
+#: includes/eme-options.php:2141
 msgid "SSL"
 msgstr "SSL"
 
-#: includes/eme-options.php:2132
+#: includes/eme-options.php:2140
 msgid "TLS"
 msgstr "TLS"
 
-#: includes/eme-options.php:2128
+#: includes/eme-options.php:2136
 msgid "SMTP encryption method"
 msgstr "Méthode de cryptage SMTP"
 
-#: includes/eme-options.php:2125
+#: includes/eme-options.php:2133
 msgid "The SMTP host. Usually it corresponds to 'localhost'."
 msgstr "Le serveur SMTP. Habituellement, cela correspond à « localhost »."
 
@@ -10698,11 +10698,11 @@ msgstr "Nouvel évènement récurrent inséré contenant des évènements %d"
 msgid "Filter on start date"
 msgstr "Filtrer sur la date de début"
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3448
 msgid "The text shown next to a form field when it is a required field"
 msgstr "Le texte affiché à côté d’un champ de formulaire lorsqu’il s’agit d’un champ obligatoire"
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3448
 msgid "Required field text"
 msgstr "Texte du champ obligatoire"
 
@@ -10744,16 +10744,16 @@ msgstr "Langue"
 msgid "Email templates"
 msgstr "Modèles d’e-mail"
 
-#: includes/eme-options.php:2757
+#: includes/eme-options.php:2766
 msgid "The text containing all info for offline payment. Can contain HTML and placeholders like the payment header/footer settings."
 msgstr "Le texte contenant toutes les informations pour le paiement hors ligne. Peut contenir du code HTML et des espaces réservés tels que les paramètres d’en-tête / pied de page de paiement."
 
-#: includes/eme-options.php:2752
-#: includes/eme-options.php:2757
+#: includes/eme-options.php:2761
+#: includes/eme-options.php:2766
 msgid "Offline payment info"
 msgstr "Informations de paiement hors ligne"
 
-#: includes/eme-options.php:3316
+#: includes/eme-options.php:3325
 msgid "The format of the text appearing in the balloon describing the location in the map."
 msgstr "Le format du texte apparaissant dans la bulle décrivant l’emplacement sur la carte."
 
@@ -10815,8 +10815,8 @@ msgstr "Filtrer sur nombre unique"
 msgid "Filter on person"
 msgstr "Filtrer sur personne"
 
-#: includes/eme-options.php:2475
-#: includes/eme-options.php:2491
+#: includes/eme-options.php:2484
+#: includes/eme-options.php:2500
 msgid "Contact Person Payment Notification Email Body"
 msgstr "Corps de l’e-mail de notification de paiement à la personne de contact"
 
@@ -10937,59 +10937,59 @@ msgstr "Identifiant de paiement incorrect."
 msgid "Hash Incorrect"
 msgstr "Hachage incorrect"
 
-#: includes/eme-options.php:3443
+#: includes/eme-options.php:3452
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr "Si cette option est sélectionnée, le fait de cliquer sur l'URL d'évènement ou d'emplacement unique pour accéder aux détails permet d'accéder à l'URL externe définie pour cet évènement ou cet emplacement, le cas échéant."
 
-#: includes/eme-options.php:3443
+#: includes/eme-options.php:3452
 msgid "Use external url for single events or locations?"
 msgstr "Utiliser une URL externe pour des évènements ou des lieux uniques ?"
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3446
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr "EME tente d'afficher les prix en fonction de la localisation du navigateur, avec la précision décimale définie ici. La valeur par défaut est 2."
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3446
 msgid "Decimals accuracy"
 msgstr "Précision décimale"
 
-#: includes/eme-options.php:3430
+#: includes/eme-options.php:3439
 msgid "Other settings"
 msgstr "Autres réglages"
 
-#: includes/eme-options.php:3188
+#: includes/eme-options.php:3197
 msgid "Braintree Public Key"
 msgstr "Clé publique Braintree"
 
-#: includes/eme-options.php:3189
+#: includes/eme-options.php:3198
 msgid "Braintree Private Key"
 msgstr "Clé privée Braintree"
 
-#: includes/eme-options.php:3187
+#: includes/eme-options.php:3196
 msgid "Braintree Merchant ID"
 msgstr "Identifiant du marchand Braintree"
 
-#: includes/eme-options.php:3185
+#: includes/eme-options.php:3194
 msgid "Choose wether you want to test Braintree in a sandbox or go live and really use Braintree."
 msgstr "Choisissez si vous voulez tester Braintree dans un bac à sable (sandbox) ou si vous voulez utilisez vraiment Braintree."
 
-#: includes/eme-options.php:3180
+#: includes/eme-options.php:3189
 msgid "Braintree Live"
 msgstr "Braintree Live"
 
-#: includes/eme-options.php:3179
+#: includes/eme-options.php:3188
 msgid "Braintree Sandbox (for testing)"
 msgstr "Braintree Sandbox (pour les tests)"
 
-#: includes/eme-options.php:3176
+#: includes/eme-options.php:3185
 msgid "Braintree live or test"
 msgstr "Braintree en direct ou en test"
 
-#: includes/eme-options.php:3114
+#: includes/eme-options.php:3123
 msgid "Stripe Public Key"
 msgstr "Clé publique Stripe"
 
-#: includes/eme-options.php:3113
+#: includes/eme-options.php:3122
 msgid "Stripe Secret Key"
 msgstr "Clé privée Stripe"
 
@@ -11031,9 +11031,9 @@ msgstr "Utilisateurs WordPress"
 #: includes/eme-events.php:8370
 #: includes/eme-members.php:1972
 #: includes/eme-options.php:1534
-#: includes/eme-options.php:2131
-#: includes/eme-options.php:2166
-#: includes/eme-options.php:3362
+#: includes/eme-options.php:2139
+#: includes/eme-options.php:2175
+#: includes/eme-options.php:3371
 msgid "None"
 msgstr "Aucun"
 
@@ -11195,12 +11195,12 @@ msgstr "Vacances : "
 msgid "Frequency:"
 msgstr "Fréquence :"
 
-#: includes/eme-options.php:3170
+#: includes/eme-options.php:3179
 #: includes/eme-payments.php:20
 msgid "Braintree"
 msgstr "Braintree"
 
-#: includes/eme-options.php:3107
+#: includes/eme-options.php:3116
 #: includes/eme-payments.php:19
 msgid "Stripe"
 msgstr "Stripe"
@@ -12094,510 +12094,510 @@ msgstr "Demande de réservation multiple"
 msgid "Payment handling"
 msgstr "Moyen de paiement"
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3509
 msgid "Save Changes"
 msgstr "Enregistrer les modifications"
 
-#: includes/eme-options.php:3482
+#: includes/eme-options.php:3491
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr "Ici vous pouvez définir des headers html supplémentaires utilisés lors de la visualisation d'un seul lieu, généralement utilisé pour ajouter des meta tags pour facebook ou SEO. Tous les placeholders  de lieu peuvent être utilisés, mais ils seront éliminés du code HTML résultant.."
 
-#: includes/eme-options.php:3482
+#: includes/eme-options.php:3491
 msgid "Extra location html headers"
 msgstr "Headers supplémentaires pour un lieu"
 
-#: includes/eme-options.php:3481
+#: includes/eme-options.php:3490
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr "Ici vous pouvez définir des headers html supplémentaires utilisés lors de la visualisation d'un seul événement, généralement utilisé pour ajouter des meta tags pour facebook ou SEO. Tous les placeholders  d'événements peuvent être utilisés, mais ils seront éliminés du code HTML résultant."
 
-#: includes/eme-options.php:3481
+#: includes/eme-options.php:3490
 msgid "Extra event html headers"
 msgstr "Headers html ajoutés pour un évènement"
 
-#: includes/eme-options.php:3480
+#: includes/eme-options.php:3489
 msgid "Extra html footer"
 msgstr "Pied de page html supplémentaire"
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3488
 msgid "Extra html header"
 msgstr "En-tête HTML supplémentaire"
 
-#: includes/eme-options.php:3476
+#: includes/eme-options.php:3485
 msgid "Extra html headers"
 msgstr "Headers html ajoutés"
 
-#: includes/eme-options.php:3314
+#: includes/eme-options.php:3323
 msgid "The zoom factor used when showing a single map (max: 14)."
 msgstr "Le facteur de zoom utilisé lors de l'affichage d'une seule carte (max. : 14)."
 
-#: includes/eme-options.php:3314
+#: includes/eme-options.php:3323
 msgid "Individual map zoom factor"
 msgstr "Facteur de zoom de la carte individuelle"
 
-#: includes/eme-options.php:3309
+#: includes/eme-options.php:3318
 msgid "Map options"
 msgstr "Options de la carte"
 
-#: includes/eme-options.php:3442
+#: includes/eme-options.php:3451
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr "Choisissez la taille de miniature par défaut  à afficher lorsque vous utilisez des espaces réservés impliquant des miniatures, par exemple #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, …"
 
-#: includes/eme-options.php:3442
+#: includes/eme-options.php:3451
 msgid "Thumbnail size"
 msgstr "Taille des miniatures"
 
-#: includes/eme-options.php:3435
+#: includes/eme-options.php:3444
 msgid "Set the delimiter used in CSV exports."
 msgstr "Définissez le séparateur utilisé dans les exportations CSV."
 
-#: includes/eme-options.php:3024
+#: includes/eme-options.php:3033
 msgid "Worldpay password for payment notifications when using Worldpay for real"
 msgstr "Mot de passe Worldpay pour les notifications de paiement lors de l'utilisation de Worldpay pour de vrai"
 
-#: includes/eme-options.php:3024
+#: includes/eme-options.php:3033
 msgid "Worldpay Live Password"
 msgstr "Worldpay Live Mot de passe"
 
-#: includes/eme-options.php:3023
+#: includes/eme-options.php:3032
 msgid "Worldpay password for payment notifications when testing"
 msgstr "Mot de passe Worldpay pour les notifications de paiement lors du test"
 
-#: includes/eme-options.php:3023
+#: includes/eme-options.php:3032
 msgid "Worldpay Test Password"
 msgstr "Mot de passe de test Worldpay"
 
-#: includes/eme-options.php:3022
+#: includes/eme-options.php:3031
 msgid "Worldpay parameters used to generate the MD5 signature, separated by ':'. Only use these 4 in the order of your choice: instId,cartId,currency and/or amount"
 msgstr "Paramètres Worldpay utilisés pour générer la signature MD5, séparés par « : ». Utiliser seulement ces 4 dans l'ordre de votre choix : instId, CartId, monnaie et/ou montant"
 
-#: includes/eme-options.php:3022
+#: includes/eme-options.php:3031
 msgid "Worldpay MD5 parameters"
 msgstr "Paramètres MD5 Worldpay"
 
-#: includes/eme-options.php:3021
+#: includes/eme-options.php:3030
 msgid "Worldpay MD5 secret used when submitting payments"
 msgstr "Chiffrage MD5 Worldpay utilisé lors de la soumission de paiements"
 
-#: includes/eme-options.php:3021
+#: includes/eme-options.php:3030
 msgid "Worldpay MD5 secret"
 msgstr "Chiffrage MD5 Worldpay"
 
-#: includes/eme-options.php:3020
+#: includes/eme-options.php:3029
 msgid "Worldpay installation ID"
 msgstr "ID d' installation Worldpay"
 
-#: includes/eme-options.php:3018
+#: includes/eme-options.php:3027
 msgid "Choose wether you want to test Worldpay in a sandbox or go live and really use Worldpay."
 msgstr "Choisissez si vous voulez tester Worldpay dans un bac à sable (sandbox) ou utilisez directement Worldpay."
 
-#: includes/eme-options.php:3013
+#: includes/eme-options.php:3022
 msgid "Worldpay Live"
 msgstr "Worldpay en direct"
 
-#: includes/eme-options.php:3012
+#: includes/eme-options.php:3021
 msgid "Worldpay Sandbox (for testing)"
 msgstr "Worldpay Sandbox (pour les tests)"
 
-#: includes/eme-options.php:3009
+#: includes/eme-options.php:3018
 msgid "Worldpay live or test"
 msgstr "Worldpay en direct ou en test"
 
-#: includes/eme-options.php:3071
+#: includes/eme-options.php:3080
 msgid "Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change."
 msgstr "Info : pour que Opayo fonctionne, le module mcrypt doit être installé et activé dans votre installation PHP. Recherchez sur Internet le paquet PHP supplémentaire à installer et/ou la ligne à modifier dans php.ini."
 
-#: includes/eme-options.php:3061
+#: includes/eme-options.php:3070
 msgid "Opayo password for testing purposes"
 msgstr "Mot de passe Opayo à des fins de test"
 
-#: includes/eme-options.php:2949
+#: includes/eme-options.php:2958
 msgid "Mollie API key"
 msgstr "Clé API Mollie"
 
-#: includes/eme-options.php:2924
+#: includes/eme-options.php:2933
 msgid "First Data Shared Secret."
 msgstr "First Data secret partagé."
 
-#: includes/eme-options.php:2924
+#: includes/eme-options.php:2933
 msgid "First Data Shared Secret"
 msgstr "First Data secret partagé"
 
-#: includes/eme-options.php:2923
+#: includes/eme-options.php:2932
 msgid "First Data Store Name."
 msgstr "Nom du magasin chez First Data."
 
-#: includes/eme-options.php:2923
+#: includes/eme-options.php:2932
 msgid "First Data Store Name"
 msgstr "Nom du magasin chez First Data"
 
-#: includes/eme-options.php:2921
+#: includes/eme-options.php:2930
 msgid "Choose wether you want to test First Data in a sandbox or go live and really use First Data."
 msgstr "Choisissez si vous souhaitez tester First Data dans un bac à sable (sandbox) ou mettre en production et utiliser réellement First Data."
 
-#: includes/eme-options.php:2916
+#: includes/eme-options.php:2925
 msgid "First Data Live"
 msgstr "First Data en direct"
 
-#: includes/eme-options.php:2915
+#: includes/eme-options.php:2924
 msgid "First Data Sandbox (for testing)"
 msgstr "First Data Sandbox (bac à sable pour les tests)"
 
-#: includes/eme-options.php:2912
+#: includes/eme-options.php:2921
 msgid "First Data live or test"
 msgstr "First Data en direct ou en test"
 
-#: includes/eme-options.php:2886
+#: includes/eme-options.php:2895
 msgid "Webmoney secret."
 msgstr "Secret Webmoney."
 
-#: includes/eme-options.php:2886
+#: includes/eme-options.php:2895
 msgid "Webmoney Secret"
 msgstr "Secret Webmoney"
 
-#: includes/eme-options.php:2885
+#: includes/eme-options.php:2894
 msgid "Webmoney Purse."
 msgstr "Porte-monnaie Webmoney."
 
-#: includes/eme-options.php:2885
+#: includes/eme-options.php:2894
 msgid "Webmoney Purse"
 msgstr "Porte-monnaie Webmoney"
 
-#: includes/eme-options.php:2883
+#: includes/eme-options.php:2892
 msgid "Choose wether you want to test Webmoney in a sandbox or go live and really use Webmoney."
 msgstr "Choisissez si vous voulez tester Webmoney dans un bac à sable (sandbox) ou l'utiliser directement."
 
-#: includes/eme-options.php:2878
+#: includes/eme-options.php:2887
 msgid "Webmoney Live"
 msgstr "Webmoney Live"
 
-#: includes/eme-options.php:2877
+#: includes/eme-options.php:2886
 msgid "Webmoney Sandbox (for testing)"
 msgstr "Webmoney Sandbox (pour les tests)"
 
-#: includes/eme-options.php:2874
+#: includes/eme-options.php:2883
 msgid "Webmoney live or test"
 msgstr "Webmoney en direct ou en test"
 
-#: includes/eme-options.php:2796
-#: includes/eme-options.php:2854
-#: includes/eme-options.php:2892
-#: includes/eme-options.php:2930
-#: includes/eme-options.php:2955
-#: includes/eme-options.php:2989
-#: includes/eme-options.php:3030
-#: includes/eme-options.php:3068
-#: includes/eme-options.php:3094
-#: includes/eme-options.php:3120
-#: includes/eme-options.php:3195
-#: includes/eme-options.php:3232
-#: includes/eme-options.php:3269
-#: includes/eme-options.php:3293
+#: includes/eme-options.php:2805
+#: includes/eme-options.php:2863
+#: includes/eme-options.php:2901
+#: includes/eme-options.php:2939
+#: includes/eme-options.php:2964
+#: includes/eme-options.php:2998
+#: includes/eme-options.php:3039
+#: includes/eme-options.php:3077
+#: includes/eme-options.php:3103
+#: includes/eme-options.php:3129
+#: includes/eme-options.php:3204
+#: includes/eme-options.php:3241
+#: includes/eme-options.php:3278
+#: includes/eme-options.php:3302
 msgid "Text below payment button"
 msgstr "Texte sous le bouton de paiement"
 
-#: includes/eme-options.php:2795
-#: includes/eme-options.php:2853
-#: includes/eme-options.php:2891
-#: includes/eme-options.php:2929
-#: includes/eme-options.php:2954
-#: includes/eme-options.php:2988
-#: includes/eme-options.php:3029
-#: includes/eme-options.php:3067
-#: includes/eme-options.php:3093
-#: includes/eme-options.php:3119
-#: includes/eme-options.php:3194
-#: includes/eme-options.php:3231
-#: includes/eme-options.php:3268
-#: includes/eme-options.php:3292
+#: includes/eme-options.php:2804
+#: includes/eme-options.php:2862
+#: includes/eme-options.php:2900
+#: includes/eme-options.php:2938
+#: includes/eme-options.php:2963
+#: includes/eme-options.php:2997
+#: includes/eme-options.php:3038
+#: includes/eme-options.php:3076
+#: includes/eme-options.php:3102
+#: includes/eme-options.php:3128
+#: includes/eme-options.php:3203
+#: includes/eme-options.php:3240
+#: includes/eme-options.php:3277
+#: includes/eme-options.php:3301
 msgid "Text above payment button"
 msgstr "Texte au-dessus du bouton de paiement"
 
-#: includes/eme-options.php:2794
-#: includes/eme-options.php:2852
-#: includes/eme-options.php:2890
-#: includes/eme-options.php:2928
-#: includes/eme-options.php:2953
-#: includes/eme-options.php:2987
-#: includes/eme-options.php:3028
-#: includes/eme-options.php:3066
-#: includes/eme-options.php:3092
-#: includes/eme-options.php:3118
-#: includes/eme-options.php:3193
-#: includes/eme-options.php:3230
-#: includes/eme-options.php:3267
-#: includes/eme-options.php:3291
+#: includes/eme-options.php:2803
+#: includes/eme-options.php:2861
+#: includes/eme-options.php:2899
+#: includes/eme-options.php:2937
+#: includes/eme-options.php:2962
+#: includes/eme-options.php:2996
+#: includes/eme-options.php:3037
+#: includes/eme-options.php:3075
+#: includes/eme-options.php:3101
+#: includes/eme-options.php:3127
+#: includes/eme-options.php:3202
+#: includes/eme-options.php:3239
+#: includes/eme-options.php:3276
+#: includes/eme-options.php:3300
 msgid "The url to an image for the payment button that replaces the standard submit button with the label mentioned above."
 msgstr "L'URL d'une image du bouton de paiement qui remplacera le bouton d'envoi standard avec l'étiquette mentionnée ci-dessus."
 
-#: includes/eme-options.php:2794
-#: includes/eme-options.php:2852
-#: includes/eme-options.php:2890
-#: includes/eme-options.php:2928
-#: includes/eme-options.php:2953
-#: includes/eme-options.php:2987
-#: includes/eme-options.php:3028
-#: includes/eme-options.php:3066
-#: includes/eme-options.php:3092
-#: includes/eme-options.php:3118
-#: includes/eme-options.php:3193
-#: includes/eme-options.php:3230
-#: includes/eme-options.php:3267
-#: includes/eme-options.php:3291
+#: includes/eme-options.php:2803
+#: includes/eme-options.php:2861
+#: includes/eme-options.php:2899
+#: includes/eme-options.php:2937
+#: includes/eme-options.php:2962
+#: includes/eme-options.php:2996
+#: includes/eme-options.php:3037
+#: includes/eme-options.php:3075
+#: includes/eme-options.php:3101
+#: includes/eme-options.php:3127
+#: includes/eme-options.php:3202
+#: includes/eme-options.php:3239
+#: includes/eme-options.php:3276
+#: includes/eme-options.php:3300
 msgid "Payment button image"
 msgstr "Image du bouton de paiement"
 
-#: includes/eme-options.php:2793
-#: includes/eme-options.php:2851
-#: includes/eme-options.php:2889
-#: includes/eme-options.php:2927
-#: includes/eme-options.php:2952
-#: includes/eme-options.php:2986
-#: includes/eme-options.php:3027
-#: includes/eme-options.php:3065
-#: includes/eme-options.php:3091
-#: includes/eme-options.php:3117
-#: includes/eme-options.php:3192
-#: includes/eme-options.php:3229
-#: includes/eme-options.php:3266
-#: includes/eme-options.php:3290
+#: includes/eme-options.php:2802
+#: includes/eme-options.php:2860
+#: includes/eme-options.php:2898
+#: includes/eme-options.php:2936
+#: includes/eme-options.php:2961
+#: includes/eme-options.php:2995
+#: includes/eme-options.php:3036
+#: includes/eme-options.php:3074
+#: includes/eme-options.php:3100
+#: includes/eme-options.php:3126
+#: includes/eme-options.php:3201
+#: includes/eme-options.php:3238
+#: includes/eme-options.php:3275
+#: includes/eme-options.php:3299
 msgid "The text shown inside the payment button"
 msgstr "Le texte affiché à l'intérieur du bouton de paiement"
 
-#: includes/eme-options.php:2793
-#: includes/eme-options.php:2851
-#: includes/eme-options.php:2889
-#: includes/eme-options.php:2927
-#: includes/eme-options.php:2952
-#: includes/eme-options.php:2986
-#: includes/eme-options.php:3027
-#: includes/eme-options.php:3065
-#: includes/eme-options.php:3091
-#: includes/eme-options.php:3117
-#: includes/eme-options.php:3192
-#: includes/eme-options.php:3229
-#: includes/eme-options.php:3266
-#: includes/eme-options.php:3290
+#: includes/eme-options.php:2802
+#: includes/eme-options.php:2860
+#: includes/eme-options.php:2898
+#: includes/eme-options.php:2936
+#: includes/eme-options.php:2961
+#: includes/eme-options.php:2995
+#: includes/eme-options.php:3036
+#: includes/eme-options.php:3074
+#: includes/eme-options.php:3100
+#: includes/eme-options.php:3126
+#: includes/eme-options.php:3201
+#: includes/eme-options.php:3238
+#: includes/eme-options.php:3275
+#: includes/eme-options.php:3299
 msgid "Payment button label"
 msgstr "Étiquette du bouton de paiement"
 
-#: includes/eme-options.php:2759
-#: includes/eme-options.php:2792
-#: includes/eme-options.php:2850
-#: includes/eme-options.php:2888
-#: includes/eme-options.php:2926
-#: includes/eme-options.php:2951
-#: includes/eme-options.php:2985
-#: includes/eme-options.php:3026
-#: includes/eme-options.php:3064
-#: includes/eme-options.php:3090
-#: includes/eme-options.php:3116
-#: includes/eme-options.php:3191
-#: includes/eme-options.php:3228
-#: includes/eme-options.php:3265
-#: includes/eme-options.php:3289
+#: includes/eme-options.php:2768
+#: includes/eme-options.php:2801
+#: includes/eme-options.php:2859
+#: includes/eme-options.php:2897
+#: includes/eme-options.php:2935
+#: includes/eme-options.php:2960
+#: includes/eme-options.php:2994
+#: includes/eme-options.php:3035
+#: includes/eme-options.php:3073
+#: includes/eme-options.php:3099
+#: includes/eme-options.php:3125
+#: includes/eme-options.php:3200
+#: includes/eme-options.php:3237
+#: includes/eme-options.php:3274
+#: includes/eme-options.php:3298
 msgid "Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%"
 msgstr "Deuxième supplément ajouté au prix. Peut être soit un nombre absolu soit un pourcentage. Par exemple 2 ou 5%"
 
-#: includes/eme-options.php:2759
-#: includes/eme-options.php:2792
-#: includes/eme-options.php:2850
-#: includes/eme-options.php:2888
-#: includes/eme-options.php:2926
-#: includes/eme-options.php:2951
-#: includes/eme-options.php:2985
-#: includes/eme-options.php:3026
-#: includes/eme-options.php:3064
-#: includes/eme-options.php:3090
-#: includes/eme-options.php:3116
-#: includes/eme-options.php:3191
-#: includes/eme-options.php:3228
-#: includes/eme-options.php:3265
-#: includes/eme-options.php:3289
+#: includes/eme-options.php:2768
+#: includes/eme-options.php:2801
+#: includes/eme-options.php:2859
+#: includes/eme-options.php:2897
+#: includes/eme-options.php:2935
+#: includes/eme-options.php:2960
+#: includes/eme-options.php:2994
+#: includes/eme-options.php:3035
+#: includes/eme-options.php:3073
+#: includes/eme-options.php:3099
+#: includes/eme-options.php:3125
+#: includes/eme-options.php:3200
+#: includes/eme-options.php:3237
+#: includes/eme-options.php:3274
+#: includes/eme-options.php:3298
 msgid "Extra charge 2"
 msgstr "Supplément 2"
 
-#: includes/eme-options.php:2758
-#: includes/eme-options.php:2791
-#: includes/eme-options.php:2849
-#: includes/eme-options.php:2887
-#: includes/eme-options.php:2925
-#: includes/eme-options.php:2950
-#: includes/eme-options.php:2984
-#: includes/eme-options.php:3025
-#: includes/eme-options.php:3063
-#: includes/eme-options.php:3089
-#: includes/eme-options.php:3115
-#: includes/eme-options.php:3190
-#: includes/eme-options.php:3227
-#: includes/eme-options.php:3264
-#: includes/eme-options.php:3288
+#: includes/eme-options.php:2767
+#: includes/eme-options.php:2800
+#: includes/eme-options.php:2858
+#: includes/eme-options.php:2896
+#: includes/eme-options.php:2934
+#: includes/eme-options.php:2959
+#: includes/eme-options.php:2993
+#: includes/eme-options.php:3034
+#: includes/eme-options.php:3072
+#: includes/eme-options.php:3098
+#: includes/eme-options.php:3124
+#: includes/eme-options.php:3199
+#: includes/eme-options.php:3236
+#: includes/eme-options.php:3273
+#: includes/eme-options.php:3297
 msgid "Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%"
 msgstr "Supplément ajouté au prix. Peut être soit un nombre absolu soit un pourcentage. Par exemple 2 ou 5%"
 
 #: includes/eme-events.php:9683
 #: includes/eme-formfields.php:370
-#: includes/eme-options.php:2758
-#: includes/eme-options.php:2791
-#: includes/eme-options.php:2849
-#: includes/eme-options.php:2887
-#: includes/eme-options.php:2925
-#: includes/eme-options.php:2950
-#: includes/eme-options.php:2984
-#: includes/eme-options.php:3025
-#: includes/eme-options.php:3063
-#: includes/eme-options.php:3089
-#: includes/eme-options.php:3115
-#: includes/eme-options.php:3190
-#: includes/eme-options.php:3227
-#: includes/eme-options.php:3264
-#: includes/eme-options.php:3288
+#: includes/eme-options.php:2767
+#: includes/eme-options.php:2800
+#: includes/eme-options.php:2858
+#: includes/eme-options.php:2896
+#: includes/eme-options.php:2934
+#: includes/eme-options.php:2959
+#: includes/eme-options.php:2993
+#: includes/eme-options.php:3034
+#: includes/eme-options.php:3072
+#: includes/eme-options.php:3098
+#: includes/eme-options.php:3124
+#: includes/eme-options.php:3199
+#: includes/eme-options.php:3236
+#: includes/eme-options.php:3273
+#: includes/eme-options.php:3297
 msgid "Extra charge"
 msgstr "Supplément"
 
-#: includes/eme-options.php:2848
+#: includes/eme-options.php:2857
 msgid "Select yes to ignore the tax setting in your Paypal profile."
 msgstr "Sélectionnez oui pour ignorer le paramètre de taxe dans votre profil Paypal."
 
-#: includes/eme-options.php:2848
+#: includes/eme-options.php:2857
 msgid "Ignore Paypal tax setting?"
 msgstr "Ignorer les paramètres de taxe Paypal ?"
 
-#: includes/eme-options.php:2847
+#: includes/eme-options.php:2856
 msgid "Paypal business ID or email."
 msgstr "Paypal business ID ou email."
 
-#: includes/eme-options.php:2847
+#: includes/eme-options.php:2856
 msgid "PayPal business info"
 msgstr "PayPal business info"
 
-#: includes/eme-options.php:2785
-#: includes/eme-options.php:2845
+#: includes/eme-options.php:2794
+#: includes/eme-options.php:2854
 msgid "Choose wether you want to test paypal in a paypal sandbox or go live and really use paypal."
 msgstr "Choisissez si vous souhaitez tester paypal dans un sandbox paypal ou l'utiliser en direct et vraiment utiliser paypal."
 
-#: includes/eme-options.php:2780
-#: includes/eme-options.php:2840
+#: includes/eme-options.php:2789
+#: includes/eme-options.php:2849
 msgid "Paypal Live"
 msgstr "Paypal en direct"
 
-#: includes/eme-options.php:2779
-#: includes/eme-options.php:2839
+#: includes/eme-options.php:2788
+#: includes/eme-options.php:2848
 msgid "Paypal Sandbox (for testing)"
 msgstr "Paypal Sandbox (pour des tests)"
 
-#: includes/eme-options.php:2776
-#: includes/eme-options.php:2836
+#: includes/eme-options.php:2785
+#: includes/eme-options.php:2845
 msgid "PayPal live or test"
 msgstr "PayPal en direct ou en test"
 
-#: includes/eme-options.php:2742
+#: includes/eme-options.php:2751
 msgid "Payment RSVP failure return page format"
 msgstr "Format de la page de retour d'échec de paiement RSVP"
 
-#: includes/eme-options.php:2741
+#: includes/eme-options.php:2750
 msgid "Payment RSVP success return page format"
 msgstr "Format de la page de retour de la réussite du paiement RSVP"
 
-#: includes/eme-options.php:2736
+#: includes/eme-options.php:2745
 msgid "The format of the text shown below the payment buttons in the multibooking form. Default: empty."
 msgstr "Le format du texte affiché sous les boutons de paiement dans le formulaire de réservation multiple. Par défaut : vide."
 
-#: includes/eme-options.php:2736
+#: includes/eme-options.php:2745
 msgid "Multibooking payment form footer format"
 msgstr "Format de pied de page du formulaire de paiement multi-réservations"
 
-#: includes/eme-options.php:2735
-#: includes/eme-options.php:2736
+#: includes/eme-options.php:2744
+#: includes/eme-options.php:2745
 msgid "Although the same placeholders as for the regular payment form header format can be used, it is advised to only use multibooking related placeholders."
 msgstr "Bien que les mêmes espaces réservés que pour le format d'en-tête de formulaire de paiement habituel puissent être utilisés, il est conseillé d'utiliser uniquement des espaces réservés liés à la multi-réservations."
 
-#: includes/eme-options.php:2735
+#: includes/eme-options.php:2744
 msgid "The format of the text shown above the payment buttons in the multibooking form. If left empty, a default message will be shown."
 msgstr "Le format du texte affiché au-dessus des boutons de paiement dans le formulaire de réservation multiple. Si laissé vide, un message par défaut sera affiché."
 
-#: includes/eme-options.php:2735
+#: includes/eme-options.php:2744
 msgid "Multibooking payment form header format"
 msgstr "Format d’en-tête de formulaire de paiement multi-réservations"
 
 #: includes/eme-members.php:2132
-#: includes/eme-options.php:2734
+#: includes/eme-options.php:2743
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr "Le format du texte affiché sous les boutons de paiement. Par défaut : vide."
 
-#: includes/eme-options.php:2734
+#: includes/eme-options.php:2743
 msgid "RSVP Payment form footer format"
 msgstr "Format de pied de page du formulaire de paiement RSVP"
 
 #: includes/eme-members.php:2114
-#: includes/eme-options.php:2733
+#: includes/eme-options.php:2742
 msgid "The format of the text shown above the payment buttons. If left empty, a default message will be shown."
 msgstr "Le format du texte affiché au-dessus des boutons de paiement. Si laissé vide, un message par défaut sera affiché."
 
-#: includes/eme-options.php:2733
+#: includes/eme-options.php:2742
 msgid "RSVP Payment form header format"
 msgstr "Format de l'en-tête du formulaire de paiement RSVP"
 
-#: includes/eme-options.php:2727
+#: includes/eme-options.php:2736
 msgid "The default price for an event."
 msgstr "Le prix par défaut pour un évènement."
 
-#: includes/eme-options.php:2727
+#: includes/eme-options.php:2736
 msgid "Default price"
 msgstr "Prix par défaut"
 
-#: includes/eme-options.php:2726
+#: includes/eme-options.php:2735
 msgid "Select the default currency for payments."
 msgstr "Sélectionnez la devise par défaut pour les paiements."
 
-#: includes/eme-options.php:2726
+#: includes/eme-options.php:2735
 msgid "Default currency"
 msgstr "Devise par défaut"
 
-#: includes/eme-options.php:2144
+#: includes/eme-options.php:2152
 msgid "Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!"
 msgstr "Cochez cette option si vous rencontrez des problèmes lors de l’envoi d’e-mail via SMTP. Ne le faites qu’à des fins de débogage et désactivez-le par la suite !"
 
-#: includes/eme-options.php:2144
+#: includes/eme-options.php:2152
 msgid "Debug SMTP?"
 msgstr "Déboguer SMTP ?"
 
-#: includes/eme-options.php:2142
+#: includes/eme-options.php:2150
 msgid "Insert the password to be used to access your SMTP server"
 msgstr "Insérez le mot de passe à utiliser pour accéder à votre serveur SMTP"
 
-#: includes/eme-options.php:2142
+#: includes/eme-options.php:2150
 msgid "SMTP password"
 msgstr "SMTP mot de passe"
 
-#: includes/eme-options.php:2141
+#: includes/eme-options.php:2149
 msgid "Insert the username to be used to access your SMTP server."
 msgstr "Insérez le nom d'utilisateur à utiliser pour accéder à votre serveur SMTP."
 
-#: includes/eme-options.php:2141
+#: includes/eme-options.php:2149
 msgid "SMTP username"
 msgstr "SMTP nom d'utilisateur"
 
-#: includes/eme-options.php:2140
+#: includes/eme-options.php:2148
 msgid "SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes"
 msgstr "L'authentification SMTP est souvent nécessaire. Si vous utilisez Gmail, mettez ce paramètre à Oui"
 
-#: includes/eme-options.php:2140
+#: includes/eme-options.php:2148
 msgid "Use SMTP authentication?"
 msgstr "Utiliser l'authentification SMTP ?"
 
-#: includes/eme-options.php:2126
+#: includes/eme-options.php:2134
 msgid "The port through which you email notifications will be sent. Make sure the firewall doesn't block this port"
 msgstr "Le port par lequel vos notifications e-mail seront envoyées. Assurez-vous que le pare-feu ne bloque pas ce port"
 
-#: includes/eme-options.php:2125
+#: includes/eme-options.php:2133
 msgid "SMTP host"
 msgstr "Hôte SMTP"
 
-#: includes/eme-options.php:2118
+#: includes/eme-options.php:2126
 msgid "PHP email function"
 msgstr "Fonction d’e-mail PHP"
 
-#: includes/eme-options.php:2114
+#: includes/eme-options.php:2122
 msgid "Email sending method"
 msgstr "Méthode d’envoi des e-mails"
 
@@ -12858,7 +12858,7 @@ msgstr "Le format de la liste d’évènements insérés dans la page d’emplac
 msgid "Default location event list format"
 msgstr "Format par défaut de la liste événements"
 
-#: includes/eme-options.php:3316
+#: includes/eme-options.php:3325
 msgid "Default location balloon format"
 msgstr "Format par défaut pour le ballon du lieu"
 
@@ -13064,96 +13064,96 @@ msgstr "Format par défaut du pied de page de la liste évènement"
 #: includes/eme-options.php:2030
 #: includes/eme-options.php:2031
 #: includes/eme-options.php:2032
-#: includes/eme-options.php:2241
-#: includes/eme-options.php:2242
-#: includes/eme-options.php:2243
-#: includes/eme-options.php:2244
-#: includes/eme-options.php:2299
-#: includes/eme-options.php:2300
-#: includes/eme-options.php:2301
-#: includes/eme-options.php:2302
-#: includes/eme-options.php:2303
-#: includes/eme-options.php:2304
-#: includes/eme-options.php:2354
-#: includes/eme-options.php:2355
-#: includes/eme-options.php:2369
-#: includes/eme-options.php:2370
-#: includes/eme-options.php:2371
-#: includes/eme-options.php:2372
-#: includes/eme-options.php:2386
-#: includes/eme-options.php:2387
-#: includes/eme-options.php:2388
-#: includes/eme-options.php:2389
-#: includes/eme-options.php:2403
-#: includes/eme-options.php:2404
-#: includes/eme-options.php:2422
-#: includes/eme-options.php:2423
-#: includes/eme-options.php:2424
-#: includes/eme-options.php:2425
-#: includes/eme-options.php:2474
-#: includes/eme-options.php:2475
-#: includes/eme-options.php:2486
-#: includes/eme-options.php:2487
-#: includes/eme-options.php:2488
-#: includes/eme-options.php:2489
-#: includes/eme-options.php:2490
-#: includes/eme-options.php:2491
-#: includes/eme-options.php:2579
-#: includes/eme-options.php:2580
-#: includes/eme-options.php:2581
-#: includes/eme-options.php:2582
-#: includes/eme-options.php:2594
-#: includes/eme-options.php:2595
-#: includes/eme-options.php:2596
-#: includes/eme-options.php:2597
-#: includes/eme-options.php:2609
-#: includes/eme-options.php:2610
-#: includes/eme-options.php:2621
-#: includes/eme-options.php:2622
-#: includes/eme-options.php:2623
-#: includes/eme-options.php:2624
-#: includes/eme-options.php:2635
-#: includes/eme-options.php:2636
-#: includes/eme-options.php:2647
-#: includes/eme-options.php:2648
-#: includes/eme-options.php:2733
-#: includes/eme-options.php:2734
-#: includes/eme-options.php:2737
-#: includes/eme-options.php:2738
-#: includes/eme-options.php:2739
-#: includes/eme-options.php:2740
-#: includes/eme-options.php:2741
+#: includes/eme-options.php:2250
+#: includes/eme-options.php:2251
+#: includes/eme-options.php:2252
+#: includes/eme-options.php:2253
+#: includes/eme-options.php:2308
+#: includes/eme-options.php:2309
+#: includes/eme-options.php:2310
+#: includes/eme-options.php:2311
+#: includes/eme-options.php:2312
+#: includes/eme-options.php:2313
+#: includes/eme-options.php:2363
+#: includes/eme-options.php:2364
+#: includes/eme-options.php:2378
+#: includes/eme-options.php:2379
+#: includes/eme-options.php:2380
+#: includes/eme-options.php:2381
+#: includes/eme-options.php:2395
+#: includes/eme-options.php:2396
+#: includes/eme-options.php:2397
+#: includes/eme-options.php:2398
+#: includes/eme-options.php:2412
+#: includes/eme-options.php:2413
+#: includes/eme-options.php:2431
+#: includes/eme-options.php:2432
+#: includes/eme-options.php:2433
+#: includes/eme-options.php:2434
+#: includes/eme-options.php:2483
+#: includes/eme-options.php:2484
+#: includes/eme-options.php:2495
+#: includes/eme-options.php:2496
+#: includes/eme-options.php:2497
+#: includes/eme-options.php:2498
+#: includes/eme-options.php:2499
+#: includes/eme-options.php:2500
+#: includes/eme-options.php:2588
+#: includes/eme-options.php:2589
+#: includes/eme-options.php:2590
+#: includes/eme-options.php:2591
+#: includes/eme-options.php:2603
+#: includes/eme-options.php:2604
+#: includes/eme-options.php:2605
+#: includes/eme-options.php:2606
+#: includes/eme-options.php:2618
+#: includes/eme-options.php:2619
+#: includes/eme-options.php:2630
+#: includes/eme-options.php:2631
+#: includes/eme-options.php:2632
+#: includes/eme-options.php:2633
+#: includes/eme-options.php:2644
+#: includes/eme-options.php:2645
+#: includes/eme-options.php:2656
+#: includes/eme-options.php:2657
 #: includes/eme-options.php:2742
 #: includes/eme-options.php:2743
-#: includes/eme-options.php:2744
-#: includes/eme-options.php:2795
-#: includes/eme-options.php:2796
-#: includes/eme-options.php:2853
-#: includes/eme-options.php:2854
-#: includes/eme-options.php:2891
-#: includes/eme-options.php:2892
-#: includes/eme-options.php:2929
-#: includes/eme-options.php:2930
-#: includes/eme-options.php:2954
-#: includes/eme-options.php:2955
-#: includes/eme-options.php:2988
-#: includes/eme-options.php:2989
-#: includes/eme-options.php:3029
-#: includes/eme-options.php:3030
-#: includes/eme-options.php:3067
-#: includes/eme-options.php:3068
-#: includes/eme-options.php:3093
-#: includes/eme-options.php:3094
-#: includes/eme-options.php:3119
-#: includes/eme-options.php:3120
-#: includes/eme-options.php:3194
-#: includes/eme-options.php:3195
-#: includes/eme-options.php:3231
-#: includes/eme-options.php:3232
-#: includes/eme-options.php:3268
-#: includes/eme-options.php:3269
-#: includes/eme-options.php:3292
-#: includes/eme-options.php:3293
+#: includes/eme-options.php:2746
+#: includes/eme-options.php:2747
+#: includes/eme-options.php:2748
+#: includes/eme-options.php:2749
+#: includes/eme-options.php:2750
+#: includes/eme-options.php:2751
+#: includes/eme-options.php:2752
+#: includes/eme-options.php:2753
+#: includes/eme-options.php:2804
+#: includes/eme-options.php:2805
+#: includes/eme-options.php:2862
+#: includes/eme-options.php:2863
+#: includes/eme-options.php:2900
+#: includes/eme-options.php:2901
+#: includes/eme-options.php:2938
+#: includes/eme-options.php:2939
+#: includes/eme-options.php:2963
+#: includes/eme-options.php:2964
+#: includes/eme-options.php:2997
+#: includes/eme-options.php:2998
+#: includes/eme-options.php:3038
+#: includes/eme-options.php:3039
+#: includes/eme-options.php:3076
+#: includes/eme-options.php:3077
+#: includes/eme-options.php:3102
+#: includes/eme-options.php:3103
+#: includes/eme-options.php:3128
+#: includes/eme-options.php:3129
+#: includes/eme-options.php:3203
+#: includes/eme-options.php:3204
+#: includes/eme-options.php:3240
+#: includes/eme-options.php:3241
+#: includes/eme-options.php:3277
+#: includes/eme-options.php:3278
+#: includes/eme-options.php:3301
+#: includes/eme-options.php:3302
 msgid "For all possible placeholders, see "
 msgstr "Pour tous les espaces réservés, voir "
 
@@ -13181,7 +13181,7 @@ msgstr "Ce contenu apparaîtra juste au-dessus de votre code pour le format de l
 msgid "Default event list format header"
 msgstr "Format d'entête par défaut de la liste événements"
 
-#: includes/eme-options.php:3434
+#: includes/eme-options.php:3443
 msgid "Remove leading zeros from minutes?"
 msgstr "Suppression des zéros des minutes ?"
 
@@ -13193,7 +13193,7 @@ msgstr "Format des événements"
 msgid "Initial status for a new event"
 msgstr "Etat initial pour un nouvel évènement"
 
-#: includes/eme-options.php:3341
+#: includes/eme-options.php:3350
 msgid "State for new event"
 msgstr "État du nouvel évènement"
 
@@ -13405,7 +13405,7 @@ msgstr "Certains thèmes sont mal conçus et peuvent présenter des problèmes d
 msgid "Always include JS in header?"
 msgstr "Toujours inclure le JS dans l'en-tête ?"
 
-#: includes/eme-options.php:3312
+#: includes/eme-options.php:3321
 msgid "Enable map scroll-wheel zooming?"
 msgstr "Activer le zoom par la molette sur la carte ?"
 
@@ -13446,7 +13446,7 @@ msgid "Use dropdown for locations?"
 msgstr "Utiliser une liste déroulante pour les lieux ?"
 
 #: includes/eme-options.php:1496
-#: includes/eme-options.php:2722
+#: includes/eme-options.php:2731
 msgid "General options"
 msgstr "Options générales"
 
@@ -13825,96 +13825,96 @@ msgstr "Champ modifié"
 #: includes/eme-options.php:2030
 #: includes/eme-options.php:2031
 #: includes/eme-options.php:2032
-#: includes/eme-options.php:2241
-#: includes/eme-options.php:2242
-#: includes/eme-options.php:2243
-#: includes/eme-options.php:2244
-#: includes/eme-options.php:2299
-#: includes/eme-options.php:2300
-#: includes/eme-options.php:2301
-#: includes/eme-options.php:2302
-#: includes/eme-options.php:2303
-#: includes/eme-options.php:2304
-#: includes/eme-options.php:2354
-#: includes/eme-options.php:2355
-#: includes/eme-options.php:2369
-#: includes/eme-options.php:2370
-#: includes/eme-options.php:2371
-#: includes/eme-options.php:2372
-#: includes/eme-options.php:2386
-#: includes/eme-options.php:2387
-#: includes/eme-options.php:2388
-#: includes/eme-options.php:2389
-#: includes/eme-options.php:2403
-#: includes/eme-options.php:2404
-#: includes/eme-options.php:2422
-#: includes/eme-options.php:2423
-#: includes/eme-options.php:2424
-#: includes/eme-options.php:2425
-#: includes/eme-options.php:2474
-#: includes/eme-options.php:2475
-#: includes/eme-options.php:2486
-#: includes/eme-options.php:2487
-#: includes/eme-options.php:2488
-#: includes/eme-options.php:2489
-#: includes/eme-options.php:2490
-#: includes/eme-options.php:2491
-#: includes/eme-options.php:2579
-#: includes/eme-options.php:2580
-#: includes/eme-options.php:2581
-#: includes/eme-options.php:2582
-#: includes/eme-options.php:2594
-#: includes/eme-options.php:2595
-#: includes/eme-options.php:2596
-#: includes/eme-options.php:2597
-#: includes/eme-options.php:2609
-#: includes/eme-options.php:2610
-#: includes/eme-options.php:2621
-#: includes/eme-options.php:2622
-#: includes/eme-options.php:2623
-#: includes/eme-options.php:2624
-#: includes/eme-options.php:2635
-#: includes/eme-options.php:2636
-#: includes/eme-options.php:2647
-#: includes/eme-options.php:2648
-#: includes/eme-options.php:2733
-#: includes/eme-options.php:2734
-#: includes/eme-options.php:2737
-#: includes/eme-options.php:2738
-#: includes/eme-options.php:2739
-#: includes/eme-options.php:2740
-#: includes/eme-options.php:2741
+#: includes/eme-options.php:2250
+#: includes/eme-options.php:2251
+#: includes/eme-options.php:2252
+#: includes/eme-options.php:2253
+#: includes/eme-options.php:2308
+#: includes/eme-options.php:2309
+#: includes/eme-options.php:2310
+#: includes/eme-options.php:2311
+#: includes/eme-options.php:2312
+#: includes/eme-options.php:2313
+#: includes/eme-options.php:2363
+#: includes/eme-options.php:2364
+#: includes/eme-options.php:2378
+#: includes/eme-options.php:2379
+#: includes/eme-options.php:2380
+#: includes/eme-options.php:2381
+#: includes/eme-options.php:2395
+#: includes/eme-options.php:2396
+#: includes/eme-options.php:2397
+#: includes/eme-options.php:2398
+#: includes/eme-options.php:2412
+#: includes/eme-options.php:2413
+#: includes/eme-options.php:2431
+#: includes/eme-options.php:2432
+#: includes/eme-options.php:2433
+#: includes/eme-options.php:2434
+#: includes/eme-options.php:2483
+#: includes/eme-options.php:2484
+#: includes/eme-options.php:2495
+#: includes/eme-options.php:2496
+#: includes/eme-options.php:2497
+#: includes/eme-options.php:2498
+#: includes/eme-options.php:2499
+#: includes/eme-options.php:2500
+#: includes/eme-options.php:2588
+#: includes/eme-options.php:2589
+#: includes/eme-options.php:2590
+#: includes/eme-options.php:2591
+#: includes/eme-options.php:2603
+#: includes/eme-options.php:2604
+#: includes/eme-options.php:2605
+#: includes/eme-options.php:2606
+#: includes/eme-options.php:2618
+#: includes/eme-options.php:2619
+#: includes/eme-options.php:2630
+#: includes/eme-options.php:2631
+#: includes/eme-options.php:2632
+#: includes/eme-options.php:2633
+#: includes/eme-options.php:2644
+#: includes/eme-options.php:2645
+#: includes/eme-options.php:2656
+#: includes/eme-options.php:2657
 #: includes/eme-options.php:2742
 #: includes/eme-options.php:2743
-#: includes/eme-options.php:2744
-#: includes/eme-options.php:2795
-#: includes/eme-options.php:2796
-#: includes/eme-options.php:2853
-#: includes/eme-options.php:2854
-#: includes/eme-options.php:2891
-#: includes/eme-options.php:2892
-#: includes/eme-options.php:2929
-#: includes/eme-options.php:2930
-#: includes/eme-options.php:2954
-#: includes/eme-options.php:2955
-#: includes/eme-options.php:2988
-#: includes/eme-options.php:2989
-#: includes/eme-options.php:3029
-#: includes/eme-options.php:3030
-#: includes/eme-options.php:3067
-#: includes/eme-options.php:3068
-#: includes/eme-options.php:3093
-#: includes/eme-options.php:3094
-#: includes/eme-options.php:3119
-#: includes/eme-options.php:3120
-#: includes/eme-options.php:3194
-#: includes/eme-options.php:3195
-#: includes/eme-options.php:3231
-#: includes/eme-options.php:3232
-#: includes/eme-options.php:3268
-#: includes/eme-options.php:3269
-#: includes/eme-options.php:3292
-#: includes/eme-options.php:3293
+#: includes/eme-options.php:2746
+#: includes/eme-options.php:2747
+#: includes/eme-options.php:2748
+#: includes/eme-options.php:2749
+#: includes/eme-options.php:2750
+#: includes/eme-options.php:2751
+#: includes/eme-options.php:2752
+#: includes/eme-options.php:2753
+#: includes/eme-options.php:2804
+#: includes/eme-options.php:2805
+#: includes/eme-options.php:2862
+#: includes/eme-options.php:2863
+#: includes/eme-options.php:2900
+#: includes/eme-options.php:2901
+#: includes/eme-options.php:2938
+#: includes/eme-options.php:2939
+#: includes/eme-options.php:2963
+#: includes/eme-options.php:2964
+#: includes/eme-options.php:2997
+#: includes/eme-options.php:2998
+#: includes/eme-options.php:3038
+#: includes/eme-options.php:3039
+#: includes/eme-options.php:3076
+#: includes/eme-options.php:3077
+#: includes/eme-options.php:3102
+#: includes/eme-options.php:3103
+#: includes/eme-options.php:3128
+#: includes/eme-options.php:3129
+#: includes/eme-options.php:3203
+#: includes/eme-options.php:3204
+#: includes/eme-options.php:3240
+#: includes/eme-options.php:3241
+#: includes/eme-options.php:3277
+#: includes/eme-options.php:3278
+#: includes/eme-options.php:3301
+#: includes/eme-options.php:3302
 msgid "the documentation"
 msgstr "la documentation"
 
@@ -14047,7 +14047,7 @@ msgid "Set a featured image"
 msgstr "Définir une image mise en avant"
 
 #: includes/eme-events.php:7899
-#: includes/eme-options.php:2355
+#: includes/eme-options.php:2364
 msgid "The body of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Le corps de l'e-mail qui sera envoyé au réservataire si la réservation a été mise à jour par un administrateur."
 
@@ -14296,34 +14296,34 @@ msgstr "Enregistrer"
 msgid "No templates defined yet!"
 msgstr "Aucun modèle défini pour le moment !"
 
-#: includes/eme-options.php:3002
+#: includes/eme-options.php:3011
 #: includes/eme-payments.php:16
 msgid "Worldpay"
 msgstr "Worldpay"
 
-#: includes/eme-options.php:2943
+#: includes/eme-options.php:2952
 #: includes/eme-payments.php:13
 msgid "Mollie"
 msgstr "Mollie"
 
-#: includes/eme-options.php:2905
+#: includes/eme-options.php:2914
 #: includes/eme-payments.php:12
 msgid "First Data"
 msgstr "First Data"
 
-#: includes/eme-options.php:2867
+#: includes/eme-options.php:2876
 #: includes/eme-payments.php:11
 msgid "Webmoney"
 msgstr "Webmoney"
 
-#: includes/eme-options.php:2769
+#: includes/eme-options.php:2778
 #: includes/eme-payments.php:9
 msgid "Paypal"
 msgstr "Paypal"
 
 #: includes/eme-events.php:6535
 #: includes/eme-members.php:2176
-#: includes/eme-options.php:3344
+#: includes/eme-options.php:3353
 msgid "Payment methods"
 msgstr "Méthodes de payement"
 
@@ -14640,7 +14640,7 @@ msgstr "Copier"
 #: includes/eme-events.php:9674
 #: includes/eme-members.php:1776
 #: includes/eme-members.php:1908
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3402
 #: includes/eme-people.php:1053
 #: includes/eme-people.php:1243
 #: includes/eme-people.php:1575
@@ -15118,3 +15118,7 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
+
+#: includes/eme-options.php:2113
+msgid "Email sending configuration"
+msgstr ""

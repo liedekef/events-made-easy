@@ -3693,7 +3693,11 @@ function eme_format_full_name( $firstname, $lastname, $email='' ) {
 }
 
 function eme_extra_event_headers( $event ) {
-    if ( $event['event_status'] != EME_EVENT_STATUS_PUBLIC && ! is_user_logged_in() ) {
+    $allowed_statuses = [ EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_PRIVATE, EME_EVENT_STATUS_UNLISTED ];
+    if ( ! in_array( $event['event_status'], $allowed_statuses, true ) ) {
+        return;
+    }
+    if ( $event['event_status'] == EME_EVENT_STATUS_PRIVATE && ! is_user_logged_in() ) {
         return;
     }
 

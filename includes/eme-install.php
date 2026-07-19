@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 428 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 429 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1423,6 +1423,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          status tinytext,
          stats varchar(255) DEFAULT '',
          conditions text,
+         mailing_group_id varchar(50) DEFAULT '',
          UNIQUE KEY  (id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
@@ -1468,6 +1469,9 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 316 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY name varchar(255) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
+		if ( $db_version < 429 ) {
+			maybe_add_column( $table_name, 'mailing_group_id', "ALTER TABLE $table_name ADD mailing_group_id varchar(50) DEFAULT '';" );
 		}
 	}
 }

@@ -1160,18 +1160,17 @@ function eme_get_mailings( $status = '', $search_text = '' ) {
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_get_linkedmailings_planned_dates( $mailing_group_id ) {
+function eme_get_linkedmailings_planned_dates( $mailing_group_id, $fallback_date = '' ) {
     global $wpdb;
-    if ( empty( $mailing_group_id ) ) {
-        return '';
-    }
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $prepared_sql   = $wpdb->prepare( "SELECT planned_on FROM $mailings_table WHERE mailing_group_id=%s AND status='planned' ORDER BY planned_on", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $results        = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    if ( empty( $results ) ) {
-        return '';
+    if ( ! empty( $mailing_group_id ) ) {
+        $prepared_sql = $wpdb->prepare( "SELECT planned_on FROM $mailings_table WHERE mailing_group_id=%s AND status='planned' ORDER BY planned_on", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $results = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        if ( ! empty( $results ) ) {
+            return eme_js_datetime( implode( ',', $results ) );
+        }
     }
-    return eme_js_datetime( implode( ',', $results));
+    return ! empty( $fallback_date ) ? eme_js_datetime( $fallback_date ) : '';
 }
 
 function eme_mail_states() {
@@ -2803,7 +2802,7 @@ function eme_emails_page() {
         $mailing = eme_get_mailing( $id );
         if ( $mailing ) {
             //$edit_mailing_name = $mailing['name'];
-            //$mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '' );
+            $mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '', $mailing['planned_on'] ?? '' );
             $conditions = eme_json_decode_safe( $mailing['conditions'] );
             if ( $conditions['action'] == 'genericmail' ) {
                 if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
@@ -2933,7 +2932,7 @@ function eme_emails_page() {
         if ( $mailing && ( $mailing['status'] == 'initial' || $mailing['status'] == 'planned' ) ) {
             $edit_mailing_id   = $id;
             $edit_mailing_name = $mailing['name'];
-            $mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '' );
+            $mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '', $mailing['planned_on'] ?? '' );
             $conditions = eme_json_decode_safe( $mailing['conditions'] );
             if ( $conditions['action'] == 'genericmail' ) {
                 if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {

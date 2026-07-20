@@ -523,12 +523,16 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 }
 
 function eme_get_recurrence_desc( $recurrence_id ) {
-	global $wp_locale;
 	$recurrence = eme_get_recurrence( $recurrence_id );
 	if ( empty( $recurrence ) ) {
 		return;
 	}
+	return eme_get_recurrence_desc_from_array( $recurrence );
+}
 
+// next is used by both eme_get_recurrence_desc and eme_get_mailing_recurrence_desc
+function eme_get_recurrence_desc_from_array( $recurrence ) {
+	global $wp_locale;
 	$weekdays_name  = [ __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) ]; // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WordPress core weekday translations
 	$monthweek_name = [
 		// translators: %s is the weekday name

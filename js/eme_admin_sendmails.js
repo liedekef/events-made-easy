@@ -83,6 +83,98 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // --- Repeat-mailing UI (genericmail / eventmail share the same field layout) ---
+    function eme_mailing_recurrence_setup(prefix) {
+        const repeatCheckbox = EME.$(`#${prefix}_repeat`);
+        const detailsDiv     = EME.$(`#${prefix}_repeat_details`);
+        const freqSelect     = EME.$(`#${prefix}_recurrence_freq`);
+        const intervalInput  = EME.$(`#${prefix}_recurrence_interval`);
+        const intervalDesc   = EME.$(`#${prefix}_interval_desc`);
+        if (!repeatCheckbox || !detailsDiv || !freqSelect) return null;
+
+        const unitNames = { daily: 'day', weekly: 'week', monthly: 'month' };
+
+        function updateSelectors() {
+            EME.$$(`#${prefix}_repeat_details span.alternate-selector`).forEach(el => eme_toggle(el, false));
+            const freq = freqSelect.value;
+            if (freq === 'weekly') {
+                eme_toggle(EME.$(`#${prefix}_weekly-selector`), true);
+            } else if (freq === 'monthly' || freq === 'specific_months') {
+                eme_toggle(EME.$(`#${prefix}_monthly-selector`), true);
+                eme_toggle(EME.$(`#${prefix}_specific_months-selector`), freq === 'specific_months');
+            }
+        }
+
+        function updateIntervalDesc() {
+            const freq = freqSelect.value;
+            if (freq === 'specific_months') {
+                eme_toggle(intervalInput, false);
+                if (intervalDesc) intervalDesc.textContent = '';
+                return;
+            }
+            eme_toggle(intervalInput, true);
+            const n = parseInt(intervalInput.value, 10) || 1;
+            const unit = unitNames[freq] || '';
+            if (intervalDesc) intervalDesc.textContent = unit + (n > 1 ? 's' : '');
+        }
+
+        function updateDetailsVisibility() {
+            eme_toggle(detailsDiv, repeatCheckbox.checked);
+        }
+
+        freqSelect.addEventListener('change', () => { updateSelectors(); updateIntervalDesc(); });
+        intervalInput?.addEventListener('input', updateIntervalDesc);
+        repeatCheckbox.addEventListener('change', updateDetailsVisibility);
+
+        updateDetailsVisibility();
+        updateSelectors();
+        updateIntervalDesc();
+
+        // form.reset() restores the checkbox/select to their rendered defaults but doesn't fire
+        // 'change' events, so the shown/hidden sub-fields would otherwise get out of sync
+        return function resync() {
+            updateDetailsVisibility();
+            updateSelectors();
+            updateIntervalDesc();
+        };
+    }
+
+    const resyncEventmailRecurrence  = eme_mailing_recurrence_setup('eventmail');
+    const resyncGenericmailRecurrence = eme_mailing_recurrence_setup('genericmail');
+
+    // Repeating only makes sense for a single start date (and, for event mail, a single event) -
+    // hide the whole repeat block otherwise, mirroring the server-side gating.
+    function eme_mailing_hide_repeat_if_multiple(dateFieldId, checkboxId, extraCheckFn) {
+        const dateField = EME.$(`input[name="${dateFieldId}"]`);
+        const checbox   = EME.$(`#${checkboxId}`);
+        if (!dateField || !checbox) return null;
+
+        function update() {
+            const multipleDates = (dateField.value || '').includes(',');
+            const multipleExtra = typeof extraCheckFn === 'function' && extraCheckFn();
+            if (multipleDates || multipleExtra) {
+                checbox.checked=false;
+                checbox.dispatchEvent(new Event('change'));
+            }
+        }
+
+        dateField.addEventListener('change', update);
+        update();
+        return update;
+    }
+
+    eme_mailing_hide_repeat_if_multiple('genericmail_actualstartdate', 'genericmail_repeat');
+
+    const eventIdsSelect = EME.$('#event_ids');
+    const updateEventmailRepeatVisibility = eme_mailing_hide_repeat_if_multiple(
+        'eventmail_actualstartdate',
+        'eventmail_repeat',
+        () => !!eventIdsSelect && eventIdsSelect.selectedOptions.length > 1
+    );
+    if (eventIdsSelect && updateEventmailRepeatVisibility) {
+        eventIdsSelect.addEventListener('change', updateEventmailRepeatVisibility);
+    }
+
     ajaxMailButtonHandler(
         '#eventmailButton',
         'eme_eventmail',
@@ -98,8 +190,12 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_mail_type",
             "#eventmail_mailing_name",
             "#eventmail_actualstartdate",
+            "#eventmail_recurrence_end_date",
             "#edit_mailing_id"
-        ]
+        ],
+        function () {
+            if (typeof resyncEventmailRecurrence === 'function') resyncEventmailRecurrence();
+        }
     );
 
     ajaxMailButtonHandler(
@@ -115,10 +211,12 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_send_memberships",
             "#genericmail_mailing_name",
             "#genericmail_actualstartdate",
+            "#genericmail_recurrence_end_date",
             "#edit_mailing_id"
         ],
         function () {
             EME.$('#eme_send_all_people').dispatchEvent(new Event('change'));
+            if (typeof resyncGenericmailRecurrence === 'function') resyncGenericmailRecurrence();
         }
     );
 

@@ -9,6 +9,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let ArchivedMailingsTable;
 
     // --- Mail Form Submission Handler ---
+
+    // After a successful edit-save, the URL still points at
+    // ?eme_admin_action=edit_mailing&id=...&eme_admin_nonce=..., which would re-trigger
+    // edit mode (and submit a stale nonce) on a page refresh. Strip those params, keeping
+    // the rest of the URL (e.g. ?page=eme-emails) intact, without a full page reload.
+    function cleanEditMailingUrl() {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('eme_admin_action') !== 'edit_mailing') return;
+        url.searchParams.delete('eme_admin_action');
+        url.searchParams.delete('id');
+        url.searchParams.delete('eme_admin_nonce');
+        window.history.replaceState({}, document.title, url.toString());
+    }
+
     function ajaxMailButtonHandler(buttonSelector, action, editorTarget, messageDivSelector, resetSelectors = [], extraReset = null) {
         const button = EME.$(buttonSelector);
         if (!button) return;
@@ -43,13 +57,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (data.Result === 'OK') {
                     form.reset();
+                    cleanEditMailingUrl();
                     if (typeof Jodit !== 'undefined' && Jodit.instances['joditdiv_'+editorTarget]) {
                         Jodit.instances['joditdiv_'+editorTarget].value = '';
                     }
                     resetSelectors.forEach(sel => {
                         const el = EME.$(sel);
-                        if (el && el.snapselectInstance) {
+                        if (!el) return;
+                        if (el.snapselectInstance) {
                             el.snapselectInstance.clear();
+                        } else if (el._fdatepicker) {
+                            el._fdatepicker.clear();
+                        } else {
+                            el.value = '';
+                            el.dispatchEvent(new Event('change'));
                         }
                     });
                     if (typeof extraReset === 'function') extraReset();
@@ -74,7 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_eventmail_send_members",
             "#eme_eventmail_send_membergroups",
             "#eme_eventmail_send_memberships",
-            "#eme_mail_type"
+            "#eme_mail_type",
+            "#eventmail_mailing_name",
+            "#eventmail_actualstartdate",
+            "#edit_mailing_id"
         ]
     );
 
@@ -88,7 +112,10 @@ document.addEventListener('DOMContentLoaded', function () {
             "#eme_genericmail_send_peoplegroups",
             "#eme_genericmail_send_members",
             "#eme_genericmail_send_membergroups",
-            "#eme_send_memberships"
+            "#eme_send_memberships",
+            "#genericmail_mailing_name",
+            "#genericmail_actualstartdate",
+            "#edit_mailing_id"
         ],
         function () {
             EME.$('#eme_send_all_people').dispatchEvent(new Event('change'));
@@ -463,6 +490,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 status: {
                     title: emeadmin.translate_status,
                 },
+                group_info: {
+                    title: emeadmin.translate_groupinfo,
+                },
                 read_count: {
                     title: emeadmin.translate_unique_readcount,
                     visibility: 'hidden',
@@ -578,6 +608,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 extra_info: {
                     title: emeadmin.translate_extrainfo,
                     sorting: false
+                },
+                group_info: {
+                    title: emeadmin.translate_groupinfo,
                 },
                 action: {
                     title: emeadmin.translate_action,

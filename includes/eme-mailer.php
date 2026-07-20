@@ -488,33 +488,6 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
     }
 }
 
-function eme_db_update_mailing( $mailing_id, $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions, $mailing_group_id = '' ) {
-    global $wpdb;
-    $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-
-    // Normalise sender and reply-to
-    eme_normalize_sender_and_replyto( $fromemail, $fromname, $replytoemail, $replytoname );
-
-    $where = [ 'id' => intval( $mailing_id ) ];
-    $fields = [
-        'name'             => mb_substr( $mailing_name, 0, 255 ),
-        'planned_on'       => $planned_on,
-        'subject'          => mb_substr( $subject, 0, 255 ),
-        'body'             => $body,
-        'fromemail'        => $fromemail,
-        'fromname'         => mb_substr( $fromname, 0, 255 ),
-        'replytoemail'     => $replytoemail,
-        'replytoname'      => mb_substr( $replytoname, 0, 255 ),
-        'mail_text_html'   => $mail_text_html,
-        'conditions'       => eme_json_encode_safe( $conditions ),
-        'mailing_group_id' => $mailing_group_id,
-    ];
-
-    $result = $wpdb->update( $mailings_table, $fields, $where );
-    wp_cache_delete( "eme_mailing $mailing_id" );
-    return $result !== false;
-}
-
 // API function
 function eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='' ) {
     if (!eme_is_list_of_int($group_ids) || empty($subject) || empty($body)) {
@@ -1116,6 +1089,23 @@ function eme_delete_mailing( $id ) {
     $wpdb->delete( $mailings_table, [ 'id' => $id ], ['%d'] );
 }
 
+// Deletes all mailings (and their queued mails) belonging to a mailing group.
+// Used when re-saving an edited mailing: since the dates/events behind a group
+// can change on edit, we drop the whole group and let the caller re-insert fresh rows,
+// instead of trying to reconcile old rows with the new form data.
+function eme_delete_mailing_group( $mailing_group_id ) {
+    global $wpdb;
+    if ( empty( $mailing_group_id ) ) {
+        return;
+    }
+    $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+    $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE mailing_group_id=%s", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $ids            = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    foreach ( $ids as $id ) {
+        eme_delete_mailing( $id );
+    }
+}
+
 function eme_get_mail( $id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
@@ -1171,6 +1161,20 @@ function eme_get_linkedmailings_planned_dates( $mailing_group_id, $fallback_date
         }
     }
     return ! empty( $fallback_date ) ? eme_js_datetime( $fallback_date ) : '';
+}
+
+function eme_get_mailinggroup_info( $mailing_group_id ) {
+    global $wpdb;
+    $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+    $prepared_sql   = $wpdb->prepare( "SELECT planned_on FROM $mailings_table WHERE mailing_group_id=%s ORDER BY planned_on", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $results        = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    if ( empty( $results ) ) {
+        return [ 'count' => 0, 'dates' => [] ];
+    }
+    return [
+        'count' => count( $results ),
+        'dates' => array_map( 'eme_localized_datetime', $results ),
+    ];
 }
 
 function eme_mail_states() {
@@ -1798,13 +1802,14 @@ function eme_ajax_mailings_list() {
         $sql = "SELECT * FROM $mailings_table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
-        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s OR mailing_group_id LIKE %s )", $search_text, $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s OR mailing_group_id LIKE %s ) $orderby $limit", $search_text, $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailings = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailing_states = eme_mailing_localizedstates();
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
+    $group_info_cache = [];
     $records = [];
     foreach ( $mailings as $mailing ) {
         $id = $mailing['id'];
@@ -1846,14 +1851,29 @@ function eme_ajax_mailings_list() {
             $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
             $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Archive this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=archive_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Archive', 'events-made-easy' ) . '</a>';
         }
-        if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
-            if ( $mailing['status'] == 'initial' || $mailing['status'] == 'planned' ) {
-                $action .= "<br><a title='".esc_attr__( 'Edit this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=edit_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Edit', 'events-made-easy' ) . '</a>';
-            }
-            $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
+        if ( empty( $mailing['mailing_group_id'] ) && ($mailing['status'] == 'initial' || $mailing['status'] == 'planned' )) {
+            $action .= "<br><a title='".esc_attr__( 'Edit this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=edit_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Edit', 'events-made-easy' ) . '</a>';
         }
+        $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
         if ( is_array( $stats ) && !empty( $stats['failed'] ) ) {
             $action .= "<br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Retry failed messages from this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=retry_failed_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Retry failed emails', 'events-made-easy' ) . '</a>';
+        }
+
+        $group_id_for_records = '';
+        if ( ! empty( $mailing['mailing_group_id'] ) ) {
+            $gid = $mailing['mailing_group_id'];
+            if ( ! isset( $group_info_cache[ $gid ] ) ) {
+                $group_info_cache[ $gid ] = eme_get_mailinggroup_info( $gid );
+            }
+            $group_info = $group_info_cache[ $gid ];
+            if ( $group_info['count'] > 0 ) {
+                $dates_title = esc_attr( implode( ', ', $group_info['dates'] ) );
+                $group_id_for_records = "<a href='#' onclick=\"document.getElementById('search_mailingstext').value='" . esc_js( $gid ) . "';document.getElementById('MailingsLoadRecordsButton').click();return false;\" title='" . $dates_title . "'>" . sprintf(esc_html__('%d mailings in this group','events-made-easy'),$group_info['count']) . '</a>';
+            }
+            if ($mailing['status'] == 'initial' || $mailing['status'] == 'planned' ) {
+                $action .= "<br><a title='".esc_attr__( 'Edit this mailing group', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=edit_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Edit group', 'events-made-easy' ) . '</a>';
+            }
+            $action .= "<br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing group', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_mailing_group&mailing_group_id=' . $gid ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete group', 'events-made-easy' ) . "</a><br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Cancel this mailing group', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=cancel_mailing_group&mailing_group_id=' . $gid ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Cancel group', 'events-made-easy' ) . '</a>';
         }
 
         $record = [];
@@ -1863,6 +1883,7 @@ function eme_ajax_mailings_list() {
         $record['planned_on'] = eme_localized_datetime( $mailing['planned_on'] );
         $record['creation_date'] = eme_localized_datetime( $mailing['creation_date'] );
         $record['status'] = esc_html( $status );
+        $record['group_info'] = $group_id_for_records;
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
         if ( $mailing['status'] == 'planned' ) {
@@ -1937,13 +1958,14 @@ function eme_ajax_archivedmailings_list() {
         $sql = "SELECT * FROM $mailings_table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
-        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s )", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s ) $orderby $limit", $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $count_sql = $wpdb->prepare("SELECT COUNT(*) FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s OR mailing_group_id LIKE %s )", $search_text, $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare("SELECT * FROM $mailings_table $where AND ( name LIKE %s OR subject LIKE %s OR mailing_group_id LIKE %s ) $orderby $limit", $search_text, $search_text, $search_text); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $recordCount = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailings = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $mailing_states = eme_mailing_localizedstates();
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
+    $group_info_cache = [];
     $records = [];
     foreach ( $mailings as $mailing ) {
         $id = $mailing['id'];
@@ -1952,11 +1974,20 @@ function eme_ajax_archivedmailings_list() {
         // translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
         $extra  = sprintf( __( '%1$d emails sent, %2$d emails failed, %3$d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
         $action = "<a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_archivedmailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete', 'events-made-easy' ) . '</a>';
-        if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
-            if ( $mailing['status'] == 'initial' || $mailing['status'] == 'planned' ) {
-                $action .= "<br><a title='".esc_attr__( 'Edit this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=edit_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Edit', 'events-made-easy' ) . '</a>';
+        $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
+
+        $group_id_for_records = '';
+        if ( ! empty( $mailing['mailing_group_id'] ) ) {
+            $gid = $mailing['mailing_group_id'];
+            if ( ! isset( $group_info_cache[ $gid ] ) ) {
+                $group_info_cache[ $gid ] = eme_get_mailinggroup_info( $gid );
             }
-            $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
+            $group_info = $group_info_cache[ $gid ];
+            if ( $group_info['count'] > 0 ) {
+                $dates_title = esc_attr( implode( ', ', $group_info['dates'] ) );
+                $group_id_for_records = "<a href='#' onclick=\"document.getElementById('search_archivedmailingstext').value='" . esc_js( $gid ) . "';document.getElementById('ArchivedMailingsLoadRecordsButton').click();return false;\" title='" . $dates_title . "'>" . sprintf(esc_html__('%d mailings in this group','events-made-easy'),$group_info['count'])  . '</a>';
+            }
+            $action .= "<br><a onclick='return confirm(\"$areyousure\");' title='".esc_attr__( 'Delete this mailing group', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=delete_archivedmailing_group&mailing_group_id=' . $gid ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Delete group', 'events-made-easy' ) . '</a>';
         }
 
         $record = [];
@@ -1967,6 +1998,7 @@ function eme_ajax_archivedmailings_list() {
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
         $record['extra_info'] = esc_html( $extra );
+        $record['group_info'] = $group_id_for_records;
         $record['action'] = $action;
         $records[] = $record;
     }
@@ -2422,14 +2454,9 @@ function eme_send_generic_mail( $post_data ) {
         $fast_queue       = 1;
     }
     $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
+    $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
 
-    // When editing, carry forward the existing group_id; otherwise generate a new one
-    if ( $edit_mailing_id > 0 ) {
-        $existing_mailing = eme_get_mailing( $edit_mailing_id );
-        $mailing_group_id = ! empty( $existing_mailing['mailing_group_id'] ) ? $existing_mailing['mailing_group_id'] : eme_random_id();
-    } else {
-        $mailing_group_id = eme_random_id();
-    }
+    $mailing_group_id = '';
 
     $recipients_configured = 0;
     if ( isset( $post_data['eme_send_all_people'] ) ) {
@@ -2465,12 +2492,13 @@ function eme_send_generic_mail( $post_data ) {
     $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
     if ( $edit_mailing_id > 0 ) {
-        eme_db_update_mailing( $edit_mailing_id, $mailing_name, $mailing_datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_group_id );
-        // re-evaluate planned count for the updated mailing
-        $res = eme_count_planned_mailing_receivers( $conditions );
-        eme_mark_mailing_planned( $edit_mailing_id, $res['total'] );
-        $msg = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been updated.', 'events-made-easy' ) . '</p></div>';
-        return [ 'success' => true, 'message' => $msg ];
+        // the number of dates can change on edit, so instead of trying to reconcile old vs new
+        // rows, wipe the existing mailing (or its whole group) and re-insert fresh ones below
+        if ( ! empty( $existing_mailing['mailing_group_id'] ) ) {
+            eme_delete_mailing_group( $existing_mailing['mailing_group_id'] );
+        } else {
+            eme_delete_mailing( $edit_mailing_id );
+        }
     }
 
     if ( $queue && $fast_queue ) {
@@ -2478,6 +2506,9 @@ function eme_send_generic_mail( $post_data ) {
         $res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
     } elseif ( $queue ) {
         $dates = explode( ',', $mailing_datetime );
+        if ( empty( $mailing_group_id ) && count( $dates ) > 1 ) {
+            $mailing_group_id = eme_random_id();
+        }
         foreach ( $dates as $datetime ) {
             $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, "initial", $mailing_group_id );
             $res        = eme_count_planned_mailing_receivers( $conditions );
@@ -2488,9 +2519,13 @@ function eme_send_generic_mail( $post_data ) {
     }
 
     if ( ! $res['mail_problems'] ) {
-        $msg = $queue
-            ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
-            : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        if ( $edit_mailing_id > 0 ) {
+            $msg = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been updated.', 'events-made-easy' ) . '</p></div>';
+        } else {
+            $msg = $queue
+                ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
+                : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        }
         return [ 'success' => true, 'message' => $msg ];
     }
 
@@ -2544,14 +2579,9 @@ function eme_send_event_mail( $post_data ) {
         $fast_queue       = 1;
     }
     $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
+    $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
 
-    // When editing, carry forward the existing group_id; otherwise generate a new one
-    if ( $edit_mailing_id > 0 ) {
-        $existing_mailing = eme_get_mailing( $edit_mailing_id );
-        $mailing_group_id = ! empty( $existing_mailing['mailing_group_id'] ) ? $existing_mailing['mailing_group_id'] : eme_random_id();
-    } else {
-        $mailing_group_id = eme_random_id();
-    }
+    $mailing_group_id = '';
 
     if ( ! empty( $post_data['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_persons'] ) ) {
         $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_persons'] ) );
@@ -2589,20 +2619,21 @@ function eme_send_event_mail( $post_data ) {
     $mail_text_html     = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
     if ( $edit_mailing_id > 0 ) {
-        // editing a single existing mailing: use the first event
-        $event_id        = $event_ids[0];
-        $conditions['event_id'] = $event_id;
-        $event           = eme_get_event( $event_id );
-        if ( ! empty( $event ) ) {
-            $contact       = eme_get_event_contact( $event );
-            $contact_email = $contact->user_email;
-            $contact_name  = $contact->display_name;
-            eme_db_update_mailing( $edit_mailing_id, $mailing_name, $mailing_datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_group_id );
-            $res = eme_count_planned_mailing_receivers( $conditions );
-            eme_mark_mailing_planned( $edit_mailing_id, $res['total'] );
+        // the dates and/or the selected events can change on edit, so instead of trying to
+        // reconcile old vs new rows, wipe the existing mailing (or its whole group) and
+        // re-insert fresh ones below via the normal per-event loop
+        if ( ! empty( $existing_mailing['mailing_group_id'] ) ) {
+            eme_delete_mailing_group( $existing_mailing['mailing_group_id'] );
+        } else {
+            eme_delete_mailing( $edit_mailing_id );
         }
-        $msg = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been updated.', 'events-made-easy' ) . '</p></div>';
-        return [ 'success' => true, 'message' => $msg ];
+    }
+
+    if ( empty( $mailing_group_id ) && $queue && ! $fast_queue ) {
+        $dates = explode( ',', $mailing_datetime );
+        if ( $count_event_ids > 1 || count( $dates ) > 1 ) {
+            $mailing_group_id = eme_random_id();
+        }
     }
 
     foreach ( $event_ids as $event_id ) {
@@ -2641,9 +2672,13 @@ function eme_send_event_mail( $post_data ) {
     }
 
     if ( ! $mail_problems ) {
-        $msg = $queue
-            ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
-            : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        if ( $edit_mailing_id > 0 ) {
+            $msg = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been updated.', 'events-made-easy' ) . '</p></div>';
+        } else {
+            $msg = $queue
+                ? "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>'
+                : "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        }
         return [ 'success' => true, 'message' => $msg ];
     }
 
@@ -2659,6 +2694,7 @@ function eme_send_event_mail( $post_data ) {
 }
 
 function eme_emails_page() {
+    global $wpdb;
     $eme_queue_mails = get_option( 'eme_queue_mails' );
     if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
         $eme_queue_mails_configured = 0;
@@ -2802,7 +2838,7 @@ function eme_emails_page() {
         $mailing = eme_get_mailing( $id );
         if ( $mailing ) {
             //$edit_mailing_name = $mailing['name'];
-            $mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '', $mailing['planned_on'] ?? '' );
+            //$mailing_planned_dates = eme_get_linkedmailings_planned_dates( $mailing['mailing_group_id'] ?? '', $mailing['planned_on'] ?? '' );
             $conditions = eme_json_decode_safe( $mailing['conditions'] );
             if ( $conditions['action'] == 'genericmail' ) {
                 if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
@@ -3090,6 +3126,48 @@ function eme_emails_page() {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_cancel_mailing( $id );
         $data_forced_tab    = 'data-showtab="tab-mailings"';
+    }
+    if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_mailing_group' && isset( $_GET['mailing_group_id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
+        $mailing_group_id = eme_sanitize_request( $_GET['mailing_group_id'] );
+        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+        $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+        $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE mailing_group_id=%s", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids            = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $ids as $mailing_id ) {
+            eme_delete_mailing( $mailing_id );
+        }
+        $data_forced_tab    = 'data-showtab="tab-mailings"';
+    }
+    if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mailing_group' && isset( $_GET['mailing_group_id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
+        $mailing_group_id = eme_sanitize_request( $_GET['mailing_group_id'] );
+        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+        $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+        $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE mailing_group_id=%s", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids            = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $ids as $mailing_id ) {
+            eme_cancel_mailing( $mailing_id );
+        }
+        $data_forced_tab    = 'data-showtab="tab-mailings"';
+    }
+    if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_archivedmailing_group' && isset( $_GET['mailing_group_id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
+        $mailing_group_id = eme_sanitize_request( $_GET['mailing_group_id'] );
+        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+        $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+        $prepared_sql   = $wpdb->prepare( "SELECT id FROM $mailings_table WHERE mailing_group_id=%s AND status='archived'", $mailing_group_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $ids            = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $ids as $mailing_id ) {
+            eme_delete_mailing( $mailing_id );
+        }
+        $data_forced_tab    = 'data-showtab="tab-mailingsarchive"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mail' && isset( $_GET['id'] ) ) {
         if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {

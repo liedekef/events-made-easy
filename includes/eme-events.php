@@ -9820,6 +9820,7 @@ function eme_admin_enqueue_js() {
             'translate_action'                     => __( 'Action', 'events-made-easy' ),
             'translate_extrainfo'                  => __( 'Extra info', 'events-made-easy' ),
             'translate_report'                     => __( 'Report', 'events-made-easy' ),
+            'translate_groupinfo'                  => __( 'Mailing group info', 'events-made-easy' ),
             'translate_mailingreport'              => __( 'Mailing report', 'events-made-easy' ),
             'translate_mails'                      => __( 'Mails', 'events-made-easy' ),
             'translate_mailings'                   => __( 'Mailings', 'events-made-easy' ),

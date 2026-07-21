@@ -143,11 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function updateFreqSelect() {
             const multipleDates = (dateField.value || '').includes(',');
             const usingSpecific = !!freqSelect && freqSelect.value === 'specific_days';
-            const eventIdsSelect = EME.$('#event_ids');
-            const multipleExtra = prefix=== 'eventmail' && !!eventIdsSelect && eventIdsSelect.selectedOptions.length > 1;
-            if (multipleExtra) {
-                repeatCheckbox.checked=false;
-            } else if (multipleDates) {
+            if (multipleDates) {
                 repeatCheckbox.checked=true;
                 freqSelect.value = 'specific_days';
             } else if (!multipleDates && usingSpecific) {

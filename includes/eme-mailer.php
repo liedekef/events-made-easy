@@ -2767,7 +2767,7 @@ function eme_send_event_mail( $post_data ) {
     $count_event_ids    = count( $event_ids );
     $mail_text_html     = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
     $dates              = explode( ',', $mailing_datetime );
-    $mailing_recurrence = ( $queue && ! $fast_queue && $count_event_ids == 1 )
+    $mailing_recurrence = ( $queue && ! $fast_queue )
         ? eme_parse_mailing_recurrence_post( $post_data, 'eventmail', $dates )
         : [];
 
@@ -3597,7 +3597,6 @@ function eme_emails_page() {
         <span id='eventmail-multidates-expl' class="eme_smaller"><?php esc_html_e( '(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)', 'events-made-easy' ); ?></span>
         </p>
         <?php eme_mailing_recurrence_formfields( 'eventmail', $edit_mailing_recurrence ); ?>
-        <span class="eme_smaller"><?php esc_html_e( 'Repeating only applies when a single event is selected.', 'events-made-easy' ); ?></span>
         </div>
     <?php } ?>
     <hr>

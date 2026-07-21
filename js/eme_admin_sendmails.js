@@ -589,6 +589,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 recurrence_info: {
                     title: emeadmin.translate_recurrenceinfo,
+                    sorting: false
                 },
                 read_count: {
                     title: emeadmin.translate_unique_readcount,
@@ -695,6 +696,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 planned_on: {
                     title: emeadmin.translate_planneddatetime,
                 },
+                recurrence_info: {
+                    title: emeadmin.translate_recurrenceinfo,
+                    sorting: false
+                },
                 read_count: {
                     title: emeadmin.translate_unique_readcount,
                     visibility: 'hidden',
@@ -705,9 +710,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 extra_info: {
                     title: emeadmin.translate_extrainfo,
                     sorting: false
-                },
-                recurrence_info: {
-                    title: emeadmin.translate_recurrenceinfo,
                 },
                 action: {
                     title: emeadmin.translate_action,

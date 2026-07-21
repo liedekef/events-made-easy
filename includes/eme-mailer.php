@@ -562,7 +562,7 @@ function eme_parse_mailing_recurrence_post( $post_data, $prefix, $dates = [] ) {
     // the other frequencies repeat forward from a single start date, so a batch of picked
     // dates here doesn't map to anything meaningful - bail and let the caller fall back to
     // inserting them as independent, non-repeating mailings
-    if ( count( $dates ) != 1 ) {
+    if ( count( $dates ) !== 1 ) {
         return [];
     }
 
@@ -785,7 +785,6 @@ function eme_mark_mail_sent( $id, $random_id = '' ) {
     } else {
         $where['id'] = intval( $id );
     }
-    $where['id']             = intval( $id );
     $fields['status']        = EME_MAIL_STATUS_SENT;
     $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
@@ -1176,15 +1175,15 @@ function eme_archive_mailing( $mailing_id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     if ( $mailing['status'] == 'completed' ) {
         // for completed mailings, the stats no longer change
-	$fields = [
-		'status' => 'archived',
-	];
+        $fields = [
+            'status' => 'archived',
+        ];
     } else {
-        $stats = eme_json_encode_safe( eme_get_mailing_stats( $mailing_id ) );
-	$fields = [
-		'status' => 'archived',
-		'stats' => eme_json_encode_safe( $stats )
-	];
+        $stats = eme_get_mailing_stats( $mailing_id );
+        $fields = [
+            'status' => 'archived',
+            'stats' => eme_json_encode_safe( $stats )
+        ];
     }
     $where = [
 	    'id' => $mailing_id
@@ -1804,7 +1803,11 @@ function eme_process_event_wp_users( $event, $conditions, $exclude_registered, $
         } else {
             $subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
             $body = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
-            $body = eme_replace_email_event_placeholders( $body, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
+            $lastname = $wp_user->user_lastname;
+            if (empty($lastname)) $lastname = $wp_user->display_name;
+            $firstname = $wp_user->user_firstname;
+            if (empty($firstname)) $firstname = $wp_user->display_name;
+            $body = eme_replace_email_event_placeholders( $body, $wp_user->user_email, $lastname, $firstname, $event );
             $batch->add( $wp_user->user_email, $wp_user->display_name, $subject, $body, 0, 0, $atts_arr );
         }
     }

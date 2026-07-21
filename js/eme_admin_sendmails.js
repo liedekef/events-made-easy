@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const freqSelect     = EME.$(`#${prefix}_recurrence_freq`);
         const intervalInput  = EME.$(`#${prefix}_recurrence_interval`);
         const intervalDesc   = EME.$(`#${prefix}_interval_desc`);
+        const intervalSpan   = EME.$(`#${prefix}_interval_span`);
+        const dateField = EME.$(`input[name="${prefix}_actualstartdate"]`);
         if (!repeatCheckbox || !detailsDiv || !freqSelect) return null;
 
         const unitNames = { daily: 'day', weekly: 'week', monthly: 'month' };
@@ -107,7 +109,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function updateIntervalDesc() {
             const freq = freqSelect.value;
+            const enddateRow  = EME.$(`#${prefix}_enddate_row`);
+            const intervalSpan  = EME.$(`#${prefix}_interval_span`);
+            const specificHint = EME.$(`#${prefix}_specific_explanation`);
+
+            if (freq === 'specific_days') {
+                eme_toggle(intervalInput, false);
+                eme_toggle(intervalSpan, false);
+                if (intervalDesc) intervalDesc.textContent = '';
+                eme_toggle(enddateRow, false);
+                eme_toggle(specificHint, true);
+                return;
+            }
+            eme_toggle(specificHint, false);
+            eme_toggle(enddateRow, true);
+
             if (freq === 'specific_months') {
+                eme_toggle(intervalSpan, false);
                 eme_toggle(intervalInput, false);
                 if (intervalDesc) intervalDesc.textContent = '';
                 return;
@@ -122,10 +140,27 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_toggle(detailsDiv, repeatCheckbox.checked);
         }
 
-        freqSelect.addEventListener('change', () => { updateSelectors(); updateIntervalDesc(); });
+        function updateFreqSelect() {
+            const multipleDates = (dateField.value || '').includes(',');
+            const usingSpecific = !!freqSelect && freqSelect.value === 'specific_days';
+            const eventIdsSelect = EME.$('#event_ids');
+            const multipleExtra = prefix=== 'eventmail' && !!eventIdsSelect && eventIdsSelect.selectedOptions.length > 1;
+            if (multipleExtra) {
+                repeatCheckbox.checked=false;
+            } else if (multipleDates) {
+                repeatCheckbox.checked=true;
+                freqSelect.value = 'specific_days';
+            } else if (!multipleDates && usingSpecific) {
+                repeatCheckbox.checked=false;
+            }
+        }
+
+        freqSelect.addEventListener('change', () => { updateDetailsVisibility(); updateSelectors(); updateIntervalDesc(); });
         intervalInput?.addEventListener('input', updateIntervalDesc);
         repeatCheckbox.addEventListener('change', updateDetailsVisibility);
+        dateField?.addEventListener('change', () => { updateFreqSelect(); updateDetailsVisibility(); updateSelectors(); updateIntervalDesc(); });
 
+        updateFreqSelect();
         updateDetailsVisibility();
         updateSelectors();
         updateIntervalDesc();
@@ -133,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // form.reset() restores the checkbox/select to their rendered defaults but doesn't fire
         // 'change' events, so the shown/hidden sub-fields would otherwise get out of sync
         return function resync() {
+            updateFreqSelect();
             updateDetailsVisibility();
             updateSelectors();
             updateIntervalDesc();
@@ -141,39 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const resyncEventmailRecurrence  = eme_mailing_recurrence_setup('eventmail');
     const resyncGenericmailRecurrence = eme_mailing_recurrence_setup('genericmail');
-
-    // Repeating only makes sense for a single start date (and, for event mail, a single event) -
-    // hide the whole repeat block otherwise, mirroring the server-side gating.
-    function eme_mailing_hide_repeat_if_multiple(dateFieldId, checkboxId, extraCheckFn) {
-        const dateField = EME.$(`input[name="${dateFieldId}"]`);
-        const checbox   = EME.$(`#${checkboxId}`);
-        if (!dateField || !checbox) return null;
-
-        function update() {
-            const multipleDates = (dateField.value || '').includes(',');
-            const multipleExtra = typeof extraCheckFn === 'function' && extraCheckFn();
-            if (multipleDates || multipleExtra) {
-                checbox.checked=false;
-                checbox.dispatchEvent(new Event('change'));
-            }
-        }
-
-        dateField.addEventListener('change', update);
-        update();
-        return update;
-    }
-
-    eme_mailing_hide_repeat_if_multiple('genericmail_actualstartdate', 'genericmail_repeat');
-
-    const eventIdsSelect = EME.$('#event_ids');
-    const updateEventmailRepeatVisibility = eme_mailing_hide_repeat_if_multiple(
-        'eventmail_actualstartdate',
-        'eventmail_repeat',
-        () => !!eventIdsSelect && eventIdsSelect.selectedOptions.length > 1
-    );
-    if (eventIdsSelect && updateEventmailRepeatVisibility) {
-        eventIdsSelect.addEventListener('change', updateEventmailRepeatVisibility);
-    }
 
     ajaxMailButtonHandler(
         '#eventmailButton',
@@ -588,8 +591,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 status: {
                     title: emeadmin.translate_status,
                 },
-                group_info: {
-                    title: emeadmin.translate_groupinfo,
+                recurrence_info: {
+                    title: emeadmin.translate_recurrenceinfo,
                 },
                 read_count: {
                     title: emeadmin.translate_unique_readcount,
@@ -707,8 +710,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emeadmin.translate_extrainfo,
                     sorting: false
                 },
-                group_info: {
-                    title: emeadmin.translate_groupinfo,
+                recurrence_info: {
+                    title: emeadmin.translate_recurrenceinfo,
                 },
                 action: {
                     title: emeadmin.translate_action,

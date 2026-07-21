@@ -51,7 +51,7 @@ function eme_get_perpetual_recurrences() {
 function eme_get_recurrence_days( $recurrence ) {
 	$matching_days = [];
 
-	if ( $recurrence['recurrence_freq'] == 'specific' ) {
+	if ( $recurrence['recurrence_freq'] == 'specific' || $recurrence['recurrence_freq'] == 'specific_days' ) {
 		$matching_days = explode( ',', $recurrence['specific_days'] );
 		sort( $matching_days );
 		return $matching_days;
@@ -619,7 +619,7 @@ function eme_get_recurrence_desc_from_array( $recurrence ) {
 		foreach ($choosen_months as $month_no) {
 			$freq_desc .= ', ' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $month_no ) );
 		}
-	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
+	} elseif ( $recurrence['recurrence_freq'] == 'specific' || $recurrence['recurrence_freq'] == 'specific_days' ) {
 		$specific_days    = eme_get_recurrence_days( $recurrence );
 		$natural_days     = [];
 		$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );

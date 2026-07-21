@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 430 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 431 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1423,13 +1423,13 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          status tinytext,
          stats varchar(255) DEFAULT '',
          conditions text,
-         mailing_group_id varchar(50) DEFAULT '',
          mailing_recurrence_freq varchar(20) DEFAULT '',
          mailing_recurrence_interval tinyint DEFAULT 1,
          mailing_recurrence_byday tinytext,
          mailing_recurrence_byweekno tinyint DEFAULT 0,
          mailing_recurrence_months varchar(50) DEFAULT '',
          mailing_recurrence_end_date date DEFAULT NULL,
+         mailing_recurrence_specific_days text,
          UNIQUE KEY  (id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
@@ -1453,6 +1453,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'mailing_recurrence_byweekno', "ALTER TABLE $table_name ADD mailing_recurrence_byweekno tinyint DEFAULT 0;" );
 		maybe_add_column( $table_name, 'mailing_recurrence_months', "ALTER TABLE $table_name ADD mailing_recurrence_months varchar(50) DEFAULT '';" );
 		maybe_add_column( $table_name, 'mailing_recurrence_end_date', "ALTER TABLE $table_name ADD mailing_recurrence_end_date date DEFAULT NULL;" );
+		maybe_add_column( $table_name, 'mailing_recurrence_specific_days', "ALTER TABLE $table_name ADD mailing_recurrence_specific_days text;" );
 		if ( $db_version < 176 ) {
             $wpdb->update( $table_name, [ 'status' => 'cancelled' ], [ 'cancelled' => 1 ], [ '%s' ], [ '%d' ]);
 			eme_maybe_drop_column( $table_name, 'cancelled' );
@@ -1481,9 +1482,6 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 316 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY name varchar(255) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		}
-		if ( $db_version < 429 ) {
-			maybe_add_column( $table_name, 'mailing_group_id', "ALTER TABLE $table_name ADD mailing_group_id varchar(50) DEFAULT '';" );
 		}
 	}
 }

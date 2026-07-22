@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        DiscountsTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Initialize Discount Groups Table ---
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        DiscountGroupsTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
         // --- Conditional UI: Show/hide based on action ---

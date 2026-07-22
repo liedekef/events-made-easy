@@ -69,177 +69,16 @@ function eme_init_discount_props( $props ) {
 function eme_discounts_page() {
 	if ( ! current_user_can( get_option( 'eme_cap_discounts' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = __( 'You have no right to manage discounts!', 'events-made-easy' );
-		eme_discounts_main_layout( $message );
+		eme_discounts_table( $message );
 		return;
 	}
 
 	$message  = '';
-	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 
 	// handle possible ations
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-		if ( $_POST['eme_admin_action'] == 'do_importdiscounts' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-			$inserted  = 0;
-			$errors    = 0;
-			$error_msg = '';
-			//validate whether uploaded file is a csv file
-			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
-						$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
-					if ( ! $handle ) {
-							$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
-					} else {
-						// BOM as a string for comparison.
-						$bom = "\xef\xbb\xbf";
-						// Progress file pointer and get first 3 characters to compare to the BOM string.
-						if ( fgets( $handle, 4 ) !== $bom ) {
-							// BOM not found - rewind pointer to start of file.
-							rewind( $handle );
-						}
-						if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
-							$enclosure = eme_sanitize_request( $_POST['enclosure'] );
-							$enclosure = substr( $enclosure, 0, 1 );
-						} else {
-							$enclosure = '"';
-						}
-						if ( ! eme_is_empty_string( $_POST['delimiter'] ) ) {
-							$delimiter = eme_sanitize_request( $_POST['delimiter'] );
-						} else {
-							$delimiter = ',';
-						}
-
-						// first line is the column headers
-						$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
-						// check required columns
-						if ( ! in_array( 'name', $headers ) || ! in_array( 'type', $headers ) || ! in_array( 'coupon', $headers ) || ! in_array( 'value', $headers ) ) {
-							$message = __( 'Not all required fields present.', 'events-made-easy' );
-						} else {
-							$empty_props = [];
-							$empty_props = eme_init_discount_props( $empty_props );
-							while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
-								$line = array_combine( $headers, $row );
-								// also import properties
-								foreach ( $line as $key => $value ) {
-									if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-										$prop = $matches[1];
-										if ( ! isset( $line['properties'] ) ) {
-											$line['properties'] = [];
-										}
-										if ( array_key_exists( $prop, $empty_props ) ) {
-											$line['properties'][ $prop ] = $value;
-										}
-									}
-								}
-
-								// convert dgroup names to id's
-								if ( ! empty( $line['dgroup'] ) ) {
-									$dgroups    = $line['dgroup'];
-									$dgroup_arr = explode( ',', $dgroups );
-                                    $selected_dgroup_arr = [];
-                                    foreach ( $dgroup_arr as $dgroup_name ) {
-                                        $dgroup = eme_get_discountgroup( $dgroup_name );
-                                        // take the case where the group no longer exists into account
-                                        if ( ! empty( $dgroup ) ) {
-                                            $selected_dgroup_arr[] = $dgroup['id'];
-                                        }
-                                    }
-                                    if ( ! empty( $selected_dgroup_arr ) ) {
-                                        $line['dgroup'] = join( ',', $selected_dgroup_arr );
-                                    } else {
-                                        $line['dgroup'] = '';
-                                    }
-								}
-
-								$res = eme_db_insert_discount( $line );
-								if ( $res ) {
-									++$inserted;
-								} else {
-									++$errors;
-									// translators: %s is the CSV row data
-									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
-								}
-							}
-							// translators: %1$d is the number of inserts, %2$d is the number of errors
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
-							if ( $errors ) {
-								$message .= "<br>" . $error_msg;
-							}
-						}
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
-						fclose( $handle );
-					}
-				} else {
-					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
-				}
-			} else {
-				$message = esc_html__( 'No CSV file detected', 'events-made-easy' );
-			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_importdgroups' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-			$inserted  = 0;
-			$errors    = 0;
-			$error_msg = '';
-			//validate whether uploaded file is a csv file
-			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
-						$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
-					if ( ! $handle ) {
-							$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
-					} else {
-						// BOM as a string for comparison.
-						$bom = "\xef\xbb\xbf";
-						// Progress file pointer and get first 3 characters to compare to the BOM string.
-						if ( fgets( $handle, 4 ) !== $bom ) {
-							// BOM not found - rewind pointer to start of file.
-							rewind( $handle );
-						}
-						if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
-							$enclosure = eme_sanitize_request( $_POST['enclosure'] );
-							$enclosure = substr( $enclosure, 0, 1 );
-						} else {
-							$enclosure = '"';
-						}
-						if ( ! eme_is_empty_string( $_POST['delimiter'] ) ) {
-							$delimiter = eme_sanitize_request( $_POST['delimiter'] );
-						} else {
-							$delimiter = ',';
-						}
-
-						// first line is the column headers
-						$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
-						// check required columns
-						if ( ! in_array( 'name', $headers ) ) {
-							$message = __( 'Not all required fields present.', 'events-made-easy' );
-						} else {
-							while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
-								$discountgroup = array_combine( $headers, $row );
-								$res           = eme_db_insert_dgroup( $discountgroup );
-								if ( $res ) {
-									++$inserted;
-								} else {
-									++$errors;
-									// translators: %s is the CSV row data
-									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
-								}
-							}
-							// translators: %1$d is the number of inserts, %2$d is the number of errors
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
-							if ( $errors ) {
-								$message .= "<br>" . $error_msg;
-							}
-						}
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
-						fclose( $handle );
-					}
-				} else {
-					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
-				}
-			} else {
-				$message = esc_html__( 'No CSV file detected', 'events-made-easy' );
-			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_editdiscount' ) {
+		if ( $_POST['eme_admin_action'] == 'do_editdiscount' ) {
 			if ( ! empty( $_POST['id'] ) ) {
 				$discount_id = intval( $_POST['id'] );
 				$discount    = eme_get_discount( $discount_id );
@@ -307,7 +146,7 @@ function eme_discounts_page() {
 					$message = __( 'There was a problem adding the discount, please try again.', 'events-made-easy' );
 				}
 			}
-			eme_manage_discounts_layout( $message );
+			eme_discounts_table( $message, 'tab-discounts' );
 			return;
 		} elseif ( $_POST['eme_admin_action'] == 'do_editdgroup' ) {
 			if ( ! empty( $_POST['id'] ) ) {
@@ -345,7 +184,7 @@ function eme_discounts_page() {
 					$message = __( 'There was a problem adding the discount group, please try again.', 'events-made-easy' );
 				}
 			}
-			eme_manage_dgroups_layout( $message );
+			eme_discounts_table( $message, 'tab-dgroups' );
 			return;
 		}
 	}
@@ -372,53 +211,39 @@ function eme_discounts_page() {
 		return;
 	}
 
-	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'discounts' ) {
-		eme_manage_discounts_layout( $message );
-		return;
-	}
-	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'dgroups' ) {
-		eme_manage_dgroups_layout( $message );
-		return;
-	}
-	eme_discounts_main_layout();
+	eme_discounts_table( $message );
 }
 
-function eme_discounts_main_layout( $message = '' ) {
-	$discounts_destination = esc_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=discounts' ) );
-	$dgroups_destination   = esc_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=dgroups' ) );
-	$html                  = "
-      <div class='wrap nosubsub'>\n
-         <h1>" . __( 'Discount management', 'events-made-easy' ) . '</h1>
-   ';
-	if ( ! empty( $message ) ) {
-		$html .= '<div id="discounts-message" class="eme-message-admin"><p>' . $message . '</p></div>';
-	}
-
-	$html .= '<h2>' . __( 'Manage discounts', 'events-made-easy' ) . '</h2>';
-	$html .= "<a href='$discounts_destination'>" . esc_html__( 'Manage discounts', 'events-made-easy' ) . '</a><br>';
-	$html .= '<h2>' . __( 'Manage discountgroups', 'events-made-easy' ) . '</h2>';
-	$html .= "<a href='$dgroups_destination'>" . esc_html__( 'Manage discountgroups', 'events-made-easy' ) . '</a><br>';
-	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
-}
-
-function eme_manage_discounts_layout( $message = '' ) {
+function eme_discounts_table( $message = '', $active_tab = '' ) {
 	global $plugin_page;
 
-	$dgroups     = eme_get_dgroups();
+	$dgroups = eme_get_dgroups();
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
 		$hidden_class = '';
 	}
 
+	// Determine the active tab from the data-showtab attribute
+	$show_tab_attr = '';
+	if ( ! empty( $active_tab ) ) {
+		$show_tab_attr = ' data-showtab="' . esc_attr( $active_tab ) . '"';
+	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		 
-		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-			<p><?php echo wp_kses_post( $message ); ?></p>
-		</div>
+<div class="wrap nosubsub">
+<h1><?php esc_html_e( 'Discount management', 'events-made-easy' ); ?></h1>
+<div id="poststuff">
+	<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+		<p><?php echo wp_kses_post( $message ); ?></p>
+	</div>
 
+	<div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
+	<div class="eme-tab" data-tab="tab-discounts"><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-dgroups"><?php esc_html_e( 'Discount groups', 'events-made-easy' ); ?></div>
+	</div>
+
+	<!-- ==================== DISCOUNTS TAB ==================== -->
+	<div class="eme-tab-content" id="tab-discounts">
 		<h1><?php esc_html_e( 'Add a new discount definition', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
 		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
@@ -430,25 +255,6 @@ function eme_manage_discounts_layout( $message = '' ) {
 
 		<h1><?php esc_html_e( 'Manage discounts', 'events-made-easy' ); ?></h1>
 
-	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-	<span class="eme_import_form_img">
-		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-	</span>
-	<div id='eme_div_import' class='eme-hidden'>
-	<form id='discount-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-	<input type="text" size=1 maxlength=1 name="delimiter" value=','>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"'>
-	<input type="hidden" name="eme_admin_action" value="do_importdiscounts">
-	<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-	<?php esc_html_e( 'If you want, use this to import discounts into the database', 'events-made-easy' ); ?>
-	</form>
-	</div>
-	<?php } ?>
     <div class="bulkactions">
 	<form id='discounts-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
@@ -477,26 +283,10 @@ function eme_manage_discounts_layout( $message = '' ) {
 	</form>
     </div>
 	<div id="DiscountsTableContainer"></div>
-	</div> 
-	</div>
-	<?php
-}
-
-function eme_manage_dgroups_layout( $message = '' ) {
-	global $plugin_page;
-	if ( empty( $message ) ) {
-		$hidden_class = 'eme-hidden';
-	} else {
-		$hidden_class = '';
-	}
-	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		 
-	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
 
+	<!-- ==================== DISCOUNT GROUPS TAB ==================== -->
+	<div class="eme-tab-content" id="tab-dgroups">
 		<h1><?php esc_html_e( 'Add a new discount group', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
 		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
@@ -508,25 +298,6 @@ function eme_manage_dgroups_layout( $message = '' ) {
 
 		<h1><?php esc_html_e( 'Manage discount groups', 'events-made-easy' ); ?></h1>
 
-	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-	<span class="eme_import_form_img">
-		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-	</span>
-	<div id='eme_div_import' class='eme-hidden'>
-	<form id='discountgroups-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-	<input type="text" size=1 maxlength=1 name="delimiter" value=','>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"'>
-	<input type="hidden" name="eme_admin_action" value="do_importdgroups">
-	<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'If you want, use this to import discountgroups into the database', 'events-made-easy' ); ?>
-	</form>
-	</div>
-	<?php } ?>
     <div class="bulkactions">
 	<form id='discountgroups-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
@@ -539,8 +310,9 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	</form>
     </div>
 	<div id="DiscountGroupsTableContainer"></div>
-	</div> 
 	</div>
+</div>
+</div>
 	<?php
 }
 

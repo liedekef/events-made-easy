@@ -813,21 +813,7 @@ function eme_members_page() {
     $message        = '';
     $current_userid = get_current_user_id();
 
-    if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'import' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-        if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-            $message = eme_import_csv_members();
-        } else {
-            $message = __( 'You have no right to manage members!', 'events-made-easy' );
-        }
-    } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'import_dynamic_answers' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-        if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-            check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-            $message = eme_import_csv_member_dynamic_answers();
-        } else {
-            $message = __( 'You have no right to manage members!', 'events-made-easy' );
-        }
-    } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addmember' ) {
+    if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addmember' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
             $res     = eme_add_update_member();
@@ -3222,37 +3208,6 @@ function eme_manage_members_layout( $message ) {
     <?php endif; ?>
 
         <h1><?php esc_html_e( 'Manage members', 'events-made-easy' ); ?></h1>
-
-    <?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-    <span class="eme_import_form_img">
-    <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-    <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-    </span>
-    <div id='eme_div_import' class='eme-hidden'>
-    <form id='member-import' method='post' enctype='multipart/form-data' action='#'>
-    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <input type="file" name="eme_csv">
-    <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-    <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-    <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-    <input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
-    <input type="hidden" name="eme_admin_action" value="import">
-    <input type="submit" value="<?php esc_html_e( 'Import members', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-    <?php esc_html_e( 'If you want, use this to import members info into the database', 'events-made-easy' ); ?>
-    </form>
-    <form id='member-import-answers' method='post' enctype='multipart/form-data' action='#'>
-    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <input type="file" name="eme_csv">
-    <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-    <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-    <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-    <input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
-    <input type="hidden" name="eme_admin_action" value="import_dynamic_answers">
-    <input type="submit" value="<?php esc_html_e( 'Import dynamic field answers', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-    <?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database', 'events-made-easy' ); ?>
-    </form>
-    </div>
-    <?php } ?>
 
 <?php
     eme_render_member_table_and_filters();

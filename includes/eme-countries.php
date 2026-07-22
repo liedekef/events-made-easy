@@ -27,142 +27,16 @@ function eme_new_state() {
 function eme_countries_page() {
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = __( 'You have no right to manage discounts!', 'events-made-easy' );
-		eme_countries_main_layout( $message );
+		eme_countries_table( $message );
 		return;
 	}
 
 	$message  = '';
-	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 
 	// handle possible ations
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-		if ( $_POST['eme_admin_action'] == 'do_importcountries' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-			$inserted  = 0;
-			$errors    = 0;
-			$error_msg = '';
-			//validate whether uploaded file is a csv file
-			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
-					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
-					if ( ! $handle ) {
-						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
-					} else {
-						// BOM as a string for comparison.
-						$bom = "\xef\xbb\xbf";
-						// Progress file pointer and get first 3 characters to compare to the BOM string.
-						if ( fgets( $handle, 4 ) !== $bom ) {
-							// BOM not found - rewind pointer to start of file.
-							rewind( $handle );
-						}
-						if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
-							$enclosure = eme_sanitize_request( $_POST['enclosure'] );
-							$enclosure = substr( $enclosure, 0, 1 );
-						} else {
-							$enclosure = '"';
-						}
-						if ( ! eme_is_empty_string( $_POST['delimiter'] ) ) {
-							$delimiter = eme_sanitize_request( $_POST['delimiter'] );
-						} else {
-							$delimiter = ',';
-						}
-						// first line is the column headers
-						$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
-						// check required columns
-						if ( ! in_array( 'alpha_2', $headers ) || ! in_array( 'name', $headers ) ) {
-							$message = __( 'Not all required fields present.', 'events-made-easy' );
-						} else {
-							while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
-								$country = array_combine( $headers, $row );
-								$res     = eme_db_insert_country( $country );
-								if ( $res ) {
-									++$inserted;
-								} else {
-									++$errors;
-									// translators: %s is the CSV row data that failed to import
-									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
-								}
-							}
-							// translators: %1$d is the number of successful inserts, %2$d is the number of errors
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
-							if ( $errors ) {
-								$message .= "<br>" . $error_msg;
-							}
-						}
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
-						fclose( $handle );
-					}
-				} else {
-					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
-				}
-			} else {
-				$message = esc_html__( 'No CSV file detected', 'events-made-easy' );
-			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_importstates' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-			$inserted  = 0;
-			$errors    = 0;
-			$error_msg = '';
-			//validate whether uploaded file is a csv file
-			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- CSV import
-					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
-					if ( ! $handle ) {
-						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
-					} else {
-						// BOM as a string for comparison.
-						$bom = "\xef\xbb\xbf";
-						// Progress file pointer and get first 3 characters to compare to the BOM string.
-						if ( fgets( $handle, 4 ) !== $bom ) {
-							// BOM not found - rewind pointer to start of file.
-							rewind( $handle );
-						}
-						if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
-							$enclosure = eme_sanitize_request( $_POST['enclosure'] );
-							$enclosure = substr( $enclosure, 0, 1 );
-						} else {
-							$enclosure = '"';
-						}
-						if ( ! eme_is_empty_string( $_POST['delimiter'] ) ) {
-							$delimiter = eme_sanitize_request( $_POST['delimiter'] );
-						} else {
-							$delimiter = ',';
-						}
-
-						// first line is the column headers
-						$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
-						// check required columns
-						if ( ! in_array( 'code', $headers ) || ! in_array( 'name', $headers ) || ! in_array( 'country_id', $headers ) ) {
-							$message = __( 'Not all required fields present.', 'events-made-easy' );
-						} else {
-							while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
-								$state = array_combine( $headers, $row );
-								$res   = eme_db_insert_state( $state );
-								if ( $res ) {
-									++$inserted;
-								} else {
-									++$errors;
-									// translators: %s is the CSV row data that failed to import
-									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
-								}
-							}
-							// translators: %1$d is the number of successful inserts, %2$d is the number of errors
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
-							if ( $errors ) {
-								$message .= "<br>" . $error_msg;
-							}
-						}
-						// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV import
-						fclose( $handle );
-					}
-				} else {
-					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
-				}
-			} else {
-				$message = esc_html__( 'No CSV file detected', 'events-made-easy' );
-			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_editstate' ) {
+		if ( $_POST['eme_admin_action'] == 'do_editstate' ) {
 			if ( ! empty( $_POST['id'] ) ) {
 				$state_id = intval( $_POST['id'] );
 				$state    = eme_get_state( $state_id );
@@ -202,7 +76,7 @@ function eme_countries_page() {
 					$message = __( 'There was a problem adding the state, please try again.', 'events-made-easy' );
 				}
 			}
-			eme_manage_states_layout( $message );
+			eme_countries_table( $message, 'tab-states' );
 			return;
 		} elseif ( $_POST['eme_admin_action'] == 'do_editcountry' ) {
 			if ( ! empty( $_POST['id'] ) ) {
@@ -249,8 +123,8 @@ function eme_countries_page() {
 					$message = __( 'There was a problem adding the country, please try again.', 'events-made-easy' );
 				}
 			}
-				eme_manage_countries_layout( $message );
-				return;
+            eme_countries_table( $message );
+            return;
 		}
 	}
 
@@ -276,46 +150,13 @@ function eme_countries_page() {
 		return;
 	}
 
-	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'countries' ) {
-		eme_manage_countries_layout( $message );
-		return;
-	}
-	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'states' ) {
-		eme_manage_states_layout( $message );
-		return;
-	}
-	eme_countries_main_layout();
+	eme_countries_table( $message );
 }
 
-function eme_countries_main_layout( $message = '' ) {
-	$countries_destination = esc_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=countries' ) );
-	$states_destination    = esc_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=states' ) );
-	$html                  = "
-      <div class='wrap nosubsub'>\n
-         <h1>" . __( 'Manage countries and states', 'events-made-easy' ) . '</h1>
-   ';
-	if ( ! empty( $message ) ) {
-		$html .= '<div id="countries-message" class="eme-message-admin"><p>' . $message . '</p></div>';
-	}
-
-	$html .= '<p>' . __( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ) . '</p>';
-
-	$html           .= '<p><b>' . __( 'This is NOT used for event locations, only for personal info of people.', 'events-made-easy' ) . '</b></p>';
-	$html           .= '<h2>' . __( 'Manage countries', 'events-made-easy' ) . '</h2>';
-	$html           .= "<a href='$countries_destination'>" . esc_html__( 'Manage countries', 'events-made-easy' ) . '</a><br>';
-	$html           .= '<h2>' . __( 'Manage states', 'events-made-easy' ) . '</h2>';
-	$countries_count = eme_get_countries_count();
-	if ( $countries_count > 0 ) {
-		$html .= "<a href='$states_destination'>" . esc_html__( 'Manage states', 'events-made-easy' ) . '</a><br>';
-	} else {
-		$html .= __( 'There are no countries defined yet. First define some countries, then you can manage the states.', 'events-made-easy' ) . '<br>';
-	}
-	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
-}
-
-function eme_manage_countries_layout( $message = '' ) {
+function eme_countries_table( $message = '', $active_tab = '' ) {
 	global $plugin_page;
-	$lang        = eme_detect_lang();
+	$lang = eme_detect_lang();
+
 	if ( empty( $message ) ) {
 		$hidden_class = 'eme-hidden';
 	} else {
@@ -332,14 +173,29 @@ function eme_manage_countries_layout( $message = '' ) {
 		}
 	}
 
+	// Determine the active tab from the data-showtab attribute
+	$show_tab_attr = '';
+	if ( ! empty( $active_tab ) ) {
+		$show_tab_attr = ' data-showtab="' . esc_attr( $active_tab ) . '"';
+	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		 
-		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-			<p><?php echo wp_kses_post( $message ); ?></p>
-		</div>
+<div class="wrap nosubsub">
+<h1> <?php esc_html_e( 'Manage countries and states', 'events-made-easy' ); ?> </h1>
+<div id="poststuff">
+	<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+		<p><?php echo wp_kses_post( $message ); ?></p>
+	</div>
 
+	<p><?php esc_html_e( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ); ?></p>
+	<p><b><?php esc_html_e( 'This is NOT used for event locations, only for personal info of people.', 'events-made-easy' ); ?></b></p>
+
+	<div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
+	<div class="eme-tab" data-tab="tab-countries"><?php esc_html_e( 'Countries', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-states"><?php esc_html_e( 'States', 'events-made-easy' ); ?></div>
+	</div>
+
+	<!-- ==================== COUNTRIES TAB ==================== -->
+	<div class="eme-tab-content" id="tab-countries">
 		<h1><?php esc_html_e( 'Add a new country', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
 		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
@@ -351,30 +207,11 @@ function eme_manage_countries_layout( $message = '' ) {
 
 		<h1><?php esc_html_e( 'Manage countries', 'events-made-easy' ); ?></h1>
 
-	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-	<span class="eme_import_form_img">
-		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-	</span>
-	<div id='eme_div_import' class='eme-hidden'>
-	<form id='countries-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
-	<input type="hidden" name="eme_admin_action" value="do_importcountries">
-	<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'If you want, use this to import countries into the database', 'events-made-easy' ); ?>
-	</form>
-	</div>
 	<?php // translators: %s is the URL for more information on country codes ?>
 	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ) ), esc_url( 'https://en.wikipedia.org/wiki/ISO_3166-1' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ); ?>
 	<br>
-	<?php } ?>
     <div class="bulkactions">
 	<form id='countries-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
@@ -387,26 +224,10 @@ function eme_manage_countries_layout( $message = '' ) {
 	</form>
     </div>
 	<div id="CountriesTableContainer"></div>
-	</div> 
-	</div>
-	<?php
-}
-
-function eme_manage_states_layout( $message = '' ) {
-	global $plugin_page;
-	if ( empty( $message ) ) {
-		$hidden_class = 'eme-hidden';
-	} else {
-		$hidden_class = '';
-	}
-	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		 
-	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>
 
+	<!-- ==================== STATES TAB ==================== -->
+	<div class="eme-tab-content" id="tab-states">
 		<h1><?php esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
 		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
@@ -418,29 +239,10 @@ function eme_manage_states_layout( $message = '' ) {
 
 		<h1><?php esc_html_e( 'Manage states', 'events-made-easy' ); ?></h1>
 
-	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-	<span class="eme_import_form_img">
-		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-	</span>
-	<div id='eme_div_import' class='eme-hidden'>
-	<form id='states-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
-	<input type="hidden" name="eme_admin_action" value="do_importstates">
-	<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'If you want, use this to import states into the database', 'events-made-easy' ); ?>
-	</form>
-	</div>
 	<?php // translators: %s is the URL for more information on state codes ?>
 	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ) ), esc_url( 'https://wikipedia.org/wiki/ISO_3166-2' ) ); ?>
 	<br>
 	<?php esc_html_e( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ); ?>
-	<?php } ?>
 	<br>
     <div class="bulkactions">
 	<form id='states-form' action="#" method="post">
@@ -454,8 +256,9 @@ function eme_manage_states_layout( $message = '' ) {
 	</form>
     </div>
 	<div id="StatesTableContainer"></div>
-	</div> 
 	</div>
+</div>
+</div>
 	<?php
 }
 

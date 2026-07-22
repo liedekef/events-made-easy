@@ -786,3 +786,45 @@ a.nav-tab {
     background: #b32d2e !important;
     color: #fff !important;
 }
+
+/* Collapsible filter panels */
+.eme-filters-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #2271b1;
+    line-height: 24px;
+    vertical-align: middle;
+}
+.eme-filters-toggle:hover {
+    border-color: #2271b1;
+    color: #135e96;
+    background: #f0f6fc;
+}
+.eme-filters-toggle-icon {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-size: 12px;
+    line-height: 1;
+}
+.eme-filters-toggle.active .eme-filters-toggle-icon {
+    transform: rotate(180deg);
+}
+.eme-filters-panel {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    margin-top: 0;
+}
+.eme-filters-panel.active {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 8px;
+}

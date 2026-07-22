@@ -58,19 +58,13 @@ function eme_init_person_props( $props ) {
 
 function eme_people_page() {
     $message = '';
+    $active_tab = 'tab-people';
 
     $current_userid = get_current_user_id();
 
     if ( isset( $_POST['eme_admin_action'] ))
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-    if ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'import_people' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-        // eme_cap_cleanup is used for cleanup, cron and imports (should more be something like 'eme_cap_actions')
-        if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $message = eme_message_ok_div(eme_import_csv_people());
-        } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update people!', 'events-made-easy' ));
-        }
-    } elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_addperson' ) {
+    if ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_addperson' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             [$add_update_message, $person_id] = eme_add_update_person_from_backend();
             if ( $person_id ) {
@@ -112,7 +106,7 @@ function eme_people_page() {
                 return;
             }
         } else {
-            $message = esc_html__( 'You have no right to update this person!', 'events-made-easy' );
+            $message = eme_message_error_div(esc_html__( 'You have no right to update this person!', 'events-made-easy' ));
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'add_person' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
@@ -138,16 +132,14 @@ function eme_people_page() {
             $message = eme_message_error_div(esc_html__( 'You have no right to update people!', 'events-made-easy' ));
         }
     }
-    eme_manage_people_layout( $message );
-}
 
-function eme_groups_page() {
-    $message = '';
-    if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
-        $message = esc_html__( 'You have no right to manage groups!', 'events-made-easy' );
+    // Handle group actions
+    if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) && isset( $_REQUEST['eme_admin_action'] ) && in_array( eme_sanitize_request($_REQUEST['eme_admin_action']), ['do_addgroup', 'do_editgroup', 'add_group', 'add_dynamic_people_group', 'add_dynamic_members_group', 'edit_group'] ) ) {
+        $message = eme_message_error_div(esc_html__( 'You have no right to manage groups!', 'events-made-easy' ));
+        $active_tab = 'tab-groups';
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addgroup' ) {
-        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $group_id = eme_add_update_group();
+        $active_tab = 'tab-groups';
         if ( $group_id ) {
             $message = eme_message_ok_div(esc_html__( 'Group added', 'events-made-easy' ));
             if ( get_option( 'eme_stay_on_edit_page' ) ) {
@@ -158,9 +150,9 @@ function eme_groups_page() {
             $message = eme_message_error_div(esc_html__( 'Problem detected while adding group', 'events-made-easy' ));
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editgroup' ) {
-        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $group_id = intval( $_POST['group_id'] );
         $res      = eme_add_update_group( $group_id );
+        $active_tab = 'tab-groups';
         if ( $res ) {
             $message = eme_message_ok_div(esc_html__( 'Group updated', 'events-made-easy' ));
         } else {
@@ -171,7 +163,6 @@ function eme_groups_page() {
             return;
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_dynamic_people_group' ) {
-        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_group_edit_layout(group_type: 'dynamic_people');
             return;
@@ -179,7 +170,6 @@ function eme_groups_page() {
             $message = eme_message_error_div(esc_html__( 'You have no right to add groups!', 'events-made-easy' ));
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_dynamic_members_group' ) {
-        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_group_edit_layout(group_type: 'dynamic_members');
             return;
@@ -187,7 +177,6 @@ function eme_groups_page() {
             $message = eme_message_error_div(esc_html__( 'You have no right to add groups!', 'events-made-easy' ));
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_group' ) {
-        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_group_edit_layout();
             return;
@@ -203,7 +192,28 @@ function eme_groups_page() {
             $message = eme_message_error_div(esc_html__( 'You have no right to update groups!', 'events-made-easy' ));
         }
     }
-    eme_manage_groups_layout( $message );
+
+    // Determine active tab from URL
+    if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'groups' ) {
+        $active_tab = 'tab-groups';
+    }
+
+    eme_people_table( $message, $active_tab );
+}
+
+function eme_groups_page() {
+    // Redirect to the combined People & Groups page, preserving all query parameters
+    $params = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY );
+    $redirect_url = admin_url( 'admin.php?page=eme-people' );
+    if ( $params ) {
+        // Replace page=eme-groups with page=eme-people
+        $params = str_replace( 'page=eme-groups', 'page=eme-people', $params );
+        $redirect_url .= '&' . $params;
+    } else {
+        $redirect_url .= '&eme_admin_action=groups';
+    }
+    wp_safe_redirect( $redirect_url );
+    exit;
 }
 
 function eme_person_shortcode( $atts ) {
@@ -2011,10 +2021,6 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_admin_action" name="eme_admin_action">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-    <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
-    <option value="untrashPeople"><?php esc_html_e( 'Restore selected persons', 'events-made-easy' ); ?></option>
-    <option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
-    <?php } else { ?>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
         <?php if ( !$limit_to_group  ) : ?>
     <option value="addToGroup"><?php esc_html_e( 'Add to group', 'events-made-easy' ); ?></option>
@@ -2033,7 +2039,6 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     <option value="changeLanguage"><?php esc_html_e( 'Change language of selected persons', 'events-made-easy' ); ?></option>
     <option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
     <option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
-    <?php } ?>
     </select>
     <span id="span_language" class="eme-hidden">
     <?php esc_html_e( 'Change language to: ', 'events-made-easy' ); ?>
@@ -2336,7 +2341,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     return $sql;
 }
 
-function eme_manage_people_layout( $message = '' ) {
+function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     global $plugin_page;
 
     if ( empty( $message ) ) {
@@ -2345,13 +2350,27 @@ function eme_manage_people_layout( $message = '' ) {
         $hidden_class = '';
     }
 
+    // Determine the active tab from the data-showtab attribute
+    $show_tab_attr = '';
+    if ( ! empty( $active_tab ) ) {
+        $show_tab_attr = ' data-showtab="' . esc_attr( $active_tab ) . '"';
+    }
 ?>
 <div class="wrap nosubsub">
+<h1> <?php esc_html_e( 'Manage people and groups', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
     <div id="people-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
+    <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
+    <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-trash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
+    </div>
+
+    <!-- ==================== PEOPLE TAB ==================== -->
+    <div class="eme-tab-content" id="tab-people">
     <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
     <h1><?php esc_html_e( 'Add a new person', 'events-made-easy' ); ?></h1>
     <div class="wrap">
@@ -2367,34 +2386,66 @@ function eme_manage_people_layout( $message = '' ) {
     <?php // translators: %s is the URL to verify EME people integrity ?>
     <?php printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) ); ?><br>
 
-    <?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
-        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=0" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
-    <?php } else { ?>
-        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=1" ) ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
-        <?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
-        <span class="eme_import_form_img">
-            <?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-        <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
-        </span>
-        <div id='eme_div_import' class='eme-hidden'>
-        <form id='people-import' method='post' enctype='multipart/form-data' action='#'>
-            <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-        <input type="file" name="eme_csv">
-            <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
-        <input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-            <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
-        <input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
-        <input type="hidden" name="eme_admin_action" value="import_people">
-        <input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-            <?php esc_html_e( 'If you want, use this to import people info into the database', 'events-made-easy' ); ?>
-        </form>
-        </div>
-        <?php } ?>
-    <?php } ?>
-
 <?php 
     eme_render_people_table_and_filters();
 ?>
+    </div>
+
+    <!-- ==================== TRASH TAB ==================== -->
+    <div class="eme-tab-content" id="tab-trash">
+    <form id="trash-people-filter" action="#" method="post">
+        <input type="search" name="trash_search_person" id="trash_search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" class="eme_searchfilter" size="15">
+        <button id="TrashedPeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter trash', 'events-made-easy' ); ?></button>
+    </form>
+    <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
+    <div class="bulkactions">
+    <form id="trash-people-form" action="#" method="post">
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
+    <select id="trash_eme_admin_action" name="eme_admin_action">
+    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <option value="untrashPeople"><?php esc_html_e( 'Restore selected persons', 'events-made-easy' ); ?></option>
+    <option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
+    </select>
+    <button id="TrashedPeopleActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+    <?php eme_rightclickhint(); ?>
+    </form>
+    </div>
+    <?php endif; ?>
+    <div id="TrashedPeopleTableContainer"></div>
+    </div>
+
+    <!-- ==================== GROUPS TAB ==================== -->
+    <div class="eme-tab-content" id="tab-groups">
+    <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
+    <h1><?php esc_html_e( 'Add a new group', 'events-made-easy' ); ?></h1>
+    <div class="wrap">
+    <form id="add-group" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-people' ) ); ?>">
+        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
+        <input type="hidden" name="eme_admin_action" value="add_group">
+        <button type="submit" class="button-primary" name="eme_admin_action" value="add_group"><?php esc_html_e( 'Add group', 'events-made-easy' ); ?></button>
+        <button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_people_group"><?php esc_html_e( 'Add dynamic group of people', 'events-made-easy' ); ?></button>
+        <button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_members_group"><?php esc_html_e( 'Add dynamic group of members', 'events-made-easy' ); ?></button>
+    </form>
+    </div>
+<?php endif; ?>
+
+    <h1><?php esc_html_e( 'Manage groups', 'events-made-easy' ); ?></h1>
+
+    <div class="bulkactions">
+    <form id='groups-form' action="#" method="post">
+    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
+    <select id="eme_admin_action" name="eme_admin_action">
+    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
+    <option value="deleteGroups"><?php esc_html_e( 'Delete selected groups', 'events-made-easy' ); ?></option>
+<?php endif; ?>
+    </select>
+    <button id="GroupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+    <?php eme_rightclickhint(); ?>
+    </form>
+    </div>
+    <div id="GroupsTableContainer"></div>
+    </div>
 </div>
 </div>
 <?php
@@ -2838,53 +2889,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
     }
 ?>
 
-    </div>
-<?php
-}
-
-function eme_manage_groups_layout( $message = '' ) {
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
-?>
-    <div class="wrap nosubsub">
-    <div id="poststuff">
-    <div id="groups-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
-
-    <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
-    <h1><?php esc_html_e( 'Add a new group', 'events-made-easy' ); ?></h1>
-    <div class="wrap">
-    <form id="add-group" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-groups' ) ); ?>">
-        <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-        <input type="hidden" name="eme_admin_action" value="add_group">
-        <button type="submit" class="button-primary" name="eme_admin_action" value="add_group"><?php esc_html_e( 'Add group', 'events-made-easy' ); ?></button>
-        <button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_people_group"><?php esc_html_e( 'Add dynamic group of people', 'events-made-easy' ); ?></button>
-        <button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_members_group"><?php esc_html_e( 'Add dynamic group of members', 'events-made-easy' ); ?></button>
-    </form>
-    </div>
-<?php endif; ?>
-
-    <h1><?php esc_html_e( 'Manage groups', 'events-made-easy' ); ?></h1>
-
-    <div class="bulkactions">
-    <form id='groups-form' action="#" method="post">
-    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
-    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-    <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
-    <option value="deleteGroups"><?php esc_html_e( 'Delete selected groups', 'events-made-easy' ); ?></option>
-<?php endif; ?>
-    </select>
-    <button id="GroupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <?php eme_rightclickhint(); ?>
-    </form>
-    </div>
-    <div id="GroupsTableContainer"></div>
-    </div>
     </div>
 <?php
 }
@@ -5464,7 +5468,7 @@ function eme_ajax_groups_list() {
         $record['group_id'] = $group['group_id'];
         $record['public']   = $group['public'] ? esc_html__( 'Yes', 'events-made-easy' ) : esc_html__( 'No', 'events-made-easy' );
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $record['name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-groups&eme_admin_action=edit_group&group_id=' . $group['group_id'] ) ) . "' title='" . esc_attr__( 'Edit group', 'events-made-easy' ) . "'>" . esc_html( $group['name'] ) . '</a>';
+            $record['name'] = "<a href='" . esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=edit_group&group_id=' . $group['group_id'] ) ) . "' title='" . esc_attr__( 'Edit group', 'events-made-easy' ) . "'>" . esc_html( $group['name'] ) . '</a>';
         } else {
             $record['name'] = esc_html( $group['name'] );
         }

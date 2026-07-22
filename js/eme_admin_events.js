@@ -663,14 +663,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideStuff() {
-        const action = EME.$('#eme_admin_action')?.value || '';
-        const categorySpan = EME.$('span#span_addtocategory');
-        const trashSpan = EME.$('span#span_sendtrashmails');
-        const extendSpan = EME.$('span#span_extendrecurrences');
+        const action = EME.$('#events_eme_admin_action')?.value || '';
+        const categorySpan = EME.$('span#events_span_addtocategory');
+        const trashSpan = EME.$('span#events_span_sendtrashmails');
         
         if (categorySpan) eme_toggle(categorySpan,action === 'addCategory');
         if (trashSpan) eme_toggle(trashSpan,action === 'trashEvents');
-        if (extendSpan) eme_toggle(extendSpan,action === 'extendRecurrences');
     }
 
     // Initialize date pickers
@@ -861,11 +859,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Admin action change handler
-    const adminAction = EME.$('#eme_admin_action');
+    // Admin action change handler for events
+    const adminAction = EME.$('#events_eme_admin_action');
     if (adminAction) {
         updateShowHideStuff();
         adminAction.addEventListener('change', updateShowHideStuff);
+    }
+
+    // Admin action change handler for recurrences (extend date fields)
+    const recurrencesAdminAction = EME.$('#recurrences_eme_admin_action');
+    if (recurrencesAdminAction) {
+        recurrencesAdminAction.addEventListener('change', function() {
+            const extendSpan = EME.$('span#recurrences_span_extendrecurrences');
+            if (extendSpan) eme_toggle(extendSpan, this.value === 'extendRecurrences');
+        });
     }
 
     // --- Initialize Events Table ---
@@ -962,21 +969,21 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_events_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
-                trash: $_GET['trash'] || '',
-                scope: EME.$('#scope')?.value || '',
-                status: EME.$('#status')?.value || '',
-                category: EME.$('#category')?.value || '',
-                search_name: EME.$('#search_name')?.value || '',
-                search_location: EME.$('#search_location')?.value || '',
-                search_start_date: EME.$('[name=search_start_date]')?.value || '',
-                search_end_date: EME.$('[name=search_end_date]')?.value || '',
-                search_customfields: eme_getValue(EME.$('#search_customfields')),
-                search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
+                trash: '',
+                scope: EME.$('#events_scope')?.value || '',
+                status: EME.$('#events_status')?.value || '',
+                category: EME.$('#events_category')?.value || '',
+                search_name: EME.$('#events_search_name')?.value || '',
+                search_location: EME.$('#events_search_location')?.value || '',
+                search_start_date: EME.$('#events_search_start_date')?.value || '',
+                search_end_date: EME.$('#events_search_end_date')?.value || '',
+                search_customfields: eme_getValue(EME.$('#events_search_customfields')),
+                search_customfieldids: eme_getValue(EME.$('#events_search_customfieldids'))
             }),
             fields: eventFields
         });
 
-        EventsTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Initialize Recurrences Table ---
@@ -995,10 +1002,10 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_recurrences_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
-                scope: EME.$('#scope')?.value || '',
-                search_name: EME.$('#search_name')?.value || '',
-                search_start_date: EME.$('[name=search_start_date]')?.value || '',
-                search_end_date: EME.$('[name=search_end_date]')?.value || ''
+                scope: EME.$('#recurrences_scope')?.value || '',
+                search_name: EME.$('#recurrences_search_name')?.value || '',
+                search_start_date: EME.$('#recurrences_search_start_date')?.value || '',
+                search_end_date: EME.$('#recurrences_search_end_date')?.value || ''
             }),
             fields: {
                 recurrence_id: {
@@ -1052,7 +1059,73 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        RecurrencesTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
+    }
+
+    // --- Initialize Trash Table ---
+    const TrashTableContainer = EME.$('#TrashTableContainer');
+    let TrashTable;
+    if (TrashTableContainer) {
+        const trashFields = {
+            event_id: {
+                key: true,
+                title: emeadmin.translate_id,
+                width: '1%',
+                columnResizable: false,
+                visibility: 'hidden'
+            },
+            event_name: {
+                title: emeadmin.translate_name,
+                visibility: 'fixed'
+            },
+            event_status: {
+                title: emeadmin.translate_status,
+                width: '5%'
+            },
+            location_name: {
+                title: emeadmin.translate_location
+            },
+            event_start: {
+                title: emeadmin.translate_eventstart,
+                width: '5%'
+            },
+            recinfo: {
+                title: emeadmin.translate_recinfo,
+                sorting: false
+            }
+        };
+
+        TrashTable = new FTable('#TrashTableContainer', {
+            title: emeadmin.translate_events,
+            paging: true,
+            sorting: true,
+            sortingResetButton: true,
+            multiSorting: true,
+            defaultSorting: 'event_start ASC, event_name ASC',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
+            csvExport: true,
+            printTable: true,
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_events_list',
+                eme_admin_nonce: emeadmin.translate_adminnonce,
+                trash: '1',
+                scope: EME.$('#trash_scope')?.value || '',
+                status: '',
+                category: '',
+                search_name: EME.$('#trash_search_name')?.value || '',
+                search_location: '',
+                search_start_date: EME.$('#trash_search_start_date')?.value || '',
+                search_end_date: EME.$('#trash_search_end_date')?.value || '',
+                search_customfields: '',
+                search_customfieldids: ''
+            }),
+            fields: trashFields
+        });
+
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Events Bulk Actions ---
@@ -1061,13 +1134,13 @@ document.addEventListener('DOMContentLoaded', function () {
         eventsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = EventsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
-            const sendTrashMails = EME.$('#send_trashmails')?.value || 'no';
-            const addCategory = EME.$('#addtocategory')?.value || '';
+            const doAction = EME.$('#events_eme_admin_action').value;
+            const sendTrashMails = EME.$('#events_send_trashmails')?.value || 'no';
+            const addCategory = EME.$('#events_addtocategory')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;
 
-            if (['trashEvents', 'deleteEvents', 'deleteRecurrences'].includes(doAction)) {
+            if (['trashEvents', 'deleteEvents'].includes(doAction)) {
                 const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
                 if (!ok) return;
             }
@@ -1107,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', function () {
         recurrencesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = RecurrencesTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#recurrences_eme_admin_action').value;
             const recNewStartDate = EME.$('#rec_new_start_date')?.value || '';
             const recNewEndDate = EME.$('#rec_new_end_date')?.value || '';
 
@@ -1137,7 +1210,49 @@ document.addEventListener('DOMContentLoaded', function () {
                 recurrencesButton.textContent = emeadmin.translate_apply;
                 recurrencesButton.disabled = false;
 
-                const msg = EME.$('#recurrences-message');
+                const msg = EME.$('#events-message');
+                if (msg) {
+                    msg.textContent = data.Message;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
+        });
+    }
+
+    // --- Trash Bulk Actions ---
+    const trashButton = EME.$('#TrashActionsButton');
+    if (trashButton) {
+        trashButton.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const selectedRows = TrashTable.getSelectedRows();
+            const doAction = EME.$('#trash_eme_admin_action').value;
+
+            if (selectedRows.length === 0 || !doAction) return;
+
+            if (doAction === 'deleteEvents') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
+
+            trashButton.textContent = emeadmin.translate_pleasewait;
+            trashButton.disabled = true;
+
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+            const idsJoined = ids.join(',');
+
+            const formData = new FormData();
+            formData.append('event_id', idsJoined);
+            formData.append('action', 'eme_manage_events');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                TrashTable.reload();
+                trashButton.textContent = emeadmin.translate_apply;
+                trashButton.disabled = false;
+
+                const msg = EME.$('#events-message');
                 if (msg) {
                     msg.textContent = data.Message;
                     eme_toggle(msg, true);
@@ -1156,6 +1271,11 @@ document.addEventListener('DOMContentLoaded', function () {
     EME.$('#RecurrencesLoadRecordsButton')?.addEventListener('click', e => {
         e.preventDefault();
         RecurrencesTable.load();
+    });
+
+    EME.$('#TrashLoadRecordsButton')?.addEventListener('click', e => {
+        e.preventDefault();
+        TrashTable.load();
     });
 
     EME.$('#eventForm')?.addEventListener('submit', function(event) {

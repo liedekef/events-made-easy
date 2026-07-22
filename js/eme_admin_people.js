@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     const PeopleTableContainer = EME.$('#PeopleTableContainer');
     let PeopleTable;
+    let personFields;
     const GroupsTableContainer = EME.$('#GroupsTableContainer');
     let GroupsTable;
+    const TrashedPeopleTableContainer = EME.$('#TrashedPeopleTableContainer');
+    let TrashedPeopleTable;
 
     // --- Initialize People Table ---
     if (PeopleTableContainer) {
-        let personFields = {
+        personFields = {
             'people.person_id': {
                 key: true,
                 title: emeadmin.translate_personid,
@@ -152,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_people_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
-                trash: $_GET['trash'] || '',
+                trash: '',
                 search_person: eme_getValue(EME.$('#search_person')),
                 search_groups: eme_getValue(EME.$('#search_groups')),
                 search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),
@@ -164,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fields: personFields
         });
 
-        PeopleTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Initialize Groups Table ---
@@ -208,7 +211,40 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        GroupsTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
+    }
+
+    // --- Initialize Trashed People Table ---
+    if (TrashedPeopleTableContainer) {
+        TrashedPeopleTable = new FTable('#TrashedPeopleTableContainer', {
+            title: emeadmin.translate_people,
+            paging: true,
+            sorting: true,
+            sortingResetButton: true,
+            multiSorting: true,
+            defaultSorting: 'people.lastname ASC, people.firstname ASC',
+            selecting: true,
+            multiselect: true,
+            selectingCheckboxes: true,
+            csvExport: true,
+            printTable: true,
+            actions: { listAction: ajaxurl },
+            listQueryParams: () => ({
+                action: 'eme_people_list',
+                eme_admin_nonce: emeadmin.translate_adminnonce,
+                trash: '1',
+                search_person: eme_getValue(EME.$('#trash_search_person')),
+                search_groups: '',
+                search_memberstatus: '',
+                search_membershipids: '',
+                search_customfields: '',
+                search_customfieldids: '',
+                search_exactmatch: 0
+            }),
+            fields: personFields
+        });
+
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Conditional UI: Show/hide based on action ---
@@ -385,6 +421,47 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // --- Trashed People Bulk Actions ---
+    const trashedPeopleButton = EME.$('#TrashedPeopleActionsButton');
+    if (trashedPeopleButton) {
+        trashedPeopleButton.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const selectedRows = TrashedPeopleTable.getSelectedRows();
+            const doAction = EME.$('#trash_eme_admin_action').value;
+
+            if (selectedRows.length === 0 || !doAction) return;
+
+            if (doAction === 'deletePeople') {
+                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
+                if (!ok) return;
+            }
+
+            trashedPeopleButton.textContent = emeadmin.translate_pleasewait;
+            trashedPeopleButton.disabled = true;
+
+            const ids = selectedRows.map(row => row.dataset.recordKey);
+
+            const formData = new FormData();
+            formData.append('person_id', ids.join(','));
+            formData.append('action', 'eme_manage_people');
+            formData.append('do_action', doAction);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (data) => {
+                TrashedPeopleTable.reload();
+                trashedPeopleButton.textContent = emeadmin.translate_apply;
+                trashedPeopleButton.disabled = false;
+
+                const msg = EME.$('#people-message');
+                if (msg) {
+                    msg.innerHTML = data.htmlmessage;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 5000);
+                }
+            });
+        });
+    }
+
     // --- Groups Bulk Actions ---
     const groupsButton = EME.$('#GroupsActionsButton');
     if (groupsButton) {
@@ -449,6 +526,11 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_toggle(storeQueryDiv, false);
         }
         PeopleTable.load();
+    });
+
+    EME.$('#TrashedPeopleLoadRecordsButton')?.addEventListener('click', e => {
+        e.preventDefault();
+        TrashedPeopleTable.load();
     });
 
     if (storeQueryButton) {

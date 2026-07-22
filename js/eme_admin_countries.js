@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        CountriesTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Initialize States Table ---
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        StatesTable.load();
+        // Don't auto-load: the active tab handler will trigger the load
     }
 
     // --- Countries Bulk Actions ---

@@ -475,13 +475,14 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
     ];
 
     if ( ! empty( $recurrence ) ) {
-        $mailing['mailing_recurrence_freq']          = $recurrence['freq'] ?? '';
-        $mailing['mailing_recurrence_interval']      = ! empty( $recurrence['interval'] ) ? intval( $recurrence['interval'] ) : 1;
-        $mailing['mailing_recurrence_byday']         = $recurrence['byday'] ?? '';
-        $mailing['mailing_recurrence_byweekno']      = ! empty( $recurrence['byweekno'] ) ? intval( $recurrence['byweekno'] ) : 0;
-        $mailing['mailing_recurrence_months']        = $recurrence['months'] ?? '';
-        $mailing['mailing_recurrence_end_date']      = ! empty( $recurrence['end_date'] ) ? $recurrence['end_date'] : null;
-        $mailing['mailing_recurrence_specific_days'] = $recurrence['specific_days'] ?? '';
+        $mailing['recurrence_freq']          = $recurrence['freq'] ?? '';
+        $mailing['recurrence_interval']      = ! empty( $recurrence['interval'] ) ? intval( $recurrence['interval'] ) : 1;
+        $mailing['recurrence_byday']         = $recurrence['byday'] ?? '';
+        $mailing['recurrence_byweekno']      = ! empty( $recurrence['byweekno'] ) ? intval( $recurrence['byweekno'] ) : 0;
+        $mailing['recurrence_months']        = $recurrence['months'] ?? '';
+        $mailing['recurrence_start_date']    = ! empty( $recurrence['start_date'] ) ? $recurrence['start_date'] : eme_get_date_from_dt($planned_on);
+        $mailing['recurrence_end_date']      = ! empty( $recurrence['end_date'] ) ? $recurrence['end_date'] : null;
+        $mailing['recurrence_specific_days'] = $recurrence['specific_days'] ?? '';
     }
 
     // add userid if possible
@@ -502,18 +503,18 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 // the generic eme_get_recurrence_desc_from_array() from eme-recurrence.php. Returns '' when the
 // mailing doesn't repeat.
 function eme_get_mailing_recurrence_desc( $mailing ) {
-    if ( empty( $mailing['mailing_recurrence_freq'] ) || empty( $mailing['planned_on'] ) ) {
+    if ( empty( $mailing['recurrence_freq'] ) || empty( $mailing['planned_on'] ) ) {
         return '';
     }
     $recurrence = [
-        'recurrence_start_date' => eme_get_date_from_dt( $mailing['planned_on'] ),
-        'recurrence_end_date'   => $mailing['mailing_recurrence_end_date'] ?? '',
-        'recurrence_interval'   => $mailing['mailing_recurrence_interval'] ?? 1,
-        'recurrence_freq'       => $mailing['mailing_recurrence_freq'],
-        'recurrence_byday'      => $mailing['mailing_recurrence_byday'] ?? '',
-        'recurrence_byweekno'   => $mailing['mailing_recurrence_byweekno'] ?? 0,
-        'specific_months'       => $mailing['mailing_recurrence_months'] ?? '',
-        'specific_days'         => $mailing['mailing_recurrence_specific_days'] ?? '',
+        'recurrence_start_date' => $mailing['recurrence_start_date'] ?? eme_get_date_from_dt( $mailing['planned_on'] ),
+        'recurrence_end_date'   => $mailing['recurrence_end_date'] ?? '',
+        'recurrence_interval'   => $mailing['recurrence_interval'] ?? 1,
+        'recurrence_freq'       => $mailing['recurrence_freq'],
+        'recurrence_byday'      => $mailing['recurrence_byday'] ?? '',
+        'recurrence_byweekno'   => $mailing['recurrence_byweekno'] ?? 0,
+        'specific_months'       => $mailing['recurrence_months'] ?? '',
+        'specific_days'         => $mailing['recurrence_specific_days'] ?? '',
     ];
     return eme_get_recurrence_desc_from_array( $recurrence );
 }
@@ -1073,7 +1074,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
         $failed_body    = sprintf( __( 'Mailing "%1$s" completed with %2$d errors, please check the mailing report', 'events-made-easy' ), $mailing['name'], $stats['failed'] );
         eme_send_mail( $failed_subject, $failed_body, $mailing['replytoemail'], $mailing['replytoname'], $mailing['replytoemail'], $mailing['replytoname'] );
     }
-    if ( ! empty( $mailing['mailing_recurrence_freq'] ) ) {
+    if ( ! empty( $mailing['recurrence_freq'] ) ) {
         eme_schedule_next_mailing_occurrence( $mailing );
     }
 }
@@ -1088,13 +1089,14 @@ function eme_schedule_next_mailing_occurrence( $mailing ) {
     }
     $conditions = eme_json_decode_safe( $mailing['conditions'] );
     $recurrence = [
-        'freq'          => $mailing['mailing_recurrence_freq'],
-        'interval'      => $mailing['mailing_recurrence_interval'],
-        'byday'         => $mailing['mailing_recurrence_byday'],
-        'byweekno'      => $mailing['mailing_recurrence_byweekno'],
-        'months'        => $mailing['mailing_recurrence_months'],
-        'end_date'      => $mailing['mailing_recurrence_end_date'],
-        'specific_days' => $mailing['mailing_recurrence_specific_days'] ?? '',
+        'freq'          => $mailing['recurrence_freq'],
+        'interval'      => $mailing['recurrence_interval'],
+        'byday'         => $mailing['recurrence_byday'],
+        'byweekno'      => $mailing['recurrence_byweekno'],
+        'months'        => $mailing['recurrence_months'],
+        'start_date'    => $mailing['recurrence_start_date'],
+        'end_date'      => $mailing['recurrence_end_date'],
+        'specific_days' => $mailing['recurrence_specific_days'] ?? '',
     ];
     $new_mailing_id = eme_db_insert_mailing(
         $mailing['name'],
@@ -1120,15 +1122,15 @@ function eme_schedule_next_mailing_occurrence( $mailing ) {
 // the mailing's recurrence rule, strictly after its own planned_on. Returns '' if the rule has no
 // more occurrences left (e.g. past its recurrence_end_date).
 function eme_get_next_mailing_occurrence_date( $mailing ) {
-    if ( empty( $mailing['mailing_recurrence_freq'] ) || empty( $mailing['planned_on'] ) ) {
+    if ( empty( $mailing['recurrence_freq'] ) || empty( $mailing['planned_on'] ) ) {
         return '';
     }
 
     // 'specific_days' stores full datetimes (possibly each with its own time of day, since they come
     // straight from the multi-select datetime picker) rather than a date-only rule, so we just
     // look up the next one after our own planned_on directly, no date/time recombining needed.
-    if ( $mailing['mailing_recurrence_freq'] === 'specific_days' ) {
-        $specific_days = ! empty( $mailing['mailing_recurrence_specific_days'] ) ? explode( ',', $mailing['mailing_recurrence_specific_days'] ) : [];
+    if ( $mailing['recurrence_freq'] === 'specific_days' ) {
+        $specific_days = ! empty( $mailing['recurrence_specific_days'] ) ? explode( ',', $mailing['recurrence_specific_days'] ) : [];
         sort( $specific_days );
         foreach ( $specific_days as $day ) {
             if ( $day > $mailing['planned_on'] ) {
@@ -1141,13 +1143,13 @@ function eme_get_next_mailing_occurrence_date( $mailing ) {
     $current_date = eme_get_date_from_dt( $mailing['planned_on'] );
     $time_part    = eme_get_time_from_dt( $mailing['planned_on'] );
     $recurrence   = [
-        'recurrence_start_date' => $current_date,
-        'recurrence_end_date'   => ! eme_is_empty_date( $mailing['mailing_recurrence_end_date'] ) ? $mailing['mailing_recurrence_end_date'] : '',
-        'recurrence_interval'   => ! empty( $mailing['mailing_recurrence_interval'] ) ? intval( $mailing['mailing_recurrence_interval'] ) : 1,
-        'recurrence_freq'       => $mailing['mailing_recurrence_freq'],
-        'recurrence_byday'      => $mailing['mailing_recurrence_byday'],
-        'recurrence_byweekno'   => $mailing['mailing_recurrence_byweekno'],
-        'specific_months'       => $mailing['mailing_recurrence_months'],
+        'recurrence_start_date' => $current_date, // faster to search for the next occurence here
+        'recurrence_end_date'   => ! eme_is_empty_date( $mailing['recurrence_end_date'] ) ? $mailing['recurrence_end_date'] : '',
+        'recurrence_interval'   => ! empty( $mailing['recurrence_interval'] ) ? intval( $mailing['recurrence_interval'] ) : 1,
+        'recurrence_freq'       => $mailing['recurrence_freq'],
+        'recurrence_byday'      => $mailing['recurrence_byday'],
+        'recurrence_byweekno'   => $mailing['recurrence_byweekno'],
+        'specific_months'       => $mailing['recurrence_months'],
         'specific_days'         => '',
         'event_duration'        => 1,
         'holidays_id'           => 0,
@@ -2029,7 +2031,7 @@ function eme_ajax_mailings_list() {
         }
 
         $recurrence_desc = '';
-        if ( ! empty( $mailing['mailing_recurrence_freq'] ) ) {
+        if ( ! empty( $mailing['recurrence_freq'] ) ) {
             $recurrence_desc = "&#128257; " . eme_get_mailing_recurrence_desc( $mailing );
         }
 
@@ -2133,7 +2135,7 @@ function eme_ajax_archivedmailings_list() {
         $action .= "<br><a title='".esc_attr__( 'Reuse this mailing', 'events-made-easy' )."' href='" . esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-emails&eme_admin_action=reuse_mailing&id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) ) . "'>" . esc_html__( 'Reuse', 'events-made-easy' ) . '</a>';
 
         $recurrence_desc = '';
-        if ( ! empty( $mailing['mailing_recurrence_freq'] ) ) {
+        if ( ! empty( $mailing['recurrence_freq'] ) ) {
             $recurrence_desc = "&#128257; " .eme_get_mailing_recurrence_desc( $mailing );
         }
 
@@ -3200,18 +3202,18 @@ function eme_emails_page() {
         if ( $mailing && ( $mailing['status'] == 'initial' || $mailing['status'] == 'planned' ) ) {
             $edit_mailing_id   = $id;
             $edit_mailing_name = $mailing['name'];
-            if ( ( $mailing['mailing_recurrence_freq'] ?? '' ) === 'specific_days' && ! empty( $mailing['mailing_recurrence_specific_days'] ) ) {
-                $mailing_planned_dates = eme_js_datetime( $mailing['mailing_recurrence_specific_days'] );
+            if ( ( $mailing['recurrence_freq'] ?? '' ) === 'specific_days' && ! empty( $mailing['recurrence_specific_days'] ) ) {
+                $mailing_planned_dates = eme_js_datetime( $mailing['recurrence_specific_days'] );
             } else {
                 $mailing_planned_dates = ! empty( $mailing['planned_on'] ) ? eme_js_datetime( $mailing['planned_on'] ) : '';
             }
             $edit_mailing_recurrence = [
-                'freq'     => $mailing['mailing_recurrence_freq'] ?? '',
-                'interval' => $mailing['mailing_recurrence_interval'] ?? 1,
-                'byday'    => $mailing['mailing_recurrence_byday'] ?? '',
-                'byweekno' => $mailing['mailing_recurrence_byweekno'] ?? 0,
-                'months'   => $mailing['mailing_recurrence_months'] ?? '',
-                'end_date' => $mailing['mailing_recurrence_end_date'] ?? '',
+                'freq'     => $mailing['recurrence_freq'] ?? '',
+                'interval' => $mailing['recurrence_interval'] ?? 1,
+                'byday'    => $mailing['recurrence_byday'] ?? '',
+                'byweekno' => $mailing['recurrence_byweekno'] ?? 0,
+                'months'   => $mailing['recurrence_months'] ?? '',
+                'end_date' => $mailing['recurrence_end_date'] ?? '',
             ];
             $conditions = eme_json_decode_safe( $mailing['conditions'] );
             if ( $conditions['action'] == 'genericmail' ) {

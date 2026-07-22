@@ -373,7 +373,7 @@ function eme_events_page() {
         } else {
             $feedback_message = __( 'You have no right to delete events!', 'events-made-easy' );
         }
-        eme_events_table( $feedback_message );
+        eme_events_table( $feedback_message, 'tab-recurrences' );
         return;
     }
 
@@ -387,7 +387,7 @@ function eme_events_page() {
         }
         if ( ! ( current_user_can( get_option( 'eme_cap_add_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) ) {
             $feedback_message = __( 'You have no right to insert or update events', 'events-made-easy' );
-            eme_events_table( $feedback_message, 'tab-recurrences' );
+            eme_events_table( $feedback_message );
             return;
         }
 
@@ -787,7 +787,7 @@ function eme_events_page() {
             eme_event_form( $event, $info, 1 );
         } else {
             $feedback_message = __( 'You have no right to add events!', 'events-made-easy' );
-            eme_events_table( $feedback_message );
+            eme_events_table( $feedback_message, 'tab-recurrences' );
         }
         return;
     }
@@ -839,7 +839,7 @@ function eme_events_page() {
         $event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
         if ( empty( $event ) ) {
             $feedback_message = __( 'No such event', 'events-made-easy' );
-            eme_events_table( $feedback_message );
+            eme_events_table( $feedback_message, 'tab-recurrences' );
             return;
         }
         // indicate this is a duplicate, we can use that further down the road for more actions
@@ -854,7 +854,7 @@ function eme_events_page() {
         } else {
             // translators: %s is the event name
             $feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
-            eme_events_table( $feedback_message );
+            eme_events_table( $feedback_message, 'tab-recurrences' );
         }
         return;
     }
@@ -863,7 +863,7 @@ function eme_events_page() {
         $event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
         if ( empty( $event ) ) {
             $feedback_message = __( 'No such event', 'events-made-easy' );
-            eme_events_table( $feedback_message );
+            eme_events_table( $feedback_message, 'tab-recurrences' );
             return;
         }
         if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||

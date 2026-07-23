@@ -2366,7 +2366,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></div>
-    <div class="eme-tab" data-tab="tab-trash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-peopletrash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
     </div>
 
     <!-- ==================== PEOPLE TAB ==================== -->
@@ -2392,7 +2392,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     </div>
 
     <!-- ==================== TRASH TAB ==================== -->
-    <div class="eme-tab-content" id="tab-trash">
+    <div class="eme-tab-content" id="tab-peopletrash">
     <form id="trash-people-filter" action="#" method="post">
         <input type="search" name="trash_search_person" id="trash_search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" class="eme_searchfilter" size="15">
         <button id="TrashedPeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter trash', 'events-made-easy' ); ?></button>

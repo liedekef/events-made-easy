@@ -21,91 +21,27 @@ function eme_activateTab(target) {
         }, 100);
     }
 
-    if (target === "tab-mailings") {
-        setTimeout(() => {
-            const container = EME.$('#MailingsTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
+    // Lazy-load: the ftable belonging to a tab only fetches its data once that tab becomes active.
+    const tabTableContainerIds = {
+        'tab-mailings':        'MailingsTableContainer',
+        'tab-mailingsarchive': 'ArchivedMailingsTableContainer',
+        'tab-allmail':         'MailsTableContainer',
+        'tab-events':          'EventsTableContainer',
+        'tab-recurrences':    'RecurrencesTableContainer',
+        'tab-eventstrash':     'TrashTableContainer',
+        'tab-people':          'PeopleTableContainer',
+        'tab-groups':          'GroupsTableContainer',
+        'tab-peopletrash':     'TrashedPeopleTableContainer',
+        'tab-countries':       'CountriesTableContainer',
+        'tab-states':          'StatesTableContainer',
+        'tab-discounts':       'DiscountsTableContainer',
+        'tab-dgroups':         'DiscountGroupsTableContainer',
+    };
 
-    if (target === "tab-mailingsarchive") {
+    const containerId = tabTableContainerIds[target];
+    if (containerId) {
         setTimeout(() => {
-            const container = EME.$('#ArchivedMailingsTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-
-    if (target === "tab-allmail") {
-        setTimeout(() => {
-            const container = EME.$('#MailsTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-
-    if (target === "tab-events") {
-        setTimeout(() => {
-            const container = EME.$('#EventsTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-
-    if (target === "tab-recurrences") {
-        setTimeout(() => {
-            const container = EME.$('#RecurrencesTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-
-    if (target === "tab-trash") {
-        setTimeout(() => {
-            const container = EME.$('#TrashTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-            const container2 = EME.$('#TrashedPeopleTableContainer');
-            if (container2 && container2.ftableInstance) {
-                container2.ftableInstance.load();
-            }
-        }, 100);
-    }
-
-    if (target === "tab-countries") {
-        setTimeout(() => {
-            const container = EME.$('#CountriesTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-    if (target === "tab-states") {
-        setTimeout(() => {
-            const container = EME.$('#StatesTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-    if (target === "tab-discounts") {
-        setTimeout(() => {
-            const container = EME.$('#DiscountsTableContainer');
-            if (container && container.ftableInstance) {
-                container.ftableInstance.load();
-            }
-        }, 100);
-    }
-    if (target === "tab-dgroups") {
-        setTimeout(() => {
-            const container = EME.$('#DiscountGroupsTableContainer');
+            const container = EME.$(`#${containerId}`);
             if (container && container.ftableInstance) {
                 container.ftableInstance.load();
             }

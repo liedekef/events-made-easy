@@ -6149,7 +6149,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-recurrences"><?php esc_html_e( 'Recurrences', 'events-made-easy' ); ?></div>
-    <div class="eme-tab" data-tab="tab-trash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-eventstrash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
     </div>
 
     <!-- ==================== EVENTS TAB ==================== -->
@@ -6301,7 +6301,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
     </div>
 
     <!-- ==================== TRASH TAB ==================== -->
-    <div class="eme-tab-content" id="tab-trash">
+    <div class="eme-tab-content" id="tab-eventstrash">
         <form method='post' action="#">
         <select id="trash_scope" name="scope">
 <?php

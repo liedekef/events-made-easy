@@ -413,7 +413,7 @@ function eme_events_page() {
                     $location = eme_new_location();
                 }
             } else {
-                eme_events_table();
+                eme_events_table('', 'tab-recurrences');
                 return;
             }
         }
@@ -763,7 +763,8 @@ function eme_events_page() {
         if ( $action == 'insert_recurrence' || $action == 'update_recurrence' ) {
             eme_events_table( $feedback_message, 'tab-recurrences' );
         } else {
-            eme_events_table( $feedback_message );
+            $target_tab = ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) ? 'tab-eventstrash' : '';
+            eme_events_table( $feedback_message, $target_tab );
         }
         return;
     }

@@ -101,6 +101,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.1.8  (2026/07/) =
 * Allow mailings to be recurring too
+* Overhaul of some admin pages (more tabs)
+* Import/export as a new submenu
 
 = 3.1.7  (2026/07/16) =
 * removed a json file from the release zip

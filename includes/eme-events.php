@@ -6777,23 +6777,26 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         <?php if ( $is_new_event ) { ?>
                   <input type="submit" class="button-primary eme_submit_button" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Save', 'events-made-easy' ); ?> &raquo;">
                   <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
-<?php
-    } else {
-        $trash_button_text           = __( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
-        $deleteRecurrence_button_text = __( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
-?>
+        <?php
+              } else {
+                  $trash_button_text           = __( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
+                  $deleteRecurrence_button_text = __( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
+        ?>
                   <input type="submit" class="button-primary eme_submit_button" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
-                <?php if ( ! $edit_recurrence ) { ?>
-                        <input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo esc_js( $trash_button_text ); ?>');">
-<?php
-        $view_button_text = __( 'View', 'events-made-easy' );
-        $view_button      = sprintf(
-            '%s<span class="screen-reader-text"> %s</span> &raquo;',
-            $view_button_text,
-            /* translators: Accessibility text. */
-            __( '(opens in a new tab)', 'events-made-easy' )
-        );
-?>
+                  <?php if ( ! $edit_recurrence ) { ?>
+                        <?php
+                        if ( $event['event_status'] != EME_EVENT_STATUS_TRASH ) { ?>
+                                <input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo esc_js( $trash_button_text ); ?>');">
+                        <?php
+                        }
+                        $view_button_text = __( 'View', 'events-made-easy' );
+                        $view_button      = sprintf(
+                            '%s<span class="screen-reader-text"> %s</span> &raquo;',
+                            $view_button_text,
+                            /* translators: Accessibility text. */
+                            __( '(opens in a new tab)', 'events-made-easy' )
+                        );
+                        ?>
                         <a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted sprintf() with __() ?></a>
                         <br><?php esc_html_e( 'If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
                     <?php } ?> 

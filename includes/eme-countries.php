@@ -431,6 +431,22 @@ function eme_get_countries_count() {
 	$sql   = "SELECT COUNT(*) FROM $table";
 	return $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 }
+function eme_get_country_id_by_alpha2( $alpha_2, $lang = '' ) {
+	global $wpdb;
+	$table   = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
+	$alpha_2 = strtoupper( $alpha_2 );
+	if ( ! empty( $lang ) ) {
+		$prepared_sql = $wpdb->prepare( "SELECT id FROM $table WHERE alpha_2 = %s AND lang = %s LIMIT 1", $alpha_2, $lang ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		$id           = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		if ( $id ) {
+			return $id;
+		}
+	}
+	// fall back to the first country row with this alpha_2, regardless of lang (a site with only 1 country per alpha_2 is the common case)
+	$prepared_sql = $wpdb->prepare( "SELECT id FROM $table WHERE alpha_2 = %s ORDER BY (lang='') DESC LIMIT 1", $alpha_2 ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
 function eme_get_countries() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;

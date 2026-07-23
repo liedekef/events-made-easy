@@ -6002,27 +6002,48 @@ function eme_import_csv_events() {
                     $line['location_id'] = $location_id;
                 }
 
-                // also import attributes
-                foreach ( $line as $key => $value ) {
-                    if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
-                        $att = $matches[1];
-                        if ( ! isset( $line['event_attributes'] ) ) {
-                            $line['event_attributes'] = [];
-                        }
-                        $line['event_attributes'][ $att ] = $value;
-                    }
-                }
+			// also import attributes
+				foreach ( $line as $key => $value ) {
+					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
+						$att = $matches[1];
+						if ( ! isset( $line['event_attributes'] ) ) {
+							$line['event_attributes'] = [];
+						}
+						$line['event_attributes'][ $att ] = eme_json_decode_safe( $value );
+					}
+				}
 
-                // also import properties
-                foreach ( $line as $key => $value ) {
-                    if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-                        $prop = $matches[1];
-                        if ( ! isset( $line['event_properties'] ) ) {
-                            $line['event_properties'] = [];
+				// also import properties
+				foreach ( $line as $key => $value ) {
+					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
+						$prop = $matches[1];
+						if ( ! isset( $line['event_properties'] ) ) {
+							$line['event_properties'] = [];
+						}
+						if ( array_key_exists( $prop, $empty_props ) ) {
+							$line['event_properties'][ $prop ] = eme_json_decode_safe( $value );
+						}
+					}
+				}
+
+                // also import categories: a 'category_names' column, pipe-separated (e.g. "Music||Concerts").
+                // Names are matched against existing categories; whether an unmatched name gets
+                // auto-created or just skipped is controlled by the 'auto_create_categories' checkbox.
+                if ( isset( $line['category_names'] ) ) {
+                    $auto_create_categories = ! empty( $_POST['auto_create_categories'] );
+                    $cat_ids                = [];
+                    foreach ( eme_convert_multi2array( $line['category_names'] ) as $cat_name ) {
+                        if ( $auto_create_categories ) {
+                            $cat_id = eme_get_or_create_category_id_by_name( $cat_name );
+                        } else {
+                            $cat_id = eme_get_category_id_by_name_slug( trim( $cat_name ) );
                         }
-                        if ( array_key_exists( $prop, $empty_props ) ) {
-                            $line['event_properties'][ $prop ] = $value;
+                        if ( $cat_id ) {
+                            $cat_ids[] = $cat_id;
                         }
+                    }
+                    if ( $cat_ids ) {
+                        $line['event_category_ids'] = implode( ',', $cat_ids );
                     }
                 }
 
@@ -6337,6 +6358,84 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <div id="TrashTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
     </div>
 
+</div>
+</div>
+<?php
+}
+
+function eme_recurrences_table( $message = '' ) {
+    global $plugin_page;
+
+    if ( empty( $message ) ) {
+        $hidden_class = 'eme-hidden';
+    } else {
+        $hidden_class = '';
+    }
+
+    $scope_names            = [];
+    $scope_names['past']    = __( 'Past recurrences', 'events-made-easy' );
+    $scope_names['all']     = __( 'All recurrences', 'events-made-easy' );
+    $scope_names['ongoing'] = __( 'Ongoing recurrences', 'events-made-easy' );
+
+?>
+
+<div class="wrap nosubsub">
+<div id="poststuff">
+    <div id="recurrences-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <p><?php echo wp_kses_post( $message ); ?></p>
+    </div>
+
+    <?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
+    <h1><?php esc_html_e( 'Add a new recurrence', 'events-made-easy' ); ?></h1>
+    <div class="wrap">
+        <form id="locations-filter" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-manager' ) ); ?>">
+        <input type="hidden" name="eme_admin_action" value="add_new_recurrence">
+        <input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add recurrence', 'events-made-easy' ); ?>">
+        </form>
+    </div>
+<?php endif; ?>
+
+    <h1><?php esc_html_e( 'Manage recurrences', 'events-made-easy' ); ?>
+        <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"><?php esc_html_e( 'Manage events', 'events-made-easy' ); ?></a><br>
+    </h1>
+
+    <form method='post' action="#">
+    <select id="scope" name="scope">
+<?php
+    foreach ( $scope_names as $key => $value ) {
+        $selected = '';
+        if ( $key == 'ongoing' ) {
+            $selected = "selected='selected'";
+        }
+        echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
+    }
+?>
+    </select>
+    <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
+    <input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
+    <input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
+    <button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
+    </form>
+    <br>
+    <div class="bulkactions">
+    <form action="#" method="post">
+    <select id="eme_admin_action" name="eme_admin_action">
+    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <option value="deleteRecurrences"><?php esc_html_e( 'Delete selected recurrences (and move events to trash bin)', 'events-made-easy' ); ?></option>
+    <option value="publicRecurrences"><?php esc_html_e( 'Publish selected recurrences', 'events-made-easy' ); ?></option>
+    <option value="privateRecurrences"><?php esc_html_e( 'Make selected recurrences private', 'events-made-easy' ); ?></option>
+    <option value="draftRecurrences"><?php esc_html_e( 'Make selected recurrences draft', 'events-made-easy' ); ?></option>
+    <option value="extendRecurrences"><?php esc_html_e( 'Set new start/end date for selected recurrences', 'events-made-easy' ); ?></option>
+    </select>
+    <span id="span_extendrecurrences" class="eme-hidden">
+    <input id="rec_new_start_date" type="text" name="rec_new_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
+    <input id="rec_new_end_date" type="text" name="rec_new_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
+    </span>
+    <button id="RecurrencesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+    <?php eme_rightclickhint(); ?>
+    </form>
+    </div>
+    <div id="RecurrencesTableContainer"></div>
 </div>
 </div>
 <?php

@@ -510,6 +510,27 @@ function eme_get_category_id_by_name_slug ($cat_name ) {
 	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
+// Like eme_get_category_id_by_name_slug(), but creates the category if no match is found.
+// Used for CSV import, matching the existing precedent elsewhere in import (locations and
+// groups also get auto-created when a name doesn't match anything existing).
+function eme_get_or_create_category_id_by_name( $cat_name ) {
+	global $wpdb;
+	$cat_name = trim( $cat_name );
+	if ( empty( $cat_name ) ) {
+		return 0;
+	}
+	$existing_id = eme_get_category_id_by_name_slug( $cat_name );
+	if ( $existing_id ) {
+		return $existing_id;
+	}
+	$category                  = eme_new_category();
+	$category['category_name'] = eme_sanitize_request( $cat_name );
+	$category['category_slug'] = eme_permalink_convert_noslash( $category['category_name'] );
+	$categories_table           = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+	$res                        = $wpdb->insert( $categories_table, $category ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- consistent with the rest of category CRUD in this file
+	return $res ? $wpdb->insert_id : 0;
+}
+
 function eme_get_categories_shortcode( $atts ) {
 	eme_enqueue_frontend();
 

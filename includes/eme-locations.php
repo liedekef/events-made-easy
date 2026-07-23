@@ -262,29 +262,29 @@ function eme_import_csv_locations() {
             $line        = eme_array_remove_empty_elements( $line );
             $location_id = 0;
             if ( isset( $line['location_name'] ) && isset( $line['location_address1'] ) && isset( $line['location_city'] ) ) {
-                // also import attributes
-                foreach ( $line as $key => $value ) {
-                    if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
-                        $att = $matches[1];
-                        if ( ! isset( $line['location_attributes'] ) ) {
-                            $line['location_attributes'] = [];
-                        }
-                        $line['location_attributes'][ $att ] = $value;
-                    }
-                }
+			// also import attributes
+				foreach ( $line as $key => $value ) {
+					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
+						$att = $matches[1];
+						if ( ! isset( $line['location_attributes'] ) ) {
+							$line['location_attributes'] = [];
+						}
+						$line['location_attributes'][ $att ] = eme_json_decode_safe( $value );
+					}
+				}
 
-                // also import properties
-                foreach ( $line as $key => $value ) {
-                    if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-                        $prop = $matches[1];
-                        if ( ! isset( $line['location_properties'] ) ) {
-                            $line['location_properties'] = [];
-                        }
-                        if ( array_key_exists( $prop, $empty_props ) ) {
-                            $line['location_properties'][ $prop ] = $value;
-                        }
-                    }
-                }
+				// also import properties
+				foreach ( $line as $key => $value ) {
+					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
+						$prop = $matches[1];
+						if ( ! isset( $line['location_properties'] ) ) {
+							$line['location_properties'] = [];
+						}
+						if ( array_key_exists( $prop, $empty_props ) ) {
+							$line['location_properties'][ $prop ] = eme_json_decode_safe( $value );
+						}
+					}
+				}
 
                 // if the location already exists: update it
                 if ( isset( $line['external_ref'] ) ) {

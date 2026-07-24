@@ -1356,11 +1356,11 @@ function eme_events_page_content() {
         return eme_display_single_event( $event_id );
     } elseif ( get_query_var( 'calendar_day' ) ) {
         $scope          = eme_sanitize_request( get_query_var( 'calendar_day' ) );
-        $location_id    = isset( $_GET['location_id'] ) ? eme_sanitize_request( urldecode( $_GET['location_id'] ) ) : '';
-        $category       = isset( $_GET['category'] ) ? eme_sanitize_request( urldecode( $_GET['category'] ) ) : '';
-        $notcategory    = isset( $_GET['notcategory'] ) ? eme_sanitize_request( urldecode( $_GET['notcategory'] ) ) : '';
-        $author         = isset( $_GET['author'] ) ? eme_sanitize_request( urldecode( $_GET['author'] ) ) : '';
-        $contact_person = isset( $_GET['contact_person'] ) ? eme_sanitize_request( urldecode( $_GET['contact_person'] ) ) : '';
+        $location_id    = isset( $_GET['location_id'] ) ? eme_sanitize_request( $_GET['location_id'] ) : '';
+        $category       = isset( $_GET['category'] ) ? eme_sanitize_request( $_GET['category'] ) : '';
+        $notcategory    = isset( $_GET['notcategory'] ) ? eme_sanitize_request( $_GET['notcategory'] ) : '';
+        $author         = isset( $_GET['author'] ) ? eme_sanitize_request( $_GET['author'] ) : '';
+        $contact_person = isset( $_GET['contact_person'] ) ? eme_sanitize_request( $_GET['contact_person'] ) : '';
         // the hash char and everything following it in a GET is not getting through a browser request, so if it passed through via the calendar, we used _MYSELF, and here we restore it again
         $author         = str_replace( '_MYSELF', '#_MYSELF', $author );
         $contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
@@ -1373,7 +1373,7 @@ function eme_events_page_content() {
             $page_body = eme_get_calendar( full: 1 );
         }
         if ( get_option( 'eme_display_events_in_events_page' ) ) {
-            $scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( urldecode( $_GET['scope'] ) ) ) : 'future';
+            $scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( $_GET['scope'] ) ) : 'future';
             $page_body .= eme_get_events_list( limit: 0, scope: $scope );
         }
         return $page_body;
@@ -2395,7 +2395,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
+                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 return "<a href='$url'>" . esc_html__( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
             }
             return '';
@@ -2404,7 +2404,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
+                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }
@@ -2416,7 +2416,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
+                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 return "<a href='$url'>" . esc_html__( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
             }
             return '';
@@ -2425,7 +2425,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
+                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }
@@ -5888,7 +5888,7 @@ function eme_import_csv_events() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-        return esc_html__( 'No CSV file detected', 'events-made-easy' );
+        return esc_html__( 'Invalid file type. Please upload a CSV file.', 'events-made-easy' );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
         return __( 'Problem detected while uploading the file', 'events-made-easy' );
@@ -6821,8 +6821,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 $info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
-                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
+                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
+                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . esc_html__( 'Printable view', 'events-made-easy' ) . '</a>)';
                 $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
@@ -10139,8 +10139,8 @@ function eme_ajax_events_list() {
                 $record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
             }
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
-                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] ) );
-                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] ) );
+                $printable_address     = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
+                $csv_address           = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='".$printable_address."'>" . esc_html__( 'Printable view', 'events-made-easy' ) . '</a>)';
                 $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='".$csv_address."'>" . esc_html__( 'CSV export', 'events-made-easy' ) . '</a>)';
             }

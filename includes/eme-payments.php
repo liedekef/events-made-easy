@@ -2102,6 +2102,10 @@ function eme_notification_sumup() {
             error_log( 'EME SumUp notification SDK error: ' . $e->getMessage() );
     }
 
+    if ( ! isset( $_POST['id'] ) ) {
+        status_header( 400 );
+        exit;
+    }
     $checkout_id      = eme_sanitize_request( $_POST['id'] );
     $checkoutService  = $sumup->getCheckoutService();
     $checkoutResponse = $checkoutService->findById( $checkout_id );
@@ -2131,7 +2135,7 @@ function eme_notification_stripe() {
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
     $payload    = @file_get_contents( 'php://input' );
-    $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+    $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
     $event      = null;
 
     // verify the signature

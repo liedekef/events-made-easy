@@ -212,7 +212,7 @@ function eme_import_csv_locations() {
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-        return esc_html__( 'No CSV file detected', 'events-made-easy' );
+        return esc_html__( 'Invalid file type. Please upload a CSV file.', 'events-made-easy' );
     }
     if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
         return __( 'Problem detected while uploading the file', 'events-made-easy' );

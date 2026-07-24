@@ -146,18 +146,30 @@ function eme_actions_init() {
                 eme_locations_search_ajax( $no_wp_die );
                 exit;
             case 'booking_printable':
+                // accessible from backend and frontend, so we use wp_verify_nonce
+                if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
+                    wp_die( 'Security check failed' );
+                }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_printable_booking_report( intval( $_GET['event_id'] ) );
                     exit;
                 }
                 break;
             case 'booking_csv':
+                // accessible from backend and frontend, so we use wp_verify_nonce
+                if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
+                    wp_die( 'Security check failed' );
+                }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_booking_report( intval( $_GET['event_id'] ) );
                     exit;
                 }
                 break;
             case 'tasksignups_csv':
+                // accessible from backend and frontend, so we use wp_verify_nonce
+                if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
+                    wp_die( 'Security check failed' );
+                }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
                     exit;
@@ -261,10 +273,10 @@ function eme_actions_admin_init() {
     eme_options_register();
 
     $user_id = $current_user->ID;
-    if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'hello' ) ) {
+    if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'hello' ) && isset( $_GET['_eme_nonce'] ) && wp_verify_nonce( $_GET['_eme_nonce'], 'eme_dismiss_notice' ) ) {
         update_user_meta( $user_id, 'eme_hello_notice_ignore', $eme_date_obj->format( 'Ymd' ) );
     }
-    if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'donate' ) ) {
+    if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'donate' ) && isset( $_GET['_eme_nonce'] ) && wp_verify_nonce( $_GET['_eme_nonce'], 'eme_dismiss_notice' ) ) {
         update_user_meta( $user_id, 'eme_donate_notice_ignore', EME_VERSION . $eme_date_obj->format( 'Ymd' ) );
     }
 

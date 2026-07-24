@@ -3317,32 +3317,37 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
         if ( ! isset( $formfield['field_attributes'] ) ) {
             $formfield['field_attributes'] = '';
         }
+        $res = '';
         if ( $formfield['field_type'] == 'date' ) { // for type DATE
-            return eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
+            $res = eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
         } elseif ( $formfield['field_type'] == 'date_js' ) { // for type DateJS
             if ( $from_backend ) {
-                return eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
+                $res = eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
             } else {
-                return eme_localized_date( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
+                $res = eme_localized_date( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
             }
         } elseif ( $formfield['field_type'] == 'datetime_js' ) { // for type DateJS
             if ( $from_backend ) {
-                return eme_localized_datetime( $answer, EME_TIMEZONE, $from_backend );
+                $res = eme_localized_datetime( $answer, EME_TIMEZONE, $from_backend );
             } else {
-                return eme_localized_datetime( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
+                $res = eme_localized_datetime( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
             }
         } elseif ( $formfield['field_type'] == 'time_js' ) { // for type DateJS
             if ( $from_backend ) {
-                return eme_localized_time( $answer, EME_TIMEZONE, $from_backend );
+                $res = eme_localized_time( $answer, EME_TIMEZONE, $from_backend );
             } else {
-                return eme_localized_time( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
+                $res = eme_localized_time( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
             }
         } elseif ( $formfield['extra_charge'] && $target == 'html' ) {
             //return eme_convert_answer_price($answer);
-            return $answer;
+            $res = $answer;
         } else {
-            return $answer;
+            $res = $answer;
         }
+        if ( $target == 'html' ) {
+            return esc_html($res);
+        }
+        return $res;
     }
 }
 

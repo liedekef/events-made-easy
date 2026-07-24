@@ -201,21 +201,6 @@ function eme_people_page() {
     eme_people_table( $message, $active_tab );
 }
 
-function eme_groups_page() {
-    // Redirect to the combined People & Groups page, preserving all query parameters
-    $params = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY );
-    $redirect_url = admin_url( 'admin.php?page=eme-people' );
-    if ( $params ) {
-        // Replace page=eme-groups with page=eme-people
-        $params = str_replace( 'page=eme-groups', 'page=eme-people', $params );
-        $redirect_url .= '&' . $params;
-    } else {
-        $redirect_url .= '&eme_admin_action=groups';
-    }
-    wp_safe_redirect( $redirect_url );
-    exit;
-}
-
 function eme_person_shortcode( $atts ) {
     eme_enqueue_frontend();
     // normalize attribute keys, lowercase

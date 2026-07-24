@@ -148,18 +148,21 @@ function eme_actions_init() {
             case 'booking_printable':
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_printable_booking_report( intval( $_GET['event_id'] ) );
+                    exit;
                 }
-                exit;
+                break;
             case 'booking_csv':
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_booking_report( intval( $_GET['event_id'] ) );
+                    exit;
                 }
-                exit;
+                break;
             case 'tasksignups_csv':
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
+                    exit;
                 }
-                exit;
+                break;
             case 'export_events':
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
                     check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
@@ -364,19 +367,19 @@ function eme_admin_register_scripts() {
     }
 
 
-    wp_register_script( 'eme-rsvp', EME_PLUGIN_URL . 'js/eme_admin_rsvp.js', [ 'eme-autocomplete-form' ], EME_VERSION );
-    wp_register_script( 'eme-holidays', EME_PLUGIN_URL . 'js/eme_admin_holidays.js', [ 'eme-autocomplete-form' ], EME_VERSION );
-    wp_register_script( 'eme-categories', EME_PLUGIN_URL . 'js/eme_admin_categories.js', [ 'eme-autocomplete-form' ], EME_VERSION );
-    wp_register_script( 'eme-sendmails', EME_PLUGIN_URL . 'js/eme_admin_sendmails.js', [], EME_VERSION );
-    wp_register_script( 'eme-discounts', EME_PLUGIN_URL . 'js/eme_admin_discounts.js', [], EME_VERSION );
-    wp_register_script( 'eme-countries', EME_PLUGIN_URL . 'js/eme_admin_countries.js', [], EME_VERSION );
-    wp_register_script( 'eme-people', EME_PLUGIN_URL . 'js/eme_admin_people.js', [], EME_VERSION );
-    wp_register_script( 'eme-templates', EME_PLUGIN_URL . 'js/eme_admin_templates.js', [], EME_VERSION );
-    wp_register_script( 'eme-tasksignups', EME_PLUGIN_URL . 'js/eme_admin_tasksignups.js', [], EME_VERSION );
-    wp_register_script( 'eme-members', EME_PLUGIN_URL . 'js/eme_admin_members.js', [], EME_VERSION );
-    wp_register_script( 'eme-events', EME_PLUGIN_URL . 'js/eme_admin_events.js', [], EME_VERSION );
-    wp_register_script( 'eme-locations', EME_PLUGIN_URL . 'js/eme_admin_locations.js', [], EME_VERSION );
-    wp_register_script( 'eme-attendances', EME_PLUGIN_URL . 'js/eme_admin_attendances.js', [], EME_VERSION );
+    wp_register_script( 'eme-rsvp', EME_PLUGIN_URL . 'js/eme_admin_rsvp.js', [ 'eme-admin', 'eme-autocomplete-form' ], EME_VERSION );
+    wp_register_script( 'eme-holidays', EME_PLUGIN_URL . 'js/eme_admin_holidays.js', [ 'eme-admin', 'eme-autocomplete-form' ], EME_VERSION );
+    wp_register_script( 'eme-categories', EME_PLUGIN_URL . 'js/eme_admin_categories.js', [ 'eme-admin', 'eme-autocomplete-form' ], EME_VERSION );
+    wp_register_script( 'eme-sendmails', EME_PLUGIN_URL . 'js/eme_admin_sendmails.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-discounts', EME_PLUGIN_URL . 'js/eme_admin_discounts.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-countries', EME_PLUGIN_URL . 'js/eme_admin_countries.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-people', EME_PLUGIN_URL . 'js/eme_admin_people.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-templates', EME_PLUGIN_URL . 'js/eme_admin_templates.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-tasksignups', EME_PLUGIN_URL . 'js/eme_admin_tasksignups.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-members', EME_PLUGIN_URL . 'js/eme_admin_members.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-events', EME_PLUGIN_URL . 'js/eme_admin_events.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-locations', EME_PLUGIN_URL . 'js/eme_admin_locations.js', [ 'eme-admin' ], EME_VERSION );
+    wp_register_script( 'eme-attendances', EME_PLUGIN_URL . 'js/eme_admin_attendances.js', [ 'eme-admin' ], EME_VERSION );
     wp_register_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );
     wp_register_style( 'eme_stylesheet', EME_PLUGIN_URL . 'css/eme.css', [], EME_VERSION );
     $eme_css_name = get_stylesheet_directory() . '/eme.css';

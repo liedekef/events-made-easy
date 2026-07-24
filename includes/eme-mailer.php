@@ -2604,6 +2604,12 @@ function eme_send_generic_mail( $post_data ) {
     }
     $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
     $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
+    if ( empty($existing_mailing) ||
+        !in_array($existing_mailing['status'], ['initial','planned']) ||
+        eme_json_decode_safe($existing_mailing['conditions'])['action'] !== 'genericmail')
+    {
+        $edit_mailing_id = 0;
+    }
 
     $dates              = explode( ',', $mailing_datetime );
     $mailing_recurrence = ( $queue && ! $fast_queue )
@@ -2733,6 +2739,12 @@ function eme_send_event_mail( $post_data ) {
     }
     $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
     $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
+    if ( empty($existing_mailing) ||
+        !in_array($existing_mailing['status'], ['initial','planned']) || 
+        eme_json_decode_safe($existing_mailing['conditions'])['action'] !== 'eventmail') 
+    { 
+        $edit_mailing_id = 0; 
+    }
 
     if ( ! empty( $post_data['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_persons'] ) ) {
         $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_persons'] ) );
@@ -3016,6 +3028,9 @@ function eme_emails_page() {
     $membergroups = eme_get_membergroups();
 
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mail' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $id   = intval( $_GET['id'] );
         $mail = eme_get_mail( $id );
@@ -3058,6 +3073,9 @@ function eme_emails_page() {
         }
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'retry_failed_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $id      = intval( $_GET['id'] );
         $mailing = eme_get_mailing( $id );
@@ -3068,6 +3086,9 @@ function eme_emails_page() {
         $data_forced_tab = 'data-showtab="tab-mailings"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $id      = intval( $_GET['id'] );
         $mailing = eme_get_mailing( $id );
@@ -3196,6 +3217,9 @@ function eme_emails_page() {
         }
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_mailing' && isset( $_GET['id'] ) ) {
+        if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+            wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        }
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $id      = intval( $_GET['id'] );
         $mailing = eme_get_mailing( $id );

@@ -27,7 +27,7 @@ function eme_actions_early_init() {
 
         if ( $_GET['f'] == $captcha_id && ! eme_is_empty_string( $captcha_id ) && get_option( 'eme_captcha_for_forms' )
              && $ts > 0 && $ts >= time() - $ttl && $ts <= time()
-             && $token === wp_hash( $captcha_id . '|' . $ts, 'nonce' ) ) {
+             && hash_equals( wp_hash( $captcha_id . '|' . $ts, 'nonce' ) , $token ) ) {
             eme_captcha_generate( $captcha_id );
         }
         exit;

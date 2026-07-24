@@ -1311,14 +1311,11 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
     }
 
     $event = $events[0];
-    if ( ! eme_is_empty_string( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
-        if ( ! isset( $_POST['rsvp_password'] ) ) {
-            $form_html = __( 'Password is missing', 'events-made-easy' );
-            return [
-                0 => $form_html,
-                1 => $booking_ids,
-            ];
-        } elseif ( eme_sanitize_request($_POST['rsvp_password']) != $event['event_properties']['rsvp_password'] ) {
+    $stored_password = $event['event_properties']['rsvp_password'];
+    if ( ! eme_is_empty_string( $stored_password) && ! $eme_is_admin_request ) {
+        $submitted_password = eme_sanitize_request( $_POST['rsvp_password'] );
+        // Check if password is empty or if passwords don't match
+        if ( empty( $submitted_password ) || ! hash_equals( $stored_password, $submitted_password ) ) {
             $form_html = __( 'Incorrect password given', 'events-made-easy' );
             return [
                 0 => $form_html,

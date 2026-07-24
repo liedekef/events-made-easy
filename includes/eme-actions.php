@@ -9,7 +9,25 @@ function eme_actions_early_init() {
     $eme_is_admin_request = eme_is_admin_request();
     if ( !empty( $_GET['eme_captcha'] ) && $_GET['eme_captcha'] == 'generate' && !empty( $_GET['f'] ) ) {
         $captcha_id = eme_sanitize_filenamechars( $_GET['f'] );
-        if ( $_GET['f']==$captcha_id && ! eme_is_empty_string( $captcha_id ) && get_option( 'eme_captcha_for_forms' ) ) {
+        $ts         = isset( $_GET['ts'] ) ? intval( $_GET['ts'] ) : 0;
+        $token      = isset( $_GET['eme_ctoken'] ) ? sanitize_text_field( wp_unslash( $_GET['eme_ctoken'] ) ) : '';
+        $ttl        = apply_filters( 'eme_captcha_token_ttl', 600 );
+        //$rate_limit = apply_filters( 'eme_captcha_rate_limit', 10 );
+
+        // rate limiting: max $rate_limit requests per minute per IP
+        //$ip          = $_SERVER['REMOTE_ADDR'] ?? '';
+        //$rate_key    = 'eme_captcha_rate_' . md5( $ip );
+        //$rate_count  = (int) get_transient( $rate_key );
+        //if ( $rate_count >= $rate_limit ) {
+        //    status_header( 429 );
+        //    echo 'Too many requests';
+        //    exit;
+        //}
+        //set_transient( $rate_key, $rate_count + 1, 60 );
+
+        if ( $_GET['f'] == $captcha_id && ! eme_is_empty_string( $captcha_id ) && get_option( 'eme_captcha_for_forms' )
+             && $ts > 0 && $ts >= time() - $ttl && $ts <= time()
+             && $token === wp_hash( $captcha_id . '|' . $ts, 'nonce' ) ) {
             eme_captcha_generate( $captcha_id );
         }
         exit;

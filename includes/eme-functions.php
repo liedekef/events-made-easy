@@ -1361,12 +1361,14 @@ function eme_captcha_url( $file ) {
     if ( ! @is_dir( $tmp_dir ) || ! wp_is_writable( $tmp_dir ) ) {
         return false;
     }
+    $ts = time();
     // ts added to try and prevent initial caching
     $the_link = add_query_arg(
         [
-            'eme_captcha' => 'generate',
-            'f'           => $file,
-            'ts'          => time(),
+            'eme_captcha'  => 'generate',
+            'f'            => $file,
+            'ts'           => $ts,
+            'eme_ctoken'   => wp_hash( $file . '|' . $ts, 'nonce' ),
         ],
         $the_link
     );

@@ -97,7 +97,7 @@ function eme_rpi_ajax() {
 function eme_rpi_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
-		$email = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+		$email = eme_sanitize_email( $_GET['eme_email'] );
 	} else {
 		$email = '';
 	}
@@ -125,7 +125,7 @@ function eme_rpi_shortcode( $atts ) {
 	<div id='eme-rpi-message-ok-$form_id' class='eme-message-success eme-rpi-message eme-rpi-message-success eme-hidden'></div><div id='eme-rpi-message-error-$form_id' class='eme-message-error eme-rpi-message eme-rpi-message-error eme-hidden'></div><div id='div_eme-rpi-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-rpi-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
+		<input type='email' name='eme_email' required='required' value='" . esc_attr($email) . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
 		$captcha_html
 		<input type='submit' value='" . esc_attr__( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
@@ -186,7 +186,7 @@ function eme_gdpr_approve_ajax() {
 function eme_gdpr_approve_shortcode() {
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
-		$email = esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
+		$email = eme_sanitize_email( $_GET['eme_email'] );
 	} else {
 		$email = '';
 	}
@@ -199,7 +199,7 @@ function eme_gdpr_approve_shortcode() {
 	<div id='eme-gdpr-approve-message-ok-$form_id' class='eme-message-success eme-gdpr-approve-message eme-gdpr-approve-message-success eme-hidden'></div><div id='eme-gdpr-approve-message-error-$form_id' class='eme-message-error eme-gdpr-approve-message eme-gdpr-approve-message-error eme-hidden'></div><div id='div_eme-gdpr-approve-form-$form_id' class='eme-showifjs eme-hidden'><form id='$form_id' name='eme-gdpr-approve-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-   		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
+   		<input type='email' name='eme_email' required='required' value='" . esc_attr($email) . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
 		$captcha_html
    		<input type='submit' value='" . esc_attr__( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>

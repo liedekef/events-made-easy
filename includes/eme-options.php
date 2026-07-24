@@ -1882,7 +1882,7 @@ function eme_options_page() {
         eme_options_input_text( __( 'Full name format', 'events-made-easy' ), 'eme_full_name_format', 
             __( 'The format of the full name of a person. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME.', 'events-made-easy' ) );
         eme_options_toggle( __( 'By default send out birthday email for new persons?', 'events-made-easy' ), 'eme_bd_email', 
-            __( 'If selected, new persons registered with a non-empty birthday will get a birthday email.', 'events-made-easy' ) );
+            __( 'If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email.', 'events-made-easy' ) );
         eme_options_toggle( __( 'Limit birthday emails to active members?', 'events-made-easy' ), 'eme_bd_email_members_only', 
             __( 'If selected and birthday emails are to be send, only persons with an active membership will get a birthday email.', 'events-made-easy' ) );
         eme_options_toggle( __( 'Show custom people fields in members overview', 'events-made-easy' ), 'eme_members_show_people_info',

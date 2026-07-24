@@ -148,7 +148,7 @@ function eme_actions_init() {
             case 'booking_printable':
                 // accessible from backend and frontend, so we use wp_verify_nonce
                 if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
-                    wp_die( 'Security check failed' );
+                    wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_printable_booking_report( intval( $_GET['event_id'] ) );
@@ -158,7 +158,7 @@ function eme_actions_init() {
             case 'booking_csv':
                 // accessible from backend and frontend, so we use wp_verify_nonce
                 if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
-                    wp_die( 'Security check failed' );
+                    wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_booking_report( intval( $_GET['event_id'] ) );
@@ -168,7 +168,7 @@ function eme_actions_init() {
             case 'tasksignups_csv':
                 // accessible from backend and frontend, so we use wp_verify_nonce
                 if ( ! isset( $_GET['eme_admin_nonce'] ) || ! wp_verify_nonce( $_GET['eme_admin_nonce'], 'eme_admin' ) ) {
-                    wp_die( 'Security check failed' );
+                    wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
                 if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
                     eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
@@ -176,44 +176,44 @@ function eme_actions_init() {
                 }
                 break;
             case 'export_events':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_events();
                 }
                 exit;
             case 'export_people':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_people();
                 }
                 exit;
             case 'export_locations':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_locations();
                 }
                 exit;
             case 'export_discounts':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_discounts();
                 }
                 exit;
             case 'export_dgroups':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_discountgroups();
                 }
                 exit;
             case 'export_countries':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_countries();
                 }
                 exit;
             case 'export_states':
+                check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                 if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
-                    check_admin_referer( 'eme_admin_export', 'eme_admin_nonce' );
                     eme_export_csv_states();
                 }
                 exit;

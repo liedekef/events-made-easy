@@ -10477,6 +10477,19 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
         // this is more efficient, but doesn't execute the hook 'eme_trash_rsvp_action'
         eme_trash_bookings_for_event_ids( $ids );
     }
+
+    if ( $send_trashmails ) {
+        $event_ids = explode( ',', $ids );
+        foreach ( $event_ids as $event_id ) {
+            $task_signups = eme_get_event_task_signups( $event_id );
+            foreach ( $task_signups as $signup_id => $signup ) {
+                eme_db_delete_task_signup( $signup_id );
+                eme_email_tasksignup_action( $signup, 'delete' );
+            }
+        }
+    } else {
+        eme_delete_tasksignups_for_event_ids( $ids );
+    }
 }
 
 function eme_untrash_events( $ids ) {

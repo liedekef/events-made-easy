@@ -394,6 +394,16 @@ function eme_count_tasksignups_for( $event_id ) {
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
+function eme_delete_tasksignups_for_event_ids( $ids ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+    if ( eme_is_list_of_int( $ids ) ) {
+        $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
+        $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+        $wpdb->query( $wpdb->prepare( "DELETE FROM $table WHERE event_id IN ($placeholders)", $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+    }
+}
+
 function eme_count_task_approved_signups( $task_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;

@@ -2395,7 +2395,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
+                $url = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 return "<a href='$url'>" . esc_html__( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
             }
             return '';
@@ -2404,7 +2404,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
+                $replacement = admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_printable&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }
@@ -2416,7 +2416,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $url = esc_url( admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
+                $url = esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) ) );
                 return "<a href='$url'>" . esc_html__( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
             }
             return '';
@@ -2425,7 +2425,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
-                $replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
+                $replacement = admin_url( 'admin.php?page=eme-manager&eme_admin_action=booking_csv&event_id=' . $event['event_id'] . '&eme_admin_nonce=' . wp_create_nonce( 'eme_admin' ) );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }

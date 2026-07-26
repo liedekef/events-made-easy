@@ -989,7 +989,7 @@ function eme_csv_tasksignups_report( $event_id ) {
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
         echo esc_html__( 'No access', 'events-made-easy' );
-        die;
+        return;
     }
 
     $delimiter = get_option( 'eme_csv_delimiter' );
@@ -1167,7 +1167,7 @@ function eme_csv_booking_report( $event_id ) {
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
         echo esc_html__( 'No access', 'events-made-easy' );
-        die;
+        return;
     }
 
     $delimiter = get_option( 'eme_csv_delimiter' );
@@ -1446,7 +1446,7 @@ function eme_printable_booking_report( $event_id ) {
     if ( ! ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
         ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) ) {
         echo esc_html__( 'No access', 'events-made-easy' );
-        die;
+        return;
     }
 
     $is_multiprice   = eme_is_multi( $event['price'] );

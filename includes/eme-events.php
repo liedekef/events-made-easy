@@ -6228,15 +6228,11 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         echo eme_ui_multiselect_key_value( '', 'events_search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
     }
 ?>
-        </div>
-<?php
-    if ( ! empty( $formfields_searchable ) ) {
-?>
-        <div id="hint">
+            <div id="hint">
             <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
+            </div>
         </div>
 <?php
-    }
 ?>
         </form>
         </div>

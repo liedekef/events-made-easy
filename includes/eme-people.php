@@ -1149,7 +1149,6 @@ function eme_csv_tasksignups_report( $event_id ) {
     }
     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $out );
-    die();
 }
 
 function eme_csv_booking_report( $event_id ) {
@@ -1436,7 +1435,6 @@ function eme_csv_booking_report( $event_id ) {
     }
     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export
     fclose( $out );
-    die();
 }
 
 function eme_printable_booking_report( $event_id ) {
@@ -1820,7 +1818,6 @@ function eme_printable_booking_report( $event_id ) {
     </body>
     </html>
 <?php
-        die();
 }
 
 function eme_person_verify_layout() {

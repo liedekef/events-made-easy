@@ -126,8 +126,7 @@ function eme_people_page() {
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'verify_people' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            eme_person_verify_layout();
-            return;
+            $active_tab = 'tab-verify';
         } else {
             $message = eme_message_error_div(esc_html__( 'You have no right to update people!', 'events-made-easy' ));
         }
@@ -2349,6 +2348,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-peopletrash"><?php esc_html_e( 'Trash', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-verify"><?php esc_html_e( 'Integrity verification', 'events-made-easy' ); ?></div>
     </div>
 
     <!-- ==================== PEOPLE TAB ==================== -->
@@ -2365,9 +2365,6 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
 <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage people', 'events-made-easy' ); ?></h1>
-    <?php // translators: %s is the URL to verify EME people integrity ?>
-    <?php printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) ); ?><br>
-
 <?php 
     eme_render_people_table_and_filters();
 ?>
@@ -2427,6 +2424,20 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     </form>
     </div>
     <div id="GroupsTableContainer"></div>
+    </div>
+
+    <!-- ==================== VERIFY TAB ==================== -->
+    <div class="eme-tab-content" id="tab-verify">
+<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) :
+    if ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'verify_people' ) :
+        eme_person_verify_layout();
+    else :
+        // translators: %s is the URL to verify EME people integrity
+        printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) );
+    endif;
+else : ?>
+    <p><?php esc_html_e( 'You have no right to verify people!', 'events-made-easy' ); ?></p>
+<?php endif; ?>
     </div>
 </div>
 </div>

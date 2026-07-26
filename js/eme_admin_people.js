@@ -168,6 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Don't auto-load: the active tab handler will trigger the load
+        // but when editing a group, we're not in a tab, so then we load
+        if ($_GET['eme_admin_action'] && $_GET['eme_admin_action']=='edit_group') {
+            PeopleTable.load();
+        }
+
     }
 
     // --- Initialize Groups Table ---

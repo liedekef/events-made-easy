@@ -62,6 +62,16 @@ function eme_people_page() {
 
     $current_userid = get_current_user_id();
 
+    // CANCEL action (Cancel button pushed while editing a person or group)
+    if ( isset( $_POST['eme_cancel_button'] ) ) {
+        $eme_current_tab = isset( $_POST['eme_current_tab'] ) ? eme_sanitize_request( $_POST['eme_current_tab'] ) : 'tab-people';
+        if ( ! in_array( $eme_current_tab, [ 'tab-people', 'tab-groups' ], true ) ) {
+            $eme_current_tab = 'tab-people';
+        }
+        eme_people_table( '', $eme_current_tab );
+        return;
+    }
+
     if ( isset( $_POST['eme_admin_action'] ))
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_addperson' ) {
@@ -2752,7 +2762,10 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     <?php if ( $readonly ) { ?>
     </fieldset>
     <?php } else { ?>
-    <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add person', 'events-made-easy' ); } else { esc_html_e( 'Update person', 'events-made-easy' ); } ?>"></p>
+    <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add person', 'events-made-easy' ); } else { esc_html_e( 'Update person', 'events-made-easy' ); } ?>">
+    <input type="hidden" name="eme_current_tab" value="tab-people">
+    <input type="submit" formnovalidate class="button" id="person_cancel_button" name="eme_cancel_button" value="<?php esc_attr_e( 'Cancel', 'events-made-easy' ); ?>">
+    </p>
     </form>
     <?php } ?>
     </div>
@@ -2870,7 +2883,10 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
         </table>
         </div>
     </div>
-    <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add group', 'events-made-easy' ); } else { esc_html_e( 'Update group', 'events-made-easy' ); } ?>"></p>
+    <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add group', 'events-made-easy' ); } else { esc_html_e( 'Update group', 'events-made-easy' ); } ?>">
+    <input type="hidden" name="eme_current_tab" value="tab-groups">
+    <input type="submit" formnovalidate class="button" id="group_cancel_button" name="eme_cancel_button" value="<?php esc_attr_e( 'Cancel', 'events-made-easy' ); ?>">
+    </p>
     </div>
     </form>
 <?php

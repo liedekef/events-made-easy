@@ -323,6 +323,17 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
 
 function eme_events_page() {
     $press_back       = __( 'Press the back-button in your browser to return to the previous screen and correct your errors', 'events-made-easy' );
+
+    // CANCEL action (Cancel button pushed while editing an event or recurrence)
+    if ( isset( $_POST['event_cancel_button'] ) ) {
+        $eme_current_tab = isset( $_POST['eme_current_tab'] ) ? eme_sanitize_request( $_POST['eme_current_tab'] ) : 'tab-events';
+        if ( ! in_array( $eme_current_tab, [ 'tab-events', 'tab-recurrences' ], true ) ) {
+            $eme_current_tab = 'tab-events';
+        }
+        eme_events_table( '', $eme_current_tab );
+        return;
+    }
+
     if ( isset( $_POST['eme_admin_action'] ) ) {
         $action        = eme_sanitize_request( $_POST['eme_admin_action'] );
         $event_ID      = isset( $_POST['event_id'] ) ? eme_sanitize_request( $_POST['event_id'] ) : 0;
@@ -6723,6 +6734,9 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                             <input type="submit" class="button-primary" id="event_deleteRecurrence_button" name="event_deleteRecurrence_button" value="<?php esc_attr_e( 'Delete Recurrence', 'events-made-easy' ); ?> &raquo;" onclick="return confirm('<?php echo esc_js( $deleteRecurrence_button_text ); ?>');">
                     <?php } ?> 
             <?php } ?>
+                    <?php $eme_current_tab = $edit_recurrence ? 'tab-recurrences' : 'tab-events'; ?>
+                    <input type="hidden" name="eme_current_tab" value="<?php echo esc_attr( $eme_current_tab ); ?>">
+                    <input type="submit" formnovalidate class="button" id="event_cancel_button" name="event_cancel_button" value="<?php esc_attr_e( 'Cancel', 'events-made-easy' ); ?>">
     </p>
     </div>
     <!-- END OF MAIN -->

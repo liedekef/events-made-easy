@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.1.11  (2026//) =
+* Update MercadoPago
+
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories
 * include missing eme-import.php

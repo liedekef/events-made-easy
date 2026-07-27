@@ -577,6 +577,12 @@ class BounceMailHandler
             if ($headerFull !== '' && preg_match("/^Content-Type:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
                 if (preg_match('/multipart\/report/i', $match[1]) && preg_match('/report-type=["\']?delivery-status["\']?/i', $match[1])) {
                     $type = 'DSN';
+                } elseif (preg_match('/^\s*multipart\//i', $match[1])) {
+                    $part2Mime = $this->client->fetchSection($x, '2.MIME', $this->maxFetchBytes) ?? '';
+                    if (preg_match('/^Content-Type:\s*message\/delivery-status/mi', $part2Mime)) {
+                        $type = 'DSN';
+                        $this->output('Msg #' . $x . ' recognized as non-standard DSN (part 2 is message/delivery-status)', self::VERBOSE_REPORT);
+                    }
                 } else {
                     $this->output('Msg #' . $x . ' is not a standard DSN message', self::VERBOSE_REPORT);
 

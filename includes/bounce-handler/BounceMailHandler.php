@@ -426,7 +426,11 @@ class BounceMailHandler
             $dsnMsg = $this->decodeBySection($dsnMsg, $this->client->fetchSection($pos, $dsnMsgPart . '.MIME', $this->maxFetchBytes), $headerFull);
 
             // machine-parsable delivery-status part of the DSN
-            $dsnReport = $this->client->fetchSection($pos, $dsnReportPart, $this->maxFetchBytes) ?? '';
+            if ($dsnMsgPart !== $dsnReportPart) {
+                $dsnReport = $this->client->fetchSection($pos, $dsnReportPart, $this->maxFetchBytes) ?? '';
+            } else {
+                $dsnReport = $dsnMsg;
+            }
 
             $result = $this->rules->dsnRules($dsnMsg, $dsnReport, $this->debugDsnRule);
             $result = is_callable($this->customDSNRulesCallback) ? call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
@@ -529,15 +533,6 @@ class BounceMailHandler
      * Only looks at top-level parts (no '.' in the part number) - a
      * delivery-status part buried inside a further nested multipart would
      * be unusual enough not to chase, and isn't something seen in practice.
-     *
-     * Edge case: if the explanation part is itself a multipart (e.g.
-     * multipart/alternative text+html), the flattened structure has no
-     * entry for that container part itself - only its children ('1.1',
-     * '1.2', ...) - so there's no top-level candidate to pick as $msgPart
-     * and it falls back to $reportPart, so $dsnMsg and $dsnReport end up
-     * fetching the same delivery-status content twice. Harmless - dsnRules()
-     * still gets valid text to match against, just redundant - but worth
-     * knowing about.
      *
      * @param array<string, array{type: string, subtype: string, mimetype: string}> $structure
      *
@@ -659,16 +654,10 @@ class BounceMailHandler
                 if (preg_match('/multipart\/report/i', $match[1]) && preg_match('/report-type=["\']?delivery-status["\']?/i', $match[1])) {
                     $type = 'DSN';
                 } elseif (preg_match('/^\s*multipart\//i', $match[1])) {
-                    // Some relays (Outlook/Exchange re-wrapping is the
-                    // common case) flatten a standard DSN into
+                    // Some relays flatten a standard DSN into
                     // multipart/mixed and lose the report-type marker from
                     // the outer Content-Type. Fall back to the message's
-                    // actual MIME structure - a genuine
-                    // message/delivery-status part is the one RFC 3462
-                    // signal that survives that kind of mangling, and
-                    // walking BODYSTRUCTURE also tells us the real part
-                    // numbers to fetch instead of assuming the standard 1/2
-                    // layout.
+                    // actual MIME structure
                     $structure = $this->client->fetchStructure($x);
                     $dsnParts = $structure !== null ? $this->findDsnParts($structure) : null;
 

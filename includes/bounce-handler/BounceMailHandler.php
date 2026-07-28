@@ -146,7 +146,12 @@ class BounceMailHandler
      * int     $totalFetched    total number of messages in the mailbox
      * string  $body            the message body used for rule matching
      * string  $headerFull      the full email header
-     * string  $bodyFull        the full email text body (excludes headers)
+     * string  $bodyFull        the full email text body (excludes headers) -
+     *                          only fetched for type 'BODY', or when
+     *                          $actionFunctionOnAllMessages is true; empty
+     *                          string for a matched DSN-type bounce
+     *                          otherwise, since dsnMsg/dsnReport already
+     *                          carry the meaningful content for that case
      * string  $status_code     DSN status code (if available)
      * string  $action          DSN action (if available)
      * string  $diagnostic_code DSN diagnostic code (if available)
@@ -210,8 +215,8 @@ class BounceMailHandler
     /**
      * If set, a message is only processed (DSN or BODY rules) when this
      * header is present - either on the bounce message itself, or (for
-     * standard DSN messages only) on the original message embedded as MIME
-     * part 3, per RFC 3462/3798. Messages without it are treated as
+     * DSN messages only) on the original message embedded as its own MIME
+     * part, per RFC 3462/3798. Messages without it are treated as
      * unprocessed.
      *
      * Leave empty (default) to disable and process every candidate bounce.
@@ -392,10 +397,16 @@ class BounceMailHandler
      *                              message/delivery-status part, when $type
      *                              is 'DSN'. Defaults to '2', same rationale
      *                              as $dsnMsgPart.
+     * @param string $dsnOriginalPart IMAP part number of the DSN's embedded
+     *                              original message (message/rfc822 part),
+     *                              when $type is 'DSN'. Defaults to '3',
+     *                              same rationale as $dsnMsgPart. Used only
+     *                              to look up $requiredXHeader there, per
+     *                              RFC 3462/3798 - not otherwise fetched.
      *
      * @return array|false $result-array or false
      */
-    public function processBounce(int $pos, string $type, string $headerFull, int $totalFetched, string $dsnMsgPart = '1', string $dsnReportPart = '2')
+    public function processBounce(int $pos, string $type, string $headerFull, int $totalFetched, string $dsnMsgPart = '1', string $dsnReportPart = '2', string $dsnOriginalPart = '3')
     {
         $subject = $this->extractSubject($headerFull);
 
@@ -405,17 +416,31 @@ class BounceMailHandler
         if ($this->requiredXHeader !== '') {
             $requiredXHeaderValue = $this->findRequiredXHeaderValue($headerFull);
 
-            if ($requiredXHeaderValue === false) {
+            if ($requiredXHeaderValue === false && $type === 'DSN') {
+                // Per RFC 3462/3798, the header we're looking for may live
+                // on the original message embedded as its own MIME part
+                // rather than on the notification itself - check that
+                // part's header section specifically rather than pulling
+                // and scanning the whole body.
+                $originalHeader = $this->client->fetchSection($pos, $dsnOriginalPart . '.HEADER', $this->maxFetchBytes) ?? '';
+                $requiredXHeaderValue = $this->findRequiredXHeaderValue($originalHeader);
+            }
+            if ($requiredXHeaderValue === false && $type === 'BODY') {
                 $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
                 $requiredXHeaderValue = $this->findRequiredXHeaderValue($bodyFull);
-                if ($requiredXHeaderValue === false) {
-                    $this->output('Msg #' . $pos . ' skipped: missing required header "' . $this->requiredXHeader . '"', self::VERBOSE_REPORT);
-                    return false;
-                }
+            }
+
+            if ($requiredXHeaderValue === false) {
+                $this->output('Msg #' . $pos . ' skipped: missing required header "' . $this->requiredXHeader . '"', self::VERBOSE_REPORT);
+                return false;
             }
         }
 
-        if ($bodyFull === null) {
+        // Only needed for BODY-type rule matching, or when the callback
+        // wants to see every message - skip the extra fetch otherwise (the
+        // common DSN case), since dsnMsg/dsnReport already carry the
+        // meaningful content for that path.
+        if ($bodyFull === null && ($type === 'BODY' || $this->actionFunctionOnAllMessages)) {
             $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
         }
         $body = '';
@@ -536,8 +561,11 @@ class BounceMailHandler
      *
      * @param array<string, array{type: string, subtype: string, mimetype: string}> $structure
      *
-     * @return array{msg: string, report: string}|null null if no
-     *               message/delivery-status part exists (not a DSN)
+     * @return array{msg: string, report: string, original: string|null}|null
+     *               null if no message/delivery-status part exists (not a
+     *               DSN); 'original' is null if no message/rfc822 part was
+     *               found alongside it (the DSN has no embedded original
+     *               message - allowed by RFC 3462, if unusual)
      */
     private function findDsnParts(array $structure): ?array
     {
@@ -581,6 +609,7 @@ class BounceMailHandler
         return [
             'msg' => $msgPart ?? $reportPart,
             'report' => $reportPart,
+            'original' => $rfc822Part,
         ];
     }
 
@@ -648,6 +677,7 @@ class BounceMailHandler
             $type = 'BODY';
             $dsnMsgPart = '1';
             $dsnReportPart = '2';
+            $dsnOriginalPart = '3';
 
             // Could be multi-line, if the new line begins with SPACE or HTAB
             if ($headerFull !== '' && preg_match("/^Content-Type:((?:[^\n]|\n[\t ])+)(?:\n[^\t ]|$)/mi", $headerFull, $match)) {
@@ -665,6 +695,9 @@ class BounceMailHandler
                         $type = 'DSN';
                         $dsnMsgPart = $dsnParts['msg'];
                         $dsnReportPart = $dsnParts['report'];
+                        if ($dsnParts['original'] !== null) {
+                            $dsnOriginalPart = $dsnParts['original'];
+                        }
                         $this->output('Msg #' . $x . ' recognized as non-standard DSN via BODYSTRUCTURE (parts ' . $dsnMsgPart . '/' . $dsnReportPart . ')', self::VERBOSE_REPORT);
                     } else {
                         $this->output('Msg #' . $x . ' is not a standard DSN message', self::VERBOSE_REPORT);
@@ -688,7 +721,7 @@ class BounceMailHandler
                 }
             }
 
-            $processedResult = $this->processBounce($x, $type, $headerFull, $totalCount, $dsnMsgPart, $dsnReportPart);
+            $processedResult = $this->processBounce($x, $type, $headerFull, $totalCount, $dsnMsgPart, $dsnReportPart, $dsnOriginalPart);
 
             if ($processedResult !== false) {
                 $this->output("Processed #$x");

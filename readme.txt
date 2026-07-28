@@ -102,7 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.1.11  (2026//) =
 * Update MercadoPago
 * Update Jodit
-* Fix bounce detection
+* Improve bounce detection
 
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories

@@ -15,6 +15,8 @@ namespace BounceMailHandler;
  *   - EXAMINE (read-only mailbox open)
  *   - SEARCH (SINCE / HEADER / UNSEEN / ALL, combinable)
  *   - FETCH ... BODY.PEEK[section] (never sets \Seen, never touches flags)
+ *   - FETCH ... BODYSTRUCTURE (parsed into a flat part-number map - see
+ *     fetchStructure())
  *   - LOGOUT
  *
  * It deliberately does NOT implement STORE, EXPUNGE, COPY, MOVE, APPEND,
@@ -217,6 +219,214 @@ class BounceIMAP
             return null;
         }
         return $literal;
+    }
+
+    /**
+     * Fetches and parses BODYSTRUCTURE for a message.
+     *
+     * Returns a flat map of IMAP part numbers (e.g. '1', '2', '2.1', as used
+     * in BODY.PEEK[section]) to ['type' => ..., 'subtype' => ..., 'mimetype'
+     * => 'type/subtype'] (all lowercased), covering every top-level part and
+     * any nested multiparts.
+     *
+     * Deliberately does NOT recurse into embedded message/rfc822 parts (e.g.
+     * the original message inside a bounce) - their own internal structure
+     * isn't needed for bounce classification, and staying out of it keeps
+     * this parser's scope to exactly what's used. Fetch that part's
+     * HEADER/TEXT directly if you need to look inside it.
+     *
+     * This is a minimal, purpose-built parser, not a general BODYSTRUCTURE
+     * implementation: it handles quoted strings, NIL, atoms, and nested
+     * lists, but not IMAP literals ({N}-prefixed data) appearing inside the
+     * structure itself - vanishingly rare in practice (it would take an
+     * unusually long parameter value, e.g. a huge Content-Type boundary or
+     * filename, for a server to switch to a literal there), but possible.
+     * Returns null rather than guessing if that happens.
+     *
+     * Returns null on failure: the FETCH itself failing, or a response this
+     * parser doesn't understand.
+     *
+     * @return array<string, array{type: string, subtype: string, mimetype: string}>|null
+     */
+    public function fetchStructure(int $msgNum): ?array
+    {
+        [$ok, $lines, , $response] = $this->command("FETCH {$msgNum} BODYSTRUCTURE");
+        if (!$ok) {
+            $this->lastError = "FETCH {$msgNum} BODYSTRUCTURE failed: " . trim($response);
+            return null;
+        }
+
+        foreach ($lines as $line) {
+            $fetchPos = stripos($line, 'FETCH (');
+            if ($fetchPos === false) {
+                continue;
+            }
+
+            $pos = $fetchPos + strlen('FETCH ');
+
+            try {
+                $items = $this->parseImapList($line, $pos);
+            } catch (\RuntimeException $e) {
+                $this->lastError = "FETCH {$msgNum} BODYSTRUCTURE: " . $e->getMessage();
+                return null;
+            }
+
+            foreach ($items as $i => $item) {
+                if (is_string($item) && strcasecmp($item, 'BODYSTRUCTURE') === 0
+                    && isset($items[$i + 1]) && is_array($items[$i + 1])
+                ) {
+                    return $this->flattenBodyStructure($items[$i + 1]);
+                }
+            }
+        }
+
+        $this->lastError = "FETCH {$msgNum} BODYSTRUCTURE: no parseable response";
+        return null;
+    }
+
+    /**
+     * Turns one parsed BODYSTRUCTURE list into IMAP part numbers.
+     *
+     * A multipart body-structure list starts with a run of child
+     * body-structure lists followed by the subtype string (and multipart
+     * extension data); a single-part list starts with the type/subtype
+     * strings directly. That distinction - is the first element a list or a
+     * string - is exactly how this tells the two apart, same as the IMAP
+     * spec does.
+     *
+     * @return array<string, array{type: string, subtype: string, mimetype: string}>
+     */
+    private function flattenBodyStructure(array $structure, string $prefix = ''): array
+    {
+        $parts = [];
+
+        if (isset($structure[0]) && is_array($structure[0])) {
+            $index = 1;
+            foreach ($structure as $item) {
+                if (!is_array($item)) {
+                    // Reached the subtype string / extension data that
+                    // follows the child parts - nothing more to descend into.
+                    break;
+                }
+                $childPrefix = $prefix === '' ? (string) $index : $prefix . '.' . $index;
+                $parts += $this->flattenBodyStructure($item, $childPrefix);
+                ++$index;
+            }
+            return $parts;
+        }
+
+        $type = is_string($structure[0] ?? null) ? strtolower($structure[0]) : '';
+        $subtype = is_string($structure[1] ?? null) ? strtolower($structure[1]) : '';
+        $partNum = $prefix === '' ? '1' : $prefix;
+
+        $parts[$partNum] = [
+            'type' => $type,
+            'subtype' => $subtype,
+            'mimetype' => $type . '/' . $subtype,
+        ];
+
+        return $parts;
+    }
+
+    /**
+     * Parses one IMAP parenthesized list starting at $s[$pos] (which must be
+     * '('), advancing $pos past the matching ')'.
+     *
+     * @return array<int, string|array<mixed>|null>
+     */
+    private function parseImapList(string $s, int &$pos): array
+    {
+        $len = strlen($s);
+        if ($pos >= $len || $s[$pos] !== '(') {
+            throw new \RuntimeException('expected "(" at offset ' . $pos);
+        }
+        ++$pos;
+
+        $items = [];
+        while (true) {
+            while ($pos < $len && $s[$pos] === ' ') {
+                ++$pos;
+            }
+            if ($pos >= $len) {
+                throw new \RuntimeException('unterminated list');
+            }
+            if ($s[$pos] === ')') {
+                ++$pos;
+                return $items;
+            }
+            $items[] = $this->parseImapToken($s, $pos);
+        }
+    }
+
+    /**
+     * Parses a single IMAP token at $s[$pos]: a parenthesized list, a quoted
+     * string, NIL, or a bare atom (e.g. an unquoted number).
+     *
+     * @return string|array<mixed>|null
+     */
+    private function parseImapToken(string $s, int &$pos)
+    {
+        $len = strlen($s);
+        while ($pos < $len && $s[$pos] === ' ') {
+            ++$pos;
+        }
+        if ($pos >= $len) {
+            throw new \RuntimeException('unexpected end of data at offset ' . $pos);
+        }
+
+        $ch = $s[$pos];
+
+        if ($ch === '(') {
+            return $this->parseImapList($s, $pos);
+        }
+
+        if ($ch === '"') {
+            return $this->parseImapQuotedString($s, $pos);
+        }
+
+        if ($ch === '{') {
+            throw new \RuntimeException('IMAP literals inside BODYSTRUCTURE are not supported by this parser');
+        }
+
+        $start = $pos;
+        while ($pos < $len && $s[$pos] !== ' ' && $s[$pos] !== '(' && $s[$pos] !== ')') {
+            ++$pos;
+        }
+        $atom = substr($s, $start, $pos - $start);
+
+        return strcasecmp($atom, 'NIL') === 0 ? null : $atom;
+    }
+
+    private function parseImapQuotedString(string $s, int &$pos): string
+    {
+        $len = strlen($s);
+        if ($pos >= $len || $s[$pos] !== '"') {
+            throw new \RuntimeException('expected quoted string at offset ' . $pos);
+        }
+        ++$pos;
+
+        $out = '';
+        while (true) {
+            if ($pos >= $len) {
+                throw new \RuntimeException('unterminated quoted string');
+            }
+            $ch = $s[$pos];
+            if ($ch === '\\') {
+                ++$pos;
+                if ($pos >= $len) {
+                    throw new \RuntimeException('unterminated escape in quoted string');
+                }
+                $out .= $s[$pos];
+                ++$pos;
+                continue;
+            }
+            if ($ch === '"') {
+                ++$pos;
+                return $out;
+            }
+            $out .= $ch;
+            ++$pos;
+        }
     }
 
     public function logout(): void

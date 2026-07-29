@@ -9615,6 +9615,7 @@ function eme_admin_enqueue_js() {
             'translate_confirmdelete'              => __( 'Confirm delete', 'events-made-easy' ),
             'translate_areyousuretodeleteselected' => __( 'Are you sure you want to delete the selected records?', 'events-made-easy' ),
             'translate_areyousuretodeletefile'     => __( 'Are you sure you want to delete this file?', 'events-made-easy' ),
+            'translate_selectperson'               => __( 'Select a person', 'events-made-easy' ),
             'translate_selectpersons'              => __( 'Select one or more persons', 'events-made-easy' ),
             'translate_selectmembers'              => __( 'Select one or more members', 'events-made-easy' ),
             'translate_addatachments'              => __( 'Add attachments', 'events-made-easy' ),
@@ -9840,6 +9841,7 @@ function eme_admin_enqueue_js() {
             'translate_mails'                      => __( 'Mails', 'events-made-easy' ),
             'translate_mailings'                   => __( 'Mailings', 'events-made-easy' ),
             'translate_archivedmailings'           => __( 'Archived mailings', 'events-made-easy' ),
+            'translate_selectevent'                => __( 'Select an event', 'events-made-easy' ),
             'translate_selectevents'               => __( 'Select one or more events', 'events-made-easy' ),
             'translate_htmlmail'                   => get_option( 'eme_mail_send_html' ) ? 'yes' : 'no',
         ];

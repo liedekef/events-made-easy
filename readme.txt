@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Update MercadoPago
 * Update Jodit
 * Improve bounce detection
+* Add the option to add task signups in the backend
 
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories

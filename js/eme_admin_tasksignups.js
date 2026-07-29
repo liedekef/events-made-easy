@@ -186,4 +186,110 @@ document.addEventListener('DOMContentLoaded', function () {
             TaskSignupsTable.load();
         });
     }
+
+    // --- Task Assignment: 3 snapselects with cascade ---
+    const eventSelect = EME.$('#eme_event_selector');
+    const taskSelect = EME.$('#eme_task_selector');
+    const personSelect = EME.$('#eme_person_selector');
+    const assignButton = EME.$('#AssignTaskButton');
+
+    if (eventSelect && taskSelect && personSelect && assignButton) {
+        // Event snapselect: future events with tasks
+        initSnapSelectRemote(eventSelect, {
+            placeholder: emeadmin.translate_selectevent,
+            showClearButton: true,
+            data: {
+                action: 'eme_events_with_tasks_snapselect',
+                eme_admin_nonce: emeadmin.translate_adminnonce,
+            },
+            onItemAdd: function(value, text) {
+                // Clear and refresh the task select
+                if (taskSelect.snapselectInstance) {
+                    taskSelect.snapselectInstance.clear();
+                    taskSelect.snapselectInstance.clearCache();
+                }
+            },
+            onItemDelete: function(value, text) {
+                if (taskSelect.snapselectInstance) {
+                    taskSelect.snapselectInstance.clear();
+                    taskSelect.snapselectInstance.clearCache();
+                }
+            }
+        });
+
+        // Task snapselect: tasks for selected event (dynamic event_id)
+        initSnapSelectRemote(taskSelect, {
+            placeholder: emeadmin.translate_taskname,
+            showClearButton: true,
+            data: function(search, page) {
+                const selectedEventId = eventSelect.value;
+                return {
+                    action: 'eme_event_tasks_snapselect',
+                    eme_admin_nonce: emeadmin.translate_adminnonce,
+                    event_id: selectedEventId || 0,
+                    q: search || '',
+                };
+            },
+        });
+
+        // Person snapselect: existing endpoint
+        initSnapSelectRemote(personSelect, {
+            placeholder: emeadmin.translate_selectperson,
+            showClearButton: true,
+            data: {
+                action: 'eme_chooseperson_snapselect',
+                eme_admin_nonce: emeadmin.translate_adminnonce,
+            }
+        });
+
+        // Assign button handler
+        assignButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const taskId = taskSelect.value;
+            const personId = personSelect.value;
+
+            if (!taskId || !personId) {
+                if (TaskSignupsTable) {
+                    TaskSignupsTable.showWarning('Please select a task and a person.');
+                }
+                return;
+            }
+
+            const origTextContent = assignButton.textContent;
+            assignButton.textContent = emeadmin.translate_pleasewait;
+            assignButton.disabled = true;
+
+            const formData = new FormData();
+            formData.append('action', 'eme_assign_task_signup');
+            formData.append('task_id', taskId);
+            formData.append('person_id', personId);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, function(data) {
+                if (data.Result === 'ERROR') {
+                    if (TaskSignupsTable) {
+                        TaskSignupsTable.showError(data.htmlmessage);
+                    }
+                } else {
+                    if (TaskSignupsTable) {
+                        TaskSignupsTable.showInfo(data.htmlmessage);
+                        TaskSignupsTable.reload();
+                    }
+                    // Clear selections
+                    if (eventSelect.snapselectInstance) {
+                        eventSelect.snapselectInstance.clear();
+                    }
+                    if (taskSelect.snapselectInstance) {
+                        taskSelect.snapselectInstance.clear();
+                    }
+                    if (personSelect.snapselectInstance) {
+                        personSelect.snapselectInstance.clear();
+                    }
+                }
+                assignButton.textContent = origTextContent;
+                assignButton.disabled = false;
+            });
+        });
+    }
 });

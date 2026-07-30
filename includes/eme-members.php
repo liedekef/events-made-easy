@@ -314,6 +314,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
             $member_id           = $wpdb->insert_id;
             $member['member_id'] = $member_id;
         }
+        eme_update_person_lastseen( $member['person_id'] );
         eme_store_member_answers( member: $member, original_post_memberdata: $line );
         return $member_id;
     }
@@ -4204,6 +4205,7 @@ function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
             $wpdb->update( $table, $fields, $where );
         }
     }
+    eme_update_person_lastseen( $member['person_id'] );
     return $res;
 }
 
@@ -4270,6 +4272,7 @@ function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
             $wpdb->update( $table, $fields, $where );
         }
     }
+    eme_update_person_lastseen( $member['person_id'] );
     return $res;
 }
 
@@ -4314,6 +4317,7 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
             $wpdb->update( $table, $fields, $where );
         }
     }
+    eme_update_person_lastseen( $member['person_id'] );
     return $res;
 }
 
@@ -4337,6 +4341,10 @@ function eme_member_set_status( $member_id, $status ) {
 
     $fields['status'] = $status;
     $res = $wpdb->update( $table, $fields, $where );
+    $member = eme_get_member( $member_id );
+    if ( ! empty( $member ) ) {
+        eme_update_person_lastseen( $member['person_id'] );
+    }
     if ( has_action( 'eme_member_status_change_action' ) ) {
         do_action( 'eme_member_status_change_action', $member_id, $status );
     }
@@ -4393,6 +4401,7 @@ function eme_stop_member( $member_id ) {
     if ( $res === false ) {
         return false;
     } else {
+        eme_update_person_lastseen( $member['person_id'] );
         $related_member_ids = eme_get_family_member_ids( $member_id );
         if ( ! empty( $related_member_ids ) ) {
             $where2 = [];

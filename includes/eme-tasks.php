@@ -1953,6 +1953,8 @@ function eme_tasks_ajax() {
                 ];
                 $signup_id = eme_db_insert_task_signup( $signup );
                 if ($signup_id) {
+                    // update the person's last_seen
+                    eme_update_person_lastseen( $person_id );
                     // re-get the signup, since the random id is now in it too
                     $signup = eme_get_task_signup($signup_id);
                     if ( $signup_status == 0 ) {

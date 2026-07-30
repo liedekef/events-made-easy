@@ -5101,6 +5101,17 @@ function eme_delete_person_answers( $person_ids ) {
     }
 }
 
+function eme_update_person_lastseen( $person_id ) {
+    global $wpdb;
+    $table              = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $where              = [];
+    $where['person_id'] = intval( $person_id );
+
+    $fields               = [];
+    $fields['last_seen'] = current_time( 'mysql', false );
+    $wpdb->update( $table, $fields, $where ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+}
+
 function eme_delete_person_memberships( $person_ids ) {
     global $wpdb;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
@@ -5409,6 +5420,7 @@ function eme_ajax_people_list( ) {
         $record['people.gdpr_date']     = esc_html( $item['gdpr_date'] );
         $record['people.creation_date'] = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
         $record['people.modif_date']    = eme_localized_datetime( $item['modif_date'], EME_TIMEZONE, 1 );
+        $record['people.last_seen']     = eme_localized_datetime( $item['last_seen'], EME_TIMEZONE, 1 );
         $record['people.groups']        = join( ', ', array_map( 'esc_html', eme_get_persongroup_names( $item['person_id'] ) ) );
         $record['people.memberships']   = eme_get_activemembership_names_by_personid( $item['person_id'] );
         $answers = eme_get_person_answers( $item['person_id'] );

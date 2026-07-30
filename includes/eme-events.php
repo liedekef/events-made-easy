@@ -1167,6 +1167,7 @@ function eme_events_page_content() {
             $format     = "<div class='eme-message-success eme-rsvp-message-success'>$img ";
             if ( current_user_can( get_option( 'eme_cap_membercheck' ) ) || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
                 eme_update_member_lastseen( $member_id );
+                eme_update_person_lastseen( $member['person_id'] );
                 $eme_membership_attendance_msg = eme_nl2br_save_html( get_option( 'eme_membership_attendance_msg' ) );
                 $format                       .= eme_replace_member_placeholders( $eme_membership_attendance_msg, $membership, $member );
                 if ( $membership['properties']['attendancerecord'] ) {

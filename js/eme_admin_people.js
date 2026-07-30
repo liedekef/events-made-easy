@@ -90,6 +90,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: emeadmin.translate_modified_on,
                 visibility: 'hidden'
             },
+            'people.last_seen': {
+                title: emeadmin.translate_last_seen,
+                visibility: 'hidden'
+            },
             'people.related_to': {
                 title: emeadmin.translate_related_to,
                 sorting: false,

@@ -1697,6 +1697,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                         eme_update_booking_discounts( $booking );
                     }
 
+                    // update the person's last_seen
+                    eme_update_person_lastseen( $person_id );
                     // everything ok? So then we add the user in WP if desired
                     // this will only do it if the booker is not logged in and his email doesn't exist in wp yet
                     // we don't check the result of the eme_create_wp_user function

@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Improve bounce detection
 * Add the option to add task signups in the backend
 * If tasks/todos are activated for an event, you're required to enter at least 1 task/todo
+* If using the function eme_search_events (you shouldn't): the signature has changed, see the code
 
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories

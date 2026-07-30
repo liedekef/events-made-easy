@@ -857,15 +857,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const parent_form_id = this.form.id;
             
             // Check required text inputs and date fields
-            EME.$$('input[type="text"][required], input:not([type])[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
+            EME.$$('input[type="text"]:not(:disabled)[required], input:not([type]):not(:disabled)[required], .eme_formfield_fdatetime:not(:disabled)[required], .eme_formfield_fdate:not(:disabled)[required]').forEach(input => {
                 if (valid && input.closest("form").id === parent_form_id) {
                     const val = input.value;
                     if (val.match(/^\s*$/)) {
-                        //eme_addClass(input, 'eme_required');
                         eme_scrollToInvalidInput(input);
                         valid = false;
                     } else {
-                        //eme_removeClass(input, 'eme_required');
+                        eme_removeClass(input, 'eme_required');
                     }
                 }
             });
@@ -875,11 +874,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (valid && group.closest("form").id === parent_form_id) {
                     const checked = group.querySelectorAll('input[type="checkbox"]:checked').length;
                     if (!checked) {
-                        //eme_addClass(group, 'eme_required');
                         eme_scrollToInvalidInput(group);
                         valid = false;
                     } else {
-                        //eme_removeClass(group, 'eme_required');
+                        eme_removeClass(group, 'eme_required');
                     }
                 }
             });

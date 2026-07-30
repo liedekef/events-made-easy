@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 433 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 434 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1701,7 +1701,8 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          comment text,
          random_id varchar(50),
          UNIQUE KEY  (id),
-         KEY  (event_id)
+         KEY  (event_id),
+         KEY  (person_id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
@@ -1709,6 +1710,9 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 		maybe_add_column( $table_name, 'signup_date', "ALTER TABLE $table_name ADD signup_date datetime;" );
 		if ( $db_version < 367 ) {
 			$wpdb->query( "ALTER TABLE $table_name ADD signup_status BOOL DEFAULT 1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
+		if ( $db_version < 434 ) {
+            eme_add_index_if_not_exists( $table_name, 'person_id' );
 		}
 	}
 }

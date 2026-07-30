@@ -26,10 +26,11 @@ function eme_cleanup_people() {
     return $count;
 }
 
-function eme_get_cleanup_people_lastseen( $eme_number, $eme_period ) {
+function eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = '' ) {
     global $wpdb;
 
-    $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 
     if ( $eme_number < 1 ) {
         $eme_number = 1;
@@ -46,13 +47,21 @@ function eme_get_cleanup_people_lastseen( $eme_number, $eme_period ) {
         $eme_date_obj->minusMonths( $eme_number );
         break;
     }
-    $datetime     = $eme_date_obj->getDateTime();
-    $prepared_sql = $wpdb->prepare( "SELECT $people_table.person_id, $people_table.firstname, $people_table.lastname, $people_table.email, $people_table.creation_date, $people_table.modif_date, $people_table.last_seen FROM $people_table WHERE last_seen IS NOT NULL AND last_seen < %s AND status != %d AND $people_table.wp_id=0 ORDER BY $people_table.last_seen", $datetime, EME_PEOPLE_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $datetime = $eme_date_obj->getDateTime();
+    $sql      = "SELECT $people_table.person_id, $people_table.firstname, $people_table.lastname, $people_table.email, $people_table.creation_date, $people_table.modif_date, $people_table.last_seen FROM $people_table WHERE last_seen IS NOT NULL AND last_seen < %s AND status != %d AND $people_table.wp_id=0";
+    if ( ! empty( $exclude_group_ids ) ) {
+        $group_ids = explode( ',', $exclude_group_ids );
+        $group_ids = array_map( 'intval', $group_ids );
+        $group_ids = join( ',', $group_ids );
+        $sql      .= " AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id AND $usergroups_table.group_id IN ($group_ids) )";
+    }
+    $sql         .= ' ORDER BY ' . $people_table . '.last_seen';
+    $prepared_sql = $wpdb->prepare( $sql, $datetime, EME_PEOPLE_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_cleanup_people_lastseen( $eme_number, $eme_period ) {
-    $people = eme_get_cleanup_people_lastseen( $eme_number, $eme_period );
+function eme_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = '' ) {
+    $people = eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids );
     $count  = count( $people );
     if ( $count > 0 ) {
         $person_ids = array_column( $people, 'person_id' );
@@ -311,13 +320,14 @@ function eme_cleanup_page() {
                 // translators: %d is the number of people trashed
                 $message = sprintf( __( 'Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed.', 'events-made-easy' ), $count );
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_lastseen_preview' ) {
-                $eme_number = intval( $_POST['eme_number'] );
-                $eme_period = eme_sanitize_request( $_POST['eme_period'] );
+                $eme_number       = intval( $_POST['eme_number'] );
+                $eme_period       = eme_sanitize_request( $_POST['eme_period'] );
+                $exclude_group_ids = isset( $_POST['exclude_group_ids'] ) ? eme_sanitize_request( $_POST['exclude_group_ids'] ) : '';
                 if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
                     $eme_period = 'month';
                 }
                 if ( $eme_number > 0 ) {
-                    $preview_people = eme_get_cleanup_people_lastseen( $eme_number, $eme_period );
+                    $preview_people = eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids );
                     $count          = count( $preview_people );
                     if ( $count === 0 ) {
                         $message = __( 'No people found that would be moved to the trash bin based on the last seen date.', 'events-made-easy' );
@@ -327,13 +337,14 @@ function eme_cleanup_page() {
                     }
                 }
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_lastseen' ) {
-                $eme_number = intval( $_POST['eme_number'] );
-                $eme_period = eme_sanitize_request( $_POST['eme_period'] );
+                $eme_number       = intval( $_POST['eme_number'] );
+                $eme_period       = eme_sanitize_request( $_POST['eme_period'] );
+                $exclude_group_ids = isset( $_POST['exclude_group_ids'] ) ? eme_sanitize_request( $_POST['exclude_group_ids'] ) : '';
                 if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
                     $eme_period = 'month';
                 }
                 if ( $eme_number > 0 ) {
-                    $count   = eme_cleanup_people_lastseen( $eme_number, $eme_period );
+                    $count   = eme_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids );
                     // translators: %1$d is the number of people, %2$d is the number of time units, %3$s is the time period
                     $message = sprintf( __( 'Cleanup done: %1$d people whose last seen date is older than %2$d %3$s(s) have been moved to the trash.', 'events-made-easy' ), $count, $eme_number, $eme_period );
                 }
@@ -407,6 +418,9 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type='hidden' name='page' value='eme-cleanup'>
     <input type='hidden' name='eme_number' value='<?php echo isset( $_POST['eme_number'] ) ? intval( $_POST['eme_number'] ) : ''; ?>'>
     <input type='hidden' name='eme_period' value='<?php echo isset( $_POST['eme_period'] ) ? esc_attr( eme_sanitize_request( $_POST['eme_period'] ) ) : ''; ?>'>
+    <?php if ( $use_lastseen && isset( $_POST['exclude_group_ids'] ) ) { ?>
+    <input type='hidden' name='exclude_group_ids' value='<?php echo esc_attr( eme_sanitize_request( $_POST['exclude_group_ids'] ) ); ?>'>
+    <?php } ?>
     <input type='hidden' name='eme_admin_action' value='<?php echo esc_attr($confirm_action); ?>'>
     <input type="submit" value="<?php esc_attr_e( 'Confirm: Move all to trash', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction_confirm" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     &nbsp;
@@ -473,6 +487,10 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
     <option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
     </select>
+    <br><br>
+    <?php esc_html_e( 'Exclude people belonging to these groups:', 'events-made-easy' ); ?>
+    <?php echo eme_ui_multiselect_key_value( '', 'exclude_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups to exclude', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
+    <br><br>
     <input type="submit" value="<?php esc_attr_e( 'Preview', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
     <br><?php esc_html_e( 'Tip: After this action, people will still be in the trash bin and can be restored. Use the permanent delete action below to remove them forever.', 'events-made-easy' ); ?>
     </form>

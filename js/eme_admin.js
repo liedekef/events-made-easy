@@ -140,11 +140,6 @@ function eme_remove_task_function(element) {
         if (descField)   descField.value   = '';
         if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
 
-        // Remove required attributes
-        metafields.forEach(f => {
-            const field = metaCopy.querySelector(`#eme_tasks_${newId}_${f}`);
-            if (field) field.removeAttribute('required');
-        });
     }
 }
 
@@ -222,11 +217,6 @@ function eme_remove_todo_function(element) {
         if (descField)   descField.value   = '';
         if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
 
-        // Remove required attributes
-        metafields.forEach(f => {
-            const field = metaCopy.querySelector(`#eme_todos_${newId}_${f}`);
-            if (field) field.removeAttribute('required');
-        });
     }
 }
 
@@ -732,58 +722,60 @@ document.addEventListener('DOMContentLoaded', function () {
     eme_admin_init_attachment_ui('#fs_ipn_attach_button', '#fs_ipn_attach_links', '#eme_fs_ipn_attach_ids', '#fs_ipn_remove_attach_button');
 
     // Animate details/summary blocks
-    EME.$$('details summary').forEach(summary => {
-        const details = summary.parentNode;
-        const wrapper = document.createElement('div');
+    EME.$$('.eme_accordion > summary').forEach(summary => {
+        const detailsParent = summary.parentNode;
+        // Find the content div after summary (should already exist)
+        let contentDiv = detailsParent.querySelector('summary + div');
 
-        // Wrap all content after summary in a div
-        let nextSibling = summary.nextSibling;
-        while (nextSibling) {
-            const current = nextSibling;
-            nextSibling = nextSibling.nextSibling;
-            if (current !== summary) {
-                wrapper.appendChild(current);
+        // If no content div exists yet, create one
+        if (!contentDiv) {
+            contentDiv = document.createElement('div');
+            let next = summary.nextSibling;
+            while (next) {
+                const current = next;
+                next = next.nextSibling;
+                contentDiv.appendChild(current);
             }
+            detailsParent.appendChild(contentDiv);
         }
-        details.appendChild(wrapper);
 
-        if (!details.hasAttribute('open')) {
-            eme_toggle(wrapper, false);
+        if (!detailsParent.hasAttribute('open')) {
+            eme_toggle(contentDiv, false);
         }
 
         summary.addEventListener('click', (e) => {
             e.preventDefault();
-            if (details.hasAttribute('open')) {
-                wrapper.style.transition = `height 300ms ease`;
-                wrapper.style.overflow = 'hidden';
-                wrapper.style.height = wrapper.offsetHeight + 'px';
+            if (detailsParent.hasAttribute('open')) {
+                contentDiv.style.transition = `height 300ms ease`;
+                contentDiv.style.overflow = 'hidden';
+                contentDiv.style.height = contentDiv.offsetHeight + 'px';
                 
                 requestAnimationFrame(() => {
-                    wrapper.style.height = '0';
+                    contentDiv.style.height = '0';
                 });
                 
                 setTimeout(() => {
-                    eme_toggle(wrapper, false);
-                    details.removeAttribute('open');
+                    eme_toggle(contentDiv, false);
+                    detailsParent.removeAttribute('open');
                 }, 300);
             } else {
-                details.setAttribute('open', 'true');
-                eme_toggle(wrapper, true);
-                const height = wrapper.scrollHeight;
-                wrapper.style.height = '0';
-                wrapper.style.overflow = 'hidden';
-                wrapper.style.transition = `height 300ms ease, opacity 300ms`;
-                wrapper.style.opacity = '0';
+                detailsParent.setAttribute('open', 'true');
+                eme_toggle(contentDiv, true);
+                const height = contentDiv.scrollHeight;
+                contentDiv.style.height = '0';
+                contentDiv.style.overflow = 'hidden';
+                contentDiv.style.transition = `height 300ms ease, opacity 300ms`;
+                contentDiv.style.opacity = '0';
 
                 requestAnimationFrame(() => {
-                    wrapper.style.height = height + 'px';
-                    wrapper.style.opacity = '1';
+                    contentDiv.style.height = height + 'px';
+                    contentDiv.style.opacity = '1';
                 });
 
                 setTimeout(() => {
-                    wrapper.style.height = '';
-                    wrapper.style.overflow = '';
-                    wrapper.style.transition = '';
+                    contentDiv.style.height = '';
+                    contentDiv.style.overflow = '';
+                    contentDiv.style.transition = '';
                 }, 300);
             }
         });

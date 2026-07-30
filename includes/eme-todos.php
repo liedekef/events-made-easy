@@ -23,21 +23,20 @@ function eme_handle_todos_post_adminform( $event_id ) {
 	}
 	$seq_nbr       = 1;
 	$todo_nbr_seen = 0;
-	foreach ( wp_unslash( $_POST['eme_todos'] ) as $eme_todo ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    $post_todos    = eme_sanitize_request( $_POST['eme_todos'] ); // sanitize immediately the whole array
+	foreach ( $post_todos as $eme_todo ) {
 		if ( ! empty( $eme_todo['todo_nbr'] ) && intval( $eme_todo['todo_nbr'] ) > $todo_nbr_seen ) {
 			$todo_nbr_seen = intval( $eme_todo['todo_nbr'] );
 		}
 	}
 	$next_todo_nbr = $todo_nbr_seen + 1;
-	foreach ( wp_unslash( $_POST['eme_todos'] ) as $eme_todo ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$eme_todo['name']       = eme_sanitize_request( $eme_todo['name'] );
+	foreach ( $post_todos as $eme_todo ) {
 		$eme_todo['todo_seq']   = $seq_nbr;
 		$eme_todo['event_id']   = $event_id;
 		$eme_todo['todo_offset'] = intval( $eme_todo['todo_offset'] );
 		if ( eme_is_empty_string( $eme_todo['name'] ) ) {
 			continue;
 		}
-		$eme_todo['description'] = eme_sanitize_request( $eme_todo['description'] );
 		// we check for todo nbr to know if we need an update or insert
 		if ( empty( $eme_todo['todo_nbr'] ) ) {
 			$eme_todo['todo_nbr'] = $next_todo_nbr;
@@ -175,6 +174,7 @@ function eme_meta_box_div_event_todos( $event ) {
 	}
 	?>
 	<div id="div_todos">
+		<fieldset id="eme_todos_fieldset" style="border:none;padding:0;margin:0">
 		<table class="eme_todos">
 		<thead>
 			<tr>
@@ -192,9 +192,6 @@ function eme_meta_box_div_event_todos( $event ) {
 			if ( ! is_array( $todos ) || count( $todos ) == 0 ) {
 				$info     = eme_new_todo();
 				$todos    = [ $info ];
-				$required = '';
-			} else {
-				$required = "required='required'";
 			}
 			foreach ( $todos as $count => $todo ) {
 				?>
@@ -209,10 +206,10 @@ function eme_meta_box_div_event_todos( $event ) {
 				<?php endif; ?>
 				</td>
 				<td>
-				<input <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_todos_<?php echo esc_attr( $count ); ?>_name" name="eme_todos[<?php echo esc_attr( $count ); ?>][name]" size="12" aria-label="name" value="<?php echo esc_attr( $todo['name'] ); ?>">
+				<input required='required' type='text' id="eme_todos_<?php echo esc_attr( $count ); ?>_name" name="eme_todos[<?php echo esc_attr( $count ); ?>][name]" size="12" aria-label="name" value="<?php echo esc_attr( $todo['name'] ); ?>">
 				</td>
 				<td>
-				<input name='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' id='eme_todos_<?php echo esc_attr( $count ); ?>_todo_offset' size="5" aria-label="event offset in days" value="<?php echo esc_attr( $todo['todo_offset'] ); ?>">
+				<input type='text' name='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' id='eme_todos_<?php echo esc_attr( $count ); ?>_todo_offset' size="5" aria-label="event offset in days" value="<?php echo esc_attr( $todo['todo_offset'] ); ?>">
 				</td>
 				<td style="width: 60%;">
 				<textarea class="eme_fullresizable" id="eme_todos_<?php echo esc_attr( $count ); ?>_description" name="eme_todos[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $todo['description'] ); ?></textarea>
@@ -226,6 +223,7 @@ function eme_meta_box_div_event_todos( $event ) {
 			?>
 		</tbody>
 		</table>
+		</fieldset>
 	</div>
 	<?php
 }

@@ -4874,7 +4874,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
     }
 }
 
-function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0, int $start=0, int $pagesize=0 ) {
+function eme_search_events( $name, $scope = 'future', $name_only = 0, $extra_conditions = [], int $start=0, int $pagesize=0 ) {
     global $wpdb;
     $table         = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $eme_date_obj  = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -4887,11 +4887,22 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
     } elseif ( $scope == 'future' ) {
         $where[] = $wpdb->prepare( 'event_start >= %s', $now);
     }
-    if ( $exclude_id ) {
-        $where[] = $wpdb->prepare( 'event_id != %d', $exclude_id);
-    }
-    if ( $only_rsvp ) {
-        $where[] = 'event_rsvp = 1';
+    if ( ! empty( $extra_conditions ) ) {
+        if ( ! empty( $extra_conditions['exclude_id'] ) ) {
+            $where[] = $wpdb->prepare( 'event_id != %d', intval( $extra_conditions['exclude_id'] ) );
+        }
+        if ( isset( $extra_conditions['event_rsvp'] ) ) {
+            $where[] = $wpdb->prepare( 'event_rsvp = %d', intval( $extra_conditions['event_rsvp'] ) );
+        }
+        if ( isset( $extra_conditions['event_tasks'] ) ) {
+            $where[] = $wpdb->prepare( 'event_tasks = %d', intval( $extra_conditions['event_tasks'] ) );
+        }
+        // for callers that already have prepared SQL fragments (e.g. admin datatable)
+        if ( ! empty( $extra_conditions['prepared'] ) ) {
+            foreach ( (array) $extra_conditions['prepared'] as $fragment ) {
+                $where[] = $fragment;
+            }
+        }
     }
     $where[] = $wpdb->prepare( 'event_status != %d', EME_EVENT_STATUS_TRASH);
 
@@ -10728,9 +10739,17 @@ function eme_ajax_events_snapselect() {
     $mysql_pagesize = $pagesize+1;
     $start     = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
-    $exclude_id  = isset( $_REQUEST['exclude_id'] ) ? intval( $_REQUEST['exclude_id'] ) : 0;
-    $only_rsvp   = isset( $_REQUEST['only_rsvp'] ) ? intval( $_REQUEST['only_rsvp'] ) : 0;
-    $events      = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp, $start, $mysql_pagesize );
+    $extra_conditions = [];
+    if ( !empty( $_REQUEST['exclude_id'] ) ) {
+        $extra_conditions['exclude_id'] = intval( $_REQUEST['exclude_id'] );
+    }
+    if ( !empty( $_REQUEST['only_rsvpable_events'] ) ) {
+        $extra_conditions['event_rsvp'] = 1;
+    }
+    if ( !empty( $_REQUEST['only_events_with_tasks'] ) ) {
+        $extra_conditions['event_tasks'] = 1;
+    }
+    $events      = eme_search_events( $q, $scope, 1, $extra_conditions, $start, $mysql_pagesize );
     $records     = [];
     foreach ( $events as $event ) {
         $records[] = [

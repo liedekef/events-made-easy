@@ -687,6 +687,22 @@ function eme_attach_dynamic_handlers(selector, isBooking) {
 }
     
 function eme_scrollToInvalidInput(el) { 
+    // open details if closed
+    const detailsParent = el.closest('.eme_accordion');
+    if (detailsParent && !detailsParent.hasAttribute('open')) {
+        // Open it
+        detailsParent.setAttribute('open', 'true');
+        // Find the content div after summary
+        const summary = detailsParent.querySelector('summary');
+        if (summary) {
+            const contentDiv = detailsParent.querySelector('summary + div');
+            if (contentDiv) {
+                eme_toggle(contentDiv, true);
+                contentDiv.style.height = ''; // reset height
+            }
+        }
+    }
+
     // First check if field is in a tab
     const tabPane = el.closest('.eme-tab-content');
     if (tabPane) {
@@ -841,15 +857,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const parent_form_id = this.form.id;
             
             // Check required text inputs and date fields
-            EME.$$('input[type="text"][required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
+            EME.$$('input[type="text"][required], input:not([type])[required], .eme_formfield_fdatetime[required], .eme_formfield_fdate[required]').forEach(input => {
                 if (valid && input.closest("form").id === parent_form_id) {
                     const val = input.value;
                     if (val.match(/^\s*$/)) {
-                        eme_addClass(input, 'eme_required');
+                        //eme_addClass(input, 'eme_required');
                         eme_scrollToInvalidInput(input);
                         valid = false;
                     } else {
-                        eme_removeClass(input, 'eme_required');
+                        //eme_removeClass(input, 'eme_required');
                     }
                 }
             });
@@ -859,11 +875,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (valid && group.closest("form").id === parent_form_id) {
                     const checked = group.querySelectorAll('input[type="checkbox"]:checked').length;
                     if (!checked) {
-                        eme_addClass(group, 'eme_required');
+                        //eme_addClass(group, 'eme_required');
                         eme_scrollToInvalidInput(group);
                         valid = false;
                     } else {
-                        eme_removeClass(group, 'eme_required');
+                        //eme_removeClass(group, 'eme_required');
                     }
                 }
             });

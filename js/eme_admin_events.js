@@ -282,13 +282,16 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateShowHideTasks() {
         const tasksChecked = EME.$('#event_tasks')?.checked;
         const container = EME.$('#tab-tasks-container');
+        const fieldset = EME.$('#eme_tasks_fieldset');
         if (container) {
             if (tasksChecked) {
                 container.style.opacity = '0';
                 eme_toggle(container, true);
                 container.style.transition = 'opacity 300ms';
                 requestAnimationFrame(() => container.style.opacity = '1');
+                if (fieldset) fieldset.disabled = false;
             } else {
+                if (fieldset) fieldset.disabled = true;
                 container.style.transition = 'opacity 300ms';
                 container.style.opacity = '0';
                 setTimeout(() => eme_toggle(container, false), 300);
@@ -299,13 +302,16 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateShowHideTodos() {
         const todosChecked = EME.$('#event_todos')?.checked;
         const container = EME.$('#tab-todos-container');
+        const fieldset = EME.$('#eme_todos_fieldset');
         if (container) {
             if (todosChecked) {
                 container.style.opacity = '0';
                 eme_toggle(container, true);
                 container.style.transition = 'opacity 300ms';
                 requestAnimationFrame(() => container.style.opacity = '1');
+                if (fieldset) fieldset.disabled = false;
             } else {
+                if (fieldset) fieldset.disabled = true;
                 container.style.transition = 'opacity 300ms';
                 container.style.opacity = '0';
                 setTimeout(() => eme_toggle(container, false), 300);

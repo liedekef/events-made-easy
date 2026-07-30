@@ -199,7 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
             placeholder: emeadmin.translate_selectevent,
             showClearButton: true,
             data: {
-                action: 'eme_events_with_tasks_snapselect',
+                action: 'eme_events_snapselect',
+                only_events_with_tasks: 1,
                 eme_admin_nonce: emeadmin.translate_adminnonce,
             },
             onItemAdd: function(value, text) {

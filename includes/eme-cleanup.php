@@ -443,7 +443,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <label for="eme_number"><?php esc_html_e( 'Remove unpaid pending bookings older than', 'events-made-easy' ); ?></label>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -454,7 +454,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <label for="eme_number"><?php esc_html_e( 'Remove unconfirmed bookings older than', 'events-made-easy' ); ?></label>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -465,7 +465,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <?php esc_html_e( 'Move people who are no longer referenced in bookings, groups or memberships to the trash bin', 'events-made-easy' ); ?>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -475,7 +475,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <br><?php esc_html_e( 'Tip: If you want to avoid certain people from being trashed through automatic cleanup, put them in a group.', 'events-made-easy' ); ?>
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <label for="eme_number"><?php esc_html_e( 'Move people whose last seen date is older than', 'events-made-easy' ); ?></label>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -487,15 +487,15 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
     <option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
     </select>
-    <br><br>
+    <input type="submit" value="<?php esc_attr_e( 'Preview', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
+    <br>
     <?php esc_html_e( 'Exclude people belonging to these groups:', 'events-made-easy' ); ?>
     <?php echo eme_ui_multiselect_key_value( '', 'exclude_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups to exclude', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
-    <br><br>
-    <input type="submit" value="<?php esc_attr_e( 'Preview', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action">
+    <br>
     <br><?php esc_html_e( 'Tip: After this action, people will still be in the trash bin and can be restored. Use the permanent delete action below to remove them forever.', 'events-made-easy' ); ?>
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <label for="eme_number"><?php esc_html_e( 'Remove people in thrash older than', 'events-made-easy' ); ?></label>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -510,7 +510,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <label for="eme_number"><?php esc_html_e( 'Remove bookings in thrash older than', 'events-made-easy' ); ?></label>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
@@ -525,12 +525,13 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 
-<br><br>
+    <hr class="eme_cleanup_hr">
     <form action="" method="post">
     <?php esc_html_e( 'Remove all data concerning events, locations, memberships, people and bookings', 'events-made-easy' ); ?>
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
     <input type='hidden' name='page' value='eme-cleanup'>
     <input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
+    <br>
     <input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>

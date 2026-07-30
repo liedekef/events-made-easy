@@ -835,3 +835,8 @@ a.nav-tab {
     opacity: 1;
     margin-top: 8px;
 }
+
+/* for the cleanup hr */
+.eme_cleanup_hr {
+    border: 1px solid grey;
+}

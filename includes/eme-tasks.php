@@ -586,11 +586,11 @@ function eme_task_signups_table_layout( ) {
     <h1><?php esc_html_e( 'Add task signup', 'events-made-easy' ); ?></h1>
     <div class="eme_assign_section">
     <form id="eme_task_assign_form" action="#" method="post">
-    <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <select id="eme_event_selector" class="eme_snapselect_event_with_tasks" name="eme_event_selector" style="min-width:200px;"></select>
     <select id="eme_task_selector" class="eme_snapselect_event_tasks" name="eme_task_selector" style="min-width:250px;"></select>
     <select id="eme_person_selector" class="eme_snapselect_chooseperson" name="eme_person_selector" style="min-width:200px;"></select>
-    <button id="AssignTaskButton" class="button-primary action"><?php esc_html_e( 'Assign', 'events-made-easy' ); ?></button>
+    <button id="AssignTaskButton" class="button-primary action" type="button"><?php esc_html_e( 'Assign', 'events-made-easy' ); ?></button>
+    <br><?php esc_html_e('No overlap or capacity checks happen here, to allow more freedom in task assignments.','events-made-easy'); ?>
     </form>
     </div>
 
@@ -2035,7 +2035,7 @@ function eme_ajax_task_signups_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
         $ajaxResult            = [];
-        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Result']  = 'ERROR';
         $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $ajaxResult );
         wp_die();
@@ -2160,7 +2160,7 @@ function eme_ajax_task_signups_list() {
         $fTableResult['Records']          = $rows;
         $fTableResult['TotalRecordCount'] = $recordCount;
     } else {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
     print wp_json_encode( $fTableResult );
@@ -2171,7 +2171,7 @@ function eme_ajax_manage_task_signups() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
         $ajaxResult            = [];
-        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Result']  = 'ERROR';
         $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $ajaxResult );
         wp_die();
@@ -2266,59 +2266,13 @@ function eme_ajax_action_signup_delete( $ids_arr, $send_mail=1 ) {
 }
 
 function eme_count_pending_tasksignups() {
-	global $wpdb;
-	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$signups_table    = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
-	$now              = $eme_date_obj_now->getDateTime();
-	$prepared_sql     = $wpdb->prepare( "SELECT COUNT(signups.id) FROM $signups_table AS signups LEFT JOIN $events_table AS events ON signups.event_id=events.event_id WHERE signups.signup_status=0 AND events.event_end >= %s", $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-}
-
-add_action( 'wp_ajax_eme_events_with_tasks_snapselect', 'eme_ajax_events_with_tasks_snapselect' );
-function eme_ajax_events_with_tasks_snapselect() {
-	global $wpdb;
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	header( 'Content-type: application/json; charset=utf-8' );
-	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
-		wp_die();
-	}
-
-	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-	$tasks_table  = EME_DB_PREFIX . EME_TASKS_TBNAME;
-
-	$q               = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-	$pagesize        = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 30;
-	$page            = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
-	$start           = ( $page - 1 ) * $pagesize;
-	$mysql_pagesize  = $pagesize + 1;
-
-	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
-	$now              = $eme_date_obj_now->getDateTime();
-
-	$where = $wpdb->prepare( "events.event_end >= %s AND events.event_status != %d", $now, EME_EVENT_STATUS_TRASH );
-	if ( ! empty( $q ) ) {
-		$where .= $wpdb->prepare( " AND events.event_name LIKE %s", '%' . $wpdb->esc_like( $q ) . '%' );
-	}
-
-	$sql    = "SELECT DISTINCT events.event_id, events.event_name, events.event_start FROM $events_table AS events INNER JOIN $tasks_table AS tasks ON events.event_id = tasks.event_id WHERE $where ORDER BY events.event_start ASC LIMIT $start, $mysql_pagesize"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	$events = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
-	$records = [];
-	foreach ( $events as $event ) {
-		$records[] = [
-			'id'   => intval( $event['event_id'] ),
-			'text' => esc_html( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
-		];
-	}
-
-	$hasMore = count( $records ) > $pagesize;
-	if ( $hasMore ) {
-		$records = array_slice( $records, 0, $pagesize );
-	}
-	print wp_json_encode( [ 'Records' => $records, 'hasMore' => $hasMore ] );
-	wp_die();
+    global $wpdb;
+    $events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $signups_table    = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+    $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    $now              = $eme_date_obj_now->getDateTime();
+    $prepared_sql     = $wpdb->prepare( "SELECT COUNT(signups.id) FROM $signups_table AS signups LEFT JOIN $events_table AS events ON signups.event_id=events.event_id WHERE signups.signup_status=0 AND events.event_end >= %s", $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 add_action( 'wp_ajax_eme_event_tasks_snapselect', 'eme_ajax_event_tasks_snapselect' );
@@ -2326,7 +2280,7 @@ function eme_ajax_event_tasks_snapselect() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
 		wp_die();
 	}
 
@@ -2361,7 +2315,7 @@ function eme_ajax_assign_task_signup() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
 		wp_die();
 	}
 
@@ -2369,33 +2323,38 @@ function eme_ajax_assign_task_signup() {
 	$person_id = isset( $_POST['person_id'] ) ? intval( $_POST['person_id'] ) : 0;
 
 	if ( ! $task_id || ! $person_id ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Please select a task and a person.', 'events-made-easy' ) . '</p></div>' ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Please select a task and a person.', 'events-made-easy' ) . '</p></div>' ] );
 		wp_die();
 	}
 
 	$task = eme_get_task( $task_id );
 	if ( ! $task ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Invalid task.', 'events-made-easy' ) . '</p></div>' ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Invalid task.', 'events-made-easy' ) . '</p></div>' ] );
+		wp_die();
+	}
+	$person = eme_get_person( $person_id );
+	if ( ! $person ) {
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Invalid person.', 'events-made-easy' ) . '</p></div>' ] );
 		wp_die();
 	}
 
 	$existing = eme_count_person_task_signups( $task_id, $person_id );
 	if ( $existing > 0 ) {
-		print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'This person is already signed up for this task.', 'events-made-easy' ) . '</p></div>' ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'This person is already signed up for this task.', 'events-made-easy' ) . '</p></div>' ] );
 		wp_die();
 	}
 
     /* No overlap check or full check in the admin
     $allow_overlap = $event['event_properties']['task_allow_overlap'];
     if ( ! $allow_overlap && eme_check_task_signup_overlap( $task, $person_id ) ) {
-        print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Signup overlap with another task detected.', 'events-made-easy' ) . '</p></div>' ] );
+        print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'Signup overlap with another task detected.', 'events-made-easy' ) . '</p></div>' ] );
         wp_die();
     }
 
 	if ( $task['spaces'] > 0 ) {
 		$approved = eme_count_task_approved_signups( $task_id );
 		if ( $approved >= $task['spaces'] ) {
-			print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'This task is full.', 'events-made-easy' ) . '</p></div>' ] );
+			print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'This task is full.', 'events-made-easy' ) . '</p></div>' ] );
 			wp_die();
 		}
 	}
@@ -2412,7 +2371,7 @@ function eme_ajax_assign_task_signup() {
 	if ( $res ) {
 		print wp_json_encode( [ 'Result' => 'OK', 'htmlmessage' => '<div class="updated"><p>' . esc_html__( 'Task assigned successfully.', 'events-made-easy' ) . '</p></div>' ] );
 	} else {
-		print wp_json_encode( [ 'Result' => 'Error', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'There was a problem assigning the task.', 'events-made-easy' ) . '</p></div>' ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'There was a problem assigning the task.', 'events-made-easy' ) . '</p></div>' ] );
 	}
 	wp_die();
 }

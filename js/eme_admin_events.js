@@ -981,8 +981,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 category: EME.$('#events_category')?.value || '',
                 search_name: EME.$('#events_search_name')?.value || '',
                 search_location: EME.$('#events_search_location')?.value || '',
-                search_start_date: EME.$('#events_search_start_date')?.value || '',
-                search_end_date: EME.$('#events_search_end_date')?.value || '',
+                search_start_date: EME.$('[name=events_search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=events_search_end_date]')?.value || '',
                 search_customfields: eme_getValue(EME.$('#events_search_customfields')),
                 search_customfieldids: eme_getValue(EME.$('#events_search_customfieldids'))
             }),
@@ -1010,8 +1010,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 eme_admin_nonce: emeadmin.translate_adminnonce,
                 scope: EME.$('#recurrences_scope')?.value || '',
                 search_name: EME.$('#recurrences_search_name')?.value || '',
-                search_start_date: EME.$('#recurrences_search_start_date')?.value || '',
-                search_end_date: EME.$('#recurrences_search_end_date')?.value || ''
+                search_start_date: EME.$('[name=recurrences_search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=recurrences_search_end_date]')?.value || ''
             }),
             fields: {
                 recurrence_id: {
@@ -1123,8 +1123,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 category: '',
                 search_name: EME.$('#trash_search_name')?.value || '',
                 search_location: '',
-                search_start_date: EME.$('#trash_search_start_date')?.value || '',
-                search_end_date: EME.$('#trash_search_end_date')?.value || '',
+                search_start_date: EME.$('[name=trash_search_start_date]')?.value || '',
+                search_end_date: EME.$('[name=trash_search_end_date]')?.value || '',
                 search_customfields: '',
                 search_customfieldids: ''
             }),

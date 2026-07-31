@@ -10490,7 +10490,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
                     // this call also executes the hook 'eme_trash_rsvp_action'
                     eme_trash_booking( $booking_id );
                     if ($send_trashmails) {
-                        eme_email_booking_action( $booking, 'cancelBooking' );
+                        eme_email_booking_action( $booking, 'trashBooking' );
                     }
                 }
             }

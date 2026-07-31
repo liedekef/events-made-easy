@@ -195,7 +195,7 @@ function eme_cleanup_unpaid( $eme_number ) {
         if ( ! empty( $event ) ) {
             eme_trash_booking( $booking_id );
             eme_manage_waitinglist( $event );
-            eme_email_booking_action( $booking, 'cancelBooking' );
+            eme_email_booking_action( $booking, 'trashBooking' );
         }
     }
 }

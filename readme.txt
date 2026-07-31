@@ -109,6 +109,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Allow cleanup of people based on last_seen date
 * Added placeholder #_LASTSEEN for people, the placeholder #_LASTSEEN for members is renamed to #_MEMBER_LASTSEEN to avoid clashes
 * Fix sending of cancel mails after deleting an event
+* When deleting events or the automatic cleanup of unpaid bookings, the wrong email template was used: the cancel-email was being sent, while it should be the trashed-email. Per the doc, the cancel-email is user-initiated, the trash-email is admin-initiated
 
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories

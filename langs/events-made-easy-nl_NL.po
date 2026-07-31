@@ -15304,73 +15304,73 @@ msgstr "Ongeldig bestandstype. Upload een CSV-bestand."
 
 #: includes/eme-people.php:2369
 msgid "Integrity verification"
-msgstr ""
+msgstr "Integriteitsverificatie"
 
 #: includes/eme-people.php:2457
 msgid "You have no right to verify people!"
-msgstr ""
+msgstr "U hebt geen recht om mensen te verifiëren!"
 
 #: includes/eme-cleanup.php:333
 msgid "No people found that would be moved to the trash bin based on the last seen date."
-msgstr ""
+msgstr "Geen mensen gevonden die op basis van de laatste gezien-datum naar de prullenbak zouden worden verplaatst."
 
 #. translators: %1$d is the number of people, %2$d is the number of time units, %3$s is the time period
 #: includes/eme-cleanup.php:349
 msgid "Cleanup done: %1$d people whose last seen date is older than %2$d %3$s(s) have been moved to the trash."
-msgstr ""
+msgstr "Opschoning voltooid: %1$d mensen waarvan de laatste gezien-datum ouder is dan %2$d %3$s zijn naar de prullenbak verplaatst."
 
 #: includes/eme-cleanup.php:385
 msgid "The following %d people have not been seen for the selected period and will be moved to the trash bin:"
-msgstr ""
+msgstr "De volgende %d mensen zijn gedurende de geselecteerde periode niet gezien en worden naar de prullenbak verplaatst:"
 
 #: includes/eme-cleanup.php:480
 msgid "Move people whose last seen date is older than"
-msgstr ""
+msgstr "Verplaats mensen waarvan de laatste gezien-datum ouder is dan"
 
 #: includes/eme-cleanup.php:492
 msgid "Exclude people belonging to these groups:"
-msgstr ""
+msgstr "Sluit mensen uit die tot deze groepen behoren:"
 
 #: includes/eme-cleanup.php:493
 msgid "Select one or more groups to exclude"
-msgstr ""
+msgstr "Selecteer een of meer groepen om uit te sluiten"
 
 #: includes/eme-cleanup.php:495
 msgid "Tip: After this action, people will still be in the trash bin and can be restored. Use the permanent delete action below to remove them forever."
-msgstr ""
+msgstr "Tip: Na deze actie bevinden mensen zich nog in de prullenbak en kunnen worden hersteld. Gebruik de permanente verwijderactie hieronder om ze voor altijd te verwijderen."
 
 #: includes/eme-tasks.php:586
 msgid "Add task signup"
-msgstr ""
+msgstr "Taakinschrijving toevoegen"
 
 #: includes/eme-tasks.php:592
 msgid "Assign"
-msgstr ""
+msgstr "Toewijzen"
 
 #: includes/eme-tasks.php:593
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
-msgstr ""
+msgstr "Hier worden geen overlap- of capaciteitscontroles uitgevoerd, om meer vrijheid te geven bij taaktoewijzingen."
 
 #: includes/eme-tasks.php:2328
 msgid "Please select a task and a person."
-msgstr ""
+msgstr "Selecteer een taak en een persoon."
 
 #: includes/eme-tasks.php:2334
 msgid "Invalid task."
-msgstr ""
+msgstr "Ongeldige taak."
 
 #: includes/eme-tasks.php:2339
 msgid "Invalid person."
-msgstr ""
+msgstr "Ongeldige persoon."
 
 #: includes/eme-tasks.php:2345
 msgid "This person is already signed up for this task."
-msgstr ""
+msgstr "Deze persoon is al ingeschreven voor deze taak."
 
 #: includes/eme-tasks.php:2374
 msgid "Task assigned successfully."
-msgstr ""
+msgstr "Taak succesvol toegewezen."
 
 #: includes/eme-tasks.php:2376
 msgid "There was a problem assigning the task."
-msgstr ""
+msgstr "Er was een probleem bij het toewijzen van de taak."

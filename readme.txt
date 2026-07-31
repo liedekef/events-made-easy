@@ -108,6 +108,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * If using the function eme_search_events (you shouldn't): the signature has changed, see the code
 * Allow cleanup of people based on last_seen date
 * Added placeholder #_LASTSEEN for people, the placeholder #_LASTSEEN for members is renamed to #_MEMBER_LASTSEEN to avoid clashes
+* Fix sending of cancel mails after deleting an event
 
 = 3.1.10  (2026/07/26) =
 * Upgrade dompdf to fix security advisories

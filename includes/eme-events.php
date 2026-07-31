@@ -6276,7 +6276,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <span id="events_span_sendtrashmails" class="eme-hidden">
 <?php
         esc_html_e( 'Send emails for cancelled bookings too?', 'events-made-easy' );
-        echo eme_ui_select_binary( 0, 'send_trashmails' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+        echo eme_ui_select_binary( 0, 'events_send_trashmails' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         </span>
         <span id="events_span_addtocategory" class="eme-hidden">
@@ -10462,26 +10462,24 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 
 function eme_trash_events( $ids, $send_trashmails = 0 ) {
     global $wpdb;
-    $table_name     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     if (!eme_is_list_of_int( $ids ) ) {
         return;
     }
 
+    $event_ids = array_map( 'intval', explode( ',', $ids ) );
     if ( has_action( 'eme_trash_event_action' ) ) {
-        $event_ids = explode( ',', $ids );
         foreach ( $event_ids as $event_id ) {
             $event = eme_get_event( $event_id );
             do_action( 'eme_trash_event_action', $event );
         }
     }
 
-    $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
-    $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
-    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $placeholders = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
+    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $event_ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
     if ( $send_trashmails || has_action( 'eme_trash_rsvp_action' ) ) {
-        $event_ids = explode( ',', $ids );
         foreach ( $event_ids as $event_id ) {
             $booking_ids = eme_get_bookingids_for( $event_id );
             if ( ! empty( $booking_ids ) ) {
@@ -10503,7 +10501,6 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
     }
 
     if ( $send_trashmails ) {
-        $event_ids = explode( ',', $ids );
         foreach ( $event_ids as $event_id ) {
             $task_signups = eme_get_event_task_signups( $event_id );
             foreach ( $task_signups as $signup_id => $signup ) {

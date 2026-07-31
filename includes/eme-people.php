@@ -452,6 +452,14 @@ function eme_get_people_placeholder_handler_definitions() {
             $replacement = $ctx['person']['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
+        '/#_LASTSEEN/' => function( $result, $matches, $ctx ) {
+            if ( ! eme_is_empty_datetime( $ctx['person']['last_seen'] ) ) {
+                $replacement = eme_localized_datetime( $ctx['person']['last_seen'], EME_TIMEZONE );
+            } else {
+                $replacement = __( 'Never', 'events-made-easy' );
+            }
+            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+        },
         '/#_IMAGETITLE$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-31T13:23:46+00:00\n"
+"POT-Creation-Date: 2026-08-01T06:28:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -151,14 +151,14 @@ msgid "People & Groups"
 msgstr ""
 
 #: events-manager.php:380
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9788
 #: includes/eme-import.php:87
 msgid "Members"
 msgstr ""
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9789
 #: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
@@ -943,7 +943,7 @@ msgid "Modified on"
 msgstr ""
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9785
 msgid "Last seen on"
 msgstr ""
 
@@ -4966,49 +4966,49 @@ msgstr ""
 msgid "Nbr People"
 msgstr ""
 
-#: includes/eme-events.php:9786
+#: includes/eme-events.php:9787
 msgid "No matching member found"
 msgstr ""
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9790
 #: includes/eme-gdpr.php:506
 #: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1576
 msgid "Membership"
 msgstr ""
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9791
 #: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr ""
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9792
 msgid "Contact"
 msgstr ""
 
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9793
 msgid "Nbr Active Members"
 msgstr ""
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9794
 #: includes/eme-gdpr.php:507
 #: includes/eme-gdpr.php:694
 msgid "Start"
 msgstr ""
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9795
 #: includes/eme-gdpr.php:508
 #: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr ""
 
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9796
 #: includes/eme-members.php:1658
 msgid "Usage count"
 msgstr ""
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9797
 msgid "Registered on"
 msgstr ""
 

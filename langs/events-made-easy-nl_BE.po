@@ -195,7 +195,7 @@ msgstr "Evenementen"
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9789
 #: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
@@ -4269,60 +4269,60 @@ msgstr "Openbare groepen"
 msgid "Nbr People"
 msgstr "Aantal personen"
 
-#: includes/eme-events.php:9786
+#: includes/eme-events.php:9787
 msgid "No matching member found"
 msgstr "Geen overeenkomend lid gevonden."
 
 #: events-manager.php:380
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9788
 #: includes/eme-import.php:87
 msgid "Members"
 msgstr "Leden"
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9790
 #: includes/eme-gdpr.php:506
 #: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1576
 msgid "Membership"
 msgstr "Lidmaatschap"
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9791
 #: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr "Lid ID"
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9792
 msgid "Contact"
 msgstr "Contact"
 
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9793
 msgid "Nbr Active Members"
 msgstr "Aantal actieve leden"
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9794
 #: includes/eme-gdpr.php:507
 #: includes/eme-gdpr.php:694
 msgid "Start"
 msgstr "Begin"
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9795
 #: includes/eme-gdpr.php:508
 #: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr "Einde"
 
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9796
 #: includes/eme-members.php:1658
 msgid "Usage count"
 msgstr "Aantal keren gebruikt"
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9797
 msgid "Registered on"
 msgstr "Geregistreerd op"
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9785
 msgid "Last seen on"
 msgstr "Laatst gezien op"
 

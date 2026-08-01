@@ -236,7 +236,7 @@ msgstr "Podujatia"
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9789
 #: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
@@ -4481,60 +4481,60 @@ msgstr "Verejná skupina"
 msgid "Nbr People"
 msgstr "Počet ľudí"
 
-#: includes/eme-events.php:9786
+#: includes/eme-events.php:9787
 msgid "No matching member found"
 msgstr "Nenašiel sa žiadny vyhovujúci člen"
 
 #: events-manager.php:380
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9788
 #: includes/eme-import.php:87
 msgid "Members"
 msgstr "Členovia"
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9790
 #: includes/eme-gdpr.php:506
 #: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1576
 msgid "Membership"
 msgstr "Členstvo"
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9791
 #: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr "ID člena"
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9792
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9793
 msgid "Nbr Active Members"
 msgstr "Počet aktívnych členov"
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9794
 #: includes/eme-gdpr.php:507
 #: includes/eme-gdpr.php:694
 msgid "Start"
 msgstr "Začiatok"
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9795
 #: includes/eme-gdpr.php:508
 #: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr "Koniec"
 
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9796
 #: includes/eme-members.php:1658
 msgid "Usage count"
 msgstr "Počet použití"
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9797
 msgid "Registered on"
 msgstr "Zaregistrovaný dňa"
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9785
 msgid "Last seen on"
 msgstr "Naposledy online"
 

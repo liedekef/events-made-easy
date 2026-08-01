@@ -1887,7 +1887,7 @@ msgstr "Listes de vacances"
 msgid "Event ID"
 msgstr "ID de l’évènement"
 
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9796
 #: includes/eme-members.php:1658
 msgid "Usage count"
 msgstr "Nombre d'utilisation"
@@ -4165,7 +4165,7 @@ msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. N
 msgid "Free"
 msgstr "Gratuit"
 
-#: includes/eme-events.php:9786
+#: includes/eme-events.php:9787
 msgid "No matching member found"
 msgstr "Aucun membre correspondant trouvé"
 
@@ -5206,7 +5206,7 @@ msgid "Send emails for cancelled bookings too?"
 msgstr "Envoyer des courriers pour les réservations annulées aussi ?"
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9785
 msgid "Last seen on"
 msgstr "Vu pour la dernière fois le"
 
@@ -8576,7 +8576,7 @@ msgstr "Utilisateur WP lié"
 msgid "Events Made Easy Member Data"
 msgstr "Données des membres Events Made Easy"
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9791
 #: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr "ID membre"
@@ -9308,7 +9308,7 @@ msgstr "Texte indiquant qu’il n’est plus possible de réserver"
 msgid "Cancellations no longer allowed on this date."
 msgstr "Les annulations ne sont plus autorisées à cette date."
 
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9793
 msgid "Nbr Active Members"
 msgstr "Nbr de membres actifs"
 
@@ -10331,18 +10331,18 @@ msgstr "Rappels envoyés"
 msgid "Paid on"
 msgstr "Payé le"
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9797
 msgid "Registered on"
 msgstr "Enregistré le"
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9795
 #: includes/eme-gdpr.php:508
 #: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr "Fin"
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9794
 #: includes/eme-gdpr.php:507
 #: includes/eme-gdpr.php:694
 msgid "Start"
@@ -10352,7 +10352,7 @@ msgstr "Début"
 msgid "Answers"
 msgstr "Réponses"
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9790
 #: includes/eme-gdpr.php:506
 #: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1576
@@ -10361,7 +10361,7 @@ msgstr "Adhésion"
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9789
 #: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
@@ -10369,7 +10369,7 @@ msgid "Memberships"
 msgstr "Les adhésions"
 
 #: events-manager.php:380
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9788
 #: includes/eme-import.php:87
 msgid "Members"
 msgstr "Membres"
@@ -14595,7 +14595,7 @@ msgstr "Puisque l'auteur n'est pas défini pour cet évènement, toute référen
 msgid "Event author"
 msgstr "Auteur de l'évènement"
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9792
 msgid "Contact"
 msgstr "Contact"
 

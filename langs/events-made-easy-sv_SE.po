@@ -195,7 +195,7 @@ msgstr "Event"
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9789
 #: includes/eme-gdpr.php:500
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
@@ -4285,61 +4285,61 @@ msgstr "Publik grupp"
 msgid "Nbr People"
 msgstr "Antal personer"
 
-#: includes/eme-events.php:9786
+#: includes/eme-events.php:9787
 msgid "No matching member found"
 msgstr "Ingen matchande medlem hittades"
 
 #: events-manager.php:380
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9788
 #: includes/eme-import.php:87
 msgid "Members"
 msgstr "Medlemmar"
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9790
 #: includes/eme-gdpr.php:506
 #: includes/eme-gdpr.php:690
 #: includes/eme-members.php:1576
 msgid "Membership"
 msgstr "Medlemskap"
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9791
 #: includes/eme-gdpr.php:686
 msgid "Member ID"
 msgstr "Medlems-ID"
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9792
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9793
 msgid "Nbr Active Members"
 msgstr "Antal aktiva medlemmar"
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9794
 #: includes/eme-gdpr.php:507
 #: includes/eme-gdpr.php:694
 msgid "Start"
 msgstr "Start"
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9795
 #: includes/eme-gdpr.php:508
 #: includes/eme-gdpr.php:698
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr "Slut"
 
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9796
 #: includes/eme-members.php:1658
 #, fuzzy
 msgid "Usage count"
 msgstr "Uppdatera land"
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9797
 msgid "Registered on"
 msgstr "Registrerad den"
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9785
 msgid "Last seen on"
 msgstr "Senast sedd den"
 

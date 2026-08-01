@@ -400,6 +400,7 @@ function eme_cpi_ajax() {
 
 	[$person_id, $add_update_message] = eme_add_update_person_from_form( $person_id );
 	if ( $person_id ) {
+        eme_update_person_lastseen( $person_id );
 		$message = __( 'Person updated', 'events-made-easy' );
 		eme_captcha_remove( $captcha_res );
 	} else {
@@ -537,6 +538,8 @@ function eme_show_personal_info( $email ) {
 					$output .= '</table>';
 				}
 			}
+            // also update lastseen
+            eme_update_person_lastseen( $person['person_id'] );
 			if ( $counted > 1 ) {
 				$output .= '<hr>';
 			}

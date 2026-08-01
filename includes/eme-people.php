@@ -4802,7 +4802,8 @@ function eme_update_email_gdpr( $email ) {
         $table,
         [
             'gdpr'      => 1,
-            'gdpr_date' => $gdpr_date
+            'gdpr_date' => $gdpr_date,
+            'last_seen' => $gdpr_date
         ],
         [ 'email' => $email ],
         [ '%d', '%s' ],

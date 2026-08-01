@@ -2279,37 +2279,39 @@ function eme_count_pending_tasksignups() {
 
 add_action( 'wp_ajax_eme_event_tasks_snapselect', 'eme_ajax_event_tasks_snapselect' );
 function eme_ajax_event_tasks_snapselect() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	header( 'Content-type: application/json; charset=utf-8' );
-	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
-		wp_die();
-	}
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+    if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
+        print wp_json_encode( [ 'Result' => 'ERROR', 'Message' => esc_html__( 'Access denied!', 'events-made-easy' ) ] );
+        wp_die();
+    }
 
-	$event_id = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
-	if ( ! $event_id ) {
-		print wp_json_encode( [ 'Records' => [], 'hasMore' => false ] );
-		wp_die();
-	}
+    $event_id = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
+    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    if ( ! $event_id ) {
+        print wp_json_encode( [ 'Records' => [], 'hasMore' => false ] );
+        wp_die();
+    }
 
-	$tasks = eme_get_event_tasks( $event_id );
+    $tasks = eme_get_event_tasks( $event_id );
 
-	$records = [];
-	foreach ( $tasks as $task ) {
-		$count = eme_count_task_signups( $task['task_id'] );
-		if ( $task['spaces'] > 0 ) {
-			$text = sprintf( '%s (%d/%d)', $task['name'], $count, $task['spaces'] );
-		} else {
-			$text = $task['name'];
-		}
-		$records[] = [
-			'id'   => intval( $task['task_id'] ),
-			'text' => esc_html( $text ),
-		];
-	}
+    $records = [];
+    foreach ( $tasks as $task ) {
+        $count = eme_count_task_signups( $task['task_id'] );
+        if ( ! empty($q) && ! str_contains( strtolower($task['name']), $q ) ) continue;
+        if ( $task['spaces'] > 0 ) {
+            $text = sprintf( '%s (%d/%d)', $task['name'], $count, $task['spaces'] );
+        } else {
+            $text = $task['name'];
+        }
+        $records[] = [
+            'id'   => intval( $task['task_id'] ),
+            'text' => esc_html( $text ),
+        ];
+    }
 
-	print wp_json_encode( [ 'Records' => $records, 'hasMore' => false ] );
-	wp_die();
+    print wp_json_encode( [ 'Records' => $records, 'hasMore' => false ] );
+    wp_die();
 }
 
 add_action( 'wp_ajax_eme_assign_task_signup', 'eme_ajax_assign_task_signup' );

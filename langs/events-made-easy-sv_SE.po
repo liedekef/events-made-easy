@@ -81,13 +81,13 @@ msgstr "på uppdrag av %s"
 #: includes/eme-options.php:142
 #: includes/eme-payments.php:4258
 #: includes/eme-people.php:4339
-#: includes/eme-people.php:5365
-#: includes/eme-people.php:5472
-#: includes/eme-people.php:5668
-#: includes/eme-people.php:5707
-#: includes/eme-people.php:5716
-#: includes/eme-people.php:5724
-#: includes/eme-people.php:5821
+#: includes/eme-people.php:5366
+#: includes/eme-people.php:5473
+#: includes/eme-people.php:5669
+#: includes/eme-people.php:5708
+#: includes/eme-people.php:5717
+#: includes/eme-people.php:5725
+#: includes/eme-people.php:5822
 #: includes/eme-recurrence.php:666
 #: includes/eme-recurrence.php:836
 #: includes/eme-rsvp.php:1306
@@ -102,7 +102,7 @@ msgstr "på uppdrag av %s"
 #: includes/eme-tasks.php:2166
 #: includes/eme-tasks.php:2177
 #: includes/eme-tasks.php:2285
-#: includes/eme-tasks.php:2320
+#: includes/eme-tasks.php:2322
 #: includes/eme-templates.php:494
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
@@ -123,8 +123,8 @@ msgid "Location"
 msgstr "Plats"
 
 #: includes/eme-events.php:9738
-#: includes/eme-gdpr.php:473
-#: includes/eme-gdpr.php:618
+#: includes/eme-gdpr.php:474
+#: includes/eme-gdpr.php:621
 #: includes/eme-locations.php:571
 #: includes/eme-people.php:1050
 #: includes/eme-people.php:1224
@@ -135,8 +135,8 @@ msgstr "Stat"
 
 #: includes/eme-countries.php:321
 #: includes/eme-events.php:9737
-#: includes/eme-gdpr.php:474
-#: includes/eme-gdpr.php:622
+#: includes/eme-gdpr.php:475
+#: includes/eme-gdpr.php:625
 #: includes/eme-locations.php:579
 #: includes/eme-people.php:1051
 #: includes/eme-people.php:1225
@@ -196,7 +196,7 @@ msgstr "Event"
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
 #: includes/eme-events.php:9789
-#: includes/eme-gdpr.php:500
+#: includes/eme-gdpr.php:501
 #: includes/eme-options.php:1351
 #: includes/eme-options.php:1681
 msgid "Memberships"
@@ -276,10 +276,10 @@ msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 #: includes/eme-people.php:2528
 #: includes/eme-people.php:2608
 #: includes/eme-people.php:2623
-#: includes/eme-people.php:5390
-#: includes/eme-people.php:5404
+#: includes/eme-people.php:5391
 #: includes/eme-people.php:5405
 #: includes/eme-people.php:5406
+#: includes/eme-people.php:5407
 #: includes/eme-tasks.php:2142
 msgid "Edit person"
 msgstr "Redigera person"
@@ -364,8 +364,8 @@ msgstr "Lägg till kategori"
 
 #: includes/eme-cleanup.php:392
 #: includes/eme-events.php:9663
-#: includes/eme-gdpr.php:465
-#: includes/eme-gdpr.php:505
+#: includes/eme-gdpr.php:466
+#: includes/eme-gdpr.php:506
 #: includes/eme-people.php:1038
 #: includes/eme-people.php:1216
 #: includes/eme-people.php:1538
@@ -391,7 +391,7 @@ msgstr "Namn"
 #: includes/eme-holidays.php:282
 #: includes/eme-locations.php:3067
 #: includes/eme-members.php:6550
-#: includes/eme-people.php:5495
+#: includes/eme-people.php:5496
 #: includes/eme-templates.php:476
 msgid "No name"
 msgstr "Inget namn"
@@ -1446,10 +1446,10 @@ msgstr "Fast per plats"
 #: includes/eme-formfields.php:3615
 #: includes/eme-formfields.php:3616
 #: includes/eme-fs.php:650
-#: includes/eme-gdpr.php:462
 #: includes/eme-gdpr.php:463
-#: includes/eme-gdpr.php:582
-#: includes/eme-gdpr.php:583
+#: includes/eme-gdpr.php:464
+#: includes/eme-gdpr.php:585
+#: includes/eme-gdpr.php:586
 #: includes/eme-locations.php:3103
 #: includes/eme-members.php:6710
 #: includes/eme-people.php:444
@@ -1466,10 +1466,10 @@ msgstr "Fast per plats"
 #: includes/eme-people.php:1881
 #: includes/eme-people.php:1924
 #: includes/eme-people.php:1967
-#: includes/eme-people.php:5409
-#: includes/eme-people.php:5426
+#: includes/eme-people.php:5410
 #: includes/eme-people.php:5427
-#: includes/eme-people.php:5498
+#: includes/eme-people.php:5428
+#: includes/eme-people.php:5499
 #: includes/eme-rsvp.php:4049
 #: includes/eme-rsvp.php:6369
 #: includes/eme-ui-helpers.php:148
@@ -1486,10 +1486,10 @@ msgstr "Ja"
 #: includes/eme-formfields.php:3615
 #: includes/eme-formfields.php:3616
 #: includes/eme-fs.php:649
-#: includes/eme-gdpr.php:462
 #: includes/eme-gdpr.php:463
-#: includes/eme-gdpr.php:582
-#: includes/eme-gdpr.php:583
+#: includes/eme-gdpr.php:464
+#: includes/eme-gdpr.php:585
+#: includes/eme-gdpr.php:586
 #: includes/eme-locations.php:3103
 #: includes/eme-members.php:6710
 #: includes/eme-people.php:444
@@ -1506,10 +1506,10 @@ msgstr "Ja"
 #: includes/eme-people.php:1883
 #: includes/eme-people.php:1926
 #: includes/eme-people.php:1969
-#: includes/eme-people.php:5409
-#: includes/eme-people.php:5426
+#: includes/eme-people.php:5410
 #: includes/eme-people.php:5427
-#: includes/eme-people.php:5498
+#: includes/eme-people.php:5428
+#: includes/eme-people.php:5499
 #: includes/eme-rsvp.php:4049
 #: includes/eme-rsvp.php:6369
 #: includes/eme-ui-helpers.php:149
@@ -1711,7 +1711,7 @@ msgstr "Din prenumeration har avslutats."
 #: includes/eme-events.php:1021
 #: includes/eme-events.php:1028
 #: includes/eme-events.php:1036
-#: includes/eme-gdpr.php:421
+#: includes/eme-gdpr.php:422
 msgid "This link is no longer valid, please request a new link."
 msgstr "Denna länk är inte längre giltig, vänligen begär en ny länk."
 
@@ -1848,8 +1848,8 @@ msgid "Membership check"
 msgstr "Kontroll av medlemskap"
 
 #: includes/eme-events.php:1671
-#: includes/eme-gdpr.php:477
-#: includes/eme-gdpr.php:634
+#: includes/eme-gdpr.php:478
+#: includes/eme-gdpr.php:637
 #: includes/eme-options.php:59
 #: includes/eme-people.php:2697
 msgid "GDPR approval"
@@ -4067,8 +4067,8 @@ msgstr "Redigera platsen ”%s”"
 
 #: includes/eme-events.php:9752
 #: includes/eme-formfields.php:1438
-#: includes/eme-gdpr.php:471
-#: includes/eme-gdpr.php:610
+#: includes/eme-gdpr.php:472
+#: includes/eme-gdpr.php:613
 #: includes/eme-locations.php:567
 #: includes/eme-people.php:1048
 #: includes/eme-people.php:1222
@@ -4079,8 +4079,8 @@ msgstr "Ort"
 
 #: includes/eme-events.php:9753
 #: includes/eme-formfields.php:1447
-#: includes/eme-gdpr.php:472
-#: includes/eme-gdpr.php:614
+#: includes/eme-gdpr.php:473
+#: includes/eme-gdpr.php:617
 #: includes/eme-locations.php:575
 #: includes/eme-people.php:1049
 #: includes/eme-people.php:1223
@@ -4105,7 +4105,7 @@ msgstr "Endast online"
 
 #: includes/eme-events.php:9762
 #: includes/eme-events.php:9815
-#: includes/eme-gdpr.php:586
+#: includes/eme-gdpr.php:589
 #: includes/eme-people.php:1039
 #: includes/eme-people.php:1217
 msgid "Person ID"
@@ -4137,8 +4137,8 @@ msgstr "Grupper"
 #: includes/eme-formfields.php:2943
 #: includes/eme-formfields.php:3142
 #: includes/eme-gdpr.php:247
-#: includes/eme-gdpr.php:466
-#: includes/eme-gdpr.php:590
+#: includes/eme-gdpr.php:467
+#: includes/eme-gdpr.php:593
 #: includes/eme-members.php:1777
 #: includes/eme-members.php:3429
 #: includes/eme-options.php:34
@@ -4162,8 +4162,8 @@ msgstr "Efternamn"
 #: includes/eme-formfields.php:2956
 #: includes/eme-formfields.php:3152
 #: includes/eme-gdpr.php:247
-#: includes/eme-gdpr.php:467
-#: includes/eme-gdpr.php:594
+#: includes/eme-gdpr.php:468
+#: includes/eme-gdpr.php:597
 #: includes/eme-members.php:1778
 #: includes/eme-members.php:3430
 #: includes/eme-options.php:35
@@ -4191,8 +4191,8 @@ msgstr "Förnamn"
 #: includes/eme-gdpr.php:128
 #: includes/eme-gdpr.php:202
 #: includes/eme-gdpr.php:318
-#: includes/eme-gdpr.php:468
-#: includes/eme-gdpr.php:598
+#: includes/eme-gdpr.php:469
+#: includes/eme-gdpr.php:601
 #: includes/eme-members.php:1779
 #: includes/eme-members.php:3431
 #: includes/eme-options.php:36
@@ -4213,8 +4213,8 @@ msgstr "E-post"
 #: includes/eme-events.php:9769
 #: includes/eme-formfields.php:1511
 #: includes/eme-formfields.php:3162
-#: includes/eme-gdpr.php:475
-#: includes/eme-gdpr.php:626
+#: includes/eme-gdpr.php:476
+#: includes/eme-gdpr.php:629
 #: includes/eme-options.php:37
 #: includes/eme-people.php:1053
 #: includes/eme-people.php:1227
@@ -4263,8 +4263,8 @@ msgid "Related to"
 msgstr "Relaterad till"
 
 #: includes/eme-events.php:9781
-#: includes/eme-gdpr.php:476
-#: includes/eme-gdpr.php:630
+#: includes/eme-gdpr.php:477
+#: includes/eme-gdpr.php:633
 #: includes/eme-options.php:2123
 #: includes/eme-people.php:1056
 #: includes/eme-people.php:1230
@@ -4296,14 +4296,14 @@ msgid "Members"
 msgstr "Medlemmar"
 
 #: includes/eme-events.php:9790
-#: includes/eme-gdpr.php:506
-#: includes/eme-gdpr.php:690
+#: includes/eme-gdpr.php:507
+#: includes/eme-gdpr.php:693
 #: includes/eme-members.php:1576
 msgid "Membership"
 msgstr "Medlemskap"
 
 #: includes/eme-events.php:9791
-#: includes/eme-gdpr.php:686
+#: includes/eme-gdpr.php:689
 msgid "Member ID"
 msgstr "Medlems-ID"
 
@@ -4316,14 +4316,14 @@ msgid "Nbr Active Members"
 msgstr "Antal aktiva medlemmar"
 
 #: includes/eme-events.php:9794
-#: includes/eme-gdpr.php:507
-#: includes/eme-gdpr.php:694
+#: includes/eme-gdpr.php:508
+#: includes/eme-gdpr.php:697
 msgid "Start"
 msgstr "Start"
 
 #: includes/eme-events.php:9795
-#: includes/eme-gdpr.php:508
-#: includes/eme-gdpr.php:698
+#: includes/eme-gdpr.php:509
+#: includes/eme-gdpr.php:701
 #: includes/eme-tasks.php:933
 msgid "End"
 msgstr "Slut"
@@ -5716,8 +5716,8 @@ msgstr "Ingen sådan post"
 #: includes/eme-gdpr.php:331
 #: includes/eme-members.php:5027
 #: includes/eme-payments.php:4148
-#: includes/eme-people.php:4910
-#: includes/eme-people.php:4996
+#: includes/eme-people.php:4911
+#: includes/eme-people.php:4997
 #: includes/eme-rsvp.php:867
 #: includes/eme-rsvp.php:1179
 #: includes/eme-tasks.php:1824
@@ -5737,8 +5737,8 @@ msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänli
 #: includes/eme-members.php:4639
 #: includes/eme-members.php:5039
 #: includes/eme-payments.php:4158
-#: includes/eme-people.php:4920
-#: includes/eme-people.php:5007
+#: includes/eme-people.php:4921
+#: includes/eme-people.php:5008
 #: includes/eme-rsvp.php:879
 #: includes/eme-rsvp.php:1191
 #: includes/eme-tasks.php:1836
@@ -5755,10 +5755,10 @@ msgstr "Tack för din begäran, ett e-postmeddelande kommer att skickas med ytte
 #: includes/eme-gdpr.php:124
 #: includes/eme-gdpr.php:198
 #: includes/eme-gdpr.php:314
-#: includes/eme-gdpr.php:434
+#: includes/eme-gdpr.php:435
 #: includes/eme-members.php:1750
-#: includes/eme-people.php:4983
-#: includes/eme-people.php:5068
+#: includes/eme-people.php:4984
+#: includes/eme-people.php:5069
 #: includes/eme-rsvp.php:167
 #: includes/eme-rsvp.php:834
 #: includes/eme-tasks.php:1535
@@ -5785,58 +5785,58 @@ msgstr "(kopiera/klistra in denna länk i din webbläsare för att ändra inform
 msgid "Request to change personal info"
 msgstr "Begäran att ändra personlig information"
 
-#: includes/eme-gdpr.php:403
+#: includes/eme-gdpr.php:404
 #: includes/eme-people.php:106
 msgid "Person updated"
 msgstr "Person uppdaterades"
 
-#: includes/eme-gdpr.php:406
+#: includes/eme-gdpr.php:407
 #: includes/eme-people.php:110
 msgid "Problem detected while updating person"
 msgstr "Ett problem upptäcktes när personen skulle uppdateras"
 
-#: includes/eme-gdpr.php:425
+#: includes/eme-gdpr.php:426
 #: includes/eme-options.php:55
 msgid "Last name: "
 msgstr "Efternamn: "
 
-#: includes/eme-gdpr.php:426
+#: includes/eme-gdpr.php:427
 #: includes/eme-options.php:55
 msgid "First name: "
 msgstr "Förnamn: "
 
-#: includes/eme-gdpr.php:427
+#: includes/eme-gdpr.php:428
 #: includes/eme-options.php:55
 msgid "Email: "
 msgstr "E-post: "
 
-#: includes/eme-gdpr.php:480
+#: includes/eme-gdpr.php:481
 msgid "Image"
 msgstr "Bild"
 
-#: includes/eme-gdpr.php:482
-#: includes/eme-gdpr.php:638
+#: includes/eme-gdpr.php:483
+#: includes/eme-gdpr.php:641
 msgid "Member of group(s)"
 msgstr "Medlem i grupp(er)"
 
-#: includes/eme-gdpr.php:516
-#: includes/eme-gdpr.php:709
+#: includes/eme-gdpr.php:517
+#: includes/eme-gdpr.php:712
 msgid "Main family account for"
 msgstr "Huvudfamiljkonto för"
 
-#: includes/eme-gdpr.php:554
+#: includes/eme-gdpr.php:557
 msgid "What personal data we collect and why we collect it"
 msgstr "Vilken personlig data vi samlar in och varför vi samlar den"
 
-#: includes/eme-gdpr.php:555
+#: includes/eme-gdpr.php:558
 msgid "EME collects data based on the RSVP and member forms and optionally extra info in the backend for people. These are configured using by the person operating the site and thus should be explained in a global manner."
 msgstr "EME samlar data baserat på OSA- och medlemsformulären och som tillval från extra info i back-end för personer. Detta konfigureras av personen som administrerar webbplatsen och skall således förklaras för hela webbplatsen."
 
-#: includes/eme-gdpr.php:556
+#: includes/eme-gdpr.php:559
 msgid "The data export will not show the info stored by RSVP forms if that info was unique to that event, however upon deletion all that data will be removed too."
 msgstr "Dataexporten kommer inte visa info sparad från OSA-formulär om den infon var unik för det eventet, men vid borttagning av allt data kommer även detta att tas bort."
 
-#: includes/eme-gdpr.php:557
+#: includes/eme-gdpr.php:560
 msgid "EME optionally uses a cookie to store the client date and time in order to adjust for client/server time differences when showing event dates and times."
 msgstr "EME använder som option en cookie att lagra klientdatum och tid för att kunna justera för tidsskillnader mellan klient/server när datum och klockslag för event ska visas."
 
@@ -5844,13 +5844,13 @@ msgstr "EME använder som option en cookie att lagra klientdatum och tid för at
 #: events-manager.php
 #: events-manager.php:359
 #: includes/eme-actions.php:775
-#: includes/eme-gdpr.php:560
-#: includes/eme-gdpr.php:566
-#: includes/eme-gdpr.php:767
+#: includes/eme-gdpr.php:563
+#: includes/eme-gdpr.php:569
+#: includes/eme-gdpr.php:770
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-gdpr.php:789
+#: includes/eme-gdpr.php:792
 msgid "All data from the plugin Events Made Easy related to this email has been removed, but don't forget this also cancelled the corresponding memberships!"
 msgstr "Allt data från tillägget Events Made Easy koppat till denna e-post har tagits bort, men glöm inte att det även avslutade motsvarande medlemskap!"
 
@@ -6218,8 +6218,8 @@ msgstr "Avboka"
 #: includes/eme-people.php:4358
 #: includes/eme-people.php:4461
 #: includes/eme-people.php:4661
-#: includes/eme-people.php:4954
-#: includes/eme-people.php:5039
+#: includes/eme-people.php:4955
+#: includes/eme-people.php:5040
 #: includes/eme-rsvp.php:1434
 msgid "Please enter a valid email address"
 msgstr "Vänligen ange en giltig e-postadress"
@@ -7858,7 +7858,7 @@ msgid "%1$d head of the family accounts + %2$d family members"
 msgstr "%1$d familjeöverhuvudkonton + %2$d familjemedlemmar"
 
 #: includes/eme-members.php:6659
-#: includes/eme-people.php:5391
+#: includes/eme-people.php:5392
 msgid "(family member)"
 msgstr "(familjemedlem)"
 
@@ -7876,23 +7876,23 @@ msgid "This is based on the payment ID of the member: %d"
 msgstr "Detta är baserat på medlemmens betalnings-ID: %d"
 
 #: includes/eme-members.php:6819
-#: includes/eme-people.php:5675
+#: includes/eme-people.php:5676
 msgid "(Dynamic)"
 msgstr "(Dynamisk)"
 
 #: includes/eme-members.php:6831
-#: includes/eme-people.php:5687
+#: includes/eme-people.php:5688
 msgid "Dynamic group added"
 msgstr "Dynamisk grupp tillagd"
 
 #: includes/eme-members.php:6833
-#: includes/eme-people.php:5689
+#: includes/eme-people.php:5690
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "Det uppstod ett problem med att lägga till fältet"
 
 #: includes/eme-members.php:6836
-#: includes/eme-people.php:5692
+#: includes/eme-people.php:5693
 msgid "Please enter a name for the group"
 msgstr "Vänligen ange ett namn för gruppen"
 
@@ -12139,7 +12139,7 @@ msgid "Edit dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 
 #: includes/eme-people.php:2827
-#: includes/eme-people.php:5500
+#: includes/eme-people.php:5501
 msgid "Edit group"
 msgstr "Redigera grupp"
 
@@ -12239,106 +12239,106 @@ msgstr "Telefonnumret som används av Events Made Easy när användaren är angi
 msgid "Bookings made for future events"
 msgstr "Bokningar gjorda för kommande evenemang"
 
-#: includes/eme-people.php:4946
-#: includes/eme-people.php:5031
+#: includes/eme-people.php:4947
+#: includes/eme-people.php:5032
 msgid "A request for confirmation has been sent to the given email address."
 msgstr "En begäran om bekräftelse har skickats till den angivna e-postadressen."
 
-#: includes/eme-people.php:4974
+#: includes/eme-people.php:4975
 msgid "If you want to subscribe to future mailings, please do so by entering your email here."
 msgstr "Om du vil prenumerera på framtida utskick, vänligen fyll i din e-postadress här."
 
-#: includes/eme-people.php:4977
+#: includes/eme-people.php:4978
 msgid "Please select the groups you wish to subscribe to."
 msgstr "Vänligen välj vilka grupper du vill prenumerera på."
 
-#: includes/eme-people.php:5059
+#: includes/eme-people.php:5060
 msgid "If you want to unsubscribe from future mailings, please do so by entering your email here."
 msgstr "Om du vill avsluta prenumeration för framtida utskick, vänligen gör så genom att ange din e-postadress här."
 
-#: includes/eme-people.php:5062
+#: includes/eme-people.php:5063
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Vänligen välj de grupper du vill avsluta prenumeration för."
 
-#: includes/eme-people.php:5385
+#: includes/eme-people.php:5386
 msgid "No surname"
 msgstr "Inget efternamn"
 
-#: includes/eme-people.php:5506
+#: includes/eme-people.php:5507
 msgid "Dynamic group of people"
 msgstr "Dynamisk grupp av personer"
 
 #. translators: %d is the number of persons in the group
-#: includes/eme-people.php:5513
+#: includes/eme-people.php:5514
 msgid "(%d person)"
 msgid_plural "(%d persons)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/eme-people.php:5517
+#: includes/eme-people.php:5518
 msgid "Dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 
 #. translators: %d is the number of members in the group
-#: includes/eme-people.php:5524
+#: includes/eme-people.php:5525
 msgid "(%d member)"
 msgid_plural "(%d members)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/eme-people.php:5838
+#: includes/eme-people.php:5839
 msgid "People recovered from trash bin."
 msgstr "Personer återskapade från papperskorgen."
 
-#: includes/eme-people.php:5850
+#: includes/eme-people.php:5851
 msgid "People moved to trash bin."
 msgstr "Personer flyttade till papperskorgen."
 
-#: includes/eme-people.php:5858
+#: includes/eme-people.php:5859
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persondata borttagen och flyttad till papperskorgen."
 
-#: includes/eme-people.php:5866
+#: includes/eme-people.php:5867
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Sätt GDPR-godkännande till ”Ja” (säkerställ att markerade personer är medvetna om detta)."
 
-#: includes/eme-people.php:5874
+#: includes/eme-people.php:5875
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR-godkännande satt till \"Nej\" (se till att de valda personerna är medvetna om detta)."
 
-#: includes/eme-people.php:5882
+#: includes/eme-people.php:5883
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Massutskick satt till \"Ja\" (se till att de valda personerna är medvetna om detta)."
 
-#: includes/eme-people.php:5890
+#: includes/eme-people.php:5891
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Massutskick satt till \"Nej\" (se till att de valda personerna är medvetna om detta)."
 
-#: includes/eme-people.php:5898
+#: includes/eme-people.php:5899
 msgid "Birthday email set to \"Yes\"."
 msgstr "Födelsedagsmeddelande satt till \"Ja\"."
 
-#: includes/eme-people.php:5906
+#: includes/eme-people.php:5907
 msgid "Birthday email set to \"No\"."
 msgstr "Födelsedagsmeddelande satt till \"Nej\"."
 
-#: includes/eme-people.php:5915
+#: includes/eme-people.php:5916
 msgid "Language updated."
 msgstr "Språk uppdaterat."
 
-#: includes/eme-people.php:5928
+#: includes/eme-people.php:5929
 msgid "People deleted."
 msgstr "Personer har tagits bort."
 
-#: includes/eme-people.php:5938
+#: includes/eme-people.php:5939
 msgid "People added to group."
 msgstr "Personer tillagda i gruppen."
 
-#: includes/eme-people.php:5949
+#: includes/eme-people.php:5950
 msgid "People removed from group."
 msgstr "Personer borttagna från grupp."
 
-#: includes/eme-people.php:5958
+#: includes/eme-people.php:5959
 msgid "Groups deleted."
 msgstr "Grupper borttagna"
 
@@ -14764,19 +14764,19 @@ msgstr "Visa inte detta råd igen"
 msgid "Default Template"
 msgstr "Standardmall"
 
-#: includes/eme-gdpr.php:652
+#: includes/eme-gdpr.php:655
 msgid "Events Made Easy Personal Data"
 msgstr "Events Made Easy personuppgifter"
 
-#: includes/eme-gdpr.php:664
+#: includes/eme-gdpr.php:667
 msgid "Events Made Easy Uploaded files linked to the person"
 msgstr "Events Made Easy uppladdade filer kopplade till personen"
 
-#: includes/eme-gdpr.php:727
+#: includes/eme-gdpr.php:730
 msgid "Events Made Easy Member Data"
 msgstr "Events Made Easy medlemsdata"
 
-#: includes/eme-gdpr.php:738
+#: includes/eme-gdpr.php:741
 msgid "Events Made Easy Uploaded files linked to the member"
 msgstr "Events Made Easy uppladdade filer kopplade till medlemmen"
 
@@ -15421,26 +15421,26 @@ msgstr ""
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr ""
 
-#: includes/eme-tasks.php:2328
+#: includes/eme-tasks.php:2330
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2334
+#: includes/eme-tasks.php:2336
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2339
+#: includes/eme-tasks.php:2341
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2345
+#: includes/eme-tasks.php:2347
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2374
+#: includes/eme-tasks.php:2377
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2376
+#: includes/eme-tasks.php:2379
 msgid "There was a problem assigning the task."
 msgstr ""

@@ -2300,14 +2300,12 @@ function eme_ajax_event_tasks_snapselect() {
         $count = eme_count_task_signups( $task['task_id'] );
         if ( ! empty($q) && ! str_contains( strtolower($task['name']), $q ) ) continue;
         if ( $task['spaces'] > 0 ) {
-            $text = sprintf( '%s (%d/%d)', $task['name'], $count, $task['spaces'] );
-        } else {
-            $text = $task['name'];
+            $text = sprintf( '%s - %s (%d/%d)', $task['name'], eme_localized_datetime( $task['task_start'], EME_TIMEZONE, 1 ), $count, $task['spaces'] );
+            $records[] = [
+                'id'   => intval( $task['task_id'] ),
+                'text' => esc_html( $text ),
+            ];
         }
-        $records[] = [
-            'id'   => intval( $task['task_id'] ),
-            'text' => esc_html( $text ),
-        ];
     }
 
     print wp_json_encode( [ 'Records' => $records, 'hasMore' => false ] );

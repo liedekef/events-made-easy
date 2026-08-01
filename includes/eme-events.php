@@ -9782,6 +9782,7 @@ function eme_admin_enqueue_js() {
             'translate_bd_email'                   => __( 'Birthday Email', 'events-made-easy' ),
             'translate_publicgroup'                => __( 'Public group', 'events-made-easy' ),
             'translate_groupcount'                 => __( 'Nbr People', 'events-made-easy' ),
+            'translate_last_seen'                  => __( 'Last seen on', 'events-made-easy' ),
             // members
             'translate_nomatchmember'              => __( 'No matching member found', 'events-made-easy' ),
             'translate_members'                    => __( 'Members', 'events-made-easy' ),
@@ -9794,7 +9795,6 @@ function eme_admin_enqueue_js() {
             'translate_enddate'                    => __( 'End', 'events-made-easy' ),
             'translate_usage_count'                => __( 'Usage count', 'events-made-easy' ),
             'translate_registrationdate'           => __( 'Registered on', 'events-made-easy' ),
-            'translate_last_seen'                  => __( 'Last seen on', 'events-made-easy' ),
             'translate_paymentdate'                => __( 'Paid on', 'events-made-easy' ),
             'translate_uniquenbr'                  => __( 'Unique nbr', 'events-made-easy' ),
             'translate_paymentid'                  => __( 'Payment ID', 'events-made-easy' ),

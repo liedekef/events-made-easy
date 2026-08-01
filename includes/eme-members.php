@@ -5254,7 +5254,7 @@ function eme_get_member_placeholder_handler_definitions() {
             $replacement = eme_unique_nbr_formatted( $ctx['member']['unique_nbr'] );
             return eme_apply_output_filters( $replacement, $ctx['target'], true );
         },
-        '/#_MEMBER_LASTSEEN/' => function( $result, $matches, $ctx ) {
+        '/#_LASTSEEN/' => function( $result, $matches, $ctx ) {
             $member = $ctx['member'];
             if ( ! eme_is_empty_datetime( $member['last_seen'] ) ) {
                 $replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );

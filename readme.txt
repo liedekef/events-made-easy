@@ -107,7 +107,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * If tasks/todos are activated for an event, you're required to enter at least 1 task/todo
 * If using the function eme_search_events (you shouldn't): the signature has changed, see the code
 * Allow cleanup of people based on last_seen date
-* Added placeholder #_LASTSEEN for people, the placeholder #_LASTSEEN for members is renamed to #_MEMBER_LASTSEEN to avoid clashes
+* Added placeholder #_LASTSEEN for people
 * Fix sending of cancel mails after deleting an event
 * When deleting events or the automatic cleanup of unpaid bookings, the wrong email template was used: the cancel-email was being sent, while it should be the trashed-email. Per the doc, the cancel-email is user-initiated, the trash-email is admin-initiated
 

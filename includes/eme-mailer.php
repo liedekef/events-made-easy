@@ -1119,12 +1119,14 @@ function eme_schedule_next_mailing_occurrence( $mailing ) {
 }
 
 // Computes the next date (in "Y-m-d H:i:s" form, same time-of-day as the passed mailing) matching
-// the mailing's recurrence rule, strictly after its own planned_on. Returns '' if the rule has no
-// more occurrences left (e.g. past its recurrence_end_date).
+// the mailing's recurrence rule, strictly after both its own planned_on AND the current moment.
+// Returns '' if the rule has no more occurrences left (e.g. past its recurrence_end_date).
 function eme_get_next_mailing_occurrence_date( $mailing ) {
     if ( empty( $mailing['recurrence_freq'] ) || empty( $mailing['planned_on'] ) ) {
         return '';
     }
+
+    $now = current_time( 'mysql', false );
 
     // 'specific_days' stores full datetimes (possibly each with its own time of day, since they come
     // straight from the multi-select datetime picker) rather than a date-only rule, so we just
@@ -1132,8 +1134,9 @@ function eme_get_next_mailing_occurrence_date( $mailing ) {
     if ( $mailing['recurrence_freq'] === 'specific_days' ) {
         $specific_days = ! empty( $mailing['recurrence_specific_days'] ) ? explode( ',', $mailing['recurrence_specific_days'] ) : [];
         sort( $specific_days );
+        $after = max( $mailing['planned_on'], $now );
         foreach ( $specific_days as $day ) {
-            if ( $day > $mailing['planned_on'] ) {
+            if ( $day > $after ) {
                 return $day;
             }
         }
@@ -1142,6 +1145,7 @@ function eme_get_next_mailing_occurrence_date( $mailing ) {
 
     $current_date = eme_get_date_from_dt( $mailing['planned_on'] );
     $time_part    = eme_get_time_from_dt( $mailing['planned_on'] );
+    $after_date   = max( $current_date, eme_get_date_from_dt( $now ) );
     $recurrence   = [
         'recurrence_start_date' => $current_date, // faster to search for the next occurence here
         'recurrence_end_date'   => ! eme_is_empty_date( $mailing['recurrence_end_date'] ) ? $mailing['recurrence_end_date'] : '',
@@ -1158,10 +1162,11 @@ function eme_get_next_mailing_occurrence_date( $mailing ) {
     // using the mailing's own last planned_on date as the recurrence anchor (rather than the
     // original series start) is safe here: since that date itself already satisfies the rule,
     // realigning the anchor to it doesn't shift which future dates match, it just gives us a
-    // fresh starting point to search forward from - so we simply skip the anchor day itself below.
+    // fresh starting point to search forward from - so we simply skip past anything up to and
+    // including today (see $after_date above) rather than just the anchor day itself.
     $matching_days = eme_get_recurrence_days( $recurrence );
     foreach ( $matching_days as $day ) {
-        if ( $day > $current_date ) {
+        if ( $day > $after_date ) {
             return "$day $time_part";
         }
     }
@@ -2616,6 +2621,24 @@ function eme_send_generic_mail( $post_data ) {
         ? eme_parse_mailing_recurrence_post( $post_data, 'genericmail', $dates )
         : [];
 
+    // on edit, genericmail_actualstartdate is prefilled with this occurrence's current
+    // planned_on; can be in the past and then we take the next valid future occurence
+    if ( $edit_mailing_id > 0 && ! empty( $mailing_recurrence ) && $mailing_recurrence['freq'] !== 'specific_days'
+         && $dates[0] <= $eme_date_obj_now->getDateTime() ) {
+        $next = eme_get_next_mailing_occurrence_date( [
+            'planned_on'          => $dates[0],
+            'recurrence_freq'     => $mailing_recurrence['freq'],
+            'recurrence_interval' => $mailing_recurrence['interval'],
+            'recurrence_byday'    => $mailing_recurrence['byday'],
+            'recurrence_byweekno' => $mailing_recurrence['byweekno'],
+            'recurrence_months'   => $mailing_recurrence['months'],
+            'recurrence_end_date' => $mailing_recurrence['end_date'],
+        ] );
+        if ( ! empty( $next ) ) {
+            $dates = [ $next ];
+        } // else: no future occurrence left (e.g. past end_date) - keep the stale date, nothing better to fall back on
+    }
+
     $recipients_configured = 0;
     if ( isset( $post_data['eme_send_all_people'] ) ) {
         $conditions['eme_send_all_people'] = 1;
@@ -2784,6 +2807,24 @@ function eme_send_event_mail( $post_data ) {
     $mailing_recurrence = ( $queue && ! $fast_queue )
         ? eme_parse_mailing_recurrence_post( $post_data, 'eventmail', $dates )
         : [];
+
+    // on edit, eventmail_actualstartdate is prefilled with this occurrence's current
+    // planned_on; can be in the past and then we take the next valid future occurence
+    if ( $edit_mailing_id > 0 && ! empty( $mailing_recurrence ) && $mailing_recurrence['freq'] !== 'specific_days'
+         && $dates[0] <= $eme_date_obj_now->getDateTime() ) {
+        $next = eme_get_next_mailing_occurrence_date( [
+            'planned_on'          => $dates[0],
+            'recurrence_freq'     => $mailing_recurrence['freq'],
+            'recurrence_interval' => $mailing_recurrence['interval'],
+            'recurrence_byday'    => $mailing_recurrence['byday'],
+            'recurrence_byweekno' => $mailing_recurrence['byweekno'],
+            'recurrence_months'   => $mailing_recurrence['months'],
+            'recurrence_end_date' => $mailing_recurrence['end_date'],
+        ] );
+        if ( ! empty( $next ) ) {
+            $dates = [ $next ];
+        } // else: no future occurrence left (e.g. past end_date) - keep the stale date, nothing better to fall back on
+    }
 
     if ( $edit_mailing_id > 0 ) {
         // the dates and/or the selected events can change on edit, so instead of trying to

@@ -2373,6 +2373,7 @@ function eme_ajax_assign_task_signup() {
 
 	$res = eme_db_insert_task_signup( $signup );
 	if ( $res ) {
+        eme_email_tasksignup_action( $signup, 'new' );
 		print wp_json_encode( [ 'Result' => 'OK', 'htmlmessage' => '<div class="updated"><p>' . esc_html__( 'Task assigned successfully.', 'events-made-easy' ) . '</p></div>' ] );
 	} else {
 		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => '<div class="error"><p>' . esc_html__( 'There was a problem assigning the task.', 'events-made-easy' ) . '</p></div>' ] );

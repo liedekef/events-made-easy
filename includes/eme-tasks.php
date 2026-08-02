@@ -2302,8 +2302,14 @@ function eme_ajax_event_tasks_snapselect() {
         if ( $task['spaces'] > 0 ) {
             $text = sprintf( '%s - %s (%d/%d)', $task['name'], eme_localized_datetime( $task['task_start'], EME_TIMEZONE, 1 ), $count, $task['spaces'] );
             $records[] = [
-                'id'   => intval( $task['task_id'] ),
-                'text' => esc_html( $text ),
+                    'id'   => intval( $task['task_id'] ),
+                    'text' => $text,
+            ];
+        } else {
+            $records[] = [
+                    'id'   => intval( $task['task_id'] ),
+                    'text' => $task['name'],
+                    'disabled' => 'disabled'
             ];
         }
     }

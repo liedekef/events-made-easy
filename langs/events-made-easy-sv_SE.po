@@ -49,30 +49,30 @@ msgstr "på uppdrag av %s"
 #: includes/eme-holidays.php:264
 #: includes/eme-holidays.php:303
 #: includes/eme-locations.php:2982
-#: includes/eme-mailer.php:1877
-#: includes/eme-mailer.php:1966
-#: includes/eme-mailer.php:2071
-#: includes/eme-mailer.php:2109
-#: includes/eme-mailer.php:2165
-#: includes/eme-mailer.php:2191
-#: includes/eme-mailer.php:2274
-#: includes/eme-mailer.php:2308
-#: includes/eme-mailer.php:2343
-#: includes/eme-mailer.php:2390
-#: includes/eme-mailer.php:2401
-#: includes/eme-mailer.php:2461
-#: includes/eme-mailer.php:3032
-#: includes/eme-mailer.php:3077
-#: includes/eme-mailer.php:3090
-#: includes/eme-mailer.php:3221
-#: includes/eme-mailer.php:3366
-#: includes/eme-mailer.php:3375
-#: includes/eme-mailer.php:3384
-#: includes/eme-mailer.php:3393
-#: includes/eme-mailer.php:3402
-#: includes/eme-mailer.php:3891
-#: includes/eme-mailer.php:3936
-#: includes/eme-mailer.php:3992
+#: includes/eme-mailer.php:1882
+#: includes/eme-mailer.php:1971
+#: includes/eme-mailer.php:2076
+#: includes/eme-mailer.php:2114
+#: includes/eme-mailer.php:2170
+#: includes/eme-mailer.php:2196
+#: includes/eme-mailer.php:2279
+#: includes/eme-mailer.php:2313
+#: includes/eme-mailer.php:2348
+#: includes/eme-mailer.php:2395
+#: includes/eme-mailer.php:2406
+#: includes/eme-mailer.php:2466
+#: includes/eme-mailer.php:3073
+#: includes/eme-mailer.php:3118
+#: includes/eme-mailer.php:3131
+#: includes/eme-mailer.php:3262
+#: includes/eme-mailer.php:3407
+#: includes/eme-mailer.php:3416
+#: includes/eme-mailer.php:3425
+#: includes/eme-mailer.php:3434
+#: includes/eme-mailer.php:3443
+#: includes/eme-mailer.php:3932
+#: includes/eme-mailer.php:3977
+#: includes/eme-mailer.php:4033
 #: includes/eme-members.php:6514
 #: includes/eme-members.php:6632
 #: includes/eme-members.php:6772
@@ -102,7 +102,7 @@ msgstr "på uppdrag av %s"
 #: includes/eme-tasks.php:2166
 #: includes/eme-tasks.php:2177
 #: includes/eme-tasks.php:2285
-#: includes/eme-tasks.php:2322
+#: includes/eme-tasks.php:2326
 #: includes/eme-templates.php:494
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
@@ -396,10 +396,10 @@ msgstr "Namn"
 msgid "No name"
 msgstr "Inget namn"
 
-#: includes/eme-mailer.php:1998
-#: includes/eme-mailer.php:2013
-#: includes/eme-mailer.php:2023
-#: includes/eme-mailer.php:2134
+#: includes/eme-mailer.php:2003
+#: includes/eme-mailer.php:2018
+#: includes/eme-mailer.php:2028
+#: includes/eme-mailer.php:2139
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -489,8 +489,8 @@ msgid "Cleanup done: all data concerning events, locations and bookings have bee
 msgstr "Rensning utförd: alla uppgifter om event platser och bokningar har tagits bort."
 
 #: includes/eme-cleanup.php:369
-#: includes/eme-mailer.php:1983
-#: includes/eme-mailer.php:2126
+#: includes/eme-mailer.php:1988
+#: includes/eme-mailer.php:2131
 msgid "Are you sure you want to do this?"
 msgstr "Är du säker på att du vill göra detta?"
 
@@ -550,9 +550,9 @@ msgstr "Månad(er)"
 #: includes/eme-formfields.php:241
 #: includes/eme-holidays.php:98
 #: includes/eme-locations.php:890
-#: includes/eme-mailer.php:3925
-#: includes/eme-mailer.php:3981
-#: includes/eme-mailer.php:4014
+#: includes/eme-mailer.php:3966
+#: includes/eme-mailer.php:4022
+#: includes/eme-mailer.php:4055
 #: includes/eme-members.php:2892
 #: includes/eme-members.php:3260
 #: includes/eme-people.php:2069
@@ -808,9 +808,9 @@ msgstr "Språket ska motsvara ett av de WordPress-språk du vill stödja, eller 
 #: includes/eme-formfields.php:238
 #: includes/eme-holidays.php:95
 #: includes/eme-locations.php:879
-#: includes/eme-mailer.php:3920
-#: includes/eme-mailer.php:3977
-#: includes/eme-mailer.php:4011
+#: includes/eme-mailer.php:3961
+#: includes/eme-mailer.php:4018
+#: includes/eme-mailer.php:4052
 #: includes/eme-members.php:2851
 #: includes/eme-members.php:3254
 #: includes/eme-people.php:2022
@@ -1551,7 +1551,7 @@ msgstr "Tryck på bakåtknappen i din webbläsare för att komma tillbaka till f
 #: includes/eme-events.php:1062
 #: includes/eme-events.php:1287
 #: includes/eme-events.php:4815
-#: includes/eme-mailer.php:2436
+#: includes/eme-mailer.php:2441
 #: includes/eme-payments.php:158
 #: includes/eme-payments.php:2043
 #: includes/eme-rsvp.php:5496
@@ -1871,7 +1871,7 @@ msgstr "Events Made Easy-tilläggssida"
 #: includes/eme-events.php:2390
 #: includes/eme-events.php:9707
 #: includes/eme-locations.php:2328
-#: includes/eme-mailer.php:2026
+#: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6214
 msgid "Edit"
 msgstr "Redigera"
@@ -2562,65 +2562,65 @@ msgid "Bookings found for this event, so not possible to convert to a recurring 
 msgstr "Bokningar finns för detta event, går inte att konvertera till ett återkommande event."
 
 #: includes/eme-events.php:7238
-#: includes/eme-mailer.php:2863
+#: includes/eme-mailer.php:2904
 #: includes/eme-widgets.php:163
 msgid "Daily"
 msgstr "Daglig"
 
 #: includes/eme-events.php:7239
-#: includes/eme-mailer.php:2864
+#: includes/eme-mailer.php:2905
 msgid "Weekly"
 msgstr "Veckovis"
 
 #: includes/eme-events.php:7240
-#: includes/eme-mailer.php:2865
+#: includes/eme-mailer.php:2906
 #: includes/eme-widgets.php:164
 msgid "Monthly"
 msgstr "Månatlig"
 
 #: includes/eme-events.php:7241
-#: includes/eme-mailer.php:2866
+#: includes/eme-mailer.php:2907
 msgid "Specific days"
 msgstr "Specifika dagar"
 
 #: includes/eme-events.php:7242
-#: includes/eme-mailer.php:2867
+#: includes/eme-mailer.php:2908
 #, fuzzy
 msgid "Specific months"
 msgstr "Specifika dagar"
 
 #: includes/eme-events.php:7268
-#: includes/eme-mailer.php:2878
+#: includes/eme-mailer.php:2919
 msgid "first"
 msgstr "första"
 
 #: includes/eme-events.php:7269
-#: includes/eme-mailer.php:2879
+#: includes/eme-mailer.php:2920
 msgid "second"
 msgstr "andra"
 
 #: includes/eme-events.php:7270
-#: includes/eme-mailer.php:2880
+#: includes/eme-mailer.php:2921
 msgid "third"
 msgstr "tredje"
 
 #: includes/eme-events.php:7271
-#: includes/eme-mailer.php:2881
+#: includes/eme-mailer.php:2922
 msgid "fourth"
 msgstr "fjärde"
 
 #: includes/eme-events.php:7272
-#: includes/eme-mailer.php:2882
+#: includes/eme-mailer.php:2923
 msgid "fifth"
 msgstr "femte"
 
 #: includes/eme-events.php:7273
-#: includes/eme-mailer.php:2883
+#: includes/eme-mailer.php:2924
 msgid "last"
 msgstr "sista"
 
 #: includes/eme-events.php:7274
-#: includes/eme-mailer.php:2884
+#: includes/eme-mailer.php:2925
 msgid "Start day"
 msgstr "Startdag"
 
@@ -2766,9 +2766,9 @@ msgstr "Fyll bara i detta ifall du vill åsidosätta standardinställningarna."
 #: includes/eme-events.php:8372
 #: includes/eme-events.php:8722
 #: includes/eme-events.php:8739
-#: includes/eme-mailer.php:3561
-#: includes/eme-mailer.php:3571
-#: includes/eme-mailer.php:3753
+#: includes/eme-mailer.php:3602
+#: includes/eme-mailer.php:3612
+#: includes/eme-mailer.php:3794
 #: includes/eme-widgets.php:225
 msgid "Either choose from a template: "
 msgstr "Välj antingen en mall:"
@@ -2847,8 +2847,8 @@ msgstr "Detta definierar layouten för ditt evenemang (där evenemangbeskrivning
 #: includes/eme-events.php:8575
 #: includes/eme-locations.php:675
 #: includes/eme-locations.php:772
-#: includes/eme-mailer.php:3583
-#: includes/eme-mailer.php:3767
+#: includes/eme-mailer.php:3624
+#: includes/eme-mailer.php:3808
 #: includes/eme-members.php:2763
 #: includes/eme-templates.php:268
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
@@ -2968,8 +2968,8 @@ msgstr "E-postbilagor för gjord bokning"
 #: includes/eme-events.php:7874
 #: includes/eme-events.php:8258
 #: includes/eme-events.php:9633
-#: includes/eme-mailer.php:3608
-#: includes/eme-mailer.php:3789
+#: includes/eme-mailer.php:3649
+#: includes/eme-mailer.php:3830
 #: includes/eme-members.php:2285
 #: includes/eme-members.php:2429
 #: includes/eme-members.php:2508
@@ -2984,8 +2984,8 @@ msgstr "Lägg till bilaga"
 #: includes/eme-events.php:7674
 #: includes/eme-events.php:7875
 #: includes/eme-events.php:8259
-#: includes/eme-mailer.php:3609
-#: includes/eme-mailer.php:3790
+#: includes/eme-mailer.php:3650
+#: includes/eme-mailer.php:3831
 #: includes/eme-members.php:2286
 #: includes/eme-members.php:2430
 #: includes/eme-members.php:2509
@@ -3773,10 +3773,10 @@ msgstr "Markera en eller fler medlemmar"
 
 #: includes/eme-events.php:8906
 #: includes/eme-events.php:8916
-#: includes/eme-mailer.php:3523
-#: includes/eme-mailer.php:3543
-#: includes/eme-mailer.php:3694
-#: includes/eme-mailer.php:3711
+#: includes/eme-mailer.php:3564
+#: includes/eme-mailer.php:3584
+#: includes/eme-mailer.php:3735
+#: includes/eme-mailer.php:3752
 #: includes/eme-people.php:2703
 #: includes/eme-tasks.php:1014
 msgid "Select one or more groups"
@@ -4452,8 +4452,8 @@ msgid "Please select only one record in order to do partial payments"
 msgstr "Välj bara en post för att göra delbetalningar"
 
 #: includes/eme-events.php:9832
-#: includes/eme-mailer.php:3642
-#: includes/eme-mailer.php:3824
+#: includes/eme-mailer.php:3683
+#: includes/eme-mailer.php:3865
 msgid "Send email"
 msgstr "Sänd e-post"
 
@@ -4486,7 +4486,7 @@ msgid "Action"
 msgstr "Händelse"
 
 #: includes/eme-events.php:9852
-#: includes/eme-mailer.php:3861
+#: includes/eme-mailer.php:3902
 msgid "Mailing report"
 msgstr "E-postrapport"
 
@@ -6119,11 +6119,11 @@ msgid "Duplicate this location"
 msgstr "Skapa kopia av denna plats"
 
 #: includes/eme-mailer.php:299
-#: includes/eme-mailer.php:2336
-#: includes/eme-mailer.php:2383
-#: includes/eme-mailer.php:2453
-#: includes/eme-mailer.php:2697
-#: includes/eme-mailer.php:2849
+#: includes/eme-mailer.php:2341
+#: includes/eme-mailer.php:2388
+#: includes/eme-mailer.php:2458
+#: includes/eme-mailer.php:2720
+#: includes/eme-mailer.php:2890
 #: includes/eme-members.php:6991
 #: includes/eme-members.php:7070
 #: includes/eme-members.php:7226
@@ -6148,49 +6148,49 @@ msgstr "Utskicket avslutat med fel"
 msgid "Mailing \"%1$s\" completed with %2$d errors, please check the mailing report"
 msgstr "Utskicket \"%1$s\" slutfördes med %2$d fel, vänligen kontrollera utskicksrapporten"
 
-#: includes/eme-mailer.php:1362
-#: includes/eme-mailer.php:1375
+#: includes/eme-mailer.php:1367
+#: includes/eme-mailer.php:1380
 msgid "Planned"
 msgstr "Planerad"
 
-#: includes/eme-mailer.php:1363
+#: includes/eme-mailer.php:1368
 msgid "Sent"
 msgstr "Skickat"
 
-#: includes/eme-mailer.php:1364
+#: includes/eme-mailer.php:1369
 msgid "Failed"
 msgstr "Misslyckades"
 
-#: includes/eme-mailer.php:1365
-#: includes/eme-mailer.php:1378
+#: includes/eme-mailer.php:1370
+#: includes/eme-mailer.php:1383
 msgid "Cancelled"
 msgstr "Avbokat"
 
-#: includes/eme-mailer.php:1366
+#: includes/eme-mailer.php:1371
 msgid "Ignored"
 msgstr "Ignorerad"
 
-#: includes/eme-mailer.php:1929
-#: includes/eme-mailer.php:2028
-#: includes/eme-mailer.php:2135
-#: includes/eme-mailer.php:2254
-#: includes/eme-mailer.php:2260
+#: includes/eme-mailer.php:1934
+#: includes/eme-mailer.php:2033
+#: includes/eme-mailer.php:2140
+#: includes/eme-mailer.php:2259
+#: includes/eme-mailer.php:2265
 msgid "Reuse"
 msgstr "Återanvänd"
 
 #: includes/eme-events.php:9842
-#: includes/eme-mailer.php:3733
+#: includes/eme-mailer.php:3774
 msgid "Sender name"
 msgstr "Avsändarnamn"
 
 #: includes/eme-events.php:9843
-#: includes/eme-mailer.php:3737
+#: includes/eme-mailer.php:3778
 msgid "Sender email"
 msgstr "Avsändar-e-post"
 
 #: includes/eme-events.php:9847
-#: includes/eme-mailer.php:3559
-#: includes/eme-mailer.php:3744
+#: includes/eme-mailer.php:3600
+#: includes/eme-mailer.php:3785
 msgid "Subject"
 msgstr "Ärenderad"
 
@@ -6202,16 +6202,16 @@ msgstr "Köat den"
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6751
 #: includes/eme-events.php:9647
-#: includes/eme-mailer.php:2002
-#: includes/eme-mailer.php:2013
+#: includes/eme-mailer.php:2007
 #: includes/eme-mailer.php:2018
-#: includes/eme-mailer.php:2260
+#: includes/eme-mailer.php:2023
+#: includes/eme-mailer.php:2265
 #: includes/eme-people.php:2775
 #: includes/eme-people.php:2896
 msgid "Cancel"
 msgstr "Avboka"
 
-#: includes/eme-mailer.php:2314
+#: includes/eme-mailer.php:2319
 #: includes/eme-members.php:1105
 #: includes/eme-members.php:1108
 #: includes/eme-people.php:4207
@@ -6224,355 +6224,355 @@ msgstr "Avboka"
 msgid "Please enter a valid email address"
 msgstr "Vänligen ange en giltig e-postadress"
 
-#: includes/eme-mailer.php:2334
-#: includes/eme-mailer.php:2381
-#: includes/eme-mailer.php:2451
-#: includes/eme-mailer.php:2686
-#: includes/eme-mailer.php:2841
+#: includes/eme-mailer.php:2339
+#: includes/eme-mailer.php:2386
+#: includes/eme-mailer.php:2456
+#: includes/eme-mailer.php:2709
+#: includes/eme-mailer.php:2882
 #: includes/eme-members.php:6988
 #: includes/eme-rsvp.php:6989
 #: includes/eme-rsvp.php:7009
 msgid "The mail has been sent."
 msgstr "E-postmeddelandet har skickats"
 
-#: includes/eme-mailer.php:2504
-#: includes/eme-mailer.php:2563
+#: includes/eme-mailer.php:2509
+#: includes/eme-mailer.php:2568
 msgid "Please enter both subject and message for the mail to be sent."
 msgstr "Vänligen ange både ärenderad och meddelandetext att sända."
 
-#: includes/eme-mailer.php:2515
+#: includes/eme-mailer.php:2520
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr "Ingen standardavsändare definierad och ingen e-postadress funnen för kontakten för eventet, avbryter"
 
-#: includes/eme-mailer.php:2368
-#: includes/eme-mailer.php:2429
+#: includes/eme-mailer.php:2373
+#: includes/eme-mailer.php:2434
 msgid "Please select a person to send the preview mail to."
 msgstr "Vänligen välj en person att sända förhandsgranskningen till."
 
-#: includes/eme-mailer.php:2685
-#: includes/eme-mailer.php:2840
+#: includes/eme-mailer.php:2708
+#: includes/eme-mailer.php:2881
 msgid "The mailing has been planned."
 msgstr "E-postutskicket har planerats."
 
-#: includes/eme-mailer.php:2692
+#: includes/eme-mailer.php:2715
 msgid "The mailing has been put on the queue, but not all persons will receive it."
 msgstr "Utskicket har lagts till i kön, men alla personer kommer inte att få det."
 
-#: includes/eme-mailer.php:2694
+#: includes/eme-mailer.php:2717
 msgid "The following persons will not receive the mail:"
 msgstr "Följande personer kommer inte att få e-postmeddelandet: "
 
-#: includes/eme-mailer.php:2699
-#: includes/eme-mailer.php:2851
+#: includes/eme-mailer.php:2722
+#: includes/eme-mailer.php:2892
 msgid "Email to the following persons has not been sent:"
 msgstr "E-post har inte skickats till följande personer: "
 
-#: includes/eme-mailer.php:2419
-#: includes/eme-mailer.php:2726
+#: includes/eme-mailer.php:2424
+#: includes/eme-mailer.php:2749
 #: includes/eme-rsvp.php:890
 #: includes/eme-rsvp.php:906
 msgid "Please select at least one event."
 msgstr "Vänligen välj minst ett evenemang."
 
-#: includes/eme-mailer.php:2767
+#: includes/eme-mailer.php:2790
 msgid "Please select the type of mail to be sent."
 msgstr "Vänligen välj vilken typ av e-post att skicka."
 
-#: includes/eme-mailer.php:2847
+#: includes/eme-mailer.php:2888
 msgid "Only emails for events you have the right to send emails for have been sent."
 msgstr "Bara e-postmeddelanden för event du har rätt att sända för, har sänts."
 
-#: includes/eme-mailer.php:3863
+#: includes/eme-mailer.php:3904
 #: includes/eme-tasks.php:608
 msgid "Person name"
 msgstr "Persons namn"
 
-#: includes/eme-mailer.php:3864
-#: includes/eme-mailer.php:3970
-#: includes/eme-mailer.php:4005
+#: includes/eme-mailer.php:3905
+#: includes/eme-mailer.php:4011
+#: includes/eme-mailer.php:4046
 msgid "Filter"
 msgstr "Filter"
 
-#: includes/eme-mailer.php:3867
+#: includes/eme-mailer.php:3908
 msgid "Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with."
 msgstr "Anmärkning: listan på mottagare nedan är bara en indikation baserad på en ögonblicksbild när utskicket skapades. Listan kommer att uppdateras baserat på villkoren som utskicket skapades med precis när ett utskick ska påbörjas."
 
-#: includes/eme-mailer.php:3422
+#: includes/eme-mailer.php:3463
 msgid "Event related email"
 msgstr "Evenemangsrelaterad e-post"
 
-#: includes/eme-mailer.php:3423
+#: includes/eme-mailer.php:3464
 msgid "Generic email"
 msgstr "Allmän e-post"
 
 #: includes/eme-events.php:9854
-#: includes/eme-mailer.php:3424
+#: includes/eme-mailer.php:3465
 msgid "Mailings"
 msgstr "E-postutskick"
 
-#: includes/eme-mailer.php:3425
+#: includes/eme-mailer.php:3466
 msgid "Mailings archive"
 msgstr "Utskicksarkiv"
 
-#: includes/eme-mailer.php:3897
+#: includes/eme-mailer.php:3938
 msgid "Sent emails"
 msgstr "Skickade e-postmeddelanden"
 
-#: includes/eme-mailer.php:3427
+#: includes/eme-mailer.php:3468
 msgid "Test email"
 msgstr "Testa e-post"
 
-#: includes/eme-mailer.php:3439
+#: includes/eme-mailer.php:3480
 msgid "Send event related emails"
 msgstr "Skicka evenemangsrelaterad e-post"
 
-#: includes/eme-mailer.php:3452
+#: includes/eme-mailer.php:3493
 #: includes/eme-rsvp.php:5122
 msgid "Check this box to search through all events and not just future ones."
 msgstr "Markera denna ruta för att söka igenom alla evenemang och inte bara kommande."
 
-#: includes/eme-mailer.php:3453
+#: includes/eme-mailer.php:3494
 msgid "Remark: if you select multiple events, a mailing will be created for each selected event"
 msgstr "Kommentar: om du väljer flera event kommer ett utskick att skapas för varje valt event"
 
-#: includes/eme-mailer.php:3457
+#: includes/eme-mailer.php:3498
 msgid "Select the type of mail"
 msgstr "Välj typ av e-postmeddelande"
 
-#: includes/eme-mailer.php:3461
-#: includes/eme-mailer.php:3596
+#: includes/eme-mailer.php:3502
+#: includes/eme-mailer.php:3637
 msgid "Attendee emails"
 msgstr "E-post för deltagare"
 
-#: includes/eme-mailer.php:3462
-#: includes/eme-mailer.php:3597
+#: includes/eme-mailer.php:3503
+#: includes/eme-mailer.php:3638
 msgid "Booking emails"
 msgstr "E-post för bokningar"
 
-#: includes/eme-mailer.php:3463
+#: includes/eme-mailer.php:3504
 msgid "Email to all people registered in EME"
 msgstr "E-post till alla personer som är registrerade i EME"
 
-#: includes/eme-mailer.php:3464
+#: includes/eme-mailer.php:3505
 msgid "Email to people and/or groups registered in EME"
 msgstr "E-post till personer och/eller grupper som är registrerade i EME"
 
-#: includes/eme-mailer.php:3465
+#: includes/eme-mailer.php:3506
 msgid "Email to all WP users"
 msgstr "E-post till alla WP-användare"
 
-#: includes/eme-mailer.php:3472
+#: includes/eme-mailer.php:3513
 msgid "Select your target audience"
 msgstr "Välj din målgrupp"
 
-#: includes/eme-mailer.php:3476
+#: includes/eme-mailer.php:3517
 msgid "All registered persons"
 msgstr "Alla registrerade personer"
 
-#: includes/eme-mailer.php:3477
+#: includes/eme-mailer.php:3518
 msgid "Only approved bookings"
 msgstr "Endast godkända bokningar"
 
-#: includes/eme-mailer.php:3478
+#: includes/eme-mailer.php:3519
 msgid "Only pending bookings"
 msgstr "Endast bokningar som inväntar granskning"
 
-#: includes/eme-mailer.php:3485
+#: includes/eme-mailer.php:3526
 msgid "Exclude people already registered for the selected event(s)"
 msgstr "Exkludera personer redan registrerade för valda evenemang"
 
-#: includes/eme-mailer.php:3501
+#: includes/eme-mailer.php:3542
 msgid "Only send emails to attendees who did not pay yet"
 msgstr "Sänd endast e-postmeddelanden till deltagare som inte betalat än"
 
-#: includes/eme-mailer.php:3565
-#: includes/eme-mailer.php:3575
-#: includes/eme-mailer.php:3758
+#: includes/eme-mailer.php:3606
+#: includes/eme-mailer.php:3616
+#: includes/eme-mailer.php:3799
 msgid "Or enter your own: "
 msgstr "Eller fyll i ditt eget:"
 
-#: includes/eme-mailer.php:3569
-#: includes/eme-mailer.php:3750
+#: includes/eme-mailer.php:3610
+#: includes/eme-mailer.php:3791
 msgid "Message"
 msgstr "Meddelande"
 
-#: includes/eme-mailer.php:3593
-#: includes/eme-mailer.php:3777
+#: includes/eme-mailer.php:3634
+#: includes/eme-mailer.php:3818
 msgid "You can use any placeholders mentioned here:"
 msgstr "Du kan använda alla platshållare som nämns här:"
 
-#: includes/eme-mailer.php:3594
+#: includes/eme-mailer.php:3635
 msgid "Event placeholders"
 msgstr "Platshållare för event"
 
-#: includes/eme-mailer.php:3595
-#: includes/eme-mailer.php:3778
+#: includes/eme-mailer.php:3636
+#: includes/eme-mailer.php:3819
 msgid "People placeholders"
 msgstr "Platshållare för personer"
 
-#: includes/eme-mailer.php:3596
+#: includes/eme-mailer.php:3637
 msgid "Attendees placeholders"
 msgstr "Platshållare för deltagare"
 
-#: includes/eme-mailer.php:3596
-#: includes/eme-mailer.php:3597
-#: includes/eme-mailer.php:3778
-#: includes/eme-mailer.php:3779
+#: includes/eme-mailer.php:3637
+#: includes/eme-mailer.php:3638
+#: includes/eme-mailer.php:3819
+#: includes/eme-mailer.php:3820
 msgid "for "
 msgstr "för "
 
-#: includes/eme-mailer.php:3597
+#: includes/eme-mailer.php:3638
 msgid "Booking placeholders"
 msgstr "Platshållare för bokningar"
 
-#: includes/eme-mailer.php:3598
-#: includes/eme-mailer.php:3779
+#: includes/eme-mailer.php:3639
+#: includes/eme-mailer.php:3820
 msgid "Member placeholders"
 msgstr "Platshållare för medlemmar"
 
-#: includes/eme-mailer.php:3598
+#: includes/eme-mailer.php:3639
 msgid "if you selected members, memberships or member groups"
 msgstr "om du valde medlemmar, medlemskap eller medlemsgrupper"
 
-#: includes/eme-mailer.php:3599
-#: includes/eme-mailer.php:3780
+#: includes/eme-mailer.php:3640
+#: includes/eme-mailer.php:3821
 msgid "You can also use any shortcode you want."
 msgstr "Du kan även använda vilken kortkod du vill."
 
-#: includes/eme-mailer.php:3605
-#: includes/eme-mailer.php:3786
+#: includes/eme-mailer.php:3646
+#: includes/eme-mailer.php:3827
 msgid "Optionally add attachments to your mailing"
 msgstr "Lägg valfritt till bilagor till ditt e-postutskick"
 
-#: includes/eme-mailer.php:3618
-#: includes/eme-mailer.php:3799
+#: includes/eme-mailer.php:3659
+#: includes/eme-mailer.php:3840
 msgid "Set mailing name and start date and time"
 msgstr "Ange namn på utskicket och startdatum och tid"
 
-#: includes/eme-mailer.php:3619
-#: includes/eme-mailer.php:3800
+#: includes/eme-mailer.php:3660
+#: includes/eme-mailer.php:3841
 msgid "Mailing name: "
 msgstr "Namn på utskick:"
 
-#: includes/eme-mailer.php:3620
-#: includes/eme-mailer.php:3801
+#: includes/eme-mailer.php:3661
+#: includes/eme-mailer.php:3842
 msgid "Start date and time: "
 msgstr "Startdatum och tid:"
 
-#: includes/eme-mailer.php:3621
-#: includes/eme-mailer.php:3802
+#: includes/eme-mailer.php:3662
+#: includes/eme-mailer.php:3843
 msgid "Leave empty to send the mail immediately"
 msgstr "Lämna tomt för att skicka e-postmeddelandet omedelbart"
 
-#: includes/eme-mailer.php:3623
-#: includes/eme-mailer.php:3804
+#: includes/eme-mailer.php:3664
+#: includes/eme-mailer.php:3845
 msgid "(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)"
 msgstr "(flera datum kan väljas, i vilket fall utskicket planeras för varje valt datum och tid)"
 
-#: includes/eme-mailer.php:3631
-#: includes/eme-mailer.php:3812
+#: includes/eme-mailer.php:3672
+#: includes/eme-mailer.php:3853
 msgid "Ignore massmail setting:"
 msgstr "Ignorera inställning för massutskick:"
 
-#: includes/eme-mailer.php:3633
-#: includes/eme-mailer.php:3814
+#: includes/eme-mailer.php:3674
+#: includes/eme-mailer.php:3855
 msgid "When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option."
 msgstr "När EME sänder e-postmeddelande till alla personer eller till vissa grupper skickas det som standard endast till personer som har angett att det vill ta emot massutskick. Om du behöver sända e-postmeddelandet till alla personer, oavsett deras inställning för massutskick, markera detta alternativ."
 
-#: includes/eme-mailer.php:3637
-#: includes/eme-mailer.php:3818
+#: includes/eme-mailer.php:3678
+#: includes/eme-mailer.php:3859
 msgid "Enter a test recipient"
 msgstr "Ange en testmottagare"
 
-#: includes/eme-mailer.php:3639
-#: includes/eme-mailer.php:3820
+#: includes/eme-mailer.php:3680
+#: includes/eme-mailer.php:3861
 msgid "Send Preview Email"
 msgstr "Skicka förhandsgranskning av e-post"
 
-#: includes/eme-mailer.php:3646
-#: includes/eme-mailer.php:3830
+#: includes/eme-mailer.php:3687
+#: includes/eme-mailer.php:3871
 msgid "Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "Varning: att använda denna funktion för att sända e-post till deltagare kan resultera i en php-timeout så att inte alla för sina e-postmeddelanden. Detta beror på antalet deltagare, lasten på servern, … . Om detta händer, aktivera och konfigurera e-postköer."
 
 #. translators: %s is the default capability name
-#: includes/eme-mailer.php:3667
+#: includes/eme-mailer.php:3708
 #: includes/eme-options.php:1732
 msgid "Send generic emails"
 msgstr "Skicka allmänna e-postmeddelanden"
 
-#: includes/eme-mailer.php:3668
+#: includes/eme-mailer.php:3709
 msgid "Use the below form to send a generic mail. Don't forget to use the #_UNSUB_URL for unsubscribe possibility."
 msgstr "Använd formuläret nedan för att sända allmänt e-post. Glöm inte att använda #_UNSUB_URL för att möjliggöra att avsluta prenumerationen."
 
-#: includes/eme-mailer.php:3672
+#: includes/eme-mailer.php:3713
 msgid "Target audience:"
 msgstr "Målgrupp:"
 
-#: includes/eme-mailer.php:3673
+#: includes/eme-mailer.php:3714
 msgid "Send to all EME people"
 msgstr "Sänd till alla EME-personer"
 
-#: includes/eme-mailer.php:3677
+#: includes/eme-mailer.php:3718
 msgid "Deselect this to select specific groups and/or memberships for your mailing"
 msgstr "Avmarkera detta för att välja specifika grupper och/eller medlemskap för ditt utskick"
 
-#: includes/eme-mailer.php:3778
+#: includes/eme-mailer.php:3819
 msgid "People or groups"
 msgstr "Personer eller grupper"
 
-#: includes/eme-mailer.php:3779
+#: includes/eme-mailer.php:3820
 msgid "members"
 msgstr "medlemmar"
 
-#: includes/eme-mailer.php:3902
-#: includes/eme-mailer.php:3952
+#: includes/eme-mailer.php:3943
+#: includes/eme-mailer.php:3993
 msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
 msgstr "Om du vill arkivera gamla utskick och rensa gamla e-postmeddelanden automatiskt, markera alternativet \"Automatiskt arkivera gamla utskick och ta bort gamla e-postmeddelanden\" i EME:s GDPR-inställningar"
 
 #. translators: %d is the number of days between automatic archiving
-#: includes/eme-mailer.php:3905
-#: includes/eme-mailer.php:3955
+#: includes/eme-mailer.php:3946
+#: includes/eme-mailer.php:3996
 msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
 msgstr "Var %d dag kommer gamla utskick att arkiveras och gamla e-postmeddelanden att rensas (se alternativet \"Automatiskt arkivera gamla utskick och ta bort gamla e-postmeddelanden\" i EME:s GDPR-inställningar)"
 
-#: includes/eme-mailer.php:3912
+#: includes/eme-mailer.php:3953
 msgid "Only show failed emails"
 msgstr "Visa bara misslyckade e-postmeddelanden"
 
-#: includes/eme-mailer.php:3877
+#: includes/eme-mailer.php:3918
 msgid "Test mail settings"
 msgstr "Testa e-postinställningar"
 
-#: includes/eme-mailer.php:3879
+#: includes/eme-mailer.php:3920
 msgid "Use the below form to send a test mail"
 msgstr "Använd formuläret nedan för att sända ett testmeddelande"
 
-#: includes/eme-mailer.php:3881
+#: includes/eme-mailer.php:3922
 msgid "Enter the recipient"
 msgstr "Ange mottagare"
 
-#: includes/eme-mailer.php:3883
+#: includes/eme-mailer.php:3924
 msgid "Send Email"
 msgstr "Skicka e-post"
 
-#: includes/eme-mailer.php:3942
+#: includes/eme-mailer.php:3983
 msgid "Mailings overview"
 msgstr "Översikt e-postutskick"
 
-#: includes/eme-mailer.php:3945
+#: includes/eme-mailer.php:3986
 msgid "Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the \"Sent emails\" tab."
 msgstr "Här finner du en översikt över alla planerade, pågående eller slutförda utskick. För en översikt över alla e-postmeddelanden, klicka på fliken \"Skickade e-postmeddelanden\"."
 
-#: includes/eme-mailer.php:3962
+#: includes/eme-mailer.php:4003
 msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
 msgstr "E-postköning är inte aktiverad, så skickade e-postmeddelanden syns bara i fliken \"Skickade e-postmeddelanden\""
 
-#: includes/eme-mailer.php:3979
-#: includes/eme-mailer.php:4012
+#: includes/eme-mailer.php:4020
+#: includes/eme-mailer.php:4053
 msgid "Delete selected mailings"
 msgstr "Ta bort markerade utskick"
 
-#: includes/eme-mailer.php:3978
+#: includes/eme-mailer.php:4019
 msgid "Archive selected mailings"
 msgstr "Arkivera markerade utskick"
 
@@ -6585,54 +6585,54 @@ msgid "Unique read count"
 msgstr "Räknare unika visningar"
 
 #: includes/eme-events.php:9850
-#: includes/eme-mailer.php:2055
+#: includes/eme-mailer.php:2060
 msgid "Report"
 msgstr "Rapport"
 
 #. translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails cancelled
-#: includes/eme-mailer.php:1997
-#: includes/eme-mailer.php:2133
+#: includes/eme-mailer.php:2002
+#: includes/eme-mailer.php:2138
 msgid "%1$d emails sent, %2$d emails failed, %3$d emails cancelled"
 msgstr "%1$d e-postmeddelanden skickade, %2$d e-postmeddelanden misslyckades, %3$d e-postmeddelanden avbrutna"
 
-#: includes/eme-mailer.php:1998
-#: includes/eme-mailer.php:2023
+#: includes/eme-mailer.php:2003
+#: includes/eme-mailer.php:2028
 msgid "Archive"
 msgstr "Arkiv"
 
-#: includes/eme-mailer.php:1379
+#: includes/eme-mailer.php:1384
 msgid "Initializing ..."
 msgstr "Initialiserar ..."
 
 #. translators: %d is the number of emails left to send
-#: includes/eme-mailer.php:2012
+#: includes/eme-mailer.php:2017
 msgid "%d emails left"
 msgstr "%d e-post återstår"
 
-#: includes/eme-mailer.php:1376
+#: includes/eme-mailer.php:1381
 msgid "Ongoing"
 msgstr "Pågående"
 
 #. translators: %1$d is the number of emails sent, %2$d is the number of emails failed, %3$d is the number of emails left to send
-#: includes/eme-mailer.php:2017
+#: includes/eme-mailer.php:2022
 msgid "%1$d emails sent, %2$d emails failed, %3$d emails left"
 msgstr "%1$d e-postmeddelanden skickade, %2$d e-postmeddelanden misslyckades, %3$d e-postmeddelanden återstår"
 
-#: includes/eme-mailer.php:1377
+#: includes/eme-mailer.php:1382
 msgid "Completed"
 msgstr "Färdig"
 
 #. translators: %1$d is the number of emails sent, %2$d is the number of emails failed
-#: includes/eme-mailer.php:2022
+#: includes/eme-mailer.php:2027
 msgid "%1$d emails sent, %2$d emails failed"
 msgstr "%1$d e-postmeddelanden skickade, %2$d e-postmeddelanden misslyckades"
 
-#: includes/eme-mailer.php:2030
+#: includes/eme-mailer.php:2035
 #, fuzzy
 msgid "Retry failed emails"
 msgstr "Tillägg misslyckades:"
 
-#: includes/eme-mailer.php:3999
+#: includes/eme-mailer.php:4040
 msgid "Here you can find an overview of all archived mailings"
 msgstr "Här finner du en översikt över alla arkiverade utskick"
 
@@ -7626,7 +7626,7 @@ msgstr "Skicka om e-postmeddelandet för betalande medlemmar"
 msgid "Resend the expiration reminder mail"
 msgstr "Skicka om utgångspåminnelsemeddelandet"
 
-#: includes/eme-mailer.php:3921
+#: includes/eme-mailer.php:3962
 #: includes/eme-members.php:2860
 #: includes/eme-people.php:2023
 #: includes/eme-rsvp.php:5607
@@ -13184,7 +13184,7 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 
-#: includes/eme-mailer.php:3502
+#: includes/eme-mailer.php:3543
 msgid "Only take unpaid bookings into account"
 msgstr "Ta bara obetalda bokningar i beaktande"
 
@@ -13825,8 +13825,8 @@ msgid "WARNING: messages found in the queue but the mail queue is not scheduled 
 msgstr "VARNING: meddelanden hittades i kön men e-postkön är inte schemalagd att bearbetas. Se till att köra det registrerade REST API-anropet från systemcron med lämpliga alternativ för att bearbeta kön."
 
 #. translators: %s is the URL to the Email settings page
-#: includes/eme-mailer.php:3655
-#: includes/eme-mailer.php:3839
+#: includes/eme-mailer.php:3696
+#: includes/eme-mailer.php:3880
 msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
 msgstr "E-postköning har aktiverats men inte schemalagts. Gå till <a href=\"%s\">E-postinställningarna</a> och välj ett schema eller se till att köra det registrerade REST API-anropet från systemcron med lämpliga alternativ för att bearbeta kön."
 
@@ -13838,12 +13838,12 @@ msgstr "E-postköning är aktiverad men e-postkön är inte schemalagd att bearb
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
 msgstr "Ändra \"användarnamnet\" till din användare och \"lösenordet\" till ett programlösenord som genererats i dina WP-användarinställningar."
 
-#: includes/eme-mailer.php:3968
-#: includes/eme-mailer.php:4003
+#: includes/eme-mailer.php:4009
+#: includes/eme-mailer.php:4044
 msgid "Enter the search text (leave empty to show all)"
 msgstr "Ange söktexten (lämna tomt för att visa alla)"
 
-#: includes/eme-mailer.php:3446
+#: includes/eme-mailer.php:3487
 msgid "Select the event(s)"
 msgstr "Välj evenemanget/en"
 
@@ -13868,7 +13868,7 @@ msgstr "Inga evenemang kommer att skapas på uteslutna dagar."
 msgid "Select a payment method"
 msgstr "Välj en betalningsmetod"
 
-#: includes/eme-mailer.php:1374
+#: includes/eme-mailer.php:1379
 msgid "Archived"
 msgstr "Arkiverad"
 
@@ -13884,7 +13884,7 @@ msgstr "Uteslutna dagar:"
 msgid "Extra approval settings (also check out the mail templates)"
 msgstr "Extra godkännandeinställningar (kolla också in e-postmallarna)"
 
-#: includes/eme-mailer.php:3923
+#: includes/eme-mailer.php:3964
 msgid "Delete selected emails"
 msgstr "Ta bort valda e-postmeddelanden"
 
@@ -13909,7 +13909,7 @@ msgid "Mails"
 msgstr "E-post"
 
 #: includes/eme-events.php:9855
-#: includes/eme-mailer.php:3997
+#: includes/eme-mailer.php:4038
 msgid "Archived mailings"
 msgstr "Arkiverade utskick"
 
@@ -13933,67 +13933,67 @@ msgstr "Ta bort valda helglistor"
 msgid "Holiday lists deleted"
 msgstr "Helglistor borttagna"
 
-#: includes/eme-mailer.php:2084
+#: includes/eme-mailer.php:2089
 msgid "Mailings archived"
 msgstr "Utskick arkiverade"
 
-#: includes/eme-mailer.php:2094
-#: includes/eme-mailer.php:2178
+#: includes/eme-mailer.php:2099
+#: includes/eme-mailer.php:2183
 msgid "Mailings deleted"
 msgstr "Utskick borttagna"
 
-#: includes/eme-mailer.php:3910
+#: includes/eme-mailer.php:3951
 msgid "Enter an optional search text"
 msgstr "Ange en valfri söktext"
 
-#: includes/eme-mailer.php:3913
+#: includes/eme-mailer.php:3954
 msgid "Filter emails"
 msgstr "Filtrera e-postmeddelanden"
 
-#: includes/eme-mailer.php:1929
-#: includes/eme-mailer.php:2254
-#: includes/eme-mailer.php:2260
+#: includes/eme-mailer.php:1934
+#: includes/eme-mailer.php:2259
+#: includes/eme-mailer.php:2265
 msgid "Reuse this mail"
 msgstr "Återanvänd detta meddelande"
 
-#: includes/eme-mailer.php:2013
-#: includes/eme-mailer.php:2023
-#: includes/eme-mailer.php:2134
+#: includes/eme-mailer.php:2018
+#: includes/eme-mailer.php:2028
+#: includes/eme-mailer.php:2139
 msgid "Delete this mailing"
 msgstr "Ta bort detta utskick"
 
-#: includes/eme-mailer.php:2013
 #: includes/eme-mailer.php:2018
+#: includes/eme-mailer.php:2023
 msgid "Cancel the sending of this mailing"
 msgstr "Avbryt sändningen av detta utskick"
 
-#: includes/eme-mailer.php:2023
+#: includes/eme-mailer.php:2028
 msgid "Archive this mailing"
 msgstr "Arkivera detta utskick"
 
-#: includes/eme-mailer.php:2028
-#: includes/eme-mailer.php:2135
+#: includes/eme-mailer.php:2033
+#: includes/eme-mailer.php:2140
 msgid "Reuse this mailing"
 msgstr "Återanvänd detta utskick"
 
-#: includes/eme-mailer.php:2030
+#: includes/eme-mailer.php:2035
 msgid "Retry failed messages from this mailing"
 msgstr "Försök igen med misslyckade meddelanden från detta utskick"
 
 #. translators: %s is the mailing creation date
-#: includes/eme-mailer.php:2050
+#: includes/eme-mailer.php:2055
 msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
 msgstr "Antalet e-postmeddelande som ska skickas uppskattades vid tillfället när utskapet skapades (%s). Detta kommer att omvärderas vid sändningstillfället."
 
-#: includes/eme-mailer.php:2055
+#: includes/eme-mailer.php:2060
 msgid "Show mailing report"
 msgstr "Visa utskicksrapport"
 
-#: includes/eme-mailer.php:2260
+#: includes/eme-mailer.php:2265
 msgid "Cancel the sending of this mail"
 msgstr "Avbryt sändningen av detta meddelande"
 
-#: includes/eme-mailer.php:3882
+#: includes/eme-mailer.php:3923
 msgid "Enter any valid mail address"
 msgstr "Ange en giltig e-postadress"
 
@@ -14221,23 +14221,23 @@ msgstr "Anmärkning: om svarsadressen för vissa e-postmeddelanden var identisk 
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr "När detta meddelande ännu inte har skickats (i kön) och bokningen godkänns eller betalas under den tiden och ett meddelande är planerat för den åtgärden, tas detta meddelande bort från kön så att människor inte får 2 e-postmeddelande samtidigt."
 
-#: includes/eme-mailer.php:1367
+#: includes/eme-mailer.php:1372
 msgid "Delayed"
 msgstr "Försenat"
 
-#: includes/eme-mailer.php:3426
+#: includes/eme-mailer.php:3467
 msgid "All emails"
 msgstr "Alla e-postmeddelanden"
 
-#: includes/eme-mailer.php:2287
+#: includes/eme-mailer.php:2292
 msgid "Emails scheduled to be resend"
 msgstr "E-postmeddelande schemalagda att skickas igen"
 
-#: includes/eme-mailer.php:2297
+#: includes/eme-mailer.php:2302
 msgid "Emails deleted"
 msgstr "E-postmeddelande borttagna"
 
-#: includes/eme-mailer.php:3922
+#: includes/eme-mailer.php:3963
 msgid "Resend selected emails"
 msgstr "Skicka igen valda e-postmeddelanden"
 
@@ -14512,7 +14512,7 @@ msgstr "(Lämna tomt eller 0 för att inaktivera denna begränsning. Negativa nu
 msgid "Webhook not created: localhost not allowed."
 msgstr "Webhook inte skapad: localhost inte tillåten."
 
-#: includes/eme-mailer.php:3821
+#: includes/eme-mailer.php:3862
 msgid "Small remark: the preview mail will not replace booking or attendee related placeholders."
 msgstr "Liten anmärkning: förhandsvisningsmeddelandet kommer inte att ersätta boknings- eller närvarorelaterade platshållare."
 
@@ -14553,7 +14553,7 @@ msgstr "Upprepningens startdatum"
 msgid "Recurrence end date"
 msgstr "Upprepningens slutdatum"
 
-#: includes/eme-mailer.php:2647
+#: includes/eme-mailer.php:2670
 msgid "Please select at least one recipient."
 msgstr "Vänligen välj minst en mottagare."
 
@@ -14576,8 +14576,8 @@ msgstr "Välj land"
 
 #: includes/eme-discounts.php:708
 #: includes/eme-events.php:8911
-#: includes/eme-mailer.php:3552
-#: includes/eme-mailer.php:3720
+#: includes/eme-mailer.php:3593
+#: includes/eme-mailer.php:3761
 msgid "Select one or more memberships"
 msgstr "Välj ett eller flera medlemskap"
 
@@ -14588,8 +14588,8 @@ msgstr "Välj stat/provins"
 
 #: includes/eme-attendances.php:127
 #: includes/eme-events.php:9630
-#: includes/eme-mailer.php:3638
-#: includes/eme-mailer.php:3819
+#: includes/eme-mailer.php:3679
+#: includes/eme-mailer.php:3860
 #: includes/eme-members.php:1529
 #: includes/eme-members.php:1554
 #: includes/eme-people.php:2049
@@ -14780,28 +14780,28 @@ msgstr "Events Made Easy medlemsdata"
 msgid "Events Made Easy Uploaded files linked to the member"
 msgstr "Events Made Easy uppladdade filer kopplade till medlemmen"
 
-#: includes/eme-mailer.php:3512
-#: includes/eme-mailer.php:3684
+#: includes/eme-mailer.php:3553
+#: includes/eme-mailer.php:3725
 msgid "Send to a number of people"
 msgstr "Skicka till ett antal personer"
 
-#: includes/eme-mailer.php:3522
-#: includes/eme-mailer.php:3692
+#: includes/eme-mailer.php:3563
+#: includes/eme-mailer.php:3733
 msgid "Send to a number of groups"
 msgstr "Skicka till ett antal grupper"
 
-#: includes/eme-mailer.php:3532
-#: includes/eme-mailer.php:3701
+#: includes/eme-mailer.php:3573
+#: includes/eme-mailer.php:3742
 msgid "Send to a number of members"
 msgstr "Skicka till ett antal medlemmar"
 
-#: includes/eme-mailer.php:3541
-#: includes/eme-mailer.php:3709
+#: includes/eme-mailer.php:3582
+#: includes/eme-mailer.php:3750
 msgid "Send to a number of member groups"
 msgstr "Skicka till ett antal medlemsgrupper"
 
-#: includes/eme-mailer.php:3550
-#: includes/eme-mailer.php:3718
+#: includes/eme-mailer.php:3591
+#: includes/eme-mailer.php:3759
 msgid "Send to active members belonging to"
 msgstr "Skicka till aktiva medlemmar som tillhör"
 
@@ -14983,11 +14983,11 @@ msgstr "Generera signaturer igen"
 msgid "e.g. 123 Main St, City"
 msgstr "t.ex. Storgatan 123, Stockholm"
 
-#: includes/eme-mailer.php:3492
+#: includes/eme-mailer.php:3533
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Exkludera också e-post från personer som redan är registrerade för dessa andra evenemang"
 
-#: includes/eme-mailer.php:3497
+#: includes/eme-mailer.php:3538
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
 msgstr "Valfritt: välj evenemang vars registrerade ska hoppas över, oberoende av vilka evenemang detta utskick handlar om."
 
@@ -15004,19 +15004,19 @@ msgstr "Kunde inte beräkna rutt"
 msgid "Edit Event"
 msgstr "Redigera evenemang"
 
-#: includes/eme-mailer.php:4193
+#: includes/eme-mailer.php:4234
 msgid "IMAP bounce handler is not active."
 msgstr "IMAP-studshanteraren är inte aktiv."
 
-#: includes/eme-mailer.php:4196
+#: includes/eme-mailer.php:4237
 msgid "Only the data master can process bounces."
 msgstr "Bara datamastaren kan hantera studsar."
 
-#: includes/eme-mailer.php:4203
+#: includes/eme-mailer.php:4244
 msgid "IMAP bounce handler is not fully configured."
 msgstr "IMAP-studshanteraren är inte fullt konfigurerad."
 
-#: includes/eme-mailer.php:4243
+#: includes/eme-mailer.php:4284
 msgid "Bounced (type %s). Reason: %s"
 msgstr "Studsad (typ %s). Orsak: %s"
 
@@ -15302,44 +15302,44 @@ msgstr ""
 msgid "Not imported (country not found): %s"
 msgstr ""
 
-#: includes/eme-mailer.php:2026
+#: includes/eme-mailer.php:2031
 msgid "Edit this mailing"
 msgstr ""
 
-#: includes/eme-mailer.php:2682
-#: includes/eme-mailer.php:2837
+#: includes/eme-mailer.php:2705
+#: includes/eme-mailer.php:2878
 msgid "The mailing has been updated."
 msgstr ""
 
-#: includes/eme-mailer.php:2899
+#: includes/eme-mailer.php:2940
 msgid "Repeat this mailing"
 msgstr ""
 
-#: includes/eme-mailer.php:2901
+#: includes/eme-mailer.php:2942
 msgid "(each time it finishes sending, the next occurrence gets planned automatically)"
 msgstr ""
 
-#: includes/eme-mailer.php:2904
+#: includes/eme-mailer.php:2945
 msgid "Frequency: "
 msgstr ""
 
-#: includes/eme-mailer.php:2908
+#: includes/eme-mailer.php:2949
 msgid "Uses every date picked in the start date field above."
 msgstr ""
 
-#: includes/eme-mailer.php:2909
+#: includes/eme-mailer.php:2950
 msgid "every"
 msgstr ""
 
-#: includes/eme-mailer.php:2919
+#: includes/eme-mailer.php:2960
 msgid "on the"
 msgstr ""
 
-#: includes/eme-mailer.php:2929
+#: includes/eme-mailer.php:2970
 msgid "In these months:"
 msgstr ""
 
-#: includes/eme-mailer.php:2934
+#: includes/eme-mailer.php:2975
 msgid "Stop repeating after (optional):"
 msgstr ""
 
@@ -15421,26 +15421,26 @@ msgstr ""
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr ""
 
-#: includes/eme-tasks.php:2330
+#: includes/eme-tasks.php:2334
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2336
+#: includes/eme-tasks.php:2340
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2341
+#: includes/eme-tasks.php:2345
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2347
+#: includes/eme-tasks.php:2351
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2377
+#: includes/eme-tasks.php:2381
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2379
+#: includes/eme-tasks.php:2383
 msgid "There was a problem assigning the task."
 msgstr ""

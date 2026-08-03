@@ -9697,6 +9697,8 @@ function eme_admin_enqueue_js() {
             'translate_taskend'                    => __( 'Task end date', 'events-made-easy' ),
             'translate_comment'                    => __( 'Comment', 'events-made-easy' ),
             'translate_event'                      => __( 'Event', 'events-made-easy' ),
+            'translate_selecttask'                 => __( 'Select a task', 'events-made-easy' ),
+            'translate_selecteventfirst'           => __( 'First select an event', 'events-made-easy' ),
             'translate_person'                     => __( 'Person', 'events-made-easy' ),
             'translate_admin_sendmails_url'        => esc_url( admin_url( 'admin.php?page=eme-emails' ) ),
             'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),

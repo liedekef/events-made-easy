@@ -208,19 +208,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (taskSelect.snapselectInstance) {
                     taskSelect.snapselectInstance.clear();
                     taskSelect.snapselectInstance.clearCache();
+                    taskSelect.snapselectInstance.setPlaceholder(emeadmin.translate_selecttask);
                 }
             },
             onItemDelete: function(value, text) {
                 if (taskSelect.snapselectInstance) {
                     taskSelect.snapselectInstance.clear();
                     taskSelect.snapselectInstance.clearCache();
+                    taskSelect.snapselectInstance.setPlaceholder(emeadmin.translate_selecteventfirst);
                 }
             }
         });
 
         // Task snapselect: tasks for selected event (dynamic event_id)
         initSnapSelectRemote(taskSelect, {
-            placeholder: emeadmin.translate_taskname,
+            placeholder: emeadmin.translate_selecteventfirst,
             showClearButton: true,
             data: function(search, page) {
                 const selectedEventId = eventSelect.value;

@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (transferEventSelect && transferPersonSelect && transferEventButton && transferPersonButton) {
         const clearSnapSelect = (selectEl) => {
-            if (selectEl.snapselectInstance && typeof selectEl.snapselectInstance.clear === 'function') {
+            if (selectEl.snapselectInstance) {
                 selectEl.snapselectInstance.clear();
             } else {
                 selectEl.value = '';

@@ -5166,15 +5166,10 @@ function eme_registration_seats_page( $pending = 0 ) {
         } elseif ( $action == 'updateBooking' ) {
             $booking_id = intval( $_POST['booking_id'] );
             check_admin_referer( "eme_admin", 'eme_admin_nonce' );
-            $transferto_id         = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
-            $transferto_person_id  = isset( $_POST ['transferto_person_id'] ) ? intval( $_POST ['transferto_person_id'] ) : 0;
-            $person_id     = isset( $_POST ['person_id'] ) ? intval( $_POST ['person_id'] ) : 0;
-            // transferto_person_id is only given for transferring a booking to another (existing) person
-            if ( $transferto_person_id && $transferto_person_id != $person_id ) {
-                $person_id = $transferto_person_id;
-            }
             $booking       = eme_get_booking( $booking_id );
+
             // transferto_id is only given for moving a booking to another event
+            $transferto_id         = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
             if ( $transferto_id && $booking['event_id'] != $transferto_id ) {
                 $orig_event_id       = $booking['event_id'];
                 $booking['event_id'] = $transferto_id;
@@ -5187,31 +5182,11 @@ function eme_registration_seats_page( $pending = 0 ) {
             } else {
                 $orig_event_id = 0;
             }
-            if ( ! $person_id ) {
-                // this is the case where we clear the existing booker info and enter totally new booking info
-                $lastname = eme_sanitize_request( $_POST['lastname'] );
-                if ( isset( $_POST['firstname'] ) ) {
-                    $firstname = eme_sanitize_request( $_POST['firstname'] );
-                } else {
-                    $firstname = '';
-                }
-                $email  = eme_sanitize_email( $_POST['email'] );
-                $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-                if ( ! $person ) {
-                    $person = eme_get_person_by_email_only( $email );
-                }
-                if ( ! $person ) {
-                    $person              = [];
-                    $person['lastname']  = $lastname;
-                    $person['firstname'] = $firstname;
-                    $person['email']     = $email;
-                    $person_id           = eme_db_insert_person( $person );
-                } else {
-                    $person_id = $person['person_id'];
-                }
-            }
-            if ( $person_id && $booking['person_id'] != $person_id ) {
-                $booking['person_id'] = $person_id;
+
+            // transferto_person_id is only given for moving a booking to another person
+            $transferto_person_id  = isset( $_POST ['transferto_person_id'] ) ? intval( $_POST ['transferto_person_id'] ) : 0;
+            if ( $transferto_person_id ) {
+                $booking['person_id'] = $transferto_person_id;
             }
             // now that the possible move is done, set the event id variable
             $event_id = $booking['event_id'];

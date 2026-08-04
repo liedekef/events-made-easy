@@ -1365,7 +1365,7 @@ function eme_get_person_formfield_handler_definitions() {
                 : esc_html__( 'Last name', 'events-made-easy' );
             $class = trim( $ctx['dfc_basic'] . ' ' . $ctx['extra_css'] );
             $replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='{$p['lastname']}' $this_readonly class='$class' placeholder='$placeholder_text'>";
-            if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
+            if ( ! $ctx['eme_is_admin'] && wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) !== 'none' ) {
                 $replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url( EME_PLUGIN_URL ) . "images/warning.png' alt='warning' title='" . esc_attr__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
             }
             if ( ! empty( $ctx['wp_profile_warning'] ) ) {

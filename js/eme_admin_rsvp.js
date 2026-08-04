@@ -448,4 +448,53 @@ document.addEventListener('DOMContentLoaded', function () {
             };
         }
     });
+    initSnapSelectRemote('select.eme_snapselect_transfer_to_person_class', {
+        showClearButton: true,
+        cache: true,
+        data: function(search, page) {
+            return {
+                action:            'eme_chooseperson_snapselect',
+                eme_admin_nonce:   emeadmin.translate_adminnonce,
+                exclude_personids: this.dataset.personId || '',
+            };
+        }
+    });
+
+    // --- Transfer booking: only show the dedicated "transfer" button once a target is chosen, ---
+    // --- and keep the two transfer methods (to event / to person) mutually exclusive.          ---
+    const transferEventSelect  = EME.$('select[name="transferto_id"]');
+    const transferPersonSelect = EME.$('select[name="transferto_person_id"]');
+    const transferEventButton  = EME.$('#transfer_to_event_button');
+    const transferPersonButton = EME.$('#transfer_to_person_button');
+
+    if (transferEventSelect && transferPersonSelect && transferEventButton && transferPersonButton) {
+        const clearSnapSelect = (selectEl) => {
+            if (selectEl.snapselectInstance && typeof selectEl.snapselectInstance.clear === 'function') {
+                selectEl.snapselectInstance.clear();
+            } else {
+                selectEl.value = '';
+            }
+        };
+
+        const toggleTransferButtons = () => {
+            transferEventButton.style.display  = transferEventSelect.value  ? '' : 'none';
+            transferPersonButton.style.display = transferPersonSelect.value ? '' : 'none';
+        };
+
+        document.addEventListener('change', (e) => {
+            if (e.target === transferEventSelect) {
+                if (transferEventSelect.value && transferPersonSelect.value) {
+                    clearSnapSelect(transferPersonSelect);
+                }
+                toggleTransferButtons();
+            } else if (e.target === transferPersonSelect) {
+                if (transferPersonSelect.value && transferEventSelect.value) {
+                    clearSnapSelect(transferEventSelect);
+                }
+                toggleTransferButtons();
+            }
+        });
+
+        toggleTransferButtons();
+    }
 });

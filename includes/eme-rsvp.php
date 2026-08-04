@@ -5115,11 +5115,17 @@ function eme_registration_seats_page( $pending = 0 ) {
         $ret_string .= $nonce_field;
         $ret_string .= '<table>';
         $ret_string .= '<tr><td>' . __( 'Send emails for changed booking?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ) . '</td></tr>';
-        $ret_string .= '<tr><td>' . __( 'Move booking to event', 'events-made-easy' ) . '</td><td>';
+        $ret_string .= '<tr><td>' . __( 'Transfer booking to event', 'events-made-easy' ) . '</td><td>';
         $ret_string .= "<input type='hidden' id='person_id' name='person_id' value='" . $booking['person_id'] . "'>";
         // we include the event id, so the snapselect can exclude this event upon search
         $ret_string .= eme_ui_select( '', 'transferto_id', [], '', 0, 'eme_snapselect_events_class nodynamicupdates', "data-placeholder='" . esc_attr__( 'Select an event', 'events-made-easy' ) . "' data-exclude_event_id='{$booking['event_id']}'" );
-        $ret_string .= "&nbsp;<label><input id='eventsearch_all' name='eventsearch_all' value='1' type='checkbox' class='nodynamicupdates'>" . __( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ) . '</label></td></tr>';
+        $ret_string .= "&nbsp;<label><input id='eventsearch_all' name='eventsearch_all' value='1' type='checkbox' class='nodynamicupdates'>" . __( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ) . '</label>';
+        $ret_string .= "&nbsp;<button type='submit' id='transfer_to_event_button' class='button eme-transfer-booking-button' style='display:none;'>" . esc_html__( 'Transfer this booking to this event', 'events-made-easy' ) . '</button>';
+        $ret_string .= '</td></tr>';
+        $ret_string .= '<tr><td>' . __( 'Transfer booking to person', 'events-made-easy' ) . '</td><td>';
+        $ret_string .= eme_ui_select( '', 'transferto_person_id', [], '', 0, 'eme_snapselect_transfer_to_person_class nodynamicupdates', "data-placeholder='" . esc_attr__( 'Select a person', 'events-made-easy' ) . "' data-person-id='{$booking['person_id']}'" );
+        $ret_string .= "&nbsp;<button type='submit' id='transfer_to_person_button' class='button eme-transfer-booking-button' style='display:none;'>" . esc_html__( 'Transfer this booking to this person', 'events-made-easy' ) . '</button>';
+        $ret_string .= '</td></tr>';
         $ret_string .= '<tr><td>' . __( 'Has the booking been paid?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( $booking['booking_paid'], 'booking_paid', 0, 'nodynamicupdates' ) . '</td></tr>';
         $ret_string .= '</table>';
         if ( empty( $event['event_id'] ) ) {
@@ -5160,8 +5166,13 @@ function eme_registration_seats_page( $pending = 0 ) {
         } elseif ( $action == 'updateBooking' ) {
             $booking_id = intval( $_POST['booking_id'] );
             check_admin_referer( "eme_admin", 'eme_admin_nonce' );
-            $transferto_id = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
+            $transferto_id         = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
+            $transferto_person_id  = isset( $_POST ['transferto_person_id'] ) ? intval( $_POST ['transferto_person_id'] ) : 0;
             $person_id     = isset( $_POST ['person_id'] ) ? intval( $_POST ['person_id'] ) : 0;
+            // transferto_person_id is only given for transferring a booking to another (existing) person
+            if ( $transferto_person_id && $transferto_person_id != $person_id ) {
+                $person_id = $transferto_person_id;
+            }
             $booking       = eme_get_booking( $booking_id );
             // transferto_id is only given for moving a booking to another event
             if ( $transferto_id && $booking['event_id'] != $transferto_id ) {
@@ -5306,10 +5317,6 @@ function eme_registration_seats_page( $pending = 0 ) {
                 $upload_failures = eme_upload_files( $booking_id, 'bookings' );
                 if ( $upload_failures ) {
                     $update_message .= $upload_failures;
-                }
-                $res = eme_add_update_person_from_form( $booking['person_id'] );
-                if ( ! $res[0] ) {
-                    $update_message .= $res[1];
                 }
                 // now get the changed booking and send mail if wanted
                 $booking = eme_get_booking( $booking_id );

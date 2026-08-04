@@ -3269,7 +3269,7 @@ function eme_get_uploaded_file_html( $file, $new_tab = 1 ) {
 function eme_delTree( $dir ) {
     $files = array_diff( scandir( $dir ), [ '.', '..' ] );
     foreach ( $files as $file ) {
-        ( is_dir( "$dir/$file" ) ) ? delTree( "$dir/$file" ) : wp_delete_file( "$dir/$file" );
+        ( is_dir( "$dir/$file" ) ) ? eme_delTree( "$dir/$file" ) : wp_delete_file( "$dir/$file" );
     }
     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- directory cleanup
     return rmdir( $dir );

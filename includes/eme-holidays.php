@@ -91,7 +91,7 @@ function eme_holidays_table_layout( $message = '' ) {
     <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_holidays" name="eme_admin_action_holidays">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteHolidays"><?php esc_html_e( 'Delete selected lists of holidays', 'events-made-easy' ); ?></option>
     </select>

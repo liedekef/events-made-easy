@@ -875,7 +875,7 @@ function eme_locations_table( $message = '' ) {
     <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_locations" name="eme_admin_action_locations">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteLocations"><?php esc_html_e( 'Delete selected locations', 'events-made-easy' ); ?></option>
     </select>

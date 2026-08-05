@@ -185,7 +185,7 @@ function eme_templates_table_layout( $message = '' ) {
     <div class="bulkactions">
     <form id='templates-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_templates" name="eme_admin_action_templates">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteTemplates"><?php esc_html_e( 'Delete selected templates', 'events-made-easy' ); ?></option>
     </select>

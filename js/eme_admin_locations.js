@@ -119,11 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide transfer field ---
     function updateShowHideStuff() {
-        const action = EME.$('#eme_admin_action')?.value || '';
+        const action = EME.$('#eme_admin_action_locations')?.value || '';
         eme_toggle(EME.$('#span_transferto'), ['trashLocations', 'deleteLocations'].includes(action));
     }
 
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action_locations')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Bulk Actions ---
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = LocationsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_locations').value;
             const transfertoId = EME.$('#transferto_id')?.value || '';
 
             if (selectedRows.length === 0 || !doAction) return;

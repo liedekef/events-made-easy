@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // --- Conditional UI: Show/hide based on action ---
     function updateShowHideStuff() {
-        const action = EME.$('#eme_admin_action')?.value || '';
+        const action = EME.$('#eme_admin_action_discounts')?.value || '';
         eme_toggle(EME.$('span#span_newvalidfrom'), action === 'changeValidFrom');
         eme_toggle(EME.$('span#span_newvalidto'), action === 'changeValidTo');
         eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
     }
 
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action_discounts')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Discounts Bulk Actions ---

@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = FormfieldsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_formfields').value;
             if (selectedRows.length === 0 || !doAction) return;
 
             if (doAction==='deleteFormfields') {

@@ -103,7 +103,7 @@ function eme_categories_table_layout( $message = '' ) {
     <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_categories" name="eme_admin_action_categories">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteCategories"><?php esc_html_e( 'Delete selected categories', 'events-made-easy' ); ?></option>
     </select>

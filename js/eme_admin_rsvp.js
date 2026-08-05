@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI for Actions ---
     function updateShowHideStuff() {
-        const action = EME.$('#eme_admin_action')?.value || '';
+        const action = EME.$('#eme_admin_action_rsvp')?.value || '';
 
         eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
         eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('span#span_rsvpmailtemplate'), action === 'rsvpMails');
     }
 
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action_rsvp')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // hide one toolbar button if not on pending approval and trash=0 (or not set)
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = BookingsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_rsvp').value;
             const sendMail = EME.$('#send_mail')?.value || 'no';
 
             if (selectedRows.length === 0 || !doAction) return;

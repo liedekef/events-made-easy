@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide based on action ---
     function updateShowHideStuff() {
-        const action = EME.$('#eme_admin_action')?.value || '';
+        const action = EME.$('#eme_admin_action_people')?.value || '';
         eme_toggle(EME.$('#span_language'), action === 'changeLanguage');
         eme_toggle(EME.$('#span_addtogroup'), action === 'addToGroup');
         eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('span#span_transferto'), ['trashPeople', 'deletePeople'].includes(action));
     }
 
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideStuff);
+    EME.$('#eme_admin_action_people')?.addEventListener('change', updateShowHideStuff);
     updateShowHideStuff();
 
     // --- Dynamic People Data (for dyngroups) ---

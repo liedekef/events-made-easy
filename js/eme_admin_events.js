@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateShowHideStuff() {
-        const action = EME.$('#events_eme_admin_action')?.value || '';
+        const action = EME.$('#eme_admin_action_events')?.value || '';
         const categorySpan = EME.$('span#events_span_addtocategory');
         const trashSpan = EME.$('span#events_span_sendtrashmails');
         
@@ -866,14 +866,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Admin action change handler for events
-    const adminAction = EME.$('#events_eme_admin_action');
+    const adminAction = EME.$('#eme_admin_action_events');
     if (adminAction) {
         updateShowHideStuff();
         adminAction.addEventListener('change', updateShowHideStuff);
     }
 
     // Admin action change handler for recurrences (extend date fields)
-    const recurrencesAdminAction = EME.$('#recurrences_eme_admin_action');
+    const recurrencesAdminAction = EME.$('#eme_admin_action_recurrences');
     if (recurrencesAdminAction) {
         recurrencesAdminAction.addEventListener('change', function() {
             const extendSpan = EME.$('span#recurrences_span_extendrecurrences');
@@ -1232,7 +1232,7 @@ document.addEventListener('DOMContentLoaded', function () {
         trashButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = TrashTable.getSelectedRows();
-            const doAction = EME.$('#trash_eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_trash').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

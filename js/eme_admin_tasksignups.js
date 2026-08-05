@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Conditional UI: Show/hide "Send mails" based on selected action ---
     function updateShowHideStuff() {
-        const actionSelect = EME.$('#eme_admin_action');
+        const actionSelect = EME.$('#eme_admin_action_tasksignups');
         const sendMailSpan = EME.$('#span_sendmails');
         if (!actionSelect || !sendMailSpan) return;
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(sendMailSpan, show);
     }
 
-    const actionSelect = EME.$('#eme_admin_action');
+    const actionSelect = EME.$('#eme_admin_action_tasksignups');
     if (actionSelect) {
         actionSelect.addEventListener('change', updateShowHideStuff);
         updateShowHideStuff(); // Initial call
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = TaskSignupsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action')?.value;
+            const doAction = EME.$('#eme_admin_action_tasksignups')?.value;
             const sendMail = EME.$('#send_mail')?.value || 'no';
 
             if (!selectedRows.length || !doAction) return;

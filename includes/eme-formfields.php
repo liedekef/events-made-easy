@@ -234,7 +234,7 @@ function eme_formfields_table_layout( $message = '' ) {
     <div class="bulkactions">
     <form id='formfields-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_formfields" name="eme_admin_action_formfields">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteFormfields"><?php esc_html_e( 'Delete selected fields', 'events-made-easy' ); ?></option>
     </select>

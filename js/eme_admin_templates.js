@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = TemplatesTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_templates').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

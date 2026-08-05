@@ -643,7 +643,7 @@ function eme_task_signups_table_layout( ) {
     <div class="bulkactions">
     <form id='task-signups-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_tasksignups" name="eme_admin_action_tasksignups">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
     <option value="sendReminders"><?php esc_html_e( 'Send reminders for task signups', 'events-made-easy' ); ?></option>

@@ -5567,7 +5567,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     </div>
     <div class="bulkactions">
     <form id="eme-admin-regform" name="eme-admin-regform" action="#" method="post">
-    <select name="eme_admin_action" id="eme_admin_action">
+    <select name="eme_admin_action_rsvp" id="eme_admin_action_rsvp">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( $trash ) { ?>
     <option value="deleteBooking"><?php esc_html_e( 'Permanently delete booking', 'events-made-easy' ); ?></option>

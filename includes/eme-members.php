@@ -2847,7 +2847,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     <div class="bulkactions">
     <form id='members-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_members" name="eme_admin_action_members">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
     <option value="acceptPayment"><?php esc_html_e( 'Accept membership payment', 'events-made-easy' ); ?></option>
@@ -3250,7 +3250,7 @@ function eme_manage_memberships_layout( $message ) {
     <div class="bulkactions">
     <form id='memberships-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_memberships" name="eme_admin_action_memberships">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
     <option value="deleteMemberships"><?php esc_html_e( 'Delete selected memberships', 'events-made-easy' ); ?></option>

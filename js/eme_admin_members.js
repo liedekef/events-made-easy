@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         membershipsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MembershipsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_memberships').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
         membersButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = MembersTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_members').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

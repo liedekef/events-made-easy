@@ -6264,7 +6264,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 ?>
         <div class="bulkactions">
         <form action="#" method="post">
-        <select id="events_eme_admin_action" name="eme_admin_action">
+        <select id="eme_admin_action_events" name="eme_admin_action_events">
         <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
         <option value="trashEvents"><?php esc_html_e( 'Delete selected events (move to trash bin)', 'events-made-easy' ); ?></option>
         <option value="publicEvents"><?php esc_html_e( 'Publish selected events', 'events-made-easy' ); ?></option>
@@ -6322,7 +6322,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <br>
         <div class="bulkactions">
         <form action="#" method="post">
-        <select id="recurrences_eme_admin_action" name="eme_admin_action">
+        <select id="eme_admin_action_recurrences" name="eme_admin_action_recurrences">
         <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
         <option value="deleteRecurrences"><?php esc_html_e( 'Delete selected recurrences (and move events to trash bin)', 'events-made-easy' ); ?></option>
         <option value="publicRecurrences"><?php esc_html_e( 'Publish selected recurrences', 'events-made-easy' ); ?></option>

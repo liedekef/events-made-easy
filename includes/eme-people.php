@@ -2018,7 +2018,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     <div class="bulkactions">
     <form id='people-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_people" name="eme_admin_action_people">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
         <?php if ( !$limit_to_group  ) : ?>
@@ -2398,7 +2398,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     <div class="bulkactions">
     <form id="trash-people-form" action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="trash_eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_trash" name="eme_admin_action_trash">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="untrashPeople"><?php esc_html_e( 'Restore selected persons', 'events-made-easy' ); ?></option>
     <option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
@@ -2431,7 +2431,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     <div class="bulkactions">
     <form id='groups-form' action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-    <select id="eme_admin_action" name="eme_admin_action">
+    <select id="eme_admin_action_groups" name="eme_admin_action_groups">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
     <option value="deleteGroups"><?php esc_html_e( 'Delete selected groups', 'events-made-easy' ); ?></option>

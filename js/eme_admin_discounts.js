@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         discountsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = DiscountsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_discounts').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         groupsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = DiscountGroupsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_discountgroups').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

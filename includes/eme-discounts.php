@@ -258,7 +258,7 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
     <div class="bulkactions">
 	<form id='discounts-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<select id="eme_admin_action" name="eme_admin_action">
+	<select id="eme_admin_action_discounts" name="eme_admin_action_discounts">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteDiscounts"><?php esc_html_e( 'Delete selected discounts', 'events-made-easy' ); ?></option>
 	<option value="addToGroup"><?php esc_html_e( 'Add to group', 'events-made-easy' ); ?></option>
@@ -301,7 +301,7 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
     <div class="bulkactions">
 	<form id='discountgroups-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<select id="eme_admin_action" name="eme_admin_action">
+	<select id="eme_admin_action_discountgroups" name="eme_admin_action_discountgroups">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteDiscountGroups"><?php esc_html_e( 'Delete selected discountgroups', 'events-made-easy' ); ?></option>
 	</select>

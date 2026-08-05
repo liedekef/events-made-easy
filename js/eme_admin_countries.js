@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         countriesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = CountriesTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_countries').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         statesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = StatesTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_states').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

@@ -1140,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', function () {
         eventsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = EventsTable.getSelectedRows();
-            const doAction = EME.$('#events_eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_events').value;
             const sendTrashMails = EME.$('#events_send_trashmails')?.value || 'no';
             const addCategory = EME.$('#events_addtocategory')?.value || '';
 
@@ -1186,7 +1186,7 @@ document.addEventListener('DOMContentLoaded', function () {
         recurrencesButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = RecurrencesTable.getSelectedRows();
-            const doAction = EME.$('#recurrences_eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_recurrences').value;
             const recNewStartDate = EME.$('#rec_new_start_date')?.value || '';
             const recNewEndDate = EME.$('#rec_new_end_date')?.value || '';
 

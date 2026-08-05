@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
         peopleButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = PeopleTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_people').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
         trashedPeopleButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = TrashedPeopleTable.getSelectedRows();
-            const doAction = EME.$('#trash_eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_trash').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
         groupsButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const selectedRows = GroupsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action').value;
+            const doAction = EME.$('#eme_admin_action_groups').value;
 
             if (selectedRows.length === 0 || !doAction) return;
 

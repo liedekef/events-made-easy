@@ -215,7 +215,7 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
     <div class="bulkactions">
 	<form id='countries-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<select id="eme_admin_action" name="eme_admin_action_countries">
+	<select id="eme_admin_action_countries" name="eme_admin_action_countries">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteCountries"><?php esc_html_e( 'Delete selected countries', 'events-made-easy' ); ?></option>
 	</select>
@@ -247,7 +247,7 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
     <div class="bulkactions">
 	<form id='states-form' action="#" method="post">
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
-	<select id="eme_admin_action" name="eme_admin_action_states">
+	<select id="eme_admin_action_states" name="eme_admin_action_states">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteStates"><?php esc_html_e( 'Delete selected states', 'events-made-easy' ); ?></option>
 	</select>

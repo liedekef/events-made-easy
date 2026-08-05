@@ -6365,7 +6365,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 ?>
         <div class="bulkactions">
         <form action="#" method="post">
-        <select id="trash_eme_admin_action" name="eme_admin_action">
+        <select id="eme_admin_action_trash" name="eme_admin_action_trash">
         <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
         <option value="untrashEvents"><?php esc_html_e( 'Restore selected events (to draft status)', 'events-made-easy' ); ?></option>
         <option value="deleteEvents"><?php esc_html_e( 'Permanently delete selected events', 'events-made-easy' ); ?></option>

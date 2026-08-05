@@ -2039,29 +2039,29 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
     <option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
     <option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
     </select>
-    <span id="span_language" class="eme-hidden">
+    <span id="span_language">
     <?php esc_html_e( 'Change language to: ', 'events-made-easy' ); ?>
     <input type='text' id='language' name='language'>
     </span>
-    <span id="span_transferto" class="eme-hidden">
+    <span id="span_transferto">
     <?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
     <select id='transferto_id' name='transferto_id'
         data-placeholder="<?php esc_attr_e( 'Select a person', 'events-made-easy' ); ?>"
         class="eme_snapselect_chooseperson">
     </select>
     </span>
-    <span id="span_addtogroup" class="eme-hidden">
+    <span id="span_addtogroup">
     <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_removefromgroup" class="eme-hidden">
+    <span id="span_removefromgroup">
     <?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_pdftemplate" class="eme-hidden">
+    <span id="span_pdftemplate">
     <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_htmltemplate" class="eme-hidden">
+    <span id="span_htmltemplate">
     <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>

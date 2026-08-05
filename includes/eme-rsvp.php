@@ -5612,51 +5612,51 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
 <?php } ?>
     </select>
-    <span id="span_sendtocontact" class="eme-hidden">
+    <span id="span_sendtocontact">
 <?php
     esc_html_e( 'Send emails to contact person too?', 'events-made-easy' );
     echo eme_ui_select_binary( 0, 'send_to_contact_too' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
-    <span id="span_sendmails" class="eme-hidden">
+    <span id="span_sendmails">
 <?php
     esc_html_e( 'Send emails to attendees upon changes being made?', 'events-made-easy' );
     echo eme_ui_select_binary( 1, 'send_mail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
     <?php if ( get_option( 'eme_payment_refund_ok' ) ) : ?>
-    <span id="span_refund" class="eme-hidden">
+    <span id="span_refund">
 <?php
     esc_html_e( 'Refund if possible?', 'events-made-easy' );
     echo eme_ui_select_binary( 0, 'refund' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
     </span>
     <?php endif; ?>
-    <span id="span_partialpayment" class="eme-hidden">
+    <span id="span_partialpayment">
 <?php
     esc_html_e( 'Partial payment amount', 'events-made-easy' );
     $label = esc_html__('Partial payment amount', 'events-made-easy' );
     echo eme_ui_number( 0, 'partial_amount', 0, '', 'aria-label="' . $label . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_number()
 ?>
     </span>
-    <span id="span_rsvpmailtemplate" class="eme-hidden">
+    <span id="span_rsvpmailtemplate">
     <?php echo eme_ui_select_key_value( '', 'rsvpmail_template_subject', $rsvptemplates, 'id', 'name', __( 'Select a subject template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'rsvpmail_template', $rsvptemplates, 'id', 'name', __( 'Please select a body template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_pdftemplate" class="eme-hidden">
+    <span id="span_pdftemplate">
     <?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_htmltemplate" class="eme-hidden">
+    <span id="span_htmltemplate">
     <?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_addtogroup" class="eme-hidden">
+    <span id="span_addtogroup">
     <?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
-    <span id="span_removefromgroup" class="eme-hidden">
+    <span id="span_removefromgroup">
     <?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </span>
     <button id="BookingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>

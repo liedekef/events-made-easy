@@ -2,6 +2,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const TaskSignupsTableContainer = EME.$('#TaskSignupsTableContainer');
     let TaskSignupsTable;
 
+    // Builds & submits a real (non-ajax) POST form — used by the sendMails bulk action,
+    // which navigates to the mailing composer.
+    function eme_submit_hidden_form(url, fields) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        Object.entries(fields).forEach(([name, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     // --- Initialize Task Signups Table with ftable ---
     if (TaskSignupsTableContainer) {
         let taskSignupFields = {
@@ -91,91 +108,43 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_signup_status: eme_getValue(EME.$('#search_signup_status'))
                 };
             },
-            fields: taskSignupFields
+            fields: taskSignupFields,
+            bulkActions: {
+                select: '#eme_admin_action_tasksignups',
+                button: '#TaskSignupsActionsButton',
+                idField: 'id',
+                action: ajaxurl,
+                confirmActions: ['deleteTaskSignups'],
+                confirmTitle: emeadmin.translate_confirmdelete,
+                confirmMessage: emeadmin.translate_areyousuretodeleteselected,
+                visibleWhen: {
+                    '#span_sendmails': ['approveTaskSignups', 'deleteTaskSignups']
+                },
+                extraData: () => ({
+                    action: 'eme_manage_task_signups',
+                    send_mail: EME.$('#send_mail')?.value || 'no',
+                    eme_admin_nonce: emeadmin.translate_adminnonce
+                }),
+                handlers: {
+                    sendMails: ({ ids }) => eme_submit_hidden_form(emeadmin.translate_admin_sendmails_url, {
+                        tasksignup_ids: ids.join(','),
+                        eme_admin_action: 'new_mailing'
+                    })
+                }
+            },
+            bulkActionComplete: ({ data }) => {
+                if (data?.Result === 'ERROR') {
+                    TaskSignupsTable.showError(data.htmlmessage);
+                } else if (data?.Result === 'WARNING') {
+                    TaskSignupsTable.showWarning(data.htmlmessage);
+                } else {
+                    TaskSignupsTable.showInfo(data?.htmlmessage);
+                }
+            }
         });
 
         // Load the table
         TaskSignupsTable.load();
-    }
-
-    // --- Conditional UI: Show/hide "Send mails" based on selected action ---
-    function updateShowHideStuff() {
-        const actionSelect = EME.$('#eme_admin_action_tasksignups');
-        const sendMailSpan = EME.$('#span_sendmails');
-        if (!actionSelect || !sendMailSpan) return;
-
-        const action = actionSelect.value;
-        const show = ['approveTaskSignups', 'deleteTaskSignups'].includes(action);
-        eme_toggle(sendMailSpan, show);
-    }
-
-    const actionSelect = EME.$('#eme_admin_action_tasksignups');
-    if (actionSelect) {
-        actionSelect.addEventListener('change', updateShowHideStuff);
-        updateShowHideStuff(); // Initial call
-    }
-
-    // --- Bulk Actions Button ---
-    const actionsButton = EME.$('#TaskSignupsActionsButton');
-    if (actionsButton) {
-        actionsButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const selectedRows = TaskSignupsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action_tasksignups')?.value;
-            const sendMail = EME.$('#send_mail')?.value || 'no';
-
-            if (!selectedRows.length || !doAction) return;
-
-            if (doAction === 'deleteTaskSignups') {
-                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
-                if (!ok) return;
-            }
-
-            actionsButton.textContent = emeadmin.translate_pleasewait;
-            actionsButton.disabled = true;
-
-            const ids = selectedRows.map(row => row.dataset.recordKey);
-            const idsJoined = ids.join(',');
-
-            // Special case: "Send Mails" redirects to mailing form
-            if (doAction === 'sendMails') {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = emeadmin.translate_admin_sendmails_url;
-                ['tasksignup_ids', 'eme_admin_action'].forEach(key => {
-                    const val = key === 'tasksignup_ids' ? idsJoined : 'new_mailing';
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = val;
-                    form.appendChild(input);
-                });
-                document.body.appendChild(form);
-                form.submit();
-                return;
-            }
-
-            // Regular AJAX action
-            const formData = new FormData();
-            formData.append('id', idsJoined);
-            formData.append('action', 'eme_manage_task_signups');
-            formData.append('do_action', doAction);
-            formData.append('send_mail', sendMail);
-            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-
-            eme_postJSON(ajaxurl, formData, (data) => {
-                if (data.Result === 'ERROR') {
-                    TaskSignupsTable.showError(data.htmlmessage);
-                } else if (data.Result === 'WARNING') {
-                    TaskSignupsTable.showWarning(data.htmlmessage);
-                } else {
-                    TaskSignupsTable.showInfo(data.htmlmessage);
-                }
-                TaskSignupsTable.reload();
-                actionsButton.textContent = emeadmin.translate_apply;
-                actionsButton.disabled = false;
-            });
-        });
     }
 
     // --- Reload Button ---

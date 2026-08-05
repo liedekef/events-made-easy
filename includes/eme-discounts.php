@@ -266,16 +266,16 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
 	<option value="changeValidFrom"><?php esc_html_e( 'Change "valid from" date', 'events-made-easy' ); ?></option>
 	<option value="changeValidTo"><?php esc_html_e( 'Change "valid until" date', 'events-made-easy' ); ?></option>
 	</select>
-	<span id="span_addtogroup" class="eme-hidden">
+	<span id="span_addtogroup">
 	<?php echo eme_ui_select_key_value( '', 'addtogroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 	</span>
-	<span id="span_removefromgroup" class="eme-hidden">
+	<span id="span_removefromgroup">
 	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $dgroups, 'id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 	</span>
-	<span id="span_newvalidfrom" class="eme-hidden">
+	<span id="span_newvalidfrom">
 	<input id="new_validfrom" type="text" name="new_validfrom" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid from" date/time', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdatetime'>
 	</span>
-	<span id="span_newvalidto" class="eme-hidden">
+	<span id="span_newvalidto">
 	<input id="new_validto" type="text" name="new_validto" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdatetime'>
 	</span>
 	<button id="DiscountsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>

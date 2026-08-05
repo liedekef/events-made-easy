@@ -879,7 +879,7 @@ function eme_locations_table( $message = '' ) {
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="deleteLocations"><?php esc_html_e( 'Delete selected locations', 'events-made-easy' ); ?></option>
     </select>
-    <span id="span_transferto" class="eme-hidden">
+    <span id="span_transferto">
     <?php esc_html_e( 'Transfer associated events to (leave empty to delete the location info for those events):', 'events-made-easy' ); ?>
     <input type='hidden' id='transferto_id' name='transferto_id'>
     <select id='chooselocation' name='chooselocation'

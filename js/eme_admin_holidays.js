@@ -31,52 +31,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: {
                     title: emeadmin.translate_name
                 }
+            },
+            bulkActions: {
+                select: '#eme_admin_action_holidays',
+                button: '#HolidaysActionsButton',
+                idField: 'holidays_ids',
+                action: ajaxurl,
+                confirmActions: ['deleteHolidays'],
+                confirmTitle: emeadmin.translate_confirmdelete,
+                confirmMessage: emeadmin.translate_areyousuretodeleteselected,
+                extraData: () => ({
+                    action: 'eme_manage_holidays',
+                    eme_admin_nonce: emeadmin.translate_adminnonce
+                })
+            },
+            bulkActionComplete: ({ data }) => {
+                const msg = EME.$('#holidays-message');
+                if (msg) {
+                    msg.innerHTML = data?.htmlmessage;
+                    eme_toggle(msg, true);
+                    setTimeout(() => eme_toggle(msg, false), 3000);
+                }
             }
         });
 
         HolidaysTable.load();
-    }
-
-    // --- Bulk Actions ---
-    const actionsButton = EME.$('#HolidaysActionsButton');
-    if (actionsButton) {
-        actionsButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const selectedRows = HolidaysTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action_holidays').value;
-
-            if (selectedRows.length === 0 || !doAction) return;
-
-            if (doAction==='deleteHolidays') {
-                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
-                if (!ok) return;
-            }
-
-            actionsButton.textContent = emeadmin.translate_pleasewait;
-            actionsButton.disabled = true;
-
-            const ids = selectedRows.map(row => row.dataset.recordKey);
-            const idsJoined = ids.join(',');
-
-            const formData = new FormData();
-            formData.append('id', idsJoined);
-            formData.append('action', 'eme_manage_holidays');
-            formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-
-            eme_postJSON(ajaxurl, formData, (data) => {
-                HolidaysTable.reload();
-                actionsButton.textContent = emeadmin.translate_apply;
-                actionsButton.disabled = false;
-
-                const msg = EME.$('#holidays-message');
-                if (msg) {
-                    msg.innerHTML = data.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 3000);
-                }
-            });
-        });
     }
 
     // --- Reload Button ---

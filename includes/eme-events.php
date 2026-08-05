@@ -6273,13 +6273,13 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <option value="draftEvents"><?php esc_html_e( 'Make selected events draft', 'events-made-easy' ); ?></option>
         <option value="addCategory"><?php esc_html_e( 'Add selected events to category', 'events-made-easy' ); ?></option>
         </select>
-        <span id="events_span_sendtrashmails" class="eme-hidden">
+        <span id="events_span_sendtrashmails">
 <?php
         esc_html_e( 'Send emails for cancelled bookings too?', 'events-made-easy' );
         echo eme_ui_select_binary( 0, 'events_send_trashmails' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
         </span>
-        <span id="events_span_addtocategory" class="eme-hidden">
+        <span id="events_span_addtocategory">
             <?php echo eme_ui_select_key_value( '', 'events_addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
         </span>
         <button id="EventsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
@@ -6330,7 +6330,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <option value="draftRecurrences"><?php esc_html_e( 'Make selected recurrences draft', 'events-made-easy' ); ?></option>
         <option value="extendRecurrences"><?php esc_html_e( 'Set new start/end date for selected recurrences', 'events-made-easy' ); ?></option>
         </select>
-        <span id="recurrences_span_extendrecurrences" class="eme-hidden">
+        <span id="recurrences_span_extendrecurrences">
         <input id="rec_new_start_date" type="text" name="rec_new_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
         <input id="rec_new_end_date" type="text" name="rec_new_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
         </span>

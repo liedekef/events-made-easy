@@ -54,55 +54,34 @@ document.addEventListener('DOMContentLoaded', function () {
                     listClass: 'eme-ftable-center',
                     columnResizable: false
                 }
-            }
-        });
-
-        // Load the table data
-        TemplatesTable.load();
-    }
-
-    // --- Templates Actions Button (Bulk Actions) ---
-    const actionsButton = EME.$('#TemplatesActionsButton');
-    if (actionsButton) {
-        actionsButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const selectedRows = TemplatesTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action_templates').value;
-
-            if (selectedRows.length === 0 || !doAction) return;
-
-            if (doAction === 'deleteTemplates') {
-                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
-                if (!ok) return;
-            }
-
-            actionsButton.textContent = emeadmin.translate_pleasewait;
-            actionsButton.disabled = true;
-
-            const ids = selectedRows.map(row => row.dataset.recordKey);
-            const idsJoined = ids.join(',');
-
-            const formData = new FormData();
-            formData.append('id', idsJoined);
-            formData.append('action', 'eme_manage_templates');
-            formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-
-            eme_postJSON(ajaxurl, formData, (data) => {
-                TemplatesTable.reload();
-                actionsButton.textContent = emeadmin.translate_apply;
-                actionsButton.disabled = false;
-
+            },
+            bulkActions: {
+                select: '#eme_admin_action_templates',
+                button: '#TemplatesActionsButton',
+                idField: 'id',
+                action: ajaxurl,
+                confirmActions: ['deleteTemplates'],
+                confirmTitle: emeadmin.translate_confirmdelete,
+                confirmMessage: emeadmin.translate_areyousuretodeleteselected,
+                extraData: () => ({
+                    action: 'eme_manage_templates',
+                    eme_admin_nonce: emeadmin.translate_adminnonce
+                })
+            },
+            bulkActionComplete: ({ data, doAction }) => {
                 const messageDiv = EME.$('#templates-message');
                 if (messageDiv) {
-                    messageDiv.innerHTML = data.htmlmessage;
+                    messageDiv.innerHTML = data?.htmlmessage;
                     eme_toggle(messageDiv, true);
                     if (doAction === 'deleteTemplates') {
                         setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
                     }
                 }
-            });
+            }
         });
+
+        // Load the table data
+        TemplatesTable.load();
     }
 
     // --- Reload Button ---

@@ -4,6 +4,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const MembersTableContainer = EME.$('#MembersTableContainer');
     let MembersTable;
 
+    // --- Shared bulk-action helpers ---
+    function eme_submit_hidden_form(url, fields) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        Object.entries(fields).forEach(([name, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     // --- Initialize Memberships Table ---
     if (MembershipsTableContainer) {
         MembershipsTable = new FTable('#MembershipsTableContainer', {
@@ -39,6 +55,49 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: emeadmin.translate_membercount,
                     sorting: false
                 }
+            },
+            bulkActions: {
+                select: '#eme_admin_action_memberships',
+                button: '#MembershipsActionsButton',
+                idField: 'membership_id',
+                action: ajaxurl,
+                confirmActions: ['deleteMemberships'],
+                confirmTitle: emeadmin.translate_confirmdelete,
+                confirmMessage: emeadmin.translate_areyousuretodeleteselected,
+                extraData: () => ({
+                    action: 'eme_manage_memberships',
+                    eme_admin_nonce: emeadmin.translate_adminnonce
+                }),
+                handlers: {
+                    showMembershipStats: async ({ ids }) => {
+                        const formData = new FormData();
+                        formData.append('membership_id', ids.join(','));
+                        formData.append('action', 'eme_manage_memberships');
+                        formData.append('do_action', 'showMembershipStats');
+                        formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+                        try {
+                            const data = await FTableHttpClient.post(ajaxurl, formData);
+                            if (data.Result === 'ERROR') {
+                                MembershipsTable.showError(data.htmlmessage);
+                            } else if (data.Result === 'WARNING') {
+                                MembershipsTable.showWarning(data.htmlmessage);
+                            } else {
+                                MembershipsTable.showInfo(data.htmlmessage);
+                            }
+                        } catch (error) {
+                            MembershipsTable.showError(emeadmin.translate_problem);
+                        }
+                    }
+                }
+            },
+            bulkActionComplete: ({ data }) => {
+                if (data?.Result === 'ERROR') {
+                    MembershipsTable.showError(data?.htmlmessage);
+                } else if (data?.Result === 'WARNING') {
+                    MembershipsTable.showWarning(data?.htmlmessage);
+                } else {
+                    MembershipsTable.showInfo(data?.htmlmessage);
+                }
             }
         });
 
@@ -46,49 +105,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Memberships Bulk Actions ---
-    const membershipsButton = EME.$('#MembershipsActionsButton');
-    if (membershipsButton) {
-        membershipsButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const selectedRows = MembershipsTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action_memberships').value;
-
-            if (selectedRows.length === 0 || !doAction) return;
-
-            if (doAction === 'deleteMemberships') {
-                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
-                if (!ok) return;
-            }
-
-            membershipsButton.textContent = emeadmin.translate_pleasewait;
-            membershipsButton.disabled = true;
-
-            const ids = selectedRows.map(row => row.dataset.recordKey);
-            const idsJoined = ids.join(',');
-
-            const formData = new FormData();
-            formData.append('membership_id', idsJoined);
-            formData.append('action', 'eme_manage_memberships');
-            formData.append('do_action', doAction);
-            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-
-            eme_postJSON(ajaxurl, formData, (data) => {
-                if (data.Result === 'ERROR') {
-                    MembershipsTable.showError(data.htmlmessage);
-                } else if (data.Result === 'WARNING') {
-                    MembershipsTable.showWarning(data.htmlmessage);
-                } else {
-                    MembershipsTable.showInfo(data.htmlmessage);
-                }
-                if (doAction !== 'showMembershipStats') {
-                    MembershipsTable.reload();
-                }
-                membershipsButton.textContent = emeadmin.translate_apply;
-                membershipsButton.disabled = false;
-            });
-        });
-    }
-
     // --- Initialize Members Table ---
     if (MembersTableContainer) {
         let memberFields = {
@@ -277,31 +293,83 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
                 search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
             }),
-            fields: memberFields
+            fields: memberFields,
+            bulkActions: {
+                select: '#eme_admin_action_members',
+                button: '#MembersActionsButton',
+                idField: 'member_id',
+                action: ajaxurl,
+                confirmActions: ['deleteMembers'],
+                confirmTitle: emeadmin.translate_confirmdelete,
+                confirmMessage: emeadmin.translate_areyousuretodeleteselected,
+                visibleWhen: {
+                    '#span_sendmails': ['acceptPayment', 'stopMembership', 'markUnpaid'],
+                    '#span_trashperson': ['deleteMembers'],
+                    '#span_membermailtemplate': ['memberMails'],
+                    '#span_pdftemplate': ['pdf'],
+                    '#span_htmltemplate': ['html']
+                },
+                extraData: () => {
+                    const action = EME.$('#eme_admin_action_members')?.value || '';
+                    const sendMailEl = EME.$('#send_mail');
+                    if (sendMailEl) {
+                        if (['acceptPayment', 'stopMembership'].includes(action)) {
+                            sendMailEl.value = 1;
+                        } else if (action === 'markUnpaid') {
+                            sendMailEl.value = 0;
+                        }
+                    }
+                    return {
+                        action: 'eme_manage_members',
+                        send_mail: EME.$('#send_mail')?.value || '',
+                        trash_person: EME.$('#trash_person')?.value || '',
+                        membermail_template: EME.$('#membermail_template')?.value || '',
+                        membermail_template_subject: EME.$('#membermail_template_subject')?.value || '',
+                        pdf_template: EME.$('#pdf_template')?.value || '',
+                        pdf_template_header: EME.$('#pdf_template_header')?.value || '',
+                        pdf_template_footer: EME.$('#pdf_template_footer')?.value || '',
+                        html_template: EME.$('#html_template')?.value || '',
+                        html_template_header: EME.$('#html_template_header')?.value || '',
+                        html_template_footer: EME.$('#html_template_footer')?.value || '',
+                        eme_admin_nonce: emeadmin.translate_adminnonce
+                    };
+                },
+                handlers: {
+                    sendMails: ({ ids }) => eme_submit_hidden_form(emeadmin.translate_admin_sendmails_url, {
+                        member_ids: ids.join(','),
+                        eme_admin_action: 'new_mailing'
+                    }),
+                    pdf: ({ ids }) => eme_submit_hidden_form(ajaxurl, {
+                        member_id: ids.join(','),
+                        do_action: 'pdf',
+                        pdf_template: EME.$('#pdf_template')?.value || '',
+                        pdf_template_header: EME.$('#pdf_template_header')?.value || '',
+                        pdf_template_footer: EME.$('#pdf_template_footer')?.value || '',
+                        eme_admin_nonce: emeadmin.translate_adminnonce
+                    }),
+                    html: ({ ids }) => eme_submit_hidden_form(ajaxurl, {
+                        member_id: ids.join(','),
+                        do_action: 'html',
+                        html_template: EME.$('#html_template')?.value || '',
+                        html_template_header: EME.$('#html_template_header')?.value || '',
+                        html_template_footer: EME.$('#html_template_footer')?.value || '',
+                        eme_admin_nonce: emeadmin.translate_adminnonce
+                    })
+                }
+            },
+            bulkActionComplete: ({ data }) => {
+                if (data?.Result === 'ERROR') {
+                    MembersTable.showError(data?.htmlmessage);
+                } else if (data?.Result === 'WARNING') {
+                    MembersTable.showWarning(data?.htmlmessage);
+                } else {
+                    MembersTable.showInfo(data?.htmlmessage);
+                }
+            }
         });
 
         MembersTable.load();
     }
-
-    // --- Conditional UI: Show/hide mail options ---
-    function updateShowHideAdminActions() {
-        const action = EME.$('#eme_admin_action')?.value || '';
-        const sendMailsSpan = EME.$('#span_sendmails');
-        eme_toggle(EME.$('#span_pdftemplate'), action === 'pdf');
-        eme_toggle(EME.$('#span_htmltemplate'), action === 'html');
-        eme_toggle(EME.$('span#span_membermailtemplate'), action === 'memberMails');
-        eme_toggle(EME.$('span#span_trashperson'), action === 'deleteMembers');
-
-        if (['acceptPayment', 'stopMembership'].includes(action)) {
-            EME.$('#send_mail').value = 1;
-        }
-        if (['markUnpaid'].includes(action)) {
-            EME.$('#send_mail').value = 0;
-        }
-        eme_toggle(sendMailsSpan, ['acceptPayment', 'stopMembership', 'markUnpaid'].includes(action));
-    }
-    EME.$('#eme_admin_action')?.addEventListener('change', updateShowHideAdminActions);
-    updateShowHideAdminActions();
 
     // --- Conditional UI: Show/hide options ---
     const select_type = EME.$('select#type');
@@ -354,94 +422,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         inputFamilyMembership.addEventListener('change', updateShowHideFamilytpl);
         updateShowHideFamilytpl();
-    }
-
-    // --- Bulk Actions ---
-    const membersButton = EME.$('#MembersActionsButton');
-    if (membersButton) {
-        membersButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const selectedRows = MembersTable.getSelectedRows();
-            const doAction = EME.$('#eme_admin_action_members').value;
-
-            if (selectedRows.length === 0 || !doAction) return;
-
-            if (['deleteMembers'].includes(doAction)) {
-                const ok = await FTable.confirm(emeadmin.translate_confirmdelete, emeadmin.translate_areyousuretodeleteselected);
-                if (!ok) return;
-            }
-
-            membersButton.textContent = emeadmin.translate_pleasewait;
-            membersButton.disabled = true;
-
-            const ids = selectedRows.map(row => row.dataset.recordKey);
-            const idsJoined = ids.join(',');
-
-            const formData = new FormData();
-            formData.append('member_id', idsJoined);
-            formData.append('action', 'eme_manage_members');
-            formData.append('do_action', doAction);
-            formData.append('send_mail', EME.$('#send_mail')?.value);
-            formData.append('trash_person', EME.$('#trash_person')?.value);
-            formData.append('membermail_template', EME.$('#membermail_template')?.value);
-            formData.append('membermail_template_subject', EME.$('#membermail_template_subject')?.value);
-            formData.append('pdf_template', EME.$('#pdf_template')?.value || '');
-            formData.append('pdf_template_header', EME.$('#pdf_template_header')?.value || '');
-            formData.append('pdf_template_footer', EME.$('#pdf_template_footer')?.value || '');
-            formData.append('html_template', EME.$('#html_template')?.value || '');
-            formData.append('html_template_header', EME.$('#html_template_header')?.value || '');
-            formData.append('html_template_footer', EME.$('#html_template_footer')?.value || '');
-            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-
-            if (doAction === 'sendMails') {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = emeadmin.translate_admin_sendmails_url;
-                ['member_ids', 'eme_admin_action'].forEach(key => {
-                    const val = key === 'member_ids' ? idsJoined : 'new_mailing';
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = val;
-                    form.appendChild(input);
-                });
-                document.body.appendChild(form);
-                form.submit();
-                return;
-            }
-
-            if (['pdf', 'html'].includes(doAction)) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = ajaxurl;
-                // Add FormData entries as hidden inputs
-                for (const [key, value] of formData.entries()) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = value;
-                    form.appendChild(input);
-                }
-                document.body.appendChild(form);
-                form.submit();
-                membersButton.textContent = emeadmin.translate_apply;
-                membersButton.disabled = false;
-                return;
-            }
-
-            eme_postJSON(ajaxurl, formData, (data) => {
-                if (data.Result === 'ERROR') {
-                    MembersTable.showError(data.htmlmessage);
-                } else if (data.Result === 'WARNING') {
-                    MembersTable.showWarning(data.htmlmessage);
-                } else {
-                    MembersTable.showInfo(data.htmlmessage);
-                }
-                MembersTable.reload();
-                membersButton.textContent = emeadmin.translate_apply;
-                membersButton.disabled = false;
-            });
-        });
     }
 
     EME.$('#membershipForm')?.addEventListener('submit', function(event) {

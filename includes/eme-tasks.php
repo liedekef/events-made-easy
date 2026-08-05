@@ -650,12 +650,12 @@ function eme_task_signups_table_layout( ) {
     <option value="approveTaskSignups"><?php esc_html_e( 'Approve selected task signups', 'events-made-easy' ); ?></option>
     <option value="deleteTaskSignups"><?php esc_html_e( 'Delete selected task signups', 'events-made-easy' ); ?></option>
     </select>
-        <span id="span_sendmails" class="eme-hidden">
-        <?php
-        esc_html_e( 'Send emails to people upon changes being made?', 'events-made-easy' );
-        echo eme_ui_select_binary( 1, 'send_mail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
-        ?>
-        </span>
+    <span id="span_sendmails">
+    <?php
+    esc_html_e( 'Send emails to people upon changes being made?', 'events-made-easy' );
+    echo eme_ui_select_binary( 1, 'send_mail' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+    ?>
+    </span>
     <button id="TaskSignupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
     </form>

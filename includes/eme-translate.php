@@ -40,21 +40,14 @@ function eme_lang_url_mode() {
 	// check for a known multilingual plugin first: its own configured mode is authoritative
 	// and shouldn't be overridden by a stray/leftover ?lang= on the current request
 	$url_mode = 0;
-	if ( function_exists( 'mqtranslate_conf' ) ) {
-		// only some functions in mqtrans are different, but the options are named the same as for qtranslate
-		$url_mode = get_option( 'mqtranslate_url_mode' );
-	} elseif ( function_exists( 'qtrans_getLanguage' ) ) {
-		$url_mode = get_option( 'qtranslate_url_mode' );
-	} elseif ( function_exists( 'ppqtrans_getLanguage' ) ) {
-		$url_mode = get_option( 'pqtranslate_url_mode' );
+	if ( function_exists( 'pll_current_language' ) ) {
+		$url_mode = 2;
 	} elseif ( function_exists( 'qtranxf_getLanguage' ) ) {
 		$url_mode = get_option( 'qtranslate_url_mode' );
 		if ( empty( $url_mode ) ) {
 			$url_mode = 2;
 		}
-	} elseif ( function_exists( 'pll_current_language' ) ) {
-		$url_mode = 2;
-	} elseif ( isset( $_GET['lang'] ) ) {
+    } elseif ( isset( $_GET['lang'] ) ) {
 		$url_mode = 1;
 	}
 	if ( empty( $url_mode ) ) {
@@ -65,7 +58,7 @@ function eme_lang_url_mode() {
 			$url_mode = 2;
 		}
 	}
-	wp_cache_set( 'eme_url_mode', $url_mode, '', 10 );
+	wp_cache_set( 'eme_url_mode', $url_mode, '', 15 );
 	return $url_mode;
 }
 
@@ -76,10 +69,7 @@ function eme_uri_add_lang( $name, $lang ) {
 		$url_mode = eme_lang_url_mode();
 		if ( $url_mode == 2 ) {
 			if ( function_exists( 'pll_home_url' ) ) {
-				// let Polylang build its own (multisite-aware) home url for this language instead of
-				// guessing which trailing path segment is the language: on a multisite path install the
-				// site's own base path (e.g. /etk/) can look just like a 2-3 letter language code and get
-				// stripped by mistake
+				// let Polylang build its own (multisite-aware) home url for the current language
 				$the_link = pll_home_url( $lang );
 				$the_link = trailingslashit( $the_link ) . user_trailingslashit( $name );
 			} else {
@@ -115,31 +105,19 @@ function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 		return $value;
 	}
 	$translated = $value;
-	if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtrans_use' ) ) {
-		if ( empty( $lang ) ) {
-			$translated = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
-		} else {
-			$translated = qtrans_use( $lang, $value );
-		}
-	} elseif ( function_exists( 'ppqtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'ppqtrans_use' ) ) {
-		if ( empty( $lang ) ) {
-			$translated = ppqtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
-		} else {
-			$translated = ppqtrans_use( $lang, $value );
-		}
-	} elseif ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtranxf_use' ) ) {
-		if ( empty( $lang ) ) {
-			$translated = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
-		} else {
-			$translated = qtranxf_use( $lang, $value );
-		}
-	} elseif ( function_exists( 'pll_translate_string' ) && function_exists( 'pll__' ) ) {
+	if ( function_exists( 'pll_translate_string' ) && function_exists( 'pll__' ) ) {
 		// pll language notation is different from what qtrans (and eme) support, so lets also translate the eme language tags
 		$value = eme_translate_string( $value, $lang );
 		if ( empty( $lang ) ) {
 			$translated = pll__( $value );
 		} else {
 			$translated = pll_translate_string( $value, $lang );
+		}
+	} elseif ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtranxf_use' ) ) {
+		if ( empty( $lang ) ) {
+			$translated = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+		} else {
+			$translated = qtranxf_use( $lang, $value );
 		}
 	}
 	if ( $translated != $value ) {

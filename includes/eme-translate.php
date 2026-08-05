@@ -37,10 +37,10 @@ function eme_lang_url_mode() {
 	}
 
 	// should be an option
+	// check for a known multilingual plugin first: its own configured mode is authoritative
+	// and shouldn't be overridden by a stray/leftover ?lang= on the current request
 	$url_mode = 0;
-	if ( isset( $_GET['lang'] ) ) {
-		$url_mode = 1;
-	} elseif ( function_exists( 'mqtranslate_conf' ) ) {
+	if ( function_exists( 'mqtranslate_conf' ) ) {
 		// only some functions in mqtrans are different, but the options are named the same as for qtranslate
 		$url_mode = get_option( 'mqtranslate_url_mode' );
 	} elseif ( function_exists( 'qtrans_getLanguage' ) ) {
@@ -54,6 +54,8 @@ function eme_lang_url_mode() {
 		}
 	} elseif ( function_exists( 'pll_current_language' ) ) {
 		$url_mode = 2;
+	} elseif ( isset( $_GET['lang'] ) ) {
+		$url_mode = 1;
 	}
 	if ( empty( $url_mode ) ) {
 		$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
@@ -73,9 +75,18 @@ function eme_uri_add_lang( $name, $lang ) {
 	if ( ! empty( $lang ) ) {
 		$url_mode = eme_lang_url_mode();
 		if ( $url_mode == 2 ) {
-			$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
-			$the_link   = preg_replace( "/\/$lang_regex\/?$/", '', $the_link );
-			$the_link   = trailingslashit( $the_link ) . "$lang/" . user_trailingslashit( $name );
+			if ( function_exists( 'pll_home_url' ) ) {
+				// let Polylang build its own (multisite-aware) home url for this language instead of
+				// guessing which trailing path segment is the language: on a multisite path install the
+				// site's own base path (e.g. /etk/) can look just like a 2-3 letter language code and get
+				// stripped by mistake
+				$the_link = pll_home_url( $lang );
+				$the_link = trailingslashit( $the_link ) . user_trailingslashit( $name );
+			} else {
+				$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+				$the_link   = preg_replace( "/\/$lang_regex\/?$/", '', $the_link );
+				$the_link   = trailingslashit( $the_link ) . "$lang/" . user_trailingslashit( $name );
+			}
 		} elseif ( $url_mode == 1 ) {
 			$the_link = trailingslashit( remove_query_arg( 'lang', $the_link ) );
 			$the_link = $the_link . user_trailingslashit( $name );

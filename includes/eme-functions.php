@@ -1146,6 +1146,7 @@ function eme_rsvp_checkurl( $booking_id ) {
 
 function eme_rsvp_proofurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
+    // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
@@ -1328,6 +1329,7 @@ function eme_captcha_url( $file ) {
 }
 
 function eme_tracker_url( $random_id ) {
+    // no language: this is a mail-open tracking pixel, no content is ever rendered
     $the_link = eme_get_events_page();
     $the_link = add_query_arg( [ 'eme_tracker_id' => $random_id ], $the_link );
     return $the_link;

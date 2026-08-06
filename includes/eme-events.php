@@ -8977,12 +8977,17 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 <?php
 }
 
-function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future', $order = 'ASC', $show_ongoing = 1, $category = '', $author = '', $contact_person = '', $limit = 5, $location_id = '', $title = '' ) {
+function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future', $order = 'ASC', $show_ongoing = 1, $category = '', $author = '', $contact_person = '', $limit = 5, $location_id = '', $title = '', $language = '' ) {
     $echo = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
     if ( $text == '' ) {
         $text = 'RSS';
     }
+    if ( empty( $language ) ) {
+        $language = eme_detect_lang();
+    }
     $url  = site_url( "/?eme_rss=main&scope=$scope&show_ongoing=$show_ongoing&order=$order&category=$category&author=$author&contact_person=$contact_person&limit=$limit&location_id=$location_id&title=" . urlencode( $title ) );
+    // bake the language in explicitly here: this url is meant to be saved into a feed reader, so language must be set
+    $url  = eme_add_lang_query_arg( $url, $language );
     $link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 
     if ( $justurl ) {
@@ -9014,6 +9019,7 @@ function eme_rss_link_shortcode( $atts ) {
             'limit'          => 5,
             'location_id'    => '',
             'title'          => '',
+            'lang'           => '',
         ],
         $atts
     );
@@ -9041,13 +9047,14 @@ function eme_rss_link_shortcode( $atts ) {
         author: $author, 
         contact_person: $contact_person, 
         location_id: $location_id, 
-        title: $title 
+        title: $title, 
     );
     return $result;
 }
 
 function eme_rss() {
     $rss_options = get_option('eme_rss');
+    $language    = eme_detect_lang(); // should get it from GET
     if ( isset( $_GET['limit'] ) ) {
         $limit = intval( $_GET['limit'] );
     } else {
@@ -9107,7 +9114,7 @@ function eme_rss() {
 </title>
 <link>
 <?php
-    $events_page_link = eme_get_events_page();
+    $events_page_link = eme_get_events_page( language: $language );
     echo eme_rss_cdata( $events_page_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- RSS CDATA output, escaping would break format
 ?>
 </link>
@@ -9136,7 +9143,7 @@ Weblog Editor 2.0
         foreach ( $events as $event ) {
             $title       = eme_rss_cdata( eme_replace_event_placeholders( $rss_options['title_format'], $event, 'rss' ) );
             $description = eme_rss_cdata( eme_replace_event_placeholders( $rss_options['description_format'], $event, 'rss' ) );
-            $event_link  = eme_rss_cdata( eme_event_url( $event ) );
+            $event_link  = eme_rss_cdata( eme_event_url( $event, $language ) );
             if ( ! empty( $event['event_image_id'] ) ) {
                 $image_url = esc_url( wp_get_attachment_image_url( $event['event_image_id'], 'full' ) );
             } elseif ( ! empty( $event['event_image_url'] ) ) {

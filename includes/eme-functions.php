@@ -912,32 +912,34 @@ function eme_event_url( $event, $language = '' ) {
     if ( $event['event_url'] != '' && get_option( 'eme_use_external_url' ) && eme_is_url( $event['event_url'] ) ) {
         $the_link = $event['event_url'];
         $parsed   = wp_parse_url( $the_link );
+        // we need some full url kind of thing
         if ( empty( $parsed['scheme'] ) ) {
             $the_link = 'https://' . ltrim( $the_link, '/' );
         }
-    } else {
-        if ( empty( $language ) ) {
-            $language = eme_detect_lang();
-        }
-        if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
-            $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
-            if ( ! empty( $event['event_prefix'] ) && in_array( $event['event_prefix'], $events_prefixes ) ) {
-                $events_prefix = eme_permalink_convert( $event['event_prefix'] );
-            } else {
-                $events_prefix = eme_permalink_convert( $events_prefixes[0] );
-            }
-            if ( empty( $event['event_slug'] ) ) {
-                $name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_name'] );
-            } elseif ( substr( $event['event_slug'], -1 ) == '/' ) { // old style stuff
-                $name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_slug'] );
-            } else {
-                $name = $events_prefix . eme_permalink_convert_noslash( $event['event_slug'] );
-            }
-            $the_link = eme_uri_add_lang( $name, $language );
+        return $the_link;
+    }
+
+    if ( empty( $language ) ) {
+        $language = eme_detect_lang();
+    }
+    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
+        $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
+        if ( ! empty( $event['event_prefix'] ) && in_array( $event['event_prefix'], $events_prefixes ) ) {
+            $events_prefix = eme_permalink_convert( $event['event_prefix'] );
         } else {
-            $the_link = eme_get_events_page( language: $language );
-            $the_link = add_query_arg( [ 'event_id' => $event['event_id'] ], $the_link );
+            $events_prefix = eme_permalink_convert( $events_prefixes[0] );
         }
+        if ( empty( $event['event_slug'] ) ) {
+            $name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_name'] );
+        } elseif ( substr( $event['event_slug'], -1 ) == '/' ) { // old style stuff
+            $name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_slug'] );
+        } else {
+            $name = $events_prefix . eme_permalink_convert_noslash( $event['event_slug'] );
+        }
+        $the_link = eme_uri_add_lang( $name, $language );
+    } else {
+        $the_link = eme_get_events_page( language: $language );
+        $the_link = add_query_arg( [ 'event_id' => $event['event_id'] ], $the_link );
     }
     return $the_link;
 }
@@ -956,7 +958,7 @@ function eme_location_url( $location, $language = '' ) {
         if ( empty( $language ) ) {
             $language = eme_detect_lang();
         }
-        if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
+        if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
             $locations_prefixes = explode( ',', get_option( 'eme_permalink_locations_prefix', 'locations' ) );
             if ( ! empty( $location['location_prefix'] ) && in_array( $location['location_prefix'], $locations_prefixes ) ) {
                 $locations_prefix = eme_permalink_convert( $location['location_prefix'] );
@@ -985,7 +987,7 @@ function eme_calendar_day_url( $day ) {
 
     $language = eme_detect_lang();
 
-    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
+    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $cal_prefix_option = get_option( 'eme_permalink_calendar_prefix', '' );
         if ( empty( $cal_prefix_option ) ) {
             $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
@@ -1007,7 +1009,7 @@ function eme_booking_confirm_url( $payment ) {
     global $wp_rewrite;
 
     $language = eme_detect_lang();
-    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
+    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
         $confirm_prefix  = eme_permalink_convert( $events_prefixes[0] ) . 'confirm/';
         $name            = $confirm_prefix . $payment['random_id'];
@@ -1029,7 +1031,7 @@ function eme_payment_url( $payment, $resultcode = 0 ) {
     global $wp_rewrite;
 
     $language = eme_detect_lang();
-    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
+    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $payments_prefix_option = get_option( 'eme_permalink_payments_prefix', '' );
         if ( empty( $payments_prefix_option ) ) {
             $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
@@ -1054,7 +1056,7 @@ function eme_category_url( $category ) {
     global $wp_rewrite;
 
     $language = eme_detect_lang();
-    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
+    if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $categories_prefixes = explode( ',', get_option( 'eme_permalink_categories_prefix', '' ) );
         if ( empty( $categories_prefixes ) ) {
             $categories_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );

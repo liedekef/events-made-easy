@@ -161,7 +161,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_map_zooming'                                 => true,
         'eme_indiv_zoom_factor'                           => 14,
         'eme_map_gesture_handling'                        => 0,
-        'eme_seo_permalink'                               => true,
         'eme_permalink_events_prefix'                     => 'events',
         'eme_permalink_locations_prefix'                  => 'locations',
         'eme_permalink_categories_prefix'                 => '',
@@ -1095,6 +1094,9 @@ function eme_update_options( $db_version ) {
         if ( $db_version < 425 ) {
             delete_option( 'eme_recaptcha_secret_key' );
         }
+        if ( $db_version < 435 ) {
+            delete_option( 'eme_seo_permalink' );
+        }
     }
 
     // always reset the drop data option
@@ -1171,7 +1173,7 @@ function eme_options_postsave_actions() {
         $eme_flush_rewrite_rules = 1;
     }
     // flush the rewrite rules if needed
-    if ( $tab == 'seo' || $eme_flush_rewrite_rules ) {
+    if ( $tab == 'permalink' || $eme_flush_rewrite_rules ) {
         flush_rewrite_rules();
     }
 
@@ -1218,7 +1220,7 @@ function eme_options_register() {
     $tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
     $options = match( $tab ) {
         'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_members_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_api_key', 'eme_recaptcha_project_id', 'eme_recaptcha_score', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
-        'seo' => [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
+        'permalink' => [ 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
         'access' => [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_send_generic_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances', 'eme_limit_admin_event_listing' ],
         'events' => [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ],
         'calendar' => [ 'eme_small_calendar_event_title_format', 'eme_small_calendar_event_title_separator', 'eme_full_calendar_event_format', 'eme_cal_hide_past_events', 'eme_cal_show_single' ],
@@ -1344,7 +1346,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
     $tabs = [
         'general'       => __( 'General', 'events-made-easy' ),
         'access'        => __( 'Access', 'events-made-easy' ),
-        'seo'           => __( 'SEO', 'events-made-easy' ),
+        'permalink'     => __( 'Permalinks', 'events-made-easy' ),
         'events'        => __( 'Events', 'events-made-easy' ),
         'locations'     => __( 'Locations', 'events-made-easy' ),
         'people'        => __( 'People', 'events-made-easy' ),
@@ -1554,13 +1556,13 @@ function eme_options_page() {
 
             <?php
             break;
-        case 'seo':
+        case 'permalink':
             ?>
 
 <h2><?php esc_html_e( 'Permalink options', 'events-made-easy' ); ?></h2>
+<?php esc_html_e( 'The following settings are only used if wordpress has permalinks set to anything but "Plain".', 'events-made-easy' ); ?>
 <table class="form-table">
             <?php
-                eme_options_toggle( __( 'Enable event permalinks if possible?', 'events-made-easy' ), 'eme_seo_permalink', __( 'If Yes, EME will render SEO permalinks if permalinks are activated.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Events permalink prefix', 'events-made-easy' ), 'eme_permalink_events_prefix', __( 'The permalink prefix used for events, categories, payments and the calendar. You can mention multiple prefixes separated by "," (just make sure they do not conflict with something else) in which case the first one will be used for payments and the calendar and for each event you can then chose which prefix you like best. ', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Locations permalink prefix', 'events-made-easy' ), 'eme_permalink_locations_prefix', __( 'The permalink prefix used for locations. You can mention multiple prefixes separated by "," (just make sure they do not conflict with something else).', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Categories permalink prefix', 'events-made-easy' ), 'eme_permalink_categories_prefix', __( 'The permalink prefix used for categories. If empty, the event prefixes are used. You can mention multiple prefixes separated by "," (just make sure they do not conflict with something else).', 'events-made-easy' ) );

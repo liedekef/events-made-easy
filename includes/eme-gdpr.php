@@ -5,9 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_gdpr_approve_url( $email ) {
-	$language = eme_detect_lang();
-
-	$the_link = eme_get_events_page( language: $language );
+	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
 	    [
@@ -20,9 +18,7 @@ function eme_gdpr_approve_url( $email ) {
 }
 
 function eme_gdpr_url( $email ) {
-	$language = eme_detect_lang();
-
-	$the_link = eme_get_events_page( language: $language );
+	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
 	    [

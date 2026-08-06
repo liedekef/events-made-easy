@@ -751,7 +751,11 @@ function eme_get_events_page( $justurl = 1, $text = '', $language = '' ) {
     // opt-in only: most callers (payment gateway notification urls, the admin ui, the raw
     // [eme_events_page] shortcode, ...) must NOT get a language tacked on, so we only add it
     // when a caller explicitly asks for it
-    $page_link = eme_add_lang_query_arg( $page_link, $language );
+    $url_lang_mode = eme_lang_url_mode();
+    if ($url_lang_mode != 0) {
+        $page_link = eme_add_lang_query_arg( $page_link, $language );
+    }
+
     if ( $justurl || empty( $text ) ) {
         $result = $page_link;
     } else {
@@ -1125,6 +1129,7 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 
 function eme_rsvp_checkurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
+    // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
@@ -1139,7 +1144,7 @@ function eme_rsvp_checkurl( $booking_id ) {
 
 function eme_rsvp_proofurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
-    $the_link = eme_get_events_page( );
+    $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
             'eme_rsvp_proof' => 1,
@@ -1188,6 +1193,7 @@ function eme_verify_member_checkurl() {
 
 function eme_member_checkurl( $member ) {
     $hash     = wp_hash( $member['member_id'], 'nonce' );
+    // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
@@ -1201,7 +1207,9 @@ function eme_member_checkurl( $member ) {
 }
 
 function eme_payment_return_url( $payment, $resultcode ) {
-    $the_link = eme_get_events_page();
+    $language = eme_detect_lang();
+    $the_link = eme_get_events_page( language: $language );
+
     if ( is_numeric( $resultcode ) && $resultcode == 0 ) {
         $res = 'success';
     } elseif ( is_numeric( $resultcode ) && $resultcode == 1 ) {

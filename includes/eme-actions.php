@@ -123,12 +123,6 @@ function eme_actions_early_init() {
 function eme_actions_init() {
     // first the no cache headers
     //eme_nocache_headers();
-    if ( function_exists( 'classicpress_version' ) ) {
-        // ClassicPress: always load the textdomain (CP is currently based on older WP then 6.8)
-        eme_load_textdomain();
-    } elseif ( version_compare( get_bloginfo('version'), '6.8', '<' ) ) {
-        eme_load_textdomain();
-    }
 
     $eme_is_admin_request = eme_is_admin_request();
 
@@ -265,27 +259,16 @@ function eme_actions_init() {
         }
     }
 }
-
 add_action( 'init', 'eme_actions_init', 1 );
 
 // setup_theme fires before the theme is loaded, thus avoiding issues with themes adding empty lines at the top and thus e.g. rendering captcha invalid
 // But then the custom filters in the theme functions.php are not yet loaded, causing issues with a number of hooks here
 add_action( 'setup_theme', 'eme_actions_early_init', 1 );
 
-/*
-// EME loads the translation at init stage (as recommended) but still the "doing it wrong message" appears ...
-add_filter('doing_it_wrong_trigger_error',
-	function ( $doing_it_wrong, $function_name, $message ) {
-		// if the function is _load_textdomain_just_in_time, return false to prevent the error.
-		if ( '_load_textdomain_just_in_time' === $function_name && false !== strpos( $message, 'events-made-easy' ) ) {
-			return false;
-		}
-		return $doing_it_wrong;
-	},
-	10,
-	4
-);
-*/
+// load languages in time
+// loading should not be needed
+// but WP has issues with multisite and users with custom language and not-wp hosted plugins
+add_action( 'plugins_loaded', 'eme_load_textdomain', 1 );
 
 function eme_actions_admin_init() {
     global $current_user, $plugin_page;

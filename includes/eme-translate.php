@@ -5,14 +5,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_load_textdomain() {
-        $domain = 'events-made-easy';
-        $locale = determine_locale();
-        $moFile = $domain . '-' . $locale . '.mo';
-        $path = EME_PLUGIN_DIR . '/langs';
-        if ( file_exists( $path ) ) {
-            // the locale is optional, but we already have the info, so it makes the function just a bit faster
-            load_textdomain($domain, $path . '/' . $moFile, $locale);
-        }
+    // loading should not be needed
+    // but WP has issues with multisite and users with custom language and not-wp hosted plugins
+ 
+    $domain = 'events-made-easy';
+    $locale = determine_locale();
+    $moFile = $domain . '-' . $locale . '.mo';
+
+    /* currently commented out since the languages are not up to date there
+    // 1. Check WordPress.org language pack directory (global plugins folder)
+    $path = WP_LANG_DIR . '/plugins/';
+    if ( file_exists( $path . $mo_file ) ) {
+        load_textdomain( $domain, $path . $mo_file );
+        return;
+    }
+     */
+
+    // 2. Take own
+    $path = EME_PLUGIN_DIR . '/langs/';
+    if ( file_exists( $path . $moFile ) ) {
+        // the locale is optional, but we already have the info, so it makes the function just a bit faster
+        load_textdomain($domain, $path . '/' . $moFile, $locale);
+    }
 }
 
 function eme_detect_lang() {
@@ -60,7 +74,7 @@ function eme_lang_url_mode() {
 			$url_mode = 2;
 		}
 	}
-	wp_cache_set( 'eme_url_mode', $url_mode, '', 10 );
+	wp_cache_set( 'eme_url_mode', $url_mode, '', 60 ); // the mode should not change a lot, 60 seconds is even very conservative then ...
 	return $url_mode;
 }
 

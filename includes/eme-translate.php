@@ -25,7 +25,7 @@ function eme_load_textdomain() {
     $path = EME_PLUGIN_DIR . '/langs/';
     if ( file_exists( $path . $moFile ) ) {
         // the locale is optional, but we already have the info, so it makes the function just a bit faster
-        load_textdomain($domain, $path . '/' . $moFile, $locale);
+        load_textdomain($domain, $path . $moFile, $locale);
     }
 }
 

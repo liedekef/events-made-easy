@@ -1156,7 +1156,7 @@ function eme_events_page_content() {
         //        return "<div class='eme-rsvp-message-error'>$img ".__("Access denied!",'events-made-easy')."</div>";
         //     }
         $member_id = intval( $_GET['member_id'] );
-        if ( ! eme_verify_member_check_url() ) {
+        if ( ! eme_verify_member_checkurl() ) {
             $img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
             // translators: %d is the member ID
             $format = "<div class='eme-message-error eme-member-message-error'>$img " . sprintf( __( 'NOK: member %d is either not active or does not exist!', 'events-made-easy' ), $member_id ) . '</div>';

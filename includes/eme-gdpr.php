@@ -7,9 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_gdpr_approve_url( $email ) {
 	$language = eme_detect_lang();
 
-	$the_link = eme_get_events_page();
-	// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-	$the_link = remove_query_arg( 'lang', $the_link );
+	$the_link = eme_get_events_page( language: $language );
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
 	    [
@@ -18,18 +16,13 @@ function eme_gdpr_approve_url( $email ) {
 		],
 	    $the_link
 	);
-	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-	}
 	return $the_link;
 }
 
 function eme_gdpr_url( $email ) {
 	$language = eme_detect_lang();
 
-	$the_link = eme_get_events_page();
-	// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-	$the_link = remove_query_arg( 'lang', $the_link );
+	$the_link = eme_get_events_page( language: $language );
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
 	    [
@@ -38,9 +31,6 @@ function eme_gdpr_url( $email ) {
 		],
 	    $the_link
 	);
-	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-	}
 	return $the_link;
 }
 

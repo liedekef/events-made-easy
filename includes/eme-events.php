@@ -1156,7 +1156,7 @@ function eme_events_page_content() {
         //        return "<div class='eme-rsvp-message-error'>$img ".__("Access denied!",'events-made-easy')."</div>";
         //     }
         $member_id = intval( $_GET['member_id'] );
-        if ( ! eme_check_member_url() ) {
+        if ( ! eme_verify_member_check_url() ) {
             $img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
             // translators: %d is the member ID
             $format = "<div class='eme-message-error eme-member-message-error'>$img " . sprintf( __( 'NOK: member %d is either not active or does not exist!', 'events-made-easy' ), $member_id ) . '</div>';
@@ -2894,11 +2894,8 @@ function eme_get_event_placeholder_handler_definitions() {
         },
         '/#_PAGEURL\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $lang = $ctx['lang'];
-            $events_page_link = eme_get_events_page();
+            $events_page_link = eme_get_events_page( language: $lang );
             $replacement      = add_query_arg( [ 'event_id' => intval( $matches[1] ) ], $events_page_link );
-            if ( ! empty( $lang ) ) {
-                $replacement = add_query_arg( [ 'lang' => $lang ], $replacement );
-            }
             if ( $ctx['target'] == 'html' ) {
                 return esc_url( $replacement );
             }

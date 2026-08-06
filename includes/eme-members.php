@@ -5477,7 +5477,7 @@ function eme_get_member_placeholder_handler_definitions() {
             }
             $targetBasePath = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
             $targetBaseUrl  = EME_UPLOAD_URL . '/members/' . $member['member_id'];
-            $url_to_encode  = eme_member_url( $member );
+            $url_to_encode  = eme_member_checkurl( $member );
             [$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
             if ( is_file( $target_file ) ) {
                 [$width, $height, $type, $attr] = getimagesize( $target_file );

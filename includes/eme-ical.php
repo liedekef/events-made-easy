@@ -134,9 +134,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 	if ( ! empty( $contact_person ) ) {
 		$url = add_query_arg( [ 'contact_person' => $contact_person ], $url );
 	}
-	if ( ! empty( $language ) ) {
-		$url = add_query_arg( [ 'lang' => $language ], $url );
-	}
+	$url = eme_add_lang_query_arg( $url, $language );
 
 	$link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 

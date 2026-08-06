@@ -3927,7 +3927,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                 }
                 $targetBasePath             = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
                 $targetBaseUrl              = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
-                $url_to_encode              = eme_check_rsvp_url( $booking['booking_id'] );
+                $url_to_encode              = eme_rsvp_checkurl( $booking['booking_id'] );
                 [$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
                 if ( is_file( $target_file ) ) {
                     [$width, $height, $type, $attr] = getimagesize( $target_file );
@@ -3938,7 +3938,7 @@ function eme_get_booking_placeholder_handler_definitions() {
         },
         '/#_ATTENDANCE_URL$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['payment'] ) {
-                $replacement = eme_check_rsvp_url( $ctx['booking']['booking_id'] );
+                $replacement = eme_rsvp_checkurl( $ctx['booking']['booking_id'] );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }
@@ -3948,7 +3948,7 @@ function eme_get_booking_placeholder_handler_definitions() {
         },
         '/#_ATTENDANCEPROOF_URL$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['payment'] ) {
-                $replacement = eme_rsvp_proof_url( $ctx['booking']['booking_id'] );
+                $replacement = eme_rsvp_proofurl( $ctx['booking']['booking_id'] );
                 if ( $ctx['target'] == 'html' ) {
                     $replacement = esc_url( $replacement );
                 }

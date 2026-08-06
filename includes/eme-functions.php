@@ -741,13 +741,17 @@ function eme_get_events_page_id() {
     return $page_id;
 }
 
-function eme_get_events_page( $justurl = 1, $text = '' ) {
+function eme_get_events_page( $justurl = 1, $text = '', $language = '' ) {
     $events_page_id = eme_get_events_page_id();
     if (!empty($events_page_id)) {
         $page_link      = get_permalink( $events_page_id );
     } else {
         $page_link      = trailingslashit( home_url() );
     }
+    // opt-in only: most callers (payment gateway notification urls, the admin ui, the raw
+    // [eme_events_page] shortcode, ...) must NOT get a language tacked on, so we only add it
+    // when a caller explicitly asks for it
+    $page_link = eme_add_lang_query_arg( $page_link, $language );
     if ( $justurl || empty( $text ) ) {
         $result = $page_link;
     } else {
@@ -927,13 +931,8 @@ function eme_event_url( $event, $language = '' ) {
             }
             $the_link = eme_uri_add_lang( $name, $language );
         } else {
-            $the_link = eme_get_events_page();
+            $the_link = eme_get_events_page( language: $language );
             $the_link = add_query_arg( [ 'event_id' => $event['event_id'] ], $the_link );
-            if ( ! empty( $language ) ) {
-                // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-                $the_link = remove_query_arg( 'lang', $the_link );
-                $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-            }
         }
     }
     return $the_link;
@@ -970,13 +969,8 @@ function eme_location_url( $location, $language = '' ) {
             }
             $the_link = eme_uri_add_lang( $name, $language );
         } else {
-            $the_link = eme_get_events_page();
+            $the_link = eme_get_events_page( language: $language );
             $the_link = add_query_arg( [ 'location_id' => $location['location_id'] ], $the_link );
-            if ( ! empty( $language ) ) {
-                // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-                $the_link = remove_query_arg( 'lang', $the_link );
-                $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-            }
         }
     }
     return $the_link;
@@ -998,13 +992,8 @@ function eme_calendar_day_url( $day ) {
         $name     = $cal_prefix . eme_permalink_convert_noslash( $day );
         $the_link = eme_uri_add_lang( $name, $language );
     } else {
-        $the_link = eme_get_events_page();
+        $the_link = eme_get_events_page( language: $language );
         $the_link = add_query_arg( [ 'calendar_day' => $day ], $the_link );
-        if ( ! empty( $language ) ) {
-            // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-            $the_link = remove_query_arg( 'lang', $the_link );
-            $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-        }
     }
     return $the_link;
 }
@@ -1020,7 +1009,7 @@ function eme_booking_confirm_url( $payment ) {
         $name            = $confirm_prefix . $payment['random_id'];
         $the_link        = eme_uri_add_lang( $name, $language );
     } else {
-        $the_link = eme_get_events_page();
+        $the_link = eme_get_events_page( language: $language );
         $the_link = add_query_arg(
             [
                 'eme_pmt_rndid'    => $payment['random_id'],
@@ -1028,11 +1017,6 @@ function eme_booking_confirm_url( $payment ) {
             ],
             $the_link
         );
-        if ( ! empty( $language ) ) {
-            // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-            $the_link = remove_query_arg( 'lang', $the_link );
-            $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-        }
     }
     return $the_link;
 }
@@ -1052,13 +1036,8 @@ function eme_payment_url( $payment, $resultcode = 0 ) {
         $name     = $payments_prefix . $payment['random_id'];
         $the_link = eme_uri_add_lang( $name, $language );
     } else {
-        $the_link = eme_get_events_page();
+        $the_link = eme_get_events_page( language: $language );
         $the_link = add_query_arg( [ 'eme_pmt_rndid' => $payment['random_id'] ], $the_link );
-        if ( ! empty( $language ) ) {
-            // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-            $the_link = remove_query_arg( 'lang', $the_link );
-            $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-        }
     }
     if ( $resultcode > 0 ) {
         // we return the payment url but we want to indicate a payment failure too
@@ -1092,14 +1071,9 @@ function eme_category_url( $category ) {
 
         $the_link = eme_uri_add_lang( $name, $language );
     } else {
-        $the_link = eme_get_events_page();
+        $the_link = eme_get_events_page( language: $language );
         $slug     = $category['category_slug'] ? $category['category_slug'] : $category['category_name'];
         $the_link = add_query_arg( [ 'eme_event_cat' => $slug ], $the_link );
-        if ( ! empty( $language ) ) {
-            // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-            $the_link = remove_query_arg( 'lang', $the_link );
-            $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-        }
     }
     return $the_link;
 }
@@ -1149,7 +1123,7 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
     return $the_link;
 }
 
-function eme_check_rsvp_url( $booking_id ) {
+function eme_rsvp_checkurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
@@ -1163,9 +1137,9 @@ function eme_check_rsvp_url( $booking_id ) {
     return $the_link;
 }
 
-function eme_rsvp_proof_url( $booking_id ) {
+function eme_rsvp_proofurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( );
     $the_link = add_query_arg(
         [
             'eme_rsvp_proof' => 1,
@@ -1180,7 +1154,7 @@ function eme_rsvp_proof_url( $booking_id ) {
 function eme_cpi_url( $person_id, $orig_email ) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $nonce    = wp_create_nonce( "change_pi $person_id $orig_email" );
     $the_link = add_query_arg(
         [
@@ -1190,15 +1164,10 @@ function eme_cpi_url( $person_id, $orig_email ) {
         ],
         $the_link
     );
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
-function eme_check_member_url() {
+function eme_verify_member_checkurl() {
     if ( isset( $_GET['member_id'] ) ) {
         $member_id = intval( $_GET['member_id'] );
     } else {
@@ -1217,12 +1186,17 @@ function eme_check_member_url() {
     }
 }
 
-function eme_member_url( $member ) {
-    $the_link = eme_get_events_page();
-    $the_link = add_query_arg( [ 'eme_check_member' => 1 ], $the_link );
-    $the_link = add_query_arg( [ 'member_id' => $member['member_id'] ], $the_link );
+function eme_member_checkurl( $member ) {
     $hash     = wp_hash( $member['member_id'], 'nonce' );
-    $the_link = add_query_arg( [ 'eme_nonce' => $hash ], $the_link );
+    $the_link = eme_get_events_page();
+    $the_link = add_query_arg(
+        [
+            'eme_check_member' => 1,
+            'member_id' => $member['member_id'],
+            'eme_nonce' => $hash,
+        ],
+        $the_link
+    );
     return $the_link;
 }
 
@@ -1247,59 +1221,39 @@ function eme_payment_return_url( $payment, $resultcode ) {
 function eme_tasksignup_cancel_url( $signup ) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $the_link = add_query_arg( [ 'eme_cancel_signup' => $signup['random_id'] ], $the_link );
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
 function eme_cancel_url( $payment ) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $the_link = add_query_arg( [ 'eme_cancel' => $payment['random_id'] ], $the_link );
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
 function eme_unsub_url() {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $the_link = add_query_arg( [ 'eme_unsub' => 1 ], $the_link );
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
 function eme_unsub_rid_url($rid) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $the_link = add_query_arg( [ 'eme_unsub' => $rid ], $the_link );
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
 function eme_unsub_confirm_url( $email, $groups ) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $nonce    = wp_create_nonce( "unsub $email$groups" );
     $the_link = add_query_arg(
         [
@@ -1311,18 +1265,13 @@ function eme_unsub_confirm_url( $email, $groups ) {
     if ( ! empty( $groups ) ) {
         $the_link = add_query_arg( [ 'g' => $groups ], $the_link );
     }
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
 function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
     $language = eme_detect_lang();
 
-    $the_link = eme_get_events_page();
+    $the_link = eme_get_events_page( language: $language );
     $nonce    = wp_create_nonce( "sub $lastname$firstname$email$groups" );
     $the_link = add_query_arg(
         [
@@ -1336,11 +1285,6 @@ function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
     if ( ! empty( $groups ) ) {
         $the_link = add_query_arg( [ 'g' => $groups ], $the_link );
     }
-    if ( ! empty( $language ) ) {
-        // some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-        $the_link = remove_query_arg( 'lang', $the_link );
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
     return $the_link;
 }
 
@@ -1348,9 +1292,7 @@ function eme_single_event_ical_url( $id ) {
     $language = eme_detect_lang();
 
     $the_link = site_url( '/?eme_ical=public_single&event_id=' . $id );
-    if ( ! empty( $language ) ) {
-        $the_link = add_query_arg( [ 'lang' => $language ], $the_link );
-    }
+    $the_link = eme_add_lang_query_arg( $the_link, $language );
     return $the_link;
 }
 

@@ -523,19 +523,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const notice = e.target.dataset.notice;
             const noticeDiv = e.target.closest('.notice');
 
-            const formData = new URLSearchParams({
-                action: 'eme_dismiss_notice',
-                notice: notice,
-                eme_admin_nonce: emeadmin.translate_adminnonce || ''
-            });
+            const formData = new FormData();
+            formData.append('action', 'eme_dismiss_notice');
+            formData.append('notice', notice);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce || '');
 
-            fetch(ajaxurl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData.toString()
-            }).then(response => response.json()).then(response => {
+            eme_postJSON(ajaxurl, formData, (response) => {
                 if (response.success && noticeDiv) {
                     noticeDiv.style.transition = 'opacity 300ms';
                     noticeDiv.style.opacity = '0';
@@ -660,18 +653,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (e.target.matches('.eme_iban_button')) {
             e.preventDefault();
-            const formData = new URLSearchParams({
-                action: 'eme_get_bancontactwero_iban',
-                pg_pid: e.target.dataset.pg_pid,
-                eme_admin_nonce: emeadmin.translate_adminnonce
-            });
-            fetch(ajaxurl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData.toString()
-            }).then(response => response.json()).then(response => {
+            const formData = new FormData();
+            formData.append('action', 'eme_get_bancontactwero_iban');
+            formData.append('pg_pid', e.target.dataset.pg_pid);
+            formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, formData, (response) => {
                 const paymentbutton = EME.$('#button_'+response.payment_id);
                 if (paymentbutton) eme_toggle(paymentbutton, false);
                 const paymentspan = EME.$('span#bancontactwero_'+response.payment_id);

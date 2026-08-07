@@ -406,26 +406,18 @@ document.addEventListener('DOMContentLoaded', function () {
             locationNameInput.addEventListener('input', function() {
                 clearTimeout(timeout);
                 EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-                
+
                 const inputValue = this.value;
                 if (inputValue.length >= 2) {
                     timeout = setTimeout(() => {
-                        const formData = new URLSearchParams({
-                            eme_admin_nonce: emeadmin.translate_adminnonce || '',
-                            name: inputValue,
-                            action: 'eme_autocomplete_locations'
-                        });
+                        const formData = new FormData();
+                        formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+                        formData.append('name', inputValue);
+                        formData.append('action', 'eme_autocomplete_locations');
 
-                        fetch(window.ajaxurl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: formData.toString()
-                        })
-                        .then(response => response.json())
-                        .then(data => {
+                        eme_postJSON(ajaxurl, formData, (data) => {
                             const suggestions = document.createElement('div');
                             suggestions.className = 'eme-autocomplete-suggestions';
-
                             data.forEach(item => {
                                 const suggestion = document.createElement('div');
                                 suggestion.className = 'eme-autocomplete-suggestion';
@@ -566,7 +558,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 locationSelect.addEventListener('change', function() {
                     const formData = new URLSearchParams({
                         eme_admin_action: 'autocomplete_locations',
-                        eme_admin_nonce: emeadmin.translate_adminnonce || '',
+                        eme_admin_nonce: emeadmin.translate_adminnonce,
+                        lang: emeadmin.translate_locale,
                         id: this.value
                     });
 
@@ -950,6 +943,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_events_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 trash: '',
                 scope: EME.$('#events_scope')?.value || '',
                 status: EME.$('#events_status')?.value || '',
@@ -976,6 +970,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 extraData: () => ({
                     action: 'eme_manage_events',
+                    lang: emeadmin.translate_locale,
                     send_trashmails: EME.$('#events_send_trashmails')?.value || 'no',
                     addtocategory: EME.$('#events_addtocategory')?.value || '',
                     eme_admin_nonce: emeadmin.translate_adminnonce
@@ -983,6 +978,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(EventsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                EventsTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -1005,6 +1003,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_recurrences_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 scope: EME.$('#recurrences_scope')?.value || '',
                 search_name: EME.$('#recurrences_search_name')?.value || '',
                 search_start_date: EME.$('[name=recurrences_search_start_date]')?.value || '',
@@ -1073,6 +1072,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 extraData: () => ({
                     action: 'eme_manage_recurrences',
+                    lang: emeadmin.translate_locale,
                     rec_new_start_date: EME.$('#rec_new_start_date')?.value || '',
                     rec_new_end_date: EME.$('#rec_new_end_date')?.value || '',
                     eme_admin_nonce: emeadmin.translate_adminnonce
@@ -1080,6 +1080,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(RecurrencesTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                RecurrencesTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -1135,6 +1138,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_events_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 trash: '1',
                 scope: EME.$('#trash_scope')?.value || '',
                 status: '',
@@ -1157,11 +1161,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_events',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(TrashTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                TrashTable.showError(emeadmin.translate_problem);
             }
         });
 

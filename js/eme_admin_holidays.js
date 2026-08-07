@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             listQueryParams: () => ({
                 action: 'eme_holidays_list',
+                lang: emeadmin.translate_locale,
                 eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
@@ -42,11 +43,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_holidays',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(HolidaysTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                HolidaysTable.showError(emeadmin.translate_problem);
             }
         });
 

@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             actions: { listAction: ajaxurl },
             listQueryParams: () => ({
                 action: 'eme_memberships_list',
+                lang: emeadmin.translate_locale,
                 eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_memberships',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 }),
                 handlers: {
@@ -77,13 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
                         try {
                             const data = await FTableHttpClient.post(ajaxurl, formData);
-                            if (data.Result === 'ERROR') {
-                                MembershipsTable.showError(data.htmlmessage);
-                            } else if (data.Result === 'WARNING') {
-                                MembershipsTable.showWarning(data.htmlmessage);
-                            } else {
-                                MembershipsTable.showInfo(data.htmlmessage);
-                            }
+                            eme_show_ftable_bulk_result(MembershipsTable, data);
                         } catch (error) {
                             MembershipsTable.showError(emeadmin.translate_problem);
                         }
@@ -92,6 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(MembershipsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                MembershipsTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -277,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_members_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 search_person: eme_getValue(EME.$('#search_person')),
                 search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),
                 search_membershipids: eme_getValue(EME.$('#search_membershipids')),
@@ -315,6 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     return {
                         action: 'eme_manage_members',
+                        lang: emeadmin.translate_locale,
                         send_mail: EME.$('#send_mail')?.value || '',
                         trash_person: EME.$('#trash_person')?.value || '',
                         membermail_template: EME.$('#membermail_template')?.value || '',
@@ -334,6 +335,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         eme_admin_action: 'new_mailing'
                     }),
                     pdf: ({ ids }) => eme_submit_hidden_form(ajaxurl, {
+                        action: 'eme_manage_members',
                         member_id: ids.join(','),
                         do_action: 'pdf',
                         pdf_template: EME.$('#pdf_template')?.value || '',
@@ -342,6 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         eme_admin_nonce: emeadmin.translate_adminnonce
                     }),
                     html: ({ ids }) => eme_submit_hidden_form(ajaxurl, {
+                        action: 'eme_manage_members',
                         member_id: ids.join(','),
                         do_action: 'html',
                         html_template: EME.$('#html_template')?.value || '',
@@ -353,6 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(MembersTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                MembersTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -561,13 +567,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         eme_postJSON(ajaxurl, formData, (data) => {
-            if (data.Result === 'ERROR') {
-                MembersTable.showError(data.htmlmessage);
-            } else if (data.Result === 'WARNING') {
-                MembersTable.showWarning(data.htmlmessage);
-            } else {
-                MembersTable.showInfo(data.htmlmessage);
-            }
+            eme_show_ftable_bulk_result(MembersTable, data);
             eme_toggle(storeQueryButton, false);
             eme_toggle(storeQueryDiv, false);
         });

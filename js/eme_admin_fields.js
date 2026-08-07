@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_name: EME.$('#search_name')?.value || '',
                 search_type: EME.$('#search_type')?.value || '',
                 search_purpose: EME.$('#search_purpose')?.value || '',
+                lang: emeadmin.translate_locale,
                 eme_admin_nonce: emeadmin.translate_adminnonce
             }),
             fields: {
@@ -209,11 +210,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_formfields',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(FormfieldsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                FormfieldsTable.showError(emeadmin.translate_problem);
             }
         });
         FormfieldsTable.load();

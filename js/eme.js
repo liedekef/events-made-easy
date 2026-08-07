@@ -28,6 +28,9 @@ function eme_getValue(element) {
 }
 
 function eme_postJSON(url, data, callback) {
+    if (typeof emeadmin !== 'undefined' && emeadmin.translate_locale && data instanceof FormData) {
+        data.append('lang', emeadmin.translate_locale);
+    }
     fetch(url, {
         method: 'POST',
         body: data,

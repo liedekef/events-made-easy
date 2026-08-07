@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 extraData: () => ({
                     action: 'eme_manage_discounts',
+                    lang: emeadmin.translate_locale,
                     addtogroup: EME.$('#addtogroup')?.value || '',
                     removefromgroup: EME.$('#removefromgroup')?.value || '',
                     new_validfrom: EME.$('#new_validfrom')?.value || '',
@@ -98,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(DiscountsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                DiscountsTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -142,11 +146,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_discountgroups',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(DiscountGroupsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                DiscountGroupsTable.showError(emeadmin.translate_problem);
             }
         });
 

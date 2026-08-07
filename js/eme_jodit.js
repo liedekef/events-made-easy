@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('screen_id', pagenow);
                 if ($_GET['tab']) formData.append('eme_tab', $_GET['tab']);
                 formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+                formData.append('lang', emeadmin.translate_adminlocale)
 
                 const response = await fetch(ajaxurl, { method: 'POST', body: formData });
                 const result = await response.json();

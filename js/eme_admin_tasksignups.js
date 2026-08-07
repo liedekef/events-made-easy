@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return {
                     action: 'eme_task_signups_list',
                     eme_admin_nonce: emeadmin.translate_adminnonce,
+                    lang: emeadmin.translate_locale,
                     search_name: eme_getValue(EME.$('#search_name')),
                     search_event: eme_getValue(EME.$('#search_event')),
                     search_eventid: eme_getValue(EME.$('#search_eventid')),
@@ -122,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 extraData: () => ({
                     action: 'eme_manage_task_signups',
+                    lang: emeadmin.translate_locale,
                     send_mail: EME.$('#send_mail')?.value || 'no',
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 }),
@@ -134,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(TaskSignupsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                TaskSignupsTable.showError(emeadmin.translate_problem);
             }
         });
 

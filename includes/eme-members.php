@@ -7403,7 +7403,7 @@ page-break-before: always;
 function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
     // the template format needs br-handling, so lets use a handy function
     $format = eme_get_template_format( $template_id );
-    $header = me_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
+    $header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
     $footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
     $extra_html_header = get_option( 'eme_html_header' );
     $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );

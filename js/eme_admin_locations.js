@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_locations_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 search_name: EME.$('#search_name')?.value || '',
                 search_customfields: EME.$('#search_customfields')?.value || '',
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
@@ -125,12 +126,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 extraData: () => ({
                     action: 'eme_manage_locations',
+                    lang: emeadmin.translate_locale,
                     transferto_id: EME.$('#transferto_id')?.value || '',
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(LocationsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                LocationsTable.showError(emeadmin.translate_problem);
             }
         });
 

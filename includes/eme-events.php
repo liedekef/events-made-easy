@@ -9598,6 +9598,7 @@ function eme_admin_enqueue_js() {
         return;
     }
     $language = eme_detect_lang();
+    $locale = determine_locale();
 
     if ( preg_match( '/^eme-/', $plugin_page ) ) {
         wp_enqueue_media();
@@ -9616,6 +9617,7 @@ function eme_admin_enqueue_js() {
             'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
             'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
             'translate_flanguage'          => $language,
+            'translate_locale'             => $locale,
             'translate_minutesStep'        => get_option( 'eme_timepicker_minutesstep' ),
             'translate_fdateformat'        => EME_WP_DATE_FORMAT,
             'translate_ftimeformat'        => EME_WP_TIME_FORMAT,
@@ -9641,6 +9643,7 @@ function eme_admin_enqueue_js() {
             'translate_delimiter'                  => get_option( 'eme_csv_delimiter', ';' ),
             'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
             'translate_flanguage'                  => $language,
+            'translate_locale'                     => $locale,
             'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
             'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',

@@ -44,11 +44,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_countries',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(CountriesTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                CountriesTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -102,11 +106,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_states',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(StatesTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                StatesTable.showError(emeadmin.translate_problem);
             }
         });
 

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function eme_rsvp_bulk_extra_data() {
         return {
             action: 'eme_manage_bookings',
+            lang: emeadmin.translate_locale,
             send_mail: EME.$('#send_mail')?.value || 'no',
             send_to_contact_too: EME.$('#send_to_contact_too')?.value || '',
             refund: EME.$('#refund')?.value || '',
@@ -250,18 +251,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                     'booking_ids': idsjoined,
                                     'action': 'eme_manage_bookings',
                                     'do_action': 'markpaidandapprove',
-                                    'eme_admin_nonce': emeadmin.translate_adminnonce
+                                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                                    'lang': emeadmin.translate_locale
                                 })
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    if (data.Result === 'ERROR') {
-                                        BookingsTable.showError(data.htmlmessage);
-                                    } else if (data.Result === 'WARNING') {
-                                        BookingsTable.showWarning(data.htmlmessage);
-                                    } else {
-                                        BookingsTable.showInfo(data.htmlmessage);
-                                    }
+                                    eme_show_ftable_bulk_result(BookingsTable, data);
                                     BookingsTable.reload();
                                 })
                                 .catch(error => {
@@ -295,18 +291,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                     'booking_ids': idsjoined,
                                     'action': 'eme_manage_bookings',
                                     'do_action': 'markPaid',
-                                    'eme_admin_nonce': emeadmin.translate_adminnonce
+                                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                                    'lang': emeadmin.translate_locale
                                 })
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    if (data.Result === 'ERROR') {
-                                        BookingsTable.showError(data.htmlmessage);
-                                    } else if (data.Result === 'WARNING') {
-                                        BookingsTable.showWarning(data.htmlmessage);
-                                    } else {
-                                        BookingsTable.showInfo(data.htmlmessage);
-                                    }
+                                    eme_show_ftable_bulk_result(BookingsTable, data);
                                     BookingsTable.reload();
                                 })
                                 .catch(error => {
@@ -324,6 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_bookings_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 trash: $_GET['trash'] || '',
                 scope: eme_getValue(EME.$('#scope')),
                 category: eme_getValue(EME.$('#category')),
@@ -384,6 +376,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(BookingsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                BookingsTable.showError(emeadmin.translate_problem);
             }
         });
 

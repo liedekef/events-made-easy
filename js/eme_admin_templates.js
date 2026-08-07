@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return {
                     action: 'eme_templates_list',
                     eme_admin_nonce: emeadmin.translate_adminnonce,
+                    lang: emeadmin.translate_locale,
                     search_name: EME.$('#search_name')?.value || '',
                     search_content: EME.$('#search_content')?.value || '',
                     search_type: EME.$('#search_type')?.value || ''
@@ -65,11 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_templates',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(TemplatesTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                TemplatesTable.showError(emeadmin.translate_problem);
             }
         });
 

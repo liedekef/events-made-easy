@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function eme_people_bulk_extra_data() {
         return {
             action: 'eme_manage_people',
+            lang: emeadmin.translate_locale,
             transferto_id: EME.$('#transferto_id')?.value || '',
             language: EME.$('#language')?.value || '',
             pdf_template: EME.$('#pdf_template')?.value || '',
@@ -241,6 +242,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(PeopleTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                PeopleTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -303,11 +307,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_groups',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(GroupsTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                GroupsTable.showError(emeadmin.translate_problem);
             }
         });
 
@@ -332,6 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_people_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 trash: '1',
                 search_person: eme_getValue(EME.$('#trash_search_person')),
                 search_groups: '',
@@ -352,11 +361,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmMessage: emeadmin.translate_areyousuretodeleteselected,
                 extraData: () => ({
                     action: 'eme_manage_people',
+                    lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(TrashedPeopleTable, data);
+            },
+            bulkActionError: ({ data }) => {
+                TrashedPeopleTable.showError(emeadmin.translate_problem);
             }
         });
 

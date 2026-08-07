@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_attendances_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 search_type: EME.$('#search_type')?.value || '',
                 search_start_date: EME.$('[name=search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=search_end_date]')?.value || ''

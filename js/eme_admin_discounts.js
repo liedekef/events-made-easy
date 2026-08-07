@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     lang: emeadmin.translate_locale,
                     addtogroup: EME.$('#addtogroup')?.value || '',
                     removefromgroup: EME.$('#removefromgroup')?.value || '',
-                    new_validfrom: EME.$('#new_validfrom')?.value || '',
-                    new_validto: EME.$('#new_validto')?.value || '',
+                    new_validfrom: EME.$('[name=new_validfrom]')?.value || '',
+                    new_validto: EME.$('[name=new_validto]')?.value || '',
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },

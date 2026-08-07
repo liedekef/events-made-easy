@@ -32,8 +32,8 @@ function eme_load_textdomain() {
 function eme_detect_lang() {
 	$language = wp_cache_get( 'eme_language' );
 	if ( $language === false ) {
-        if ( ! empty( $_GET['lang'] ) ) {
-            $language = eme_sanitize_request( $_GET['lang'] );
+        if ( ! empty( $_REQUEST['lang'] ) ) {
+            $language = eme_sanitize_request( $_REQUEST['lang'] );
         } else {
             $language = substr( determine_locale(), 0, 2 );
         }
@@ -61,7 +61,7 @@ function eme_lang_url_mode() {
         if ( empty( $url_mode ) ) {
             $url_mode = 2;
         }
-    } elseif ( isset( $_GET['lang'] ) ) {
+    } elseif ( isset( $_REQUEST['lang'] ) ) {
         $url_mode = 1;
 	}
 	if ( empty( $url_mode ) ) {

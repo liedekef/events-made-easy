@@ -5932,7 +5932,7 @@ function eme_ajax_bookings_list() {
     if ( $booking_status == 'PENDING' ) {
         if ( ! ( current_user_can( get_option( 'eme_cap_approve' ) ) ||
             current_user_can( get_option( 'eme_cap_author_approve' ) ) ) ) {
-            $fTableResult['Result']  = 'Error';
+            $fTableResult['Result']  = 'ERROR';
             $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $fTableResult );
             wp_die();
@@ -5956,7 +5956,7 @@ function eme_ajax_bookings_list() {
     } elseif ( $booking_status == 'APPROVED' ) {
         if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
             current_user_can( get_option( 'eme_cap_author_registrations' ) ) ) ) {
-            $fTableResult['Result']  = 'Error';
+            $fTableResult['Result']  = 'ERROR';
             $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $fTableResult );
             wp_die();
@@ -6514,7 +6514,7 @@ function eme_ajax_manage_bookings() {
                 eme_ajax_action_send_booking_mails( $ids_arr, $template_id_subject, $template_id );
             } else {
                 $ajaxResult = [];
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Nothing done.', 'events-made-easy' ) );
                 $ajaxResult['Result']      = 'ERROR';
                 print wp_json_encode( $ajaxResult );
             }
@@ -6527,7 +6527,7 @@ function eme_ajax_manage_bookings() {
                 eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             } else {
                 $ajaxResult = [];
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Nothing done.', 'events-made-easy' ) );
                 $ajaxResult['Result']      = 'ERROR';
                 print wp_json_encode( $ajaxResult );
             }
@@ -6540,7 +6540,7 @@ function eme_ajax_manage_bookings() {
                 eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             } else {
                 $ajaxResult = [];
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Nothing done.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Nothing done.', 'events-made-easy' ) );
                 $ajaxResult['Result']      = 'ERROR';
                 print wp_json_encode( $ajaxResult );
             }
@@ -6602,13 +6602,13 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
     }
     $ajaxResult = [];
     if ( $mail_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p><p>' . __( 'Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p><p>' . __( 'Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6636,13 +6636,13 @@ function eme_ajax_action_remove_waitinglist( $ids_arr, $action, $send_mail ) {
     }
     $ajaxResult = [];
     if ( $mail_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6677,19 +6677,19 @@ function eme_ajax_action_move_waitinglist( $ids_arr, $action, $send_mail, $refun
     }
     $ajaxResult = [];
     if ( ! $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     } elseif ( $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( ! $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( ! $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     }
     print wp_json_encode( $ajaxResult );
@@ -6721,14 +6721,14 @@ function eme_ajax_action_rsvp_approve( $ids_arr, $action, $send_mail ) {
     }
     $ajaxResult = [];
     if ( $mail_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p><p>' . __( 'Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list.', 'events-made-easy' ) . '</p></div>';
-        $ajaxResult['Result']      = 'WARNING';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p><p>' . __( 'Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list.', 'events-made-easy' ) );
+        $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
 }
@@ -6743,10 +6743,10 @@ function eme_ajax_action_rsvp_delete( $ids_arr ) {
     }
     $ajaxResult = [];
     if ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6782,19 +6782,19 @@ function eme_ajax_action_rsvp_trash( $ids_arr, $action, $send_mail, $refund ) {
     }
     $ajaxResult = [];
     if ( ! $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     } elseif ( $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( ! $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( ! $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     }
     print wp_json_encode( $ajaxResult );
@@ -6847,13 +6847,13 @@ function eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_ma
     }
     $ajaxResult = [];
     if ( $mail_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6889,13 +6889,13 @@ function eme_ajax_action_mark_booking_paid( $ids_arr, $action, $send_mail ) {
     }
     $ajaxResult = [];
     if ( $mail_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6929,16 +6929,16 @@ function eme_ajax_action_mark_booking_unpaid( $ids_arr, $action, $send_mail, $re
     $ajaxResult = [];
     if ( ! $action_ok ) {
         if ( $refund ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem refunding the payment, please check your logs.', 'events-made-easy' ) . '</p></div>';
+            $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem refunding the payment, please check your logs.', 'events-made-easy' ) );
         } else {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+            $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         }
         $ajaxResult['Result'] = 'ERROR';
     } elseif ( ! $mail_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     }
     print wp_json_encode( $ajaxResult );
@@ -6968,10 +6968,10 @@ function eme_ajax_action_send_booking_mails( $ids_arr, $subject_template_id, $bo
     }
     $ajaxResult = [];
     if ( $mail_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The mail has been sent.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6988,10 +6988,10 @@ function eme_ajax_action_resend_booking_mail( $ids_arr, $action ) {
     }
     $ajaxResult = [];
     if ( $mail_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The mail has been sent.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -7000,7 +7000,7 @@ function eme_ajax_action_resend_booking_mail( $ids_arr, $action ) {
 function eme_ajax_action_mark_userconfirm( $ids, $action ) {
     eme_mark_booking_userconfirm( $ids );
     $ajaxResult                = [];
-    $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
     $ajaxResult['Result']      = 'OK';
     print wp_json_encode( $ajaxResult );
 }
@@ -7015,7 +7015,7 @@ function eme_ajax_action_mark_attendance( $ids, $action ) {
         }
     }
     $ajaxResult                = [];
-    $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'Attendance noted.', 'events-made-easy' ) . '</p></div>';
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Attendance noted.', 'events-made-easy' ) );
     $ajaxResult['Result']      = 'OK';
     print wp_json_encode( $ajaxResult );
 }
@@ -7048,19 +7048,19 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
     }
     $ajaxResult = [];
     if ( ! $action_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     } elseif ( $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( ! $mail_ok && $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } elseif ( ! $mail_ok && ! $refund_ok ) {
-        $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) . '</p></div>';
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems sending mail and refunding the payment.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     }
     print wp_json_encode( $ajaxResult );

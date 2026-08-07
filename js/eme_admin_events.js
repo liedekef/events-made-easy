@@ -982,12 +982,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#events-message');
-                if (msg) {
-                    msg.textContent = data?.Message;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(EventsTable, data);
             }
         });
 
@@ -1084,12 +1079,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#events-message');
-                if (msg) {
-                    msg.textContent = data?.Message;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(RecurrencesTable, data);
             }
         });
 
@@ -1171,12 +1161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#events-message');
-                if (msg) {
-                    msg.textContent = data?.Message;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(TrashTable, data);
             }
         });
 

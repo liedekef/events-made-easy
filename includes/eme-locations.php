@@ -2978,7 +2978,7 @@ function eme_ajax_locations_list() {
     header( 'Content-type: application/json; charset=utf-8' );
 
     if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ){
-            $ajaxResult['Result']  = 'Error';
+            $ajaxResult['Result']  = 'ERROR';
             $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $ajaxResult );
             wp_die();
@@ -3153,7 +3153,8 @@ function eme_ajax_manage_locations() {
                         eme_delete_location( intval( $location_id ), $to_id );
                     }
                 }
-                $fTableResult['Result'] = 'OK';
+                $fTableResult['Result']      = 'OK';
+                $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Locations deleted', 'events-made-easy' ) );
                 break;
         }
     }

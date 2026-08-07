@@ -662,7 +662,7 @@ function eme_ajax_recurrences_list() {
     header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		$ajaxResult                = [];
-			$ajaxResult['Result']  = 'Error';
+			$ajaxResult['Result']  = 'ERROR';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
 			wp_die();
@@ -832,8 +832,8 @@ function eme_ajax_manage_recurrences() {
 		$ids                = eme_sanitize_request( $_POST['recurrence_id'] );
 		$ids_arr            = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
-			$ajaxResult['Result']  = 'Error';
-			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+			$ajaxResult['Result']      = 'ERROR';
+			$ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
 			print wp_json_encode( $ajaxResult );
 			wp_die();
 		}
@@ -856,8 +856,8 @@ function eme_ajax_manage_recurrences() {
 				break;
 		}
 	} else {
-		$ajaxResult['Result']  = 'Error';
-		$ajaxResult['Message'] = __( 'No action defined!', 'events-made-easy' );
+		$ajaxResult['Result']      = 'ERROR';
+		$ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'No action defined!', 'events-made-easy' ) );
 		print wp_json_encode( $ajaxResult );
 	}
 	wp_die();
@@ -869,7 +869,7 @@ function eme_ajax_action_recurrences_delete( $ids_arr ) {
 	}
 	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
-	$ajaxResult['Message'] = __( 'Recurrences deleted and events moved to trash', 'events-made-easy' );
+	$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Recurrences deleted and events moved to trash', 'events-made-easy' ) );
 	print wp_json_encode( $ajaxResult );
 }
 
@@ -880,7 +880,7 @@ function eme_ajax_action_recurrences_status( $ids_arr, $status ) {
 	}
 	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
-	$ajaxResult['Message'] = __( 'Recurrences status updated', 'events-made-easy' );
+	$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Recurrences status updated', 'events-made-easy' ) );
 	print wp_json_encode( $ajaxResult );
 }
 
@@ -913,7 +913,7 @@ function eme_ajax_action_recurrences_extend( $ids_arr, $rec_new_start_date, $rec
 	}
 	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
-	$ajaxResult['Message'] = __( 'Start and end date adjusted for the selected recurrences', 'events-made-easy' );
+	$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Start and end date adjusted for the selected recurrences', 'events-made-easy' ) );
 	print wp_json_encode( $ajaxResult );
 }
 

@@ -1,4 +1,14 @@
 // Main functions
+function eme_show_ftable_bulk_result(myftable, result) {
+    if (result?.Result === 'ERROR') {
+        myftable.showError(result.htmlmessage);
+    } else if (result?.Result === 'WARNING') {
+        myftable.showWarning(result.htmlmessage);
+    } else {
+        myftable.showInfo(result?.htmlmessage);
+    }
+}
+
 function eme_activateTab(target) {
     EME.$$('.eme-tab').forEach(tab => tab.classList.remove('active'));
     EME.$$('.eme-tab-content').forEach(content => content.classList.remove('active'));

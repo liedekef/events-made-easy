@@ -99,7 +99,6 @@ function eme_categories_table_layout( $message = '' ) {
     </div>
     <?php } ?>
 
-    <div id="categories-message" class="eme-hidden" ></div>
     <div class="bulkactions">
     <form action="#" method="post">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
@@ -670,8 +669,8 @@ function eme_ajax_action_categories_list() {
 
     $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_categories' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        $fTableResult['Result']  = 'ERROR';
+        $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         print wp_json_encode( $fTableResult );
         wp_die();
     }
@@ -709,8 +708,8 @@ function eme_ajax_action_manage_categories() {
 
     $fTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_categories' ) )) {
-        $fTableResult['Result']  = 'Error';
-        $fTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        $fTableResult['Result']  = 'ERROR';
+        $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         print wp_json_encode( $fTableResult );
         wp_die();
     }
@@ -726,7 +725,7 @@ function eme_ajax_action_manage_categories() {
                 $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
                 $wpdb->query($wpdb->prepare("DELETE FROM $table WHERE category_id IN ($placeholders)", ...$ids_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             }
-            $fTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Categories deleted','events-made-easy')."</div>";
+            $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Categories deleted', 'events-made-easy' ) );
             $fTableResult['Result'] = 'OK';
             break;
         }

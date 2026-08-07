@@ -37,16 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    function eme_rsvp_show_bulk_result(result) {
-        if (result?.Result === 'ERROR') {
-            BookingsTable.showError(result.htmlmessage);
-        } else if (result?.Result === 'WARNING') {
-            BookingsTable.showWarning(result.htmlmessage);
-        } else {
-            BookingsTable.showInfo(result?.htmlmessage);
-        }
-    }
-
     // addToGroup / removeFromGroup post person ids to the people handler, so they
     // can't use the booking-oriented default bulkActions flow.
     async function eme_rsvp_bulk_people_action(doAction, selectedRows, table) {
@@ -61,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         table.clearListCache();
         table.reload();
-        eme_rsvp_show_bulk_result(result);
+        eme_show_ftable_bulk_result(table, result);
     }
 
     // --- Initialize Bookings Table ---
@@ -388,12 +378,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                         table.clearListCache();
                         table.reload();
-                        eme_rsvp_show_bulk_result(result);
+                        eme_show_ftable_bulk_result(table, result);
                     }
                 }
             },
             bulkActionComplete: ({ data }) => {
-                eme_rsvp_show_bulk_result(data);
+                eme_show_ftable_bulk_result(BookingsTable, data);
             }
         });
 

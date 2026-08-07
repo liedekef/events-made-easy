@@ -490,7 +490,7 @@ function eme_ajax_templates_list() {
         $fTableResult['Records']          = $rows;
         $fTableResult['TotalRecordCount'] = $recordCount;
     } else {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
     print wp_json_encode( $fTableResult );

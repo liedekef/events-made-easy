@@ -5362,7 +5362,7 @@ function eme_ajax_people_list( ) {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
-        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Result']  = 'ERROR';
         $ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $ajaxResult );
         wp_die();
@@ -5469,7 +5469,7 @@ function eme_ajax_groups_list() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
-        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Result']  = 'ERROR';
         $ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $ajaxResult );
         wp_die();
@@ -5685,12 +5685,12 @@ function eme_ajax_store_people_query() {
         $group['search_terms'] = eme_json_encode_safe( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
-            $fTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Dynamic group added', 'events-made-easy' ) );
         } else {
-            $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
+            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There was a problem adding the group', 'events-made-easy' ) );
         }
     } else {
-        $fTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
+        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Please enter a name for the group', 'events-made-easy' ) );
     }
     print wp_json_encode( $fTableResult );
     wp_die();
@@ -5704,8 +5704,8 @@ function eme_ajax_manage_people() {
         $ids       = eme_sanitize_request( $_POST['person_id'] );
         $ids_arr   = explode( ',', $ids );
         if ( ! eme_is_numeric_array( $ids_arr ) ) {
-            $fTableResult['Result']  = 'ERROR';
-            $fTableResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+            $ajaxResult['Result']  = 'ERROR';
+            $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
             print wp_json_encode( $ajaxResult );
             wp_die();
         }

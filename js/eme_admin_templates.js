@@ -68,15 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     eme_admin_nonce: emeadmin.translate_adminnonce
                 })
             },
-            bulkActionComplete: ({ data, doAction }) => {
-                const messageDiv = EME.$('#templates-message');
-                if (messageDiv) {
-                    messageDiv.innerHTML = data?.htmlmessage;
-                    eme_toggle(messageDiv, true);
-                    if (doAction === 'deleteTemplates') {
-                        setTimeout(() => { eme_toggle(messageDiv, false); }, 5000);
-                    }
-                }
+            bulkActionComplete: ({ data }) => {
+                eme_show_ftable_bulk_result(TemplatesTable, data);
             }
         });
 

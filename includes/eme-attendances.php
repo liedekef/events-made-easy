@@ -277,7 +277,7 @@ function eme_ajax_attendances_list() {
 		$fTableResult['Records']          = $rows;
 		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$fTableResult['Result']  = 'Error';
+		$fTableResult['Result']  = 'ERROR';
 		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
 	print wp_json_encode( $fTableResult );
@@ -303,8 +303,8 @@ function eme_ajax_manage_attendances() {
 function eme_ajax_action_attendances_delete( $ids ) {
 	eme_delete_events( $ids );
 	$ajaxResult            = [];
-	$ajaxResult['Result']  = 'OK';
-	$ajaxResult['Message'] = __( 'Events deleted', 'events-made-easy' );
+	$ajaxResult['Result']      = 'OK';
+	$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events deleted', 'events-made-easy' ) );
 	print wp_json_encode( $ajaxResult );
 }
 ?>

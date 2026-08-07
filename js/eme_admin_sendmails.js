@@ -518,12 +518,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#mails-result');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 3000);
-                }
+                eme_show_ftable_bulk_result(MailsTable, data);
             }
         });
 
@@ -622,12 +617,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#mailings-result');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(MailingsTable, data);
             }
         });
 
@@ -715,12 +705,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#archivedmailings-result');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(ArchivedMailingsTable, data);
             }
         });
 

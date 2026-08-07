@@ -740,7 +740,7 @@ function eme_ajax_countries_list() {
 		$fTableResult['Records']          = $rows;
 		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$fTableResult['Result']  = 'Error';
+		$fTableResult['Result']  = 'ERROR';
 		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
 	print wp_json_encode( $fTableResult );
@@ -769,7 +769,7 @@ function eme_ajax_states_list() {
 		$fTableResult['Records']          = $rows;
 		$fTableResult['TotalRecordCount'] = $recordCount;
 	} else {
-		$fTableResult['Result']  = 'Error';
+		$fTableResult['Result']  = 'ERROR';
 		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 	}
 	print wp_json_encode( $fTableResult );
@@ -779,8 +779,8 @@ function eme_ajax_manage_countries() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$fTableResult['Result']  = 'ERROR';
-		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']      = 'ERROR';
+		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -798,8 +798,8 @@ function eme_ajax_manage_states() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$fTableResult['Result']  = 'ERROR';
-		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']      = 'ERROR';
+		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -820,8 +820,8 @@ function eme_ajax_country_delete() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
-		$fTableResult['Result']  = 'Error';
-		$fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$fTableResult['Result']      = 'ERROR';
+		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -832,8 +832,8 @@ function eme_ajax_country_delete() {
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $countries_table WHERE id IN ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $wpdb->prepare( "UPDATE $states_table SET country_id=0 WHERE country_id IN ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
-	$fTableResult['Result']  = 'OK';
-	$fTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );
+	$fTableResult['Result']      = 'OK';
+	$fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Country deleted!', 'events-made-easy' ) );
 	print wp_json_encode( $fTableResult );
 	wp_die();
 }

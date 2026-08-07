@@ -3569,7 +3569,7 @@ function eme_ajax_formfields_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
         $ajaxResult            = [];
-        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Result']  = 'ERROR';
         $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $ajaxResult );
         wp_die();
@@ -3624,7 +3624,7 @@ function eme_ajax_formfields_list() {
         $fTableResult['Records']          = $rows;
         $fTableResult['TotalRecordCount'] = $recordCount;
     } else {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
     print wp_json_encode( $fTableResult );
@@ -3635,8 +3635,8 @@ function eme_ajax_manage_formfields() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $fTableResult=[];
     if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_REQUEST['field_id'] ) ) {
-        $fTableResult['Result']      = 'Error';
-        $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']      = 'ERROR';
+        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
     }
     if ( isset( $_REQUEST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
@@ -3645,7 +3645,7 @@ function eme_ajax_manage_formfields() {
                 // validation happens in the eme_delete_formfields function
                 eme_delete_formfields( [ intval($_REQUEST['field_id']) ] );
                 $fTableResult['Result']      = 'OK';
-                $fTableResult['Message'] = __( 'Records deleted!', 'events-made-easy' );
+                $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Records deleted!', 'events-made-easy' ) );
                 print wp_json_encode( $fTableResult );
                 wp_die();
                 break;
@@ -3655,10 +3655,10 @@ function eme_ajax_manage_formfields() {
                     // validation happens in the eme_delete_formfields function
                     eme_delete_formfields( $field_ids );
                     $fTableResult['Result']      = 'OK';
-                    $fTableResult['Message'] = __( 'Records deleted!', 'events-made-easy' );
+                    $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Records deleted!', 'events-made-easy' ) );
                 } else {
-                    $fTableResult['Result']      = 'Error';
-                    $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
+                    $fTableResult['Result']      = 'ERROR';
+                    $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
                 print wp_json_encode( $fTableResult );
                 wp_die();

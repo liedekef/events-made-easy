@@ -46,12 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#holidays-message');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 3000);
-                }
+                eme_show_ftable_bulk_result(HolidaysTable, data);
             }
         });
 

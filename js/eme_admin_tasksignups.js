@@ -133,13 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             bulkActionComplete: ({ data }) => {
-                if (data?.Result === 'ERROR') {
-                    TaskSignupsTable.showError(data.htmlmessage);
-                } else if (data?.Result === 'WARNING') {
-                    TaskSignupsTable.showWarning(data.htmlmessage);
-                } else {
-                    TaskSignupsTable.showInfo(data?.htmlmessage);
-                }
+                eme_show_ftable_bulk_result(TaskSignupsTable, data);
             }
         });
 

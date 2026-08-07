@@ -130,12 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#locations-message');
-                if (msg) {
-                    msg.textContent = data?.Message;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(LocationsTable, data);
             }
         });
 

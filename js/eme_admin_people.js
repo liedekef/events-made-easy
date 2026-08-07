@@ -240,12 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#people-message');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(PeopleTable, data);
             }
         });
 
@@ -312,12 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#people-message');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(GroupsTable, data);
             }
         });
 
@@ -366,12 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#people-message');
-                if (msg) {
-                    msg.innerHTML = data?.htmlmessage;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 5000);
-                }
+                eme_show_ftable_bulk_result(TrashedPeopleTable, data);
             }
         });
 

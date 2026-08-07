@@ -3355,7 +3355,7 @@ function eme_ajax_record_list( $tablename, $cap ) {
             $fTableResult['TotalRecordCount'] = $recordCount;
         }
     } else {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
     }
     print wp_json_encode( $fTableResult );
@@ -3371,9 +3371,8 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         // Validate that the column name exists in the table
         $table_columns = eme_get_table_columns( $table );
         if ( ! in_array( $postvar, $table_columns ) ) {
-            $fTableResult['Result']      = 'Error';
-            $fTableResult['Message']     = __( 'Invalid column name!', 'events-made-easy' );
-            $fTableResult['htmlmessage'] = __( 'Invalid column name!', 'events-made-easy' );
+            $fTableResult['Result']      = 'ERROR';
+            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Invalid column name!', 'events-made-easy' ) );
             print wp_json_encode( $fTableResult );
             wp_die();
         }
@@ -3393,12 +3392,10 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         }
 
         $fTableResult['Result']      = 'OK';
-        $fTableResult['Message']     = __( 'Records deleted!', 'events-made-easy' );
-        $fTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
+        $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Records deleted!', 'events-made-easy' ) );
     } else {
-        $fTableResult['Result']      = 'Error';
-        $fTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
-        $fTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+        $fTableResult['Result']      = 'ERROR';
+        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
     }
     print wp_json_encode( $fTableResult );
     wp_die();
@@ -4436,10 +4433,13 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
 }
 
 function eme_message_ok_div($message) {
-    return "<div class='notice notice-success eme-message-admin is-dismissible'><p>" .$message.'</p></div>';
+    return "<div class='notice notice-success eme-message-admin'><p>" .$message.'</p></div>';
+}
+function eme_message_warning_div($message) {
+    return "<div class='notice notice-warning eme-message-admin'><p>" .$message.'</p></div>';
 }
 function eme_message_error_div($message) {
-    return "<div class='notice notice-error eme-message-admin is-dismissible'><p>" .$message.'</p></div>';
+    return "<div class='notice notice-error eme-message-admin'><p>" .$message.'</p></div>';
 }
 
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {

@@ -213,12 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             },
             bulkActionComplete: ({ data }) => {
-                const msg = EME.$('#formfields-message');
-                if (msg) {
-                    msg.textContent = data?.Message;
-                    eme_toggle(msg, true);
-                    setTimeout(() => eme_toggle(msg, false), 3000);
-                }
+                eme_show_ftable_bulk_result(FormfieldsTable, data);
             }
         });
         FormfieldsTable.load();

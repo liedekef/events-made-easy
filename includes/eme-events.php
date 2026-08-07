@@ -9962,7 +9962,7 @@ function eme_ajax_events_list() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        $fTableResult['Result']  = 'Error';
+        $fTableResult['Result']  = 'ERROR';
         $fTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
         print wp_json_encode( $fTableResult );
         wp_die();
@@ -10359,8 +10359,8 @@ function eme_ajax_manage_events() {
         $ids       = eme_sanitize_request( $_POST['event_id'] );
         $ids_arr   = array_map( 'intval', explode( ',', $ids ) );
         if ( ! eme_is_numeric_array( $ids_arr ) ) {
-            $ajaxResult['Result']  = 'Error';
-            $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+            $ajaxResult['Result']      = 'ERROR';
+            $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
@@ -10368,16 +10368,16 @@ function eme_ajax_manage_events() {
             if ( current_user_can( get_option( 'eme_cap_author_event' ) ) ) {
                 $author_event_ids = eme_get_author_event_ids( $ids );
                 if ( count( $ids_arr ) != count( $author_event_ids ) ) {
-                    $ajaxResult['Result']  = 'Error';
-                    $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+                    $ajaxResult['Result']      = 'ERROR';
+                    $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
                     print wp_json_encode( $ajaxResult );
                     wp_die();
                 }
                 $ids     = implode( ',', $author_event_ids );
                 $ids_arr = $author_event_ids;
             } else {
-                $ajaxResult['Result']  = 'Error';
-                $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+                $ajaxResult['Result']      = 'ERROR';
+                $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 print wp_json_encode( $ajaxResult );
                 wp_die();
             }
@@ -10412,8 +10412,8 @@ function eme_ajax_manage_events() {
             break;
         }
     } else {
-        $ajaxResult['Result']  = 'Error';
-        $ajaxResult['Message'] = __( 'No action defined!', 'events-made-easy' );
+        $ajaxResult['Result']      = 'ERROR';
+        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'No action defined!', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
     }
     wp_die();
@@ -10422,8 +10422,8 @@ function eme_ajax_manage_events() {
 function eme_ajax_action_events_delete( $ids_arr ) {
     eme_delete_events( $ids_arr );
     $ajaxResult            = [];
-    $ajaxResult['Result']  = 'OK';
-    $ajaxResult['Message'] = __( 'Events deleted', 'events-made-easy' );
+    $ajaxResult['Result']      = 'OK';
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events deleted', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10431,7 +10431,7 @@ function eme_ajax_action_events_trash( $ids, $send_trashmails ) {
     eme_trash_events( $ids, $send_trashmails );
     $ajaxResult            = [];
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['Message'] = __( 'Events moved to the trash bin', 'events-made-easy' );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events moved to the trash bin', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10439,7 +10439,7 @@ function eme_ajax_action_events_untrash( $ids ) {
     eme_untrash_events( $ids );
     $ajaxResult            = [];
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['Message'] = __( 'Restored selected events to draft status', 'events-made-easy' );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Restored selected events to draft status', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10447,7 +10447,7 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
     $ajaxResult = [];
     eme_change_event_status( $ids_arr, $status );
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['Message'] = __( 'Events status updated', 'events-made-easy' );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events status updated', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10461,8 +10461,8 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
             WHERE event_id IN ($placeholders) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", array_merge( [ $category_id ], $ids_arr, [ $category_id ] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
-    $ajaxResult['Result']  = 'OK';
-    $ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
+    $ajaxResult['Result']      = 'OK';
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events added to category', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 

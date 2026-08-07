@@ -102,6 +102,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.2.2  (2026//) =
 * Allow transfer from booking to other person when editing a booking
 * Permalinks are now activated if WP has them activated, no longer an option on its own
+* Rework the language propagation: work around a polylang bug in admin ajax requests
+* Feedback from bulk actions in the admin interface is now shown more directly to the user (popup), it was not always clear before and not always handled in a similar manner
 
 = 3.2.1  (2026/08/02) =
 * Lang updates

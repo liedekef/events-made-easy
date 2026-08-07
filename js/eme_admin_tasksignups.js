@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
             printTable: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emeadmin.translate_adminnonce
+                deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             listQueryParams: function () {
                 return {

@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
             defaultDateFormat: emeadmin.translate_fdateformat,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_discounts_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_discounts&do_action=deleteDiscounts&eme_admin_nonce='+emeadmin.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_discounts_list&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_discounts&do_action=deleteDiscounts&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_discountgroups_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_discountgroups&do_action=deleteDiscountGroups&eme_admin_nonce='+emeadmin.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_discountgroups_list&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_discountgroups&do_action=deleteDiscountGroups&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {

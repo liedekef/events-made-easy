@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_countries_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&eme_admin_nonce='+emeadmin.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_countries_list&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_states_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_states&do_action=deleteStates&eme_admin_nonce='+emeadmin.translate_adminnonce
+                listAction: ajaxurl+'?action=eme_states_list&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_states&do_action=deleteStates&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             fields: {
                 id: {

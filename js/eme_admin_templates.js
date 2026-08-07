@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
             },
             listQueryParams: function () {
                 return {

@@ -196,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_people_list',
                 eme_admin_nonce: emeadmin.translate_adminnonce,
+                lang: emeadmin.translate_locale,
                 trash: '',
                 search_person: eme_getValue(EME.$('#search_person')),
                 search_groups: eme_getValue(EME.$('#search_groups')),
@@ -269,8 +270,8 @@ document.addEventListener('DOMContentLoaded', function () {
             multiselect: true,
             selectingCheckboxes: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emeadmin.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                listAction: ajaxurl+'?action=eme_groups_list&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce,
             },
             fields: {
                 'group_id': {

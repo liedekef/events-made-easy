@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
             selectingCheckboxes: true,
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl + '?action=eme_manage_formfields&do_action=deleteFormfield&eme_admin_nonce=' + emeadmin.translate_adminnonce
+                deleteAction: ajaxurl + '?action=eme_manage_formfields&do_action=deleteFormfield&lang=' + emeadmin.translate_locale + '&eme_admin_nonce=' + emeadmin.translate_adminnonce
             },
             listQueryParams: () => ({
                 action: 'eme_formfields_list',

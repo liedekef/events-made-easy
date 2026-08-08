@@ -26,24 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // Builds & submits a real (non-ajax) POST form — used for sendMails (navigates to the
-    // mailing composer) and pdf/html (triggers a file download), neither of which the
-    // default ajax-then-reload bulkActions flow can handle.
-    function eme_submit_hidden_form(url, fields) {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = url;
-        Object.entries(fields).forEach(([name, value]) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            input.value = value;
-            form.appendChild(input);
-        });
-        document.body.appendChild(form);
-        form.submit();
-    }
-
     // --- Initialize People Table ---
     if (PeopleTableContainer) {
         personFields = {

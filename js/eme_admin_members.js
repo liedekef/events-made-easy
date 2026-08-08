@@ -4,22 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const MembersTableContainer = EME.$('#MembersTableContainer');
     let MembersTable;
 
-    // --- Shared bulk-action helpers ---
-    function eme_submit_hidden_form(url, fields) {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = url;
-        Object.entries(fields).forEach(([name, value]) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            input.value = value;
-            form.appendChild(input);
-        });
-        document.body.appendChild(form);
-        form.submit();
-    }
-
     // --- Initialize Memberships Table ---
     if (MembershipsTableContainer) {
         MembershipsTable = new FTable('#MembershipsTableContainer', {

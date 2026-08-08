@@ -27,20 +27,6 @@ function eme_getValue(element) {
     return Array.from(element.selectedOptions).map(option => option.value);
 }
 
-function eme_postJSON(url, data, callback) {
-    if (typeof emeadmin !== 'undefined' && emeadmin.translate_locale && data instanceof FormData) {
-        data.append('lang', emeadmin.translate_locale);
-    }
-    fetch(url, {
-        method: 'POST',
-        body: data,
-        credentials: 'same-origin'
-    })
-        .then(r => r.json())
-        .then(callback)
-        .catch(err => console.error('AJAX Error:', err));
-}
-
 function eme_getQueryParams(qs) {
     qs = qs.split('+').join(' ');
     let params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;

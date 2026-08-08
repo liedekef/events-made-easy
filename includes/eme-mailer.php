@@ -532,7 +532,7 @@ function eme_parse_mailing_recurrence_post( $post_data, $prefix, $dates = [] ) {
     if ( empty( $post_data[ "{$prefix}_repeat" ] ) ) {
         return [];
     }
-    $freq = isset( $post_data[ "{$prefix}_recurrence_freq" ] ) ? eme_sanitize_request( $post_data[ "{$prefix}_recurrence_freq" ] ) : '';
+    $freq = eme_sanitize_request( $post_data[ "{$prefix}_recurrence_freq" ] ?? '' );
     if ( ! in_array( $freq, [ 'daily', 'weekly', 'monthly', 'specific_months', 'specific_days' ], true ) ) {
         return [];
     }
@@ -567,26 +567,26 @@ function eme_parse_mailing_recurrence_post( $post_data, $prefix, $dates = [] ) {
         return [];
     }
 
-    $interval = isset( $post_data[ "{$prefix}_recurrence_interval" ] ) ? max( 1, intval( $post_data[ "{$prefix}_recurrence_interval" ] ) ) : 1;
+    $interval = max( 1, intval( $post_data[ "{$prefix}_recurrence_interval" ] ?? 1 ) );
     $byday    = '';
     $byweekno = 0;
     $months   = '';
 
     if ( $freq === 'weekly' ) {
-        if ( ! empty( $post_data[ "{$prefix}_recurrence_bydays" ] ) && eme_is_numeric_array( $post_data[ "{$prefix}_recurrence_bydays" ] ) ) {
+        if ( ! empty( $post_data[ "{$prefix}_recurrence_bydays" ] ) && eme_is_integer_array( $post_data[ "{$prefix}_recurrence_bydays" ] ) ) {
             $byday = join( ',', array_map( 'intval', $post_data[ "{$prefix}_recurrence_bydays" ] ) );
         }
         if ( empty( $byday ) ) {
             return []; // no weekday chosen, nothing to repeat
         }
     } elseif ( $freq === 'monthly' || $freq === 'specific_months' ) {
-        $byweekno = isset( $post_data[ "{$prefix}_recurrence_byweekno" ] ) ? intval( $post_data[ "{$prefix}_recurrence_byweekno" ] ) : 0;
-        $byday    = isset( $post_data[ "{$prefix}_recurrence_byday" ] ) ? eme_sanitize_request( $post_data[ "{$prefix}_recurrence_byday" ] ) : '';
+        $byweekno = intval( $post_data[ "{$prefix}_recurrence_byweekno" ] ?? 0 );
+        $byday    = eme_sanitize_request( $post_data[ "{$prefix}_recurrence_byday" ] ?? '' );
         if ( $byweekno != 0 && empty( $byday ) ) {
             return []; // "nth weekday" chosen but no weekday selected
         }
         if ( $freq === 'specific_months' ) {
-            $months = ( ! empty( $post_data[ "{$prefix}_recurrence_months" ] ) && eme_is_numeric_array( $post_data[ "{$prefix}_recurrence_months" ] ) )
+            $months = ( ! empty( $post_data[ "{$prefix}_recurrence_months" ] ) && eme_is_integer_array( $post_data[ "{$prefix}_recurrence_months" ] ) )
                 ? join( ',', array_map( 'intval', $post_data[ "{$prefix}_recurrence_months" ] ) )
                 : '';
             if ( empty( $months ) ) {
@@ -1887,7 +1887,7 @@ function eme_mailingreport_list() {
         return;
     }
     $mailing_id  = intval( $_POST['mailing_id'] );
-    $search_name = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+    $search_name = eme_sanitize_request( $_POST['search_name'] ?? '' );
     $where       = '';
     $where_arr   = [];
     $where_arr[] = $wpdb->prepare( 'mailing_id = %d' , $mailing_id );
@@ -2419,8 +2419,8 @@ function eme_ajax_previeweventmail() {
     $mail_subject    = $parsed['mail_subject'];
     $mail_message    = $parsed['mail_message'];
 
-    $event_ids = isset( $_POST['event_ids'] ) ? wp_parse_id_list( $_POST['event_ids'] ) : [];
-    if ( ! eme_is_numeric_array( $event_ids ) ) {
+    $event_ids = wp_parse_id_list( $_POST['event_ids'] ?? [] );
+    if ( ! eme_is_integer_array( $event_ids ) ) {
         wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Please select at least one event.', 'events-made-easy' ) ) ] );
     }
 
@@ -2607,7 +2607,7 @@ function eme_send_generic_mail( $post_data ) {
         $mailing_datetime = $eme_date_obj_now->getDateTime();
         $fast_queue       = 1;
     }
-    $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
+    $edit_mailing_id  = intval( $post_data['edit_mailing_id'] ?? 0 );
     $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
     if ( empty($existing_mailing) ||
         !in_array($existing_mailing['status'], ['initial','planned']) ||
@@ -2644,23 +2644,23 @@ function eme_send_generic_mail( $post_data ) {
         $conditions['eme_send_all_people'] = 1;
         $recipients_configured             = 1;
     } else {
-        if ( ! empty( $post_data['eme_genericmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_persons'] ) ) {
+        if ( ! empty( $post_data['eme_genericmail_send_persons'] ) && eme_is_integer_array( $post_data['eme_genericmail_send_persons'] ) ) {
             $conditions['eme_genericmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_persons'] ) );
             $recipients_configured = 1;
         }
-        if ( ! empty( $post_data['eme_send_members'] ) && eme_is_numeric_array( $post_data['eme_send_members'] ) ) {
+        if ( ! empty( $post_data['eme_send_members'] ) && eme_is_integer_array( $post_data['eme_send_members'] ) ) {
             $conditions['eme_send_members'] = join( ',', array_map( 'intval', $post_data['eme_send_members'] ) );
             $recipients_configured = 1;
         }
-        if ( ! empty( $post_data['eme_genericmail_send_peoplegroups'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_peoplegroups'] ) ) {
+        if ( ! empty( $post_data['eme_genericmail_send_peoplegroups'] ) && eme_is_integer_array( $post_data['eme_genericmail_send_peoplegroups'] ) ) {
             $conditions['eme_genericmail_send_peoplegroups'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_peoplegroups'] ) );
             $recipients_configured = 1;
         }
-        if ( ! empty( $post_data['eme_genericmail_send_membergroups'] ) && eme_is_numeric_array( $post_data['eme_genericmail_send_membergroups'] ) ) {
+        if ( ! empty( $post_data['eme_genericmail_send_membergroups'] ) && eme_is_integer_array( $post_data['eme_genericmail_send_membergroups'] ) ) {
             $conditions['eme_genericmail_send_membergroups'] = join( ',', array_map( 'intval', $post_data['eme_genericmail_send_membergroups'] ) );
             $recipients_configured = 1;
         }
-        if ( ! empty( $post_data['eme_send_memberships'] ) && eme_is_numeric_array( $post_data['eme_send_memberships'] ) ) {
+        if ( ! empty( $post_data['eme_send_memberships'] ) && eme_is_integer_array( $post_data['eme_send_memberships'] ) ) {
             $conditions['eme_send_memberships'] = join( ',', array_map( 'intval', $post_data['eme_send_memberships'] ) );
             $recipients_configured = 1;
         }
@@ -2744,8 +2744,8 @@ function eme_send_event_mail( $post_data ) {
     $mail_subject    = $parsed['mail_subject'];
     $mail_message    = $parsed['mail_message'];
 
-    $event_ids = isset( $post_data['event_ids'] ) ? wp_parse_id_list( $post_data['event_ids'] ) : [];
-    if ( empty($event_ids) || ! eme_is_numeric_array( $event_ids ) ) {
+    $event_ids = wp_parse_id_list( $post_data['event_ids'] ?? [] );
+    if ( empty($event_ids) || ! eme_is_integer_array( $event_ids ) ) {
         return [ 'success' => false, 'message' => eme_message_error_div( __( 'Please select at least one event.', 'events-made-easy' ) ) ];
     }
 
@@ -2760,7 +2760,7 @@ function eme_send_event_mail( $post_data ) {
         $mailing_datetime = $eme_date_obj_now->getDateTime();
         $fast_queue       = 1;
     }
-    $edit_mailing_id  = isset( $post_data['edit_mailing_id'] ) ? intval( $post_data['edit_mailing_id'] ) : 0;
+    $edit_mailing_id  = intval( $post_data['edit_mailing_id'] ?? 0 );
     $existing_mailing = $edit_mailing_id > 0 ? eme_get_mailing( $edit_mailing_id ) : null;
     if ( empty($existing_mailing) ||
         !in_array($existing_mailing['status'], ['initial','planned']) || 
@@ -2769,31 +2769,31 @@ function eme_send_event_mail( $post_data ) {
         $edit_mailing_id = 0; 
     }
 
-    if ( ! empty( $post_data['eme_eventmail_send_persons'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_persons'] ) ) {
+    if ( ! empty( $post_data['eme_eventmail_send_persons'] ) && eme_is_integer_array( $post_data['eme_eventmail_send_persons'] ) ) {
         $conditions['eme_eventmail_send_persons'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_persons'] ) );
     }
-    if ( ! empty( $post_data['eme_eventmail_send_groups'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_groups'] ) ) {
+    if ( ! empty( $post_data['eme_eventmail_send_groups'] ) && eme_is_integer_array( $post_data['eme_eventmail_send_groups'] ) ) {
         $conditions['eme_eventmail_send_groups'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_groups'] ) );
     }
-    if ( ! empty( $post_data['eme_eventmail_send_members'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_members'] ) ) {
+    if ( ! empty( $post_data['eme_eventmail_send_members'] ) && eme_is_integer_array( $post_data['eme_eventmail_send_members'] ) ) {
         $conditions['eme_eventmail_send_members'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_members'] ) );
     }
-    if ( ! empty( $post_data['eme_eventmail_send_membergroups'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_membergroups'] ) ) {
+    if ( ! empty( $post_data['eme_eventmail_send_membergroups'] ) && eme_is_integer_array( $post_data['eme_eventmail_send_membergroups'] ) ) {
         $conditions['eme_eventmail_send_membergroups'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_membergroups'] ) );
     }
-    if ( ! empty( $post_data['eme_eventmail_send_memberships'] ) && eme_is_numeric_array( $post_data['eme_eventmail_send_memberships'] ) ) {
+    if ( ! empty( $post_data['eme_eventmail_send_memberships'] ) && eme_is_integer_array( $post_data['eme_eventmail_send_memberships'] ) ) {
         $conditions['eme_eventmail_send_memberships'] = join( ',', array_map( 'intval', $post_data['eme_eventmail_send_memberships'] ) );
     }
 
-    $eme_mail_type = isset( $post_data['eme_mail_type'] ) ? eme_sanitize_request( $post_data['eme_mail_type'] ) : 'attendees';
+    $eme_mail_type = eme_sanitize_request( $post_data['eme_mail_type'] ?? 'attendees' );
     if ( empty( $eme_mail_type ) ) {
         return [ 'success' => false, 'message' => eme_message_error_div( __( 'Please select the type of mail to be sent.', 'events-made-easy' ) ) ];
     }
     $conditions['eme_mail_type']        = $eme_mail_type;
-    $conditions['rsvp_status']          = isset( $post_data['rsvp_status'] )        ? intval( $post_data['rsvp_status'] )        : 0;
-    $conditions['only_unpaid']          = isset( $post_data['only_unpaid'] )         ? intval( $post_data['only_unpaid'] )         : 0;
-    $conditions['exclude_registered']   = isset( $post_data['exclude_registered'] )  ? intval( $post_data['exclude_registered'] )  : 0;
-    $conditions['exclude_registered_events'] = ( ! empty( $post_data['exclude_registered_events'] ) && eme_is_numeric_array( $post_data['exclude_registered_events'] ) )
+    $conditions['rsvp_status']          = intval( $post_data['rsvp_status'] ?? 0 );
+    $conditions['only_unpaid']          = intval( $post_data['only_unpaid'] ?? 0 );
+    $conditions['exclude_registered']   = intval( $post_data['exclude_registered'] ?? 0 );
+    $conditions['exclude_registered_events'] = ( ! empty( $post_data['exclude_registered_events'] ) && eme_is_integer_array( $post_data['exclude_registered_events'] ) )
         ? join( ',', array_map( 'intval', $post_data['exclude_registered_events'] ) )
         : '';
 

@@ -156,7 +156,7 @@ function eme_delete_event_tasks( $event_id ) {
 
 function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
     global $wpdb;
-    if ( empty( $ids_arr ) || ! eme_is_numeric_array( $ids_arr ) ) {
+    if ( empty( $ids_arr ) || ! eme_is_integer_array( $ids_arr ) ) {
         return;
     }
     $ids_arr = array_map('intval', $ids_arr);
@@ -205,10 +205,10 @@ function eme_get_tasksignup_post_answers( $task_signup ) {
                 }
                 if ($formfield['field_purpose'] == 'people') {
                     $type = 'person';
-                    $related_id = isset($task_signup['person_id'])?$task_signup['person_id']:0;
+                    $related_id = $task_signup['person_id'] ?? 0;
                 } else {
                     $type = 'tasksignup';
-                    $related_id = isset($task_signup['id'])?$task_signup['id']:0;
+                    $related_id = $task_signup['id'] ?? 0;
                 }
                 // some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
                 $answer    = [
@@ -534,7 +534,7 @@ function eme_tasks_send_signup_reminders() {
             continue;
         }
         $task_reminder_days = explode( ',', $event['event_properties']['task_reminder_days'] );
-        if ( ! eme_is_numeric_array( $task_reminder_days ) ) {
+        if ( ! eme_is_integer_array( $task_reminder_days ) ) {
             continue;
         }
         $tasks = eme_get_event_tasks( $event['event_id'] );
@@ -2056,16 +2056,16 @@ function eme_ajax_task_signups_list() {
         $search_person     = "";
         $search_start_date = "";
         $search_end_date   = "";
-        $search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
+        $search_status     = intval( $_REQUEST['search_signup_status'] ?? -1 );
     } else {
         $search_eventid    = 0;
-        $search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
-        $search_scope      = isset( $_POST['search_scope'] ) ? eme_sanitize_request( $_POST['search_scope'] ) : 'future';
-        $search_event      = isset( $_POST['search_event'] ) ? eme_sanitize_request( $_POST['search_event'] ) : '';
-        $search_person     = isset( $_POST['search_person'] ) ? eme_sanitize_request( $_POST['search_person'] ) : '';
+        $search_name       = eme_sanitize_request( $_POST['search_name'] ?? '' );
+        $search_scope      = eme_sanitize_request( $_POST['search_scope'] ?? 'future' );
+        $search_event      = eme_sanitize_request( $_POST['search_event'] ?? '' );
+        $search_person     = eme_sanitize_request( $_POST['search_person'] ?? '' );
         $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request( $_POST['search_start_date'] ) : '';
         $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request( $_POST['search_end_date'] ) : '';
-        $search_status     = isset( $_POST['search_signup_status'] ) ? intval( $_POST['search_signup_status'] ) : -1;
+        $search_status     = intval( $_POST['search_signup_status'] ?? -1 );
     }
 
     $where     = '';
@@ -2180,9 +2180,9 @@ function eme_ajax_manage_task_signups() {
     }
 
     if ( isset( $_REQUEST['do_action'] ) ) {
-        $ids_arr   = ( isset( $_REQUEST['id'] ) ) ? explode( ',', eme_sanitize_request($_POST['id']) ) : [];
-        $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-        $send_mail = ( isset( $_REQUEST['send_mail'] ) ) ? intval( $_REQUEST['send_mail'] ) : 1;
+        $ids_arr   = explode( ',', eme_sanitize_request( $_REQUEST['id'] ?? '' ) );
+        $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+        $send_mail = intval( $_REQUEST['send_mail'] ?? 1 );
         switch ( $do_action ) {
         case 'sendReminders':
             eme_ajax_action_send_reminders( $ids_arr );
@@ -2286,8 +2286,8 @@ function eme_ajax_event_tasks_snapselect() {
         wp_die();
     }
 
-    $event_id = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
-    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $event_id = intval( $_REQUEST['event_id'] ?? 0 );
+    $q        = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
     if ( ! $event_id ) {
         print wp_json_encode( [ 'Records' => [], 'hasMore' => false ] );
         wp_die();
@@ -2327,8 +2327,8 @@ function eme_ajax_assign_task_signup() {
 		wp_die();
 	}
 
-	$task_id   = isset( $_POST['task_id'] ) ? intval( $_POST['task_id'] ) : 0;
-	$person_id = isset( $_POST['person_id'] ) ? intval( $_POST['person_id'] ) : 0;
+	$task_id   = intval( $_POST['task_id'] ?? 0 );
+	$person_id = intval( $_POST['person_id'] ?? 0 );
 
 	if ( ! $task_id || ! $person_id ) {
 		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Please select a task and a person.', 'events-made-easy' ) ) ] );

@@ -249,7 +249,7 @@ function eme_get_categories( $eventful = false, $scope = 'future', $conditions =
                 }
             }
         }
-        if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
+        if ( ! empty( $categories ) && eme_is_integer_array( $categories ) ) {
             $event_cats = array_map('intval', $categories);
             $event_cats_placeholders = implode(',', array_fill(0, count($event_cats), '%d'));
 

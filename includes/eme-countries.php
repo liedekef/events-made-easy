@@ -708,8 +708,8 @@ function eme_ajax_countries_list() {
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$fTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
-	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : [];
+	$q           = eme_sanitize_request( $_POST['q'] ?? '' );
+	$opt         = eme_sanitize_request( $_POST['opt'] ?? [] );
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -784,14 +784,12 @@ function eme_ajax_manage_countries() {
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		switch ( $do_action ) {
-			case 'deleteCountries':
-				eme_ajax_country_delete();
-				break;
-		}
-	}
+    $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+    switch ( $do_action ) {
+    case 'deleteCountries':
+        eme_ajax_country_delete();
+        break;
+    }
 	wp_die();
 }
 function eme_ajax_manage_states() {
@@ -803,14 +801,12 @@ function eme_ajax_manage_states() {
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		switch ( $do_action ) {
-			case 'deleteStates':
-				eme_ajax_record_delete( EME_STATES_TBNAME, 'eme_cap_settings', 'id' );
-				break;
-		}
-	}
+    $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+    switch ( $do_action ) {
+    case 'deleteStates':
+        eme_ajax_record_delete( EME_STATES_TBNAME, 'eme_cap_settings', 'id' );
+        break;
+    }
 	wp_die();
 }
 function eme_ajax_country_delete() {
@@ -912,8 +908,8 @@ add_action( 'wp_ajax_eme_select_state', 'eme_select_state_ajax' );
 add_action( 'wp_ajax_nopriv_eme_select_state', 'eme_select_state_ajax' );
 function eme_select_state_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
-	$q            = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
-	$country_code = isset( $_REQUEST['country_code'] ) ? eme_sanitize_request( $_REQUEST['country_code'] ) : '';
+	$q            = eme_sanitize_request( $_REQUEST['q'] ?? '' );
+	$country_code = eme_sanitize_request( $_REQUEST['country_code'] ?? '' );
 	// the country code can be empty, in which case eme_get_localized_states will return states if only 1 country exists
 	$records = [];
 	$states  = eme_get_localized_states( $country_code );
@@ -937,7 +933,7 @@ add_action( 'wp_ajax_eme_select_country', 'eme_select_country_ajax' );
 add_action( 'wp_ajax_nopriv_eme_select_country', 'eme_select_country_ajax' );
 function eme_select_country_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
-	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
+	$q         = eme_sanitize_request( $_REQUEST['q'] ?? '' );
 	$records   = [];
 	$countries = eme_get_localized_countries();
 	foreach ( $countries as $country ) {

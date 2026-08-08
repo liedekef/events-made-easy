@@ -322,7 +322,7 @@ function eme_cleanup_page() {
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_lastseen_preview' ) {
                 $eme_number       = intval( $_POST['eme_number'] );
                 $eme_period       = eme_sanitize_request( $_POST['eme_period'] );
-                $exclude_group_ids = isset( $_POST['exclude_group_ids'] ) ? eme_sanitize_request( $_POST['exclude_group_ids'] ) : '';
+                $exclude_group_ids = eme_sanitize_request( $_POST['exclude_group_ids'] ?? '' );
                 if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
                     $eme_period = 'month';
                 }
@@ -339,7 +339,7 @@ function eme_cleanup_page() {
             } elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people_lastseen' ) {
                 $eme_number       = intval( $_POST['eme_number'] );
                 $eme_period       = eme_sanitize_request( $_POST['eme_period'] );
-                $exclude_group_ids = isset( $_POST['exclude_group_ids'] ) ? eme_sanitize_request( $_POST['exclude_group_ids'] ) : '';
+                $exclude_group_ids = eme_sanitize_request( $_POST['exclude_group_ids'] ?? '' );
                 if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
                     $eme_period = 'month';
                 }
@@ -417,7 +417,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
     <input type='hidden' name='page' value='eme-cleanup'>
     <input type='hidden' name='eme_number' value='<?php echo isset( $_POST['eme_number'] ) ? intval( $_POST['eme_number'] ) : ''; ?>'>
-    <input type='hidden' name='eme_period' value='<?php echo isset( $_POST['eme_period'] ) ? esc_attr( eme_sanitize_request( $_POST['eme_period'] ) ) : ''; ?>'>
+    <input type='hidden' name='eme_period' value='<?php echo esc_attr( eme_sanitize_request( $_POST['eme_period'] ?? '' ) ); ?>'>
     <?php if ( $use_lastseen && isset( $_POST['exclude_group_ids'] ) ) { ?>
     <input type='hidden' name='exclude_group_ids' value='<?php echo esc_attr( eme_sanitize_request( $_POST['exclude_group_ids'] ) ); ?>'>
     <?php } ?>

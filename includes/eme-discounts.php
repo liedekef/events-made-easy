@@ -588,7 +588,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		if ( ! empty( $selected_dgroup ) ) {
 			// let's see if the dgroup is an array of integers, if not: we take it as a name and convert it to 1 id
 			$selected_dgroup_arr = explode( ',', $selected_dgroup );
-			if ( ! eme_is_numeric_array( $selected_dgroup_arr ) ) {
+			if ( ! eme_is_integer_array( $selected_dgroup_arr ) ) {
 				$dgroup = eme_get_discountgroup_by_name( $selected_dgroup );
 				// take the case where the group no longer exists into account
 				if ( ! empty( $dgroup ) ) {
@@ -1522,8 +1522,8 @@ function eme_ajax_discounts_list() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$fTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
-	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
+	$q           = eme_sanitize_request( $_POST['q'] ?? '' );
+	$opt         = eme_sanitize_request( $_POST['opt'] ?? '' );
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -1585,8 +1585,8 @@ function eme_ajax_discountgroups_list() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$fTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
-	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
+	$q           = eme_sanitize_request( $_POST['q'] ?? '' );
+	$opt         = eme_sanitize_request( $_POST['opt'] ?? '' );
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -1631,16 +1631,16 @@ function eme_ajax_discounts_snapselect() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
-	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+	$q            = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
 	if ( ! empty( $q ) ) {
         $where = $wpdb->prepare("name LIKE %s", '%' . $wpdb->esc_like( $q ) . '%');
 	} else {
         $where = '(1=1)';
 	}
 
-	$pagesize    = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+	$pagesize    = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
-    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $page     = max( 1, intval( $_REQUEST['page'] ?? 1 ) );
     $start    = ( $page - 1 ) * $pagesize;
 	$search      = "$where ORDER BY name LIMIT $start,$mysql_pagesize";
 
@@ -1667,16 +1667,16 @@ function eme_ajax_dgroups_snapselect() {
 		wp_die();
 	}
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
-	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+	$q            = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
 	if ( ! empty( $q ) ) {
         $where = $wpdb->prepare("name LIKE %s", '%' . $wpdb->esc_like( $q ) . '%');
 	} else {
         $where = '(1=1)';
 	}
 
-    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $pagesize = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
-    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $page     = max( 1, intval( $_REQUEST['page'] ?? 1 ) );
     $start    = ( $page - 1 ) * $pagesize;
 	$search      = "$where ORDER BY name LIMIT $start,$mysql_pagesize";
 
@@ -1702,56 +1702,54 @@ function eme_ajax_manage_discounts() {
 	}
 	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		switch ( $do_action ) {
-			case 'deleteDiscounts':
-				eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts deleted', 'events-made-easy' ) );
-				break;
-			case 'changeValidFrom':
-				$date    = ( isset( $_REQUEST['new_validfrom'] ) ) ? eme_sanitize_request( $_REQUEST['new_validfrom'] ) : '';
-				$ids_arr = explode( ',', eme_sanitize_request($_REQUEST['id']) );
-				if ( eme_is_datetime( $date ) && eme_is_numeric_array( $ids_arr ) ) {
-					foreach ( $ids_arr as $discount_id ) {
-							eme_change_discount_validfrom( $discount_id, $date );
-					}
-				}
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
-				break;
-			case 'changeValidTo':
-				$date    = ( isset( $_REQUEST['new_validto'] ) ) ? eme_sanitize_request( $_REQUEST['new_validto'] ) : '';
-				$ids_arr = explode( ',', eme_sanitize_request($_REQUEST['id']) );
-				if ( eme_is_datetime( $date ) && eme_is_numeric_array( $ids_arr ) ) {
-					foreach ( $ids_arr as $discount_id ) {
-						eme_change_discount_validto( $discount_id, $date );
-					}
-				}
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
-				break;
-			case 'addToGroup':
-				$group_id = ( isset( $_REQUEST['addtogroup'] ) ) ? intval( $_REQUEST['addtogroup'] ) : 0;
-				$ids_arr  = explode( ',', eme_sanitize_request($_REQUEST['id']) );
-				if ( eme_is_numeric_array( $ids_arr ) ) {
-					foreach ( $ids_arr as $discount_id ) {
-						eme_add_discount_to_group( $discount_id, $group_id );
-					}
-				}
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts added to group.', 'events-made-easy' ) );
-				break;
-			case 'removeFromGroup':
-				$group_id = ( isset( $_REQUEST['removefromgroup'] ) ) ? intval( $_REQUEST['removefromgroup'] ) : 0;
-				$ids_arr  = explode( ',', eme_sanitize_request($_REQUEST['id']) );
-				if ( eme_is_numeric_array( $ids_arr ) ) {
-					foreach ( $ids_arr as $discount_id ) {
-						eme_remove_discount_from_group( $discount_id, $group_id );
-					}
-				}
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts removed from group.', 'events-made-easy' ) );
-				break;
+    $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+    switch ( $do_action ) {
+    case 'deleteDiscounts':
+        eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts deleted', 'events-made-easy' ) );
+        break;
+    case 'changeValidFrom':
+        $date    = eme_sanitize_request( $_REQUEST['new_validfrom'] ?? '' );
+        $ids_arr = explode( ',', eme_sanitize_request($_REQUEST['id']) );
+        if ( eme_is_datetime( $date ) && eme_is_integer_array( $ids_arr ) ) {
+            foreach ( $ids_arr as $discount_id ) {
+                eme_change_discount_validfrom( $discount_id, $date );
+            }
+        }
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
+        break;
+    case 'changeValidTo':
+        $date    = eme_sanitize_request( $_REQUEST['new_validto'] ?? '' );
+        $ids_arr = explode( ',', eme_sanitize_request($_REQUEST['id']) );
+        if ( eme_is_datetime( $date ) && eme_is_integer_array( $ids_arr ) ) {
+            foreach ( $ids_arr as $discount_id ) {
+                eme_change_discount_validto( $discount_id, $date );
+            }
+        }
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
+        break;
+    case 'addToGroup':
+        $group_id = intval( $_REQUEST['addtogroup'] ?? 0 );
+        $ids_arr  = explode( ',', eme_sanitize_request($_REQUEST['id']) );
+        if ( eme_is_integer_array( $ids_arr ) ) {
+            foreach ( $ids_arr as $discount_id ) {
+                eme_add_discount_to_group( $discount_id, $group_id );
+            }
+        }
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts added to group.', 'events-made-easy' ) );
+        break;
+    case 'removeFromGroup':
+        $group_id = intval( $_REQUEST['removefromgroup'] ?? 0 );
+        $ids_arr  = explode( ',', eme_sanitize_request($_REQUEST['id']) );
+        if ( eme_is_integer_array( $ids_arr ) ) {
+            foreach ( $ids_arr as $discount_id ) {
+                eme_remove_discount_from_group( $discount_id, $group_id );
+            }
+        }
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts removed from group.', 'events-made-easy' ) );
+        break;
 
-		}
-	}
+    }
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }
@@ -1763,15 +1761,13 @@ function eme_ajax_manage_discountgroups() {
 	}
 	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		switch ( $do_action ) {
-			case 'deleteDiscountGroups':
-				eme_ajax_record_delete( EME_DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );
-				$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discount groups deleted.', 'events-made-easy' ) );
-				break;
-		}
-	}
+    $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+    switch ( $do_action ) {
+    case 'deleteDiscountGroups':
+        eme_ajax_record_delete( EME_DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discount groups deleted.', 'events-made-easy' ) );
+        break;
+    }
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

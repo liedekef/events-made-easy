@@ -1130,7 +1130,7 @@ function eme_options_delete() {
 }
 
 function eme_options_postsave_actions() {
-    $tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
+    $tab = eme_sanitize_request( $_GET['tab'] ?? 'general' );
     // if we saved settings on the payments tab, certain webhooks need to be created
     if ( $tab == 'payments' ) {
         eme_stripe_webhook();
@@ -1217,7 +1217,7 @@ function eme_options_register() {
         return;
     }
     $options = [];
-    $tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
+    $tab     = eme_sanitize_request( $_POST['tab'] ?? 'general' );
     $options = match( $tab ) {
         'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_members_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_api_key', 'eme_recaptcha_project_id', 'eme_recaptcha_score', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
         'permalink' => [ 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
@@ -1481,7 +1481,7 @@ function eme_explain_slug_conflict( $conflict_found ) {
 
 // Function composing the options page
 function eme_options_page() {
-    $tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
+    $tab = eme_sanitize_request( $_GET['tab'] ?? 'general' );
     eme_admin_tabs( $tab );
     $conflict_found = eme_check_conflicting_slug();
     if ( ! empty( $conflict_found ) ) {
@@ -3393,7 +3393,7 @@ case 'extensions':
             $filename = basename( $filepath );
             $files[] = [
                 'name' => $filename,
-                'current_hash' => isset( $signatures[ $filename ] ) ? $signatures[ $filename ] : '',
+                'current_hash' => $signatures[ $filename ] ?? '',
                 'on_disk_hash' => hash_file( 'sha256', $filepath ),
             ];
         }

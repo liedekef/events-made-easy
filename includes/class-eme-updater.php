@@ -422,11 +422,11 @@ class EME_GitHub_Updater {
     }
 
     private function get_requires_wp_version($plugin_data) {
-        return isset($plugin_data['RequiresWP']) ? $plugin_data['RequiresWP'] : '5.0';
+        return $plugin_data['RequiresWP'] ?? '5.0';
     }
 
     private function get_requires_php($plugin_data) {
-        return isset($plugin_data['RequiresPHP']) ? $plugin_data['RequiresPHP'] : '7.0';
+        return $plugin_data['RequiresPHP'] ?? '7.0';
     }
 
     private function parse_markdown($markdown) {

@@ -140,7 +140,7 @@ function eme_delete_event_todos( $event_id ) {
 
 function eme_delete_event_old_todos( $event_id, $ids_arr ) {
 	global $wpdb;
-	if ( empty( $ids_arr ) || ! eme_is_numeric_array( $ids_arr ) ) {
+	if ( empty( $ids_arr ) || ! eme_is_integer_array( $ids_arr ) ) {
 		return;
 	}
 	$ids_arr  = array_map('intval', $ids_arr);

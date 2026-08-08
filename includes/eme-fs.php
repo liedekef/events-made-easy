@@ -685,7 +685,7 @@ function eme_fs_process_newevent() {
     if ( !isset($event_data['event_end_date']) || empty($event_data['event_end_date']) ) {
         $event_data['event_end_date'] = $event_data['event_start_date'];
     }
-    if ( isset( $event_data['event_category_ids'] ) && eme_is_numeric_array( eme_sanitize_request( $event_data['event_category_ids'] ) ) ) {
+    if ( isset( $event_data['event_category_ids'] ) && eme_is_integer_array( eme_sanitize_request( $event_data['event_category_ids'] ) ) ) {
         $event_data['event_category_ids'] = join( ',', eme_sanitize_request( $event_data['event_category_ids'] ) );
     }
 
@@ -812,16 +812,16 @@ function eme_fs_processlocation( $event_data, $force=0 ) {
     if (isset($event_data['location_town'])) {
         $location['location_city'] = $event_data['location_town'];
     }
-    $location['location_name'] = isset($event_data['location_name']) ? $event_data['location_name'] : '';
-    $location['location_description'] = isset($event_data['location_description']) ? $event_data['location_description'] : '';
-    $location['location_address1'] = isset($event_data['location_address1']) ? $event_data['location_address1'] : '';
-    $location['location_address2'] = isset($event_data['location_address2']) ? $event_data['location_address2'] : '';
-    $location['location_city'] = isset($event_data['location_city']) ? $event_data['location_city'] : '';
-    $location['location_state'] = isset($event_data['location_state']) ? $event_data['location_state'] : '';
-    $location['location_zip'] = isset($event_data['location_zip']) ? $event_data['location_zip'] : '';
-    $location['location_country'] = isset($event_data['location_country']) ? $event_data['location_country'] : '';
-    $location['location_latitude'] = isset($event_data['location_latitude']) ? $event_data['location_latitude'] : '';
-    $location['location_longitude'] = isset($event_data['location_longitude']) ? $event_data['location_longitude'] : '';
+    $location['location_name'] = $event_data['location_name'] ?? '';
+    $location['location_description'] = $event_data['location_description'] ?? '';
+    $location['location_address1'] = $event_data['location_address1'] ?? '';
+    $location['location_address2'] = $event_data['location_address2'] ?? '';
+    $location['location_city'] = $event_data['location_city'] ?? '';
+    $location['location_state'] = $event_data['location_state'] ?? '';
+    $location['location_zip'] = $event_data['location_zip'] ?? '';
+    $location['location_country'] = $event_data['location_country'] ?? '';
+    $location['location_latitude'] = $event_data['location_latitude'] ?? '';
+    $location['location_longitude'] = $event_data['location_longitude'] ?? '';
     if (empty($location['location_name']) && empty($location['location_address1']) && empty($location['location_latitude']) && empty($location['location_longitude'])) {
         return 0;
     }

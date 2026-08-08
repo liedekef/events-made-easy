@@ -204,12 +204,12 @@ function eme_ical() {
 		do_action( 'eme_ical_header_action' );
 	}
 
-	$location_id        = isset( $_GET['location_id'] ) ? eme_sanitize_request( $_GET['location_id'] ) : '';
-	$category           = isset( $_GET['category'] ) ? eme_sanitize_request( $_GET['category'] ) : '';
-	$notcategory        = isset( $_GET['notcategory'] ) ? eme_sanitize_request( $_GET['notcategory'] ) : '';
-	$scope              = isset( $_GET['scope'] ) ? eme_sanitize_request( $_GET['scope'] ) : '';
-	$author             = isset( $_GET['author'] ) ? eme_sanitize_request( $_GET['author'] ) : '';
-	$contact_person     = isset( $_GET['contact_person'] ) ? eme_sanitize_request( $_GET['contact_person'] ) : '';
+	$location_id        = eme_sanitize_request( $_GET['location_id'] ?? '' );
+	$category           = eme_sanitize_request( $_GET['category'] ?? '' );
+	$notcategory        = eme_sanitize_request( $_GET['notcategory'] ?? '' );
+	$scope              = eme_sanitize_request( $_GET['scope'] ?? '' );
+	$author             = eme_sanitize_request( $_GET['author'] ?? '' );
+	$contact_person     = eme_sanitize_request( $_GET['contact_person'] ?? '' );
 	$events             = eme_get_events( scope: $scope, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: 1, notcategory: $notcategory );
 	foreach ( $events as $event ) {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- iCal format output (text/calendar), not HTML

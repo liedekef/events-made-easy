@@ -674,8 +674,8 @@ function eme_ajax_recurrences_list() {
 
     $limit             = eme_get_ftable_limit();
 	$orderby           = eme_get_ftable_orderby();
-	$scope             = ( isset( $_POST['scope'] ) ) ? eme_sanitize_request( $_POST['scope'] ) : 'ongoing';
-	$search_name       = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+	$scope             = eme_sanitize_request( $_POST['scope'] ?? 'ongoing' );
+	$search_name       = eme_sanitize_request( $_POST['search_name'] ?? '' );
 	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request($_POST['search_start_date']) : '';
 	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request($_POST['search_end_date']) : '';
 
@@ -831,7 +831,7 @@ function eme_ajax_manage_recurrences() {
 		$rec_new_end_date   = eme_sanitize_request( $_POST['rec_new_end_date'] );
 		$ids                = eme_sanitize_request( $_POST['recurrence_id'] );
 		$ids_arr            = explode( ',', $ids );
-		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+		if ( ! eme_is_integer_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']      = 'ERROR';
 			$ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
 			print wp_json_encode( $ajaxResult );

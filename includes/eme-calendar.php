@@ -556,7 +556,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 			// only show wanted columns
 			if ( count( $weekday_arr ) ) {
 				$day_of_week = $eme_date_obj->getDayOfWeekAsNumeric();
-				if ( eme_is_numeric_array( $weekday_arr ) && in_array( $day_of_week, $weekday_arr ) ) {
+				if ( eme_is_integer_array( $weekday_arr ) && in_array( $day_of_week, $weekday_arr ) ) {
 					$sCalTblRows .= $sCalTblCell;
 					$sCalDivRows .= $sCalDivCell;
 				}
@@ -592,7 +592,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		}
 		// only show wanted columns
 		if ( ! empty( $weekday_arr ) ) {
-			if ( ! eme_is_numeric_array( $weekday_arr ) || ! in_array( $j, $weekday_arr ) ) {
+			if ( ! eme_is_integer_array( $weekday_arr ) || ! in_array( $j, $weekday_arr ) ) {
 				continue;
 			}
 		}

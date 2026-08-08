@@ -129,7 +129,7 @@ function eme_locations_page() {
             //switched to WP TinyMCE field
             $location['location_description'] = eme_kses_maybe_unfiltered( $_POST['location_description'] );
 
-            if ( isset( $_POST['location_category_ids'] ) && eme_is_numeric_array( $_POST['location_category_ids'] ) ) {
+            if ( isset( $_POST['location_category_ids'] ) && eme_is_integer_array( $_POST['location_category_ids'] ) ) {
                 $location ['location_category_ids'] = join( ',', array_map( 'intval', $_POST['location_category_ids'] ) );
             } else {
                 $location ['location_category_ids'] = '';
@@ -1129,7 +1129,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 
         if ( ! empty( $location_id ) ) {
             $location_ids = explode( ',', $location_id );
-            if ( eme_is_numeric_array( $location_ids ) ) {
+            if ( eme_is_integer_array( $location_ids ) ) {
                 $loc_ids_int  = array_map( 'intval', $location_ids );
                 $placeholders = implode( ',', array_fill( 0, count( $loc_ids_int ), '%d' ) );
                 $conditions[] = $wpdb->prepare( "(location_id IN ($placeholders))", ...$loc_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -2986,7 +2986,7 @@ function eme_ajax_locations_list() {
 
     $table         = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $search_name   = isset( $_POST['search_name'] ) ? eme_sanitize_request( $_POST['search_name'] ) : '';
+    $search_name   = eme_sanitize_request( $_POST['search_name'] ?? '' );
     $where         = '';
     $where_arr     = [];
     if ( ! empty( $search_name ) ) {
@@ -3032,7 +3032,7 @@ function eme_ajax_locations_list() {
             $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
 
-        if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
+        if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_integer_array( $_POST['search_customfieldids'] ) ) {
             $cf_ids_int = array_map( 'intval', $_POST['search_customfieldids'] );
         } else {
             $cf_ids_int = array_map( 'intval', $field_ids_arr );
@@ -3172,10 +3172,10 @@ function eme_ajax_chooselocation_snapselect() {
         wp_die();
     }
 
-    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $q        = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
+    $pagesize = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
-    $page     = isset( $_REQUEST['page'] ) ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $page     = max( 1, intval( $_REQUEST['page'] ?? 1 ) );
     $start    = ( $page - 1 ) * $pagesize;
 
     $where = ! empty( $q )
@@ -3184,7 +3184,7 @@ function eme_ajax_chooselocation_snapselect() {
     if ( ! empty( $_REQUEST['exclude_locationids'] ) ) {
         $exclude_locationids     = eme_sanitize_request( $_REQUEST['exclude_locationids'] );
         $exclude_locationids_arr = explode( ',', $exclude_locationids );
-        if ( eme_is_numeric_array( $exclude_locationids_arr ) ) {
+        if ( eme_is_integer_array( $exclude_locationids_arr ) ) {
             $exclude_ids_int = array_map( 'intval', $exclude_locationids_arr );
             $placeholders    = implode( ',', array_fill( 0, count( $exclude_ids_int ), '%d' ) );
             $where .= $wpdb->prepare( " AND location_id NOT IN ($placeholders)", ...$exclude_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

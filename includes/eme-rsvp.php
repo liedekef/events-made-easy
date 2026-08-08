@@ -899,7 +899,7 @@ function eme_add_bookings_ajax() {
     }
 
     $events = [];
-    if ( ! empty( $_POST['eme_event_ids'] ) && eme_is_numeric_array( $_POST['eme_event_ids'] ) ) {
+    if ( ! empty( $_POST['eme_event_ids'] ) && eme_is_integer_array( $_POST['eme_event_ids'] ) ) {
         $events = eme_get_rsvp_event_arr( array_map( 'intval', $_POST['eme_event_ids'] ) );
     }
     if ( empty( $events ) ) {
@@ -2152,10 +2152,10 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
                     }
                     if ($formfield['field_purpose'] == 'people') {
                         $type = 'person';
-                        $related_id = isset($booking['person_id'])?$booking['person_id']:0;
+                        $related_id = $booking['person_id'] ?? 0;
                     } else {
                         $type = 'booking';
-                        $related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+                        $related_id = $booking['booking_id'] ?? 0;
                     }
                     // some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
                     $answer    = [
@@ -2217,10 +2217,10 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
                             }
                             if ($formfield['field_purpose'] == 'people') {
                                 $type = 'person';
-                                $related_id = isset($booking['person_id'])?$booking['person_id']:0;
+                                $related_id = $booking['person_id'] ?? 0;
                             } else {
                                 $type = 'booking';
-                                $related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+                                $related_id = $booking['booking_id'] ?? 0;
                             }
                             // some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
                             $answer    = [
@@ -2280,10 +2280,10 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
                 }
                 if ($formfield['field_purpose'] == 'people') {
                     $type = 'person';
-                    $related_id = isset($booking['person_id'])?$booking['person_id']:0;
+                    $related_id = $booking['person_id'] ?? 0;
                 } else {
                     $type = 'booking';
-                    $related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+                    $related_id = $booking['booking_id'] ?? 0;
                 }
                 // some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
                 $answer    = [
@@ -3208,7 +3208,7 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0, $
     }
 
     $where = [];
-    if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
+    if ( is_array( $event_ids ) && eme_is_integer_array( $event_ids ) ) {
         $ids_arr_int = array_map('intval', $event_ids);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $where[] = $wpdb->prepare( 'bookings.event_id IN (' . $placeholders . ')', ...$ids_arr_int );
@@ -3306,7 +3306,7 @@ function eme_get_wp_ids_for( $event_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+    if ( is_array( $event_id ) && eme_is_integer_array( $event_id ) ) {
         $ids_arr_int  = array_map( 'intval', $event_id );
         $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
         $prepared_sql = $wpdb->prepare(
@@ -3340,7 +3340,7 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+    if ( is_array( $event_id ) && eme_is_integer_array( $event_id ) ) {
         $ids_arr_int = array_map('intval', $event_id);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $sql = $wpdb->prepare(
@@ -3379,7 +3379,7 @@ function eme_get_attendees_for( $event_id, $rsvp_status = 0, $paid_status = 0 ) 
 function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+    if ( is_array( $event_id ) && eme_is_integer_array( $event_id ) ) {
         $ids_arr_int = array_map('intval', $event_id);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $sql = $wpdb->prepare(
@@ -3414,7 +3414,7 @@ function eme_get_attendee_emails( $event_id ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+    if ( is_array( $event_id ) && eme_is_integer_array( $event_id ) ) {
         $ids_arr_int  = array_map( 'intval', $event_id );
         $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
         $sql = $wpdb->prepare(
@@ -5145,8 +5145,8 @@ function eme_registration_seats_page( $pending = 0 ) {
         print $ret_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted admin booking form HTML
         return;
     } else {
-        $action    = isset( $_POST ['eme_admin_action'] ) ? eme_sanitize_request($_POST ['eme_admin_action']) : '';
-        $send_mail = isset( $_POST ['send_mail'] ) ? intval( $_POST ['send_mail'] ) : 1;
+        $action    = eme_sanitize_request( $_POST ['eme_admin_action'] ?? '' );
+        $send_mail = intval( $_POST ['send_mail'] ?? 1 );
         if ( $action == 'addBooking' ) {
             $event_id = intval( $_POST['event_id'] );
             check_admin_referer( "eme_admin", 'eme_admin_nonce' );
@@ -5169,7 +5169,7 @@ function eme_registration_seats_page( $pending = 0 ) {
             $booking       = eme_get_booking( $booking_id );
 
             // transferto_id is only given for moving a booking to another event
-            $transferto_id         = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
+            $transferto_id         = intval( $_POST ['transferto_id'] ?? 0 );
             if ( $transferto_id && $booking['event_id'] != $transferto_id ) {
                 $orig_event_id       = $booking['event_id'];
                 $booking['event_id'] = $transferto_id;
@@ -5184,7 +5184,7 @@ function eme_registration_seats_page( $pending = 0 ) {
             }
 
             // transferto_person_id is only given for moving a booking to another person
-            $transferto_person_id  = isset( $_POST ['transferto_person_id'] ) ? intval( $_POST ['transferto_person_id'] ) : 0;
+            $transferto_person_id  = intval( $_POST ['transferto_person_id'] ?? 0 );
             if ( $transferto_person_id ) {
                 $booking['person_id'] = $transferto_person_id;
             }
@@ -5904,19 +5904,19 @@ function eme_ajax_bookings_list() {
 
     $limit          = eme_get_ftable_limit();
     $orderby        = eme_get_ftable_orderby() ?: 'ORDER BY creation_date ASC';
-    $booking_status = ( isset( $_POST['booking_status'] ) ) ? eme_sanitize_request( $_POST['booking_status'] ) : 'APPROVED';
-    $search_event   = isset( $_POST['search_event'] ) ? eme_sanitize_request($_POST['search_event'])  : '';
-    $search_person  = isset( $_POST['search_person'] ) ? eme_sanitize_request($_POST['search_person']) : '';
+    $booking_status = eme_sanitize_request( $_POST['booking_status'] ?? 'APPROVED' );
+    $search_event   = eme_sanitize_request( $_POST['search_event'] ?? '' );
+    $search_person  = eme_sanitize_request( $_POST['search_person'] ?? '' );
     // the unique number can contain text (+, /, ...), but we only need the numbers, so lets do that
-    $search_unique     = isset( $_POST['search_unique'] ) ? eme_str_numbers_only( $_POST['search_unique']) : '';
-    $search_paymentid  = isset( $_POST['search_paymentid'] ) ? intval( $_POST['search_paymentid'] ) : 0;
-    $search_pg_pid     = isset( $_POST['search_pg_pid'] ) ? eme_sanitize_request($_POST['search_pg_pid']) : '';
+    $search_unique     = eme_str_numbers_only( $_POST['search_unique'] ?? '' );
+    $search_paymentid  = intval( $_POST['search_paymentid'] ?? 0 );
+    $search_pg_pid     = eme_sanitize_request( $_POST['search_pg_pid'] ?? '' );
     $search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? eme_sanitize_request($_POST['search_start_date']) : '';
     $search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? eme_sanitize_request($_POST['search_end_date']) : '';
-    $scope             = ( isset( $_POST['scope'] ) ) ? eme_sanitize_request( $_POST['scope'] ) : 'future';
-    $category          = isset( $_POST['category'] ) ? eme_sanitize_request( $_POST['category']) : '';
-    $person_id         = isset( $_POST['person_id'] ) ? intval( $_POST['person_id'] ) : 0;
-    $event_id          = isset( $_POST['event_id'] ) ? intval( $_POST['event_id'] ) : 0;
+    $scope             = eme_sanitize_request( $_POST['scope'] ?? 'future' );
+    $category          = eme_sanitize_request( $_POST['category'] ?? '' );
+    $person_id         = intval( $_POST['person_id'] ?? 0 );
+    $event_id          = intval( $_POST['event_id'] ?? 0 );
     if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
         $trash = 1;
     } else {
@@ -5924,8 +5924,8 @@ function eme_ajax_bookings_list() {
     }
 
     // The toolbar search input
-    $q         = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
-    $opt       = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
+    $q         = eme_sanitize_request( $_POST['q'] ?? '' );
+    $opt       = eme_sanitize_request( $_POST['opt'] ?? '' );
     $where     = '';
     $where_arr = [];
 
@@ -6423,14 +6423,14 @@ function eme_ajax_manage_bookings() {
 
     $booking_ids = eme_sanitize_request( $_POST['booking_ids'] );
     $ids_arr     = explode( ',', $booking_ids );
-    $send_mail   = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
-    $refund      = ( isset( $_POST['refund'] ) ) ? intval( $_POST['refund'] ) : 0;
+    $send_mail   = intval( $_POST['send_mail'] ?? 1 );
+    $refund      = intval( $_POST['refund'] ?? 0 );
     // to be sure
     if ( ! get_option( 'eme_payment_refund_ok' ) ) {
         $refund = 0;
     }
 
-    if ( eme_is_numeric_array( $ids_arr ) ) {
+    if ( eme_is_integer_array( $ids_arr ) ) {
         switch ( $do_action ) {
         case 'markpaidandapprove':
             // shortcut button to do 2 things at once, mail will always be sent
@@ -6451,7 +6451,7 @@ function eme_ajax_manage_bookings() {
             break;
         case 'partialPayment':
             header( 'Content-type: application/json; charset=utf-8' );
-            $amount = ( isset( $_POST['partial_amount'] ) ) ? eme_sanitize_request($_POST['partial_amount']) : 0;
+            $amount = eme_sanitize_request( $_POST['partial_amount'] ?? 0 );
             if ( count( $ids_arr ) == 1 && is_numeric( $amount ) ) {
                 $booking_id = $ids_arr[0];
                 eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_mail );
@@ -6467,7 +6467,7 @@ function eme_ajax_manage_bookings() {
             break;
         case 'resendApprovedBooking':
             header( 'Content-type: application/json; charset=utf-8' );
-            $send_to_contact_too = ( isset( $_POST['send_to_contact_too'] ) ) ? intval( $_POST['send_to_contact_too'] ) : 0;
+            $send_to_contact_too = intval( $_POST['send_to_contact_too'] ?? 0 );
             if ($send_to_contact_too) {
                 eme_ajax_action_resend_booking_mail( $ids_arr, 'approvedBooking' );
             } else {
@@ -6508,8 +6508,8 @@ function eme_ajax_manage_bookings() {
             break;
         case 'rsvpMails':
             header( 'Content-type: application/json; charset=utf-8' );
-            $template_id_subject = ( isset( $_POST['rsvpmail_template_subject'] ) ) ? intval( $_POST['rsvpmail_template_subject'] ) : 0;
-            $template_id         = ( isset( $_POST['rsvpmail_template'] ) ) ? intval( $_POST['rsvpmail_template'] ) : 0;
+            $template_id_subject = intval( $_POST['rsvpmail_template_subject'] ?? 0 );
+            $template_id         = intval( $_POST['rsvpmail_template'] ?? 0 );
             if ( $template_id_subject && $template_id ) {
                 eme_ajax_action_send_booking_mails( $ids_arr, $template_id_subject, $template_id );
             } else {
@@ -6520,9 +6520,9 @@ function eme_ajax_manage_bookings() {
             }
             break;
         case 'pdf':
-            $template_id        = ( isset( $_POST['pdf_template'] ) ) ? intval( $_POST['pdf_template'] ) : 0;
-            $template_id_header = ( isset( $_POST['pdf_template_header'] ) ) ? intval( $_POST['pdf_template_header'] ) : 0;
-            $template_id_footer = ( isset( $_POST['pdf_template_footer'] ) ) ? intval( $_POST['pdf_template_footer'] ) : 0;
+            $template_id        = intval( $_POST['pdf_template'] ?? 0 );
+            $template_id_header = intval( $_POST['pdf_template_header'] ?? 0 );
+            $template_id_footer = intval( $_POST['pdf_template_footer'] ?? 0 );
             if ( $template_id ) {
                 eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             } else {
@@ -6533,9 +6533,9 @@ function eme_ajax_manage_bookings() {
             }
             break;
         case 'html':
-            $template_id        = ( isset( $_POST['html_template'] ) ) ? intval( $_POST['html_template'] ) : 0;
-            $template_id_header = ( isset( $_POST['html_template_header'] ) ) ? intval( $_POST['html_template_header'] ) : 0;
-            $template_id_footer = ( isset( $_POST['html_template_footer'] ) ) ? intval( $_POST['html_template_footer'] ) : 0;
+            $template_id        = intval( $_POST['html_template'] ?? 0 );
+            $template_id_header = intval( $_POST['html_template_header'] ?? 0 );
+            $template_id_footer = intval( $_POST['html_template_footer'] ?? 0 );
             if ( $template_id ) {
                 eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             } else {
@@ -7277,7 +7277,7 @@ function eme_rsvp_send_pending_reminders() {
             continue;
         }
         $reminder_days = explode( ',', $event['event_properties']['rsvp_pending_reminder_days'] );
-        if ( ! eme_is_numeric_array( $reminder_days ) ) {
+        if ( ! eme_is_integer_array( $reminder_days ) ) {
             continue;
         }
         $bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_PENDING );
@@ -7304,7 +7304,7 @@ function eme_rsvp_send_approved_reminders() {
             continue;
         }
         $reminder_days = explode( ',', $event['event_properties']['rsvp_approved_reminder_days'] );
-        if ( ! eme_is_numeric_array( $reminder_days ) ) {
+        if ( ! eme_is_integer_array( $reminder_days ) ) {
             continue;
         }
         $bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_APPROVED );

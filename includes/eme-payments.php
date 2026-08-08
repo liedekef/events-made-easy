@@ -1969,7 +1969,7 @@ function eme_notification_legacypaypal() {
         }
         // Verify receiver email matches configured business email
         $configured_email = get_option( 'eme_legacypaypal_business' );
-        $receiver_email   = isset( $ipn->ipn['receiver_email'] ) ? strtolower( $ipn->ipn['receiver_email'] ) : '';
+        $receiver_email   = strtolower( $ipn->ipn['receiver_email'] ?? '' );
         if ( strtolower( $configured_email ) !== $receiver_email ) {
             $ipn->complete();
             return;
@@ -2295,10 +2295,10 @@ function eme_charge_paypal() {
     $client = new EME_PayPal_Client();
     if ( ! $client->is_configured() ) return 0;
 
-    $payment_id = isset($_POST['payment_id']) ? intval( $_POST['payment_id'] ) : 0;
-    $price = isset($_POST['price']) ? floatval( $_POST['price'] ) : 0;
-    $cur   = isset($_POST['cur']) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description = isset($_POST['description']) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id = intval( $_POST['payment_id'] ?? 0 );
+    $price = floatval( $_POST['price'] ?? 0 );
+    $cur   = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment = eme_get_payment($payment_id);
 
     // Validate nonce (price+cur locked)
@@ -2336,10 +2336,10 @@ function eme_charge_paypal() {
 function eme_charge_stripe() {
     $gateway = "stripe";
     $events_page_link = eme_get_events_page();
-    $payment_id       = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price            = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur              = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description      = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id       = intval( $_POST['payment_id'] ?? 0 );
+    $price            = floatval( $_POST['price'] ?? 0 );
+    $cur              = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description      = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment          = eme_get_payment( $payment_id );
     $success_link     = eme_payment_return_url( $payment, $gateway );
     $cancel_link      = eme_payment_url( $payment );
@@ -2451,11 +2451,11 @@ function eme_charge_braintree() {
         return;
     }
 
-    $payment_id   = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price        = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur          = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
+    $payment_id   = intval( $_POST['payment_id'] ?? 0 );
+    $price        = floatval( $_POST['price'] ?? 0 );
+    $cur          = eme_sanitize_request( $_POST['cur'] ?? '' );
     // braintree ignores the description, but let's act as usual
-    $description  = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $description  = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment      = eme_get_payment( $payment_id );
 
     $success_link = eme_payment_return_url( $payment, 0 );
@@ -2524,10 +2524,10 @@ function eme_charge_instamojo() {
     }
 
     $events_page_link  = eme_get_events_page();
-    $payment_id        = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price             = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur               = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description       = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id        = intval( $_POST['payment_id'] ?? 0 );
+    $price             = floatval( $_POST['price'] ?? 0 );
+    $cur               = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description       = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment           = eme_get_payment( $payment_id );
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
@@ -2600,7 +2600,7 @@ function eme_charge_mercadopago() {
 
     // we get the external reference back as a post
     // // we also get the mercado pago payment id, merchant order and status back as post, but we won't trust it
-    $payment_id   = isset( $_POST['external_reference'] ) ? intval( $_POST['external_reference'] ) : 0;
+    $payment_id   = intval( $_POST['external_reference'] ?? 0 );
     $payment      = eme_get_payment( $payment_id );
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
@@ -2639,10 +2639,10 @@ function eme_charge_fondy() {
         return;
     }
 
-    $payment_id  = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price       = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur         = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id  = intval( $_POST['payment_id'] ?? 0 );
+    $price       = floatval( $_POST['price'] ?? 0 );
+    $cur         = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description = eme_sanitize_request( $_POST['description'] ?? '' );
 
     $payment = eme_get_payment( $payment_id );
 
@@ -2900,10 +2900,10 @@ function eme_refund_booking_braintree( $booking ) {
 function eme_charge_mollie() {
     $gateway = 'mollie';
     $events_page_link = eme_get_events_page();
-    $payment_id       = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price            = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur              = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description      = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id       = intval( $_POST['payment_id'] ?? 0 );
+    $price            = floatval( $_POST['price'] ?? 0 );
+    $cur              = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description      = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment          = eme_get_payment( $payment_id );
 
     $api_key = get_option( 'eme_mollie_api_key' );
@@ -3047,10 +3047,10 @@ function eme_charge_payconiq() {
 function eme_charge_bancontactwero() {
     $gateway          = 'bancontactwero';
     $events_page_link = eme_get_events_page();
-    $payment_id       = isset( $_POST['payment_id'] ) ? intval( $_POST['payment_id'] ) : 0;
-    $price            = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
-    $cur              = isset( $_POST['cur'] ) ? eme_sanitize_request( $_POST['cur'] ) : '';
-    $description      = isset( $_POST['description'] ) ? eme_sanitize_request( $_POST['description'] ) : '';
+    $payment_id       = intval( $_POST['payment_id'] ?? 0 );
+    $price            = floatval( $_POST['price'] ?? 0 );
+    $cur              = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description      = eme_sanitize_request( $_POST['description'] ?? '' );
     $payment          = eme_get_payment( $payment_id );
     if ( $payment['target'] == 'member' ) {
         $bulkId = "members";
@@ -3303,7 +3303,7 @@ function eme_notification_worldpay() {
     $post_pwd        = eme_sanitize_request( $_POST['callbackPW'] );
     $trans_status    = eme_sanitize_request( $_POST['transStatus'] );
     $trans_id        = eme_sanitize_request( $_POST['transId'] );
-    $test_mode       = isset( $_POST ['testMode'] ) ? eme_sanitize_request( $_POST ['testMode'] ) : 0;
+    $test_mode       = eme_sanitize_request( $_POST ['testMode'] ?? 0 );
     $post_instid     = eme_sanitize_request( $_POST['instId'] );
     $worldpay_instid = eme_sanitize_request( get_option( 'eme_worldpay_instid' ) );
     $payment_id      = intval( $_POST['cartId'] );

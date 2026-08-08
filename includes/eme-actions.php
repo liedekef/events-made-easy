@@ -9,8 +9,8 @@ function eme_actions_early_init() {
     $eme_is_admin_request = eme_is_admin_request();
     if ( !empty( $_GET['eme_captcha'] ) && $_GET['eme_captcha'] == 'generate' && !empty( $_GET['f'] ) ) {
         $captcha_id = eme_sanitize_filenamechars( $_GET['f'] );
-        $ts         = isset( $_GET['ts'] ) ? intval( $_GET['ts'] ) : 0;
-        $token      = isset( $_GET['eme_ctoken'] ) ? sanitize_text_field( wp_unslash( $_GET['eme_ctoken'] ) ) : '';
+        $ts         = intval( $_GET['ts'] ?? 0 );
+        $token      = sanitize_text_field( wp_unslash( $_GET['eme_ctoken'] ?? '' ) );
         $ttl        = apply_filters( 'eme_captcha_token_ttl', 600 );
         //$rate_limit = apply_filters( 'eme_captcha_rate_limit', 10 );
 

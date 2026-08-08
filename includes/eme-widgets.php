@@ -24,7 +24,7 @@ class WP_Widget_eme_list extends WP_Widget {
 		//$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Events','eme' ) : $instance['title'], $instance, $this->id_base);
 		//$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$title                = apply_filters( 'widget_title', $instance['title'] );
-		$limit                = isset( $instance['limit'] ) ? intval( $instance['limit'] ) : 5;
+		$limit                = intval( $instance['limit'] ?? 5 );
 		$scope                = empty( $instance['scope'] ) ? 'future' : $instance['scope'];
 		$showperiod           = empty( $instance['showperiod'] ) ? '' : $instance['showperiod'];
 		$show_ongoing         = empty( $instance['show_ongoing'] ) ? false : true;
@@ -41,7 +41,7 @@ class WP_Widget_eme_list extends WP_Widget {
 		} else {
 			$format = $instance['format'];
 		}
-		$format_tpl = isset( $instance['format_tpl'] ) ? intval( $instance['format_tpl'] ) : 0;
+		$format_tpl = intval( $instance['format_tpl'] ?? 0 );
 
 		if ( $instance['authorid'] == -1 ) {
 			$author = '';
@@ -111,9 +111,9 @@ class WP_Widget_eme_list extends WP_Widget {
 				'show_ongoing' => 1,
 			]
 		);
-		$title      = isset( $instance['title'] ) ? $instance['title'] : '';
-		$format_tpl = isset( $instance['format_tpl'] ) ? $instance['format_tpl'] : 0;
-		$limit      = isset( $instance['limit'] ) ? $instance['limit'] : 5;
+		$title      = $instance['title'] ?? '';
+		$format_tpl = $instance['format_tpl'] ?? 0;
+		$limit      = $instance['limit'] ?? 5;
 		$scope      = empty( $instance['scope'] ) ? 'future' : $instance['scope'];
 		$showperiod = empty( $instance['showperiod'] ) ? '' : $instance['showperiod'];
 		if ( isset( $instance['show_ongoing'] ) && ( $instance['show_ongoing'] != false ) ) {
@@ -314,12 +314,12 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	public function form( $instance ) {
 		//Defaults
 		$instance             = wp_parse_args( (array) $instance, [ 'long_events' => 0 ] );
-		$title                = isset( $instance['title'] ) ? $instance['title'] : '';
+		$title                = $instance['title'] ?? '';
 		$category             = empty( $instance['category'] ) ? '' : $instance['category'];
 		$notcategory          = empty( $instance['notcategory'] ) ? '' : $instance['notcategory'];
-		$long_events          = isset( $instance['long_events'] ) ? $instance['long_events'] : false;
-		$authorid             = isset( $instance['authorid'] ) ? $instance['authorid'] : '';
-		$holiday_id           = isset( $instance['holiday_id'] ) ? intval( $instance['holiday_id'] ) : 0;
+		$long_events          = $instance['long_events'] ?? false;
+		$authorid             = $instance['authorid'] ?? '';
+		$holiday_id           = intval( $instance['holiday_id'] ?? 0 );
 		$categories           = eme_get_categories();
 		$holidays_array_by_id = eme_get_holidays_array_by_id();
 		$option_categories    = [];

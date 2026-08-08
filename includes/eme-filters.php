@@ -157,10 +157,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$scope_post_name           = 'eme_scope_filter';
 	$customfield_post_name     = 'eme_customfield_filter';
 
-	$selected_scope    = isset( $_REQUEST[ $scope_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $scope_post_name ] ) : '';
-	$selected_location = isset( $_REQUEST[ $loc_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $loc_post_name ] ) : 0;
-	$selected_city     = isset( $_REQUEST[ $city_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $city_post_name ] ) : 0;
-	$selected_country  = isset( $_REQUEST[ $country_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $country_post_name ] ) : 0;
+	$selected_scope    = eme_sanitize_request( $_REQUEST[ $scope_post_name ] ?? '' );
+	$selected_location = eme_sanitize_request( $_REQUEST[ $loc_post_name ] ?? 0 );
+	$selected_city     = eme_sanitize_request( $_REQUEST[ $city_post_name ] ?? 0 );
+	$selected_country  = eme_sanitize_request( $_REQUEST[ $country_post_name ] ?? 0 );
 	$selected_category = 0;
 	if (isset( $_REQUEST[ $cat_post_name ] )) {
 		$val = eme_sanitize_request( $_REQUEST[ $cat_post_name ] );
@@ -173,8 +173,8 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			}
 		}
 	}
-	$selected_author   = isset( $_REQUEST[ $author_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $author_post_name ] ) : 0;
-	$selected_contact  = isset( $_REQUEST[ $contact_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $contact_post_name ] ) : 0;
+	$selected_author   = eme_sanitize_request( $_REQUEST[ $author_post_name ] ?? 0 );
+	$selected_contact  = eme_sanitize_request( $_REQUEST[ $contact_post_name ] ?? 0 );
 
     $extra_conditions_arr = [];
     if ( $category != '' ) {
@@ -434,7 +434,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$exclude = substr( $matches[2], 1, -1 );
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
-				if ( eme_is_numeric_array( $exclude_arr ) ) {
+				if ( eme_is_integer_array( $exclude_arr ) ) {
 					$args['exclude'] = $exclude_arr;
 				}
 			}
@@ -463,7 +463,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$exclude = substr( $matches[2], 1, -1 );
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
-				if ( eme_is_numeric_array( $exclude_arr ) ) {
+				if ( eme_is_integer_array( $exclude_arr ) ) {
 					$args['exclude'] = $exclude_arr;
 				}
 			}

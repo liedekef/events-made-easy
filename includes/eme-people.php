@@ -64,7 +64,7 @@ function eme_people_page() {
 
     // CANCEL action (Cancel button pushed while editing a person or group)
     if ( isset( $_POST['eme_cancel_button'] ) ) {
-        $eme_current_tab = isset( $_POST['eme_current_tab'] ) ? eme_sanitize_request( $_POST['eme_current_tab'] ) : 'tab-people';
+        $eme_current_tab = eme_sanitize_request( $_POST['eme_current_tab'] ?? 'tab-people' );
         if ( ! in_array( $eme_current_tab, [ 'tab-people', 'tab-groups' ], true ) ) {
             $eme_current_tab = 'tab-people';
         }
@@ -2207,7 +2207,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
     $members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
     // trim the search_person param too
-    $search_person = isset( $search_terms['search_person'] ) ? $search_terms['search_person'] : '';
+    $search_person = $search_terms['search_person'] ?? '';
 
     // if the person is not allowed to manage all people, show only himself
     if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -2228,7 +2228,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
         $where_arr[] = $wpdb->prepare( '(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)', $like, $like, $like);
     }
     $usergroup_join = '';
-    if ( ! empty( $search_terms['search_groups'] ) && eme_is_numeric_array( $search_terms['search_groups'] ) ) {
+    if ( ! empty( $search_terms['search_groups'] ) && eme_is_integer_array( $search_terms['search_groups'] ) ) {
         $search_groups_int = array_map( 'intval', $search_terms['search_groups'] );
         $placeholders      = implode( ',', array_fill( 0, count( $search_groups_int ), '%d' ) );
         $where_arr[]       = $wpdb->prepare( "ugroups.group_id IN ($placeholders)", ...$search_groups_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -2249,14 +2249,14 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
         }
     }
     $member_join = '';
-    if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
+    if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_integer_array( $search_terms['search_membershipids'] ) ) {
         $ids_arr_int  = array_map('intval', $search_terms['search_membershipids']);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $where_arr[]  = $wpdb->prepare( "members.membership_id IN ($placeholders)", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $member_join  = "INNER JOIN $members_table AS members ON people.person_id=members.person_id";
     }
     // search_status can be 0 too, for pending
-    if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_numeric_array( $search_terms['search_memberstatus'] ) ) {
+    if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_integer_array( $search_terms['search_memberstatus'] ) ) {
         $ids_arr_int  = array_map('intval', $search_terms['search_memberstatus']);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $where_arr[]  = $wpdb->prepare( "members.status IN ($placeholders)", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -2295,7 +2295,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
         } else  {
             $search_formfield_sql = $wpdb->prepare(" AND answer LIKE %s", '%'. $wpdb->esc_like($search_terms['search_customfields']) .'%' );
         }
-        if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
+        if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_integer_array( $search_terms['search_customfieldids'] ) ) {
             $ids_arr_int = array_map('intval', $search_terms['search_customfieldids']);
             $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
             $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -3505,7 +3505,7 @@ function eme_get_static_groups() {
 function eme_groups_exists( $ids_arr ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-    if ( eme_is_numeric_array( $ids_arr ) ) {
+    if ( eme_is_integer_array( $ids_arr ) ) {
         $ids_arr_int = array_map('intval', $ids_arr);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $prepared_sql = $wpdb->prepare("SELECT DISTINCT group_id FROM $table WHERE group_id IN ($placeholders)", ...$ids_arr_int); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -3722,7 +3722,7 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
     $where       = '';
     $where_arr   = [];
     $where_arr[] = 'status=' . EME_PEOPLE_STATUS_ACTIVE;
-    if ( ! empty( $person_ids ) && eme_is_numeric_array( $person_ids ) ) {
+    if ( ! empty( $person_ids ) && eme_is_integer_array( $person_ids ) ) {
         $person_ids_int = array_map( 'intval', $person_ids );
         $placeholders   = implode( ',', array_fill( 0, count( $person_ids_int ), '%d' ) );
         $where_arr[]    = $wpdb->prepare( "person_id IN ($placeholders)", ...$person_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -3843,7 +3843,7 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 
     // for static groups we look at the massmail option, for dynamic groups not
     $res = [];
-    if ( ! empty( $static_groupids ) && eme_is_numeric_array( $static_groupids ) ) {
+    if ( ! empty( $static_groupids ) && eme_is_integer_array( $static_groupids ) ) {
         $ids_list_arr = array_map('intval', $static_groupids);
         $placeholders_sids = implode(',', array_fill(0, count($ids_list_arr), '%d'));
         $prepared_sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d $and_massmail_sql AND people.email<>'' AND ugroups.group_id IN ($placeholders_sids) GROUP BY people.email", array_merge([EME_PEOPLE_STATUS_ACTIVE], $ids_list_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -3910,7 +3910,7 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
         $and_extra_sql = ' AND ' . $extra_sql;
     }
 
-    if ( ! empty( $static_groupids ) && eme_is_numeric_array($static_groupids)) {
+    if ( ! empty( $static_groupids ) && eme_is_integer_array($static_groupids)) {
         $ids_list_arr = array_map('intval', $static_groupids);
         $placeholders_sids = implode(',', array_fill(0, count($ids_list_arr), '%d'));
         $sql = $wpdb->prepare( "SELECT people.person_id FROM $people_table AS people LEFT JOIN $usergroups_table as ug ON people.person_id=ug.person_id WHERE people.status=%d AND ug.group_id IN ($placeholders_sids) $and_extra_sql", array_merge([EME_PEOPLE_STATUS_ACTIVE], $ids_list_arr)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -4276,8 +4276,8 @@ function eme_add_update_group( $group_id = 0 ) {
     if ( isset( $_POST['description'] ) ) {
         $group['description'] = eme_sanitize_request( $_POST['description'] );
     }
-    $group['public'] = isset( $_POST['public'] ) ? intval( $_POST['public'] ) : 0;
-    $group['type'] = isset( $_POST['group_type'] ) ? eme_sanitize_request( $_POST['group_type'] ) : 'static';
+    $group['public'] = intval( $_POST['public'] ?? 0 );
+    $group['type'] = eme_sanitize_request( $_POST['group_type'] ?? 'static' );
     $search_terms    = [];
     $search_fields   = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
     foreach ( $search_fields as $search_field ) {
@@ -4931,12 +4931,12 @@ function eme_subscribe_ajax() {
     // verify captchas
     $captcha_res = eme_check_captcha();
 
-    $eme_lastname  = isset( $_POST['lastname'] ) ? eme_sanitize_request( $_POST['lastname'] ) : '';
-    $eme_firstname = isset( $_POST['firstname'] ) ? eme_sanitize_request( $_POST['firstname'] ) : '';
+    $eme_lastname  = eme_sanitize_request( $_POST['lastname'] ?? '' );
+    $eme_firstname = eme_sanitize_request( $_POST['firstname'] ?? '' );
     $eme_email     = eme_sanitize_email( $_POST['email'] );
     if ( eme_is_email_frontend( $eme_email ) ) {
         eme_captcha_remove ( $captcha_res );
-        if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
+        if ( isset( $_POST['email_groups'] ) && eme_is_integer_array( $_POST['email_groups'] ) ) {
             $eme_email_groups = join( ',', array_map( 'intval', $_POST['email_groups'] ) );
         } elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
             $eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
@@ -5021,7 +5021,7 @@ function eme_unsubscribe_ajax() {
     $eme_email = eme_sanitize_email( $_POST['email'] );
     if ( eme_is_email_frontend( $eme_email ) ) {
         eme_captcha_remove ( $captcha_res );
-        if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
+        if ( isset( $_POST['email_groups'] ) && eme_is_integer_array( $_POST['email_groups'] ) ) {
             $eme_email_groups = join( ',', array_map( 'intval', $_POST['email_groups'] ) );
         } elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
             $eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
@@ -5263,7 +5263,7 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
     }
     // verify $exclude_personids some more
     $exclude_personids_arr = explode( ',', $exclude_personids );
-    if ( ! eme_is_numeric_array( $exclude_personids_arr ) ) {
+    if ( ! eme_is_integer_array( $exclude_personids_arr ) ) {
         $exclude_personids = '';
     }
 
@@ -5526,7 +5526,7 @@ function eme_ajax_groups_list() {
                 }
             }
         } else {
-            $record['groupcount'] = isset( $groupcount[ $group['group_id'] ] ) ? intval($groupcount[ $group['group_id'] ]) : 0;
+            $record['groupcount'] = intval( $groupcount[ $group['group_id'] ] ?? 0 );
         }
         $records[] = $record;
     }
@@ -5552,10 +5552,10 @@ function eme_ajax_chooseperson_snapselect() {
         wp_die();
     }
 
-    $q        = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $q        = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
+    $pagesize = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
-    $page     = isset( $_REQUEST['page'] )     ? max( 1, intval( $_REQUEST['page'] ) ) : 1;
+    $page     = max( 1, intval( $_REQUEST['page'] ?? 1 ) );
     $start    = ( $page - 1 ) * $pagesize;
 
     if (!empty($q)) {
@@ -5568,7 +5568,7 @@ function eme_ajax_chooseperson_snapselect() {
     if ( ! empty( $_REQUEST['exclude_personids'] ) ) {
         $exclude_personids     = eme_sanitize_request( $_REQUEST['exclude_personids'] );
         $exclude_personids_arr = explode( ',', $exclude_personids );
-        if ( eme_is_numeric_array( $exclude_personids_arr ) ) {
+        if ( eme_is_integer_array( $exclude_personids_arr ) ) {
             $exc_ids      = array_map( 'intval', $exclude_personids_arr );
             $exc_ph       = implode( ',', array_fill( 0, count( $exc_ids ), '%d' ) );
             $where .= $wpdb->prepare( " AND person_id NOT IN ($exc_ph)", ...$exc_ids ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -5605,8 +5605,8 @@ function eme_ajax_wpuser_snapselect() {
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
         wp_die();
     }
-    $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize     = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $q            = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
+    $pagesize     = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
     $start        = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
@@ -5634,14 +5634,14 @@ function eme_ajax_wpuser_snapselect_exclude_linked() {
     if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
         wp_die();
     }
-    $q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-    $pagesize     = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 20;
+    $q            = strtolower( eme_sanitize_request( $_REQUEST['q'] ?? '' ) );
+    $pagesize     = intval( $_REQUEST['pagesize'] ?? 20 );
     $mysql_pagesize = $pagesize+1;
     $start        = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
 
     // Exclude wp_ids already linked to another person; pass the current person's wp_id
     // so that their own linked user stays available for (re-)selection.
-    $person_wpid  = isset( $_REQUEST['person_wpid'] ) ? intval( $_REQUEST['person_wpid'] ) : 0;
+    $person_wpid  = intval( $_REQUEST['person_wpid'] ?? 0 );
     $used_wp_ids   = eme_get_used_wpids( $person_wpid );
 
     $records  = [];
@@ -5703,7 +5703,7 @@ function eme_ajax_manage_people() {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         $ids       = eme_sanitize_request( $_POST['person_id'] );
         $ids_arr   = explode( ',', $ids );
-        if ( ! eme_is_numeric_array( $ids_arr ) ) {
+        if ( ! eme_is_integer_array( $ids_arr ) ) {
             $ajaxResult['Result']  = 'ERROR';
             $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
             print wp_json_encode( $ajaxResult );
@@ -5776,12 +5776,12 @@ function eme_ajax_manage_people() {
             break;
         case 'addToGroup':
             header( 'Content-type: application/json; charset=utf-8' );
-            $group_id = ( isset( $_POST['addtogroup'] ) ) ? intval( $_POST['addtogroup'] ) : 0;
+            $group_id = intval( $_POST['addtogroup'] ?? 0 );
             eme_ajax_action_add_people_to_group( $ids_arr, $group_id );
             break;
         case 'removeFromGroup':
             header( 'Content-type: application/json; charset=utf-8' );
-            $group_id = ( isset( $_POST['removefromgroup'] ) ) ? intval( $_POST['removefromgroup'] ) : 0;
+            $group_id = intval( $_POST['removefromgroup'] ?? 0 );
             eme_ajax_action_delete_people_from_group( $ids_arr, $group_id );
             break;
         case 'changeLanguage':
@@ -5789,17 +5789,17 @@ function eme_ajax_manage_people() {
             eme_ajax_action_set_people_language( $ids );
             break;
         case 'pdf':
-            $template_id        = ( isset( $_POST['pdf_template'] ) ) ? intval( $_POST['pdf_template'] ) : 0;
-            $template_id_header = ( isset( $_POST['pdf_template_header'] ) ) ? intval( $_POST['pdf_template_header'] ) : 0;
-            $template_id_footer = ( isset( $_POST['pdf_template_footer'] ) ) ? intval( $_POST['pdf_template_footer'] ) : 0;
+            $template_id        = intval( $_POST['pdf_template'] ?? 0 );
+            $template_id_header = intval( $_POST['pdf_template_header'] ?? 0 );
+            $template_id_footer = intval( $_POST['pdf_template_footer'] ?? 0 );
             if ( $template_id ) {
                 eme_ajax_generate_people_pdf( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             }
             break;
         case 'html':
-            $template_id        = ( isset( $_POST['html_template'] ) ) ? intval( $_POST['html_template'] ) : 0;
-            $template_id_header = ( isset( $_POST['html_template_header'] ) ) ? intval( $_POST['html_template_header'] ) : 0;
-            $template_id_footer = ( isset( $_POST['html_template_footer'] ) ) ? intval( $_POST['html_template_footer'] ) : 0;
+            $template_id        = intval( $_POST['html_template'] ?? 0 );
+            $template_id_header = intval( $_POST['html_template_header'] ?? 0 );
+            $template_id_footer = intval( $_POST['html_template_footer'] ?? 0 );
             if ( $template_id ) {
                 eme_ajax_generate_people_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
             }
@@ -5812,22 +5812,19 @@ function eme_ajax_manage_people() {
 function eme_ajax_manage_groups() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
-    if ( isset( $_REQUEST['do_action'] ) ) {
-        $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-        $ids       = eme_sanitize_request( $_REQUEST['group_id'] );
-        $ids_arr   = explode( ',', $ids );
-        if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-            $ajaxResult            = [];
-            $ajaxResult['Result']  = 'ERROR';
-            $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy' ));
-            print wp_json_encode( $ajaxResult );
-            wp_die();
-        }
-        switch ( $do_action ) {
-        case 'deleteGroups':
-            eme_ajax_action_delete_groups( $ids );
-            break;
-        }
+    $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
+    $ids       = eme_sanitize_request( $_REQUEST['group_id'] ?? '' );
+    if ( ! eme_is_list_of_int( $ids ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+        $ajaxResult            = [];
+        $ajaxResult['Result']  = 'ERROR';
+        $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy' ));
+        print wp_json_encode( $ajaxResult );
+        wp_die();
+    }
+    switch ( $do_action ) {
+    case 'deleteGroups':
+        eme_ajax_action_delete_groups( $ids );
+        break;
     }
     wp_die();
 }

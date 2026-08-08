@@ -64,14 +64,14 @@ function eme_client_clock_ajax() {
     }
 
     // Cast client clock values as integers to avoid mathematical errors and set in temporary local variables.
-    $client_unixtime = isset( $_POST['page'] ) ? intval( $_POST['client_unixtime'] ) : 0;
-    $client_seconds  = isset( $_POST['page'] ) ? intval( $_POST['client_seconds'] ) : 0;
-    $client_minutes  = isset( $_POST['page'] ) ? intval( $_POST['client_minutes'] ) : 0;
-    $client_hours    = isset( $_POST['page'] ) ? intval( $_POST['client_hours'] ) : 0;
-    $client_wday     = isset( $_POST['page'] ) ? intval( $_POST['client_wday'] ) : 0;
-    $client_mday     = isset( $_POST['page'] ) ? intval( $_POST['client_mday'] ) : 0;
-    $client_month    = isset( $_POST['client_month'] ) ? intval( $_POST['client_month'] ) : 0;
-    $client_fullyear = isset( $_POST['client_fullyear'] ) ? intval( $_POST['client_fullyear'] ) : 0;
+    $client_unixtime = intval( $_POST['client_unixtime'] ?? 0 );
+    $client_seconds  = intval( $_POST['client_seconds'] ?? 0 );
+    $client_minutes  = intval( $_POST['client_minutes'] ?? 0 );
+    $client_hours    = intval( $_POST['client_hours'] ?? 0 );
+    $client_wday     = intval( $_POST['client_wday'] ?? 0 );
+    $client_mday     = intval( $_POST['client_mday'] ?? 0 );
+    $client_month    = intval( $_POST['client_month'] ?? 0 );
+    $client_fullyear = intval( $_POST['client_fullyear'] ?? 0 );
 
     // Client clock sanity tests
     if ( abs( $client_unixtime - $client_timeinfo['eme_client_unixtime'] ) > 300 ) {
@@ -2233,7 +2233,7 @@ function eme_dyndata_people_ajax() {
         $files   = [];
     }
 
-    if ( isset( $_POST['groups'] ) && eme_is_numeric_array( $_POST['groups'] ) ) {
+    if ( isset( $_POST['groups'] ) && eme_is_integer_array( $_POST['groups'] ) ) {
         $groups = eme_sanitize_request( $_POST['groups'] );
     } else {
         $groups = [];
@@ -3323,8 +3323,8 @@ function eme_ajax_record_list( $tablename, $cap ) {
     $table        = EME_DB_PREFIX . $tablename;
     $fTableResult = [];
     // The toolbar search input
-    $q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
-    $opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
+    $q           = eme_sanitize_request( $_REQUEST['q'] ?? '' );
+    $opt         = eme_sanitize_request( $_REQUEST['opt'] ?? '' );
     $where       = '';
     $where_array = [];
     if ( $q ) {
@@ -3381,7 +3381,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
         $ids_string = eme_sanitize_request( $_POST[ $postvar ] );
         $ids_arr = explode( ',', $ids_string );
 
-        if ( eme_is_numeric_array( $ids_arr ) ) {
+        if ( eme_is_integer_array( $ids_arr ) ) {
             // Convert all IDs to integers
             $ids_arr_int = array_map( 'intval', $ids_arr );
             $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );

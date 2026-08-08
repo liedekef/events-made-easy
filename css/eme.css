@@ -840,3 +840,13 @@ a.nav-tab {
 .eme_cleanup_hr {
     border: 1px solid grey;
 }
+
+/* for the spinner */
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

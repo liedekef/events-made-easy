@@ -466,7 +466,7 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
         const span = form.querySelector(sel);
         if (span) {
             found = true;
-            span.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+            span.innerHTML = '<span class="spinner">⟳</span>';
             alldata.set('action', action);
             alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -503,7 +503,7 @@ function eme_dynamic_data_json(form_id, isBooking = true) {
     const dataDiv = form.querySelector(dataDivSel);
 
     if (dataDiv) {
-        dataDiv.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+        dataDiv.innerHTML = '<span class="spinner">⟳</span>';
         alldata.set('action', action);
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -535,7 +535,7 @@ function eme_dynamic_familymemberdata_json(form_id) {
     const dataDiv = form.querySelector('div#eme_dyndata_family');
 
     if (dataDiv) {
-        dataDiv.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+        dataDiv.innerHTML = '<span class="spinner">⟳</span>';
         alldata.set('action', 'eme_dyndata_familymember');
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -601,7 +601,7 @@ function attachCalendarHandlers() {
     EME.$$('a.eme-cal-prev-month, a.eme-cal-next-month').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            this.innerHTML = '<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">';
+            this.innerHTML = '<span class="spinner">⟳</span>';
             loadCalendar(
                 this.dataset.calendar_divid,
                 this.dataset.full,

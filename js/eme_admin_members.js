@@ -69,22 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     action: 'eme_manage_memberships',
                     lang: emeadmin.translate_locale,
                     eme_admin_nonce: emeadmin.translate_adminnonce
-                }),
-                handlers: {
-                    showMembershipStats: async ({ ids }) => {
-                        const formData = new FormData();
-                        formData.append('membership_id', ids.join(','));
-                        formData.append('action', 'eme_manage_memberships');
-                        formData.append('do_action', 'showMembershipStats');
-                        formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-                        try {
-                            const data = await FTableHttpClient.post(ajaxurl, formData);
-                            eme_show_ftable_bulk_result(MembershipsTable, data);
-                        } catch (error) {
-                            MembershipsTable.showError(emeadmin.translate_problem);
-                        }
-                    }
-                }
+                })
             },
             bulkActionComplete: ({ data }) => {
                 eme_show_ftable_bulk_result(MembershipsTable, data);

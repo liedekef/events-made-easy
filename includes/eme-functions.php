@@ -4432,6 +4432,9 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
     return $attributes;
 }
 
+function eme_message_div($message) {
+    return "<div><p>" .$message.'</p></div>';
+}
 function eme_message_ok_div($message) {
     return "<div class='notice notice-success eme-message-admin'><p>" .$message.'</p></div>';
 }

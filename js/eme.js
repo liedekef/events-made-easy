@@ -559,10 +559,10 @@ function eme_dynamic_familymemberdata_json(form_id) {
 
 // Calendar navigation
 function loadCalendar(
-    tableDiv, fullcalendar = 0, htmltable, htmldiv, showlong_events = 0,
-    month = 0, year = 0, cat_chosen = '', author_chosen = '', contact_person_chosen = '',
+    tableDiv, fullcalendar = 0, htmltable, htmldiv, showlong_events = 0, month = 0,
+    year = 0, cat_chosen = '', author_chosen = '', contact_person_chosen = '',
     location_chosen = '', not_cat_chosen = '', template_chosen = 0, holiday_chosen = 0,
-    weekdays = '', language = ''
+    weekdays = ''
 ) {
     const formData = new FormData();
     formData.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
@@ -581,7 +581,6 @@ function loadCalendar(
     formData.append('template_id', template_chosen);
     formData.append('holiday_id', holiday_chosen);
     formData.append('weekdays', weekdays);
-    formData.append('lang', language);
 
     fetch(emebasic.translate_ajax_url, {
         method: 'POST',
@@ -618,8 +617,7 @@ function attachCalendarHandlers() {
                 this.dataset.notcategory,
                 this.dataset.template_id,
                 this.dataset.holiday_id,
-                this.dataset.weekdays,
-                this.dataset.language
+                this.dataset.weekdays
             );
         });
     });

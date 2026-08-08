@@ -5910,7 +5910,7 @@ function eme_ajax_action_set_nobdemail_people( $ids ) {
 
 function eme_ajax_action_set_people_language( $ids ) {
     $ajaxResult = [];
-    $lang       = eme_sanitize_request( $_POST['language'] );
+    $lang       = eme_sanitize_request( $_POST['language'] ?? '' );
     eme_update_people_language( $ids, $lang );
     $ajaxResult['Result']      = 'OK';
     $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Language updated.', 'events-made-easy' ));

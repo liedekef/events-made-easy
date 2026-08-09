@@ -24,19 +24,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // addToGroup / removeFromGroup post person ids to the people handler, so they
     // can't use the booking-oriented default bulkActions flow.
-    async function eme_rsvp_bulk_people_action(doAction, selectedRows, table) {
+    function eme_rsvp_bulk_people_action(doAction, selectedRows, table) {
         const personIds = selectedRows.map(row => row.recordData.person_id).join(',');
-        const result = await FTableHttpClient.post(ajaxurl, {
+        eme_postJSON(ajaxurl, new URLSearchParams({
             action: 'eme_manage_people',
             person_id: personIds,
             do_action: doAction,
             addtogroup: EME.$('#addtogroup')?.value || '',
             removefromgroup: EME.$('#removefromgroup')?.value || '',
             eme_admin_nonce: emeadmin.translate_adminnonce
+        }), (result) => {
+            table.reload();
+            eme_show_ftable_bulk_result(table, result);
         });
-        table.clearListCache();
-        table.reload();
-        eme_show_ftable_bulk_result(table, result);
     }
 
     // --- Initialize Bookings Table ---
@@ -224,33 +224,23 @@ document.addEventListener('DOMContentLoaded', function () {
                             const idsjoined = ids.join(',');
 
                             const button = EME.$('.eme_ftable_button_for_pending_only .ftable-toolbar-item-text');
+                            const origTextContent = button ? button.textContent : null;
                             if (button) button.textContent = emeadmin.translate_pleasewait;
 
-                            fetch(ajaxurl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                body: new URLSearchParams({
-                                    'booking_ids': idsjoined,
-                                    'action': 'eme_manage_bookings',
-                                    'do_action': 'markpaidandapprove',
-                                    'eme_admin_nonce': emeadmin.translate_adminnonce,
-                                    'lang': emeadmin.translate_locale
-                                })
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    eme_show_ftable_bulk_result(BookingsTable, data);
-                                    BookingsTable.reload();
-                                })
-                                .catch(error => {
-                                    console.error('AJAX error:', error);
-                                    BookingsTable.reload();
-                                })
-                                .finally(() => {
-                                    if (button) button.textContent = emeadmin.translate_markpaidandapprove;
-                                });
+                            eme_postJSON(ajaxurl, new URLSearchParams({
+                                'booking_ids': idsjoined,
+                                'action': 'eme_manage_bookings',
+                                'do_action': 'markpaidandapprove',
+                                'eme_admin_nonce': emeadmin.translate_adminnonce,
+                                'lang': emeadmin.translate_locale
+                            }), (data) => {
+                                eme_show_ftable_bulk_result(BookingsTable, data);
+                                BookingsTable.reload();
+                            }, () => {
+                                BookingsTable.reload();
+                            }, () => {
+                                if (button) button.textContent = origTextContent;
+                            });
                         }
                     },
                     {
@@ -264,33 +254,23 @@ document.addEventListener('DOMContentLoaded', function () {
                             const idsjoined = ids.join();
 
                             const button = EME.$('.eme_ftable_button_for_approved_only .ftable-toolbar-item-text');
+                            const origTextContent = button ? button.textContent : null;
                             if (button) button.textContent = emeadmin.translate_pleasewait;
 
-                            fetch(ajaxurl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                body: new URLSearchParams({
-                                    'booking_ids': idsjoined,
-                                    'action': 'eme_manage_bookings',
-                                    'do_action': 'markPaid',
-                                    'eme_admin_nonce': emeadmin.translate_adminnonce,
-                                    'lang': emeadmin.translate_locale
-                                })
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    eme_show_ftable_bulk_result(BookingsTable, data);
-                                    BookingsTable.reload();
-                                })
-                                .catch(error => {
-                                    console.error('AJAX error:', error);
-                                    BookingsTable.reload();
-                                })
-                                .finally(() => {
-                                    if (button) button.textContent = emeadmin.translate_markpaid;
-                                });
+                            eme_postJSON(ajaxurl, new URLSearchParams({
+                                'booking_ids': idsjoined,
+                                'action': 'eme_manage_bookings',
+                                'do_action': 'markPaid',
+                                'eme_admin_nonce': emeadmin.translate_adminnonce,
+                                'lang': emeadmin.translate_locale
+                            }), (data) => {
+                                eme_show_ftable_bulk_result(BookingsTable, data);
+                                BookingsTable.reload();
+                            }, () => {
+                                BookingsTable.reload();
+                            }, () => {
+                                if (button) button.textContent = origTextContent;
+                            });
                         }
                     }
                 ]
@@ -342,19 +322,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     }),
                     addToGroup: ({ doAction, selectedRows, table }) => eme_rsvp_bulk_people_action(doAction, selectedRows, table),
                     removeFromGroup: ({ doAction, selectedRows, table }) => eme_rsvp_bulk_people_action(doAction, selectedRows, table),
-                    partialPayment: async ({ doAction, ids, selectedRows, table }) => {
+                    partialPayment: ({ doAction, ids, selectedRows, table }) => {
                         if (selectedRows.length > 1) {
                             alert(emeadmin.translate_selectonerowonlyforpartial);
                             return;
                         }
-                        const result = await FTableHttpClient.post(ajaxurl, {
+                        eme_postJSON(ajaxurl, new URLSearchParams({
                             booking_ids: ids.join(','),
                             do_action: doAction,
                             ...eme_rsvp_bulk_extra_data()
+                        }), (result) => {
+                            table.reload();
+                            eme_show_ftable_bulk_result(table, result);
                         });
-                        table.clearListCache();
-                        table.reload();
-                        eme_show_ftable_bulk_result(table, result);
                     }
                 }
             },

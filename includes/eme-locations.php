@@ -2891,9 +2891,23 @@ function eme_events_in_location_list( $location, $scope = 'future', $order = 'AS
 
 // API function, leave it as is
 function eme_locations_search_ajax() {
-    if ( !empty( $_GET['id'] ) ) {
-        header( 'Content-type: application/json; charset=utf-8' );
-        $item   = eme_get_location( intval( $_GET['id'] ) );
+    eme_ajax_locations_autocomplete( 1 );
+}
+
+function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
+    header( 'Content-type: application/json; charset=utf-8' );
+    if ( $no_wp_die == 0 ) {
+        if ( ( ! isset( $_REQUEST['eme_admin_nonce'] ) && ! isset( $_REQUEST['eme_frontend_nonce'] ) ) ||
+            ( isset( $_REQUEST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' ) ) ||
+            ( isset( $_REQUEST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+            wp_die();
+        }
+    }
+
+    // Single-location lookup by id (used e.g. by the location-select dropdown to
+    // repopulate the address/lat/long fields for the chosen location).
+    if ( isset( $_REQUEST['id'] ) ) {
+        $item = eme_get_location( intval( $_REQUEST['id'] ) );
         if ( empty( $item ) ) {
             echo wp_json_encode( [] );
         } else {
@@ -2913,20 +2927,12 @@ function eme_locations_search_ajax() {
             $record['location_url'] = esc_html( eme_translate( $item['location_url'] ) );
             echo wp_json_encode( $record );
         }
-    } else {
-        eme_ajax_locations_autocomplete( 1 );
-    }
-}
-
-function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
-    header( 'Content-type: application/json; charset=utf-8' );
-    if ( $no_wp_die == 0 ) {
-        if ( ( ! isset( $_REQUEST['eme_admin_nonce'] ) && ! isset( $_REQUEST['eme_frontend_nonce'] ) ) ||
-            ( isset( $_REQUEST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' ) ) ||
-            ( isset( $_REQUEST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+        if ( ! $no_wp_die ) {
             wp_die();
         }
+        return;
     }
+
     $res = [];
     if ( ! isset( $_REQUEST['name'] ) ) {
         echo wp_json_encode( $res );

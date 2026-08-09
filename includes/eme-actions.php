@@ -152,11 +152,6 @@ function eme_actions_init() {
 
     if ( isset( $_GET['eme_admin_action'] ) && $eme_is_admin_request ) {
         switch ( $_GET['eme_admin_action'] ) {
-            case 'autocomplete_locations':
-                check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-                $no_wp_die = 1;
-                eme_locations_search_ajax( $no_wp_die );
-                exit;
             case 'booking_printable':
                 // accessible from backend and frontend, so we use wp_verify_nonce
                 $nonce = $_GET['eme_admin_nonce'] ?? '';

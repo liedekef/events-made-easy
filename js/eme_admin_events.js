@@ -556,30 +556,26 @@ document.addEventListener('DOMContentLoaded', function () {
             const locationSelect = EME.$('#location-select-id');
             if (locationSelect) {
                 locationSelect.addEventListener('change', function() {
-                    const formData = new URLSearchParams({
-                        eme_admin_action: 'autocomplete_locations',
-                        eme_admin_nonce: emeadmin.translate_adminnonce,
-                        lang: emeadmin.translate_locale,
-                        id: this.value
-                    });
+                    const formData = new FormData();
+                    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+                    formData.append('id', this.value);
+                    formData.append('action', 'eme_autocomplete_locations');
 
-                    fetch(window.location.href + '?' + formData.toString())
-                        .then(response => response.json())
-                        .then(item => {
-                            EME.$('input[name="location-select-name"]').value = item.name;
-                            EME.$('input[name="location-select-address1"]').value = item.address1;
-                            EME.$('input[name="location-select-address2"]').value = item.address2;
-                            EME.$('input[name="location-select-city"]').value = item.city;
-                            EME.$('input[name="location-select-state"]').value = item.state;
-                            EME.$('input[name="location-select-zip"]').value = item.zip;
-                            EME.$('input[name="location-select-country"]').value = item.country;
-                            EME.$('input[name="location-select-latitude"]').value = item.latitude;
-                            EME.$('input[name="location-select-longitude"]').value = item.longitude;
-                            
-                            if (emeadmin.translate_map_is_active === 'true') {
-                                loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
-                            }
-                        });
+                    eme_postJSON(ajaxurl, formData, (item) => {
+                        EME.$('input[name="location-select-name"]').value = item.name;
+                        EME.$('input[name="location-select-address1"]').value = item.address1;
+                        EME.$('input[name="location-select-address2"]').value = item.address2;
+                        EME.$('input[name="location-select-city"]').value = item.city;
+                        EME.$('input[name="location-select-state"]').value = item.state;
+                        EME.$('input[name="location-select-zip"]').value = item.zip;
+                        EME.$('input[name="location-select-country"]').value = item.country;
+                        EME.$('input[name="location-select-latitude"]').value = item.latitude;
+                        EME.$('input[name="location-select-longitude"]').value = item.longitude;
+
+                        if (emeadmin.translate_map_is_active === 'true') {
+                            loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
+                        }
+                    });
                 });
             }
         }

@@ -7,6 +7,7 @@ use MercadoPago\Client\MercadoPagoClient;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Net\HttpMethod;
 use MercadoPago\Net\MPHttpClient;
+use MercadoPago\Net\MPAutoPaginationGenerator;
 use MercadoPago\Net\MPSearchRequest;
 use MercadoPago\Resources\Payment;
 use MercadoPago\Resources\PaymentSearch;
@@ -70,6 +71,25 @@ final class PaymentClient extends MercadoPagoClient
         return $result;
     }
     /**
+     * Updates an existing payment with arbitrary fields.
+     *
+     * @param int $id Payment ID.
+     * @param array<string,mixed> $request Fields to update (e.g. status, transaction_amount).
+     * @param RequestOptions|null $request_options Per-request configuration overrides.
+     * @return Payment The updated payment resource.
+     * @throws \MercadoPago\Exceptions\MPApiException When the API returns a non-2xx status code.
+     * @throws \Exception On transport-level errors.
+     * @see https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/update-payment/put
+     */
+    public function update(int $id, array $request, ?RequestOptions $request_options = null): Payment
+    {
+        $response = parent::send(sprintf(self::URL_WITH_ID, strval($id)), HttpMethod::PUT, json_encode($request), null, $request_options);
+        $result = Serializer::deserializeFromJson(Payment::class, $response->getContent());
+        $result->setResponse($response);
+        return $result;
+    }
+
+    /**
      * Cancels a pending payment by setting its status to "cancelled".
      *
      * Only payments in "pending" status can be cancelled.
@@ -131,5 +151,21 @@ final class PaymentClient extends MercadoPagoClient
         $result = Serializer::deserializeFromJson(PaymentSearch::class, $response->getContent());
         $result->setResponse($response);
         return $result;
+    }
+
+    /**
+     * Returns a Generator that lazily fetches all pages of payments matching the search criteria.
+     *
+     * @param MPSearchRequest $request Search filters and pagination seed.
+     * @param RequestOptions|null $request_options Per-request overrides.
+     * @return \Generator Yields individual PaymentSearchResult items.
+     */
+    public function searchAll(MPSearchRequest $request, ?RequestOptions $request_options = null): \Generator
+    {
+        return MPAutoPaginationGenerator::of(
+            fn($req, $opts) => $this->search($req, $opts),
+            $request,
+            $request_options
+        );
     }
 }

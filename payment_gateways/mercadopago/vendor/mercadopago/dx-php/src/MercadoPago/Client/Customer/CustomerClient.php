@@ -7,6 +7,7 @@ use MercadoPago\Client\MercadoPagoClient;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Net\HttpMethod;
 use MercadoPago\Net\MPHttpClient;
+use MercadoPago\Net\MPAutoPaginationGenerator;
 use MercadoPago\Net\MPSearchRequest;
 use MercadoPago\Resources\Customer;
 use MercadoPago\Resources\CustomerSearch;
@@ -112,6 +113,22 @@ final class CustomerClient extends MercadoPagoClient
     }
 
     /**
+     * Deletes a customer by ID.
+     *
+     * @param string $id Customer ID.
+     * @param RequestOptions|null $request_options Request options.
+     * @return Customer The deleted customer resource.
+     * @throws \MercadoPago\Exceptions\MPApiException When the API returns a non-2xx status code.
+     */
+    public function delete(string $id, ?RequestOptions $request_options = null): Customer
+    {
+        $response = $this->send("/v1/customers/" . $id, HttpMethod::DELETE, null, null, $request_options);
+        $result = Serializer::deserializeFromJson(Customer::class, $response->getContent());
+        $result->setResponse($response);
+        return $result;
+    }
+
+    /**
      * Searches customers with pagination and filters.
      *
      * @param MPSearchRequest|null $request Search criteria (limit, offset, filters like email).
@@ -128,5 +145,22 @@ final class CustomerClient extends MercadoPagoClient
         $result = Serializer::deserializeFromJson(CustomerSearch::class, $response->getContent());
         $result->setResponse($response);
         return $result;
+    }
+
+    /**
+     * Returns a Generator that lazily fetches all pages of customers matching the search criteria.
+     *
+     * @param MPSearchRequest|null $request Search filters and pagination seed.
+     * @param RequestOptions|null $request_options Per-request overrides.
+     * @return \Generator Yields individual Customer items.
+     */
+    public function searchAll(?MPSearchRequest $request = null, ?RequestOptions $request_options = null): \Generator
+    {
+        $request = $request ?? new MPSearchRequest(100, 0);
+        return MPAutoPaginationGenerator::of(
+            fn($req, $opts) => $this->search($req, $opts),
+            $request,
+            $request_options
+        );
     }
 }

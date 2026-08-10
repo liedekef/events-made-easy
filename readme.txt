@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.3  (2026/08/11) =
+* Bugfix for editing events
+
 = 3.2.2  (2026/08/10) =
 * Allow transfer from booking to other person when editing a booking
 * Permalinks are now activated if WP has them activated, no longer an option on its own

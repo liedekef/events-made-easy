@@ -2589,7 +2589,6 @@ function eme_nl2br_save_html( $string ) {
     if ( empty( $string ) || ! str_contains( $string, "\n" ) ) {
         return $string;
     }
-
     $htmleditor = get_option( 'eme_htmleditor' );
     // If not tinymce and the string already looks like authored HTML,
     // respect it as-is
@@ -2599,20 +2598,29 @@ function eme_nl2br_save_html( $string ) {
         return $string;
     }
     $string = str_replace( [ "\r\n", "\r" ], "\n", $string );
-    $string = wpautop( $string );
-
-    // wpautop's <p> wrapping isn't safe to keep: a blank line inside a
-    // <td>/<strong>/etc. still gets turned into <p>...</p>, which is
-    // invalid nested markup in that context
-    // So we flatten it to <br>-based layout unconditionally
-    $string = preg_replace( '#\s*</p>\s*<p>\s*#', '<br /><br />', $string );
-    $string = preg_replace( '#</?p[^>]*>#', '', $string );
-
-    // Readability: every <br> tag should be followed by a newline
-    $string = preg_replace( '#(<br\s*/?>)(?!\n)#', "$1\n", $string );
-
-    $string = trim( $string );
-
+    // trimmed string empty? turn each newline into a <br> directly
+    if ( trim( $string ) === '' ) {
+        return nl2br( $string );
+    }
+    // we'll handle leading/trailing enters last, saving them here
+    preg_match( '#^\n+#', $string, $m_lead );
+    preg_match( '#\n+$#', $string, $m_trail );
+    $leading  = $m_lead[0] ?? '';
+    $trailing = $m_trail[0] ?? '';
+    $core     = trim( $string, "\n" );
+    if ( $core !== '' ) {
+        $core = wpautop( $core );
+        $core = rtrim( $core, "\n" ); // remove newlines added by wpautop
+        // wpautop's <p> wrapping isn't safe to keep: a blank line inside a
+        // <td>/<strong>/etc. still gets turned into <p>...</p>, which is
+        // invalid nested markup in that context
+        // So we flatten it to <br>-based layout unconditionally
+        $core = preg_replace( '#\s*</p>\s*<p>\s*#', '<br /><br />', $core );
+        $core = preg_replace( '#</?p[^>]*>#', '', $core );
+        // Readability I like: every <br> tag should be followed by a newline
+        $core = preg_replace( '#(<br\s*/?>)(?!\n)#', "$1\n", $core );
+    }
+    $string = nl2br( $leading ) . $core . nl2br( $trailing );
     return $string;
 }
 

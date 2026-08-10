@@ -364,12 +364,13 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
 ?>
     <div class="wrap">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
     <?php if ( $message != '' ) { ?>
-        <div id="message" class="notice is-dismissible eme-message-admin">
+        <div id="message" class="notice notice-success is-dismissible">
         <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
     <?php } ?>
-        <div id="eme-location-changed" class='notice is-dismissible eme-message-admin eme-hidden'>
+        <div id="eme-location-changed" class='notice notice-success is-dismissible eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
         </div>
     <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" class="validate">
@@ -844,7 +845,7 @@ function eme_locations_table( $message = '' ) {
 
         <h1><?php esc_html_e( 'Manage locations', 'events-made-easy' ); ?></h1>
         <?php if ( $message != '' ) { ?>
-            <div id="message" class="updated notice notice-success is-dismissible">
+            <div id="message" class="notice notice-success is-dismissible">
                 <p><?php echo wp_kses_post( $message ); ?></p>
             </div>
         <?php } ?>

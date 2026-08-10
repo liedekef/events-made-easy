@@ -145,7 +145,7 @@ function eme_attendances_table_layout( $message = '' ) {
 
 	if ( $message != '' ) {
 			echo "
-            <div id='message' class='updated notice is-dismissible eme-message-admin'>
+            <div id='message' class='notice notice-success is-dismissible'>
                <p>" . wp_kses_post( $message ) . "</p>
             </div>";
 	}

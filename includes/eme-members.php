@@ -1814,7 +1814,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
             </h1>
 
         <?php if ( $message != '' ) { ?>
-            <div id="message" class="updated notice notice-success is-dismissible">
+            <div id="message" class="notice notice-success is-dismissible">
                 <p><?php echo wp_kses_post( $message ); ?></p>
             </div>
         <?php } ?>
@@ -3178,11 +3178,12 @@ function eme_manage_members_layout( $message ) {
     if ( empty( $message ) ) {
         $style_class = "class='eme-hidden'";
     } else {
-        $style_class = "class='notice is-dismissible eme-message-admin'";
+        $style_class = "class='notice notice-success is-dismissible'";
     }
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
     <div id="members-message" <?php echo $style_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>>
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -3225,9 +3226,10 @@ function eme_manage_memberships_layout( $message ) {
     <div class="wrap nosubsub">
     <div id="poststuff">
 
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
 <?php
     if ( ! empty( $message ) ) {
-        print '<div class="notice is-dismissible eme-message-admin"><p>' . wp_kses_post( $message ) . '</p></div>';
+        print '<div class="notice notice-success is-dismissible"><p>' . wp_kses_post( $message ) . '</p></div>';
     }
 ?>
 

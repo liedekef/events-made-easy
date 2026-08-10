@@ -74,12 +74,10 @@ function eme_import_page() {
 
 	<div class="wrap nosubsub">
 	<div id="poststuff">
-		<div id="import-message" class="updated notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
+		<h1><?php esc_html_e( 'Import/Export Data', 'events-made-easy' ); ?></h1>
+		<div id="import-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
 			<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
-
-		<h1><?php esc_html_e( 'Import/Export Data', 'events-made-easy' ); ?></h1>
-
 		<div class="eme-tabs">
 		<div class="eme-tab" data-tab="tab-import-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>
 		<div class="eme-tab" data-tab="tab-import-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>

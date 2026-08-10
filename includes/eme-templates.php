@@ -163,7 +163,7 @@ function eme_templates_table_layout( $message = '' ) {
          <h1>" . esc_html__( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
-    <div id="templates-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
+    <div id="templates-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 

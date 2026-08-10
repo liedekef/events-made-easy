@@ -291,7 +291,7 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 
 	if ( $message != '' ) {
 		$layout .= "
-      <div id='message' class='updated notice notice-success is-dismissible'>
+      <div id='message' class='notice notice-success is-dismissible'>
          <p>$message</p>
       </div>";
 	}
@@ -357,7 +357,7 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 
 	if ( $message != '' ) {
 		$layout .= "
-      <div id='message' class='updated notice notice-success is-dismissible'>
+      <div id='message' class='notice notice-success is-dismissible'>
          <p>$message</p>
       </div>";
 	}

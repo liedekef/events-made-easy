@@ -515,11 +515,7 @@ function eme_events_page() {
             $recurrence['exclude_days'] = '';
         }
         if ( $recurrence['recurrence_freq'] == 'weekly' ) {
-            if ( isset( $_POST['recurrence_bydays'] ) ) {
-                $recurrence['recurrence_byday'] = implode( ',', eme_sanitize_request( $_POST['recurrence_bydays'] ) );
-            } else {
-                $recurrence['recurrence_byday'] = '';
-            }
+            $recurrence['recurrence_byday'] = implode( ',', eme_sanitize_request( $_POST['recurrence_bydays'] ?? [] ) );
         }
         $recurrence['recurrence_interval'] = isset( $_POST['recurrence_interval'] ) ? eme_sanitize_request( $_POST['recurrence_interval'] ) : 1;
         if ( $recurrence['recurrence_interval'] == 0 ) {
@@ -534,7 +530,7 @@ function eme_events_page() {
             $recurrence['recurrence_byday'] = eme_sanitize_request( $_POST['specific_months_recurrence_byday'] ?? '' );
         }
         $recurrence['holidays_id']         = intval( $_POST['holidays_id'] ?? 0 );
-        $recurrence['specific_months']     = implode(',', eme_sanitize_request( $_POST['specific_months'] ?? '' ));
+        $recurrence['specific_months']     = implode(',', eme_sanitize_request( $_POST['specific_months'] ?? [] ));
 
         // set the location info
         $post_vars = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_url' ];

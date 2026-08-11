@@ -233,7 +233,6 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
 <div class="wrap nosubsub">
 <h1><?php esc_html_e( 'Discount management', 'events-made-easy' ); ?></h1>
 <div id="poststuff">
-    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
 	<div id="discounts-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
 		<p><?php echo wp_kses_post( $message ); ?></p>
 	</div>

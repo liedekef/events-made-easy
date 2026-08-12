@@ -2617,6 +2617,8 @@ function eme_nl2br_save_html( $string ) {
         // So we flatten it to <br>-based layout unconditionally
         $core = preg_replace( '#\s*</p>\s*<p>\s*#', '<br /><br />', $core );
         $core = preg_replace( '#</?p[^>]*>#', '', $core );
+        // no br after a closing </li> or </td>
+        $core = preg_replace( '#(</(?:li|td)>)\s*<br\s*/?>#', '$1', $core );
         // Readability I like: every <br> tag should be followed by a newline
         $core = preg_replace( '#(<br\s*/?>)(?!\n)#', "$1\n", $core );
     }

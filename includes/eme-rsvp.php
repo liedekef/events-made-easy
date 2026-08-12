@@ -5568,6 +5568,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     <option value="userConfirmBooking"><?php esc_html_e( 'Restore booking and mark pending and awaiting user confirmation', 'events-made-easy' ); ?></option>
     <option value="pendingBooking"><?php esc_html_e( 'Restore booking and mark pending', 'events-made-easy' ); ?></option>
     <option value="approveBooking"><?php esc_html_e( 'Restore booking and mark approved', 'events-made-easy' ); ?></option>
+    <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
 <?php } elseif ( $pending ) { ?>
     <option value="approveBooking"><?php esc_html_e( 'Approve booking', 'events-made-easy' ); ?></option>
     <option value="trashBooking"><?php esc_html_e( 'Delete booking (move to trash)', 'events-made-easy' ); ?></option>

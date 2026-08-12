@@ -322,7 +322,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_cal_hide_past_events'                        => 0,
         'eme_cal_show_single'                             => 1,
         'eme_smtp_debug'                                  => 0,
-        'eme_shortcodes_in_widgets'                       => 0,
         'eme_load_js_in_header'                           => 0,
         'eme_use_client_clock'                            => 0,
         'eme_event_list_number_items'                     => 10,
@@ -571,7 +570,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_people_massmail'                             => 0,
         'eme_massmail_popup'                              => 1,
         'eme_massmail_popup_text'                         => __( 'You selected to not receive future emails. Are you sure about this?', 'events-made-easy' ),
-        'eme_add_events_locs_link_search'                 => 1,
         'eme_booking_attach_ids'                          => '',
         'eme_booking_attach_tmpl_ids'                     => [],
         'eme_pending_attach_ids'                          => '',
@@ -588,7 +586,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_full_name_format'                            => '#_FIRSTNAME #_LASTNAME',
         'eme_pdf_font'                                    => 'dejavu sans',
         'eme_frontend_nocache'                            => 0,
-        'eme_use_is_page_for_title'                       => 0,
         'eme_mail_tracking'                               => 0,
         'eme_mail_blacklist'                              => '',
         'eme_imap_bounce_active'                          => 0,
@@ -603,7 +600,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_backend_timeformat'                          => '',
         'eme_check_free_waiting'                          => 0,
         'eme_multisite_active'                            => 0,
-        'eme_rememberme'                                  => 0,
         'eme_htmleditor'                                  => 'tinymce',
         'eme_fs' => [
             'auto_publish' => EME_EVENT_STATUS_PUBLIC,
@@ -1096,6 +1092,10 @@ function eme_update_options( $db_version ) {
         }
         if ( $db_version < 435 ) {
             delete_option( 'eme_seo_permalink' );
+            delete_option( 'eme_add_events_locs_link_search' );
+            delete_option( 'eme_shortcodes_in_widgets' );
+            delete_option( 'eme_use_is_page_for_title' );
+            delete_option( 'eme_rememberme' );
         }
     }
 
@@ -1219,7 +1219,7 @@ function eme_options_register() {
     $options = [];
     $tab     = eme_sanitize_request( $_POST['tab'] ?? 'general' );
     $options = match( $tab ) {
-        'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_members_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_api_key', 'eme_recaptcha_project_id', 'eme_recaptcha_score', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
+        'general' => [ 'eme_use_select_for_locations', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_members_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_api_key', 'eme_recaptcha_project_id', 'eme_recaptcha_score', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache' ],
         'permalink' => [ 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
         'access' => [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_send_generic_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances', 'eme_limit_admin_event_listing' ],
         'events' => [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ],
@@ -1505,7 +1505,6 @@ function eme_options_page() {
 <table class="form-table">
             <?php
                 eme_options_toggle( __( 'Use dropdown for locations?', 'events-made-easy' ), 'eme_use_select_for_locations', __( 'Select yes to select the location from a drop-down menu; location selection will be faster, but you will lose the ability to insert locations with events.', 'events-made-easy' ) . '<br>' . __( 'When the qtranslate plugin is installed and activated, this setting will be ignored and always considered \'Yes\'.', 'events-made-easy' ) );
-                eme_options_toggle( __( 'Add events and locations to WP link search function?', 'events-made-easy' ), 'eme_add_events_locs_link_search', __( 'If selected, events and locations will be shown in the link search when creating links in the WordPress editor.', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use RSVP?', 'events-made-easy' ), 'eme_rsvp_enabled', __( 'Select yes to enable the RSVP feature so people can register for an event and book seats.', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use tasks?', 'events-made-easy' ), 'eme_tasks_enabled', __( 'Select yes to enable the Tasks feature so people can sign up for event tasks (volunteer management).', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use categories?', 'events-made-easy' ), 'eme_categories_enabled', __( 'Select yes to enable the category features.', 'events-made-easy' ) );
@@ -1530,7 +1529,6 @@ function eme_options_page() {
                 eme_options_input_text( __( 'Friendly Captcha site key', 'events-made-easy' ), 'eme_friendlycaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Friendly Captcha API key', 'events-made-easy' ), 'eme_friendlycaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Only use captcha for logged out users?', 'events-made-easy' ), 'eme_captcha_only_logged_out', __( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ) );
-                eme_options_toggle( __( 'Enable Remember-me functionality?', 'events-made-easy' ), 'eme_rememberme', __( 'Check this option to show a checkbox that allows people to choose if they want their lastname/firstname/email stored locallly, to have it prefilled next time. This also requires the use of a #_REMEMBERME placeholder in your form, and only works for not logged-in users in the frontend. If checked, the option "Show the RSVP form again after booking" will be ignored.', 'events-made-easy' ) );
                 eme_options_select(
                     __( 'Autocomplete sources', 'events-made-easy' ),
                     'eme_autocomplete_sources',
@@ -1547,10 +1545,8 @@ function eme_options_page() {
                 );
                 eme_options_toggle( __( 'Delete all stored EME data when upgrading or deactivating?', 'events-made-easy' ), 'eme_uninstall_drop_data', __( 'Check this option if you want to delete all EME data concerning events, bookings, ... when upgrading or deactivating the plugin.', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Delete all EME settings when upgrading or deactivating?', 'events-made-easy' ), 'eme_uninstall_drop_settings', __( 'Check this option if you want to delete all EME settings when upgrading or deactivating the plugin.', 'events-made-easy' ) );
-                eme_options_toggle( __( 'Enable shortcodes in widgets', 'events-made-easy' ), 'eme_shortcodes_in_widgets', __( 'Check this option if you want to enable the use of shortcodes in widgets (affects shortcodes of any plugin used in widgets, so use with care).', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Enable placeholders in event or location notes', 'events-made-easy' ), 'eme_enable_notes_placeholders', __( 'Check this option if you want to enable the use of placeholders in the event or location notes. By default placeholders in notes are not being touched at all so as not to interfere with possible format settings for other shortcodes you can/want to use, so use with care.', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Add nocache headers?', 'events-made-easy' ), 'eme_frontend_nocache', __( 'In the frontend WordPress allows browsers to cache content, but this can cause issues if you have shortcodes that change over time (like events). Checking this option will cause nocache headers to be sent so browsers no longer cache the content (this does not impact browser caching of CSS and JS files).', 'events-made-easy' ) );
-                eme_options_toggle( __( 'Use alternative method to set events page title?', 'events-made-easy' ), 'eme_use_is_page_for_title', __( "A great number of themes doesn't correctly use WordPress standards to set the page title, so this provides an alternative method if the page title is not set to the event title when viewing a single event.", 'events-made-easy' ) );
             ?>
 </table>
 

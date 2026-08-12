@@ -1724,7 +1724,6 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
         return $form_html;
     }
     $wp_id      = 0;
-    $form_class = '';
     if ( $member['person_id'] ) {
         $person = eme_get_person( $member['person_id'] );
         $wp_id  = $person['wp_id'];
@@ -1736,10 +1735,6 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
                 wp_enqueue_script( 'eme-autocomplete-form' );
             }
         }
-        if ( ! is_user_logged_in() && get_option('eme_rememberme')) {
-            wp_enqueue_script( 'eme-rememberme' );
-            $form_class = "class='eme-rememberme'";
-        }
     }
     // to make sure wp_id has a valid value for non-logged users
     if ( ! $wp_id ) {
@@ -1747,7 +1742,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
     }
     if ( ! $from_backend ) {
         $form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-            <div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' class='eme-showifjs eme-hidden'><form name='eme-member-form' id='$form_id' method='post' $form_class action='#'>";
+            <div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' class='eme-showifjs eme-hidden'><form name='eme-member-form' id='$form_id' method='post' action='#'>";
         $form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
         $form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
     }

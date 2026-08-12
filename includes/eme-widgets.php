@@ -4,11 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// enable shortcodes in widgets, if wanted
-if ( get_option( 'eme_shortcodes_in_widgets' ) ) {
-	add_filter( 'widget_text', 'do_shortcode', 11 );
-}
-
 class WP_Widget_eme_list extends WP_Widget {
 
 	public function __construct() {

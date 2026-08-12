@@ -1473,10 +1473,7 @@ add_filter( 'the_content', 'eme_filter_events_page' );
 //}
 //add_filter ( 'the_content', 'eme_filter_wpautop' );
 
-$eme_use_is_page_for_title = get_option( 'eme_use_is_page_for_title' );
 function eme_page_title( $data, $post_id = null ) {
-    global $eme_use_is_page_for_title;
-
     // the following little trick is used to avoid recursion caused by shortcodes. Example:
     // 1. EME sets the filter (so eme_page_title gets called)
     // 2. in the title there is a shortcode (for example shortcoder: sc)
@@ -1496,8 +1493,7 @@ function eme_page_title( $data, $post_id = null ) {
     $events_page_title = $events_page->post_title;
 
     // make sure we only replace the title for the events page, not anything
-    if ( ( $data == $events_page_title ) && eme_is_events_page() &&
-        ( ( ! $eme_use_is_page_for_title && in_the_loop() ) || $eme_use_is_page_for_title ) ) {
+    if ( ( $data == $events_page_title ) && eme_is_events_page() && in_the_loop() ) {
         if ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
             $res = __( 'Attendance check', 'events-made-easy' );
         } elseif ( get_query_var( 'eme_rsvp_confirm' ) && get_query_var( 'eme_pmt_rndid' ) ) {
@@ -1690,24 +1686,6 @@ function eme_html_title( $data ) {
 // we want to prevent html tags in the html header title (if you add html in the 'single event title format', it will show)
 add_filter( 'single_post_title', 'eme_html_title' );
 add_filter( 'the_title', 'eme_page_title', 10, 2 );
-
-if ( $eme_use_is_page_for_title ) {
-    function eme_remove_title_filter_nav_menu( $nav_menu, $args ) {
-        // we are working with menu, so remove the title filter
-        remove_filter( 'the_title', 'eme_page_title', 10, 2 );
-        return $nav_menu;
-    }
-    // this filter fires just before the nav menu item creation process
-    add_filter( 'pre_wp_nav_menu', 'eme_remove_title_filter_nav_menu', 10, 2 );
-
-    function eme_add_title_filter_non_menu( $items, $args ) {
-        // we are done working with menu, so add the title filter back
-        add_filter( 'the_title', 'eme_page_title', 10, 2 );
-        return $items;
-    }
-    // this filter fires after nav menu item creation is done
-    add_filter( 'wp_nav_menu_items', 'eme_add_title_filter_non_menu', 10, 2 );
-}
 
 function eme_post_image_html( $data, $post_id, $post_image_id ) {
     $access_allowed = eme_check_access( $post_id );

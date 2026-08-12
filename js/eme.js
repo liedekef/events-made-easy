@@ -878,6 +878,41 @@ document.addEventListener('DOMContentLoaded', function() {
     eme_attach_dynamic_handlers('[name=eme-member-form]', false);
     eme_attach_dynamic_handlers('#eme-member-adminform', false);
 
+    // Remember-me functionality: only active if a form contains the #_REMEMBERME checkbox
+    const rememberMeForms = EME.$$('form').filter(form => form.querySelector('input#eme_rememberme'));
+    if (rememberMeForms.length) {
+        rememberMeForms.forEach(form => {
+            if (localStorage.getItem('eme_rememberme') == 1) {
+                const checkbox = form.querySelector('input#eme_rememberme');
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            }
+            ['lastname', 'firstname', 'email', 'phone', 'task_lastname', 'task_firstname', 'task_email', 'task_phone'].forEach(fieldName => {
+                const field = form.querySelector(`input[name=${fieldName}]`);
+                if (field && field.value === '') {
+                    field.value = localStorage.getItem('eme_' + fieldName.replace('task_', '')) || '';
+                }
+            });
+            form.addEventListener('submit', function() {
+                const rememberCheckbox = this.querySelector('input#eme_rememberme');
+                if (rememberCheckbox && rememberCheckbox.checked) {
+                    localStorage.setItem('eme_rememberme', 1);
+                    ['lastname', 'firstname', 'email', 'phone', 'task_lastname', 'task_firstname', 'task_email', 'task_phone'].forEach(fieldName => {
+                        const field = this.querySelector(`input[name=${fieldName}]`);
+                        if (field) {
+                            localStorage.setItem('eme_' + fieldName.replace('task_', ''), field.value);
+                        }
+                    });
+                } else {
+                    ['eme_lastname', 'eme_firstname', 'eme_email', 'eme_phone', 'eme_rememberme'].forEach(storageKey => {
+                        localStorage.removeItem(storageKey);
+                    });
+                }
+            });
+        });
+    }
+
     // Person image upload widget
     const personImageButton = document.getElementById('eme_person_image_button');
     if (personImageButton) {

@@ -364,9 +364,8 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
 ?>
     <div class="wrap">
-    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
     <?php if ( $message != '' ) { ?>
-        <div id="message" class="notice notice-success is-dismissible">
+        <div id="message" class="notice notice-success is-dismissible inline">
         <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
     <?php } ?>

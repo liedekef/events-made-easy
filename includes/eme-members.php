@@ -1790,6 +1790,12 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 function eme_membership_edit_layout( $membership, $message = '' ) {
     global $plugin_page;
 
+    if ( empty( $message ) ) {
+        $hidden_class = 'eme-hidden';
+    } else {
+        $hidden_class = '';
+    }
+
     if ( ! isset( $membership['membership_id'] ) ) {
         $is_new_membership = 1;
     } else {
@@ -1806,14 +1812,11 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
         printf( esc_html__( "Edit membership '%s'", 'events-made-easy' ), esc_html( $membership['name'] ) );
     }
 ?>
-            </h1>
+        </h1>
 
-        <?php if ( $message != '' ) { ?>
-            <div id="message" class="notice notice-success is-dismissible">
-                <p><?php echo wp_kses_post( $message ); ?></p>
-            </div>
-        <?php } ?>
-
+        <div id="message" class="notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+            <p><?php echo wp_kses_post( $message ); ?></p>
+        </div>
 
         <div id="ajax-response"></div>
         <form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"  enctype="multipart/form-data" class="validate">
@@ -3171,15 +3174,14 @@ function eme_manage_members_layout( $message ) {
     $memberships     = eme_get_memberships();
 
     if ( empty( $message ) ) {
-        $style_class = "class='eme-hidden'";
+        $hidden_class = 'eme-hidden';
     } else {
-        $style_class = "class='notice notice-success is-dismissible'";
+        $hidden_class = '';
     }
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
-    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
-    <div id="members-message" <?php echo $style_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>>
+    <div id="members-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
 
@@ -3221,10 +3223,9 @@ function eme_manage_memberships_layout( $message ) {
     <div class="wrap nosubsub">
     <div id="poststuff">
 
-    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any notices to, these are rendered by WP js below the first h1 -->
 <?php
     if ( ! empty( $message ) ) {
-        print '<div class="notice notice-success is-dismissible"><p>' . wp_kses_post( $message ) . '</p></div>';
+        print '<div class="notice notice-success is-dismissible inline"><p>' . wp_kses_post( $message ) . '</p></div>';
     }
 ?>
 

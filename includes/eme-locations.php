@@ -166,9 +166,9 @@ function eme_locations_page() {
                     if ( $new_location_id ) {
                         eme_location_store_answers( $new_location_id );
                         eme_upload_files( $new_location_id, 'locations' );
-                        $new_location = eme_get_location( $new_location_id );
                         $message      = __( 'The location has been added.', 'events-made-easy' );
                         if ( get_option( 'eme_stay_on_edit_page' ) ) {
+                            $new_location = eme_get_location( $new_location_id );
                             eme_locations_edit_layout( $new_location, $message );
                             return;
                         }
@@ -181,7 +181,7 @@ function eme_locations_page() {
                         eme_upload_files( $location_id, 'locations' );
                         $message = __( 'The location has been updated.', 'events-made-easy' );
                         if ( get_option( 'eme_stay_on_edit_page' ) ) {
-                            // for edit, we need a location id
+                            // for edit, we need a location
                             $location = eme_get_location( $location_id );
                             eme_locations_edit_layout( $location, $message );
                             return;
@@ -369,9 +369,9 @@ function eme_locations_edit_layout( $location, $message = '' ) {
         <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
     <?php } ?>
-        <div id="eme-location-changed" class='notice notice-success is-dismissible eme-hidden'>
+    <div id="eme-location-changed" class='notice notice-success is-dismissible eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
-        </div>
+    </div>
     <form enctype="multipart/form-data" name="locationForm" id="locationForm" autocomplete="off" method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" class="validate">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <?php if ( $action == 'add' ) { ?>

@@ -3,7 +3,7 @@ Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 3.2.3
 Requires PHP: 8.1
 License: GPLv2 or later
@@ -99,6 +99,12 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.4  (2026/08/13) =
+* Refactored "Remember Me" functionality: now works automatically when #_REMEMBERME is present; no option needed.
+* Removed eme_use_is_page_for_title option; title filter now always uses standard WordPress behavior (add filter 'eme_use_is_page_for_title' to restore old behavior).
+* Fixed admin notice CSS class inconsistencies.
+* Added "Send generic email" bulk action to trashed bookings.
+
 = 3.2.3  (2026/08/11) =
 * Bugfix for editing events
 

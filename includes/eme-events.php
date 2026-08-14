@@ -6158,6 +6158,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 
 <div class="wrap nosubsub">
 <div id="poststuff">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <div id="events-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -6443,6 +6444,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
 ?>
     <div class="wrap">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <div id="events-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>

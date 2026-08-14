@@ -4443,16 +4443,19 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
 }
 
 function eme_message_div($message) {
-    return "<div><p>" .$message.'</p></div>';
+    return "<div><p>" .$message.'</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
 }
-function eme_message_ok_div($message) {
-    return "<div class='notice notice-success eme-message-admin'><p>" .$message.'</p></div>';
+function eme_message_ok_div($message, $is_dismissible = 0) {
+    $dismiss_class = $is_dissmissible ? "is-dismissible" : "";
+    return "<div class='notice notice-success $is_dismissible eme-message-admin'><p>" .$message.'</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
 }
-function eme_message_warning_div($message) {
-    return "<div class='notice notice-warning eme-message-admin'><p>" .$message.'</p></div>';
+function eme_message_warning_div($message, $is_dismissible = 0) {
+    $dismiss_class = $is_dissmissible ? "is-dismissible" : "";
+    return "<div class='notice notice-warning $is_dismissible eme-message-admin'><p>" .$message.'</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
 }
-function eme_message_error_div($message) {
-    return "<div class='notice notice-error eme-message-admin'><p>" .$message.'</p></div>';
+function eme_message_error_div($message, $is_dismissible = 0) {
+    $dismiss_class = $is_dissmissible ? "is-dismissible" : "";
+    return "<div class='notice notice-error $is_dismissible eme-message-admin'><p>" .$message.'</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
 }
 
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {

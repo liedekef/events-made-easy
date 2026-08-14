@@ -1814,7 +1814,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 ?>
         </h1>
 
-        <div id="message" class="notice notice-success is-dismissible <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
+        <div id="message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
             <p><?php echo wp_kses_post( $message ); ?></p>
         </div>
 
@@ -3181,6 +3181,7 @@ function eme_manage_members_layout( $message ) {
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <div id="members-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
         <p><?php echo wp_kses_post( $message ); ?></p>
     </div>
@@ -3222,6 +3223,7 @@ function eme_manage_memberships_layout( $message ) {
 ?>
     <div class="wrap nosubsub">
     <div id="poststuff">
+    <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
 
 <?php
     if ( ! empty( $message ) ) {

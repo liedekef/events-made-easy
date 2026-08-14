@@ -1839,8 +1839,6 @@ function eme_printable_booking_report( $event_id ) {
 
 function eme_person_verify_layout() {
 ?>
-    <div class="wrap nosubsub">
-    <div id="poststuff">
     <h1><?php esc_html_e( 'Verify link between people and WP', 'events-made-easy' ); ?></h1>
 <?php
     // the next function returns a row containing multiple person ids per line (csv), lastname,firstname,email,wp_id
@@ -1976,10 +1974,6 @@ function eme_person_verify_layout() {
         esc_html_e( 'No issues found', 'events-made-easy' );
     }
     endif;
-?>
-    </div>
-    </div>
-<?php
 }
 
 function eme_render_people_table_and_filters( $limit_to_group = 0) {
@@ -2439,12 +2433,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     <!-- ==================== VERIFY TAB ==================== -->
     <div class="eme-tab-content" id="tab-verify">
 <?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) :
-    if ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'verify_people' ) :
         eme_person_verify_layout();
-    else :
-        // translators: %s is the URL to verify EME people integrity
-        printf( wp_kses_post( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ) ), esc_url( admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ) );
-    endif;
 else : ?>
     <p><?php esc_html_e( 'You have no right to verify people!', 'events-made-easy' ); ?></p>
 <?php endif; ?>

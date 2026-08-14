@@ -78,24 +78,24 @@ function eme_people_page() {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             [$add_update_message, $person_id] = eme_add_update_person_from_backend();
             if ( $person_id ) {
-                $message = esc_html__( 'Person added', 'events-made-easy' );
+                $message = __( 'Person added', 'events-made-easy' );
                 if ( ! empty( $add_update_message ) ) {
                     $message .= '<br>' . $add_update_message;
                 }
-                $message = eme_message_ok_div($message);
+                $message = eme_message_ok_div($message, 1);
                 if ( get_option( 'eme_stay_on_edit_page' ) ) {
                     eme_person_edit_layout( $person_id, $message );
                     return;
                 }
             } else {
-                $message = esc_html__( 'Problem detected while adding person', 'events-made-easy' );
+                $message = __( 'Problem detected while adding person', 'events-made-easy' );
                 if ( ! empty( $add_update_message ) ) {
                     $message .= '<br>' . $add_update_message;
                 }
-                $message = eme_message_error_div($message);
+                $message = eme_message_error_div($message, 1);
             }
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update people!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to update people!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_editperson' ) {
         $person_id = intval( $_POST['person_id'] );
@@ -103,27 +103,27 @@ function eme_people_page() {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) || ( current_user_can( get_option( 'eme_cap_author_person' ) ) && $wp_id == $current_userid ) ) {
             [$add_update_message, $person_id] = eme_add_update_person_from_backend( $person_id );
             if ( $person_id ) {
-                $message = esc_html__( 'Person updated', 'events-made-easy' );
+                $message = __( 'Person updated', 'events-made-easy' );
                 $message .= '<br>' . $add_update_message;
-                $message = eme_message_ok_div($message);
+                $message = eme_message_ok_div($message, 1);
             } else {
-                $message = esc_html__( 'Problem detected while updating person', 'events-made-easy' );
+                $message = __( 'Problem detected while updating person', 'events-made-easy' );
                 $message .= '<br>' . $add_update_message;
-                $message = eme_message_error_div($message);
+                $message = eme_message_error_div($message, 1);
             }
             if ( $person_id && get_option( 'eme_stay_on_edit_page' ) ) {
                 eme_person_edit_layout( $person_id, $message );
                 return;
             }
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update this person!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to update this person!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'add_person' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_person_edit_layout();
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to add people!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to add people!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'edit_person' ) {
         $person_id = intval( $_GET['person_id'] );
@@ -132,40 +132,40 @@ function eme_people_page() {
             eme_person_edit_layout( $person_id );
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update this person!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to update this person!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'verify_people' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             $active_tab = 'tab-verify';
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update people!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to update people!', 'events-made-easy' ), 1);
         }
     }
 
     // Handle group actions
     if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) && isset( $_REQUEST['eme_admin_action'] ) && in_array( eme_sanitize_request($_REQUEST['eme_admin_action']), ['do_addgroup', 'do_editgroup', 'add_group', 'add_dynamic_people_group', 'add_dynamic_members_group', 'edit_group'] ) ) {
-        $message = eme_message_error_div(esc_html__( 'You have no right to manage groups!', 'events-made-easy' ));
+        $message = eme_message_error_div(__( 'You have no right to manage groups!', 'events-made-easy' ), 1);
         $active_tab = 'tab-groups';
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addgroup' ) {
         $group_id = eme_add_update_group();
         $active_tab = 'tab-groups';
         if ( $group_id ) {
-            $message = eme_message_ok_div(esc_html__( 'Group added', 'events-made-easy' ));
+            $message = eme_message_ok_div(__( 'Group added', 'events-made-easy' ), 1);
             if ( get_option( 'eme_stay_on_edit_page' ) ) {
                 eme_group_edit_layout( $group_id, $message );
                 return;
             }
         } else {
-            $message = eme_message_error_div(esc_html__( 'Problem detected while adding group', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'Problem detected while adding group', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editgroup' ) {
         $group_id = intval( $_POST['group_id'] );
         $res      = eme_add_update_group( $group_id );
         $active_tab = 'tab-groups';
         if ( $res ) {
-            $message = eme_message_ok_div(esc_html__( 'Group updated', 'events-made-easy' ));
+            $message = eme_message_ok_div(__( 'Group updated', 'events-made-easy' ), 1);
         } else {
-            $message = eme_message_error_div(esc_html__( 'Problem detected while updating group', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'Problem detected while updating group', 'events-made-easy' ), 1);
         }
         if ( get_option( 'eme_stay_on_edit_page' ) ) {
             eme_group_edit_layout( $group_id, $message );
@@ -176,21 +176,21 @@ function eme_people_page() {
             eme_group_edit_layout(group_type: 'dynamic_people');
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to add groups!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to add groups!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_dynamic_members_group' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_group_edit_layout(group_type: 'dynamic_members');
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to add groups!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to add groups!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_group' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
             eme_group_edit_layout();
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to add groups!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to add groups!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_group' ) {
         $group_id = intval( $_GET['group_id'] );
@@ -198,7 +198,7 @@ function eme_people_page() {
             eme_group_edit_layout( $group_id );
             return;
         } else {
-            $message = eme_message_error_div(esc_html__( 'You have no right to update groups!', 'events-made-easy' ));
+            $message = eme_message_error_div(__( 'You have no right to update groups!', 'events-made-easy' ), 1);
         }
     }
 
@@ -2343,12 +2343,6 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
 function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
     global $plugin_page;
 
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
-
     // Determine the active tab from the data-showtab attribute
     $show_tab_attr = '';
     if ( ! empty( $active_tab ) ) {
@@ -2358,9 +2352,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
 <div class="wrap nosubsub">
 <h1> <?php esc_html_e( 'Manage people and groups', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
-    <div id="people-message" class="<?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
@@ -2530,12 +2522,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 ?>
     </h1>
 
-    <?php if ( $message != '' ) { ?>
-        <div id="message">
-            <?php echo wp_kses_post( $message ); ?>
-        </div>
-    <?php } ?>
-    <div id="ajax-response"></div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
     <?php if ( ! $readonly ) { ?>
     <form name="editperson" id="editperson" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" class="validate" enctype='multipart/form-data'>
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
@@ -2830,12 +2817,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 ?>
     </h1>
 
-    <?php if ( $message != '' ) { ?>
-        <div id="message">
-            <p><?php echo wp_kses_post( $message ); ?></p>
-        </div>
-    <?php } ?>
-    <div id="ajax-response"></div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
     <form name="editgroup" id="editgroup" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>" class="validate">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <input type="hidden" name="group_type" value="<?php echo esc_attr( $group['type'] ); ?>">
@@ -5685,12 +5667,12 @@ function eme_ajax_store_people_query() {
         $group['search_terms'] = eme_json_encode_safe( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
-            $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Dynamic group added', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Dynamic group added', 'events-made-easy' ) );
         } else {
-            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There was a problem adding the group', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem adding the group', 'events-made-easy' ) );
         }
     } else {
-        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Please enter a name for the group', 'events-made-easy' ) );
+        $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Please enter a name for the group', 'events-made-easy' ) );
     }
     print wp_json_encode( $fTableResult );
     wp_die();
@@ -5705,7 +5687,7 @@ function eme_ajax_manage_people() {
         $ids_arr   = explode( ',', $ids );
         if ( ! eme_is_integer_array( $ids_arr ) ) {
             $ajaxResult['Result']  = 'ERROR';
-            $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+            $ajaxResult['htmlmessage'] = eme_message_error_div(__( 'Access denied!', 'events-made-easy'));
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
@@ -5714,7 +5696,7 @@ function eme_ajax_manage_people() {
                 $author_person_ids = eme_get_author_person_ids( $ids );
                 if ( count( $ids_arr ) != count( $author_person_ids ) ) {
                     $ajaxResult['Result']  = 'ERROR';
-                    $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+                    $ajaxResult['htmlmessage'] = eme_message_error_div(__( 'Access denied!', 'events-made-easy'));
                     print wp_json_encode( $ajaxResult );
                     wp_die();
                 }
@@ -5722,7 +5704,7 @@ function eme_ajax_manage_people() {
                 $ids_arr = $author_person_ids;
             } else {
                 $ajaxResult['Result']  = 'ERROR';
-                $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy'));
+                $ajaxResult['htmlmessage'] = eme_message_error_div(__( 'Access denied!', 'events-made-easy'));
                 print wp_json_encode( $ajaxResult );
                 wp_die();
             }
@@ -5817,7 +5799,7 @@ function eme_ajax_manage_groups() {
     if ( ! eme_is_list_of_int( $ids ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
         $ajaxResult            = [];
         $ajaxResult['Result']  = 'ERROR';
-        $ajaxResult['htmlmessage'] = eme_message_error_div(esc_html__( 'Access denied!', 'events-made-easy' ));
+        $ajaxResult['htmlmessage'] = eme_message_error_div(__( 'Access denied!', 'events-made-easy' ));
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
@@ -5833,7 +5815,7 @@ function eme_ajax_action_untrash_people( $ids ) {
     $ajaxResult = [];
     eme_untrash_people( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'People recovered from trash bin.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'People recovered from trash bin.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5845,7 +5827,7 @@ function eme_ajax_action_trash_people( $ids, $transferto_id=0 ) {
     }
     eme_trash_people( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'People moved to trash bin.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'People moved to trash bin.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5853,7 +5835,7 @@ function eme_ajax_action_gdpr_trash_people( $ids ) {
     $ajaxResult = [];
     eme_gdpr_trash_people( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Personal data removed and moved to trash bin.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Personal data removed and moved to trash bin.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5861,7 +5843,7 @@ function eme_ajax_action_gdpr_approve_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_gdpr( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'GDPR approval set to "Yes" (make sure the selected persons are aware of this).', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'GDPR approval set to "Yes" (make sure the selected persons are aware of this).', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5869,7 +5851,7 @@ function eme_ajax_action_gdpr_unapprove_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_gdpr( $ids, 0 );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'GDPR approval set to "No" (make sure the selected persons are aware of this).', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'GDPR approval set to "No" (make sure the selected persons are aware of this).', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5877,7 +5859,7 @@ function eme_ajax_action_set_massmail_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_massmail( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Massmail set to "Yes" (make sure the selected persons are aware of this).', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Massmail set to "Yes" (make sure the selected persons are aware of this).', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5885,7 +5867,7 @@ function eme_ajax_action_set_nomassmail_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_massmail( $ids, 0 );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Massmail set to "No" (make sure the selected persons are aware of this).', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Massmail set to "No" (make sure the selected persons are aware of this).', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5893,7 +5875,7 @@ function eme_ajax_action_set_bdemail_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_bdemail( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Birthday email set to "Yes".', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Birthday email set to "Yes".', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5901,7 +5883,7 @@ function eme_ajax_action_set_nobdemail_people( $ids ) {
     $ajaxResult = [];
     eme_update_people_bdemail( $ids, 0 );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Birthday email set to "No".', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Birthday email set to "No".', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5910,7 +5892,7 @@ function eme_ajax_action_set_people_language( $ids ) {
     $lang       = eme_sanitize_request( $_POST['language'] ?? '' );
     eme_update_people_language( $ids, $lang );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Language updated.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Language updated.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5923,7 +5905,7 @@ function eme_ajax_action_delete_people( $ids ) {
     }
     eme_delete_people( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'People deleted.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'People deleted.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
 }
 
@@ -5933,7 +5915,7 @@ function eme_ajax_action_add_people_to_group( $ids_arr, $group_id ) {
         eme_add_persongroups( $person_id, $group_id );
     }
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'People added to group.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'People added to group.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
     wp_die();
 }
@@ -5944,7 +5926,7 @@ function eme_ajax_action_delete_people_from_group( $ids_arr, $group_id ) {
         eme_delete_person_from_group( $person_id, $group_id );
     }
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'People removed from group.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'People removed from group.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
     wp_die();
 }
@@ -5953,7 +5935,7 @@ function eme_ajax_action_delete_groups( $ids ) {
     $ajaxResult = [];
     eme_delete_groups( $ids );
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div(esc_html__( 'Groups deleted.', 'events-made-easy' ));
+    $ajaxResult['htmlmessage'] = eme_message_ok_div(__( 'Groups deleted.', 'events-made-easy' ));
     print wp_json_encode( $ajaxResult );
     wp_die();
 }

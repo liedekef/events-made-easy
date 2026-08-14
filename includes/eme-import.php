@@ -36,19 +36,19 @@ function eme_import_page() {
 			if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 				$message = eme_import_csv_people();
 			} else {
-				$message = eme_message_error_div( esc_html__( 'You have no right to update people!', 'events-made-easy' ) );
+				$message = eme_message_error_div( __( 'You have no right to update people!', 'events-made-easy' ) );
 			}
 		} elseif ( $action == 'import' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				$message = eme_import_csv_members();
 			} else {
-				$message = eme_message_error_div( esc_html__( 'You have no right to manage members!', 'events-made-easy' ) );
+				$message = eme_message_error_div( __( 'You have no right to manage members!', 'events-made-easy' ) );
 			}
 		} elseif ( $action == 'import_dynamic_answers' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				$message = eme_import_csv_member_dynamic_answers();
 			} else {
-				$message = eme_message_error_div( esc_html__( 'You have no right to manage members!', 'events-made-easy' ) );
+				$message = eme_message_error_div( __( 'You have no right to manage members!', 'events-made-easy' ) );
 			}
 		} elseif ( $action == 'import_locations' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_locations();

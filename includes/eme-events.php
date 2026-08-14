@@ -355,13 +355,13 @@ function eme_events_page() {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $tmp_event = eme_get_event( $event_ID );
         if ( empty( $tmp_event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
         } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $tmp_event['event_author'] == $current_userid ) ) {
             $res              = eme_trash_events( $event_ID );
-            $feedback_message = __( 'Event moved to the trash bin', 'events-made-easy' );
+            $feedback_message = eme_message_ok_div( __( 'Event moved to the trash bin', 'events-made-easy' ), 1 );
         } else {
-            $feedback_message = __( 'You have no right to delete events!', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'You have no right to delete events!', 'events-made-easy' ), 1 );
         }
         eme_events_table( $feedback_message );
         return;
@@ -372,17 +372,17 @@ function eme_events_page() {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $tmp_event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
         if ( empty( $tmp_event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
         } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $tmp_event['event_author'] == $current_userid ) ) {
             $res = eme_db_delete_recurrence( $recurrence_ID );
             if ( $res == 0 ) {
-                $feedback_message = __( 'Recurrence deleted!', 'events-made-easy' );
+                $feedback_message = eme_message_ok_div( __( 'Recurrence deleted!', 'events-made-easy' ), 1 );
             } else {
-                $feedback_message = __( 'Error deleting the recurrence!', 'events-made-easy' );
+                $feedback_message = eme_message_error_div( __( 'Error deleting the recurrence!', 'events-made-easy' ), 1 );
             }
         } else {
-            $feedback_message = __( 'You have no right to delete events!', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'You have no right to delete events!', 'events-made-easy' ), 1 );
         }
         eme_events_table( $feedback_message, 'tab-recurrences' );
         return;
@@ -397,7 +397,7 @@ function eme_events_page() {
             return;
         }
         if ( ! ( current_user_can( get_option( 'eme_cap_add_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) ) {
-            $feedback_message = __( 'You have no right to insert or update events', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'You have no right to insert or update events', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message );
             return;
         }
@@ -592,10 +592,7 @@ function eme_events_page() {
         $validation_result = eme_validate_event( $event );
         if ( !empty($validation_result) ) {
             // validation unsuccessful
-            echo "<div id='message' class='error '>
-                <p>" . wp_kses_post( $validation_result ) . "</p>
-                <p>" . esc_html( $press_back ) . "</p>
-                </div>";
+            echo eme_message_error_div( $validation_result . '</p><p>' . $press_back, 1 );
                 return;
         }
 
@@ -613,19 +610,13 @@ function eme_events_page() {
             } else {
                 $validation_result = eme_validate_location( $location );
                 if ( $validation_result != 'OK' ) {
-                    echo "<div id='message' class='error '>
-                        <p>" . wp_kses_post( $validation_result ) . "</p>
-                        <p>" . esc_html( $press_back ) . "</p>
-                        </div>";
+                    echo eme_message_error_div( $validation_result . '</p><p>' . $press_back, 1 );
                 return;
                 } else {
                     $new_location_id = eme_insert_location( $location );
                     eme_location_store_answers( $new_location_id );
                     if ( ! $new_location_id ) {
-                        echo "<div id='message' class='error '>
-                            <p>" . esc_html__( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'events-made-easy' ) . "</p>
-                            <p>" . esc_html( $press_back ) . "</p>
-                            </div>";
+                        echo eme_message_error_div( __( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'events-made-easy' ) . '</p><p>' . $press_back, 1 );
                 return;
                     }
                     $event['location_id'] = $new_location_id;
@@ -640,11 +631,11 @@ function eme_events_page() {
                 //insert new recurrence
                 $recurrence_id = eme_db_insert_recurrence( $recurrence, $event );
                 if ( ! $recurrence_id ) {
-                    $feedback_message = __( 'No recurrence created!', 'events-made-easy' );
+                    $feedback_message = eme_message_error_div( __( 'No recurrence created!', 'events-made-easy' ), 1 );
                 } else {
                     $count            = eme_recurrence_count( $recurrence_id );
                     // translators: %d is the number of events in the recurrence
-                    $feedback_message = sprintf( __( 'New recurrence inserted containing %d events', 'events-made-easy' ), $count );
+                    $feedback_message = eme_message_ok_div( sprintf( __( 'New recurrence inserted containing %d events', 'events-made-easy' ), $count ), 1 );
                     if ( $stay_on_edit_page ) {
                         $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
                         $info['feedback'] = $feedback_message;
@@ -659,7 +650,7 @@ function eme_events_page() {
                 // INSERT new event
                 $event_id = eme_db_insert_event( $event );
                 if ( ! $event_id ) {
-                    $feedback_message = __( 'Database insert failed!', 'events-made-easy' );
+                    $feedback_message = eme_message_error_div( __( 'Database insert failed!', 'events-made-easy' ), 1 );
                 } else {
                     eme_event_store_answers( $event_id );
                     eme_upload_files( $event_id, 'events' );
@@ -668,7 +659,7 @@ function eme_events_page() {
                         $event = eme_get_event( $event_id );
                         do_action( 'eme_insert_event_action', $event );
                     }
-                    $feedback_message = __( 'New event successfully inserted!', 'events-made-easy' );
+                    $feedback_message = eme_message_ok_div( __( 'New event successfully inserted!', 'events-made-easy' ), 1 );
                     if ( $stay_on_edit_page ) {
                         // translators: %s is the event name
                         $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
@@ -691,7 +682,7 @@ function eme_events_page() {
                     $count                       = eme_db_update_recurrence( $recurrence, $event );
                     if ( $count ) {
                         // translators: %d is the number of events in the recurrence
-                        $feedback_message = sprintf( __( 'Recurrence updated, contains %d events', 'events-made-easy' ), $count );
+                        $feedback_message = eme_message_ok_div( sprintf( __( 'Recurrence updated, contains %d events', 'events-made-easy' ), $count ), 1 );
                         if ( $stay_on_edit_page ) {
                             $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
                             $info['feedback'] = $feedback_message;
@@ -702,11 +693,11 @@ function eme_events_page() {
                             return;
                         }
                     } else {
-                        $feedback_message = __( 'Recurrence no longer contains events, so it has been removed', 'events-made-easy' );
+                        $feedback_message = eme_message_ok_div( __( 'Recurrence no longer contains events, so it has been removed', 'events-made-easy' ), 1 );
                     }
                 } else {
                     // translators: %s is the event name
-                    $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
+                    $feedback_message = eme_message_error_div( sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) ), 1);
                 }
             } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $orig_event['event_author'] == $current_userid ) ) {
@@ -715,12 +706,12 @@ function eme_events_page() {
                     // we go from single event to recurrence: create the recurrence and delete the single event
                     $recurrence_id = eme_db_insert_recurrence( $recurrence, $event );
                     if ( ! $recurrence_id ) {
-                        $feedback_message = __( 'No recurrent event created!', 'events-made-easy' );
+                        $feedback_message = eme_message_error_div( __( 'No recurrent event created!', 'events-made-easy' ), 1 );
                     } else {
                         eme_db_delete_event( $orig_event['event_id'] );
                         $count            = eme_recurrence_count( $recurrence_id );
                         // translators: %d is the number of events in the recurrence
-                        $feedback_message = sprintf( __( 'New recurrent event inserted containing %d events', 'events-made-easy' ), $count );
+                        $feedback_message = eme_message_ok_div( sprintf( __( 'New recurrent event inserted containing %d events', 'events-made-easy' ), $count ), 1 );
                         if ( $stay_on_edit_page ) {
                             $info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
                             $info['feedback'] = $feedback_message;
@@ -743,7 +734,7 @@ function eme_events_page() {
                             do_action( 'eme_update_event_action', $event );
                         }
                         // translators: %s is the event name
-                        $feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+                        $feedback_message = eme_message_ok_div( sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
                         if ( $stay_on_edit_page ) {
                             // translators: %s is the event name
                             $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
@@ -756,12 +747,12 @@ function eme_events_page() {
                         }
                     } else {
                         // translators: %s is the event name
-                        $feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+                        $feedback_message = eme_message_error_div( sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
                     }
                 }
             } else {
                 // translators: %s is the event name
-                $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
+                $feedback_message = eme_message_error_div( sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) ), 1);
             }
         }
 
@@ -782,7 +773,7 @@ function eme_events_page() {
             $info  = [ 'title' => __( 'Insert New Event', 'events-made-easy' ) ];
             eme_event_form( $event, $info );
         } else {
-            $feedback_message = __( 'You have no right to add events!', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'You have no right to add events!', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message );
         }
         return;
@@ -794,7 +785,7 @@ function eme_events_page() {
             $info  = [ 'title' => __( 'Insert New Recurrence', 'events-made-easy' ) ];
             eme_event_form( $event, $info, 1 );
         } else {
-            $feedback_message = __( 'You have no right to add events!', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'You have no right to add events!', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message, 'tab-recurrences' );
         }
         return;
@@ -803,7 +794,7 @@ function eme_events_page() {
     if ( $action == 'edit_event' ) {
         $event = eme_get_event( $event_ID );
         if ( empty( $event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message );
         } elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
@@ -813,7 +804,7 @@ function eme_events_page() {
             eme_event_form( $event, $info );
         } else {
             // translators: %s is the event name
-            $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+            $feedback_message = eme_message_error_div( sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
             eme_events_table( $feedback_message );
         }
         return;
@@ -823,7 +814,7 @@ function eme_events_page() {
     if ( $action == 'duplicate_event' ) {
         $event = eme_get_event( $event_ID );
         if ( empty( $event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message );
             return;
         }
@@ -838,7 +829,7 @@ function eme_events_page() {
             eme_event_form( $event, $info );
         } else {
             // translators: %s is the event name
-            $feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+            $feedback_message = eme_message_error_div( sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
             eme_events_table( $feedback_message );
         }
         return;
@@ -846,7 +837,7 @@ function eme_events_page() {
     if ( $action == 'duplicate_recurrence' ) {
         $event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
         if ( empty( $event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message, 'tab-recurrences' );
             return;
         }
@@ -861,7 +852,7 @@ function eme_events_page() {
             eme_event_form( $event, $info, 1 );
         } else {
             // translators: %s is the event name
-            $feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+            $feedback_message = eme_message_error_div( sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
             eme_events_table( $feedback_message, 'tab-recurrences' );
         }
         return;
@@ -870,7 +861,7 @@ function eme_events_page() {
     if ( $action == 'edit_recurrence' ) {
         $event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
         if ( empty( $event ) ) {
-            $feedback_message = __( 'No such event', 'events-made-easy' );
+            $feedback_message = eme_message_error_div( __( 'No such event', 'events-made-easy' ), 1 );
             eme_events_table( $feedback_message, 'tab-recurrences' );
             return;
         }
@@ -880,7 +871,7 @@ function eme_events_page() {
             eme_event_form( $event, $info, 1 );
         } else {
             // translators: %s is the event name
-            $feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+            $feedback_message = eme_message_error_div( sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
             eme_events_table( $feedback_message, 'tab-recurrences' );
         }
         return;
@@ -6109,12 +6100,6 @@ function eme_import_csv_events() {
 function eme_events_table( $message = '', $active_tab = '' ) {
     global $plugin_page;
 
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
-
     $scope_names           = [];
     $scope_names['past']   = __( 'Past events', 'events-made-easy' );
     $scope_names['all']    = __( 'All events', 'events-made-easy' );
@@ -6159,9 +6144,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 <div class="wrap nosubsub">
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
-    <div id="events-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>
@@ -6356,13 +6339,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 }
 
 function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
-    if ( ! isset( $info['feedback'] ) ) {
-        $hidden_class = 'eme-hidden';
-        $message      = '';
-    } else {
-        $hidden_class = '';
-        $message      = $info['feedback'];
-    }
+    $message = $info['feedback'] ?? '';
 
     // if it comes from a copy action, remove event_id and such
     if ( isset( $event['is_duplicate'] ) ) {
@@ -6445,9 +6422,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 ?>
     <div class="wrap">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
-    <div id="events-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
     <form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo esc_url( $form_destination ); ?>">
     <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
     <?php echo $hidden_fields; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML hidden fields ?>
@@ -10339,7 +10314,7 @@ function eme_ajax_manage_events() {
         $ids_arr   = array_map( 'intval', explode( ',', $ids ) );
         if ( ! eme_is_integer_array( $ids_arr ) ) {
             $ajaxResult['Result']      = 'ERROR';
-            $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+            $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
@@ -10348,7 +10323,7 @@ function eme_ajax_manage_events() {
                 $author_event_ids = eme_get_author_event_ids( $ids );
                 if ( count( $ids_arr ) != count( $author_event_ids ) ) {
                     $ajaxResult['Result']      = 'ERROR';
-                    $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+                    $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
                     print wp_json_encode( $ajaxResult );
                     wp_die();
                 }
@@ -10356,7 +10331,7 @@ function eme_ajax_manage_events() {
                 $ids_arr = $author_event_ids;
             } else {
                 $ajaxResult['Result']      = 'ERROR';
-                $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+                $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
                 print wp_json_encode( $ajaxResult );
                 wp_die();
             }
@@ -10392,7 +10367,7 @@ function eme_ajax_manage_events() {
         }
     } else {
         $ajaxResult['Result']      = 'ERROR';
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'No action defined!', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'No action defined!', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
     }
     wp_die();
@@ -10402,7 +10377,7 @@ function eme_ajax_action_events_delete( $ids_arr ) {
     eme_delete_events( $ids_arr );
     $ajaxResult            = [];
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events deleted', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Events deleted', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10410,7 +10385,7 @@ function eme_ajax_action_events_trash( $ids, $send_trashmails ) {
     eme_trash_events( $ids, $send_trashmails );
     $ajaxResult            = [];
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events moved to the trash bin', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Events moved to the trash bin', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10418,7 +10393,7 @@ function eme_ajax_action_events_untrash( $ids ) {
     eme_untrash_events( $ids );
     $ajaxResult            = [];
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Restored selected events to draft status', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Restored selected events to draft status', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10426,7 +10401,7 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
     $ajaxResult = [];
     eme_change_event_status( $ids_arr, $status );
     $ajaxResult['Result']  = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events status updated', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Events status updated', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 
@@ -10441,7 +10416,7 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
     $ajaxResult['Result']      = 'OK';
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events added to category', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Events added to category', 'events-made-easy' ) );
     print wp_json_encode( $ajaxResult );
 }
 

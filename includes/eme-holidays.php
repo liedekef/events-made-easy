@@ -125,8 +125,6 @@ function eme_holidays_edit_layout() {
       <h1>" . $h1_string . '</h1>';
 
     $layout .= "
-      <div id='ajax-response'></div>
-
       <form name='edit_holidays' id='edit_holidays' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editholidays'>
       <input type='hidden' name='id' value='" . $holidays_id . "'>

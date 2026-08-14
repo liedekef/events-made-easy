@@ -2168,7 +2168,7 @@ function eme_ajax_manage_task_signups() {
     if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
         $ajaxResult            = [];
         $ajaxResult['Result']      = 'ERROR';
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
@@ -2325,24 +2325,24 @@ function eme_ajax_assign_task_signup() {
 	$person_id = intval( $_POST['person_id'] ?? 0 );
 
 	if ( ! $task_id || ! $person_id ) {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Please select a task and a person.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Please select a task and a person.', 'events-made-easy' ) ) ] );
 		wp_die();
 	}
 
 	$task = eme_get_task( $task_id );
 	if ( ! $task ) {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Invalid task.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Invalid task.', 'events-made-easy' ) ) ] );
 		wp_die();
 	}
 	$person = eme_get_person( $person_id );
 	if ( ! $person ) {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Invalid person.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Invalid person.', 'events-made-easy' ) ) ] );
 		wp_die();
 	}
 
 	$existing = eme_count_person_task_signups( $task_id, $person_id );
 	if ( $existing > 0 ) {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'This person is already signed up for this task.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'This person is already signed up for this task.', 'events-made-easy' ) ) ] );
 		wp_die();
 	}
 
@@ -2372,9 +2372,9 @@ function eme_ajax_assign_task_signup() {
 	$res = eme_db_insert_task_signup( $signup );
 	if ( $res ) {
         eme_email_tasksignup_action( $signup, 'new' );
-		print wp_json_encode( [ 'Result' => 'OK', 'htmlmessage' => eme_message_ok_div( esc_html__( 'Task assigned successfully.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'OK', 'htmlmessage' => eme_message_ok_div( __( 'Task assigned successfully.', 'events-made-easy' ) ) ] );
 	} else {
-		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'There was a problem assigning the task.', 'events-made-easy' ) ) ] );
+		print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'There was a problem assigning the task.', 'events-made-easy' ) ) ] );
 	}
 	wp_die();
 }

@@ -295,8 +295,6 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
     }
 
     $layout .= "
-      <div id='ajax-response'></div>
-
       <form name='edit_formfield' id='edit_formfield' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "' class='validate'>
       <input type='hidden' name='eme_admin_action' value='do_editformfield'>
       $nonce_field
@@ -3636,7 +3634,7 @@ function eme_ajax_manage_formfields() {
     $fTableResult=[];
     if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_REQUEST['field_id'] ) ) {
         $fTableResult['Result']      = 'ERROR';
-        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
     }
     $do_action = eme_sanitize_request( $_REQUEST['do_action'] ?? '' );
     switch ( $do_action ) {
@@ -3644,7 +3642,7 @@ function eme_ajax_manage_formfields() {
         // validation happens in the eme_delete_formfields function
         eme_delete_formfields( [ intval($_REQUEST['field_id']) ] );
         $fTableResult['Result']      = 'OK';
-        $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Records deleted!', 'events-made-easy' ) );
+        $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Records deleted!', 'events-made-easy' ) );
         print wp_json_encode( $fTableResult );
         wp_die();
         break;
@@ -3654,10 +3652,10 @@ function eme_ajax_manage_formfields() {
             // validation happens in the eme_delete_formfields function
             eme_delete_formfields( $field_ids );
             $fTableResult['Result']      = 'OK';
-            $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Records deleted!', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Records deleted!', 'events-made-easy' ) );
         } else {
             $fTableResult['Result']      = 'ERROR';
-            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         }
         print wp_json_encode( $fTableResult );
         wp_die();

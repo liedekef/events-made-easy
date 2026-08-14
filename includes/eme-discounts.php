@@ -126,24 +126,24 @@ function eme_discounts_page() {
 			if ( $discount_id ) {
 				$validation_result = eme_db_update_discount( $discount_id, $discount );
 				if ( $validation_result !== false ) {
-					$message = __( 'Successfully edited the discount', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully edited the discount', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_discounts_edit_layout( $discount_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem editing the discount, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem editing the discount, please try again.', 'events-made-easy' ), 1 );
 				}
 			} else {
 				$new_id = eme_db_insert_discount( $discount );
 				if ( $new_id ) {
-					$message = __( 'Successfully added the discount', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully added the discount', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_discounts_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem adding the discount, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem adding the discount, please try again.', 'events-made-easy' ), 1 );
 				}
 			}
 			eme_discounts_table( $message, 'tab-discounts' );
@@ -164,24 +164,24 @@ function eme_discounts_page() {
 			if ( $dgroup_id ) {
 				$validation_result = eme_db_update_dgroup( $dgroup_id, $dgroup );
 				if ( $validation_result !== false ) {
-					$message = __( 'Successfully edited the discount group', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully edited the discount group', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_dgroups_edit_layout( $dgroup_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem editing the discount group, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem editing the discount group, please try again.', 'events-made-easy' ), 1 );
 				}
 			} else {
 				$new_id = eme_db_insert_dgroup( $dgroup );
 				if ( $new_id ) {
-					$message = __( 'Successfully added the discount group', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully added the discount group', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_dgroups_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem adding the discount group, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem adding the discount group, please try again.', 'events-made-easy' ), 1 );
 				}
 			}
 			eme_discounts_table( $message, 'tab-dgroups' );
@@ -218,11 +218,6 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
 	global $plugin_page;
 
 	$dgroups = eme_get_dgroups();
-	if ( empty( $message ) ) {
-		$hidden_class = 'eme-hidden';
-	} else {
-		$hidden_class = '';
-	}
 
 	// Determine the active tab from the data-showtab attribute
 	$show_tab_attr = '';
@@ -233,9 +228,7 @@ function eme_discounts_table( $message = '', $active_tab = '' ) {
 <div class="wrap nosubsub">
 <h1><?php esc_html_e( 'Discount management', 'events-made-easy' ); ?></h1>
 <div id="poststuff">
-	<div id="discounts-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo wp_kses_post( $message ); ?></p>
-	</div>
+	<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
 	<div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
 	<div class="eme-tab" data-tab="tab-discounts"><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></div>
@@ -616,12 +609,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		 
 		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
-		<?php if ( $message != '' ) { ?>
-		<div id='message' class='notice notice-success is-dismissible'>
-		<p><?php echo wp_kses_post( $message ); ?></p>
-		</div>
-		<?php } ?>
-		<div id='ajax-response'></div>
+		<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
 		<form name='edit_discounts' id='edit_discounts' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editdiscount'>
@@ -787,12 +775,7 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 	<div class='wrap'>
 		<h1><?php echo esc_html( $h1_string ); ?></h1>
 	  
-		<?php if ( $message != '' ) { ?>
-		<div id='message' class='notice notice-success is-dismissible'>
-		<p><?php echo wp_kses_post( $message ); ?></p>
-		</div>
-		<?php } ?>
-		<div id='ajax-response'></div>
+		<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
 		<form name='edit_dgroups' id='edit_dgroups' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editdgroup'>
@@ -1706,7 +1689,7 @@ function eme_ajax_manage_discounts() {
     switch ( $do_action ) {
     case 'deleteDiscounts':
         eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts deleted', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Discounts deleted', 'events-made-easy' ) );
         break;
     case 'changeValidFrom':
         $date    = eme_sanitize_request( $_REQUEST['new_validfrom'] ?? '' );
@@ -1716,7 +1699,7 @@ function eme_ajax_manage_discounts() {
                 eme_change_discount_validfrom( $discount_id, $date );
             }
         }
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Date changed.', 'events-made-easy' ) );
         break;
     case 'changeValidTo':
         $date    = eme_sanitize_request( $_REQUEST['new_validto'] ?? '' );
@@ -1726,7 +1709,7 @@ function eme_ajax_manage_discounts() {
                 eme_change_discount_validto( $discount_id, $date );
             }
         }
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Date changed.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Date changed.', 'events-made-easy' ) );
         break;
     case 'addToGroup':
         $group_id = intval( $_REQUEST['addtogroup'] ?? 0 );
@@ -1736,7 +1719,7 @@ function eme_ajax_manage_discounts() {
                 eme_add_discount_to_group( $discount_id, $group_id );
             }
         }
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts added to group.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Discounts added to group.', 'events-made-easy' ) );
         break;
     case 'removeFromGroup':
         $group_id = intval( $_REQUEST['removefromgroup'] ?? 0 );
@@ -1746,7 +1729,7 @@ function eme_ajax_manage_discounts() {
                 eme_remove_discount_from_group( $discount_id, $group_id );
             }
         }
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discounts removed from group.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Discounts removed from group.', 'events-made-easy' ) );
         break;
 
     }
@@ -1765,7 +1748,7 @@ function eme_ajax_manage_discountgroups() {
     switch ( $do_action ) {
     case 'deleteDiscountGroups':
         eme_ajax_record_delete( EME_DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Discount groups deleted.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Discount groups deleted.', 'events-made-easy' ) );
         break;
     }
 	print wp_json_encode( $ajaxResult );

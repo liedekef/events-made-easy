@@ -140,7 +140,6 @@ function eme_categories_edit_layout() {
 		 
 		<h1><?php echo esc_html( $h1_string ); ?></h1>   
 	  
-		<div id='ajax-response'></div>
 		<form name='edit_category' id='edit_category' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editcategory'>
 		<input type='hidden' name='category_id' value='<?php echo esc_attr( $category_id ); ?>'>

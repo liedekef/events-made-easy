@@ -52,28 +52,28 @@ function eme_countries_page() {
 			$validation_result = eme_validate_state( $state );
 			if ( ! empty( $validation_result ) ) {
 				// translators: %s is the validation error message
-				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
+				$message = eme_message_error_div( sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result ), 1);
 			} elseif ( $state_id ) {
 				$update_result = eme_db_update_state( $state_id, $state );
 				if ( $update_result !== false ) {
-					$message = __( 'Successfully edited the state', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully edited the state', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_states_edit_layout( $state_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem editing the state, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem editing the state, please try again.', 'events-made-easy' ), 1 );
 				}
 			} else {
 				$new_id = eme_db_insert_state( $state );
 				if ( $new_id ) {
-					$message = __( 'Successfully added the state', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully added the state', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_states_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem adding the state, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem adding the state, please try again.', 'events-made-easy' ), 1 );
 				}
 			}
 			eme_countries_table( $message, 'tab-states' );
@@ -99,28 +99,28 @@ function eme_countries_page() {
 			$validation_result = eme_validate_country( $country );
 			if ( ! empty( $validation_result ) ) {
 				// translators: %s is the validation error message
-				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
+				$message = eme_message_error_div( sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result ), 1);
 			} elseif ( $country_id ) {
 				$update_result = eme_db_update_country( $country_id, $country );
 				if ( $update_result !== false ) {
-					$message = __( 'Successfully edited the country', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully edited the country', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_countries_edit_layout( $country_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem editing the country, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem editing the country, please try again.', 'events-made-easy' ), 1 );
 				}
 			} else {
 				$new_id = eme_db_insert_country( $country );
 				if ( $new_id ) {
-					$message = __( 'Successfully added the country', 'events-made-easy' );
+					$message = eme_message_ok_div( __( 'Successfully added the country', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_countries_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-					$message = __( 'There was a problem adding the country, please try again.', 'events-made-easy' );
+					$message = eme_message_error_div( __( 'There was a problem adding the country, please try again.', 'events-made-easy' ), 1 );
 				}
 			}
             eme_countries_table( $message );
@@ -157,19 +157,13 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
 	global $plugin_page;
 	$lang = eme_detect_lang();
 
-	if ( empty( $message ) ) {
-		$hidden_class = 'eme-hidden';
-	} else {
-		$hidden_class = '';
-	}
-
 	$countries_count = eme_get_countries_count();
 	if ( $countries_count == 1 ) {
 		$countries = eme_get_countries();
 		$country   = $countries[0];
 		if ( ! empty( $country['lang'] ) && $country['lang'] != $lang ) {
 			// translators: %s is the WordPress detected language code
-			$message .= sprintf( __( "There's only one country defined, but the language of the country is not empty and doesn't match the WordPress detected language (%s), meaning it won't show up when editing people. Either add extra countries or correct the language of this country.", 'events-made-easy' ), $lang );
+			$message .= eme_message_warning_div( sprintf( __( "There's only one country defined, but the language of the country is not empty and doesn't match the WordPress detected language (%s), meaning it won't show up when editing people. Either add extra countries or correct the language of this country.", 'events-made-easy' ), $lang ), 1 );
 		}
 	}
 
@@ -182,9 +176,7 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
 <div class="wrap nosubsub">
 <h1> <?php esc_html_e( 'Manage countries and states', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
-	<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo esc_attr( $hidden_class ); ?>">
-		<p><?php echo wp_kses_post( $message ); ?></p>
-	</div>
+	<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
 	<p><?php esc_html_e( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ); ?></p>
 	<p><b><?php esc_html_e( 'This is NOT used for event locations, only for personal info of people.', 'events-made-easy' ); ?></b></p>
@@ -290,13 +282,9 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
       <h1>" . $h1_string . '</h1>';
 
 	if ( $message != '' ) {
-		$layout .= "
-      <div id='message' class='notice notice-success is-dismissible'>
-         <p>$message</p>
-      </div>";
+		$layout .= $message;
 	}
 		$layout .= "
-      <div id='ajax-response'></div>
 
       <form name='edit_states' id='edit_states' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editstate'>
@@ -356,13 +344,9 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
       <h1>" . $h1_string . '</h1>';
 
 	if ( $message != '' ) {
-		$layout .= "
-      <div id='message' class='notice notice-success is-dismissible'>
-         <p>$message</p>
-      </div>";
+		$layout .= $message;
 	}
 		$layout .= "
-      <div id='ajax-response'></div>
 
       <form name='edit_countries' id='edit_countries' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editcountry'>
@@ -780,7 +764,7 @@ function eme_ajax_manage_countries() {
 	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$fTableResult['Result']      = 'ERROR';
-		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+		$fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -797,7 +781,7 @@ function eme_ajax_manage_states() {
 	$fTableResult    = [];
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$fTableResult['Result']      = 'ERROR';
-		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+		$fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -817,7 +801,7 @@ function eme_ajax_country_delete() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$fTableResult['Result']      = 'ERROR';
-		$fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+		$fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
 		print wp_json_encode( $fTableResult );
 		wp_die();
 	}
@@ -829,7 +813,7 @@ function eme_ajax_country_delete() {
 		$wpdb->query( $wpdb->prepare( "UPDATE $states_table SET country_id=0 WHERE country_id IN ($placeholders)", ...$ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 	$fTableResult['Result']      = 'OK';
-	$fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Country deleted!', 'events-made-easy' ) );
+	$fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Country deleted!', 'events-made-easy' ) );
 	print wp_json_encode( $fTableResult );
 	wp_die();
 }

@@ -60,7 +60,7 @@ function eme_templates_page() {
     global $wpdb;
 
     if ( ! current_user_can( get_option( 'eme_cap_templates' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
-        $message = __( 'You have no right to update templates!', 'events-made-easy' );
+        $message = eme_message_error_div( __( 'You have no right to update templates!', 'events-made-easy' ), 1 );
         eme_templates_table_layout( $message );
         return;
     }
@@ -117,22 +117,22 @@ function eme_templates_page() {
             $template_id = 0;
             if ( $properties['pdf_size'] == 'custom' && ( empty( $properties['pdf_width'] ) || empty( $properties['pdf_height'] ) ) ) {
                 $validation_result = false;
-                $message           = __( "When choosing 'custom' as PDF size, please specify width and height.", 'events-made-easy' );
+                $message           = eme_message_error_div( __( "When choosing 'custom' as PDF size, please specify width and height.", 'events-made-easy' ), 1 );
             } elseif ( isset( $_POST['template_id'] ) && intval( $_POST['template_id'] ) > 0 ) {
                 $template_id       = intval( $_POST['template_id'] );
                 $validation_result = $wpdb->update( $templates_table, $template, [ 'id' => $template_id ] );
                 if ( $validation_result !== false ) {
-                    $message = __( 'Successfully edited the template.', 'events-made-easy' );
+                    $message = eme_message_ok_div( __( 'Successfully edited the template.', 'events-made-easy' ), 1 );
                 } else {
-                    $message = __( 'There was a problem editing your template, please try again.', 'events-made-easy' );
+                    $message = eme_message_error_div( __( 'There was a problem editing your template, please try again.', 'events-made-easy' ), 1 );
                 }
             } else {
                 $validation_result = $wpdb->insert( $templates_table, $template );
                 if ( $validation_result !== false ) {
                     $template_id = $wpdb->insert_id;
-                    $message     = __( 'Successfully added the template.', 'events-made-easy' );
+                    $message     = eme_message_ok_div( __( 'Successfully added the template.', 'events-made-easy' ), 1 );
                 } else {
-                    $message = __( 'There was a problem adding your template, please try again.', 'events-made-easy' );
+                    $message = eme_message_error_div( __( 'There was a problem adding your template, please try again.', 'events-made-easy' ), 1 );
                 }
             }
 
@@ -151,11 +151,6 @@ function eme_templates_table_layout( $message = '' ) {
 
     $template_types = eme_template_types();
     $destination    = esc_url( admin_url( "admin.php?page=$plugin_page" ) );
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
 
     echo "
       <div class='wrap nosubsub'>
@@ -163,9 +158,7 @@ function eme_templates_table_layout( $message = '' ) {
          <h1>" . esc_html__( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
     ?>
-    <div id="templates-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
     <div class="wrap">
     <form id="templates-new" method="post" action="<?php echo esc_url( $destination ); ?>">
@@ -238,14 +231,9 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
       <h1>" . esc_html( $h1_string ) . '</h1>';
 
     if ( $message != '' ) {
-        echo "
-      <div id='message' class='updated notice notice-success is-dismissible'>
-         <p>" . wp_kses_post( $message ) . "</p>
-      </div>";
+        echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML
     }
 ?>
-
-        <div id='ajax-response'></div>
         <form name='edit_template' id='edit_template' method='post' action='<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>' class='validate'>
         <input type='hidden' name='eme_admin_action' value='do_edittemplate'>
         <input type='hidden' name='template_id' value='<?php echo esc_attr( $template_id ); ?>'>

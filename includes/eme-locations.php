@@ -65,7 +65,7 @@ function eme_locations_page() {
             // edit location
             eme_locations_edit_layout( $location );
         } else {
-            $message = __( 'You have no right to edit this location!', 'events-made-easy' );
+            $message = eme_message_error_div( __( 'You have no right to edit this location!', 'events-made-easy' ), 1 );
             eme_locations_table( $message );
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'copy_location' ) {
@@ -85,7 +85,7 @@ function eme_locations_page() {
         if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) ) {
             eme_locations_edit_layout( $location );
         } else {
-            $message = __( 'You have no right to copy this location!', 'events-made-easy' );
+            $message = eme_message_error_div( __( 'You have no right to copy this location!', 'events-made-easy' ), 1 );
             eme_locations_table( $message );
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_location' ) {
@@ -94,7 +94,7 @@ function eme_locations_page() {
             $location = eme_new_location();
             eme_locations_edit_layout( $location );
         } else {
-            $message = __( 'You have no right to add a location!', 'events-made-easy' );
+            $message = eme_message_error_div( __( 'You have no right to add a location!', 'events-made-easy' ), 1 );
             eme_locations_table( $message );
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && ( $_POST['eme_admin_action'] == 'do_editlocation' || $_POST['eme_admin_action'] == 'do_addlocation' ) ) {
@@ -113,11 +113,11 @@ function eme_locations_page() {
         }
 
         if ( $action == 'do_addlocation' && ! current_user_can( get_option( 'eme_cap_add_locations' ) ) ) {
-            $message = __( 'You have no right to add a location!', 'events-made-easy' );
+            $message = eme_message_error_div( __( 'You have no right to add a location!', 'events-made-easy' ), 1 );
             eme_locations_table( $message );
         } elseif ( $action == 'do_editlocation' && ! ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) ) {
-            $message = __( 'You have no right to edit this location!', 'events-made-easy' );
+            $message = eme_message_error_div( __( 'You have no right to edit this location!', 'events-made-easy' ), 1 );
             eme_locations_table( $message );
         } else {
             $post_vars = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_url', 'location_image_url', 'location_image_id', 'location_prefix', 'location_slug', 'location_latitude', 'location_longitude', 'location_author' ];
@@ -166,20 +166,20 @@ function eme_locations_page() {
                     if ( $new_location_id ) {
                         eme_location_store_answers( $new_location_id );
                         eme_upload_files( $new_location_id, 'locations' );
-                        $message      = __( 'The location has been added.', 'events-made-easy' );
+                        $message      = eme_message_ok_div( __( 'The location has been added.', 'events-made-easy' ), 1 );
                         if ( get_option( 'eme_stay_on_edit_page' ) ) {
                             $new_location = eme_get_location( $new_location_id );
                             eme_locations_edit_layout( $new_location, $message );
                             return;
                         }
                     } else {
-                        $message = __( 'There has been a problem adding the location.', 'events-made-easy' );
+                        $message = eme_message_error_div( __( 'There has been a problem adding the location.', 'events-made-easy' ), 1 );
                     }
                 } elseif ( $action == 'do_editlocation' ) {
                     if ( eme_update_location( $location, $location_id ) ) {
                         eme_location_store_answers( $location_id );
                         eme_upload_files( $location_id, 'locations' );
-                        $message = __( 'The location has been updated.', 'events-made-easy' );
+                        $message = eme_message_ok_div( __( 'The location has been updated.', 'events-made-easy' ), 1 );
                         if ( get_option( 'eme_stay_on_edit_page' ) ) {
                             // for edit, we need a location
                             $location = eme_get_location( $location_id );
@@ -187,13 +187,13 @@ function eme_locations_page() {
                             return;
                         }
                     } else {
-                        $message = __( 'The location update failed.', 'events-made-easy' );
+                        $message = eme_message_error_div( __( 'The location update failed.', 'events-made-easy' ), 1 );
                     }
                 }
                 eme_locations_table( $message );
             } else {
                 // validation failed, show why and return to the edit
-                $message                         = $validation_result;
+                $message                         = eme_message_error_div( $validation_result, 1 );
                 $location['location_attributes'] = eme_json_decode_safe( $location_attributes );
                 $location['location_properties'] = eme_json_decode_safe( $location_properties );
                 eme_locations_edit_layout( $location, $message );
@@ -364,11 +364,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
 ?>
     <div class="wrap">
-    <?php if ( $message != '' ) { ?>
-        <div id="message" class="notice notice-success is-dismissible inline">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-        </div>
-    <?php } ?>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
     <div id="eme-location-changed" class='notice notice-success is-dismissible eme-hidden'>
         <p><?php esc_html_e( 'The location details have changed. Please verify the coordinates and press Save when done', 'events-made-easy' ); ?></p>
     </div>
@@ -843,11 +839,7 @@ function eme_locations_table( $message = '' ) {
     <?php endif; ?>
 
         <h1><?php esc_html_e( 'Manage locations', 'events-made-easy' ); ?></h1>
-        <?php if ( $message != '' ) { ?>
-            <div id="message" class="notice notice-success is-dismissible">
-                <p><?php echo wp_kses_post( $message ); ?></p>
-            </div>
-        <?php } ?>
+        <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
     <form action="#" method="post">
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
@@ -3160,7 +3152,7 @@ function eme_ajax_manage_locations() {
                     }
                 }
                 $fTableResult['Result']      = 'OK';
-                $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Locations deleted', 'events-made-easy' ) );
+                $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Locations deleted', 'events-made-easy' ) );
                 break;
         }
     }

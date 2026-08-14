@@ -118,9 +118,9 @@ function eme_attendances_table_layout( $message = '' ) {
 			$person_id       = intval( $_POST['person_id'] );
 			$attendance_date = eme_sanitize_request( $_POST['attendance_actualdate'] );
 			eme_db_insert_attendance( 'manual', $person_id, $attendance_date );
-			$message = __( 'Attendance record added', 'events-made-easy' );
+			$message = eme_message_ok_div( __( 'Attendance record added', 'events-made-easy' ), 1 );
 		} else {
-			$message = __( 'You have no right to add attendance records!', 'events-made-easy' );
+			$message = eme_message_error_div( __( 'You have no right to add attendance records!', 'events-made-easy' ), 1 );
 		}
 	}
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -129,6 +129,9 @@ function eme_attendances_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <h1>" . esc_html__( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
+         "
+         . $message //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML
+         . "
 	 <form action='#' method='post'>"
          . $nonce_field //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML
          . "
@@ -143,12 +146,6 @@ function eme_attendances_table_layout( $message = '' ) {
          <h1>" . esc_html__( 'Consult attendances', 'events-made-easy' ) . '</h1>
          <p>' . esc_html__( 'If a RSVP or member QRCODE is scanned by someone with sufficent rights, an attendance record will be added in this table.', 'events-made-easy' ) . '</p>';
 
-	if ( $message != '' ) {
-			echo "
-            <div id='message' class='notice notice-success is-dismissible'>
-               <p>" . wp_kses_post( $message ) . "</p>
-            </div>";
-	}
 	$att_types = eme_attendance_types();
 	?>
 	<form action="#" method="post">
@@ -302,7 +299,7 @@ function eme_ajax_action_attendances_delete( $ids ) {
 	eme_delete_events( $ids );
 	$ajaxResult            = [];
 	$ajaxResult['Result']      = 'OK';
-	$ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Events deleted', 'events-made-easy' ) );
+	$ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Events deleted', 'events-made-easy' ) );
 	print wp_json_encode( $ajaxResult );
 }
 ?>

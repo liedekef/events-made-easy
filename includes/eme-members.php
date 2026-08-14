@@ -816,10 +816,14 @@ function eme_members_page() {
     if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addmember' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-            $res     = eme_add_update_member();
-            $message = $res[0];
+            $res = eme_add_update_member();
+            if ( $res[2] ) {
+                $message = eme_message_ok_div( $res[0], 1 );
+            } else {
+                $message = eme_message_error_div( $res[0], 1 );
+            }
         } else {
-            $message = __( 'You have no right to manage members!', 'events-made-easy' );
+            $message = eme_message_error_div(__( 'You have no right to manage members!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editmember' ) {
         $member_id = intval( $_POST['member_id'] );
@@ -828,10 +832,14 @@ function eme_members_page() {
         $wp_id     = eme_get_wpid_by_personid( $member['person_id'] );
         if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_member' ) ) && $wp_id == $current_userid ) ) ) {
             check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-            $res     = eme_add_update_member( $member_id, $send_mail );
-            $message = $res[0];
+            $res = eme_add_update_member( $member_id, $send_mail );
+            if ( $res[2] ) {
+                $message = eme_message_ok_div( $res[0], 1 );
+            } else {
+                $message = eme_message_error_div( $res[0], 1 );
+            }
         } else {
-            $message = __( 'You have no right to edit this member!', 'events-made-easy' );
+            $message = eme_message_error_div(__( 'You have no right to edit this member!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_member' ) {
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
@@ -840,7 +848,7 @@ function eme_members_page() {
             eme_member_edit_layout( $member );
             return;
         } else {
-            $message = __( 'You have no right to manage members!', 'events-made-easy' );
+            $message = eme_message_error_div(__( 'You have no right to manage members!', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_member' && isset( $_GET['member_id'] ) ) {
         $member_id = intval( $_GET['member_id'] );
@@ -854,7 +862,7 @@ function eme_members_page() {
             }
             return;
         } else {
-            $message = __( 'You have no right to manage members!', 'events-made-easy' );
+            $message = eme_message_error_div(__( 'You have no right to manage members!', 'events-made-easy' ), 1);
         }
     }
     eme_manage_members_layout( $message );
@@ -863,22 +871,23 @@ function eme_members_page() {
 function eme_memberships_page() {
     $message = '';
     if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
-        $message = __( 'You have no right to manage memberships!', 'events-made-easy' );
+        $message = eme_message_error_div(__( 'You have no right to manage memberships!', 'events-made-easy' ), 1);
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addmembership' ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         [$membership_id, $res_text] = eme_add_update_membership();
         if ( $membership_id ) {
             $message = __( 'Membership added', 'events-made-easy' );
+            if ( ! empty( $res_text ) ) {
+                $message .= '<br>' . $res_text;
+            }
+            $message = eme_message_ok_div( $message, 1 );
             if ( get_option( 'eme_stay_on_edit_page' ) || ! empty( $res_text ) ) {
                 $membership = eme_get_membership( $membership_id );
-                if ( ! empty( $res_text ) ) {
-                    $message .= "<br>$res_text";
-                }
                 eme_membership_edit_layout( $membership, $message );
                 return;
             }
         } else {
-            $message = __( 'Problem detected while adding membership', 'events-made-easy' );
+            $message = eme_message_error_div(__( 'Problem detected while adding membership', 'events-made-easy' ), 1);
         }
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editmembership' ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -886,16 +895,17 @@ function eme_memberships_page() {
         [$res, $res_text] = eme_add_update_membership( $membership_id );
         if ( $res ) {
             $message = __( 'Membership updated', 'events-made-easy' );
+            if ( ! empty( $res_text ) ) {
+                $message .= '<br>' . $res_text;
+            }
+            $message = eme_message_ok_div( $message, 1 );
             if ( get_option( 'eme_stay_on_edit_page' ) || ! empty( $res_text ) ) {
                 $membership = eme_get_membership( $membership_id );
-                if ( ! empty( $res_text ) ) {
-                    $message .= "<br>$res_text";
-                }
                 eme_membership_edit_layout( $membership, $message );
                 return;
             }
         } else {
-            $message    = __( 'Problem detected while updating membership', 'events-made-easy' );
+            $message    = eme_message_error_div(__( 'Problem detected while updating membership', 'events-made-easy' ), 1);
             $membership = eme_get_membership( $membership_id );
             eme_membership_edit_layout( $membership, $message );
             return;
@@ -921,12 +931,14 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
     $payment_id    = 0;
     $membership_id = 0;
     $transfer      = 0;
+    $ok            = 0;
     if ( ! empty( $_POST['membership_id'] ) ) {
         $membership_id = intval( $_POST['membership_id'] );
     } else {
         $res = [
             0 => __( 'No valid membership selected!', 'events-made-easy' ),
-            1 => 0
+            1 => 0,
+            2 => $ok
         ];
         return $res;
     }
@@ -1009,12 +1021,22 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             if ( $member['related_member_id'] > 0 ) {
                 // make sure we don't link to ourselves
                 if ( $member_id && $member['related_member_id'] == $member_id ) {
-                    return __( 'Linking to yourself is not allowed.', 'events-made-easy' );
+                    $res = [
+                        0 => __( 'Linking to yourself is not allowed.', 'events-made-easy' ),
+                        1 => 0,
+                        2 => 0
+                    ];
+                    return $res;
                 }
                 $related_member = eme_get_member( $member['related_member_id'] );
                 // if the related member is also already related to someone else: stop here
                 if ( ! empty( $related_member['related_member_id'] ) ) {
-                    return __( "The related family member you're trying to set already belongs to another family account, so this is not allowed.", 'events-made-easy' );
+                    $res = [
+                        0 => __( "The related family member you're trying to set already belongs to another family account, so this is not allowed.", 'events-made-easy' ),
+                        1 => 0,
+                        2 => 0
+                    ];
+                    return $res;
                 }
                 $membership_id        = $related_member['membership_id'];
                 $member['start_date'] = $related_member['start_date'];
@@ -1033,7 +1055,8 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
             $res = [
                 0 => __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", "events-made-easy" ),
-                1 => 0
+                1 => 0,
+                2 => $ok
             ];
             return $res;
         }
@@ -1045,6 +1068,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         // existing member, all person info remains unchanged
         $res = eme_db_update_member( $member_id, $member, $membership );
         if ( $res ) {
+            $ok              = 1;
             $member          = eme_get_member( $member_id );
             $upload_failures = eme_upload_files( $member_id, 'members' );
             // upload failures: in the backend, just show them, in the frontend: only show them and delete the member again
@@ -1164,6 +1188,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                 }
                 $member_id = eme_db_insert_member( $member, $membership );
                 if ( $member_id ) {
+                    $ok              = 1;
                     $upload_failures = eme_upload_files( $member_id, 'members' );
                     // upload failures: in the backend, just show them, in the frontend: only show them and delete the member again
                     if ( ! empty( $upload_failures ) ) {
@@ -1242,6 +1267,8 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
                             do_action( 'eme_insert_member_action', $member );
                         }
                     }
+                } else {
+                    $result = __( 'Problem detected while adding member', 'events-made-easy' );
                 }
             }
         }
@@ -1250,7 +1277,8 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
     }
     $res = [
         0 => $result,
-        1 => $payment_id
+        1 => $payment_id,
+        2 => $ok
     ];
     return $res;
 }
@@ -1790,12 +1818,6 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 function eme_membership_edit_layout( $membership, $message = '' ) {
     global $plugin_page;
 
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
-
     if ( ! isset( $membership['membership_id'] ) ) {
         $is_new_membership = 1;
     } else {
@@ -1813,12 +1835,8 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
     }
 ?>
         </h1>
+        <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
-        <div id="message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-            <p><?php echo wp_kses_post( $message ); ?></p>
-        </div>
-
-        <div id="ajax-response"></div>
         <form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>"  enctype="multipart/form-data" class="validate">
         <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
         <?php if ( $is_new_membership == 1 ) { ?>
@@ -3172,19 +3190,11 @@ function eme_manage_members_layout( $message ) {
     global $plugin_page;
 
     $memberships     = eme_get_memberships();
-
-    if ( empty( $message ) ) {
-        $hidden_class = 'eme-hidden';
-    } else {
-        $hidden_class = '';
-    }
 ?>
 <div class="wrap nosubsub">
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
-    <div id="members-message" class="notice notice-success is-dismissible inline <?php echo $hidden_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded CSS class string ?>">
-        <p><?php echo wp_kses_post( $message ); ?></p>
-    </div>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new member', 'events-made-easy' ); ?></h1>
@@ -3225,11 +3235,7 @@ function eme_manage_memberships_layout( $message ) {
     <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
 
-<?php
-    if ( ! empty( $message ) ) {
-        print '<div class="notice notice-success is-dismissible inline"><p>' . wp_kses_post( $message ) . '</p></div>';
-    }
-?>
+    <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new membership definition', 'events-made-easy' ); ?></h1>
@@ -6508,7 +6514,7 @@ function eme_ajax_memberships_list() {
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         $ajaxResult['Result']      = 'ERROR';
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
@@ -6626,7 +6632,7 @@ function eme_ajax_members_list( ) {
 
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         $ajaxResult['Result']      = 'ERROR';
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
         wp_die();
     }
@@ -6766,7 +6772,7 @@ function eme_ajax_members_snapselect() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-        print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) ) ] );
+        print wp_json_encode( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) ) ] );
         wp_die();
     }
 
@@ -6825,12 +6831,12 @@ function eme_ajax_store_members_query() {
         $group['search_terms'] = eme_json_encode_safe( $search_terms );
         $new_group_id = eme_db_insert_group($group);
         if ($new_group_id) {
-            $fTableResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Dynamic group added', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_ok_div( __( 'Dynamic group added', 'events-made-easy' ) );
         } else {
-            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There was a problem adding the group', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem adding the group', 'events-made-easy' ) );
         }
     } else {
-        $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Please enter a name for the group', 'events-made-easy' ) );
+        $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Please enter a name for the group', 'events-made-easy' ) );
     }
     print wp_json_encode( $fTableResult );
     wp_die();
@@ -6847,7 +6853,7 @@ function eme_ajax_manage_members() {
         $ids_arr = explode( ',', $ids );
         if ( ! eme_is_integer_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             $fTableResult['Result']      = 'ERROR';
-            $fTableResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+            $fTableResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
             print wp_json_encode( $fTableResult );
             wp_die();
         }
@@ -6889,7 +6895,7 @@ function eme_ajax_manage_members() {
                 eme_ajax_action_send_member_mails( $ids_arr, $template_id_subject, $template_id );
             } else {
                 $ajaxResult                = [];
-                $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Content of subject or body was empty, no mail has been sent.', 'events-made-easy' ) );
+                $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Content of subject or body was empty, no mail has been sent.', 'events-made-easy' ) );
                 $ajaxResult['Result']      = 'ERROR';
                 print wp_json_encode( $ajaxResult );
                 wp_die();
@@ -6927,7 +6933,7 @@ function eme_ajax_manage_memberships() {
         $ids_arr = explode( ',', $ids );
         if ( ! eme_is_integer_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             $ajaxResult['Result']      = 'ERROR';
-            $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Access denied!', 'events-made-easy' ) );
+            $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
             wp_die();
         }
@@ -6943,7 +6949,7 @@ function eme_ajax_manage_memberships() {
                 eme_delete_membership( $membership_id );
             }
             $ajaxResult['Result']      = 'OK';
-            $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Memberships deleted.', 'events-made-easy' ) );
+            $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Memberships deleted.', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
             break;
         }
@@ -6958,7 +6964,7 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
     $body           = eme_get_template_format_plain( $body_template_id );
     $ajaxResult     = [];
     if ( eme_is_empty_string( $subject ) || eme_is_empty_string( $body ) ) {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'Content of subject or body was empty, no mail has been sent.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Content of subject or body was empty, no mail has been sent.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
         print wp_json_encode( $ajaxResult );
         return;
@@ -6982,10 +6988,10 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
     }
     $ajaxResult = [];
     if ( $mail_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The mail has been sent.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The mail has been sent.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There were some problems while sending mail.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -6999,7 +7005,7 @@ function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
             eme_ajax_action_trash_people( join( ',', $person_ids ) );
         } else {
             $ajaxResult['Result']      = 'ERROR';
-            $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'No corresponding persons found.', 'events-made-easy' ) );
+            $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'No corresponding persons found.', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
         }
     } else {
@@ -7009,7 +7015,7 @@ function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
             eme_delete_member( $member_id, 1 );
         }
         $ajaxResult['Result']      = 'OK';
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'Members deleted.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'Members deleted.', 'events-made-easy' ) );
         print wp_json_encode( $ajaxResult );
     }
 }
@@ -7035,13 +7041,13 @@ function eme_ajax_action_set_member_unpaid( $ids_arr, $action, $send_mail ) {
     }
     $ajaxResult = [];
     if ( $mails_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_warning_div( esc_html__( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -7061,10 +7067,10 @@ function eme_ajax_action_resend_paid_member( $ids_arr, $action ) {
     }
     $ajaxResult = [];
     if ( $mails_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There were some problems while sending mail.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -7074,7 +7080,7 @@ add_action( 'wp_ajax_eme_delete_dyndata_occurence', 'eme_delete_dyndata_occurenc
 function eme_delete_dyndata_occurence_ajax() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'No permission', 'events-made-easy' ) ) ] );
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'No permission', 'events-made-easy' ) ) ] );
     }
 
     global $wpdb;
@@ -7085,7 +7091,7 @@ function eme_delete_dyndata_occurence_ajax() {
     $occurence = intval( $_POST['occurence'] ?? 0 );
 
     if ( ! $member_id || ! $grouping ) {
-        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( esc_html__( 'Invalid parameters', 'events-made-easy' ) ) ] );
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => eme_message_error_div( __( 'Invalid parameters', 'events-made-easy' ) ) ] );
     }
 
     // 1. Delete all answers for this (member, grouping, occurence)
@@ -7104,7 +7110,7 @@ function eme_delete_dyndata_occurence_ajax() {
     );
 
     wp_cache_delete( "eme_member $member_id" );
-    wp_send_json( [ 'Result' => 'OK', 'htmlmessage' => eme_message_ok_div( esc_html__( 'Occurrence deleted and remaining occurrences renumbered.', 'events-made-easy' ) ) ] );
+    wp_send_json( [ 'Result' => 'OK', 'htmlmessage' => eme_message_ok_div( __( 'Occurrence deleted and remaining occurrences renumbered.', 'events-made-easy' ) ) ] );
 }
 
 function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
@@ -7161,7 +7167,7 @@ function eme_ajax_action_payment_membership( $ids_arr, $send_mail ) {
     }
 
     $ajaxResult                = [];
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
     $ajaxResult['Result']      = 'OK';
     print wp_json_encode( $ajaxResult );
 }
@@ -7192,13 +7198,13 @@ function eme_ajax_action_stop_membership( $ids_arr, $action, $send_mail ) {
     }
     $ajaxResult = [];
     if ( $mails_ok && $action_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } elseif ( $action_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_warning_div( esc_html__( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_warning_div( __( 'The action has been executed successfully but there were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'WARNING';
     } else {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -7217,10 +7223,10 @@ function eme_ajax_action_resend_pending_member( $ids_arr, $action ) {
     }
     $ajaxResult = [];
     if ( $mails_ok ) {
-        $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'OK';
     } else {
-        $ajaxResult['htmlmessage'] = eme_message_error_div( esc_html__( 'There were some problems while sending mail.', 'events-made-easy' ) );
+        $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'There were some problems while sending mail.', 'events-made-easy' ) );
         $ajaxResult['Result']      = 'ERROR';
     }
     print wp_json_encode( $ajaxResult );
@@ -7234,7 +7240,7 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
         }
     }
     $ajaxResult                = [];
-    $ajaxResult['htmlmessage'] = eme_message_ok_div( esc_html__( 'The action has been executed successfully.', 'events-made-easy' ) );
+    $ajaxResult['htmlmessage'] = eme_message_ok_div( __( 'The action has been executed successfully.', 'events-made-easy' ) );
     $ajaxResult['Result']      = 'OK';
     print wp_json_encode( $ajaxResult );
 }

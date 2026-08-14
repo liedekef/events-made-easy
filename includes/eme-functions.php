@@ -4443,19 +4443,19 @@ function eme_remove_attrs($attrs_to_remove, $attributes) {
 }
 
 function eme_message_div($message) {
-    return "<div><p>" .$message.'</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
+    return "<div>" .$message.'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- managed generated message string
 }
 function eme_message_ok_div($message, $is_dismissible = 0) {
     $dismiss_class = $is_dismissible ? "is-dismissible inline" : "";
-    return "<div class='notice notice-success $dismiss_class eme-message-admin'><p>" . wp_kses_post( $message ) . '</p></div>';
+    return "<div class='notice notice-success $dismiss_class eme-message-admin'>" . wp_kses_post( $message ) . '</div>';
 }
 function eme_message_warning_div($message, $is_dismissible = 0) {
     $dismiss_class = $is_dismissible ? "is-dismissible inline" : "";
-    return "<div class='notice notice-warning $dismiss_class eme-message-admin'><p>" . wp_kses_post( $message ) . '</p></div>';
+    return "<div class='notice notice-warning $dismiss_class eme-message-admin'>" . wp_kses_post( $message ) . '</div>';
 }
 function eme_message_error_div($message, $is_dismissible = 0) {
     $dismiss_class = $is_dismissible ? "is-dismissible inline" : "";
-    return "<div class='notice notice-error $dismiss_class eme-message-admin'><p>" . wp_kses_post( $message ) . '</p></div>';
+    return "<div class='notice notice-error $dismiss_class eme-message-admin'>" . wp_kses_post( $message ) . '</div>';
 }
 
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {

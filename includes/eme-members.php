@@ -1914,7 +1914,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id='startdate'>
     <td><label for="start_date"><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></label></td>
-        <input type='text' readonly='readonly' name='start_date' id='start_date' data-date='<?php echo esc_attr( eme_js_datetime( $membership['start_date'] ) ); ?>' class='eme_formfield_fdate'>
+    <td><input type='text' readonly='readonly' name='start_date' id='start_date' data-date='<?php echo esc_attr( eme_js_datetime( $membership['start_date'] ) ); ?>' class='eme_formfield_fdate'>
     </td>
     </tr>
     <tr>

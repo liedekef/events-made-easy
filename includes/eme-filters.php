@@ -153,6 +153,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$loc_post_name             = 'eme_loc_filter';
 	$cat_post_name             = 'eme_cat_filter';
 	$city_post_name            = 'eme_city_filter';
+	$state_post_name           = 'eme_state_filter';
 	$country_post_name         = 'eme_country_filter';
 	$scope_post_name           = 'eme_scope_filter';
 	$customfield_post_name     = 'eme_customfield_filter';
@@ -160,6 +161,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$selected_scope    = eme_sanitize_request( $_REQUEST[ $scope_post_name ] ?? '' );
 	$selected_location = eme_sanitize_request( $_REQUEST[ $loc_post_name ] ?? 0 );
 	$selected_city     = eme_sanitize_request( $_REQUEST[ $city_post_name ] ?? 0 );
+	$selected_state    = eme_sanitize_request( $_REQUEST[ $state_post_name ] ?? 0 );
 	$selected_country  = eme_sanitize_request( $_REQUEST[ $country_post_name ] ?? 0 );
 	$selected_category = 0;
 	if (isset( $_REQUEST[ $cat_post_name ] )) {
@@ -290,11 +292,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$label = __( 'Select a city', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
-			$cities     = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
-			if ( ! empty( $cities ) ) {
+			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
+			if ( ! empty( $locations ) ) {
 				$city_list = [];
-				foreach ( $cities as $this_city ) {
-					$id               = eme_translate( $this_city['location_city'] );
+				foreach ( $locations as $this_loc ) {
+					$id               = eme_translate( $this_loc['location_city'] );
 					$city_list[ $id ] = $id;
 				}
 				$city_list = eme_array_remove_empty_elements( $city_list );
@@ -311,6 +313,40 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 					}
 				}
 			}
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_STATES(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
+				$eventful = 1;
+			}
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[2], 1, -1 );
+			} elseif ( $multiple ) {
+				$label = __( 'Select one or more states', 'events-made-easy' );
+			} else {
+				$label = __( 'Select a state', 'events-made-easy' );
+			}
+			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
+			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
+			if ( ! empty( $locations ) ) {
+				$states_list = [];
+				foreach ( $locations as $this_loc ) {
+					$id                 = eme_translate( $this_loc['location_state'] );
+					$states_list[ $id ] = $id;
+				}
+				$states_list = eme_array_remove_empty_elements( $states_list );
+				if ( ! empty( $states_list ) ) {
+					asort( $states_list );
+					if ( $multiple ) {
+						if ( $old_select > 1 ) {
+							$replacement = eme_ui_multiselect( $selected_state, $state_post_name, $states_list, $multisize, $label, 0, '', $aria_label );
+						} else {
+							$replacement = eme_ui_multiselect( $selected_state, $state_post_name, $states_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+						}
+					} else {
+						$replacement = eme_ui_select( $selected_state, $state_post_name, $states_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
+					}
+				}
+			}
 		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_COUNTRIES(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
@@ -324,11 +360,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$label = __( 'Select a country', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
-			$countries  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
-			if ( ! empty( $countries ) ) {
+			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
+			if ( ! empty( $locations ) ) {
 				$country_list = [];
-				foreach ( $countries as $this_country ) {
-					$id                  = eme_translate( $this_country['location_country'] );
+				foreach ( $locations as $this_loc ) {
+					$id                  = eme_translate( $this_loc['location_country'] );
 					$country_list[ $id ] = $id;
 				}
 				$country_list = eme_array_remove_empty_elements( $country_list );

@@ -990,6 +990,18 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
                 $location_id = -1;
             }
         }
+        if ( ! empty( $_REQUEST['eme_state_filter'] ) ) {
+            $states  = eme_sanitize_request( $_REQUEST['eme_state_filter'] );
+            $tmp_ids = eme_get_state_location_ids( $states );
+            if ( empty( $location_id_arr ) ) {
+                $location_id_arr = $tmp_ids;
+            } else {
+                $location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+            }
+            if ( empty( $location_id_arr ) ) {
+                $location_id = -1;
+            }
+        }
         if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
             $countries = eme_sanitize_request( $_REQUEST['eme_country_filter'] );
             $tmp_ids   = eme_get_country_location_ids( $countries );
@@ -1077,7 +1089,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
                         $category_conditions[] = " location_category_ids=''";
                     }
                 }
-                $conditions [] = '(' . implode( ' OR', $category_conditions ) . ')';
+                $conditions [] = '(' . implode( ' OR ', $category_conditions ) . ')';
             } elseif ( preg_match( '/\+/', $category ) ) {
                 $category_arr        = explode( '+', $category );
                 $category_conditions = [];
@@ -1237,9 +1249,30 @@ function eme_get_city_location_ids( $cities ) {
         foreach ( $cities as $city ) {
             $city_conditions[] = $wpdb->prepare( 'location_city = %s', $city);
         }
-        $conditions = '(' . implode( ' OR', $city_conditions ) . ')';
+        $conditions = '(' . implode( ' OR ', $city_conditions ) . ')';
     } elseif ( ! empty( $cities ) ) {
         $conditions = $wpdb->prepare( 'location_city = %s', $cities);
+    }
+    if ( ! empty( $conditions ) ) {
+        $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
+        $location_ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+    }
+    return $location_ids;
+}
+
+function eme_get_state_location_ids( $states ) {
+    global $wpdb;
+    $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+    $location_ids    = [];
+    $conditions      = '';
+    if ( is_array( $states ) ) {
+        $state_conditions = [];
+        foreach ( $states as $state ) {
+            $state_conditions[] = $wpdb->prepare( 'location_state = %s', $state);
+        }
+        $conditions = '(' . implode( ' OR ', $state_conditions ) . ')';
+    } elseif ( ! empty( $states ) ) {
+        $conditions = $wpdb->prepare( 'location_state = %s', $states);
     }
     if ( ! empty( $conditions ) ) {
         $sql          = "SELECT DISTINCT location_id FROM $locations_table WHERE " . $conditions;
@@ -1258,7 +1291,7 @@ function eme_get_country_location_ids( $countries ) {
         foreach ( $countries as $country ) {
             $country_conditions[] = $wpdb->prepare( 'location_country = %s', $country);
         }
-        $conditions = '(' . implode( ' OR', $country_conditions ) . ')';
+        $conditions = '(' . implode( ' OR ', $country_conditions ) . ')';
     } elseif ( ! empty( $countries ) ) {
         $conditions = $wpdb->prepare( 'location_country = %s', $countries);
     }

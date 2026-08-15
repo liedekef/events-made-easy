@@ -6715,7 +6715,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             unset ($event_status_array[0]); // remove the trash status for non-trashed events
         }
         echo eme_ui_select( $event['event_status'], 'event_status', $event_status_array, __( 'Event Status', 'events-made-easy' ));
-        esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form.', 'events-made-easy' );
+        esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the status for events submitted via the frontend submit form.', 'events-made-easy' );
 ?>
                         </p>
                     </div>
@@ -9559,7 +9559,7 @@ function eme_admin_enqueue_js() {
         $translation_array = [
             'translate_plugin_url'         => esc_url(EME_PLUGIN_URL),
             'translate_ajax_url'           => esc_url( admin_url( 'admin-ajax.php' ) ),
-            'translate_selectstate'        => __( 'Select state/province', 'events-made-easy' ),
+            'translate_selectstate'        => __( 'Select state', 'events-made-easy' ),
             'translate_selectcountry'      => __( 'Select country', 'events-made-easy' ),
             'translate_optionselect'       => __( 'Make your choice', 'events-made-easy' ),
             'translate_frontendnonce'      => wp_create_nonce( 'eme_frontend' ),

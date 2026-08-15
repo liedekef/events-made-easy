@@ -564,7 +564,7 @@ function eme_meta_box_div_location_details( $location ) {
             <td><input name="location_city" id="location_city" type="text" value="<?php echo esc_html( $location['location_city'] ); ?>" size="40"></td>
             </tr>
             <tr>
-            <td><label for="location_state"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
+            <td><label for="location_state"><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
             <td><input name="location_state" id="location_state" type="text" value="<?php echo esc_html( $location['location_state'] ); ?>" size="40"></td>
             </tr>
             <tr>

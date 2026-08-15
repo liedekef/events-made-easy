@@ -56,23 +56,27 @@ function eme_countries_page() {
 			} elseif ( $state_id ) {
 				$update_result = eme_db_update_state( $state_id, $state );
 				if ( $update_result !== false ) {
+                    // translators: "state" refers to a geographical region (e.g., province, canton, department)
 					$message = eme_message_ok_div( __( 'Successfully edited the state', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_states_edit_layout( $state_id, $message );
 						return;
 					}
 				} else {
+                    // translators: "state" refers to a geographical region (e.g., province, canton, department)
 					$message = eme_message_error_div( __( 'There was a problem editing the state, please try again.', 'events-made-easy' ), 1 );
 				}
 			} else {
 				$new_id = eme_db_insert_state( $state );
 				if ( $new_id ) {
+                    // translators: "state" refers to a geographical region (e.g., province, canton, department)
 					$message = eme_message_ok_div( __( 'Successfully added the state', 'events-made-easy' ), 1 );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_states_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
+                    // translators: "state" refers to a geographical region (e.g., province, canton, department)
 					$message = eme_message_error_div( __( 'There was a problem adding the state, please try again.', 'events-made-easy' ), 1 );
 				}
 			}
@@ -174,11 +178,11 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
 	}
 	?>
 <div class="wrap nosubsub">
-<h1> <?php esc_html_e( 'Manage countries and states', 'events-made-easy' ); ?> </h1>
+<h1> <?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Manage countries and states', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
 	<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
 
-	<p><?php esc_html_e( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ); ?></p>
+	<p><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ); ?></p>
 	<p><b><?php esc_html_e( 'This is NOT used for event locations, only for personal info of people.', 'events-made-easy' ); ?></b></p>
 
 	<div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
@@ -220,16 +224,16 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
 
 	<!-- ==================== STATES TAB ==================== -->
 	<div class="eme-tab-content" id="tab-states">
-		<h1><?php esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>
+		<h1><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>
 		<div class="wrap">
 		<form method="post" action="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page" ) ); ?>">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 			<input type="hidden" name="eme_admin_action" value="add_state">
-			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add state', 'events-made-easy' ); ?>">
+			<input type="submit" class="button-primary" name="submit" value="<?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Add state', 'events-made-easy' ); ?>">
 		</form>
 		</div>
 
-		<h1><?php esc_html_e( 'Manage states', 'events-made-easy' ); ?></h1>
+		<h1><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Manage states', 'events-made-easy' ); ?></h1>
 
 	<?php // translators: %s is the URL for more information on state codes ?>
 	<?php printf( wp_kses_post( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ) ), esc_url( 'https://wikipedia.org/wiki/ISO_3166-2' ) ); ?>
@@ -241,7 +245,7 @@ function eme_countries_table( $message = '', $active_tab = '' ) {
 	<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
 	<select id="eme_admin_action_states" name="eme_admin_action_states">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-	<option value="deleteStates"><?php esc_html_e( 'Delete selected states', 'events-made-easy' ); ?></option>
+	<option value="deleteStates"><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Delete selected states', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="StatesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -260,17 +264,23 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 	$countries = eme_get_countries_lang();
 	if ( ! empty( $state_id ) ) {
 		$state         = eme_get_state( $state_id );
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$h1_string     = __( 'Edit state', 'events-made-easy' );
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$action_string = __( 'Update state', 'events-made-easy' );
 	} elseif ( isset( $_GET['id'] ) ) {
 		$state_id      = intval( $_GET['id'] );
 		$state         = eme_get_state( $state_id );
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$h1_string     = __( 'Edit state', 'events-made-easy' );
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$action_string = __( 'Update state', 'events-made-easy' );
 	} else {
 		$state_id      = 0;
 		$state         = eme_new_state();
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$h1_string     = __( 'Create state', 'events-made-easy' );
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$action_string = __( 'Add state', 'events-made-easy' );
 	}
 
@@ -284,6 +294,7 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 	if ( $message != '' ) {
 		$layout .= $message;
 	}
+        /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
 		$layout .= "
 
       <form name='edit_states' id='edit_states' method='post' action='" . esc_url( admin_url( "admin.php?page=$plugin_page" ) ) . "'>

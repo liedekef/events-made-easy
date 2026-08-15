@@ -99,6 +99,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.5  (2026/08/) =
+* Filter fixes
+* Added filter #_FILTER_STATES
+
 = 3.2.4  (2026/08/14) =
 * Refactored "Remember Me" functionality: now works automatically when #_REMEMBERME is present; no option needed.
 * Removed eme_use_is_page_for_title option; title filter now always uses standard WordPress behavior (add filter 'eme_use_is_page_for_title' to restore old behavior).

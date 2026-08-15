@@ -532,7 +532,7 @@ $edit_title = esc_attr__( 'Edit person', 'events-made-easy' );
     <input type='hidden' name='page' value='eme-cleanup'>
     <input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
     <br>
-    <input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
+    <input id="other_data" type="checkbox" value="1" name="other_data"> <?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
     <input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return confirm('<?php echo esc_attr( $areyousure ); ?>');">
     </form>
 <br><br>

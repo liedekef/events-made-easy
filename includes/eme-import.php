@@ -89,7 +89,7 @@ function eme_import_page() {
 		<div class="eme-tab" data-tab="tab-import-discounts"><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></div>
 		<div class="eme-tab" data-tab="tab-import-payments"><?php esc_html_e( 'Payments', 'events-made-easy' ); ?></div>
 		<?php } ?>
-		<div class="eme-tab" data-tab="tab-import-countries"><?php esc_html_e( 'Countries/States', 'events-made-easy' ); ?></div>
+		<div class="eme-tab" data-tab="tab-import-countries"><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Countries/States', 'events-made-easy' ); ?></div>
 		</div>
 
 		<!-- ==================== EVENTS TAB ==================== -->
@@ -275,7 +275,7 @@ function eme_import_page() {
 
 		<hr>
 
-		<h2><?php esc_html_e( 'Import States', 'events-made-easy' ); ?></h2>
+		<h2><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Import States', 'events-made-easy' ); ?></h2>
 		<form id="states-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
 			<input type="file" name="eme_csv">
@@ -286,11 +286,11 @@ function eme_import_page() {
 			<input type="hidden" name="eme_admin_action" value="do_importstates">
 			<input type="submit" value="<?php esc_attr_e( 'Import', 'events-made-easy' ); ?>" class="button-primary action">
 		</form>
-		<p><?php esc_html_e( 'Import states from a CSV file. Required columns: code, name, and either country_id (only valid on this same site) or country_alpha2 (portable across sites; optionally add country_lang to disambiguate).', 'events-made-easy' ); ?></p>
-		<h2><?php esc_html_e( 'Export States', 'events-made-easy' ); ?></h2>
+		<p><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Import states from a CSV file. Required columns: code, name, and either country_id (only valid on this same site) or country_alpha2 (portable across sites; optionally add country_lang to disambiguate).', 'events-made-easy' ); ?></p>
+		<h2><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Export States', 'events-made-easy' ); ?></h2>
 		<p>
 		<a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-import&eme_admin_action=export_states' ), 'eme_admin_export', 'eme_admin_nonce' ) ); ?>">
-			<?php esc_html_e( 'Download all states as CSV', 'events-made-easy' ); ?>
+			<?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Download all states as CSV', 'events-made-easy' ); ?>
 		</a>
 		</p>
 		<p><i><?php esc_html_e( 'The export identifies the country by alpha_2 (and language, if relevant) rather than the internal country_id, so this file can be safely imported into a different EME install.', 'events-made-easy' ); ?></i></p>

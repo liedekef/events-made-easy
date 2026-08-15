@@ -321,8 +321,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				// remove { and } (first and last char of second match)
 				$label = substr( $matches[2], 1, -1 );
 			} elseif ( $multiple ) {
+                // translators: "state" refers to a geographical region (e.g., province, canton, department)
 				$label = __( 'Select one or more states', 'events-made-easy' );
 			} else {
+                // translators: "state" refers to a geographical region (e.g., province, canton, department)
 				$label = __( 'Select a state', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . esc_html( $label ) . '"';

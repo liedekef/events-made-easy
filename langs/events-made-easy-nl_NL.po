@@ -4644,7 +4644,7 @@ msgstr "Selecteer Jaar"
 
 #: includes/eme-filters.php:221
 msgid "Select one or more categories"
-msgstr "Selecteer 1 of meer categorie"
+msgstr "Selecteer 1 of meer categorieën"
 
 #: includes/eme-filters.php:223
 msgid "Select a category"

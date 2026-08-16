@@ -13,7 +13,6 @@ function eme_filter_form_shortcode( $atts ) {
 		    [
 				'multiple'    => 0,
 				'multisize'   => 5,
-				'old_select'  => 0,
 				'scope_count' => 12,
 				'submit'      => 'Submit',
 				'category'    => '',
@@ -23,7 +22,6 @@ function eme_filter_form_shortcode( $atts ) {
 		    $atts
 	);
 	$multiple = filter_var( $atts['multiple'], FILTER_VALIDATE_BOOLEAN );
-	$old_select = filter_var( $atts['old_select'], FILTER_VALIDATE_BOOLEAN );
 	$multisize = intval($atts['multisize']);
 	$scope_count = intval($atts['scope_count']);
 	$template_id = intval($atts['template_id']);
@@ -44,7 +42,7 @@ function eme_filter_form_shortcode( $atts ) {
 		$submit_to_added = 1;
 	}
 
-	$content = eme_replace_filter_form_placeholders( $filter_form_format, $multiple, $multisize, $scope_count, $category, $notcategory, $old_select );
+	$content = eme_replace_filter_form_placeholders( $filter_form_format, $multiple, $multisize, $scope_count, $category, $notcategory );
 	# using the current page as action, so we can leave action empty in the html form definition
 	# this helps to keep the language and any other parameters, and works with permalinks as well
     $form_id = "eme_".eme_random_id(); // JS selectors need to start with a letter, so to be sure we prefix it
@@ -146,7 +144,7 @@ function eme_create_year_scope( $past_count, $future_count, $eventful = 0 ) {
 	return $scope;
 }
 
-function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory, $old_select ) {
+function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory ) {
 	// if one of these changes, also the eme_events.php needs changing for the "Next page" part
 	$author_post_name          = 'eme_author_filter';
 	$contact_post_name         = 'eme_contact_filter';
@@ -235,11 +233,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $cat_list ) ) {
 					asort( $cat_list );
 					if ( $multiple ) {
-						if ( $old_select ) {
-							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, '', $aria_label );
-						} else {
-							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
-						}
+                        $replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 					} else {
 						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
@@ -269,160 +263,83 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $loc_list ) ) {
 					asort( $loc_list );
 					if ( $multiple ) {
-						if ( $old_select > 1 ) {
-							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
-						} else {
-							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
-						}
+                        $replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
 					} else {
 						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
 					}
 				}
 			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_TOWNS(\{.+?\})?|#_(EVENTFUL_)?FILTER_CITIES(\{.+?\})?/', $result ) ) {
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_(TOWNS|CITIES|STATES|COUNTRIES)(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
 			}
-			if ( isset( $matches[2] ) ) {
+			// per-type config: which location field feeds the list, its post name/selected value, and default labels
+			// translators: "state" refers to a geographical region (e.g., province, canton, department)
+			$field_config = [
+				'TOWNS'     => [ 'field' => 'location_city', 'post_name' => $city_post_name, 'selected' => $selected_city, 'label_multi' => __( 'Select one or more cities', 'events-made-easy' ), 'label_single' => __( 'Select a city', 'events-made-easy' ) ],
+				'CITIES'    => [ 'field' => 'location_city', 'post_name' => $city_post_name, 'selected' => $selected_city, 'label_multi' => __( 'Select one or more cities', 'events-made-easy' ), 'label_single' => __( 'Select a city', 'events-made-easy' ) ],
+				'STATES'    => [ 'field' => 'location_state', 'post_name' => $state_post_name, 'selected' => $selected_state, 'label_multi' => __( 'Select one or more states', 'events-made-easy' ), 'label_single' => __( 'Select a state', 'events-made-easy' ) ],
+				'COUNTRIES' => [ 'field' => 'location_country', 'post_name' => $country_post_name, 'selected' => $selected_country, 'label_multi' => __( 'Select one or more countries', 'events-made-easy' ), 'label_single' => __( 'Select a country', 'events-made-easy' ) ],
+			];
+			$cfg = $field_config[ $matches[2] ];
+			if ( isset( $matches[3] ) ) {
 				// remove { and } (first and last char of second match)
-				$label = substr( $matches[2], 1, -1 );
+				$label = substr( $matches[3], 1, -1 );
 			} elseif ( $multiple ) {
-				$label = __( 'Select one or more cities', 'events-made-easy' );
+				$label = $cfg['label_multi'];
 			} else {
-				$label = __( 'Select a city', 'events-made-easy' );
+				$label = $cfg['label_single'];
 			}
-			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
-			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
-			if ( ! empty( $locations ) ) {
-				$city_list = [];
-				foreach ( $locations as $this_loc ) {
-					$id               = eme_translate( $this_loc['location_city'] );
-					$city_list[ $id ] = $id;
-				}
-				$city_list = eme_array_remove_empty_elements( $city_list );
-				if ( ! empty( $city_list ) ) {
-					asort( $city_list );
-					if ( $multiple ) {
-						if ( $old_select > 1 ) {
-							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
-						} else {
-							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
-						}
-					} else {
-						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
-					}
-				}
-			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_STATES(\{.+?\})?/', $result, $matches ) ) {
+			$aria_label  = 'aria-label="' . esc_html( $label ) . '"';
+			$locations   = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
+            $list = [];
+            if (!empty($locations)) {
+                foreach ( $locations as $loc ) {
+                    $id           = eme_translate( $loc[ $field ] );
+                    $list[ $id ]  = $id;
+                }
+                $list = eme_array_remove_empty_elements( $list );
+                if ( ! empty( $list ) ) {
+                    asort( $list );
+                }
+            }
+            if (!empty($list)) {
+                if ( $multiple ) {
+                    $replacement = eme_ui_multiselect( $selected, $post_name, $list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+                } else {
+                    $replacement = eme_ui_select( $selected, $post_name, $list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
+                }
+            }
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_(WEEKS|MONTHS|YEARS)(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
-			}
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$label = substr( $matches[2], 1, -1 );
-			} elseif ( $multiple ) {
-                // translators: "state" refers to a geographical region (e.g., province, canton, department)
-				$label = __( 'Select one or more states', 'events-made-easy' );
-			} else {
-                // translators: "state" refers to a geographical region (e.g., province, canton, department)
-				$label = __( 'Select a state', 'events-made-easy' );
-			}
-			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
-			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
-			if ( ! empty( $locations ) ) {
-				$states_list = [];
-				foreach ( $locations as $this_loc ) {
-					$id                 = eme_translate( $this_loc['location_state'] );
-					$states_list[ $id ] = $id;
-				}
-				$states_list = eme_array_remove_empty_elements( $states_list );
-				if ( ! empty( $states_list ) ) {
-					asort( $states_list );
-					if ( $multiple ) {
-						if ( $old_select > 1 ) {
-							$replacement = eme_ui_multiselect( $selected_state, $state_post_name, $states_list, $multisize, $label, 0, '', $aria_label );
-						} else {
-							$replacement = eme_ui_multiselect( $selected_state, $state_post_name, $states_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
-						}
-					} else {
-						$replacement = eme_ui_select( $selected_state, $state_post_name, $states_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
-					}
-				}
-			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_COUNTRIES(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
-				$eventful = 1;
-			}
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$label = substr( $matches[2], 1, -1 );
-			} elseif ( $multiple ) {
-				$label = __( 'Select one or more countries', 'events-made-easy' );
-			} else {
-				$label = __( 'Select a country', 'events-made-easy' );
-			}
-			$aria_label = 'aria-label="' . esc_html( $label ) . '"';
-			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
-			if ( ! empty( $locations ) ) {
-				$country_list = [];
-				foreach ( $locations as $this_loc ) {
-					$id                  = eme_translate( $this_loc['location_country'] );
-					$country_list[ $id ] = $id;
-				}
-				$country_list = eme_array_remove_empty_elements( $country_list );
-				if ( ! empty( $country_list ) ) {
-					asort( $country_list );
-					if ( $multiple ) {
-						if ( $old_select > 1 ) {
-							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
-						} else {
-							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
-						}
-					} else {
-						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
-					}
-				}
-			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_WEEKS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
-				$eventful = 1;
-			}
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$past_count = intval(substr( $matches[2], 1, -1 ));
-			} else {
-				$past_count = 0;
 			}
 			if ( isset( $matches[3] ) ) {
 				// remove { and } (first and last char of second match)
-				$future_count = intval(substr( $matches[3], 1, -1 ));
+				$past_count = intval(substr( $matches[3], 1, -1 ));
+			} else {
+				$past_count = 0;
+			}
+			if ( isset( $matches[4] ) ) {
+				// remove { and } (first and last char of second match)
+				$future_count = intval(substr( $matches[4], 1, -1 ));
 			} else {
 				$future_count = $scope_count;
 			}
 			if ( $scope_fieldcount == 0 ) {
-				$label       = __( 'Select Week', 'events-made-easy' );
-				$aria_label  = 'aria-label="' . esc_html( $label ) . '"';
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_week_scope( $past_count, $future_count, $eventful ), $label, 0, '', $aria_label );
-				++$scope_fieldcount;
-			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_MONTHS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
-				$eventful = 1;
-			}
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$past_count = intval(substr( $matches[2], 1, -1 ));
-			} else {
-				$past_count = 0;
-			}
-			if ( isset( $matches[3] ) ) {
-				// remove { and } (first and last char of second match)
-				$future_count = intval(substr( $matches[3], 1, -1 ));
-			} else {
-				$future_count = $scope_count;
-			}
-			if ( $scope_fieldcount == 0 ) {
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_month_scope( $past_count, $future_count, $eventful ) );
+				switch ( $matches[2] ) {
+					case 'WEEKS':
+						$label       = __( 'Select Week', 'events-made-easy' );
+						$aria_label  = 'aria-label="' . esc_html( $label ) . '"';
+						$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_week_scope( $past_count, $future_count, $eventful ), $label, 0, '', $aria_label );
+						break;
+					case 'MONTHS':
+						$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_month_scope( $past_count, $future_count, $eventful ) );
+						break;
+					case 'YEARS':
+						$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_year_scope( $past_count, $future_count, $eventful ) );
+						break;
+				}
 				++$scope_fieldcount;
 			}
 		} elseif ( preg_match( '/#_FILTER_MONTHRANGE/', $result ) ) {
@@ -432,44 +349,30 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				eme_enqueue_datetimepicker();
 				++$scope_fieldcount;
 			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_YEARS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
-				$eventful = 1;
-			}
+		} elseif ( preg_match( '/#_FILTER_(CONTACT|AUTHOR)(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
+			// per-type config: post name, selected value, default label and filter hook
+			$user_config = [
+				'CONTACT' => [ 'post_name' => $contact_post_name, 'selected' => $selected_contact, 'default_label' => __( 'Event contact', 'events-made-easy' ), 'hook' => 'eme_filter_searchfilter_contact' ],
+				'AUTHOR'  => [ 'post_name' => $author_post_name, 'selected' => $selected_author, 'default_label' => __( 'Event author', 'events-made-easy' ), 'hook' => 'eme_filter_searchfilter_author' ],
+			];
+			$cfg = $user_config[ $matches[1] ];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
-				$past_count = intval(substr( $matches[2], 1, -1 ));
+				$label = substr( $matches[2], 1, -1 );
 			} else {
-				$past_count = 0;
+				$label = $cfg['default_label'];
 			}
+			$args = [
+				'echo'              => 0,
+				'name'              => $cfg['post_name'],
+				'show_option_none'  => esc_html( $label ),
+				'option_none_value' => '',
+				'selected'          => $cfg['selected'],
+				'class'             => 'eme_snapselect_allow_empty',
+			];
 			if ( isset( $matches[3] ) ) {
 				// remove { and } (first and last char of second match)
-				$future_count = intval(substr( $matches[3], 1, -1 ));
-			} else {
-				$future_count = $scope_count;
-			}
-			if ( $scope_fieldcount == 0 ) {
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_year_scope( $past_count, $future_count, $eventful ) );
-				++$scope_fieldcount;
-			}
-		} elseif ( preg_match( '/#_FILTER_CONTACT(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) ) {
-				// remove { and } (first and last char of second match)
-				$label = substr( $matches[1], 1, -1 );
-			} else {
-				$label = __( 'Event contact', 'events-made-easy' );
-			}
-			$args = [
-				'echo'             => 0,
-				'name'             => $contact_post_name,
-				'show_option_none' => esc_html( $label ),
-                'option_none_value'=> '',
-				'selected'         => $selected_contact,
-				'class'            => 'eme_snapselect_allow_empty',
-			];
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$exclude = substr( $matches[2], 1, -1 );
+				$exclude = substr( $matches[3], 1, -1 );
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
 				if ( eme_is_integer_array( $exclude_arr ) ) {
@@ -477,37 +380,8 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				}
 			}
 			// other arguments can be changed via the filter
-			if ( has_filter( 'eme_filter_searchfilter_contact' ) ) {
-				$args = apply_filters( 'eme_filter_searchfilter_contact', $args );
-			}
-			$replacement = wp_dropdown_users( $args );
-		} elseif ( preg_match( '/#_FILTER_AUTHOR(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) ) {
-				// remove { and } (first and last char of second match)
-				$label = substr( $matches[1], 1, -1 );
-			} else {
-				$label = __( 'Event author', 'events-made-easy' );
-			}
-			$args = [
-				'echo'             => 0,
-				'name'             => $author_post_name,
-				'show_option_none' => esc_html( $label ),
-                'option_none_value'=> '',
-				'selected'         => $selected_author,
-				'class'            => 'eme_snapselect_allow_empty',
-			];
-			if ( isset( $matches[2] ) ) {
-				// remove { and } (first and last char of second match)
-				$exclude = substr( $matches[2], 1, -1 );
-				// check if all integers
-				$exclude_arr = explode( ',', $exclude );
-				if ( eme_is_integer_array( $exclude_arr ) ) {
-					$args['exclude'] = $exclude_arr;
-				}
-			}
-			// other arguments can be changed via the filter
-			if ( has_filter( 'eme_filter_searchfilter_author' ) ) {
-				$args = apply_filters( 'eme_filter_searchfilter_author', $args );
+			if ( has_filter( $cfg['hook'] ) ) {
+				$args = apply_filters( $cfg['hook'], $args );
 			}
 			$replacement = wp_dropdown_users( $args );
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {

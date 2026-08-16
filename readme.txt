@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.2.5  (2026/08/) =
 * Filter fixes
 * Added filter #_FILTER_STATES
+* Simplify filter code, remove an rarely used param (old_select), used to bypass the snapselect way of doing things
 
 = 3.2.4  (2026/08/14) =
 * Refactored "Remember Me" functionality: now works automatically when #_REMEMBERME is present; no option needed.

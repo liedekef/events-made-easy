@@ -2206,13 +2206,13 @@ function eme_ajax_mails_list() {
         if ( ! empty( $_POST['search_failed'] ) ) {
             $where = 'WHERE status='. EME_MAIL_STATUS_FAILED;
         }
-        $count_sql = "SELECT COUNT(*) FROM $table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $count_sql = "SELECT COUNT(*) FROM $table $where";
         if (empty($orderby)) {
             // subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
             //$sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC $limit) as q ORDER BY q.id";
             $orderby = "ORDER BY creation_date DESC";
         }
-        $sql  = "SELECT * FROM $table $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql  = "SELECT * FROM $table $where $orderby $limit";
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
         if ( ! empty( $_POST['search_failed'] ) ) {

@@ -295,7 +295,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
             $list = [];
             if (!empty($locations)) {
                 foreach ( $locations as $loc ) {
-                    $id           = eme_translate( $loc[ $field ] );
+                    $id           = eme_translate( $loc[ $cfg['field'] ] );
                     $list[ $id ]  = $id;
                 }
                 $list = eme_array_remove_empty_elements( $list );
@@ -305,9 +305,9 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
             }
             if (!empty($list)) {
                 if ( $multiple ) {
-                    $replacement = eme_ui_multiselect( $selected, $post_name, $list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
+                    $replacement = eme_ui_multiselect( $cfg['selected'], $cfg['post_name'], $list, $multisize, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'", 1 );
                 } else {
-                    $replacement = eme_ui_select( $selected, $post_name, $list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
+                    $replacement = eme_ui_select( $cfg['selected'], $cfg['post_name'], $list, '', 0, 'eme_snapselect_allow_empty', $aria_label . " data-placeholder='$label'" );
                 }
             }
 		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_(WEEKS|MONTHS|YEARS)(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.2.4
+Stable tag: 3.2.5
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,7 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.2.5  (2026/08/) =
+= 3.2.5  (2026/08/16) =
 * Filter fixes
 * Added filter #_FILTER_STATES
 * Simplify filter code, remove an rarely used param (old_select), used to bypass the snapselect way of doing things

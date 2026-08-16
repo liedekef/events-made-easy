@@ -3901,7 +3901,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "在一个循环中，开始和结束日期不能相同"
 
 #: includes/eme-events.php:9643
-#: includes/eme-filters.php:489
+#: includes/eme-filters.php:356
 #: includes/eme-options.php:1936
 msgid "Event author"
 msgstr "活动作者"
@@ -4634,60 +4634,62 @@ msgstr "活动状态已更新"
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 
-#: includes/eme-filters.php:92
+#: includes/eme-filters.php:90
 msgid "Select Month"
 msgstr "选择月份"
 
-#: includes/eme-filters.php:121
+#: includes/eme-filters.php:119
 msgid "Select Year"
 msgstr "选择年份"
 
-#: includes/eme-filters.php:221
+#: includes/eme-filters.php:219
 msgid "Select one or more categories"
 msgstr "选择一个或多个分类"
 
-#: includes/eme-filters.php:223
+#: includes/eme-filters.php:221
 msgid "Select a category"
 msgstr "选择一个分类"
 
-#: includes/eme-filters.php:256
+#: includes/eme-filters.php:250
 msgid "Select one or more locations"
 msgstr "选择一个或多个地点"
 
-#: includes/eme-filters.php:258
+#: includes/eme-filters.php:252
 #: includes/eme-locations.php:878
 msgid "Select a location"
 msgstr "选择一个地点"
 
-#: includes/eme-filters.php:290
+#: includes/eme-filters.php:279
+#: includes/eme-filters.php:280
 msgid "Select one or more cities"
 msgstr "选择一个或多个城市"
 
-#: includes/eme-filters.php:292
+#: includes/eme-filters.php:279
+#: includes/eme-filters.php:280
 msgid "Select a city"
 msgstr "选择一个城市"
 
-#: includes/eme-filters.php:360
+#: includes/eme-filters.php:282
 msgid "Select one or more countries"
 msgstr "选择一个或多个国家"
 
-#: includes/eme-filters.php:362
+#: includes/eme-filters.php:282
 msgid "Select a country"
 msgstr "选择一个国家"
 
-#: includes/eme-filters.php:403
+#: includes/eme-filters.php:332
 msgid "Select Week"
 msgstr "选择周次"
 
-#: includes/eme-filters.php:430
+#: includes/eme-filters.php:347
 msgid "Select a daterange"
 msgstr "选择一个日期范围"
 
-#: includes/eme-filters.php:460
+#: includes/eme-filters.php:355
 msgid "Event contact"
 msgstr "活动联系"
 
-#: includes/eme-filters.php:536
+#: includes/eme-filters.php:410
 msgid "Submit"
 msgstr "提交"
 
@@ -15456,12 +15458,10 @@ msgstr ""
 msgid "Problem detected while adding member"
 msgstr ""
 
-#. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:325
+#: includes/eme-filters.php:281
 msgid "Select one or more states"
 msgstr ""
 
-#. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:328
+#: includes/eme-filters.php:281
 msgid "Select a state"
 msgstr ""

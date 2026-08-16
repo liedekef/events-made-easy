@@ -3893,7 +3893,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "In einer Veranstaltungsserie dürfen Start- und End-Datum nicht identisch sein"
 
 #: includes/eme-events.php:9643
-#: includes/eme-filters.php:489
+#: includes/eme-filters.php:356
 #: includes/eme-options.php:1936
 msgid "Event author"
 msgstr "Veranstaltungsautor"
@@ -4624,60 +4624,62 @@ msgstr "Veranstaltungsstatus aktualisiert"
 msgid "Events added to category"
 msgstr "Veranstaltung der Kategorie hinzugefügt"
 
-#: includes/eme-filters.php:92
+#: includes/eme-filters.php:90
 msgid "Select Month"
 msgstr "Monat auswählen"
 
-#: includes/eme-filters.php:121
+#: includes/eme-filters.php:119
 msgid "Select Year"
 msgstr "Jahr auswählen"
 
-#: includes/eme-filters.php:221
+#: includes/eme-filters.php:219
 msgid "Select one or more categories"
 msgstr "Eine oder mehrere Kategorien auswählen"
 
-#: includes/eme-filters.php:223
+#: includes/eme-filters.php:221
 msgid "Select a category"
 msgstr "Wähle eine Kategorie"
 
-#: includes/eme-filters.php:256
+#: includes/eme-filters.php:250
 msgid "Select one or more locations"
 msgstr "Einen oder mehrere Veranstaltungsorte auswählen"
 
-#: includes/eme-filters.php:258
+#: includes/eme-filters.php:252
 #: includes/eme-locations.php:878
 msgid "Select a location"
 msgstr "Einen Veranstaltungsort auswählen"
 
-#: includes/eme-filters.php:290
+#: includes/eme-filters.php:279
+#: includes/eme-filters.php:280
 msgid "Select one or more cities"
 msgstr "Eine oder mehrere Orte auswählen"
 
-#: includes/eme-filters.php:292
+#: includes/eme-filters.php:279
+#: includes/eme-filters.php:280
 msgid "Select a city"
 msgstr "Wähle eine Stadt"
 
-#: includes/eme-filters.php:360
+#: includes/eme-filters.php:282
 msgid "Select one or more countries"
 msgstr "Wähle ein oder mehrere Länder"
 
-#: includes/eme-filters.php:362
+#: includes/eme-filters.php:282
 msgid "Select a country"
 msgstr "Wähle ein Land"
 
-#: includes/eme-filters.php:403
+#: includes/eme-filters.php:332
 msgid "Select Week"
 msgstr "Woche auswählen"
 
-#: includes/eme-filters.php:430
+#: includes/eme-filters.php:347
 msgid "Select a daterange"
 msgstr "Einen Datumsbereich auswählen"
 
-#: includes/eme-filters.php:460
+#: includes/eme-filters.php:355
 msgid "Event contact"
 msgstr "Veranstaltung Kontakt"
 
-#: includes/eme-filters.php:536
+#: includes/eme-filters.php:410
 msgid "Submit"
 msgstr "Senden"
 
@@ -15412,12 +15414,10 @@ msgstr ""
 msgid "Problem detected while adding member"
 msgstr ""
 
-#. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:325
+#: includes/eme-filters.php:281
 msgid "Select one or more states"
 msgstr ""
 
-#. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:328
+#: includes/eme-filters.php:281
 msgid "Select a state"
 msgstr ""

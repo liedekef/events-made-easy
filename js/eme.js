@@ -1002,27 +1002,27 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function eme_bancontactwero_poll_status() {
-    var box = document.getElementById('eme-bw-qrcode-box');
+    const box        = document.getElementById('eme-bw-qrcode-box');
     if (!box) return;
 
-    var paymentRid = box.getAttribute('data-payment-rid');
-    var nonce     = box.getAttribute('data-nonce');
-    var returnUrl = box.getAttribute('data-return-url');
-    var statusEl  = document.getElementById('eme-bw-status');
-    var attempt   = 0;
-    var maxAttempts = 400;
-    var interval  = 3000;
+    const paymentRid  = box.getAttribute('data-payment-rid');
+    const nonce       = box.getAttribute('data-nonce');
+    const returnUrl   = box.getAttribute('data-return-url');
+    const statusEl    = document.getElementById('eme-bw-status');
+    const maxAttempts = 400;
+    const interval    = 3000;
 
-    function checkStatus() {
+    let attempt     = 0;
+    const checkStatus = function() {
         attempt++;
         if (attempt > maxAttempts) {
             if (statusEl) {
                 statusEl.className = 'eme-bw-status eme-bw-status-failed';
-                statusEl.textContent = 'Payment timed out. Please try again.';
+                statusEl.textContent = emebasic.translate_bw_timeout;
             }
             return;
         }
-        var formData = new FormData();
+        let formData = new FormData();
         formData.append('action', 'eme_check_bancontactwero_status');
         formData.append('payment_rid', paymentRid);
         formData.append('_wpnonce', nonce);
@@ -1030,19 +1030,17 @@ function eme_bancontactwero_poll_status() {
             if (resp.success && resp.data && resp.data.status === 'SUCCEEDED') {
                 if (statusEl) {
                     statusEl.className = 'eme-bw-status eme-bw-status-success';
-                    statusEl.textContent = 'Payment successful! Redirecting...';
+                    statusEl.textContent = emebasic.translate_bw_success;
                 }
                 setTimeout(function() { window.location.href = returnUrl; }, 1500);
             } else if (resp.data && (resp.data.status === 'FAILED' || resp.data.status === 'CANCELLED' || resp.data.status === 'EXPIRED' || resp.data.status === 'AUTHORIZATION_FAILED')) {
                 if (statusEl) {
                     statusEl.className = 'eme-bw-status eme-bw-status-failed';
-                    statusEl.textContent = 'Payment failed. Please try again.';
+                    statusEl.textContent = emebasic.translate_bw_failed;
                 }
             } else {
                 setTimeout(checkStatus, interval);
             }
-        }, function() {
-            setTimeout(checkStatus, interval);
         });
     }
     setTimeout(checkStatus, interval);

@@ -9577,6 +9577,9 @@ function eme_admin_enqueue_js() {
             'translate_setimg'             => __( 'Set image', 'events-made-easy' ),
             'translate_chooseimg'          => __( 'Choose image', 'events-made-easy' ),
             'translate_replaceimg'         => __( 'Replace image', 'events-made-easy' ),
+            'translate_bw_timeout'         => __( 'Payment timed out. Please try again.', 'events-made-easy' ),
+            'translate_bw_success'         => __( 'Payment successful! Redirecting...', 'events-made-easy' ),
+            'translate_bw_failed'          => __( 'Payment failed. Please try again.', 'events-made-easy' ),
         ];
         wp_localize_script( 'eme-basic', 'emebasic', $translation_array );
         wp_enqueue_script( 'eme-basic' );

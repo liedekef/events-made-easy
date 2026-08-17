@@ -856,19 +856,23 @@ a.nav-tab {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    padding: 40px;
+    padding: 10px;
     text-align: center;
     max-width: 500px;
     width: 90%;
-    margin: 40px auto;
+    margin: 10px auto;
 }
 .eme-bw-qrcode-box img {
     max-width: 100%;
     height: auto;
-    margin: 20px 0;
+    margin: 0;
+}
+.eme-bw-qrcode-box img.eme-bw-logo {
+    max-width: 160px;
+    margin-bottom: 10px;
 }
 .eme-bw-status {
-    margin: 15px 0;
+    margin: 0;
     padding: 10px;
     border-radius: 6px;
 }

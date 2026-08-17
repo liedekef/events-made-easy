@@ -1317,7 +1317,7 @@ function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur
 
         $qrcode_size = get_option( 'eme_bancontactwero_qrcode_size', 'M' );
         $qrcode_url  = $bancontactwero_payment->_links->qrcode->href . '?f=PNG&s=' . $qrcode_size;
-        $ajax_url    = admin_url( 'admin-ajax.php' );
+        $logo_url    = EME_PLUGIN_URL . 'images/payment_gateways/bancontactwero/bancontactwero.png';
         $nonce       = wp_create_nonce( 'eme_bancontactwero_status_' . $payment_rid );
 
         $button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -1329,7 +1329,8 @@ function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur
         $form_html .= ' data-nonce="' . esc_attr( $nonce ) . '"';
         $form_html .= ' data-return-url="' . esc_attr( $return_link ) . '"';
         $form_html .= '>';
-        $form_html .= '<img src="' . esc_url( $qrcode_url ) . '" alt="' . esc_attr__( 'Bancontact Pay QR code', 'events-made-easy' ) . '">';
+        $form_html .= '<img src="' . esc_url( $logo_url ) . '" alt="Bancontact-Wero" class="eme-bw-logo">';
+        $form_html .= '<img src="' . esc_url( $qrcode_url ) . '" alt="' . esc_attr__( 'Bancontact-Wero Pay QR code', 'events-made-easy' ) . '">';
         $form_html .= '<div id="eme-bw-status" class="eme-bw-status eme-bw-status-pending">';
         $form_html .= esc_html__( 'Waiting for payment...', 'events-made-easy' );
         $form_html .= '</div>';

@@ -6,6 +6,27 @@ if (typeof window.EME === 'undefined') {
     };
 }
 
+// Fires a fetch()-based ajax POST and hands the parsed JSON response to callback.
+function eme_postJSON(url, data, callback, onError = null, onFinally = null) {
+    if (typeof emebasic !== 'undefined' && emebasic.translate_locale && data instanceof FormData && !data.has('lang')) {
+        data.append('lang', emebasic.translate_locale);
+    }
+    fetch(url, {
+        method: 'POST',
+        body: data,
+        credentials: 'same-origin'
+    })
+        .then(r => r.json())
+        .then(callback)
+        .catch(err => {
+            console.error('AJAX Error:', err);
+            if (onError) onError(err);
+        })
+        .finally(() => {
+            if (onFinally) onFinally();
+        });
+}
+
 function eme_debounce(func, wait = 300) {
     let timeout;
     return function(...args) {
@@ -975,4 +996,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize widgets
     eme_init_widgets();
+
+    // Bancontact Wero QR code polling
+    eme_bancontactwero_poll_status();
 });
+
+function eme_bancontactwero_poll_status() {
+    var box = document.getElementById('eme-bw-qrcode-box');
+    if (!box) return;
+
+    var paymentRid = box.getAttribute('data-payment-rid');
+    var nonce     = box.getAttribute('data-nonce');
+    var returnUrl = box.getAttribute('data-return-url');
+    var statusEl  = document.getElementById('eme-bw-status');
+    var attempt   = 0;
+    var maxAttempts = 400;
+    var interval  = 3000;
+
+    function checkStatus() {
+        attempt++;
+        if (attempt > maxAttempts) {
+            if (statusEl) {
+                statusEl.className = 'eme-bw-status eme-bw-status-failed';
+                statusEl.textContent = 'Payment timed out. Please try again.';
+            }
+            return;
+        }
+        var formData = new FormData();
+        formData.append('action', 'eme_check_bancontactwero_status');
+        formData.append('payment_rid', paymentRid);
+        formData.append('_wpnonce', nonce);
+        eme_postJSON(emebasic.translate_ajax_url, formData, function(resp) {
+            if (resp.success && resp.data && resp.data.status === 'SUCCEEDED') {
+                if (statusEl) {
+                    statusEl.className = 'eme-bw-status eme-bw-status-success';
+                    statusEl.textContent = 'Payment successful! Redirecting...';
+                }
+                setTimeout(function() { window.location.href = returnUrl; }, 1500);
+            } else if (resp.data && (resp.data.status === 'FAILED' || resp.data.status === 'CANCELLED' || resp.data.status === 'EXPIRED' || resp.data.status === 'AUTHORIZATION_FAILED')) {
+                if (statusEl) {
+                    statusEl.className = 'eme-bw-status eme-bw-status-failed';
+                    statusEl.textContent = 'Payment failed. Please try again.';
+                }
+            } else {
+                setTimeout(checkStatus, interval);
+            }
+        }, function() {
+            setTimeout(checkStatus, interval);
+        });
+    }
+    setTimeout(checkStatus, interval);
+}

@@ -1,27 +1,5 @@
 // Main functions
 
-// Fires a fetch()-based ajax POST and hands the parsed JSON response to callback.
-// Used for the default ajax-then-reload flow (bulk actions, table updates, etc.).
-function eme_postJSON(url, data, callback, onError = null, onFinally = null) {
-    if (emeadmin.translate_locale && data instanceof FormData && !data.has('lang')) {
-        data.append('lang', emeadmin.translate_locale);
-    }
-    fetch(url, {
-        method: 'POST',
-        body: data,
-        credentials: 'same-origin'
-    })
-        .then(r => r.json())
-        .then(callback)
-        .catch(err => {
-            console.error('AJAX Error:', err);
-            if (onError) onError(err);
-        })
-        .finally(() => {
-            if (onFinally) onFinally();
-        });
-}
-
 // Builds & submits a real (non-ajax) POST form — used when the response must either
 // navigate the browser (e.g. sendMails) or trigger a file download (e.g. pdf/html),
 // neither of which fetch()-based eme_postJSON can do.

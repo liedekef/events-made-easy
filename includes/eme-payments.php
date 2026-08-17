@@ -1274,7 +1274,70 @@ function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $events_page_link = eme_get_events_page();
     $payment_id       = $payment['id'];
+    $payment_rid      = $payment['random_id'];
 
+    $display_mode = get_option( 'eme_bancontactwero_display_mode' );
+
+    if ( $display_mode === 'qrcode' ) {
+        $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+        if ( ! empty( $check_allowed_to_pay ) ) {
+            return $check_allowed_to_pay;
+        }
+
+        if ( ! class_exists( 'BancontactWero\Client' ) ) {
+            require_once EME_PLUGIN_DIR . 'payment_gateways/BancontactWero/src/Client.php';
+        }
+        $mode = get_option( 'eme_bancontactwero_env' );
+        $bancontactwero = new \BancontactWero\Client( $api_key );
+        if ( preg_match( '/sandbox/', $mode ) ) {
+            $bancontactwero->setEndpointTest();
+        }
+
+        $return_link       = eme_payment_return_url( $payment, $gateway );
+        $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
+
+        try {
+            $bancontactwero_payment = $bancontactwero->createPayment(
+                amount: $price,
+                currency: $cur,
+                description: $description,
+                reference: $payment_id,
+                callbackUrl: $notification_link,
+                returnUrl: $return_link
+            );
+        } catch ( \Exception $e ) {
+            return 'BancontactWero API call failed: ' . esc_html( $e->getMessage() );
+        }
+
+        eme_update_payment_pg_pid( $payment_id, $bancontactwero_payment->paymentId );
+
+        if ( empty( $bancontactwero_payment->_links->qrcode->href ) ) {
+            return 'BancontactWero API error: no QR code URL returned';
+        }
+
+        $qrcode_size = get_option( 'eme_bancontactwero_qrcode_size', 'M' );
+        $qrcode_url  = $bancontactwero_payment->_links->qrcode->href . '?f=PNG&s=' . $qrcode_size;
+        $ajax_url    = admin_url( 'admin-ajax.php' );
+        $nonce       = wp_create_nonce( 'eme_bancontactwero_status_' . $payment_rid );
+
+        $button_above = get_option( 'eme_' . $gateway . '_button_above' );
+        $button_below = get_option( 'eme_' . $gateway . '_button_below' );
+
+        $form_html  = $button_above;
+        $form_html .= '<div id="eme-bw-qrcode-box" class="eme-bw-qrcode-box"';
+        $form_html .= ' data-payment-rid="' . esc_attr( $payment_rid ). '"';
+        $form_html .= ' data-nonce="' . esc_attr( $nonce ) . '"';
+        $form_html .= ' data-return-url="' . esc_attr( $return_link ) . '"';
+        $form_html .= '>';
+        $form_html .= '<img src="' . esc_url( $qrcode_url ) . '" alt="' . esc_attr__( 'Bancontact Pay QR code', 'events-made-easy' ) . '">';
+        $form_html .= '<div id="eme-bw-status" class="eme-bw-status eme-bw-status-pending">';
+        $form_html .= esc_html__( 'Waiting for payment...', 'events-made-easy' );
+        $form_html .= '</div>';
+        $form_html .= $button_below;
+        return $form_html;
+    }
+
+    // redirect mode (default)
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );
     if ( empty( $button_label ) ) {
@@ -3123,6 +3186,39 @@ function eme_charge_bancontactwero() {
     }
 }
 
+function eme_check_bancontactwero_status() {
+    $payment_rid = eme_sanitize_request( $_POST['payment_rid'] ?? 0 );
+    if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'eme_bancontactwero_status_' . $payment_rid ) ) {
+        wp_send_json_error( [ 'message' => 'Security check failed' ] );
+    }
+
+    $gateway  = 'bancontactwero';
+    $api_key  = get_option( "eme_{$gateway}_api_key" );
+    if ( ! $api_key ) {
+        wp_send_json_error( [ 'message' => 'API key not configured' ] );
+    }
+
+    $payment = eme_get_payment( payment_randomid: $payment_rid );
+    if ( empty( $payment ) || empty( $payment['pg_pid'] ) ) {
+        wp_send_json_error( [ 'message' => 'Payment not found' ] );
+    }
+
+    if ( ! class_exists( 'BancontactWero\Client' ) ) {
+        require_once EME_PLUGIN_DIR . 'payment_gateways/BancontactWero/src/Client.php';
+    }
+    $mode = get_option( 'eme_bancontactwero_env' );
+    $bancontactwero = new \BancontactWero\Client( $api_key );
+    if ( preg_match( '/sandbox/', $mode ) ) {
+        $bancontactwero->setEndpointTest();
+    }
+    try {
+        $bw_payment = $bancontactwero->retrievePayment( $payment['pg_pid'] );
+        wp_send_json_success( [ 'status' => $bw_payment->status ] );
+    } catch ( \Exception $e ) {
+        wp_send_json_error( [ 'message' => $e->getMessage() ] );
+    }
+}
+
 function eme_complete_transaction_payconiq( $payment ) {
     return eme_complete_transaction_bancontactwero( $payment );
 }
@@ -4141,6 +4237,8 @@ function eme_cancel_payment_form( $payment_randomid ) {
 add_action( 'wp_ajax_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 add_action( 'wp_ajax_nopriv_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 add_action( 'wp_ajax_eme_get_bancontactwero_iban', 'eme_ajax_get_bancontactwero_iban' );
+add_action( 'wp_ajax_eme_check_bancontactwero_status', 'eme_check_bancontactwero_status' );
+add_action( 'wp_ajax_nopriv_eme_check_bancontactwero_status', 'eme_check_bancontactwero_status' );
 
 function eme_cancel_payment_ajax() {
     $payment_randomid = eme_sanitize_request( $_POST['eme_pmt_rndid'] );

@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.6  (2026/08/) =
+* Add inline qrcode payment possibility for BancontactWero
+
 = 3.2.5  (2026/08/16) =
 * Filter fixes
 * Added filter #_FILTER_STATES

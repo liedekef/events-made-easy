@@ -850,3 +850,37 @@ a.nav-tab {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Bancontact Wero QR code payment page */
+.eme-bw-qrcode-box {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    margin: 40px auto;
+}
+.eme-bw-qrcode-box img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+}
+.eme-bw-status {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 6px;
+}
+.eme-bw-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+.eme-bw-status-success {
+    background: #d4edda;
+    color: #155724;
+}
+.eme-bw-status-failed {
+    background: #f8d7da;
+    color: #721c24;
+}

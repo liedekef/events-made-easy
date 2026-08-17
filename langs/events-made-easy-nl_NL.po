@@ -15024,7 +15024,7 @@ msgstr "Personen & Groepen"
 #: events-manager.php:382
 #: includes/eme-import.php:92
 msgid "Countries/States"
-msgstr "Provincies"
+msgstr "Landen/Provincies"
 
 #: events-manager.php:387
 msgid "Import/Export"

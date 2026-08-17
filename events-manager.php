@@ -13,6 +13,7 @@ Description: Manage and display events and memberships. Also includes recurring 
 Author: Franky Van Liedekerke
 Author URI: https://www.e-dynamics.be/
 Text Domain: events-made-easy
+Domain Path: /langs
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */

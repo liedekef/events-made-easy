@@ -730,13 +730,34 @@ function eme_export_csv_locations() {
 	[ $out, $delimiter ] = eme_import_export_open_csv_stream( 'locations.csv' );
 
 	$locations = eme_get_locations( false, 'all' );
+	$att_keys = [];
 	$prop_keys = array_keys( eme_init_location_props() );
+	$answer_keys = [];
+	foreach ( $locations as $location ) {
+		if ( ! empty( $location['location_attributes'] ) && is_array( $location['location_attributes'] ) ) {
+			$att_keys = array_unique( array_merge( $att_keys, array_keys( $location['location_attributes'] ) ) );
+		}
+		foreach ( eme_get_location_answers( $location['location_id'] ) as $answer ) {
+			$formfield = eme_get_formfield( $answer['field_id'] );
+			if ( ! empty( $formfield ) ) {
+				$answer_keys[ $formfield['field_name'] ] = true;
+			}
+		}
+	}
+	$answer_keys = array_keys( $answer_keys );
 
 	$base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref' ];
 	$headers      = $base_columns;
+    foreach ( $att_keys as $key ) {
+        $headers[] = 'att_' . $key;
+    }
 	foreach ( $prop_keys as $key ) {
 		$headers[] = 'prop_' . $key;
 	}
+    foreach ( $answer_keys as $key ) {
+        $headers[] = 'answer_' . $key;
+    }
+
 	eme_fputcsv( $out, $headers, $delimiter );
 
 	foreach ( $locations as $location ) {
@@ -754,10 +775,26 @@ function eme_export_csv_locations() {
 			$location['location_url'],
 			$location['location_external_ref'],
 		];
+        foreach ( $att_keys as $key ) {
+            $att_value = $location['location_attributes'][ $key ] ?? '';
+            $row[]     = is_array( $att_value ) ? wp_json_encode( $att_value ) : $att_value;
+        }
 		foreach ( $prop_keys as $key ) {
 			$prop_value = $location['location_properties'][ $key ] ?? '';
 			$row[]      = is_array( $prop_value ) ? wp_json_encode( $prop_value ) : $prop_value;
 		}
+        if ( $answer_keys ) {
+            $answers_by_field = [];
+            foreach ( eme_get_location_answers( $location['location_id'] ) as $answer ) {
+                $formfield = eme_get_formfield( $answer['field_id'] );
+                if ( ! empty( $formfield ) ) {
+                    $answers_by_field[ $formfield['field_name'] ] = $answer['answer'];
+                }
+            }
+            foreach ( $answer_keys as $key ) {
+                $row[] = $answers_by_field[ $key ] ?? '';
+            }
+        }
 		eme_fputcsv( $out, $row, $delimiter );
 	}
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- CSV export

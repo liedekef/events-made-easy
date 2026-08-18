@@ -101,6 +101,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.6  (2026/08/) =
 * Add inline qrcode payment possibility for BancontactWero
+* Fixed multiple-setting for fields (the #SINGLE and #MULTIPLE overrides were changing it for all fields)
+* The location export did not contain all custom attributes or fields
 
 = 3.2.5  (2026/08/16) =
 * Filter fixes

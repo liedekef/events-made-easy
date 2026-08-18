@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // create the tile layer with correct attribution
-    let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    let osmAttrib='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    let osmUrl=emeshowmaps.translate_osm_url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib=emeshowmaps.translate_osm_attribution || 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
     let osmAttribDirections= osmAttrib + ' | ' + '<a href="https://www.openstreetmap.org/fixthemap">Fix the map</a>';
 
     // first the global map (if present)

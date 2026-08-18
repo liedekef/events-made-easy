@@ -19,8 +19,8 @@ function createMapForContainer(containerId) {
     });
 
     // create the tile layer with correct attribution
-    let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    let osmAttrib = 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>';
+    let osmUrl = emeadmin.translate_osm_url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib = emeadmin.translate_osm_attribution || 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>';
     let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
     map.addLayer(osm);

@@ -464,7 +464,9 @@ function eme_register_scripts() {
         wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
         $translation_array = [
             'translate_addressnotfound' => __('Address not found', 'events-made-easy' ),
-            'translate_couldnotcalcroute' => __('Could not calculate route', 'events-made-easy' )
+            'translate_couldnotcalcroute' => __('Could not calculate route', 'events-made-easy' ),
+            'translate_osm_url' => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
+            'translate_osm_attribution' => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
         ];
         wp_localize_script( 'eme-show-maps', 'emeshowmaps', $translation_array );
         wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
@@ -473,6 +475,8 @@ function eme_register_scripts() {
         $translation_array = [
             'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
             'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
+            'translate_osm_url'          => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
+            'translate_osm_attribution'  => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
         ];
         wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
         wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-leaflet-maps', 'eme-edit-maps' ], EME_VERSION, true );

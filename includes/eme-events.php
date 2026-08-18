@@ -9611,6 +9611,8 @@ function eme_admin_enqueue_js() {
             // edit-maps
             'translate_map_zooming'                => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
             'translate_default_map_icon'           => get_option( 'eme_location_map_icon' ),
+            'translate_osm_url'                    => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
+            'translate_osm_attribution'            => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
             // events
             'translate_nomatchlocation'            => __( 'No matching location found', 'events-made-easy' ),
             'translate_events'                     => __( 'Events', 'events-made-easy' ),

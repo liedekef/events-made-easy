@@ -3507,7 +3507,7 @@ function eme_handle_dyndata_post_adminform() {
     if ( empty( $_POST['eme_dyndata'] ) ) {
         return $eme_dyndata_arr;
     }
-    foreach ( wp_unslash( $_POST['eme_dyndata'] ) as $eme_dyndata ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    foreach ( eme_sanitize_request( $_POST['eme_dyndata'] ) as $eme_dyndata ) {
         if ( $eme_dyndata['template_id'] > 0 && isset( $eme_dyndata['grouping'] ) ) {
             $grouping = intval( $eme_dyndata['grouping'] );
             if ( $biggest_grouping_seen < $grouping ) {
@@ -3515,15 +3515,15 @@ function eme_handle_dyndata_post_adminform() {
             }
         }
     }
-    foreach ( wp_unslash( $_POST['eme_dyndata'] ) as $eme_dyndata ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    foreach ( eme_sanitize_request( $_POST['eme_dyndata'] ) as $eme_dyndata ) {
         if ( $eme_dyndata['template_id'] > 0 ) {
             $eme_dyndata['template_id'] = intval( $eme_dyndata['template_id'] );
             if ( isset( $eme_dyndata['repeat'] ) && $eme_dyndata['repeat'] == 1 ) {
                 $eme_dyndata['repeat']  = intval( $eme_dyndata['repeat'] );
-                $eme_dyndata['condval'] = intval( $eme_dyndata['condval'] );
+                $eme_dyndata['condval'] = eme_sanitize_request( $eme_dyndata['condval'] );
             } else {
                 $eme_dyndata['repeat']  = 0;
-                $eme_dyndata['condval'] = $eme_dyndata['condval'];
+                $eme_dyndata['condval'] = eme_sanitize_request( $eme_dyndata['condval'] );
             }
             if ( isset( $eme_dyndata['template_id_header'] ) ) {
                 $eme_dyndata['template_id_header'] = intval( $eme_dyndata['template_id_header'] );

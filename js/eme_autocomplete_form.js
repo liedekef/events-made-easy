@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Different HTML for RSVP vs Task forms
                         if (autocompleteAction === 'rsvp_autocomplete_people') {
                             suggestion.innerHTML = `
-                                <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
-                                <br><small>${eme_htmlDecode(item.email)} - ${eme_htmlDecode(item.phone)}</small>
+                                <strong>${item.lastname} ${item.firstname}</strong>
+                                <br><small>${item.email} - ${item.phone}</small>
                             `;
                         } else {
                             suggestion.innerHTML = `
-                                <strong>${eme_htmlDecode(item.lastname)} ${eme_htmlDecode(item.firstname)}</strong>
-                                <br><small>${eme_htmlDecode(item.email)}</small>
+                                <strong>${item.lastname} ${item.firstname}</strong>
+                                <br><small>${item.email}</small>
                             `;
                         }
 
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     input.insertAdjacentElement('afterend', suggestions);
                 })
-                .catch(err => console.warn('Autocomplete fetch error:', err));
+                .catch(() => console.warn('Autocomplete request failed'));
             }, 500);
         });
     }

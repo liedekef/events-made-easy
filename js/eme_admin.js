@@ -13,7 +13,7 @@ function eme_postJSON(url, data, callback, onError = null, onFinally = null) {
         .then(r => r.json())
         .then(callback)
         .catch(err => {
-            console.error('AJAX Error:', err);
+            console.error('AJAX request failed');
             if (onError) onError(err);
         })
         .finally(() => {
@@ -292,10 +292,16 @@ function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, r
                     multiple: true
                 }).on('select', function() {
                     const selection = customUploader.state().get('selection');
+                    links.replaceChildren();
                     selection.map(function(attach) {
                         const attachment = attach.toJSON();
                         if (links) {
-                            links.innerHTML += `<a target='_blank' href='${attachment.url}'>${attachment.title}</a><br>`;
+                            const a = document.createElement('a');
+                            a.target = '_blank';
+                            a.href = attachment.url;
+                            a.textContent = attachment.title;
+                            links.appendChild(a);
+                            links.appendChild(document.createElement('br'));
                         }
                         if (ids) {
                             const idsArr = ids.value ? ids.value.split(',') : [];

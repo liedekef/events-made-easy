@@ -44,7 +44,7 @@ function eme_actions_early_init() {
         $booking_id = intval( $_GET['bid'] );
         $get_rsvp_proof_hash = eme_sanitize_request( $_GET['eme_hash'] );
         $calc_rsvp_proof_hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
-        if ( $get_rsvp_proof_hash == $calc_rsvp_proof_hash ) {
+        if ( hash_equals( $calc_rsvp_proof_hash, $get_rsvp_proof_hash ) ) {
             $booking = eme_get_booking( $booking_id );
             if (!empty($booking) && $booking['attend_count'] > 0 ) {
                 $payment = eme_get_payment ($booking['payment_id']);

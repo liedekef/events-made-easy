@@ -29,5 +29,5 @@ fetch(emeclock.translate_ajax_url, {
     }
 })
 .catch(error => {
-    console.error('Error:', error);
+    console.error('Clock sync failed');
 });

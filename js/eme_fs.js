@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             data.forEach(item => {
                                 const suggestionDiv = document.createElement('div');
                                 suggestionDiv.className = 'eme-autocomplete-suggestion';
-                                suggestionDiv.innerHTML = "<strong>" + eme_htmlDecode(item.name) + '</strong><br><small>' + eme_htmlDecode(item.address1) + ' - ' + eme_htmlDecode(item.city) + '</small>';
+                                suggestionDiv.innerHTML = "<strong>" + item.name + '</strong><br><small>' + item.address1 + ' - ' + item.city + '</small>';
                                 
                                 suggestionDiv.addEventListener("click", function(e) {
                                     e.preventDefault();
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         locationNameInput.insertAdjacentElement('afterend', suggestions);
                     })
                     .catch(error => {
-                        console.error('Error fetching location autocomplete:', error);
+                        console.error('Location autocomplete request failed');
                     });
                 }, 500); // Delay of 0.5 second
             }

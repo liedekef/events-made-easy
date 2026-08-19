@@ -2497,9 +2497,9 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
         }
     }
     // always allow span, style and meta
-    $allowed_html[ 'span '] = [];
-    $allowed_html[ 'meta '] = [];
-    $allowed_html[ 'style '] = [];
+    $allowed_html[ 'span' ] = [];
+    $allowed_html[ 'meta' ] = [];
+    $allowed_html[ 'style' ] = [];
 
     add_filter( 'safe_style_css', 'eme_safe_css_attributes' );
     // brute-force remove script tags, even if wp_kses wouldn't do it

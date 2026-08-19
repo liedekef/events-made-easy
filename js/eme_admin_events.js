@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             data.forEach(item => {
                                 const suggestion = document.createElement('div');
                                 suggestion.className = 'eme-autocomplete-suggestion';
-                                suggestion.innerHTML = `<strong>${eme_htmlDecode(item.name)}</strong><br><small>${eme_htmlDecode(item.address1)} - ${eme_htmlDecode(item.city)}</small>`;
+                                suggestion.innerHTML = `<strong>${item.name}</strong><br><small>${item.address1} - ${item.city}</small>`;
                                 
                                 suggestion.addEventListener('click', (e) => {
                                     e.preventDefault();

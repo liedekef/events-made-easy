@@ -4460,6 +4460,10 @@ function eme_message_error_div($message, $is_dismissible = 0) {
     return "<div class='notice notice-error $dismiss_class eme-message-admin'>" . wp_kses_post( $message ) . '</div>';
 }
 
+// backwars compatible
+function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
+    return eme_sanitize_placeholder_output( $replacement, $target, $esc_html);
+}
 function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false ) {
     if ( $target == 'html' ) {
         $replacement = eme_kses($replacement);

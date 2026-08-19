@@ -1979,7 +1979,7 @@ function eme_get_generic_placeholder_handler_definitions() {
         '/#_CALENDAR_DAY/' => function( $result, $matches, $ctx ) {
             $day_key     = get_query_var( 'calendar_day' );
             $replacement = eme_localized_date( $day_key, EME_TIMEZONE );
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/^#_WPID$/' => function( $result, $matches, $ctx ) {
             if ( $ctx['wp_id'] ) {
@@ -1994,14 +1994,14 @@ function eme_get_generic_placeholder_handler_definitions() {
                 if ( is_array( $wp_user->$fieldname ) ) {
                     return join( ', ', $wp_user->$fieldname );
                 }
-                return eme_apply_output_filters( $wp_user->$fieldname, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $wp_user->$fieldname, $ctx['target'] );
             }
             return '';
         },
         '/^#_WPUSERMETA\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $fieldname = $matches[1];
             if ( $ctx['wp_id'] ) {
-                return eme_apply_output_filters( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ) );
+                return eme_sanitize_placeholder_output( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ) );
             }
             return '';
         },
@@ -2182,7 +2182,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             if ( ! empty( $t_person ) && ! empty( $t_person['person_id'] ) ) {
                 $replacement = join( ', ', eme_get_persongroup_names( $t_person['person_id'] ) );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_USER_MEMBERSHIPS/' => function( $result, $matches, $ctx ) {
             $wp_id = $ctx['wp_id'];
@@ -2195,7 +2195,7 @@ function eme_get_generic_placeholder_handler_definitions() {
             if ( ! empty( $t_person ) && ! empty( $t_person['person_id'] ) ) {
                 $replacement = eme_get_activemembership_names_by_personid( $t_person['person_id'] );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_INCLUDE_TEMPLATE\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $template_id = $matches[1];
@@ -2815,9 +2815,9 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             if ( $target == 'html' ) {
                 $event_link  = esc_url( $event_link );
-                return eme_apply_output_filters( "<a href='$event_link' $linktarget title='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>" . esc_html( eme_translate( $event['event_name'], $lang ) ) . '</a>', $target );
+                return eme_sanitize_placeholder_output( "<a href='$event_link' $linktarget title='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>" . esc_html( eme_translate( $event['event_name'], $lang ) ) . '</a>', $target );
             }
-            return eme_apply_output_filters( eme_translate( $event['event_name'], $lang ), $target );
+            return eme_sanitize_placeholder_output( eme_translate( $event['event_name'], $lang ), $target );
         },
         '/#_EXTERNALURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
@@ -2835,7 +2835,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( $ctx['target'] == 'html' ) {
                 $url = esc_url( $url );
             }
-            return eme_apply_output_filters( "<a href='$url'>ICAL</a>", $ctx['target'] );
+            return eme_sanitize_placeholder_output( "<a href='$url'>ICAL</a>", $ctx['target'] );
         },
         '/#_ICALURL/' => function( $result, $matches, $ctx ) {
             $url = eme_single_event_ical_url( $ctx['event']['event_id'] );
@@ -2875,7 +2875,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( $ctx['target'] == 'html' ) {
                 $replacement = esc_url( $replacement );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_NAME$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
@@ -2885,7 +2885,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 $replacement = $event[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_ID/' => function( $result, $matches, $ctx ) {
             return intval( $ctx['event']['event_id'] );
@@ -2896,7 +2896,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
                 if ( ! empty( $info ) ) {
-                    return eme_apply_output_filters( $info['title'], $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $info['title'], $ctx['target'] );
                 }
             }
             return '';
@@ -2906,7 +2906,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
                 if ( ! empty( $info ) ) {
-                    return eme_apply_output_filters( $info['alt'], $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $info['alt'], $ctx['target'] );
                 }
             }
             return '';
@@ -2916,7 +2916,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
                 if ( ! empty( $info ) ) {
-                    return eme_apply_output_filters( $info['caption'], $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $info['caption'], $ctx['target'] );
                 }
             }
             return '';
@@ -2926,7 +2926,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $event['event_image_id'] ) ) {
                 $info = eme_get_wp_image( $event['event_image_id'] );
                 if ( ! empty( $info ) ) {
-                    return eme_apply_output_filters( $info['description'], $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $info['description'], $ctx['target'] );
                 }
             }
             return '';
@@ -2947,7 +2947,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $event['event_name'], $ctx['lang'] ) ) . "'>";
             }
             if ( ! empty( $replacement ) ) {
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -2964,7 +2964,7 @@ function eme_get_event_placeholder_handler_definitions() {
                     $replacement = '';
                 }
                 if ( ! empty( $replacement ) ) {
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -2994,7 +2994,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( isset( $event['event_attributes'][ $tmp_attkey ] ) && ! is_array( $event['event_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $event['event_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -3004,7 +3004,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
                 $replacement = $event[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -3015,7 +3015,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $tmp_event ) && isset( $tmp_event['event_attributes'][ $tmp_event_attkey ] ) ) {
                 $replacement = $tmp_event['event_attributes'][ $tmp_event_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -3024,7 +3024,7 @@ function eme_get_event_placeholder_handler_definitions() {
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -3047,7 +3047,7 @@ function eme_get_event_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $field_replace = eme_apply_output_filters( $field_replace, $target );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target );
                     }
                 }
                 foreach ( $ctx['files'] as $file ) {
@@ -3193,7 +3193,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( ! $ctx['need_escape'] ) {
                     $replacement = eme_localized_price( $replacement, $event['currency'], $ctx['target'] );
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -3206,7 +3206,7 @@ function eme_get_event_placeholder_handler_definitions() {
                     if ( $ctx['need_escape'] ) {
                         return $prices[ $field_id ];
                     }
-                    return eme_apply_output_filters( eme_localized_price( $prices[ $field_id ], $event['currency'], $ctx['target'] ), $ctx['target'] );
+                    return eme_sanitize_placeholder_output( eme_localized_price( $prices[ $field_id ], $event['currency'], $ctx['target'] ), $ctx['target'] );
                 }
             }
             return '';
@@ -3220,7 +3220,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( $ctx['need_escape'] ) {
                     return $price;
                 }
-                return eme_apply_output_filters( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
             }
             return '';
         },
@@ -3235,7 +3235,7 @@ function eme_get_event_placeholder_handler_definitions() {
                     if ( $ctx['need_escape'] ) {
                         return $price;
                     }
-                    return eme_apply_output_filters( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
+                    return eme_sanitize_placeholder_output( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
                 }
             }
             return '';
@@ -3249,7 +3249,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( $ctx['need_escape'] ) {
                     return $price;
                 }
-                return eme_apply_output_filters( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_localized_price( $price, $event['currency'], $ctx['target'] ), $ctx['target'] );
             }
             return '';
         },
@@ -3259,7 +3259,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
                 $prices_desc = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
                 if ( is_array( $prices_desc ) && array_key_exists( $field_id, $prices_desc ) ) {
-                    return eme_apply_output_filters( $prices_desc[ $field_id ], $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $prices_desc[ $field_id ], $ctx['target'] );
                 }
             }
             return '';
@@ -3267,7 +3267,7 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_PRICEDESCRIPTION$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! eme_is_multi( $event['price'] ) ) {
-                return eme_apply_output_filters( $event['event_properties']['price_desc'], $ctx['target'] );
+                return eme_sanitize_placeholder_output( $event['event_properties']['price_desc'], $ctx['target'] );
             }
             return '';
         },
@@ -3275,18 +3275,18 @@ function eme_get_event_placeholder_handler_definitions() {
             $event = $ctx['event'];
             $field = 'currency';
             if ( $event['price'] ) {
-                return eme_apply_output_filters( $event[ $field ], $ctx['target'] );
+                return eme_sanitize_placeholder_output( $event[ $field ], $ctx['target'] );
             }
             return '';
         },
         '/#_VAT_PCT$/' => function( $result, $matches, $ctx ) {
-            return eme_apply_output_filters( $ctx['event']['event_properties']['vat_pct'], $ctx['target'] );
+            return eme_sanitize_placeholder_output( $ctx['event']['event_properties']['vat_pct'], $ctx['target'] );
         },
         '/#_CURRENCYSYMBOL$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $field = 'currency';
             if ( $event['price'] ) {
-                return eme_apply_output_filters( eme_localized_currencysymbol( $event[ $field ] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_localized_currencysymbol( $event[ $field ] ), $ctx['target'] );
             }
             return '';
         },
@@ -3295,14 +3295,14 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_apply_output_filters( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
         '/#_BOOKINGS/' => function( $result, $matches, $ctx ) {
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_apply_output_filters( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
         },
         '/#_(CONTACT|AUTHOR)/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
@@ -3380,7 +3380,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( get_option( 'eme_categories_enabled' ) ) {
                 $category_ids = $ctx['event']['event_category_ids'];
                 $replacement = eme_translate( $category_ids, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -3400,7 +3400,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categories_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categories_sep_filter', $sep );
                 }
-                return eme_apply_output_filters( join( $sep, $cat_names ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( join( $sep, $cat_names ), $ctx['target'] );
             }
             return '';
         },
@@ -3409,7 +3409,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 $event_categories = eme_get_categories_filtered( $ctx['event']['event_category_ids'], $ctx['all_categories'] );
                 $cat_names = array_column( $event_categories, 'category_name' );
                 $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -3421,7 +3421,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
-                return eme_apply_output_filters( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'] );
             }
             return '';
         },
@@ -3443,7 +3443,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categories_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categories_sep_filter', $sep );
                 }
-                return eme_apply_output_filters( join( $sep, $cat_links ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( join( $sep, $cat_links ), $ctx['target'] );
             }
             return '';
         },
@@ -3479,7 +3479,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( has_filter( 'eme_categories_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categories_sep_filter', $sep );
             }
-            return eme_apply_output_filters( join( $sep, $cat_names ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( join( $sep, $cat_names ), $ctx['target'] );
         },
         '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -3501,7 +3501,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             $t_categories = eme_get_event_category_names( $ctx['event']['event_id'], $extra_conditions_arr, $order_by );
             $replacement = eme_translate( join( ' ', $t_categories ), $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -3526,7 +3526,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
             }
-            return eme_apply_output_filters( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'] );
         },
         '/#_LINKED(EVENT)?CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -3563,14 +3563,14 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( has_filter( 'eme_categories_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categories_sep_filter', $sep );
             }
-            return eme_apply_output_filters( join( $sep, $cat_links ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( join( $sep, $cat_links ), $ctx['target'] );
         },
 
         /* Recurrence placeholders */
         '/#_RECURRENCE_DESC|#_RECURRENCEDESC/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( $event ['recurrence_id'] ) {
-                return eme_apply_output_filters( eme_get_recurrence_desc( $event ['recurrence_id'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_get_recurrence_desc( $event ['recurrence_id'] ), $ctx['target'] );
             }
             return '';
         },
@@ -3590,7 +3590,7 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_PASSWORD$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( eme_is_event_rsvp( $event ) && ! empty( $event['event_properties']['rsvp_password'] ) ) {
-                return eme_apply_output_filters( $event['event_properties']['rsvp_password'], $ctx['target'] );
+                return eme_sanitize_placeholder_output( $event['event_properties']['rsvp_password'], $ctx['target'] );
             }
             return '';
         },
@@ -3656,7 +3656,7 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_EXTERNAL_REF/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( ! empty( $event['event_external_ref'] ) ) {
-                return eme_apply_output_filters( preg_replace( '/fb_/', '', $event['event_external_ref'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( preg_replace( '/fb_/', '', $event['event_external_ref'] ), $ctx['target'] );
             }
             return '';
         },
@@ -3906,7 +3906,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             //Check to see if we have a second set of braces;
             $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
         }
-        $replacement = eme_apply_output_filters( $replacement, $target );
+        $replacement = eme_sanitize_placeholder_output( $replacement, $target );
 
         if ( $need_escape ) {
             $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -4166,7 +4166,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
                 }
             }
             if ( $target == 'html' ) {
-                $replacement = eme_apply_output_filters( $replacement, $target );
+                $replacement = eme_sanitize_placeholder_output( $replacement, $target );
                 if ( $show_excerpt ) {
                     $replacement = apply_filters( 'the_excerpt', $replacement );
                 } else {

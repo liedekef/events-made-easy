@@ -1965,7 +1965,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 $replacement = eme_events_in_location_list( $location, 'past', $order );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_NEXTEVENTS(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -1978,7 +1978,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 $replacement = eme_events_in_location_list( $location, 'future', $order );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_ALLEVENTS(\{.+?\})?$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -1991,7 +1991,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
                 $replacement = eme_events_in_location_list( $location, 'all', $order );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_(ADDRESS|TOWN|CITY|STATE|ZIP|COUNTRY|LATITUDE|LONGITUDE|POSTAL)/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2010,7 +2010,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = $location[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_NAME$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2020,7 +2020,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = $location[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_ID/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2030,7 +2030,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = $location[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_IMAGETITLE$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2039,7 +2039,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $location['location_image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['title'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -2051,7 +2051,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $location['location_image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['alt'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -2063,7 +2063,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $location['location_image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['caption'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -2075,7 +2075,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $location['location_image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['description'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -2096,7 +2096,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = "<img src='$url' alt='" . esc_attr( eme_translate( $location['location_name'], $ctx['lang'] ) ) . "'>";
             }
             if ( ! empty( $replacement ) ) {
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -2128,7 +2128,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 if (empty($replacement)) {
                     $replacement = "";
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -2160,7 +2160,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( $ctx['target'] == 'html' ) {
                 $replacement = esc_url( $replacement );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_DIRECTIONS/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2176,7 +2176,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) && ! is_array( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -2186,7 +2186,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
                 $replacement = $location[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -2196,7 +2196,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -2213,7 +2213,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_names = array_column( $location_categories, 'category_name' );
                 $replacement = eme_translate( join( $sep, $cat_names ), $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -2226,7 +2226,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_names = array_column( $location_categories, 'category_name' );
                 $replacement = eme_translate( join( ' ', $cat_names ), $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -2243,7 +2243,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $location_categories = eme_get_categories_filtered( $location['location_category_ids'], $ctx['all_categories'] );
                 $cat_descs = array_column( $location_categories, 'description' );
                 $replacement = eme_translate( join( $sep, $cat_descs ), $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -2284,7 +2284,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $sep = apply_filters( 'eme_categories_sep_filter', $sep );
             }
             $replacement = join( $sep, $cat_names );
-            return eme_apply_output_filters( $replacement, $target );
+            return eme_sanitize_placeholder_output( $replacement, $target );
         },
         '/#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -2309,7 +2309,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             $extra_conditions = join( ' AND ', $extra_conditions_arr );
             $categories       = eme_get_location_category_names( $ctx['location']['location_id'], $extra_conditions, $order_by );
             $replacement = eme_translate( join( ' ', $categories ), $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -2338,7 +2338,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
             }
             $replacement = eme_translate( join( $sep, $categories ), $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_EDITLOCATIONLINK/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2376,7 +2376,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             }
             if ( ! empty( $location['location_url'] ) ) {
                 $replacement = $location['location_url'];
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -2387,7 +2387,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             }
             if ( ! empty( $location['location_external_ref'] ) ) {
                 $replacement = preg_replace( '/fb_/', '', $location['location_external_ref'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -2396,7 +2396,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -2420,7 +2420,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
                     }
-                    $field_replace = eme_apply_output_filters( $field_replace, $target );
+                    $field_replace = eme_sanitize_placeholder_output( $field_replace, $target );
                 }
                 foreach ( $ctx['files'] as $file ) {
                     if ( $file['field_id'] == $field_id ) {
@@ -2497,7 +2497,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 //Check to see if we have a second set of braces;
                 $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
             }
-            $replacement = eme_apply_output_filters( $replacement, $target );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target );
 
             if ( $need_escape ) {
                 $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -2675,7 +2675,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
                 }
             }
             if ( $target == 'html' ) {
-                $replacement = eme_apply_output_filters( $replacement, $target );
+                $replacement = eme_sanitize_placeholder_output( $replacement, $target );
                 if ( $show_excerpt ) {
                     $replacement = apply_filters( 'the_excerpt', $replacement );
                 } else {

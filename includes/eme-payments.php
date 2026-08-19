@@ -1274,7 +1274,6 @@ function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur
     $price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
     $events_page_link = eme_get_events_page();
     $payment_id       = $payment['id'];
-    $payment_rid      = $payment['random_id'];
 
     $button_above = get_option( 'eme_' . $gateway . '_button_above' );
     $button_label = get_option( 'eme_' . $gateway . '_button_label' );

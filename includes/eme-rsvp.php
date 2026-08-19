@@ -3574,14 +3574,14 @@ function eme_get_booking_placeholder_handler_definitions() {
 
     $handlers = [
         '/#_(RESP)?COMMENT/' => function( $result, $matches, $ctx ) {
-            return eme_apply_output_filters( $ctx['booking']['booking_comment'], $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $ctx['booking']['booking_comment'], $ctx['target'], true );
         },
         '/#_(RESP)?CANCELCOMMENT/' => function( $result, $matches, $ctx ) {
             $replacement = '';
             if ( isset( $_POST['eme_cancelcomment'] ) ) {
                 $replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/(#_RESPSPACES|#_SPACES|#_RESPSEATS|#_SEATS)\{(\d+)\}/' => function( $result, $matches, $ctx ) {
             $booking = $ctx['booking'];
@@ -3612,7 +3612,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                     }
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $target );
+                return eme_sanitize_placeholder_output( $replacement, $target );
             }
             return '';
         },
@@ -3646,7 +3646,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                 if ( $target == 'html' ) {
                     $replacement .= '</table>';
                 }
-                return eme_apply_output_filters( $replacement, $target );
+                return eme_sanitize_placeholder_output( $replacement, $target );
             }
             return '';
         },
@@ -3741,7 +3741,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
                     }
                 }
-                return eme_apply_output_filters( join( ', ', $discount_names ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( join( ', ', $discount_names ), $ctx['target'] );
             }
             return '';
         },
@@ -3874,7 +3874,7 @@ function eme_get_booking_placeholder_handler_definitions() {
             $booking = $ctx['booking'];
             $tmp_attkey = $matches[1];
             if ( isset( $booking[ $tmp_attkey ] ) && ! is_array( $booking[ $tmp_attkey ] ) ) {
-                return eme_apply_output_filters( eme_translate( $booking[ $tmp_attkey ], $ctx['lang'] ), $ctx['target'], true );
+                return eme_sanitize_placeholder_output( eme_translate( $booking[ $tmp_attkey ], $ctx['lang'] ), $ctx['target'], true );
             }
             return null;
         },
@@ -4037,7 +4037,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                     $field_replace .= $tmp_formfield['field_name'] . ": $tmp_answer" . $eol_sep;
                 }
             }
-            return eme_apply_output_filters( eme_translate( $field_replace, $ctx['lang'] ), $target );
+            return eme_sanitize_placeholder_output( eme_translate( $field_replace, $ctx['lang'] ), $target );
         },
         '/#_PAID|#_PAYED/' => function( $result, $matches, $ctx ) {
             return ( $ctx['booking']['booking_paid'] ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
@@ -4073,7 +4073,7 @@ function eme_get_booking_placeholder_handler_definitions() {
             $field_key = $matches[1];
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
-                return eme_apply_output_filters( eme_translate( $formfield['field_name'], $ctx['lang'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_translate( $formfield['field_name'], $ctx['lang'] ), $ctx['target'] );
             }
             return null;
         },
@@ -4103,7 +4103,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_apply_output_filters( $field_replace, $target );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target );
                         break;
                     }
                 }
@@ -4135,7 +4135,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_apply_output_filters( $field_replace, $target );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target );
                     }
                 }
                 $replacement = join( $eol_sep, $matched_answers );

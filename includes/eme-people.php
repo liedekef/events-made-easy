@@ -336,7 +336,7 @@ function eme_get_people_placeholder_handler_definitions() {
         '/#_FULLNAME/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_(NAME|LASTNAME|FIRSTNAME|ZIP|POSTAL|CITY|ADDRESS1|ADDRESS2|PHONE|BIRTHPLACE)$/' => function( $result, $matches, $ctx ) {
             $field = str_replace( '#_', '', $result );
@@ -348,62 +348,62 @@ function eme_get_people_placeholder_handler_definitions() {
                 $field = 'zip';
             }
             $replacement = $ctx['person'][ $field ];
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_BIRTHDATE$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_date( $ctx['person']['birthdate'], EME_TIMEZONE, 1 );
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_EMAIL$/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['email'];
             if ( $ctx['target'] == 'html' ) {
                 $replacement = eme_email_obfuscate( $replacement, $ctx['orig_target'] );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
         },
         '/#_FIRSTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['firstname'], 0, $length );
             $replacement .= ( substr( $replacement, -1 ) == '.' ? '' : '.' );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_LASTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['lastname'], 0, $length );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_INITIALS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $fullname = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $replacement = eme_get_initials( $fullname );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_LASTNAME_INITIALS/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_initials( $ctx['person']['lastname'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_COUNTRY/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_country_name( $ctx['person']['country_code'], $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_STATE/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = eme_get_state_name( $person['state_code'], $person['country_code'], $ctx['lang'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_GROUPS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if (!empty($person['person_id']))
                 $replacement = join( ', ', eme_get_persongroup_names( $person['person_id'] ) );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_MEMBERSHIPS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = '';
             if (!empty($person['person_id']))
                 $replacement = eme_get_activemembership_names_by_personid( $person['person_id'] );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $memberships = $matches[1];
@@ -442,15 +442,15 @@ function eme_get_people_placeholder_handler_definitions() {
         },
         '/#_BIRTHDAY_EMAIL/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_MASSMAIL|#_OPT_IN|#_OPT_OUT/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_GDPR|#_CONSENT/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['person']['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_LASTSEEN/' => function( $result, $matches, $ctx ) {
             if ( ! eme_is_empty_datetime( $ctx['person']['last_seen'] ) ) {
@@ -458,7 +458,7 @@ function eme_get_people_placeholder_handler_definitions() {
             } else {
                 $replacement = __( 'Never', 'events-made-easy' );
             }
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_IMAGETITLE$/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
@@ -467,7 +467,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $person['properties']['image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['title'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -479,7 +479,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $person['properties']['image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['alt'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -491,7 +491,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $person['properties']['image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['caption'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -503,7 +503,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 $info = eme_get_wp_image( $person['properties']['image_id'] );
                 if (!empty($info)) {
                     $replacement = $info['description'];
-                    return eme_apply_output_filters( $replacement, $ctx['target'] );
+                    return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
                 }
             }
             return '';
@@ -515,7 +515,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if (empty($replacement)) {
                     $replacement = "";
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -545,7 +545,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if (empty($replacement)) {
                     $replacement = "";
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'] );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
             }
             return '';
         },
@@ -586,7 +586,7 @@ function eme_get_people_placeholder_handler_definitions() {
             if ( isset( $person[ $tmp_attkey ] ) && ! is_array( $person[ $tmp_attkey ] ) ) {
                 $replacement = $person[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -609,7 +609,7 @@ function eme_get_people_placeholder_handler_definitions() {
             $formfield = eme_get_formfield( $field_key );
             if ( ! empty( $formfield ) ) {
                 $replacement = eme_translate( $formfield['field_name'], $ctx['lang'] );
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -632,7 +632,7 @@ function eme_get_people_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         }
-                        $field_replace = eme_apply_output_filters( $field_replace, $target );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target );
                         break;
                     }
                 }
@@ -665,7 +665,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if ( $user ) {
                     $replacement = $user->user_nicename;
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -677,7 +677,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if ( $user ) {
                     $replacement = $user->display_name;
                 }
-                return eme_apply_output_filters( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return '';
         },
@@ -689,7 +689,7 @@ function eme_get_people_placeholder_handler_definitions() {
             }
             $my_nonce = wp_create_nonce( 'eme_frontend' );
             $replacement = $person['random_id']."&eme_frontend_nonce=$my_nonce";
-            return eme_apply_output_filters( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_FAMILYCOUNT/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];

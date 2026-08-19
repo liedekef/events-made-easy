@@ -635,7 +635,7 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 
 		if ( $found ) {
             $replacement = eme_translate( $replacement, $lang );
-            $replacement = eme_apply_output_filters( $replacement, $target, true );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target, true );
 			if ( $need_escape ) {
 				$replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 			}

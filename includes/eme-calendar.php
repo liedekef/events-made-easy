@@ -281,6 +281,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	if ( ! $full && has_filter( 'eme_cal_small_yearmonth' ) ) {
 		$cal_datestring = apply_filters( 'eme_cal_small_yearmonth', $cal_datestring, $iSelectedMonth, $iSelectedYear );
 	}
+    $cal_datestring = esc_html($cal_datestring);
 
 	// Get previous year and month
 	$iPrevYear  = $iSelectedYear;
@@ -390,7 +391,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		if ( $holidays ) {
 			foreach ( $holidays as $day_key => $info ) {
 				if ( ! empty( $info['name'] ) ) {
-					$holiday_title = trim( esc_html( $info['name'] ) );
+					$holiday_title = trim( $info['name'] );
 					$eme_holiday_class = 'eme-cal-holidays';
 					if ( empty( $info['class'] ) ) {
 						$class = $eme_holiday_class;
@@ -401,7 +402,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 					if ( empty( $info['link'] ) ) {
 						$holiday_text = $info['name'];
 					} else {
-						$holiday_text = "<a href='" . $info['link'] . "' target='_blank' rel='noopener noreferrer'>" . $info['name'] . '</a>';
+						$holiday_text = "<a href='" . esc_url( $info['link'] ) . "' target='_blank' rel='noopener noreferrer'>" . esc_html( $info['name'] ) . '</a>';
 					}
 
 					// if there's an event that day, the day-number is a link and will be set later on
@@ -413,9 +414,9 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 						$event_date = explode( '-', $day_key );
 						$event_day  = ltrim( $event_date[2], '0' );
 						if ( ! empty( $info['link'] ) ) {
-							$event_day = "<a href='" . $info['link'] . "' target='_blank' rel='noopener noreferrer'>" . $event_day . '</a>';
+							$event_day = "<a href='" . esc_url( $info['link'] ) . "' target='_blank' rel='noopener noreferrer'>" . $event_day . '</a>';
 						}
-						$cells[ $day_key ] = "<span class='$eme_holiday_class' title='$holiday_title'>$event_day</span>";
+						$cells[ $day_key ] = "<span class='$eme_holiday_class' title='" . esc_attr( $holiday_title ) . "'>$event_day</span>";
 						if ( $full ) {
 							$cells[ $day_key ] .= "<br><span class='$class'>$holiday_text</span><br>";
 						}
@@ -476,7 +477,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 			$class = apply_filters( 'eme_calday_url_class_filter', $class );
 		}
 		if ( ! empty( $class ) ) {
-			$class = "class='$class'";
+			$class = "class='" . esc_attr( $class ) . "'";
 		}
 
 		$cells[ $day_key ] = "<span class='span-eme-calday span-eme-calday-$event_day'><a title='" . esc_attr( $link_title ) . "' href='" . esc_url( $cal_day_link ) . "' $class>$event_day</a></span>";
@@ -537,8 +538,8 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 				} else {
 					$sClass .= " eventful event-day-$iCalendarDay";
 				}
-				$sCalTblCell = "<td class='$sClass'>" . $cells[ $calstring ] . "</td>\n";
-				$sCalDivCell = "<div class='emeDivTableCell $sClass'>" . $cells[ $calstring ] . "</div>\n";
+			$sCalTblCell = "<td class='" . esc_attr( $sClass ) . "'>" . $cells[ $calstring ] . "</td>\n";
+			$sCalDivCell = "<div class='emeDivTableCell " . esc_attr( $sClass ) . "'>" . $cells[ $calstring ] . "</div>\n";
 			} else {
 				if ( $isPreviousMonth ) {
 					$sClass .= ' eventless-pre';
@@ -549,8 +550,8 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 				} else {
 					$sClass .= ' eventless';
 				}
-				$sCalTblCell = "<td class='$sClass'><span class='span-eme-calday span-eme-calday-$iCalendarDay'>$iCalendarDay</span></td>\n";
-				$sCalDivCell = "<div class='emeDivTableCell $sClass'>$iCalendarDay</div>\n";
+			$sCalTblCell = "<td class='" . esc_attr( $sClass ) . "'><span class='span-eme-calday span-eme-calday-$iCalendarDay'>$iCalendarDay</span></td>\n";
+			$sCalDivCell = "<div class='emeDivTableCell " . esc_attr( $sClass ) . "'>$iCalendarDay</div>\n";
 			}
 
 			// only show wanted columns
@@ -612,7 +613,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	$next_link     = "<a class='next-month eme-cal-next-month' href='#' data-full='" . esc_attr( $full ) . "' data-htmltable='" . esc_attr( $htmltable ) . "' data-htmldiv='" . esc_attr( $htmldiv ) . "' data-long_events='" . esc_attr( $long_events ) . "' data-month='" . esc_attr( $iNextMonth ) . "' data-year='" . esc_attr( $iNextYear ) . "' data-category='" . esc_attr( $category ) . "' data-author='" . esc_attr( $author ) . "' data-contact_person='" . esc_attr( $contact_person ) . "' data-location_id='" . esc_attr( $location_id ) . "' data-notcategory='" . esc_attr( $notcategory ) . "' data-template_id='" . esc_attr( $template_id ) . "' data-holiday_id='" . esc_attr( $holiday_id ) . "' data-weekdays='" . esc_attr( $weekdays ) . "' data-calendar_divid='" . esc_attr( $cal_div_id ) . "'>&gt;&gt;</a>";
 
 	$full ? $class = 'eme-calendar-full' : $class = 'eme-calendar';
-	$calendar      = "<div class='$class' id='$cal_div_id'>";
+	$calendar      = "<div class='$class' id='" . esc_attr( $cal_div_id ) . "'>";
 
 	if ( count( $weekday_arr ) ) {
 		$colspan = count( $weekday_arr );

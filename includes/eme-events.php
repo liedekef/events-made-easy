@@ -2001,7 +2001,7 @@ function eme_get_generic_placeholder_handler_definitions() {
         '/^#_WPUSERMETA\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $fieldname = $matches[1];
             if ( $ctx['wp_id'] ) {
-                return eme_sanitize_placeholder_output( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ) );
+                return eme_sanitize_placeholder_output( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ), $ctx['target'] );
             }
             return '';
         },

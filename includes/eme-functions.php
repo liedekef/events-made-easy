@@ -2589,9 +2589,9 @@ function eme_nl2br_save_html( $string, $target = 'html' ) {
     if ( empty( $string ) ) {
         return $string;
     }
-    if ( $target != 'htmlmail' ) {
-        $string = eme_kses( $string );
-    }
+    //if ( $target != 'htmlmail' ) {
+    //    $string = eme_kses( $string );
+    //}
     // no \n found: return now
     if ( ! str_contains( $string, "\n" ) ) {
         return $string;

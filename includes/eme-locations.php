@@ -2788,7 +2788,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         } else {
             $balloon_format = get_option( 'eme_location_balloon_format' );
         }
-        $tmp_loc = eme_replace_locations_placeholders( $balloon_format, $location );
+        $tmp_loc = eme_kses(eme_replace_locations_placeholders( $balloon_format, $location ));
         // newlines are already replaced by eme_replace_locations_placeholders
                 //    no newlines allowed, otherwise no map is shown
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
@@ -2833,7 +2833,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
     } else {
         $balloon_format = get_option( 'eme_location_balloon_format' );
     }
-    $map_text = eme_replace_locations_placeholders( $balloon_format, $location );
+    $map_text = eme_kses(eme_replace_locations_placeholders( $balloon_format, $location ));
     // newlines are already replaced by eme_replace_locations_placeholders
     //    no newlines allowed, otherwise no map is shown
     //    $map_text = eme_nl2br_save_html( $map_text );

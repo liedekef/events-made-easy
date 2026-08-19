@@ -2785,7 +2785,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         }
 
         # first we set the balloon info
-        if (!empty($location['location_properties']['balloon_format'] )) {
+        if (!eme_is_empty_string($location['location_properties']['balloon_format'] )) {
             $balloon_format = $location['location_properties']['balloon_format'];
         } else {
             $balloon_format = get_option( 'eme_location_balloon_format' );
@@ -2830,7 +2830,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $zoom_factor = get_option( 'eme_indiv_zoom_factor' );
     }
 
-    if (!empty($location['location_properties']['balloon_format'] )) {
+    if (!eme_is_empty_string($location['location_properties']['balloon_format'] )) {
         $balloon_format = $location['location_properties']['balloon_format'];
     } else {
         $balloon_format = get_option( 'eme_location_balloon_format' );

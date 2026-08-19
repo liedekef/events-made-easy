@@ -3639,7 +3639,7 @@ function eme_extra_event_headers( $event ) {
     $content['name']     = '#_EVENTNAME';
     $content['url']      = '#_EVENTPAGEURL';
     // to make sure description is not empty
-    if ( empty( $event['event_notes'] ) ) {
+    if ( eme_is_empty_string( $event['event_notes'] ) ) {
         $content['description'] = '#_EVENTNAME';
     } else {
         $content['description'] = '#_EXCERPT';
@@ -4014,14 +4014,15 @@ function eme_migrate_event_rsvpstartend_options() {
 }
 
 function eme_is_empty_string( $text ) {
-    if ( empty( $text ) ) {
-        return 1;
+    if ( $text === '' ) {
+        return true;
     } elseif ( is_array( $text ) ) {
         $text = array_map( 'trim', $text );
     } else {
         $text = trim( $text );
     }
-    if ( $text == '' ) {
+    // empty or only open/close empty html tags: then return true
+    if ( $text === '' || preg_match( '/^\s*<([a-z][a-z0-9]*)\s*>\s*<\/\1>\s*$/i', $text ) ) {
         return true;
     } else {
         return false;

@@ -4468,6 +4468,7 @@ function eme_message_error_div($message, $is_dismissible = 0) {
 
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
     if ( $target == 'html' ) {
+        $replacement = eme_kses($replacement);
         if ( $esc_html ) {
             $replacement = esc_html( $replacement );
         }

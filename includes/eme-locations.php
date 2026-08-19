@@ -1911,7 +1911,7 @@ function eme_get_locations_shortcode( $atts ) {
 
 function eme_replace_event_location_placeholders( $format, $event, $target = 'html', $do_shortcode = 1, $lang = '' ) {
     // replace EME language tags as early as possible
-        $format = eme_translate_string( $format );
+    $format = eme_translate_string( $format );
 
     $orig_target  = $target;
     if ( $target == 'htmlmail' ) {
@@ -2497,6 +2497,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                 //Check to see if we have a second set of braces;
                 $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
             }
+            $replacement = eme_apply_output_filters( $replacement, $target );
 
             if ( $need_escape ) {
                 $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -2674,6 +2675,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
                 }
             }
             if ( $target == 'html' ) {
+                $replacement = eme_apply_output_filters( $replacement, $target );
                 if ( $show_excerpt ) {
                     $replacement = apply_filters( 'the_excerpt', $replacement );
                 } else {
@@ -2788,7 +2790,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         } else {
             $balloon_format = get_option( 'eme_location_balloon_format' );
         }
-        $tmp_loc = eme_kses(eme_replace_locations_placeholders( $balloon_format, $location ));
+        $tmp_loc = eme_replace_locations_placeholders( $balloon_format, $location );
         // newlines are already replaced by eme_replace_locations_placeholders
                 //    no newlines allowed, otherwise no map is shown
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
@@ -2833,7 +2835,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
     } else {
         $balloon_format = get_option( 'eme_location_balloon_format' );
     }
-    $map_text = eme_kses(eme_replace_locations_placeholders( $balloon_format, $location ));
+    $map_text = eme_replace_locations_placeholders( $balloon_format, $location );
     // newlines are already replaced by eme_replace_locations_placeholders
     //    no newlines allowed, otherwise no map is shown
     //    $map_text = eme_nl2br_save_html( $map_text );

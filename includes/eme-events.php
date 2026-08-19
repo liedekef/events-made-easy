@@ -1994,14 +1994,14 @@ function eme_get_generic_placeholder_handler_definitions() {
                 if ( is_array( $wp_user->$fieldname ) ) {
                     return join( ', ', $wp_user->$fieldname );
                 }
-                return $wp_user->$fieldname;
+                return eme_apply_output_filters( $wp_user->$fieldname, $ctx['target'] );
             }
             return '';
         },
         '/^#_WPUSERMETA\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $fieldname = $matches[1];
             if ( $ctx['wp_id'] ) {
-                return join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) );
+                return eme_apply_output_filters( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ) );
             }
             return '';
         },
@@ -3906,6 +3906,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             //Check to see if we have a second set of braces;
             $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
         }
+        $replacement = eme_apply_output_filters( $replacement, $target );
 
         if ( $need_escape ) {
             $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -4165,6 +4166,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
                 }
             }
             if ( $target == 'html' ) {
+                $replacement = eme_apply_output_filters( $replacement, $target );
                 if ( $show_excerpt ) {
                     $replacement = apply_filters( 'the_excerpt', $replacement );
                 } else {

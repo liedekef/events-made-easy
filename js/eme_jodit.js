@@ -213,8 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
             defaultActionOnPasteFromWord: 'insert_as_text',
             cleanHTML: {
                 replaceNBSP: false,
-                removeEmptyElements: false,
-                removeEmptyAttributes: false,
                 fillEmptyParagraph: false,
             },
             allowTagsWithoutClosing: true,

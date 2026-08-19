@@ -9,5 +9,7 @@ https://www.freepik.com/free-vector/origami-ribbons-in-different-colors_724999.h
 
 Fondy code has been provided by Alexander Mankuta <alex@pointless.one>
 
-Security report gladly attributed to:
+Security reports gladly attributed to:
 - WPScan, Haitam Lazaar
+- CVE-2026-75934 reported by Wordfence researcher prism
+- CVE-2026-75963 reported by Wordfence researcher prism

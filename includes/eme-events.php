@@ -1718,18 +1718,21 @@ function eme_single_event_page_template( $template ) {
     if ( eme_is_single_event_page() ) {
         $event = eme_get_event( get_query_var( 'event_id' ) );
         if ( ! empty( $event ) && ! empty( $event['event_properties']['wp_page_template'] ) ) {
-            $overridden_template = locate_template( $event['event_properties']['wp_page_template'] );
-            if ( $overridden_template ) {
-                return $overridden_template;
-            } else {
+            $tpl = $event['event_properties']['wp_page_template'];
+            // make sure the template is allowed in the theme
+            $allowed_templates = array_values( get_page_templates() );
+            if ( ! in_array( $tpl, $allowed_templates, true ) ) {
                 return $template;
             }
-        } else {
+            $overridden_template = locate_template( $tpl );
+            if ( $overridden_template ) {
+                return $overridden_template;
+            }
             return $template;
         }
-    } else {
         return $template;
     }
+    return $template;
 }
 add_filter( 'template_include', 'eme_single_event_page_template', 99 );
 
@@ -9328,6 +9331,14 @@ function eme_sanitize_event( $event ) {
     }
     if ( $event_properties['vat_pct'] < 0 || $event_properties['vat_pct'] > 100 ) {
         $event_properties['vat_pct'] = 0;
+    }
+
+    // validate wp_page_template against the theme's allow-list
+    if ( ! empty( $event_properties['wp_page_template'] ) ) {
+        $allowed_templates = array_values( get_page_templates() );
+        if ( ! in_array( $event_properties['wp_page_template'], $allowed_templates, true ) ) {
+            $event_properties['wp_page_template'] = '';
+        }
     }
 
     // the properties might have changed too

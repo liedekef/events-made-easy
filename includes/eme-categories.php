@@ -651,7 +651,7 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 	$format = eme_translate( $format, $lang );
 
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format, $orig_target );
+        $format = eme_nl2br_save_html( $format );
     }
 
 	// and now replace any shortcodes, if wanted

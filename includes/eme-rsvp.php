@@ -4319,7 +4319,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format, $orig_target );
+        $format = eme_nl2br_save_html( $format );
     }
 
     return do_shortcode( $format );
@@ -4384,7 +4384,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format, $orig_target );
+        $format = eme_nl2br_save_html( $format );
     }
 
     return do_shortcode( $format );

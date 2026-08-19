@@ -4086,7 +4086,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 
         // now some html
         if ( $target == 'html' ) {
-            $format = eme_nl2br_save_html( $format, $orig_target );
+            $format = eme_nl2br_save_html( $format );
         }
 
         if ( $do_shortcode ) {

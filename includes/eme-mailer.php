@@ -280,7 +280,7 @@ function eme_send_via_wpmail( $subject, $body, $mailoptions, $attachment_paths_a
     }
 
     if ( $mailoptions['send_html'] ) {
-        $body = eme_nl2br_save_html( $body, 'htmlmail' );
+        $body = eme_nl2br_save_html( $body );
         $headers[] = 'Content-type: text/html';
     } else {
         require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
@@ -353,7 +353,7 @@ function eme_send_via_phpmailer( $subject, $body, $mailoptions, $attachment_path
     if ( $mailoptions['send_html'] ) {
         $mail->isHTML( true );
         $mail->AltBody = $mail->normalizeBreaks( $altbody );
-        $mail->Body    = $mail->normalizeBreaks( eme_nl2br_save_html( $body, 'htmlmail' ) );
+        $mail->Body    = $mail->normalizeBreaks( eme_nl2br_save_html( $body ) );
     } else {
         $mail->Body = $mail->normalizeBreaks( $altbody );
     }

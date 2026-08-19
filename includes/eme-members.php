@@ -5760,7 +5760,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format, $orig_target );
+        $format = eme_nl2br_save_html( $format );
     }
 
     return do_shortcode( $format );
@@ -6006,7 +6006,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 
         // now some html
         if ( $target == 'html' ) {
-            $format = eme_nl2br_save_html( $format, $orig_target );
+            $format = eme_nl2br_save_html( $format );
         }
 
         if ( $do_shortcode ) {

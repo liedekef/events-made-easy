@@ -2598,7 +2598,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 
         // now some html
         if ( $target == 'html' ) {
-            $format = eme_nl2br_save_html( $format, $orig_target );
+            $format = eme_nl2br_save_html( $format );
         }
 
         // and now replace any shortcodes, if wanted

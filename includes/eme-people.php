@@ -813,7 +813,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format, $orig_target );
+        $format = eme_nl2br_save_html( $format );
     }
 
     if ( $do_shortcode ) {

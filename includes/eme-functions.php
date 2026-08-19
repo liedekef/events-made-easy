@@ -2500,6 +2500,7 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
     $allowed_html[ 'span' ] = [];
     $allowed_html[ 'meta' ] = [];
     $allowed_html[ 'style' ] = [];
+    $allowed_html[ 'noscript' ] = [];
 
     add_filter( 'safe_style_css', 'eme_safe_css_attributes' );
     // brute-force remove script tags, even if wp_kses wouldn't do it
@@ -2584,16 +2585,9 @@ function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $me
     ];
 }
 
-function eme_nl2br_save_html( $string, $target = 'html' ) {
-    // empty: do nothing
-    if ( empty( $string ) ) {
-        return $string;
-    }
-    //if ( $target != 'htmlmail' ) {
-    //    $string = eme_kses( $string );
-    //}
-    // no \n found: return now
-    if ( ! str_contains( $string, "\n" ) ) {
+function eme_nl2br_save_html( $string ) {
+    // empty or no \n found: do nothing
+    if ( empty( $string ) || ! str_contains( $string, "\n" ) ) {
         return $string;
     }
 

@@ -1914,7 +1914,7 @@ function eme_replace_event_location_placeholders( $format, $event, $target = 'ht
         $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -2454,7 +2454,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
         $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -2597,7 +2597,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 
         // now some html
         if ( $target == 'html' ) {
-            $format = eme_nl2br_save_html( $format );
+            $format = eme_nl2br_save_html( $format, $orig_target );
         }
 
         // and now replace any shortcodes, if wanted
@@ -2613,7 +2613,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
     // replace EME language tags as early as possible
         $format = eme_translate_string( $format );
 
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 

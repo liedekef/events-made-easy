@@ -4005,7 +4005,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 
 function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target='html', $lang='', $do_shortcode = 1 ) {
     $orig_target = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
     if (empty($lang)) {

@@ -727,7 +727,7 @@ function eme_get_people_placeholder_handler_definitions() {
 
 function eme_replace_people_placeholders( $format, $person, $target = 'html', $lang = '', $do_shortcode = 1 ) {
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -813,7 +813,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format );
+        $format = eme_nl2br_save_html( $format, $orig_target );
     }
 
     if ( $do_shortcode ) {

@@ -677,9 +677,10 @@ function eme_calendar_ajax() {
 
 function eme_replace_calendar_placeholders( $format, $event, $cal_day, $target = 'html', $lang = '' ) {
 	// replace EME language tags as early as possible
-        $format = eme_translate_string( $format );
+    $format = eme_translate_string( $format );
 
-	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    $orig_target = $target;
+	if ( $target == 'htmlmail' ) {
 		$target = 'html';
 	}
 	if ( has_filter( 'eme_cal_format_prefilter' ) ) {
@@ -723,6 +724,9 @@ function eme_replace_calendar_placeholders( $format, $event, $cal_day, $target =
 		}
 	}
 
+    if ( $target == 'html' ) {
+        $format = eme_nl2br_save_html( $format, $orig_target );
+    }
 	// now, replace any language tags found in the format itself
 	$format = eme_translate( $format, $lang );
 

@@ -599,7 +599,8 @@ function eme_get_categories_shortcode( $atts ) {
 }
 
 function eme_replace_categories_placeholders( $format, $cat = '', $target = 'html', $do_shortcode = 1, $lang = '' ) {
-	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    $orig_target = $target;
+	if ( $target == 'htmlmail' ) {
 		$target = 'html';
 	}
 
@@ -648,6 +649,10 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 
 	// now, replace any language tags found
 	$format = eme_translate( $format, $lang );
+
+    if ( $target == 'html' ) {
+        $format = eme_nl2br_save_html( $format, $orig_target );
+    }
 
 	// and now replace any shortcodes, if wanted
 	if ( $do_shortcode ) {

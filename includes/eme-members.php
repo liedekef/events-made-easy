@@ -5654,7 +5654,7 @@ function eme_get_member_placeholder_handler_definitions() {
 
 function eme_replace_member_placeholders( $format, $membership, $member, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -5753,15 +5753,16 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
     $do_shortcode = 0;
     $format       = eme_replace_payment_gateway_placeholders( $format, $member['pg'], $total_member_price, $membership['properties']['currency'], $membership['properties']['vat_pct'], $orig_target, $lang, $do_shortcode );
 
-    // now some html
-    if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format );
-    }
-
     $format = eme_replace_membership_placeholders( $format, $membership, $orig_target, $lang, $do_shortcode );
     if ( $member['person_id'] != -1 ) {
         $format = eme_replace_people_placeholders( $format, $person, $orig_target, $lang, $do_shortcode );
     }
+
+    // now some html
+    if ( $target == 'html' ) {
+        $format = eme_nl2br_save_html( $format, $orig_target );
+    }
+
     return do_shortcode( $format );
 }
 
@@ -5906,7 +5907,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
     $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -6005,7 +6006,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 
         // now some html
         if ( $target == 'html' ) {
-            $format = eme_nl2br_save_html( $format );
+            $format = eme_nl2br_save_html( $format, $orig_target );
         }
 
         if ( $do_shortcode ) {

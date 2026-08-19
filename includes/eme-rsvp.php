@@ -4205,7 +4205,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
     $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -4319,7 +4319,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format );
+        $format = eme_nl2br_save_html( $format, $orig_target );
     }
 
     return do_shortcode( $format );
@@ -4330,7 +4330,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
     $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -4384,7 +4384,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
 
     // now some html
     if ( $target == 'html' ) {
-        $format = eme_nl2br_save_html( $format );
+        $format = eme_nl2br_save_html( $format, $orig_target );
     }
 
     return do_shortcode( $format );

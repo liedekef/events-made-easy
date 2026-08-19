@@ -1664,7 +1664,7 @@ function eme_email_tasksignup_action( $signup, $action ) {
 
 function eme_replace_task_placeholders( $format, $task, $event, $target = 'html', $lang = '' ) {
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -1748,7 +1748,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 
 function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task, $target = 'html', $lang = '' ) {
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 

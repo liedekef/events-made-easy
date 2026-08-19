@@ -2246,7 +2246,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
     // replace EME language tags as early as possible
     $format = eme_translate( $format );
 
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    $orig_target = $target;
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -3847,7 +3848,7 @@ function eme_get_event_placeholder_handler_definitions() {
 function eme_replace_event_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
     global $wpdb;
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -4083,8 +4084,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
         $format = eme_translate( $format, $lang );
 
         // now some html
-        if ( $target == 'html' && $orig_target != 'html_nohtml2br' ) {
-            $format = eme_nl2br_save_html( $format );
+        if ( $target == 'html' ) {
+            $format = eme_nl2br_save_html( $format, $orig_target );
         }
 
         if ( $do_shortcode ) {
@@ -4100,7 +4101,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
     $format = eme_translate_string( $format );
 
     $orig_target  = $target;
-    if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+    if ( $target == 'htmlmail' ) {
         $target = 'html';
     }
 
@@ -4131,7 +4132,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
             if ( ! eme_is_empty_string( $event['event_notes'] ) ) {
                 // first translate, since for "noexcerpt" the language indication is not there (it is only at the beginning of the notes, not after the separator)
                 $event_notes = eme_translate( $event['event_notes'] );
-                if ( $target == 'html' && $orig_target != 'html_nohtml2br' ) {
+                if ( $target == 'html' ) {
                     $event_notes = eme_nl2br_save_html( $event_notes );
                 }
 

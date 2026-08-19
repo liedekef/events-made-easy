@@ -2584,11 +2584,19 @@ function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $me
     ];
 }
 
-function eme_nl2br_save_html( $string ) {
-    // empty or no \n found: do nothing
-    if ( empty( $string ) || ! str_contains( $string, "\n" ) ) {
+function eme_nl2br_save_html( $string, $target = 'html' ) {
+    // empty: do nothing
+    if ( empty( $string ) ) {
         return $string;
     }
+    if ( $target != 'htmlmail' ) {
+        $string = eme_kses( $string );
+    }
+    // no \n found: return now
+    if ( ! str_contains( $string, "\n" ) ) {
+        return $string;
+    }
+
     $htmleditor = get_option( 'eme_htmleditor' );
     // If not tinymce and the string already looks like authored HTML,
     // respect it as-is

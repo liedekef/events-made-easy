@@ -275,11 +275,10 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$eventful = 1;
 			}
 			// per-type config: which location field feeds the list, its post name/selected value, and default labels
-			// translators: "state" refers to a geographical region (e.g., province, canton, department)
 			$field_config = [
 				'TOWNS'     => [ 'field' => 'location_city', 'post_name' => $city_post_name, 'selected' => $selected_city, 'label_multi' => __( 'Select one or more cities', 'events-made-easy' ), 'label_single' => __( 'Select a city', 'events-made-easy' ) ],
 				'CITIES'    => [ 'field' => 'location_city', 'post_name' => $city_post_name, 'selected' => $selected_city, 'label_multi' => __( 'Select one or more cities', 'events-made-easy' ), 'label_single' => __( 'Select a city', 'events-made-easy' ) ],
-				'STATES'    => [ 'field' => 'location_state', 'post_name' => $state_post_name, 'selected' => $selected_state, 'label_multi' => __( 'Select one or more states', 'events-made-easy' ), 'label_single' => __( 'Select a state', 'events-made-easy' ) ],
+                'STATES'    => [ 'field' => 'location_state', 'post_name' => $state_post_name, 'selected' => $selected_state, 'label_multi' => /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ __( 'Select one or more states', 'events-made-easy' ), 'label_single' => /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ __( 'Select a state', 'events-made-easy' ) ],
 				'COUNTRIES' => [ 'field' => 'location_country', 'post_name' => $country_post_name, 'selected' => $selected_country, 'label_multi' => __( 'Select one or more countries', 'events-made-easy' ), 'label_single' => __( 'Select a country', 'events-made-easy' ) ],
 			];
 			$cfg = $field_config[ $matches[2] ];

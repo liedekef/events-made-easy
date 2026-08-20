@@ -5498,7 +5498,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     if ( $used_field_id ) {
         $field = eme_get_formfield( $used_field_id );
         if ( ! empty( $field ) ) {
-            $event_q_string = '&used_field_id='. $used_field_id; 
+            $event_q_string .= '&used_field_id='. $used_field_id; 
             $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
             echo '<div class="notice below-h1 eme-message-admin"><p>';
             // translators: %s is the field name

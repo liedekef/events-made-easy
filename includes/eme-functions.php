@@ -4021,8 +4021,8 @@ function eme_is_empty_string( $text ) {
     } else {
         $text = trim( $text );
     }
-    // empty or only open/close empty html tags: then return true
-    if ( $text === '' || preg_match( '/^\s*<([a-z][a-z0-9]*)\s*>\s*<\/\1>\s*$/i', $text ) ) {
+    // empty or only open+close empty html tags: then return true
+    if ( $text === '' || preg_match( '/^(?:<([a-z][a-z0-9]*)\s*>\s*<\/\1>)*$/i', $text ) ) {
         return true;
     } else {
         return false;

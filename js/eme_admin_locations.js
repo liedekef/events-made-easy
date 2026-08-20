@@ -110,7 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 lang: emeadmin.translate_locale,
                 search_name: EME.$('#search_name')?.value || '',
                 search_customfields: EME.$('#search_customfields')?.value || '',
-                search_customfieldids: eme_getValue(EME.$('#search_customfieldids'))
+                search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: locationFields,
             bulkActions: {

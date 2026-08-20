@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_scope: eme_getValue(EME.$('#search_scope')),
                     search_start_date: EME.$('[name=search_start_date]')?.value || '',
                     search_end_date: EME.$('[name=search_end_date]')?.value || '',
-                    search_signup_status: eme_getValue(EME.$('#search_signup_status'))
+                    search_signup_status: eme_getValue(EME.$('#search_signup_status')),
+                    used_field_id: $_GET['used_field_id'] || ''
                 };
             },
             fields: taskSignupFields,

@@ -186,7 +186,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_membershipids: eme_getValue(EME.$('#search_membershipids')),
                 search_customfields: eme_getValue(EME.$('#search_customfields')),
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
-                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
+                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0,
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: personFields,
             bulkActions: {
@@ -331,7 +332,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_membershipids: '',
                 search_customfields: '',
                 search_customfieldids: '',
-                search_exactmatch: 0
+                search_exactmatch: 0,
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: personFields,
             bulkActions: {

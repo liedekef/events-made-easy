@@ -6151,6 +6151,20 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
+<?php
+    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $field = eme_get_formfield( $used_field_id );
+        if ( ! empty( $field ) ) {
+            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
+            echo '<div class="notice below-h1 eme-message-admin"><p>';
+            // translators: %s is the field name
+            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
+            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
+            echo '</p></div>';
+        }
+    }
+?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>
@@ -6174,9 +6188,10 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <form method='post' action="#">
         <select id="events_scope" name="scope">
 <?php
+    $scope_default = $used_field_id ? 'all' : 'future';
     foreach ( $scope_names as $key => $value ) {
         $selected = '';
-        if ( $key == 'future' ) {
+        if ( $key == $scope_default ) {
             $selected = "selected='selected'";
         }
         echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded
@@ -6247,7 +6262,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <?php eme_rightclickhint(); ?>
         </form>
         </div>
-<?php endif; ?>
+        <?php endif; ?>
         <div id="EventsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
     </div>
 
@@ -9956,6 +9971,11 @@ function eme_ajax_events_list() {
 
     if ( ! empty( $search_name ) ) {
         $where_arr[] = $wpdb->prepare( 'event_name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );
+    }
+    $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+        $where_arr[] = $wpdb->prepare( "event_id IN (SELECT related_id FROM $answers_table WHERE type='event' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
         $where_arr[] = $wpdb->prepare( 'event_start >= %s', $search_start_date );

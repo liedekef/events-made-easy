@@ -293,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_start_date: eme_getValue(EME.$('[name=search_start_date]')),
                 search_end_date: eme_getValue(EME.$('[name=search_end_date]')),
                 event_id: EME.$('#event_id')?.value || '',
+                used_field_id: $_GET['used_field_id'] || '',
                 person_id: $_GET['person_id']
             }),
             fields: bookingFields,

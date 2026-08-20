@@ -4014,7 +4014,7 @@ function eme_migrate_event_rsvpstartend_options() {
 }
 
 function eme_is_empty_string( $text ) {
-    if ( $text === '' ) {
+    if ( $text === '' || is_null( $text ) ) {
         return true;
     } elseif ( is_array( $text ) ) {
         $text = array_map( 'trim', $text );

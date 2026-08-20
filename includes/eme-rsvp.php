@@ -5493,6 +5493,21 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     }
 ?>
 </h1>
+<?php
+    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $field = eme_get_formfield( $used_field_id );
+        if ( ! empty( $field ) ) {
+            $event_q_string = '&used_field_id='. $used_field_id; 
+            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
+            echo '<div class="notice below-h1 eme-message-admin"><p>';
+            // translators: %s is the field name
+            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
+            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
+            echo '</p></div>';
+        }
+    }
+?>
     <?php if ( $trash ) { ?>
         <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=0$event_q_string" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
     <?php } else { ?>
@@ -5516,9 +5531,10 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 ?>
         <select id='scope' name='scope'>
 <?php
+        $scope_default = $used_field_id ? 'all' : 'future';
         foreach ( $scope_names as $key => $value ) {
             $selected = '';
-            if ( $key == 'future' ) {
+            if ( $key == $scope_default ) {
                 $selected = "selected='selected'";
             }
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded selected attribute
@@ -6000,6 +6016,11 @@ function eme_ajax_bookings_list() {
         $where_arr[] = $wpdb->prepare('bookings.status = %d', EME_RSVP_STATUS_APPROVED);
     } elseif ( $booking_status == 'PENDING' ) {
         $where_arr[] = $wpdb->prepare('(bookings.status = %d OR bookings.status = %d)', EME_RSVP_STATUS_PENDING , EME_RSVP_STATUS_USERPENDING );
+    }
+
+    $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $where_arr[] = $wpdb->prepare( "bookings.booking_id IN (SELECT related_id FROM $answers_table WHERE type='booking' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 
     if ( $q ) {

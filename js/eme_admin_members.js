@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
             listQueryParams: () => ({
                 action: 'eme_memberships_list',
                 lang: emeadmin.translate_locale,
-                eme_admin_nonce: emeadmin.translate_adminnonce
+                eme_admin_nonce: emeadmin.translate_adminnonce,
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: {
                 membership_id: {
@@ -254,7 +255,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_pg_pid: eme_getValue(EME.$('#search_pg_pid')),
                 search_customfields: eme_getValue(EME.$('#search_customfields')),
                 search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
-                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0
+                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0,
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: memberFields,
             bulkActions: {

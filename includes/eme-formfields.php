@@ -288,10 +288,55 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
     }
 
     if ( $used ) {
-        $layout .= "
+        $usage_details = eme_get_formfield_usage_details( $field_id );
+        $usage_lines   = [];
+        foreach ( $usage_details as $type => $cnt ) {
+            switch ( $type ) {
+                case 'booking':
+                    $pending_url  = esc_url( admin_url( 'admin.php?page=eme-registration-approval&used_field_id=' . $field_id ) );
+                    $approved_url = esc_url( admin_url( 'admin.php?page=eme-registration-seats&used_field_id=' . $field_id ) );
+                    // translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+                    $usage_lines[] = sprintf( esc_html__( '%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)', 'events-made-easy' ), $cnt, "<a href='$pending_url'>", '</a>', "<a href='$approved_url'>", '</a>' );
+                    break;
+                case 'event':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-manager&used_field_id=' . $field_id ) );
+                    // translators: 1: number of events, 2: link to events list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d events (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+                case 'location':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-locations&used_field_id=' . $field_id ) );
+                    // translators: 1: number of locations, 2: link to locations list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d locations (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+                case 'member':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-members&used_field_id=' . $field_id ) );
+                    // translators: 1: number of members, 2: link to members list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d members (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+                case 'membership':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-memberships&used_field_id=' . $field_id ) );
+                    // translators: 1: number of memberships, 2: link to memberships list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d memberships (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+                case 'person':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-people&used_field_id=' . $field_id ) );
+                    // translators: 1: number of people, 2: link to people list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d people (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+                case 'tasksignup':
+                    $url = esc_url( admin_url( 'admin.php?page=eme-task-signups&used_field_id=' . $field_id ) );
+                    // translators: 1: number of task signups, 2: link to task signups list
+                    $usage_lines[] = sprintf( esc_html__( '%1$d task signups (%2$sView%3$s)', 'events-made-easy' ), $cnt, "<a href='$url'>", '</a>' );
+                    break;
+            }
+        }
+        $usage_list       = implode( '<br>', $usage_lines );
+        $warning_text     = __( 'Warning: this field is already used. Changing the field type or values might result in unwanted side effects.', 'events-made-easy' );
+        $layout          .= "
       <div id='eme_formfield_warning' class='notice below-h1 eme-message-admin'>
-         <p>" . __( 'Warning: this field is already used in RSVP replies, member signups, event or location definitions. Changing the field type or values might result in unwanted side effects.', 'events-made-easy' ) . '</p>
-      </div>';
+         <p><strong>$warning_text</strong></p>
+         <p>$usage_list</p>
+      </div>";
     }
 
     $layout .= "
@@ -458,6 +503,18 @@ function eme_check_used_formfield( $field_id ) {
     $prepared_query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
     $count  = $wpdb->get_var( $prepared_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;
+}
+
+function eme_get_formfield_usage_details( $field_id ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    $prepared_query = $wpdb->prepare( "SELECT type, COUNT(*) as cnt FROM $table WHERE field_id=%d GROUP BY type", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows = $wpdb->get_results( $prepared_query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $usage = [];
+    foreach ( $rows as $row ) {
+        $usage[ $row['type'] ] = intval( $row['cnt'] );
+    }
+    return $usage;
 }
 
 function eme_get_formfields( $ids = '', $purpose = '' ) {

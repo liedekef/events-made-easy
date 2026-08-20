@@ -949,7 +949,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_start_date: EME.$('[name=events_search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=events_search_end_date]')?.value || '',
                 search_customfields: eme_getValue(EME.$('#events_search_customfields')),
-                search_customfieldids: eme_getValue(EME.$('#events_search_customfieldids'))
+                search_customfieldids: eme_getValue(EME.$('#events_search_customfieldids')),
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: eventFields,
             bulkActions: {
@@ -1144,7 +1145,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_start_date: EME.$('[name=trash_search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=trash_search_end_date]')?.value || '',
                 search_customfields: '',
-                search_customfieldids: ''
+                search_customfieldids: '',
+                used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: trashFields,
             bulkActions: {

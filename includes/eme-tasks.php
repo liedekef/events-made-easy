@@ -595,6 +595,20 @@ function eme_task_signups_table_layout( ) {
     </div>
 
     <h1><?php esc_html_e( 'Manage task signups', 'events-made-easy' ); ?></h1>
+<?php
+    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $field = eme_get_formfield( $used_field_id );
+        if ( ! empty( $field ) ) {
+            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
+            echo '<div class="notice below-h1 eme-message-admin"><p>';
+            // translators: %s is the field name
+            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
+            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
+            echo '</p></div>';
+        }
+    }
+?>
 
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>
@@ -612,9 +626,10 @@ function eme_task_signups_table_layout( ) {
         $scope_names['past']   = __( 'Past events', 'events-made-easy' );
         $scope_names['all']    = __( 'All events', 'events-made-easy' );
         $scope_names['future'] = __( 'Future events', 'events-made-easy' );
+        $scope_default = $used_field_id ? 'all' : 'future';
         foreach ( $scope_names as $key => $value ) {
             $selected = '';
-            if ( $key == 'future' ) {
+            if ( $key == $scope_default ) {
                 $selected = "selected='selected'";
             }
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selected is hardcoded selected attribute
@@ -2066,6 +2081,11 @@ function eme_ajax_task_signups_list() {
     $where_arr = [];
     if ( $search_status >= 0 ) {
         $where_arr[] = $wpdb->prepare( 'signups.signup_status = %d', $search_status );
+    }
+    $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+        $where_arr[] = $wpdb->prepare( "signups.id IN (SELECT related_id FROM $answers_table WHERE type='tasksignup' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     if ( ! empty( $search_name ) ) {
         $where_arr[] = $wpdb->prepare( 'tasks.name LIKE %s', '%' . $wpdb->esc_like( $search_name ) . '%' );

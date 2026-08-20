@@ -1825,7 +1825,7 @@ function eme_options_page() {
 <h2><?php esc_html_e( 'Events filtering format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
-            eme_options_textarea( __( 'Default event list filtering format', 'events-made-easy' ), 'eme_filter_form_format', __( 'This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' rel='noopener noreferrer' href='https://www.e-dynamics.be/wordpress/eme-docs/filter-form-formatting/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>' );
+            eme_options_textarea( __( 'Default event list filtering format', 'events-made-easy' ), 'eme_filter_form_format', __( 'This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' rel='noopener noreferrer' href='https://www.e-dynamics.be/wordpress/eme-docs/filter-form-formatting/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>', 1 );
 ?>
 </table>
 

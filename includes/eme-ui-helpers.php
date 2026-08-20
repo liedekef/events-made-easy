@@ -37,7 +37,7 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
             $checked = "checked='checked'";
         }
         $id = esc_attr( eme_get_field_id( $name, $key ));
-        $output .= "<input type='checkbox' name='$name' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . $item . '</label>';
+        $output .= "<input type='checkbox' name='$name' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . esc_html( $item ) . '</label>';
         if ( $horizontal ) {
             $output .= "&nbsp;";
         } else {
@@ -558,7 +558,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
             $t_value = $value;
         }
         "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . $t_value . '</label>';
+        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . esc_attr( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . esc_html( $t_value ) . '</label>';
         if (  $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -577,14 +577,13 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 
     $option_value ? $selected = "checked='checked' " : $selected = '';
 
+    $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
-
-    $name = wp_strip_all_tags( $name );
     $val  = "<input type='checkbox' name='{$name}' id='{$name}' value='1' $selected $extra_attributes>";
     if ( ! empty( $label ) ) {
-        $val .= "&nbsp;<label for='{$name}'>" . $label . '</label>';
+        $val .= "&nbsp;<label for='{$name}'>" . esc_html($label) . '</label>';
     }
     return $val;
 }
@@ -616,7 +615,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
         } else {
             "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
         }
-        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . $value . '</label>';
+        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . esc_attr( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . esc_html($value) . '</label>';
         if ( $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -633,12 +632,11 @@ function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra
     }
     $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
+    $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
         $extra_attributes .= ' aria-label="' . $name . '"';
     }
-
-    $name = wp_strip_all_tags( $name );
-    return "<input type='number' $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
+    return "<input type='number' $extra_attributes name='{$name}' id='{$name}' value='" . esc_attr( $option_value ) . "'>";
 }
 
 function eme_get_field_id ( $field_name, $number = 1) {

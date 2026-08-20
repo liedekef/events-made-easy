@@ -517,18 +517,18 @@ function eme_get_formfield_usage_details( $field_id ) {
     return $usage;
 }
 
-function eme_render_used_field_notice() {
-    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
-    if ( $used_field_id ) {
-        $field = eme_get_formfield( $used_field_id );
-        if ( ! empty( $field ) ) {
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
+function eme_render_used_field_notice( $used_field_id = 0 ) {
+    if ( ! $used_field_id ) {
+        return;
+    }
+    $field = eme_get_formfield( $used_field_id );
+    if ( ! empty( $field ) ) {
+        $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
+        echo '<div class="notice below-h1 eme-message-admin"><p>';
+        // translators: %s is the field name
+        printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
+        echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
+        echo '</p></div>';
     }
 }
 

@@ -3200,7 +3200,10 @@ function eme_manage_members_layout( $message ) {
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
-    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
+    <?php
+        $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+        eme_render_used_field_notice($used_field_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
+    ?>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new member', 'events-made-easy' ); ?></h1>
@@ -3255,7 +3258,10 @@ function eme_manage_memberships_layout( $message ) {
     <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
-    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
+    <?php
+        $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+        eme_render_used_field_notice($used_field_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
+    ?>
 
     <div class="bulkactions">
     <form id='memberships-form' action="#" method="post">

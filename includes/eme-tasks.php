@@ -595,7 +595,10 @@ function eme_task_signups_table_layout( ) {
     </div>
 
     <h1><?php esc_html_e( 'Manage task signups', 'events-made-easy' ); ?></h1>
-    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
+    <?php
+        $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+        eme_render_used_field_notice($used_field_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
+    ?>
 
     <form action="#" method="post">
     <?php if (isset($_GET['event_id'])) { ?>

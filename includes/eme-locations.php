@@ -840,7 +840,10 @@ function eme_locations_table( $message = '' ) {
 
         <h1><?php esc_html_e( 'Manage locations', 'events-made-easy' ); ?></h1>
         <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
-        <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
+        <?php
+            $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+            eme_render_used_field_notice($used_field_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
+        ?>
 
     <form action="#" method="post">
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>

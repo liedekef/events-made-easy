@@ -2355,7 +2355,10 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
 <h1> <?php esc_html_e( 'Manage people and groups', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
-    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
+    <?php
+        $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
+        eme_render_used_field_notice($used_field_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
+    ?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>

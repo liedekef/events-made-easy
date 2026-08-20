@@ -37,7 +37,7 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
             $checked = "checked='checked'";
         }
         $id = esc_attr( eme_get_field_id( $name, $key ));
-        $output .= "<input type='checkbox' name='$name' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . esc_html( $item ) . '</label>';
+        $output .= "<input type='checkbox' name='" . esc_attr( $name ) . "' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . esc_html( $item ) . '</label>';
         if ( $horizontal ) {
             $output .= "&nbsp;";
         } else {
@@ -247,12 +247,12 @@ function eme_ui_select_binary( $option_value, $name, $required = 0, $class = '',
     }
     $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
+    $name         = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $name         = wp_strip_all_tags( $name );
-    $val          = "<select name='$name' id='$name' $extra_attributes >";
+    $val          = "<select name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' $extra_attributes >";
     $selected_YES = '';
     $selected_NO  = '';
     if ( $option_value ) {
@@ -279,10 +279,10 @@ function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='$id' name='$name' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $id ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -317,13 +317,13 @@ function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
     $random_id = eme_random_id();
     $datalist_id = $name."_".$random_id;
-    $val = "<input list='$datalist_id' id='$name' name='$name' value='$option_value' $extra_attributes >";
-    $val .= "<datalist id='$datalist_id'>";
+    $val = "<input list='" . esc_attr( $datalist_id ) . "' id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' value='" . esc_attr( $option_value ) . "' $extra_attributes >";
+    $val .= "<datalist id='" . esc_attr( $datalist_id ) . "'>";
     foreach ( $list as $key => $value ) {
         $val .= "<option value='".esc_html( $value )."'>";
     }
@@ -344,10 +344,10 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -388,10 +388,10 @@ function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first =
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( ! empty( $add_empty_first ) ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -420,10 +420,10 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='$name' name='$name' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
     }
@@ -451,11 +451,12 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
     }
     $extra_attributes = eme_merge_classes_into_attrs($class, $extra_attributes);
 
+    $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    $val = "<select $extra_attributes multiple='multiple' name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $id_prefix . $name ) . "' size='" . esc_attr( $size ) . "'>";
     if ( $add_empty_first != '' ) {
         if ($disable_first_option) {
             $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
@@ -504,10 +505,10 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
+    $val = "<select $extra_attributes multiple='multiple' name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $id_prefix . $name ) . "' size='" . esc_attr( $size ) . "'>";
     if ( ! empty( $add_empty_first ) ) {
         if ($disable_first_option) {
             $val .= "<option disabled='disabled' value=''>" . esc_html( $add_empty_first ) . '</option>';
@@ -558,7 +559,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
             $t_value = $value;
         }
         "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-        $val                                 .= "<input type='radio' id='{$name}_{$counter}' name='$name' value='" . esc_attr( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . esc_html( $t_value ) . '</label>';
+        $val .= "<input type='radio' id='" . esc_attr( $name . "_{$counter}" ) . "' name='" . esc_attr( $name ) . "' value='" . esc_attr( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . esc_html( $t_value ) . '</label>';
         if (  $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -579,11 +580,11 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
-    $val  = "<input type='checkbox' name='{$name}' id='{$name}' value='1' $selected $extra_attributes>";
+    $val  = "<input type='checkbox' name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' value='1' $selected $extra_attributes>";
     if ( ! empty( $label ) ) {
-        $val .= "&nbsp;<label for='{$name}'>" . esc_html($label) . '</label>';
+        $val .= "&nbsp;<label for='" . esc_attr( $name ) . "'>" . esc_html($label) . '</label>';
     }
     return $val;
 }
@@ -615,7 +616,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
         } else {
             "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
         }
-        $val .= "<input type='checkbox' name='{$name}[]' id='{$name}_{$counter}' value='" . esc_attr( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . esc_html($value) . '</label>';
+        $val .= "<input type='checkbox' name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $name . "_{$counter}" ) . "' value='" . esc_attr( $key ) . "' $selected $extra_attributes> <label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . esc_html($value) . '</label>';
         if ( $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -634,9 +635,9 @@ function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra
 
     $name = wp_strip_all_tags( $name );
     if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
-        $extra_attributes .= ' aria-label="' . $name . '"';
+        $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
-    return "<input type='number' $extra_attributes name='{$name}' id='{$name}' value='" . esc_attr( $option_value ) . "'>";
+    return "<input type='number' $extra_attributes name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' value='" . esc_attr( $option_value ) . "'>";
 }
 
 function eme_get_field_id ( $field_name, $number = 1) {

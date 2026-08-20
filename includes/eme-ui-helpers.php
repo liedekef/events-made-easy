@@ -114,9 +114,9 @@ function eme_options_toggle($title, $name, $description = '', $option_value = fa
         $option_value = get_option($name);
     }
 
-    $id = esc_attr(sanitize_html_class($name));
-    $yes_label = esc_attr('Yes', 'events-made-easy');
-    $no_label  = esc_attr('No', 'events-made-easy');
+    $id = sanitize_html_class($name);
+    $yes_label = __('Yes', 'events-made-easy');
+    $no_label  = __('No', 'events-made-easy');
 ?>
 <tr style="vertical-align:top" id="<?php echo esc_attr( $id ); ?>_row">
     <th scope="row"><?php echo esc_html($title); ?></th>

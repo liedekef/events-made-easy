@@ -400,7 +400,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 					}
 
 					if ( empty( $info['link'] ) ) {
-						$holiday_text = $info['name'];
+						$holiday_text = esc_html( $info['name'] );
 					} else {
 						$holiday_text = "<a href='" . esc_url( $info['link'] ) . "' target='_blank' rel='noopener noreferrer'>" . esc_html( $info['name'] ) . '</a>';
 					}

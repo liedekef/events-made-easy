@@ -2223,6 +2223,12 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
         $like = '%' . $wpdb->esc_like( $search_person ) . '%';
         $where_arr[] = $wpdb->prepare( '(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)', $like, $like, $like);
     }
+
+    $used_field_id = intval( $search_terms['used_field_id'] ?? 0 );
+    if ( $used_field_id ) {
+        $where_arr[] = $wpdb->prepare( "people.person_id IN (SELECT related_id FROM $answers_table WHERE type='person' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    }
+
     $usergroup_join = '';
     if ( ! empty( $search_terms['search_groups'] ) && eme_is_integer_array( $search_terms['search_groups'] ) ) {
         $search_groups_int = array_map( 'intval', $search_terms['search_groups'] );
@@ -2349,20 +2355,7 @@ function eme_people_table( $message = '', $active_tab = 'tab-people' ) {
 <h1> <?php esc_html_e( 'Manage people and groups', 'events-made-easy' ); ?> </h1>
 <div id="poststuff">
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
-<?php
-    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
-    if ( $used_field_id ) {
-        $field = eme_get_formfield( $used_field_id );
-        if ( ! empty( $field ) ) {
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
-    }
-?>
+    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
@@ -5363,14 +5356,8 @@ function eme_ajax_people_list( ) {
     $limit        = eme_get_ftable_limit();
     $orderby      = eme_get_ftable_orderby();
     $search_terms = eme_json_decode_safe(eme_sanitize_request($_POST));
-    $extra_where  = [];
-    $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
-    if ( $used_field_id ) {
-        $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-        $extra_where[] = $wpdb->prepare( "people.person_id IN (SELECT related_id FROM $answers_table WHERE type='person' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    }
-    $count_sql    = eme_get_sql_people_searchfields( $search_terms, 1, 0, 0, $extra_where );
-    $sql          = eme_get_sql_people_searchfields( $search_terms, 0, 0, 0, $extra_where );
+    $count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
+    $sql          = eme_get_sql_people_searchfields( $search_terms, 0 );
     $recordCount  = $wpdb->get_var( $count_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $rows         = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $wp_users     = eme_get_indexed_users();

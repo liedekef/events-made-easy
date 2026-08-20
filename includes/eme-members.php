@@ -3064,9 +3064,8 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $where_arr[]   = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
     }
 
-    $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
+    $used_field_id = intval( $search_terms['used_field_id'] ?? 0 );
     if ( $used_field_id ) {
-        $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
         $where_arr[] = $wpdb->prepare( "members.member_id IN (SELECT related_id FROM $answers_table WHERE type='member' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     if ( ! empty( $search_terms['search_groups'] ) && is_numeric( $search_terms['search_groups'] ) ) {
@@ -3201,20 +3200,7 @@ function eme_manage_members_layout( $message ) {
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
-<?php
-    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
-    if ( $used_field_id ) {
-        $field = eme_get_formfield( $used_field_id );
-        if ( ! empty( $field ) ) {
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
-    }
-?>
+    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new member', 'events-made-easy' ); ?></h1>
@@ -3269,20 +3255,7 @@ function eme_manage_memberships_layout( $message ) {
     <?php endif; ?>
 
     <h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
-<?php
-    $used_field_id_memberships = intval( $_GET['used_field_id'] ?? 0 );
-    if ( $used_field_id_memberships ) {
-        $field = eme_get_formfield( $used_field_id_memberships );
-        if ( ! empty( $field ) ) {
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
-    }
-?>
+    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <div class="bulkactions">
     <form id='memberships-form' action="#" method="post">

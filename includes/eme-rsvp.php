@@ -5493,22 +5493,12 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     }
 ?>
 </h1>
-<?php
+<?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped
     $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
     if ( $used_field_id ) {
-        $field = eme_get_formfield( $used_field_id );
-        if ( ! empty( $field ) ) {
-            $event_q_string .= '&used_field_id='. $used_field_id; 
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
+        $event_q_string .= '&used_field_id='. $used_field_id; 
     }
-?>
-    <?php if ( $trash ) { ?>
+    if ( $trash ) { ?>
         <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=0$event_q_string" ) ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
     <?php } else { ?>
         <a href="<?php echo esc_url( admin_url( "admin.php?page=$plugin_page&trash=1$event_q_string" ) ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>

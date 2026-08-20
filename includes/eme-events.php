@@ -6151,20 +6151,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
 <div id="poststuff">
     <h1 style="padding: 0;"></h1> <!-- empty h1 to anchor any (admin) notices to, these are rendered by WP js below the first h1 -->
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message is pre-escaped HTML ?>
-<?php
-    $used_field_id = intval( $_GET['used_field_id'] ?? 0 );
-    if ( $used_field_id ) {
-        $field = eme_get_formfield( $used_field_id );
-        if ( ! empty( $field ) ) {
-            $clear_url = esc_url( remove_query_arg( 'used_field_id' ) );
-            echo '<div class="notice below-h1 eme-message-admin"><p>';
-            // translators: %s is the field name
-            printf( esc_html__( 'Filtering on custom field: %s', 'events-made-easy' ), esc_html( $field['field_name'] ) );
-            echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
-            echo '</p></div>';
-        }
-    }
-?>
+    <?php eme_render_used_field_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
     <div class="eme-tabs"<?php echo $show_tab_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute ?>>
     <div class="eme-tab" data-tab="tab-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>

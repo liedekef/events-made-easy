@@ -286,7 +286,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 booking_status: eme_getValue(EME.$('#booking_status')),
                 search_event: eme_getValue(EME.$('#search_event')),
                 search_person: eme_getValue(EME.$('#search_person')),
-                search_customfields: eme_getValue(EME.$('#search_customfields')),
+                ...(() => {
+                    const cf = eme_get_customfieldfilter_values('eme_cf_filters');
+                    return {
+                        search_customfieldids: cf.fieldids,
+                        search_customfieldvalues: cf.values,
+                        search_customfieldexact: cf.exacts
+                    };
+                })(),
                 search_unique: eme_getValue(EME.$('#search_unique')),
                 search_paymentid: eme_getValue(EME.$('#search_paymentid')),
                 search_pg_pid: eme_getValue(EME.$('#search_pg_pid')),

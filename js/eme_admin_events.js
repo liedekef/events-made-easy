@@ -948,8 +948,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_location: EME.$('#events_search_location')?.value || '',
                 search_start_date: EME.$('[name=events_search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=events_search_end_date]')?.value || '',
-                search_customfields: eme_getValue(EME.$('#events_search_customfields')),
-                search_customfieldids: eme_getValue(EME.$('#events_search_customfieldids')),
+                ...(() => {
+                    const cf = eme_get_customfieldfilter_values('eme_cf_filters');
+                    return {
+                        search_customfieldids: cf.fieldids,
+                        search_customfieldvalues: cf.values,
+                        search_customfieldexact: cf.exacts
+                    };
+                })(),
                 used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: eventFields,
@@ -1144,8 +1150,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_location: '',
                 search_start_date: EME.$('[name=trash_search_start_date]')?.value || '',
                 search_end_date: EME.$('[name=trash_search_end_date]')?.value || '',
-                search_customfields: '',
-                search_customfieldids: '',
+                search_customfieldids: [],
+                search_customfieldvalues: [],
+                search_customfieldexact: [],
                 used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: trashFields,

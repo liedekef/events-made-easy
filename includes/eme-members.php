@@ -2835,7 +2835,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 <?php
     eme_render_members_searchfields( limit_to_group: $limit_to_group);
 ?>
-    <button id="MembersLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
+    <button id="MembersLoadRecordsButton" class="button-primary action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
 <?php
     if (empty($limit_to_group)) {
 ?>
@@ -2852,7 +2852,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     if ( empty($limit_to_group) &&! empty( $formfields_searchable ) ) {
 ?>
     <div id="hint">
-        <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
+        <?php esc_html_e( 'Hint: pick a custom field and enter a value to filter on. Click "+ Add custom field filter" to filter on multiple fields at once (all conditions must match); use the × to remove a filter.', 'events-made-easy' ); ?><br>
     </div>
 <?php
     }
@@ -2940,6 +2940,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     $eme_member_status_array = eme_member_status_array();
     $memberships             = eme_get_memberships();
     $value                   = '';
+    $search_terms            = [];
     if ( ! empty( $group_to_edit ) ) {
         $edit_group   = 1;
         $id_prefix = "edit_";
@@ -3004,40 +3005,9 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
     if ( ! empty( $formfields_searchable ) ) {
         if ( $edit_group ) {
-            echo '</td></tr><tr><td>' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '</td><td>';
+            echo '</td></tr><tr><td>' . esc_html__( 'Custom field filters', 'events-made-easy' ) . '</td><td>';
         }
-        if ( isset( $search_terms['search_customfields'] ) ) {
-            $value = $search_terms['search_customfields'];
-        } else {
-            $value = '';
-        }
-        echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
-        if ( $edit_group ) {
-            echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
-        }
-        if ( isset( $search_terms['search_customfieldids'] ) ) {
-            $value = $search_terms['search_customfieldids'];
-        } else {
-            $value = '';
-        }
-        $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
-        if ( $edit_group ) {
-            echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
-        }
-        if ( isset( $search_terms['search_exactmatch'] ) ) {
-            $value = intval($search_terms['search_exactmatch']);
-        } else {
-            $value = 0;
-        }
-        if ( $edit_group ) {
-            $label = '';
-        } else {
-            $label = __( 'Exact?', 'events-made-easy' );
-        }
-        $title = esc_attr__( 'Exact custom field search match', 'events-made-easy' );
-        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'"); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_nobreak_checkbox_binary()
+        eme_render_customfield_filter_rows( $formfields_searchable, $search_terms, $id_prefix );
     }
 }
 
@@ -3048,9 +3018,10 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     $answers_table     = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 
+    $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
+
     $limit   = eme_get_ftable_limit();
     $orderby = eme_get_ftable_orderby();
-    // if we don't sort on membership_name, we don't need to JOIN on the memberships table too, a bit more efficient then
     if (preg_match('/membership_name/', $orderby ) ) {
         $orderby = str_replace( 'membership_name', 'memberships.name', $orderby );
         $membership_join = "LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id";
@@ -3058,7 +3029,6 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $membership_join = "";
     }
     $people_join = "LEFT JOIN $people_table AS people ON members.person_id=people.person_id";
-    // trim the search_person too
     if ( ! empty( $search_terms['search_person'] ) ) {
         $like = '%' . $wpdb->esc_like( trim( $search_terms['search_person'] ) ) . '%';
         $where_arr[]   = $wpdb->prepare("(people.lastname LIKE %s OR people.firstname LIKE %s OR people.email LIKE %s)", $like, $like, $like);
@@ -3080,7 +3050,6 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         }
     }
 
-    // if the person is not allowed to manage all people, show only himself
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         $wp_id          = get_current_user_id();
         $member_ids_arr = eme_get_memberids_by_wpid( $wp_id );
@@ -3099,7 +3068,6 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $where_arr[] = $wpdb->prepare( "(members.membership_id IN ($placeholders))", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
-    // search_status can be 0 too, for pending
     if ( ! empty( $search_terms['search_memberstatus'] ) && eme_is_integer_array( $search_terms['search_memberstatus'] ) ) {
         $ids_arr_int = array_map('intval', $search_terms['search_memberstatus']);
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
@@ -3112,6 +3080,46 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $like = '%' . $wpdb->esc_like( $search_terms['search_pg_pid'] ) . '%';
         $where_arr[]   = $wpdb->prepare("pg_pid LIKE %s", $like );
     }
+
+    // custom field filters: each row is an independent, AND'd EXISTS condition
+    $cf_ids   = $search_terms['search_customfieldids'] ?? [];
+    $cf_vals  = $search_terms['search_customfieldvalues'] ?? [];
+    $cf_exact = $search_terms['search_customfieldexact'] ?? [];
+    $legacy_has_value    = isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] !== '';
+    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && eme_is_integer_array( $search_terms['search_customfieldids'] );
+    if ( ! empty( $formfields_searchable ) && ( $legacy_has_value || $legacy_has_fieldids ) ) {
+        // Legacy format: one value + a list of field ids to OR-match it against.
+        // Kept as-is so dynamic groups saved before the multi-row filter UI keep working unchanged.
+        $value   = $search_terms['search_customfields'] ?? '';
+        $cmp_sql = $value === ''
+            ? "answer = ''"
+            : ( ! empty( $search_terms['search_exactmatch'] )
+                ? $wpdb->prepare( 'answer = %s', $value )
+                : $wpdb->prepare( 'answer LIKE %s', '%' . $wpdb->esc_like( $value ) . '%' ) );
+        $field_ids_arr = $legacy_has_fieldids
+            ? array_map( 'intval', $search_terms['search_customfieldids'] )
+            : array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ) );
+        $placeholders = implode( ',', array_fill( 0, count( $field_ids_arr ), '%d' ) );
+        $where_arr[]  = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=people.person_id AND type='person' AND field_id IN ($placeholders) AND $cmp_sql)", ...$field_ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+    } elseif ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfieldids'] ) ) {
+        $searchable_ids = array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ));
+        foreach ( $cf_ids as $idx => $field_id ) {
+            $field_id = intval( $field_id );
+            if ( ! $field_id || ! in_array( $field_id, $searchable_ids, true ) ) {
+                continue; // ignore empty/unselected rows and non-searchable fields
+            }
+            $value = isset( $cf_vals[ $idx ] ) ? trim( (string) $cf_vals[ $idx ] ) : '';
+            if ( $value === '' ) {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=members.member_id AND type='member' AND field_id=%d AND answer='')", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            } elseif ( ! empty( $cf_exact[ $idx ] ) ) {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=members.member_id AND type='member' AND field_id=%d AND answer=%s)", $field_id, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            } else {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=members.member_id AND type='member' AND field_id=%d AND answer LIKE %s)", $field_id, '%' . $wpdb->esc_like( $value ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            }
+        }
+    }
+
     $where_arr = eme_array_remove_empty_elements($where_arr);
     if ( ! empty( $where_arr ) ) {
         $where = 'WHERE ' . join( ' AND ', $where_arr );
@@ -3119,63 +3127,22 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $where = '';
     }
 
-    $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
-
-    // we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
-    // but we'll do the GROUP_CONCAT only when needed of course
+    // GROUP_CONCAT purely for the FIELD_x display/sort columns now — filtering happens above
     $group_concat_sql = '';
-    $field_ids_arr    = [];
     foreach ( $formfields_searchable as $formfield ) {
-        $field_id        = $formfield['field_id'];
-        $field_ids_arr[] = $field_id;
         if ( ! ( $memberids_only || $peopleids_only || $emails_only ) ) {
-            $field_id          = intval( $field_id );
+            $field_id          = intval( $formfield['field_id'] );
             $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
     }
 
-    $search_formfield_sql = '';
-    if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
-        // small optimization
-        if ( $search_terms['search_customfields'] == '' ) {
-            $search_customfields = '';
-            $search_formfield_sql = " AND answer = '' ";
-        } elseif (! empty($search_terms['search_exactmatch']))  {
-            $search_formfield_sql = $wpdb->prepare(" AND answer = %s", $search_terms['search_customfields'] );
-        } else  {
-            $search_formfield_sql = $wpdb->prepare(" AND answer LIKE %s", '%' . $wpdb->esc_like($search_terms['search_customfields']) . '%');
-        }
-        if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_integer_array( $search_terms['search_customfieldids'] ) ) {
-            $ids_arr_int = array_map('intval', $search_terms['search_customfieldids']);
-            $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-            $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        } else {
-            // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
-            // so if it is empty, set this var to empty
-            if ($search_terms['search_customfields'] == '' ) {
-                $search_formfield_sql = "";
-            } elseif ( ! empty( $field_ids_arr ) ) {
-                $ids_arr_int = array_map('intval', $field_ids_arr);
-                $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
-                $search_formfield_sql .= $wpdb->prepare( " AND field_id IN ($placeholders) ", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            }
-        }
-    }
-    if ( ! empty( $search_formfield_sql ) ) {
-        $sql_join = "
-           INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-             WHERE related_id>0 AND type='member' $search_formfield_sql
-             GROUP BY related_id
-            ) ans
-           ON members.member_id=ans.related_id";
-    } else {
-        $sql_join = "
-           LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-             WHERE related_id>0 AND type='member'
-             GROUP BY related_id
-            ) ans
-           ON members.member_id=ans.related_id";
-    }
+    $sql_join = "
+       LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
+         WHERE related_id>0 AND type='member'
+         GROUP BY related_id
+        ) ans
+       ON members.member_id=ans.related_id";
+
     if ( $count ) {
         $sql = "SELECT COUNT(*) FROM $members_table AS members $people_join $membership_join $sql_join $where";
     } elseif ( $memberids_only ) {
@@ -6074,14 +6041,14 @@ function eme_import_csv_members() {
     }
 
     // get the first row as keys and lowercase them
-    $headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+    $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
     // check required columns: membership, start_date and at least lastname or email
     if ( ! ( in_array( 'lastname', $headers ) || in_array( 'email', $headers ) ) || ! in_array( 'membership', $headers ) || ! in_array( 'start_date', $headers ) ) {
         return __( 'Not all required fields present.', 'events-made-easy' );
     } else {
         // now loop over the rest
-        while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+        while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
             $line = eme_array_remove_empty_elements( $line );
@@ -6278,7 +6245,7 @@ function eme_import_csv_member_dynamic_answers() {
     }
 
     // get the first row as keys and lowercase them
-    $headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+    $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
     // check required columns
     if ( ! ( in_array( 'lastname', $headers ) || in_array( 'email', $headers ) ) || ! in_array( 'firstname', $headers ) || ! in_array( 'email', $headers ) || ! in_array( 'membership', $headers ) ) {
@@ -6287,7 +6254,7 @@ function eme_import_csv_member_dynamic_answers() {
         // now loop over the rest
         // a simple array to be able to increase occurence counter based on memberid and grouping
         $occurences = [];
-        while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+        while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
             $line = eme_array_remove_empty_elements( $line );
@@ -6846,7 +6813,8 @@ function eme_ajax_store_members_query() {
         $group['name']     = eme_sanitize_request( $_POST['dynamicgroupname'] ) . ' ' . __( '(Dynamic)', 'events-made-easy' );
         $search_terms      = [];
         // the same as in add_update_group
-        $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
+        $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfieldids', 'search_customfieldvalues', 'search_customfieldexact' ];
+        //$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch'];
         foreach ( $search_fields as $search_field ) {
             if ( isset( $_POST[ $search_field ] ) ) {
                 $search_terms[ $search_field ] = eme_sanitize_request( $_POST[ $search_field ] );

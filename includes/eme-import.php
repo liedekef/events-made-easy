@@ -337,12 +337,12 @@ function eme_import_csv_countries() {
 		$delimiter = ',';
 	}
 	// first line is the column headers
-	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+	$headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 	// check required columns
 	if ( ! in_array( 'alpha_2', $headers ) || ! in_array( 'name', $headers ) ) {
 		$message = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+		while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
 			$country = array_combine( $headers, $row );
 			$res     = eme_db_insert_country( $country );
 			if ( $res ) {
@@ -398,11 +398,11 @@ function eme_import_csv_states() {
 	} else {
 		$delimiter = ',';
 	}
-	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+	$headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 	if ( ! in_array( 'code', $headers ) || ! in_array( 'name', $headers ) || ( ! in_array( 'country_id', $headers ) && ! in_array( 'country_alpha2', $headers ) ) ) {
 		$message = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+		while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
 			$state = array_combine( $headers, $row );
 			if ( empty( $state['country_id'] ) && ! empty( $state['country_alpha2'] ) ) {
 				$state['country_id'] = eme_get_country_id_by_alpha2( $state['country_alpha2'], $state['country_lang'] ?? '' );
@@ -466,13 +466,13 @@ function eme_import_csv_discounts() {
 	} else {
 		$delimiter = ',';
 	}
-	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+	$headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 	if ( ! in_array( 'name', $headers ) || ! in_array( 'type', $headers ) || ! in_array( 'coupon', $headers ) || ! in_array( 'value', $headers ) ) {
 		$message = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		$empty_props = [];
 		$empty_props = eme_init_discount_props( $empty_props );
-		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+		while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
 			$line = array_combine( $headers, $row );
 			// also import properties
 			foreach ( $line as $key => $value ) {
@@ -558,11 +558,11 @@ function eme_import_csv_discountgroups() {
 	} else {
 		$delimiter = ',';
 	}
-	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+	$headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 	if ( ! in_array( 'name', $headers ) ) {
 		$message = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+		while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
 			$discountgroup = array_combine( $headers, $row );
 			$res           = eme_db_insert_dgroup( $discountgroup );
 			if ( $res ) {
@@ -596,7 +596,7 @@ function eme_export_csv_events() {
 
 	$events = eme_get_events( 0, 'all', 'ASC', 0, '', '', '', '', 1, '', 0, [], 0, 0 );
 
-	$base_columns = [ 'event_name', 'event_start_date', 'event_end_date', 'price', 'currency', 'event_seats', 'external_ref', 'category_names', 'location_name', 'location_address1', 'location_city', 'location_latitude', 'location_longitude' ];
+	$base_columns = [ 'event_name', 'event_start_date', 'event_end_date', 'price', 'currency', 'event_seats', 'event_external_ref', 'category_names', 'location_name', 'location_address1', 'location_city', 'location_latitude', 'location_longitude', 'location_external_ref' ];
 
 	$att_keys    = [];
 	$prop_keys   = array_keys( eme_init_event_props() );
@@ -642,6 +642,7 @@ function eme_export_csv_events() {
 			$location['location_city'] ?? '',
 			$location['location_latitude'] ?? '',
 			$location['location_longitude'] ?? '',
+			$location['location_external_ref'] ?? '',
 		];
 		foreach ( $att_keys as $key ) {
 			$att_value = $event['event_attributes'][ $key ] ?? '';
@@ -746,7 +747,7 @@ function eme_export_csv_locations() {
 	}
 	$answer_keys = array_keys( $answer_keys );
 
-	$base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref' ];
+	$base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref', 'category_names' ];
 	$headers      = $base_columns;
     foreach ( $att_keys as $key ) {
         $headers[] = 'att_' . $key;
@@ -774,6 +775,7 @@ function eme_export_csv_locations() {
 			$location['location_description'],
 			$location['location_url'],
 			$location['location_external_ref'],
+			implode( '||', eme_get_location_category_names( $location['location_id'] ) ),
 		];
         foreach ( $att_keys as $key ) {
             $att_value = $location['location_attributes'][ $key ] ?? '';

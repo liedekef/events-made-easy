@@ -172,7 +172,7 @@ function eme_templates_table_layout( $message = '' ) {
     <?php echo eme_ui_select( '', 'search_type', $template_types ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Template name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
     <input type="search" name="search_content" id="search_content" placeholder="<?php esc_attr_e( 'Filter content', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
-    <button id="TemplatesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
+    <button id="TemplatesLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
     </form>
 
     <div class="bulkactions">

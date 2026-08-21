@@ -247,7 +247,7 @@ function eme_import_csv_locations() {
     }
 
     // get the first row as keys and lowercase them
-    $headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
+    $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
     // check required columns
     if ( ! in_array( 'location_name', $headers ) || ! in_array( 'location_address1', $headers ) || ! in_array( 'location_city', $headers ) ) {
@@ -256,7 +256,7 @@ function eme_import_csv_locations() {
         $empty_props = [];
         $empty_props = eme_init_location_props( $empty_props );
         // now loop over the rest
-        while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
+        while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
             $line        = eme_array_remove_empty_elements( $line );
@@ -286,9 +286,30 @@ function eme_import_csv_locations() {
 					}
 				}
 
+                // also import categories: a 'category_names' column, pipe-separated (e.g. "Music||Concerts").
+                // Names are matched against existing categories; whether an unmatched name gets
+                // auto-created or just skipped is controlled by the 'auto_create_categories' checkbox.
+                if ( isset( $line['category_names'] ) ) {
+                    $auto_create_categories = ! empty( $_POST['auto_create_categories'] );
+                    $cat_ids                = [];
+                    foreach ( eme_convert_multi2array( $line['category_names'] ) as $cat_name ) {
+                        if ( $auto_create_categories ) {
+                            $cat_id = eme_get_or_create_category_id_by_name( $cat_name );
+                        } else {
+                            $cat_id = eme_get_category_id_by_name_slug( trim( $cat_name ) );
+                        }
+                        if ( $cat_id ) {
+                            $cat_ids[] = $cat_id;
+                        }
+                    }
+                    if ( $cat_ids ) {
+                        $line['location_category_ids'] = implode( ',', $cat_ids );
+                    }
+                }
+
                 // if the location already exists: update it
-                if ( isset( $line['external_ref'] ) ) {
-                    $location_id = eme_check_location_external_ref( $line['external_ref'] );
+                if ( isset( $line['location_external_ref'] ) ) {
+                    $location_id = eme_check_location_external_ref( $line['location_external_ref'] );
                 }
                 #if (!$location_id && isset($line['location_latitude']) && isset($line['location_longitude']))
                 #   $location_id=eme_check_location_coord($line['location_latitude'],$line['location_longitude']);
@@ -847,16 +868,13 @@ function eme_locations_table( $message = '' ) {
 
     <form action="#" method="post">
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
-<?php
+    <?php
     $formfields_searchable = eme_get_searchable_formfields( 'locations' );
     if ( ! empty( $formfields_searchable ) ) {
-        echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
-        $label = __( 'Custom fields to filter on', 'events-made-easy' );
-        $extra_attributes = 'aria-label="' . esc_html( $label ) . '" data-placeholder="' . esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_snapselect', $extra_attributes, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value()
+        eme_render_customfield_filter_rows( $formfields_searchable, [], '' );
     }
-?>
-    <button id="LocationsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter location', 'events-made-easy' ); ?></button>
+    ?>
+    <button id="LocationsLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter location', 'events-made-easy' ); ?></button>
 <?php
     if ( ! empty( $formfields_searchable ) ) {
 ?>
@@ -3023,6 +3041,7 @@ function eme_ajax_locations_list() {
 
     $table         = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    $formfields_searchable = eme_get_searchable_formfields( 'locations' );
     $search_name   = eme_sanitize_request( $_POST['search_name'] ?? '' );
     $where         = '';
     $where_arr     = [];
@@ -3032,6 +3051,29 @@ function eme_ajax_locations_list() {
     $used_field_id = intval( $_POST['used_field_id'] ?? 0 );
     if ( $used_field_id ) {
         $where_arr[] = $wpdb->prepare( "locations.location_id IN (SELECT related_id FROM $answers_table WHERE type='location' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    }
+
+    // custom field filters: each row is an independent, AND'd EXISTS condition
+    // locations have no dynamic-group/legacy-format concept, so no legacy branch needed here
+    $cf_ids   = eme_sanitize_request( $_POST['search_customfieldids'] ?? [] );
+    $cf_vals  = eme_sanitize_request( $_POST['search_customfieldvalues'] ?? [] );
+    $cf_exact = eme_sanitize_request( $_POST['search_customfieldexact'] ?? [] );
+    if ( ! empty( $formfields_searchable ) && is_array( $cf_ids ) && ! empty( $cf_ids ) ) {
+        $searchable_ids = array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ) );
+        foreach ( $cf_ids as $idx => $field_id ) {
+            $field_id = intval( $field_id );
+            if ( ! $field_id || ! in_array( $field_id, $searchable_ids, true ) ) {
+                continue; // ignore empty/unselected rows and non-searchable fields
+            }
+            $value = isset( $cf_vals[ $idx ] ) ? trim( (string) $cf_vals[ $idx ] ) : '';
+            if ( $value === '' ) {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=locations.location_id AND type='location' AND field_id=%d AND answer='')", $field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            } elseif ( ! empty( $cf_exact[ $idx ] ) ) {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=locations.location_id AND type='location' AND field_id=%d AND answer=%s)", $field_id, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            } else {
+                $where_arr[] = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=locations.location_id AND type='location' AND field_id=%d AND answer LIKE %s)", $field_id, '%' . $wpdb->esc_like( $value ) . '%' ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            }
+        }
     }
 
     // if the person is not allowed to manage all locations, show only events he can edit
@@ -3051,8 +3093,7 @@ function eme_ajax_locations_list() {
         $where = 'WHERE ' . implode( ' AND ', $where_arr );
     }
 
-    $formfields_searchable = eme_get_searchable_formfields( 'locations' );
-    $formfields            = eme_get_formfields( '', 'locations' );
+    $formfields = eme_get_formfields( '', 'locations' );
 
     $fTableResult = [];
     $limit    = eme_get_ftable_limit();
@@ -3062,39 +3103,16 @@ function eme_ajax_locations_list() {
         $count_sql = "SELECT COUNT(*) FROM $table AS locations $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $sql       = "SELECT locations.* FROM $table AS locations $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $field_ids_arr = [];
         $group_concat_sql = '';
         foreach ( $formfields_searchable as $formfield ) {
-            $field_ids_arr[] = $formfield['field_id'];
-            $field_id        = $formfield['field_id'];
-            // we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
-            // but we'll do the GROUP_CONCAT only when needed of course
-            $field_id          = intval( $field_id );
+            $field_id          = intval( $formfield['field_id'] );
             $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
         }
-
-        if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_integer_array( $_POST['search_customfieldids'] ) ) {
-            $cf_ids_int = array_map( 'intval', $_POST['search_customfieldids'] );
-        } else {
-            $cf_ids_int = array_map( 'intval', $field_ids_arr );
-        }
-        $cf_placeholders = implode( ',', array_fill( 0, count( $cf_ids_int ), '%d' ) );
-        $field_ids_prepared = $wpdb->prepare( "field_id IN ($cf_placeholders)", ...$cf_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
-            $search_customfields = $wpdb->prepare( "answer LIKE %s", '%'.$wpdb->esc_like(eme_sanitize_request($_POST['search_customfields'])).'%' );
-            $sql_join        = "
-                   INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-                         WHERE $search_customfields AND $field_ids_prepared AND type='location'
-                         GROUP BY related_id
-                        ) ans
-                   ON locations.location_id=ans.related_id";
-        } else {
-            $sql_join = "
-                   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='location'
-                         GROUP BY related_id
-                        ) ans
-                   ON locations.location_id=ans.related_id";
-        }
+        $sql_join = "
+               LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='location'
+                     GROUP BY related_id
+                    ) ans
+               ON locations.location_id=ans.related_id";
         $count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }

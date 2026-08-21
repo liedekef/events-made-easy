@@ -198,6 +198,41 @@ function eme_remove_task_function(element) {
     }
 }
 
+// Custom-field filter rows (members/people/events/locations/tasks/rsvp search forms)
+function eme_add_customfieldfilter_function(button) {
+    const containerId = button.dataset.target;
+    const container = EME.$('#' + containerId);
+    const template  = EME.$('#' + containerId + '_template');
+    if (!container || !template) return;
+    const rowCopy = template.content.firstElementChild.cloneNode(true);
+    container.appendChild(rowCopy);
+    eme_init_widgets(true);
+}
+
+function eme_remove_customfieldfilter_function(button) {
+    const container = button.closest('.eme_cf_filters');
+    if (!container) return;
+    const rows = container.querySelectorAll('.eme_cf_filter_row');
+    button.closest('.eme_cf_filter_row').remove();
+}
+
+// Reads a .eme_cf_filters container's rows into 3 index-aligned arrays for listQueryParams/store payloads.
+// Skips rows where no field is selected.
+function eme_get_customfieldfilter_values(containerId) {
+    const container = EME.$('#' + containerId);
+    const fieldids = [], values = [], exacts = [];
+    if (!container) return { fieldids, values, exacts };
+    container.querySelectorAll('.eme_cf_filter_row').forEach(row => {
+        const fieldSelect = row.querySelector('.eme_cf_filter_field');
+        const fieldId = fieldSelect ? eme_getValue(fieldSelect) : '';
+        if (!fieldId) return;
+        fieldids.push(fieldId);
+        values.push(row.querySelector('.eme_cf_filter_value')?.value || '');
+        exacts.push(row.querySelector('.eme_cf_filter_exact_input')?.checked ? 1 : 0);
+    });
+    return { fieldids, values, exacts };
+}
+
 // Todo management functions
 function eme_add_todo_function(element) {
     const selectedItem = element.closest('tr');
@@ -603,6 +638,15 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             eme_remove_task_function(e.target);
         }
+        if (e.target.matches('.eme_cf_filter_add')) {
+            e.preventDefault();
+            eme_add_customfieldfilter_function(e.target);
+        }
+        if (e.target.matches('.eme_cf_filter_remove')) {
+            e.preventDefault();
+            eme_remove_customfieldfilter_function(e.target);
+        }
+
         if (e.target.matches('.eme_dyndata_add_tag')) {
             e.preventDefault();
             const tbody = EME.$('#eme_dyndata_tbody');

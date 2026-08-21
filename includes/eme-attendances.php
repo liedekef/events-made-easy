@@ -158,7 +158,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	</select>
 	<input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
 	<input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate'>
-	<button id="AttendancesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter attendances', 'events-made-easy' ); ?></button>
+	<button id="AttendancesLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter attendances', 'events-made-easy' ); ?></button>
 	</form>
 
     <div class="bulkactions">

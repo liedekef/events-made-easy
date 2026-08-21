@@ -109,8 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 eme_admin_nonce: emeadmin.translate_adminnonce,
                 lang: emeadmin.translate_locale,
                 search_name: EME.$('#search_name')?.value || '',
-                search_customfields: EME.$('#search_customfields')?.value || '',
-                search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
+                ...(() => {
+                    const cf = eme_get_customfieldfilter_values('eme_cf_filters');
+                    return {
+                        search_customfieldids: cf.fieldids,
+                        search_customfieldvalues: cf.values,
+                        search_customfieldexact: cf.exacts
+                    };
+                })(),
                 used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: locationFields,

@@ -184,9 +184,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_groups: eme_getValue(EME.$('#search_groups')),
                 search_memberstatus: eme_getValue(EME.$('#search_memberstatus')),
                 search_membershipids: eme_getValue(EME.$('#search_membershipids')),
-                search_customfields: eme_getValue(EME.$('#search_customfields')),
-                search_customfieldids: eme_getValue(EME.$('#search_customfieldids')),
-                search_exactmatch: EME.$('#search_exactmatch')?.checked ? 1 : 0,
+                ...(() => {
+                    const cf = eme_get_customfieldfilter_values('eme_cf_filters');
+                    return {
+                        search_customfieldids: cf.fieldids,
+                        search_customfieldvalues: cf.values,
+                        search_customfieldexact: cf.exacts
+                    };
+                })(),
                 used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: personFields,
@@ -330,9 +335,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 search_groups: '',
                 search_memberstatus: '',
                 search_membershipids: '',
-                search_customfields: '',
-                search_customfieldids: '',
-                search_exactmatch: 0,
+                search_customfieldids: [],
+                search_customfieldvalues: [],
+                search_customfieldexact: [],
                 used_field_id: $_GET['used_field_id'] || ''
             }),
             fields: personFields,
@@ -442,8 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_getValue(EME.$('#search_groups')).length ||
             eme_getValue(EME.$('#search_memberstatus')).length ||
             eme_getValue(EME.$('#search_membershipids')).length ||
-            eme_getValue(EME.$('#search_customfields')).length ||
-            eme_getValue(EME.$('#search_customfieldids')).length ) {
+            eme_get_customfieldfilter_values('eme_cf_filters').fieldids.length) {
             if (storeQueryButton) {
                 eme_toggle(storeQueryButton, true);
             }
@@ -479,14 +483,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (EME.$('#search_exactmatch').checked) {
             exactmatch = 1;
         }
+        const cf = eme_get_customfieldfilter_values('eme_cf_filters');
         let params = {
             'search_person': eme_getValue(EME.$('#search_person')),
             'search_groups': eme_getValue(EME.$('#search_groups')),
             'search_memberstatus': eme_getValue(EME.$('#search_memberstatus')),
             'search_membershipids': eme_getValue(EME.$('#search_membershipids')),
-            'search_customfields': eme_getValue(EME.$('#search_customfields')),
-            'search_customfieldids': eme_getValue(EME.$('#search_customfieldids')),
-            'search_exactmatch': exactmatch,
+            'search_customfieldids': cf.fieldids,
+            'search_customfieldvalues': cf.values,
+            'search_customfieldexact': cf.exacts,
             'action': 'eme_store_people_query',
             'eme_admin_nonce': emeadmin.translate_adminnonce,
             'dynamicgroupname': EME.$('#dynamicgroupname').value

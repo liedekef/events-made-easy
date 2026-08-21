@@ -641,7 +641,7 @@ function eme_task_signups_table_layout( ) {
 
         <input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
         <input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
-        <button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
+        <button id="TaskSignupsLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
     <?php } ?>
     </form>
 

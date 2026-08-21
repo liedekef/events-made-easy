@@ -228,7 +228,7 @@ function eme_formfields_table_layout( $message = '' ) {
     <?php echo eme_ui_select( '', 'search_type', $field_types, __( 'Any', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <?php echo eme_ui_select( '', 'search_purpose', $field_purposes, __( 'Any', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Field name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
-    <button id="FormfieldsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
+    <button id="FormfieldsLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
     </form>
 
     <div class="bulkactions">
@@ -530,6 +530,87 @@ function eme_render_used_field_notice( $used_field_id = 0 ) {
         echo " — <a href='$clear_url'>" . esc_html__( 'Clear filter', 'events-made-easy' ) . '</a>';
         echo '</p></div>';
     }
+}
+
+// Reusable across members/people/events/locations/tasks/rsvp: renders a repeatable
+// "field + value (+ exact)" filter row, each row an independent AND-condition.
+// $search_terms is expected to (optionally) contain 3 flat, index-aligned arrays:
+// search_customfieldids[], search_customfieldvalues[], search_customfieldexact[]
+function eme_render_customfield_filter_rows( $formfields_searchable, $search_terms = [], $id_prefix = '' ) {
+    $cf_ids   = $search_terms['search_customfieldids'] ?? [];
+    $cf_vals  = $search_terms['search_customfieldvalues'] ?? [];
+    $cf_exact = $search_terms['search_customfieldexact'] ?? [];
+    if ( empty( $cf_ids ) || ! is_array( $cf_ids ) ) {
+        $cf_ids = [ ];
+    }
+    $extra_attributes = ' data-placeholder="' . esc_attr__( 'Select custom field', 'events-made-easy' ) . '"';
+ 
+    // Legacy format (one value + optional list of field ids to OR-match it against, pre-dating
+    // the per-row filter UI). Not editable here — just show what's stored so it isn't silently lost.
+    $legacy_has_value    = isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] !== '';
+    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && is_array( $search_terms['search_customfieldids'] );
+    if ( $legacy_has_value || $legacy_has_fieldids ) {
+        $legacy_value = $search_terms['search_customfields'] ?? '';
+        $legacy_field_ids = $legacy_has_fieldids
+            ? array_map( 'intval', $search_terms['search_customfieldids'] )
+            : array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ) );
+        $legacy_field_names = [];
+        foreach ( $formfields_searchable as $formfield ) {
+            if ( in_array( intval( $formfield['field_id'] ), $legacy_field_ids, true ) ) {
+                $legacy_field_names[] = $formfield['field_name'];
+            }
+        }
+        echo '<p class="eme_cf_legacy_notice description">';
+        if ( $legacy_value === '' ) {
+            printf(
+                /* translators: %s: comma-separated list of custom field names */
+                esc_html__( 'Previously saved filter (old format): %s is empty.', 'events-made-easy' ),
+                esc_html( implode( ', ', $legacy_field_names ) )
+            );
+        } else {
+            printf(
+                /* translators: 1: comma-separated list of custom field names, 2: match type (contains/equals), 3: search value */
+                esc_html__( 'Previously saved filter (old format): %1$s %2$s "%3$s".', 'events-made-easy' ),
+                esc_html( implode( ', ', $legacy_field_names ) ),
+                ! empty( $search_terms['search_exactmatch'] ) ? esc_html__( 'equals', 'events-made-easy' ) : esc_html__( 'contains', 'events-made-easy' ),
+                esc_html( $legacy_value )
+            );
+        }
+        echo ' ' . esc_html__( 'Add a filter below and save to convert it to the new format.', 'events-made-easy' ) . '</p>';
+    }
+?>
+    <div class="eme_cf_filters" id="<?php echo esc_attr( $id_prefix ); ?>eme_cf_filters">
+<?php
+    foreach ( array_values( $cf_ids ) as $key => $field_id ) {
+?>
+        <span class="eme_cf_filter_row">
+<?php
+        echo eme_ui_select_key_value( $field_id, 'search_customfieldids[]', $formfields_searchable, 'field_id', 'field_name', __( 'Select custom field', 'events-made-easy' ), 0, 'eme_snapselect eme_cf_filter_field', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select_key_value()
+?>
+            <input type="search" value="<?php echo esc_attr( $cf_vals[ $key ] ?? '' ); ?>" name="search_customfieldvalues[]" placeholder="<?php esc_attr_e( 'Value to search', 'events-made-easy' ); ?>" class="eme_searchfilter eme_cf_filter_value" size="15">
+            <label class="eme_cf_filter_exact" title="<?php esc_attr_e( 'Exact match', 'events-made-easy' ); ?>">
+                <input type="checkbox" name="search_customfieldexact[]" value="1" class="eme_cf_filter_exact_input"<?php checked( ! empty( $cf_exact[ $key ] ) ); ?>> <?php esc_html_e( 'Exact', 'events-made-easy' ); ?>
+            </label>
+            <button type="button" class="eme_cf_filter_remove button" aria-label="<?php esc_attr_e( 'Remove this filter', 'events-made-easy' ); ?>">&times;</button>
+        </span>
+<?php
+    }
+?>
+    </div>
+    <button type="button" class="button eme_cf_filter_add" data-target="<?php echo esc_attr( $id_prefix ); ?>eme_cf_filters"><?php esc_html_e( '+ Add custom field filter', 'events-made-easy' ); ?></button>
+    <template id="<?php echo esc_attr( $id_prefix ); ?>eme_cf_filters_template">
+        <span class="eme_cf_filter_row">
+<?php
+    echo eme_ui_select_key_value( '', 'search_customfieldids[]', $formfields_searchable, 'field_id', 'field_name', __( 'Select custom field', 'events-made-easy' ), 0, 'eme_snapselect dynamicfield eme_cf_filter_field', $extra_attributes, id_prefix: $id_prefix ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select_key_value()
+?>
+            <input type="search" name="search_customfieldvalues[]" placeholder="<?php esc_attr_e( 'Value to search', 'events-made-easy' ); ?>" class="eme_searchfilter eme_cf_filter_value" size="15">
+            <label class="eme_cf_filter_exact" title="<?php esc_attr_e( 'Exact match', 'events-made-easy' ); ?>">
+                <input type="checkbox" name="search_customfieldexact[]" value="1" class="eme_cf_filter_exact_input"> <?php esc_html_e( 'Exact', 'events-made-easy' ); ?>
+            </label>
+            <button type="button" class="eme_cf_filter_remove button" aria-label="<?php esc_attr_e( 'Remove this filter', 'events-made-easy' ); ?>">&times;</button>
+        </span>
+    </template>
+<?php
 }
 
 function eme_get_formfields( $ids = '', $purpose = '' ) {

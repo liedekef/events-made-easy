@@ -331,7 +331,7 @@ function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $
     return $val;
 }
 
-function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $id_prefix = '' ) {
     // make sure it is an array, otherwise just go back
     if ( ! is_array( $list ) ) {
         return;
@@ -347,7 +347,7 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
         $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $id_prefix.$name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -375,7 +375,7 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
     return $val;
 }
 
-function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $id_prefix = '' ) {
     // make sure it is an array, otherwise just go back
     if ( ! is_array( $list ) ) {
         return;
@@ -391,7 +391,7 @@ function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first =
         $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $id_prefix.$name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( ! empty( $add_empty_first ) ) {
         $val .= "<option value=''>$add_empty_first</option>";
     }
@@ -407,7 +407,7 @@ function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first =
     return $val;
 }
 
-function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $id_prefix = '' ) {
     // make sure it is an array, otherwise just go back
     if ( ! is_array( $list ) ) {
         return;
@@ -423,7 +423,7 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
         $extra_attributes .= ' aria-label="' . esc_attr( $name ) . '"';
     }
 
-    $val = "<select id='" . esc_attr( $name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
+    $val = "<select id='" . esc_attr( $id_prefix.$name ) . "' name='" . esc_attr( $name ) . "' $extra_attributes >";
     if ( $add_empty_first != '' ) {
         $val .= "<option value=''>" . esc_html( $add_empty_first ) . '</option>';
     }

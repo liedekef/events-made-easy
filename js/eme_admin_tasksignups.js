@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&lang='+emeadmin.translate_locale+'&eme_admin_nonce='+emeadmin.translate_adminnonce
             },
             listQueryParams: function () {
+                const cf = eme_get_customfieldfilter_values('eme_cf_filters');
                 return {
                     action: 'eme_task_signups_list',
                     eme_admin_nonce: emeadmin.translate_adminnonce,
@@ -90,6 +91,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     search_start_date: EME.$('[name=search_start_date]')?.value || '',
                     search_end_date: EME.$('[name=search_end_date]')?.value || '',
                     search_signup_status: eme_getValue(EME.$('#search_signup_status')),
+                    search_customfieldids: cf.fieldids,
+                    search_customfieldvalues: cf.values,
+                    search_customfieldexact: cf.exacts,
                     used_field_id: $_GET['used_field_id'] || ''
                 };
             },

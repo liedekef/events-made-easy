@@ -255,6 +255,11 @@ function eme_import_csv_locations() {
     } else {
         $empty_props = [];
         $empty_props = eme_init_location_props( $empty_props );
+        // geocoding missing coordinates is throttled to 1 request per second, so this
+        // can take a while: try to lift the php time limit (not always allowed by the host)
+        if ( function_exists( 'set_time_limit' ) ) {
+            @set_time_limit( 0 );
+        }
         // now loop over the rest
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
@@ -304,6 +309,24 @@ function eme_import_csv_locations() {
                     }
                     if ( $cat_ids ) {
                         $line['location_category_ids'] = implode( ',', $cat_ids );
+                    }
+                }
+
+                // location_latitude/location_longitude need to be valid float values, otherwise ignore them
+                if ( isset( $line['location_latitude'] ) && ! is_numeric( trim( $line['location_latitude'] ) ) ) {
+                    unset( $line['location_latitude'] );
+                }
+                if ( isset( $line['location_longitude'] ) && ! is_numeric( trim( $line['location_longitude'] ) ) ) {
+                    unset( $line['location_longitude'] );
+                }
+                // if not present or not a valid float: search for the coordinates
+                if ( ! isset( $line['location_latitude'] ) || ! isset( $line['location_longitude'] ) ) {
+                    $coords = eme_geolocate_location( $line );
+                    if ( $coords !== false ) {
+                        $line['location_latitude']  = $coords['latitude'];
+                        $line['location_longitude'] = $coords['longitude'];
+                    } else {
+                        unset( $line['location_latitude'], $line['location_longitude'] );
                     }
                 }
 
@@ -1529,6 +1552,48 @@ function eme_check_location_coord( $lat, $long ) {
     $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_latitude = %s AND location_longitude = %s", $lat, $long ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
+
+function eme_geolocate_location( $line ) {
+    // search the coordinates for a location using nominatim.openstreetmap.org
+    // the public server allows max 1 request per second and no bulk geocoding,
+    // so we throttle consecutive requests during e.g. a csv import
+    static $last_call = 0;
+    $search_arr = [];
+    foreach ( [ 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country' ] as $key ) {
+        if ( ! empty( $line[ $key ] ) ) {
+            $search_arr[] = $line[ $key ];
+        }
+    }
+    if ( empty( $search_arr ) && ! empty( $line['location_name'] ) ) {
+        $search_arr[] = $line['location_name'];
+    }
+    if ( empty( $search_arr ) ) {
+        return false;
+    }
+    $search_key = join( ', ', $search_arr );
+    $url  = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' . rawurlencode( $search_key );
+    $args = [
+        'user-agent' => 'Events-Made-Easy; WordPress plugin',
+        'timeout'    => 10,
+    ];
+    if ( $last_call ) {
+        $elapsed = microtime( true ) - $last_call;
+        if ( $elapsed < 1 ) {
+            usleep( intval( ( 1 - $elapsed ) * 1000000 ) );
+        }
+    }
+    $last_call = microtime( true );
+    $response  = wp_remote_get( $url, $args );
+    if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) != 200 ) {
+        return false;
+    }
+    $data = eme_json_decode_safe( wp_remote_retrieve_body( $response ) );
+    if ( empty( $data[0]['lat'] ) || empty( $data[0]['lon'] ) || ! is_numeric( $data[0]['lat'] ) || ! is_numeric( $data[0]['lon'] ) ) {
+        return false;
+    }
+    return [ 'latitude' => floatval( $data[0]['lat'] ), 'longitude' => floatval( $data[0]['lon'] ) ];
+}
+
 
 function eme_check_location_name_address( $location ) {
     global $wpdb;
@@ -3132,22 +3197,22 @@ function eme_ajax_locations_list() {
             $record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
         }
         if ( ! empty( $location['location_category_ids'] ) ) {
-                        $categories            = explode( ',', $location['location_category_ids'] );
-                        $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Category', 'events-made-easy' ) . "'>";
-                        $cat_names             = [];
-                        foreach ( $categories as $cat ) {
-                                $category = eme_get_category( $cat );
-                                if ( $category ) {
-                                        $cat_names[] = esc_html( eme_translate( $category['category_name'] ) );
-                                }
-                        }
-                        $record['location_name'] .= implode( ', ', $cat_names );
-                        $record['location_name'] .= '</span>';
+            $categories            = explode( ',', $location['location_category_ids'] );
+            $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Category', 'events-made-easy' ) . "'>";
+            $cat_names             = [];
+            foreach ( $categories as $cat ) {
+                $category = eme_get_category( $cat );
+                if ( $category ) {
+                    $cat_names[] = esc_html( eme_translate( $category['category_name'] ) );
                 }
+            }
+            $record['location_name'] .= implode( ', ', $cat_names );
+            $record['location_name'] .= '</span>';
+        }
         if ( ! empty( $location['location_properties']['max_capacity'] ) ) {
-                        $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Max capacity', 'events-made-easy' ) . "'>";
+            $record['location_name'] .= "<br><span class='eme_small' title='" . esc_attr__( 'Max capacity', 'events-made-easy' ) . "'>";
             $record['location_name'] .= __( 'Max capacity', 'events-made-easy' ) . " ".$location['location_properties']['max_capacity'];
-                        $record['location_name'] .= '</span>';
+            $record['location_name'] .= '</span>';
         }
 
         $record['location_address1']  = esc_html( eme_translate( $location['location_address1'] ) );

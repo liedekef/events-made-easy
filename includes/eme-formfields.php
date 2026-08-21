@@ -178,6 +178,13 @@ function eme_formfields_page() {
                     return;
                 }
             } else {
+                // when adding a new field, make sure the name is not already used
+                $existing_field_id = $wpdb->get_var( $wpdb->prepare( "SELECT field_id FROM $formfields_table WHERE field_name = %s", $formfield['field_name'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+                if ( ! empty( $existing_field_id ) ) {
+                    $message = "<div id='message' class='eme-message-error'>".__( 'Error: there is already a field with that name.', 'events-made-easy' )."</div>";
+                    eme_formfields_edit_layout( 0, $message, $formfield );
+                    return;
+                }
                 $validation_result = $wpdb->insert( $formfields_table, $formfield );
                 if ( $validation_result !== false ) {
                     $new_field_id = $wpdb->insert_id;

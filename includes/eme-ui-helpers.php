@@ -119,7 +119,7 @@ function eme_options_toggle($title, $name, $description = '', $option_value = fa
     $no_label  = __('No', 'events-made-easy');
 ?>
 <tr style="vertical-align:top" id="<?php echo esc_attr( $id ); ?>_row">
-    <th scope="row"><?php echo esc_html($title); ?></th>
+    <th scope="row"><?php echo wp_kses_post($title); ?></th>
     <td>
         <input type="checkbox" class="eme-yesno-check-input"
             name="<?php echo esc_attr($name); ?>"
@@ -143,7 +143,7 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
     }
 ?>
         <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-            <th scope="row"><?php echo esc_html( $title ); ?></th>
+            <th scope="row"><?php echo wp_kses_post( $title ); ?></th>
             <td>
             <input id="<?php echo esc_attr( $name ); ?>_yes" name="<?php echo esc_attr( $name ); ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_yes'><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
             <input  id="<?php echo esc_attr( $name ); ?>_no" name="<?php echo esc_attr( $name ); ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo esc_attr( $name ); ?>_no'><?php esc_html_e( 'No', 'events-made-easy' ); ?>

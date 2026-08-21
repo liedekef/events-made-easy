@@ -99,6 +99,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.7  (2026/08/19) =
+* Export/import fixes
+* Major rewrite in the admin to filter on custom fields
+
 = 3.2.6  (2026/08/19) =
 * Add inline qrcode payment possibility for BancontactWero
 * Fixed multiple-setting for fields (the #SINGLE and #MULTIPLE overrides were changing it for all fields)

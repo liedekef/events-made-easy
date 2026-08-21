@@ -26,42 +26,53 @@ function eme_import_export_open_csv_stream( $filename, $delimiter = null ) {
 function eme_import_page() {
 	$message = '';
 
+    $data_forced_tab = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		$action = eme_sanitize_request( $_POST['eme_admin_action'] );
 
 		if ( $action == 'import_events' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_events();
+            $data_forced_tab = 'data-showtab="tab-import-events"';
 		} elseif ( $action == 'import_people' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 				$message = eme_import_csv_people();
 			} else {
 				$message = eme_message_error_div( __( 'You have no right to update people!', 'events-made-easy' ) );
 			}
-		} elseif ( $action == 'import' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
+            $data_forced_tab = 'data-showtab="tab-import-people"';
+		} elseif ( $action == 'import_members' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				$message = eme_import_csv_members();
 			} else {
 				$message = eme_message_error_div( __( 'You have no right to manage members!', 'events-made-easy' ) );
 			}
-		} elseif ( $action == 'import_dynamic_answers' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
+            $data_forced_tab = 'data-showtab="tab-import-members"';
+		} elseif ( $action == 'import_members_dynamic_answers' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				$message = eme_import_csv_member_dynamic_answers();
 			} else {
 				$message = eme_message_error_div( __( 'You have no right to manage members!', 'events-made-easy' ) );
 			}
+            $data_forced_tab = 'data-showtab="tab-import-members"';
 		} elseif ( $action == 'import_locations' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_locations();
+            $data_forced_tab = 'data-showtab="tab-import-locations"';
 		} elseif ( $action == 'do_importdiscounts' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_discounts();
+            $data_forced_tab = 'data-showtab="tab-import-discounts"';
 		} elseif ( $action == 'do_importdgroups' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_discountgroups();
+            $data_forced_tab = 'data-showtab="tab-import-discounts"';
 		} elseif ( $action == 'import_payments' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_payments();
+            $data_forced_tab = 'data-showtab="tab-import-payments"';
 		} elseif ( $action == 'do_importcountries' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_countries();
+            $data_forced_tab = 'data-showtab="tab-import-countries"';
 		} elseif ( $action == 'do_importstates' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$message = eme_import_csv_states();
+            $data_forced_tab = 'data-showtab="tab-import-countries"';
 		}
 	}
 
@@ -78,7 +89,7 @@ function eme_import_page() {
 		<div id="import-message" class="notice notice-success is-dismissible <?php echo esc_attr( $hidden_class ); ?>">
 			<p><?php echo wp_kses_post( $message ); ?></p>
 		</div>
-		<div class="eme-tabs">
+        <div class="eme-tabs" <?php echo $data_forced_tab; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded data attribute string ?>>
 		<div class="eme-tab" data-tab="tab-import-events"><?php esc_html_e( 'Events', 'events-made-easy' ); ?></div>
 		<div class="eme-tab" data-tab="tab-import-people"><?php esc_html_e( 'People', 'events-made-easy' ); ?></div>
 		<?php if ( get_option( 'eme_members_enabled' ) ) { ?>
@@ -97,7 +108,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Events', 'events-made-easy' ); ?></h2>
 		<form id="events-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -121,7 +132,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import People', 'events-made-easy' ); ?></h2>
 		<form id="people-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -144,12 +155,12 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Members', 'events-made-easy' ); ?></h2>
 		<form id="member-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="enclosure" value='"' required="required">
-			<input type="hidden" name="eme_admin_action" value="import">
+			<input type="hidden" name="eme_admin_action" value="import_members">
 			<input type="submit" value="<?php esc_attr_e( 'Import members', 'events-made-easy' ); ?>" class="button-primary action">
 		</form>
 		<p><?php esc_html_e( 'Import members from a CSV file.', 'events-made-easy' ); ?></p>
@@ -157,12 +168,12 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Dynamic Field Answers', 'events-made-easy' ); ?></h2>
 		<form id="member-import-answers" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="enclosure" value='"' required="required">
-			<input type="hidden" name="eme_admin_action" value="import_dynamic_answers">
+			<input type="hidden" name="eme_admin_action" value="import_members_dynamic_answers">
 			<input type="submit" value="<?php esc_attr_e( 'Import dynamic field answers', 'events-made-easy' ); ?>" class="button-primary action">
 		</form>
 		<p><?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database.', 'events-made-easy' ); ?></p>
@@ -174,7 +185,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Locations', 'events-made-easy' ); ?></h2>
 		<form id="location-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -197,7 +208,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Discounts', 'events-made-easy' ); ?></h2>
 		<form id="discount-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -218,7 +229,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Discount Groups', 'events-made-easy' ); ?></h2>
 		<form id="discountgroups-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -240,7 +251,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Payments', 'events-made-easy' ); ?></h2>
 		<form id="payment-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -257,7 +268,7 @@ function eme_import_page() {
 		<h2><?php esc_html_e( 'Import Countries', 'events-made-easy' ); ?></h2>
 		<form id="countries-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -278,7 +289,7 @@ function eme_import_page() {
 		<h2><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Import States', 'events-made-easy' ); ?></h2>
 		<form id="states-import" method="post" enctype="multipart/form-data" action="#">
 			<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-			<input type="file" name="eme_csv">
+			<input type="file" name="eme_csv" required='required'>
 			<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 			<input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>

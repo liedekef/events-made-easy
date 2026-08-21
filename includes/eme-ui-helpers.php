@@ -37,7 +37,7 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
             $checked = "checked='checked'";
         }
         $id = esc_attr( eme_get_field_id( $name, $key ));
-        $output .= "<input type='checkbox' name='" . esc_attr( $name ) . "' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . esc_html( $item ) . '</label>';
+        $output .= "<input type='checkbox' name='" . esc_attr( $name ) . "' id='$id' value='" . esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . wp_kses_post( $item ) . '</label>';
         if ( $horizontal ) {
             $output .= "&nbsp;";
         } else {
@@ -58,7 +58,7 @@ function eme_options_input_type( $title, $name, $description, $type = 'text', $o
     }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-        <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+        <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
         <td>
 <?php echo "<input $autocomplete name='" . esc_attr( $name ) . "' type='" . esc_attr( $type ) . "' id='" . esc_attr( $name ) . "' style='width: 95%;' value='" . esc_html( $option_value ) . "' size='45'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $autocomplete is hardcoded
 if ( ! empty( $description ) ) {
@@ -95,7 +95,7 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
     }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
     <td>
 <?php
     eme_wysiwyg_textarea( $name, $option_value, $show_wp_editor, $show_full);
@@ -169,7 +169,7 @@ function eme_options_input_list( $title, $name, $list, $description, $option_val
     }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
     <td>
 <?php
     echo eme_ui_list( $option_value, $name, $list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_list()
@@ -194,7 +194,7 @@ function eme_options_select( $title, $name, $list, $description, $option_value =
     }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
     <td>
 <?php
     echo eme_ui_select( $option_value, $name, $list, $add_empty_first ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
@@ -228,7 +228,7 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
     }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
-    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo esc_html( $title ); ?></label></th>
+    <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
     <td>
 <?php
     echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect()
@@ -559,7 +559,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
             $t_value = $value;
         }
         "$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-        $val .= "<input type='radio' id='" . esc_attr( $name . "_{$counter}" ) . "' name='" . esc_attr( $name ) . "' value='" . esc_attr( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . esc_html( $t_value ) . '</label>';
+        $val .= "<input type='radio' id='" . esc_attr( $name . "_{$counter}" ) . "' name='" . esc_attr( $name ) . "' value='" . esc_attr( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . wp_kses_post( $t_value ) . '</label>';
         if (  $horizontal ) {
             $val .= "&nbsp;";
         } else {
@@ -584,7 +584,7 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
     }
     $val  = "<input type='checkbox' name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' value='1' $selected $extra_attributes>";
     if ( ! empty( $label ) ) {
-        $val .= "&nbsp;<label for='" . esc_attr( $name ) . "'>" . esc_html($label) . '</label>';
+        $val .= "&nbsp;<label for='" . esc_attr( $name ) . "'>" . wp_kses_post($label) . '</label>';
     }
     return $val;
 }
@@ -616,7 +616,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
         } else {
             "$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
         }
-        $val .= "<input type='checkbox' name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $name . "_{$counter}" ) . "' value='" . esc_attr( $key ) . "' $selected $extra_attributes> <label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . esc_html($value) . '</label>';
+        $val .= "<input type='checkbox' name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $name . "_{$counter}" ) . "' value='" . esc_attr( $key ) . "' $selected $extra_attributes> <label for='" . esc_attr( $name . "_{$counter}" ) . "'>" . wp_kses_post($value) . '</label>';
         if ( $horizontal ) {
             $val .= "&nbsp;";
         } else {

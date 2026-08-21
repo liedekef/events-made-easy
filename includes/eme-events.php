@@ -9893,6 +9893,7 @@ function eme_admin_enqueue_js() {
         'eme-discounts' => ['eme-discounts'],
         'eme-countries' => ['eme-countries'],
         'eme-locations' => ['eme-locations'],
+        'eme-import' => ['eme-locations'], // the ajax call for coordinate resolving is in eme_admin_locations.js
         'eme-people' => ['eme-people','eme-members'], // we need members too when editing dynamic member groups
         'eme-members', 'eme-memberships' => ['eme-members'],
         'eme-registration-approval', 'eme-registration-seats' => ['eme-rsvp'],

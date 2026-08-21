@@ -255,12 +255,6 @@ function eme_import_csv_locations() {
     } else {
         $empty_props = [];
         $empty_props = eme_init_location_props( $empty_props );
-        // geocoding missing coordinates is throttled to 1 request per second, so this
-        // can take a while: try to lift the php time limit (not always allowed by the host)
-        if ( function_exists( 'set_time_limit' ) ) {
-            @set_time_limit( 0 );
-        }
-        // now loop over the rest
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
@@ -312,21 +306,15 @@ function eme_import_csv_locations() {
                     }
                 }
 
-                // location_latitude/location_longitude need to be valid float values, otherwise ignore them
-                if ( isset( $line['location_latitude'] ) && ! is_numeric( trim( $line['location_latitude'] ) ) ) {
-                    unset( $line['location_latitude'] );
-                }
-                if ( isset( $line['location_longitude'] ) && ! is_numeric( trim( $line['location_longitude'] ) ) ) {
-                    unset( $line['location_longitude'] );
-                }
-                // if not present or not a valid float: search for the coordinates
-                if ( ! isset( $line['location_latitude'] ) || ! isset( $line['location_longitude'] ) ) {
-                    $coords = eme_geolocate_location( $line );
-                    if ( $coords !== false ) {
-                        $line['location_latitude']  = $coords['latitude'];
-                        $line['location_longitude'] = $coords['longitude'];
-                    } else {
-                        unset( $line['location_latitude'], $line['location_longitude'] );
+                // location_latitude/location_longitude need to be valid float values; if missing or invalid,
+                // store null so the "resolve missing coordinates" action (on the import tab) can find and
+                // geocode them later, without blocking/throttling the import itself
+                if (empty($line['location_properties']['online_only'])) {
+                    if ( ! isset( $line['location_latitude'] ) || ! is_numeric( trim( $line['location_latitude'] ) ) ) {
+                        $line['location_latitude'] = null;
+                    }
+                    if ( ! isset( $line['location_longitude'] ) || ! is_numeric( trim( $line['location_longitude'] ) ) ) {
+                        $line['location_longitude'] = null;
                     }
                 }
 
@@ -1386,16 +1374,16 @@ function eme_sanitize_location( $location ) {
         }
     }
 
-    if ( empty( $location['location_longitude'] ) ) {
-        $location['location_longitude'] = '';
-    } elseif ( ! is_numeric( $location['location_longitude'] ) ) {
+    if ( is_null( $location['location_longitude'] ) ) {
+        // explicit null (e.g. a location still pending coordinate resolution) is left as-is
+    } elseif ( empty( $location['location_longitude'] ) || ! is_numeric( $location['location_longitude'] ) ) {
         $location['location_longitude'] = '';
     } else {
         $location['location_longitude'] = floatval( $location['location_longitude'] );
     }
-    if ( empty( $location['location_latitude'] ) ) {
-        $location['location_latitude'] = '';
-    } elseif ( ! is_numeric( $location['location_latitude'] ) ) {
+    if ( is_null( $location['location_latitude'] ) ) {
+        // explicit null (e.g. a location still pending coordinate resolution) is left as-is
+    } elseif ( empty( $location['location_latitude'] ) || ! is_numeric( $location['location_latitude'] ) ) {
         $location['location_latitude'] = '';
     } else {
         $location['location_latitude'] = floatval( $location['location_latitude'] );
@@ -3478,4 +3466,60 @@ function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-?>
+add_action( 'wp_ajax_eme_resolve_location_coords', 'eme_ajax_resolve_location_coords' );
+function eme_ajax_resolve_location_coords() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
+        wp_send_json( [ 'Result' => 'ERROR', 'htmlmessage' => __( 'No permission', 'events-made-easy' ) ] );
+    }
+    global $wpdb;
+    $table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+    $batch_size = 5; // ~5s worst case per call at the 1 req/sec geocoding throttle
+
+    // online_only lives inside the JSON location_properties column, so it can't be filtered in SQL;
+    // fetch a bit more than needed and skip those in PHP
+    $candidates = $wpdb->get_results(
+        "SELECT location_id, location_name, location_address1, location_address2, location_city, location_state, location_zip, location_country, location_properties
+         FROM $table_name
+         WHERE location_latitude IS NULL OR location_longitude IS NULL
+         ORDER BY location_id LIMIT " . ( $batch_size * 4 ), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- fixed integer, not user input
+        ARRAY_A
+    );
+
+    $resolved = $failed = $processed = 0;
+    foreach ( $candidates as $loc ) {
+        if ( $processed >= $batch_size ) {
+            break;
+        }
+        $props = eme_json_decode_safe( $loc['location_properties'] );
+        if ( ! empty( $props['online_only'] ) ) {
+            continue; // permanently coordinate-less by design, not a pending item. We should not get here, but anyway ...
+        }
+        ++$processed;
+        $coords = eme_geolocate_location( $loc ); //eme_geolocate_location does its own pacing, no extra sleep needed here
+        if ( $coords !== false ) {
+            $wpdb->update(
+                $table_name,
+                [ 'location_latitude' => $coords['latitude'], 'location_longitude' => $coords['longitude'] ],
+                [ 'location_id' => $loc['location_id'] ]
+            );
+            wp_cache_delete( "eme_location {$loc['location_id']}" );
+            ++$resolved;
+        } else {
+            ++$failed;
+        }
+    }
+
+    $remaining = (int) $wpdb->get_var(
+        "SELECT COUNT(*) FROM $table_name WHERE location_latitude IS NULL OR location_longitude IS NULL" // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    );
+    // still an upper bound (includes online-only rows), but no longer counts intentionally-blank manual entries
+
+    wp_send_json( [
+        'Result'    => 'OK',
+        'processed' => $processed,
+        'resolved'  => $resolved,
+        'failed'    => $failed,
+        'remaining' => $remaining,
+    ] );
+}

@@ -24,6 +24,7 @@ function eme_import_export_open_csv_stream( $filename, $delimiter = null ) {
 }
 
 function eme_import_page() {
+    global $wpdb;
 	$message = '';
 
     $data_forced_tab = '';
@@ -195,9 +196,13 @@ function eme_import_page() {
 		</form>
 		<p><?php esc_html_e( 'Import locations from a CSV file. Required columns: location_name, location_address1, location_city.', 'events-made-easy' ); ?></p>
 		<p><i><?php esc_html_e( 'The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored.', 'events-made-easy' ); ?></i></p>
-		<div class="notice notice-warning inline"><p>
-		<?php esc_html_e( 'Warning: when no valid coordinates are present in the CSV, the address is looked up using the public nominatim.openstreetmap.org geocoding service. That service allows at most 1 request per second and forbids bulk geocoding, so each lookup is throttled to 1 request per second and large files can take a long time to import (e.g. several minutes for a few hundred locations). The plugin tries to lift the PHP time limit for this, but your host may still enforce one (or a web server/proxy timeout), in which case the import stops halfway without a result message; already imported locations are kept and you can then import the remaining rows. To avoid this, provide the latitude and longitude yourself in the CSV, import the file in smaller chunks, or increase the PHP max_execution_time limit. For bulk geocoding needs, consider running your own Nominatim instance or using a commercial geocoding service.', 'events-made-easy' ); ?>
-		</p></div>
+        <?php
+        $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+        $pending_coords   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM $locations_table WHERE location_latitude IS NULL OR location_longitude IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        ?>
+        <p><?php esc_html_e( 'Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations — you can leave and come back, already-resolved locations are kept).', 'events-made-easy' ); ?></p>
+        <button type="button" id="resolve-coords-button" class="button-secondary"><?php esc_html_e( 'Resolve missing coordinates', 'events-made-easy' ); ?> (<span id="resolve-coords-pending"><?php echo esc_html( $pending_coords ); ?></span>)</button>
+        <span id="resolve-coords-progress"></span>
 		<h2><?php esc_html_e( 'Export Locations', 'events-made-easy' ); ?></h2>
 		<p>
 		<a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=eme-import&eme_admin_action=export_locations' ), 'eme_admin_export', 'eme_admin_nonce' ) ); ?>">

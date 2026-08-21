@@ -258,4 +258,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    EME.$('#resolve-coords-button')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        const button = this;
+        const progressEl = EME.$('#resolve-coords-progress');
+        const pendingEl = EME.$('#resolve-coords-pending');
+        button.disabled = true;
+
+        const totals = { resolved: 0, failed: 0 };
+
+        function runBatch() {
+            const data = new FormData();
+            data.append('action', 'eme_resolve_location_coords');
+            data.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+            eme_postJSON(ajaxurl, data, function (result) {
+                if (result.Result === 'ERROR') {
+                    alert(result.htmlmessage);
+                    button.disabled = false;
+                    return;
+                }
+                totals.resolved += result.resolved;
+                totals.failed += result.failed;
+                if (pendingEl) pendingEl.textContent = result.remaining;
+                if (progressEl) progressEl.textContent = `${totals.resolved} resolved, ${totals.failed} failed`;
+                if (result.remaining > 0 && result.processed > 0) {
+                    runBatch();
+                } else {
+                    button.disabled = false;
+                }
+            });
+        }
+
+        runBatch();
+    });
 });

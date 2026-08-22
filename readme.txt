@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.8  (2026/08/22) =
+* Fix for people using dynamic groups with custom field filtering
+
 = 3.2.7  (2026/08/22) =
 * Export/import fixes, with controlled bulk resolving of lat/long coordinates after import
 * Major rewrite in the admin interface to filter on custom fields

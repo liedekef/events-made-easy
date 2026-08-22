@@ -63,10 +63,10 @@ msgstr "v mene %s"
 #: includes/eme-events.php:10371
 #: includes/eme-events.php:10379
 #: includes/eme-events.php:10730
-#: includes/eme-formfields.php:3731
-#: includes/eme-formfields.php:3786
-#: includes/eme-formfields.php:3797
-#: includes/eme-formfields.php:3818
+#: includes/eme-formfields.php:3744
+#: includes/eme-formfields.php:3799
+#: includes/eme-formfields.php:3810
+#: includes/eme-formfields.php:3831
 #: includes/eme-functions.php:3370
 #: includes/eme-functions.php:3409
 #: includes/eme-functions.php:3452
@@ -97,21 +97,21 @@ msgstr "v mene %s"
 #: includes/eme-mailer.php:3933
 #: includes/eme-mailer.php:3977
 #: includes/eme-mailer.php:4032
-#: includes/eme-members.php:6498
-#: includes/eme-members.php:6626
-#: includes/eme-members.php:6766
-#: includes/eme-members.php:6848
-#: includes/eme-members.php:6928
+#: includes/eme-members.php:6511
+#: includes/eme-members.php:6639
+#: includes/eme-members.php:6779
+#: includes/eme-members.php:6861
+#: includes/eme-members.php:6941
 #: includes/eme-options.php:144
 #: includes/eme-payments.php:4258
-#: includes/eme-people.php:4294
-#: includes/eme-people.php:5323
-#: includes/eme-people.php:5430
-#: includes/eme-people.php:5626
-#: includes/eme-people.php:5665
-#: includes/eme-people.php:5674
-#: includes/eme-people.php:5682
-#: includes/eme-people.php:5777
+#: includes/eme-people.php:4307
+#: includes/eme-people.php:5336
+#: includes/eme-people.php:5443
+#: includes/eme-people.php:5639
+#: includes/eme-people.php:5678
+#: includes/eme-people.php:5687
+#: includes/eme-people.php:5695
+#: includes/eme-people.php:5790
 #: includes/eme-recurrence.php:666
 #: includes/eme-recurrence.php:836
 #: includes/eme-rsvp.php:1300
@@ -153,7 +153,7 @@ msgstr "Miesto"
 #: includes/eme-locations.php:599
 #: includes/eme-people.php:1051
 #: includes/eme-people.php:1226
-#: includes/eme-people.php:2622
+#: includes/eme-people.php:2635
 #: includes/eme-rsvp.php:1512
 msgid "State"
 msgstr "Štát"
@@ -165,7 +165,7 @@ msgstr "Štát"
 #: includes/eme-locations.php:607
 #: includes/eme-people.php:1052
 #: includes/eme-people.php:1227
-#: includes/eme-people.php:2617
+#: includes/eme-people.php:2630
 #: includes/eme-rsvp.php:1517
 msgid "Country"
 msgstr "Krajina"
@@ -314,13 +314,13 @@ msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zo
 #: includes/eme-people.php:1960
 #: includes/eme-people.php:1961
 #: includes/eme-people.php:1962
-#: includes/eme-people.php:2493
-#: includes/eme-people.php:2568
-#: includes/eme-people.php:2583
-#: includes/eme-people.php:5348
-#: includes/eme-people.php:5362
-#: includes/eme-people.php:5363
-#: includes/eme-people.php:5364
+#: includes/eme-people.php:2506
+#: includes/eme-people.php:2581
+#: includes/eme-people.php:2596
+#: includes/eme-people.php:5361
+#: includes/eme-people.php:5375
+#: includes/eme-people.php:5376
+#: includes/eme-people.php:5377
 #: includes/eme-tasks.php:2175
 msgid "Edit person"
 msgstr "Upraviť osobu"
@@ -359,7 +359,7 @@ msgstr "Nie je definované v šablónach"
 
 #: includes/eme-attributes.php:123
 #: includes/eme-attributes.php:143
-#: includes/eme-formfields.php:3635
+#: includes/eme-formfields.php:3648
 #: includes/eme-tasks.php:996
 #: includes/eme-todos.php:218
 msgid "Remove"
@@ -418,7 +418,7 @@ msgstr "ID záznamu"
 #: includes/eme-events.php:9664
 #: includes/eme-events.php:9848
 #: includes/eme-members.php:1898
-#: includes/eme-people.php:2809
+#: includes/eme-people.php:2822
 #: includes/eme-tasks.php:942
 #: includes/eme-templates.php:243
 #: includes/eme-todos.php:183
@@ -427,11 +427,11 @@ msgstr "Názov"
 
 #: includes/eme-categories.php:695
 #: includes/eme-events.php:10082
-#: includes/eme-formfields.php:3767
+#: includes/eme-formfields.php:3780
 #: includes/eme-holidays.php:279
 #: includes/eme-locations.php:3179
-#: includes/eme-members.php:6544
-#: includes/eme-people.php:5453
+#: includes/eme-members.php:6557
+#: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
 msgid "No name"
 msgstr "Žiadne meno"
@@ -593,10 +593,10 @@ msgstr "Mesiacov"
 #: includes/eme-mailer.php:4021
 #: includes/eme-mailer.php:4053
 #: includes/eme-members.php:2907
-#: includes/eme-members.php:3243
+#: includes/eme-members.php:3256
 #: includes/eme-people.php:2065
-#: includes/eme-people.php:2376
-#: includes/eme-people.php:2410
+#: includes/eme-people.php:2389
+#: includes/eme-people.php:2423
 #: includes/eme-rsvp.php:5668
 #: includes/eme-tasks.php:670
 #: includes/eme-templates.php:185
@@ -667,8 +667,8 @@ msgstr "Nemáte oprávnenie spravovať zľavy!"
 #: includes/eme-import.php:472
 #: includes/eme-import.php:564
 #: includes/eme-locations.php:227
-#: includes/eme-members.php:6022
-#: includes/eme-members.php:6226
+#: includes/eme-members.php:6035
+#: includes/eme-members.php:6239
 #: includes/eme-people.php:846
 #: includes/eme-rsvp.php:5330
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -680,8 +680,8 @@ msgstr "Problém s prístupom k nahranému súboru, možno nejaký problém so z
 #: includes/eme-import.php:491
 #: includes/eme-import.php:583
 #: includes/eme-locations.php:254
-#: includes/eme-members.php:6048
-#: includes/eme-members.php:6252
+#: includes/eme-members.php:6061
+#: includes/eme-members.php:6265
 #: includes/eme-people.php:873
 #: includes/eme-rsvp.php:5357
 msgid "Not all required fields present."
@@ -702,7 +702,7 @@ msgstr "Neimportované: %s"
 #: includes/eme-import.php:446
 #: includes/eme-import.php:538
 #: includes/eme-import.php:597
-#: includes/eme-members.php:6369
+#: includes/eme-members.php:6382
 msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr "Import dokončený: %1$d vložených, %2$d chýb"
 
@@ -712,8 +712,8 @@ msgstr "Import dokončený: %1$d vložených, %2$d chýb"
 #: includes/eme-import.php:467
 #: includes/eme-import.php:559
 #: includes/eme-locations.php:218
-#: includes/eme-members.php:6013
-#: includes/eme-members.php:6218
+#: includes/eme-members.php:6026
+#: includes/eme-members.php:6231
 #: includes/eme-people.php:836
 #: includes/eme-rsvp.php:5320
 msgid "Problem detected while uploading the file"
@@ -862,10 +862,10 @@ msgstr "Jazyk by mal zodpovedať jednému z jazykov WordPress, ktoré chcete pod
 #: includes/eme-mailer.php:4017
 #: includes/eme-mailer.php:4050
 #: includes/eme-members.php:2866
-#: includes/eme-members.php:3237
+#: includes/eme-members.php:3250
 #: includes/eme-people.php:2018
-#: includes/eme-people.php:2372
-#: includes/eme-people.php:2405
+#: includes/eme-people.php:2385
+#: includes/eme-people.php:2418
 #: includes/eme-rsvp.php:5576
 #: includes/eme-tasks.php:658
 #: includes/eme-templates.php:182
@@ -974,7 +974,7 @@ msgstr "Num-3"
 
 #: includes/eme-countries.php:385
 #: includes/eme-events.php:9741
-#: includes/eme-people.php:2645
+#: includes/eme-people.php:2658
 msgid "Language"
 msgstr "Jazyk"
 
@@ -1124,7 +1124,7 @@ msgstr "Emaily v poradí budú odoslané v dávkach %1$d %2$s"
 #: includes/eme-options.php:2126
 #: includes/eme-people.php:1058
 #: includes/eme-people.php:1233
-#: includes/eme-people.php:2653
+#: includes/eme-people.php:2666
 msgid "Newsletter"
 msgstr "Novinky"
 
@@ -1300,7 +1300,7 @@ msgstr "Názov zľavy"
 #: includes/eme-discounts.php:791
 #: includes/eme-events.php:9708
 #: includes/eme-members.php:1902
-#: includes/eme-people.php:2813
+#: includes/eme-people.php:2826
 #: includes/eme-tasks.php:946
 #: includes/eme-templates.php:247
 #: includes/eme-todos.php:185
@@ -1402,7 +1402,7 @@ msgid "Require EME membership"
 msgstr "Vyžadovať EME členstvo"
 
 #: includes/eme-discounts.php:699
-#: includes/eme-members.php:3190
+#: includes/eme-members.php:3203
 msgid "No memberships defined yet!"
 msgstr "Žiadne členstvá neboli ešte definované!"
 
@@ -1491,19 +1491,19 @@ msgstr "Pevná na miesto"
 
 #: includes/eme-discounts.php:1548
 #: includes/eme-discounts.php:1549
-#: includes/eme-formfields.php:1683
-#: includes/eme-formfields.php:1697
-#: includes/eme-formfields.php:3770
-#: includes/eme-formfields.php:3772
-#: includes/eme-formfields.php:3773
-#: includes/eme-formfields.php:3774
+#: includes/eme-formfields.php:1696
+#: includes/eme-formfields.php:1710
+#: includes/eme-formfields.php:3783
+#: includes/eme-formfields.php:3785
+#: includes/eme-formfields.php:3786
+#: includes/eme-formfields.php:3787
 #: includes/eme-fs.php:650
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
 #: includes/eme-locations.php:3215
-#: includes/eme-members.php:6704
+#: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -1518,10 +1518,10 @@ msgstr "Pevná na miesto"
 #: includes/eme-people.php:1881
 #: includes/eme-people.php:1924
 #: includes/eme-people.php:1967
-#: includes/eme-people.php:5367
-#: includes/eme-people.php:5384
-#: includes/eme-people.php:5385
-#: includes/eme-people.php:5456
+#: includes/eme-people.php:5380
+#: includes/eme-people.php:5397
+#: includes/eme-people.php:5398
+#: includes/eme-people.php:5469
 #: includes/eme-rsvp.php:4043
 #: includes/eme-rsvp.php:6373
 #: includes/eme-ui-helpers.php:118
@@ -1532,19 +1532,19 @@ msgstr "Áno"
 
 #: includes/eme-discounts.php:1548
 #: includes/eme-discounts.php:1549
-#: includes/eme-formfields.php:1684
-#: includes/eme-formfields.php:1698
-#: includes/eme-formfields.php:3770
-#: includes/eme-formfields.php:3772
-#: includes/eme-formfields.php:3773
-#: includes/eme-formfields.php:3774
+#: includes/eme-formfields.php:1697
+#: includes/eme-formfields.php:1711
+#: includes/eme-formfields.php:3783
+#: includes/eme-formfields.php:3785
+#: includes/eme-formfields.php:3786
+#: includes/eme-formfields.php:3787
 #: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
 #: includes/eme-locations.php:3215
-#: includes/eme-members.php:6704
+#: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -1559,10 +1559,10 @@ msgstr "Áno"
 #: includes/eme-people.php:1883
 #: includes/eme-people.php:1926
 #: includes/eme-people.php:1969
-#: includes/eme-people.php:5367
-#: includes/eme-people.php:5384
-#: includes/eme-people.php:5385
-#: includes/eme-people.php:5456
+#: includes/eme-people.php:5380
+#: includes/eme-people.php:5397
+#: includes/eme-people.php:5398
+#: includes/eme-people.php:5469
 #: includes/eme-rsvp.php:4043
 #: includes/eme-rsvp.php:6373
 #: includes/eme-ui-helpers.php:119
@@ -1917,7 +1917,7 @@ msgstr "Kontrola členstva"
 #: includes/eme-gdpr.php:468
 #: includes/eme-gdpr.php:627
 #: includes/eme-options.php:59
-#: includes/eme-people.php:2657
+#: includes/eme-people.php:2670
 msgid "GDPR approval"
 msgstr "Súhlas s GDPR"
 
@@ -2065,10 +2065,10 @@ msgstr "Miesta neboli importované: %s"
 #. translators: %1$s is the field name, %2$s is the CSV row data
 #: includes/eme-events.php:6011
 #: includes/eme-events.php:6015
-#: includes/eme-members.php:6082
-#: includes/eme-members.php:6088
-#: includes/eme-members.php:6094
-#: includes/eme-members.php:6100
+#: includes/eme-members.php:6095
+#: includes/eme-members.php:6101
+#: includes/eme-members.php:6107
+#: includes/eme-members.php:6113
 #: includes/eme-people.php:904
 msgid "Not imported (field %1$s not valid): %2$s"
 msgstr "Neimportované (pole %1$s nie je platné): %2$s"
@@ -2086,15 +2086,15 @@ msgstr "Neimportované (problém s vložením podujatia do databázy): %s"
 #. translators: %s is the CSV row data
 #: includes/eme-events.php:6116
 #: includes/eme-locations.php:375
-#: includes/eme-members.php:6076
-#: includes/eme-members.php:6282
+#: includes/eme-members.php:6089
+#: includes/eme-members.php:6295
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Neimportované (nie sú prítomné všetky povinné polia): %s"
 
 #. translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
 #: includes/eme-events.php:6120
 #: includes/eme-locations.php:379
-#: includes/eme-members.php:6196
+#: includes/eme-members.php:6209
 #: includes/eme-people.php:987
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr "Import dokončený: %1$d vložení, %2$d aktualizácií, %3$d chýb"
@@ -3931,8 +3931,8 @@ msgid "Set image"
 msgstr "Nastaviť obrázok"
 
 #: includes/eme-events.php:9618
-#: includes/eme-people.php:2877
-#: includes/eme-people.php:2917
+#: includes/eme-people.php:2890
+#: includes/eme-people.php:2930
 msgid "Choose image"
 msgstr "Vybrať obrázok"
 
@@ -3962,7 +3962,7 @@ msgstr "Vybrať jedného alebo viac členov"
 #: includes/eme-mailer.php:3585
 #: includes/eme-mailer.php:3736
 #: includes/eme-mailer.php:3753
-#: includes/eme-people.php:2663
+#: includes/eme-people.php:2676
 #: includes/eme-tasks.php:1025
 msgid "Select one or more groups"
 msgstr "Vybrať jednu alebo viac skupín"
@@ -4003,7 +4003,7 @@ msgid "Event price"
 msgstr "Cena podujatia"
 
 #: includes/eme-events.php:9669
-#: includes/eme-formfields.php:3778
+#: includes/eme-formfields.php:3791
 msgid "Copy"
 msgstr "Kopírovať"
 
@@ -4025,7 +4025,7 @@ msgid "Single event duration"
 msgstr "Trvanie jednorazového podujatia"
 
 #: includes/eme-events.php:9675
-#: includes/eme-formfields.php:751
+#: includes/eme-formfields.php:764
 msgid "Date"
 msgstr "Dátum"
 
@@ -4122,9 +4122,9 @@ msgid "Task end date"
 msgstr "Dátum ukončenia úlohy"
 
 #: includes/eme-events.php:9698
-#: includes/eme-formfields.php:2279
-#: includes/eme-formfields.php:2926
-#: includes/eme-formfields.php:3000
+#: includes/eme-formfields.php:2292
+#: includes/eme-formfields.php:2939
+#: includes/eme-formfields.php:3013
 #: includes/eme-options.php:39
 #: includes/eme-people.php:1067
 #: includes/eme-people.php:1267
@@ -4140,7 +4140,7 @@ msgstr "Dátum prihlásenia"
 
 #: events-manager.php:369
 #: includes/eme-events.php:9707
-#: includes/eme-formfields.php:3576
+#: includes/eme-formfields.php:3589
 #: includes/eme-options.php:1642
 msgid "Templates"
 msgstr "Šablóny"
@@ -4261,25 +4261,25 @@ msgid "View"
 msgstr "Zobraziť"
 
 #: includes/eme-events.php:9754
-#: includes/eme-formfields.php:1596
+#: includes/eme-formfields.php:1609
 #: includes/eme-gdpr.php:462
 #: includes/eme-gdpr.php:603
 #: includes/eme-locations.php:595
 #: includes/eme-people.php:1048
 #: includes/eme-people.php:1223
-#: includes/eme-people.php:2612
+#: includes/eme-people.php:2625
 #: includes/eme-rsvp.php:1498
 msgid "City"
 msgstr "Mesto"
 
 #: includes/eme-events.php:9755
-#: includes/eme-formfields.php:1605
+#: includes/eme-formfields.php:1618
 #: includes/eme-gdpr.php:463
 #: includes/eme-gdpr.php:607
 #: includes/eme-locations.php:603
 #: includes/eme-people.php:1049
 #: includes/eme-people.php:1224
-#: includes/eme-people.php:2607
+#: includes/eme-people.php:2620
 #: includes/eme-rsvp.php:1501
 msgid "Postal code"
 msgstr "PSČ"
@@ -4313,29 +4313,29 @@ msgstr "ID skupiny"
 #: includes/eme-events.php:9766
 #: includes/eme-import.php:95
 #: includes/eme-options.php:1354
-#: includes/eme-people.php:2336
-#: includes/eme-people.php:2830
+#: includes/eme-people.php:2349
+#: includes/eme-people.php:2843
 msgid "People"
 msgstr "Ľudia"
 
 #: includes/eme-events.php:9767
 #: includes/eme-events.php:9777
-#: includes/eme-people.php:2337
-#: includes/eme-people.php:2661
+#: includes/eme-people.php:2350
+#: includes/eme-people.php:2674
 msgid "Groups"
 msgstr "Skupiny"
 
 #: includes/eme-cleanup.php:394
 #: includes/eme-events.php:9768
-#: includes/eme-formfields.php:1298
-#: includes/eme-formfields.php:1523
-#: includes/eme-formfields.php:3101
-#: includes/eme-formfields.php:3300
+#: includes/eme-formfields.php:1311
+#: includes/eme-formfields.php:1536
+#: includes/eme-formfields.php:3114
+#: includes/eme-formfields.php:3313
 #: includes/eme-gdpr.php:237
 #: includes/eme-gdpr.php:457
 #: includes/eme-gdpr.php:583
 #: includes/eme-members.php:1799
-#: includes/eme-members.php:3412
+#: includes/eme-members.php:3425
 #: includes/eme-options.php:34
 #: includes/eme-options.php:44
 #: includes/eme-options.php:87
@@ -4345,22 +4345,22 @@ msgstr "Skupiny"
 #: includes/eme-people.php:1857
 #: includes/eme-people.php:1906
 #: includes/eme-people.php:1949
-#: includes/eme-people.php:2529
+#: includes/eme-people.php:2542
 #: includes/eme-rsvp.php:85
 msgid "Last name"
 msgstr "Priezvisko"
 
 #: includes/eme-cleanup.php:393
 #: includes/eme-events.php:9769
-#: includes/eme-formfields.php:1304
-#: includes/eme-formfields.php:1547
-#: includes/eme-formfields.php:3114
-#: includes/eme-formfields.php:3310
+#: includes/eme-formfields.php:1317
+#: includes/eme-formfields.php:1560
+#: includes/eme-formfields.php:3127
+#: includes/eme-formfields.php:3323
 #: includes/eme-gdpr.php:237
 #: includes/eme-gdpr.php:458
 #: includes/eme-gdpr.php:587
 #: includes/eme-members.php:1800
-#: includes/eme-members.php:3413
+#: includes/eme-members.php:3426
 #: includes/eme-options.php:35
 #: includes/eme-options.php:45
 #: includes/eme-options.php:88
@@ -4370,7 +4370,7 @@ msgstr "Priezvisko"
 #: includes/eme-people.php:1858
 #: includes/eme-people.php:1907
 #: includes/eme-people.php:1950
-#: includes/eme-people.php:2516
+#: includes/eme-people.php:2529
 #: includes/eme-rsvp.php:85
 #: includes/eme-rsvp.php:1484
 msgid "First name"
@@ -4378,18 +4378,18 @@ msgstr "Krstné meno"
 
 #: includes/eme-cleanup.php:395
 #: includes/eme-events.php:9770
-#: includes/eme-formfields.php:760
-#: includes/eme-formfields.php:1310
-#: includes/eme-formfields.php:1655
-#: includes/eme-formfields.php:3124
-#: includes/eme-formfields.php:3329
+#: includes/eme-formfields.php:773
+#: includes/eme-formfields.php:1323
+#: includes/eme-formfields.php:1668
+#: includes/eme-formfields.php:3137
+#: includes/eme-formfields.php:3342
 #: includes/eme-gdpr.php:118
 #: includes/eme-gdpr.php:192
 #: includes/eme-gdpr.php:308
 #: includes/eme-gdpr.php:459
 #: includes/eme-gdpr.php:591
 #: includes/eme-members.php:1801
-#: includes/eme-members.php:3414
+#: includes/eme-members.php:3427
 #: includes/eme-options.php:36
 #: includes/eme-options.php:46
 #: includes/eme-options.php:89
@@ -4400,21 +4400,21 @@ msgstr "Krstné meno"
 #: includes/eme-people.php:1859
 #: includes/eme-people.php:1908
 #: includes/eme-people.php:1951
-#: includes/eme-people.php:2540
+#: includes/eme-people.php:2553
 #: includes/eme-rsvp.php:85
 msgid "Email"
 msgstr "Email"
 
 #: includes/eme-events.php:9771
-#: includes/eme-formfields.php:1669
-#: includes/eme-formfields.php:3320
+#: includes/eme-formfields.php:1682
+#: includes/eme-formfields.php:3333
 #: includes/eme-gdpr.php:466
 #: includes/eme-gdpr.php:619
 #: includes/eme-options.php:37
 #: includes/eme-people.php:1054
 #: includes/eme-people.php:1229
 #: includes/eme-people.php:1564
-#: includes/eme-people.php:4659
+#: includes/eme-people.php:4672
 #: includes/eme-rsvp.php:1477
 msgid "Phone number"
 msgstr "Telefón"
@@ -4429,7 +4429,7 @@ msgstr "Miesto narodenia"
 
 #: includes/eme-events.php:9774
 #: includes/eme-people.php:1860
-#: includes/eme-people.php:2686
+#: includes/eme-people.php:2699
 msgid "Linked WP user"
 msgstr "Prepojený používateľ WP"
 
@@ -4463,7 +4463,7 @@ msgstr "Príbuzný s"
 #: includes/eme-options.php:2123
 #: includes/eme-people.php:1057
 #: includes/eme-people.php:1232
-#: includes/eme-people.php:2649
+#: includes/eme-people.php:2662
 msgid "MassMail"
 msgstr "Hromadný email"
 
@@ -4914,7 +4914,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Zahrnúť toto pole do CSV exportu rezervácií."
 
 #: includes/eme-formfields.php:401
-#: includes/eme-formfields.php:3575
+#: includes/eme-formfields.php:3588
 msgid "Field condition"
 msgstr "Podmienka poľa"
 
@@ -5176,354 +5176,354 @@ msgstr "CSV zoznam obsahuje"
 msgid "CSV list does not contain"
 msgstr "Zoznam CSV neobsahuje"
 
-#: includes/eme-formfields.php:717
+#: includes/eme-formfields.php:730
 msgid "Generic"
 msgstr "Všeobecné"
 
-#: includes/eme-formfields.php:718
+#: includes/eme-formfields.php:731
 msgid "Events field"
 msgstr "Pole podujatí"
 
-#: includes/eme-formfields.php:719
+#: includes/eme-formfields.php:732
 msgid "Locations field"
 msgstr "Pole miest"
 
-#: includes/eme-formfields.php:720
+#: includes/eme-formfields.php:733
 msgid "RSVP field"
 msgstr "Rezervačné pole"
 
-#: includes/eme-formfields.php:721
+#: includes/eme-formfields.php:734
 msgid "People field"
 msgstr "Pole ľudia"
 
-#: includes/eme-formfields.php:722
+#: includes/eme-formfields.php:735
 msgid "Members field"
 msgstr "Pole členov"
 
-#: includes/eme-formfields.php:723
+#: includes/eme-formfields.php:736
 msgid "Memberships field"
 msgstr "Pole členstiev"
 
-#: includes/eme-formfields.php:738
+#: includes/eme-formfields.php:751
 msgid "Text"
 msgstr "Text"
 
-#: includes/eme-formfields.php:739
+#: includes/eme-formfields.php:752
 msgid "Textarea"
 msgstr "Textové pole"
 
-#: includes/eme-formfields.php:740
+#: includes/eme-formfields.php:753
 msgid "Dropdown"
 msgstr "Rozbaľovacia ponuka"
 
-#: includes/eme-formfields.php:741
+#: includes/eme-formfields.php:754
 msgid "Dropdown (multiple)"
 msgstr "Rozbaľovacia ponuka (viacnásobná)"
 
-#: includes/eme-formfields.php:742
+#: includes/eme-formfields.php:755
 msgid "Radiobox"
 msgstr "Prepínač"
 
-#: includes/eme-formfields.php:743
+#: includes/eme-formfields.php:756
 msgid "Radiobox (vertical)"
 msgstr "Prepínač (zvislý)"
 
-#: includes/eme-formfields.php:744
+#: includes/eme-formfields.php:757
 msgid "Checkbox"
 msgstr "Zaškrtávacie políčko"
 
-#: includes/eme-formfields.php:745
+#: includes/eme-formfields.php:758
 msgid "Checkbox (vertical)"
 msgstr "Prepínač (zvislý)"
 
-#: includes/eme-formfields.php:746
-#: includes/eme-formfields.php:2351
-#: includes/eme-formfields.php:3007
+#: includes/eme-formfields.php:759
+#: includes/eme-formfields.php:2364
+#: includes/eme-formfields.php:3020
 msgid "Password"
 msgstr "Heslo"
 
-#: includes/eme-formfields.php:747
+#: includes/eme-formfields.php:760
 msgid "Hidden"
 msgstr "Skryté"
 
-#: includes/eme-formfields.php:748
+#: includes/eme-formfields.php:761
 msgid "Readonly"
 msgstr "Iba na čítanie"
 
-#: includes/eme-formfields.php:749
+#: includes/eme-formfields.php:762
 msgid "File upload"
 msgstr "Nahrávanie súborov"
 
-#: includes/eme-formfields.php:750
+#: includes/eme-formfields.php:763
 msgid "Multiple files upload"
 msgstr "Nahrať viacero súborov"
 
-#: includes/eme-formfields.php:752
+#: includes/eme-formfields.php:765
 msgid "Date (Javascript)"
 msgstr "Dátum (Javascript)"
 
-#: includes/eme-formfields.php:753
+#: includes/eme-formfields.php:766
 msgid "Datetime (Javascript)"
 msgstr "Dátum čas (Javascript)"
 
-#: includes/eme-formfields.php:758
+#: includes/eme-formfields.php:771
 msgid "Time (Javascript)"
 msgstr "Dátum (Javascript)"
 
-#: includes/eme-formfields.php:885
+#: includes/eme-formfields.php:898
 msgid "This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it"
 msgstr "Toto pole je skryté, ale v administrácii sa zobrazuje ako text, takže administrátor môže vidieť jeho hodnotu a prípadne ju zmeniť"
 
-#: includes/eme-formfields.php:1527
+#: includes/eme-formfields.php:1540
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom upravovať alebo autorizovať toto podujatie, pole „Priezvisko“ je tiež poľom automatického dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a začnite písať."
 
-#: includes/eme-formfields.php:1718
-#: includes/eme-formfields.php:3168
+#: includes/eme-formfields.php:1731
+#: includes/eme-formfields.php:3181
 msgid "Remember me?"
 msgstr "Zapamätať si ma?"
 
-#: includes/eme-formfields.php:1560
-#: includes/eme-formfields.php:3366
+#: includes/eme-formfields.php:1573
+#: includes/eme-formfields.php:3379
 #: includes/eme-people.php:1055
 #: includes/eme-people.php:1230
-#: includes/eme-people.php:2627
+#: includes/eme-people.php:2640
 #: includes/eme-rsvp.php:1504
 msgid "Date of birth"
 msgstr "Deň narodenia"
 
-#: includes/eme-formfields.php:1569
-#: includes/eme-formfields.php:3356
+#: includes/eme-formfields.php:1582
+#: includes/eme-formfields.php:3369
 #: includes/eme-people.php:1056
 #: includes/eme-people.php:1231
-#: includes/eme-people.php:2641
+#: includes/eme-people.php:2654
 #: includes/eme-rsvp.php:1507
 msgid "Place of birth"
 msgstr "Miesto narodenia"
 
-#: includes/eme-formfields.php:2939
-#: includes/eme-formfields.php:3186
+#: includes/eme-formfields.php:2952
+#: includes/eme-formfields.php:3199
 msgid "Subscribe"
 msgstr "Prihlásenie"
 
-#: includes/eme-formfields.php:1290
-#: includes/eme-formfields.php:2901
+#: includes/eme-formfields.php:1303
+#: includes/eme-formfields.php:2914
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme minimálne zástupné výrazy #_LASTNAME a #_EMAIL."
 
-#: includes/eme-formfields.php:1316
+#: includes/eme-formfields.php:1329
 msgid "Cancel reason"
 msgstr "Dôvod zrušenia"
 
-#: includes/eme-formfields.php:1353
+#: includes/eme-formfields.php:1366
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_CANCEL_PAYMENT_LINE a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: includes/eme-formfields.php:1729
+#: includes/eme-formfields.php:1742
 msgid "Group is not public"
 msgstr "Skupina nie je verejná"
 
-#: includes/eme-formfields.php:1726
+#: includes/eme-formfields.php:1739
 msgid "Group does not exist"
 msgstr "Skupina neexistuje"
 
-#: includes/eme-formfields.php:2325
+#: includes/eme-formfields.php:2338
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Použitím #_SEATS{xx} používate vo svojej rezervačnej šablóne viacero kategórií miest, ale nastaveniach rezervácie podujatia ste nedefinovali cenu pre každú kategóriu. Prosím opravte nastavenia rezervácie podujatia."
 
-#: includes/eme-formfields.php:2385
-#: includes/eme-formfields.php:2736
+#: includes/eme-formfields.php:2398
+#: includes/eme-formfields.php:2749
 msgid "Discount code"
 msgstr "Zľavový kód"
 
-#: includes/eme-formfields.php:2390
-#: includes/eme-formfields.php:2741
+#: includes/eme-formfields.php:2403
+#: includes/eme-formfields.php:2754
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Ak chcete, zadajte novú pevnú hodnotu zľavy alebo ponechajte vypočítanú hodnotu %s na základe nasledujúcich uplatnených zliav:"
 
-#: includes/eme-formfields.php:2394
-#: includes/eme-formfields.php:2745
+#: includes/eme-formfields.php:2407
+#: includes/eme-formfields.php:2758
 msgid "Enter a fixed discount value if wanted"
 msgstr "Ak chcete, zadajte pevnú hodnotu zľavy"
 
 #. translators: %s is the discount group name
-#: includes/eme-formfields.php:2399
-#: includes/eme-formfields.php:2750
+#: includes/eme-formfields.php:2412
+#: includes/eme-formfields.php:2763
 #: includes/eme-people.php:1368
 #: includes/eme-people.php:1688
 msgid "Discountgroup %s"
 msgstr "Skupina zľavy %s"
 
 #. translators: %d is the discount group ID
-#: includes/eme-formfields.php:2400
-#: includes/eme-formfields.php:2751
+#: includes/eme-formfields.php:2413
+#: includes/eme-formfields.php:2764
 #: includes/eme-people.php:1371
 #: includes/eme-people.php:1691
 msgid "Applied discount group %d no longer exists"
 msgstr "Použitá skupina zliav %d už neexistuje"
 
 #. translators: %d is the discount ID
-#: includes/eme-formfields.php:2410
-#: includes/eme-formfields.php:2761
-#: includes/eme-members.php:5196
+#: includes/eme-formfields.php:2423
+#: includes/eme-formfields.php:2774
+#: includes/eme-members.php:5209
 #: includes/eme-people.php:1387
 #: includes/eme-people.php:1707
 #: includes/eme-rsvp.php:3741
 msgid "Applied discount %d no longer exists"
 msgstr "Použitá zľava %d už neexistuje"
 
-#: includes/eme-formfields.php:2416
-#: includes/eme-formfields.php:2767
+#: includes/eme-formfields.php:2429
+#: includes/eme-formfields.php:2780
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "V backende administrátora je možné použiť iba jedno pole zľavy, ostatné nie sú zobrazené"
 
-#: includes/eme-formfields.php:2481
+#: includes/eme-formfields.php:2494
 msgid "Update booking"
 msgstr "Aktualizovať rezerváciu"
 
-#: includes/eme-formfields.php:2508
+#: includes/eme-formfields.php:2521
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_EMAIL, #_SEATS a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: includes/eme-formfields.php:2511
+#: includes/eme-formfields.php:2524
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
 msgstr "Keďže ide o podujatie s rôznymi cenami, nezabudnite zmeniť nastavenie „Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy #_SEATS{xx} pre každú cenu."
 
-#: includes/eme-formfields.php:2514
+#: includes/eme-formfields.php:2527
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Skontrolujte, či je vo formulári prítomný zástupný výraz #_PASSWORD."
 
-#: includes/eme-formfields.php:3289
+#: includes/eme-formfields.php:3302
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Vo formulári sa nenachádzajú všetky povinné polia. Potrebujeme aspoň #_LASTNAME a #_FIRSTNAME zástupné výrazy."
 
-#: includes/eme-formfields.php:2718
+#: includes/eme-formfields.php:2731
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "V administrátorskej časti nemôžete pridávať ani upravovať informácie o členoch rodiny, na to použite formulár vo frontende."
 
-#: includes/eme-formfields.php:2806
+#: includes/eme-formfields.php:2819
 msgid "Update member"
 msgstr "Aktualizovať člena"
 
-#: includes/eme-formfields.php:2810
+#: includes/eme-formfields.php:2823
 msgid "Become member"
 msgstr "Stať sa členom"
 
-#: includes/eme-formfields.php:2606
-#: includes/eme-formfields.php:3221
+#: includes/eme-formfields.php:2619
+#: includes/eme-formfields.php:3234
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_FIRSTNAME, #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: includes/eme-formfields.php:3149
+#: includes/eme-formfields.php:3162
 #: includes/eme-tasks.php:632
 #: includes/eme-templates.php:43
 msgid "All"
 msgstr "Všetky"
 
-#: includes/eme-formfields.php:3138
 #: includes/eme-formfields.php:3151
+#: includes/eme-formfields.php:3164
 msgid "Newsletter concerning new events"
 msgstr "Informačné novinky o nových podujatiach"
 
-#: includes/eme-formfields.php:1530
-#: includes/eme-formfields.php:3104
+#: includes/eme-formfields.php:1543
+#: includes/eme-formfields.php:3117
 msgid "You can change your last name in your WP profile."
 msgstr "Svoje priezvisko si môžete zmeniť vo svojom WP profile."
 
-#: includes/eme-formfields.php:1551
-#: includes/eme-formfields.php:3117
+#: includes/eme-formfields.php:1564
+#: includes/eme-formfields.php:3130
 msgid "You can change your first name in your WP profile."
 msgstr "Svoje meno si môžete zmeniť vo svojom WP profile."
 
-#: includes/eme-formfields.php:1660
-#: includes/eme-formfields.php:3127
+#: includes/eme-formfields.php:1673
+#: includes/eme-formfields.php:3140
 msgid "You can change your email in your WP profile."
 msgstr "Svoj e-mail môžete zmeniť vo svojom WP profile."
 
-#: includes/eme-formfields.php:3184
+#: includes/eme-formfields.php:3197
 msgid "Unsubscribe"
 msgstr "Odhlásenie"
 
-#: includes/eme-formfields.php:3071
+#: includes/eme-formfields.php:3084
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: includes/eme-formfields.php:3274
+#: includes/eme-formfields.php:3287
 msgid "Save personal info"
 msgstr "Uložiť osobné údaje"
 
-#: includes/eme-formfields.php:3569
+#: includes/eme-formfields.php:3582
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Dynamicky zobrazovať polia na základe viacerých podmienok"
 
-#: includes/eme-formfields.php:3574
+#: includes/eme-formfields.php:3587
 msgid "Index"
 msgstr "Index"
 
-#: includes/eme-formfields.php:3620
+#: includes/eme-formfields.php:3633
 msgid "Field"
 msgstr "Pole"
 
-#: includes/eme-formfields.php:3621
+#: includes/eme-formfields.php:3634
 msgid "Condition"
 msgstr "Podmienka"
 
-#: includes/eme-formfields.php:3622
+#: includes/eme-formfields.php:3635
 msgid "Condition value"
 msgstr "Hodnota podmienky"
 
-#: includes/eme-formfields.php:3577
+#: includes/eme-formfields.php:3590
 msgid "Repeat"
 msgstr "Opakovať"
 
-#: includes/eme-formfields.php:3607
+#: includes/eme-formfields.php:3620
 #: includes/eme-tasks.php:961
 #: includes/eme-todos.php:200
 msgid "Reorder"
 msgstr "Zmeniť poradie"
 
-#: includes/eme-formfields.php:3626
+#: includes/eme-formfields.php:3639
 msgid "Header template"
 msgstr "Šablóna hlavičky"
 
-#: includes/eme-formfields.php:3627
+#: includes/eme-formfields.php:3640
 msgid "Template"
 msgstr "Šablóna"
 
-#: includes/eme-formfields.php:3628
+#: includes/eme-formfields.php:3641
 msgid "Footer template"
 msgstr "Šablóna pätičky"
 
-#: includes/eme-formfields.php:3635
+#: includes/eme-formfields.php:3648
 msgid "Add new condition"
 msgstr "Pridať novú podmienku"
 
-#: includes/eme-formfields.php:3638
+#: includes/eme-formfields.php:3651
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Varovanie: Na základe tejto podmienky sú už zadané odpovede, zmena alebo odstránenie tejto podmienky by mohli viesť k nežiaducim vedľajším účinkom."
 
-#: includes/eme-formfields.php:3649
+#: includes/eme-formfields.php:3662
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Ak je splnená podmienka, vo formulári sa navyše zobrazí vybratá šablóna."
 
-#: includes/eme-formfields.php:3651
+#: includes/eme-formfields.php:3664
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Parameter „Pole“ sa vyplní akýmkoľvek platným zástupným výrazom povoleným vo formulári."
 
-#: includes/eme-formfields.php:3653
+#: includes/eme-formfields.php:3666
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Vybraná šablóna sa zobrazí niekoľkokrát, ak sa použije možnosť opakovania (na základe toho, koľkokrát sa pole líši od hodnoty podmienky. Toto sa nepoužije pri výbere podmienky „rovnaké ako“)."
 
-#: includes/eme-formfields.php:3655
+#: includes/eme-formfields.php:3668
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Vybraná šablóna môže obsahovať html a tiež mať zástupné výrazy pre vlastné polia formulárov (nie sú povolené žiadne iné zástupné výrazy)."
 
-#: includes/eme-formfields.php:3656
+#: includes/eme-formfields.php:3669
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických formulárov vo vašom formulári."
 
-#: includes/eme-formfields.php:3805
-#: includes/eme-formfields.php:3815
+#: includes/eme-formfields.php:3818
+#: includes/eme-formfields.php:3828
 #: includes/eme-functions.php:3406
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
@@ -5539,8 +5539,8 @@ msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 #: includes/eme-gdpr.php:304
 #: includes/eme-gdpr.php:425
 #: includes/eme-members.php:1772
-#: includes/eme-people.php:4941
-#: includes/eme-people.php:5026
+#: includes/eme-people.php:4954
+#: includes/eme-people.php:5039
 #: includes/eme-rsvp.php:161
 #: includes/eme-rsvp.php:828
 #: includes/eme-tasks.php:1540
@@ -5573,10 +5573,10 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 #: includes/eme-gdpr.php:131
 #: includes/eme-gdpr.php:205
 #: includes/eme-gdpr.php:321
-#: includes/eme-members.php:5010
+#: includes/eme-members.php:5023
 #: includes/eme-payments.php:4148
-#: includes/eme-people.php:4868
-#: includes/eme-people.php:4954
+#: includes/eme-people.php:4881
+#: includes/eme-people.php:4967
 #: includes/eme-rsvp.php:861
 #: includes/eme-rsvp.php:1173
 #: includes/eme-tasks.php:1829
@@ -5593,11 +5593,11 @@ msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omy
 #: includes/eme-gdpr.php:370
 #: includes/eme-gdpr.php:379
 #: includes/eme-members.php:1057
-#: includes/eme-members.php:4622
-#: includes/eme-members.php:5022
+#: includes/eme-members.php:4635
+#: includes/eme-members.php:5035
 #: includes/eme-payments.php:4158
-#: includes/eme-people.php:4878
-#: includes/eme-people.php:4965
+#: includes/eme-people.php:4891
+#: includes/eme-people.php:4978
 #: includes/eme-rsvp.php:873
 #: includes/eme-rsvp.php:1185
 #: includes/eme-tasks.php:1841
@@ -6285,9 +6285,9 @@ msgstr "Duplikovať toto miesto"
 #: includes/eme-mailer.php:2458
 #: includes/eme-mailer.php:2720
 #: includes/eme-mailer.php:2890
-#: includes/eme-members.php:6986
-#: includes/eme-members.php:7065
-#: includes/eme-members.php:7221
+#: includes/eme-members.php:6999
+#: includes/eme-members.php:7078
+#: includes/eme-members.php:7234
 #: includes/eme-rsvp.php:1269
 #: includes/eme-rsvp.php:5296
 #: includes/eme-rsvp.php:6996
@@ -6367,20 +6367,20 @@ msgstr "V poradí"
 #: includes/eme-mailer.php:2018
 #: includes/eme-mailer.php:2023
 #: includes/eme-mailer.php:2265
-#: includes/eme-people.php:2735
-#: includes/eme-people.php:2851
+#: includes/eme-people.php:2748
+#: includes/eme-people.php:2864
 msgid "Cancel"
 msgstr "Zrušiť"
 
 #: includes/eme-mailer.php:2319
 #: includes/eme-members.php:1128
 #: includes/eme-members.php:1131
-#: includes/eme-people.php:4162
-#: includes/eme-people.php:4313
-#: includes/eme-people.php:4417
-#: includes/eme-people.php:4618
-#: includes/eme-people.php:4912
-#: includes/eme-people.php:4997
+#: includes/eme-people.php:4175
+#: includes/eme-people.php:4326
+#: includes/eme-people.php:4430
+#: includes/eme-people.php:4631
+#: includes/eme-people.php:4925
+#: includes/eme-people.php:5010
 #: includes/eme-rsvp.php:1428
 msgid "Please enter a valid email address"
 msgstr "Vložte prosím platnú e-mailovú adresu"
@@ -6390,7 +6390,7 @@ msgstr "Vložte prosím platnú e-mailovú adresu"
 #: includes/eme-mailer.php:2456
 #: includes/eme-mailer.php:2709
 #: includes/eme-mailer.php:2882
-#: includes/eme-members.php:6983
+#: includes/eme-members.php:6996
 #: includes/eme-rsvp.php:6993
 #: includes/eme-rsvp.php:7013
 msgid "The mail has been sent."
@@ -6896,10 +6896,10 @@ msgstr "Navždy"
 #: includes/eme-members.php:652
 #: includes/eme-members.php:1495
 #: includes/eme-members.php:1627
-#: includes/eme-members.php:6657
-#: includes/eme-members.php:6666
-#: includes/eme-members.php:6667
-#: includes/eme-members.php:6668
+#: includes/eme-members.php:6670
+#: includes/eme-members.php:6679
+#: includes/eme-members.php:6680
+#: includes/eme-members.php:6681
 msgid "Edit member"
 msgstr "Upraviť člena"
 
@@ -7026,7 +7026,7 @@ msgid "The extra charge for the membership is not a valid price and has been res
 msgstr "Príplatok za členstvo nie je platná cena a bola vynulovaná na 0"
 
 #: includes/eme-members.php:1490
-#: includes/eme-members.php:3185
+#: includes/eme-members.php:3198
 msgid "Add member"
 msgstr "Pridať člena"
 
@@ -7068,7 +7068,7 @@ msgid "This member is head of the family for other members."
 msgstr "Tento člen je hlavou rodiny pre iných členov."
 
 #: includes/eme-members.php:1621
-#: includes/eme-people.php:2575
+#: includes/eme-people.php:2588
 msgid "Family members:"
 msgstr "Rodinní príslušníci:"
 
@@ -7152,7 +7152,7 @@ msgid "Mail format settings"
 msgstr "Nastavenia formátu e-mailu"
 
 #: includes/eme-members.php:1867
-#: includes/eme-members.php:3222
+#: includes/eme-members.php:3235
 msgid "Add membership"
 msgstr "Pridať členstvo"
 
@@ -7915,7 +7915,7 @@ msgstr "Vybrať stav člena"
 #: includes/eme-members.php:2991
 #: includes/eme-people.php:2112
 #: includes/eme-people.php:2119
-#: includes/eme-people.php:2364
+#: includes/eme-people.php:2377
 #: includes/eme-rsvp.php:5558
 msgid "Filter on person"
 msgstr "Filtrovať na osobu"
@@ -7935,11 +7935,11 @@ msgstr "Filtrovať na ID platby"
 msgid "Filter on payment GW id"
 msgstr "Filtrovať na platbu GW id"
 
-#: includes/eme-members.php:3176
+#: includes/eme-members.php:3189
 msgid "Add a new member"
 msgstr "Pridať nového člena"
 
-#: includes/eme-members.php:3195
+#: includes/eme-members.php:3208
 msgid "Manage members"
 msgstr "Spravovať členov"
 
@@ -7951,192 +7951,192 @@ msgstr "Importovať členov"
 msgid "Import dynamic field answers"
 msgstr "Importovať odpovede dynamických polí"
 
-#: includes/eme-members.php:3217
+#: includes/eme-members.php:3230
 msgid "Add a new membership definition"
 msgstr "Pridať novú definíciu členstva"
 
-#: includes/eme-members.php:3227
+#: includes/eme-members.php:3240
 msgid "Manage memberships"
 msgstr "Spravovať členstvá"
 
-#: includes/eme-members.php:3239
+#: includes/eme-members.php:3252
 msgid "Delete selected memberships"
 msgstr "Vymazať vybrané členstvá"
 
-#: includes/eme-members.php:3240
+#: includes/eme-members.php:3253
 msgid "Show membership statistics"
 msgstr "Zobraziť štatistiky členstva"
 
-#: includes/eme-members.php:4686
+#: includes/eme-members.php:4699
 msgid "Members CSV"
 msgstr "CSV členovia"
 
-#: includes/eme-members.php:4940
+#: includes/eme-members.php:4953
 msgid "Limit access to EME members of"
 msgstr "Obmedziť prístup k EME členom skupiny"
 
-#: includes/eme-members.php:4946
+#: includes/eme-members.php:4959
 msgid "Allow access after the membership has been active for this many days (drip content):"
 msgstr "Povoliť prístup k obsahu po tom, ako je členstvo aktívne toľkoto dní (postupný prístup k obsahu):"
 
-#: includes/eme-members.php:4949
+#: includes/eme-members.php:4962
 msgid "Limit access to EME people that are members of the following groups"
 msgstr "Obmedziť prístup k EME osobám, ktoré sú členmi týchto skupín"
 
-#: includes/eme-members.php:4956
+#: includes/eme-members.php:4969
 msgid "Access denied message template"
 msgstr "Šablóna správy o zamietnutom prístupe"
 
-#: includes/eme-members.php:4960
+#: includes/eme-members.php:4973
 msgid "The format of the text shown if access to the page is denied. If left empty, a default message will be shown."
 msgstr "Formát textu, ktorý sa zobrazí, ak je prístup na stránku odmietnutý. Ak zostane prázdne, zobrazí sa predvolená správa."
 
-#: includes/eme-members.php:5033
+#: includes/eme-members.php:5046
 msgid "No membership selected"
 msgstr "Žiadne členstvo nebolo vybraté"
 
-#: includes/eme-members.php:5053
+#: includes/eme-members.php:5066
 #: includes/eme-rsvp.php:1567
 msgid "You did not enter a valid discount code"
 msgstr "Nezadali ste platný zľavový kód"
 
-#: includes/eme-members.php:5245
+#: includes/eme-members.php:5258
 #: includes/eme-people.php:459
 #: includes/eme-rsvp.php:6364
 msgid "Never"
 msgstr "Nikdy"
 
-#: includes/eme-members.php:5266
-#: includes/eme-members.php:5288
-#: includes/eme-members.php:5322
-#: includes/eme-members.php:5348
+#: includes/eme-members.php:5279
+#: includes/eme-members.php:5301
+#: includes/eme-members.php:5335
+#: includes/eme-members.php:5361
 msgid "no end date"
 msgstr "žiadny dátum ukončenia"
 
-#: includes/eme-members.php:5342
+#: includes/eme-members.php:5355
 msgid "expired"
 msgstr "vypršalo"
 
-#: includes/eme-members.php:6004
-#: includes/eme-members.php:6209
+#: includes/eme-members.php:6017
+#: includes/eme-members.php:6222
 msgid "Access denied"
 msgstr "Prístup zamietnutý"
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: includes/eme-members.php:6063
-#: includes/eme-members.php:6269
+#: includes/eme-members.php:6076
+#: includes/eme-members.php:6282
 #: includes/eme-people.php:891
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr "Neimportované (e-mail aj priezvisko sú prázdne): %s"
 
 #. translators: %s is the CSV row data
 #. translators: %s is the CSV row data that failed to import
-#: includes/eme-members.php:6124
+#: includes/eme-members.php:6137
 #: includes/eme-people.php:935
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr "Neimportované (problém s aktualizáciou osoby v databáze): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-members.php:6131
-#: includes/eme-members.php:6301
+#: includes/eme-members.php:6144
+#: includes/eme-members.php:6314
 msgid "Not imported (membership does not exist): %s"
 msgstr "Neimportované (členstvo neexistuje): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-members.php:6188
+#: includes/eme-members.php:6201
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "Neimportované (problém s vložením člena do databázy): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-members.php:6295
+#: includes/eme-members.php:6308
 msgid "Not imported (person does not exist): %s"
 msgstr "Neimportované (osoba neexistuje): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-members.php:6357
+#: includes/eme-members.php:6370
 msgid "Not imported (member does not exist): %s"
 msgstr "Neimportované (člen neexistuje): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-members.php:6362
+#: includes/eme-members.php:6375
 msgid "Not imported (no matching person found): %s"
 msgstr "Neimportované (nebola nájdená žiadna zodpovedajúca osoba): %s"
 
-#: includes/eme-members.php:6558
+#: includes/eme-members.php:6571
 msgid "Edit membership"
 msgstr "Upraviť členstvo"
 
-#: includes/eme-members.php:6567
+#: includes/eme-members.php:6580
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr "Pre toto členstvo nebol definovaný žiadny členský formulár, použije sa jednoduchý predvolený formulár."
 
 #. translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
-#: includes/eme-members.php:6581
+#: includes/eme-members.php:6594
 msgid "%1$d head of the family accounts + %2$d family members"
 msgstr "%1$d účtov hlavy rodiny + %2$d rodinných príslušníkov"
 
-#: includes/eme-members.php:6653
-#: includes/eme-people.php:5349
+#: includes/eme-members.php:6666
+#: includes/eme-people.php:5362
 msgid "(family member)"
 msgstr "(člen rodiny)"
 
-#: includes/eme-members.php:6658
+#: includes/eme-members.php:6671
 msgid "Head of the family: "
 msgstr "Hlava rodiny: "
 
-#: includes/eme-members.php:6661
+#: includes/eme-members.php:6674
 msgid "(head of the family)"
 msgstr "(head of the family)"
 
 #. translators: %d is the payment ID
-#: includes/eme-members.php:6707
+#: includes/eme-members.php:6720
 msgid "This is based on the payment ID of the member: %d"
 msgstr "Toto je založené na ID platby člena: %d"
 
-#: includes/eme-members.php:6813
-#: includes/eme-people.php:5633
+#: includes/eme-members.php:6826
+#: includes/eme-people.php:5646
 msgid "(Dynamic)"
 msgstr "(Dynamické)"
 
-#: includes/eme-members.php:6826
-#: includes/eme-people.php:5645
+#: includes/eme-members.php:6839
+#: includes/eme-people.php:5658
 msgid "Dynamic group added"
 msgstr "Dynamická skupina pridaná"
 
-#: includes/eme-members.php:6828
-#: includes/eme-people.php:5647
+#: includes/eme-members.php:6841
+#: includes/eme-people.php:5660
 msgid "There was a problem adding the group"
 msgstr "Nastal problém s pridaním skupiny"
 
-#: includes/eme-members.php:6831
-#: includes/eme-people.php:5650
+#: includes/eme-members.php:6844
+#: includes/eme-people.php:5663
 msgid "Please enter a name for the group"
 msgstr "Prosím, vložte meno pre skupinu"
 
-#: includes/eme-members.php:6890
-#: includes/eme-members.php:6959
+#: includes/eme-members.php:6903
+#: includes/eme-members.php:6972
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "Obsah predmetu alebo tela emailu bol prázdny, nebol odoslaný žiadny mail."
 
-#: includes/eme-members.php:6944
+#: includes/eme-members.php:6957
 msgid "Memberships deleted."
 msgstr "Členstvo vymazané."
 
-#: includes/eme-members.php:7000
+#: includes/eme-members.php:7013
 msgid "No corresponding persons found."
 msgstr "Žiadne zodpovedajúce osoby sa nenašli."
 
-#: includes/eme-members.php:7010
+#: includes/eme-members.php:7023
 msgid "Members deleted."
 msgstr "Členovia vymazaní."
 
-#: includes/eme-members.php:7036
-#: includes/eme-members.php:7062
-#: includes/eme-members.php:7162
-#: includes/eme-members.php:7193
-#: includes/eme-members.php:7218
-#: includes/eme-members.php:7235
+#: includes/eme-members.php:7049
+#: includes/eme-members.php:7075
+#: includes/eme-members.php:7175
+#: includes/eme-members.php:7206
+#: includes/eme-members.php:7231
+#: includes/eme-members.php:7248
 #: includes/eme-rsvp.php:6627
 #: includes/eme-rsvp.php:6661
 #: includes/eme-rsvp.php:6705
@@ -8154,8 +8154,8 @@ msgstr "Členovia vymazaní."
 msgid "The action has been executed successfully."
 msgstr "Akcia bola úspešne vykonaná."
 
-#: includes/eme-members.php:7039
-#: includes/eme-members.php:7196
+#: includes/eme-members.php:7052
+#: includes/eme-members.php:7209
 #: includes/eme-rsvp.php:6630
 #: includes/eme-rsvp.php:6664
 #: includes/eme-rsvp.php:6708
@@ -8168,8 +8168,8 @@ msgstr "Akcia bola úspešne vykonaná."
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "Akcia bola úspešne vykonaná, ale pri odosielaní pošty sa vyskytli problémy."
 
-#: includes/eme-members.php:7042
-#: includes/eme-members.php:7199
+#: includes/eme-members.php:7055
+#: includes/eme-members.php:7212
 #: includes/eme-rsvp.php:6633
 #: includes/eme-rsvp.php:6667
 #: includes/eme-rsvp.php:6702
@@ -8292,7 +8292,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr "Chystáte sa zrušiť nasledujúce rezervácie:"
 
 #: includes/eme-options.php:51
-#: includes/eme-people.php:4652
+#: includes/eme-people.php:4665
 msgid "seats"
 msgstr "miest"
 
@@ -12266,7 +12266,7 @@ msgstr "Neimportované (problém s vložením osoby do databázy): %s"
 
 #: includes/eme-people.php:1059
 #: includes/eme-people.php:1234
-#: includes/eme-people.php:2632
+#: includes/eme-people.php:2645
 msgid "Birthday email"
 msgstr "Narodeninový email"
 
@@ -12339,8 +12339,8 @@ msgstr "Opravte tieto chyby: používateľ WordPress by mal byť prepojený s na
 #: includes/eme-people.php:1861
 #: includes/eme-people.php:1909
 #: includes/eme-people.php:1952
-#: includes/eme-people.php:2678
-#: includes/eme-people.php:4668
+#: includes/eme-people.php:2691
+#: includes/eme-people.php:4681
 msgid "Active memberships"
 msgstr "Aktívne členstvá"
 
@@ -12388,11 +12388,11 @@ msgstr "Prosím, opravte tieto chyby: všetci ľudia z EME by mali mať jedineč
 msgid "Filter people"
 msgstr "Filtrovať ľudí"
 
-#: includes/eme-people.php:2373
+#: includes/eme-people.php:2386
 msgid "Restore selected persons"
 msgstr "Obnoviť vybrané osoby"
 
-#: includes/eme-people.php:2374
+#: includes/eme-people.php:2387
 msgid "Permanently delete selected persons"
 msgstr "Natrvalo vymazať vybrané osoby"
 
@@ -12444,301 +12444,301 @@ msgstr "Preniesť súvisiace rezervácie a úlohy do (nechajte prázdne, ak chce
 msgid "Filter on group"
 msgstr "Filtrovať skupinu"
 
-#: includes/eme-people.php:2345
+#: includes/eme-people.php:2358
 msgid "Add a new person"
 msgstr "Pridať novú osobu"
 
-#: includes/eme-people.php:2350
-#: includes/eme-people.php:2489
-#: includes/eme-people.php:2733
+#: includes/eme-people.php:2363
+#: includes/eme-people.php:2502
+#: includes/eme-people.php:2746
 msgid "Add person"
 msgstr "Pridať osobu"
 
-#: includes/eme-people.php:2355
+#: includes/eme-people.php:2368
 msgid "Manage people"
 msgstr "Spravovať ľudí"
 
-#: includes/eme-people.php:2491
+#: includes/eme-people.php:2504
 msgid "View person in trash (read-only)"
 msgstr "Zobraziť osobu v koši (iba na čítanie)"
 
-#: includes/eme-people.php:2520
 #: includes/eme-people.php:2533
-#: includes/eme-people.php:2544
+#: includes/eme-people.php:2546
+#: includes/eme-people.php:2557
 msgid "Since this person is linked to a WP user, this field is read-only"
 msgstr "Keďže je táto osoba je prepojená s používateľom WP, toto pole je iba na čítanie"
 
-#: includes/eme-people.php:2551
+#: includes/eme-people.php:2564
 msgid "Related family member"
 msgstr "Príbuzný člen rodiny"
 
-#: includes/eme-people.php:2568
+#: includes/eme-people.php:2581
 msgid "Click here to edit that person"
 msgstr "Kliknutím sem môžete túto osobu upraviť"
 
-#: includes/eme-people.php:2592
+#: includes/eme-people.php:2605
 msgid "Phone Number"
 msgstr "Telefón"
 
-#: includes/eme-people.php:2636
+#: includes/eme-people.php:2649
 msgid "If active, the person will receive a birthday email."
 msgstr "Ak je aktívne, osoba dostane narodeninový e-mail."
 
-#: includes/eme-people.php:2666
+#: includes/eme-people.php:2679
 msgid "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in."
 msgstr "Nezabudnite, že môžete definovať vlastné polia s účelom „Ľudia“, ktorý umožní ďalšie informácie na základe skupiny, v ktorej sa daná osoba nachádza."
 
-#: includes/eme-people.php:2706
+#: includes/eme-people.php:2719
 msgid "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email."
 msgstr "Prepojenie osoby EME s používateľom WP nie je povolené, ak existuje iná osoba EME, ktorá sa zhoduje s menom/priezviskom/e-mailom používateľa WP."
 
-#: includes/eme-people.php:2707
+#: includes/eme-people.php:2720
 msgid "Linking an EME person with a WP user will change the person firstname/lastname/email to the WP user's firstname/lastname/email and those fields can then only be changed via the WP profile of that person."
 msgstr "Prepojením osoby s EME s používateľom WP zmeníte krstné meno, priezvisko a e-mail osoby na hodnoty používateľa WP a tieto polia potom môžu byť zmenené iba prostredníctvom profilu WP tejto osoby."
 
-#: includes/eme-people.php:2711
+#: includes/eme-people.php:2724
 msgid "Delete linked WP user?"
 msgstr "Vymazať prepojeného používateľa WP?"
 
-#: includes/eme-people.php:2714
+#: includes/eme-people.php:2727
 msgid "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin)."
 msgstr "Nastavte túto možnosť na áno, ak chcete, aby bol prepojený používateľ WP odstránený, keď bude EME osoba odstránená (presunutá do koša)."
 
-#: includes/eme-people.php:2715
+#: includes/eme-people.php:2728
 msgid "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted."
 msgstr "V predvolenom nastavení je táto hodnota nastavená na zapnutú len vtedy, keď je používateľ WP vytvorený pomocou EME (pri vytváraní člena alebo pri rezervácii podujatia, keď je nastavená možnosť vytvoriť používateľa WP). Administrátor sa nikdy neodstráni."
 
-#: includes/eme-people.php:2733
+#: includes/eme-people.php:2746
 msgid "Update person"
 msgstr "Aktualizovať osobu"
 
-#: includes/eme-people.php:2393
-#: includes/eme-people.php:2775
+#: includes/eme-people.php:2406
+#: includes/eme-people.php:2788
 msgid "Add dynamic group of people"
 msgstr "Pridať dynamickú skupinu ľudí"
 
-#: includes/eme-people.php:2394
-#: includes/eme-people.php:2777
+#: includes/eme-people.php:2407
+#: includes/eme-people.php:2790
 msgid "Add dynamic group of members"
 msgstr "Pridať dynamickú skupinu členov"
 
-#: includes/eme-people.php:2392
-#: includes/eme-people.php:2779
-#: includes/eme-people.php:2849
+#: includes/eme-people.php:2405
+#: includes/eme-people.php:2792
+#: includes/eme-people.php:2862
 msgid "Add group"
 msgstr "Pridať skupinu"
 
-#: includes/eme-people.php:2783
+#: includes/eme-people.php:2796
 msgid "Edit dynamic group of people"
 msgstr "Upraviť dynamickú skupinu ľudí"
 
-#: includes/eme-people.php:2785
+#: includes/eme-people.php:2798
 msgid "Edit dynamic group of members"
 msgstr "Upraviť dynamickú skupinu členov"
 
-#: includes/eme-people.php:2787
-#: includes/eme-people.php:5458
+#: includes/eme-people.php:2800
+#: includes/eme-people.php:5471
 msgid "Edit group"
 msgstr "Upraviť skupinu"
 
-#: includes/eme-people.php:2817
+#: includes/eme-people.php:2830
 msgid "Group email"
 msgstr "Skupinový email"
 
-#: includes/eme-people.php:2819
+#: includes/eme-people.php:2832
 msgid "If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty."
 msgstr "Ak chcete, aby ste mohli posielať emaily tejto skupine prostredníctvom emailového klienta (a nielen prostredníctvom EME), musíte nakonfigurovať metódu cli_mail (pozrite dokumentáciu) a zadať jedinečnú e-mailovú adresu pre túto skupinu. Toto môže zostať prázdne."
 
-#: includes/eme-people.php:2824
+#: includes/eme-people.php:2837
 msgid "Public?"
 msgstr "Verejná?"
 
-#: includes/eme-people.php:2826
+#: includes/eme-people.php:2839
 msgid "If you chose for this group to be a public group, then this group will appear in the list of groups to subscribe/unsubscribe in the eme_subform and eme_unsubform shortcodes (and the form generated by #_UNSUB_URL)."
 msgstr "Ak vyberiete túto skupinu ako verejnú skupinu, potom táto skupina sa objaví v zozname skupín na odber/zrušenie noviniek v skrátených kódoch eme_subform a eme_unsubform (a vo formulári vygenerovanom #_UNSUB_URL)."
 
-#: includes/eme-people.php:2836
-#: includes/eme-people.php:2841
+#: includes/eme-people.php:2849
+#: includes/eme-people.php:2854
 msgid "Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below"
 msgstr "Upozornenie: táto skupina používa staršiu metódu definovania kritérií pre jej členov. Po uložení tejto skupiny sa tieto informácie stratia, preto sa uistite, že ste kritériá znovu zadali do nižšie uvedených polí"
 
-#: includes/eme-people.php:2849
+#: includes/eme-people.php:2862
 msgid "Update group"
 msgstr "Aktualizovať skupinu"
 
-#: includes/eme-people.php:2387
+#: includes/eme-people.php:2400
 msgid "Add a new group"
 msgstr "Pridať novú skupinu"
 
-#: includes/eme-people.php:2399
+#: includes/eme-people.php:2412
 msgid "Manage groups"
 msgstr "Spravovať skupiny"
 
-#: includes/eme-people.php:2407
+#: includes/eme-people.php:2420
 msgid "Delete selected groups"
 msgstr "Vymazať vybrané skupiny"
 
-#: includes/eme-people.php:2876
-#: includes/eme-people.php:2916
+#: includes/eme-people.php:2889
+#: includes/eme-people.php:2929
 msgid "No image set"
 msgstr "Žiadny obrázok nie je nastavený"
 
-#: includes/eme-people.php:2878
-#: includes/eme-people.php:2918
+#: includes/eme-people.php:2891
+#: includes/eme-people.php:2931
 msgid "Remove image"
 msgstr "Odstrániť obrázok"
 
-#: includes/eme-people.php:2879
-#: includes/eme-people.php:2919
+#: includes/eme-people.php:2892
+#: includes/eme-people.php:2932
 msgid "Person image"
 msgstr "Obrázok osoby"
 
-#: includes/eme-people.php:4175
+#: includes/eme-people.php:4188
 msgid "A person with this name and email already exists"
 msgstr "Osoba s týmto menom a e-mailom už existuje"
 
-#: includes/eme-people.php:4324
-#: includes/eme-people.php:4469
+#: includes/eme-people.php:4337
+#: includes/eme-people.php:4482
 msgid "Invalid country code"
 msgstr "Neplatný kód krajiny"
 
-#: includes/eme-people.php:4336
-#: includes/eme-people.php:4481
+#: includes/eme-people.php:4349
+#: includes/eme-people.php:4494
 msgid "Invalid state code"
 msgstr "Neplatný kód štátu"
 
-#: includes/eme-people.php:4427
-#: includes/eme-people.php:4572
-#: includes/eme-people.php:4644
+#: includes/eme-people.php:4440
+#: includes/eme-people.php:4585
+#: includes/eme-people.php:4657
 msgid "Error encountered while updating person"
 msgstr "Pri aktualizovaní osoby sa vyskytol problém"
 
-#: includes/eme-people.php:4443
+#: includes/eme-people.php:4456
 msgid "The email address belongs to an existing user. Please log in first before continuing to register with this email address."
 msgstr "E-mailová adresa patrí existujúcemu používateľovi. Najskôr sa prosím prihláste, pred pokračovaním v registrácii pomocou tejto e-mailovej adresy."
 
-#: includes/eme-people.php:4595
+#: includes/eme-people.php:4608
 msgid "Error encountered while adding person"
 msgstr "Pri pridávaní osoby sa vyskytol problém"
 
-#: includes/eme-people.php:4626
+#: includes/eme-people.php:4639
 msgid "Conflict with info from other person, please use another lastname, firstname or email"
 msgstr "Konflikt s informáciami od inej osoby, použite iné priezvisko, meno alebo e-mail"
 
-#: includes/eme-people.php:4656
+#: includes/eme-people.php:4669
 msgid "Events Made Easy settings"
 msgstr "Nastavenia Events Made Easy"
 
-#: includes/eme-people.php:4661
+#: includes/eme-people.php:4674
 msgid "The phone number used by Events Made Easy when the user is indicated as the contact person for an event."
 msgstr "Telefónne číslo, ktoré sa používa v Events Made Easy, ak je používateľ označený ako kontaktná osoba pre podujatie."
 
-#: includes/eme-people.php:4664
+#: includes/eme-people.php:4677
 msgid "Bookings made for future events"
 msgstr "Rezervácie na budúce podujatia"
 
-#: includes/eme-people.php:4904
-#: includes/eme-people.php:4989
+#: includes/eme-people.php:4917
+#: includes/eme-people.php:5002
 msgid "A request for confirmation has been sent to the given email address."
 msgstr "Na uvedenú e-mailovú adresu bola odoslaná žiadosť o potvrdenie."
 
-#: includes/eme-people.php:4932
+#: includes/eme-people.php:4945
 msgid "If you want to subscribe to future mailings, please do so by entering your email here."
 msgstr "Ak sa chcete prihlásiť na odber budúcich emailov, urobte to tak, že sem zadáte svoj email."
 
-#: includes/eme-people.php:4935
+#: includes/eme-people.php:4948
 msgid "Please select the groups you wish to subscribe to."
 msgstr "Vyberte skupiny, ku ktorým sa chcete prihlásiť na odber."
 
-#: includes/eme-people.php:5017
+#: includes/eme-people.php:5030
 msgid "If you want to unsubscribe from future mailings, please do so by entering your email here."
 msgstr "Ak sa chcete odhlásiť z odberu budúcich emailov, prosím spravte tak zadaním svojho emailu sem."
 
-#: includes/eme-people.php:5020
+#: includes/eme-people.php:5033
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Prosím vyberte skupiny, z ktorých sa chcete odhlásiť z odberu."
 
-#: includes/eme-people.php:5343
+#: includes/eme-people.php:5356
 msgid "No surname"
 msgstr "Žiadne priezvisko"
 
-#: includes/eme-people.php:5464
+#: includes/eme-people.php:5477
 msgid "Dynamic group of people"
 msgstr "Dynamická skupina ľudí"
 
 #. translators: %d is the number of persons in the group
-#: includes/eme-people.php:5471
+#: includes/eme-people.php:5484
 msgid "(%d person)"
 msgid_plural "(%d persons)"
 msgstr[0] "(%d osoba)"
 msgstr[1] "(%d osoby)"
 msgstr[2] "(%d osôb)"
 
-#: includes/eme-people.php:5475
+#: includes/eme-people.php:5488
 msgid "Dynamic group of members"
 msgstr "Dynamická skupina členov"
 
 #. translators: %d is the number of members in the group
-#: includes/eme-people.php:5482
+#: includes/eme-people.php:5495
 msgid "(%d member)"
 msgid_plural "(%d members)"
 msgstr[0] "(%d člen)"
 msgstr[1] "(%d členovia)"
 msgstr[2] "(%d členov)"
 
-#: includes/eme-people.php:5793
+#: includes/eme-people.php:5806
 msgid "People recovered from trash bin."
 msgstr "Ľudia obnovení z koša."
 
-#: includes/eme-people.php:5805
+#: includes/eme-people.php:5818
 msgid "People moved to trash bin."
 msgstr "Ľudia presunutý do koša."
 
-#: includes/eme-people.php:5813
+#: includes/eme-people.php:5826
 msgid "Personal data removed and moved to trash bin."
 msgstr "Osobné údaje boli odstránené a presunuté do koša."
 
-#: includes/eme-people.php:5821
+#: includes/eme-people.php:5834
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Schválenie GDPR nastavené na „Áno“ (uistite sa, že vybrané osoby sú si toho vedomé)."
 
-#: includes/eme-people.php:5829
+#: includes/eme-people.php:5842
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Súhlas s GDPR nastavený na \"Nie\" (uistite sa, že vybrané osoby sú o tom informované)."
 
-#: includes/eme-people.php:5837
+#: includes/eme-people.php:5850
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Hromadná pošta je nastavená na \"Áno\" (uistite sa, že vybrané osoby o tom vedia)."
 
-#: includes/eme-people.php:5845
+#: includes/eme-people.php:5858
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Hromadná pošta nastavená na \"Nie\" (uistite sa, že vybrané osoby sú o tom informované)."
 
-#: includes/eme-people.php:5853
+#: includes/eme-people.php:5866
 msgid "Birthday email set to \"Yes\"."
 msgstr "Narodeninový e-mail nastavený na \"Áno\"."
 
-#: includes/eme-people.php:5861
+#: includes/eme-people.php:5874
 msgid "Birthday email set to \"No\"."
 msgstr "Narodeninový e-mail nastavený na \"Nie\"."
 
-#: includes/eme-people.php:5870
+#: includes/eme-people.php:5883
 msgid "Language updated."
 msgstr "Jazyk bol aktualizovaný."
 
-#: includes/eme-people.php:5883
+#: includes/eme-people.php:5896
 msgid "People deleted."
 msgstr "Ľudia vymazaní."
 
-#: includes/eme-people.php:5893
+#: includes/eme-people.php:5906
 msgid "People added to group."
 msgstr "Ľudia pridaný do skupiny."
 
-#: includes/eme-people.php:5904
+#: includes/eme-people.php:5917
 msgid "People removed from group."
 msgstr "Ľudia odstránení zo skupiny."
 
-#: includes/eme-people.php:5913
+#: includes/eme-people.php:5926
 msgid "Groups deleted."
 msgstr "Skupiny vymazané."
 
@@ -13705,7 +13705,7 @@ msgstr "Zadajte text vyhľadávania (ponechajte prázdne pre zobrazenie všetké
 msgid "Select the event(s)"
 msgstr "Vyberte podujatia"
 
-#: includes/eme-members.php:6723
+#: includes/eme-members.php:6736
 #: includes/eme-rsvp.php:6387
 msgid "Get IBAN"
 msgstr "Získať IBAN"
@@ -13928,7 +13928,7 @@ msgstr "Zadarmo:"
 #: includes/eme-events.php:6818
 #: includes/eme-events.php:10160
 #: includes/eme-events.php:10163
-#: includes/eme-members.php:6692
+#: includes/eme-members.php:6705
 #: includes/eme-recurrence.php:763
 #: includes/eme-rsvp.php:6267
 #: includes/eme-rsvp.php:6270
@@ -14261,43 +14261,43 @@ msgstr "Skryté podujatia sú prístupné všetkým, ale nezobrazujú sa v zozna
 msgid "Make selected events hidden"
 msgstr "Skryť vybrané podujatia"
 
-#: includes/eme-formfields.php:754
+#: includes/eme-formfields.php:767
 msgid "Datetime-local"
 msgstr "Dátum a čas (miestne)"
 
-#: includes/eme-formfields.php:755
+#: includes/eme-formfields.php:768
 msgid "Month"
 msgstr "Mesiac"
 
-#: includes/eme-formfields.php:756
+#: includes/eme-formfields.php:769
 msgid "Week"
 msgstr "Týždeň"
 
-#: includes/eme-formfields.php:757
+#: includes/eme-formfields.php:770
 msgid "Time"
 msgstr "Čas"
 
-#: includes/eme-formfields.php:759
+#: includes/eme-formfields.php:772
 msgid "Color"
 msgstr "Farba"
 
-#: includes/eme-formfields.php:761
+#: includes/eme-formfields.php:774
 msgid "Number"
 msgstr "Číslo"
 
-#: includes/eme-formfields.php:762
+#: includes/eme-formfields.php:775
 msgid "Range"
 msgstr "Rozsah"
 
-#: includes/eme-formfields.php:763
+#: includes/eme-formfields.php:776
 msgid "Tel"
 msgstr "Tel"
 
-#: includes/eme-formfields.php:764
+#: includes/eme-formfields.php:777
 msgid "Url"
 msgstr "URL"
 
-#: includes/eme-formfields.php:765
+#: includes/eme-formfields.php:778
 msgid "Datalist"
 msgstr "Dátový zoznam"
 
@@ -14454,7 +14454,7 @@ msgstr "Vybrať kraj/región"
 #: includes/eme-members.php:1556
 #: includes/eme-members.php:1581
 #: includes/eme-people.php:2045
-#: includes/eme-people.php:2561
+#: includes/eme-people.php:2574
 #: includes/eme-rsvp.php:5120
 msgid "Select a person"
 msgstr "Vybrať osobu"
@@ -14676,7 +14676,7 @@ msgstr "Dokumentácia o formátovaní dátumu a času."
 msgid "Todo reminder for event #_EVENTNAME: "
 msgstr "Pripomienka úlohy pre podujatie #_EVENTNAME: "
 
-#: includes/eme-people.php:2700
+#: includes/eme-people.php:2713
 msgid "Select a WP user"
 msgstr "Vybrať používateľa WP"
 
@@ -14706,7 +14706,7 @@ msgstr "Polia miesta"
 msgid "Member fields"
 msgstr "Polia členov"
 
-#: includes/eme-members.php:3254
+#: includes/eme-members.php:3267
 msgid "Membership fields"
 msgstr "Polia členstva"
 
@@ -14718,21 +14718,21 @@ msgstr "Rezervačné a všeobecné polia"
 msgid "Are you sure you want to delete this group? This cannot be undone."
 msgstr "Naozaj chcete vymazať túto skupinu? Toto sa nedá vrátiť späť."
 
-#: includes/eme-formfields.php:1971
-#: includes/eme-formfields.php:1972
+#: includes/eme-formfields.php:1984
+#: includes/eme-formfields.php:1985
 msgid "Delete this group"
 msgstr "Vymazať túto skupinu"
 
 #: includes/eme-locations.php:3473
-#: includes/eme-members.php:7075
+#: includes/eme-members.php:7088
 msgid "No permission"
 msgstr "Žiadne oprávnenie"
 
-#: includes/eme-members.php:7086
+#: includes/eme-members.php:7099
 msgid "Invalid parameters"
 msgstr "Neplatné parametre"
 
-#: includes/eme-members.php:7105
+#: includes/eme-members.php:7118
 msgid "Occurrence deleted and remaining occurrences renumbered."
 msgstr "Výskyt vymazaný a zostávajúce výskuty prečíslované."
 
@@ -14740,8 +14740,8 @@ msgstr "Výskyt vymazaný a zostávajúce výskuty prečíslované."
 msgid "Confirm delete"
 msgstr "Potvrdiť vymazanie"
 
-#: includes/eme-formfields.php:2307
-#: includes/eme-formfields.php:2341
+#: includes/eme-formfields.php:2320
+#: includes/eme-formfields.php:2354
 msgid "Select"
 msgstr "Vybrať"
 
@@ -14998,7 +14998,7 @@ msgid "Import/Export"
 msgstr ""
 
 #: includes/eme-events.php:6186
-#: includes/eme-people.php:2338
+#: includes/eme-people.php:2351
 msgid "Trash"
 msgstr ""
 
@@ -15008,7 +15008,7 @@ msgid "Extra filters"
 msgstr ""
 
 #: includes/eme-events.php:6348
-#: includes/eme-people.php:2365
+#: includes/eme-people.php:2378
 msgid "Filter trash"
 msgstr ""
 
@@ -15206,7 +15206,7 @@ msgstr ""
 msgid "Stop repeating after (optional):"
 msgstr ""
 
-#: includes/eme-people.php:2327
+#: includes/eme-people.php:2340
 msgid "Manage people and groups"
 msgstr ""
 
@@ -15228,18 +15228,18 @@ msgstr ""
 #: includes/eme-import.php:464
 #: includes/eme-import.php:556
 #: includes/eme-locations.php:215
-#: includes/eme-members.php:6010
-#: includes/eme-members.php:6215
+#: includes/eme-members.php:6023
+#: includes/eme-members.php:6228
 #: includes/eme-people.php:833
 #: includes/eme-rsvp.php:5317
 msgid "Invalid file type. Please upload a CSV file."
 msgstr ""
 
-#: includes/eme-people.php:2339
+#: includes/eme-people.php:2352
 msgid "Integrity verification"
 msgstr ""
 
-#: includes/eme-people.php:2422
+#: includes/eme-people.php:2435
 msgid "You have no right to verify people!"
 msgstr ""
 
@@ -15440,8 +15440,8 @@ msgid "Clear filter"
 msgstr ""
 
 #: includes/eme-formfields.php:553
-#: includes/eme-formfields.php:595
-#: includes/eme-formfields.php:611
+#: includes/eme-formfields.php:608
+#: includes/eme-formfields.php:624
 msgid "Select custom field"
 msgstr ""
 
@@ -15463,27 +15463,27 @@ msgstr ""
 msgid "Add a filter below and save to convert it to the new format."
 msgstr ""
 
-#: includes/eme-formfields.php:597
-#: includes/eme-formfields.php:613
+#: includes/eme-formfields.php:610
+#: includes/eme-formfields.php:626
 msgid "Value to search"
 msgstr ""
 
-#: includes/eme-formfields.php:598
-#: includes/eme-formfields.php:614
+#: includes/eme-formfields.php:611
+#: includes/eme-formfields.php:627
 msgid "Exact match"
 msgstr ""
 
-#: includes/eme-formfields.php:599
-#: includes/eme-formfields.php:615
+#: includes/eme-formfields.php:612
+#: includes/eme-formfields.php:628
 msgid "Exact"
 msgstr ""
 
-#: includes/eme-formfields.php:601
-#: includes/eme-formfields.php:617
+#: includes/eme-formfields.php:614
+#: includes/eme-formfields.php:630
 msgid "Remove this filter"
 msgstr ""
 
-#: includes/eme-formfields.php:607
+#: includes/eme-formfields.php:620
 msgid "+ Add custom field filter"
 msgstr ""
 

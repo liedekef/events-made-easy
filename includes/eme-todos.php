@@ -164,6 +164,34 @@ function eme_get_event_todos( $event_id ) {
 	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
+function eme_render_event_todo_row( $count, $todo, $event ) {
+	?>
+				<tr id="eme_row_todo_<?php echo esc_attr( $count ); ?>" >
+				<td>
+				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "' title='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
+				</td>
+				<td>
+				<?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the todo ids only if it is not a duplicate event ?>
+					<input type='hidden' id="eme_todos_<?php echo esc_attr( $count ); ?>_todo_id" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_id'] ) ) { echo esc_attr( $todo['todo_id'] );} ?>">
+					<input type='hidden' id="eme_todos_<?php echo esc_attr( $count ); ?>_todo_nbr" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_nbr'] ) ) { echo esc_attr( $todo['todo_nbr'] );} ?>">
+				<?php endif; ?>
+				</td>
+				<td>
+				<input required='required' type='text' id="eme_todos_<?php echo esc_attr( $count ); ?>_name" name="eme_todos[<?php echo esc_attr( $count ); ?>][name]" size="12" aria-label="name" value="<?php echo esc_attr( $todo['name'] ); ?>">
+				</td>
+				<td>
+				<input type='text' name='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' id='eme_todos_<?php echo esc_attr( $count ); ?>_todo_offset' size="5" aria-label="event offset in days" value="<?php echo esc_attr( $todo['todo_offset'] ); ?>">
+				</td>
+				<td style="width: 60%;">
+				<textarea class="eme_fullresizable" id="eme_todos_<?php echo esc_attr( $count ); ?>_description" name="eme_todos[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $todo['description'] ); ?></textarea>
+				</td>
+				<td>
+				<a href="#" class='eme_remove_todo'><?php echo "<img class='eme_remove_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_todo"><?php echo "<img class='eme_add_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "'>"; ?></a>
+				</td>
+				</tr>
+	<?php
+}
+
 function eme_meta_box_div_event_todos( $event ) {
 	if ( isset( $event['is_duplicate'] ) ) {
 		$todos = eme_get_event_todos( $event['orig_id'] );
@@ -190,36 +218,15 @@ function eme_meta_box_div_event_todos( $event ) {
 			<?php
 			// if there are no entries in the array, make 1 empty entry in it, so it renders at least 1 row
 			if ( ! is_array( $todos ) || count( $todos ) == 0 ) {
-				$info     = eme_new_todo();
-				$todos    = [ $info ];
+				$todos = [ eme_new_todo() ];
 			}
 			foreach ( $todos as $count => $todo ) {
-				?>
-				<tr id="eme_row_todo_<?php echo esc_attr( $count ); ?>" >
-				<td>
-				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
-				</td>
-				<td>
-				<?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the todo ids only if it is not a duplicate event ?>
-					<input type='hidden' id="eme_todos_<?php echo esc_attr( $count ); ?>_todo_id" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_id]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_id'] ) ) { echo esc_attr( $todo['todo_id'] );} ?>">
-					<input type='hidden' id="eme_todos_<?php echo esc_attr( $count ); ?>_todo_nbr" name="eme_todos[<?php echo esc_attr( $count ); ?>][todo_nbr]" aria-label="hidden index" value="<?php if ( isset( $todo['todo_nbr'] ) ) { echo esc_attr( $todo['todo_nbr'] );} ?>">
-				<?php endif; ?>
-				</td>
-				<td>
-				<input required='required' type='text' id="eme_todos_<?php echo esc_attr( $count ); ?>_name" name="eme_todos[<?php echo esc_attr( $count ); ?>][name]" size="12" aria-label="name" value="<?php echo esc_attr( $todo['name'] ); ?>">
-				</td>
-				<td>
-				<input type='text' name='eme_todos[<?php echo esc_attr( $count ); ?>][todo_offset]' id='eme_todos_<?php echo esc_attr( $count ); ?>_todo_offset' size="5" aria-label="event offset in days" value="<?php echo esc_attr( $todo['todo_offset'] ); ?>">
-				</td>
-				<td style="width: 60%;">
-				<textarea class="eme_fullresizable" id="eme_todos_<?php echo esc_attr( $count ); ?>_description" name="eme_todos[<?php echo esc_attr( $count ); ?>][description]" ><?php echo esc_html( $todo['description'] ); ?></textarea>
-				</td>
-				<td>
-				<a href="#" class='eme_remove_todo'><?php echo "<img class='eme_remove_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_todo"><?php echo "<img class='eme_add_todo' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new todo', 'events-made-easy' ) . "'>"; ?></a>
-				</td>
-				</tr>
-				<?php
+				eme_render_event_todo_row( $count, $todo, $event );
 			}
+			// a pristine row inside a template tag, used by js to add new todos
+			echo '<template id="eme_todos_template">';
+			eme_render_event_todo_row( '__IDX__', eme_new_todo(), $event );
+			echo '</template>';
 			?>
 		</tbody>
 		</table>

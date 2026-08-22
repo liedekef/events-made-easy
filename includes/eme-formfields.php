@@ -3575,6 +3575,51 @@ function eme_get_people_export_fieldids() {
     return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
+function eme_render_dyndata_row( $count, $info, $templates_array, $eme_dyndata_conditions, $used_groupingids, $dyn_count_total = 0, $required = '', $is_template = false ) {
+    $grouping_used = in_array( $info['grouping'], $used_groupingids ) ? 1 : 0;
+    ?>
+                    <tr id="eme_dyndata_<?php echo esc_attr( $count ); ?>">
+                    <td>
+                <?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "' title='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
+                    </td>
+                    <td>
+            <!-- the grouping index parameter should be a unique index per condition. This is used to set/retrieve all the entered info based on this condition in the database (so once set, always keep it to the same value for that condition) -->
+            <!-- Since it is too complicated to explain that, but we still need it: keep it a hidden field if possible, the value for new rows is set via php anyway -->
+                <?php if ( $is_template ) : // new rows get their grouping index assigned upon saving ?>
+                <?php elseif ($dyn_count_total>0 && $grouping_used==0) : ?>
+                        <input type='text' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo esc_attr( $info['grouping'] ); ?>">
+                <?php else : ?>
+                        <?php if ($dyn_count_total>0) echo esc_html( $info['grouping'] ); ?>
+                        <input type='hidden' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" value="<?php echo esc_attr( $info['grouping'] ); ?>">
+                <?php endif; ?>
+                    </td>
+                    <td><table style="">
+                        <tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input type="text" <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" size="12" aria-label="field" value="<?php echo esc_attr( $info['field'] ); ?>"></td></tr>
+                        <tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input type="text" <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" aria-label="condition value" size="12" value="<?php echo esc_attr( $info['condval'] ); ?>"></td></tr>
+                    </table>
+                    </td>
+                    <td><table style="">
+                        <tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                        <tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
+                    </table>
+                    </td>
+                    <td>
+                <?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+                    </td>
+                    <td>
+                        <a href="#" class='eme_remove_dyndatacondition'><?php echo "<img class='eme_remove_dyndatacondition' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img class='eme_dyndata_add_tag' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
+                <?php
+                if ( $grouping_used ) {
+                    echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects.', 'events-made-easy' ) . "'>";
+                }
+                ?>
+                    </td>
+                    </tr>
+    <?php
+}
+
 function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids ) {
     $eme_dyndata_conditions = eme_get_dyndata_conditions();
     ?>
@@ -3613,48 +3658,31 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
                 $dyn_count_total = count( $eme_data);
             }
             foreach ( $eme_data as $count => $info ) {
-                $grouping_used = in_array( $info['grouping'], $used_groupingids ) ? 1 : 0;
-                ?>
-                    <tr id="eme_dyndata_<?php echo esc_attr( $count ); ?>">
-                    <td>
-                <?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
-                    </td>
-                    <td>
-            <!-- the grouping index parameter should be a unique index per condition. This is used to set/retrieve all the entered info based on this condition in the database (so once set, always keep it to the same value for that condition) -->
-            <!-- Since it is too complicated to explain that, but we still need it: keep it a hidden field if possible, the value for new rows is set via php anyway -->
-                        <?php if ($dyn_count_total>0 && $grouping_used==0) : ?>
-                        <input type='text' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo esc_attr( $info['grouping'] ); ?>">
-                        <?php else : ?>
-                        <?php if ($dyn_count_total>0) echo esc_html( $info['grouping'] ); ?>
-                        <input type='hidden' id="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][grouping]" aria-label="hidden grouping index" value="<?php echo esc_attr( $info['grouping'] ); ?>">
-                        <?php endif; ?>
-                    </td>
-                    <td><table style="">
-                        <tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input type="text" <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][field]" size="12" aria-label="field" value="<?php echo esc_attr( $info['field'] ); ?>"></td></tr>
-                        <tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input type="text" <?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hardcoded attribute ?> id="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" name="eme_dyndata[<?php echo esc_attr( $count ); ?>][condval]" aria-label="condition value" size="12" value="<?php echo esc_attr( $info['condval'] ); ?>"></td></tr>
-                    </table>
-                    </td>
-                    <td><table style="">
-                        <tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
-                        <tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td></tr>
-                    </table>
-                    </td>
-                    <td>
-                <?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-                    </td>
-                    <td>
-                        <a href="#" class='eme_remove_dyndatacondition'><?php echo "<img class='eme_remove_dyndatacondition' src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img class='eme_dyndata_add_tag' src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
-                <?php
-                if ( $grouping_used ) {
-                    echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects.', 'events-made-easy' ) . "'>";
-                }
-                ?>
-                    </td>
-                    </tr>
-                <?php
+                eme_render_dyndata_row( $count, $info, $templates_array, $eme_dyndata_conditions, $used_groupingids, $dyn_count_total, $required );
             }
+            // a pristine row inside a template tag, used by js to add new conditions
+            // no required attributes and no grouping input: those only apply to saved conditions
+            echo '<template id="eme_dyndata_template">';
+            eme_render_dyndata_row(
+                '__IDX__',
+                [
+                    'field'              => '',
+                    'condition'          => 'eq',
+                    'condval'            => '',
+                    'template_id_header' => 0,
+                    'template_id'        => 0,
+                    'template_id_footer' => 0,
+                    'repeat'             => 0,
+                    'grouping'           => 1,
+                ],
+                $templates_array,
+                $eme_dyndata_conditions,
+                [],
+                0,
+                '',
+                true
+            );
+            echo '</template>';
             ?>
         </tbody>
         </table>

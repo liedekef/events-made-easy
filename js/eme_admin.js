@@ -104,98 +104,48 @@ function eme_activateTab(target) {
     }
 }
 
+// Generic add/remove for table rows cloned from a <template> element
+function eme_next_row_index(prefix) {
+    let idx = 0;
+    while (EME.$(`#${prefix}${idx}`)) idx++;
+    return idx;
+}
+
+function eme_add_templated_row(tbodyId, templateId, rowPrefix, token = '__IDX__') {
+    const tbody = EME.$('#' + tbodyId);
+    const template = EME.$('#' + templateId);
+    if (!tbody || !template) return null;
+
+    const idx = eme_next_row_index(rowPrefix);
+    const row = template.content.firstElementChild.cloneNode(true);
+    row.id = `${rowPrefix}${idx}`;
+    row.querySelectorAll('input,select,textarea').forEach(el => {
+        ['name', 'id'].forEach(attr => {
+            const val = el.getAttribute(attr);
+            if (val) el.setAttribute(attr, val.replaceAll(token, idx));
+        });
+    });
+    tbody.appendChild(row);
+    return { row, idx };
+}
+
+function eme_remove_templated_row(row, tbodyId, templateId, rowPrefix) {
+    if (!row) return;
+    row.remove();
+    // keep at least one row in the table
+    const tbody = EME.$('#' + tbodyId);
+    if (tbody && !tbody.querySelector('tr')) eme_add_templated_row(tbodyId, templateId, rowPrefix);
+}
+
 // Task management functions
-function eme_add_task_function(element) {
-    const selectedItem = element.closest('tr');
-    const metaCopy = selectedItem.cloneNode(true);
-    let newId = 0;
-    while (EME.$(`#eme_row_task_${newId}`)) newId++;
-
-    const currentId = metaCopy.id.replace('eme_row_task_', '');
-    metaCopy.id = `eme_row_task_${newId}`;
-
-    const relElements = metaCopy.querySelectorAll('a');
-    relElements.forEach(a => a.setAttribute('rel', newId));
-
-    // Remove signup_count field
-    const signupCount = metaCopy.querySelector(`#eme_tasks_${currentId}_signup_count`);
-    if (signupCount) signupCount.remove();
-
-    const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
-    metafields.forEach(f => {
-        const field = metaCopy.querySelector(`#eme_tasks_${currentId}_${f}`);
-        if (field) {
-            field.id   = `eme_tasks_${newId}_${f}`;
-            field.name = `eme_tasks[${newId}][${f}]`;
-        }
-    });
-
-    // Clear values
-    const nameField   = metaCopy.querySelector(`#eme_tasks_${newId}_name`);
-    const spacesField = metaCopy.querySelector(`#eme_tasks_${newId}_spaces`);
-    const descField   = metaCopy.querySelector(`#eme_tasks_${newId}_description`);
-    const taskIdField = metaCopy.querySelector(`#eme_tasks_${newId}_task_id`);
-
-    if (nameField)   nameField.value   = '';
-    if (spacesField) spacesField.value = '1';
-    if (descField)   descField.value   = '';
-    if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
-
-    // Remove the stale FDatepicker auto-created hidden fields from the clone;
-    // eme_init_widgets() will let FDatepicker recreate them with the correct ids.
-    metaCopy.querySelectorAll('input[id$="-fdp-alt"]').forEach(el => el.remove());
-
-    // Clear date values on the visible datepicker inputs so the clone starts empty.
-    ['task_start', 'task_end'].forEach(f => {
-        const field = metaCopy.querySelector(`#eme_tasks_${newId}_${f}`);
-        if (field) { field.value = ''; field.removeAttribute('data-date'); }
-    });
-
-    const tbody = EME.$('#eme_tasks_tbody');
-    if (tbody) tbody.appendChild(metaCopy);
-
-    // Re-initialise datepickers in the cloned row so FDatepicker binds to the renamed fields.
-    eme_init_widgets();
+function eme_add_task_function() {
+    if (eme_add_templated_row('eme_tasks_tbody', 'eme_tasks_template', 'eme_row_task_')) {
+        eme_init_widgets(true);
+    }
 }
 
 function eme_remove_task_function(element) {
-    const tbody = EME.$('#eme_tasks_tbody');
-    const rows = tbody ? tbody.children : [];
-
-    if (rows.length > 1) {
-        element.closest('tr').remove();
-    } else {
-        const metaCopy = element.closest('tr');
-        let newId = 0;
-        while (EME.$(`#eme_row_task_${newId}`)) newId++;
-
-        const currentId = metaCopy.id.replace('eme_row_task_', '');
-        metaCopy.id = `eme_row_task_${newId}`;
-
-        const relElements = metaCopy.querySelectorAll('a');
-        relElements.forEach(a => a.setAttribute('rel', newId));
-
-        const metafields = ['task_id', 'name', 'task_start', 'task_end', 'spaces', 'description'];
-        metafields.forEach(f => {
-            const field = metaCopy.querySelector(`#eme_tasks_${currentId}_${f}`);
-            if (field) {
-                field.id   = `eme_tasks_${newId}_${f}`;
-                field.name = `eme_tasks[${newId}][${f}]`;
-            }
-        });
-
-        // Clear values
-        const nameField   = metaCopy.querySelector(`#eme_tasks_${newId}_name`);
-        const spacesField = metaCopy.querySelector(`#eme_tasks_${newId}_spaces`);
-        const descField   = metaCopy.querySelector(`#eme_tasks_${newId}_description`);
-        const taskIdField = metaCopy.querySelector(`#eme_tasks_${newId}_task_id`);
-
-        if (nameField)   nameField.value   = '';
-        if (spacesField) spacesField.value = '1';
-        if (descField)   descField.value   = '';
-        if (taskIdField && taskIdField.parentNode) taskIdField.parentNode.innerHTML = '';
-
-    }
+    eme_remove_templated_row(element.closest('tr'), 'eme_tasks_tbody', 'eme_tasks_template', 'eme_row_task_');
 }
 
 // Custom-field filter rows (members/people/events/locations/tasks/rsvp search forms)
@@ -234,80 +184,21 @@ function eme_get_customfieldfilter_values(containerId) {
 }
 
 // Todo management functions
-function eme_add_todo_function(element) {
-    const selectedItem = element.closest('tr');
-    const metaCopy = selectedItem.cloneNode(true);
-    let newId = 0;
-    while (EME.$(`#eme_row_todo_${newId}`)) newId++;
-
-    const currentId = metaCopy.id.replace('eme_row_todo_', '');
-    metaCopy.id = `eme_row_todo_${newId}`;
-
-    const relElements = metaCopy.querySelectorAll('a');
-    relElements.forEach(a => a.setAttribute('rel', newId));
-
-    const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
-    metafields.forEach(f => {
-        const field = metaCopy.querySelector(`#eme_todos_${currentId}_${f}`);
-        if (field) {
-            field.id   = `eme_todos_${newId}_${f}`;
-            field.name = `eme_todos[${newId}][${f}]`;
-        }
-    });
-
-    // Clear values
-    const nameField   = metaCopy.querySelector(`#eme_todos_${newId}_name`);
-    const offsetField = metaCopy.querySelector(`#eme_todos_${newId}_todo_offset`);
-    const descField   = metaCopy.querySelector(`#eme_todos_${newId}_description`);
-    const todoIdField = metaCopy.querySelector(`#eme_todos_${newId}_todo_id`);
-
-    if (nameField)   nameField.value   = '';
-    if (offsetField) offsetField.value = '0';
-    if (descField)   descField.value   = '';
-    if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
-
-    const tbody = EME.$('#eme_todos_tbody');
-    if (tbody) tbody.appendChild(metaCopy);
+function eme_add_todo_function() {
+    eme_add_templated_row('eme_todos_tbody', 'eme_todos_template', 'eme_row_todo_');
 }
 
 function eme_remove_todo_function(element) {
-    const tbody = EME.$('#eme_todos_tbody');
-    const rows = tbody ? tbody.children : [];
+    eme_remove_templated_row(element.closest('tr'), 'eme_todos_tbody', 'eme_todos_template', 'eme_row_todo_');
+}
 
-    if (rows.length > 1) {
-        element.closest('tr').remove();
-    } else {
-        const metaCopy = element.closest('tr');
-        let newId = 0;
-        while (EME.$(`#eme_row_todo_${newId}`)) newId++;
+// DynData condition management functions
+function eme_add_dyndatacondition_function() {
+    eme_add_templated_row('eme_dyndata_tbody', 'eme_dyndata_template', 'eme_dyndata_');
+}
 
-        const currentId = metaCopy.id.replace('eme_row_todo_', '');
-        metaCopy.id = `eme_row_todo_${newId}`;
-
-        const relElements = metaCopy.querySelectorAll('a');
-        relElements.forEach(a => a.setAttribute('rel', newId));
-
-        const metafields = ['todo_id', 'name', 'todo_offset', 'description'];
-        metafields.forEach(f => {
-            const field = metaCopy.querySelector(`#eme_todos_${currentId}_${f}`);
-            if (field) {
-                field.id   = `eme_todos_${newId}_${f}`;
-                field.name = `eme_todos[${newId}][${f}]`;
-            }
-        });
-
-        // Clear values
-        const nameField   = metaCopy.querySelector(`#eme_todos_${newId}_name`);
-        const offsetField = metaCopy.querySelector(`#eme_todos_${newId}_todo_offset`);
-        const descField   = metaCopy.querySelector(`#eme_todos_${newId}_description`);
-        const todoIdField = metaCopy.querySelector(`#eme_todos_${newId}_todo_id`);
-
-        if (nameField)   nameField.value   = '';
-        if (offsetField) offsetField.value = '0';
-        if (descField)   descField.value   = '';
-        if (todoIdField && todoIdField.parentNode) todoIdField.parentNode.innerHTML = '';
-
-    }
+function eme_remove_dyndatacondition_function(element) {
+    eme_remove_templated_row(element.closest('tr'), 'eme_dyndata_tbody', 'eme_dyndata_template', 'eme_dyndata_');
 }
 
 // Attachment UI initialization function
@@ -513,30 +404,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // change_task_days snippet (for reference)
+    // change_task_days: shift all task dates by the given number of days
     const changeTaskDaysBtn = EME.$('#change_task_days');
     if (changeTaskDaysBtn) {
         changeTaskDaysBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const offset = parseInt(EME.$('#task_offset').value);
-            let myId = 0;
-
-            while (EME.$(`#eme_row_task_${myId}`)) {
-                const startField = EME.$(`#eme_tasks_${myId}_task_start`);
-                if (startField?._fdatepicker) {
-                    const startObj = startField._fdatepicker.selectedDate;
-                    startObj.setDate(startObj.getDate() + offset);
-                    startField._fdatepicker.setDate(startObj);
-                }
-
-                const endField = EME.$(`#eme_tasks_${myId}_task_end`);
-                if (endField?._fdatepicker) {
-                    const endObj = endField._fdatepicker.selectedDate;
-                    endObj.setDate(endObj.getDate() + offset);
-                    endField._fdatepicker.setDate(endObj);
-                }
-                myId++;
-            }
+            EME.$$('#eme_tasks_tbody tr').forEach(tr => {
+                ['task_start', 'task_end'].forEach(f => {
+                    const field = tr.querySelector(`[name*="[${f}]"]`);
+                    if (field?._fdatepicker && field._fdatepicker.selectedDate) {
+                        const dateObj = field._fdatepicker.selectedDate;
+                        dateObj.setDate(dateObj.getDate() + offset);
+                        field._fdatepicker.setDate(dateObj);
+                    }
+                });
+            });
         });
     }
 
@@ -624,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (e.target.matches('.eme_add_todo')) {
             e.preventDefault();
-            eme_add_todo_function(e.target);
+            eme_add_todo_function();
         }
         if (e.target.matches('.eme_remove_todo')) {
             e.preventDefault();
@@ -632,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (e.target.matches('.eme_add_task')) {
             e.preventDefault();
-            eme_add_task_function(e.target);
+            eme_add_task_function();
         }
         if (e.target.matches('.eme_remove_task')) {
             e.preventDefault();
@@ -649,101 +532,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (e.target.matches('.eme_dyndata_add_tag')) {
             e.preventDefault();
-            const tbody = EME.$('#eme_dyndata_tbody');
-            const metas = tbody.children;
-            const metaCopy = metas[0].cloneNode(true);
-            let newId = 0;
-            while (EME.$(`#eme_dyndata_${newId}`)) newId++;
-
-            const currentId = metaCopy.id.replace('eme_dyndata_', '');
-            metaCopy.id = `eme_dyndata_${newId}`;
-
-            const relElements = metaCopy.querySelectorAll('a');
-            relElements.forEach(a => a.setAttribute('rel', newId));
-
-            const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
-            metafields.forEach(f => {
-                const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
-                if (field) {
-                    field.name = `eme_dyndata[${newId}][${f}]`;
-                    field.id = `eme_dyndata[${newId}][${f}]`;
-                }
-            });
-
-            // Set default values
-            const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
-            const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
-            const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
-            const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
-            const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
-            const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
-            const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
-            const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
-
-            if (fieldField) fieldField.value = '';
-            if (conditionField) conditionField.value = 'eq';
-            if (condvalField) condvalField.value = '';
-            if (headerField) headerField.value = '0';
-            if (templateField) templateField.value = '0';
-            if (footerField) footerField.value = '0';
-            if (repeatField) repeatField.value = '0';
-            if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
-
-            tbody.appendChild(metaCopy);
+            eme_add_dyndatacondition_function();
         }
- 
+
         // DynData remove functionality
         if (e.target.matches('.eme_remove_dyndatacondition')) {
             e.preventDefault();
-            const tbody = EME.$('#eme_dyndata_tbody');
-            const rows = tbody.children;
-
-            if (rows.length > 1) {
-                e.target.closest('tr').remove();
-            } else {
-                const metaCopy = e.target.closest('tr');
-                let newId = 0;
-                while (EME.$(`#eme_dyndata_${newId}`)) newId++;
-
-                const currentId = metaCopy.id.replace('eme_dyndata_', '');
-                metaCopy.id = `eme_dyndata_${newId}`;
-
-                const relElements = metaCopy.querySelectorAll('a');
-                relElements.forEach(a => a.setAttribute('rel', newId));
-
-                const metafields = ['field', 'condition', 'condval', 'template_id_header', 'template_id', 'template_id_footer', 'repeat', 'grouping'];
-                metafields.forEach(f => {
-                    const field = metaCopy.querySelector(`[name="eme_dyndata[${currentId}][${f}]"]`);
-                    if (field) {
-                        field.name = `eme_dyndata[${newId}][${f}]`;
-                        field.id = `eme_dyndata[${newId}][${f}]`;
-                    }
-                });
-
-                // Clear values and remove required attributes
-                const fieldField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][field]"]`);
-                const conditionField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condition]"]`);
-                const condvalField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][condval]"]`);
-                const headerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_header]"]`);
-                const templateField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id]"]`);
-                const footerField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][template_id_footer]"]`);
-                const repeatField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][repeat]"]`);
-                const groupingField = metaCopy.querySelector(`[name="eme_dyndata[${newId}][grouping]"]`);
-
-                if (fieldField) fieldField.value = '';
-                if (conditionField) conditionField.value = 'eq';
-                if (condvalField) condvalField.value = '';
-                if (headerField) headerField.value = '0';
-                if (templateField) templateField.value = '0';
-                if (footerField) footerField.value = '0';
-                if (repeatField) repeatField.value = '0';
-                if (groupingField && groupingField.parentNode) groupingField.parentNode.innerHTML = '';
-
-                metafields.forEach(f => {
-                    const field = metaCopy.querySelector(`[name="eme_dyndata[${newId}][${f}]"]`);
-                    if (field) field.removeAttribute('required');
-                });
-            }
+            eme_remove_dyndatacondition_function(e.target);
         }
 
         if (e.target.matches('.eme_iban_button')) {

@@ -368,7 +368,6 @@ document.addEventListener('DOMContentLoaded', function () {
         eme_toggle(EME.$('span#span_refund'), ['trashBooking','pendingBooking','setwaitinglistBooking','markUnpaid'].includes(action) && eme_isFalsey($_GET['trash']));
         eme_toggle(EME.$('#span_addtogroup'), action === 'addToGroup');
         eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
-        eme_toggle(EME.$('#span_removefromgroup'), action === 'removeFromGroup');
         eme_toggle(EME.$('span#span_partialpayment'), action === 'partialPayment');
         eme_toggle(EME.$('span#span_rsvpmailtemplate'), action === 'rsvpMails');
     }

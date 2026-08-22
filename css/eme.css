@@ -34,10 +34,6 @@
     font-size:.8em;
 }
 
-.eme_todos {
-    width: 100%;
-}
-
 textarea.eme_fullresizable {
     resize: both; 
     width: 100%;
@@ -496,17 +492,17 @@ input[type="checkbox"] {
     min-inline-size: 10ch;
 }
 
-/* for tasks */
-.eme_tasks {
+/* for tasks, todos */
+.eme_tasks, .eme_todos {
     border-collapse: collapse; 
     width: 100%;
 }
-.eme_tasks thead {
+.eme_tasks thead, .eme_todos thead {
     border-top: transparent;
     border-left: transparent;
     border-right: transparent;
 }
-.eme_tasks tr {
+.eme_tasks tr, .eme_todos tr {
     border-width: thin;
     border-style: solid;
 }

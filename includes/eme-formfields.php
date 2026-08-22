@@ -548,14 +548,14 @@ function eme_render_customfield_filter_rows( $formfields_searchable, $search_ter
     $cf_vals  = $search_terms['search_customfieldvalues'] ?? [];
     $cf_exact = $search_terms['search_customfieldexact'] ?? [];
     if ( empty( $cf_ids ) || ! is_array( $cf_ids ) ) {
-        $cf_ids = [ ];
+        $cf_ids = [];
     }
     $extra_attributes = ' data-placeholder="' . esc_attr__( 'Select custom field', 'events-made-easy' ) . '"';
- 
+
     // Legacy format (one value + optional list of field ids to OR-match it against, pre-dating
     // the per-row filter UI). Not editable here — just show what's stored so it isn't silently lost.
     $legacy_has_value    = isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] !== '';
-    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && is_array( $search_terms['search_customfieldids'] );
+    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && eme_is_integer_array( $search_terms['search_customfieldids'] ) && ! isset( $search_terms['search_customfieldvalues'] );
     if ( $legacy_has_value || $legacy_has_fieldids ) {
         $legacy_value = $search_terms['search_customfields'] ?? '';
         $legacy_field_ids = $legacy_has_fieldids
@@ -584,6 +584,19 @@ function eme_render_customfield_filter_rows( $formfields_searchable, $search_ter
             );
         }
         echo ' ' . esc_html__( 'Add a filter below and save to convert it to the new format.', 'events-made-easy' ) . '</p>';
+
+        // 0 or 1 field: OR-of-one-thing is lossless, so pre-fill a real row (fixes both the
+        // "select a field but leave the value blank" list-preview bug, and lets a plain Save
+        // convert the group to the new format without retyping anything).
+        // 2+ fields: legacy semantics is OR-across-fields, which a single row can't represent —
+        // showing no row is preferable to showing one with the wrong (too-narrow) meaning.
+        if ( count( $legacy_field_ids ) <= 1 ) {
+            $cf_ids   = $legacy_field_ids;
+            $cf_vals  = array_fill( 0, count( $legacy_field_ids ), $legacy_value );
+            $cf_exact = array_fill( 0, count( $legacy_field_ids ), ! empty( $search_terms['search_exactmatch'] ) ? 1 : 0 );
+        } else {
+            $cf_ids = [];
+        }
     }
 ?>
     <div class="eme_cf_filters" id="<?php echo esc_attr( $id_prefix ); ?>eme_cf_filters">

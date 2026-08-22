@@ -3082,27 +3082,40 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     }
 
     // custom field filters: each row is an independent, AND'd EXISTS condition
+    $legacy_has_value    = isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] !== '';
+    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && is_array( $search_terms['search_customfieldids'] ) && ! isset( $search_terms['search_customfieldvalues'] );
+
     $cf_ids   = $search_terms['search_customfieldids'] ?? [];
     $cf_vals  = $search_terms['search_customfieldvalues'] ?? [];
     $cf_exact = $search_terms['search_customfieldexact'] ?? [];
-    $legacy_has_value    = isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] !== '';
-    $legacy_has_fieldids = ! empty( $search_terms['search_customfieldids'] ) && eme_is_integer_array( $search_terms['search_customfieldids'] );
+
     if ( ! empty( $formfields_searchable ) && ( $legacy_has_value || $legacy_has_fieldids ) ) {
-        // Legacy format: one value + a list of field ids to OR-match it against.
-        // Kept as-is so dynamic groups saved before the multi-row filter UI keep working unchanged.
-        $value   = $search_terms['search_customfields'] ?? '';
-        $cmp_sql = $value === ''
-            ? "answer = ''"
-            : ( ! empty( $search_terms['search_exactmatch'] )
-                ? $wpdb->prepare( 'answer = %s', $value )
-                : $wpdb->prepare( 'answer LIKE %s', '%' . $wpdb->esc_like( $value ) . '%' ) );
-        $field_ids_arr = $legacy_has_fieldids
+        $legacy_value     = $search_terms['search_customfields'] ?? '';
+        $legacy_field_ids = $legacy_has_fieldids
             ? array_map( 'intval', $search_terms['search_customfieldids'] )
             : array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ) );
-        $placeholders = implode( ',', array_fill( 0, count( $field_ids_arr ), '%d' ) );
-        $where_arr[]  = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=people.person_id AND type='person' AND field_id IN ($placeholders) AND $cmp_sql)", ...$field_ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-    } elseif ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfieldids'] ) ) {
+        if ( count( $legacy_field_ids ) <= 1 ) {
+            // 0 or 1 field: OR-of-one-thing is lossless, convert into the shared per-row shape below
+            $cf_ids   = $legacy_field_ids;
+            $cf_vals  = array_fill( 0, count( $legacy_field_ids ), $legacy_value );
+            $cf_exact = array_fill( 0, count( $legacy_field_ids ), ! empty( $search_terms['search_exactmatch'] ) ? 1 : 0 );
+        } else {
+            // 2+ fields: legacy semantics is OR-across-fields, which the AND-across-rows loop below
+            // can't express — build that one OR'd condition directly instead, then skip the shared loop
+            $cmp_sql = $legacy_value === ''
+                ? "answer = ''"
+                : ( ! empty( $search_terms['search_exactmatch'] )
+                ? $wpdb->prepare( 'answer = %s', $legacy_value )
+                : $wpdb->prepare( 'answer LIKE %s', '%' . $wpdb->esc_like( $legacy_value ) . '%' ) );
+            $placeholders = implode( ',', array_fill( 0, count( $legacy_field_ids ), '%d' ) );
+            $where_arr[]  = $wpdb->prepare( "EXISTS (SELECT 1 FROM $answers_table WHERE related_id=members.member_id AND type='member' AND field_id IN ($placeholders) AND $cmp_sql)", ...$legacy_field_ids ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $cf_ids = [];
+        }
+    }
+
+    // shared per-row loop — handles new-format submissions as-is, and the 0-1-field legacy conversion above
+    if ( ! empty( $formfields_searchable ) && is_array( $cf_ids ) && ! empty( $cf_ids ) ) {
         $searchable_ids = array_map( 'intval', wp_list_pluck( $formfields_searchable, 'field_id' ));
         foreach ( $cf_ids as $idx => $field_id ) {
             $field_id = intval( $field_id );

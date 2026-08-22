@@ -6304,7 +6304,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <input type="search" name="search_name" id="recurrences_search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>
         <input id="recurrences_search_start_date" type="text" name="recurrences_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
         <input id="recurrences_search_end_date" type="text" name="recurrences_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
-        <button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
+        <button id="RecurrencesLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
         </form>
         <br>
         <div class="bulkactions">
@@ -6345,7 +6345,7 @@ function eme_events_table( $message = '', $active_tab = '' ) {
         <input type="search" name="search_name" id="trash_search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class='eme_searchfilter'>
         <input id="trash_search_start_date" type="text" name="trash_search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
         <input id="trash_search_end_date" type="text" name="trash_search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
-        <button id="TrashLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter trash', 'events-made-easy' ); ?></button>
+        <button id="TrashLoadRecordsButton" class="button-primary action"><?php esc_html_e( 'Filter trash', 'events-made-easy' ); ?></button>
         </form>
 <?php
     if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_author_event' ) ) ) :

@@ -1582,7 +1582,6 @@ function eme_geolocate_location( $line ) {
     return [ 'latitude' => floatval( $data[0]['lat'] ), 'longitude' => floatval( $data[0]['lon'] ) ];
 }
 
-
 function eme_check_location_name_address( $location ) {
     global $wpdb;
     $table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;

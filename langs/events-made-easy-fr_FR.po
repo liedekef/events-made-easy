@@ -22,10 +22,6 @@ msgstr "Filtres de champs personnalisés"
 msgid "Resolve missing coordinates"
 msgstr "Résoudre le problème des coordonnées manquantes"
 
-#: includes/eme-import.php:203
-msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations — you can leave and come back, already-resolved locations are kept)."
-msgstr "Les emplacements importés dont les coordonnées ne sont pas valides dans le fichier CSV sont enregistrés sans elles ; utilisez le bouton ci-dessous pour les géolocaliser par la suite via le service public de géocodage nominatim.openstreetmap.org (limité à 1 requête par seconde ; cela peut donc prendre un certain temps pour un grand nombre d’emplacements — vous pouvez quitter la page et y revenir plus tard ; les emplacements déjà géolocalisés sont conservés)."
-
 #: includes/eme-import.php:198
 msgid "The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored."
 msgstr "Les colonnes « location_latitude » et « location_longitude » sont facultatives, mais si elles sont présentes, elles doivent contenir des valeurs numériques valides (par exemple 50.8503 ou 4.3517) ; dans le cas contraire, elles sont ignorées."
@@ -189,7 +185,7 @@ msgstr "Transférer une réservation vers un évènement"
 msgid "The following settings are only used if wordpress has permalinks set to anything but \"Plain\"."
 msgstr "Les réglages suivants sont utilisés uniquement si les permaliens de WordPress sont définis sur une option autre que « Simple »."
 
-#: includes/eme-locations.php:3269
+#: includes/eme-locations.php:3268
 msgid "Locations deleted"
 msgstr "Emplacements supprimés"
 
@@ -632,7 +628,7 @@ msgstr "Facultatif : sélectionnez chaque évènement dont les inscrits doivent 
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Exclure également les adresses e-mail des personnes déjà inscrites à ces autres évènements."
 
-#: includes/eme-locations.php:2837
+#: includes/eme-locations.php:2836
 msgid "e.g. 123 Main St, City"
 msgstr "par exemple : 123, rue Main, Ville"
 
@@ -759,7 +755,7 @@ msgstr "L'occurrence a été supprimée et les occurrences restantes ont été r
 msgid "Invalid parameters"
 msgstr "Paramètres invalides"
 
-#: includes/eme-locations.php:3473
+#: includes/eme-locations.php:3472
 #: includes/eme-members.php:7088
 msgid "No permission"
 msgstr "Aucun droit"
@@ -1911,8 +1907,8 @@ msgid "If setting the max capacity to something else than 0, then - for all even
 msgstr "Si le paramètre de capacité maximum est différente de 0, alors - pour tous les évènements qui ont lieu en même temps à cet emplacement - un contrôle sera effectué pour voir si l’emplacement permet d’autres personnes."
 
 #: includes/eme-locations.php:681
+#: includes/eme-locations.php:3200
 #: includes/eme-locations.php:3201
-#: includes/eme-locations.php:3202
 msgid "Max capacity"
 msgstr "Capacité maximale"
 
@@ -5009,7 +5005,7 @@ msgstr "Aucun nom de famille"
 #: includes/eme-events.php:10082
 #: includes/eme-formfields.php:3780
 #: includes/eme-holidays.php:279
-#: includes/eme-locations.php:3179
+#: includes/eme-locations.php:3178
 #: includes/eme-members.php:6557
 #: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
@@ -8232,7 +8228,7 @@ msgstr "Icône de carte d'emplacement par défaut"
 msgid "Template name"
 msgstr "Nom du modèle"
 
-#: includes/eme-locations.php:3217
+#: includes/eme-locations.php:3216
 msgid "View location"
 msgstr "Voir le lieu"
 
@@ -10973,7 +10969,7 @@ msgid "Localize price"
 msgstr "Prix localisé"
 
 #: includes/eme-events.php:10214
-#: includes/eme-locations.php:3185
+#: includes/eme-locations.php:3184
 #: includes/eme-recurrence.php:795
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Les coordonnées de la carte de localisation sont vides ! Veuillez modifier l’emplacement pour corriger ceci, sinon il ne s’affichera pas correctement sur votre site Web."
@@ -11642,7 +11638,7 @@ msgstr "Mise à jour a échoué : "
 #: includes/eme-functions.php:3452
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
-#: includes/eme-locations.php:3090
+#: includes/eme-locations.php:3089
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -13913,17 +13909,17 @@ msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) participera à #_EVENTNAME le #_STARTDA
 msgid "New booking for '#_EVENTNAME'"
 msgstr "Nouvelle réservation pour '#_EVENTNAME'"
 
-#: includes/eme-locations.php:2841
+#: includes/eme-locations.php:2840
 msgid "Get Directions"
 msgstr "Calculer l'itinéraire"
 
-#: includes/eme-locations.php:2836
+#: includes/eme-locations.php:2835
 msgid "Your Street Address"
 msgstr "Votre rue/avenue"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9709
-#: includes/eme-locations.php:2428
+#: includes/eme-locations.php:2427
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6218
 msgid "Edit"
@@ -13937,7 +13933,7 @@ msgstr "Adresse du lieu"
 msgid "The location name"
 msgstr "Nom du lieu"
 
-#: includes/eme-locations.php:3219
+#: includes/eme-locations.php:3218
 msgid "Duplicate this location"
 msgstr "Dupliquer ce lieu"
 
@@ -13999,7 +13995,7 @@ msgstr "Nom du lieu"
 
 #: includes/eme-events.php:10212
 #: includes/eme-locations.php:562
-#: includes/eme-locations.php:3183
+#: includes/eme-locations.php:3182
 #: includes/eme-recurrence.php:793
 msgid "Edit location"
 msgstr "Editer le lieu"
@@ -14971,7 +14967,7 @@ msgstr "RSVP-information : "
 #: includes/eme-events.php:9822
 #: includes/eme-events.php:10093
 #: includes/eme-locations.php:485
-#: includes/eme-locations.php:3189
+#: includes/eme-locations.php:3188
 #: includes/eme-recurrence.php:775
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -15106,45 +15102,45 @@ msgstr "Page précédente"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1727
-#: includes/eme-locations.php:1736
+#: includes/eme-locations.php:1726
+#: includes/eme-locations.php:1735
 msgid "Next day"
 msgstr "Jour suivant"
 
 #: includes/eme-events.php:4355
 #: includes/eme-events.php:4364
-#: includes/eme-locations.php:1726
-#: includes/eme-locations.php:1735
+#: includes/eme-locations.php:1725
+#: includes/eme-locations.php:1734
 msgid "Previous day"
 msgstr "Jour précédent"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1719
+#: includes/eme-locations.php:1718
 msgid "Next year"
 msgstr "Année suivante"
 
 #: includes/eme-events.php:4347
-#: includes/eme-locations.php:1718
+#: includes/eme-locations.php:1717
 msgid "Previous year"
 msgstr "Année précédente"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1745
+#: includes/eme-locations.php:1744
 msgid "Next month"
 msgstr "Mois suivant"
 
 #: includes/eme-events.php:4337
-#: includes/eme-locations.php:1744
+#: includes/eme-locations.php:1743
 msgid "Previous month"
 msgstr "Mois précédent"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1709
+#: includes/eme-locations.php:1708
 msgid "Next week"
 msgstr "Semaine suivante"
 
 #: includes/eme-events.php:4326
-#: includes/eme-locations.php:1708
+#: includes/eme-locations.php:1707
 msgid "Previous week"
 msgstr "Semaine précédente"
 
@@ -15431,7 +15427,7 @@ msgstr "Ajouter des attributs ici"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -15472,7 +15468,7 @@ msgstr "Non"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -15499,3 +15495,7 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
+
+#: includes/eme-import.php:203
+msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
+msgstr ""

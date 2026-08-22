@@ -47,7 +47,7 @@ msgstr "på uppdrag av %s"
 #: includes/eme-functions.php:3452
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
-#: includes/eme-locations.php:3090
+#: includes/eme-locations.php:3089
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -389,7 +389,7 @@ msgstr "Namn"
 #: includes/eme-events.php:10082
 #: includes/eme-formfields.php:3780
 #: includes/eme-holidays.php:279
-#: includes/eme-locations.php:3179
+#: includes/eme-locations.php:3178
 #: includes/eme-members.php:6557
 #: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
@@ -1465,7 +1465,7 @@ msgstr "Fast per plats"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1506,7 +1506,7 @@ msgstr "Ja"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1887,7 +1887,7 @@ msgstr "Events Made Easy-tilläggssida"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9709
-#: includes/eme-locations.php:2428
+#: includes/eme-locations.php:2427
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6218
 msgid "Edit"
@@ -1944,46 +1944,46 @@ msgstr[0] "%d år"
 msgstr[1] "%d år"
 
 #: includes/eme-events.php:4326
-#: includes/eme-locations.php:1708
+#: includes/eme-locations.php:1707
 msgid "Previous week"
 msgstr "Föregående vecka"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1709
+#: includes/eme-locations.php:1708
 msgid "Next week"
 msgstr "Nästa vecka"
 
 #: includes/eme-events.php:4337
-#: includes/eme-locations.php:1744
+#: includes/eme-locations.php:1743
 msgid "Previous month"
 msgstr "Föregående månad"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1745
+#: includes/eme-locations.php:1744
 msgid "Next month"
 msgstr "Nästa månad"
 
 #: includes/eme-events.php:4347
-#: includes/eme-locations.php:1718
+#: includes/eme-locations.php:1717
 msgid "Previous year"
 msgstr "Föregående år"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1719
+#: includes/eme-locations.php:1718
 msgid "Next year"
 msgstr "Nästa år"
 
 #: includes/eme-events.php:4355
 #: includes/eme-events.php:4364
-#: includes/eme-locations.php:1726
-#: includes/eme-locations.php:1735
+#: includes/eme-locations.php:1725
+#: includes/eme-locations.php:1734
 msgid "Previous day"
 msgstr "Föregående dag"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1727
-#: includes/eme-locations.php:1736
+#: includes/eme-locations.php:1726
+#: includes/eme-locations.php:1735
 msgid "Next day"
 msgstr "Nästa dag"
 
@@ -2435,7 +2435,7 @@ msgstr "Eftersom ingen skapare är definierad för detta event kommer administra
 #: includes/eme-events.php:9822
 #: includes/eme-events.php:10093
 #: includes/eme-locations.php:485
-#: includes/eme-locations.php:3189
+#: includes/eme-locations.php:3188
 #: includes/eme-recurrence.php:775
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -4566,13 +4566,13 @@ msgstr "Uppgiftsinformation: %d uppgifter"
 
 #: includes/eme-events.php:10212
 #: includes/eme-locations.php:562
-#: includes/eme-locations.php:3183
+#: includes/eme-locations.php:3182
 #: includes/eme-recurrence.php:793
 msgid "Edit location"
 msgstr "Redigera plats"
 
 #: includes/eme-events.php:10214
-#: includes/eme-locations.php:3185
+#: includes/eme-locations.php:3184
 #: includes/eme-recurrence.php:795
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Platsens kartkoordinater är tomma! Vänligen redigera platsen och korrigera detta, annars kommer den inte att visas korrekt på din webbplats."
@@ -6026,8 +6026,8 @@ msgid "Location maximum capacity"
 msgstr "Platsbild"
 
 #: includes/eme-locations.php:681
+#: includes/eme-locations.php:3200
 #: includes/eme-locations.php:3201
-#: includes/eme-locations.php:3202
 msgid "Max capacity"
 msgstr "Maxkapacitet"
 
@@ -6101,19 +6101,19 @@ msgstr "Platsens adress"
 msgid "The location city"
 msgstr "Platsens stad"
 
-#: includes/eme-locations.php:2836
+#: includes/eme-locations.php:2835
 msgid "Your Street Address"
 msgstr "Din gatuadress"
 
-#: includes/eme-locations.php:2841
+#: includes/eme-locations.php:2840
 msgid "Get Directions"
 msgstr "Få vägbeskrivning"
 
-#: includes/eme-locations.php:3217
+#: includes/eme-locations.php:3216
 msgid "View location"
 msgstr "Visa plats"
 
-#: includes/eme-locations.php:3219
+#: includes/eme-locations.php:3218
 msgid "Duplicate this location"
 msgstr "Skapa kopia av denna plats"
 
@@ -14776,7 +14776,7 @@ msgstr "Är du säker på att du vill ta bort denna grupp? Detta kan inte ångra
 msgid "Delete this group"
 msgstr "Ta bort denna grupp"
 
-#: includes/eme-locations.php:3473
+#: includes/eme-locations.php:3472
 #: includes/eme-members.php:7088
 msgid "No permission"
 msgstr "Ingen behörighet"
@@ -14899,7 +14899,7 @@ msgstr "Jag har verifierat filhasharna ovan och bekräftar att generera signatur
 msgid "Regenerate signatures"
 msgstr "Generera signaturer igen"
 
-#: includes/eme-locations.php:2837
+#: includes/eme-locations.php:2836
 msgid "e.g. 123 Main St, City"
 msgstr "t.ex. Storgatan 123, Stockholm"
 
@@ -15374,7 +15374,7 @@ msgstr ""
 msgid "First select an event"
 msgstr ""
 
-#: includes/eme-locations.php:3269
+#: includes/eme-locations.php:3268
 msgid "Locations deleted"
 msgstr ""
 
@@ -15553,10 +15553,6 @@ msgstr ""
 msgid "The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored."
 msgstr ""
 
-#: includes/eme-import.php:203
-msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations — you can leave and come back, already-resolved locations are kept)."
-msgstr ""
-
 #: includes/eme-import.php:204
 msgid "Resolve missing coordinates"
 msgstr ""
@@ -15564,4 +15560,8 @@ msgstr ""
 #: includes/eme-members.php:3008
 #: includes/eme-people.php:2161
 msgid "Custom field filters"
+msgstr ""
+
+#: includes/eme-import.php:203
+msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr ""

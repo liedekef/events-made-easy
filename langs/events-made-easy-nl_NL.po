@@ -47,7 +47,7 @@ msgstr "in naam van %s"
 #: includes/eme-functions.php:3452
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
-#: includes/eme-locations.php:3090
+#: includes/eme-locations.php:3089
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -388,7 +388,7 @@ msgstr "Naam"
 #: includes/eme-events.php:10082
 #: includes/eme-formfields.php:3780
 #: includes/eme-holidays.php:279
-#: includes/eme-locations.php:3179
+#: includes/eme-locations.php:3178
 #: includes/eme-members.php:6557
 #: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
@@ -1457,7 +1457,7 @@ msgstr "Vast per plaats"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1498,7 +1498,7 @@ msgstr "Ja"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1878,7 +1878,7 @@ msgstr "Events Made Easy plugin pagina"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9709
-#: includes/eme-locations.php:2428
+#: includes/eme-locations.php:2427
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6218
 msgid "Edit"
@@ -1935,46 +1935,46 @@ msgstr[0] "%d jaar"
 msgstr[1] "%d jaren"
 
 #: includes/eme-events.php:4326
-#: includes/eme-locations.php:1708
+#: includes/eme-locations.php:1707
 msgid "Previous week"
 msgstr "Vorige week"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1709
+#: includes/eme-locations.php:1708
 msgid "Next week"
 msgstr "Volgende week"
 
 #: includes/eme-events.php:4337
-#: includes/eme-locations.php:1744
+#: includes/eme-locations.php:1743
 msgid "Previous month"
 msgstr "Vorige maand"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1745
+#: includes/eme-locations.php:1744
 msgid "Next month"
 msgstr "Volgende maand"
 
 #: includes/eme-events.php:4347
-#: includes/eme-locations.php:1718
+#: includes/eme-locations.php:1717
 msgid "Previous year"
 msgstr "Vorig jaar"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1719
+#: includes/eme-locations.php:1718
 msgid "Next year"
 msgstr "Volgend jaar"
 
 #: includes/eme-events.php:4355
 #: includes/eme-events.php:4364
-#: includes/eme-locations.php:1726
-#: includes/eme-locations.php:1735
+#: includes/eme-locations.php:1725
+#: includes/eme-locations.php:1734
 msgid "Previous day"
 msgstr "Vorige dag"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1727
-#: includes/eme-locations.php:1736
+#: includes/eme-locations.php:1726
+#: includes/eme-locations.php:1735
 msgid "Next day"
 msgstr "Volgende dag"
 
@@ -2422,7 +2422,7 @@ msgstr "Omdat er geen auteur is aangegeven voor dit evenement, zal elke verwijzi
 #: includes/eme-events.php:9822
 #: includes/eme-events.php:10093
 #: includes/eme-locations.php:485
-#: includes/eme-locations.php:3189
+#: includes/eme-locations.php:3188
 #: includes/eme-recurrence.php:775
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -4563,13 +4563,13 @@ msgstr "Taak Info: %d taken"
 
 #: includes/eme-events.php:10212
 #: includes/eme-locations.php:562
-#: includes/eme-locations.php:3183
+#: includes/eme-locations.php:3182
 #: includes/eme-recurrence.php:793
 msgid "Edit location"
 msgstr "Wijzig locatie"
 
 #: includes/eme-events.php:10214
-#: includes/eme-locations.php:3185
+#: includes/eme-locations.php:3184
 #: includes/eme-recurrence.php:795
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Geen geo-coördinaten aanwezig! Corrigeer dit voor deze locatie, anders is de data op je site incorrect."
@@ -6020,8 +6020,8 @@ msgid "Location maximum capacity"
 msgstr "Locatie maximum capaciteit"
 
 #: includes/eme-locations.php:681
+#: includes/eme-locations.php:3200
 #: includes/eme-locations.php:3201
-#: includes/eme-locations.php:3202
 msgid "Max capacity"
 msgstr "Max capaciteit"
 
@@ -6095,19 +6095,19 @@ msgstr "Locatie adres"
 msgid "The location city"
 msgstr "De stadsnaam van de locatie"
 
-#: includes/eme-locations.php:2836
+#: includes/eme-locations.php:2835
 msgid "Your Street Address"
 msgstr "Je adres (straat)"
 
-#: includes/eme-locations.php:2841
+#: includes/eme-locations.php:2840
 msgid "Get Directions"
 msgstr "Geef route-aanwijzingen"
 
-#: includes/eme-locations.php:3217
+#: includes/eme-locations.php:3216
 msgid "View location"
 msgstr "Bekijk locatie"
 
-#: includes/eme-locations.php:3219
+#: includes/eme-locations.php:3218
 msgid "Duplicate this location"
 msgstr "Dupliceer deze locatie"
 
@@ -14715,7 +14715,7 @@ msgstr "Weet je zeker dat je deze groep wilt verwijderen? Dit kan niet ongedaan 
 msgid "Delete this group"
 msgstr "Deze groep verwijderen"
 
-#: includes/eme-locations.php:3473
+#: includes/eme-locations.php:3472
 #: includes/eme-members.php:7088
 msgid "No permission"
 msgstr "Geen toestemming"
@@ -14838,7 +14838,7 @@ msgstr "Ik heb de bovenstaande bestands-hashes gecontroleerd en bevestig het opn
 msgid "Regenerate signatures"
 msgstr "Handtekeningen opnieuw genereren"
 
-#: includes/eme-locations.php:2837
+#: includes/eme-locations.php:2836
 msgid "e.g. 123 Main St, City"
 msgstr "bijv. Hoofdstraat 123, Stad"
 
@@ -15308,7 +15308,7 @@ msgstr "Selecteer een taak"
 msgid "First select an event"
 msgstr "Selecteer eerst een evenement"
 
-#: includes/eme-locations.php:3269
+#: includes/eme-locations.php:3268
 msgid "Locations deleted"
 msgstr "Locaties verwijderd"
 
@@ -15483,10 +15483,6 @@ msgstr "Importeer locaties vanuit een CSV-bestand. Vereiste kolommen: location_n
 msgid "The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored."
 msgstr "De kolommen location_latitude en location_longitude zijn optioneel, maar indien aanwezig moeten het geldige numerieke waarden zijn (bijv. 50.8503 of 4.3517), anders worden ze genegeerd."
 
-#: includes/eme-import.php:203
-msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations — you can leave and come back, already-resolved locations are kept)."
-msgstr "Geïmporteerde locaties zonder geldige coördinaten in de CSV worden opgeslagen zonder coördinaten; gebruik de knop hieronder om ze achteraf op te lossen via de openbare geocoderingsservice van nominatim.openstreetmap.org (beperkt tot 1 verzoek/seconde, dus dit kan even duren bij veel locaties – u kunt de pagina verlaten en later terugkomen, reeds opgeloste locaties blijven behouden)."
-
 #: includes/eme-import.php:204
 msgid "Resolve missing coordinates"
 msgstr "Ontbrekende coördinaten oplossen"
@@ -15495,3 +15491,7 @@ msgstr "Ontbrekende coördinaten oplossen"
 #: includes/eme-people.php:2161
 msgid "Custom field filters"
 msgstr "Aangepaste veldfilters"
+
+#: includes/eme-import.php:203
+msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
+msgstr "Geïmporteerde locaties zonder geldige coördinaten in de CSV worden opgeslagen zonder coördinaten; gebruik de onderstaande knop om ze achteraf op te lossen via de openbare geocoderingsservice van nominatim.openstreetmap.org (beperkt tot 1 verzoek per seconde, dus dit kan even duren bij veel locaties. Het oplossen stopt als u deze pagina verlaat; wanneer u terugkomt en wilt doorgaan, drukt u opnieuw op de knop."

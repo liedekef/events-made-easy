@@ -72,7 +72,7 @@ msgstr "v mene %s"
 #: includes/eme-functions.php:3452
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
-#: includes/eme-locations.php:3090
+#: includes/eme-locations.php:3089
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -429,7 +429,7 @@ msgstr "Názov"
 #: includes/eme-events.php:10082
 #: includes/eme-formfields.php:3780
 #: includes/eme-holidays.php:279
-#: includes/eme-locations.php:3179
+#: includes/eme-locations.php:3178
 #: includes/eme-members.php:6557
 #: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
@@ -1502,7 +1502,7 @@ msgstr "Pevná na miesto"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1543,7 +1543,7 @@ msgstr "Áno"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3215
+#: includes/eme-locations.php:3214
 #: includes/eme-members.php:6717
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1936,7 +1936,7 @@ msgstr "Stránka pluginu Events Made Easy"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9709
-#: includes/eme-locations.php:2428
+#: includes/eme-locations.php:2427
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6218
 msgid "Edit"
@@ -2007,46 +2007,46 @@ msgid "Next page"
 msgstr "Ďalšia strana"
 
 #: includes/eme-events.php:4326
-#: includes/eme-locations.php:1708
+#: includes/eme-locations.php:1707
 msgid "Previous week"
 msgstr "Predošlý týždeň"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1709
+#: includes/eme-locations.php:1708
 msgid "Next week"
 msgstr "Ďalší týždeň"
 
 #: includes/eme-events.php:4337
-#: includes/eme-locations.php:1744
+#: includes/eme-locations.php:1743
 msgid "Previous month"
 msgstr "Predošlý mesiac"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1745
+#: includes/eme-locations.php:1744
 msgid "Next month"
 msgstr "Ďalší mesiac"
 
 #: includes/eme-events.php:4347
-#: includes/eme-locations.php:1718
+#: includes/eme-locations.php:1717
 msgid "Previous year"
 msgstr "Predošlý rok"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1719
+#: includes/eme-locations.php:1718
 msgid "Next year"
 msgstr "Ďalší rok"
 
 #: includes/eme-events.php:4355
 #: includes/eme-events.php:4364
-#: includes/eme-locations.php:1726
-#: includes/eme-locations.php:1735
+#: includes/eme-locations.php:1725
+#: includes/eme-locations.php:1734
 msgid "Previous day"
 msgstr "Predošlý deň"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1727
-#: includes/eme-locations.php:1736
+#: includes/eme-locations.php:1726
+#: includes/eme-locations.php:1735
 msgid "Next day"
 msgstr "Ďalší deň"
 
@@ -2574,7 +2574,7 @@ msgstr "Keďže autor nie je pre toto podujatie definovaný, pri akýkoľvek odk
 #: includes/eme-events.php:9822
 #: includes/eme-events.php:10093
 #: includes/eme-locations.php:485
-#: includes/eme-locations.php:3189
+#: includes/eme-locations.php:3188
 #: includes/eme-recurrence.php:775
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -4695,13 +4695,13 @@ msgstr "Upraviť podujatie"
 
 #: includes/eme-events.php:10212
 #: includes/eme-locations.php:562
-#: includes/eme-locations.php:3183
+#: includes/eme-locations.php:3182
 #: includes/eme-recurrence.php:793
 msgid "Edit location"
 msgstr "Upraviť polohu"
 
 #: includes/eme-events.php:10214
-#: includes/eme-locations.php:3185
+#: includes/eme-locations.php:3184
 #: includes/eme-recurrence.php:795
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Súradnice mapy polohy sú prázdne! Upravte toto miesto, aby ste to opravili, inak sa na vašom webe nezobrazí správne."
@@ -6188,8 +6188,8 @@ msgid "Location maximum capacity"
 msgstr "Maximálna kapacita miesta"
 
 #: includes/eme-locations.php:681
+#: includes/eme-locations.php:3200
 #: includes/eme-locations.php:3201
-#: includes/eme-locations.php:3202
 msgid "Max capacity"
 msgstr "Maximálna kapacita"
 
@@ -6263,19 +6263,19 @@ msgstr "Adresa miesta"
 msgid "The location city"
 msgstr "Mesto"
 
-#: includes/eme-locations.php:2836
+#: includes/eme-locations.php:2835
 msgid "Your Street Address"
 msgstr "Vaša ulica"
 
-#: includes/eme-locations.php:2841
+#: includes/eme-locations.php:2840
 msgid "Get Directions"
 msgstr "Získať navigačné pokyny"
 
-#: includes/eme-locations.php:3217
+#: includes/eme-locations.php:3216
 msgid "View location"
 msgstr "Zobraziť miesto"
 
-#: includes/eme-locations.php:3219
+#: includes/eme-locations.php:3218
 msgid "Duplicate this location"
 msgstr "Duplikovať toto miesto"
 
@@ -14723,7 +14723,7 @@ msgstr "Naozaj chcete vymazať túto skupinu? Toto sa nedá vrátiť späť."
 msgid "Delete this group"
 msgstr "Vymazať túto skupinu"
 
-#: includes/eme-locations.php:3473
+#: includes/eme-locations.php:3472
 #: includes/eme-members.php:7088
 msgid "No permission"
 msgstr "Žiadne oprávnenie"
@@ -14846,7 +14846,7 @@ msgstr "Overil/overila som vyššie hash súborov a potvrdzujem regeneráciu pod
 msgid "Regenerate signatures"
 msgstr "Regenerovať podpisy"
 
-#: includes/eme-locations.php:2837
+#: includes/eme-locations.php:2836
 msgid "e.g. 123 Main St, City"
 msgstr "napr. Hlavná 123, Bratislava"
 
@@ -15316,7 +15316,7 @@ msgstr ""
 msgid "First select an event"
 msgstr ""
 
-#: includes/eme-locations.php:3269
+#: includes/eme-locations.php:3268
 msgid "Locations deleted"
 msgstr ""
 
@@ -15495,10 +15495,6 @@ msgstr ""
 msgid "The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored."
 msgstr ""
 
-#: includes/eme-import.php:203
-msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations — you can leave and come back, already-resolved locations are kept)."
-msgstr ""
-
 #: includes/eme-import.php:204
 msgid "Resolve missing coordinates"
 msgstr ""
@@ -15506,4 +15502,8 @@ msgstr ""
 #: includes/eme-members.php:3008
 #: includes/eme-people.php:2161
 msgid "Custom field filters"
+msgstr ""
+
+#: includes/eme-import.php:203
+msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr ""

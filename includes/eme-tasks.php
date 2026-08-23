@@ -71,7 +71,7 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
     return eme_handle_tasks_data( $event_id, eme_sanitize_request( $_POST['eme_tasks'] ), $day_difference );
 }
 
-// store tasks coming from an imported json string (the 'eme_tasks' csv column), same logic as the admin form
+// store tasks coming from an imported json string (the 'event_taskslist' csv column), same logic as the admin form
 function eme_store_imported_tasks( $event_id, $tasks_json ) {
     if ( ! is_string( $tasks_json ) || eme_is_empty_string( $tasks_json ) ) {
         return [];

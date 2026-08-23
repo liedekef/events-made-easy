@@ -6110,12 +6110,12 @@ function eme_import_csv_events() {
                         }
                     }
 
-                    // also import tasks and todos, stored as json in the 'eme_tasks'/'eme_todos' columns
-                    if ( isset( $line['eme_tasks'] ) ) {
-                        eme_store_imported_tasks( $event_id, $line['eme_tasks'] );
+                    // also import tasks and todos, stored as json in the 'event_taskslist'/'event_todoslist' columns
+                    if ( isset( $line['event_taskslist'] ) ) {
+                        eme_store_imported_tasks( $event_id, $line['event_taskslist'] );
                     }
-                    if ( isset( $line['eme_todos'] ) ) {
-                        eme_store_imported_todos( $event_id, $line['eme_todos'] );
+                    if ( isset( $line['event_todoslist'] ) ) {
+                        eme_store_imported_todos( $event_id, $line['event_todoslist'] );
                     }
                 }
             } else {
@@ -9354,7 +9354,7 @@ function eme_sanitize_event( $event ) {
     // make sure strings with only spaces are also empty strings
     $post_vars = [ 'event_name', 'event_page_title_format', 'event_single_event_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
     foreach ( $post_vars as $post_var ) {
-        if ( eme_is_empty_string( $event[ $post_var ] ) ) {
+        if ( !isset( $event[ $post_var ] ) || eme_is_empty_string( $event[ $post_var ] ) ) {
             $event[ $post_var ] = '';
         }
     }
@@ -9362,7 +9362,7 @@ function eme_sanitize_event( $event ) {
     // some properties need to be numeric
     $numeric_vars = [ 'vat_pct', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'rsvp_end_number_days', 'rsvp_end_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age' ];
     foreach ($numeric_vars as $numeric_var) {
-        if ( ! is_numeric( $event_properties[$numeric_var] ) ) {
+        if ( ! isset( $event_properties[ $numeric_var ] ) || ! is_numeric( $event_properties[ $numeric_var ] ) ) {
             $event_properties[$numeric_var] = 0;
         }
     }
@@ -9407,10 +9407,10 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
         $line['event_slug'] = eme_permalink_convert_noslash( $line['event_name'] );
     }
     $line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id' );
-    if ( eme_is_empty_datetime( $line['event_start'] ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
+    if ( ( ! isset( $line['event_start'] ) || eme_is_empty_datetime( $line['event_start'] ) ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
         $line['event_start'] = $line['event_start_date'] . ' ' . $line['event_start_time'];
     }
-    if ( eme_is_empty_datetime( $line['event_end'] ) && isset( $line['event_end_date'] ) && isset( $line['event_end_time'] ) ) {
+    if ( ( ! isset( $line['event_end'] ) || eme_is_empty_datetime( $line['event_end'] ) ) && isset( $line['event_end_date'] ) && isset( $line['event_end_time'] ) ) {
         $line['event_end'] = $line['event_end_date'] . ' ' . $line['event_end_time'];
     }
     if ( has_filter( 'eme_event_preinsert_filter' ) ) {
@@ -9467,10 +9467,10 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
     } else {
         $line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
     }
-    if ( eme_is_empty_datetime( $line['event_start'] ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
+    if ( ( ! isset( $line['event_start'] ) || eme_is_empty_datetime( $line['event_start'] ) ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
         $line['event_start'] = $line['event_start_date'] . ' ' . $line['event_start_time'];
     }
-    if ( eme_is_empty_datetime( $line['event_end'] ) && isset( $line['event_end_date'] ) && isset( $line['event_end_time'] ) ) {
+    if ( ( ! isset( $line['event_end'] ) || eme_is_empty_datetime( $line['event_end'] ) ) && isset( $line['event_end_date'] ) && isset( $line['event_end_time'] ) ) {
         $line['event_end'] = $line['event_end_date'] . ' ' . $line['event_end_time'];
     }
 
@@ -9501,7 +9501,7 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
         eme_manage_waitinglist($updated_event);
         // only take posted tasks/todos into account, so updates not coming from
         // the event form (like csv import or migrations) don't wipe existing tasks/todos.
-        // csv imports handle them via the 'eme_tasks'/'eme_todos' columns instead.
+        // csv imports handle them via the 'event_taskslist'/'event_todoslist' columns instead.
         if ( isset( $_POST['eme_tasks'] ) ) {
             $task_ids = eme_handle_tasks_post_adminform( $event_id, $day_difference );
             if ( ! empty( $task_ids ) ) {

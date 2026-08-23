@@ -46,7 +46,7 @@ function eme_new_group() {
     return $group;
 }
 
-function eme_init_person_props( $props ) {
+function eme_init_person_props( $props = [] ) {
     if ( ! isset( $props['wp_delete_user'] ) ) {
         $props['wp_delete_user'] = 0;
     }

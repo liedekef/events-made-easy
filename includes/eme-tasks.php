@@ -18,14 +18,18 @@ function eme_new_task() {
     return $task;
 }
 
-function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
+function eme_handle_tasks_data( $event_id, $post_tasks, $day_difference = 0 ) {
     $eme_tasks_arr = [];
-    if ( empty( $_POST['eme_tasks'] ) ) {
+    if ( empty( $post_tasks ) || ! is_array( $post_tasks ) ) {
+        return $eme_tasks_arr;
+    }
+    // only keep the array entries
+    $post_tasks = array_filter( $post_tasks, 'is_array' );
+    if ( empty( $post_tasks ) ) {
         return $eme_tasks_arr;
     }
     $seq_nbr       = 1;
     $task_nbr_seen = 0;
-    $post_tasks    = eme_sanitize_request( $_POST['eme_tasks'] ); // sanitize immediately the whole array
     foreach ( $post_tasks as $eme_task ) {
         if ( ! empty( $eme_task['task_nbr'] ) && intval( $eme_task['task_nbr'] ) > $task_nbr_seen ) {
             $task_nbr_seen = intval( $eme_task['task_nbr'] );
@@ -35,7 +39,7 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
     foreach ( $post_tasks as $eme_task ) {
         $eme_task['task_seq']   = $seq_nbr;
         $eme_task['event_id']   = $event_id;
-        if ( eme_is_empty_string( $eme_task['name'] ) || eme_is_empty_datetime( $eme_task['task_start'] ) || eme_is_empty_datetime( $eme_task['task_end'] ) ) {
+        if ( eme_is_empty_string( $eme_task['name'] ?? '' ) || eme_is_empty_datetime( $eme_task['task_start'] ?? '' ) || eme_is_empty_datetime( $eme_task['task_end'] ?? '' ) ) {
             continue;
         }
         if ( $day_difference != 0 ) {
@@ -58,6 +62,33 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
         ++$seq_nbr;
     }
     return $eme_tasks_arr;
+}
+
+function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
+    if ( empty( $_POST['eme_tasks'] ) ) {
+        return [];
+    }
+    return eme_handle_tasks_data( $event_id, eme_sanitize_request( $_POST['eme_tasks'] ), $day_difference );
+}
+
+// store tasks coming from an imported json string (the 'eme_tasks' csv column), same logic as the admin form
+function eme_store_imported_tasks( $event_id, $tasks_json ) {
+    if ( ! is_string( $tasks_json ) || eme_is_empty_string( $tasks_json ) ) {
+        return [];
+    }
+    $tasks_arr = eme_json_decode_safe( $tasks_json );
+    // only act on valid json arrays, so we don't touch anything on invalid input
+    if ( ! is_array( $tasks_arr ) ) {
+        return [];
+    }
+    $task_ids = eme_handle_tasks_data( $event_id, eme_sanitize_request( $tasks_arr ) );
+    // sync: remove tasks that are no longer present in the imported data
+    if ( ! empty( $task_ids ) ) {
+        eme_delete_event_old_tasks( $event_id, $task_ids );
+    } else {
+        eme_delete_event_tasks( $event_id );
+    }
+    return $task_ids;
 }
 
 function eme_db_insert_task( $line ) {

@@ -760,7 +760,7 @@ function eme_export_csv_people() {
     }
     $answer_keys = array_keys( $answer_keys );
 
-    $base_columns = [ 'lastname', 'firstname', 'email', 'phone', 'address1', 'address2', 'city', 'zip', 'state', 'country', 'groups' ];
+    $base_columns = [ 'lastname', 'firstname', 'email', 'phone', 'address1', 'address2', 'city', 'zip', 'state', 'country', 'status', 'birthdate', 'bd_email', 'birthplace', 'state_code', 'country_code', 'lang', 'massmail', 'newsletter', 'gdpr', 'groups' ];
     $headers      = $base_columns;
     foreach ( $prop_keys as $key ) {
         $headers[] = 'prop_' . $key;
@@ -782,8 +782,19 @@ function eme_export_csv_people() {
             $person['zip'],
             $person['state'],
             $person['country'],
+            $person['status'],
+            $person['birthdate'],
+            $person['bd_email'],
+            $person['birthplace'],
+            $person['state_code'],
+            $person['country_code'],
+            $person['lang'],
+            $person['massmail'],
+            $person['newsletter'],
+            $person['gdpr'],
             implode( '||', eme_get_persongroup_names( $person['person_id'] ) ),
         ];
+
         foreach ( $prop_keys as $key ) {
             $props      = eme_json_decode_safe( $person['properties'] );
             $prop_value = is_array( $props ) ? ( $props[ $key ] ?? '' ) : '';
@@ -827,7 +838,7 @@ function eme_export_csv_locations() {
     }
     $answer_keys = array_keys( $answer_keys );
 
-    $base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref', 'category_names' ];
+    $base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref', 'location_prefix', 'location_slug', 'location_image_url', 'category_names' ];
     $headers      = $base_columns;
     foreach ( $att_keys as $key ) {
         $headers[] = 'att_' . $key;
@@ -855,6 +866,9 @@ function eme_export_csv_locations() {
             $location['location_description'],
             $location['location_url'],
             $location['location_external_ref'],
+            $location['location_prefix'],
+            $location['location_slug'],
+            $location['location_image_url'],
             implode( '||', eme_get_location_category_names( $location['location_id'] ) ),
         ];
         foreach ( $att_keys as $key ) {

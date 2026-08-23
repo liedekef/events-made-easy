@@ -616,7 +616,14 @@ function eme_export_csv_events() {
 
     $events = eme_get_events( 0, 'all', 'ASC', 0, '', '', '', '', 1, '', 0, [], 0, 0 );
 
-    $base_columns = [ 'event_name', 'event_status', 'event_start', 'event_end', 'event_notes', 'event_rsvp', 'price', 'currency', 'event_seats', 'event_external_ref', 'registration_requires_approval', 'registration_wp_users_only', 'event_page_title_format', 'event_single_event_format', 'event_contactperson_email_body', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_paid_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_recorded_ok_html', 'event_prefix', 'event_slug', 'event_image_url', 'event_url', 'event_taskslist', 'event_todoslist', 'category_names', 'location_name', 'location_address1', 'location_city', 'location_latitude', 'location_longitude', 'location_external_ref' ];
+    // base columns derive from the event schema itself (eme_new_event), minus ids
+    // and the fields handled via att_/prop_/category_names, so exports always match
+    // what the import accepts and new event fields get picked up automatically
+    $skip_columns = [ 'event_id', 'recurrence_id', 'location_id', 'event_author', 'event_contactperson_id', 'event_image_id', 'event_category_ids', 'event_attributes', 'event_properties' ];
+    $base_columns = array_values( array_diff( array_keys( eme_new_event() ), $skip_columns ) );
+
+    $location_columns = [ 'location_name', 'location_address1', 'location_city', 'location_latitude', 'location_longitude', 'location_external_ref' ];
+    $computed_columns = array_merge( [ 'event_taskslist', 'event_todoslist', 'category_names' ], $location_columns );
 
     $att_keys    = [];
     $prop_keys   = array_keys( eme_init_event_props() );
@@ -634,7 +641,7 @@ function eme_export_csv_events() {
     }
     $answer_keys = array_keys( $answer_keys );
 
-    $headers = $base_columns;
+    $headers = array_merge( $base_columns, $computed_columns );
     foreach ( $att_keys as $key ) {
         $headers[] = 'att_' . $key;
     }
@@ -675,45 +682,18 @@ function eme_export_csv_events() {
             ];
         }
 
-        $row      = [
-            $event['event_name'],
-            $event['event_status'],
-            $event['event_start'],
-            $event['event_end'],
-            $event['event_notes'],
-            $event['event_rsvp'],
-            $event['price'],
-            $event['currency'],
-            $event['event_seats'],
-            $event['event_external_ref'],
-            $event['registration_requires_approval'],
-            $event['registration_wp_users_only'],
-            $event['event_page_title_format'],
-            $event['event_single_event_format'],
-            $event['event_contactperson_email_body'],
-            $event['event_respondent_email_body'],
-            $event['event_registration_pending_email_body'],
-            $event['event_registration_updated_email_body'],
-            $event['event_registration_cancelled_email_body'],
-            $event['event_registration_trashed_email_body'],
-            $event['event_registration_paid_email_body'],
-            $event['event_registration_form_format'],
-            $event['event_cancel_form_format'],
-            $event['event_registration_recorded_ok_html'],
-            $event['event_prefix'],
-            $event['event_slug'],
-            $event['event_image_url'],
-            $event['event_url'],
-            $tasks_arr ? wp_json_encode( $tasks_arr ) : '',
-            $todos_arr ? wp_json_encode( $todos_arr ) : '',
-            implode( '||', eme_get_event_category_names( $event['event_id'] ) ),
-            $location['location_name'] ?? '',
-            $location['location_address1'] ?? '',
-            $location['location_city'] ?? '',
-            $location['location_latitude'] ?? '',
-            $location['location_longitude'] ?? '',
-            $location['location_external_ref'] ?? '',
-        ];
+        $row = [];
+        foreach ( $base_columns as $col ) {
+            $val   = $event[ $col ] ?? '';
+            $row[] = is_array( $val ) ? wp_json_encode( $val ) : $val;
+        }
+        // same order as $computed_columns above
+        $row[] = $tasks_arr ? wp_json_encode( $tasks_arr ) : '';
+        $row[] = $todos_arr ? wp_json_encode( $todos_arr ) : '';
+        $row[] = implode( '||', eme_get_event_category_names( $event['event_id'] ) );
+        foreach ( $location_columns as $loc_col ) {
+            $row[] = $location[ $loc_col ] ?? '';
+        }
 
         foreach ( $att_keys as $key ) {
             $att_value = $event['event_attributes'][ $key ] ?? '';
@@ -760,8 +740,15 @@ function eme_export_csv_people() {
     }
     $answer_keys = array_keys( $answer_keys );
 
-    $base_columns = [ 'lastname', 'firstname', 'email', 'phone', 'address1', 'address2', 'city', 'zip', 'state', 'country', 'status', 'birthdate', 'bd_email', 'birthplace', 'state_code', 'country_code', 'lang', 'massmail', 'newsletter', 'gdpr', 'groups' ];
-    $headers      = $base_columns;
+    // base columns derive from the person schema itself (eme_new_person), minus ids
+    // and properties (exported via prop_), so exports always match what the import
+    // accepts and new person fields get picked up automatically. extra raw db
+    // columns like person_id/creation_date/modif_date/last_seen are not in
+    // eme_new_person and thus excluded automatically
+    $skip_columns = [ 'related_person_id', 'wp_id', 'properties' ];
+    $base_columns = array_values( array_diff( array_keys( eme_new_person() ), $skip_columns ) );
+
+    $headers = array_merge( $base_columns, [ 'groups' ] );
     foreach ( $prop_keys as $key ) {
         $headers[] = 'prop_' . $key;
     }
@@ -771,29 +758,12 @@ function eme_export_csv_people() {
     eme_fputcsv( $out, $headers, $delimiter );
 
     foreach ( $people as $person ) {
-        $row = [
-            $person['lastname'],
-            $person['firstname'],
-            $person['email'],
-            $person['phone'],
-            $person['address1'],
-            $person['address2'],
-            $person['city'],
-            $person['zip'],
-            $person['state'],
-            $person['country'],
-            $person['status'],
-            $person['birthdate'],
-            $person['bd_email'],
-            $person['birthplace'],
-            $person['state_code'],
-            $person['country_code'],
-            $person['lang'],
-            $person['massmail'],
-            $person['newsletter'],
-            $person['gdpr'],
-            implode( '||', eme_get_persongroup_names( $person['person_id'] ) ),
-        ];
+        $row = [];
+        foreach ( $base_columns as $col ) {
+            $val   = $person[ $col ] ?? '';
+            $row[] = is_array( $val ) ? wp_json_encode( $val ) : $val;
+        }
+        $row[] = implode( '||', eme_get_persongroup_names( $person['person_id'] ) );
 
         foreach ( $prop_keys as $key ) {
             $props      = eme_json_decode_safe( $person['properties'] );
@@ -838,8 +808,13 @@ function eme_export_csv_locations() {
     }
     $answer_keys = array_keys( $answer_keys );
 
-    $base_columns = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_description', 'location_url', 'location_external_ref', 'location_prefix', 'location_slug', 'location_image_url', 'category_names' ];
-    $headers      = $base_columns;
+    // base columns derive from the location schema itself (eme_new_location), minus
+    // ids and the fields handled via att_/prop_/category_names, so exports always
+    // match what the import accepts and new location fields get picked up automatically
+    $skip_columns = [ 'location_id', 'location_author', 'location_image_id', 'location_category_ids', 'location_attributes', 'location_properties' ];
+    $base_columns = array_values( array_diff( array_keys( eme_new_location() ), $skip_columns ) );
+
+    $headers = array_merge( $base_columns, [ 'category_names' ] );
     foreach ( $att_keys as $key ) {
         $headers[] = 'att_' . $key;
     }
@@ -853,24 +828,12 @@ function eme_export_csv_locations() {
     eme_fputcsv( $out, $headers, $delimiter );
 
     foreach ( $locations as $location ) {
-        $row = [
-            $location['location_name'],
-            $location['location_address1'],
-            $location['location_address2'],
-            $location['location_city'],
-            $location['location_state'],
-            $location['location_zip'],
-            $location['location_country'],
-            $location['location_latitude'],
-            $location['location_longitude'],
-            $location['location_description'],
-            $location['location_url'],
-            $location['location_external_ref'],
-            $location['location_prefix'],
-            $location['location_slug'],
-            $location['location_image_url'],
-            implode( '||', eme_get_location_category_names( $location['location_id'] ) ),
-        ];
+        $row = [];
+        foreach ( $base_columns as $col ) {
+            $val   = $location[ $col ] ?? '';
+            $row[] = is_array( $val ) ? wp_json_encode( $val ) : $val;
+        }
+        $row[] = implode( '||', eme_get_location_category_names( $location['location_id'] ) );
         foreach ( $att_keys as $key ) {
             $att_value = $location['location_attributes'][ $key ] ?? '';
             $row[]     = is_array( $att_value ) ? wp_json_encode( $att_value ) : $att_value;

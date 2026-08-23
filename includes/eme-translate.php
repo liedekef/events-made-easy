@@ -61,7 +61,7 @@ function eme_lang_url_mode() {
         if ( empty( $url_mode ) ) {
             $url_mode = 2;
         }
-    } elseif ( isset( $_REQUEST['lang'] ) ) {
+    } elseif ( isset( $_GET['lang'] ) ) {
         $url_mode = 1;
 	}
 	if ( empty( $url_mode ) ) {

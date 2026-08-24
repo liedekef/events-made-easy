@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 438 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 439 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -54,6 +54,16 @@ function eme_install( $networkwide ) {
 
 // the private function; for activation
 function _eme_install() {
+	global $wpdb;
+
+	// avoid concurrent upgrades from parallel requests (cron, other tabs, ...) interfering with each other
+	$lock_name = 'eme_db_upgrade_' . $wpdb->prefix;
+	$got_lock  = $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, 30)', $lock_name ) );
+	if ( $got_lock != 1 ) {
+		// another request is already performing the upgrade, let it finish
+		return;
+	}
+
 	eme_add_options();
 	$db_version = intval( get_option( 'eme_version' ) );
 	if ( $db_version > EME_DB_VERSION ) {
@@ -172,6 +182,8 @@ function _eme_install() {
 
 	// now set the version correct
 	update_option( 'eme_version', EME_DB_VERSION );
+
+	$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $lock_name ) );
 }
 
 function eme_uninstall( $networkwide ) {
@@ -299,10 +311,10 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		// Creating the events table
-		$sql = 'CREATE TABLE ' . $table_name . " (
-			event_id mediumint(9) NOT NULL AUTO_INCREMENT,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+			event_id int unsigned NOT NULL AUTO_INCREMENT,
 			event_status mediumint(9) DEFAULT 1,
-			event_author mediumint(9) DEFAULT 0,
+			event_author bigint(20) unsigned DEFAULT 0,
 			event_name text NOT NULL,
 			event_prefix text,
 			event_slug text,
@@ -318,9 +330,9 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			price text,
 			currency text,
 			event_seats text,
-			event_contactperson_id mediumint(9) DEFAULT 0,
-			location_id mediumint(9) DEFAULT 0,
-			recurrence_id mediumint(9) DEFAULT 0,
+			event_contactperson_id bigint(20) unsigned DEFAULT 0,
+			location_id int unsigned DEFAULT 0,
+			recurrence_id int unsigned DEFAULT 0,
 			event_category_ids text,
 			event_attributes text, 
 			event_properties text, 
@@ -339,7 +351,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			registration_requires_approval bool DEFAULT 0,
 			registration_wp_users_only bool DEFAULT 0,
 			event_image_url text,
-			event_image_id mediumint(9) DEFAULT 0,
+			event_image_id bigint(20) unsigned DEFAULT 0,
 			event_external_ref text, 
 			UNIQUE KEY (event_id),
 			KEY (event_start),
@@ -404,9 +416,9 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'price', "ALTER TABLE $table_name ADD price text;" );
 		maybe_add_column( $table_name, 'currency', "ALTER TABLE $table_name ADD currency text;" );
 		maybe_add_column( $table_name, 'event_seats', "ALTER TABLE $table_name ADD event_seats text;" );
-		maybe_add_column( $table_name, 'location_id', "ALTER TABLE $table_name ADD location_id mediumint(9) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'recurrence_id', "ALTER TABLE $table_name ADD recurrence_id mediumint(9) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_contactperson_id', "ALTER TABLE $table_name ADD event_contactperson_id mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'location_id', "ALTER TABLE $table_name ADD location_id int unsigned DEFAULT 0;" );
+		maybe_add_column( $table_name, 'recurrence_id', "ALTER TABLE $table_name ADD recurrence_id int unsigned DEFAULT 0;" );
+		maybe_add_column( $table_name, 'event_contactperson_id', "ALTER TABLE $table_name ADD event_contactperson_id bigint(20) unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'event_attributes', "ALTER TABLE $table_name ADD event_attributes text;" );
 		maybe_add_column( $table_name, 'event_properties', "ALTER TABLE $table_name ADD event_properties text;" );
 		maybe_add_column( $table_name, 'event_url', "ALTER TABLE $table_name ADD event_url text;" );
@@ -425,7 +437,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'registration_requires_approval', "ALTER TABLE $table_name ADD registration_requires_approval bool DEFAULT 0;" );
 		$registration_wp_users_only = get_option( 'eme_rsvp_registered_users_only' );
 		maybe_add_column( $table_name, 'registration_wp_users_only', "ALTER TABLE $table_name ADD registration_wp_users_only bool DEFAULT $registration_wp_users_only;" );
-		maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author bigint(20) unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
 		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime" );
 		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
@@ -433,7 +445,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'event_registration_form_format', "ALTER TABLE $table_name ADD event_registration_form_format text;" );
 		maybe_add_column( $table_name, 'event_cancel_form_format', "ALTER TABLE $table_name ADD event_cancel_form_format text;" );
 		maybe_add_column( $table_name, 'event_image_url', "ALTER TABLE $table_name ADD event_image_url text;" );
-		maybe_add_column( $table_name, 'event_image_id', "ALTER TABLE $table_name ADD event_image_id mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'event_image_id', "ALTER TABLE $table_name ADD event_image_id bigint(20) unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'event_external_ref', "ALTER TABLE $table_name ADD event_external_ref text;" );
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_name text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -457,7 +469,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 				$wpdb->query( "ALTER TABLE $table_name CHANGE event_creator_id event_author mediumint(9) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			}
 			// in case event_creator_id didn't exist ...
-			maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author mediumint(9) DEFAULT 0;" );
+			maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author bigint(20) unsigned DEFAULT 0;" );
 		}
 		if ( $db_version < 29 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY price text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -514,6 +526,9 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		if ( $db_version < 438 ) {
 			eme_migrate_event_reminder_days_options();
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY location_id int unsigned DEFAULT 0, MODIFY recurrence_id int unsigned DEFAULT 0, MODIFY event_author bigint(20) unsigned DEFAULT 0, MODIFY event_contactperson_id bigint(20) unsigned DEFAULT 0, MODIFY event_image_id bigint(20) unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -522,8 +537,8 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 	$table_name = $db_prefix . EME_RECURRENCE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-			recurrence_id mediumint(9) NOT NULL AUTO_INCREMENT,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+			recurrence_id int unsigned NOT NULL AUTO_INCREMENT,
 			recurrence_start_date date NOT NULL,
 			recurrence_end_date date DEFAULT NULL,
 			recurrence_interval tinyint NOT NULL, 
@@ -533,7 +548,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 			event_duration mediumint(9) DEFAULT 0,
 			specific_days text,
 			specific_months varchar(256),
-			holidays_id mediumint(9) DEFAULT 0,
+			holidays_id int unsigned DEFAULT 0,
 			exclude_days text,
 			UNIQUE KEY (recurrence_id)
 	 	) $charset $collate;";
@@ -545,7 +560,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		maybe_add_column( $table_name, 'specific_months', "ALTER TABLE $table_name ADD specific_months varchar(256);" );
 		maybe_add_column( $table_name, 'exclude_days', "ALTER TABLE $table_name ADD exclude_days text;" );
-		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id int unsigned DEFAULT 0;" );
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -577,6 +592,9 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		if ( $db_version < 417 ) {
             eme_paypal_webhook();
         }
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY holidays_id int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -585,8 +603,8 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
 	$table_name = $db_prefix . EME_LOCATIONS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-        $sql = 'CREATE TABLE ' . $table_name . " (
-            location_id mediumint(9) NOT NULL AUTO_INCREMENT,
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+            location_id int unsigned NOT NULL AUTO_INCREMENT,
             location_name text NOT NULL,
             location_prefix text,
             location_slug text,
@@ -600,10 +618,10 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
             location_latitude tinytext,
             location_longitude tinytext,
             location_description text,
-            location_author mediumint(9) DEFAULT 0,
+            location_author bigint(20) unsigned DEFAULT 0,
             location_category_ids text,
             location_image_url text,
-            location_image_id mediumint(9) DEFAULT 0,
+            location_image_id bigint(20) unsigned DEFAULT 0,
             location_attributes text, 
             location_properties text, 
             location_external_ref text, 
@@ -638,7 +656,7 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
              $wpdb->insert( $table_name, $location );
          }
 	} else {
-		maybe_add_column( $table_name, 'location_author', "ALTER TABLE $table_name ADD location_author mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'location_author', "ALTER TABLE $table_name ADD location_author bigint(20) unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'location_category_ids', "ALTER TABLE $table_name ADD location_category_ids text;" );
 		eme_maybe_drop_column( $table_name, 'location_creation_date_gmt' );
 		eme_maybe_drop_column( $table_name, 'location_creation_date' );
@@ -647,7 +665,7 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
 		maybe_add_column( $table_name, 'location_prefix', "ALTER TABLE $table_name ADD location_prefix text;" );
 		maybe_add_column( $table_name, 'location_slug', "ALTER TABLE $table_name ADD location_slug text;" );
 		maybe_add_column( $table_name, 'location_image_url', "ALTER TABLE $table_name ADD location_image_url text;" );
-		maybe_add_column( $table_name, 'location_image_id', "ALTER TABLE $table_name ADD location_image_id mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'location_image_id', "ALTER TABLE $table_name ADD location_image_id bigint(20) unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'location_attributes', "ALTER TABLE $table_name ADD location_attributes text;" );
 		maybe_add_column( $table_name, 'location_properties', "ALTER TABLE $table_name ADD location_properties text;" );
 		maybe_add_column( $table_name, 'location_external_ref', "ALTER TABLE $table_name ADD location_external_ref text;" );
@@ -670,6 +688,9 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
 			$wpdb->query( "ALTER TABLE $table_name CHANGE location_latitude location_latitude tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			$wpdb->query( "ALTER TABLE $table_name CHANGE location_longitude location_longitude tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY location_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY location_author bigint(20) unsigned DEFAULT 0, MODIFY location_image_id bigint(20) unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -680,11 +701,11 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 	// column discount: effective calculated discount value
 	// columns discountid , dgroupid: pointer to discount/discout group applied
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         booking_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         event_id mediumint(9) NOT NULL,
-         person_id mediumint(9) NOT NULL, 
-         payment_id mediumint(9) DEFAULT NULL, 
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         booking_id int unsigned NOT NULL AUTO_INCREMENT,
+         event_id int unsigned NOT NULL,
+         person_id int unsigned NOT NULL,
+         payment_id int unsigned DEFAULT NULL,
          status tinyint DEFAULT 1,
          booking_seats mediumint(9) NOT NULL,
          booking_seats_mp varchar(250),
@@ -706,7 +727,7 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          discountids tinytext,
          dcodes_entered tinytext,
          dcodes_used tinytext,
-         dgroupid INT(11) DEFAULT 0,
+         dgroupid int unsigned DEFAULT 0,
          attend_count INT(11) DEFAULT 0,
          delayed_mailids varchar(50),
          UNIQUE KEY  (booking_id),
@@ -735,7 +756,7 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
 		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
 		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
-		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid INT(11) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received tinytext;" );
 		maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining tinytext;" );
@@ -762,7 +783,7 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			$wpdb->query( "update $table_name a JOIN $people_table_name b on (a.person_id = b.person_id)  set a.wp_id=b.wp_id;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
 		if ( $db_version < 92 ) {
-			maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id mediumint(9) DEFAULT NULL;" );
+			maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id int unsigned DEFAULT NULL;" );
 			$payment_table_name = $db_prefix . EME_PAYMENTS_TBNAME;
 			$sql                = "SELECT id,booking_ids from $payment_table_name";
 
@@ -818,6 +839,9 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		if ( $db_version < 423 ) {
             eme_add_index_if_not_exists($table_name, 'event_id');
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY event_id int unsigned NOT NULL, MODIFY person_id int unsigned NOT NULL, MODIFY payment_id int unsigned DEFAULT NULL, MODIFY dgroupid int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -828,9 +852,9 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 	$usergrouptable_name = $db_prefix . EME_USERGROUPS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         person_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         related_person_id mediumint(9) DEFAULT 0,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         person_id int unsigned NOT NULL AUTO_INCREMENT,
+         related_person_id int unsigned DEFAULT 0,
          lastname tinytext, 
          firstname tinytext, 
          email tinytext NOT NULL,
@@ -887,7 +911,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
 		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
 		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id mediumint(9) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id int unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'bd_email', "ALTER TABLE $table_name ADD bd_email bool DEFAULT 0;" );
 		if ( $db_version < 10 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -913,12 +937,15 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
         if ( $db_version < 433 ) {
             $wpdb->query( $wpdb->prepare( "UPDATE $table_name SET last_seen = %s WHERE last_seen IS NULL", current_time( 'mysql', false ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
         }
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY person_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY related_person_id int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 
 	// now the groups table
 	if ( ! eme_table_exists( $grouptable_name ) ) {
-		$sql = 'CREATE TABLE ' . $grouptable_name . " (
-	 group_id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $grouptable_name . " (
+	 group_id int unsigned NOT NULL auto_increment,
          name varchar(50) DEFAULT NULL,
          email tinytext,
          description tinytext,
@@ -942,15 +969,20 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		} else {
 			maybe_add_column( $grouptable_name, 'public', "ALTER TABLE $grouptable_name ADD public bool DEFAULT 0;" );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $grouptable_name MODIFY group_id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 
 	// now the table defining group members
 	if ( ! eme_table_exists( $usergrouptable_name ) ) {
-		$sql = 'CREATE TABLE ' . $usergrouptable_name . " (
-			person_id int(11),
-			group_id int(11)
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $usergrouptable_name . " (
+			person_id int unsigned,
+			group_id int unsigned
 			) $charset $collate;";
 		maybe_create_table( $usergrouptable_name, $sql );
+	} elseif ( $db_version < 439 ) {
+		$wpdb->query( "ALTER TABLE $usergrouptable_name MODIFY person_id int unsigned, MODIFY group_id int unsigned;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
 }
 
@@ -959,8 +991,8 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 	$table_name = $db_prefix . EME_CATEGORIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-	 category_id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+	 category_id int unsigned NOT NULL auto_increment,
 	 category_name tinytext NOT NULL,
 	 description text,
 	 category_prefix text,
@@ -984,15 +1016,19 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 				$wpdb->update( $table_name, $fields, $where );
 			}
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY category_id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
 function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
 	$table_name = $db_prefix . EME_HOLIDAYS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          name tinytext NOT NULL,
          list text NOT NULL,
          UNIQUE KEY  (id)
@@ -1001,6 +1037,9 @@ function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix 
 	} else {
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1009,8 +1048,8 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 	$table_name = $db_prefix . EME_TEMPLATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          name tinytext,
          description tinytext,
          format text NOT NULL,
@@ -1042,6 +1081,9 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 			$modif_date = current_time( 'mysql', false );
             $wpdb->query( $wpdb->prepare("UPDATE $table_name SET modif_date = %s", $modif_date ) );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1050,8 +1092,8 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 	$table_name = $db_prefix . EME_FORMFIELDS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         field_id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         field_id int unsigned NOT NULL auto_increment,
          field_type tinytext NOT NULL,
          field_name tinytext NOT NULL,
          field_values text NOT NULL,
@@ -1119,6 +1161,9 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 		if ( $db_version < 215 ) {
 			eme_maybe_drop_column( $table_name, 'old_type' );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY field_id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1127,11 +1172,11 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 	$table_name = $db_prefix . EME_ANSWERS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         answer_id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         answer_id int unsigned NOT NULL auto_increment,
          type varchar(20) DEFAULT NULL,
-         related_id mediumint(9) DEFAULT 0,
-         field_id int(11) DEFAULT 0,
+         related_id int unsigned DEFAULT 0,
+         field_id int unsigned DEFAULT 0,
          answer text NOT NULL,
          eme_grouping int(11) DEFAULT 0,
          occurence int(11) DEFAULT 0,
@@ -1178,7 +1223,7 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			maybe_add_column( $table_name, 'eme_grouping', "ALTER TABLE $table_name ADD eme_grouping INT(11) DEFAULT 0;" );
 		}
 		if ( $db_version < 304 ) {
-			maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
+			maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id int unsigned DEFAULT 0;" );
 			maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type VARCHAR(20) DEFAULT NULL;" );
             eme_add_index_if_not_exists($table_name, 'related_id');
             eme_add_index_if_not_exists($table_name, 'type');
@@ -1211,6 +1256,9 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			eme_maybe_drop_column( $table_name, 'member_id' );
 			eme_maybe_drop_column( $table_name, 'booking_id' );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY answer_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY related_id int unsigned DEFAULT 0, MODIFY field_id int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1219,12 +1267,12 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 	$table_name = $db_prefix . EME_PAYMENTS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          creation_date datetime,
          random_id varchar(50),
          target varchar(50),
-         related_id mediumint(9) DEFAULT 0,
+         related_id int unsigned DEFAULT 0,
          pg_pid varchar(256),
          pg_handled BOOL DEFAULT 0,
          UNIQUE KEY  (id),
@@ -1269,6 +1317,9 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 			$wpdb->query( "UPDATE $table_name set target='member' where member_id>0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			eme_maybe_drop_column( $table_name, 'member_id' );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY related_id int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1280,8 +1331,8 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 	// column coupon: text to be entered by booker
 	// column value: the applied discount (converted in php to floating point)
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          name varchar(50) DEFAULT NULL,
          description tinytext,
          type tinyint UNSIGNED DEFAULT 0,
@@ -1313,18 +1364,22 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 				eme_maybe_drop_column( $table_name, 'expire' );
 			}
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
 function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
 	$table_name = $db_prefix . EME_DISCOUNTGROUPS_TBNAME;
 
 	// column maxdiscounts: max number of discounts in a group that can
 	// be used, 0 for no max (this to avoid hackers from adding discount fields
 	// to a form)
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          description tinytext,
          name varchar(50) DEFAULT NULL,
          maxdiscounts tinyint UNSIGNED DEFAULT 0,
@@ -1336,6 +1391,9 @@ function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_p
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		maybe_add_column( $table_name, 'description', "ALTER TABLE $table_name ADD description tinytext;" );
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1344,11 +1402,11 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 	$table_name = $db_prefix . EME_MQUEUE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
-         mailing_id int(11) DEFAULT 0,
-         person_id int(11) DEFAULT 0,
-         member_id int(11) DEFAULT 0,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
+         mailing_id int unsigned DEFAULT 0,
+         person_id int unsigned DEFAULT 0,
+         member_id int unsigned DEFAULT 0,
          status tinyint DEFAULT 0,
          creation_date datetime,
          created_by bigint(20) unsigned DEFAULT NULL,
@@ -1374,9 +1432,9 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'mailing_id', "ALTER TABLE $table_name ADD mailing_id int(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'person_id', "ALTER TABLE $table_name ADD person_id int(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'member_id', "ALTER TABLE $table_name ADD member_id int(11) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'mailing_id', "ALTER TABLE $table_name ADD mailing_id int unsigned DEFAULT 0;" );
+		maybe_add_column( $table_name, 'person_id', "ALTER TABLE $table_name ADD person_id int unsigned DEFAULT 0;" );
+		maybe_add_column( $table_name, 'member_id', "ALTER TABLE $table_name ADD member_id int unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
 		maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
 		maybe_add_column( $table_name, 'error_msg', "ALTER TABLE $table_name ADD error_msg tinytext;" );
@@ -1409,12 +1467,15 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		if ( $db_version < 296 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY mailing_id int unsigned DEFAULT 0, MODIFY person_id int unsigned DEFAULT 0, MODIFY member_id int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 
 	$table_name = $db_prefix . EME_MAILINGS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          name varchar(255) DEFAULT NULL,
          planned_on datetime DEFAULT '0000-00-00 00:00:00', 
          creation_date datetime,
@@ -1493,6 +1554,9 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		if ( $db_version < 316 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY name varchar(255) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 function eme_create_members_table( $charset, $collate, $db_version, $db_prefix ) {
@@ -1503,11 +1567,11 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 	// autostate indicates if the state needs to be calculated automatically
 	//    or if it is set manually
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         member_id int(11) NOT NULL auto_increment,
-         related_member_id int(11) DEFAULT 0,
-         membership_id int(11) DEFAULT 0,
-         person_id int(11) DEFAULT 0,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         member_id int unsigned NOT NULL auto_increment,
+         related_member_id int unsigned DEFAULT 0,
+         membership_id int unsigned DEFAULT 0,
+         person_id int unsigned DEFAULT 0,
          status tinyint DEFAULT 0,
          status_automatic BOOL DEFAULT 1,
          creation_date datetime,
@@ -1521,7 +1585,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          reminder_date datetime DEFAULT '0000-00-00 00:00:00',
          renewal_count INT(11) DEFAULT 0,
          unique_nbr varchar(20),
-         payment_id mediumint(9) DEFAULT NULL, 
+         payment_id int unsigned DEFAULT NULL,
          payment_date datetime DEFAULT '0000-00-00 00:00:00',
          paid bool DEFAULT 0,
          pg tinytext,
@@ -1531,7 +1595,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          discountids tinytext,
          dcodes_entered tinytext,
          dcodes_used tinytext,
-         dgroupid INT(11) DEFAULT 0,
+         dgroupid int unsigned DEFAULT 0,
          properties text,
          UNIQUE KEY  (member_id),
          KEY  (related_member_id),
@@ -1541,9 +1605,9 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		maybe_create_table( $table_name, $sql );
 	} else {
 		maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'related_member_id', "ALTER TABLE $table_name ADD related_member_id INT(11) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'related_member_id', "ALTER TABLE $table_name ADD related_member_id int unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'renewal_count', "ALTER TABLE $table_name ADD renewal_count INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id INT(9) DEFAULT NULL;" );
+		maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id int unsigned DEFAULT NULL;" );
 		maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
 		maybe_add_column( $table_name, 'reminder_date', "ALTER TABLE $table_name ADD reminder_date datetime DEFAULT '0000-00-00 00:00:00';" );
 		maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT '0000-00-00 00:00:00';" );
@@ -1557,7 +1621,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
 		eme_maybe_drop_column( $table_name, 'discountid' );
 		maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
-		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid INT(11) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
 		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
 		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
 		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
@@ -1585,6 +1649,9 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
             eme_add_index_if_not_exists($table_name, 'person_id');
             eme_add_index_if_not_exists($table_name, 'status');
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY member_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY related_member_id int unsigned DEFAULT 0, MODIFY membership_id int unsigned DEFAULT 0, MODIFY person_id int unsigned DEFAULT 0, MODIFY payment_id int unsigned DEFAULT NULL, MODIFY dgroupid int unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 
 	// properties: templ.id's for form, and subject/body for payment, confirm, reminder, stop templates
@@ -1595,8 +1662,8 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 	// start date: only used for type fixed
 	$table_name = $db_prefix . EME_MEMBERSHIPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         membership_id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         membership_id int unsigned NOT NULL auto_increment,
          name varchar(50) DEFAULT NULL,
          description tinytext,
          type varchar(50) DEFAULT NULL,
@@ -1620,6 +1687,9 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		if ( $db_version < 438 ) {
 			eme_migrate_membership_reminder_days_options();
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY membership_id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1628,8 +1698,8 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
 	$table_name = $db_prefix . EME_COUNTRIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          alpha_2 char(2) DEFAULT NULL,
          alpha_3 char(3) DEFAULT NULL,
          num_3 char(3) DEFAULT NULL,
@@ -1647,24 +1717,31 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
 		if ( $db_version < 319 ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE locale lang varchar(10) DEFAULT '';" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
 function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
 	$table_name = $db_prefix . EME_STATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          code tinytext,
          name varchar(100) DEFAULT NULL,
-         country_id int(11) DEFAULT NULL,
+         country_id int unsigned DEFAULT NULL,
          UNIQUE KEY  (id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY country_id int unsigned DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1676,9 +1753,9 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 	// when updating a task, we will use the combo event_id and task_nbr, so we can use that for
 	// recurrences too (using task_id for updating would update it for 1 event only)
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         task_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         event_id mediumint(9) NOT NULL,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         task_id int unsigned NOT NULL AUTO_INCREMENT,
+         event_id int unsigned NOT NULL,
          task_start datetime,
          task_end datetime,
          task_seq smallint DEFAULT 1,
@@ -1690,18 +1767,21 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          ) $charset $collate;";
          maybe_create_table( $table_name, $sql );
 	} else {
-        maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id mediumint(9) NOT NULL;" );
+        maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id int unsigned NOT NULL;" );
         maybe_add_column( $table_name, 'task_seq', "ALTER TABLE $table_name ADD task_seq smallint DEFAULT 1;" );
         maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY task_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY event_id int unsigned NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 
 	$table_name = $db_prefix . EME_TASK_SIGNUPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
-         task_id mediumint(9) NOT NULL,
-         person_id mediumint(9) NOT NULL,
-         event_id mediumint(9) NOT NULL,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
+         task_id int unsigned NOT NULL,
+         person_id int unsigned NOT NULL,
+         event_id int unsigned NOT NULL,
          signup_status BOOL DEFAULT 1,
          signup_date datetime,
          comment text,
@@ -1720,6 +1800,9 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 		if ( $db_version < 434 ) {
             eme_add_index_if_not_exists( $table_name, 'person_id' );
 		}
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY task_id int unsigned NOT NULL, MODIFY person_id int unsigned NOT NULL, MODIFY event_id int unsigned NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1731,9 +1814,9 @@ function eme_create_todos_tables( $charset, $collate, $db_version, $db_prefix ) 
 	// when updating a todo, we will use the combo event_id and todo_nbr, so we can use that for
 	// recurrences too (using todo_id for updating would update it for 1 event only)
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         todo_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         event_id mediumint(9) NOT NULL,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         todo_id int unsigned NOT NULL AUTO_INCREMENT,
+         event_id int unsigned NOT NULL,
          todo_offset int DEFAULT 0,
          todo_seq smallint DEFAULT 1,
          todo_nbr smallint DEFAULT 1,
@@ -1745,6 +1828,10 @@ function eme_create_todos_tables( $charset, $collate, $db_version, $db_prefix ) 
          KEY  (reminder_sent)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
+	} else {
+		if ( $db_version < 439 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY todo_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY event_id int unsigned NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		}
 	}
 }
 
@@ -1753,11 +1840,11 @@ function eme_create_attendances_table( $charset, $collate, $db_version, $db_pref
 	$table_name = $db_prefix . EME_ATTENDANCES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
-		$sql = 'CREATE TABLE ' . $table_name . " (
-         id int(11) NOT NULL auto_increment,
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         id int unsigned NOT NULL auto_increment,
          type varchar(20) DEFAULT NULL,
-         person_id int(11) DEFAULT NULL,
-         related_id int(11) DEFAULT NULL,
+         person_id int unsigned DEFAULT NULL,
+         related_id int unsigned DEFAULT NULL,
          creation_date datetime,
          UNIQUE KEY  (id)
          ) $charset $collate;";
@@ -1765,6 +1852,9 @@ function eme_create_attendances_table( $charset, $collate, $db_version, $db_pref
 	}
 	if ( $db_version < 296 ) {
 		$wpdb->query( "ALTER TABLE $table_name MODIFY creation_date datetime ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	}
+	if ( $db_version < 439 ) {
+		$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY person_id int unsigned DEFAULT NULL, MODIFY related_id int unsigned DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	}
 }
 

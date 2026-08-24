@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.12  (2026/08/) =
 * Allow 0 as reminder day too
+* Change DB structure to be more aligned internally (int unsigned for primary keys) and with WP (bigint for user/image ids)
 
 = 3.2.11  (2026/08/24) =
 * Bugfix for recursing empty-string check

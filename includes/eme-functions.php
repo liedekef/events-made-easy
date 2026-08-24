@@ -4054,7 +4054,12 @@ function eme_is_empty_string( $text ) {
     if ( empty( $text ) ) { // catches empty, 0, null
         return true;
     } elseif ( is_array( $text ) ) {
-        $text = array_map( 'trim', $text );
+        foreach ( $text as $item ) {
+            if ( ! eme_is_empty_string( $item ) ) {
+                return false;
+            }
+        }
+        return true;
     } else {
         $text = trim( $text );
     }

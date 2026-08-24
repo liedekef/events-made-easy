@@ -99,6 +99,15 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.10  (2026/08/) =
+* All fields go in export for events/people/locations
+* Export of events can directly be used for import now
+
+= 3.2.9  (2026/08/23) =
+* Internal code changes
+* Better export
+* event urls had a language added in admin list interface
+
 = 3.2.8  (2026/08/22) =
 * Fix for people using dynamic groups with custom field filtering
 

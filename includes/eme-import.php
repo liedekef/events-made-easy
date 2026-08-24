@@ -196,10 +196,10 @@ function eme_import_page() {
         </form>
         <p><?php esc_html_e( 'Import locations from a CSV file. Required columns: location_name, location_address1, location_city. If providing categories, use the column category_names (pipe-separated, e.g. "Music||Concerts").', 'events-made-easy' ); ?></p>
         <p><i><?php esc_html_e( 'The columns location_latitude and location_longitude are optional, but if present they need to be valid numeric values (e.g. 50.8503 or 4.3517), otherwise they are ignored.', 'events-made-easy' ); ?></i></p>
-<?php
-    $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-    $pending_coords   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM $locations_table WHERE location_latitude IS NULL OR location_longitude IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-?>
+        <?php
+        $locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+        $pending_coords   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM $locations_table WHERE location_latitude IS NULL OR location_longitude IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        ?>
         <p><?php esc_html_e( 'Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again.', 'events-made-easy' ); ?></p>
         <button type="button" id="resolve-coords-button" class="button-secondary"><?php esc_html_e( 'Resolve missing coordinates', 'events-made-easy' ); ?> (<span id="resolve-coords-pending"><?php echo esc_html( $pending_coords ); ?></span>)</button>
         <span id="resolve-coords-progress"></span>

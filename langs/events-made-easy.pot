@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.2.9\n"
+"Project-Id-Version: Events Made Easy 3.2.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-24T14:17:31+00:00\n"
+"POT-Creation-Date: 2026-08-24T14:59:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -6690,35 +6690,35 @@ msgstr ""
 msgid "No such record"
 msgstr ""
 
-#: includes/eme-functions.php:4280
+#: includes/eme-functions.php:4285
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: includes/eme-functions.php:4282
+#: includes/eme-functions.php:4287
 msgid "hCaptcha"
 msgstr ""
 
-#: includes/eme-functions.php:4284
+#: includes/eme-functions.php:4289
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: includes/eme-functions.php:4286
+#: includes/eme-functions.php:4291
 msgid "Friendly Captcha"
 msgstr ""
 
-#: includes/eme-functions.php:4288
+#: includes/eme-functions.php:4293
 msgid "Basic EME Captcha"
 msgstr ""
 
-#: includes/eme-functions.php:4343
+#: includes/eme-functions.php:4348
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr ""
 
-#: includes/eme-functions.php:4347
+#: includes/eme-functions.php:4352
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
-#: includes/eme-functions.php:4349
+#: includes/eme-functions.php:4354
 msgid "All selected columns are used for sorting"
 msgstr ""
 

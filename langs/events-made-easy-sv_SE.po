@@ -258,7 +258,7 @@ msgstr "Filtrera efter slutdatum"
 msgid "Filter attendances"
 msgstr "Filtrera närvaro"
 
-#: includes/eme-functions.php:4343
+#: includes/eme-functions.php:4348
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 
@@ -7038,15 +7038,15 @@ msgstr "Förnyelse för aktiva medlemmar baserat på slutdatum"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Tillåt aktiva medlemmar att betala för en förnyelse bara om medlemskapets slutdatum är mindre än det angivna antalet dagar bort. Detta förhindrar att personer betalar flera gånger i rad. Ange 0 eller inget för att inaktivera detta (standardvärdet)."
 
-#: includes/eme-functions.php:4280
+#: includes/eme-functions.php:4285
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: includes/eme-functions.php:4282
+#: includes/eme-functions.php:4287
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4284
+#: includes/eme-functions.php:4289
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13460,7 +13460,7 @@ msgstr "Välj en CAPTCHA att använda"
 msgid "Frontend Draft (unpaid)"
 msgstr "Framsida-utkast (obetalt)"
 
-#: includes/eme-functions.php:4288
+#: includes/eme-functions.php:4293
 msgid "Basic EME Captcha"
 msgstr "Grundläggande EME CAPTCHA"
 
@@ -13948,7 +13948,7 @@ msgstr "Ta också bort definierade kategorier, mallar, helger, rabatter, stater,
 msgid "Please check the Friendly Captcha box"
 msgstr "Vänligen markera Friendly Captcha-rutan"
 
-#: includes/eme-functions.php:4286
+#: includes/eme-functions.php:4291
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -14012,7 +14012,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/eme-functions.php:4347
+#: includes/eme-functions.php:4352
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Använd Ctrl-klick för att sortera på flera kolumner"
 
@@ -14091,7 +14091,7 @@ msgstr "Återbetalning är möjlig."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Återbetalning är möjlig om medel finns tillgängliga på kontot."
 
-#: includes/eme-functions.php:4349
+#: includes/eme-functions.php:4354
 msgid "All selected columns are used for sorting"
 msgstr "Alla valda kolumner används för sortering"
 

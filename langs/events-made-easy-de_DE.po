@@ -258,7 +258,7 @@ msgstr "Filtern nach End-Datum"
 msgid "Filter attendances"
 msgstr "Anwesenheiten filtern"
 
-#: includes/eme-functions.php:4343
+#: includes/eme-functions.php:4348
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hinweis: Rechtsklick auf die Spaltenüberschriften um Spalten ein/auszublenden"
 
@@ -7019,15 +7019,15 @@ msgstr "Erneuerung für aktive Mitglieder basierend auf dem Enddatum"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Erlaube aktiven Mitgliedern, nur dann für eine Erneuerung zu zahlen, wenn das Enddatum der Mitgliedschaft weniger als die angegebene Anzahl von Tagen entfernt ist. Dadurch wird verhindert, dass Personen mehrmals hintereinander zahlen. Gebe eine 0 oder nichts ein, um dies zu deaktivieren (Standardeinstellung)."
 
-#: includes/eme-functions.php:4280
+#: includes/eme-functions.php:4285
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: includes/eme-functions.php:4282
+#: includes/eme-functions.php:4287
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4284
+#: includes/eme-functions.php:4289
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13419,7 +13419,7 @@ msgstr "Captcha auswählen"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend-Entwurf (unbezahlt)"
 
-#: includes/eme-functions.php:4288
+#: includes/eme-functions.php:4293
 msgid "Basic EME Captcha"
 msgstr "Grundlegendes EME Captcha"
 
@@ -13907,7 +13907,7 @@ msgstr "Auch definierte Kategorien, Vorlagen, Feiertage, Rabatte, Bundesländer,
 msgid "Please check the Friendly Captcha box"
 msgstr "Bitte das Friendly Captcha-Feld aktivieren"
 
-#: includes/eme-functions.php:4286
+#: includes/eme-functions.php:4291
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -13975,11 +13975,11 @@ msgstr[1] "%d Personen haben sich bereits für diese Aufgabe angemeldet"
 msgid "Trashed"
 msgstr "Gelöscht"
 
-#: includes/eme-functions.php:4347
+#: includes/eme-functions.php:4352
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Verwenden Sie Strg-Klick, um nach mehreren Spalten zu sortieren"
 
-#: includes/eme-functions.php:4349
+#: includes/eme-functions.php:4354
 msgid "All selected columns are used for sorting"
 msgstr "Alle ausgewählten Spalten werden zum Sortieren verwendet"
 

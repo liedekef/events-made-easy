@@ -1936,23 +1936,23 @@ msgstr "Gérer la liste des jours fériés"
 msgid "Add a new list of holidays"
 msgstr "Ajouter une nouvelle liste de vacances"
 
-#: includes/eme-functions.php:4349
+#: includes/eme-functions.php:4354
 msgid "All selected columns are used for sorting"
 msgstr "Toutes les colonnes sélectionnées sont utilisées pour le tri"
 
-#: includes/eme-functions.php:4347
+#: includes/eme-functions.php:4352
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Utilisez Ctrl-clic pour trier sur plusieurs colonnes"
 
-#: includes/eme-functions.php:4288
+#: includes/eme-functions.php:4293
 msgid "Basic EME Captcha"
 msgstr "Captcha de base de l'EME"
 
-#: includes/eme-functions.php:4286
+#: includes/eme-functions.php:4291
 msgid "Friendly Captcha"
 msgstr "Captcha convivial"
 
-#: includes/eme-functions.php:4284
+#: includes/eme-functions.php:4289
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -4023,7 +4023,7 @@ msgstr "Cochez cette option si vous souhaitez utiliser le hCaptcha sur les formu
 msgid "Use hCaptcha for forms?"
 msgstr "Utiliser hCaptcha pour les formulaires ?"
 
-#: includes/eme-functions.php:4282
+#: includes/eme-functions.php:4287
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
@@ -5082,7 +5082,7 @@ msgstr "Clé du site Google reCAPTCHA"
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "Utiliser Google reCAPTCHA pour les formulaires ?"
 
-#: includes/eme-functions.php:4280
+#: includes/eme-functions.php:4285
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
@@ -11202,7 +11202,7 @@ msgstr "Impression"
 msgid "CSV"
 msgstr "CSV"
 
-#: includes/eme-functions.php:4343
+#: includes/eme-functions.php:4348
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Astuce : cliquez avec le bouton droit sur les en-têtes de colonne pour afficher/masquer les colonnes"
 

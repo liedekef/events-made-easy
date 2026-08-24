@@ -258,7 +258,7 @@ msgstr "按结束日期过滤"
 msgid "Filter attendances"
 msgstr "出席者的筛选"
 
-#: includes/eme-functions.php:4343
+#: includes/eme-functions.php:4348
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "提示：右键单击列标题以显示或隐藏列"
 
@@ -7038,15 +7038,15 @@ msgstr "基于结束日期的有效会员的续期"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "只有当会员资格结束日期少于所提到的天数时，才允许有效的会员支付续约费用。这可以防止人员连续多次付款。输入 \"0\" 或 \"无\" 来禁用它（默认）。"
 
-#: includes/eme-functions.php:4280
+#: includes/eme-functions.php:4285
 msgid "Google reCAPTCHA"
 msgstr "谷歌 reCAPTCHA"
 
-#: includes/eme-functions.php:4282
+#: includes/eme-functions.php:4287
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4284
+#: includes/eme-functions.php:4289
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13465,7 +13465,7 @@ msgstr "选择要使用的验证码"
 msgid "Frontend Draft (unpaid)"
 msgstr "前端草稿（未付款）"
 
-#: includes/eme-functions.php:4288
+#: includes/eme-functions.php:4293
 msgid "Basic EME Captcha"
 msgstr "基本 EME 验证码"
 
@@ -13953,7 +13953,7 @@ msgstr "同时删除已定义的类别、模板、假日、折扣、状态、国
 msgid "Please check the Friendly Captcha box"
 msgstr "请勾选Friendly Captcha复选框"
 
-#: includes/eme-functions.php:4286
+#: includes/eme-functions.php:4291
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -14016,7 +14016,7 @@ msgid "%d person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 
-#: includes/eme-functions.php:4347
+#: includes/eme-functions.php:4352
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "使用Ctrl+点击对多列排序"
 
@@ -14095,7 +14095,7 @@ msgstr "可以进行退款。"
 msgid "Refunding is possible if funds are available on the account."
 msgstr "如果账户中有可用资金，则可以进行退款。"
 
-#: includes/eme-functions.php:4349
+#: includes/eme-functions.php:4354
 msgid "All selected columns are used for sorting"
 msgstr "所有选定的列都用于排序"
 

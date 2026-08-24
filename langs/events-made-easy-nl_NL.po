@@ -42,9 +42,9 @@ msgstr "in naam van %s"
 #: includes/eme-formfields.php:3827
 #: includes/eme-formfields.php:3838
 #: includes/eme-formfields.php:3859
-#: includes/eme-functions.php:3370
-#: includes/eme-functions.php:3409
-#: includes/eme-functions.php:3452
+#: includes/eme-functions.php:3407
+#: includes/eme-functions.php:3446
+#: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3089
@@ -258,7 +258,7 @@ msgstr "Filter op einddatum"
 msgid "Filter attendances"
 msgstr "Filter aanwezigen"
 
-#: includes/eme-functions.php:4306
+#: includes/eme-functions.php:4343
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
@@ -970,12 +970,12 @@ msgid "Incorrect country selection"
 msgstr "Ongeldige land selectie"
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3434
+#: includes/eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Aanpassen mislukt: "
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3436
+#: includes/eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "Invoegen mislukt: "
 
@@ -5392,7 +5392,7 @@ msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw 
 
 #: includes/eme-formfields.php:3846
 #: includes/eme-formfields.php:3856
-#: includes/eme-functions.php:3406
+#: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
 
@@ -5630,77 +5630,77 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Groep"
 
-#: includes/eme-functions.php:2968
+#: includes/eme-functions.php:3005
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Het geüploade bestand overschrijdt de richtlijn upload_max_filesize in php.ini"
 
-#: includes/eme-functions.php:2969
+#: includes/eme-functions.php:3006
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Het geüploade bestand overschrijdt de MAX_FILE_SIZE-richtlijn die is opgegeven in het HTML-formulier"
 
-#: includes/eme-functions.php:2970
+#: includes/eme-functions.php:3007
 msgid "The uploaded file was only partially uploaded"
 msgstr "Het geüploade bestand is slechts gedeeltelijk geüpload"
 
-#: includes/eme-functions.php:2971
+#: includes/eme-functions.php:3008
 msgid "No file was uploaded"
 msgstr "Er is geen file ge-uploaded"
 
-#: includes/eme-functions.php:2972
+#: includes/eme-functions.php:3009
 msgid "Missing a temporary folder"
 msgstr "Tijdelijke folder ontbreekt"
 
-#: includes/eme-functions.php:2973
+#: includes/eme-functions.php:3010
 msgid "Failed to write file to disk"
 msgstr "Kan bestand niet naar schijf schrijven"
 
-#: includes/eme-functions.php:2974
+#: includes/eme-functions.php:3011
 msgid "File upload stopped by extension"
 msgstr "Uploaden van bestanden geweigerd door extensie"
 
-#: includes/eme-functions.php:2975
+#: includes/eme-functions.php:3012
 msgid "Unknown upload error"
 msgstr "Onbekende upload fout"
 
-#: includes/eme-functions.php:3015
+#: includes/eme-functions.php:3052
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Probleem bij het aanmaken van de upload folder, kijk de folder rechten na."
 
-#: includes/eme-functions.php:3050
-#: includes/eme-functions.php:3112
+#: includes/eme-functions.php:3087
+#: includes/eme-functions.php:3149
 msgid "File upload is required."
 msgstr "Bestand uploaden is vereist."
 
-#: includes/eme-functions.php:3058
-#: includes/eme-functions.php:3120
+#: includes/eme-functions.php:3095
+#: includes/eme-functions.php:3157
 msgid "Illegal filename."
 msgstr "Ongeldige filenaam."
 
-#: includes/eme-functions.php:3064
-#: includes/eme-functions.php:3126
+#: includes/eme-functions.php:3101
+#: includes/eme-functions.php:3163
 msgid "File already exists."
 msgstr "Bestand bestaat reeds."
 
-#: includes/eme-functions.php:3070
-#: includes/eme-functions.php:3132
+#: includes/eme-functions.php:3107
+#: includes/eme-functions.php:3169
 msgid "File too large."
 msgstr "Bestand te groot."
 
-#: includes/eme-functions.php:3086
-#: includes/eme-functions.php:3148
+#: includes/eme-functions.php:3123
+#: includes/eme-functions.php:3185
 msgid "Incorrect file type."
 msgstr "Foutief bestandstype."
 
-#: includes/eme-functions.php:3092
-#: includes/eme-functions.php:3154
+#: includes/eme-functions.php:3129
+#: includes/eme-functions.php:3191
 msgid "Upload failed."
 msgstr "Uploaden gefaald."
 
-#: includes/eme-functions.php:3161
+#: includes/eme-functions.php:3198
 msgid "Errors encountered while uploading files"
 msgstr "Er waren problemen bij het uploaden van bestanden"
 
-#: includes/eme-functions.php:3421
+#: includes/eme-functions.php:3458
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
@@ -7028,15 +7028,15 @@ msgstr "Verlenging voor actieve leden op basis van einddatum"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Laat actieve leden alleen betalen voor een verlenging als de einddatum van het lidmaatschap minder is dan het genoemde aantal dagen. Dit voorkomt dat mensen vele malen achter elkaar betalen. Voer 0 of niets in om dit uit te schakelen (de standaardinstelling)."
 
-#: includes/eme-functions.php:4243
+#: includes/eme-functions.php:4280
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: includes/eme-functions.php:4245
+#: includes/eme-functions.php:4282
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4247
+#: includes/eme-functions.php:4284
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13417,7 +13417,7 @@ msgstr "Selecteer een captcha die u wilt gebruiken"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (onbetaald)"
 
-#: includes/eme-functions.php:4251
+#: includes/eme-functions.php:4288
 msgid "Basic EME Captcha"
 msgstr "Basis EME-captcha"
 
@@ -13901,7 +13901,7 @@ msgstr "Verwijder ook gedefinieerde categorieën, sjablonen, feestdagen, korting
 msgid "Please check the Friendly Captcha box"
 msgstr "Vink het vakje Friendly Captcha aan"
 
-#: includes/eme-functions.php:4249
+#: includes/eme-functions.php:4286
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -13950,7 +13950,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] "%d persoon heeft zich al aangemeld voor deze taak"
 msgstr[1] "%d personen hebben zich al aangemeld voor deze taak"
 
-#: includes/eme-functions.php:4310
+#: includes/eme-functions.php:4347
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Gebruik Ctrl-klik om op meerdere kolommen te sorteren"
 
@@ -14029,7 +14029,7 @@ msgstr "Terugbetaling is mogelijk."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Terugbetaling is mogelijk als er voldoende saldo op de rekening is."
 
-#: includes/eme-functions.php:4312
+#: includes/eme-functions.php:4349
 msgid "All selected columns are used for sorting"
 msgstr "Alle geselecteerde kolommen worden gebruikt voor sorteren"
 
@@ -14682,7 +14682,7 @@ msgstr "Betaal met je Bancontact Pay app of met je bank app die Bancontact of 
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
 msgstr "Beheer en toon evenementen en lidmaatschappen. Bevat ook terugkerende evenementen; locaties; widgets; kaarten; inschrijvingen; ICAL en RSS feeds, PayPal, Stripe, Mollie en andere."
 
-#: includes/eme-functions.php:3386
+#: includes/eme-functions.php:3423
 msgid "Invalid column name!"
 msgstr "Ongeldige kolomnaam"
 
@@ -15488,10 +15488,10 @@ msgstr "Aangepaste veldfilters"
 msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr "Geïmporteerde locaties zonder geldige coördinaten in de CSV worden opgeslagen zonder coördinaten; gebruik de onderstaande knop om ze achteraf op te lossen via de openbare geocoderingsservice van nominatim.openstreetmap.org (beperkt tot 1 verzoek per seconde, dus dit kan even duren bij veel locaties. Het oplossen stopt als u deze pagina verlaat; wanneer u terugkomt en wilt doorgaan, drukt u opnieuw op de knop."
 
-#: includes/eme-import.php:122
-msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns eme_tasks and eme_todos contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
-msgstr ""
-
 #: includes/eme-import.php:197
 msgid "Import locations from a CSV file. Required columns: location_name, location_address1, location_city. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\")."
+msgstr ""
+
+#: includes/eme-import.php:122
+msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns event_taskslist and event_todoslist contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
 msgstr ""

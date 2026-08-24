@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.2.8\n"
+"Project-Id-Version: Events Made Easy 3.2.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-23T12:26:25+00:00\n"
+"POT-Creation-Date: 2026-08-24T14:17:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -242,9 +242,9 @@ msgstr ""
 #: includes/eme-formfields.php:3827
 #: includes/eme-formfields.php:3838
 #: includes/eme-formfields.php:3859
-#: includes/eme-functions.php:3370
-#: includes/eme-functions.php:3409
-#: includes/eme-functions.php:3452
+#: includes/eme-functions.php:3407
+#: includes/eme-functions.php:3446
+#: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3089
@@ -1306,12 +1306,12 @@ msgid "Incorrect country selection"
 msgstr ""
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3434
+#: includes/eme-functions.php:3471
 msgid "Update failed: "
 msgstr ""
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3436
+#: includes/eme-functions.php:3473
 msgid "Insert failed: "
 msgstr ""
 
@@ -6291,7 +6291,7 @@ msgstr ""
 
 #: includes/eme-formfields.php:3846
 #: includes/eme-formfields.php:3856
-#: includes/eme-functions.php:3406
+#: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr ""
 
@@ -6612,113 +6612,113 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: includes/eme-functions.php:2968
+#: includes/eme-functions.php:3005
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: includes/eme-functions.php:2969
+#: includes/eme-functions.php:3006
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: includes/eme-functions.php:2970
+#: includes/eme-functions.php:3007
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: includes/eme-functions.php:2971
+#: includes/eme-functions.php:3008
 msgid "No file was uploaded"
 msgstr ""
 
-#: includes/eme-functions.php:2972
+#: includes/eme-functions.php:3009
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: includes/eme-functions.php:2973
+#: includes/eme-functions.php:3010
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: includes/eme-functions.php:2974
+#: includes/eme-functions.php:3011
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: includes/eme-functions.php:2975
+#: includes/eme-functions.php:3012
 msgid "Unknown upload error"
 msgstr ""
 
-#: includes/eme-functions.php:3015
+#: includes/eme-functions.php:3052
 msgid "Failure creating upload dir, please check your permissions."
 msgstr ""
 
-#: includes/eme-functions.php:3050
-#: includes/eme-functions.php:3112
+#: includes/eme-functions.php:3087
+#: includes/eme-functions.php:3149
 msgid "File upload is required."
 msgstr ""
 
-#: includes/eme-functions.php:3058
-#: includes/eme-functions.php:3120
+#: includes/eme-functions.php:3095
+#: includes/eme-functions.php:3157
 msgid "Illegal filename."
 msgstr ""
 
-#: includes/eme-functions.php:3064
-#: includes/eme-functions.php:3126
+#: includes/eme-functions.php:3101
+#: includes/eme-functions.php:3163
 msgid "File already exists."
 msgstr ""
 
-#: includes/eme-functions.php:3070
-#: includes/eme-functions.php:3132
+#: includes/eme-functions.php:3107
+#: includes/eme-functions.php:3169
 msgid "File too large."
 msgstr ""
 
-#: includes/eme-functions.php:3086
-#: includes/eme-functions.php:3148
+#: includes/eme-functions.php:3123
+#: includes/eme-functions.php:3185
 msgid "Incorrect file type."
 msgstr ""
 
-#: includes/eme-functions.php:3092
-#: includes/eme-functions.php:3154
+#: includes/eme-functions.php:3129
+#: includes/eme-functions.php:3191
 msgid "Upload failed."
 msgstr ""
 
-#: includes/eme-functions.php:3161
+#: includes/eme-functions.php:3198
 msgid "Errors encountered while uploading files"
 msgstr ""
 
-#: includes/eme-functions.php:3386
+#: includes/eme-functions.php:3423
 msgid "Invalid column name!"
 msgstr ""
 
-#: includes/eme-functions.php:3421
+#: includes/eme-functions.php:3458
 msgid "No such record"
 msgstr ""
 
-#: includes/eme-functions.php:4243
+#: includes/eme-functions.php:4280
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: includes/eme-functions.php:4245
+#: includes/eme-functions.php:4282
 msgid "hCaptcha"
 msgstr ""
 
-#: includes/eme-functions.php:4247
+#: includes/eme-functions.php:4284
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: includes/eme-functions.php:4249
+#: includes/eme-functions.php:4286
 msgid "Friendly Captcha"
 msgstr ""
 
-#: includes/eme-functions.php:4251
+#: includes/eme-functions.php:4288
 msgid "Basic EME Captcha"
 msgstr ""
 
-#: includes/eme-functions.php:4306
+#: includes/eme-functions.php:4343
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr ""
 
-#: includes/eme-functions.php:4310
+#: includes/eme-functions.php:4347
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
-#: includes/eme-functions.php:4312
+#: includes/eme-functions.php:4349
 msgid "All selected columns are used for sorting"
 msgstr ""
 
@@ -6968,7 +6968,7 @@ msgid "Import"
 msgstr ""
 
 #: includes/eme-import.php:122
-msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns eme_tasks and eme_todos contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
+msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns event_taskslist and event_todoslist contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
 msgstr ""
 
 #: includes/eme-import.php:123

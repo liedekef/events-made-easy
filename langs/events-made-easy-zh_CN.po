@@ -42,9 +42,9 @@ msgstr "代表 %s"
 #: includes/eme-formfields.php:3827
 #: includes/eme-formfields.php:3838
 #: includes/eme-formfields.php:3859
-#: includes/eme-functions.php:3370
-#: includes/eme-functions.php:3409
-#: includes/eme-functions.php:3452
+#: includes/eme-functions.php:3407
+#: includes/eme-functions.php:3446
+#: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3089
@@ -258,7 +258,7 @@ msgstr "按结束日期过滤"
 msgid "Filter attendances"
 msgstr "出席者的筛选"
 
-#: includes/eme-functions.php:4306
+#: includes/eme-functions.php:4343
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "提示：右键单击列标题以显示或隐藏列"
 
@@ -975,12 +975,12 @@ msgid "Incorrect country selection"
 msgstr "国家选择不正确"
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3434
+#: includes/eme-functions.php:3471
 msgid "Update failed: "
 msgstr "更新失败："
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3436
+#: includes/eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "插入失败："
 
@@ -5398,7 +5398,7 @@ msgstr "使用占位符 #_DYNAMICDATA 来显示您表格中的动态表格。"
 
 #: includes/eme-formfields.php:3846
 #: includes/eme-formfields.php:3856
-#: includes/eme-functions.php:3406
+#: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr "记录已被删除!"
 
@@ -5633,77 +5633,77 @@ msgstr "额外信息"
 msgid "Group"
 msgstr "群组"
 
-#: includes/eme-functions.php:2968
+#: includes/eme-functions.php:3005
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "上传的文件超过php.ini中的upload_max_filesize指令"
 
-#: includes/eme-functions.php:2969
+#: includes/eme-functions.php:3006
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "上传的文件超过HTML表单中指定的MAX_FILE_SIZE指令"
 
-#: includes/eme-functions.php:2970
+#: includes/eme-functions.php:3007
 msgid "The uploaded file was only partially uploaded"
 msgstr "上传的文件仅部分上传"
 
-#: includes/eme-functions.php:2971
+#: includes/eme-functions.php:3008
 msgid "No file was uploaded"
 msgstr "未上传任何文件"
 
-#: includes/eme-functions.php:2972
+#: includes/eme-functions.php:3009
 msgid "Missing a temporary folder"
 msgstr "缺少临时文件夹"
 
-#: includes/eme-functions.php:2973
+#: includes/eme-functions.php:3010
 msgid "Failed to write file to disk"
 msgstr "写入文件到磁盘失败"
 
-#: includes/eme-functions.php:2974
+#: includes/eme-functions.php:3011
 msgid "File upload stopped by extension"
 msgstr "文件上传被扩展程序阻止"
 
-#: includes/eme-functions.php:2975
+#: includes/eme-functions.php:3012
 msgid "Unknown upload error"
 msgstr "未知上传错误"
 
-#: includes/eme-functions.php:3015
+#: includes/eme-functions.php:3052
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "创建上传目录失败，请检查您的权限。"
 
-#: includes/eme-functions.php:3050
-#: includes/eme-functions.php:3112
+#: includes/eme-functions.php:3087
+#: includes/eme-functions.php:3149
 msgid "File upload is required."
 msgstr "需要上传文件。"
 
-#: includes/eme-functions.php:3058
-#: includes/eme-functions.php:3120
+#: includes/eme-functions.php:3095
+#: includes/eme-functions.php:3157
 msgid "Illegal filename."
 msgstr "文件名不合法。"
 
-#: includes/eme-functions.php:3064
-#: includes/eme-functions.php:3126
+#: includes/eme-functions.php:3101
+#: includes/eme-functions.php:3163
 msgid "File already exists."
 msgstr "文件已经存在。"
 
-#: includes/eme-functions.php:3070
-#: includes/eme-functions.php:3132
+#: includes/eme-functions.php:3107
+#: includes/eme-functions.php:3169
 msgid "File too large."
 msgstr "文件太大。"
 
-#: includes/eme-functions.php:3086
-#: includes/eme-functions.php:3148
+#: includes/eme-functions.php:3123
+#: includes/eme-functions.php:3185
 msgid "Incorrect file type."
 msgstr "文件类型不正确。"
 
-#: includes/eme-functions.php:3092
-#: includes/eme-functions.php:3154
+#: includes/eme-functions.php:3129
+#: includes/eme-functions.php:3191
 msgid "Upload failed."
 msgstr "上传失败。"
 
-#: includes/eme-functions.php:3161
+#: includes/eme-functions.php:3198
 msgid "Errors encountered while uploading files"
 msgstr "上传文件时遇到的错误"
 
-#: includes/eme-functions.php:3421
+#: includes/eme-functions.php:3458
 msgid "No such record"
 msgstr "没有这样的记录"
 
@@ -7038,15 +7038,15 @@ msgstr "基于结束日期的有效会员的续期"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "只有当会员资格结束日期少于所提到的天数时，才允许有效的会员支付续约费用。这可以防止人员连续多次付款。输入 \"0\" 或 \"无\" 来禁用它（默认）。"
 
-#: includes/eme-functions.php:4243
+#: includes/eme-functions.php:4280
 msgid "Google reCAPTCHA"
 msgstr "谷歌 reCAPTCHA"
 
-#: includes/eme-functions.php:4245
+#: includes/eme-functions.php:4282
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4247
+#: includes/eme-functions.php:4284
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -13465,7 +13465,7 @@ msgstr "选择要使用的验证码"
 msgid "Frontend Draft (unpaid)"
 msgstr "前端草稿（未付款）"
 
-#: includes/eme-functions.php:4251
+#: includes/eme-functions.php:4288
 msgid "Basic EME Captcha"
 msgstr "基本 EME 验证码"
 
@@ -13953,7 +13953,7 @@ msgstr "同时删除已定义的类别、模板、假日、折扣、状态、国
 msgid "Please check the Friendly Captcha box"
 msgstr "请勾选Friendly Captcha复选框"
 
-#: includes/eme-functions.php:4249
+#: includes/eme-functions.php:4286
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -14016,7 +14016,7 @@ msgid "%d person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 
-#: includes/eme-functions.php:4310
+#: includes/eme-functions.php:4347
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "使用Ctrl+点击对多列排序"
 
@@ -14095,7 +14095,7 @@ msgstr "可以进行退款。"
 msgid "Refunding is possible if funds are available on the account."
 msgstr "如果账户中有可用资金，则可以进行退款。"
 
-#: includes/eme-functions.php:4312
+#: includes/eme-functions.php:4349
 msgid "All selected columns are used for sorting"
 msgstr "所有选定的列都用于排序"
 
@@ -14746,7 +14746,7 @@ msgstr "选择一个 WP 用户"
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
 msgstr "管理和显示活动及会员资格。还包括重复活动、地点、小工具、地图、RSVP、ICAL 和 RSS 订阅源；PayPal、Stripe、Mollie 等。"
 
-#: includes/eme-functions.php:3386
+#: includes/eme-functions.php:3423
 msgid "Invalid column name!"
 msgstr "无效的列名！"
 
@@ -15561,10 +15561,10 @@ msgstr ""
 msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr ""
 
-#: includes/eme-import.php:122
-msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns eme_tasks and eme_todos contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
-msgstr ""
-
 #: includes/eme-import.php:197
 msgid "Import locations from a CSV file. Required columns: location_name, location_address1, location_city. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\")."
+msgstr ""
+
+#: includes/eme-import.php:122
+msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns event_taskslist and event_todoslist contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
 msgstr ""

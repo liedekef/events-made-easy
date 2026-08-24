@@ -789,7 +789,7 @@ msgstr "Cochez cette option si vous souhaitez utiliser hCaptcha sur les formulai
 msgid "Send emails to members upon changes being made?"
 msgstr "Envoyer des e-mails aux membres lors de modifications ?"
 
-#: includes/eme-functions.php:3386
+#: includes/eme-functions.php:3423
 msgid "Invalid column name!"
 msgstr "Nom de colonne invalide !"
 
@@ -1936,23 +1936,23 @@ msgstr "Gérer la liste des jours fériés"
 msgid "Add a new list of holidays"
 msgstr "Ajouter une nouvelle liste de vacances"
 
-#: includes/eme-functions.php:4312
+#: includes/eme-functions.php:4349
 msgid "All selected columns are used for sorting"
 msgstr "Toutes les colonnes sélectionnées sont utilisées pour le tri"
 
-#: includes/eme-functions.php:4310
+#: includes/eme-functions.php:4347
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Utilisez Ctrl-clic pour trier sur plusieurs colonnes"
 
-#: includes/eme-functions.php:4251
+#: includes/eme-functions.php:4288
 msgid "Basic EME Captcha"
 msgstr "Captcha de base de l'EME"
 
-#: includes/eme-functions.php:4249
+#: includes/eme-functions.php:4286
 msgid "Friendly Captcha"
 msgstr "Captcha convivial"
 
-#: includes/eme-functions.php:4247
+#: includes/eme-functions.php:4284
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
@@ -2651,35 +2651,35 @@ msgstr "Ici, vous pouvez définir un pied de page HTML supplémentaire, aucun es
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Vous pouvez définir ici des en-têtes HTML supplémentaires, aucun espace réservé ne peut être utilisé."
 
-#: includes/eme-functions.php:2975
+#: includes/eme-functions.php:3012
 msgid "Unknown upload error"
 msgstr "Erreur de téléversement inconnue"
 
-#: includes/eme-functions.php:2974
+#: includes/eme-functions.php:3011
 msgid "File upload stopped by extension"
 msgstr "Téléversement de fichier arrêté par l’extension"
 
-#: includes/eme-functions.php:2973
+#: includes/eme-functions.php:3010
 msgid "Failed to write file to disk"
 msgstr "Échec de l’écriture du fichier sur le disque"
 
-#: includes/eme-functions.php:2972
+#: includes/eme-functions.php:3009
 msgid "Missing a temporary folder"
 msgstr "Il manque un dossier temporaire"
 
-#: includes/eme-functions.php:2971
+#: includes/eme-functions.php:3008
 msgid "No file was uploaded"
 msgstr "Aucun fichier n’a été téléversé"
 
-#: includes/eme-functions.php:2970
+#: includes/eme-functions.php:3007
 msgid "The uploaded file was only partially uploaded"
 msgstr "Le fichier téléversé n’a été que partiellement téléversé"
 
-#: includes/eme-functions.php:2969
+#: includes/eme-functions.php:3006
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Le fichier téléversé dépasse la valeur MAX_FILE_SIZE spécifiée dans le formulaire HTML"
 
-#: includes/eme-functions.php:2968
+#: includes/eme-functions.php:3005
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Le fichier téléversé dépasse la limite upload_max_filesize du php.ini"
 
@@ -4023,7 +4023,7 @@ msgstr "Cochez cette option si vous souhaitez utiliser le hCaptcha sur les formu
 msgid "Use hCaptcha for forms?"
 msgstr "Utiliser hCaptcha pour les formulaires ?"
 
-#: includes/eme-functions.php:4245
+#: includes/eme-functions.php:4282
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
@@ -5082,7 +5082,7 @@ msgstr "Clé du site Google reCAPTCHA"
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "Utiliser Google reCAPTCHA pour les formulaires ?"
 
-#: includes/eme-functions.php:4243
+#: includes/eme-functions.php:4280
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
@@ -5511,8 +5511,8 @@ msgstr "Date et heure de présence facultatives : "
 msgid "WARNING: This might throw of the limit parameter for the eme_events shortcode if that parameter is used: in case the option to hide RSVP ended events is selected, the number of events shown might be less than indicated with the limit option."
 msgstr "AVERTISSEMENT : le paramètre limite du code court eme_events peut être désactivé si ce paramètre est utilisé : si l’option de masquage des RSVP des évènements terminés est sélectionnée, le nombre d’évènements affichés peut être inférieur à celui indiqué par l’option limite."
 
-#: includes/eme-functions.php:3058
-#: includes/eme-functions.php:3120
+#: includes/eme-functions.php:3095
+#: includes/eme-functions.php:3157
 msgid "Illegal filename."
 msgstr "Nom de fichier illégal."
 
@@ -7034,7 +7034,7 @@ msgstr "Limite d’annulation avant le début de l’évènement"
 msgid "You can pay via %s. If you wish to do so, click the button below."
 msgstr "Vous pouvez payer par %s. Si vous le souhaitez, cliquez sur le bouton ci-dessous."
 
-#: includes/eme-functions.php:3015
+#: includes/eme-functions.php:3052
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Échec de la création du répertoire de téléversement, veuillez vérifiez vos droits."
 
@@ -8452,32 +8452,32 @@ msgstr "Le membre a été ajouté, mais il y a eu des problèmes de téléversem
 msgid "The location details have changed. Please verify the coordinates and press Save when done"
 msgstr "Les détails de l’emplacement ont changé. Veuillez vérifier les coordonnées et appuyez sur Enregistrer lorsque vous avez terminé"
 
-#: includes/eme-functions.php:3161
+#: includes/eme-functions.php:3198
 msgid "Errors encountered while uploading files"
 msgstr "Erreurs rencontrées lors du téléversement des fichiers"
 
-#: includes/eme-functions.php:3092
-#: includes/eme-functions.php:3154
+#: includes/eme-functions.php:3129
+#: includes/eme-functions.php:3191
 msgid "Upload failed."
 msgstr "Le téléversement a échoué."
 
-#: includes/eme-functions.php:3086
-#: includes/eme-functions.php:3148
+#: includes/eme-functions.php:3123
+#: includes/eme-functions.php:3185
 msgid "Incorrect file type."
 msgstr "Type de fichier incorrect."
 
-#: includes/eme-functions.php:3070
-#: includes/eme-functions.php:3132
+#: includes/eme-functions.php:3107
+#: includes/eme-functions.php:3169
 msgid "File too large."
 msgstr "Fichier trop grand."
 
-#: includes/eme-functions.php:3064
-#: includes/eme-functions.php:3126
+#: includes/eme-functions.php:3101
+#: includes/eme-functions.php:3163
 msgid "File already exists."
 msgstr "Le fichier existe déjà."
 
-#: includes/eme-functions.php:3050
-#: includes/eme-functions.php:3112
+#: includes/eme-functions.php:3087
+#: includes/eme-functions.php:3149
 msgid "File upload is required."
 msgstr "Le téléversement de fichier est nécessaire."
 
@@ -8921,7 +8921,7 @@ msgstr "Code alpha numéro 3 incorrect"
 msgid "Incorrect alpha-2 code"
 msgstr "Code alpha numéro 2 incorrect"
 
-#: includes/eme-functions.php:3421
+#: includes/eme-functions.php:3458
 msgid "No such record"
 msgstr "Aucun enregistrement"
 
@@ -10615,7 +10615,7 @@ msgstr "Ajouter un nouvel évènement"
 
 #: includes/eme-formfields.php:3846
 #: includes/eme-formfields.php:3856
-#: includes/eme-functions.php:3406
+#: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr "Enregistrements supprimés !"
 
@@ -11202,7 +11202,7 @@ msgstr "Impression"
 msgid "CSV"
 msgstr "CSV"
 
-#: includes/eme-functions.php:4306
+#: includes/eme-functions.php:4343
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Astuce : cliquez avec le bouton droit sur les en-têtes de colonne pour afficher/masquer les colonnes"
 
@@ -11592,12 +11592,12 @@ msgid "Bookings found for this event, so not possible to convert to a recurring 
 msgstr "Des réservations existent pour cet évènement, il ne peut donc pas être converti en évènement récurrent."
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3436
+#: includes/eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "L'insertion a échoué : "
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3434
+#: includes/eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Mise à jour a échoué : "
 
@@ -11625,9 +11625,9 @@ msgstr "Mise à jour a échoué : "
 #: includes/eme-formfields.php:3827
 #: includes/eme-formfields.php:3838
 #: includes/eme-formfields.php:3859
-#: includes/eme-functions.php:3370
-#: includes/eme-functions.php:3409
-#: includes/eme-functions.php:3452
+#: includes/eme-functions.php:3407
+#: includes/eme-functions.php:3446
+#: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3089
@@ -15492,10 +15492,10 @@ msgstr "Oui"
 msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr ""
 
-#: includes/eme-import.php:122
-msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns eme_tasks and eme_todos contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
-msgstr ""
-
 #: includes/eme-import.php:197
 msgid "Import locations from a CSV file. Required columns: location_name, location_address1, location_city. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\")."
+msgstr ""
+
+#: includes/eme-import.php:122
+msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns event_taskslist and event_todoslist contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
 msgstr ""

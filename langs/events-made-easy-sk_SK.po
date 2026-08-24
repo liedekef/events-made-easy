@@ -67,9 +67,9 @@ msgstr "v mene %s"
 #: includes/eme-formfields.php:3827
 #: includes/eme-formfields.php:3838
 #: includes/eme-formfields.php:3859
-#: includes/eme-functions.php:3370
-#: includes/eme-functions.php:3409
-#: includes/eme-functions.php:3452
+#: includes/eme-functions.php:3407
+#: includes/eme-functions.php:3446
+#: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3089
@@ -299,7 +299,7 @@ msgstr "Filtrovať podľa dátumu ukončenia"
 msgid "Filter attendances"
 msgstr "Filtrovať podľa účasti"
 
-#: includes/eme-functions.php:4306
+#: includes/eme-functions.php:4343
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zobrazenie a skrytie stĺpcov"
 
@@ -1015,12 +1015,12 @@ msgid "Incorrect country selection"
 msgstr "Nesprávny výber krajiny"
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3434
+#: includes/eme-functions.php:3471
 msgid "Update failed: "
 msgstr "Aktualizácia zlyhala: "
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3436
+#: includes/eme-functions.php:3473
 msgid "Insert failed: "
 msgstr "Vloženie zlyhalo: "
 
@@ -5524,7 +5524,7 @@ msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických form
 
 #: includes/eme-formfields.php:3846
 #: includes/eme-formfields.php:3856
-#: includes/eme-functions.php:3406
+#: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
@@ -5842,93 +5842,93 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Skupina"
 
-#: includes/eme-functions.php:2968
+#: includes/eme-functions.php:3005
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Odoslaný súbor prekračuje parameter upload_max_filesize v php.ini"
 
-#: includes/eme-functions.php:2969
+#: includes/eme-functions.php:3006
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Odoslaný súbor presahuje parameter MAX_FILE_SIZE, ktorý bol zadaný vo formulári HTML"
 
-#: includes/eme-functions.php:2970
+#: includes/eme-functions.php:3007
 msgid "The uploaded file was only partially uploaded"
 msgstr "Nahraný súbor bol nahraný len čiastočne"
 
-#: includes/eme-functions.php:2971
+#: includes/eme-functions.php:3008
 msgid "No file was uploaded"
 msgstr "Nebol nahratý žiadny súbor"
 
-#: includes/eme-functions.php:2972
+#: includes/eme-functions.php:3009
 msgid "Missing a temporary folder"
 msgstr "Chýba dočasný priečinok"
 
-#: includes/eme-functions.php:2973
+#: includes/eme-functions.php:3010
 msgid "Failed to write file to disk"
 msgstr "Nepodarilo sa zapísať súbor na disk"
 
-#: includes/eme-functions.php:2974
+#: includes/eme-functions.php:3011
 msgid "File upload stopped by extension"
 msgstr "Nahrávanie súboru sa zastavilo kvôli prípone"
 
-#: includes/eme-functions.php:2975
+#: includes/eme-functions.php:3012
 msgid "Unknown upload error"
 msgstr "Neznáma chyba nahrávania"
 
-#: includes/eme-functions.php:3015
+#: includes/eme-functions.php:3052
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Zlyhalo vytvorenie adresára pre nahrávanie, skontrolujte svoje povolenia."
 
-#: includes/eme-functions.php:3050
-#: includes/eme-functions.php:3112
+#: includes/eme-functions.php:3087
+#: includes/eme-functions.php:3149
 msgid "File upload is required."
 msgstr "Nahratie súboru je povinné."
 
-#: includes/eme-functions.php:3058
-#: includes/eme-functions.php:3120
+#: includes/eme-functions.php:3095
+#: includes/eme-functions.php:3157
 msgid "Illegal filename."
 msgstr "Neplatný názov súboru."
 
-#: includes/eme-functions.php:3064
-#: includes/eme-functions.php:3126
+#: includes/eme-functions.php:3101
+#: includes/eme-functions.php:3163
 msgid "File already exists."
 msgstr "Súbor už existuje."
 
-#: includes/eme-functions.php:3070
-#: includes/eme-functions.php:3132
+#: includes/eme-functions.php:3107
+#: includes/eme-functions.php:3169
 msgid "File too large."
 msgstr "Súbor je príliš veľký."
 
-#: includes/eme-functions.php:3086
-#: includes/eme-functions.php:3148
+#: includes/eme-functions.php:3123
+#: includes/eme-functions.php:3185
 msgid "Incorrect file type."
 msgstr "Neplatný typ súboru."
 
-#: includes/eme-functions.php:3092
-#: includes/eme-functions.php:3154
+#: includes/eme-functions.php:3129
+#: includes/eme-functions.php:3191
 msgid "Upload failed."
 msgstr "Nahrávanie zlyhalo."
 
-#: includes/eme-functions.php:3161
+#: includes/eme-functions.php:3198
 msgid "Errors encountered while uploading files"
 msgstr "Pri nahrávaní súborov sa vyskytli chyby"
 
-#: includes/eme-functions.php:3421
+#: includes/eme-functions.php:3458
 msgid "No such record"
 msgstr "Taký záznam neexistuje"
 
-#: includes/eme-functions.php:4243
+#: includes/eme-functions.php:4280
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: includes/eme-functions.php:4245
+#: includes/eme-functions.php:4282
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: includes/eme-functions.php:4247
+#: includes/eme-functions.php:4284
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: includes/eme-functions.php:4251
+#: includes/eme-functions.php:4288
 msgid "Basic EME Captcha"
 msgstr "Základná EME Captcha"
 
@@ -13888,7 +13888,7 @@ msgstr "Tiež vymazať definované kategórie, šablóny, sviatky, zľavy, kraje
 msgid "Please check the Friendly Captcha box"
 msgstr "Prosím, zaškrtnite pole Friendly Captcha"
 
-#: includes/eme-functions.php:4249
+#: includes/eme-functions.php:4286
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
@@ -13953,7 +13953,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: includes/eme-functions.php:4310
+#: includes/eme-functions.php:4347
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Použite Ctrl+kliknutie na zoradenie podľa viacerých stĺpcov"
 
@@ -14032,7 +14032,7 @@ msgstr "Vrátenie peňazí je možné."
 msgid "Refunding is possible if funds are available on the account."
 msgstr "Vrátenie peňazí je možné, ak sú na účte dostupné prostriedky."
 
-#: includes/eme-functions.php:4312
+#: includes/eme-functions.php:4349
 msgid "All selected columns are used for sorting"
 msgstr "Všetky vybrané stĺpce sa používajú na zoradenie"
 
@@ -14690,7 +14690,7 @@ msgstr "Zaplaťte svojou aplikáciou Bancontact Pay alebo svojou bankovou aplik�
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
 msgstr "Spravujte a zobrazujte podujatia a členstvá. Zahŕňa aj opakujúce sa podujatia; miesta; widgety; mapy; rezervácie; ICAL a RSS kanály; Paypal, Stripe, Mollie a ďalšie."
 
-#: includes/eme-functions.php:3386
+#: includes/eme-functions.php:3423
 msgid "Invalid column name!"
 msgstr "Neplatný názov stĺpca!"
 
@@ -15500,10 +15500,10 @@ msgstr ""
 msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
 msgstr ""
 
-#: includes/eme-import.php:122
-msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns eme_tasks and eme_todos contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
-msgstr ""
-
 #: includes/eme-import.php:197
 msgid "Import locations from a CSV file. Required columns: location_name, location_address1, location_city. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\")."
+msgstr ""
+
+#: includes/eme-import.php:122
+msgid "Import events from a CSV file. Required column: event_name. If providing categories, use the column category_names (pipe-separated, e.g. \"Music||Concerts\"). Optional: the columns event_taskslist and event_todoslist contain tasks/todos as json (as generated by the events export), when present they fully replace the existing tasks/todos of the event; if not present they are left untouched."
 msgstr ""

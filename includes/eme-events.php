@@ -287,7 +287,7 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
         if (eme_is_list_of_numbers($props[$opt])) {
             $props[$opt]=$props[$opt];
         } else {
-            $props[$opt]=intval($props[$opt]);
+            $props[$opt]='';
         }
     }
 

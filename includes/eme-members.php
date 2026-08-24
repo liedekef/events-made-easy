@@ -254,6 +254,37 @@ function eme_init_membership_props( $props = [], $new_membership = 0 ) {
     return $props;
 }
 
+// reminder days: 0 used to mean "no reminder", now '' means "no reminder" and 0 is a valid reminder day
+function eme_migrate_membership_reminder_days_options() {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+
+    // only fetch memberships storing a 0 (int or string) for reminder_days
+    $like_conditions = [
+        $wpdb->prepare( 'properties LIKE %s', '%' . $wpdb->esc_like( '"reminder_days":0' ) . '%' ),
+        $wpdb->prepare( 'properties LIKE %s', '%' . $wpdb->esc_like( '"reminder_days":"0"' ) . '%' ),
+        // legacy php serialized format
+        $wpdb->prepare( 'properties LIKE %s', '%' . $wpdb->esc_like( '"reminder_days";i:0;' ) . '%' ),
+        $wpdb->prepare( 'properties LIKE %s', '%' . $wpdb->esc_like( '"reminder_days";s:1:"0";' ) . '%' ),
+    ];
+    $sql = "SELECT membership_id FROM $table WHERE " . implode( ' OR ', $like_conditions );
+    $ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+
+    foreach ( $ids as $id ) {
+        $membership = eme_get_membership( $id );
+        if ( empty( $membership ) ) {
+            continue;
+        }
+        $val = $membership['properties']['reminder_days'] ?? null;
+        if ( $val === 0 || $val === '0' ) {
+            $membership['properties']['reminder_days'] = '';
+            // only update the properties column, so modif_date stays untouched
+            $wpdb->update( $table, [ 'properties' => eme_json_encode_safe( $membership['properties'] ) ], [ 'membership_id' => intval( $id ) ] );
+            wp_cache_delete( "eme_membership $id" );
+        }
+    }
+}
+
 function eme_db_insert_membership( $membership ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
@@ -1947,7 +1978,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <td><label for="properties[reminder_days]"><?php esc_html_e( 'Reminder', 'events-made-easy' ); ?></label></td>
     <td><input type="text" id="properties[reminder_days]" name="properties[reminder_days]" value="<?php echo esc_attr( $membership['properties']['reminder_days'] ); ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'Set the number of days before membership expiration a reminder will be sent out.', 'events-made-easy' ); ?>
-        <br><?php esc_html_e( 'If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period.', 'events-made-easy' ); ?></p>
+        <br><?php esc_html_e( 'If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period. Leave empty for no reminders.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
     <tr id='remove_pending'>

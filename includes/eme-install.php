@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 437 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 438 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -510,6 +510,9 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 				eme_maybe_drop_column( $table_name, 'rsvp_number_hours' );
 				eme_maybe_drop_column( $table_name, 'rsvp_number_days' );
 			}
+		}
+		if ( $db_version < 438 ) {
+			eme_migrate_event_reminder_days_options();
 		}
 	}
 }
@@ -1613,6 +1616,9 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		if ( $db_version < 386 ) {
 			$modif_date = current_time( 'mysql', false );
             $wpdb->query( $wpdb->prepare("UPDATE $table_name SET modif_date = %s", $modif_date ) );
+		}
+		if ( $db_version < 438 ) {
+			eme_migrate_membership_reminder_days_options();
 		}
 	}
 }

@@ -1099,6 +1099,16 @@ function eme_update_options( $db_version ) {
             delete_option( 'eme_use_is_page_for_title' );
             delete_option( 'eme_rememberme' );
         }
+        if ( $db_version < 438 ) {
+            // reminder days: 0 used to mean "no reminder", now it means "remind on day 0" and '' means "no reminder"
+            $reminder_days_options = [ 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days', 'eme_task_reminder_days' ];
+            foreach ( $reminder_days_options as $reminder_days_option ) {
+                $val = get_option( $reminder_days_option );
+                if ( $val === 0 || $val === '0' ) {
+                    update_option( $reminder_days_option, '' );
+                }
+            }
+        }
     }
 
     // always reset the drop data option
@@ -1266,9 +1276,9 @@ function eme_sanitize_option( $option_value, $option_name ) {
         'eme_mail_sleep' => 0,
     ];
     $numeric_list_options = [
-        'eme_rsvp_pending_reminder_days' => 0,
-        'eme_rsvp_approved_reminder_days' => 0,
-        'eme_task_reminder_days' => 0
+        'eme_rsvp_pending_reminder_days' => '',
+        'eme_rsvp_approved_reminder_days' => '',
+        'eme_task_reminder_days' => ''
     ];
 
     if ( is_array( $option_value ) ) {

@@ -4050,8 +4050,47 @@ function eme_migrate_event_rsvpstartend_options() {
     }
 }
 
+// reminder days: 0 used to mean "no reminder", now '' means "no reminder" and 0 is a valid reminder day
+function eme_migrate_event_reminder_days_options() {
+    global $wpdb;
+    $table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+
+    // only fetch events storing a 0 (int or string) for one of the reminder days properties
+    $like_conditions = [];
+    foreach ( [ 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ] as $reminder_key ) {
+        // json format
+        $like_conditions[] = $wpdb->prepare( 'event_properties LIKE %s', '%' . $wpdb->esc_like( "\"$reminder_key\":0" ) . '%' );
+        $like_conditions[] = $wpdb->prepare( 'event_properties LIKE %s', '%' . $wpdb->esc_like( "\"$reminder_key\":\"0\"" ) . '%' );
+        // legacy php serialized format
+        $like_conditions[] = $wpdb->prepare( 'event_properties LIKE %s', '%' . $wpdb->esc_like( "\"$reminder_key\";i:0;" ) . '%' );
+        $like_conditions[] = $wpdb->prepare( 'event_properties LIKE %s', '%' . $wpdb->esc_like( "\"$reminder_key\";s:1:\"0\";" ) . '%' );
+    }
+    $sql = "SELECT event_id FROM $table_name WHERE " . implode( ' OR ', $like_conditions );
+    $ids = $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+
+    foreach ( $ids as $id ) {
+        $event = eme_get_event( $id );
+        if ( empty( $event ) ) {
+            continue;
+        }
+        $changed = false;
+        foreach ( [ 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ] as $reminder_key ) {
+            $val = $event['event_properties'][ $reminder_key ] ?? null;
+            if ( $val === 0 || $val === '0' ) {
+                $event['event_properties'][ $reminder_key ] = '';
+                $changed = true;
+            }
+        }
+        if ( $changed ) {
+            // only update the properties column, so modif_date and slug stay untouched
+            $wpdb->update( $table_name, [ 'event_properties' => eme_json_encode_safe( $event['event_properties'] ) ], [ 'event_id' => intval( $id ) ] );
+            wp_cache_delete( "eme_event $id" );
+        }
+    }
+}
+
 function eme_is_empty_string( $text ) {
-    if ( empty( $text ) ) { // catches empty, 0, null
+    if ( $text === '' || is_null( $text ) ) {
         return true;
     } elseif ( is_array( $text ) ) {
         foreach ( $text as $item ) {

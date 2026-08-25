@@ -661,7 +661,19 @@ function eme_fs_process_newevent() {
     if (empty($_POST['event'])) {
         $event_data = [];
     } else {
+        $preserved_notes = $_POST['event']['event_notes'] ?? null;
+        $preserved_single_event_format = $_POST['event']['event_single_event_format'] ?? null;
+        $preserved_location_description = $_POST['event']['location_description'] ?? null;
         $event_data = eme_kses($_POST['event']);
+        if ( $preserved_notes !== null ) {
+            $event_data['event_notes'] = eme_kses_maybe_unfiltered( $preserved_notes );
+        }
+        if ( $preserved_single_event_format !== null ) {
+            $event_data['event_single_event_format'] = eme_kses_maybe_unfiltered( $preserved_single_event_format );
+        }
+        if ( $preserved_location_description !== null ) {
+            $event_data['location_description'] = eme_kses_maybe_unfiltered( $preserved_location_description );
+        }
     }
     // add in the event_attributes and properties
     if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes'])) {

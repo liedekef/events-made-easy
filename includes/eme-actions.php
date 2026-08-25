@@ -824,7 +824,7 @@ function eme_jodit_preview_render() {
 
     // remove potential unsecured tags
     //$rendered = apply_filters('the_content', $content);
-    $rendered = eme_kses_maybe_unfiltered($content);
+    $rendered = eme_kses($content);
 
     if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == 'events-made-easy_page_eme-emails' ) {
         $rendered = eme_replaceiframe($rendered);

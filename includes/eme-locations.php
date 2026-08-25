@@ -1417,7 +1417,12 @@ function eme_sanitize_location( $location ) {
         }
     }
 
-    return eme_kses( $location );
+    $preserved_description = $location['location_description'] ?? null;
+    $location = eme_kses( $location );
+    if ( $preserved_description !== null ) {
+        $location['location_description'] = eme_kses_maybe_unfiltered($preserved_description);
+    }
+    return $location;
 }
 
 function eme_validate_location( $location ) {

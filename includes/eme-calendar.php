@@ -107,6 +107,18 @@ function eme_get_calendar_shortcode( $atts ) {
 				$location_id = -1;
 			}
 		}
+        if ( ! empty( $_REQUEST['eme_state_filter'] ) ) {
+            $states  = eme_sanitize_request( $_REQUEST['eme_state_filter'] );
+            $tmp_ids = eme_get_state_location_ids( $states );
+            if ( empty( $location_id_arr ) ) {
+                $location_id_arr = $tmp_ids;
+            } else {
+                $location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+            }
+            if ( empty( $location_id_arr ) ) {
+                $location_id = -1;
+            }
+        }
 		if (!empty($_REQUEST['eme_country_filter'])) {
 			$countries = eme_sanitize_request($_REQUEST['eme_country_filter']);
 			$tmp_ids   = eme_get_country_location_ids($countries);

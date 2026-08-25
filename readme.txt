@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.2.11
+Stable tag: 3.2.12
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,10 +99,12 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.2.12  (2026/08/) =
+= 3.2.12  (2026/08/25) =
 * Allow 0 as reminder day too
 * Change DB structure to be more aligned internally (int unsigned for primary keys) and with WP (bigint for user/image ids)
 * Accept Belgiam Lambert72 coordinates too (lx/ly) during location import
+* Allow default (fixed) filters in filter form (see doc)
+* New argument to the filterform shortcode: filter_type. Can be 'events', 'locations' or don't mention it. If present, the fields shown will restrict themselves to the possible values of the matching events/locations
 
 = 3.2.11  (2026/08/24) =
 * Bugfix for recursing empty-string check

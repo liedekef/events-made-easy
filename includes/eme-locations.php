@@ -1211,12 +1211,18 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
         } else {
             $sql = "SELECT * FROM $locations_table WHERE location_name != '' $where ORDER BY location_name $limit";
         }
-        $locations = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
-        // don't forget the images (for the older locations that didn't use the wp gallery)
-        if ( $locations ) {
-            foreach ( $locations as $key => $location ) {
-                $locations[ $key ] = eme_get_extra_location_data( $location );
+
+        $sql_md5 = md5( $sql );
+        $locations = wp_cache_get( "eme_locatoins $sql_md5" );
+        if ( $locations === false ) {
+            $locations = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+            // don't forget the images (for the older locations that didn't use the wp gallery)
+            if ( $locations ) {
+                foreach ( $locations as $key => $location ) {
+                    $locations[ $key ] = eme_get_extra_location_data( $location );
+                }
             }
+            wp_cache_set( "eme_locations $sql_md5", $locations, '', 10 );
         }
     }
     if ( has_filter( 'eme_location_list_filter' ) ) {

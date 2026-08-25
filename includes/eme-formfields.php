@@ -932,6 +932,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             $new_attrs = eme_merge_classes_into_attrs('eme_snapselect', $field_attributes) . ' ' . $disabled;
             $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, '', $new_attrs );
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
+            }
             break;
         case 'dropdown_multi':
             # dropdown, multiselect
@@ -953,6 +959,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             } else {
                 $new_attrs = eme_merge_classes_into_attrs('eme_snapselect', $field_attributes) . ' ' . $disabled;
                 $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, '', $new_attrs );
+            }
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
             }
             break;
         case 'textarea':
@@ -977,6 +989,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $my_arr[ $val ] = eme_translate( $tag );
             }
             $html = eme_ui_radio( $entered_val, $field_name, $my_arr, true, $required, '', $field_attributes . ' ' . $disabled );
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
+            }
             break;
         case 'radiobox_vertical':
             # radiobox, vertical
@@ -988,6 +1006,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $my_arr[ $val ] = eme_translate( $tag );
             }
             $html = eme_ui_radio( $entered_val, $field_name, $my_arr, false, $required, '', $field_attributes . ' ' . $disabled );
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
+            }
             break;
         case 'checkbox':
             # checkbox
@@ -1008,6 +1032,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( $required ) {
                 $html .= '</div>';
             }
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
+            }
             break;
         case 'checkbox_vertical':
             # checkbox, vertical
@@ -1027,6 +1057,12 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             $html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, false, 0, '', $field_attributes . ' ' . $disabled );
             if ( $required ) {
                 $html .= '</div>';
+            }
+            if ( $ro ) {
+                $vals = is_array( $entered_val ) ? $entered_val : [ $entered_val ];
+                foreach ( $vals as $v ) {
+                    $html .= "<input type='hidden' name='" . esc_attr( $field_name ) . "' value='" . esc_attr( $v ) . "'>";
+                }
             }
             break;
         case 'file':
@@ -1112,7 +1148,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $dateformat ) ) {
                 $dateformat = EME_WP_DATE_FORMAT;
             }
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$value' data-format='$dateformat' class='eme_formfield eme_formfield_fdate $class'>";
+            if ( $ro ) {
+                $html .= "<input $required_att readonly='readonly' type='text' name='{$field_name}' id='{$field_name}' value='$value' class='eme_formfield $class'>";
+            } else {
+                $html .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$value' data-format='$dateformat' class='eme_formfield eme_formfield_fdate $class'>";
+            }
             break;
         case 'datetime_js':
             # for datetime JS field
@@ -1134,7 +1174,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 $dateformat = EME_WP_DATE_FORMAT .' '. EME_WP_TIME_FORMAT;
             }
             $dateformat = $field_attributes;
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield eme_formfield_fdatetime $class'>";
+            if ( $ro ) {
+                $html .= "<input $required_att readonly='readonly' type='text' name='{$field_name}' id='{$field_name}' value='$value' class='eme_formfield $class'>";
+            } else {
+                $html .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield eme_formfield_fdatetime $class'>";
+            }
             break;
         case 'time_js':
             # for time JS field
@@ -1155,7 +1199,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( empty( $dateformat ) ) {
                 $dateformat = EME_WP_TIME_FORMAT;
             }
-            $html      .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield_ftime $class'>";
+            if ( $ro ) {
+                $html .= "<input $required_att readonly='readonly' type='text' name='{$field_name}' id='{$field_name}' value='$value' class='eme_formfield $class'>";
+            } else {
+                $html .= "<input $required_att readonly='readonly' $disabled type='text' name='{$field_name}' id='{$field_name}' data-date='$js_value' data-format='$dateformat' class='eme_formfield_ftime $class'>";
+            }
             break;
         case 'datalist':
             # for text fields

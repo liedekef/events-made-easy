@@ -33,21 +33,21 @@ msgstr "på uppdrag av %s"
 #: includes/eme-countries.php:836
 #: includes/eme-discounts.php:1558
 #: includes/eme-discounts.php:1603
-#: includes/eme-events.php:9978
-#: includes/eme-events.php:10377
-#: includes/eme-events.php:10386
-#: includes/eme-events.php:10394
-#: includes/eme-events.php:10745
-#: includes/eme-formfields.php:3772
-#: includes/eme-formfields.php:3827
-#: includes/eme-formfields.php:3838
-#: includes/eme-formfields.php:3859
+#: includes/eme-events.php:9992
+#: includes/eme-events.php:10391
+#: includes/eme-events.php:10400
+#: includes/eme-events.php:10408
+#: includes/eme-events.php:10759
+#: includes/eme-formfields.php:3820
+#: includes/eme-formfields.php:3875
+#: includes/eme-formfields.php:3886
+#: includes/eme-formfields.php:3907
 #: includes/eme-functions.php:3407
 #: includes/eme-functions.php:3446
 #: includes/eme-functions.php:3489
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
-#: includes/eme-locations.php:3089
+#: includes/eme-locations.php:3187
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -97,35 +97,35 @@ msgstr "på uppdrag av %s"
 #: includes/eme-rsvp.php:5149
 #: includes/eme-rsvp.php:5942
 #: includes/eme-rsvp.php:5966
-#: includes/eme-tasks.php:2086
-#: includes/eme-tasks.php:2239
-#: includes/eme-tasks.php:2250
-#: includes/eme-tasks.php:2358
-#: includes/eme-tasks.php:2399
+#: includes/eme-tasks.php:2087
+#: includes/eme-tasks.php:2240
+#: includes/eme-tasks.php:2251
+#: includes/eme-tasks.php:2359
+#: includes/eme-tasks.php:2400
 #: includes/eme-templates.php:482
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
 
 #: includes/eme-actions.php:310
-#: includes/eme-events.php:6502
-#: includes/eme-events.php:9714
+#: includes/eme-events.php:6516
+#: includes/eme-events.php:9728
 #: includes/eme-templates.php:44
 msgid "Event"
 msgstr "Event"
 
 #: includes/eme-actions.php:319
-#: includes/eme-events.php:6503
-#: includes/eme-events.php:8434
-#: includes/eme-events.php:9687
-#: includes/eme-locations.php:425
+#: includes/eme-events.php:6517
+#: includes/eme-events.php:8448
+#: includes/eme-events.php:9701
+#: includes/eme-locations.php:432
 msgid "Location"
 msgstr "Plats"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-events.php:9755
+#: includes/eme-events.php:9769
 #: includes/eme-gdpr.php:464
 #: includes/eme-gdpr.php:611
-#: includes/eme-locations.php:599
+#: includes/eme-locations.php:606
 #: includes/eme-people.php:1051
 #: includes/eme-people.php:1226
 #: includes/eme-people.php:2635
@@ -134,10 +134,10 @@ msgid "State"
 msgstr "Stat"
 
 #: includes/eme-countries.php:320
-#: includes/eme-events.php:9754
+#: includes/eme-events.php:9768
 #: includes/eme-gdpr.php:465
 #: includes/eme-gdpr.php:615
-#: includes/eme-locations.php:607
+#: includes/eme-locations.php:614
 #: includes/eme-people.php:1052
 #: includes/eme-people.php:1227
 #: includes/eme-people.php:2630
@@ -146,7 +146,7 @@ msgid "Country"
 msgstr "Land"
 
 #: includes/eme-actions.php:426
-#: includes/eme-events.php:9621
+#: includes/eme-events.php:9635
 msgid "An error has occurred"
 msgstr "Ett fel har uppstått"
 
@@ -155,12 +155,12 @@ msgid "Clear"
 msgstr "Rensa"
 
 #: includes/eme-actions.php:428
-#: includes/eme-events.php:9622
+#: includes/eme-events.php:9636
 msgid "Mailing preferences"
 msgstr "Alternativ för e-postutskick"
 
 #: includes/eme-actions.php:429
-#: includes/eme-events.php:9623
+#: includes/eme-events.php:9637
 msgid "Yes, I'm sure"
 msgstr "Ja, jag är säker"
 
@@ -181,8 +181,8 @@ msgstr "Valfritt"
 
 #: events-manager.php:362
 #: includes/eme-attendances.php:108
-#: includes/eme-events.php:6192
-#: includes/eme-events.php:9673
+#: includes/eme-events.php:6206
+#: includes/eme-events.php:9687
 #: includes/eme-import.php:94
 #: includes/eme-install.php:1863
 #: includes/eme-options.php:132
@@ -195,7 +195,7 @@ msgstr "Event"
 
 #: events-manager.php:381
 #: includes/eme-attendances.php:109
-#: includes/eme-events.php:9806
+#: includes/eme-events.php:9820
 #: includes/eme-gdpr.php:491
 #: includes/eme-options.php:1365
 #: includes/eme-options.php:1691
@@ -237,18 +237,18 @@ msgid "If a RSVP or member QRCODE is scanned by someone with sufficent rights, a
 msgstr "Om en OSA eller medlems WR-kod scannas av någon med tillräckliga behörigheter, kommer en närvaropost att läggas till i denna tabell."
 
 #: includes/eme-attendances.php:159
-#: includes/eme-events.php:6233
-#: includes/eme-events.php:6313
-#: includes/eme-events.php:6354
+#: includes/eme-events.php:6247
+#: includes/eme-events.php:6327
+#: includes/eme-events.php:6368
 #: includes/eme-rsvp.php:5546
 #: includes/eme-tasks.php:673
 msgid "Filter on start date"
 msgstr "Filtrera efter startdatum"
 
 #: includes/eme-attendances.php:160
-#: includes/eme-events.php:6234
-#: includes/eme-events.php:6314
-#: includes/eme-events.php:6355
+#: includes/eme-events.php:6248
+#: includes/eme-events.php:6328
+#: includes/eme-events.php:6369
 #: includes/eme-rsvp.php:5547
 #: includes/eme-tasks.php:674
 msgid "Filter on end date"
@@ -280,12 +280,12 @@ msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 #: includes/eme-people.php:5375
 #: includes/eme-people.php:5376
 #: includes/eme-people.php:5377
-#: includes/eme-tasks.php:2215
+#: includes/eme-tasks.php:2216
 msgid "Edit person"
 msgstr "Redigera person"
 
 #: includes/eme-attendances.php:257
-#: includes/eme-events.php:10299
+#: includes/eme-events.php:10313
 #: includes/eme-rsvp.php:6335
 msgid "All day"
 msgstr "Heldag"
@@ -296,7 +296,7 @@ msgid "Manual entry"
 msgstr "Manuellt"
 
 #: includes/eme-attendances.php:302
-#: includes/eme-events.php:10440
+#: includes/eme-events.php:10454
 msgid "Events deleted"
 msgstr "Event borttagna"
 
@@ -309,7 +309,7 @@ msgid "Attribute Name"
 msgstr "Attributnamn"
 
 #: includes/eme-attributes.php:98
-#: includes/eme-events.php:9739
+#: includes/eme-events.php:9753
 msgid "Value"
 msgstr "Värde"
 
@@ -319,7 +319,7 @@ msgstr "Inte definierad i mallar"
 
 #: includes/eme-attributes.php:123
 #: includes/eme-attributes.php:143
-#: includes/eme-formfields.php:3612
+#: includes/eme-formfields.php:3660
 #: includes/eme-tasks.php:992
 #: includes/eme-todos.php:220
 msgid "Remove"
@@ -363,7 +363,7 @@ msgid "Add category"
 msgstr "Lägg till kategori"
 
 #: includes/eme-cleanup.php:392
-#: includes/eme-events.php:9678
+#: includes/eme-events.php:9692
 #: includes/eme-gdpr.php:456
 #: includes/eme-gdpr.php:496
 #: includes/eme-people.php:1038
@@ -375,8 +375,8 @@ msgstr "Lägg till kategori"
 msgid "ID"
 msgstr "ID"
 
-#: includes/eme-events.php:9679
-#: includes/eme-events.php:9863
+#: includes/eme-events.php:9693
+#: includes/eme-events.php:9877
 #: includes/eme-members.php:1929
 #: includes/eme-people.php:2822
 #: includes/eme-tasks.php:1020
@@ -386,10 +386,10 @@ msgid "Name"
 msgstr "Namn"
 
 #: includes/eme-categories.php:695
-#: includes/eme-events.php:10097
-#: includes/eme-formfields.php:3808
+#: includes/eme-events.php:10111
+#: includes/eme-formfields.php:3856
 #: includes/eme-holidays.php:279
-#: includes/eme-locations.php:3178
+#: includes/eme-locations.php:3276
 #: includes/eme-members.php:6588
 #: includes/eme-people.php:5466
 #: includes/eme-templates.php:464
@@ -403,8 +403,8 @@ msgstr "Inget namn"
 msgid "Delete"
 msgstr "Ta bort"
 
-#: includes/eme-events.php:6928
-#: includes/eme-locations.php:491
+#: includes/eme-events.php:6942
+#: includes/eme-locations.php:498
 msgid "No categories defined."
 msgstr "Inga kategorier definierade."
 
@@ -417,8 +417,8 @@ msgid "Update category"
 msgstr "Uppdatera kategori"
 
 #: includes/eme-categories.php:127
-#: includes/eme-events.php:7115
-#: includes/eme-locations.php:528
+#: includes/eme-events.php:7129
+#: includes/eme-locations.php:535
 msgid "Permalink: "
 msgstr "Permalänk: "
 
@@ -427,8 +427,8 @@ msgid "Create category"
 msgstr "Skapa kategori"
 
 #: includes/eme-categories.php:134
-#: includes/eme-events.php:7117
-#: includes/eme-locations.php:530
+#: includes/eme-events.php:7131
+#: includes/eme-locations.php:537
 msgid "Permalink prefix: "
 msgstr "Permalänksprefix: "
 
@@ -544,13 +544,13 @@ msgstr "Månad(er)"
 #: includes/eme-cron.php:475
 #: includes/eme-discounts.php:274
 #: includes/eme-discounts.php:301
-#: includes/eme-events.php:6280
-#: includes/eme-events.php:6332
-#: includes/eme-events.php:6368
-#: includes/eme-events.php:9695
+#: includes/eme-events.php:6294
+#: includes/eme-events.php:6346
+#: includes/eme-events.php:6382
+#: includes/eme-events.php:9709
 #: includes/eme-formfields.php:248
 #: includes/eme-holidays.php:97
-#: includes/eme-locations.php:915
+#: includes/eme-locations.php:922
 #: includes/eme-mailer.php:3966
 #: includes/eme-mailer.php:4021
 #: includes/eme-mailer.php:4053
@@ -620,7 +620,7 @@ msgstr "Töm e-postkön"
 msgid "You have no right to manage discounts!"
 msgstr "Du har inte behörighet att hantera rabatter!"
 
-#: includes/eme-events.php:5918
+#: includes/eme-events.php:5932
 #: includes/eme-import.php:339
 #: includes/eme-import.php:403
 #: includes/eme-import.php:472
@@ -633,7 +633,7 @@ msgstr "Du har inte behörighet att hantera rabatter!"
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr "Problem att komma åt den uppladdade filen, kan vara något säkerhetsproblem?"
 
-#: includes/eme-events.php:5945
+#: includes/eme-events.php:5959
 #: includes/eme-import.php:363
 #: includes/eme-import.php:423
 #: includes/eme-import.php:491
@@ -665,7 +665,7 @@ msgstr "Inte importerat: %s"
 msgid "Import finished: %1$d inserts, %2$d errors"
 msgstr "Import slutförd: %1$d insättningar, %2$d fel"
 
-#: includes/eme-events.php:5909
+#: includes/eme-events.php:5923
 #: includes/eme-import.php:334
 #: includes/eme-import.php:398
 #: includes/eme-import.php:467
@@ -811,12 +811,12 @@ msgstr "Språket ska motsvara ett av de WordPress-språk du vill stödja, eller 
 #: includes/eme-countries.php:247
 #: includes/eme-discounts.php:255
 #: includes/eme-discounts.php:298
-#: includes/eme-events.php:6263
-#: includes/eme-events.php:6321
-#: includes/eme-events.php:6364
+#: includes/eme-events.php:6277
+#: includes/eme-events.php:6335
+#: includes/eme-events.php:6378
 #: includes/eme-formfields.php:245
 #: includes/eme-holidays.php:94
-#: includes/eme-locations.php:904
+#: includes/eme-locations.php:911
 #: includes/eme-mailer.php:3961
 #: includes/eme-mailer.php:4017
 #: includes/eme-mailer.php:4050
@@ -890,7 +890,7 @@ msgstr "Namnet på staten"
 #: includes/eme-actions.php:512
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
-#: includes/eme-events.php:9664
+#: includes/eme-events.php:9678
 msgid "Code"
 msgstr "Kod"
 
@@ -917,22 +917,22 @@ msgid "The name of the country"
 msgstr "Namnet på landet"
 
 #: includes/eme-countries.php:373
-#: includes/eme-events.php:9758
+#: includes/eme-events.php:9772
 msgid "Alpha-2"
 msgstr "Alpha-2"
 
 #: includes/eme-countries.php:377
-#: includes/eme-events.php:9759
+#: includes/eme-events.php:9773
 msgid "Alpha-3"
 msgstr "Alpha-3"
 
 #: includes/eme-countries.php:381
-#: includes/eme-events.php:9760
+#: includes/eme-events.php:9774
 msgid "Num-3"
 msgstr "Num-3"
 
 #: includes/eme-countries.php:385
-#: includes/eme-events.php:9756
+#: includes/eme-events.php:9770
 #: includes/eme-people.php:2658
 msgid "Language"
 msgstr "Språk"
@@ -1094,9 +1094,9 @@ msgid "Send a mail to all EME registered people for upcoming events that will ha
 msgstr "Sänd e-post till alla EME-registrerade personer om kommande event som sker inom"
 
 #: includes/eme-cron.php:431
-#: includes/eme-events.php:7301
-#: includes/eme-events.php:8935
-#: includes/eme-events.php:8948
+#: includes/eme-events.php:7315
+#: includes/eme-events.php:8949
+#: includes/eme-events.php:8962
 #: includes/eme-options.php:1971
 #: includes/eme-options.php:1987
 #: includes/eme-recurrence.php:741
@@ -1259,7 +1259,7 @@ msgstr "Namnet på rabatten"
 
 #: includes/eme-discounts.php:625
 #: includes/eme-discounts.php:791
-#: includes/eme-events.php:9723
+#: includes/eme-events.php:9737
 #: includes/eme-members.php:1933
 #: includes/eme-people.php:2826
 #: includes/eme-tasks.php:1024
@@ -1269,7 +1269,7 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: includes/eme-discounts.php:629
-#: includes/eme-events.php:9702
+#: includes/eme-events.php:9716
 #: includes/eme-members.php:1937
 #: includes/eme-templates.php:264
 msgid "Type"
@@ -1305,7 +1305,7 @@ msgstr "Om du lämnar kupongkoden blank men sätter ett utgångsdatum för rabat
 
 #: includes/eme-discounts.php:235
 #: includes/eme-discounts.php:654
-#: includes/eme-events.php:9735
+#: includes/eme-events.php:9749
 msgid "Discount groups"
 msgstr "Rabattgrupper"
 
@@ -1314,7 +1314,7 @@ msgid "If wanted, you can make this discount a part of one or more discount grou
 msgstr "Om du önskar kan du göra denna rabatt till en del av en eller flera rabattgrupper, och sedan tillämpa rabattgruppen på ditt event."
 
 #: includes/eme-discounts.php:660
-#: includes/eme-events.php:9742
+#: includes/eme-events.php:9756
 msgid "Valid from"
 msgstr "Giltig från"
 
@@ -1323,7 +1323,7 @@ msgid "An optional coupon start date and time, if entered the coupon is not vali
 msgstr "Ett frivilligt datum och klockslag då kupongen börjar gälla, om det anges är kupongen inte giltig före detta datum och klockslag. "
 
 #: includes/eme-discounts.php:667
-#: includes/eme-events.php:9743
+#: includes/eme-events.php:9757
 msgid "Valid until"
 msgstr "Giltig till"
 
@@ -1351,7 +1351,7 @@ msgid "Require users to be logged-in for this discount to apply."
 msgstr "Kräv att användare är inloggade för att rabatten ska gälla."
 
 #: includes/eme-discounts.php:686
-#: includes/eme-events.php:8893
+#: includes/eme-events.php:8907
 msgid "Require EME groups"
 msgstr "Kräv EME grupper"
 
@@ -1360,7 +1360,7 @@ msgid "Require logged-in user to be in of one of the selected EME groups for thi
 msgstr "Kräv att den inloggade användaren är med i någon av de valda EME grupperna för att rabatten ska gälla."
 
 #: includes/eme-discounts.php:692
-#: includes/eme-events.php:8898
+#: includes/eme-events.php:8912
 msgid "Require EME membership"
 msgstr "Kräv EME medlemskap"
 
@@ -1438,34 +1438,34 @@ msgid "A discount group exists of several discounts, and you can ask for several
 msgstr "En rabattgrupp består av flera rabatter och du kan be om flera rabattkoder genom att använda #_DISCOUNT flera gånger. Denna parameter sätter en gräns för hur många giltiga rabatter som kan användas, så även om du t.ex. anger 5 giltiga kupongkoder kan du begränsa användningen till t.ex. 3 stycken."
 
 #: includes/eme-discounts.php:1481
-#: includes/eme-events.php:9745
+#: includes/eme-events.php:9759
 msgid "Fixed"
 msgstr "Fast"
 
 #: includes/eme-discounts.php:1482
-#: includes/eme-events.php:9747
+#: includes/eme-events.php:9761
 msgid "Percentage"
 msgstr "Procent"
 
 #: includes/eme-discounts.php:1484
-#: includes/eme-events.php:9746
+#: includes/eme-events.php:9760
 msgid "Fixed per seat"
 msgstr "Fast per plats"
 
 #: includes/eme-discounts.php:1548
 #: includes/eme-discounts.php:1549
-#: includes/eme-formfields.php:1696
-#: includes/eme-formfields.php:1710
-#: includes/eme-formfields.php:3811
-#: includes/eme-formfields.php:3813
-#: includes/eme-formfields.php:3814
-#: includes/eme-formfields.php:3815
+#: includes/eme-formfields.php:1744
+#: includes/eme-formfields.php:1758
+#: includes/eme-formfields.php:3859
+#: includes/eme-formfields.php:3861
+#: includes/eme-formfields.php:3862
+#: includes/eme-formfields.php:3863
 #: includes/eme-fs.php:650
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3214
+#: includes/eme-locations.php:3312
 #: includes/eme-members.php:6748
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1495,18 +1495,18 @@ msgstr "Ja"
 
 #: includes/eme-discounts.php:1548
 #: includes/eme-discounts.php:1549
-#: includes/eme-formfields.php:1697
-#: includes/eme-formfields.php:1711
-#: includes/eme-formfields.php:3811
-#: includes/eme-formfields.php:3813
-#: includes/eme-formfields.php:3814
-#: includes/eme-formfields.php:3815
+#: includes/eme-formfields.php:1745
+#: includes/eme-formfields.php:1759
+#: includes/eme-formfields.php:3859
+#: includes/eme-formfields.php:3861
+#: includes/eme-formfields.php:3862
+#: includes/eme-formfields.php:3863
 #: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3214
+#: includes/eme-locations.php:3312
 #: includes/eme-members.php:6748
 #: includes/eme-people.php:444
 #: includes/eme-people.php:448
@@ -1567,7 +1567,7 @@ msgstr "Tryck på bakåtknappen i din webbläsare för att komma tillbaka till f
 #: includes/eme-events.php:864
 #: includes/eme-events.php:1049
 #: includes/eme-events.php:1274
-#: includes/eme-events.php:4783
+#: includes/eme-events.php:4797
 #: includes/eme-mailer.php:2441
 #: includes/eme-payments.php:158
 #: includes/eme-payments.php:2043
@@ -1605,8 +1605,8 @@ msgstr "Nytt återkommande inlagt som innehåller %d event"
 #: includes/eme-events.php:687
 #: includes/eme-events.php:716
 #: includes/eme-events.php:870
-#: includes/eme-events.php:6486
-#: includes/eme-events.php:10319
+#: includes/eme-events.php:6500
+#: includes/eme-events.php:10333
 msgid "Edit Recurrence"
 msgstr "Redigera återkommande"
 
@@ -1663,7 +1663,7 @@ msgid "Failed to update '%s'"
 msgstr "Kunde inte uppdatera ”%s”"
 
 #: includes/eme-events.php:773
-#: includes/eme-events.php:9680
+#: includes/eme-events.php:9694
 msgid "Insert New Event"
 msgstr "Lägg till nytt event"
 
@@ -1855,7 +1855,7 @@ msgstr "Avboka"
 
 #: includes/eme-events.php:1559
 #: includes/eme-events.php:1662
-#: includes/eme-tasks.php:1831
+#: includes/eme-tasks.php:1832
 msgid "Cancel task signup"
 msgstr "Avboka uppgift"
 
@@ -1873,7 +1873,7 @@ msgid "GDPR approval"
 msgstr "GDPR-godkännande"
 
 #: includes/eme-events.php:1656
-#: includes/eme-events.php:9795
+#: includes/eme-events.php:9809
 msgid "GDPR"
 msgstr "GDPR"
 
@@ -1886,8 +1886,8 @@ msgid "Events Made Easy plugin page"
 msgstr "Events Made Easy-tilläggssida"
 
 #: includes/eme-events.php:2359
-#: includes/eme-events.php:9724
-#: includes/eme-locations.php:2427
+#: includes/eme-events.php:9738
+#: includes/eme-locations.php:2525
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6218
 msgid "Edit"
@@ -1943,73 +1943,73 @@ msgid_plural "%d years"
 msgstr[0] "%d år"
 msgstr[1] "%d år"
 
-#: includes/eme-events.php:4326
-#: includes/eme-locations.php:1707
+#: includes/eme-events.php:4327
+#: includes/eme-locations.php:1805
 msgid "Previous week"
 msgstr "Föregående vecka"
 
-#: includes/eme-events.php:4327
-#: includes/eme-locations.php:1708
+#: includes/eme-events.php:4328
+#: includes/eme-locations.php:1806
 msgid "Next week"
 msgstr "Nästa vecka"
 
-#: includes/eme-events.php:4337
-#: includes/eme-locations.php:1743
+#: includes/eme-events.php:4338
+#: includes/eme-locations.php:1841
 msgid "Previous month"
 msgstr "Föregående månad"
 
-#: includes/eme-events.php:4338
-#: includes/eme-locations.php:1744
+#: includes/eme-events.php:4339
+#: includes/eme-locations.php:1842
 msgid "Next month"
 msgstr "Nästa månad"
 
-#: includes/eme-events.php:4347
-#: includes/eme-locations.php:1717
+#: includes/eme-events.php:4348
+#: includes/eme-locations.php:1815
 msgid "Previous year"
 msgstr "Föregående år"
 
-#: includes/eme-events.php:4348
-#: includes/eme-locations.php:1718
+#: includes/eme-events.php:4349
+#: includes/eme-locations.php:1816
 msgid "Next year"
 msgstr "Nästa år"
 
-#: includes/eme-events.php:4355
-#: includes/eme-events.php:4364
-#: includes/eme-locations.php:1725
-#: includes/eme-locations.php:1734
+#: includes/eme-events.php:4356
+#: includes/eme-events.php:4365
+#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1832
 msgid "Previous day"
 msgstr "Föregående dag"
 
-#: includes/eme-events.php:4356
-#: includes/eme-events.php:4365
-#: includes/eme-locations.php:1726
-#: includes/eme-locations.php:1735
+#: includes/eme-events.php:4357
+#: includes/eme-events.php:4366
+#: includes/eme-locations.php:1824
+#: includes/eme-locations.php:1833
 msgid "Next day"
 msgstr "Nästa dag"
 
-#: includes/eme-events.php:4305
+#: includes/eme-events.php:4306
 msgid "Previous page"
 msgstr "Föregående sida"
 
-#: includes/eme-events.php:4306
+#: includes/eme-events.php:4307
 msgid "Next page"
 msgstr "Nästa sida"
 
 #. translators: %d is the page number
-#: includes/eme-events.php:4410
-#: includes/eme-events.php:4422
+#: includes/eme-events.php:4411
+#: includes/eme-events.php:4423
 msgid "Page %d"
 msgstr "Sida %d"
 
 #. translators: %s is the CSV row data
-#: includes/eme-events.php:5974
-#: includes/eme-events.php:5981
+#: includes/eme-events.php:5988
+#: includes/eme-events.php:5995
 msgid "Location not imported: %s"
 msgstr "Plats importerades inte: %s"
 
 #. translators: %1$s is the field name, %2$s is the CSV row data
-#: includes/eme-events.php:6011
-#: includes/eme-events.php:6015
+#: includes/eme-events.php:6025
+#: includes/eme-events.php:6029
 #: includes/eme-members.php:6126
 #: includes/eme-members.php:6132
 #: includes/eme-members.php:6138
@@ -2020,56 +2020,56 @@ msgid "Not imported (field %1$s not valid): %2$s"
 msgstr "Inte importerad (medlem finns inte): %1$s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-events.php:6079
+#: includes/eme-events.php:6093
 msgid "Not imported (problem updating the event in the db): %s"
 msgstr "Ej importerat (problem vid uppdatering av evenemanget i databasen): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-events.php:6088
+#: includes/eme-events.php:6102
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr "Ej importerat (problem vid infogning av evenemanget i databasen): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-events.php:6124
-#: includes/eme-locations.php:375
+#: includes/eme-events.php:6138
+#: includes/eme-locations.php:382
 #: includes/eme-members.php:6120
 #: includes/eme-members.php:6326
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Ej importerat (inte alla obligatoriska fält finns): %s"
 
 #. translators: %1$d is the number of inserts, %2$d is the number of updates, %3$d is the number of errors
-#: includes/eme-events.php:6128
-#: includes/eme-locations.php:379
+#: includes/eme-events.php:6142
+#: includes/eme-locations.php:386
 #: includes/eme-members.php:6240
 #: includes/eme-people.php:987
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr "Import slutförd: %1$d insättningar, %2$d uppdateringar, %3$d fel"
 
-#: includes/eme-events.php:6142
+#: includes/eme-events.php:6156
 #: includes/eme-rsvp.php:5440
 #: includes/eme-tasks.php:647
 msgid "Past events"
 msgstr "Tidigare event"
 
 #: events-manager.php:362
-#: includes/eme-events.php:6143
+#: includes/eme-events.php:6157
 #: includes/eme-rsvp.php:5441
 #: includes/eme-tasks.php:648
 msgid "All events"
 msgstr "Alla event"
 
-#: includes/eme-events.php:6144
+#: includes/eme-events.php:6158
 #: includes/eme-rsvp.php:5442
 #: includes/eme-tasks.php:649
 msgid "Future events"
 msgstr "Kommande event"
 
-#: includes/eme-events.php:6200
+#: includes/eme-events.php:6214
 msgid "Add a new event"
 msgstr "Lägg till ett nytt event"
 
 #. translators: %s is the default capability name
-#: includes/eme-events.php:6204
+#: includes/eme-events.php:6218
 #: includes/eme-options.php:1599
 msgid "Add event"
 msgstr "Lägg till event"
@@ -2082,323 +2082,323 @@ msgstr "Visa vanliga innehållet"
 msgid "Show trash content"
 msgstr "Visa innehållet i papperskorgen"
 
-#: includes/eme-events.php:6224
+#: includes/eme-events.php:6238
 #: includes/eme-rsvp.php:5537
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: includes/eme-events.php:6225
+#: includes/eme-events.php:6239
 #: includes/eme-rsvp.php:5538
 msgid "Events without category"
 msgstr "Event utan kategori"
 
-#: includes/eme-events.php:6232
-#: includes/eme-events.php:6312
-#: includes/eme-events.php:6353
-#: includes/eme-events.php:7110
+#: includes/eme-events.php:6246
+#: includes/eme-events.php:6326
+#: includes/eme-events.php:6367
+#: includes/eme-events.php:7124
 #: includes/eme-tasks.php:642
 msgid "Event name"
 msgstr "Eventets namn"
 
-#: includes/eme-events.php:6240
-#: includes/eme-events.php:6749
-#: includes/eme-events.php:6757
+#: includes/eme-events.php:6254
+#: includes/eme-events.php:6763
+#: includes/eme-events.php:6771
 #: includes/eme-fs.php:633
 msgid "Event Status"
 msgstr "Eventstatus"
 
-#: includes/eme-events.php:6242
+#: includes/eme-events.php:6256
 #, fuzzy
 msgid "Filter on location"
 msgstr "FIltrera plats"
 
-#: includes/eme-events.php:6254
+#: includes/eme-events.php:6268
 msgid "Filter events"
 msgstr "Filtrera event"
 
-#: includes/eme-locations.php:893
+#: includes/eme-locations.php:900
 #: includes/eme-people.php:2007
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr "Tips: när du söker efter värden i anpassade fält, kan du om du önskar begränsa vilka anpassade fält du söker i genom kryssrutan ”Anpassade fält att filtrera på”."
 
-#: includes/eme-events.php:6365
+#: includes/eme-events.php:6379
 msgid "Restore selected events (to draft status)"
 msgstr "Återställ valda event (till status utkast)"
 
-#: includes/eme-events.php:6366
+#: includes/eme-events.php:6380
 msgid "Permanently delete selected events"
 msgstr "Permanent borttagning av valda event"
 
-#: includes/eme-events.php:6265
+#: includes/eme-events.php:6279
 msgid "Publish selected events"
 msgstr "Publicera markerade event"
 
-#: includes/eme-events.php:6266
+#: includes/eme-events.php:6280
 msgid "Make selected events private"
 msgstr "Markera valda event som privata"
 
-#: includes/eme-events.php:6268
+#: includes/eme-events.php:6282
 msgid "Make selected events draft"
 msgstr "Markera valda event som utkast"
 
-#: includes/eme-events.php:6269
+#: includes/eme-events.php:6283
 msgid "Add selected events to category"
 msgstr "Lägg till valda event till kategori"
 
-#: includes/eme-events.php:6273
+#: includes/eme-events.php:6287
 msgid "Send emails for cancelled bookings too?"
 msgstr "Skicka e-post även för avbokade bokningar?"
 
-#: includes/eme-events.php:6278
+#: includes/eme-events.php:6292
 msgid "Please select a category"
 msgstr "Vänligen välj en kategori"
 
-#: includes/eme-events.php:6147
+#: includes/eme-events.php:6161
 msgid "Past recurrences"
 msgstr "Tidigare återkommande"
 
-#: includes/eme-events.php:6148
+#: includes/eme-events.php:6162
 msgid "All recurrences"
 msgstr "Alla återkommande"
 
-#: includes/eme-events.php:6149
+#: includes/eme-events.php:6163
 msgid "Ongoing recurrences"
 msgstr "Pågående återkommande"
 
-#: includes/eme-events.php:6291
+#: includes/eme-events.php:6305
 msgid "Add a new recurrence"
 msgstr "Skapa en nytt återkommande"
 
-#: includes/eme-events.php:6295
+#: includes/eme-events.php:6309
 msgid "Add recurrence"
 msgstr "Lägg till återkommande"
 
-#: includes/eme-events.php:6315
+#: includes/eme-events.php:6329
 msgid "Filter recurrences"
 msgstr "Filtrera återkommande"
 
-#: includes/eme-events.php:6323
+#: includes/eme-events.php:6337
 msgid "Publish selected recurrences"
 msgstr "Publicera valda återkommande"
 
-#: includes/eme-events.php:6324
+#: includes/eme-events.php:6338
 msgid "Make selected recurrences private"
 msgstr "Gör valda återkommande privata"
 
-#: includes/eme-events.php:6325
+#: includes/eme-events.php:6339
 msgid "Make selected recurrences draft"
 msgstr "Gör valda återkommande till utkast"
 
-#: includes/eme-events.php:6326
+#: includes/eme-events.php:6340
 msgid "Set new start/end date for selected recurrences"
 msgstr "Ange nytt start-/slutdatum för valda återkommande"
 
-#: includes/eme-events.php:6329
+#: includes/eme-events.php:6343
 msgid "Select new start date"
 msgstr "Välj nytt startdatum"
 
-#: includes/eme-events.php:6330
+#: includes/eme-events.php:6344
 msgid "Select new end date"
 msgstr "Välj nytt slutdatum"
 
-#: includes/eme-events.php:6391
+#: includes/eme-events.php:6405
 #: includes/eme-formfields.php:57
 #: includes/eme-locations.php:83
 #: includes/eme-templates.php:84
 msgid " (Copy)"
 msgstr "(Kopia)"
 
-#: includes/eme-events.php:6477
+#: includes/eme-events.php:6491
 msgid "WARNING: This is a recurrence."
 msgstr "VARNING: Det här är ett återkommande."
 
-#: includes/eme-events.php:6479
+#: includes/eme-events.php:6493
 msgid "If you change this recurrence, events with a start day no longer matching the defined days will be removed while missing events will get added. Existing events with a start day that still match the defined days will get updated but you will not lose bookings."
 msgstr "Om du ändrar detta återkommande kommer evenemang med en startdag som inte längre matchar de definierade dagarna att tas bort, medan saknade evenemang läggs till. Befintliga evenemang med en startdag som fortfarande matchar de definierade dagarna uppdateras, men du kommer inte att förlora bokningar."
 
-#: includes/eme-events.php:6482
+#: includes/eme-events.php:6496
 msgid "WARNING: This event is part of a recurrence."
 msgstr "Varning: Detta event är en del av ett återkommande."
 
-#: includes/eme-events.php:6484
+#: includes/eme-events.php:6498
 msgid "If you change this event, it will become an independent event and be removed from the recurrence."
 msgstr "Om du ändrar detta even kommer det att bli ett fristående event och tas bort från återkommandet."
 
-#: includes/eme-events.php:6505
-#: includes/eme-events.php:9675
-#: includes/eme-events.php:10269
+#: includes/eme-events.php:6519
+#: includes/eme-events.php:9689
+#: includes/eme-events.php:10283
 #: includes/eme-options.php:1368
 #: includes/eme-rsvp.php:6293
 msgid "RSVP"
 msgstr "OSA"
 
-#: includes/eme-events.php:6508
-#: includes/eme-events.php:6628
+#: includes/eme-events.php:6522
+#: includes/eme-events.php:6642
 msgid "Tasks"
 msgstr "Uppgifter"
 
-#: includes/eme-events.php:6512
-#: includes/eme-events.php:8541
-#: includes/eme-locations.php:427
-#: includes/eme-locations.php:779
+#: includes/eme-events.php:6526
+#: includes/eme-events.php:8555
+#: includes/eme-locations.php:434
+#: includes/eme-locations.php:786
 msgid "Attributes"
 msgstr "Attribut"
 
-#: includes/eme-events.php:6514
-#: includes/eme-events.php:8555
-#: includes/eme-locations.php:429
-#: includes/eme-locations.php:793
+#: includes/eme-events.php:6528
+#: includes/eme-events.php:8569
+#: includes/eme-locations.php:436
+#: includes/eme-locations.php:800
 #: includes/eme-members.php:1887
 #: includes/eme-members.php:2802
 #: includes/eme-options.php:1752
 msgid "Custom fields"
 msgstr "Anpassade fält"
 
-#: includes/eme-events.php:6540
+#: includes/eme-events.php:6554
 msgid "Generic RSVP info"
 msgstr "Allmän OSA-information"
 
-#: includes/eme-events.php:6544
+#: includes/eme-events.php:6558
 #: includes/eme-members.php:2209
 #: includes/eme-options.php:3372
 msgid "Payment methods"
 msgstr "Betalningsmetoder"
 
-#: includes/eme-events.php:6548
+#: includes/eme-events.php:6562
 msgid "Dynamic data"
 msgstr "Dynamiska data"
 
-#: includes/eme-events.php:6559
+#: includes/eme-events.php:6573
 #, fuzzy
 msgid "RSVP form format"
 msgstr "OSA-formulär"
 
-#: includes/eme-events.php:6566
+#: includes/eme-events.php:6580
 msgid "Attendance settings"
 msgstr "Närvaroinställningar"
 
-#: includes/eme-events.php:6570
+#: includes/eme-events.php:6584
 msgid "RSVP Email format settings"
 msgstr "Inställningar för OSA-e-postformat"
 
-#: includes/eme-events.php:6575
+#: includes/eme-events.php:6589
 #: includes/eme-options.php:2248
 msgid "Booking Made or Approved Email"
 msgstr "Meddelandetext ny eller godkänd bokning"
 
-#: includes/eme-events.php:6579
+#: includes/eme-events.php:6593
 msgid "Booking Awaiting User Confirmation Email"
 msgstr "E-post väntande på användarbekräftelse av bokning"
 
-#: includes/eme-events.php:6583
+#: includes/eme-events.php:6597
 #: includes/eme-options.php:2313
 msgid "Booking Pending Email"
 msgstr "Meddelandetext väntande bokning"
 
-#: includes/eme-events.php:6587
+#: includes/eme-events.php:6601
 #: includes/eme-options.php:2373
 msgid "Booking Updated Email"
 msgstr "Meddelandetext uppdaterad bokning"
 
-#: includes/eme-events.php:6591
+#: includes/eme-events.php:6605
 #: includes/eme-options.php:2388
 msgid "Booking Reminder Email"
 msgstr "Påminnelsemeddelande för bokning"
 
-#: includes/eme-events.php:6595
+#: includes/eme-events.php:6609
 #: includes/eme-options.php:2405
 msgid "Booking Cancelled Email"
 msgstr "Meddelandetext avbruten bokning"
 
-#: includes/eme-events.php:6599
+#: includes/eme-events.php:6613
 #: includes/eme-options.php:2422
 msgid "Booking Deleted Email"
 msgstr "Meddelandetext borttagen bokning"
 
-#: includes/eme-events.php:6603
+#: includes/eme-events.php:6617
 #: includes/eme-options.php:2437
 msgid "Booking Paid Email"
 msgstr "Meddelandetext betald bokning"
 
-#: includes/eme-events.php:6607
+#: includes/eme-events.php:6621
 #: includes/eme-options.php:2493
 msgid "Booking Payment Gateway Notification Email"
 msgstr "E-post för notifiering av bokningsbetalning via betalningslösning"
 
-#: includes/eme-events.php:6621
+#: includes/eme-events.php:6635
 msgid "Enable tasks for this event"
 msgstr "Aktivera uppgifter för detta evenemang"
 
-#: includes/eme-events.php:6630
+#: includes/eme-events.php:6644
 msgid "List of tasks"
 msgstr "Lista över uppgifter"
 
-#: includes/eme-events.php:6634
+#: includes/eme-events.php:6648
 msgid "Tasks settings"
 msgstr "Inställningar för uppgifter"
 
-#: includes/eme-events.php:6636
+#: includes/eme-events.php:6650
 msgid "Tasks generic settings"
 msgstr "Allmänna inställningar för uppgifter"
 
-#: includes/eme-events.php:6640
+#: includes/eme-events.php:6654
 msgid "Tasks form format"
 msgstr "Format för uppgiftsformulär"
 
-#: includes/eme-events.php:6647
+#: includes/eme-events.php:6661
 msgid "Tasks Email format settings"
 msgstr "Inställningar för e-postformat för uppgifter"
 
-#: includes/eme-events.php:6651
+#: includes/eme-events.php:6665
 #: includes/eme-options.php:2601
 #, fuzzy
 msgid "Task Signup Pending Email"
 msgstr "Meddelandetext väntande bokning"
 
-#: includes/eme-events.php:6655
+#: includes/eme-events.php:6669
 #: includes/eme-options.php:2616
 msgid "Task Signup Made Email"
 msgstr "E-post för genomförd uppgiftsanmälan"
 
-#: includes/eme-events.php:6659
+#: includes/eme-events.php:6673
 #: includes/eme-options.php:2631
 msgid "Task Signup Reminder Email"
 msgstr "Påminnelsemeddelande för uppgiftsanmälan"
 
-#: includes/eme-events.php:6663
+#: includes/eme-events.php:6677
 #: includes/eme-options.php:2643
 msgid "Task Signup Cancelled Email"
 msgstr "E-post för avbokad uppgiftsanmälan"
 
-#: includes/eme-events.php:6667
+#: includes/eme-events.php:6681
 #: includes/eme-options.php:2657
 msgid "Task Signup Deleted Email"
 msgstr "E-post för borttagen uppgiftsanmälan"
 
-#: includes/eme-events.php:6708
+#: includes/eme-events.php:6722
 msgid "Save"
 msgstr "Spara"
 
-#: includes/eme-events.php:6713
+#: includes/eme-events.php:6727
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "Är du säker på att du vill ta bort denna återkommande?"
 
-#: includes/eme-events.php:6715
+#: includes/eme-events.php:6729
 msgid "Update"
 msgstr "Uppdatera"
 
-#: includes/eme-events.php:6722
-#: includes/eme-events.php:9766
+#: includes/eme-events.php:6736
+#: includes/eme-events.php:9780
 msgid "View"
 msgstr "Visa"
 
-#: includes/eme-events.php:6734
+#: includes/eme-events.php:6748
 msgid "Delete Recurrence"
 msgstr "Radera återkommande"
 
-#: includes/eme-events.php:6751
-#: includes/eme-events.php:9683
-#: includes/eme-events.php:9719
+#: includes/eme-events.php:6765
+#: includes/eme-events.php:9697
+#: includes/eme-events.php:9733
 #: includes/eme-members.php:1816
 #: includes/eme-members.php:1941
 #: includes/eme-options.php:3421
@@ -2408,363 +2408,363 @@ msgstr "Radera återkommande"
 msgid "Status"
 msgstr "Status"
 
-#: includes/eme-events.php:6881
-#: includes/eme-locations.php:468
+#: includes/eme-events.php:6895
+#: includes/eme-locations.php:475
 #: includes/eme-widgets.php:201
 #: includes/eme-widgets.php:367
 msgid "Author"
 msgstr "Författare"
 
-#: includes/eme-events.php:6883
+#: includes/eme-events.php:6897
 msgid "Author of this event: "
 msgstr "Skapare av detta event:"
 
-#: includes/eme-events.php:6899
+#: includes/eme-events.php:6913
 msgid "Contact Person"
 msgstr "Kontaktperson"
 
-#: includes/eme-events.php:6901
+#: includes/eme-events.php:6915
 msgid "If you leave this empty, the author will be used as contact person."
 msgstr "Om du lämnar detta tomt kommer författaren att användas som kontaktperson."
 
-#: includes/eme-events.php:6914
+#: includes/eme-events.php:6928
 msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info."
 msgstr "Eftersom ingen skapare är definierad för detta event kommer administratörens att användas som kontaktperson (t.ex. vid användning av #_CONTACTPERSON i e-postmeddelanden)."
 
-#: includes/eme-events.php:6922
-#: includes/eme-events.php:9837
-#: includes/eme-events.php:10108
-#: includes/eme-locations.php:485
-#: includes/eme-locations.php:3188
+#: includes/eme-events.php:6936
+#: includes/eme-events.php:9851
+#: includes/eme-events.php:10122
+#: includes/eme-locations.php:492
+#: includes/eme-locations.php:3286
 #: includes/eme-recurrence.php:775
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
 msgid "Category"
 msgstr "Kategori"
 
-#: includes/eme-events.php:6939
+#: includes/eme-events.php:6953
 msgid "WP Page template"
 msgstr "WP-sidmall"
 
-#: includes/eme-events.php:6944
+#: includes/eme-events.php:6958
 msgid "By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted."
 msgstr "Som standard använder evenemanget samma WP-sidmall som den definierade specialevenemangssidan. Om ditt tema tillhandahåller flera olika sidmallar kan du välja en annan om så önskas."
 
-#: includes/eme-events.php:6962
+#: includes/eme-events.php:6976
 msgid "The event name"
 msgstr "Eventets namn"
 
-#: includes/eme-events.php:6963
+#: includes/eme-events.php:6977
 msgid "The start date"
 msgstr "Startdatumet"
 
 #. translators: %s is the name of the required field
-#: includes/eme-events.php:6968
-#: includes/eme-events.php:6972
-#: includes/eme-locations.php:1418
-#: includes/eme-locations.php:1423
-#: includes/eme-locations.php:1427
+#: includes/eme-events.php:6982
+#: includes/eme-events.php:6986
+#: includes/eme-locations.php:1432
+#: includes/eme-locations.php:1437
+#: includes/eme-locations.php:1441
 msgid "%s is missing!"
 msgstr "%s fattas!"
 
-#: includes/eme-events.php:6977
+#: includes/eme-events.php:6991
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the price per category (multiprice) as well."
 msgstr "Eftersom eventet har flera olika platskategorier (multiplats), måste du ange priset per kategori (multipris) också. "
 
-#: includes/eme-events.php:6983
+#: includes/eme-events.php:6997
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the exact same amount of prices (multiprice) as well."
 msgstr "Eftersom eventet har flera olika platskategorier (multiplats), måste du ange exakt samma antal priser (multipris) också."
 
-#: includes/eme-events.php:7019
+#: includes/eme-events.php:7033
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "Ditt event verkar ha multipla priskategorier, så du kan inte använda #_SEATS (eller #_SPACES) i ditt OSA-formulär för eventet. Vänligen ändra OSA-formuläret så att det använder #_SEATS{xx} i stället."
 
-#: includes/eme-events.php:7046
+#: includes/eme-events.php:7060
 msgid "Please correct the RSVP form format to use #_EMAIL."
 msgstr "Vänligen ändra OSA-formuläret så att det innehåller #_EMAIL."
 
-#: includes/eme-events.php:7049
+#: includes/eme-events.php:7063
 msgid "Please correct the RSVP form format to use #_LASTNAME."
 msgstr "Vänligen ändra OSA-formuläret så att det innehåller #_LASTNAME."
 
-#: includes/eme-events.php:7059
+#: includes/eme-events.php:7073
 msgid "You have indicated you want to use a password but your event RSVP form format doesn't contain #_PASSWORD. Please correct the RSVP form format to use #_PASSWORD."
 msgstr "Du har angett att du vill använda ett lösenord, men ditt OSA-formulär för eventet innehåller inte #_PASSWORD. Vänligen ändra OSA-formuläret så att det innehåller #_PASSWORD."
 
-#: includes/eme-events.php:7063
+#: includes/eme-events.php:7077
 msgid "The min amount of seats to book should not be bigger than the max amount of seats to book."
 msgstr "Minsta antalet platser att boka får inte vara större än högsta antalet platser att boka."
 
-#: includes/eme-events.php:7070
+#: includes/eme-events.php:7084
 msgid "If specified, the max amount of seats to book should consist of integers only."
 msgstr "Om angivet, måste högsta antalet platser att boka endast bestå av heltal."
 
-#: includes/eme-events.php:7073
+#: includes/eme-events.php:7087
 msgid "Since this is a multiprice event and you decided to limit the max amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"max seats to book\" as you did for the prices."
 msgstr "Eftersom detta event är multipris och du valt att begränsa maxmialt antal platser att boka (i en bokning) per priskategori, måste du ange exakt samma antal ”minsta antal platser att boka” som du gjorde för priserna. "
 
-#: includes/eme-events.php:7076
+#: includes/eme-events.php:7090
 msgid "If specified, the max amount of seats to book should be an integer."
 msgstr "Om angivet måste högsta antalet platser att boka vara ett heltal."
 
-#: includes/eme-events.php:7083
+#: includes/eme-events.php:7097
 msgid "If specified, the min amount of seats to book should consist of integers only."
 msgstr "Om angivet, måste minsta antalet platser att boka endast bestå av heltal."
 
-#: includes/eme-events.php:7086
+#: includes/eme-events.php:7100
 msgid "Since this is a multiprice event and you decided to limit the min amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"min seats to book\" as you did for the prices."
 msgstr "Eftersom detta event är multipris och du valt att begränsa minsta antal platser att boka (i en bokning) per priskategori, måste du ange exakt samma antal ”minsta antal platser att boka” som du gjorde för priserna."
 
-#: includes/eme-events.php:7089
+#: includes/eme-events.php:7103
 msgid "If specified, the min amount of seats to book should be an integer."
 msgstr "Om angivet måste minsta antalet platser att boka vara ett heltal."
 
-#: includes/eme-events.php:7101
-#: includes/eme-locations.php:1434
+#: includes/eme-events.php:7115
+#: includes/eme-locations.php:1448
 msgid "Ach, some problems here:"
 msgstr "Ojdå, det var problem här:"
 
-#: includes/eme-events.php:7182
+#: includes/eme-events.php:7196
 msgid "Event date"
 msgstr "Datum för eventet"
 
-#: includes/eme-events.php:7187
+#: includes/eme-events.php:7201
 msgid "The event beginning and end date."
 msgstr "Eventets start- och slutdatum."
 
-#: includes/eme-events.php:7191
+#: includes/eme-events.php:7205
 msgid "Event duration (in days)"
 msgstr "Eventets längd (i dagar)"
 
-#: includes/eme-events.php:7192
+#: includes/eme-events.php:7206
 msgid "day(s)"
 msgstr "dag(ar)"
 
-#: includes/eme-events.php:7196
+#: includes/eme-events.php:7210
 msgid "Event time"
 msgstr "Tid för eventet"
 
-#: includes/eme-events.php:7202
+#: includes/eme-events.php:7216
 msgid "The time of the event beginning and end"
 msgstr "Start- och sluttid för eventet"
 
-#: includes/eme-events.php:7206
+#: includes/eme-events.php:7220
 msgid "This event lasts all day"
 msgstr "Heldagsevent"
 
-#: includes/eme-events.php:7212
+#: includes/eme-events.php:7226
 msgid "Check if your event happens more than once."
 msgstr "Markera ifall ditt event inträffar mer än en gång."
 
-#: includes/eme-events.php:7216
+#: includes/eme-events.php:7230
 msgid "Bookings found for this event, so not possible to convert to a recurring event."
 msgstr "Bokningar finns för detta event, går inte att konvertera till ett återkommande event."
 
-#: includes/eme-events.php:7226
+#: includes/eme-events.php:7240
 #: includes/eme-mailer.php:2904
 #: includes/eme-widgets.php:158
 msgid "Daily"
 msgstr "Daglig"
 
-#: includes/eme-events.php:7227
+#: includes/eme-events.php:7241
 #: includes/eme-mailer.php:2905
 msgid "Weekly"
 msgstr "Veckovis"
 
-#: includes/eme-events.php:7228
+#: includes/eme-events.php:7242
 #: includes/eme-mailer.php:2906
 #: includes/eme-widgets.php:159
 msgid "Monthly"
 msgstr "Månatlig"
 
-#: includes/eme-events.php:7229
+#: includes/eme-events.php:7243
 #: includes/eme-mailer.php:2907
 msgid "Specific days"
 msgstr "Specifika dagar"
 
-#: includes/eme-events.php:7230
+#: includes/eme-events.php:7244
 #: includes/eme-mailer.php:2908
 #, fuzzy
 msgid "Specific months"
 msgstr "Specifika dagar"
 
-#: includes/eme-events.php:7256
+#: includes/eme-events.php:7270
 #: includes/eme-mailer.php:2919
 msgid "first"
 msgstr "första"
 
-#: includes/eme-events.php:7257
+#: includes/eme-events.php:7271
 #: includes/eme-mailer.php:2920
 msgid "second"
 msgstr "andra"
 
-#: includes/eme-events.php:7258
+#: includes/eme-events.php:7272
 #: includes/eme-mailer.php:2921
 msgid "third"
 msgstr "tredje"
 
-#: includes/eme-events.php:7259
+#: includes/eme-events.php:7273
 #: includes/eme-mailer.php:2922
 msgid "fourth"
 msgstr "fjärde"
 
-#: includes/eme-events.php:7260
+#: includes/eme-events.php:7274
 #: includes/eme-mailer.php:2923
 msgid "fifth"
 msgstr "femte"
 
-#: includes/eme-events.php:7261
+#: includes/eme-events.php:7275
 #: includes/eme-mailer.php:2924
 msgid "last"
 msgstr "sista"
 
-#: includes/eme-events.php:7262
+#: includes/eme-events.php:7276
 #: includes/eme-mailer.php:2925
 msgid "Start day"
 msgstr "Startdag"
 
-#: includes/eme-events.php:7274
+#: includes/eme-events.php:7288
 msgid "Recurrence dates"
 msgstr "Datum för återkommande"
 
-#: includes/eme-events.php:7284
+#: includes/eme-events.php:7298
 msgid "Select all the dates you want the event to begin on."
 msgstr "Markera alla datum du vill att eventet ska börja på."
 
-#: includes/eme-events.php:7289
+#: includes/eme-events.php:7303
 msgid "Frequency:"
 msgstr "Frekvens:"
 
-#: includes/eme-events.php:7295
-#: includes/eme-events.php:7313
-#: includes/eme-events.php:7326
+#: includes/eme-events.php:7309
+#: includes/eme-events.php:7327
+#: includes/eme-events.php:7340
 msgid "Every"
 msgstr "Varje"
 
-#: includes/eme-events.php:7300
+#: includes/eme-events.php:7314
 #: includes/eme-recurrence.php:743
 msgid "day"
 msgstr "dag"
 
-#: includes/eme-events.php:7302
+#: includes/eme-events.php:7316
 msgid "week"
 msgstr "vecka"
 
-#: includes/eme-events.php:7303
+#: includes/eme-events.php:7317
 msgid "weeks"
 msgstr "veckor"
 
-#: includes/eme-events.php:7304
+#: includes/eme-events.php:7318
 msgid "month"
 msgstr "månad"
 
-#: includes/eme-events.php:7305
+#: includes/eme-events.php:7319
 msgid "months"
 msgstr "månader"
 
-#: includes/eme-events.php:7310
+#: includes/eme-events.php:7324
 msgid "If you leave this empty, the recurrence start date will be used as a reference."
 msgstr "Om du lämnar detta tomt kommer återkommande startdatum att användas som referens"
 
-#: includes/eme-events.php:7320
-#: includes/eme-events.php:7333
+#: includes/eme-events.php:7334
+#: includes/eme-events.php:7347
 msgid "Day of month"
 msgstr "Dag i månaden"
 
-#: includes/eme-events.php:7322
-#: includes/eme-events.php:7335
+#: includes/eme-events.php:7336
+#: includes/eme-events.php:7349
 msgid "If you use \"Start day\" as day of the month, the recurrence start date will be used as a reference."
 msgstr "Om du använder ”Startdag” som dag i månaden kommer återkommande startdatum att användas som referens."
 
-#: includes/eme-events.php:7351
+#: includes/eme-events.php:7365
 msgid "Holidays: "
 msgstr "Helgdagar:"
 
-#: includes/eme-events.php:7356
+#: includes/eme-events.php:7370
 msgid "No events will be created on days matching an entry in the holidays list"
 msgstr "Inga event kommer att skapas på dagar som matchar ett inlägg i listan över helgdagar"
 
-#: includes/eme-events.php:7376
+#: includes/eme-events.php:7390
 msgid "Single Event Title"
 msgstr "Rubrik för enstaka event"
 
-#: includes/eme-events.php:7378
-#: includes/eme-events.php:7410
-#: includes/eme-events.php:7448
-#: includes/eme-events.php:7470
-#: includes/eme-events.php:7514
-#: includes/eme-events.php:7556
-#: includes/eme-events.php:7578
-#: includes/eme-events.php:7604
-#: includes/eme-events.php:7626
-#: includes/eme-events.php:7664
-#: includes/eme-events.php:7672
-#: includes/eme-events.php:7699
-#: includes/eme-events.php:7721
-#: includes/eme-events.php:7757
-#: includes/eme-events.php:7779
-#: includes/eme-events.php:7805
-#: includes/eme-events.php:7827
-#: includes/eme-events.php:7865
-#: includes/eme-events.php:7873
-#: includes/eme-events.php:7894
-#: includes/eme-events.php:7916
-#: includes/eme-events.php:7945
-#: includes/eme-events.php:7967
-#: includes/eme-events.php:7986
-#: includes/eme-events.php:8008
-#: includes/eme-events.php:8037
-#: includes/eme-events.php:8059
-#: includes/eme-events.php:8085
-#: includes/eme-events.php:8107
-#: includes/eme-events.php:8141
-#: includes/eme-events.php:8163
-#: includes/eme-events.php:8189
-#: includes/eme-events.php:8211
-#: includes/eme-events.php:8249
-#: includes/eme-events.php:8257
-#: includes/eme-events.php:8278
-#: includes/eme-events.php:8300
-#: includes/eme-events.php:8328
-#: includes/eme-events.php:8357
+#: includes/eme-events.php:7392
+#: includes/eme-events.php:7424
+#: includes/eme-events.php:7462
+#: includes/eme-events.php:7484
+#: includes/eme-events.php:7528
+#: includes/eme-events.php:7570
+#: includes/eme-events.php:7592
+#: includes/eme-events.php:7618
+#: includes/eme-events.php:7640
+#: includes/eme-events.php:7678
+#: includes/eme-events.php:7686
+#: includes/eme-events.php:7713
+#: includes/eme-events.php:7735
+#: includes/eme-events.php:7771
+#: includes/eme-events.php:7793
+#: includes/eme-events.php:7819
+#: includes/eme-events.php:7841
+#: includes/eme-events.php:7879
+#: includes/eme-events.php:7887
+#: includes/eme-events.php:7908
+#: includes/eme-events.php:7930
+#: includes/eme-events.php:7959
+#: includes/eme-events.php:7981
+#: includes/eme-events.php:8000
+#: includes/eme-events.php:8022
+#: includes/eme-events.php:8051
+#: includes/eme-events.php:8073
+#: includes/eme-events.php:8099
+#: includes/eme-events.php:8121
+#: includes/eme-events.php:8155
+#: includes/eme-events.php:8177
+#: includes/eme-events.php:8203
+#: includes/eme-events.php:8225
+#: includes/eme-events.php:8263
+#: includes/eme-events.php:8271
+#: includes/eme-events.php:8292
+#: includes/eme-events.php:8314
+#: includes/eme-events.php:8342
+#: includes/eme-events.php:8371
 msgid "Only fill this in if you want to override the default settings."
 msgstr "Fyll bara i detta ifall du vill åsidosätta standardinställningarna."
 
-#: includes/eme-events.php:7381
-#: includes/eme-events.php:7415
-#: includes/eme-events.php:7451
-#: includes/eme-events.php:7473
-#: includes/eme-events.php:7517
-#: includes/eme-events.php:7559
-#: includes/eme-events.php:7581
-#: includes/eme-events.php:7607
-#: includes/eme-events.php:7629
-#: includes/eme-events.php:7702
-#: includes/eme-events.php:7724
-#: includes/eme-events.php:7760
-#: includes/eme-events.php:7782
-#: includes/eme-events.php:7808
-#: includes/eme-events.php:7830
-#: includes/eme-events.php:7897
-#: includes/eme-events.php:7919
-#: includes/eme-events.php:7948
-#: includes/eme-events.php:7970
-#: includes/eme-events.php:7989
-#: includes/eme-events.php:8011
-#: includes/eme-events.php:8040
-#: includes/eme-events.php:8062
-#: includes/eme-events.php:8088
-#: includes/eme-events.php:8110
-#: includes/eme-events.php:8144
-#: includes/eme-events.php:8166
-#: includes/eme-events.php:8192
-#: includes/eme-events.php:8214
-#: includes/eme-events.php:8281
-#: includes/eme-events.php:8303
-#: includes/eme-events.php:8331
-#: includes/eme-events.php:8360
-#: includes/eme-events.php:8710
-#: includes/eme-events.php:8727
+#: includes/eme-events.php:7395
+#: includes/eme-events.php:7429
+#: includes/eme-events.php:7465
+#: includes/eme-events.php:7487
+#: includes/eme-events.php:7531
+#: includes/eme-events.php:7573
+#: includes/eme-events.php:7595
+#: includes/eme-events.php:7621
+#: includes/eme-events.php:7643
+#: includes/eme-events.php:7716
+#: includes/eme-events.php:7738
+#: includes/eme-events.php:7774
+#: includes/eme-events.php:7796
+#: includes/eme-events.php:7822
+#: includes/eme-events.php:7844
+#: includes/eme-events.php:7911
+#: includes/eme-events.php:7933
+#: includes/eme-events.php:7962
+#: includes/eme-events.php:7984
+#: includes/eme-events.php:8003
+#: includes/eme-events.php:8025
+#: includes/eme-events.php:8054
+#: includes/eme-events.php:8076
+#: includes/eme-events.php:8102
+#: includes/eme-events.php:8124
+#: includes/eme-events.php:8158
+#: includes/eme-events.php:8180
+#: includes/eme-events.php:8206
+#: includes/eme-events.php:8228
+#: includes/eme-events.php:8295
+#: includes/eme-events.php:8317
+#: includes/eme-events.php:8345
+#: includes/eme-events.php:8374
+#: includes/eme-events.php:8724
+#: includes/eme-events.php:8741
 #: includes/eme-mailer.php:3603
 #: includes/eme-mailer.php:3613
 #: includes/eme-mailer.php:3795
@@ -2772,41 +2772,41 @@ msgstr "Fyll bara i detta ifall du vill åsidosätta standardinställningarna."
 msgid "Either choose from a template: "
 msgstr "Välj antingen en mall:"
 
-#: includes/eme-events.php:7385
-#: includes/eme-events.php:7419
-#: includes/eme-events.php:7455
-#: includes/eme-events.php:7477
-#: includes/eme-events.php:7521
-#: includes/eme-events.php:7563
-#: includes/eme-events.php:7585
-#: includes/eme-events.php:7611
-#: includes/eme-events.php:7633
-#: includes/eme-events.php:7706
-#: includes/eme-events.php:7728
-#: includes/eme-events.php:7764
-#: includes/eme-events.php:7786
-#: includes/eme-events.php:7812
-#: includes/eme-events.php:7834
-#: includes/eme-events.php:7901
-#: includes/eme-events.php:7923
-#: includes/eme-events.php:7952
-#: includes/eme-events.php:7974
-#: includes/eme-events.php:7993
-#: includes/eme-events.php:8015
-#: includes/eme-events.php:8044
-#: includes/eme-events.php:8066
-#: includes/eme-events.php:8092
-#: includes/eme-events.php:8114
-#: includes/eme-events.php:8148
-#: includes/eme-events.php:8170
-#: includes/eme-events.php:8196
-#: includes/eme-events.php:8218
-#: includes/eme-events.php:8285
-#: includes/eme-events.php:8307
-#: includes/eme-events.php:8335
-#: includes/eme-events.php:8364
-#: includes/eme-events.php:8714
-#: includes/eme-events.php:8731
+#: includes/eme-events.php:7399
+#: includes/eme-events.php:7433
+#: includes/eme-events.php:7469
+#: includes/eme-events.php:7491
+#: includes/eme-events.php:7535
+#: includes/eme-events.php:7577
+#: includes/eme-events.php:7599
+#: includes/eme-events.php:7625
+#: includes/eme-events.php:7647
+#: includes/eme-events.php:7720
+#: includes/eme-events.php:7742
+#: includes/eme-events.php:7778
+#: includes/eme-events.php:7800
+#: includes/eme-events.php:7826
+#: includes/eme-events.php:7848
+#: includes/eme-events.php:7915
+#: includes/eme-events.php:7937
+#: includes/eme-events.php:7966
+#: includes/eme-events.php:7988
+#: includes/eme-events.php:8007
+#: includes/eme-events.php:8029
+#: includes/eme-events.php:8058
+#: includes/eme-events.php:8080
+#: includes/eme-events.php:8106
+#: includes/eme-events.php:8128
+#: includes/eme-events.php:8162
+#: includes/eme-events.php:8184
+#: includes/eme-events.php:8210
+#: includes/eme-events.php:8232
+#: includes/eme-events.php:8299
+#: includes/eme-events.php:8321
+#: includes/eme-events.php:8349
+#: includes/eme-events.php:8378
+#: includes/eme-events.php:8728
+#: includes/eme-events.php:8745
 #: includes/eme-members.php:2080
 #: includes/eme-members.php:2112
 #: includes/eme-members.php:2130
@@ -2829,23 +2829,23 @@ msgstr "Välj antingen en mall:"
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr "Eller fyll i en egen (om någonting anges här har det företräde över den valda mallen):"
 
-#: includes/eme-events.php:7405
+#: includes/eme-events.php:7419
 msgid "Single Event"
 msgstr "Enstaka event"
 
-#: includes/eme-events.php:7408
+#: includes/eme-events.php:7422
 msgid "The format of the single event page."
 msgstr "Sidformat för ett enstaka event"
 
-#: includes/eme-events.php:7412
+#: includes/eme-events.php:7426
 msgid "This defines the layout of your event (where the event description goes, the RSVP form, the map, ... ."
 msgstr "Detta definierar layouten för ditt evenemang (där evenemangbeskrivningen, OSA-formuläret, kartan osv. placeras)."
 
-#: includes/eme-events.php:7427
-#: includes/eme-events.php:8495
-#: includes/eme-events.php:8563
-#: includes/eme-locations.php:703
-#: includes/eme-locations.php:800
+#: includes/eme-events.php:7441
+#: includes/eme-events.php:8509
+#: includes/eme-events.php:8577
+#: includes/eme-locations.php:710
+#: includes/eme-locations.php:807
 #: includes/eme-mailer.php:3625
 #: includes/eme-mailer.php:3809
 #: includes/eme-members.php:2809
@@ -2853,55 +2853,55 @@ msgstr "Detta definierar layouten för ditt evenemang (där evenemangbeskrivning
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr "Ditt konto har möjlighet att publicera obegränsat HTML-innehåll här, undantaget JavaScript."
 
-#: includes/eme-events.php:7445
+#: includes/eme-events.php:7459
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Ärenderad kontaktperson om betald bokning via betalningslösning"
 
-#: includes/eme-events.php:7446
+#: includes/eme-events.php:7460
 #: includes/eme-members.php:2763
 #: includes/eme-options.php:2500
 #: includes/eme-options.php:2516
 msgid "The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "Ärenderad som sänds till kontaktpersonen när en betalningsnotifiering tas emot från en betalningslösning."
 
-#: includes/eme-events.php:7466
+#: includes/eme-events.php:7480
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Meddelandetext kontaktperson om mottagen betalning via betalningslösning"
 
-#: includes/eme-events.php:7468
+#: includes/eme-events.php:7482
 #: includes/eme-members.php:2770
 #: includes/eme-options.php:2501
 #: includes/eme-options.php:2517
 msgid "The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "Meddelandetext som sänds till kontaktpersonen när en betalningsnotifiering tas emot från en betalningslösning."
 
-#: includes/eme-events.php:7492
+#: includes/eme-events.php:7506
 #: includes/eme-members.php:2265
 msgid "Dynamic data check on every field"
 msgstr "Dynamisk datakontroll på alla fält"
 
-#: includes/eme-events.php:7494
+#: includes/eme-events.php:7508
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your RSVP form definition. Using this option, you can use all booking placeholders, even if not defined in your RSVP form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr "Som standard görs den dynamiska kontrollen av data bara för de fält som anges i dina villkor för dynamiskt data, ifall de finns i din definition av OSA-formuläret. Med detta val kan du använda alla platshållare för bokningar, även om de inte definieras i ditt OSA-formulär. Den lilla nackdelen med detta är att fler förfrågningar kommer att skickas till back-end, så använd endast där det är helt nödvändigt."
 
-#: includes/eme-events.php:7495
+#: includes/eme-events.php:7509
 msgid "If your event uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr "Om ditt evenemang använder en rabatt av typen kod och du vill att det dynamiska priset (med #_DYNAMICPRICE) ska uppdateras med hänsyn till den rabatten, kryssa också för detta alternativ."
 
-#: includes/eme-events.php:7510
+#: includes/eme-events.php:7524
 #: includes/eme-options.php:2029
 msgid "Booking recorded message"
 msgstr "Meddelande för registrerad bokning"
 
-#: includes/eme-events.php:7512
+#: includes/eme-events.php:7526
 #: includes/eme-options.php:2029
 msgid "The text (html allowed) shown to the user when the booking has been made successfully."
 msgstr "Text (html tillåts) som visas för användaren när en lyckad bokning har genomförts."
 
-#: includes/eme-events.php:7539
-#: includes/eme-events.php:7689
-#: includes/eme-events.php:7746
-#: includes/eme-events.php:8132
+#: includes/eme-events.php:7553
+#: includes/eme-events.php:7703
+#: includes/eme-events.php:7760
+#: includes/eme-events.php:8146
 #: includes/eme-options.php:2252
 #: includes/eme-options.php:2317
 #: includes/eme-options.php:2378
@@ -2913,60 +2913,60 @@ msgstr "Text (html tillåts) som visas för användaren när en lyckad bokning h
 msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "OSA-notifieringar är inte aktiverade, så dessa e-postmeddelanden kommer inte att skickas. Gå till e-postinställningarna för att aktivera detta om så önskas."
 
-#: includes/eme-events.php:7542
+#: includes/eme-events.php:7556
 #: includes/eme-options.php:2255
 msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "OSA-notifieringar är inte aktiverade för gjorda eller godkända bokningar, så dessa e-postmeddelanden kommer inte att skickas. Gå till e-postinställningarna för att aktivera detta om så önskas."
 
-#: includes/eme-events.php:7553
+#: includes/eme-events.php:7567
 #: includes/eme-options.php:2267
 msgid "Booking Made Email Subject"
 msgstr "Ärenderad om genomförd bokning"
 
-#: includes/eme-events.php:7554
+#: includes/eme-events.php:7568
 #: includes/eme-options.php:2267
 msgid "The subject of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Ärenderad som sänds till svarande när en bokning gjorts (som inte inväntar godkännande) eller godkänts."
 
-#: includes/eme-events.php:7575
+#: includes/eme-events.php:7589
 #: includes/eme-options.php:2268
 msgid "Booking Made Email Body"
 msgstr "Meddelandetext genomförd bokning"
 
-#: includes/eme-events.php:7576
+#: includes/eme-events.php:7590
 #: includes/eme-options.php:2268
 msgid "The body of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "Meddelandetext som sänds till svarande när en bokning gjorts (som inte inväntar godkännande) eller godkänts."
 
-#: includes/eme-events.php:7601
+#: includes/eme-events.php:7615
 #: includes/eme-options.php:2269
 msgid "Contact Person Booking Made Email Subject"
 msgstr "Ärenderad kontaktperson om genomförd bokning"
 
-#: includes/eme-events.php:7602
+#: includes/eme-events.php:7616
 #: includes/eme-options.php:2269
 msgid "The subject of the email that will be sent to the contact person when a booking is made."
 msgstr "Ärenderad  som sänds till kontaktpersonen när en bokning görs."
 
-#: includes/eme-events.php:7623
+#: includes/eme-events.php:7637
 #: includes/eme-options.php:2270
 msgid "Contact Person Booking Made Email Body"
 msgstr "Meddelandetext kontaktperson om bokning"
 
-#: includes/eme-events.php:7624
+#: includes/eme-events.php:7638
 #: includes/eme-options.php:2270
 msgid "The body of the email that will be sent to the contact person when a booking is made."
 msgstr "Meddelandetext som sänds till kontaktpersonen när en bokning görs."
 
-#: includes/eme-events.php:7642
+#: includes/eme-events.php:7656
 #: includes/eme-options.php:2273
 msgid "Booking made mail attachments"
 msgstr "E-postbilagor för gjord bokning"
 
-#: includes/eme-events.php:7661
-#: includes/eme-events.php:7862
-#: includes/eme-events.php:8246
-#: includes/eme-events.php:9645
+#: includes/eme-events.php:7675
+#: includes/eme-events.php:7876
+#: includes/eme-events.php:8260
+#: includes/eme-events.php:9659
 #: includes/eme-mailer.php:3650
 #: includes/eme-mailer.php:3831
 #: includes/eme-members.php:2331
@@ -2980,9 +2980,9 @@ msgstr "E-postbilagor för gjord bokning"
 msgid "Add attachments"
 msgstr "Lägg till bilaga"
 
-#: includes/eme-events.php:7662
-#: includes/eme-events.php:7863
-#: includes/eme-events.php:8247
+#: includes/eme-events.php:7676
+#: includes/eme-events.php:7877
+#: includes/eme-events.php:8261
 #: includes/eme-mailer.php:3651
 #: includes/eme-mailer.php:3832
 #: includes/eme-members.php:2332
@@ -2996,273 +2996,273 @@ msgstr "Lägg till bilaga"
 msgid "Remove attachments"
 msgstr "Ta bort bilaga"
 
-#: includes/eme-events.php:7663
+#: includes/eme-events.php:7677
 #: includes/eme-options.php:2295
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr "Lägg valfritt till bilagor till e-postmeddelandet när en ny bokning görs."
 
-#: includes/eme-events.php:7691
-#: includes/eme-events.php:7748
-#: includes/eme-events.php:8783
+#: includes/eme-events.php:7705
+#: includes/eme-events.php:7762
+#: includes/eme-events.php:8797
 #: includes/eme-options.php:2319
 msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "OSA-notifieringar är inte aktiverade för väntande bokningar, så dessa e-postmeddelanden kommer inte att skickas. Gå till e-postinställningarna för att aktivera detta om så önskas."
 
-#: includes/eme-events.php:7696
+#: includes/eme-events.php:7710
 #: includes/eme-options.php:2325
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr "Ärenderad för e-post väntande på användarbekräftelse av bokning"
 
-#: includes/eme-events.php:7697
+#: includes/eme-events.php:7711
 #: includes/eme-options.php:2325
 msgid "The subject of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "Ärenderaden för e-postmeddelandet som ska skickas till svararen om bokningen kräver användarbekräftelse."
 
-#: includes/eme-events.php:7717
+#: includes/eme-events.php:7731
 #: includes/eme-options.php:2326
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr "E-postens brödtext för bokning väntande på användarbekräftelse"
 
-#: includes/eme-events.php:7719
+#: includes/eme-events.php:7733
 #: includes/eme-options.php:2326
 msgid "The body of the email that will be sent to the respondent if the booking requires user confirmation."
 msgstr "Brödtexten för e-postmeddelandet som ska skickas till svararen om bokningen kräver användarbekräftelse."
 
-#: includes/eme-events.php:7754
+#: includes/eme-events.php:7768
 #: includes/eme-options.php:2327
 msgid "Booking Pending Email Subject"
 msgstr "Ärenderad om bokning som inväntar granskning"
 
-#: includes/eme-events.php:7755
+#: includes/eme-events.php:7769
 #: includes/eme-options.php:2327
 msgid "The subject of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Ärenderad som sänds till svarande ifall bokningen kräver godkännande."
 
-#: includes/eme-events.php:7775
+#: includes/eme-events.php:7789
 #: includes/eme-options.php:2328
 msgid "Booking Pending Email Body"
 msgstr "Meddelandetext bokning inväntar granskning"
 
-#: includes/eme-events.php:7777
+#: includes/eme-events.php:7791
 #: includes/eme-options.php:2328
 msgid "The body of the email that will be sent to the respondent if the booking requires approval."
 msgstr "Meddelandetext  om sänds till svarande ifall bokningen kräver godkännande."
 
-#: includes/eme-events.php:7802
+#: includes/eme-events.php:7816
 #: includes/eme-options.php:2329
 msgid "Contact Person Pending Booking Email Subject"
 msgstr "Ärenderad kontaktperson om bokning som inväntar granskning"
 
-#: includes/eme-events.php:7803
+#: includes/eme-events.php:7817
 #: includes/eme-options.php:2329
 msgid "The subject of the email that will be sent to the contact person if a booking requires approval."
 msgstr "Ärenderad som sänds till kontaktpersonen om en bokning kräver godkännande."
 
-#: includes/eme-events.php:7824
+#: includes/eme-events.php:7838
 #: includes/eme-options.php:2330
 msgid "Contact Person Pending Booking Email Body"
 msgstr "Meddelandetext kontaktperson om bokning inväntar granskning"
 
-#: includes/eme-events.php:7825
+#: includes/eme-events.php:7839
 #: includes/eme-options.php:2330
 msgid "The body of the email that will be sent to the contact person if a booking requires approval."
 msgstr "Meddelandetext som sänds till kontaktpersonen om en bokning kräver godkännande."
 
-#: includes/eme-events.php:7843
+#: includes/eme-events.php:7857
 #: includes/eme-options.php:2333
 msgid "Pending mail attachments"
 msgstr "Väntande e-postbilagor"
 
-#: includes/eme-events.php:7891
+#: includes/eme-events.php:7905
 #: includes/eme-options.php:2380
 msgid "Booking Updated Email Subject"
 msgstr "Ärenderad om uppdaterad bokning"
 
-#: includes/eme-events.php:7892
+#: includes/eme-events.php:7906
 #: includes/eme-options.php:2380
 msgid "The subject of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Ärenderad som sänds till svarande ifall bokningen har uppdaterats av en administratör."
 
-#: includes/eme-events.php:7913
+#: includes/eme-events.php:7927
 #: includes/eme-options.php:2381
 msgid "Booking Updated Email Body"
 msgstr "Meddelandetext uppdaterad bokning"
 
-#: includes/eme-events.php:7914
+#: includes/eme-events.php:7928
 #: includes/eme-options.php:2381
 msgid "The body of the email that will be sent to the respondent if the booking has been updated by an admin."
 msgstr "Meddelandetext som sänds till den svarande om bokningen har uppdaterats av en administratör."
 
-#: includes/eme-events.php:7942
+#: includes/eme-events.php:7956
 #: includes/eme-options.php:2395
 msgid "Pending Booking Reminder Email Subject"
 msgstr "Ärenderad för påminnelse om väntande bokning"
 
-#: includes/eme-events.php:7943
+#: includes/eme-events.php:7957
 #: includes/eme-options.php:2395
 msgid "The subject of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "Ärenderaden för e-postmeddelandet som ska skickas till svararen som en påminnelse om en väntande bokning."
 
-#: includes/eme-events.php:7964
+#: includes/eme-events.php:7978
 #: includes/eme-options.php:2396
 msgid "Pending Booking Reminder Email Body"
 msgstr "E-postens brödtext för påminnelse om väntande bokning"
 
-#: includes/eme-events.php:7965
+#: includes/eme-events.php:7979
 #: includes/eme-options.php:2396
 msgid "The body of the email that will be sent to the respondent as a reminder of a pending booking."
 msgstr "Brödtexten för e-postmeddelandet som ska skickas till svararen som en påminnelse om en väntande bokning."
 
-#: includes/eme-events.php:7983
+#: includes/eme-events.php:7997
 #: includes/eme-options.php:2397
 msgid "Accepted Booking Reminder Email Subject"
 msgstr "Ärenderad för påminnelse om godkänd bokning"
 
-#: includes/eme-events.php:7984
+#: includes/eme-events.php:7998
 #: includes/eme-options.php:2397
 msgid "The subject of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "Ärenderaden för e-postmeddelandet som ska skickas till svararen som en påminnelse om en godkänd bokning."
 
-#: includes/eme-events.php:8005
+#: includes/eme-events.php:8019
 #: includes/eme-options.php:2398
 msgid "Accepted Booking Reminder Email Body"
 msgstr "E-postens brödtext för påminnelse om godkänd bokning"
 
-#: includes/eme-events.php:8006
+#: includes/eme-events.php:8020
 #: includes/eme-options.php:2398
 msgid "The body of the email that will be sent to the respondent as a reminder of an approved booking."
 msgstr "Brödtexten för e-postmeddelandet som ska skickas till svararen som en påminnelse om en godkänd bokning."
 
-#: includes/eme-events.php:8034
+#: includes/eme-events.php:8048
 #: includes/eme-options.php:2412
 msgid "Booking Cancelled Email Subject"
 msgstr "Ärenderad om avbokning"
 
-#: includes/eme-events.php:8035
+#: includes/eme-events.php:8049
 #: includes/eme-options.php:2412
 msgid "The subject of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "Ärenderad som sänds till svarande när denne avbokar alla sina bokningar för ett event."
 
-#: includes/eme-events.php:8056
+#: includes/eme-events.php:8070
 #: includes/eme-options.php:2413
 msgid "Booking Cancelled Email Body"
 msgstr "Meddelandetext avbokning"
 
-#: includes/eme-events.php:8057
+#: includes/eme-events.php:8071
 #: includes/eme-options.php:2413
 msgid "The body of the email that will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "Meddelandetext som sänds till svarande när en denne avbokar alla sina bokningar för ett event."
 
-#: includes/eme-events.php:8082
+#: includes/eme-events.php:8096
 #: includes/eme-options.php:2414
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr "Ärenderad kontaktperson om avbokning"
 
-#: includes/eme-events.php:8083
+#: includes/eme-events.php:8097
 #: includes/eme-options.php:2414
 msgid "The subject of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "Ärenderad som sänds till kontaktpersonen när en svarande avbokar alla sina bokningar till ett event. "
 
-#: includes/eme-events.php:8104
+#: includes/eme-events.php:8118
 #: includes/eme-options.php:2415
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr "Meddelandetext kontaktperson om avbokning"
 
-#: includes/eme-events.php:8105
+#: includes/eme-events.php:8119
 #: includes/eme-options.php:2415
 msgid "The body of the email that will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "Meddelandetext som sänds till kontaktpersonen när en svarande avbokar alla sina bokningar till ett event."
 
-#: includes/eme-events.php:8134
+#: includes/eme-events.php:8148
 #: includes/eme-options.php:2443
 msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "OSA-notifieringar är inte aktiverade för betalda bokningar, så dessa e-postmeddelanden kommer inte att skickas. Gå till e-postinställningarna för att aktivera detta om så önskas."
 
-#: includes/eme-events.php:8138
+#: includes/eme-events.php:8152
 #: includes/eme-options.php:2448
 msgid "Booking Paid Email Subject"
 msgstr "Ärenderad om betald bokning"
 
-#: includes/eme-events.php:8139
+#: includes/eme-events.php:8153
 #: includes/eme-options.php:2448
 msgid "The subject of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "Ärenderad som sänds till svarande när en bokning markeras som betald. "
 
-#: includes/eme-events.php:8160
+#: includes/eme-events.php:8174
 #: includes/eme-options.php:2449
 msgid "Booking Paid Email Body"
 msgstr "Meddelandetext betald bokning"
 
-#: includes/eme-events.php:8161
+#: includes/eme-events.php:8175
 #: includes/eme-options.php:2449
 msgid "The body of the email that will be sent to the respondent when a booking is marked as paid."
 msgstr "Meddelandetext som sänds till svarande när en bokning markeras som betald."
 
-#: includes/eme-events.php:8186
+#: includes/eme-events.php:8200
 msgid "Contact Person Booking Paid Email Subject"
 msgstr "Ärenderad kontaktperson om betald bokning"
 
-#: includes/eme-events.php:8187
+#: includes/eme-events.php:8201
 #: includes/eme-options.php:2450
 msgid "The subject of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "Ärenderad som sänds till kontaktpersonen när en bokning markerats som betald (inte via en betalningslösning)."
 
-#: includes/eme-events.php:8207
+#: includes/eme-events.php:8221
 msgid "Contact Person Booking Paid Email Body"
 msgstr "Meddelandetext kontaktperson om betald bokning"
 
-#: includes/eme-events.php:8209
+#: includes/eme-events.php:8223
 #: includes/eme-options.php:2451
 msgid "The body of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "E-postmeddelande som sänds till kontaktpersonen när en bokning markeras som betald (inte via en betalningslösning)."
 
-#: includes/eme-events.php:8227
+#: includes/eme-events.php:8241
 #: includes/eme-options.php:2453
 msgid "Booking paid mail attachments"
 msgstr "E-postbilagor för betald bokning"
 
-#: includes/eme-events.php:8248
+#: includes/eme-events.php:8262
 #: includes/eme-options.php:2475
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr "Lägg valfritt till bilagor till e-postmeddelandet när en bokning är betald."
 
-#: includes/eme-events.php:8275
+#: includes/eme-events.php:8289
 #: includes/eme-options.php:2429
 msgid "Booking Deleted Email Subject"
 msgstr "Ärenderad om borttagen bokning"
 
-#: includes/eme-events.php:8276
+#: includes/eme-events.php:8290
 #: includes/eme-options.php:2429
 msgid "The subject of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "Ärenderad som sänds till svarande när en bokning tas bort av en administratör."
 
-#: includes/eme-events.php:8297
+#: includes/eme-events.php:8311
 #: includes/eme-options.php:2430
 msgid "Booking Deleted Email Body"
 msgstr "Meddelandetext borttagen bokning"
 
-#: includes/eme-events.php:8298
+#: includes/eme-events.php:8312
 #: includes/eme-options.php:2430
 msgid "The body of the email that will be sent to the respondent if the booking is deleted by an admin."
 msgstr "Meddelandetext som sänds till den svarande om bokningen tas bort av en administratör."
 
-#: includes/eme-events.php:8325
+#: includes/eme-events.php:8339
 msgid "Booking Form"
 msgstr "Bokningsformulär"
 
-#: includes/eme-events.php:8326
+#: includes/eme-events.php:8340
 msgid "The booking form format."
 msgstr "Format för bokningsformulär."
 
-#: includes/eme-events.php:8354
+#: includes/eme-events.php:8368
 msgid "Cancel Booking Form"
 msgstr "Avbokningsformulär"
 
-#: includes/eme-events.php:8355
+#: includes/eme-events.php:8369
 msgid "The cancel booking form format."
 msgstr "Format för avbokningsformulär."
 
-#: includes/eme-events.php:8381
+#: includes/eme-events.php:8395
 msgid "Captcha settings"
 msgstr "Captcha-inställningar"
 
@@ -3282,171 +3282,171 @@ msgstr "Använd Cloudflare Turnstile för formulär?"
 msgid "Use EME captcha for forms?"
 msgstr "Använd EME-captcha för formulär?"
 
-#: includes/eme-events.php:8391
+#: includes/eme-events.php:8405
 #: includes/eme-members.php:2008
 #: includes/eme-options.php:1543
 msgid "Only use captcha for logged out users?"
 msgstr "Använd captcha bara för utloggade användare?"
 
-#: includes/eme-events.php:8392
+#: includes/eme-events.php:8406
 #: includes/eme-members.php:2010
 #: includes/eme-options.php:1543
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr "Om detta alternativ är markerat kommer captcha bara att användas för utloggade användare."
 
-#: includes/eme-events.php:8486
+#: includes/eme-events.php:8500
 msgid "Event description"
 msgstr "Evenemangbeskrivning"
 
-#: includes/eme-events.php:8488
+#: includes/eme-events.php:8502
 msgid "The event description. This is also used in html meta tags and google tags to show the event info."
 msgstr "Evenemangbeskrivningen. Denna används även i HTML-metataggar och Google-taggar för att visa evenemangsinformationen."
 
-#: includes/eme-events.php:8511
-#: includes/eme-events.php:8515
-#: includes/eme-events.php:8519
+#: includes/eme-events.php:8525
+#: includes/eme-events.php:8529
+#: includes/eme-events.php:8533
 msgid "Event image"
 msgstr "Bild för eventet"
 
-#: includes/eme-events.php:8529
-#: includes/eme-locations.php:741
+#: includes/eme-events.php:8543
+#: includes/eme-locations.php:748
 msgid "Set a featured image"
 msgstr "Välj en bild"
 
-#: includes/eme-events.php:8530
-#: includes/eme-locations.php:742
+#: includes/eme-events.php:8544
+#: includes/eme-locations.php:749
 msgid "Unset featured image"
 msgstr "Välj bort utvald bild"
 
-#: includes/eme-events.php:8556
+#: includes/eme-events.php:8570
 msgid "Here custom fields of type 'events' are shown."
 msgstr "Här visas anpassade fält av typen ”event”."
 
-#: includes/eme-events.php:8557
+#: includes/eme-events.php:8571
 msgid "The difference with event attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom."
 msgstr "Skillnaden mot eventattribut är att attribut behöver definieras i ditt format först och endast kan vara text, här kan du först skapa anpassade fält av valfri typ vilket ger större frihet."
 
-#: includes/eme-events.php:8558
+#: includes/eme-events.php:8572
 msgid "If a custom field with name 'performer' exists, it's value here will be used for the google 'performer' header when showing the event in google search results."
 msgstr "Om ett anpassat fält med namnet 'performer' finns, kommer dess värde här att användas för Google-rubriken 'performer' när evenemanget visas i Google-sökresultat."
 
-#: includes/eme-events.php:8610
-#: includes/eme-locations.php:844
+#: includes/eme-events.php:8624
+#: includes/eme-locations.php:851
 #: includes/eme-members.php:2847
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr "Anpassade fält av typ ”dold” är meningslösa här och kommer naturligtvis inte att visas."
 
-#: includes/eme-events.php:8626
-#: includes/eme-events.php:9773
-#: includes/eme-locations.php:758
+#: includes/eme-events.php:8640
+#: includes/eme-events.php:9787
+#: includes/eme-locations.php:765
 msgid "External URL"
 msgstr "Extern URL"
 
-#: includes/eme-events.php:8630
+#: includes/eme-events.php:8644
 msgid "If this is filled in, the single event URL will point to this url instead of the standard event page."
 msgstr "Om detta fylls i kommer URL för ett enstaka event att peka på denna URL i stället för standard eventsidan."
 
-#: includes/eme-events.php:8639
+#: includes/eme-events.php:8653
 msgid "Enable bookings for this event"
 msgstr "Aktivera bokningar till detta event"
 
-#: includes/eme-events.php:8651
+#: includes/eme-events.php:8665
 msgid "If no payment method is selected, the \"Booking Recorded Message\" (defined in the RSVP Form format settings) will be shown. Otherwise the \"Booking Recorded Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr "Om ingen betalningsmetod är vald kommer \"Bokningsregistrerat meddelande\" (definierat i inställningarna för OSA-formulärformat) att visas. Annars kommer \"Bokningsregistrerat meddelande\" att visas och efter några sekund omdirigeras användaren till betalningssidan (se de allmänna EME-inställningarna för omdirigeringstimeout och fler betalningsinställningar)."
 
-#: includes/eme-events.php:8659
+#: includes/eme-events.php:8673
 #: includes/eme-members.php:2218
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr "Inga betalningsmetoder är konfigurerade ännu. Gå till EME-betalningsinställningarna och konfigurera några."
 
-#: includes/eme-events.php:8667
+#: includes/eme-events.php:8681
 msgid "Skip payment methods after booking"
 msgstr "Hoppa över betalningsmetoder efter bokning"
 
-#: includes/eme-events.php:8669
+#: includes/eme-events.php:8683
 msgid "If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message."
 msgstr "Om du vill hoppa över möjligheten att betala omedelbart efter bokning, välj detta alternativ. Detta kan vara användbart om du till exempel vill godkänna obetalda bokningar och först sedan skicka betalningslänken via #_PAYMENT_URL i bokningsmeddelandet."
 
-#: includes/eme-events.php:8698
+#: includes/eme-events.php:8712
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr "Närvarot-URL (skapad av #_ATTENDANCE_URL) gäller från"
 
-#: includes/eme-events.php:8700
+#: includes/eme-events.php:8714
 msgid "hours before the event starts until "
 msgstr "timmar innan eventet börjar fram till"
 
-#: includes/eme-events.php:8702
+#: includes/eme-events.php:8716
 msgid "hours after the event ends."
 msgstr "timmar efter att eventet slutar."
 
-#: includes/eme-events.php:8707
+#: includes/eme-events.php:8721
 msgid "Extra attendance info for not authorized users"
 msgstr "Extra närvaroinformation för obehöriga användare"
 
-#: includes/eme-events.php:8708
+#: includes/eme-events.php:8722
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not authorized user, only info concerning the payment status is shown. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "När URL:n som genereras av #_QRCODE eller #_ATTENDANCE_URL skannas av en obehörig användare visas bara information om betalningsstatus. Om du vill visa extra information (som evenemangsnamn eller bokningsinformation) kan du definiera det i denna mall. Alla evenemangs- och OSAplatshållare är tillåtna."
 
-#: includes/eme-events.php:8724
+#: includes/eme-events.php:8738
 msgid "Extra attendance info for authorized users"
 msgstr "Extra närvaroinformation för behöriga användare"
 
-#: includes/eme-events.php:8725
+#: includes/eme-events.php:8739
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a authorized user, only info concerning the payment status is shown, next to attendance count info if configured to do so. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "När URL:n som genereras av #_QRCODE eller #_ATTENDANCE_URL skannas av en behörig användare visas bara information om betalningsstatus, tillsammans med närvaroantal om det är konfigurerat. Om du vill visa extra information (som evenemangsnamn eller bokningsinformation) kan du definiera det i denna mall. Alla evenemangs- och OSAplatshållare är tillåtna."
 
-#: includes/eme-events.php:8779
+#: includes/eme-events.php:8793
 msgid "Require booking approval"
 msgstr "Kräv godkännande av bokning"
 
-#: includes/eme-events.php:8774
+#: includes/eme-events.php:8788
 msgid "Require user confirmation after booking"
 msgstr "Kräv användarbekräftelse efter bokning"
 
-#: includes/eme-events.php:8775
+#: includes/eme-events.php:8789
 msgid "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker."
 msgstr "Om aktiv, glöm inte att använda #_BOOKING_CONFIRM_URL i e-postmeddelandet som skickas till bokaren."
 
-#: includes/eme-events.php:8790
+#: includes/eme-events.php:8804
 msgid "Auto-approve booking upon payment"
 msgstr "Godkänn automatiskt vid betalning"
 
-#: includes/eme-events.php:8792
+#: includes/eme-events.php:8806
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr "Anse registreringar som kräver granskning som tillgängliga platser för nya bokningar"
 
-#: includes/eme-events.php:8792
+#: includes/eme-events.php:8806
 msgid "In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments."
 msgstr "Om onlinebetalningar är möjliga kommer väntande bokningar yngre än 5 minuter att räknas som upptagna, för att möjliggöra för personer att slutföra onlinebetalningar."
 
-#: includes/eme-events.php:8795
+#: includes/eme-events.php:8809
 #: includes/eme-options.php:1954
 msgid "Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Ange antalet dagar innan påminnelser e-post skickas för väntande bokningar (räknat från evenemangets startdatum). Om du vill skicka flera påminnelser, separera dagarna med kommatecken. Lämna tomt för inga påminnelser via e-post."
 
-#: includes/eme-events.php:8799
+#: includes/eme-events.php:8813
 #: includes/eme-options.php:1955
 msgid "Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Ange antalet dagar innan påminnelser e-post skickas för godkända bokningar (räknat från evenemangets startdatum). Om du vill skicka flera påminnelser, separera dagarna med kommatecken. Lämna tomt för inga påminnelser via e-post."
 
-#: includes/eme-events.php:8802
+#: includes/eme-events.php:8816
 msgid "Create WP user after succesful booking"
 msgstr "Skapa WP-användare efter lyckad bokning"
 
-#: includes/eme-events.php:8803
+#: includes/eme-events.php:8817
 msgid "This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user."
 msgstr "Detta skapar en WP-användare efter att bokningen är färdig, precis som om personen registrerat sig direkt i WP. Detta skapar endast en användare ifall den som bokar inte var inloggad och e-postadressen inte är upptagen av en annan WP-användare."
 
-#: includes/eme-events.php:8806
+#: includes/eme-events.php:8820
 msgid "Allow only 1 booking per unique email address"
 msgstr "Tillåt endast 1 bokning per unik e-postadress"
 
-#: includes/eme-events.php:8809
+#: includes/eme-events.php:8823
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "Tillåt endast 1 bokning per person (kombination e-post/efternamn/förnamn)"
 
-#: includes/eme-events.php:8813
-#: includes/eme-events.php:9836
+#: includes/eme-events.php:8827
+#: includes/eme-events.php:9850
 #: includes/eme-options.php:38
 #: includes/eme-people.php:1254
 #: includes/eme-people.php:1572
@@ -3454,26 +3454,26 @@ msgstr "Tillåt endast 1 bokning per person (kombination e-post/efternamn/förna
 msgid "Seats"
 msgstr "Platser"
 
-#: includes/eme-events.php:8814
+#: includes/eme-events.php:8828
 #: includes/eme-options.php:1958
 msgid "Enter 0 for no limit"
 msgstr "Ange 0 för ingen gräns"
 
-#: includes/eme-events.php:8815
+#: includes/eme-events.php:8829
 msgid "The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by '||'"
 msgstr "Maximalt antal tillgängliga platser för detta evenemang. Ange 0 för ingen gräns. För evenemang med flera platser, separera värdena med '||'"
 
-#: includes/eme-events.php:8820
+#: includes/eme-events.php:8834
 #: includes/eme-people.php:1518
 msgid "Price: "
 msgstr "Pris:"
 
-#: includes/eme-events.php:8821
-#: includes/eme-events.php:8836
+#: includes/eme-events.php:8835
+#: includes/eme-events.php:8850
 msgid "For multiprice events, separate the values by '||'"
 msgstr "För event som är multipris, separera värdena med ”||”"
 
-#: includes/eme-events.php:8837
+#: includes/eme-events.php:8851
 #: includes/eme-members.php:2022
 #: includes/eme-members.php:2028
 #: includes/eme-options.php:2753
@@ -3481,297 +3481,297 @@ msgstr "För event som är multipris, separera värdena med ”||”"
 msgid "Use the point as decimal separator"
 msgstr "Använd punkt som decimalavgränsare"
 
-#: includes/eme-events.php:8841
+#: includes/eme-events.php:8855
 msgid "Price description"
 msgstr "Prisbeskrivning"
 
-#: includes/eme-events.php:8842
+#: includes/eme-events.php:8856
 msgid "Add an optional description for the price (which can be used in templates)."
 msgstr "Lägg till en valfri beskrivning för priset (som kan användas i mallar)."
 
-#: includes/eme-events.php:8845
+#: includes/eme-events.php:8859
 msgid "Price Categories descriptions"
 msgstr "Priskategoribeskrivningar"
 
-#: includes/eme-events.php:8846
+#: includes/eme-events.php:8860
 msgid "Add an optional description for each price category (one price description per line)."
 msgstr "Lägg till en valfri beskrivning för varje priskategori (en prisbeskrivning per rad)."
 
-#: includes/eme-events.php:8849
+#: includes/eme-events.php:8863
 msgid "VAT percentage: "
 msgstr "Moms-procent: "
 
-#: includes/eme-events.php:8850
+#: includes/eme-events.php:8864
 #: includes/eme-members.php:2036
 msgid "VAT percentage"
 msgstr "Moms-procent"
 
-#: includes/eme-events.php:8851
+#: includes/eme-events.php:8865
 msgid "The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr "Priset du anger för evenemang inkluderar moms, speciella platshållare finns för att ange priset utan moms."
 
-#: includes/eme-events.php:8855
+#: includes/eme-events.php:8869
 #: includes/eme-members.php:2042
 msgid "Discount to apply"
 msgstr "Rabatt att tillämpa"
 
-#: includes/eme-events.php:8856
+#: includes/eme-events.php:8870
 #: includes/eme-members.php:2043
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr "Namnet på rabatten du vill tillämpa (kommer åsidosättas av rabattgrupp om sådan används)."
 
-#: includes/eme-events.php:8859
+#: includes/eme-events.php:8873
 #: includes/eme-members.php:2046
 msgid "Discount group to apply"
 msgstr "Rabattgrupp att tillämpa"
 
-#: includes/eme-events.php:8860
+#: includes/eme-events.php:8874
 #: includes/eme-members.php:2047
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "Namn på rabattgruppen du vill använda (åsidosätter rabatten)."
 
-#: includes/eme-events.php:8863
+#: includes/eme-events.php:8877
 msgid "Waitinglist seats"
 msgstr "Platser på väntelistan"
 
-#: includes/eme-events.php:8864
+#: includes/eme-events.php:8878
 msgid "The number of seats considered to be a waiting list."
 msgstr "Antal platser som anses vara kölistan."
 
-#: includes/eme-events.php:8867
+#: includes/eme-events.php:8881
 #: includes/eme-options.php:2027
 msgid "Check waitinglist when seats become available"
 msgstr "Kontrollera väntelistan när platser blir tillgängliga"
 
-#: includes/eme-events.php:8869
+#: includes/eme-events.php:8883
 #: includes/eme-options.php:2027
 msgid "Automatically take a booking from the waiting list when seats become available again"
 msgstr "Ta automatiskt bort en bokning från väntelistan när platser blir tillgängliga igen"
 
-#: includes/eme-events.php:8872
+#: includes/eme-events.php:8886
 #: includes/eme-options.php:1960
 msgid "Max number of seats to book"
 msgstr "Max antal platser att boka"
 
-#: includes/eme-events.php:8873
+#: includes/eme-events.php:8887
 #: includes/eme-options.php:1960
 msgid "The maximum number of seats a person can book in one go."
 msgstr "Maximalt antal platser en person kan boka vid ett tillfälle."
 
-#: includes/eme-events.php:8873
-#: includes/eme-events.php:8877
+#: includes/eme-events.php:8887
+#: includes/eme-events.php:8891
 msgid "(is multi-compatible)"
 msgstr "(är multikompatibelt)"
 
-#: includes/eme-events.php:8873
-#: includes/eme-events.php:8877
+#: includes/eme-events.php:8887
+#: includes/eme-events.php:8891
 msgid "If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden."
 msgstr "Om minsta och största antalet platser att boka är identiska kommer fältet för att välja antal platser att boka att döljas."
 
-#: includes/eme-events.php:8876
+#: includes/eme-events.php:8890
 #: includes/eme-options.php:1959
 msgid "Min number of seats to book"
 msgstr "Minsta antal platser att boka"
 
-#: includes/eme-events.php:8877
+#: includes/eme-events.php:8891
 #: includes/eme-options.php:1959
 msgid "The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list)."
 msgstr "Det minsta antalet platser en person kan boka vid ett tillfälle (kan vara 0, för t.ex. bara en deltagarlista)"
 
-#: includes/eme-events.php:8880
+#: includes/eme-events.php:8894
 msgid "Attendance-only event?"
 msgstr "Enbart närvaro-evenemang?"
 
-#: includes/eme-events.php:8881
+#: includes/eme-events.php:8895
 msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "Registrera endast närvaro (0 eller 1 plats) för detta event"
 
-#: includes/eme-events.php:8882
+#: includes/eme-events.php:8896
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox."
 msgstr "Om detta alternativ är aktiverat och inställningen \"Minsta antal platser att boka\" är satt till 0, kommer fältet för att välja antal platser att boka att ändras till en kryssruta."
 
-#: includes/eme-events.php:8883
+#: includes/eme-events.php:8897
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1."
 msgstr "Om detta alternativ är aktiverat och inställningen \"Minsta antal platser att boka\" är satt till ett värde större än 0, kommer fältet för att välja antal platser att boka att döljas och antalet bokade platser att tvingas till 1."
 
-#: includes/eme-events.php:8887
+#: includes/eme-events.php:8901
 msgid "Require WP membership for booking"
 msgstr "Kräv WP-medlemskap för bokning"
 
-#: includes/eme-events.php:8889
+#: includes/eme-events.php:8903
 msgid "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only."
 msgstr "Detta kommer bara att visa bokningsformuläret för inloggade användare och fylla i formuläret med personliga uppgifter från deras WordPress-profil. Dessa uppgifter kan då inte ändras i formuläret, så om du inte vill detta kan du inaktivera detta alternativ och använda #_ADDBOOKINGFORM_IF_LOGGED_IN för att bara visa formuläret för inloggade användare."
 
-#: includes/eme-events.php:8894
+#: includes/eme-events.php:8908
 #, fuzzy
 msgid "Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event."
 msgstr "Kräv att den inloggade användaren är med i någon av de valda EME grupperna för att rabatten ska gälla."
 
-#: includes/eme-events.php:8899
+#: includes/eme-events.php:8913
 #, fuzzy
 msgid "Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event."
 msgstr "Kräv att den inloggade användaren är medlem i någon av de valda EME medlemskapstyperna för att rabatten ska gälla."
 
-#: includes/eme-events.php:8903
+#: includes/eme-events.php:8917
 #: includes/eme-members.php:2199
 #: includes/eme-tasks.php:1073
 msgid "Group to add people to"
 msgstr "Grupp att lägga till personer i"
 
-#: includes/eme-events.php:8904
+#: includes/eme-events.php:8918
 #: includes/eme-members.php:2200
 #: includes/eme-tasks.php:1075
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Gruppen du vill att personer automatiskt blir medlemmar av när de startar en prenumeration."
 
-#: includes/eme-events.php:8907
+#: includes/eme-events.php:8921
 msgid "RSVP Password"
 msgstr "Lösenord för OSA"
 
-#: includes/eme-events.php:8908
+#: includes/eme-events.php:8922
 msgid "A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too."
 msgstr "Ett lösenord krävs för att OSA ska kunna skickas. Om detta används är #_PASSWORD obligatoriskt i OSA-formuläret också."
 
-#: includes/eme-events.php:8911
+#: includes/eme-events.php:8925
 msgid "Invite-only event?"
 msgstr "Enbart inbjudnings-evenemang?"
 
-#: includes/eme-events.php:8912
+#: includes/eme-events.php:8926
 msgid "Require an invitation"
 msgstr "Kräv en inbjudan"
 
-#: includes/eme-events.php:8913
+#: includes/eme-events.php:8927
 msgid "Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL."
 msgstr "Tillåt bara bokningar som görs om någon besöker evenemanget via inbjudnings-URL:en som genereras av #_INVITEURL."
 
-#: includes/eme-events.php:8918
+#: includes/eme-events.php:8932
 msgid "Ticket PDF template"
 msgstr "Mall för PDF med biljetten"
 
-#: includes/eme-events.php:8920
+#: includes/eme-events.php:8934
 msgid "This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included)."
 msgstr "Denna valfria mall används för att sända bifogade PDF i e-postmeddelande när bokningen godkänts eller betalts (se nästa inställning för att konfigurera när bilagan ska bifogas)."
 
-#: includes/eme-events.php:8921
+#: includes/eme-events.php:8935
 msgid "No template shown in the list? Then go in the section Templates and create a PDF template."
 msgstr "Syns ingen mall i listan? Gå i så fall till sektionen Mallar och skapa en PDF-mall."
 
-#: includes/eme-events.php:8925
+#: includes/eme-events.php:8939
 msgid "Ticket mail preference"
 msgstr "Biljett e-postpreferenser"
 
-#: includes/eme-events.php:8926
+#: includes/eme-events.php:8940
 msgid "At booking time"
 msgstr "Vid bokning"
 
-#: includes/eme-events.php:8926
+#: includes/eme-events.php:8940
 msgid "Upon approval"
 msgstr "Vid godkännande"
 
-#: includes/eme-events.php:8926
+#: includes/eme-events.php:8940
 msgid "Upon payment"
 msgstr "Vid betalning"
 
-#: includes/eme-events.php:8926
+#: includes/eme-events.php:8940
 msgid "All of the above"
 msgstr "Alla alternativ ovan"
 
-#: includes/eme-events.php:8927
+#: includes/eme-events.php:8941
 msgid "Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for."
 msgstr "Ställ in i vilket e-postmeddelande du bill inkludera den valfria PDF-bilagan: när bokningen görs, när den bekräftas eller när den betalas."
 
-#: includes/eme-events.php:8933
+#: includes/eme-events.php:8947
 msgid "Allow RSVP from "
 msgstr "Tillåt OSA från och med"
 
-#: includes/eme-events.php:8937
-#: includes/eme-events.php:8950
+#: includes/eme-events.php:8951
+#: includes/eme-events.php:8964
 #: includes/eme-options.php:1972
 #: includes/eme-options.php:1988
 msgid "hours"
 msgstr "timmar"
 
-#: includes/eme-events.php:8939
-#: includes/eme-events.php:8952
+#: includes/eme-events.php:8953
+#: includes/eme-events.php:8966
 #: includes/eme-options.php:1978
 #: includes/eme-options.php:1994
 msgid "before the event "
 msgstr "innan eventet"
 
-#: includes/eme-events.php:8939
-#: includes/eme-events.php:8952
+#: includes/eme-events.php:8953
+#: includes/eme-events.php:8966
 #: includes/eme-options.php:1975
 #: includes/eme-options.php:1991
 msgid "starts"
 msgstr "börjar"
 
-#: includes/eme-events.php:8939
-#: includes/eme-events.php:8952
+#: includes/eme-events.php:8953
+#: includes/eme-events.php:8966
 #: includes/eme-options.php:1976
 #: includes/eme-options.php:1992
 msgid "ends"
 msgstr "slutar"
 
-#: includes/eme-events.php:8946
+#: includes/eme-events.php:8960
 msgid "Allow RSVP until "
 msgstr "Tillåt OSA till och med"
 
-#: includes/eme-events.php:8958
+#: includes/eme-events.php:8972
 #: includes/eme-options.php:2001
 msgid "RSVP cancel cutoff before event starts"
 msgstr "OSA avbokningsstopp innan event startar"
 
-#: includes/eme-events.php:8960
+#: includes/eme-events.php:8974
 #: includes/eme-options.php:2001
 msgid "Allow RSVP cancellation until this many days before the event starts."
 msgstr "Tillåt OSA avbokningar fram till så här många dagar innan eventet börjar."
 
-#: includes/eme-events.php:8963
+#: includes/eme-events.php:8977
 #: includes/eme-options.php:2002
 msgid "RSVP cancel cutoff booking age"
 msgstr "OSA avbokningsstopp tid sedan bokning"
 
-#: includes/eme-events.php:8965
+#: includes/eme-events.php:8979
 #: includes/eme-options.php:2002
 msgid "Allow RSVP cancellation until this many days after the booking has been made."
 msgstr "Tillåt OSA avbokning efter detta antal dagar från det bokning gjordes."
 
-#: includes/eme-events.php:9631
+#: includes/eme-events.php:9645
 msgid "Select the image to be used as person image"
 msgstr "Välj bild att använda som bild för personen"
 
-#: includes/eme-events.php:9632
+#: includes/eme-events.php:9646
 msgid "Set image"
 msgstr "Välj bild"
 
-#: includes/eme-events.php:9633
+#: includes/eme-events.php:9647
 #: includes/eme-people.php:2890
 #: includes/eme-people.php:2930
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/eme-events.php:9634
+#: includes/eme-events.php:9648
 msgid "Replace image"
 msgstr "Byt bild"
 
-#: includes/eme-events.php:9640
+#: includes/eme-events.php:9654
 msgid "Are you sure you want to delete the selected records?"
 msgstr "Är du säker på att du vill ta bort valda poster?"
 
-#: includes/eme-events.php:9641
+#: includes/eme-events.php:9655
 msgid "Are you sure you want to delete this file?"
 msgstr "Är du säker på att du vill ta bort denna fil?"
 
-#: includes/eme-events.php:9643
+#: includes/eme-events.php:9657
 msgid "Select one or more persons"
 msgstr "Välj en eller flera personer"
 
-#: includes/eme-events.php:9644
+#: includes/eme-events.php:9658
 msgid "Select one or more members"
 msgstr "Markera en eller fler medlemmar"
 
-#: includes/eme-events.php:8894
-#: includes/eme-events.php:8904
+#: includes/eme-events.php:8908
+#: includes/eme-events.php:8918
 #: includes/eme-mailer.php:3565
 #: includes/eme-mailer.php:3585
 #: includes/eme-mailer.php:3736
@@ -3795,150 +3795,150 @@ msgstr "Filtrera på medlemskap"
 msgid "Filter on member status"
 msgstr "Filtrera på medlemsstatus"
 
-#: includes/eme-events.php:9646
+#: includes/eme-events.php:9660
 msgid "Select a discount"
 msgstr "Välj en rabatt"
 
-#: includes/eme-events.php:9647
+#: includes/eme-events.php:9661
 msgid "Select a discountgroup"
 msgstr "Välj en rabattgrupp"
 
-#: includes/eme-events.php:9829
+#: includes/eme-events.php:9843
 msgid "No matching event found"
 msgstr "Inget matchande event funnet"
 
-#: includes/eme-events.php:6193
-#: includes/eme-events.php:9674
+#: includes/eme-events.php:6207
+#: includes/eme-events.php:9688
 msgid "Recurrences"
 msgstr "Återkommande"
 
-#: includes/eme-events.php:9676
+#: includes/eme-events.php:9690
 msgid "Event price"
 msgstr "Pris för event"
 
-#: includes/eme-events.php:9684
-#: includes/eme-formfields.php:3819
+#: includes/eme-events.php:9698
+#: includes/eme-formfields.php:3867
 msgid "Copy"
 msgstr "Kopiera"
 
-#: includes/eme-events.php:9685
+#: includes/eme-events.php:9699
 msgid "CSV"
 msgstr "CSV"
 
-#: includes/eme-events.php:9686
+#: includes/eme-events.php:9700
 msgid "Print"
 msgstr "Skriv ut"
 
-#: includes/eme-events.php:9688
-#: includes/eme-events.php:9868
+#: includes/eme-events.php:9702
+#: includes/eme-events.php:9882
 msgid "Recurrence info"
 msgstr "Återkommande info"
 
-#: includes/eme-events.php:9689
+#: includes/eme-events.php:9703
 msgid "Single event duration"
 msgstr "Enstaka evenemangs duration"
 
-#: includes/eme-events.php:9690
+#: includes/eme-events.php:9704
 #: includes/eme-formfields.php:764
 msgid "Date"
 msgstr "Datum"
 
-#: includes/eme-events.php:9677
+#: includes/eme-events.php:9691
 msgid "Date and time"
 msgstr "Datum och tid"
 
-#: includes/eme-events.php:9691
+#: includes/eme-events.php:9705
 msgid "Selected dates:"
 msgstr "Valda datum:"
 
 #: includes/eme-cleanup.php:396
-#: includes/eme-events.php:9692
+#: includes/eme-events.php:9706
 msgid "Created on"
 msgstr "Skapad den"
 
 #: includes/eme-cleanup.php:397
-#: includes/eme-events.php:9693
+#: includes/eme-events.php:9707
 msgid "Modified on"
 msgstr "Ändrad den"
 
-#: includes/eme-events.php:9694
+#: includes/eme-events.php:9708
 msgid "Please wait"
 msgstr "Vänligen vänta"
 
-#: includes/eme-events.php:9696
-#: includes/eme-events.php:9775
+#: includes/eme-events.php:9710
+#: includes/eme-events.php:9789
 msgid "Select the image to be used as featured image"
 msgstr "Välj bild att använda som utvald bild"
 
-#: includes/eme-events.php:9697
-#: includes/eme-events.php:9776
+#: includes/eme-events.php:9711
+#: includes/eme-events.php:9790
 msgid "Set featured image"
 msgstr "Definiera utvald bild"
 
-#: includes/eme-events.php:9725
+#: includes/eme-events.php:9739
 msgid "Press the delete button to remove"
 msgstr "Tryck på Ta bort-knappen för att ta bort"
 
-#: includes/eme-events.php:9698
+#: includes/eme-events.php:9712
 msgid "Since the event is repeated, you must specify an end date"
 msgstr "Eftersom eventet upprepas behöver du ange ett slutdatum"
 
-#: includes/eme-events.php:9699
+#: includes/eme-events.php:9713
 msgid "In a recurrence, start and end date can't be identical"
 msgstr "För ett återkommande kan inte start- och slutdatum vara lika"
 
-#: includes/eme-events.php:9700
-#: includes/eme-filters.php:356
+#: includes/eme-events.php:9714
+#: includes/eme-filters.php:533
 #: includes/eme-options.php:1948
 msgid "Event author"
 msgstr "Skapare av event"
 
-#: includes/eme-events.php:9703
+#: includes/eme-events.php:9717
 msgid "Recorded on"
 msgstr "Registrerad den"
 
-#: includes/eme-events.php:9704
-#: includes/eme-events.php:9717
+#: includes/eme-events.php:9718
+#: includes/eme-events.php:9731
 msgid "Person"
 msgstr "Person"
 
-#: includes/eme-events.php:9705
+#: includes/eme-events.php:9719
 msgid "Attendance reports"
 msgstr "Närvarorapporter"
 
-#: includes/eme-events.php:9706
+#: includes/eme-events.php:9720
 msgid "Are you sure to delete this record?"
 msgstr "Är du säker på att du vill ta bort denna post?"
 
-#: includes/eme-events.php:9707
+#: includes/eme-events.php:9721
 msgid "No matching person found"
 msgstr "Ingen matchande person funnen"
 
 #: events-manager.php:376
-#: includes/eme-events.php:9709
+#: includes/eme-events.php:9723
 msgid "Task signups"
 msgstr "Uppgiftsanmälningar"
 
-#: includes/eme-events.php:9710
+#: includes/eme-events.php:9724
 #: includes/eme-people.php:1041
 #: includes/eme-tasks.php:641
 msgid "Task name"
 msgstr "Uppgiftsnamn"
 
-#: includes/eme-events.php:9711
+#: includes/eme-events.php:9725
 #: includes/eme-people.php:1042
 msgid "Task start date"
 msgstr "Uppgiftens startdatum"
 
-#: includes/eme-events.php:9712
+#: includes/eme-events.php:9726
 #: includes/eme-people.php:1043
 msgid "Task end date"
 msgstr "Uppgiftens slutdatum"
 
-#: includes/eme-events.php:9713
-#: includes/eme-formfields.php:2292
-#: includes/eme-formfields.php:2939
-#: includes/eme-formfields.php:3013
+#: includes/eme-events.php:9727
+#: includes/eme-formfields.php:2340
+#: includes/eme-formfields.php:2987
+#: includes/eme-formfields.php:3061
 #: includes/eme-options.php:39
 #: includes/eme-people.php:1067
 #: includes/eme-people.php:1267
@@ -3948,13 +3948,13 @@ msgid "Comment"
 msgstr "Kommentera"
 
 #: events-manager.php:369
-#: includes/eme-events.php:9722
-#: includes/eme-formfields.php:3634
+#: includes/eme-events.php:9736
+#: includes/eme-formfields.php:3682
 #: includes/eme-options.php:1652
 msgid "Templates"
 msgstr "Mallar"
 
-#: includes/eme-events.php:9728
+#: includes/eme-events.php:9742
 #: includes/eme-formfields.php:420
 #: includes/eme-options.php:2784
 #: includes/eme-options.php:2817
@@ -3974,101 +3974,101 @@ msgstr "Mallar"
 msgid "Extra charge"
 msgstr "Extra avgift"
 
-#: includes/eme-events.php:9729
+#: includes/eme-events.php:9743
 msgid "Searchable"
 msgstr "Sökbart"
 
-#: includes/eme-events.php:9730
+#: includes/eme-events.php:9744
 msgid "Purpose"
 msgstr "Syfte"
 
-#: includes/eme-events.php:9731
+#: includes/eme-events.php:9745
 msgid "Used in replies"
 msgstr "Används för svar"
 
-#: includes/eme-events.php:9732
+#: includes/eme-events.php:9746
 msgid "Required"
 msgstr "Obligatoriskt"
 
 #: events-manager.php:371
 #: includes/eme-discounts.php:234
-#: includes/eme-events.php:9734
+#: includes/eme-events.php:9748
 #: includes/eme-import.php:101
 #: includes/eme-options.php:1663
 msgid "Discounts"
 msgstr "Rabatter"
 
-#: includes/eme-events.php:9736
+#: includes/eme-events.php:9750
 msgid "Coupon"
 msgstr "Kupong"
 
-#: includes/eme-events.php:9737
+#: includes/eme-events.php:9751
 msgid "Case sensitive"
 msgstr "Skilj på gemener/versaler"
 
-#: includes/eme-events.php:9738
+#: includes/eme-events.php:9752
 msgid "Track discount usage per booked seat"
 msgstr "Spåra rabattanvändning per bokad plats"
 
-#: includes/eme-events.php:9740
+#: includes/eme-events.php:9754
 msgid "Max Usage"
 msgstr "Max användning"
 
-#: includes/eme-events.php:9741
+#: includes/eme-events.php:9755
 msgid "Usage"
 msgstr "Nyttjande"
 
-#: includes/eme-events.php:9744
+#: includes/eme-events.php:9758
 msgid "Max Discounts"
 msgstr "Max rabatter"
 
 #: includes/eme-countries.php:189
-#: includes/eme-events.php:9751
+#: includes/eme-events.php:9765
 msgid "Countries"
 msgstr "Länder"
 
-#: includes/eme-events.php:9752
+#: includes/eme-events.php:9766
 msgid "Country ID"
 msgstr "Lands-ID"
 
 #: includes/eme-countries.php:190
-#: includes/eme-events.php:9753
+#: includes/eme-events.php:9767
 msgid "States"
 msgstr "Stater"
 
-#: includes/eme-events.php:9757
+#: includes/eme-events.php:9771
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Inget land är kopplat till denna stat, den kommer inte synas i rullgardinsmenyer. Vänligen redigera staten och korrigera landsinformationen."
 
 #: includes/eme-actions.php:492
-#: includes/eme-events.php:9672
+#: includes/eme-events.php:9686
 msgid "No matching location found"
 msgstr "Ingen matchande plats funnen"
 
 #: events-manager.php:363
-#: includes/eme-events.php:9762
+#: includes/eme-events.php:9776
 #: includes/eme-import.php:99
 #: includes/eme-options.php:1363
 #: includes/eme-options.php:1613
 msgid "Locations"
 msgstr "Platser"
 
-#: includes/eme-events.php:9763
-#: includes/eme-locations.php:413
+#: includes/eme-events.php:9777
+#: includes/eme-locations.php:420
 msgid "Insert New Location"
 msgstr "Infoga ny plats"
 
 #. translators: %s is the location name
-#: includes/eme-events.php:9765
-#: includes/eme-locations.php:416
+#: includes/eme-events.php:9779
+#: includes/eme-locations.php:423
 msgid "Edit Location '%s'"
 msgstr "Redigera platsen ”%s”"
 
-#: includes/eme-events.php:9769
-#: includes/eme-formfields.php:1609
+#: includes/eme-events.php:9783
+#: includes/eme-formfields.php:1657
 #: includes/eme-gdpr.php:462
 #: includes/eme-gdpr.php:603
-#: includes/eme-locations.php:595
+#: includes/eme-locations.php:602
 #: includes/eme-people.php:1048
 #: includes/eme-people.php:1223
 #: includes/eme-people.php:2625
@@ -4076,11 +4076,11 @@ msgstr "Redigera platsen ”%s”"
 msgid "City"
 msgstr "Ort"
 
-#: includes/eme-events.php:9770
-#: includes/eme-formfields.php:1618
+#: includes/eme-events.php:9784
+#: includes/eme-formfields.php:1666
 #: includes/eme-gdpr.php:463
 #: includes/eme-gdpr.php:607
-#: includes/eme-locations.php:603
+#: includes/eme-locations.php:610
 #: includes/eme-people.php:1049
 #: includes/eme-people.php:1224
 #: includes/eme-people.php:2620
@@ -4088,33 +4088,33 @@ msgstr "Ort"
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/eme-events.php:9771
-#: includes/eme-locations.php:620
+#: includes/eme-events.php:9785
+#: includes/eme-locations.php:627
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/eme-events.php:9772
-#: includes/eme-locations.php:624
+#: includes/eme-events.php:9786
+#: includes/eme-locations.php:631
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/eme-events.php:9774
+#: includes/eme-events.php:9788
 msgid "Online only"
 msgstr "Endast online"
 
-#: includes/eme-events.php:9779
-#: includes/eme-events.php:9832
+#: includes/eme-events.php:9793
+#: includes/eme-events.php:9846
 #: includes/eme-gdpr.php:579
 #: includes/eme-people.php:1039
 #: includes/eme-people.php:1218
 msgid "Person ID"
 msgstr "Person-ID"
 
-#: includes/eme-events.php:9780
+#: includes/eme-events.php:9794
 msgid "Group ID"
 msgstr "Grupp-ID"
 
-#: includes/eme-events.php:9781
+#: includes/eme-events.php:9795
 #: includes/eme-import.php:95
 #: includes/eme-options.php:1364
 #: includes/eme-people.php:2349
@@ -4122,19 +4122,19 @@ msgstr "Grupp-ID"
 msgid "People"
 msgstr "Personer"
 
-#: includes/eme-events.php:9782
-#: includes/eme-events.php:9792
+#: includes/eme-events.php:9796
+#: includes/eme-events.php:9806
 #: includes/eme-people.php:2350
 #: includes/eme-people.php:2674
 msgid "Groups"
 msgstr "Grupper"
 
 #: includes/eme-cleanup.php:394
-#: includes/eme-events.php:9783
-#: includes/eme-formfields.php:1311
-#: includes/eme-formfields.php:1536
-#: includes/eme-formfields.php:3114
-#: includes/eme-formfields.php:3313
+#: includes/eme-events.php:9797
+#: includes/eme-formfields.php:1359
+#: includes/eme-formfields.php:1584
+#: includes/eme-formfields.php:3162
+#: includes/eme-formfields.php:3361
 #: includes/eme-gdpr.php:237
 #: includes/eme-gdpr.php:457
 #: includes/eme-gdpr.php:583
@@ -4155,11 +4155,11 @@ msgid "Last name"
 msgstr "Efternamn"
 
 #: includes/eme-cleanup.php:393
-#: includes/eme-events.php:9784
-#: includes/eme-formfields.php:1317
-#: includes/eme-formfields.php:1560
-#: includes/eme-formfields.php:3127
-#: includes/eme-formfields.php:3323
+#: includes/eme-events.php:9798
+#: includes/eme-formfields.php:1365
+#: includes/eme-formfields.php:1608
+#: includes/eme-formfields.php:3175
+#: includes/eme-formfields.php:3371
 #: includes/eme-gdpr.php:237
 #: includes/eme-gdpr.php:458
 #: includes/eme-gdpr.php:587
@@ -4181,12 +4181,12 @@ msgid "First name"
 msgstr "Förnamn"
 
 #: includes/eme-cleanup.php:395
-#: includes/eme-events.php:9785
+#: includes/eme-events.php:9799
 #: includes/eme-formfields.php:773
-#: includes/eme-formfields.php:1323
-#: includes/eme-formfields.php:1668
-#: includes/eme-formfields.php:3137
-#: includes/eme-formfields.php:3342
+#: includes/eme-formfields.php:1371
+#: includes/eme-formfields.php:1716
+#: includes/eme-formfields.php:3185
+#: includes/eme-formfields.php:3390
 #: includes/eme-gdpr.php:118
 #: includes/eme-gdpr.php:192
 #: includes/eme-gdpr.php:308
@@ -4209,9 +4209,9 @@ msgstr "Förnamn"
 msgid "Email"
 msgstr "E-post"
 
-#: includes/eme-events.php:9786
-#: includes/eme-formfields.php:1682
-#: includes/eme-formfields.php:3333
+#: includes/eme-events.php:9800
+#: includes/eme-formfields.php:1730
+#: includes/eme-formfields.php:3381
 #: includes/eme-gdpr.php:466
 #: includes/eme-gdpr.php:619
 #: includes/eme-options.php:37
@@ -4223,45 +4223,45 @@ msgstr "E-post"
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: includes/eme-events.php:9787
+#: includes/eme-events.php:9801
 msgid "Birth date"
 msgstr "Födelsedatum"
 
-#: includes/eme-events.php:9788
+#: includes/eme-events.php:9802
 msgid "Birth place"
 msgstr "Födelseort"
 
-#: includes/eme-events.php:9789
+#: includes/eme-events.php:9803
 #: includes/eme-people.php:1860
 #: includes/eme-people.php:2699
 msgid "Linked WP user"
 msgstr "Länkad WP-användare"
 
-#: includes/eme-events.php:9790
+#: includes/eme-events.php:9804
 msgid "Show all bookings"
 msgstr "Visa alla bokningar"
 
-#: includes/eme-events.php:9791
+#: includes/eme-events.php:9805
 msgid "Member of"
 msgstr "Medlem av"
 
-#: includes/eme-events.php:9793
+#: includes/eme-events.php:9807
 msgid "Bookings made"
 msgstr "Bokningar gjorda"
 
-#: includes/eme-events.php:9794
+#: includes/eme-events.php:9808
 msgid "Answers"
 msgstr "Svar"
 
-#: includes/eme-events.php:9796
+#: includes/eme-events.php:9810
 msgid "GDPR modification date"
 msgstr "GDPR-ändringsdatum"
 
-#: includes/eme-events.php:9797
+#: includes/eme-events.php:9811
 msgid "Related to"
 msgstr "Relaterad till"
 
-#: includes/eme-events.php:9798
+#: includes/eme-events.php:9812
 #: includes/eme-gdpr.php:467
 #: includes/eme-gdpr.php:623
 #: includes/eme-options.php:2133
@@ -4271,414 +4271,414 @@ msgstr "Relaterad till"
 msgid "MassMail"
 msgstr "Massutskick av e-post"
 
-#: includes/eme-events.php:9799
+#: includes/eme-events.php:9813
 #: includes/eme-options.php:2669
 msgid "Birthday Email"
 msgstr "Födelsedags-e-post"
 
-#: includes/eme-events.php:9800
+#: includes/eme-events.php:9814
 msgid "Public group"
 msgstr "Publik grupp"
 
-#: includes/eme-events.php:9801
+#: includes/eme-events.php:9815
 msgid "Nbr People"
 msgstr "Antal personer"
 
-#: includes/eme-events.php:9804
+#: includes/eme-events.php:9818
 msgid "No matching member found"
 msgstr "Ingen matchande medlem hittades"
 
 #: events-manager.php:380
-#: includes/eme-events.php:9805
+#: includes/eme-events.php:9819
 #: includes/eme-import.php:97
 msgid "Members"
 msgstr "Medlemmar"
 
-#: includes/eme-events.php:9807
+#: includes/eme-events.php:9821
 #: includes/eme-gdpr.php:497
 #: includes/eme-gdpr.php:683
 #: includes/eme-members.php:1634
 msgid "Membership"
 msgstr "Medlemskap"
 
-#: includes/eme-events.php:9808
+#: includes/eme-events.php:9822
 #: includes/eme-gdpr.php:679
 msgid "Member ID"
 msgstr "Medlems-ID"
 
-#: includes/eme-events.php:9809
+#: includes/eme-events.php:9823
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/eme-events.php:9810
+#: includes/eme-events.php:9824
 msgid "Nbr Active Members"
 msgstr "Antal aktiva medlemmar"
 
-#: includes/eme-events.php:9811
+#: includes/eme-events.php:9825
 #: includes/eme-gdpr.php:498
 #: includes/eme-gdpr.php:687
 msgid "Start"
 msgstr "Start"
 
-#: includes/eme-events.php:9812
+#: includes/eme-events.php:9826
 #: includes/eme-gdpr.php:499
 #: includes/eme-gdpr.php:691
 #: includes/eme-tasks.php:1022
 msgid "End"
 msgstr "Slut"
 
-#: includes/eme-events.php:9813
+#: includes/eme-events.php:9827
 #: includes/eme-members.php:1716
 #, fuzzy
 msgid "Usage count"
 msgstr "Uppdatera land"
 
-#: includes/eme-events.php:9814
+#: includes/eme-events.php:9828
 msgid "Registered on"
 msgstr "Registrerad den"
 
 #: includes/eme-cleanup.php:398
-#: includes/eme-events.php:9802
+#: includes/eme-events.php:9816
 msgid "Last seen on"
 msgstr "Senast sedd den"
 
-#: includes/eme-events.php:9815
+#: includes/eme-events.php:9829
 msgid "Paid on"
 msgstr "Betalat den"
 
-#: includes/eme-events.php:9816
+#: includes/eme-events.php:9830
 #: includes/eme-people.php:1265
 msgid "Unique nbr"
 msgstr "Unikt nummer"
 
-#: includes/eme-events.php:9817
+#: includes/eme-events.php:9831
 msgid "Payment ID"
 msgstr "Betalnings-ID"
 
-#: includes/eme-events.php:9818
+#: includes/eme-events.php:9832
 #: includes/eme-people.php:1257
 #: includes/eme-people.php:1593
 msgid "Paid"
 msgstr "Betald"
 
-#: includes/eme-events.php:9819
+#: includes/eme-events.php:9833
 msgid "Payment GW"
 msgstr "Betalningsgateway"
 
-#: includes/eme-events.php:9820
+#: includes/eme-events.php:9834
 msgid "Payment GW ID"
 msgstr "Betalnings-GW ID"
 
-#: includes/eme-events.php:9821
+#: includes/eme-events.php:9835
 msgid "Last reminder"
 msgstr "Sista påminnelsen"
 
-#: includes/eme-events.php:9822
+#: includes/eme-events.php:9836
 msgid "Reminders sent"
 msgstr "Påminnelser sända"
 
-#: includes/eme-events.php:9823
+#: includes/eme-events.php:9837
 #: includes/eme-people.php:1262
 #: includes/eme-people.php:1605
 msgid "Discount"
 msgstr "Rabatt"
 
-#: includes/eme-events.php:9824
+#: includes/eme-events.php:9838
 msgid "Used discount codes"
 msgstr "Använda rabattkoder"
 
-#: includes/eme-events.php:9825
+#: includes/eme-events.php:9839
 #: includes/eme-people.php:1261
 #: includes/eme-people.php:1611
 msgid "Total price"
 msgstr "Totalpris"
 
-#: includes/eme-events.php:9826
+#: includes/eme-events.php:9840
 msgid "Membership price"
 msgstr "Medlemskapspris"
 
-#: includes/eme-events.php:9830
+#: includes/eme-events.php:9844
 #: includes/eme-options.php:1710
 msgid "Bookings"
 msgstr "Bokningar"
 
-#: includes/eme-events.php:9831
+#: includes/eme-events.php:9845
 #, fuzzy
 msgid "Event ID"
 msgstr "Event"
 
-#: includes/eme-events.php:9833
+#: includes/eme-events.php:9847
 msgid "Event info"
 msgstr "Eventinfo"
 
-#: includes/eme-events.php:9834
+#: includes/eme-events.php:9848
 msgid "Booker"
 msgstr "Bokare"
 
-#: includes/eme-events.php:9835
+#: includes/eme-events.php:9849
 #: includes/eme-people.php:1260
 #: includes/eme-people.php:1599
 msgid "Booking date"
 msgstr "Bokningsdatum"
 
-#: includes/eme-events.php:9838
+#: includes/eme-events.php:9852
 #: includes/eme-people.php:1259
 msgid "Remaining"
 msgstr "Återstår"
 
-#: includes/eme-events.php:9839
+#: includes/eme-events.php:9853
 #: includes/eme-people.php:1258
 msgid "Received"
 msgstr "Mottaget"
 
-#: includes/eme-events.php:9840
+#: includes/eme-events.php:9854
 msgid "Mark paid and approve"
 msgstr "Markera som betald och godkänn"
 
-#: includes/eme-events.php:9841
+#: includes/eme-events.php:9855
 #: includes/eme-rsvp.php:5590
 #: includes/eme-rsvp.php:5608
 msgid "Mark paid"
 msgstr "Markera som betald"
 
-#: includes/eme-events.php:9842
+#: includes/eme-events.php:9856
 #: includes/eme-people.php:1266
 msgid "Attendance count"
 msgstr "Närvaroantal"
 
-#: includes/eme-events.php:9843
+#: includes/eme-events.php:9857
 msgid "Please select only one record in order to do partial payments"
 msgstr "Välj bara en post för att göra delbetalningar"
 
-#: includes/eme-events.php:9849
+#: includes/eme-events.php:9863
 #: includes/eme-mailer.php:3684
 #: includes/eme-mailer.php:3866
 msgid "Send email"
 msgstr "Sänd e-post"
 
-#: includes/eme-events.php:9850
+#: includes/eme-events.php:9864
 msgid "Queue email"
 msgstr "Köa e-post"
 
-#: includes/eme-events.php:9853
+#: includes/eme-events.php:9867
 msgid "Sent on"
 msgstr "Sänt den"
 
-#: includes/eme-events.php:9854
+#: includes/eme-events.php:9868
 msgid "First read on"
 msgstr "Först läst den"
 
-#: includes/eme-events.php:9855
+#: includes/eme-events.php:9869
 msgid "Last read on"
 msgstr "Senast läst den"
 
-#: includes/eme-events.php:9857
+#: includes/eme-events.php:9871
 msgid "Read count"
 msgstr "Räknare visningar"
 
-#: includes/eme-events.php:9858
+#: includes/eme-events.php:9872
 msgid "Error message"
 msgstr "Felmeddelande"
 
-#: includes/eme-events.php:9865
+#: includes/eme-events.php:9879
 msgid "Action"
 msgstr "Händelse"
 
-#: includes/eme-events.php:9869
+#: includes/eme-events.php:9883
 #: includes/eme-mailer.php:3903
 msgid "Mailing report"
 msgstr "E-postrapport"
 
-#: includes/eme-events.php:9874
+#: includes/eme-events.php:9888
 msgid "Select one or more events"
 msgstr "Välj ett eller flera event"
 
-#: includes/eme-events.php:10104
+#: includes/eme-events.php:10118
 #: includes/eme-rsvp.php:6221
-#: includes/eme-tasks.php:2202
+#: includes/eme-tasks.php:2203
 msgid "Edit event"
 msgstr "Redigera event"
 
-#: includes/eme-events.php:6777
-#: includes/eme-events.php:10120
+#: includes/eme-events.php:6791
+#: includes/eme-events.php:10134
 #: includes/eme-rsvp.php:6228
 msgid "RSVP Info: "
 msgstr "OSA info:"
 
-#: includes/eme-events.php:6806
-#: includes/eme-events.php:6809
-#: includes/eme-events.php:6863
-#: includes/eme-events.php:10144
-#: includes/eme-events.php:10146
-#: includes/eme-events.php:10151
-#: includes/eme-events.php:10153
-#: includes/eme-events.php:10217
-#: includes/eme-events.php:10219
+#: includes/eme-events.php:6820
+#: includes/eme-events.php:6823
+#: includes/eme-events.php:6877
+#: includes/eme-events.php:10158
+#: includes/eme-events.php:10160
+#: includes/eme-events.php:10165
+#: includes/eme-events.php:10167
+#: includes/eme-events.php:10231
+#: includes/eme-events.php:10233
 #: includes/eme-rsvp.php:6231
 #: includes/eme-rsvp.php:6321
 msgid "Approved:"
 msgstr "Godkänd:"
 
-#: includes/eme-events.php:6813
-#: includes/eme-events.php:6861
-#: includes/eme-events.php:10159
-#: includes/eme-events.php:10161
-#: includes/eme-events.php:10211
-#: includes/eme-events.php:10213
+#: includes/eme-events.php:6827
+#: includes/eme-events.php:6875
+#: includes/eme-events.php:10173
+#: includes/eme-events.php:10175
+#: includes/eme-events.php:10225
+#: includes/eme-events.php:10227
 #: includes/eme-rsvp.php:6258
 #: includes/eme-rsvp.php:6319
 msgid "Pending:"
 msgstr "Väntande:"
 
-#: includes/eme-events.php:6818
-#: includes/eme-events.php:10168
-#: includes/eme-events.php:10170
+#: includes/eme-events.php:6832
+#: includes/eme-events.php:10182
+#: includes/eme-events.php:10184
 #: includes/eme-rsvp.php:6263
 msgid "Absent:"
 msgstr "Frånvarande:"
 
 #. translators: %d is the number of waiting list seats
-#: includes/eme-events.php:6831
-#: includes/eme-events.php:10183
+#: includes/eme-events.php:6845
+#: includes/eme-events.php:10197
 #: includes/eme-rsvp.php:6276
 msgid "(%d waiting list seats included)"
 msgstr "(%d platser på väntelistan inkluderade)"
 
-#: includes/eme-events.php:6836
-#: includes/eme-events.php:10188
+#: includes/eme-events.php:6850
+#: includes/eme-events.php:10202
 #: includes/eme-rsvp.php:6282
 msgid "Printable view"
 msgstr "Utskriftsvänlig vy"
 
-#: includes/eme-events.php:6837
-#: includes/eme-events.php:10189
+#: includes/eme-events.php:6851
+#: includes/eme-events.php:10203
 #: includes/eme-rsvp.php:6283
-#: includes/eme-tasks.php:2204
+#: includes/eme-tasks.php:2205
 msgid "CSV export"
 msgstr "CSV-export"
 
 #. translators: %d is the number of tasks
-#: includes/eme-events.php:6859
-#: includes/eme-events.php:10208
+#: includes/eme-events.php:6873
+#: includes/eme-events.php:10222
 #: includes/eme-rsvp.php:6317
 msgid "Task Info: %d tasks"
 msgstr "Uppgiftsinformation: %d uppgifter"
 
-#: includes/eme-events.php:10227
-#: includes/eme-locations.php:562
-#: includes/eme-locations.php:3182
+#: includes/eme-events.php:10241
+#: includes/eme-locations.php:569
+#: includes/eme-locations.php:3280
 #: includes/eme-recurrence.php:793
 msgid "Edit location"
 msgstr "Redigera plats"
 
-#: includes/eme-events.php:10229
-#: includes/eme-locations.php:3184
+#: includes/eme-events.php:10243
+#: includes/eme-locations.php:3282
 #: includes/eme-recurrence.php:795
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Platsens kartkoordinater är tomma! Vänligen redigera platsen och korrigera detta, annars kommer den inte att visas korrekt på din webbplats."
 
-#: includes/eme-events.php:10248
+#: includes/eme-events.php:10262
 msgid "Preview event"
 msgstr "Förhandsgranska event"
 
-#: includes/eme-events.php:10250
+#: includes/eme-events.php:10264
 msgid "View event"
 msgstr "Visa event"
 
-#: includes/eme-events.php:10257
+#: includes/eme-events.php:10271
 msgid "Duplicate this event"
 msgstr "Skapa kopia av detta event"
 
-#: includes/eme-events.php:10269
+#: includes/eme-events.php:10283
 #: includes/eme-rsvp.php:6293
 msgid "Add booking for this event"
 msgstr "Lägg till bokning till detta event"
 
-#: includes/eme-events.php:10271
+#: includes/eme-events.php:10285
 #: includes/eme-rsvp.php:6295
 msgid "Password protected"
 msgstr "Lösenordsskyddad"
 
-#: includes/eme-events.php:10279
+#: includes/eme-events.php:10293
 #: includes/eme-recurrence.php:765
 msgid "Free"
 msgstr "Gratis"
 
-#: includes/eme-events.php:10430
+#: includes/eme-events.php:10444
 #: includes/eme-recurrence.php:860
 msgid "No action defined!"
 msgstr "Ingen handling definierad!"
 
-#: includes/eme-events.php:10456
+#: includes/eme-events.php:10470
 msgid "Restored selected events to draft status"
 msgstr "Återställde valda event till status utkast"
 
-#: includes/eme-events.php:10464
+#: includes/eme-events.php:10478
 msgid "Events status updated"
 msgstr "Eventstatus uppdaterades"
 
-#: includes/eme-events.php:10479
+#: includes/eme-events.php:10493
 msgid "Events added to category"
 msgstr "Event tillagda till kategori"
 
-#: includes/eme-filters.php:90
+#: includes/eme-filters.php:155
 msgid "Select Month"
 msgstr "Välj månad"
 
-#: includes/eme-filters.php:119
+#: includes/eme-filters.php:184
 msgid "Select Year"
 msgstr "Välj år"
 
-#: includes/eme-filters.php:220
+#: includes/eme-filters.php:311
 msgid "Select one or more categories"
 msgstr "Välj en eller flera kategorier"
 
-#: includes/eme-filters.php:222
+#: includes/eme-filters.php:313
 msgid "Select a category"
 msgstr "Välj en kategori"
 
-#: includes/eme-filters.php:251
+#: includes/eme-filters.php:383
 msgid "Select one or more locations"
 msgstr "Välj en eller flera platser"
 
-#: includes/eme-filters.php:253
-#: includes/eme-locations.php:911
+#: includes/eme-filters.php:385
+#: includes/eme-locations.php:918
 msgid "Select a location"
 msgstr "Välj en plats"
 
-#: includes/eme-filters.php:279
-#: includes/eme-filters.php:280
+#: includes/eme-filters.php:434
+#: includes/eme-filters.php:435
 msgid "Select one or more cities"
 msgstr "Välj en eller flera städer"
 
-#: includes/eme-filters.php:279
-#: includes/eme-filters.php:280
+#: includes/eme-filters.php:434
+#: includes/eme-filters.php:435
 msgid "Select a city"
 msgstr "Välj en stad"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:282
+#: includes/eme-filters.php:437
 msgid "Select one or more countries"
 msgstr "Välj ett eller flera länder"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:282
+#: includes/eme-filters.php:437
 msgid "Select a country"
 msgstr "Välj ett land"
 
-#: includes/eme-filters.php:332
+#: includes/eme-filters.php:509
 msgid "Select Week"
 msgstr "Välj vecka"
 
-#: includes/eme-filters.php:347
+#: includes/eme-filters.php:524
 msgid "Select a daterange"
 msgstr "Välj ett datumintervall"
 
-#: includes/eme-filters.php:355
+#: includes/eme-filters.php:532
 msgid "Event contact"
 msgstr "Evenemangskontakt"
 
-#: includes/eme-filters.php:410
+#: includes/eme-filters.php:656
 msgid "Submit"
 msgstr "Skicka"
 
@@ -4786,7 +4786,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Inkludera detta fält i CSV-exporten för bokningar."
 
 #: includes/eme-formfields.php:401
-#: includes/eme-formfields.php:3633
+#: includes/eme-formfields.php:3681
 msgid "Field condition"
 msgstr "Fältvillkor"
 
@@ -5111,8 +5111,8 @@ msgid "Checkbox (vertical)"
 msgstr "Kryssruta (lodrät)"
 
 #: includes/eme-formfields.php:759
-#: includes/eme-formfields.php:2364
-#: includes/eme-formfields.php:3020
+#: includes/eme-formfields.php:2412
+#: includes/eme-formfields.php:3068
 msgid "Password"
 msgstr "Lösenord"
 
@@ -5148,18 +5148,18 @@ msgstr "Tid (Javascript)"
 msgid "This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it"
 msgstr "Detta är ett dolt fält, men i back-end visas det som text så att en administratör kan se värdet och eventuellt ändra det."
 
-#: includes/eme-formfields.php:1540
+#: includes/eme-formfields.php:1588
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Obs: eftersom du är inloggad som en person med behörighet att redigera detta event så är fältet ”Efternamn” också ett autoifyllnadsfält så att du kan välja befintliga personer ifall så önskas. Eller bara töm fältet och börja skriv."
 
-#: includes/eme-formfields.php:1731
-#: includes/eme-formfields.php:3181
+#: includes/eme-formfields.php:1779
+#: includes/eme-formfields.php:3229
 #, fuzzy
 msgid "Remember me?"
 msgstr "E-post om ny medlem"
 
-#: includes/eme-formfields.php:1573
-#: includes/eme-formfields.php:3379
+#: includes/eme-formfields.php:1621
+#: includes/eme-formfields.php:3427
 #: includes/eme-people.php:1055
 #: includes/eme-people.php:1230
 #: includes/eme-people.php:2640
@@ -5167,8 +5167,8 @@ msgstr "E-post om ny medlem"
 msgid "Date of birth"
 msgstr "Födelsedatum"
 
-#: includes/eme-formfields.php:1582
-#: includes/eme-formfields.php:3369
+#: includes/eme-formfields.php:1630
+#: includes/eme-formfields.php:3417
 #: includes/eme-people.php:1056
 #: includes/eme-people.php:1231
 #: includes/eme-people.php:2654
@@ -5176,70 +5176,70 @@ msgstr "Födelsedatum"
 msgid "Place of birth"
 msgstr "Födelseort"
 
-#: includes/eme-formfields.php:2952
-#: includes/eme-formfields.php:3199
+#: includes/eme-formfields.php:3000
+#: includes/eme-formfields.php:3247
 msgid "Subscribe"
 msgstr "Prenumerera"
 
-#: includes/eme-formfields.php:1303
-#: includes/eme-formfields.php:2914
+#: includes/eme-formfields.php:1351
+#: includes/eme-formfields.php:2962
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_LASTNAME och #_EMAIL platshållare."
 
-#: includes/eme-formfields.php:1329
+#: includes/eme-formfields.php:1377
 msgid "Cancel reason"
 msgstr "Avbokningsorsak"
 
-#: includes/eme-formfields.php:1366
+#: includes/eme-formfields.php:1414
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_CANCEL_PAYMENT_LINE och #_SUBMIT (eller liknande) platshållare."
 
-#: includes/eme-formfields.php:1742
+#: includes/eme-formfields.php:1790
 msgid "Group is not public"
 msgstr "Gruppen är inte publik"
 
-#: includes/eme-formfields.php:1739
+#: includes/eme-formfields.php:1787
 msgid "Group does not exist"
 msgstr "Gruppen finns inte"
 
-#: includes/eme-formfields.php:2338
+#: includes/eme-formfields.php:2386
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Genom att använda #_SEATS{xx} använder du multipla kategorier i din OSA-mall, men du har inte definierat ett pris för varje kategori i dina OSA-inställningar för eventet. Vänligen korrigera eventets OSA-inställningar."
 
-#: includes/eme-formfields.php:2398
-#: includes/eme-formfields.php:2749
+#: includes/eme-formfields.php:2446
+#: includes/eme-formfields.php:2797
 msgid "Discount code"
 msgstr "Rabattkod"
 
-#: includes/eme-formfields.php:2403
-#: includes/eme-formfields.php:2754
+#: includes/eme-formfields.php:2451
+#: includes/eme-formfields.php:2802
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Ange ett nytt fast rabattvärde om så önskas, eller lämna som det är för att behålla det beräknade värdet %s baserat på följande tillämpade rabatter:"
 
-#: includes/eme-formfields.php:2407
-#: includes/eme-formfields.php:2758
+#: includes/eme-formfields.php:2455
+#: includes/eme-formfields.php:2806
 msgid "Enter a fixed discount value if wanted"
 msgstr "Ange ett fast rabattvärde om så önskas"
 
 #. translators: %s is the discount group name
-#: includes/eme-formfields.php:2412
-#: includes/eme-formfields.php:2763
+#: includes/eme-formfields.php:2460
+#: includes/eme-formfields.php:2811
 #: includes/eme-people.php:1368
 #: includes/eme-people.php:1688
 msgid "Discountgroup %s"
 msgstr "Rabattgrupp %s"
 
 #. translators: %d is the discount group ID
-#: includes/eme-formfields.php:2413
-#: includes/eme-formfields.php:2764
+#: includes/eme-formfields.php:2461
+#: includes/eme-formfields.php:2812
 #: includes/eme-people.php:1371
 #: includes/eme-people.php:1691
 msgid "Applied discount group %d no longer exists"
 msgstr "Använd rabattgrupp %d finns inte längre"
 
 #. translators: %d is the discount ID
-#: includes/eme-formfields.php:2423
-#: includes/eme-formfields.php:2774
+#: includes/eme-formfields.php:2471
+#: includes/eme-formfields.php:2822
 #: includes/eme-members.php:5240
 #: includes/eme-people.php:1387
 #: includes/eme-people.php:1707
@@ -5247,158 +5247,158 @@ msgstr "Använd rabattgrupp %d finns inte längre"
 msgid "Applied discount %d no longer exists"
 msgstr "Använd rabatt %d finns inte längre "
 
-#: includes/eme-formfields.php:2429
-#: includes/eme-formfields.php:2780
+#: includes/eme-formfields.php:2477
+#: includes/eme-formfields.php:2828
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "Endast ett rabattfält kan användas i admingränssnittet, de andra kommer inte att sammanställas"
 
-#: includes/eme-formfields.php:2494
+#: includes/eme-formfields.php:2542
 msgid "Update booking"
 msgstr "Uppdatera bokning"
 
-#: includes/eme-formfields.php:2521
+#: includes/eme-formfields.php:2569
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_LASTNAME, #_EMAIL, #_SEATS, #_SUBMIT (eller motsvarande) platshållare."
 
-#: includes/eme-formfields.php:2524
+#: includes/eme-formfields.php:2572
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEATS{xx} placeholders for each price."
 msgstr "Eftersom detta event är multipris, se till att du ändrat inställningen ”Registreringsformulär” för eventet så att platshållaren #_SEATS{xx} finns för varje pris."
 
-#: includes/eme-formfields.php:2527
+#: includes/eme-formfields.php:2575
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Kontrollera att platshållaren #_PASSWORD finns med i formuläret."
 
-#: includes/eme-formfields.php:3302
+#: includes/eme-formfields.php:3350
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_LASTNAME och #_FIRSTNAME platshållare."
 
-#: includes/eme-formfields.php:2731
+#: includes/eme-formfields.php:2779
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "I back-end kan du inte lägga till eller redigera familjemedlemsinformation, använd front-end-formuläret för det."
 
-#: includes/eme-formfields.php:2819
+#: includes/eme-formfields.php:2867
 msgid "Update member"
 msgstr "Uppdatera medlem"
 
-#: includes/eme-formfields.php:2823
+#: includes/eme-formfields.php:2871
 msgid "Become member"
 msgstr "Bli medlem"
 
-#: includes/eme-formfields.php:2619
-#: includes/eme-formfields.php:3234
+#: includes/eme-formfields.php:2667
+#: includes/eme-formfields.php:3282
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Alla obligatoriska fält finns inte i formuläret. Vi behöver åtminstone #_LASTNAME, #_FIRSTNAME, #_EMAIL och #_SUBMIT (eller motsvarande) platshållare."
 
-#: includes/eme-formfields.php:3162
+#: includes/eme-formfields.php:3210
 #: includes/eme-tasks.php:663
 #: includes/eme-templates.php:43
 msgid "All"
 msgstr "Alla"
 
-#: includes/eme-formfields.php:3151
-#: includes/eme-formfields.php:3164
+#: includes/eme-formfields.php:3199
+#: includes/eme-formfields.php:3212
 msgid "Newsletter concerning new events"
 msgstr "Nyhetsbrev om nya evenemang"
 
-#: includes/eme-formfields.php:1543
-#: includes/eme-formfields.php:3117
+#: includes/eme-formfields.php:1591
+#: includes/eme-formfields.php:3165
 msgid "You can change your last name in your WP profile."
 msgstr "Du kan ändra ditt efternamn i din WP-profil."
 
-#: includes/eme-formfields.php:1564
-#: includes/eme-formfields.php:3130
+#: includes/eme-formfields.php:1612
+#: includes/eme-formfields.php:3178
 msgid "You can change your first name in your WP profile."
 msgstr "Du kan ändra ditt förnamn i din WP-profil."
 
-#: includes/eme-formfields.php:1673
-#: includes/eme-formfields.php:3140
+#: includes/eme-formfields.php:1721
+#: includes/eme-formfields.php:3188
 msgid "You can change your email in your WP profile."
 msgstr "Du kan ändra din e-postadress i din WP-profil."
 
-#: includes/eme-formfields.php:3197
+#: includes/eme-formfields.php:3245
 msgid "Unsubscribe"
 msgstr "Avsluta prenumeration"
 
-#: includes/eme-formfields.php:3084
+#: includes/eme-formfields.php:3132
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Inte alla obligatoriska fält finns med i formuläret. Vi behöver åtminstone #_EMAIL och #_SUBMIT (eller motsvarande) platshållare."
 
-#: includes/eme-formfields.php:3287
+#: includes/eme-formfields.php:3335
 msgid "Save personal info"
 msgstr "Spara personlig information"
 
-#: includes/eme-formfields.php:3627
+#: includes/eme-formfields.php:3675
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Visa fält dynamiskt baserat på ett antal villkor"
 
-#: includes/eme-formfields.php:3632
+#: includes/eme-formfields.php:3680
 msgid "Index"
 msgstr "Index"
 
-#: includes/eme-formfields.php:3597
+#: includes/eme-formfields.php:3645
 msgid "Field"
 msgstr "Fält"
 
-#: includes/eme-formfields.php:3598
+#: includes/eme-formfields.php:3646
 msgid "Condition"
 msgstr "Villkor"
 
-#: includes/eme-formfields.php:3599
+#: includes/eme-formfields.php:3647
 msgid "Condition value"
 msgstr "Villkorsvärde"
 
-#: includes/eme-formfields.php:3635
+#: includes/eme-formfields.php:3683
 msgid "Repeat"
 msgstr "Upprepa"
 
-#: includes/eme-formfields.php:3583
+#: includes/eme-formfields.php:3631
 #: includes/eme-tasks.php:957
 #: includes/eme-todos.php:202
 msgid "Reorder"
 msgstr "Ändra ordning"
 
-#: includes/eme-formfields.php:3603
+#: includes/eme-formfields.php:3651
 msgid "Header template"
 msgstr "Mall för sidhuvud"
 
-#: includes/eme-formfields.php:3604
+#: includes/eme-formfields.php:3652
 msgid "Template"
 msgstr "Mall"
 
-#: includes/eme-formfields.php:3605
+#: includes/eme-formfields.php:3653
 msgid "Footer template"
 msgstr "Mall för sidfot"
 
-#: includes/eme-formfields.php:3612
+#: includes/eme-formfields.php:3660
 msgid "Add new condition"
 msgstr "Lägg till ny förutsättning"
 
-#: includes/eme-formfields.php:3615
+#: includes/eme-formfields.php:3663
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Varning: det finns redan svar inmatade baserade på detta villkor, ändring eller borttagning av detta villkor kan leda till oönskade bipåverkan."
 
-#: includes/eme-formfields.php:3690
+#: includes/eme-formfields.php:3738
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Detta kommer som tillägg visa den valda mallen i formuläret ifall villkoret uppfylls."
 
-#: includes/eme-formfields.php:3692
+#: includes/eme-formfields.php:3740
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Parametern ”Fält” ska fyllas med valfri giltig platshållare som tillåts i formuläret."
 
-#: includes/eme-formfields.php:3694
+#: includes/eme-formfields.php:3742
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Den valda mallen kommer att visas flera gånger om upprepningsvalet används (baserat på antal gånger fältet skiljer från villkorsvärdet). Detta används inte för valet ”lika med”."
 
-#: includes/eme-formfields.php:3696
+#: includes/eme-formfields.php:3744
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Den valda mallen kan innehålla html och även ha platshållare för anpassade formulärfält (inga andra platshållare tillåts)."
 
-#: includes/eme-formfields.php:3697
+#: includes/eme-formfields.php:3745
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Använd platshållaren #_DYNAMICDATA för att visa de dynamiska formulären i ditt formulär."
 
-#: includes/eme-formfields.php:3846
-#: includes/eme-formfields.php:3856
+#: includes/eme-formfields.php:3894
+#: includes/eme-formfields.php:3904
 #: includes/eme-functions.php:3443
 msgid "Records deleted!"
 msgstr "Poster borttagna!"
@@ -5446,7 +5446,7 @@ msgstr "Utkast"
 #: includes/eme-people.php:1644
 #: includes/eme-people.php:1791
 #: includes/eme-tasks.php:664
-#: includes/eme-tasks.php:2213
+#: includes/eme-tasks.php:2214
 msgid "Pending"
 msgstr "Inväntar granskning"
 
@@ -5625,7 +5625,7 @@ msgstr "CFP-franc (Franc Pacifique)"
 msgid "South African Rand"
 msgstr "Sydafrikanska Rand"
 
-#: includes/eme-events.php:9866
+#: includes/eme-events.php:9880
 #: includes/eme-functions.php:2249
 msgid "Extra info"
 msgstr "Extra info"
@@ -5719,7 +5719,7 @@ msgstr "Ingen sådan post"
 #: includes/eme-people.php:4967
 #: includes/eme-rsvp.php:861
 #: includes/eme-rsvp.php:1173
-#: includes/eme-tasks.php:1869
+#: includes/eme-tasks.php:1870
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänligen kontakta webbplatsinnehavaren."
 
@@ -5740,7 +5740,7 @@ msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänli
 #: includes/eme-people.php:4978
 #: includes/eme-rsvp.php:873
 #: includes/eme-rsvp.php:1185
-#: includes/eme-tasks.php:1881
+#: includes/eme-tasks.php:1882
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Upptäckte ett försök att manipulera formuläret. Om du anser att du felaktigt fått detta meddelande, vänligen kontakta webbplatsinnehavaren."
 
@@ -5760,7 +5760,7 @@ msgstr "Tack för din begäran, ett e-postmeddelande kommer att skickas med ytte
 #: includes/eme-people.php:5039
 #: includes/eme-rsvp.php:161
 #: includes/eme-rsvp.php:828
-#: includes/eme-tasks.php:1580
+#: includes/eme-tasks.php:1581
 msgid "Javascript is required for this form to work properly"
 msgstr "Javascript krävs för att detta formulär ska fungera korrekt"
 
@@ -5944,176 +5944,176 @@ msgid "The location update failed."
 msgstr "Uppdateringen av plats misslyckades."
 
 #. translators: %s is the CSV row data
-#: includes/eme-locations.php:338
+#: includes/eme-locations.php:345
 msgid "Not imported (problem updating the location in the db): %s"
 msgstr "Inte importerat (problem vid uppdatering av platsen i databasen): %s"
 
 #. translators: %s is the CSV row data
-#: includes/eme-locations.php:347
+#: includes/eme-locations.php:354
 msgid "Not imported (problem inserting the location in the db): %s"
 msgstr "Inte importerat (problem vid infogning av platsen i databasen): %s"
 
-#: includes/eme-locations.php:401
+#: includes/eme-locations.php:408
 msgid "The location details have changed. Please verify the coordinates and press Save when done"
 msgstr "Detaljerna för platsen har ändrats. Vänligen verifiera koordinaterna och välj sedan att Spara"
 
 #. translators: %s is the default capability name
-#: includes/eme-locations.php:453
-#: includes/eme-locations.php:559
-#: includes/eme-locations.php:868
+#: includes/eme-locations.php:460
+#: includes/eme-locations.php:566
+#: includes/eme-locations.php:875
 #: includes/eme-options.php:1620
 msgid "Add location"
 msgstr "Lägg till plats"
 
-#: includes/eme-locations.php:453
+#: includes/eme-locations.php:460
 msgid "Update location"
 msgstr "Uppdatera plats"
 
-#: includes/eme-locations.php:470
+#: includes/eme-locations.php:477
 msgid "Author of this location: "
 msgstr "Upphovsperson för denna plats: "
 
-#: includes/eme-locations.php:521
-#: includes/eme-locations.php:523
-#: includes/eme-locations.php:568
-#: includes/eme-locations.php:571
-#: includes/eme-locations.php:881
+#: includes/eme-locations.php:528
+#: includes/eme-locations.php:530
+#: includes/eme-locations.php:575
+#: includes/eme-locations.php:578
+#: includes/eme-locations.php:888
 msgid "Location name"
 msgstr "Platsnamn"
 
-#: includes/eme-locations.php:572
+#: includes/eme-locations.php:579
 msgid "This is an autocomplete field. If a name of an existing location matches, it will be suggested."
 msgstr "Detta är ett autofyllningsfält. Om ett namn på en befintlig plats matchas, kommer det att föreslås."
 
-#: includes/eme-locations.php:583
+#: includes/eme-locations.php:590
 msgid "Location address"
 msgstr "Platsadress"
 
-#: includes/eme-locations.php:612
+#: includes/eme-locations.php:619
 msgid "If you're are really serious about the correct location, specify the latitude and longitude coordinates."
 msgstr "Om du verkligen vill ha rätt plats, ange latitud- och longitudkoordinaterna."
 
-#: includes/eme-locations.php:616
+#: includes/eme-locations.php:623
 #, fuzzy
 msgid "Override location coordinates"
 msgstr "Platsens stad"
 
-#: includes/eme-locations.php:655
+#: includes/eme-locations.php:662
 msgid "Location map icon url"
 msgstr "Url till ikonen för platskartan"
 
-#: includes/eme-locations.php:659
+#: includes/eme-locations.php:666
 msgid "Map icon url"
 msgstr "Url till kartikon"
 
-#: includes/eme-locations.php:661
+#: includes/eme-locations.php:668
 #: includes/eme-options.php:3341
 msgid "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here."
 msgstr "Som standard visas en kartnål där platsen är på kartan. Om du inte gillar standarden kan du ange en annan kartikon här."
 
-#: includes/eme-locations.php:662
+#: includes/eme-locations.php:669
 #: includes/eme-options.php:3341
 msgid "Size should be 32x32, bottom center will be pointing to the location on the map."
 msgstr "Storleken ska vara 32x32, mittpunkten nertill kommer peka på platsen på kartan."
 
-#: includes/eme-locations.php:671
+#: includes/eme-locations.php:678
 msgid "Because qtranslate or a derivate is active, the title of the location might not update automatically in the balloon, so don't panic there."
 msgstr "Eftersom qtranslate eller ett derivat är aktiv, kanske rubriken på platsen inte uppdateras automatiskt i ballongen, så ingen panik här."
 
-#: includes/eme-locations.php:677
+#: includes/eme-locations.php:684
 #, fuzzy
 msgid "Location maximum capacity"
 msgstr "Platsbild"
 
-#: includes/eme-locations.php:681
-#: includes/eme-locations.php:3200
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:688
+#: includes/eme-locations.php:3298
+#: includes/eme-locations.php:3299
 msgid "Max capacity"
 msgstr "Maxkapacitet"
 
-#: includes/eme-locations.php:683
+#: includes/eme-locations.php:690
 msgid "If setting the max capacity to something else than 0, then - for all events that are happening at the same time at this location - a check will be done to see if the location still allows extra people inside."
 msgstr "Om maxkapaciteten ställs in till något annat än 0, kommer ett kontroll att göras för alla evenemang som sker samtidigt på denna plats för att se om platsen fortfarande tillåter fler personer."
 
-#: includes/eme-locations.php:695
+#: includes/eme-locations.php:702
 msgid "Location description"
 msgstr "Platsbeskrivning"
 
-#: includes/eme-locations.php:708
+#: includes/eme-locations.php:715
 msgid "A description of the location. You may include any kind of info here."
 msgstr "En beskrivning av platsen. Du kan inkludera vilken information som helst här."
 
-#: includes/eme-locations.php:722
-#: includes/eme-locations.php:727
-#: includes/eme-locations.php:731
+#: includes/eme-locations.php:729
+#: includes/eme-locations.php:734
+#: includes/eme-locations.php:738
 msgid "Location image"
 msgstr "Platsbild"
 
-#: includes/eme-locations.php:753
+#: includes/eme-locations.php:760
 msgid "External info"
 msgstr "Extern information"
 
-#: includes/eme-locations.php:763
+#: includes/eme-locations.php:770
 msgid "Only online location"
 msgstr "Endast onlineplatser"
 
-#: includes/eme-locations.php:765
+#: includes/eme-locations.php:772
 msgid "Check this is the location is purely virtual (like a meeting url or so)."
 msgstr "Markera detta om platsen är rent virtuell (som en mötesadress eller liknande)."
 
-#: includes/eme-locations.php:794
+#: includes/eme-locations.php:801
 msgid "Here custom fields of type 'locations' are shown."
 msgstr "Här visas anpassade fält av typen ”platser”."
 
-#: includes/eme-locations.php:795
+#: includes/eme-locations.php:802
 msgid "The difference with location attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom."
 msgstr "Skillnaden mot platsattribut är att attribut behöver definieras i ditt format först och endast kan vara text, här kan du först skapa anpassade fält av valfri typ vilket ger större frihet."
 
-#: includes/eme-locations.php:863
+#: includes/eme-locations.php:870
 msgid "Add a new location"
 msgstr "Lägg till ny plats"
 
-#: includes/eme-locations.php:873
+#: includes/eme-locations.php:880
 msgid "Manage locations"
 msgstr "Hantera platser"
 
-#: includes/eme-locations.php:888
+#: includes/eme-locations.php:895
 msgid "Filter location"
 msgstr "FIltrera plats"
 
-#: includes/eme-locations.php:905
+#: includes/eme-locations.php:912
 msgid "Delete selected locations"
 msgstr "Ta bort markerade platser"
 
-#: includes/eme-locations.php:908
+#: includes/eme-locations.php:915
 msgid "Transfer associated events to (leave empty to delete the location info for those events):"
 msgstr "Flytta kopplade event till (lämna blank för att ta bort platsinfo för de eventen):"
 
-#: includes/eme-locations.php:1411
+#: includes/eme-locations.php:1425
 msgid "The location name"
 msgstr "Platsens namn"
 
-#: includes/eme-locations.php:1412
+#: includes/eme-locations.php:1426
 msgid "The location address"
 msgstr "Platsens adress"
 
-#: includes/eme-locations.php:1413
+#: includes/eme-locations.php:1427
 msgid "The location city"
 msgstr "Platsens stad"
 
-#: includes/eme-locations.php:2835
+#: includes/eme-locations.php:2933
 msgid "Your Street Address"
 msgstr "Din gatuadress"
 
-#: includes/eme-locations.php:2840
+#: includes/eme-locations.php:2938
 msgid "Get Directions"
 msgstr "Få vägbeskrivning"
 
-#: includes/eme-locations.php:3216
+#: includes/eme-locations.php:3314
 msgid "View location"
 msgstr "Visa plats"
 
-#: includes/eme-locations.php:3218
+#: includes/eme-locations.php:3316
 msgid "Duplicate this location"
 msgstr "Skapa kopia av denna plats"
 
@@ -6177,30 +6177,30 @@ msgstr "Ignorerad"
 msgid "Reuse"
 msgstr "Återanvänd"
 
-#: includes/eme-events.php:9859
+#: includes/eme-events.php:9873
 #: includes/eme-mailer.php:3775
 msgid "Sender name"
 msgstr "Avsändarnamn"
 
-#: includes/eme-events.php:9860
+#: includes/eme-events.php:9874
 #: includes/eme-mailer.php:3779
 msgid "Sender email"
 msgstr "Avsändar-e-post"
 
-#: includes/eme-events.php:9864
+#: includes/eme-events.php:9878
 #: includes/eme-mailer.php:3601
 #: includes/eme-mailer.php:3786
 msgid "Subject"
 msgstr "Ärenderad"
 
-#: includes/eme-events.php:9852
+#: includes/eme-events.php:9866
 msgid "Queued on"
 msgstr "Köat den"
 
 #: includes/eme-actions.php:508
 #: includes/eme-cleanup.php:427
-#: includes/eme-events.php:6739
-#: includes/eme-events.php:9660
+#: includes/eme-events.php:6753
+#: includes/eme-events.php:9674
 #: includes/eme-mailer.php:2007
 #: includes/eme-mailer.php:2018
 #: includes/eme-mailer.php:2023
@@ -6304,7 +6304,7 @@ msgstr "Evenemangsrelaterad e-post"
 msgid "Generic email"
 msgstr "Allmän e-post"
 
-#: includes/eme-events.php:9871
+#: includes/eme-events.php:9885
 #: includes/eme-mailer.php:3466
 msgid "Mailings"
 msgstr "E-postutskick"
@@ -6575,15 +6575,15 @@ msgstr "Ta bort markerade utskick"
 msgid "Archive selected mailings"
 msgstr "Arkivera markerade utskick"
 
-#: includes/eme-events.php:9851
+#: includes/eme-events.php:9865
 msgid "Planned execution time"
 msgstr "Planerad tidpunkt för utförande"
 
-#: includes/eme-events.php:9856
+#: includes/eme-events.php:9870
 msgid "Unique read count"
 msgstr "Räknare unika visningar"
 
-#: includes/eme-events.php:9867
+#: includes/eme-events.php:9881
 #: includes/eme-mailer.php:2060
 msgid "Report"
 msgstr "Rapport"
@@ -6885,14 +6885,14 @@ msgstr "Du kan länka denna medlem till ett 'familjeöverhuvud'-konto, varefter 
 msgid "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that."
 msgstr "Eftersom denna medlem är relaterad till en annan familjemedlem kan du inte redigera den grundläggande medlemskapsinformationen. Vänligen ta först bort relationen (genom att tömma detta fält) och tryck spara om du vill göra det."
 
-#: includes/eme-events.php:7183
+#: includes/eme-events.php:7197
 #: includes/eme-members.php:1694
 #: includes/eme-members.php:1814
 #: includes/eme-members.php:1947
 msgid "Start date"
 msgstr "Startdatum"
 
-#: includes/eme-events.php:7185
+#: includes/eme-events.php:7199
 #: includes/eme-members.php:1704
 #: includes/eme-members.php:1815
 msgid "End date"
@@ -7921,9 +7921,9 @@ msgstr "Medlemmarna borttagna."
 #: includes/eme-rsvp.php:6963
 #: includes/eme-rsvp.php:7025
 #: includes/eme-rsvp.php:7076
-#: includes/eme-tasks.php:2284
-#: includes/eme-tasks.php:2310
-#: includes/eme-tasks.php:2334
+#: includes/eme-tasks.php:2285
+#: includes/eme-tasks.php:2311
+#: includes/eme-tasks.php:2335
 msgid "The action has been executed successfully."
 msgstr "Handlingen har utförts."
 
@@ -7953,9 +7953,9 @@ msgstr "Handlingen har utförts men det var problem med att sända e-post."
 #: includes/eme-rsvp.php:6920
 #: includes/eme-rsvp.php:6956
 #: includes/eme-rsvp.php:7073
-#: includes/eme-tasks.php:2287
-#: includes/eme-tasks.php:2313
-#: includes/eme-tasks.php:2337
+#: includes/eme-tasks.php:2288
+#: includes/eme-tasks.php:2314
+#: includes/eme-tasks.php:2338
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "Det uppstod ett problem med att utföra det du önskade, vänligen kolla dina loggar."
 
@@ -8467,7 +8467,7 @@ msgstr "Cloudflare Turnstile hemlig nyckel"
 msgid "Autocomplete sources"
 msgstr "Källor för automatisk komplettering"
 
-#: includes/eme-events.php:8385
+#: includes/eme-events.php:8399
 #: includes/eme-members.php:2005
 #: includes/eme-options.php:1548
 #: includes/eme-options.php:2167
@@ -8687,7 +8687,7 @@ msgid "Permission needed to edit all locations. Default: %s"
 msgstr "Behörighet som behövs för att redigera alla platser. Standard: %s"
 
 #: events-manager.php:365
-#: includes/eme-events.php:9845
+#: includes/eme-events.php:9859
 #: includes/eme-options.php:1630
 msgid "Categories"
 msgstr "Kategorier"
@@ -11818,7 +11818,7 @@ msgstr "Väntar på användarbekräftelse"
 #: includes/eme-people.php:1648
 #: includes/eme-people.php:1776
 #: includes/eme-tasks.php:665
-#: includes/eme-tasks.php:2211
+#: includes/eme-tasks.php:2212
 msgid "Approved"
 msgstr "Godkänd"
 
@@ -12629,7 +12629,7 @@ msgstr "Återbetalning om möjligt?"
 msgid "Partial payment amount"
 msgstr "Delbetalningsbelopp"
 
-#: includes/eme-events.php:6166
+#: includes/eme-events.php:6180
 #: includes/eme-rsvp.php:5692
 #, fuzzy
 msgid "Event fields"
@@ -12777,28 +12777,28 @@ msgstr "Kräv WP-medlemskap för att kunna anmäla sig för uppgifter?"
 msgid "Require approval for task signups?"
 msgstr "Kräv bekräftelse av anmälningar som standard?"
 
-#: includes/eme-tasks.php:1530
-#: includes/eme-tasks.php:1657
+#: includes/eme-tasks.php:1531
+#: includes/eme-tasks.php:1658
 msgid "There are no tasks to sign up for right now"
 msgstr "Det finns inga uppgifter att anmäla sig för just nu"
 
-#: includes/eme-tasks.php:1892
+#: includes/eme-tasks.php:1893
 msgid "Please select at least one task."
 msgstr "Välj minst en uppgift."
 
-#: includes/eme-tasks.php:1964
+#: includes/eme-tasks.php:1965
 msgid "No more open spaces for this task"
 msgstr "Inga fler lediga platser för denna uppgift"
 
-#: includes/eme-tasks.php:1979
+#: includes/eme-tasks.php:1980
 msgid "Duplicate signup detected"
 msgstr "Duplicerad anmälan upptäckt"
 
-#: includes/eme-tasks.php:1986
+#: includes/eme-tasks.php:1987
 msgid "Signup overlap with another task detected"
 msgstr "Anmälan överlappar med en annan uppgift"
 
-#: includes/eme-tasks.php:2025
+#: includes/eme-tasks.php:2026
 msgid "Signup failed"
 msgstr "Anmälan misslyckades"
 
@@ -12993,6 +12993,7 @@ msgstr "(Se dokumentationen för &#91;eme_events] för alla möjliga värden)"
 msgid "Show events per period"
 msgstr "Visa event per period"
 
+#: includes/eme-filters.php:570
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -13066,7 +13067,7 @@ msgstr[0] "Lägg till medlem"
 msgstr[1] "Lägg till medlem"
 
 #: events-manager.php:368
-#: includes/eme-events.php:9727
+#: includes/eme-events.php:9741
 msgid "Custom Fields"
 msgstr "Anpassade fält"
 
@@ -13122,18 +13123,18 @@ msgstr "Medlemskapspriset är inte ett giltigt pris och har återställts till 0
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
 msgstr "Extraavgiften för medlemskapet är inte ett giltigt pris och har återställts till 0"
 
-#: includes/eme-events.php:6772
+#: includes/eme-events.php:6786
 msgid "Bookings and tasks"
 msgstr "Bokningar och uppgifter"
 
-#: includes/eme-events.php:9720
+#: includes/eme-events.php:9734
 #: includes/eme-people.php:1040
 msgid "Signup date"
 msgstr "Anmälningsdatum"
 
-#: includes/eme-events.php:7665
-#: includes/eme-events.php:7866
-#: includes/eme-events.php:8250
+#: includes/eme-events.php:7679
+#: includes/eme-events.php:7880
+#: includes/eme-events.php:8264
 #: includes/eme-members.php:2337
 #: includes/eme-members.php:2481
 #: includes/eme-members.php:2560
@@ -13144,9 +13145,9 @@ msgstr "Anmälningsdatum"
 msgid "PDF templates as attachments"
 msgstr "PDF-mallar som bilagor"
 
-#: includes/eme-events.php:7670
-#: includes/eme-events.php:7871
-#: includes/eme-events.php:8255
+#: includes/eme-events.php:7684
+#: includes/eme-events.php:7885
+#: includes/eme-events.php:8269
 #: includes/eme-members.php:2343
 #: includes/eme-members.php:2346
 #: includes/eme-members.php:2487
@@ -13160,9 +13161,9 @@ msgstr "PDF-mallar som bilagor"
 msgid "Optionally add PDF templates as attachments to the mail."
 msgstr "Valfritt: lägg till PDF-mallar som bilagor till e-postmeddelandet."
 
-#: includes/eme-events.php:7674
-#: includes/eme-events.php:7875
-#: includes/eme-events.php:8259
+#: includes/eme-events.php:7688
+#: includes/eme-events.php:7889
+#: includes/eme-events.php:8273
 #: includes/eme-members.php:2348
 #: includes/eme-members.php:2492
 #: includes/eme-members.php:2571
@@ -13173,7 +13174,7 @@ msgstr "Valfritt: lägg till PDF-mallar som bilagor till e-postmeddelandet."
 msgid "No PDF templates defined yet."
 msgstr "Inga PDF-mallar definierade ännu."
 
-#: includes/eme-events.php:7864
+#: includes/eme-events.php:7878
 #: includes/eme-options.php:2355
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr "Valfritt: lägg till bilagor till e-postmeddelandet när en bokning väntar."
@@ -13240,7 +13241,7 @@ msgstr "Inte importerat (både e-post och efternamn är tomma): %s"
 msgid "Not imported (no matching person found): %s"
 msgstr "Inte importerat (ingen matchande person hittad): %s"
 
-#: includes/eme-events.php:7281
+#: includes/eme-events.php:7295
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr "Upprepningens start- och slutdatum (betrakta det som dagen för det första evenemanget i serien och dagen för det sista evenemanget i serien). Om du lämnar slutdatumet tomt kommer uppprepningen att fortsätta för alltid och de nästa 10 evenemangen kommer automatiskt att planeras (kontrolleras dagligen) medan äldre evenemang kommer att tas bort förutom det senaste."
 
@@ -13446,7 +13447,7 @@ msgstr "Betalning misslyckades för din evenemanginskickning"
 msgid "Event submit payment page"
 msgstr "Betalningssida för evenemanginskickning"
 
-#: includes/eme-events.php:8387
+#: includes/eme-events.php:8401
 #: includes/eme-members.php:2005
 #: includes/eme-options.php:3390
 msgid "Select a captcha to use"
@@ -13596,27 +13597,27 @@ msgstr "Ange avgränsaren som används i CSV-exporter."
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "Tillåt bara en anmälan för uppgifter per evenemang för en person?"
 
-#: includes/eme-tasks.php:1952
+#: includes/eme-tasks.php:1953
 msgid "Only one signup allowed"
 msgstr "Bara en anmälan tillåten"
 
-#: includes/eme-events.php:6510
+#: includes/eme-events.php:6524
 msgid "Todos"
 msgstr "Att-göra"
 
-#: includes/eme-events.php:6624
+#: includes/eme-events.php:6638
 msgid "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task."
 msgstr "Uppgifter kan användas för att mobilisera frivilliga att hjälpa till vid ett evenemang (t.ex. 5 personer bakom baren per skift, städtjänst, ...) eller för att låta folk anmäla sig för en viss tidsram för ett evenemang (tidsbokningsliknande). Även om du kan begränsa och bekräfta uppgifter finns det inget pris per uppgift så ingen betalning är möjlig vid anmälan till en uppgift."
 
-#: includes/eme-events.php:6678
+#: includes/eme-events.php:6692
 msgid "Enable todos for this event"
 msgstr "Aktivera att-göra för detta evenemang"
 
-#: includes/eme-events.php:6681
+#: includes/eme-events.php:6695
 msgid "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started."
 msgstr "Varje att-göra med ett datum i det förflutna kommer att skicka ett e-postmeddelande till kontaktpersonen så att du kan använda detta för att planera ditt evenemang och inte glömma saker. Datumet för att-göra baseras på evenemangets startdatum och att-göra-offsetparametern i dagar: ett offset på 5 betyder 5 dagar innan evenemanget börjar, ett offset på -2 betyder 2 dagar efter att evenemanget började."
 
-#: includes/eme-events.php:6685
+#: includes/eme-events.php:6699
 msgid "List of todos"
 msgstr "Lista över att-göra"
 
@@ -13628,7 +13629,7 @@ msgstr "Evenemangsstart-offset (dagar)"
 msgid "Add new todo"
 msgstr "Lägg till nytt att-göra"
 
-#: includes/eme-events.php:6758
+#: includes/eme-events.php:6772
 msgid "Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the status for events submitted via the frontend submit form."
 msgstr "Privata evenemang är bara synliga för inloggade användare. Utkast-evenemang är inte synliga från framsidan. Olistade (dolda) evenemang visas inte i någon lista eller kalender. Framsida-utkast är normalt statusen för evenemang som skickats in via framsida-inskickningsformuläret."
 
@@ -13653,7 +13654,7 @@ msgid "Could not create the new location for this event: either you don't have t
 msgstr "Kunde inte skapa den nya platsen för detta evenemang: antingen har du inte rättighet att infoga platser eller det finns ett databasproblem."
 
 #. translators: Accessibility text.
-#: includes/eme-events.php:6727
+#: includes/eme-events.php:6741
 msgid "(opens in a new tab)"
 msgstr "(öppnas en ny flik)"
 
@@ -13665,15 +13666,15 @@ msgstr "Närvarande-/bokningslista ignorerar väntande"
 msgid "Whether or not to ignore pending bookings when using the <code>#_ATTENDEES</code> or <code>#_BOOKINGS</code> placeholders."
 msgstr "Huruvida väntande bokningar ska ignoreras eller inte vid användning av platshållarna <code>#_ATTENDEES</code> eller <code>#_BOOKINGS</code>."
 
-#: includes/eme-events.php:8741
+#: includes/eme-events.php:8755
 msgid "Attendance PDF proof"
 msgstr "Närvarobevis PDF"
 
-#: includes/eme-events.php:8742
+#: includes/eme-events.php:8756
 msgid "When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed."
 msgstr "När URL:en som genereras av #_ATTENDANCEPROOF_URL besöks kommer den valda PDF-mallen att användas för att generera en PDF för användaren som kan fungera som bevis på närvaro. Alla evenemangs- och RSVP-platshållare är tillåtna."
 
-#: includes/eme-events.php:8744
+#: includes/eme-events.php:8758
 msgid "Choose from a template: "
 msgstr "Välj från en mall: "
 
@@ -13714,7 +13715,7 @@ msgstr "%1$s kommer det att ske en kontroll om nya evenemang ska skickas till EM
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr "%s kommer det att ske en kontroll om nya evenemang ska skickas till EME-registrerade personer (dessa kommer då att köas och skickas ut alla på en gång varje gång kön bearbetas via REST API-anropet)"
 
-#: includes/eme-events.php:8691
+#: includes/eme-events.php:8705
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
 msgstr "Välj detta alternativ om du vill att ett närvaroregister ska föras varje gång RSVP-närvaro-QR-koden skannas av en auktoriserad användare."
 
@@ -13766,19 +13767,19 @@ msgstr "Välj evenemanget/en"
 msgid "Get IBAN"
 msgstr "Hämta IBAN"
 
-#: includes/eme-events.php:6709
+#: includes/eme-events.php:6723
 msgid "If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr "Om det inte verkar hända något när du klickar på Spara, kontrollera alla andra flikar för att säkerställa att alla obligatoriska fält är ifyllda."
 
-#: includes/eme-events.php:6731
+#: includes/eme-events.php:6745
 msgid "If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr "Om det inte verkar hända något när du klickar på Uppdatera, kontrollera alla andra flikar för att säkerställa att alla obligatoriska fält är ifyllda."
 
-#: includes/eme-events.php:7345
+#: includes/eme-events.php:7359
 msgid "No events will be created on excluded days."
 msgstr "Inga evenemang kommer att skapas på uteslutna dagar."
 
-#: includes/eme-events.php:8662
+#: includes/eme-events.php:8676
 msgid "Select a payment method"
 msgstr "Välj en betalningsmetod"
 
@@ -13790,11 +13791,11 @@ msgstr "Arkiverad"
 msgid "\"60\" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course."
 msgstr "\"60\" betyder att skriptet kan köras som mest i 55 sekunder (=60-5, 5 som säkerhetsåtgärd). Ställ aldrig in detta högre än din cron-upprepning såklart."
 
-#: includes/eme-events.php:7341
+#: includes/eme-events.php:7355
 msgid "Excluded days:"
 msgstr "Uteslutna dagar:"
 
-#: includes/eme-events.php:8788
+#: includes/eme-events.php:8802
 msgid "Extra approval settings (also check out the mail templates)"
 msgstr "Extra godkännandeinställningar (kolla också in e-postmallarna)"
 
@@ -13814,15 +13815,15 @@ msgstr "Ta bort valda kategorier"
 msgid "Categories deleted"
 msgstr "Kategorier borttagna"
 
-#: includes/eme-events.php:9847
+#: includes/eme-events.php:9861
 msgid "Holiday lists"
 msgstr "Helglistor"
 
-#: includes/eme-events.php:9870
+#: includes/eme-events.php:9884
 msgid "Mails"
 msgstr "E-post"
 
-#: includes/eme-events.php:9872
+#: includes/eme-events.php:9886
 #: includes/eme-mailer.php:4037
 msgid "Archived mailings"
 msgstr "Arkiverade utskick"
@@ -13915,23 +13916,23 @@ msgstr "Ange en giltig e-postadress"
 msgid "Event moved to the trash bin"
 msgstr "Evenemang flyttat till papperskorgen"
 
-#: includes/eme-events.php:6264
+#: includes/eme-events.php:6278
 msgid "Delete selected events (move to trash bin)"
 msgstr "Ta bort valda evenemang (flytta till papperskorgen)"
 
-#: includes/eme-events.php:6322
+#: includes/eme-events.php:6336
 msgid "Delete selected recurrences (and move events to trash bin)"
 msgstr "Ta bort valda upprepningar (och flytta evenemang till papperskorgen)"
 
-#: includes/eme-events.php:6712
+#: includes/eme-events.php:6726
 msgid "Are you sure you want to move this event to the trash bin?"
 msgstr "Är du säker på att du vill flytta detta evenemang till papperskorgen?"
 
-#: includes/eme-events.php:6719
+#: includes/eme-events.php:6733
 msgid "Move event to trash bin"
 msgstr "Flytta evenemang till papperskorgen"
 
-#: includes/eme-events.php:10448
+#: includes/eme-events.php:10462
 msgid "Events moved to the trash bin"
 msgstr "Evenemang flyttade till papperskorgen"
 
@@ -13964,26 +13965,26 @@ msgstr "Friendly Captcha webbplatsnyckel"
 msgid "Friendly Captcha API key"
 msgstr "Friendly Captcha API-nyckel"
 
-#: includes/eme-events.php:7028
+#: includes/eme-events.php:7042
 msgid "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES)."
 msgstr "Ditt evenemang verkar bara ha ett pris, så du kan inte använda #_SEATS{xx} i ditt evenemang-RSVP-formulärformat. Vänligen korrigera RSVP-formulärformatet till att använda #_SEATS (eller #_SPACES)."
 
-#: includes/eme-events.php:7053
+#: includes/eme-events.php:7067
 msgid "Please correct the RSVP form format to use #_SEATS."
 msgstr "Vänligen korrigera RSVP-formulärformatet till att använda #_SEATS."
 
-#: includes/eme-events.php:7055
+#: includes/eme-events.php:7069
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
 msgstr "Vänligen korrigera RSVP-formulärformatet till att använda #_SEATS{xx} för alla prisinkategorier."
 
-#: includes/eme-events.php:6805
+#: includes/eme-events.php:6819
 msgid "Free:"
 msgstr "Gratis:"
 
-#: includes/eme-events.php:6823
-#: includes/eme-events.php:6826
-#: includes/eme-events.php:10175
-#: includes/eme-events.php:10178
+#: includes/eme-events.php:6837
+#: includes/eme-events.php:6840
+#: includes/eme-events.php:10189
+#: includes/eme-events.php:10192
 #: includes/eme-members.php:6736
 #: includes/eme-recurrence.php:763
 #: includes/eme-rsvp.php:6267
@@ -13991,13 +13992,13 @@ msgstr "Gratis:"
 msgid "Max:"
 msgstr "Max:"
 
-#: includes/eme-events.php:6824
-#: includes/eme-events.php:10176
+#: includes/eme-events.php:6838
+#: includes/eme-events.php:10190
 #: includes/eme-rsvp.php:6268
 msgid "Max (from location):"
 msgstr "Max (från plats):"
 
-#: includes/eme-events.php:8816
+#: includes/eme-events.php:8830
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr "En maximal kapacitet för platsen är inställd. Om ditt evenemangs maximum överstiger denna kapacitet kommer platsens kapacitet att ha företräde."
 
@@ -14131,7 +14132,7 @@ msgstr "Borttaget"
 msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
 msgstr "Anmärkning: om svarsadressen för vissa e-postmeddelanden var identisk med avsändaradressen kommer värdet för svarsadressen också att tvingas."
 
-#: includes/eme-events.php:7750
+#: includes/eme-events.php:7764
 #: includes/eme-options.php:2321
 msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr "När detta meddelande ännu inte har skickats (i kön) och bokningen godkänns eller betalas under den tiden och ett meddelande är planerat för den åtgärden, tas detta meddelande bort från kön så att människor inte får 2 e-postmeddelande samtidigt."
@@ -14156,21 +14157,21 @@ msgstr "E-postmeddelande borttagna"
 msgid "Resend selected emails"
 msgstr "Skicka igen valda e-postmeddelanden"
 
-#: includes/eme-events.php:7545
+#: includes/eme-events.php:7559
 #: includes/eme-options.php:2258
 msgid "When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for)."
 msgstr "När ett evenemang är konfigurerat att automatiskt godkänna bokningar efter betalning och det totala beloppet att betala är 0, kommer detta e-postmeddelande att skickas när en väntande bokning markeras som betald (och inte betalningsmeddelandet, eftersom det inte fanns något att betala för)."
 
-#: includes/eme-events.php:7547
+#: includes/eme-events.php:7561
 #: includes/eme-options.php:2260
 msgid "Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid."
 msgstr "Eftersom RSVP-aviseringar efter betalning inte är aktiva kommer detta e-postmeddelande också att skickas när en bokning markeras som betald."
 
-#: includes/eme-events.php:9861
+#: includes/eme-events.php:9875
 msgid "Recipient name"
 msgstr "Mottagarnamn"
 
-#: includes/eme-events.php:9862
+#: includes/eme-events.php:9876
 msgid "Recipient email"
 msgstr "Mottagare e-post"
 
@@ -14191,34 +14192,34 @@ msgid "Use membership feature?"
 msgstr "Använd medlemskapsfunktion?"
 
 #: includes/eme-actions.php:506
-#: includes/eme-events.php:9658
+#: includes/eme-events.php:9672
 msgid "Insert image"
 msgstr "Infoga bild"
 
 #: includes/eme-actions.php:507
-#: includes/eme-events.php:9659
+#: includes/eme-events.php:9673
 msgid "Insert"
 msgstr "Infoga"
 
 #: includes/eme-actions.php:509
-#: includes/eme-events.php:9661
+#: includes/eme-events.php:9675
 msgid "Insert from Media Library"
 msgstr "Infoga från mediebiblioteket"
 
 #: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
-#: includes/eme-events.php:9662
+#: includes/eme-events.php:9676
 msgid "Preview"
 msgstr "Förhandsgranska"
 
 #: includes/eme-actions.php:511
-#: includes/eme-events.php:9663
+#: includes/eme-events.php:9677
 msgid "Visual"
 msgstr "Visuell"
 
 #: includes/eme-actions.php:513
-#: includes/eme-events.php:9665
+#: includes/eme-events.php:9679
 msgid "Insert non-breaking space"
 msgstr "Infoga blanksteg"
 
@@ -14304,15 +14305,15 @@ msgstr "Min antal platser bokade"
 msgid "Max #seats booked"
 msgstr "Max antal platser bokade"
 
-#: includes/eme-events.php:6266
+#: includes/eme-events.php:6280
 msgid "Private events are only accessible to logged-in users"
 msgstr "Privata evenemang är bara tillgängliga för inloggade användare"
 
-#: includes/eme-events.php:6267
+#: includes/eme-events.php:6281
 msgid "Hidden events are accessible to everyone but not shown in events lists or calendars."
 msgstr "Dolda evenemang är tillgängliga för alla men visas inte i evenemangslistor eller kalendrar."
 
-#: includes/eme-events.php:6267
+#: includes/eme-events.php:6281
 msgid "Make selected events hidden"
 msgstr "Gör valda evenemang dolda"
 
@@ -14419,7 +14420,7 @@ msgstr "Layouten för uppgiftsinmatningsavsnittet i anmälningsformuläret."
 msgid "Task Signup Form (personal info section)"
 msgstr "Uppgiftsanmälningsformulär (personlig information)"
 
-#: includes/eme-events.php:8942
+#: includes/eme-events.php:8956
 msgid "(Leave empty or 0 to disable this limit. Negative numbers are allowed and for hours you can use decimals too.)"
 msgstr "(Lämna tomt eller 0 för att inaktivera denna begränsning. Negativa nummer är tillåtna och för timmar kan du använda decimaler också.)"
 
@@ -14460,11 +14461,11 @@ msgstr "Kreditvärdecheck"
 msgid "Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance."
 msgstr "Gäller bara fasta rabatter. När det används som en kreditvärdecheck kan rabatten lössas in flera gånger tills hela värdet är förbrukat. Rabattvärdet kommer alltid att visa återstående checksaldo."
 
-#: includes/eme-events.php:7276
+#: includes/eme-events.php:7290
 msgid "Recurrence start date"
 msgstr "Upprepningens startdatum"
 
-#: includes/eme-events.php:7278
+#: includes/eme-events.php:7292
 msgid "Recurrence end date"
 msgstr "Upprepningens slutdatum"
 
@@ -14472,11 +14473,11 @@ msgstr "Upprepningens slutdatum"
 msgid "Please select at least one recipient."
 msgstr "Vänligen välj minst en mottagare."
 
-#: includes/eme-locations.php:645
+#: includes/eme-locations.php:652
 msgid "Location balloon format"
 msgstr "Plats-bubblaformat"
 
-#: includes/eme-locations.php:649
+#: includes/eme-locations.php:656
 msgid "If you don't like the default balloon format, you can set something here. Leave this empty to keep the default."
 msgstr "Om du inte gillar standardbubblorna kan du ställa in något här. Lämna detta tomt för att behålla standarden."
 
@@ -14485,24 +14486,24 @@ msgid "'Yes' enables map scroll-wheel zooming. 'No' disables map scroll-wheel zo
 msgstr "'Ja' aktiverar zoomning med mushjul på kartan. 'Nej' inaktiverar zoomning med mushjul på kartan. En webbläsareuppdatering på en sida som visar en kartan behövs för att se effekten av denna ändring."
 
 #: includes/eme-actions.php:423
-#: includes/eme-events.php:9618
+#: includes/eme-events.php:9632
 msgid "Select country"
 msgstr "Välj land"
 
 #: includes/eme-discounts.php:696
-#: includes/eme-events.php:8899
+#: includes/eme-events.php:8913
 #: includes/eme-mailer.php:3594
 #: includes/eme-mailer.php:3762
 msgid "Select one or more memberships"
 msgstr "Välj ett eller flera medlemskap"
 
 #: includes/eme-actions.php:422
-#: includes/eme-events.php:9617
+#: includes/eme-events.php:9631
 msgid "Select state"
 msgstr "Välj stat/provins"
 
 #: includes/eme-attendances.php:127
-#: includes/eme-events.php:9642
+#: includes/eme-events.php:9656
 #: includes/eme-mailer.php:3680
 #: includes/eme-mailer.php:3861
 #: includes/eme-members.php:1587
@@ -14517,7 +14518,7 @@ msgstr "Välj en person"
 msgid "In case online payment is possible, the payment redirect message will also be shown, see the payment options if you want to change that message."
 msgstr "Om onlinebetalning är möjlig kommer omdirigeringsmeddelandet för betalning också att visas, se betalningsalternativen om du vill ändra det meddelandet."
 
-#: includes/eme-events.php:9873
+#: includes/eme-events.php:9887
 #: includes/eme-rsvp.php:5115
 msgid "Select an event"
 msgstr "Välj ett evenemang"
@@ -14575,15 +14576,15 @@ msgstr "EME använder en anpassad snapselect-version för listrutor, se https://
 msgid "Error updating attendance count, but ignoring"
 msgstr "Fel vid uppdatering av närvaroantal, men ignorerar"
 
-#: includes/eme-events.php:8695
+#: includes/eme-events.php:8709
 msgid "Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration."
 msgstr "Välj detta alternativ om du vill att skanningsantalet ska begränsas till antalet bokade platser per dag. Om inte (standard) begränsas skanningsantalet till antalet bokade platser under hela evenemangets längd."
 
-#: includes/eme-events.php:8703
+#: includes/eme-events.php:8717
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter."
 msgstr "När du skannar URL:en som genereras av #_QRCODE eller #_ATTENDANCE_URL kan du också välja att använda detta som inträdesbiljett. Detta alternativ gör det då möjligt att definiera från vilken tidpunkt folk får komma in."
 
-#: includes/eme-events.php:8814
+#: includes/eme-events.php:8828
 msgid "For multiseat events, separate the values by '||'"
 msgstr "För flerplatsevenemang, separera värdena med '||'"
 
@@ -14606,7 +14607,7 @@ msgid "No access"
 msgstr "Ingen åtkomst"
 
 #: includes/eme-actions.php:424
-#: includes/eme-events.php:9619
+#: includes/eme-events.php:9633
 msgid "Make your choice"
 msgstr "Gör ditt val"
 
@@ -14615,7 +14616,7 @@ msgstr "Gör ditt val"
 msgid "Access denied: scan count (%1$d) exceeds max count (%2$d)"
 msgstr "Åtkomst nekad: skanningsantal (%1$d) överstiger maxantal (%2$d)"
 
-#: includes/eme-events.php:8695
+#: includes/eme-events.php:8709
 msgid "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with care."
 msgstr "Detta innebär användning av närvaroregister per användare och sökningar i den tabellen för antalet gånger en användares QR-kod har skannats. Som resultat är det mer krevande för databasen, så använd med försiktighet."
 
@@ -14676,7 +14677,7 @@ msgstr "Ändra inställningar"
 msgid "Don't show this advice again"
 msgstr "Visa inte detta råd igen"
 
-#: includes/eme-events.php:6943
+#: includes/eme-events.php:6957
 msgid "Default Template"
 msgstr "Standardmall"
 
@@ -14747,7 +14748,7 @@ msgstr "Ogiltigt kolumnnamn!"
 msgid "Filter content"
 msgstr "Filtrera innehåll"
 
-#: includes/eme-locations.php:926
+#: includes/eme-locations.php:933
 msgid "Location fields"
 msgstr "Platsfält"
 
@@ -14763,16 +14764,16 @@ msgstr "Medlemskapsfält"
 msgid "RSVP and generic fields"
 msgstr "RSVP och allmänna fält"
 
-#: includes/eme-events.php:9827
+#: includes/eme-events.php:9841
 msgid "Are you sure you want to delete this group? This cannot be undone."
 msgstr "Är du säker på att du vill ta bort denna grupp? Detta kan inte ångras."
 
-#: includes/eme-formfields.php:1984
-#: includes/eme-formfields.php:1985
+#: includes/eme-formfields.php:2032
+#: includes/eme-formfields.php:2033
 msgid "Delete this group"
 msgstr "Ta bort denna grupp"
 
-#: includes/eme-locations.php:3472
+#: includes/eme-locations.php:3570
 #: includes/eme-members.php:7119
 msgid "No permission"
 msgstr "Ingen behörighet"
@@ -14785,12 +14786,12 @@ msgstr "Ogiltiga parametrar"
 msgid "Occurrence deleted and remaining occurrences renumbered."
 msgstr "Förekomst borttagen och återstående förekomster omnumrerade."
 
-#: includes/eme-events.php:9639
+#: includes/eme-events.php:9653
 msgid "Confirm delete"
 msgstr "Bekräfta borttagning"
 
-#: includes/eme-formfields.php:2320
-#: includes/eme-formfields.php:2354
+#: includes/eme-formfields.php:2368
+#: includes/eme-formfields.php:2402
 msgid "Select"
 msgstr "Välj"
 
@@ -14895,7 +14896,7 @@ msgstr "Jag har verifierat filhasharna ovan och bekräftar att generera signatur
 msgid "Regenerate signatures"
 msgstr "Generera signaturer igen"
 
-#: includes/eme-locations.php:2836
+#: includes/eme-locations.php:2934
 msgid "e.g. 123 Main St, City"
 msgstr "t.ex. Storgatan 123, Stockholm"
 
@@ -14916,7 +14917,7 @@ msgid "Could not calculate route"
 msgstr "Kunde inte beräkna rutt"
 
 #. translators: %s is the event name
-#: includes/eme-events.php:9682
+#: includes/eme-events.php:9696
 msgid "Edit Event"
 msgstr "Redigera evenemang"
 
@@ -15051,17 +15052,17 @@ msgstr ""
 msgid "Import/Export"
 msgstr ""
 
-#: includes/eme-events.php:6194
+#: includes/eme-events.php:6208
 #: includes/eme-people.php:2351
 msgid "Trash"
 msgstr ""
 
-#: includes/eme-events.php:6235
+#: includes/eme-events.php:6249
 #: includes/eme-rsvp.php:5548
 msgid "Extra filters"
 msgstr ""
 
-#: includes/eme-events.php:6356
+#: includes/eme-events.php:6370
 #: includes/eme-people.php:2378
 msgid "Filter trash"
 msgstr ""
@@ -15272,7 +15273,7 @@ msgstr ""
 msgid "If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email."
 msgstr ""
 
-#: includes/eme-events.php:5906
+#: includes/eme-events.php:5920
 #: includes/eme-import.php:331
 #: includes/eme-import.php:395
 #: includes/eme-import.php:464
@@ -15334,39 +15335,39 @@ msgstr ""
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr ""
 
-#: includes/eme-tasks.php:2407
+#: includes/eme-tasks.php:2408
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2413
+#: includes/eme-tasks.php:2414
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2418
+#: includes/eme-tasks.php:2419
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2424
+#: includes/eme-tasks.php:2425
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2454
+#: includes/eme-tasks.php:2455
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2456
+#: includes/eme-tasks.php:2457
 msgid "There was a problem assigning the task."
 msgstr ""
 
-#: includes/eme-events.php:9715
+#: includes/eme-events.php:9729
 msgid "Select a task"
 msgstr ""
 
-#: includes/eme-events.php:9716
+#: includes/eme-events.php:9730
 msgid "First select an event"
 msgstr ""
 
-#: includes/eme-locations.php:3268
+#: includes/eme-locations.php:3366
 msgid "Locations deleted"
 msgstr ""
 
@@ -15399,12 +15400,12 @@ msgid "Problem detected while adding member"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:281
+#: includes/eme-filters.php:436
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:281
+#: includes/eme-filters.php:436
 msgid "Select a state"
 msgstr ""
 
@@ -15432,7 +15433,7 @@ msgstr ""
 msgid "The attribution text shown on the map. You can use HTML links."
 msgstr ""
 
-#: includes/eme-events.php:6249
+#: includes/eme-events.php:6263
 #: includes/eme-members.php:2886
 msgid "Hint: pick a custom field and enter a value to filter on. Click \"+ Add custom field filter\" to filter on multiple fields at once (all conditions must match); use the × to remove a filter."
 msgstr ""

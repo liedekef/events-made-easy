@@ -184,7 +184,7 @@ msgstr "Valfritt"
 #: includes/eme-events.php:6192
 #: includes/eme-events.php:9673
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1773
+#: includes/eme-install.php:1863
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156
@@ -5909,7 +5909,7 @@ msgstr "Grundformat: ÅÅÅÅ-MM-DD, en per rad"
 msgid "For more information about holidays, see "
 msgstr "För mer information om helgdagar, se"
 
-#: includes/eme-install.php:1774
+#: includes/eme-install.php:1864
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Denna sida används av Events Made Easy. Ändra den inte, använd den inte i dina menyer, radera den inte. Se bara till att EME-inställningen ”Eventsida” pekar på denna sida. EME använder denna sida för att sammanställa event, platser, bokningar, kartor,... allt. Om du vill radera denna sida, skapa en ny som EME kan använda och gör motsvarande uppdatering av inställningen på ”Eventsida”."
 

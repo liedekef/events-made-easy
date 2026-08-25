@@ -184,7 +184,7 @@ msgstr "任何"
 #: includes/eme-events.php:6192
 #: includes/eme-events.php:9673
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1773
+#: includes/eme-install.php:1863
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156
@@ -5908,7 +5908,7 @@ msgstr "基本格式：YYYY-MM-DD，每行一个"
 msgid "For more information about holidays, see "
 msgstr "关于假期的更多信息，请参见"
 
-#: includes/eme-install.php:1774
+#: includes/eme-install.php:1864
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "本页由 Events Made Easy 使用。不要改变它，不要在您的菜单中使用它，不要删除它。只要确保 EME 的设置称为 \"活动页面\"，指向这个页面。EME 使用这个页面来呈现任何和所有的事件、地点、预订、地图、......任何东西。如果您确实想删除这个页面，创建一个 EME 可以使用的新页面，并相应地更新 EME 设置中的 \"活动页面\"。"
 

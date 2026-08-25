@@ -184,7 +184,7 @@ msgstr "Elke"
 #: includes/eme-events.php:6192
 #: includes/eme-events.php:9673
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1773
+#: includes/eme-install.php:1863
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156
@@ -5905,7 +5905,7 @@ msgstr "Standaard opmaak: YYYY-MM-DD, één per regel"
 msgid "For more information about holidays, see "
 msgstr "Voor meer informative over vakanties, zie "
 
-#: includes/eme-install.php:1774
+#: includes/eme-install.php:1864
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Deze pagina wordt gebruikt door Events Made Easy. Verander deze niet, gebruik deze niet in een menu, verwijder deze niet. Wees er enkel zeker van dat de EME optie genoemd 'Evenementen pagina' verwijst naar deze pagina. EME gebruikt deze pagina om alle evenementen, locaties, boekingen, kaarten, ... te tonen. Als je deze wil verwijderen, maak een nieuwe aan voor gebruik in EME en pas de optie 'Evenementen pagina' aan."
 
@@ -14662,7 +14662,7 @@ msgstr "Documentatie over datum- en tijdnotatie."
 
 #: includes/eme-todos.php:286
 msgid "Todo reminder for event #_EVENTNAME: "
-msgstr "Takenherinnering voor evenement #_EVENTNAME: "
+msgstr "Todo herinnering voor evenement #_EVENTNAME: "
 
 #: includes/eme-people.php:2713
 msgid "Select a WP user"

@@ -11868,7 +11868,7 @@ msgstr "Réglages Event Made Easy"
 msgid "People"
 msgstr "Personnes"
 
-#: includes/eme-install.php:1774
+#: includes/eme-install.php:1864
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Cette page est utilisée par Events Made Easy. Ne la modifiez pas, ne l'utilisez pas dans vos menus, ne la supprimez pas. Assurez-vous simplement que le paramètre EME appelé « Events  page » pointe vers cette page. EME utilise cette page pour afficher tous les évènements, lieux, réservations, cartes, etc. Si vous souhaitez supprimer cette page, créez-en une nouvelle que EME peut utiliser et mettez à jour le paramètre EME « Events page » en conséquence."
 
@@ -13800,7 +13800,7 @@ msgstr "En utilisant Mollie, vous pouvez payer en utilisant l’une des méthode
 #: includes/eme-events.php:6192
 #: includes/eme-events.php:9673
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1773
+#: includes/eme-install.php:1863
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156

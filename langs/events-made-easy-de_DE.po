@@ -184,7 +184,7 @@ msgstr "Alle"
 #: includes/eme-events.php:6192
 #: includes/eme-events.php:9673
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1773
+#: includes/eme-install.php:1863
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156
@@ -5894,7 +5894,7 @@ msgstr "Format: JJJJ-MM-TT, ein Eintrag pro Zeile"
 msgid "For more information about holidays, see "
 msgstr "Für weitere Information zur ‘Freie Tage’ Funktion, konsultiere die "
 
-#: includes/eme-install.php:1774
+#: includes/eme-install.php:1864
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "Diese Seite wird von Events Made Easy verwendet! Verändere sie nicht, verwende sie nicht in deinen Menüs und lösche sie nicht! Stelle einfach nur sicher, das Events Made Easy in den Einstellungen auf der \"Event Seite\" auf diese Seite verweist. Events Made Easy benutzt diese Seite um Veranstaltungen, Veranstaltungsorte, Buchungen, Landkarten und alles andere darstellen zu können. Falls Du diese Seite löschen möchtest erstelle eine neue Seite die Events Made Easy benutzen und aktualisieren kann und verweise in den Einstellungen auf der \"Event Seite\" von Events Made Easy auf die neue Seite."
 

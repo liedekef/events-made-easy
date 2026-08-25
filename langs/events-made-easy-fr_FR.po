@@ -147,12 +147,12 @@ msgid "Single location map zoom factor"
 msgstr "Facteur de zoom de la carte pour un emplacement donné"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select a state"
 msgstr "Sélectionnez un état"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select one or more states"
 msgstr "Sélectionnez un ou plusieurs états"
 
@@ -4319,7 +4319,7 @@ msgstr "Membre de la famille similaire"
 msgid "The related family member you're trying to set already belongs to another family account, so this is not allowed."
 msgstr "Le membre de la famille similaire que vous essayez de définir appartient déjà à un autre compte familial, ce qui n’est pas autorisé."
 
-#: includes/eme-filters.php:532
+#: includes/eme-filters.php:534
 msgid "Event contact"
 msgstr "Contact pour l'évènement"
 
@@ -5652,7 +5652,7 @@ msgstr "En cas d’annulation d’une réservation, l’option de remboursement 
 msgid "Allow refunds?"
 msgstr "Autoriser les remboursements ?"
 
-#: includes/eme-filters.php:656
+#: includes/eme-filters.php:658
 msgid "Submit"
 msgstr "Envoyer"
 
@@ -6169,7 +6169,7 @@ msgstr "Description du prix"
 msgid "Enable placeholders in event or location notes"
 msgstr "Activer les espaces réservés dans les notes d’évènement ou de localisation"
 
-#: includes/eme-filters.php:524
+#: includes/eme-filters.php:526
 msgid "Select a daterange"
 msgstr "Sélectionner une plage de date"
 
@@ -11084,12 +11084,12 @@ msgid "Filter location"
 msgstr "Filtrer l’emplacement"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select a country"
 msgstr "Sélectionner un pays"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select one or more countries"
 msgstr "Sélectionnez un ou plusieurs pays"
 
@@ -11128,8 +11128,8 @@ msgstr "Le format de tous les évènements dans une liste."
 msgid "The location city"
 msgstr "Localisation de la ville"
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select a city"
 msgstr "Sélectionnez une ville"
 
@@ -11934,7 +11934,7 @@ msgstr "Ordre des événements"
 msgid "Yearly"
 msgstr "Annuellement"
 
-#: includes/eme-filters.php:570
+#: includes/eme-filters.php:572
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -14316,38 +14316,38 @@ msgstr "Erreur : la valeur du champ ne peut pas être vide pour ce type de cham
 msgid "You have no right to update form fields!"
 msgstr "Vous n'avez pas le droit de mettre à jour les champs du formulaire !"
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select one or more cities"
 msgstr "Sélectionnez une ou plusieurs villes"
 
-#: includes/eme-filters.php:385
+#: includes/eme-filters.php:383
 #: includes/eme-locations.php:918
 msgid "Select a location"
 msgstr "Sélectionnez un emplacement"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:381
 msgid "Select one or more locations"
 msgstr "Sélectionnez un ou plusieurs lieux"
 
-#: includes/eme-filters.php:313
+#: includes/eme-filters.php:311
 msgid "Select a category"
 msgstr "Sélectionnez une catégorie"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:309
 msgid "Select one or more categories"
 msgstr "Sélectionnez une ou plusieurs catégories"
 
-#: includes/eme-filters.php:184
-msgid "Select Year"
+#: includes/eme-filters.php:517
+msgid "Select year"
 msgstr "Choisir une année"
 
-#: includes/eme-filters.php:155
-msgid "Select Month"
+#: includes/eme-filters.php:512
+msgid "Select month"
 msgstr "Choisir un mois"
 
-#: includes/eme-filters.php:509
-msgid "Select Week"
+#: includes/eme-filters.php:507
+msgid "Select week"
 msgstr "Sélectionnez une semaine"
 
 #: includes/eme-events.php:9712
@@ -14766,7 +14766,7 @@ msgid "Since the author is undefined for this event, any reference to the contac
 msgstr "Puisque l'auteur n'est pas défini pour cet évènement, toute référence à la personne de contact (comme lors de l'utilisation de #_CONTACTPERSON lors de l'envoi d'e-mails) utilisera les informations de l'utilisateur admin ."
 
 #: includes/eme-events.php:9714
-#: includes/eme-filters.php:533
+#: includes/eme-filters.php:535
 #: includes/eme-options.php:1948
 msgid "Event author"
 msgstr "Auteur de l'évènement"

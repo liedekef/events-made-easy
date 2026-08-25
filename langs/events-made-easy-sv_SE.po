@@ -3888,7 +3888,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "För ett återkommande kan inte start- och slutdatum vara lika"
 
 #: includes/eme-events.php:9714
-#: includes/eme-filters.php:533
+#: includes/eme-filters.php:535
 #: includes/eme-options.php:1948
 msgid "Event author"
 msgstr "Skapare av event"
@@ -4621,64 +4621,64 @@ msgstr "Eventstatus uppdaterades"
 msgid "Events added to category"
 msgstr "Event tillagda till kategori"
 
-#: includes/eme-filters.php:155
-msgid "Select Month"
+#: includes/eme-filters.php:512
+msgid "Select month"
 msgstr "Välj månad"
 
-#: includes/eme-filters.php:184
-msgid "Select Year"
+#: includes/eme-filters.php:517
+msgid "Select year"
 msgstr "Välj år"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:309
 msgid "Select one or more categories"
 msgstr "Välj en eller flera kategorier"
 
-#: includes/eme-filters.php:313
+#: includes/eme-filters.php:311
 msgid "Select a category"
 msgstr "Välj en kategori"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:381
 msgid "Select one or more locations"
 msgstr "Välj en eller flera platser"
 
-#: includes/eme-filters.php:385
+#: includes/eme-filters.php:383
 #: includes/eme-locations.php:918
 msgid "Select a location"
 msgstr "Välj en plats"
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select one or more cities"
 msgstr "Välj en eller flera städer"
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select a city"
 msgstr "Välj en stad"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select one or more countries"
 msgstr "Välj ett eller flera länder"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select a country"
 msgstr "Välj ett land"
 
-#: includes/eme-filters.php:509
-msgid "Select Week"
+#: includes/eme-filters.php:507
+msgid "Select week"
 msgstr "Välj vecka"
 
-#: includes/eme-filters.php:524
+#: includes/eme-filters.php:526
 msgid "Select a daterange"
 msgstr "Välj ett datumintervall"
 
-#: includes/eme-filters.php:532
+#: includes/eme-filters.php:534
 msgid "Event contact"
 msgstr "Evenemangskontakt"
 
-#: includes/eme-filters.php:656
+#: includes/eme-filters.php:658
 msgid "Submit"
 msgstr "Skicka"
 
@@ -12993,7 +12993,7 @@ msgstr "(Se dokumentationen för &#91;eme_events] för alla möjliga värden)"
 msgid "Show events per period"
 msgstr "Visa event per period"
 
-#: includes/eme-filters.php:570
+#: includes/eme-filters.php:572
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -15400,12 +15400,12 @@ msgid "Problem detected while adding member"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select a state"
 msgstr ""
 

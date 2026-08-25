@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.2.11\n"
+"Project-Id-Version: Events Made Easy 3.2.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-25T13:46:46+00:00\n"
+"POT-Creation-Date: 2026-08-25T18:18:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -4674,7 +4674,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr ""
 
 #: includes/eme-events.php:9714
-#: includes/eme-filters.php:533
+#: includes/eme-filters.php:535
 #: includes/eme-options.php:1948
 msgid "Event author"
 msgstr ""
@@ -5316,81 +5316,81 @@ msgstr ""
 msgid "Events added to category"
 msgstr ""
 
-#: includes/eme-filters.php:155
-msgid "Select Month"
-msgstr ""
-
-#: includes/eme-filters.php:184
-msgid "Select Year"
-msgstr ""
-
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:309
 msgid "Select one or more categories"
 msgstr ""
 
-#: includes/eme-filters.php:313
+#: includes/eme-filters.php:311
 msgid "Select a category"
 msgstr ""
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:381
 msgid "Select one or more locations"
 msgstr ""
 
-#: includes/eme-filters.php:385
+#: includes/eme-filters.php:383
 #: includes/eme-locations.php:918
 msgid "Select a location"
 msgstr ""
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select one or more cities"
 msgstr ""
 
-#: includes/eme-filters.php:434
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:432
+#: includes/eme-filters.php:433
 msgid "Select a city"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:436
+#: includes/eme-filters.php:434
 msgid "Select a state"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select one or more countries"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:437
+#: includes/eme-filters.php:435
 msgid "Select a country"
 msgstr ""
 
-#: includes/eme-filters.php:509
-msgid "Select Week"
+#: includes/eme-filters.php:507
+msgid "Select week"
 msgstr ""
 
-#: includes/eme-filters.php:524
+#: includes/eme-filters.php:512
+msgid "Select month"
+msgstr ""
+
+#: includes/eme-filters.php:517
+msgid "Select year"
+msgstr ""
+
+#: includes/eme-filters.php:526
 msgid "Select a daterange"
 msgstr ""
 
-#: includes/eme-filters.php:532
+#: includes/eme-filters.php:534
 msgid "Event contact"
 msgstr ""
 
-#: includes/eme-filters.php:570
+#: includes/eme-filters.php:572
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
 msgid "Select..."
 msgstr ""
 
-#: includes/eme-filters.php:656
+#: includes/eme-filters.php:658
 msgid "Submit"
 msgstr ""
 

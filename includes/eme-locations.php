@@ -316,6 +316,13 @@ function eme_import_csv_locations() {
                     if ( ! isset( $line['location_longitude'] ) || ! is_numeric( trim( $line['location_longitude'] ) ) ) {
                         $line['location_longitude'] = null;
                     }
+                    // Lambert72 (Belgian open-data) coordinates
+                    if ( $line['location_latitude'] === null && $line['location_longitude'] === null
+                        && isset( $line['lx'], $line['ly'] ) && is_numeric( trim( $line['lx'] ) ) && is_numeric( trim( $line['ly'] ) ) ) {
+                        $coords = eme_lambert72_to_wgs84( floatval( $line['lx'] ), floatval( $line['ly'] ) );
+                        $line['location_latitude']  = $coords['latitude'];
+                        $line['location_longitude'] = $coords['longitude'];
+                    }
                 }
 
                 // if the location already exists: update it
@@ -1540,6 +1547,90 @@ function eme_check_location_coord( $lat, $long ) {
     $table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $prepared_sql = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_latitude = %s AND location_longitude = %s", $lat, $long ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+}
+
+/**
+ * Convert Belgian Lambert 72 (EPSG:31370) X/Y in meters to WGS84 lat/lon.
+ */
+function eme_lambert72_to_wgs84( $x, $y ) {
+    // Ellipsoid: International 1924 (Hayford)
+    $a       = 6378388.0;
+    $inv_f   = 297.0;
+    $f       = 1.0 / $inv_f;
+    $e2      = $f * ( 2 - $f );
+    $e       = sqrt( $e2 );
+
+    $lat1 = deg2rad( 51.16666723333333 );
+    $lat2 = deg2rad( 49.8333339 );
+    $lat0 = deg2rad( 90.0 );
+    $lon0 = deg2rad( 4.367486666666666 );
+    $x0   = 150000.013;
+    $y0   = 5400088.438;
+
+    $m = function ( $lat ) use ( $e2 ) {
+        return cos( $lat ) / sqrt( 1 - $e2 * sin( $lat ) ** 2 );
+    };
+    $t = function ( $lat ) use ( $e ) {
+        return tan( M_PI / 4 - $lat / 2 ) / ( ( ( 1 - $e * sin( $lat ) ) / ( 1 + $e * sin( $lat ) ) ) ** ( $e / 2 ) );
+    };
+
+    $m1 = $m( $lat1 );
+    $m2 = $m( $lat2 );
+    $t1 = $t( $lat1 );
+    $t2 = $t( $lat2 );
+    $n  = ( log( $m1 ) - log( $m2 ) ) / ( log( $t1 ) - log( $t2 ) );
+    $F  = $m1 / ( $n * ( $t1 ** $n ) );
+    $t0 = $t( $lat0 ); // ~0 at lat0=90
+    $rho0 = $t0 > 0 ? $a * $F * ( $t0 ** $n ) : 0.0;
+
+    $dx = $x - $x0;
+    $dy = $y - $y0;
+    $rho_raw = sqrt( $dx ** 2 + ( $rho0 - $dy ) ** 2 );
+    $rho_   = $n < 0 ? -$rho_raw : $rho_raw; // n is always positive for this projection
+    $theta_ = atan2( $dx, ( $rho0 - $dy ) );
+    $lon    = $theta_ / $n + $lon0;
+
+    $tprime = ( $rho_ / ( $a * $F ) ) ** ( 1.0 / $n );
+    $lat_i  = M_PI / 2 - 2 * atan( $tprime );
+    for ( $i = 0; $i < 10; $i++ ) {
+        $lat_i = M_PI / 2 - 2 * atan( $tprime * ( ( ( 1 - $e * sin( $lat_i ) ) / ( 1 + $e * sin( $lat_i ) ) ) ** ( $e / 2 ) ) );
+    }
+    $lat_bd72 = $lat_i;
+    $lon_bd72 = $lon;
+
+    // Geographic (BD72, intl ellipsoid) -> geocentric XYZ
+    $slat = sin( $lat_bd72 ); $clat = cos( $lat_bd72 );
+    $slon = sin( $lon_bd72 ); $clon = cos( $lon_bd72 );
+    $N = $a / sqrt( 1 - $e2 * $slat ** 2 );
+    $X = $N * $clat * $clon;
+    $Y = $N * $clat * $slon;
+    $Z = $N * ( 1 - $e2 ) * $slat;
+
+    // 7-parameter Helmert, BD72 -> WGS84 (position vector convention)
+    $dX = -106.8686; $dY = 52.2978; $dZ = -103.7239;
+    $rx = 0.3366; $ry = -0.457; $rz = 1.8422; // arcseconds
+    $s  = -1.2747; // ppm
+    $asec = M_PI / ( 180 * 3600 );
+    $rx_r = $rx * $asec; $ry_r = $ry * $asec; $rz_r = $rz * $asec;
+    $scale = 1 + $s * 1e-6;
+
+    $X2 = $dX + $scale * ( $X - $rz_r * $Y + $ry_r * $Z );
+    $Y2 = $dY + $scale * ( $rz_r * $X + $Y - $rx_r * $Z );
+    $Z2 = $dZ + $scale * ( -$ry_r * $X + $rx_r * $Y + $Z );
+
+    // WGS84 geocentric -> geographic (iterative)
+    $a_w  = 6378137.0;
+    $f_w  = 1 / 298.257223563;
+    $e2_w = $f_w * ( 2 - $f_w );
+    $p    = sqrt( $X2 ** 2 + $Y2 ** 2 );
+    $lon_w = atan2( $Y2, $X2 );
+    $lat_w = atan2( $Z2, $p * ( 1 - $e2_w ) );
+    for ( $i = 0; $i < 10; $i++ ) {
+        $N_w   = $a_w / sqrt( 1 - $e2_w * sin( $lat_w ) ** 2 );
+        $lat_w = atan2( $Z2 + $e2_w * $N_w * sin( $lat_w ), $p );
+    }
+
+    return [ 'latitude' => rad2deg( $lat_w ), 'longitude' => rad2deg( $lon_w ) ];
 }
 
 function eme_geolocate_location( $line ) {

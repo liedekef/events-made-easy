@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.2.12  (2026/08/) =
 * Allow 0 as reminder day too
 * Change DB structure to be more aligned internally (int unsigned for primary keys) and with WP (bigint for user/image ids)
+* Accept Belgiam Lambert72 coordinates too (lx/ly) during location import
 
 = 3.2.11  (2026/08/24) =
 * Bugfix for recursing empty-string check

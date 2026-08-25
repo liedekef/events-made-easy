@@ -109,7 +109,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Events', 'events-made-easy' ); ?></h2>
         <form id="events-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -133,7 +133,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import People', 'events-made-easy' ); ?></h2>
         <form id="people-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -156,7 +156,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Members', 'events-made-easy' ); ?></h2>
         <form id="member-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -169,7 +169,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Dynamic Field Answers', 'events-made-easy' ); ?></h2>
         <form id="member-import-answers" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -186,7 +186,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Locations', 'events-made-easy' ); ?></h2>
         <form id="location-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -217,7 +217,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Discounts', 'events-made-easy' ); ?></h2>
         <form id="discount-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -238,7 +238,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Discount Groups', 'events-made-easy' ); ?></h2>
         <form id="discountgroups-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -260,7 +260,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Payments', 'events-made-easy' ); ?></h2>
         <form id="payment-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -277,7 +277,7 @@ function eme_import_page() {
         <h2><?php esc_html_e( 'Import Countries', 'events-made-easy' ); ?></h2>
         <form id="countries-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
@@ -298,7 +298,7 @@ function eme_import_page() {
         <h2><?php /* translators: "state" refers to a geographical region (e.g., province, canton, department) */ esc_html_e( 'Import States', 'events-made-easy' ); ?></h2>
         <form id="states-import" method="post" enctype="multipart/form-data" action="#">
             <?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce' ); ?>
-            <input type="file" name="eme_csv" required='required'>
+            <input type="file" name="eme_csv" required='required' accept=".csv,text/csv,application/vnd.ms-excel">
             <?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
             <input type="text" size="1" maxlength="1" name="delimiter" value="," required="required">
             <?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>

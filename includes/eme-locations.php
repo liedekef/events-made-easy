@@ -258,7 +258,7 @@ function eme_import_csv_locations() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line        = eme_array_remove_empty_elements( $line );
+            $line        = eme_kses(eme_array_remove_empty_elements( $line ));
             $location_id = 0;
             if ( isset( $line['location_name'] ) && isset( $line['location_address1'] ) && isset( $line['location_city'] ) ) {
 			// also import attributes

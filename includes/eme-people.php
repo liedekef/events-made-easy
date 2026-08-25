@@ -878,7 +878,7 @@ function eme_import_csv_people() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_array_remove_empty_elements( $line );
+            $line = eme_kses(eme_array_remove_empty_elements( $line ));
             // we need at least 3 fields present, otherwise nothing will be done
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';

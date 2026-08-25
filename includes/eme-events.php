@@ -5963,7 +5963,7 @@ function eme_import_csv_events() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_array_remove_empty_elements( $line );
+            $line = eme_kses(eme_array_remove_empty_elements( $line ));
 
             // first we import the mentioned location, then we add that location id to the event
             $location_id = 0;
@@ -6032,7 +6032,7 @@ function eme_import_csv_events() {
                     $line['location_id'] = $location_id;
                 }
 
-			// also import attributes
+                // also import attributes
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
 						$att = $matches[1];

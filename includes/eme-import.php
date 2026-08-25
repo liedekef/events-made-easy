@@ -364,7 +364,7 @@ function eme_import_csv_countries() {
     } else {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $country = array_combine( $headers, $row );
-            $res     = eme_db_insert_country( $country );
+            $res     = eme_db_insert_country( eme_kses($country) );
             if ( $res ) {
                 ++$inserted;
             } else {
@@ -433,7 +433,7 @@ function eme_import_csv_states() {
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (country not found): %s', 'events-made-easy' ), implode( ',', $row ) ) );
                 continue;
             }
-            $res   = eme_db_insert_state( $state );
+            $res   = eme_db_insert_state( eme_kses($state) );
             if ( $res ) {
                 ++$inserted;
             } else {
@@ -525,7 +525,7 @@ function eme_import_csv_discounts() {
                 }
             }
 
-            $res = eme_db_insert_discount( $line );
+            $res = eme_db_insert_discount( eme_kses($line) );
             if ( $res ) {
                 ++$inserted;
             } else {
@@ -584,7 +584,7 @@ function eme_import_csv_discountgroups() {
     } else {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $discountgroup = array_combine( $headers, $row );
-            $res           = eme_db_insert_dgroup( $discountgroup );
+            $res           = eme_db_insert_dgroup( eme_kses($discountgroup) );
             if ( $res ) {
                 ++$inserted;
             } else {

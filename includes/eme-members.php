@@ -6095,7 +6095,7 @@ function eme_import_csv_members() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_array_remove_empty_elements( $line );
+            $line = eme_kses(eme_array_remove_empty_elements( $line ));
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';
                 $line['massmail'] = 0;
@@ -6301,7 +6301,7 @@ function eme_import_csv_member_dynamic_answers() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_array_remove_empty_elements( $line );
+            $line = eme_kses(eme_array_remove_empty_elements( $line ));
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';
                 $line['massmail'] = 0;

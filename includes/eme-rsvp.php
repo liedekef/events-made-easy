@@ -5361,7 +5361,7 @@ function eme_import_csv_payments() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line                = eme_array_remove_empty_elements( $line );
+            $line                = eme_kses(eme_array_remove_empty_elements( $line ));
             $amount              = eme_int_price( $line['amount'] );
             $payment_date_parsed = date_parse( $line['payment_date'] );
             if ( ! empty( $payment_date_parsed['year'] ) && ! empty( $payment_date_parsed['month'] ) && ! empty( $payment_date_parsed['day'] ) ) {

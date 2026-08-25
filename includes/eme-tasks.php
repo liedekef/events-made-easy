@@ -1291,8 +1291,9 @@ function eme_tasks_signups_shortcode( $atts ) {
         }
         foreach ( $_REQUEST as $key => $value ) {
             $key = eme_sanitize_request( $key );
-            $value = eme_sanitize_request( $value );
             if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
+                $value = eme_sanitize_request( $value );
+                if (eme_is_empty_string($value)) continue;
                 $field_id  = intval( $matches[1] );
                 $formfield = eme_get_formfield( $field_id );
                 if ( ! empty( $formfield ) ) {

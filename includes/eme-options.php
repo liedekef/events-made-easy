@@ -1261,9 +1261,15 @@ function eme_options_register() {
 }
 
 function eme_sanitize_option( $option_value, $option_name ) {
-    // allow js only in very specific header settings
-    //$allow_js_arr = ['eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html'];
     $no_kses = ['eme_smtp_password', 'eme_imap_bounce_password'];
+    $maybe_unfiltered = [
+        'eme_single_event_format',
+        'eme_single_location_format',
+        'eme_html_header',
+        'eme_html_footer',
+        'eme_event_html_headers_format',
+        'eme_location_html_headers_format',
+    ];
     $numeric_options = [
         'eme_rsvp_start_number_days' => 0,
         'eme_rsvp_start_number_hours' => 0,
@@ -1286,6 +1292,8 @@ function eme_sanitize_option( $option_value, $option_name ) {
         foreach ($option_value as $key=>$value) {
             if (in_array($key,$no_kses)) {
                 $output[$key]=$value;
+            } elseif (in_array($key, $maybe_unfiltered)) {
+                $output[$key] = eme_kses_maybe_unfiltered($value);
             } else {
                 $output[$key] = eme_kses($value);
             }
@@ -1320,6 +1328,8 @@ function eme_sanitize_option( $option_value, $option_name ) {
     } else {
         if (in_array($option_name,$no_kses)) {
             $output = $option_value;
+        } elseif (in_array($key, $maybe_unfiltered)) {
+            $output = eme_kses_maybe_unfiltered($option_value);
         } else {
             $output = eme_kses( $option_value );
         }

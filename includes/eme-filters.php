@@ -250,15 +250,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			}
 		}
 	} elseif (isset( $_REQUEST[ $cat_post_name ] )) {
-		$val = eme_sanitize_request( $_REQUEST[ $cat_post_name ] );
-		if (is_numeric($val)) {
-			$selected_category = $val;
-		} else {
-			$cat_id = eme_get_category_id_by_name_slug($val);
-			if (!empty($cat_id)) {
-				$selected_category = $cat_id;
-			}
-		}
+		$selected_category = eme_sanitize_request( $_REQUEST[ $cat_post_name ] );
 	}
 	$selected_author   = ! empty( $prefilters['author'] ) ? $prefilters['author'] : eme_sanitize_request( $_REQUEST[ $author_post_name ] ?? '' );
 	$selected_contact  = ! empty( $prefilters['contact'] ) ? $prefilters['contact'] : eme_sanitize_request( $_REQUEST[ $contact_post_name ] ?? '' );

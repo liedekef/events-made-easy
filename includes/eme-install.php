@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 439 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 440 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -529,6 +529,13 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY location_id int unsigned DEFAULT 0, MODIFY recurrence_id int unsigned DEFAULT 0, MODIFY event_author bigint(20) unsigned DEFAULT 0, MODIFY event_contactperson_id bigint(20) unsigned DEFAULT 0, MODIFY event_image_id bigint(20) unsigned DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+        if ( $db_version < 440 ) {
+            // -1 used to mean "use the event author as contact person"; the column is now unsigned so -1
+            // can no longer be stored. Depending on sql_mode at the time of the 439 conversion above, any
+            // pre-existing -1 was either clamped to 0 (already correct) or wrapped to the max unsigned
+            // value. 0 is the new sentinel for the same meaning, so normalize the wrapped case.
+            $wpdb->query( "UPDATE $table_name SET event_contactperson_id = 0 WHERE event_contactperson_id = 18446744073709551615;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+        }
 	}
 }
 

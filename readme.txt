@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.2.13
+Stable tag: 3.2.14
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,9 +99,12 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.14  (2026/08/26) =
+* Be strict during csv import too
+* Default contact person now works as before for events (fall back to author)
+
 = 3.2.13  (2026/08/25) =
 * Escape all possible strings in filter form, avoiding any possible unexpected input
-* Be strict during csv import too
 
 = 3.2.12  (2026/08/25) =
 * Allow 0 as reminder day too

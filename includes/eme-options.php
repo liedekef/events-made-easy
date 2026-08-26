@@ -168,7 +168,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_permalink_categories_prefix'                 => '',
         'eme_permalink_calendar_prefix'                   => '',
         'eme_permalink_payments_prefix'                   => '',
-        'eme_default_contact_person'                      => -1,
+        'eme_default_contact_person'                      => 0,
         'eme_captcha_only_logged_out'                     => 0,
         'eme_hcaptcha_for_forms'                          => 0,
         'eme_hcaptcha_site_key'                           => '',
@@ -1107,6 +1107,12 @@ function eme_update_options( $db_version ) {
                 if ( $val === 0 || $val === '0' ) {
                     update_option( $reminder_days_option, '' );
                 }
+            }
+        }
+        if ($db_version < 440 ) {
+            $val = get_option( 'eme_default_contact_person' );
+            if ( $val === -1 || $val === '-1' ) {
+                update_option( 'eme_default_contact_person', '0' );
             }
         }
     }

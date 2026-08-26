@@ -806,8 +806,8 @@ function eme_get_contact( $contact_id = 0 ) {
 }
 
 function eme_get_event_contact( $event = null ) {
-    if ( ! is_null( $event ) && ! empty( $event['event_contactperson_id'] ) ) {
-        $contact_id = $event['event_contactperson_id'];
+    if ( ! is_null( $event ) && isset( $event['event_contactperson_id'] ) ) {
+        $contact_id = intval($event['event_contactperson_id']);
         if ( $contact_id < 1 && isset( $event['event_author'] ) && $event['event_author'] > 0 ) {
             $contact_id = $event['event_author'];
         }
@@ -828,7 +828,7 @@ function eme_get_author( $event ) {
         }
         #$contact_id = get_current_user_id();
     } else {
-        $userinfo = get_userdata( $author_id );
+        $userinfo = get_userdata( intval($author_id) );
     }
     return $userinfo;
 }

@@ -5349,6 +5349,9 @@ function eme_import_csv_payments() {
         $delimiter = ',';
     }
 
+    // the things to sanitize differently, all the others get eme_sanitize_request
+    $intval_fields = [ 'payment_id', 'payment_randomid', 'unique_nbr' ];
+
     // get the first row as keys and lowercase them
     $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
@@ -5361,7 +5364,14 @@ function eme_import_csv_payments() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line                = eme_kses(eme_array_remove_empty_elements( $line ));
+            $line = eme_array_remove_empty_elements( $line );
+            foreach ( $line as $key => $value ) {
+                if ( in_array( $key, $intval_fields, true ) ) {
+                    $line[ $key ] = intval( $value );
+                } else {
+                    $line[ $key ] = eme_sanitize_request( $value );
+                }
+            }
             $amount              = eme_int_price( $line['amount'] );
             $payment_date_parsed = date_parse( $line['payment_date'] );
             if ( ! empty( $payment_date_parsed['year'] ) && ! empty( $payment_date_parsed['month'] ) && ! empty( $payment_date_parsed['day'] ) ) {

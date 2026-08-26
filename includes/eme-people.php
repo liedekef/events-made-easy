@@ -865,6 +865,9 @@ function eme_import_csv_people() {
         $delimiter = ',';
     }
 
+    // the things to sanitize differently, all the others get eme_sanitize_request
+    $intval_fields = [ 'related_person_id', 'status', 'wp_id', 'massmail', 'newsletter', 'gdpr' ];
+
     // get the first row as keys and lowercase them
     $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
@@ -878,7 +881,17 @@ function eme_import_csv_people() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_kses(eme_array_remove_empty_elements( $line ));
+            $line = eme_array_remove_empty_elements( $line );
+            foreach ( $line as $key => $value ) {
+                if ( preg_match( '/^(att|prop|answer)_/', $key ) ) {
+                    continue;
+                }
+                if ( in_array( $key, $intval_fields, true ) ) {
+                    $line[ $key ] = intval( $value );
+                } else {
+                    $line[ $key ] = eme_sanitize_request( $value );
+                }
+            }
             // we need at least 3 fields present, otherwise nothing will be done
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';
@@ -913,7 +926,7 @@ function eme_import_csv_people() {
                         $line['properties'] = [];
                     }
                     if ( array_key_exists( $prop, $empty_props ) ) {
-                        $line['properties'][ $prop ] = $value;
+                        $line['properties'][ $prop ] = eme_kses( $value );
                     }
                 }
             }
@@ -963,17 +976,7 @@ function eme_import_csv_people() {
                                     ],
                                     [ '%d', '%d', '%s' ]
                             );
-                            $wpdb->insert(
-                                $answers_table,
-                                [
-                                    'related_id'    => $person_id,
-                                    'field_id'      => $field_id,
-                                    'answer'        => $value,
-                                    'eme_grouping'  => $grouping,
-                                    'type'          => 'person'
-                                ],
-                                [ '%d', '%d', '%s', '%d', '%s' ]
-                            );
+                            eme_insert_answer( 'person', $person_id, $field_id, eme_sanitize_request( $value ) );
                         }
                     }
                     if ( preg_match( '/^groups?$/', $key, $matches ) ) {
@@ -4167,7 +4170,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
         $groups = [];
     }
     if ( isset( $_POST['properties'] ) ) {
-        $person['properties'] = eme_sanitize_request( $_POST['properties'] );
+        $person['properties'] = eme_kses( $_POST['properties'] );
     }
 
     // if the email is not empty, it needs to be valid

@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.13  (2026/08/25) =
 * Escape all possible strings in filter form, avoiding any possible unexpected input
+* Be strict during csv import too
 
 = 3.2.12  (2026/08/25) =
 * Allow 0 as reminder day too

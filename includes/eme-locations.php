@@ -246,6 +246,10 @@ function eme_import_csv_locations() {
         $delimiter = ',';
     }
 
+    // the things to sanitize differently, all the others get eme_sanitize_request
+    $maybe_unfiltered_fields = [ 'location_description' ];
+    $intval_fields = [];
+
     // get the first row as keys and lowercase them
     $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
@@ -258,7 +262,17 @@ function eme_import_csv_locations() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line        = eme_kses(eme_array_remove_empty_elements( $line ));
+            $line = eme_array_remove_empty_elements( $line );
+            foreach ( $line as $key => $value ) {
+                if ( preg_match( '/^(att|prop|answer)_/', $key ) ) {
+                    continue; // raw value feeds eme_json_decode_safe() downstream or gets sanitized at insert — not free text 
+                }
+                if ( in_array( $key, $maybe_unfiltered_fields, true ) ) {
+                    $line[ $key ] = eme_kses_maybe_unfiltered( $value );
+                } else {
+                    $line[ $key ] = eme_sanitize_request( $value );
+                }
+            }
             $location_id = 0;
             if ( isset( $line['location_name'] ) && isset( $line['location_address1'] ) && isset( $line['location_city'] ) ) {
 			// also import attributes
@@ -268,7 +282,7 @@ function eme_import_csv_locations() {
 						if ( ! isset( $line['location_attributes'] ) ) {
 							$line['location_attributes'] = [];
 						}
-						$line['location_attributes'][ $att ] = eme_json_decode_safe( $value );
+						$line['location_attributes'][ $att ] = eme_kses( eme_json_decode_safe( $value ) );
 					}
 				}
 
@@ -280,7 +294,7 @@ function eme_import_csv_locations() {
 							$line['location_properties'] = [];
 						}
 						if ( array_key_exists( $prop, $empty_props ) ) {
-							$line['location_properties'][ $prop ] = eme_json_decode_safe( $value );
+							$line['location_properties'][ $prop ] = eme_kses( eme_json_decode_safe( $value ) );
 						}
 					}
 				}
@@ -371,7 +385,7 @@ function eme_import_csv_locations() {
                                     ],
                                     [ '%d', '%d', '%s' ]
                                 );
-                                eme_insert_answer( 'location', $location_id, $field_id, $value);
+                                eme_insert_answer( 'location', $location_id, $field_id, eme_kses_maybe_unfiltered( $value ) );
                             }
                         }
                     }

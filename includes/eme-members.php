@@ -1041,9 +1041,6 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         if ( eme_is_datetime( $post_payment_date ) ) {
             $member['payment_date'] = $post_payment_date;
         }
-        if ( isset( $_POST['properties'] ) ) {
-            $member['properties'] = eme_kses( $_POST['properties'] );
-        }
         if ( empty( $membership['properties']['family_membership'] ) ) {
             $member['related_member_id'] = 0;
         } elseif ( isset( $_POST['related_member_id'] ) ) {
@@ -6084,6 +6081,9 @@ function eme_import_csv_members() {
         $delimiter = ',';
     }
 
+    // the things to sanitize differently, all the others get eme_sanitize_request
+    $intval_fields = [ 'membership_id', 'person_id', 'related_member_id', 'status', 'paid', 'status_automatic', 'reminder', 'dgroupid', 'related_person_id', 'massmail', 'newsletter', 'gdpr' ];
+
     // get the first row as keys and lowercase them
     $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
@@ -6095,7 +6095,17 @@ function eme_import_csv_members() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_kses(eme_array_remove_empty_elements( $line ));
+            $line = eme_array_remove_empty_elements( $line );
+            foreach ( $line as $key => $value ) {
+                if ( preg_match( '/^(att|prop|answer)_/', $key ) ) {
+                    continue; // raw value gets sanitized at insert — not free text
+                }
+                if ( in_array( $key, $intval_fields, true ) ) {
+                    $line[ $key ] = intval( $value );
+                } else {
+                    $line[ $key ] = eme_sanitize_request( $value );
+                }
+            }
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';
                 $line['massmail'] = 0;
@@ -6143,6 +6153,18 @@ function eme_import_csv_members() {
                 // translators: %1$s is the field name, %2$s is the CSV row data
                 $error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
                 continue;
+            }
+            // also import properties
+            foreach ( $line as $key => $value ) {
+                if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
+                    $prop = $matches[1];
+                    if ( ! isset( $line['properties'] ) ) {
+                        $line['properties'] = [];
+                    }
+                    if ( array_key_exists( $prop, $empty_props ) ) {
+                        $line['properties'][ $prop ] = eme_kses( $value );
+                    }
+                }
             }
 
             $person_id  = 0;
@@ -6222,7 +6244,7 @@ function eme_import_csv_members() {
                                     ],
                                     [ '%d', '%d', '%s' ]
                                 );
-                                eme_insert_answer( 'member', $member_id, $field_id, $value);
+                                eme_insert_answer( 'member', $member_id, $field_id, eme_sanitize_request( $value ) );
                             }
                         }
                     }
@@ -6288,6 +6310,9 @@ function eme_import_csv_member_dynamic_answers() {
         $delimiter = ',';
     }
 
+    // the things to sanitize differently, all the others get eme_sanitize_request
+    $intval_fields = [ 'membership_id', 'person_id', 'related_member_id', 'status', 'paid', 'status_automatic', 'reminder', 'dgroupid', 'related_person_id', 'massmail', 'newsletter', 'gdpr' ];
+
     // get the first row as keys and lowercase them
     $headers = array_map( 'strtolower', fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') );
 
@@ -6301,7 +6326,17 @@ function eme_import_csv_member_dynamic_answers() {
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );
             // remove columns with empty values
-            $line = eme_kses(eme_array_remove_empty_elements( $line ));
+            $line = eme_array_remove_empty_elements( $line );
+            foreach ( $line as $key => $value ) {
+                if ( preg_match( '/^(att|prop|answer)_/', $key ) ) {
+                    continue; // raw value gets sanitized at insert — not free text
+                }
+                if ( in_array( $key, $intval_fields, true ) ) {
+                    $line[ $key ] = intval( $value );
+                } else {
+                    $line[ $key ] = eme_sanitize_request( $value );
+                }
+            }
             if ( ! isset( $line['email'] ) ) {
                 $line['email']    = '';
                 $line['massmail'] = 0;
@@ -6379,18 +6414,7 @@ function eme_import_csv_member_dynamic_answers() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) ) {
                                 $field_id = $formfield['field_id'];
-                                $wpdb->insert(
-                                    $answers_table,
-                                    [
-                                        'related_id'    => $member_id,
-                                        'field_id'      => $field_id,
-                                        'answer'        => $value,
-                                        'eme_grouping'  => $grouping,
-                                        'occurence'     => $occurence,
-                                        'type'          => 'member'
-                                    ],
-                                    [ '%d', '%d', '%s', '%d', '%d', '%s' ]
-                                );
+                                eme_insert_answer( 'member', $member_id, $field_id, eme_sanitize_request( $value ), $grouping, $occurence );
                                 ++$inserted;
                             }
                         }

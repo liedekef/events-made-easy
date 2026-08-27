@@ -5555,6 +5555,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 
         <input id="search_start_date" type="text" name="search_start_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
         <input id="search_end_date" type="text" name="search_end_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' class='eme_formfield_fdate eme_searchfilter'>
+        <?php if ( ! $person_id ) : ?>
+        <input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" size=15>
+        <?php endif; ?>
         <button type="button" class="eme-filters-toggle" data-showhide="extra_searchfields"><span class="eme-filters-toggle-icon">&#9660;</span> <?php esc_html_e( 'Extra filters', 'events-made-easy' ); ?></button>
         <div id="extra_searchfields" class='eme-filters-panel'>
 <?php
@@ -5564,9 +5567,6 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 <?php
     }
 ?>
-        <?php if ( ! $person_id ) : ?>
-        <input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" size=15>
-    <?php endif; ?>
     <input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
     <input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) echo esc_attr(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>
     <input type="search" name="search_pg_pid" id="search_pg_pid" placeholder="<?php esc_attr_e( 'Filter on payment GW id', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>

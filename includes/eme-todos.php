@@ -272,7 +272,7 @@ function eme_get_past_unsent_todos() {
 	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
 	$search_date  = $eme_date_obj_now->getDate();
-	$prepared_sql = $wpdb->prepare("SELECT $table.* FROM $table LEFT JOIN $events_table ON $table.event_id=$events_table.event_id WHERE $events_tabe.event_todos=1 AND reminder_sent=0 AND $events_table.event_status != %d AND DATE_SUB($events_table.event_start,INTERVAL $table.todo_offset DAY) < %s", EME_EVENT_STATUS_TRASH, $search_date . ' 23:59:00'); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+	$prepared_sql = $wpdb->prepare("SELECT $table.* FROM $table LEFT JOIN $events_table ON $table.event_id=$events_table.event_id WHERE $events_table.event_todos=1 AND reminder_sent=0 AND $events_table.event_status != %d AND DATE_SUB($events_table.event_start,INTERVAL $table.todo_offset DAY) < %s", EME_EVENT_STATUS_TRASH, $search_date . ' 23:59:00'); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 	return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

@@ -1385,7 +1385,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
         },
         '/#_SUBMIT(\{.+?\})?/' => function( $result, $matches, $ctx ) {
             $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_delbooking_submit_string' );
-            return "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+            return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         },
     ];
 
@@ -1451,7 +1451,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
         },
         '/#_SUBMIT(\{.+?\})?/' => function( $result, $matches, $ctx ) {
             $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_delbooking_submit_string' );
-            return "<img id='cancel_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+            return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
         },
     ];
 
@@ -2545,7 +2545,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         } else {
             $label = get_option( 'eme_rsvp_addbooking_submit_string' );
         }
-        return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     // ── Run dispatch, updating dfc_basic per-iteration via a wrapper ─────────
@@ -2870,7 +2870,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         } else {
             $label = __( 'Become member', 'events-made-easy' );
         }
-        return "<img id='member_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     // per-iteration dfc_basic update (same pattern as rsvp)
@@ -2998,7 +2998,7 @@ function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
     };
     $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
         $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : __( 'Subscribe', 'events-made-easy' );
-        return "<img id='task_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
@@ -3089,7 +3089,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
     };
     $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
         $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : get_option( 'eme_rsvp_addbooking_submit_string' );
-        return "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
@@ -3246,7 +3246,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         } else {
             $label = __( 'Subscribe', 'events-made-easy' );
         }
-        return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );
@@ -3333,7 +3333,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
     };
     $handlers['/#_SUBMIT(\{.+?\})?/'] = function( $result, $matches, $ctx ) {
         $label = isset( $matches[1] ) ? substr( $matches[1], 1, -1 ) : __( 'Save personal info', 'events-made-easy' );
-        return "<img id='loading_gif' alt='loading' src='" . esc_url( EME_PLUGIN_URL ) . "images/spinner.gif' class='eme-hidden'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
+        return "<input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . esc_attr( eme_translate( $label ) ) . "'>";
     };
 
     $format = eme_run_formfield_dispatch( $format, $handlers, $ctx );

@@ -225,7 +225,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             const button = EME.$('.eme_ftable_button_for_pending_only .ftable-toolbar-item-text');
                             const origTextContent = button ? button.textContent : null;
-                            if (button) button.textContent = emeadmin.translate_pleasewait;
+                            if (button) {
+                                button.textContent = emeadmin.translate_pleasewait;
+                                button.disabled = true;
+                            }
 
                             eme_postJSON(ajaxurl, new URLSearchParams({
                                 'booking_ids': idsjoined,
@@ -239,7 +242,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             }, () => {
                                 BookingsTable.reload();
                             }, () => {
-                                if (button) button.textContent = origTextContent;
+                                if (button) {
+                                    button.textContent = origTextContent;
+                                    button.disabled = false;
+                                }
                             });
                         }
                     },
@@ -255,7 +261,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             const button = EME.$('.eme_ftable_button_for_approved_only .ftable-toolbar-item-text');
                             const origTextContent = button ? button.textContent : null;
-                            if (button) button.textContent = emeadmin.translate_pleasewait;
+                            if (button) {
+                                button.textContent = emeadmin.translate_pleasewait;
+                                button.disabled = true;
+                            }
 
                             eme_postJSON(ajaxurl, new URLSearchParams({
                                 'booking_ids': idsjoined,
@@ -269,7 +278,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             }, () => {
                                 BookingsTable.reload();
                             }, () => {
-                                if (button) button.textContent = origTextContent;
+                                if (button) {
+                                    button.textContent = origTextContent;
+                                    button.disabled = false;
+                                }
                             });
                         }
                     }

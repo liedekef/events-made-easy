@@ -320,20 +320,37 @@ function eme_executeScriptsInElement(element) {
 }
 
 // --- Unified AJAX Handler for Booking/Member/Generic forms ---
-function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
+function eme_ajax_form(form_id, action, okSel, errSel, submitBtn, extraParams = {}) {
     const form = document.getElementById(form_id);
     if (!form) return;
-    const loadingEl = form.querySelector(loadingSel);
     const okEl = EME.$(okSel);
     const errEl = EME.$(errSel);
 
-    // Hide submit buttons
-    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
-
-    // Show loading
-    if (loadingSel) {
-        if (loadingEl) eme_toggle(loadingEl, true);
+    const btn = submitBtn || form.querySelector('[type="submit"]');
+    const spinner = document.createElement('span');
+    spinner.className = 'spinner';
+    spinner.innerHTML = '&#10231;';
+    if (btn) {
+        btn.dataset.emeOrigText = btn.value || btn.textContent;
+        btn.disabled = true;
+        if (btn.tagName === 'INPUT') {
+            btn.value = emebasic.translate_pleasewait;
+        } else {
+            btn.textContent = emebasic.translate_pleasewait;
+        }
+        btn.parentNode.insertBefore(spinner, btn.nextSibling);
     }
+    const restoreBtn = () => {
+        if (btn) {
+            btn.disabled = false;
+            if (btn.tagName === 'INPUT') {
+                btn.value = btn.dataset.emeOrigText;
+            } else {
+                btn.textContent = btn.dataset.emeOrigText;
+            }
+        }
+        if (spinner && spinner.parentNode) spinner.parentNode.removeChild(spinner);
+    };
 
     let alldata = new FormData(form);
     alldata.append('action', action);
@@ -345,14 +362,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
     })
         .then(response => response.json())
         .then(data => {
-            // Hide loading
-            if (loadingSel) {
-                const loadingEl = form.querySelector(loadingSel);
-                if (loadingEl) eme_toggle(loadingEl, false);
-            }
-
-            // Show submit buttons
-            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
+            restoreBtn();
 
             if (data.Result === "OK") {
                 if (errSel) {
@@ -397,6 +407,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
             }
         })
         .catch(error => {
+            restoreBtn();
             if (errSel) {
                 if (errEl) {
                     errEl.innerHTML = emebasic.translate_error + (error?.message ? '<br>' + error.message : '');
@@ -406,11 +417,6 @@ function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams =
             if (okSel) {
                 if (okEl) eme_toggle(okEl, false);
             }
-            if (loadingSel) {
-                const loadingEl = form.querySelector(loadingSel);
-                if (loadingEl) eme_toggle(loadingEl, false);
-            }
-            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
             eme_scrollToEl(errEl);
         });
 }
@@ -783,19 +789,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Generic forms ---
     const genericForms = [
-        { sel: '[name=eme-cancel-payment-form]', action: 'eme_cancel_payment', ok: 'div#eme-cancel-payment-message-ok-', err: 'div#eme-cancel-payment-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-cancel-bookings-form]', action: 'eme_cancel_bookings', ok: 'div#eme-cancel-bookings-message-ok-', err: 'div#eme-cancel-bookings-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-subscribe-form]', action: 'eme_subscribe', ok: 'div#eme-subscribe-message-ok-', err: 'div#eme-subscribe-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-unsubscribe-form]', action: 'eme_unsubscribe', ok: 'div#eme-unsubscribe-message-ok-', err: 'div#eme-unsubscribe-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-rpi-form]', action: 'eme_rpi', ok: 'div#eme-rpi-message-ok-', err: 'div#eme-rpi-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-gdpr-approve-form]', action: 'eme_gdpr_approve', ok: 'div#eme-gdpr-approve-message-ok-', err: 'div#eme-gdpr-approve-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-cpi-request-form]', action: 'eme_cpi_request', ok: 'div#eme-cpi-request-message-ok-', err: 'div#eme-cpi-request-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-cpi-form]', action: 'eme_cpi', ok: 'div#eme-cpi-message-ok-', err: 'div#eme-cpi-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-tasks-form]', action: 'eme_tasks', ok: 'div#eme-tasks-message-ok-', err: 'div#eme-tasks-message-error-', loading: '#loading_gif' },
-        { sel: '[name=eme-fs-form]', action: 'eme_frontend_submit', ok: 'div#eme-fs-message-ok-', err: 'div#eme-fs-message-error-', loading: '#loading_gif', isFS: true }
+        { sel: '[name=eme-cancel-payment-form]', action: 'eme_cancel_payment', ok: 'div#eme-cancel-payment-message-ok-', err: 'div#eme-cancel-payment-message-error-' },
+        { sel: '[name=eme-cancel-bookings-form]', action: 'eme_cancel_bookings', ok: 'div#eme-cancel-bookings-message-ok-', err: 'div#eme-cancel-bookings-message-error-' },
+        { sel: '[name=eme-subscribe-form]', action: 'eme_subscribe', ok: 'div#eme-subscribe-message-ok-', err: 'div#eme-subscribe-message-error-' },
+        { sel: '[name=eme-unsubscribe-form]', action: 'eme_unsubscribe', ok: 'div#eme-unsubscribe-message-ok-', err: 'div#eme-unsubscribe-message-error-' },
+        { sel: '[name=eme-rpi-form]', action: 'eme_rpi', ok: 'div#eme-rpi-message-ok-', err: 'div#eme-rpi-message-error-' },
+        { sel: '[name=eme-gdpr-approve-form]', action: 'eme_gdpr_approve', ok: 'div#eme-gdpr-approve-message-ok-', err: 'div#eme-gdpr-approve-message-error-' },
+        { sel: '[name=eme-cpi-request-form]', action: 'eme_cpi_request', ok: 'div#eme-cpi-request-message-ok-', err: 'div#eme-cpi-request-message-error-' },
+        { sel: '[name=eme-cpi-form]', action: 'eme_cpi', ok: 'div#eme-cpi-message-ok-', err: 'div#eme-cpi-message-error-' },
+        { sel: '[name=eme-tasks-form]', action: 'eme_tasks', ok: 'div#eme-tasks-message-ok-', err: 'div#eme-tasks-message-error-' },
+        { sel: '[name=eme-fs-form]', action: 'eme_frontend_submit', ok: 'div#eme-fs-message-ok-', err: 'div#eme-fs-message-error-', isFS: true }
     ];
     
-    genericForms.forEach(({ sel, action, ok, err, loading, isFS }) => {
+    genericForms.forEach(({ sel, action, ok, err, isFS }) => {
         EME.$$(sel).forEach(form => {
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -808,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (locationDescEditor) locationDescEditor.save();
                     }
                 }
-                eme_ajax_form(form_id, action, ok + form_id, err + form_id, loading);
+                eme_ajax_form(form_id, action, ok + form_id, err + form_id, event.submitter);
             });
         });
     });
@@ -821,7 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['eme_invite', 'eme_email', 'eme_ln', 'eme_fn'].forEach(k => { 
                     if ($_GET[k]) extra[k] = $_GET[k]; 
                 });
-                eme_ajax_form(form_id, 'eme_add_bookings', 'div#eme-rsvp-addmessage-ok-' + form_id, 'div#eme-rsvp-addmessage-error-' + form_id, '#rsvp_add_loading_gif', extra);
+                eme_ajax_form(form_id, 'eme_add_bookings', 'div#eme-rsvp-addmessage-ok-' + form_id, 'div#eme-rsvp-addmessage-error-' + form_id, event.submitter, extra);
                 eme_dynamic_data_json(form_id, true);
             });
         });
@@ -831,7 +837,7 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             eme_handle_massmail(this.id, function(form_id) {
-                eme_ajax_form(form_id, 'eme_add_member', 'div#eme-member-addmessage-ok-' + form_id, 'div#eme-member-addmessage-error-' + form_id, '#member_loading_gif');
+                eme_ajax_form(form_id, 'eme_add_member', 'div#eme-member-addmessage-ok-' + form_id, 'div#eme-member-addmessage-error-' + form_id, event.submitter);
                 eme_dynamic_data_json(form_id, false);
             });
         });

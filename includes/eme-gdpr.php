@@ -116,7 +116,7 @@ function eme_rpi_shortcode( $atts ) {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' required='required' value='" . esc_attr($email) . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
+		<br>
 		$captcha_html
 		<input type='submit' value='" . esc_attr__( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
@@ -190,7 +190,7 @@ function eme_gdpr_approve_shortcode() {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
    		<input type='email' name='eme_email' required='required' value='" . esc_attr($email) . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
+		<br>
 		$captcha_html
    		<input type='submit' value='" . esc_attr__( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form>";
@@ -306,7 +306,7 @@ function eme_cpi_shortcode( $atts ) {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' value='" . $email . "' placeholder='" . esc_attr__( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' class='eme-hidden'><br>
+		<br>
 		$captcha_html
 		<input type='submit' value='" . esc_attr__( 'Request to change personal info', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";

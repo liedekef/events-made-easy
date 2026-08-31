@@ -165,11 +165,11 @@ msgid "Yes, I'm sure"
 msgstr "是的，我肯定"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:562
+#: includes/eme-actions.php:563
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "本页对应于 <strong>Events Made Easy</strong> 的活动页面。它的内容将被 <strong>Events Made Easy</strong> 覆盖。如果您想显示您的内容，您可以在 <a href='%s'>Settings</a> 中为 <strong>Events Made Easy</strong> 指定另一个页面。"
 
-#: includes/eme-actions.php:614
+#: includes/eme-actions.php:615
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "如果您觉得 <strong>Events Made Easy</strong> 对您有用，请考虑进行小额捐赠，以帮助我投入时间和进一步发展。谢谢您的善意支持!"
 
@@ -887,7 +887,7 @@ msgstr "州名"
 msgid "The name of the state"
 msgstr "州的名称"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:513
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -3858,6 +3858,7 @@ msgstr "创建于"
 msgid "Modified on"
 msgstr "修改于"
 
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "请稍候"
@@ -3885,7 +3886,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "在一个循环中，开始和结束日期不能相同"
 
 #: includes/eme-events.php:9745
-#: includes/eme-filters.php:535
+#: includes/eme-filters.php:527
 #: includes/eme-options.php:1964
 msgid "Event author"
 msgstr "活动作者"
@@ -4037,7 +4038,7 @@ msgstr "州"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 
-#: includes/eme-actions.php:492
+#: includes/eme-actions.php:493
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "没有找到匹配的地点"
@@ -4618,64 +4619,64 @@ msgstr "活动状态已更新"
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 
-#: includes/eme-filters.php:512
+#: includes/eme-filters.php:504
 msgid "Select month"
 msgstr "选择月份"
 
-#: includes/eme-filters.php:517
+#: includes/eme-filters.php:509
 msgid "Select year"
 msgstr "选择年份"
 
-#: includes/eme-filters.php:309
+#: includes/eme-filters.php:301
 msgid "Select one or more categories"
 msgstr "选择一个或多个分类"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:303
 msgid "Select a category"
 msgstr "选择一个分类"
 
-#: includes/eme-filters.php:381
+#: includes/eme-filters.php:373
 msgid "Select one or more locations"
 msgstr "选择一个或多个地点"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:375
 #: includes/eme-locations.php:932
 msgid "Select a location"
 msgstr "选择一个地点"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select one or more cities"
 msgstr "选择一个或多个城市"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select a city"
 msgstr "选择一个城市"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select one or more countries"
 msgstr "选择一个或多个国家"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select a country"
 msgstr "选择一个国家"
 
-#: includes/eme-filters.php:507
+#: includes/eme-filters.php:499
 msgid "Select week"
 msgstr "选择周次"
 
-#: includes/eme-filters.php:526
+#: includes/eme-filters.php:518
 msgid "Select a daterange"
 msgstr "选择一个日期范围"
 
-#: includes/eme-filters.php:534
+#: includes/eme-filters.php:526
 msgid "Event contact"
 msgstr "活动联系"
 
-#: includes/eme-filters.php:658
+#: includes/eme-filters.php:650
 msgid "Submit"
 msgstr "提交"
 
@@ -5841,7 +5842,7 @@ msgstr "EME 有选择地使用一个 cookie 来存储客户端的日期和时间
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:753
+#: includes/eme-actions.php:754
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
@@ -6196,7 +6197,7 @@ msgstr "主题"
 msgid "Queued on"
 msgstr "排列的时间是"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:509
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -7703,7 +7704,7 @@ msgstr "选择会员状态"
 #: includes/eme-people.php:2115
 #: includes/eme-people.php:2122
 #: includes/eme-people.php:2380
-#: includes/eme-rsvp.php:5568
+#: includes/eme-rsvp.php:5559
 msgid "Filter on person"
 msgstr "过滤人员"
 
@@ -13000,7 +13001,7 @@ msgstr "(所有可能的值见 &#91;eme_events] 的文档)"
 msgid "Show events per period"
 msgstr "显示每个时期的活动"
 
-#: includes/eme-filters.php:572
+#: includes/eme-filters.php:564
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -13259,15 +13260,15 @@ msgstr "从 %s 起（自动延长）"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "如果任务的空位数为0，任务描述将被视为下一组任务的章节标题。"
 
-#: includes/eme-actions.php:611
+#: includes/eme-actions.php:612
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy 已安装或升级"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:613
 msgid "Please donate to the development of Events Made Easy"
 msgstr "请为 Events Made Easy 的开发捐赠"
 
-#: includes/eme-actions.php:623
+#: includes/eme-actions.php:624
 msgid "Dismiss"
 msgstr "关闭"
 
@@ -13295,7 +13296,7 @@ msgstr "联系人会员删除邮件正文"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "在会员被删除之前发送给联系人的邮件正文。"
 
-#: includes/eme-actions.php:758
+#: includes/eme-actions.php:759
 msgid "List of next 10 events"
 msgstr "接下来10个活动的列表"
 
@@ -14195,34 +14196,34 @@ msgstr "如果您希望尽快发送已支付的电子邮件，而不等待下一
 msgid "Use membership feature?"
 msgstr "使用会员资格功能？"
 
-#: includes/eme-actions.php:506
+#: includes/eme-actions.php:507
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "插入图片"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "插入"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "从媒体库插入"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:511
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "预览"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:512
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "可视化"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:514
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "插入不换行空格"
@@ -14656,27 +14657,27 @@ msgstr "重新发送已批准预订的邮件"
 msgid "Send the configured reminder mail for approved bookings"
 msgstr "发送已配置的已批准预订提醒邮件"
 
-#: includes/eme-actions.php:590
+#: includes/eme-actions.php:591
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>嗨，<strong>%1$s</strong>，欢迎使用 <strong>Events Made Easy</strong>！希望您喜欢这里。</p><p>现在可以通过<a href='%2$s' title='%3$s'>小工具</a>、<a href='%4$s' title='%5$s'>模板标签</a>或<a href='%6$s' title='%7$s'>短代码</a>来插入活动列表了。</p><p>顺便问一下，您看过<a href='%8$s' title='%9$s'>设置页面</a>吗？在那里您可以自定义活动和地点的显示方式。</p><p>什么？厌倦了看到这个提示？我理解您，<a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>点击此处</a>，您将不再看到此提示！</p>"
 
-#: includes/eme-actions.php:593
+#: includes/eme-actions.php:594
 msgid "Widgets page"
 msgstr "小工具页面"
 
-#: includes/eme-actions.php:595
+#: includes/eme-actions.php:596
 msgid "Template tags documentation"
 msgstr "模板标签文档"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:598
 msgid "Shortcodes documentation"
 msgstr "短代码文档"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:600
 msgid "Change settings"
 msgstr "更改设置"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:601
 msgid "Don't show this advice again"
 msgstr "不再显示此提示"
 
@@ -14911,11 +14912,11 @@ msgstr "同时排除已注册这些其他活动的人员的电子邮件"
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
 msgstr "可选：选择应跳过其报名者的活动，与本次群发邮件所涉及的活动无关。"
 
-#: includes/eme-actions.php:466
+#: includes/eme-actions.php:467
 msgid "Address not found"
 msgstr "未找到地址"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:468
 msgid "Could not calculate route"
 msgstr "无法计算路线"
 
@@ -15061,7 +15062,7 @@ msgid "Trash"
 msgstr ""
 
 #: includes/eme-events.php:6280
-#: includes/eme-rsvp.php:5558
+#: includes/eme-rsvp.php:5561
 msgid "Extra filters"
 msgstr ""
 
@@ -15403,12 +15404,12 @@ msgid "Problem detected while adding member"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select a state"
 msgstr ""
 

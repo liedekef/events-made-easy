@@ -165,11 +165,11 @@ msgid "Yes, I'm sure"
 msgstr "Ja, ich bin mir sicher"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:562
+#: includes/eme-actions.php:563
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Diese Seite ist mit der Veranstaltungsseite von <strong>Events Made Easy</strong> verknüpft. Der Inhalt wird von <strong>Events Made Easy</strong> überschrieben. Wenn ihr Inhalt angezeigt werden soll, kannst Du für <strong>Events Made Easy</strong> eine andere Seite über die <a href='%s'>Einstellungen</a> zuordnen. "
 
-#: includes/eme-actions.php:614
+#: includes/eme-actions.php:615
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Wenn <strong>Events Made Easy</strong> nützlich für dich ist, erwäge bitte eine kleine Spende um die Zeit, die ich investiere zu würdigen und die Weiterentwicklung zu unterstützen. Danke für deine freundliche Unterstützung!"
 
@@ -883,7 +883,7 @@ msgstr "Regionsname"
 msgid "The name of the state"
 msgstr "Der Name der Region"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:513
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -3850,6 +3850,7 @@ msgstr "Erstellt am"
 msgid "Modified on"
 msgstr "Aktualisiert am"
 
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "Bitte warte"
@@ -3877,7 +3878,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "In einer Veranstaltungsserie dürfen Start- und End-Datum nicht identisch sein"
 
 #: includes/eme-events.php:9745
-#: includes/eme-filters.php:535
+#: includes/eme-filters.php:527
 #: includes/eme-options.php:1964
 msgid "Event author"
 msgstr "Veranstaltungsautor"
@@ -4029,7 +4030,7 @@ msgstr "Regionen"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Kein Land mit dieser Region verknüpft, die Region wird nicht in Auswahllisten erscheinen. Bitte editiere diese Region und aktualisiere die Landesinformation."
 
-#: includes/eme-actions.php:492
+#: includes/eme-actions.php:493
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "Kein passender Ort gefunden"
@@ -4608,64 +4609,64 @@ msgstr "Veranstaltungsstatus aktualisiert"
 msgid "Events added to category"
 msgstr "Veranstaltung der Kategorie hinzugefügt"
 
-#: includes/eme-filters.php:512
+#: includes/eme-filters.php:504
 msgid "Select month"
 msgstr "Monat auswählen"
 
-#: includes/eme-filters.php:517
+#: includes/eme-filters.php:509
 msgid "Select year"
 msgstr "Jahr auswählen"
 
-#: includes/eme-filters.php:309
+#: includes/eme-filters.php:301
 msgid "Select one or more categories"
 msgstr "Eine oder mehrere Kategorien auswählen"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:303
 msgid "Select a category"
 msgstr "Wähle eine Kategorie"
 
-#: includes/eme-filters.php:381
+#: includes/eme-filters.php:373
 msgid "Select one or more locations"
 msgstr "Einen oder mehrere Veranstaltungsorte auswählen"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:375
 #: includes/eme-locations.php:932
 msgid "Select a location"
 msgstr "Einen Veranstaltungsort auswählen"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select one or more cities"
 msgstr "Eine oder mehrere Orte auswählen"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select a city"
 msgstr "Wähle eine Stadt"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select one or more countries"
 msgstr "Wähle ein oder mehrere Länder"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select a country"
 msgstr "Wähle ein Land"
 
-#: includes/eme-filters.php:507
+#: includes/eme-filters.php:499
 msgid "Select week"
 msgstr "Woche auswählen"
 
-#: includes/eme-filters.php:526
+#: includes/eme-filters.php:518
 msgid "Select a daterange"
 msgstr "Einen Datumsbereich auswählen"
 
-#: includes/eme-filters.php:534
+#: includes/eme-filters.php:526
 msgid "Event contact"
 msgstr "Veranstaltung Kontakt"
 
-#: includes/eme-filters.php:658
+#: includes/eme-filters.php:650
 msgid "Submit"
 msgstr "Senden"
 
@@ -5827,7 +5828,7 @@ msgstr "EME benutzt optional Cookies um das Besucher Datum und die Zeit zu speic
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:753
+#: includes/eme-actions.php:754
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
@@ -6180,7 +6181,7 @@ msgstr "Betreff"
 msgid "Queued on"
 msgstr "Eingestellt am"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:509
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -7678,7 +7679,7 @@ msgstr "Mitgliedsstatus wählen"
 #: includes/eme-people.php:2115
 #: includes/eme-people.php:2122
 #: includes/eme-people.php:2380
-#: includes/eme-rsvp.php:5568
+#: includes/eme-rsvp.php:5559
 msgid "Filter on person"
 msgstr "Personen filtern"
 
@@ -12954,7 +12955,7 @@ msgstr "(Siehe Dokumentation &#91;eme_events] für alle möglichen Werte)"
 msgid "Show events per period"
 msgstr "Zeige Veranstaltungen pro Zeitraum"
 
-#: includes/eme-filters.php:572
+#: includes/eme-filters.php:564
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -13213,15 +13214,15 @@ msgstr "Ab %s (automatisch verlängert)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Wenn die Anzahl der Plätze für eine Aufgabe 0 ist, wird die Aufgabenbeschreibung als Abschnittsüberschrift für den nächsten Satz von Aufgaben behandelt."
 
-#: includes/eme-actions.php:611
+#: includes/eme-actions.php:612
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy wurde installiert oder aktualisiert"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:613
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Bitte spenden Sie für die Entwicklung von Events Made Easy"
 
-#: includes/eme-actions.php:623
+#: includes/eme-actions.php:624
 msgid "Dismiss"
 msgstr "Verwerfen"
 
@@ -13249,7 +13250,7 @@ msgstr "Inhalt der E-Mail an die Kontaktperson bei Löschung eines Mitglieds"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Inhalt der E-Mail, die an die Kontaktperson gesendet wird, kurz bevor ein Mitglied gelöscht wird."
 
-#: includes/eme-actions.php:758
+#: includes/eme-actions.php:759
 msgid "List of next 10 events"
 msgstr "Liste der nächsten 10 Ereignisse"
 
@@ -14150,34 +14151,34 @@ msgstr "Aktivieren Sie diese Option, wenn Sie die bezahlten E-Mails so schnell w
 msgid "Use membership feature?"
 msgstr "Mitgliedschaftsfunktion verwenden?"
 
-#: includes/eme-actions.php:506
+#: includes/eme-actions.php:507
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Bild einfügen"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Einfügen"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Aus Medienbibliothek einfügen"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:511
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Vorschau"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:512
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visuell"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:514
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Geschütztes Leerzeichen einfügen"
@@ -14612,27 +14613,27 @@ msgstr "E-Mail für genehmigte Buchungen erneut senden"
 msgid "Send the configured reminder mail for approved bookings"
 msgstr "Die konfigurierte Erinnerungs-E-Mail für genehmigte Buchungen senden"
 
-#: includes/eme-actions.php:590
+#: includes/eme-actions.php:591
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo <strong>%1$s</strong>, willkommen bei <strong>Events Made Easy</strong>! Wir hoffen, es gefällt Ihnen hier.</p><p>Jetzt ist es an der Zeit, Veranstaltungslisten über <a href='%2$s' title='%3$s'>Widgets</a>, <a href='%4$s' title='%5$s'>Vorlagen-Tags</a> oder <a href='%6$s' title='%7$s'>Shortcodes</a> einzufügen.</p><p>Übrigens, haben Sie sich die <a href='%8$s' title='%9$s'>Einstellungsseite</a> angeschaut? Dort können Sie anpassen, wie Veranstaltungen und Standorte angezeigt werden.</p><p>Was? Sie sind es leid, diesen Hinweis zu sehen? Ich verstehe Sie, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klicken Sie hier</a> und Sie sehen dies nicht wieder!</p>"
 
-#: includes/eme-actions.php:593
+#: includes/eme-actions.php:594
 msgid "Widgets page"
 msgstr "Widgets-Seite"
 
-#: includes/eme-actions.php:595
+#: includes/eme-actions.php:596
 msgid "Template tags documentation"
 msgstr "Dokumentation zu Vorlagen-Tags"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:598
 msgid "Shortcodes documentation"
 msgstr "Dokumentation zu Shortcodes"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:600
 msgid "Change settings"
 msgstr "Einstellungen ändern"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:601
 msgid "Don't show this advice again"
 msgstr "Diesen Hinweis nicht mehr anzeigen"
 
@@ -14872,11 +14873,11 @@ msgstr "Auch E-Mails von Personen ausschließen, die bereits für diese anderen 
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
 msgstr "Optional: Wählen Sie Veranstaltungen aus, deren Teilnehmer übersprungen werden sollen, unabhängig davon, um welche(n) Veranstaltung(en) es in diesem Mailing geht."
 
-#: includes/eme-actions.php:466
+#: includes/eme-actions.php:467
 msgid "Address not found"
 msgstr "Adresse nicht gefunden"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:468
 msgid "Could not calculate route"
 msgstr "Route konnte nicht berechnet werden"
 
@@ -15017,7 +15018,7 @@ msgid "Trash"
 msgstr ""
 
 #: includes/eme-events.php:6280
-#: includes/eme-rsvp.php:5558
+#: includes/eme-rsvp.php:5561
 msgid "Extra filters"
 msgstr ""
 
@@ -15359,12 +15360,12 @@ msgid "Problem detected while adding member"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select a state"
 msgstr ""
 

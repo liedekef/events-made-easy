@@ -165,11 +165,11 @@ msgid "Yes, I'm sure"
 msgstr "Ja, jag är säker"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:562
+#: includes/eme-actions.php:563
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Denna sida motsvarar <strong>Events Made Easy</strong> eventsida. Dess innehåll kommer att skrivas över av <strong>Events Made Easy</strong>. Om du vill visa ditt innehåll kan du tilldela en annan sida för <strong>Events Made Easy</strong> i <a href='%s'>Inställningarna</a>."
 
-#: includes/eme-actions.php:614
+#: includes/eme-actions.php:615
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Om du finner <strong>Events Made Easy</strong> användbart, vänligen fundera på att ge ett litet bidrag för den tid jag investerat och för att möjliggöra fortsatt utveckling. Tack för ditt stöd!"
 
@@ -887,7 +887,7 @@ msgstr "Namn på stat"
 msgid "The name of the state"
 msgstr "Namnet på staten"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:513
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -3861,6 +3861,7 @@ msgstr "Skapad den"
 msgid "Modified on"
 msgstr "Ändrad den"
 
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "Vänligen vänta"
@@ -3888,7 +3889,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "För ett återkommande kan inte start- och slutdatum vara lika"
 
 #: includes/eme-events.php:9745
-#: includes/eme-filters.php:535
+#: includes/eme-filters.php:527
 #: includes/eme-options.php:1964
 msgid "Event author"
 msgstr "Skapare av event"
@@ -4040,7 +4041,7 @@ msgstr "Stater"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Inget land är kopplat till denna stat, den kommer inte synas i rullgardinsmenyer. Vänligen redigera staten och korrigera landsinformationen."
 
-#: includes/eme-actions.php:492
+#: includes/eme-actions.php:493
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "Ingen matchande plats funnen"
@@ -4621,64 +4622,64 @@ msgstr "Eventstatus uppdaterades"
 msgid "Events added to category"
 msgstr "Event tillagda till kategori"
 
-#: includes/eme-filters.php:512
+#: includes/eme-filters.php:504
 msgid "Select month"
 msgstr "Välj månad"
 
-#: includes/eme-filters.php:517
+#: includes/eme-filters.php:509
 msgid "Select year"
 msgstr "Välj år"
 
-#: includes/eme-filters.php:309
+#: includes/eme-filters.php:301
 msgid "Select one or more categories"
 msgstr "Välj en eller flera kategorier"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:303
 msgid "Select a category"
 msgstr "Välj en kategori"
 
-#: includes/eme-filters.php:381
+#: includes/eme-filters.php:373
 msgid "Select one or more locations"
 msgstr "Välj en eller flera platser"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:375
 #: includes/eme-locations.php:932
 msgid "Select a location"
 msgstr "Välj en plats"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select one or more cities"
 msgstr "Välj en eller flera städer"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select a city"
 msgstr "Välj en stad"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select one or more countries"
 msgstr "Välj ett eller flera länder"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select a country"
 msgstr "Välj ett land"
 
-#: includes/eme-filters.php:507
+#: includes/eme-filters.php:499
 msgid "Select week"
 msgstr "Välj vecka"
 
-#: includes/eme-filters.php:526
+#: includes/eme-filters.php:518
 msgid "Select a daterange"
 msgstr "Välj ett datumintervall"
 
-#: includes/eme-filters.php:534
+#: includes/eme-filters.php:526
 msgid "Event contact"
 msgstr "Evenemangskontakt"
 
-#: includes/eme-filters.php:658
+#: includes/eme-filters.php:650
 msgid "Submit"
 msgstr "Skicka"
 
@@ -5842,7 +5843,7 @@ msgstr "EME använder som option en cookie att lagra klientdatum och tid för at
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:753
+#: includes/eme-actions.php:754
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
@@ -6197,7 +6198,7 @@ msgstr "Ärenderad"
 msgid "Queued on"
 msgstr "Köat den"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:509
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -7700,7 +7701,7 @@ msgstr "Välj medlemsstatus"
 #: includes/eme-people.php:2115
 #: includes/eme-people.php:2122
 #: includes/eme-people.php:2380
-#: includes/eme-rsvp.php:5568
+#: includes/eme-rsvp.php:5559
 msgid "Filter on person"
 msgstr "Filtrera på person"
 
@@ -12993,7 +12994,7 @@ msgstr "(Se dokumentationen för &#91;eme_events] för alla möjliga värden)"
 msgid "Show events per period"
 msgstr "Visa event per period"
 
-#: includes/eme-filters.php:572
+#: includes/eme-filters.php:564
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -13254,15 +13255,15 @@ msgstr "Från och med %s (automatiskt förlängd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Om antalet platser för en uppgift är 0 kommer uppgiftsbeskrivningen att behandlas som en rubrik för nästa uppsättning uppgifter."
 
-#: includes/eme-actions.php:611
+#: includes/eme-actions.php:612
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy har installerats eller uppgraderats"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:613
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Vänligen donera till utvecklingen av Events Made Easy"
 
-#: includes/eme-actions.php:623
+#: includes/eme-actions.php:624
 msgid "Dismiss"
 msgstr "Stäng"
 
@@ -13290,7 +13291,7 @@ msgstr "Kontaktperson medlem borttagen e-posttext"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Texten för e-postmeddelandet som skickas till kontaktpersonen precis innan en medlem tas bort."
 
-#: includes/eme-actions.php:758
+#: includes/eme-actions.php:759
 msgid "List of next 10 events"
 msgstr "Lista över nästa 10 evenemang"
 
@@ -14191,34 +14192,34 @@ msgstr "Markera detta alternativ om du vill skicka ut de betalda e-postmeddeland
 msgid "Use membership feature?"
 msgstr "Använd medlemskapsfunktion?"
 
-#: includes/eme-actions.php:506
+#: includes/eme-actions.php:507
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Infoga bild"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Infoga"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Infoga från mediebiblioteket"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:511
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Förhandsgranska"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:512
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visuell"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:514
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Infoga blanksteg"
@@ -14653,27 +14654,27 @@ msgstr "Skicka igen meddelandet för godkända bokningar"
 msgid "Send the configured reminder mail for approved bookings"
 msgstr "Skicka det konfigurerade påminnelsemeddelandet för godkända bokningar"
 
-#: includes/eme-actions.php:590
+#: includes/eme-actions.php:591
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hej, <strong>%1$s</strong>, välkommen till <strong>Events Made Easy</strong>! Vi hoppas att du trivs här.</p><p>Nu är det dags att infoga evenemangslistor via <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>malltaggar</a> eller <a href='%6$s' title='%7$s'>kortkoder</a>.</p><p>För övrigt, har du tittat på <a href='%8$s' title='%9$s'>Inställningssidan</a>? Där anpassar du hur evenemang och platser visas.</p><p>What? Trött på att se detta råd? Jag förstår, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klicka här</a> så kommer du inte att se detta igen!</p>"
 
-#: includes/eme-actions.php:593
+#: includes/eme-actions.php:594
 msgid "Widgets page"
 msgstr "Widget-sida"
 
-#: includes/eme-actions.php:595
+#: includes/eme-actions.php:596
 msgid "Template tags documentation"
 msgstr "Dokumentation för malltaggar"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:598
 msgid "Shortcodes documentation"
 msgstr "Dokumentation för kortkoder"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:600
 msgid "Change settings"
 msgstr "Ändra inställningar"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:601
 msgid "Don't show this advice again"
 msgstr "Visa inte detta råd igen"
 
@@ -14908,11 +14909,11 @@ msgstr "Exkludera också e-post från personer som redan är registrerade för d
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
 msgstr "Valfritt: välj evenemang vars registrerade ska hoppas över, oberoende av vilka evenemang detta utskick handlar om."
 
-#: includes/eme-actions.php:466
+#: includes/eme-actions.php:467
 msgid "Address not found"
 msgstr "Adress hittades inte"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:468
 msgid "Could not calculate route"
 msgstr "Kunde inte beräkna rutt"
 
@@ -15058,7 +15059,7 @@ msgid "Trash"
 msgstr ""
 
 #: includes/eme-events.php:6280
-#: includes/eme-rsvp.php:5558
+#: includes/eme-rsvp.php:5561
 msgid "Extra filters"
 msgstr ""
 
@@ -15400,12 +15401,12 @@ msgid "Problem detected while adding member"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select one or more states"
 msgstr ""
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select a state"
 msgstr ""
 

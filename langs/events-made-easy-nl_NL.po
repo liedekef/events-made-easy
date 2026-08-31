@@ -165,11 +165,11 @@ msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:562
+#: includes/eme-actions.php:563
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
-#: includes/eme-actions.php:614
+#: includes/eme-actions.php:615
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -883,7 +883,7 @@ msgstr "Provincie naam"
 msgid "The name of the state"
 msgstr "De provincie naam"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:513
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -3845,6 +3845,7 @@ msgstr "Aangemaakt op"
 msgid "Modified on"
 msgstr "Gewijzigd op"
 
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "Wacht aub"
@@ -3872,7 +3873,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "Bij terugkerende evenementen mogen start- en einddatum niet gelijk zijn"
 
 #: includes/eme-events.php:9745
-#: includes/eme-filters.php:535
+#: includes/eme-filters.php:527
 #: includes/eme-options.php:1964
 msgid "Event author"
 msgstr "Evenement auteur"
@@ -4024,7 +4025,7 @@ msgstr "Provincies"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Geen land geassocieerd met deze provincie, deze zal niet getoond worden in dropdown lijsten. Pas deze provincie aan met de correcte land info."
 
-#: includes/eme-actions.php:492
+#: includes/eme-actions.php:493
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "Geen overeenkomende locatie gevonden."
@@ -4618,64 +4619,64 @@ msgstr "Status van evenementen ge-updated"
 msgid "Events added to category"
 msgstr "Evenementen toegevoegd aan categorie"
 
-#: includes/eme-filters.php:512
+#: includes/eme-filters.php:504
 msgid "Select month"
 msgstr "Selecteer maand"
 
-#: includes/eme-filters.php:517
+#: includes/eme-filters.php:509
 msgid "Select year"
 msgstr "Selecteer jaar"
 
-#: includes/eme-filters.php:309
+#: includes/eme-filters.php:301
 msgid "Select one or more categories"
 msgstr "Selecteer 1 of meer categorieën"
 
-#: includes/eme-filters.php:311
+#: includes/eme-filters.php:303
 msgid "Select a category"
 msgstr "Selecteer een categorie"
 
-#: includes/eme-filters.php:381
+#: includes/eme-filters.php:373
 msgid "Select one or more locations"
 msgstr "Selecteer 1 of meer locaties"
 
-#: includes/eme-filters.php:383
+#: includes/eme-filters.php:375
 #: includes/eme-locations.php:932
 msgid "Select a location"
 msgstr "Selecteer een locatie"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select one or more cities"
 msgstr "Selecteer één of meer steden"
 
-#: includes/eme-filters.php:432
-#: includes/eme-filters.php:433
+#: includes/eme-filters.php:424
+#: includes/eme-filters.php:425
 msgid "Select a city"
 msgstr "Kies een stad"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select one or more countries"
 msgstr "Selecteer één of meerdere landen"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:435
+#: includes/eme-filters.php:427
 msgid "Select a country"
 msgstr "Selecteer een land"
 
-#: includes/eme-filters.php:507
+#: includes/eme-filters.php:499
 msgid "Select week"
 msgstr "Selecteer week"
 
-#: includes/eme-filters.php:526
+#: includes/eme-filters.php:518
 msgid "Select a daterange"
 msgstr "Selecteer een datumbereik"
 
-#: includes/eme-filters.php:534
+#: includes/eme-filters.php:526
 msgid "Event contact"
 msgstr "Evenement contact"
 
-#: includes/eme-filters.php:658
+#: includes/eme-filters.php:650
 msgid "Submit"
 msgstr "Uitvoeren"
 
@@ -5838,7 +5839,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:753
+#: includes/eme-actions.php:754
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
@@ -6191,7 +6192,7 @@ msgstr "Onderwerp"
 msgid "Queued on"
 msgstr "In de wachtrij gezet op"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:509
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -7687,7 +7688,7 @@ msgstr "Selecteer ledenstatus"
 #: includes/eme-people.php:2115
 #: includes/eme-people.php:2122
 #: includes/eme-people.php:2380
-#: includes/eme-rsvp.php:5568
+#: includes/eme-rsvp.php:5559
 msgid "Filter on person"
 msgstr "Filter op personen"
 
@@ -12952,7 +12953,7 @@ msgstr "(Zie de documentatie voor &#91;eme_events] voor alle mogelijke waarden)"
 msgid "Show events per period"
 msgstr "Toon evenementen per periode"
 
-#: includes/eme-filters.php:572
+#: includes/eme-filters.php:564
 #: includes/eme-widgets.php:157
 #: includes/eme-widgets.php:207
 #: includes/eme-widgets.php:373
@@ -13211,15 +13212,15 @@ msgstr "Vanaf %s (automatisch verlengd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Als het aantal plaatsen voor een taak 0 is, wordt de taakbeschrijving behandeld als sectiehoofd voor de volgende reeks taken."
 
-#: includes/eme-actions.php:611
+#: includes/eme-actions.php:612
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:613
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
-#: includes/eme-actions.php:623
+#: includes/eme-actions.php:624
 msgid "Dismiss"
 msgstr "Negeren"
 
@@ -13247,7 +13248,7 @@ msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: includes/eme-actions.php:758
+#: includes/eme-actions.php:759
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
@@ -14129,34 +14130,34 @@ msgstr "Schakel deze optie in als u de betaalde e-mails zo snel mogelijk wilt ve
 msgid "Use membership feature?"
 msgstr "Lidmaatschapsfunctie gebruiken?"
 
-#: includes/eme-actions.php:506
+#: includes/eme-actions.php:507
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Invoegen"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:511
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:512
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visueel"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:514
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Vaste spatie invoegen"
@@ -14587,27 +14588,27 @@ msgstr "Stuur nogmaals de e-mail voor goedgekeurde boekingen"
 msgid "Send the configured reminder mail for approved bookings"
 msgstr "Verstuur de geconfigureerde herinneringsmail voor goedgekeurde boekingen"
 
-#: includes/eme-actions.php:590
+#: includes/eme-actions.php:591
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hi, <strong>%1$s</strong>, welkom bij <strong>Evenents Made Easy</strong>! We hopen dat je het hier naar je zin hebt.</p><p>Nu is het tijd om evenementenlijsten in te voegen via <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>sjabloontags</a> of <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>Trouwens, heb je al eens gekeken naar de <a href='%8$s' title='%9$s'>Instellingenpagina</a>? Daar kun je aanpassen hoe evenementen en locaties worden weergegeven.</p><p>Wat? Moe van dit advies? Ik snap het, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klik hier</a> en je ziet dit niet meer!</p>"
 
-#: includes/eme-actions.php:593
+#: includes/eme-actions.php:594
 msgid "Widgets page"
 msgstr "Widgetspagina"
 
-#: includes/eme-actions.php:595
+#: includes/eme-actions.php:596
 msgid "Template tags documentation"
 msgstr "Documentatie template-tags"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:598
 msgid "Shortcodes documentation"
 msgstr "Documentatie shortcodes"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:600
 msgid "Change settings"
 msgstr "Instellingen wijzigen"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:601
 msgid "Don't show this advice again"
 msgstr "Dit advies niet meer tonen"
 
@@ -14847,11 +14848,11 @@ msgstr "Sluit ook e-mails uit van personen die al geregistreerd zijn voor deze a
 msgid "Optional: pick any event(s) whose registrants should be skipped, independent of which event(s) this mailing is about."
 msgstr "Optioneel: kies elk evenement waarvan de geregistreerden overgeslagen moeten worden, ongeacht over welk evenement deze mailing gaat."
 
-#: includes/eme-actions.php:466
+#: includes/eme-actions.php:467
 msgid "Address not found"
 msgstr "Adres niet gevonden"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:468
 msgid "Could not calculate route"
 msgstr "Kon route niet berekenen"
 
@@ -14992,7 +14993,7 @@ msgid "Trash"
 msgstr "Prullenbak"
 
 #: includes/eme-events.php:6280
-#: includes/eme-rsvp.php:5558
+#: includes/eme-rsvp.php:5561
 msgid "Extra filters"
 msgstr "Extra filters"
 
@@ -15334,12 +15335,12 @@ msgid "Problem detected while adding member"
 msgstr "Probleem gedetecteerd bij het toevoegen van lid"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select one or more states"
 msgstr "Selecteer een of meer provincies"
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
-#: includes/eme-filters.php:434
+#: includes/eme-filters.php:426
 msgid "Select a state"
 msgstr "Selecteer een provincie"
 

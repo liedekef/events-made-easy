@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 = 3.2.15  (2026/08/) =
 * Mercadopago update
 * Make sure we show the issue of required checkboxes, prevent form submit
+* Fix filtering on multiple cats
 
 = 3.2.14  (2026/08/26) =
 * Be strict during csv import too

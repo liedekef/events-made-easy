@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "mercadopago/dx-php",
-            "version": "3.14.0",
-            "version_normalized": "3.14.0.0",
+            "version": "3.16.0",
+            "version_normalized": "3.16.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mercadopago/sdk-php.git",
-                "reference": "69ebc7584f896a4c3406ad3840e53ab2b1e51cd8"
+                "reference": "6138da3381549e4d0a5839440e6f0e35d1760e7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/69ebc7584f896a4c3406ad3840e53ab2b1e51cd8",
-                "reference": "69ebc7584f896a4c3406ad3840e53ab2b1e51cd8",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/6138da3381549e4d0a5839440e6f0e35d1760e7a",
+                "reference": "6138da3381549e4d0a5839440e6f0e35d1760e7a",
                 "shasum": ""
             },
             "require": {
@@ -24,7 +24,7 @@
                 "squizlabs/php_codesniffer": ">=3.13.6",
                 "symfony/console": "^7.0"
             },
-            "time": "2026-08-11T22:07:54+00:00",
+            "time": "2026-08-27T18:14:23+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -40,7 +40,7 @@
             "homepage": "https://github.com/mercadopago/sdk-php",
             "support": {
                 "issues": "https://github.com/mercadopago/sdk-php/issues",
-                "source": "https://github.com/mercadopago/sdk-php/tree/3.14.0"
+                "source": "https://github.com/mercadopago/sdk-php/tree/3.16.0"
             },
             "install-path": "../mercadopago/dx-php"
         }

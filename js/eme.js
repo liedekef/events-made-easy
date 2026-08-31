@@ -875,7 +875,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            if (!valid) return false;
+            if (!valid) {
+                event.preventDefault();
+                event.stopPropagation(); // optional, prevent fire of other click-listeners
+            }
+
         });
     });
 

@@ -1334,7 +1334,7 @@ function eme_sanitize_option( $option_value, $option_name ) {
     } else {
         if (in_array($option_name,$no_kses)) {
             $output = $option_value;
-        } elseif (in_array($key, $maybe_unfiltered)) {
+        } elseif (in_array($option_name, $maybe_unfiltered)) {
             $output = eme_kses_maybe_unfiltered($option_value);
         } else {
             $output = eme_kses( $option_value );

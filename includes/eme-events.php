@@ -1720,7 +1720,7 @@ function eme_single_event_page_template( $template ) {
         if ( ! empty( $event ) && ! empty( $event['event_properties']['wp_page_template'] ) ) {
             $tpl = $event['event_properties']['wp_page_template'];
             // make sure the template is allowed in the theme
-            $allowed_templates = array_values( get_page_templates() );
+            $allowed_templates = array_values( wp_get_theme()->get_page_templates() );
             if ( ! in_array( $tpl, $allowed_templates, true ) ) {
                 return $template;
             }
@@ -6984,7 +6984,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         <h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span></h2>
         <div class="inside">
 <?php
-        $templates = get_page_templates();
+        $templates = wp_get_theme()->get_page_templates();
         print eme_ui_select_inverted( $event['event_properties']['wp_page_template'], 'eme_prop_wp_page_template', $templates, __( 'Default Template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
         print '<br>' . esc_html__( 'By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted.', 'events-made-easy' );
 ?>
@@ -9417,7 +9417,7 @@ function eme_sanitize_event( $event ) {
 
     // validate wp_page_template against the theme's allow-list
     if ( ! empty( $event_properties['wp_page_template'] ) ) {
-        $allowed_templates = array_values( get_page_templates() );
+        $allowed_templates = array_values( wp_get_theme()->get_page_templates() );
         if ( ! in_array( $event_properties['wp_page_template'], $allowed_templates, true ) ) {
             $event_properties['wp_page_template'] = '';
         }

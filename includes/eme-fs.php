@@ -683,7 +683,7 @@ function eme_fs_process_newevent() {
         $event_data['event_properties'] = eme_kses($_POST['event_properties']);
         // validate wp_page_template against the theme's allow-list
         if ( ! empty( $event_data['event_properties']['wp_page_template'] ) ) {
-            $allowed_templates = array_values( get_page_templates() );
+            $allowed_templates = array_values( wp_get_theme()->get_page_templates() );
             if ( ! in_array( $event_data['event_properties']['wp_page_template'], $allowed_templates, true ) ) {
                 $event_data['event_properties']['wp_page_template'] = '';
             }

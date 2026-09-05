@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.17  (2026/09/05) =
+* Fix for assigning a per-event page template (error on frontend, see https://github.com/liedekef/events-made-easy/issues/1057
+
 = 3.2.16  (2026/09/05) =
 * Fix a filtering for options
 

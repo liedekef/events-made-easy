@@ -3516,7 +3516,7 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
             foreach ( $answers as $ans ) {
                 foreach ( $values as $key => $val ) {
                     if ( $val === $ans ) {
-                        if ( $target == 'html' ) {
+                        if ( $target == 'html' && !in_array($formfield['field_purpose'], ['events','locations','memberships']) ) {
                             $my_arr[] = esc_html( $tags[ $key ] );
                         } else {
                             $my_arr[] = $tags[ $key ];
@@ -3527,7 +3527,7 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
             return eme_convert_array2multi( $my_arr, $sep );
         } else {
             $answers = eme_convert_multi2array( $answer );
-            if ( $target == 'html' ) {
+            if ( $target == 'html' && !in_array($formfield['field_purpose'], ['events','locations','memberships']) ) {
                 $answers = array_map( 'esc_html', $answers );
             }
             return eme_convert_array2multi( $answers, $sep );
@@ -3563,7 +3563,7 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
         } else {
             $res = $answer;
         }
-        if ( $target == 'html' ) {
+        if ( $target == 'html' && !in_array($formfield['field_purpose'], ['events','locations','memberships']) ) {
             return esc_html($res);
         }
         return $res;

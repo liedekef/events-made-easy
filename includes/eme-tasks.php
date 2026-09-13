@@ -1061,7 +1061,6 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_task_settings( $event ) {
-    $eme_prop_task_reminder_days         = esc_html( $event['event_properties']['task_reminder_days'] );
     $extra_attributes                    = 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"';
     ?>
     <div id='div_event_task_settings'>
@@ -1090,7 +1089,7 @@ function eme_meta_box_div_event_task_settings( $event ) {
             <label for="eme_prop_task_allow_overlap"><?php esc_html_e( 'Allow overlap for task signups?', 'events-made-easy' ); ?></label>
         </p>
         <p id='p_task_reminder_days'>
-            <input id="eme_prop_task_reminder_days" name='eme_prop_task_reminder_days' type='text' value="<?php echo esc_attr( $eme_prop_task_reminder_days ); ?>">
+            <input id="eme_prop_task_reminder_days" name='eme_prop_task_reminder_days' type='text' value="<?php echo esc_attr( $event['event_properties']['task_reminder_days'] ); ?>">
             <label for="eme_prop_task_reminder_days"><?php esc_html_e( 'Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
         </p>
     </div>
@@ -2218,7 +2217,7 @@ function eme_ajax_task_signups_list() {
             foreach ( $formfields as $formfield ) {
                 foreach ( $answers as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id']) {
-                        $val = eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'text', 1 );
+                        $val = eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'html', 1 );
                         // the 'FIELD_' value is used by the container-js
                         $answerkey = 'FIELD_' . $answer['field_id'];
                         if ( isset( $row[ $answerkey ] ) ) {

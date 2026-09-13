@@ -3780,7 +3780,7 @@ function eme_extra_event_headers( $event ) {
         $answers  = eme_get_event_cf_answers( $event['event_id'] );
         foreach ( $answers as $answer ) {
             if ( $answer['field_id'] == $field_id ) {
-                $val = eme_answer2readable( $answer['answer'], $formfield );
+                $val = eme_answer2readable( answer: $answer['answer'], formfield: $formfield, target: 'text' );
                 if ( ! empty( $val ) ) {
                     $performer            = [];
                     $performer['@type']   = 'Person';

@@ -10372,7 +10372,7 @@ function eme_ajax_events_list() {
         foreach ( $formfields as $formfield ) {
             foreach ( $event_cf_values as $val ) {
                 if ( $val['field_id'] == $formfield['field_id']) {
-                    $tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
+                    $tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'html', 1 );
                     // the 'FIELD_' value is used by the container-js
                     $key = 'FIELD_' . $val['field_id'];
                     if ( isset( $record[ $key ] ) ) {

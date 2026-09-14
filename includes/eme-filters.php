@@ -595,7 +595,8 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						}
 						$used_values = eme_get_cf_distinct_values( $formfield['field_id'], 'event', $event_ids );
 						if ( ! empty( $used_values ) ) {
-							$formfield = unserialize( serialize( $formfield ) );
+                            // we try to not touch the original, since we'll leave out values/tags
+							$formfield = unserialize( serialize( $formfield ), ['allowed_classes' => false] );
 							$values    = eme_convert_multi2array( $formfield['field_values'] );
 							$tags      = eme_convert_multi2array( $formfield['field_tags'] );
 							$new_values = [];
@@ -622,7 +623,8 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 						}
 						$used_values = eme_get_cf_distinct_values( $formfield['field_id'], 'location', $location_ids );
 						if ( ! empty( $used_values ) ) {
-							$formfield = unserialize( serialize( $formfield ) );
+                            // we try to not touch the original, since we'll leave out values/tags
+							$formfield = unserialize( serialize( $formfield ), ['allowed_classes' => false] );
 							$values    = eme_convert_multi2array( $formfield['field_values'] );
 							$tags      = eme_convert_multi2array( $formfield['field_tags'] );
 							$new_values = [];

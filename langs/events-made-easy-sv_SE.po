@@ -97,11 +97,11 @@ msgstr "på uppdrag av %s"
 #: includes/eme-rsvp.php:5149
 #: includes/eme-rsvp.php:5952
 #: includes/eme-rsvp.php:5976
-#: includes/eme-tasks.php:2087
-#: includes/eme-tasks.php:2240
-#: includes/eme-tasks.php:2251
-#: includes/eme-tasks.php:2359
-#: includes/eme-tasks.php:2400
+#: includes/eme-tasks.php:2086
+#: includes/eme-tasks.php:2239
+#: includes/eme-tasks.php:2250
+#: includes/eme-tasks.php:2358
+#: includes/eme-tasks.php:2399
 #: includes/eme-templates.php:482
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
@@ -280,7 +280,7 @@ msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 #: includes/eme-people.php:5378
 #: includes/eme-people.php:5379
 #: includes/eme-people.php:5380
-#: includes/eme-tasks.php:2216
+#: includes/eme-tasks.php:2215
 msgid "Edit person"
 msgstr "Redigera person"
 
@@ -1855,7 +1855,7 @@ msgstr "Avboka"
 
 #: includes/eme-events.php:1559
 #: includes/eme-events.php:1662
-#: includes/eme-tasks.php:1832
+#: includes/eme-tasks.php:1831
 msgid "Cancel task signup"
 msgstr "Avboka uppgift"
 
@@ -3614,13 +3614,13 @@ msgstr "Kräv att den inloggade användaren är medlem i någon av de valda EME 
 
 #: includes/eme-events.php:8948
 #: includes/eme-members.php:2196
-#: includes/eme-tasks.php:1073
+#: includes/eme-tasks.php:1072
 msgid "Group to add people to"
 msgstr "Grupp att lägga till personer i"
 
 #: includes/eme-events.php:8949
 #: includes/eme-members.php:2197
-#: includes/eme-tasks.php:1075
+#: includes/eme-tasks.php:1074
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Gruppen du vill att personer automatiskt blir medlemmar av när de startar en prenumeration."
 
@@ -3777,7 +3777,7 @@ msgstr "Markera en eller fler medlemmar"
 #: includes/eme-mailer.php:3736
 #: includes/eme-mailer.php:3753
 #: includes/eme-people.php:2679
-#: includes/eme-tasks.php:1065
+#: includes/eme-tasks.php:1064
 msgid "Select one or more groups"
 msgstr "Välj en eller flera grupper"
 
@@ -4496,7 +4496,7 @@ msgstr "Välj ett eller flera event"
 
 #: includes/eme-events.php:10149
 #: includes/eme-rsvp.php:6231
-#: includes/eme-tasks.php:2203
+#: includes/eme-tasks.php:2202
 msgid "Edit event"
 msgstr "Redigera event"
 
@@ -4554,7 +4554,7 @@ msgstr "Utskriftsvänlig vy"
 #: includes/eme-events.php:6882
 #: includes/eme-events.php:10234
 #: includes/eme-rsvp.php:6293
-#: includes/eme-tasks.php:2205
+#: includes/eme-tasks.php:2204
 msgid "CSV export"
 msgstr "CSV-export"
 
@@ -4679,7 +4679,7 @@ msgstr "Välj ett datumintervall"
 msgid "Event contact"
 msgstr "Evenemangskontakt"
 
-#: includes/eme-filters.php:650
+#: includes/eme-filters.php:652
 msgid "Submit"
 msgstr "Skicka"
 
@@ -5447,7 +5447,7 @@ msgstr "Utkast"
 #: includes/eme-people.php:1647
 #: includes/eme-people.php:1794
 #: includes/eme-tasks.php:664
-#: includes/eme-tasks.php:2214
+#: includes/eme-tasks.php:2213
 msgid "Pending"
 msgstr "Inväntar granskning"
 
@@ -5720,7 +5720,7 @@ msgstr "Ingen sådan post"
 #: includes/eme-people.php:4970
 #: includes/eme-rsvp.php:861
 #: includes/eme-rsvp.php:1173
-#: includes/eme-tasks.php:1870
+#: includes/eme-tasks.php:1869
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänligen kontakta webbplatsinnehavaren."
 
@@ -5741,7 +5741,7 @@ msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänli
 #: includes/eme-people.php:4981
 #: includes/eme-rsvp.php:873
 #: includes/eme-rsvp.php:1185
-#: includes/eme-tasks.php:1882
+#: includes/eme-tasks.php:1881
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Upptäckte ett försök att manipulera formuläret. Om du anser att du felaktigt fått detta meddelande, vänligen kontakta webbplatsinnehavaren."
 
@@ -5761,7 +5761,7 @@ msgstr "Tack för din begäran, ett e-postmeddelande kommer att skickas med ytte
 #: includes/eme-people.php:5042
 #: includes/eme-rsvp.php:161
 #: includes/eme-rsvp.php:828
-#: includes/eme-tasks.php:1581
+#: includes/eme-tasks.php:1580
 msgid "Javascript is required for this form to work properly"
 msgstr "Javascript krävs för att detta formulär ska fungera korrekt"
 
@@ -7922,9 +7922,9 @@ msgstr "Medlemmarna borttagna."
 #: includes/eme-rsvp.php:6973
 #: includes/eme-rsvp.php:7035
 #: includes/eme-rsvp.php:7086
-#: includes/eme-tasks.php:2285
-#: includes/eme-tasks.php:2311
-#: includes/eme-tasks.php:2335
+#: includes/eme-tasks.php:2284
+#: includes/eme-tasks.php:2310
+#: includes/eme-tasks.php:2334
 msgid "The action has been executed successfully."
 msgstr "Handlingen har utförts."
 
@@ -7954,9 +7954,9 @@ msgstr "Handlingen har utförts men det var problem med att sända e-post."
 #: includes/eme-rsvp.php:6930
 #: includes/eme-rsvp.php:6966
 #: includes/eme-rsvp.php:7083
-#: includes/eme-tasks.php:2288
-#: includes/eme-tasks.php:2314
-#: includes/eme-tasks.php:2338
+#: includes/eme-tasks.php:2287
+#: includes/eme-tasks.php:2313
+#: includes/eme-tasks.php:2337
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "Det uppstod ett problem med att utföra det du önskade, vänligen kolla dina loggar."
 
@@ -9786,7 +9786,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "Välj Ja om du vill att nya event som standard ska kräva godkännande av bokningar."
 
 #: includes/eme-options.php:2072
-#: includes/eme-tasks.php:1090
+#: includes/eme-tasks.php:1089
 msgid "Allow overlap for task signups?"
 msgstr "Tillåt överlappning för uppgiftsregistreringar?"
 
@@ -9845,7 +9845,7 @@ msgid "Send out reminder emails"
 msgstr "Skicka påminnelse-e-postmeddelanden"
 
 #: includes/eme-options.php:2078
-#: includes/eme-tasks.php:1094
+#: includes/eme-tasks.php:1093
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Ställ in antalet dagar före påminnelse-e-postmeddelanden för uppgiftsregistreringar skickas (räknat från uppgiftens startdatum). Om du vill skicka flera påminnelser, separera dagarna med kommatecken. Lämna tomt för inga påminnelse-e-postmeddelanden."
 
@@ -11819,7 +11819,7 @@ msgstr "Väntar på användarbekräftelse"
 #: includes/eme-people.php:1651
 #: includes/eme-people.php:1779
 #: includes/eme-tasks.php:665
-#: includes/eme-tasks.php:2212
+#: includes/eme-tasks.php:2211
 msgid "Approved"
 msgstr "Godkänd"
 
@@ -12769,37 +12769,37 @@ msgstr "För återkommande evenemang, ange start- och slutdatum för uppgiften s
 msgid "The start date of the first event in the series was initially %s"
 msgstr "Startdatumet för det första evenemangen i serien var initialt %s"
 
-#: includes/eme-tasks.php:1070
+#: includes/eme-tasks.php:1069
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "Kräv WP-medlemskap för att kunna anmäla sig för uppgifter?"
 
-#: includes/eme-tasks.php:1079
+#: includes/eme-tasks.php:1078
 #, fuzzy
 msgid "Require approval for task signups?"
 msgstr "Kräv bekräftelse av anmälningar som standard?"
 
-#: includes/eme-tasks.php:1531
-#: includes/eme-tasks.php:1658
+#: includes/eme-tasks.php:1530
+#: includes/eme-tasks.php:1657
 msgid "There are no tasks to sign up for right now"
 msgstr "Det finns inga uppgifter att anmäla sig för just nu"
 
-#: includes/eme-tasks.php:1893
+#: includes/eme-tasks.php:1892
 msgid "Please select at least one task."
 msgstr "Välj minst en uppgift."
 
-#: includes/eme-tasks.php:1965
+#: includes/eme-tasks.php:1964
 msgid "No more open spaces for this task"
 msgstr "Inga fler lediga platser för denna uppgift"
 
-#: includes/eme-tasks.php:1980
+#: includes/eme-tasks.php:1979
 msgid "Duplicate signup detected"
 msgstr "Duplicerad anmälan upptäckt"
 
-#: includes/eme-tasks.php:1987
+#: includes/eme-tasks.php:1986
 msgid "Signup overlap with another task detected"
 msgstr "Anmälan överlappar med en annan uppgift"
 
-#: includes/eme-tasks.php:2026
+#: includes/eme-tasks.php:2025
 msgid "Signup failed"
 msgstr "Anmälan misslyckades"
 
@@ -13594,11 +13594,11 @@ msgstr "CSV-avgränsare"
 msgid "Set the delimiter used in CSV exports."
 msgstr "Ange avgränsaren som används i CSV-exporter."
 
-#: includes/eme-tasks.php:1086
+#: includes/eme-tasks.php:1085
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "Tillåt bara en anmälan för uppgifter per evenemang för en person?"
 
-#: includes/eme-tasks.php:1953
+#: includes/eme-tasks.php:1952
 msgid "Only one signup allowed"
 msgstr "Bara en anmälan tillåten"
 
@@ -14405,7 +14405,7 @@ msgid_plural "%d pending task signups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/eme-tasks.php:1081
+#: includes/eme-tasks.php:1080
 msgid "Consider pending (unapproved) task signups as available for new signups"
 msgstr "Ansök väntande (ogodkända) uppgiftsanmälningar som tillgängliga för nya anmälningar"
 
@@ -15336,27 +15336,27 @@ msgstr ""
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr ""
 
-#: includes/eme-tasks.php:2408
+#: includes/eme-tasks.php:2407
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2414
+#: includes/eme-tasks.php:2413
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2419
+#: includes/eme-tasks.php:2418
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2425
+#: includes/eme-tasks.php:2424
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2455
+#: includes/eme-tasks.php:2454
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2457
+#: includes/eme-tasks.php:2456
 msgid "There was a problem assigning the task."
 msgstr ""
 

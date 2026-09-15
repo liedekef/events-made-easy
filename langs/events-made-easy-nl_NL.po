@@ -97,11 +97,11 @@ msgstr "in naam van %s"
 #: includes/eme-rsvp.php:5149
 #: includes/eme-rsvp.php:5952
 #: includes/eme-rsvp.php:5976
-#: includes/eme-tasks.php:2087
-#: includes/eme-tasks.php:2240
-#: includes/eme-tasks.php:2251
-#: includes/eme-tasks.php:2359
-#: includes/eme-tasks.php:2400
+#: includes/eme-tasks.php:2086
+#: includes/eme-tasks.php:2239
+#: includes/eme-tasks.php:2250
+#: includes/eme-tasks.php:2358
+#: includes/eme-tasks.php:2399
 #: includes/eme-templates.php:482
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
@@ -280,7 +280,7 @@ msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 #: includes/eme-people.php:5378
 #: includes/eme-people.php:5379
 #: includes/eme-people.php:5380
-#: includes/eme-tasks.php:2216
+#: includes/eme-tasks.php:2215
 msgid "Edit person"
 msgstr "Pas persoon aan"
 
@@ -1846,7 +1846,7 @@ msgstr "Annuleer je reservering"
 
 #: includes/eme-events.php:1559
 #: includes/eme-events.php:1662
-#: includes/eme-tasks.php:1832
+#: includes/eme-tasks.php:1831
 msgid "Cancel task signup"
 msgstr "Annuleer taakaanmelding"
 
@@ -3598,13 +3598,13 @@ msgstr "Vereis dat aangemelde gebruiker lid is van één van de geselecteerde EM
 
 #: includes/eme-events.php:8948
 #: includes/eme-members.php:2196
-#: includes/eme-tasks.php:1073
+#: includes/eme-tasks.php:1072
 msgid "Group to add people to"
 msgstr "Groep om mensen aan toe te voegen"
 
 #: includes/eme-events.php:8949
 #: includes/eme-members.php:2197
-#: includes/eme-tasks.php:1075
+#: includes/eme-tasks.php:1074
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "De groep waar mensen automatisch lid van worden als ze inschrijven."
 
@@ -3761,7 +3761,7 @@ msgstr "Selecteer één of meerdere leden"
 #: includes/eme-mailer.php:3736
 #: includes/eme-mailer.php:3753
 #: includes/eme-people.php:2679
-#: includes/eme-tasks.php:1065
+#: includes/eme-tasks.php:1064
 msgid "Select one or more groups"
 msgstr "Selecteer één of meerdere groepen"
 
@@ -4478,7 +4478,7 @@ msgstr "Selecteer één of meerdere evenementen"
 
 #: includes/eme-events.php:10149
 #: includes/eme-rsvp.php:6231
-#: includes/eme-tasks.php:2203
+#: includes/eme-tasks.php:2202
 msgid "Edit event"
 msgstr "Wijzig activiteit"
 
@@ -4551,7 +4551,7 @@ msgstr "Afdrukvoorbeeld"
 #: includes/eme-events.php:6882
 #: includes/eme-events.php:10234
 #: includes/eme-rsvp.php:6293
-#: includes/eme-tasks.php:2205
+#: includes/eme-tasks.php:2204
 msgid "CSV export"
 msgstr "CSV export"
 
@@ -4676,7 +4676,7 @@ msgstr "Selecteer een datumbereik"
 msgid "Event contact"
 msgstr "Evenement contact"
 
-#: includes/eme-filters.php:650
+#: includes/eme-filters.php:652
 msgid "Submit"
 msgstr "Uitvoeren"
 
@@ -5443,7 +5443,7 @@ msgstr "Concept"
 #: includes/eme-people.php:1647
 #: includes/eme-people.php:1794
 #: includes/eme-tasks.php:664
-#: includes/eme-tasks.php:2214
+#: includes/eme-tasks.php:2213
 msgid "Pending"
 msgstr "Goed te keuren"
 
@@ -5716,7 +5716,7 @@ msgstr "Geen gegevens gevonden"
 #: includes/eme-people.php:4970
 #: includes/eme-rsvp.php:861
 #: includes/eme-rsvp.php:1173
-#: includes/eme-tasks.php:1870
+#: includes/eme-tasks.php:1869
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvangt, contacteer dan de websitebeheerder."
 
@@ -5737,7 +5737,7 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: includes/eme-people.php:4981
 #: includes/eme-rsvp.php:873
 #: includes/eme-rsvp.php:1185
-#: includes/eme-tasks.php:1882
+#: includes/eme-tasks.php:1881
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Er is geknoeid met het formulier. Als je denkt dat je deze boodschap onterecht ontvangt, contacteer dan de websitebeheerder."
 
@@ -5757,7 +5757,7 @@ msgstr "Bedankt voor uw aanvraag, u ontvangt een e-mail met verdere informatie."
 #: includes/eme-people.php:5042
 #: includes/eme-rsvp.php:161
 #: includes/eme-rsvp.php:828
-#: includes/eme-tasks.php:1581
+#: includes/eme-tasks.php:1580
 msgid "Javascript is required for this form to work properly"
 msgstr "Javascript is vereist om dit formulier goed te laten werken"
 
@@ -7907,9 +7907,9 @@ msgstr "Leden verwijderd."
 #: includes/eme-rsvp.php:6973
 #: includes/eme-rsvp.php:7035
 #: includes/eme-rsvp.php:7086
-#: includes/eme-tasks.php:2285
-#: includes/eme-tasks.php:2311
-#: includes/eme-tasks.php:2335
+#: includes/eme-tasks.php:2284
+#: includes/eme-tasks.php:2310
+#: includes/eme-tasks.php:2334
 msgid "The action has been executed successfully."
 msgstr "De actie is successvol uitgevoerd."
 
@@ -7939,9 +7939,9 @@ msgstr "De actie is uitgevoerd maar er waren problemen bij het versturen van de 
 #: includes/eme-rsvp.php:6930
 #: includes/eme-rsvp.php:6966
 #: includes/eme-rsvp.php:7083
-#: includes/eme-tasks.php:2288
-#: includes/eme-tasks.php:2314
-#: includes/eme-tasks.php:2338
+#: includes/eme-tasks.php:2287
+#: includes/eme-tasks.php:2313
+#: includes/eme-tasks.php:2337
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "Er was een probleem met het uitvoeren van de actie, consulteer uw logs."
 
@@ -9759,7 +9759,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "Vink dit aan als je wilt dat nieuwe taakaanmeldingen standaard goedkeuring nodig hebben."
 
 #: includes/eme-options.php:2072
-#: includes/eme-tasks.php:1090
+#: includes/eme-tasks.php:1089
 msgid "Allow overlap for task signups?"
 msgstr "Sta overlapping toe voor taakaanmeldingen?"
 
@@ -9818,7 +9818,7 @@ msgid "Send out reminder emails"
 msgstr "Stuur herinneringmails uit"
 
 #: includes/eme-options.php:2078
-#: includes/eme-tasks.php:1094
+#: includes/eme-tasks.php:1093
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "Stel het aantal dagen in voordat herinneringsmails voor het aanmelden van een taak worden verzonden (te rekenen vanaf de startdatum van de taak). Als je meerdere herinneringen wilt versturen, scheid dan de dagen hier met komma's. Laat leeg voor geen herinneringsmails."
 
@@ -11787,7 +11787,7 @@ msgstr "Wachtend op gebruiker bevestiging"
 #: includes/eme-people.php:1651
 #: includes/eme-people.php:1779
 #: includes/eme-tasks.php:665
-#: includes/eme-tasks.php:2212
+#: includes/eme-tasks.php:2211
 msgid "Approved"
 msgstr "Goedgekeurd"
 
@@ -12729,36 +12729,36 @@ msgstr "Voor terugkerende evenementen voert u de begin- en einddatum van de taak
 msgid "The start date of the first event in the series was initially %s"
 msgstr "De startdatum van het eerste evenement in de serie was aanvankelijk %s"
 
-#: includes/eme-tasks.php:1070
+#: includes/eme-tasks.php:1069
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "Vereist WP-lidmaatschap om te kunnen aanmelden voor taken?"
 
-#: includes/eme-tasks.php:1079
+#: includes/eme-tasks.php:1078
 msgid "Require approval for task signups?"
 msgstr "Goedkeuring vereist voor taakaanmeldingen?"
 
-#: includes/eme-tasks.php:1531
-#: includes/eme-tasks.php:1658
+#: includes/eme-tasks.php:1530
+#: includes/eme-tasks.php:1657
 msgid "There are no tasks to sign up for right now"
 msgstr "Er zijn momenteel geen taken om op in te tekenen"
 
-#: includes/eme-tasks.php:1893
+#: includes/eme-tasks.php:1892
 msgid "Please select at least one task."
 msgstr "Selecteer minimaal 1 taak."
 
-#: includes/eme-tasks.php:1965
+#: includes/eme-tasks.php:1964
 msgid "No more open spaces for this task"
 msgstr "Geen vrije plaatsen meer voor deze taak"
 
-#: includes/eme-tasks.php:1980
+#: includes/eme-tasks.php:1979
 msgid "Duplicate signup detected"
 msgstr "Dubbele aanmelding gedetecteerd"
 
-#: includes/eme-tasks.php:1987
+#: includes/eme-tasks.php:1986
 msgid "Signup overlap with another task detected"
 msgstr "Aanmelding overlap met een andere taak gedetecteerd"
 
-#: includes/eme-tasks.php:2026
+#: includes/eme-tasks.php:2025
 msgid "Signup failed"
 msgstr "Aanmelding gefaald"
 
@@ -13551,11 +13551,11 @@ msgstr "CSV-scheidingsteken"
 msgid "Set the delimiter used in CSV exports."
 msgstr "Stel het scheidingsteken in dat wordt gebruikt bij CSV-exports."
 
-#: includes/eme-tasks.php:1086
+#: includes/eme-tasks.php:1085
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "Slechts één aanmelding voor taken per evenement toestaan voor een persoon?"
 
-#: includes/eme-tasks.php:1953
+#: includes/eme-tasks.php:1952
 msgid "Only one signup allowed"
 msgstr "Slechts één aanmelding toegestaan"
 
@@ -14343,7 +14343,7 @@ msgid_plural "%d pending task signups"
 msgstr[0] "%d hangende taakaanmelding"
 msgstr[1] "%d hangende taakaanmeldingen"
 
-#: includes/eme-tasks.php:1081
+#: includes/eme-tasks.php:1080
 msgid "Consider pending (unapproved) task signups as available for new signups"
 msgstr "Beschouw in behandeling zijnde (niet-goedgekeurde) taakaanmeldingen als beschikbaar voor nieuwe aanmeldingen"
 
@@ -15270,27 +15270,27 @@ msgstr "Toewijzen"
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr "Hier worden geen overlap- of capaciteitscontroles uitgevoerd, om meer vrijheid te geven bij taaktoewijzingen."
 
-#: includes/eme-tasks.php:2408
+#: includes/eme-tasks.php:2407
 msgid "Please select a task and a person."
 msgstr "Selecteer een taak en een persoon."
 
-#: includes/eme-tasks.php:2414
+#: includes/eme-tasks.php:2413
 msgid "Invalid task."
 msgstr "Ongeldige taak."
 
-#: includes/eme-tasks.php:2419
+#: includes/eme-tasks.php:2418
 msgid "Invalid person."
 msgstr "Ongeldige persoon."
 
-#: includes/eme-tasks.php:2425
+#: includes/eme-tasks.php:2424
 msgid "This person is already signed up for this task."
 msgstr "Deze persoon is al ingeschreven voor deze taak."
 
-#: includes/eme-tasks.php:2455
+#: includes/eme-tasks.php:2454
 msgid "Task assigned successfully."
 msgstr "Taak succesvol toegewezen."
 
-#: includes/eme-tasks.php:2457
+#: includes/eme-tasks.php:2456
 msgid "There was a problem assigning the task."
 msgstr "Er was een probleem bij het toewijzen van de taak."
 

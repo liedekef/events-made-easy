@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.2.17\n"
+"Project-Id-Version: Events Made Easy 3.2.18\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-12T21:32:55+00:00\n"
+"POT-Creation-Date: 2026-09-15T13:48:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -297,11 +297,11 @@ msgstr ""
 #: includes/eme-rsvp.php:5149
 #: includes/eme-rsvp.php:5952
 #: includes/eme-rsvp.php:5976
-#: includes/eme-tasks.php:2087
-#: includes/eme-tasks.php:2240
-#: includes/eme-tasks.php:2251
-#: includes/eme-tasks.php:2359
-#: includes/eme-tasks.php:2400
+#: includes/eme-tasks.php:2086
+#: includes/eme-tasks.php:2239
+#: includes/eme-tasks.php:2250
+#: includes/eme-tasks.php:2358
+#: includes/eme-tasks.php:2399
 #: includes/eme-templates.php:482
 msgid "Access denied!"
 msgstr ""
@@ -566,7 +566,7 @@ msgstr ""
 #: includes/eme-people.php:5378
 #: includes/eme-people.php:5379
 #: includes/eme-people.php:5380
-#: includes/eme-tasks.php:2216
+#: includes/eme-tasks.php:2215
 msgid "Edit person"
 msgstr ""
 
@@ -2291,7 +2291,7 @@ msgstr ""
 
 #: includes/eme-events.php:1559
 #: includes/eme-events.php:1662
-#: includes/eme-tasks.php:1832
+#: includes/eme-tasks.php:1831
 msgid "Cancel task signup"
 msgstr ""
 
@@ -3046,7 +3046,7 @@ msgstr ""
 #: includes/eme-events.php:6882
 #: includes/eme-events.php:10234
 #: includes/eme-rsvp.php:6293
-#: includes/eme-tasks.php:2205
+#: includes/eme-tasks.php:2204
 msgid "CSV export"
 msgstr ""
 
@@ -4416,7 +4416,7 @@ msgstr ""
 #: includes/eme-mailer.php:3736
 #: includes/eme-mailer.php:3753
 #: includes/eme-people.php:2679
-#: includes/eme-tasks.php:1065
+#: includes/eme-tasks.php:1064
 msgid "Select one or more groups"
 msgstr ""
 
@@ -4430,13 +4430,13 @@ msgstr ""
 
 #: includes/eme-events.php:8948
 #: includes/eme-members.php:2196
-#: includes/eme-tasks.php:1073
+#: includes/eme-tasks.php:1072
 msgid "Group to add people to"
 msgstr ""
 
 #: includes/eme-events.php:8949
 #: includes/eme-members.php:2197
-#: includes/eme-tasks.php:1075
+#: includes/eme-tasks.php:1074
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr ""
 
@@ -5252,7 +5252,7 @@ msgstr ""
 
 #: includes/eme-events.php:10149
 #: includes/eme-rsvp.php:6231
-#: includes/eme-tasks.php:2203
+#: includes/eme-tasks.php:2202
 msgid "Edit event"
 msgstr ""
 
@@ -5391,7 +5391,7 @@ msgstr ""
 msgid "Select..."
 msgstr ""
 
-#: includes/eme-filters.php:650
+#: includes/eme-filters.php:652
 msgid "Submit"
 msgstr ""
 
@@ -6318,7 +6318,7 @@ msgstr ""
 #: includes/eme-people.php:5042
 #: includes/eme-rsvp.php:161
 #: includes/eme-rsvp.php:828
-#: includes/eme-tasks.php:1581
+#: includes/eme-tasks.php:1580
 msgid "Javascript is required for this form to work properly"
 msgstr ""
 
@@ -6354,7 +6354,7 @@ msgstr ""
 #: includes/eme-people.php:4970
 #: includes/eme-rsvp.php:861
 #: includes/eme-rsvp.php:1173
-#: includes/eme-tasks.php:1870
+#: includes/eme-tasks.php:1869
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
@@ -6375,7 +6375,7 @@ msgstr ""
 #: includes/eme-people.php:4981
 #: includes/eme-rsvp.php:873
 #: includes/eme-rsvp.php:1185
-#: includes/eme-tasks.php:1882
+#: includes/eme-tasks.php:1881
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
@@ -6437,7 +6437,7 @@ msgstr ""
 #: includes/eme-people.php:1647
 #: includes/eme-people.php:1794
 #: includes/eme-tasks.php:664
-#: includes/eme-tasks.php:2214
+#: includes/eme-tasks.php:2213
 msgid "Pending"
 msgstr ""
 
@@ -9436,9 +9436,9 @@ msgstr ""
 #: includes/eme-rsvp.php:6973
 #: includes/eme-rsvp.php:7035
 #: includes/eme-rsvp.php:7086
-#: includes/eme-tasks.php:2285
-#: includes/eme-tasks.php:2311
-#: includes/eme-tasks.php:2335
+#: includes/eme-tasks.php:2284
+#: includes/eme-tasks.php:2310
+#: includes/eme-tasks.php:2334
 msgid "The action has been executed successfully."
 msgstr ""
 
@@ -9468,9 +9468,9 @@ msgstr ""
 #: includes/eme-rsvp.php:6930
 #: includes/eme-rsvp.php:6966
 #: includes/eme-rsvp.php:7083
-#: includes/eme-tasks.php:2288
-#: includes/eme-tasks.php:2314
-#: includes/eme-tasks.php:2338
+#: includes/eme-tasks.php:2287
+#: includes/eme-tasks.php:2313
+#: includes/eme-tasks.php:2337
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr ""
 
@@ -11457,7 +11457,7 @@ msgid "Check this option if you want by default that a person can only signup fo
 msgstr ""
 
 #: includes/eme-options.php:2072
-#: includes/eme-tasks.php:1090
+#: includes/eme-tasks.php:1089
 msgid "Allow overlap for task signups?"
 msgstr ""
 
@@ -11516,7 +11516,7 @@ msgid "Send out reminder emails"
 msgstr ""
 
 #: includes/eme-options.php:2078
-#: includes/eme-tasks.php:1094
+#: includes/eme-tasks.php:1093
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr ""
 
@@ -14048,7 +14048,7 @@ msgstr ""
 #: includes/eme-people.php:1651
 #: includes/eme-people.php:1779
 #: includes/eme-tasks.php:665
-#: includes/eme-tasks.php:2212
+#: includes/eme-tasks.php:2211
 msgid "Approved"
 msgstr ""
 
@@ -15149,72 +15149,72 @@ msgstr ""
 msgid "The start date of the first event in the series was initially %s"
 msgstr ""
 
-#: includes/eme-tasks.php:1070
+#: includes/eme-tasks.php:1069
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr ""
 
-#: includes/eme-tasks.php:1079
+#: includes/eme-tasks.php:1078
 msgid "Require approval for task signups?"
 msgstr ""
 
-#: includes/eme-tasks.php:1081
+#: includes/eme-tasks.php:1080
 msgid "Consider pending (unapproved) task signups as available for new signups"
 msgstr ""
 
-#: includes/eme-tasks.php:1086
+#: includes/eme-tasks.php:1085
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr ""
 
-#: includes/eme-tasks.php:1531
-#: includes/eme-tasks.php:1658
+#: includes/eme-tasks.php:1530
+#: includes/eme-tasks.php:1657
 msgid "There are no tasks to sign up for right now"
 msgstr ""
 
-#: includes/eme-tasks.php:1893
+#: includes/eme-tasks.php:1892
 msgid "Please select at least one task."
 msgstr ""
 
-#: includes/eme-tasks.php:1953
+#: includes/eme-tasks.php:1952
 msgid "Only one signup allowed"
 msgstr ""
 
-#: includes/eme-tasks.php:1965
+#: includes/eme-tasks.php:1964
 msgid "No more open spaces for this task"
 msgstr ""
 
-#: includes/eme-tasks.php:1980
+#: includes/eme-tasks.php:1979
 msgid "Duplicate signup detected"
 msgstr ""
 
-#: includes/eme-tasks.php:1987
+#: includes/eme-tasks.php:1986
 msgid "Signup overlap with another task detected"
 msgstr ""
 
-#: includes/eme-tasks.php:2026
+#: includes/eme-tasks.php:2025
 msgid "Signup failed"
 msgstr ""
 
-#: includes/eme-tasks.php:2408
+#: includes/eme-tasks.php:2407
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2414
+#: includes/eme-tasks.php:2413
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2419
+#: includes/eme-tasks.php:2418
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2425
+#: includes/eme-tasks.php:2424
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2455
+#: includes/eme-tasks.php:2454
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2457
+#: includes/eme-tasks.php:2456
 msgid "There was a problem assigning the task."
 msgstr ""
 

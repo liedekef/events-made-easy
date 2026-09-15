@@ -450,9 +450,8 @@ msgstr "分类的描述"
 
 #. translators: %1$d is the number of time units, %2$s is the time period (day, week, or month)
 #: includes/eme-cleanup.php:265
-#, fuzzy
 msgid "Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed."
-msgstr "清理完毕：超过 %1$d 分钟的未支付的待订已被删除。"
+msgstr "清理完毕：超过 %d %s 的活动（和相应的预订数据）已被删除。"
 
 #. translators: %d is the number of minutes
 #: includes/eme-cleanup.php:275
@@ -2009,9 +2008,8 @@ msgstr "地点未被导入：%s"
 #: includes/eme-members.php:6148
 #: includes/eme-members.php:6154
 #: includes/eme-people.php:917
-#, fuzzy
 msgid "Not imported (field %1$s not valid): %2$s"
-msgstr "未导入（人不存在）：%1$s"
+msgstr "未导入（字段 %1$s 无效）：%2$s"
 
 #. translators: %s is the CSV row data
 #: includes/eme-events.php:6124
@@ -7849,9 +7847,8 @@ msgstr "此会员资格未定义会员表单，将使用简单的默认表单。
 
 #. translators: %1$d is the number of head-of-family accounts, %2$d is the number of family members
 #: includes/eme-members.php:6649
-#, fuzzy
 msgid "%1$d head of the family accounts + %2$d family members"
-msgstr "“一家之主” 账户"
+msgstr "%d 家庭账户的户主 + %d 家庭成员"
 
 #: includes/eme-members.php:6721
 #: includes/eme-people.php:5365
@@ -11679,9 +11676,8 @@ msgstr "您的会籍 #_MEMBERSHIPNAME 付款失败，请重试。"
 
 #. translators: %1$s is the current membership end date, %2$s is the extended membership end date
 #: includes/eme-payments.php:313
-#, fuzzy
 msgid "Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s"
-msgstr "您的会籍已经过期。如果您再次支付会员费，您的会籍将被重新激活，直到 %1$s"
+msgstr "您的会籍目前是有效的，直到 %s。如果您再次支付会员费，您的会籍将被延长至 %s。"
 
 #. translators: %s is the membership reactivation end date
 #: includes/eme-payments.php:320
@@ -12298,7 +12294,6 @@ msgstr "该月的最后 %s"
 
 #. translators: %1$s is the start date, %2$s is the end date
 #: includes/eme-recurrence.php:556
-#, fuzzy
 msgid "From %1$s to %2$s"
 msgstr "从 %1$s 到 %2$s"
 
@@ -15259,7 +15254,7 @@ msgstr ""
 
 #: includes/eme-options.php:1911
 msgid "If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email."
-msgstr ""
+msgstr "如果选择了这个选项，新注册的人如果有非空的生日，就会收到一封生日电子邮件。进入邮件模板设置来改变该电子邮件的外观和感觉。"
 
 #: includes/eme-events.php:5920
 #: includes/eme-import.php:331

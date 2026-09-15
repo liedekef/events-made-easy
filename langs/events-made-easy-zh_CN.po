@@ -9707,14 +9707,6 @@ msgstr "忽视预订列表中的待订"
 msgid "Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder."
 msgstr "在使用 <code>#_BOOKINGS</code> 占位符时，是否要忽视待订。"
 
-#: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "预订后再次显示 RSVP 表格？"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
-msgstr "如果您不想在预订成功后再次显示 RSVP 的预订表格，请取消勾选该选项。"
-
 #: includes/eme-options.php:2047
 msgid "Allow overbooking?"
 msgstr "允许超额预订？"
@@ -15569,4 +15561,12 @@ msgstr ""
 
 #: includes/eme-options.php:2784
 msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""

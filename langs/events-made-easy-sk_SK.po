@@ -9943,14 +9943,6 @@ msgstr "Ignorovať čakajúce rezervácie v zozname rezervácií"
 msgid "Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder."
 msgstr "Či sa majú alebo nemajú ignorovať čakajúce rezervácie pri použití zástupného výrazu <code>#_BOOKINGS</code>."
 
-#: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "Zobraziť rezervačný formulár po rezervácii?"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
-msgstr "Zrušte označenie tejto možnosti, ak nechcete po úspešnej rezervácii znova zobrazovať rezervačný formulár."
-
 #: includes/eme-options.php:2047
 msgid "Allow overbooking?"
 msgstr "Povoliť nadpočetnú rezerváciu?"
@@ -15508,4 +15500,12 @@ msgstr ""
 
 #: includes/eme-options.php:2784
 msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""

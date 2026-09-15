@@ -9679,11 +9679,11 @@ msgid "Whether or not to ignore pending bookings when using the <code>#_BOOKINGS
 msgstr "Al dan niet niet-goedgekeurde boekingen negereren bij gebruik van de placeholder <code>#_BOOKINGS</code>."
 
 #: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "Toon RSVP formulier na boeking?"
+msgid "Show booking form again after booking?"
+msgstr "Toon boekingsformulier terug na boeking?"
 
 #: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr "Vink deze optie af als je het boekingssformulier niet opnieuw wil tonen na een geslaagde boeking."
 
 #: includes/eme-options.php:2047

@@ -9678,14 +9678,6 @@ msgstr "Ausstehende Buchungen in der Buchungsliste ignorieren"
 msgid "Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder."
 msgstr "Legt fest ob bei der Verwendung des Platzhalters <code>#_BOOKINGS</code> unbestätigte Buchungen berücksichtigt werden sollen."
 
-#: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "Zeige erneut das Buchungsformular nach erfolgter Buchung?"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
-msgstr "Wähle diese Option ab falls Du nicht möchtest das das Buchungsformular nach erfolgreicher Buchung erneut angezeigt werden soll."
-
 #: includes/eme-options.php:2047
 msgid "Allow overbooking?"
 msgstr "Überbuchungen erlauben?"
@@ -15525,4 +15517,12 @@ msgstr ""
 
 #: includes/eme-options.php:2784
 msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""

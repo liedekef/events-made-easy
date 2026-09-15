@@ -9703,14 +9703,6 @@ msgstr "Ignorera väntande bokningar i bokningslistan"
 msgid "Whether or not to ignore pending bookings when using the <code>#_BOOKINGS</code> placeholder."
 msgstr "Om man ska eller inte ska ignorera bokningar som inväntar granskning när platshållaren <code>#_BOOKINGS</code> används."
 
-#: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "Visa OSA-formulär igen efter bokning?"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
-msgstr "Välj Nej om du inte vill visa bokningsformuläret för OSA efter en lyckosam bokning."
-
 #: includes/eme-options.php:2047
 msgid "Allow overbooking?"
 msgstr "Tillåt överbokning?"
@@ -15566,4 +15558,12 @@ msgstr ""
 
 #: includes/eme-options.php:2784
 msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""

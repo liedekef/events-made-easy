@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T15:29:22+00:00\n"
+"POT-Creation-Date: 2026-09-15T15:38:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -11369,11 +11369,11 @@ msgid "In case online payment is possible, the payment redirect message will als
 msgstr ""
 
 #: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
+msgid "Show booking form again after booking?"
 msgstr ""
 
 #: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""
 
 #: includes/eme-options.php:2047

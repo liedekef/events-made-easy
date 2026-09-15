@@ -12986,14 +12986,6 @@ msgstr "La mise en page du formulaire pour les réservations. #_NAME, #_EMAIL et
 msgid "RSVP form format"
 msgstr "RSVP : format du formulaire"
 
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the RSVP booking form again after a successful booking."
-msgstr "Décochez cette option si vous ne souhaitez plus afficher le formulaire de réservation après une réservation réussie."
-
-#: includes/eme-options.php:2046
-msgid "Show RSVP form again after booking?"
-msgstr "Afficher le formulaire RSV après la réservation ?"
-
 #: includes/eme-events.php:7555
 #: includes/eme-options.php:2045
 msgid "Booking recorded message"
@@ -15504,4 +15496,12 @@ msgstr ""
 
 #: includes/eme-options.php:2784
 msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr ""
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
 msgstr ""

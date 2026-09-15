@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T15:23:11+00:00\n"
+"POT-Creation-Date: 2026-09-15T15:29:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -5472,7 +5472,7 @@ msgstr ""
 
 #. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
 #: includes/eme-formfields.php:306
-msgid "%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
 msgstr ""
 
 #. translators: 1: number of events, 2: link to events list
@@ -12627,7 +12627,7 @@ msgid "Payment RSVP success return page format"
 msgstr ""
 
 #: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for RSVP bookings."
+msgid "The format of the return page when the payment is succesfull for bookings."
 msgstr ""
 
 #: includes/eme-options.php:2783
@@ -12642,7 +12642,7 @@ msgid "Payment RSVP failure return page format"
 msgstr ""
 
 #: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for RSVP bookings."
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
 msgstr ""
 
 #: includes/eme-options.php:2785

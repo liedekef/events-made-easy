@@ -120,11 +120,6 @@ msgstr "%1$d emplacements (%2$sAfficher%3$s)"
 msgid "%1$d events (%2$sView%3$s)"
 msgstr "%1$d évènements (%2$sAfficher%3$s)"
 
-#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-#: includes/eme-formfields.php:306
-msgid "%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr "%1$d réservations (%2$sEn attente%3$s | %4$sApprouvées%5$s)"
-
 #: includes/eme-formfields.php:184
 msgid "Error: there is already a field with that name."
 msgstr "Erreur : un champ portant ce nom existe déjà."
@@ -9894,14 +9889,6 @@ msgstr "Le format de la page de retour lorsque le paiement de l’adhésion est 
 msgid "Payment membership success return page format"
 msgstr "Format de la page de retour de réussite du paiement de l’adhésion"
 
-#: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for RSVP bookings."
-msgstr "Le format de la page de retour lorsque le paiement a échoué ou a été annulé pour la réservation."
-
-#: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for RSVP bookings."
-msgstr "Le format de la page de retour lorsque le paiement est réussi pour la réservation."
-
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1718
 msgid "Permission needed to manage members and memberships. Default: %s"
@@ -15505,3 +15492,16 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
+
+#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+#: includes/eme-formfields.php:306
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr ""
+
+#: includes/eme-options.php:2783
+msgid "The format of the return page when the payment is succesfull for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2784
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr ""

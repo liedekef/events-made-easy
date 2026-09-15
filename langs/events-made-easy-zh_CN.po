@@ -10768,10 +10768,6 @@ msgid "Payment RSVP success return page format"
 msgstr "付款 RSVP 成功返回页面的格式"
 
 #: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for RSVP bookings."
-msgstr "RSVP 预订的付款成功后的返回页面的格式。"
-
-#: includes/eme-options.php:2783
 #: includes/eme-options.php:2784
 #: includes/eme-options.php:2785
 #: includes/eme-options.php:2786
@@ -10781,10 +10777,6 @@ msgstr "如果留空，将显示一个默认信息。"
 #: includes/eme-options.php:2784
 msgid "Payment RSVP failure return page format"
 msgstr "付款 RSVP 失败返回页的格式"
-
-#: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for RSVP bookings."
-msgstr "当 RSVP 预订的付款失败或被取消时，返回页面的格式。"
 
 #: includes/eme-options.php:2785
 msgid "Payment membership success return page format"
@@ -15446,11 +15438,6 @@ msgstr ""
 msgid "Error: there is already a field with that name."
 msgstr ""
 
-#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-#: includes/eme-formfields.php:306
-msgid "%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr ""
-
 #. translators: 1: number of events, 2: link to events list
 #: includes/eme-formfields.php:311
 msgid "%1$d events (%2$sView%3$s)"
@@ -15569,4 +15556,17 @@ msgstr ""
 
 #: includes/eme-members.php:1978
 msgid "If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period. Leave empty for no reminders."
+msgstr ""
+
+#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+#: includes/eme-formfields.php:306
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr ""
+
+#: includes/eme-options.php:2783
+msgid "The format of the return page when the payment is succesfull for bookings."
+msgstr ""
+
+#: includes/eme-options.php:2784
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
 msgstr ""

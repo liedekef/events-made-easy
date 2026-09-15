@@ -10729,7 +10729,7 @@ msgid "Payment RSVP success return page format"
 msgstr "Pagina-opmaak bij geslaagde reserveringsbetaling"
 
 #: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for RSVP bookings."
+msgid "The format of the return page when the payment is succesfull for bookings."
 msgstr "Opmaak van de pagina als betaling van een boeking gelukt is."
 
 #: includes/eme-options.php:2783
@@ -10744,7 +10744,7 @@ msgid "Payment RSVP failure return page format"
 msgstr "Pagina-opmaak bij mislukte reserveringsbetaling"
 
 #: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for RSVP bookings."
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
 msgstr "Opmaak van de pagina als betaling van een boeking niet gelukt of geannuleerd is."
 
 #: includes/eme-options.php:2785
@@ -15375,8 +15375,8 @@ msgstr "Fout: er bestaat al een veld met die naam."
 
 #. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
 #: includes/eme-formfields.php:306
-msgid "%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr "%1$d RSVP-reserveringen (%2$sIn afwachting%3$s | %4$sGoedgekeurd%5$s)"
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr "%1$d boekingen (%2$sIn afwachting%3$s | %4$sGoedgekeurd%5$s)"
 
 #. translators: 1: number of events, 2: link to events list
 #: includes/eme-formfields.php:311

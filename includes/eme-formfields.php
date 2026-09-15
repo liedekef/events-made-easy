@@ -303,7 +303,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                     $pending_url  = esc_url( admin_url( 'admin.php?page=eme-registration-approval&used_field_id=' . $field_id ) );
                     $approved_url = esc_url( admin_url( 'admin.php?page=eme-registration-seats&used_field_id=' . $field_id ) );
                     // translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-                    $usage_lines[] = sprintf( esc_html__( '%1$d RSVP bookings (%2$sPending%3$s | %4$sApproved%5$s)', 'events-made-easy' ), $cnt, "<a href='$pending_url'>", '</a>', "<a href='$approved_url'>", '</a>' );
+                    $usage_lines[] = sprintf( esc_html__( '%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)', 'events-made-easy' ), $cnt, "<a href='$pending_url'>", '</a>', "<a href='$approved_url'>", '</a>' );
                     break;
                 case 'event':
                     $url = esc_url( admin_url( 'admin.php?page=eme-manager&used_field_id=' . $field_id ) );

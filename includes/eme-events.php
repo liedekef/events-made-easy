@@ -2372,7 +2372,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRINTBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
+        '/#_(EVENT)?PRINTBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2381,7 +2381,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_PRINTBOOKINGSURL/' => function( $result, $matches, $ctx ) {
+        '/#_(EVENT)?PRINTBOOKINGSURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2393,7 +2393,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CSVBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
+        '/#_(EVENT)?CSVBOOKINGSLINK/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {
@@ -2402,7 +2402,7 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             return '';
         },
-        '/#_CSVBOOKINGSURL/' => function( $result, $matches, $ctx ) {
+        '/#_(EVENT)?CSVBOOKINGSURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ( $event['event_author'] == $ctx['current_userid'] || $event['event_contactperson_id'] == $ctx['current_userid'] ) ) ) {

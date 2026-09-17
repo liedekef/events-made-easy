@@ -153,35 +153,38 @@ function eme_actions_init() {
     if ( isset( $_GET['eme_admin_action'] ) && $eme_is_admin_request ) {
         switch ( $_GET['eme_admin_action'] ) {
             case 'booking_printable':
-                // accessible from backend and frontend, so we use wp_verify_nonce
-                $nonce = $_GET['eme_admin_nonce'] ?? '';
-                if ( ! wp_verify_nonce( $nonce, 'eme_admin' ) ) {
+                // accessible from backend and frontend, so we hash_equals wp_verify_nonce
+                $event_id = intval( $_GET['event_id'] ?? 0 );
+                $hash = $_GET['eme_admin_nonce'] ?? '';
+                if ( ! $event_id || ! hash_equals( eme_admin_report_hash( $event_id, 'booking_printable' ), $hash ) ) {
                     wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
-                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
-                    eme_printable_booking_report( intval( $_GET['event_id'] ) );
+                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                    eme_printable_booking_report( $event_id );
                     exit;
                 }
                 break;
             case 'booking_csv':
-                // accessible from backend and frontend, so we use wp_verify_nonce
-                $nonce = $_GET['eme_admin_nonce'] ?? '';
-                if ( ! wp_verify_nonce( $nonce, 'eme_admin' ) ) {
+                // accessible from backend and frontend, so we use hash_equals
+                $event_id = intval( $_GET['event_id'] ?? 0 );
+                $hash = $_GET['eme_admin_nonce'] ?? '';
+                if ( ! $event_id || ! hash_equals( eme_admin_report_hash( $event_id, 'booking_csv' ), $hash ) ) {
                     wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
-                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
-                    eme_csv_booking_report( intval( $_GET['event_id'] ) );
+                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                    eme_csv_booking_report( $event_id );
                     exit;
                 }
                 break;
             case 'tasksignups_csv':
-                // accessible from backend and frontend, so we use wp_verify_nonce
-                $nonce = $_GET['eme_admin_nonce'] ?? '';
-                if ( ! wp_verify_nonce( $nonce, 'eme_admin' ) ) {
+                // accessible from backend and frontend, so we use hash_equals
+                $event_id = intval( $_GET['event_id'] ?? 0 );
+                $hash = $_GET['eme_admin_nonce'] ?? '';
+                if ( ! $event_id || ! hash_equals( eme_admin_report_hash( $event_id, 'tasksignups_csv' ), $hash ) ) {
                     wp_die( esc_html__( 'Access denied!', 'events-made-easy' ) );
                 }
-                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) && isset( $_GET['event_id'] ) ) {
-                    eme_csv_tasksignups_report( intval( $_GET['event_id'] ) );
+                if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+                    eme_csv_tasksignups_report( $event_id );
                     exit;
                 }
                 break;

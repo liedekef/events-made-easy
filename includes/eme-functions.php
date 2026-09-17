@@ -1102,7 +1102,7 @@ function eme_check_invite_url( $event_id ) {
         $hash_string .= eme_sanitize_request( $_REQUEST['eme_fn'] );
     }
     $invite_check = wp_hash( $hash_string . '|' . $event_id, 'nonce' );
-    if ( $invite_check != $invite_get ) {
+    if ( ! hash_equals( $invite_check, $invite_get ) ) {
         return 0;
     } else {
         return 1;
@@ -1187,7 +1187,7 @@ function eme_verify_member_checkurl() {
         return 0;
     }
     $nonce_check = wp_hash( $member_id, 'nonce' );
-    if ( $nonce_check != $nonce_get ) {
+    if ( ! hash_equals( $nonce_check, $nonce_get ) ) {
         return 0;
     } else {
         return eme_is_active_memberid( $member_id );
@@ -1207,6 +1207,10 @@ function eme_member_checkurl( $member ) {
         $the_link
     );
     return $the_link;
+}
+
+function eme_admin_report_hash( $event_id, $action ) {
+    return wp_hash( $event_id . '|' . $action, 'nonce' );
 }
 
 function eme_payment_return_url( $payment, $resultcode ) {

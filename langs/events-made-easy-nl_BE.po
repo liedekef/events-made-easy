@@ -163,7 +163,7 @@ msgstr "Selecteer een provincie"
 msgid "Select one or more states"
 msgstr "Selecteer een of meer provincies"
 
-#: includes/eme-actions.php:422
+#: includes/eme-actions.php:425
 #: includes/eme-events.php:9662
 msgid "Select state"
 msgstr "Selecteer provincie"
@@ -636,11 +636,11 @@ msgstr "bijv. Hoofdstraat 123, Stad"
 msgid "Edit Event"
 msgstr "Evenement bewerken"
 
-#: includes/eme-actions.php:468
+#: includes/eme-actions.php:471
 msgid "Could not calculate route"
 msgstr "Kon route niet berekenen"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:470
 msgid "Address not found"
 msgstr "Adres niet gevonden"
 
@@ -796,7 +796,7 @@ msgstr "Selecteer deze optie als u hCaptcha wilt gebruiken op de boekings-/annul
 msgid "Send emails to members upon changes being made?"
 msgstr "Stuur e-mails naar leden als er wijzigingen zijn aangebracht?"
 
-#: includes/eme-functions.php:3423
+#: includes/eme-functions.php:3427
 msgid "Invalid column name!"
 msgstr "Ongeldige kolomnaam!"
 
@@ -1943,35 +1943,35 @@ msgstr "Lijst met vakanties beheren"
 msgid "Add a new list of holidays"
 msgstr "Voeg een nieuwe lijst met vakanties toe"
 
-#: includes/eme-functions.php:4393
+#: includes/eme-functions.php:4397
 msgid "All selected columns are used for sorting"
 msgstr "Alle geselecteerde kolommen worden gebruikt voor sorteren"
 
-#: includes/eme-functions.php:4391
+#: includes/eme-functions.php:4395
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "Gebruik Ctrl-klik om op meerdere kolommen te sorteren"
 
-#: includes/eme-functions.php:4332
+#: includes/eme-functions.php:4336
 msgid "Basic EME Captcha"
 msgstr "Basis EME-captcha"
 
-#: includes/eme-functions.php:4330
+#: includes/eme-functions.php:4334
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
-#: includes/eme-functions.php:4328
+#: includes/eme-functions.php:4332
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: includes/eme-functions.php:1417
+#: includes/eme-functions.php:1421
 msgid "Trashed"
 msgstr "Verwijderd"
 
-#: includes/eme-functions.php:1416
+#: includes/eme-functions.php:1420
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (onbetaald)"
 
-#: includes/eme-functions.php:1414
+#: includes/eme-functions.php:1418
 msgid "Unlisted (hidden)"
 msgstr "Verborgen"
 
@@ -2555,71 +2555,71 @@ msgstr "Handmatige invoer"
 msgid "Select a person"
 msgstr "Kies een persoon"
 
-#: includes/eme-actions.php:759
+#: includes/eme-actions.php:762
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
-#: includes/eme-actions.php:624
+#: includes/eme-actions.php:627
 msgid "Dismiss"
 msgstr "Negeren"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:615
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:604
 msgid "Don't show this advice again"
 msgstr "Dit advies niet meer tonen"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:603
 msgid "Change settings"
 msgstr "Instellingen wijzigen"
 
-#: includes/eme-actions.php:598
+#: includes/eme-actions.php:601
 msgid "Shortcodes documentation"
 msgstr "Documentatie shortcodes"
 
-#: includes/eme-actions.php:596
+#: includes/eme-actions.php:599
 msgid "Template tags documentation"
 msgstr "Documentatie template-tags"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:597
 msgid "Widgets page"
 msgstr "Widgetspagina"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:517
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Vaste spatie invoegen"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visueel"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:514
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Invoegen"
 
-#: includes/eme-actions.php:424
+#: includes/eme-actions.php:427
 #: includes/eme-events.php:9664
 msgid "Make your choice"
 msgstr "Maak uw keuze"
 
-#: includes/eme-actions.php:423
+#: includes/eme-actions.php:426
 #: includes/eme-events.php:9663
 msgid "Select country"
 msgstr "Selecteer land"
@@ -2658,35 +2658,35 @@ msgstr "Hier kan je extra html footer definiëren, placeholders kunnen niet word
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Hier kan je extra html headers definiëren, placeholders kunnen niet worden gebruikt."
 
-#: includes/eme-functions.php:3012
+#: includes/eme-functions.php:3016
 msgid "Unknown upload error"
 msgstr "Onbekende upload fout"
 
-#: includes/eme-functions.php:3011
+#: includes/eme-functions.php:3015
 msgid "File upload stopped by extension"
 msgstr "Uploaden van bestanden geweigerd door extensie"
 
-#: includes/eme-functions.php:3010
+#: includes/eme-functions.php:3014
 msgid "Failed to write file to disk"
 msgstr "Kan bestand niet naar schijf schrijven"
 
-#: includes/eme-functions.php:3009
+#: includes/eme-functions.php:3013
 msgid "Missing a temporary folder"
 msgstr "Tijdelijke folder ontbreekt"
 
-#: includes/eme-functions.php:3008
+#: includes/eme-functions.php:3012
 msgid "No file was uploaded"
 msgstr "Er is geen file ge-uploaded"
 
-#: includes/eme-functions.php:3007
+#: includes/eme-functions.php:3011
 msgid "The uploaded file was only partially uploaded"
 msgstr "Het geüploade bestand is slechts gedeeltelijk geüpload"
 
-#: includes/eme-functions.php:3006
+#: includes/eme-functions.php:3010
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Het geüploade bestand overschrijdt de MAX_FILE_SIZE-richtlijn die is opgegeven in het HTML-formulier"
 
-#: includes/eme-functions.php:3005
+#: includes/eme-functions.php:3009
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Het geüploade bestand overschrijdt de richtlijn upload_max_filesize in php.ini"
 
@@ -4030,7 +4030,7 @@ msgstr "Schakel deze optie in als je Friendly Captcha wilt gebruiken op de boeki
 msgid "Use hCaptcha for forms?"
 msgstr "Gebruik hCaptcha voor formulieren?"
 
-#: includes/eme-functions.php:4326
+#: includes/eme-functions.php:4330
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
@@ -4106,63 +4106,63 @@ msgstr "Als je e-mail naar deze groep wilt kunnen sturen via je mailclient (en n
 msgid "Group email"
 msgstr "Groep e-mail"
 
-#: includes/eme-functions.php:1680
+#: includes/eme-functions.php:1684
 msgid "CFP Franc (Franc Pacifique)"
 msgstr "CFP Frank (Franc Pacifique)"
 
-#: includes/eme-functions.php:1679
+#: includes/eme-functions.php:1683
 msgid "CFA Franc BCEAO"
 msgstr "CFA Franc BCEAO"
 
-#: includes/eme-functions.php:1678
+#: includes/eme-functions.php:1682
 msgid "CFA Franc BEAC"
 msgstr "CFA Franc BEAC"
 
-#: includes/eme-functions.php:1677
+#: includes/eme-functions.php:1681
 msgid "Vanuatu vatu"
 msgstr "Vanuatuaanse vatu"
 
-#: includes/eme-functions.php:1676
+#: includes/eme-functions.php:1680
 msgid "Vietnamese dong"
 msgstr "Vietnamese dong"
 
-#: includes/eme-functions.php:1670
+#: includes/eme-functions.php:1674
 msgid "Rwandan Franc"
 msgstr "Rwandese Frank"
 
-#: includes/eme-functions.php:1669
+#: includes/eme-functions.php:1673
 msgid "Russian Ruble"
 msgstr "Russische Roebel"
 
-#: includes/eme-functions.php:1668
+#: includes/eme-functions.php:1672
 msgid "Paraguayan Guarani"
 msgstr "Paraguayaanse Guarani"
 
-#: includes/eme-functions.php:1662
+#: includes/eme-functions.php:1666
 msgid "Malagasy Ariary"
 msgstr "Malagasi Ariary"
 
-#: includes/eme-functions.php:1661
+#: includes/eme-functions.php:1665
 msgid "South Korean Won"
 msgstr "Zuid-Koreaanse Won"
 
-#: includes/eme-functions.php:1660
+#: includes/eme-functions.php:1664
 msgid "Comoro Franc"
 msgstr "Comoro Frank"
 
-#: includes/eme-functions.php:1654
+#: includes/eme-functions.php:1658
 msgid "Guinean Franc"
 msgstr "Guinese Frank"
 
-#: includes/eme-functions.php:1651
+#: includes/eme-functions.php:1655
 msgid "Djiboutian Franc"
 msgstr "Djiboutiaanse Frank"
 
-#: includes/eme-functions.php:1647
+#: includes/eme-functions.php:1651
 msgid "Chilean Peso"
 msgstr "Chileense Peso"
 
-#: includes/eme-functions.php:1644
+#: includes/eme-functions.php:1648
 msgid "Burundian Franc"
 msgstr "Burundese Frank"
 
@@ -4251,7 +4251,7 @@ msgstr "Voer een geldig e-mailadres in"
 msgid "If you want, select a different membership to transfer this member to: "
 msgstr "Selecteer desgewenst een ander lidmaatschap om dit lid naartoe te verplaatsen: "
 
-#: includes/eme-functions.php:1645
+#: includes/eme-functions.php:1649
 msgid "Brazilian Real"
 msgstr "Braziliaanse Real"
 
@@ -5089,7 +5089,7 @@ msgstr "Google reCAPTCHA site sleutel"
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "Google reCAPTCHA voor formulieren gebruiken?"
 
-#: includes/eme-functions.php:4324
+#: includes/eme-functions.php:4328
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
@@ -5518,8 +5518,8 @@ msgstr "Optionele aanwezigheid datum en -tijd: "
 msgid "WARNING: This might throw of the limit parameter for the eme_events shortcode if that parameter is used: in case the option to hide RSVP ended events is selected, the number of events shown might be less than indicated with the limit option."
 msgstr "WAARSCHUWING: dit zou de limit parameter voor de eme_events shortcode kunnen genereren als die parameter wordt gebruikt: in het geval dat de optie om rsvp beëindigde evenementen te verbergen is geselecteerd, kan het aantal getoonde events minder zijn dan aangegeven met de limit optie."
 
-#: includes/eme-functions.php:3095
-#: includes/eme-functions.php:3157
+#: includes/eme-functions.php:3099
+#: includes/eme-functions.php:3161
 msgid "Illegal filename."
 msgstr "Ongeldige filenaam."
 
@@ -5799,7 +5799,7 @@ msgstr "Mercado Pago live of test"
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
 
-#: includes/eme-functions.php:1642
+#: includes/eme-functions.php:1646
 msgid "Argentine Peso"
 msgstr "Argentijnse Peso"
 
@@ -6689,7 +6689,7 @@ msgstr "Opmerking: aangezien u bent aangemeld als een persoon met het recht om d
 msgid "No matching person found"
 msgstr "Geen overeenkomende persoon gevonden."
 
-#: includes/eme-actions.php:493
+#: includes/eme-actions.php:496
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "Geen overeenkomende locatie gevonden."
@@ -6725,7 +6725,7 @@ msgstr "Wanneer je 'aangepast' als PDF-grootte kiest, geef dan breedte en hoogte
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr "Geen standaard afzender gedefinieerd en geen evenement contact e-mail gevonden"
 
-#: includes/eme-functions.php:1657
+#: includes/eme-functions.php:1661
 msgid "Indian Rupee"
 msgstr "Indian Rupee"
 
@@ -7037,7 +7037,7 @@ msgstr "RSVP annulatie afsluiting vooraleer evenement begint"
 msgid "You can pay via %s. If you wish to do so, click the button below."
 msgstr "Je kan betalen via %s. Als je dit wenst te doen, klik dan op onderstaande knop."
 
-#: includes/eme-functions.php:3052
+#: includes/eme-functions.php:3056
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Probleem bij het aanmaken van de upload folder, kijk de folder rechten na."
 
@@ -8396,7 +8396,7 @@ msgstr "Als dit op automatisch staat en het lidmaatschap is betaald, zal de stat
 msgid "Warning: membership is not paid for, so automatic status calculation will not happen!"
 msgstr "Waarschuwing: lidmaatschap is niet betaald, dus automatische berekening van de status zal niet gebeuren!"
 
-#: includes/eme-functions.php:1425
+#: includes/eme-functions.php:1429
 #: includes/eme-members.php:1962
 msgid "Grace period"
 msgstr "Respijtperiode"
@@ -8455,32 +8455,32 @@ msgstr "Lid toegevoegd, maar er waren problemen bij het uploaden van bestanden"
 msgid "The location details have changed. Please verify the coordinates and press Save when done"
 msgstr "De locatiegegevens zijn veranderd. Verifieer de coordinaten en sla de wijzigingen op"
 
-#: includes/eme-functions.php:3198
+#: includes/eme-functions.php:3202
 msgid "Errors encountered while uploading files"
 msgstr "Er waren problemen bij het uploaden van bestanden"
 
-#: includes/eme-functions.php:3129
-#: includes/eme-functions.php:3191
+#: includes/eme-functions.php:3133
+#: includes/eme-functions.php:3195
 msgid "Upload failed."
 msgstr "Uploaden gefaald."
 
-#: includes/eme-functions.php:3123
-#: includes/eme-functions.php:3185
+#: includes/eme-functions.php:3127
+#: includes/eme-functions.php:3189
 msgid "Incorrect file type."
 msgstr "Foutief bestandstype."
 
-#: includes/eme-functions.php:3107
-#: includes/eme-functions.php:3169
+#: includes/eme-functions.php:3111
+#: includes/eme-functions.php:3173
 msgid "File too large."
 msgstr "Bestand te groot."
 
-#: includes/eme-functions.php:3101
-#: includes/eme-functions.php:3163
+#: includes/eme-functions.php:3105
+#: includes/eme-functions.php:3167
 msgid "File already exists."
 msgstr "Bestand bestaat reeds."
 
-#: includes/eme-functions.php:3087
-#: includes/eme-functions.php:3149
+#: includes/eme-functions.php:3091
+#: includes/eme-functions.php:3153
 msgid "File upload is required."
 msgstr "Bestand uploaden is vereist."
 
@@ -8628,12 +8628,12 @@ msgstr "U heeft gekozen om geen e-mails te ontvangen in de toekomst. Bent u zeke
 msgid "Filter on end date"
 msgstr "Filter op einddatum"
 
-#: includes/eme-actions.php:429
+#: includes/eme-actions.php:432
 #: includes/eme-events.php:9668
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
-#: includes/eme-actions.php:428
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9667
 msgid "Mailing preferences"
 msgstr "Mailing voorkeuren"
@@ -8924,7 +8924,7 @@ msgstr "Foutieve alpha-3 code"
 msgid "Incorrect alpha-2 code"
 msgstr "Foutieve alpha-2 code"
 
-#: includes/eme-functions.php:3458
+#: includes/eme-functions.php:3462
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
@@ -9402,7 +9402,7 @@ msgstr "Selecteer één of meerdere personen"
 msgid "Permalinks"
 msgstr "Permalinks"
 
-#: includes/eme-actions.php:613
+#: includes/eme-actions.php:616
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
@@ -9470,12 +9470,12 @@ msgstr "Het type staat je toe om aan te duiden waar je deze template wil gebruik
 msgid "Only used in shortcodes"
 msgstr "Alleen gebruikt in shortcodes"
 
-#: includes/eme-actions.php:426
+#: includes/eme-actions.php:429
 #: includes/eme-events.php:9666
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
@@ -9625,7 +9625,7 @@ msgstr "%1$d e-mails verzonden, %2$d e-mails gefaald, %3$d e-mails nog te doen"
 msgid "Ongoing"
 msgstr "Bezig"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -9659,7 +9659,7 @@ msgid "Report"
 msgstr "Rapport"
 
 #: includes/eme-events.php:9911
-#: includes/eme-functions.php:2249
+#: includes/eme-functions.php:2253
 msgid "Extra info"
 msgstr "Extra info"
 
@@ -10350,16 +10350,16 @@ msgstr "Ingepland"
 msgid "Create holidays list"
 msgstr "Maak lijst van vakantiedagen aan"
 
-#: includes/eme-functions.php:2251
+#: includes/eme-functions.php:2255
 msgid "Group"
 msgstr "Groep"
 
-#: includes/eme-functions.php:1426
+#: includes/eme-functions.php:1430
 #: includes/eme-members.php:555
 msgid "Expired"
 msgstr "Vervallen"
 
-#: includes/eme-functions.php:1424
+#: includes/eme-functions.php:1428
 #: includes/eme-members.php:600
 msgid "Active"
 msgstr "Actief"
@@ -10610,7 +10610,7 @@ msgstr "Voeg een nieuw evenement toe"
 
 #: includes/eme-formfields.php:3894
 #: includes/eme-formfields.php:3904
-#: includes/eme-functions.php:3443
+#: includes/eme-functions.php:3447
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
 
@@ -10631,7 +10631,7 @@ msgstr "E-mail onderwerp template"
 msgid "Create category"
 msgstr "Maak categorie aan"
 
-#: includes/eme-actions.php:427
+#: includes/eme-actions.php:430
 msgid "Clear"
 msgstr "Leegmaken"
 
@@ -10707,11 +10707,11 @@ msgstr "Betaalde RSVP e-mails inschakelen?"
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been paid for.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
 msgstr "Beste #_PERSONFULLNAME,<br><br>je verzoek tot het boeken van #_RESPSEATS plaats/plaatsen voor #_EVENTNAME is betaald.<br><br>Met vriendelijke groeten,<br>#_CONTACTPERSON"
 
-#: includes/eme-functions.php:1681
+#: includes/eme-functions.php:1685
 msgid "South African Rand"
 msgstr "South African Rand"
 
-#: includes/eme-actions.php:431
+#: includes/eme-actions.php:434
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "Wacht aub"
@@ -11198,7 +11198,7 @@ msgstr "Print"
 msgid "CSV"
 msgstr "CSV"
 
-#: includes/eme-functions.php:4387
+#: includes/eme-functions.php:4391
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
@@ -11588,19 +11588,19 @@ msgid "Bookings found for this event, so not possible to convert to a recurring 
 msgstr "Boekingen gevonden voor dit evenement, dus niet om te zetten naar een terugkerend evenement."
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3473
+#: includes/eme-functions.php:3477
 msgid "Insert failed: "
 msgstr "Invoegen mislukt: "
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3471
+#: includes/eme-functions.php:3475
 msgid "Update failed: "
 msgstr "Aanpassen mislukt: "
 
 #: includes/eme-actions.php:96
-#: includes/eme-actions.php:159
-#: includes/eme-actions.php:170
-#: includes/eme-actions.php:181
+#: includes/eme-actions.php:160
+#: includes/eme-actions.php:172
+#: includes/eme-actions.php:184
 #: includes/eme-attendances.php:278
 #: includes/eme-categories.php:677
 #: includes/eme-categories.php:716
@@ -11621,9 +11621,9 @@ msgstr "Aanpassen mislukt: "
 #: includes/eme-formfields.php:3875
 #: includes/eme-formfields.php:3886
 #: includes/eme-formfields.php:3907
-#: includes/eme-functions.php:3407
-#: includes/eme-functions.php:3446
-#: includes/eme-functions.php:3489
+#: includes/eme-functions.php:3411
+#: includes/eme-functions.php:3450
+#: includes/eme-functions.php:3493
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3206
@@ -11685,7 +11685,7 @@ msgstr "Aanpassen mislukt: "
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:516
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11827,18 +11827,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:754
+#: includes/eme-actions.php:757
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:591
+#: includes/eme-actions.php:594
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hi, <strong>%1$s</strong>, welkom bij <strong>Evenents Made Easy</strong>! We hopen dat je het hier naar je zin hebt.</p><p>Nu is het tijd om evenementenlijsten in te voegen via <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>sjabloontags</a> of <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>Trouwens, heb je al eens gekeken naar de <a href='%8$s' title='%9$s'>Instellingenpagina</a>? Daar kun je aanpassen hoe evenementen en locaties worden weergegeven.</p><p>Wat? Moe van dit advies? Ik snap het, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klik hier</a> en je ziet dit niet meer!</p>"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:618
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -12135,7 +12135,7 @@ msgstr "Aanmelder"
 msgid "Send emails to attendees upon changes being made?"
 msgstr "Verstuur e-mails naar aanwezigen over doorgevoerde wijzigingen?"
 
-#: includes/eme-actions.php:310
+#: includes/eme-actions.php:313
 #: includes/eme-events.php:6547
 #: includes/eme-events.php:9759
 #: includes/eme-templates.php:44
@@ -12162,7 +12162,7 @@ msgstr "Geen boekingen gevonden."
 msgid "No responses yet!"
 msgstr "Nog geen reacties!"
 
-#: includes/eme-functions.php:1423
+#: includes/eme-functions.php:1427
 #: includes/eme-people.php:1096
 #: includes/eme-people.php:1296
 #: includes/eme-people.php:1647
@@ -14019,99 +14019,99 @@ msgstr "Je hebt geen rechten om deze locatie te kopiëren!"
 msgid "You have no right to edit this location!"
 msgstr "Je hebt geen rechten om deze locatie te wijzigen!"
 
-#: includes/eme-functions.php:1648
+#: includes/eme-functions.php:1652
 msgid "Chinese Yuan Renminbi"
 msgstr "Chinese Yuan Renminbi"
 
-#: includes/eme-functions.php:1675
+#: includes/eme-functions.php:1679
 msgid "U.S. Dollar"
 msgstr "Amerikaanse dollars"
 
-#: includes/eme-functions.php:1674
+#: includes/eme-functions.php:1678
 msgid "Thai Baht"
 msgstr "Thaise Baht"
 
-#: includes/eme-functions.php:1673
+#: includes/eme-functions.php:1677
 msgid "Swiss Franc"
 msgstr "Zwitserse Franc"
 
-#: includes/eme-functions.php:1672
+#: includes/eme-functions.php:1676
 msgid "Swedish Krona"
 msgstr "Zweedse Krona"
 
-#: includes/eme-functions.php:1671
+#: includes/eme-functions.php:1675
 msgid "Singapore Dollar"
 msgstr "Singapore Dollar"
 
-#: includes/eme-functions.php:1653
+#: includes/eme-functions.php:1657
 msgid "Pound Sterling"
 msgstr "Pond Sterling"
 
-#: includes/eme-functions.php:1667
+#: includes/eme-functions.php:1671
 msgid "Polish Zloty"
 msgstr "Poolse Zloty"
 
-#: includes/eme-functions.php:1666
+#: includes/eme-functions.php:1670
 msgid "Philippine Peso"
 msgstr "Filippijnse Peso"
 
-#: includes/eme-functions.php:1665
+#: includes/eme-functions.php:1669
 msgid "New Zealand Dollar"
 msgstr "Niew Zeelandse Dollar"
 
-#: includes/eme-functions.php:1664
+#: includes/eme-functions.php:1668
 msgid "Norwegian Krone"
 msgstr "Noorse Krone"
 
-#: includes/eme-functions.php:1663
+#: includes/eme-functions.php:1667
 msgid "Mexican Peso"
 msgstr "Mexicaanse Peso"
 
-#: includes/eme-functions.php:1659
+#: includes/eme-functions.php:1663
 msgid "Japanese Yen"
 msgstr "Japanse Yen"
 
-#: includes/eme-functions.php:1658
+#: includes/eme-functions.php:1662
 msgid "Israeli New Sheqel"
 msgstr "Israelische New Sheqel"
 
-#: includes/eme-functions.php:1656
+#: includes/eme-functions.php:1660
 msgid "Hungarian Forint"
 msgstr "Hungaarse Forint"
 
-#: includes/eme-functions.php:1655
+#: includes/eme-functions.php:1659
 msgid "Hong Kong Dollar"
 msgstr "Hong Kong Dollar"
 
-#: includes/eme-functions.php:1652
+#: includes/eme-functions.php:1656
 msgid "Euro"
 msgstr "Euro"
 
-#: includes/eme-functions.php:1650
+#: includes/eme-functions.php:1654
 msgid "Danish Krone"
 msgstr "Deense Krone"
 
-#: includes/eme-functions.php:1649
+#: includes/eme-functions.php:1653
 msgid "Czech Koruna"
 msgstr "Tsjechische Koruna"
 
-#: includes/eme-functions.php:1646
+#: includes/eme-functions.php:1650
 msgid "Canadian Dollar"
 msgstr "Canadese Dollar"
 
-#: includes/eme-functions.php:1643
+#: includes/eme-functions.php:1647
 msgid "Australian Dollar"
 msgstr "Australische Dollar"
 
-#: includes/eme-functions.php:1415
+#: includes/eme-functions.php:1419
 msgid "Draft"
 msgstr "Concept"
 
-#: includes/eme-functions.php:1413
+#: includes/eme-functions.php:1417
 msgid "Private"
 msgstr "Privé"
 
-#: includes/eme-functions.php:1412
+#: includes/eme-functions.php:1416
 msgid "Public"
 msgstr "Publiek"
 
@@ -14352,7 +14352,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:563
+#: includes/eme-actions.php:566
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
@@ -14970,7 +14970,7 @@ msgstr "Herhaling info"
 msgid "Date and time"
 msgstr "Datum en tijd"
 
-#: includes/eme-actions.php:319
+#: includes/eme-actions.php:322
 #: includes/eme-events.php:6548
 #: includes/eme-events.php:8479
 #: includes/eme-events.php:9732

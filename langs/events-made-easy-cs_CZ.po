@@ -163,7 +163,7 @@ msgstr "Vyberte stát"
 msgid "Select one or more states"
 msgstr "Vyberte jeden nebo více států"
 
-#: includes/eme-actions.php:422
+#: includes/eme-actions.php:425
 #: includes/eme-events.php:9662
 msgid "Select state"
 msgstr "Vyberte stát"
@@ -636,11 +636,11 @@ msgstr "např. Hlavní ulice 123, Město"
 msgid "Edit Event"
 msgstr "Upravit událost"
 
-#: includes/eme-actions.php:468
+#: includes/eme-actions.php:471
 msgid "Could not calculate route"
 msgstr "Nepodařilo se vypočítat trasu"
 
-#: includes/eme-actions.php:467
+#: includes/eme-actions.php:470
 msgid "Address not found"
 msgstr "Adresa nebyla nalezena"
 
@@ -796,7 +796,7 @@ msgstr "Zaškrtněte tuto možnost, pokud chcete v rezervačním/zrušovacím/č
 msgid "Send emails to members upon changes being made?"
 msgstr "Odesílat e-maily členům při provedení změn?"
 
-#: includes/eme-functions.php:3423
+#: includes/eme-functions.php:3427
 msgid "Invalid column name!"
 msgstr "Neplatný název sloupce!"
 
@@ -1944,35 +1944,35 @@ msgstr "Spravovat seznam svátků"
 msgid "Add a new list of holidays"
 msgstr "Přidat nový seznam svátků"
 
-#: includes/eme-functions.php:4393
+#: includes/eme-functions.php:4397
 msgid "All selected columns are used for sorting"
 msgstr "Všechny vybrané sloupce se použijí pro řazení"
 
-#: includes/eme-functions.php:4391
+#: includes/eme-functions.php:4395
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr "K řazení podle více sloupců použijte Ctrl+klik"
 
-#: includes/eme-functions.php:4332
+#: includes/eme-functions.php:4336
 msgid "Basic EME Captcha"
 msgstr "Základní EME Captcha"
 
-#: includes/eme-functions.php:4330
+#: includes/eme-functions.php:4334
 msgid "Friendly Captcha"
 msgstr "Friendly Captcha"
 
-#: includes/eme-functions.php:4328
+#: includes/eme-functions.php:4332
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: includes/eme-functions.php:1417
+#: includes/eme-functions.php:1421
 msgid "Trashed"
 msgstr "V koši"
 
-#: includes/eme-functions.php:1416
+#: includes/eme-functions.php:1420
 msgid "Frontend Draft (unpaid)"
 msgstr "Koncept z frontendu (nezaplaceno)"
 
-#: includes/eme-functions.php:1414
+#: includes/eme-functions.php:1418
 msgid "Unlisted (hidden)"
 msgstr "Nezařazeno (skryto)"
 
@@ -2556,71 +2556,71 @@ msgstr "Ruční zadání"
 msgid "Select a person"
 msgstr "Vyberte osobu"
 
-#: includes/eme-actions.php:759
+#: includes/eme-actions.php:762
 msgid "List of next 10 events"
 msgstr "Seznam dalších 10 událostí"
 
-#: includes/eme-actions.php:624
+#: includes/eme-actions.php:627
 msgid "Dismiss"
 msgstr "Zavřít"
 
-#: includes/eme-actions.php:612
+#: includes/eme-actions.php:615
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy byl nainstalován nebo aktualizován"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:604
 msgid "Don't show this advice again"
 msgstr "Tuto radu již nezobrazovat"
 
-#: includes/eme-actions.php:600
+#: includes/eme-actions.php:603
 msgid "Change settings"
 msgstr "Změnit nastavení"
 
-#: includes/eme-actions.php:598
+#: includes/eme-actions.php:601
 msgid "Shortcodes documentation"
 msgstr "Dokumentace ke shortcodům"
 
-#: includes/eme-actions.php:596
+#: includes/eme-actions.php:599
 msgid "Template tags documentation"
 msgstr "Dokumentace ke značkám šablon"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:597
 msgid "Widgets page"
 msgstr "Stránka widgetů"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:517
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Vložit nedělitelnou mezeru"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Vizuální"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:514
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Náhled"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Vložit z knihovny médií"
 
-#: includes/eme-actions.php:508
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Vložit"
 
-#: includes/eme-actions.php:424
+#: includes/eme-actions.php:427
 #: includes/eme-events.php:9664
 msgid "Make your choice"
 msgstr "Proveďte svou volbu"
 
-#: includes/eme-actions.php:423
+#: includes/eme-actions.php:426
 #: includes/eme-events.php:9663
 msgid "Select country"
 msgstr "Vyberte zemi"
@@ -2660,35 +2660,35 @@ msgstr "Zde můžete definovat další HTML patičku, nelze použít žádné z�
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Zde můžete definovat další HTML záhlaví, nelze použít žádné zástupné symboly."
 
-#: includes/eme-functions.php:3012
+#: includes/eme-functions.php:3016
 msgid "Unknown upload error"
 msgstr "Neznámá chyba nahrávání"
 
-#: includes/eme-functions.php:3011
+#: includes/eme-functions.php:3015
 msgid "File upload stopped by extension"
 msgstr "Nahrávání souboru zastaveno rozšířením"
 
-#: includes/eme-functions.php:3010
+#: includes/eme-functions.php:3014
 msgid "Failed to write file to disk"
 msgstr "Nepodařilo se zapsat soubor na disk"
 
-#: includes/eme-functions.php:3009
+#: includes/eme-functions.php:3013
 msgid "Missing a temporary folder"
 msgstr "Chybí dočasná složka"
 
-#: includes/eme-functions.php:3008
+#: includes/eme-functions.php:3012
 msgid "No file was uploaded"
 msgstr "Nebyl nahrán žádný soubor"
 
-#: includes/eme-functions.php:3007
+#: includes/eme-functions.php:3011
 msgid "The uploaded file was only partially uploaded"
 msgstr "Nahraný soubor byl nahrán jen částečně"
 
-#: includes/eme-functions.php:3006
+#: includes/eme-functions.php:3010
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Nahraný soubor překračuje direktivu MAX_FILE_SIZE zadanou v HTML formuláři"
 
-#: includes/eme-functions.php:3005
+#: includes/eme-functions.php:3009
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Nahraný soubor překračuje direktivu upload_max_filesize v php.ini"
 
@@ -4032,7 +4032,7 @@ msgstr "Zaškrtněte tuto možnost, pokud chcete v rezervačním/zrušovacím/č
 msgid "Use hCaptcha for forms?"
 msgstr "Použít hCaptcha ve formulářích?"
 
-#: includes/eme-functions.php:4326
+#: includes/eme-functions.php:4330
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
@@ -4108,63 +4108,63 @@ msgstr "Pokud chcete být schopni odesílat e-maily do této skupiny přes svéh
 msgid "Group email"
 msgstr "E-mail skupiny"
 
-#: includes/eme-functions.php:1680
+#: includes/eme-functions.php:1684
 msgid "CFP Franc (Franc Pacifique)"
 msgstr "CFP frank (frank Pacifiku)"
 
-#: includes/eme-functions.php:1679
+#: includes/eme-functions.php:1683
 msgid "CFA Franc BCEAO"
 msgstr "CFA frank BCEAO"
 
-#: includes/eme-functions.php:1678
+#: includes/eme-functions.php:1682
 msgid "CFA Franc BEAC"
 msgstr "CFA frank BEAC"
 
-#: includes/eme-functions.php:1677
+#: includes/eme-functions.php:1681
 msgid "Vanuatu vatu"
 msgstr "Vanuatské vatu"
 
-#: includes/eme-functions.php:1676
+#: includes/eme-functions.php:1680
 msgid "Vietnamese dong"
 msgstr "Vietnamský dong"
 
-#: includes/eme-functions.php:1670
+#: includes/eme-functions.php:1674
 msgid "Rwandan Franc"
 msgstr "Rwandský frank"
 
-#: includes/eme-functions.php:1669
+#: includes/eme-functions.php:1673
 msgid "Russian Ruble"
 msgstr "Ruský rubl"
 
-#: includes/eme-functions.php:1668
+#: includes/eme-functions.php:1672
 msgid "Paraguayan Guarani"
 msgstr "Paraguayské guarani"
 
-#: includes/eme-functions.php:1662
+#: includes/eme-functions.php:1666
 msgid "Malagasy Ariary"
 msgstr "Malgašský ariary"
 
-#: includes/eme-functions.php:1661
+#: includes/eme-functions.php:1665
 msgid "South Korean Won"
 msgstr "Jihokorejský won"
 
-#: includes/eme-functions.php:1660
+#: includes/eme-functions.php:1664
 msgid "Comoro Franc"
 msgstr "Komorský frank"
 
-#: includes/eme-functions.php:1654
+#: includes/eme-functions.php:1658
 msgid "Guinean Franc"
 msgstr "Guinejský frank"
 
-#: includes/eme-functions.php:1651
+#: includes/eme-functions.php:1655
 msgid "Djiboutian Franc"
 msgstr "Džibutský frank"
 
-#: includes/eme-functions.php:1647
+#: includes/eme-functions.php:1651
 msgid "Chilean Peso"
 msgstr "Chilské peso"
 
-#: includes/eme-functions.php:1644
+#: includes/eme-functions.php:1648
 msgid "Burundian Franc"
 msgstr "Burundský frank"
 
@@ -4255,7 +4255,7 @@ msgstr "Zadejte prosím platnou e-mailovou adresu"
 msgid "If you want, select a different membership to transfer this member to: "
 msgstr "Pokud chcete, vyberte jiné členství, na které chcete tohoto člena přesunout: "
 
-#: includes/eme-functions.php:1645
+#: includes/eme-functions.php:1649
 msgid "Brazilian Real"
 msgstr "Brazilský real"
 
@@ -5101,7 +5101,7 @@ msgstr "Klíč webu Google reCAPTCHA"
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "Použít Google reCAPTCHA ve formulářích?"
 
-#: includes/eme-functions.php:4324
+#: includes/eme-functions.php:4328
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
@@ -5530,8 +5530,8 @@ msgstr "Volitelné datum a čas účasti: "
 msgid "WARNING: This might throw of the limit parameter for the eme_events shortcode if that parameter is used: in case the option to hide RSVP ended events is selected, the number of events shown might be less than indicated with the limit option."
 msgstr "VAROVÁNÍ: toto může narušit parametr limit u shortcode eme_events, pokud je tento parametr použit: pokud je vybrána možnost skrýt události s ukončeným RSVP, počet zobrazených událostí může být nižší, než udává možnost limit."
 
-#: includes/eme-functions.php:3095
-#: includes/eme-functions.php:3157
+#: includes/eme-functions.php:3099
+#: includes/eme-functions.php:3161
 msgid "Illegal filename."
 msgstr "Nepovolený název souboru."
 
@@ -5811,7 +5811,7 @@ msgstr "Mercado Pago ostrý provoz nebo test"
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
 
-#: includes/eme-functions.php:1642
+#: includes/eme-functions.php:1646
 msgid "Argentine Peso"
 msgstr "Argentinské peso"
 
@@ -6701,7 +6701,7 @@ msgstr "Upozornění: jelikož jste přihlášeni jako osoba s oprávněním upr
 msgid "No matching person found"
 msgstr "Nebyla nalezena žádná odpovídající osoba"
 
-#: includes/eme-actions.php:493
+#: includes/eme-actions.php:496
 #: includes/eme-events.php:9717
 msgid "No matching location found"
 msgstr "Nebylo nalezeno žádné odpovídající umístění"
@@ -6737,7 +6737,7 @@ msgstr "Pokud jako velikost PDF vyberete „vlastní“, uveďte prosím šířk
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr "Není definován žádný výchozí odesílatel a nebyl nalezen žádný kontaktní e-mail události, ukončuje se"
 
-#: includes/eme-functions.php:1657
+#: includes/eme-functions.php:1661
 msgid "Indian Rupee"
 msgstr "Indická rupie"
 
@@ -7049,7 +7049,7 @@ msgstr "Mezní doba pro zrušení RSVP před začátkem události"
 msgid "You can pay via %s. If you wish to do so, click the button below."
 msgstr "Můžete zaplatit přes %s. Pokud si to přejete, klikněte na tlačítko níže."
 
-#: includes/eme-functions.php:3052
+#: includes/eme-functions.php:3056
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Nepodařilo se vytvořit adresář pro nahrávání, zkontrolujte prosím svá oprávnění."
 
@@ -8408,7 +8408,7 @@ msgstr "Když je nastavena automatika a dojde k zaplacení členství, stav čle
 msgid "Warning: membership is not paid for, so automatic status calculation will not happen!"
 msgstr "Upozornění: Členství nebylo dosud zaplaceno, takže ještě neproběhla změna jeho stavu!"
 
-#: includes/eme-functions.php:1425
+#: includes/eme-functions.php:1429
 #: includes/eme-members.php:1962
 msgid "Grace period"
 msgstr "Doba odkladu"
@@ -8467,32 +8467,32 @@ msgstr "Vytvořen nový člen, ale nastaly problémy s nahráváním souborů"
 msgid "The location details have changed. Please verify the coordinates and press Save when done"
 msgstr "Údaje o umístění se změnily. Ověřte prosím souřadnice a po dokončení stiskněte tlačítko Uložit"
 
-#: includes/eme-functions.php:3198
+#: includes/eme-functions.php:3202
 msgid "Errors encountered while uploading files"
 msgstr "Během nahrávání souborů došlo k chybám"
 
-#: includes/eme-functions.php:3129
-#: includes/eme-functions.php:3191
+#: includes/eme-functions.php:3133
+#: includes/eme-functions.php:3195
 msgid "Upload failed."
 msgstr "Chyba nahrávání souboru."
 
-#: includes/eme-functions.php:3123
-#: includes/eme-functions.php:3185
+#: includes/eme-functions.php:3127
+#: includes/eme-functions.php:3189
 msgid "Incorrect file type."
 msgstr "Špatný typ souboru."
 
-#: includes/eme-functions.php:3107
-#: includes/eme-functions.php:3169
+#: includes/eme-functions.php:3111
+#: includes/eme-functions.php:3173
 msgid "File too large."
 msgstr "Soubor je moc velký."
 
-#: includes/eme-functions.php:3101
-#: includes/eme-functions.php:3163
+#: includes/eme-functions.php:3105
+#: includes/eme-functions.php:3167
 msgid "File already exists."
 msgstr "Soubor už byl dříve nahraný."
 
-#: includes/eme-functions.php:3087
-#: includes/eme-functions.php:3149
+#: includes/eme-functions.php:3091
+#: includes/eme-functions.php:3153
 msgid "File upload is required."
 msgstr "Je potřeba nahrát soubor."
 
@@ -8640,12 +8640,12 @@ msgstr "Zvolili jste, že nechcete dostávat budoucí e-maily. Jste si tím jist
 msgid "Filter on end date"
 msgstr "Filtrovat podle data konce"
 
-#: includes/eme-actions.php:429
+#: includes/eme-actions.php:432
 #: includes/eme-events.php:9668
 msgid "Yes, I'm sure"
 msgstr "Ano, jsem si jist"
 
-#: includes/eme-actions.php:428
+#: includes/eme-actions.php:431
 #: includes/eme-events.php:9667
 msgid "Mailing preferences"
 msgstr "Předvolba zasílání mailů"
@@ -8936,7 +8936,7 @@ msgstr "Nesprávný kód alpha-3"
 msgid "Incorrect alpha-2 code"
 msgstr "Nesprávný kód alpha-2"
 
-#: includes/eme-functions.php:3458
+#: includes/eme-functions.php:3462
 msgid "No such record"
 msgstr "Takový záznam neexistuje"
 
@@ -9414,7 +9414,7 @@ msgstr "Vybrat jednu nebo více osob"
 msgid "Permalinks"
 msgstr "Trvalé odkazy"
 
-#: includes/eme-actions.php:613
+#: includes/eme-actions.php:616
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Přispějte prosím na vývoj Events Made Easy"
 
@@ -9482,12 +9482,12 @@ msgstr "Typ vám umožňuje uvést, kde chcete tuto šablonu použít. To pomáh
 msgid "Only used in shortcodes"
 msgstr "Používá se pouze ve shortcodech"
 
-#: includes/eme-actions.php:426
+#: includes/eme-actions.php:429
 #: includes/eme-events.php:9666
 msgid "An error has occurred"
 msgstr "Došlo k chybě"
 
-#: includes/eme-actions.php:507
+#: includes/eme-actions.php:510
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Vložit obrázek"
@@ -9637,7 +9637,7 @@ msgstr "%1$d e-mailů odesláno, %2$d e-mailů se nezdařilo, %3$d e-mailů zbý
 msgid "Ongoing"
 msgstr "Probíhá"
 
-#: includes/eme-actions.php:509
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -9671,7 +9671,7 @@ msgid "Report"
 msgstr "Report"
 
 #: includes/eme-events.php:9911
-#: includes/eme-functions.php:2249
+#: includes/eme-functions.php:2253
 msgid "Extra info"
 msgstr "Doplňující informace"
 
@@ -10362,16 +10362,16 @@ msgstr "Naplánováno"
 msgid "Create holidays list"
 msgstr "Vytvořit seznam svátků"
 
-#: includes/eme-functions.php:2251
+#: includes/eme-functions.php:2255
 msgid "Group"
 msgstr "Skupina"
 
-#: includes/eme-functions.php:1426
+#: includes/eme-functions.php:1430
 #: includes/eme-members.php:555
 msgid "Expired"
 msgstr "Vypršelo"
 
-#: includes/eme-functions.php:1424
+#: includes/eme-functions.php:1428
 #: includes/eme-members.php:600
 msgid "Active"
 msgstr "Aktivní"
@@ -10622,7 +10622,7 @@ msgstr "Přidat novou událost"
 
 #: includes/eme-formfields.php:3894
 #: includes/eme-formfields.php:3904
-#: includes/eme-functions.php:3443
+#: includes/eme-functions.php:3447
 msgid "Records deleted!"
 msgstr "Záznamy smazány!"
 
@@ -10643,7 +10643,7 @@ msgstr "Šablona předmětu e-mailu"
 msgid "Create category"
 msgstr "Vytvořit kategorii"
 
-#: includes/eme-actions.php:427
+#: includes/eme-actions.php:430
 msgid "Clear"
 msgstr "Vymazat"
 
@@ -10719,11 +10719,11 @@ msgstr "Povolit e-maily o zaplaceném RSVP?"
 msgid "Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been paid for.<br><br>Yours faithfully,<br>#_CONTACTPERSON"
 msgstr "Vážený/á #_PERSONFULLNAME,<br><br>Vaše žádost o rezervaci #_RESPSEATS míst(a) pro #_EVENTNAME byla zaplacena.<br><br>S pozdravem,<br>#_CONTACTPERSON"
 
-#: includes/eme-functions.php:1681
+#: includes/eme-functions.php:1685
 msgid "South African Rand"
 msgstr "Jihoafrický rand"
 
-#: includes/eme-actions.php:431
+#: includes/eme-actions.php:434
 #: includes/eme-events.php:9739
 msgid "Please wait"
 msgstr "Čekejte prosím"
@@ -11210,7 +11210,7 @@ msgstr "Tisk"
 msgid "CSV"
 msgstr "CSV"
 
-#: includes/eme-functions.php:4387
+#: includes/eme-functions.php:4391
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Tip: klikněte pravým tlačítkem na záhlaví sloupců pro zobrazení/skrytí sloupců"
 
@@ -11600,19 +11600,19 @@ msgid "Bookings found for this event, so not possible to convert to a recurring 
 msgstr "Pro tuto událost byly nalezeny rezervace, proto ji nelze převést na opakující se událost."
 
 #: includes/eme-countries.php:885
-#: includes/eme-functions.php:3473
+#: includes/eme-functions.php:3477
 msgid "Insert failed: "
 msgstr "Vložení se nezdařilo: "
 
 #: includes/eme-countries.php:883
-#: includes/eme-functions.php:3471
+#: includes/eme-functions.php:3475
 msgid "Update failed: "
 msgstr "Aktualizace se nezdařila: "
 
 #: includes/eme-actions.php:96
-#: includes/eme-actions.php:159
-#: includes/eme-actions.php:170
-#: includes/eme-actions.php:181
+#: includes/eme-actions.php:160
+#: includes/eme-actions.php:172
+#: includes/eme-actions.php:184
 #: includes/eme-attendances.php:278
 #: includes/eme-categories.php:677
 #: includes/eme-categories.php:716
@@ -11633,9 +11633,9 @@ msgstr "Aktualizace se nezdařila: "
 #: includes/eme-formfields.php:3875
 #: includes/eme-formfields.php:3886
 #: includes/eme-formfields.php:3907
-#: includes/eme-functions.php:3407
-#: includes/eme-functions.php:3446
-#: includes/eme-functions.php:3489
+#: includes/eme-functions.php:3411
+#: includes/eme-functions.php:3450
+#: includes/eme-functions.php:3493
 #: includes/eme-holidays.php:261
 #: includes/eme-holidays.php:300
 #: includes/eme-locations.php:3206
@@ -11697,7 +11697,7 @@ msgstr "Aktualizace se nezdařila: "
 msgid "Access denied!"
 msgstr "Přístup odepřen!"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:516
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11839,18 +11839,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:754
+#: includes/eme-actions.php:757
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:591
+#: includes/eme-actions.php:594
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahoj, <strong>%1$s</strong>, vítejte v pluginu <strong>Events Made Easy</strong>! Doufáme, že se vám tu bude líbit.</p><p>Nyní je čas vložit seznamy událostí pomocí <a href='%2$s' title='%3$s'>widgetů</a>, <a href='%4$s' title='%5$s'>značek šablon</a> nebo <a href='%6$s' title='%7$s'>shortcodů</a>.</p><p>Mimochodem, podívali jste se na <a href='%8$s' title='%9$s'>stránku Nastavení</a>? Tam si můžete přizpůsobit způsob zobrazení událostí a umístění.</p><p>Co? Už vás nebaví vidět tuto radu? Chápu, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klikněte sem</a> a už ji znovu neuvidíte!</p>"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:618
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Pokud pro vás je plugin <strong>Events Made Easy</strong> užitečný, zvažte prosím malý dar na podporu mého času a dalšího vývoje. Děkujeme za vaši podporu!"
 
@@ -12147,7 +12147,7 @@ msgstr "Registrující"
 msgid "Send emails to attendees upon changes being made?"
 msgstr "Odesílat e-maily účastníkům při provedení změn?"
 
-#: includes/eme-actions.php:310
+#: includes/eme-actions.php:313
 #: includes/eme-events.php:6547
 #: includes/eme-events.php:9759
 #: includes/eme-templates.php:44
@@ -12174,7 +12174,7 @@ msgstr "Nebyly nalezeny žádné rezervace."
 msgid "No responses yet!"
 msgstr "Ještě žádné odpovědi!"
 
-#: includes/eme-functions.php:1423
+#: includes/eme-functions.php:1427
 #: includes/eme-people.php:1096
 #: includes/eme-people.php:1296
 #: includes/eme-people.php:1647
@@ -14031,99 +14031,99 @@ msgstr "Nemáte oprávnění kopírovat toto umístění!"
 msgid "You have no right to edit this location!"
 msgstr "Nemáte oprávnění upravovat toto umístění!"
 
-#: includes/eme-functions.php:1648
+#: includes/eme-functions.php:1652
 msgid "Chinese Yuan Renminbi"
 msgstr "Čínský jüan (renminbi)"
 
-#: includes/eme-functions.php:1675
+#: includes/eme-functions.php:1679
 msgid "U.S. Dollar"
 msgstr "Americký dolar"
 
-#: includes/eme-functions.php:1674
+#: includes/eme-functions.php:1678
 msgid "Thai Baht"
 msgstr "Thajský baht"
 
-#: includes/eme-functions.php:1673
+#: includes/eme-functions.php:1677
 msgid "Swiss Franc"
 msgstr "Švýcarský frank"
 
-#: includes/eme-functions.php:1672
+#: includes/eme-functions.php:1676
 msgid "Swedish Krona"
 msgstr "Švédská koruna"
 
-#: includes/eme-functions.php:1671
+#: includes/eme-functions.php:1675
 msgid "Singapore Dollar"
 msgstr "Singapurský dolar"
 
-#: includes/eme-functions.php:1653
+#: includes/eme-functions.php:1657
 msgid "Pound Sterling"
 msgstr "Britská libra"
 
-#: includes/eme-functions.php:1667
+#: includes/eme-functions.php:1671
 msgid "Polish Zloty"
 msgstr "Polský zlotý"
 
-#: includes/eme-functions.php:1666
+#: includes/eme-functions.php:1670
 msgid "Philippine Peso"
 msgstr "Filipínské peso"
 
-#: includes/eme-functions.php:1665
+#: includes/eme-functions.php:1669
 msgid "New Zealand Dollar"
 msgstr "Novozélandský dolar"
 
-#: includes/eme-functions.php:1664
+#: includes/eme-functions.php:1668
 msgid "Norwegian Krone"
 msgstr "Norská koruna"
 
-#: includes/eme-functions.php:1663
+#: includes/eme-functions.php:1667
 msgid "Mexican Peso"
 msgstr "Mexické peso"
 
-#: includes/eme-functions.php:1659
+#: includes/eme-functions.php:1663
 msgid "Japanese Yen"
 msgstr "Japonský jen"
 
-#: includes/eme-functions.php:1658
+#: includes/eme-functions.php:1662
 msgid "Israeli New Sheqel"
 msgstr "Izraelský nový šekel"
 
-#: includes/eme-functions.php:1656
+#: includes/eme-functions.php:1660
 msgid "Hungarian Forint"
 msgstr "Maďarský forint"
 
-#: includes/eme-functions.php:1655
+#: includes/eme-functions.php:1659
 msgid "Hong Kong Dollar"
 msgstr "Hong Kongský Dollar"
 
-#: includes/eme-functions.php:1652
+#: includes/eme-functions.php:1656
 msgid "Euro"
 msgstr "Euro"
 
-#: includes/eme-functions.php:1650
+#: includes/eme-functions.php:1654
 msgid "Danish Krone"
 msgstr "Dánská koruna"
 
-#: includes/eme-functions.php:1649
+#: includes/eme-functions.php:1653
 msgid "Czech Koruna"
 msgstr "Česká koruna"
 
-#: includes/eme-functions.php:1646
+#: includes/eme-functions.php:1650
 msgid "Canadian Dollar"
 msgstr "Kanadský dolar"
 
-#: includes/eme-functions.php:1643
+#: includes/eme-functions.php:1647
 msgid "Australian Dollar"
 msgstr "Australský dolar"
 
-#: includes/eme-functions.php:1415
+#: includes/eme-functions.php:1419
 msgid "Draft"
 msgstr "Koncept"
 
-#: includes/eme-functions.php:1413
+#: includes/eme-functions.php:1417
 msgid "Private"
 msgstr "Osobní"
 
-#: includes/eme-functions.php:1412
+#: includes/eme-functions.php:1416
 msgid "Public"
 msgstr "Veřejné"
 
@@ -14364,7 +14364,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:563
+#: includes/eme-actions.php:566
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Tato stránka odpovídá stránce událostí pluginu <strong>Events Made Easy</strong>. Její obsah bude přepsán pluginem <strong>Events Made Easy</strong>. Pokud chcete zobrazit svůj obsah, můžete pluginu <strong>Events Made Easy</strong> přiřadit jinou stránku v <a href='%s'>Nastavení</a>. "
 
@@ -14982,7 +14982,7 @@ msgstr "Opakování události"
 msgid "Date and time"
 msgstr "Datum a čas"
 
-#: includes/eme-actions.php:319
+#: includes/eme-actions.php:322
 #: includes/eme-events.php:6548
 #: includes/eme-events.php:8479
 #: includes/eme-events.php:9732

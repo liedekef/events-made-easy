@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
         eme_postJSON(ajaxurl, formData, (data) => {
-            if (data && data.Result) {
+            if (data && 'Result' in data) {
                 EME.$('#eme_dynpersondata').innerHTML = data.Result;
                 eme_init_widgets(true);
             }

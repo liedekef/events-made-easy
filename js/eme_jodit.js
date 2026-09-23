@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cleanHTML: {
                 replaceNBSP: false,
                 fillEmptyParagraph: false,
+                removeTrailingBr: true
             },
             allowTagsWithoutClosing: true,
             buttons: [

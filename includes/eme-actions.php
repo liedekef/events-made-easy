@@ -341,22 +341,21 @@ add_action( 'wp_footer', 'eme_general_footer' );
 //}
 
 function eme_admin_register_scripts() {
+    wp_register_script( 'eme-sethtml', EME_PLUGIN_URL . 'js/eme_sethtml.js', [], EME_VERSION );
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ ], EME_VERSION );
     wp_register_script( 'eme-ftable', EME_PLUGIN_URL . 'js/ftable/ftable.min.js', [ ], EME_VERSION );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select' ], EME_VERSION );
-    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'eme-ftable', 'eme-sortable' ], EME_VERSION );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-select', 'eme-sethtml' ], EME_VERSION );
+    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'eme-ftable', 'eme-sortable', 'eme-sethtml' ], EME_VERSION );
 
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
     wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION );
     wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION );
-    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-sethtml' ], EME_VERSION );
     wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ ], EME_VERSION );
-    wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ ], EME_VERSION );
+    wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'eme-sethtml' ], EME_VERSION );
 
     // jodit stuff
-    //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
-    //wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
     wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION);
@@ -416,7 +415,8 @@ function eme_register_scripts() {
     wp_register_script( 'eme-select', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.js', [], EME_VERSION );
     // when loading scripts in footer, the html is already loaded and present, so defer does nothing usefull anymore (defer only really usefull in header)
     //wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer, 'strategy' => 'defer' ] );
-    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
+    wp_register_script( 'eme-sethtml', EME_PLUGIN_URL . 'js/eme_sethtml.js', [ ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
+    wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
     $eme_fs_options = get_option('eme_fs');
     /* translators: "state" refers to a geographical region (e.g., province, canton, department) */
     $translation_array = [
@@ -454,18 +454,18 @@ function eme_register_scripts() {
     // the frontend also needs the autocomplete (rsvp form)
     $search_tables = get_option( 'eme_autocomplete_sources' );
     if ( $search_tables != 'none' && is_user_logged_in() ) {
-        wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION, $load_js_in_footer );
+        wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
     }
     $eme_map_is_active = get_option( 'eme_map_is_active' );
     if ( $eme_map_is_active) {
-        wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION, true );
-        wp_register_script( 'eme-leaflet-gestures', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
-        wp_register_script( 'eme-leaflet-markercluster', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/leaflet.markercluster.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION, [ 'in_footer' => true ] );
+        wp_register_script( 'eme-leaflet-gestures', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, [ 'in_footer' => true ] );
+        wp_register_script( 'eme-leaflet-markercluster', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/leaflet.markercluster.js', [ 'eme-leaflet-maps' ], EME_VERSION, [ 'in_footer' => true ] );
         wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
         wp_register_style( 'eme-markercluster-css1', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.css', [], EME_VERSION );
         wp_register_style( 'eme-markercluster-css2', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.Default.css', [], EME_VERSION );
         wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
-        wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'eme-leaflet-maps', 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => true ] );
         $translation_array = [
             'translate_addressnotfound' => __('Address not found', 'events-made-easy' ),
             'translate_couldnotcalcroute' => __('Could not calculate route', 'events-made-easy' ),
@@ -473,8 +473,8 @@ function eme_register_scripts() {
             'translate_osm_attribution' => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
         ];
         wp_localize_script( 'eme-show-maps', 'emeshowmaps', $translation_array );
-        wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
-        wp_register_script( 'eme-leaflet-routing', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-leaflet-maps' ], EME_VERSION, [ 'in_footer' => true ] );
+        wp_register_script( 'eme-leaflet-routing', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, [ 'in_footer' => true ] );
         wp_register_style( 'eme-leaflet-routing-css', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.css', [ 'eme-leaflet-css' ], EME_VERSION );
         $translation_array = [
             'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
@@ -483,9 +483,9 @@ function eme_register_scripts() {
             'translate_osm_attribution'  => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
         ];
         wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
-        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-leaflet-maps', 'eme-edit-maps' ], EME_VERSION, true );
+        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-leaflet-maps', 'eme-edit-maps', 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => true ] );
     } else {
-        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ ], EME_VERSION, true );
+        wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => true ] );
     }
     $map_is_active = $eme_map_is_active ? 'true' : 'false';
     $translation_array = [
@@ -499,11 +499,9 @@ function eme_register_scripts() {
     wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
 
     // jodit stuff
-    //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
-    //wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
-    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, [ 'in_footer' => true ]);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
-    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
+    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, [ 'in_footer' => true ]);
     $translation_array = [
 	    'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
 	    'translate_flanguage'       => $language,

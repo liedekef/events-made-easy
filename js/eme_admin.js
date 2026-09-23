@@ -246,7 +246,7 @@ function eme_admin_init_attachment_ui(btnSelector, linksSelector, idsSelector, r
     if (removeBtn) {
         removeBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (links) links.innerHTML = '';
+            if (links) links.replaceChildren();
             if (ids) ids.value = '';
             eme_toggle(removeBtn, false);
         });

@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         html += '</ol>';
 
-        instructionsDiv.innerHTML = html;
+        instructionsDiv.setHTML(html);
         instructionsDiv.style.display = '';
     }
 
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (!data || data.length === 0) {
-                        instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
+                        instructionsDiv.setHTML('<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>');
                         instructionsDiv.style.display = '';
                         mapDiv.style.display = 'none';
                         return;
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
 
                         routingControl.on('routingerror', function() {
-                            instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>';
+                            instructionsDiv.setHTML('<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>');
                             instructionsDiv.style.display = '';
                         });
 
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 100);
                 })
                 .catch(function() {
-                    instructionsDiv.innerHTML = '<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>';
+                    instructionsDiv.setHTML('<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>');
                     instructionsDiv.style.display = '';
                     mapDiv.style.display = 'none';
                 });

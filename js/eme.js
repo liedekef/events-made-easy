@@ -329,7 +329,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, submitBtn, extraParams = 
     const btn = submitBtn || form.querySelector('[type="submit"]');
     const spinner = document.createElement('span');
     spinner.className = 'spinner';
-    spinner.innerHTML = '&#10231;';
+    spinner.setHTML('&#10231;');
     if (btn) {
         btn.dataset.emeOrigText = btn.value || btn.textContent;
         btn.disabled = true;
@@ -410,7 +410,7 @@ function eme_ajax_form(form_id, action, okSel, errSel, submitBtn, extraParams = 
             restoreBtn();
             if (errSel) {
                 if (errEl) {
-                    errEl.innerHTML = emebasic.translate_error + (error?.message ? '<br>' + error.message : '');
+                    errEl.setHTML(emebasic.translate_error + (error?.message ? '<br>' + error.message : ''));
                     eme_toggle(errEl, true);
                 }
             }
@@ -458,7 +458,7 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
         const span = form.querySelector(sel);
         if (span) {
             found = true;
-            span.innerHTML = '<span class="spinner">⟳</span>';
+            span.setHTML('<span class="spinner">⟳</span>');
             alldata.set('action', action);
             alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -473,7 +473,7 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
                 })
                 .catch(() => {
                     form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
-                    span.innerHTML = 'Invalid reply';
+                    span.setHTML('Invalid reply');
                 });
         }
     });
@@ -495,7 +495,7 @@ function eme_dynamic_data_json(form_id, isBooking = true) {
     const dataDiv = form.querySelector(dataDivSel);
 
     if (dataDiv) {
-        dataDiv.innerHTML = '<span class="spinner">⟳</span>';
+        dataDiv.setHTML('<span class="spinner">⟳</span>');
         alldata.set('action', action);
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -527,7 +527,7 @@ function eme_dynamic_familymemberdata_json(form_id) {
     const dataDiv = form.querySelector('div#eme_dyndata_family');
 
     if (dataDiv) {
-        dataDiv.innerHTML = '<span class="spinner">⟳</span>';
+        dataDiv.setHTML('<span class="spinner">⟳</span>');
         alldata.set('action', 'eme_dyndata_familymember');
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
 
@@ -593,7 +593,7 @@ function attachCalendarHandlers() {
     EME.$$('a.eme-cal-prev-month, a.eme-cal-next-month').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            this.innerHTML = '<span class="spinner">⟳</span>';
+            this.setHTML('<span class="spinner">⟳</span>');
             loadCalendar(
                 this.dataset.calendar_divid,
                 this.dataset.full,

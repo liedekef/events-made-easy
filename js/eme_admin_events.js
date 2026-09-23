@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             data.forEach(item => {
                                 const suggestion = document.createElement('div');
                                 suggestion.className = 'eme-autocomplete-suggestion';
-                                suggestion.innerHTML = `<strong>${item.name}</strong><br><small>${item.address1} - ${item.city}</small>`;
+                                suggestion.setHTML(`<strong>${item.name}</strong><br><small>${item.address1} - ${item.city}</small>`);
                                 
                                 suggestion.addEventListener('click', (e) => {
                                     e.preventDefault();
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (!data.length) {
                                 const noMatch = document.createElement('div');
                                 noMatch.className = 'eme-autocomplete-suggestion';
-                                noMatch.innerHTML = `<strong>${emeadmin.translate_nomatchlocation || 'No matches found'}</strong>`;
+                                noMatch.setHTML(`<strong>${emeadmin.translate_nomatchlocation || 'No matches found'}</strong>`);
                                 suggestions.appendChild(noMatch);
                             }
 

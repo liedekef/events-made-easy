@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (data.length === 0) {
                             const noMatchDiv = document.createElement('div');
                             noMatchDiv.className = 'eme-autocomplete-suggestion';
-                            noMatchDiv.innerHTML = "<strong>" + emefs.translate_nomatchlocation + '</strong>';
+                            noMatchDiv.setHTML("<strong>" + emefs.translate_nomatchlocation + '</strong>');
                             suggestions.appendChild(noMatchDiv);
                         } else {
                             data.forEach(item => {
                                 const suggestionDiv = document.createElement('div');
                                 suggestionDiv.className = 'eme-autocomplete-suggestion';
-                                suggestionDiv.innerHTML = "<strong>" + item.name + '</strong><br><small>' + item.address1 + ' - ' + item.city + '</small>';
+                                suggestionDiv.setHTML("<strong>" + item.name + '</strong><br><small>' + item.address1 + ' - ' + item.city + '</small>');
                                 
                                 suggestionDiv.addEventListener("click", function(e) {
                                     e.preventDefault();

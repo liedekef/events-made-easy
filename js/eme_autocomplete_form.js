@@ -75,15 +75,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Different HTML for RSVP vs Task forms
                         if (autocompleteAction === 'rsvp_autocomplete_people') {
-                            suggestion.innerHTML = `
+                            suggestion.setHTML(`
                                 <strong>${item.lastname} ${item.firstname}</strong>
                                 <br><small>${item.email} - ${item.phone}</small>
-                            `;
+                            `);
                         } else {
-                            suggestion.innerHTML = `
+                            suggestion.setHTML(`
                                 <strong>${item.lastname} ${item.firstname}</strong>
                                 <br><small>${item.email}</small>
-                            `;
+                            `);
                         }
 
                         suggestion.addEventListener('click', e => {

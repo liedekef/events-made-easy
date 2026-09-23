@@ -49,17 +49,25 @@ document.addEventListener('DOMContentLoaded', function () {
             const existingInput = container.querySelector('input, textarea');
             const currentValue = existingInput ? existingInput.value : '';
 
-            // Re-render the input
+            // Re-render the input using DOM methods (avoids HTML injection)
             if (isMulti) {
                 const textareaVal = formatToTextarea(currentValue);
-                container.innerHTML = `
-                    <textarea name="${fieldId}" id="${fieldId}" rows="5" cols="40">${textareaVal}</textarea>
-                `;
+                const textarea = document.createElement('textarea');
+                textarea.name = fieldId;
+                textarea.id = fieldId;
+                textarea.rows = 5;
+                textarea.cols = 40;
+                textarea.textContent = textareaVal;
+                container.replaceChildren(textarea);
             } else {
                 const inputVal = formatToInput(currentValue);
-                container.innerHTML = `
-                    <input type="text" name="${fieldId}" id="${fieldId}" size="40" value="${inputVal}" />
-                `;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = fieldId;
+                input.id = fieldId;
+                input.size = 40;
+                input.value = inputVal;
+                container.replaceChildren(input);
             }
         });
     }

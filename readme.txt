@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.20  (2026/09/) =
+* use setHTML, improvement in security over innerHTML
+
 = 3.2.19  (2026/09/22) =
 * fdatepicker update
 * make old #_EVENTPRINTBOOKINGSURL/LINK and CSV placeholders work again

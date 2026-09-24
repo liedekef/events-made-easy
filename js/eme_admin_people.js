@@ -376,9 +376,11 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
         eme_postJSON(ajaxurl, formData, (data) => {
-            if (data && 'Result' in data) {
+            if (data && data.Result) {
                 EME.$('#eme_dynpersondata').innerHTML = data.Result;
                 eme_init_widgets(true);
+            } else {
+                EME.$('#eme_dynpersondata').replaceChildren();
             }
         });
     }

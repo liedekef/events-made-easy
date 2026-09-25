@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.20  (2026/09/) =
 * use setHTML, improvement in security over innerHTML
+* fix csv/print reports from within the booking screen
 
 = 3.2.19  (2026/09/22) =
 * fdatepicker update

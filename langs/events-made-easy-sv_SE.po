@@ -2555,61 +2555,61 @@ msgstr ""
 msgid "Select a person"
 msgstr "Välj en person"
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr "Lista över nästa 10 evenemang"
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr "Stäng"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy har installerats eller uppgraderats"
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr "Visa inte detta råd igen"
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr "Ändra inställningar"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr "Dokumentation för kortkoder"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr "Dokumentation för malltaggar"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr "Widget-sida"
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Infoga blanksteg"
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visuell"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Förhandsgranska"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Infoga från mediebiblioteket"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Infoga"
@@ -9402,7 +9402,7 @@ msgstr "Välj en eller flera personer"
 msgid "Permalinks"
 msgstr ""
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Vänligen donera till utvecklingen av Events Made Easy"
 
@@ -9475,7 +9475,7 @@ msgstr "Används endast i kortkoder"
 msgid "An error has occurred"
 msgstr "Ett fel har uppstått"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Infoga bild"
@@ -9625,7 +9625,7 @@ msgstr "%1$d e-postmeddelanden skickade, %2$d e-postmeddelanden misslyckades, %3
 msgid "Ongoing"
 msgstr "Pågående"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -11685,7 +11685,7 @@ msgstr "Uppdatering misslyckades:"
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11827,18 +11827,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hej, <strong>%1$s</strong>, välkommen till <strong>Events Made Easy</strong>! Vi hoppas att du trivs här.</p><p>Nu är det dags att infoga evenemangslistor via <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>malltaggar</a> eller <a href='%6$s' title='%7$s'>kortkoder</a>.</p><p>För övrigt, har du tittat på <a href='%8$s' title='%9$s'>Inställningssidan</a>? Där anpassar du hur evenemang och platser visas.</p><p>What? Trött på att se detta råd? Jag förstår, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klicka här</a> så kommer du inte att se detta igen!</p>"
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Om du finner <strong>Events Made Easy</strong> användbart, vänligen fundera på att ge ett litet bidrag för den tid jag investerat och för att möjliggöra fortsatt utveckling. Tack för ditt stöd!"
 
@@ -14352,7 +14352,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Denna sida motsvarar <strong>Events Made Easy</strong> eventsida. Dess innehåll kommer att skrivas över av <strong>Events Made Easy</strong>. Om du vill visa ditt innehåll kan du tilldela en annan sida för <strong>Events Made Easy</strong> i <a href='%s'>Inställningarna</a>."
 

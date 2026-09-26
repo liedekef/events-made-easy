@@ -2555,61 +2555,61 @@ msgstr "Manueller Eintrag"
 msgid "Select a person"
 msgstr "Eine Person auswählen"
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr "Liste der nächsten 10 Ereignisse"
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr "Verwerfen"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy wurde installiert oder aktualisiert"
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr "Diesen Hinweis nicht mehr anzeigen"
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr "Einstellungen ändern"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr "Dokumentation zu Shortcodes"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr "Dokumentation zu Vorlagen-Tags"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr "Widgets-Seite"
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Geschütztes Leerzeichen einfügen"
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visuell"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Vorschau"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Aus Medienbibliothek einfügen"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Einfügen"
@@ -9402,7 +9402,7 @@ msgstr "Wähle eine oder mehrere Personen"
 msgid "Permalinks"
 msgstr ""
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Bitte spenden Sie für die Entwicklung von Events Made Easy"
 
@@ -9475,7 +9475,7 @@ msgstr "Nur in Platzhaltern verwendet"
 msgid "An error has occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Bild einfügen"
@@ -9625,7 +9625,7 @@ msgstr "%1$d Nachrichten versendet, %2$d fehlgeschlagen, %3$d ausstehend"
 msgid "Ongoing"
 msgstr "Fortlaufend"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -11685,7 +11685,7 @@ msgstr "Aktualisierung fehlgeschlagen: "
 msgid "Access denied!"
 msgstr "Zugriff verweigert!"
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11827,18 +11827,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo <strong>%1$s</strong>, willkommen bei <strong>Events Made Easy</strong>! Wir hoffen, es gefällt Ihnen hier.</p><p>Jetzt ist es an der Zeit, Veranstaltungslisten über <a href='%2$s' title='%3$s'>Widgets</a>, <a href='%4$s' title='%5$s'>Vorlagen-Tags</a> oder <a href='%6$s' title='%7$s'>Shortcodes</a> einzufügen.</p><p>Übrigens, haben Sie sich die <a href='%8$s' title='%9$s'>Einstellungsseite</a> angeschaut? Dort können Sie anpassen, wie Veranstaltungen und Standorte angezeigt werden.</p><p>Was? Sie sind es leid, diesen Hinweis zu sehen? Ich verstehe Sie, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klicken Sie hier</a> und Sie sehen dies nicht wieder!</p>"
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Wenn <strong>Events Made Easy</strong> nützlich für dich ist, erwäge bitte eine kleine Spende um die Zeit, die ich investiere zu würdigen und die Weiterentwicklung zu unterstützen. Danke für deine freundliche Unterstützung!"
 
@@ -14352,7 +14352,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Diese Seite ist mit der Veranstaltungsseite von <strong>Events Made Easy</strong> verknüpft. Der Inhalt wird von <strong>Events Made Easy</strong> überschrieben. Wenn ihr Inhalt angezeigt werden soll, kannst Du für <strong>Events Made Easy</strong> eine andere Seite über die <a href='%s'>Einstellungen</a> zuordnen. "
 

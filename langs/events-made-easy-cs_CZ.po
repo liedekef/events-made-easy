@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T21:52:39+00:00\n"
-"PO-Revision-Date: 2026-08-26 08:47:10+0000\n"
+"POT-Creation-Date: 2026-09-26T07:59:36+00:00\n"
+"PO-Revision-Date: 2026-09-24 10:31:48+0000\n"
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2);\n"
 "X-Generator: GlotPress/4.1.0\n"
@@ -119,6 +119,11 @@ msgstr "%1$d míst (%2$sView%3$s)"
 #: includes/eme-formfields.php:311
 msgid "%1$d events (%2$sView%3$s)"
 msgstr "%1$d událostí (%2$sView%3$s)"
+
+#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+#: includes/eme-formfields.php:306
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr "%1$d rezervací (%2$sČekající na schválení%3$s | %4$sSchválené%5$s)"
 
 #: includes/eme-formfields.php:184
 msgid "Error: there is already a field with that name."
@@ -2556,61 +2561,61 @@ msgstr "Ruční zadání"
 msgid "Select a person"
 msgstr "Vyberte osobu"
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr "Seznam dalších 10 událostí"
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr "Zavřít"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy byl nainstalován nebo aktualizován"
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr "Tuto radu již nezobrazovat"
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr "Změnit nastavení"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr "Dokumentace ke shortcodům"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr "Dokumentace ke značkám šablon"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr "Stránka widgetů"
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Vložit nedělitelnou mezeru"
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Vizuální"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Náhled"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Vložit z knihovny médií"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Vložit"
@@ -9414,7 +9419,7 @@ msgstr "Vybrat jednu nebo více osob"
 msgid "Permalinks"
 msgstr "Trvalé odkazy"
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Přispějte prosím na vývoj Events Made Easy"
 
@@ -9487,7 +9492,7 @@ msgstr "Používá se pouze ve shortcodech"
 msgid "An error has occurred"
 msgstr "Došlo k chybě"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Vložit obrázek"
@@ -9637,7 +9642,7 @@ msgstr "%1$d e-mailů odesláno, %2$d e-mailů se nezdařilo, %3$d e-mailů zbý
 msgid "Ongoing"
 msgstr "Probíhá"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -9892,6 +9897,14 @@ msgstr "Formát návratové stránky, když je platba za přihlášení k člens
 #: includes/eme-options.php:2785
 msgid "Payment membership success return page format"
 msgstr "Formát návratové stránky při úspěšné platbě za členství"
+
+#: includes/eme-options.php:2784
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr "Vzhled stránky s chybovým hlášení v případě, že platba za rezervaci selhala nebo byla zrušena."
+
+#: includes/eme-options.php:2783
+msgid "The format of the return page when the payment is succesfull for bookings."
+msgstr "Vzhled stránky s potvrzením po úspěšném provedení platby za rezervace."
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1718
@@ -11697,7 +11710,7 @@ msgstr "Aktualizace se nezdařila: "
 msgid "Access denied!"
 msgstr "Přístup odepřen!"
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11839,18 +11852,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahoj, <strong>%1$s</strong>, vítejte v pluginu <strong>Events Made Easy</strong>! Doufáme, že se vám tu bude líbit.</p><p>Nyní je čas vložit seznamy událostí pomocí <a href='%2$s' title='%3$s'>widgetů</a>, <a href='%4$s' title='%5$s'>značek šablon</a> nebo <a href='%6$s' title='%7$s'>shortcodů</a>.</p><p>Mimochodem, podívali jste se na <a href='%8$s' title='%9$s'>stránku Nastavení</a>? Tam si můžete přizpůsobit způsob zobrazení událostí a umístění.</p><p>Co? Už vás nebaví vidět tuto radu? Chápu, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klikněte sem</a> a už ji znovu neuvidíte!</p>"
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Pokud pro vás je plugin <strong>Events Made Easy</strong> užitečný, zvažte prosím malý dar na podporu mého času a dalšího vývoje. Děkujeme za vaši podporu!"
 
@@ -12989,6 +13002,14 @@ msgstr "Rozvržení rezervačního formuláře. Povinnými poli jsou #_NAME, #_E
 #: includes/eme-events.php:6604
 msgid "RSVP form format"
 msgstr "Formát formuláře RSVP"
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
+msgstr "Tuto možnost zrušte, pokud nechcete, aby se po úspěšné rezervaci znovu zobrazil rezervační formulář."
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr "Zobrazit rezervační formulář znovu po provedení rezervace?"
 
 #: includes/eme-events.php:7555
 #: includes/eme-options.php:2045
@@ -14364,7 +14385,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Tato stránka odpovídá stránce událostí pluginu <strong>Events Made Easy</strong>. Její obsah bude přepsán pluginem <strong>Events Made Easy</strong>. Pokud chcete zobrazit svůj obsah, můžete pluginu <strong>Events Made Easy</strong> přiřadit jinou stránku v <a href='%s'>Nastavení</a>. "
 
@@ -15488,24 +15509,3 @@ msgstr "Ne"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Ano"
-
-#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-#: includes/eme-formfields.php:306
-msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr ""
-
-#: includes/eme-options.php:2046
-msgid "Show booking form again after booking?"
-msgstr ""
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
-msgstr ""
-
-#: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for bookings."
-msgstr ""
-
-#: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for bookings."
-msgstr ""

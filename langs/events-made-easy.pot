@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.2.18\n"
+"Project-Id-Version: Events Made Easy 3.2.19\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-22T14:51:42+00:00\n"
+"POT-Creation-Date: 2026-09-26T07:59:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
@@ -373,17 +373,17 @@ msgstr ""
 msgid "No matching location found"
 msgstr ""
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr ""
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr ""
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -396,81 +396,81 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr ""
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr ""
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr ""
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
 msgid "Code"
 msgstr ""
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr ""
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr ""
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr ""
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr ""
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr ""
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr ""
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr ""
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr ""
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr ""
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr ""
 

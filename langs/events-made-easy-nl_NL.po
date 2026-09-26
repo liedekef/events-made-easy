@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T21:43:07+00:00\n"
-"PO-Revision-Date: 2026-08-25 19:15:56+0000\n"
+"POT-Creation-Date: 2026-09-26T07:59:36+00:00\n"
+"PO-Revision-Date: 2026-09-22 17:04:52+0000\n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/4.1.0\n"
@@ -119,6 +119,11 @@ msgstr "%1$d locaties (%2$sWeergeven%3$s)"
 #: includes/eme-formfields.php:311
 msgid "%1$d events (%2$sView%3$s)"
 msgstr "%1$d evenementen (%2$sWeergeven%3$s)"
+
+#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+#: includes/eme-formfields.php:306
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr "%1$d boekingen (%2$sIn afwachting%3$s | %4$sGoedgekeurd%5$s)"
 
 #: includes/eme-formfields.php:184
 msgid "Error: there is already a field with that name."
@@ -2555,61 +2560,61 @@ msgstr "Handmatige invoer"
 msgid "Select a person"
 msgstr "Kies een persoon"
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr "Negeren"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr "Dit advies niet meer tonen"
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr "Instellingen wijzigen"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr "Documentatie shortcodes"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr "Documentatie template-tags"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr "Widgetspagina"
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Vaste spatie invoegen"
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visueel"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Invoegen uit mediabibliotheek"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Invoegen"
@@ -9402,7 +9407,7 @@ msgstr "Selecteer één of meerdere personen"
 msgid "Permalinks"
 msgstr "Permalinks"
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
@@ -9475,7 +9480,7 @@ msgstr "Alleen gebruikt in shortcodes"
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
@@ -9625,7 +9630,7 @@ msgstr "%1$d e-mails verzonden, %2$d e-mails gefaald, %3$d e-mails nog te doen"
 msgid "Ongoing"
 msgstr "Bezig"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -9880,6 +9885,14 @@ msgstr "Opmaak van de pagina als betaling van een lidmaatschaps-aanmelding geluk
 #: includes/eme-options.php:2785
 msgid "Payment membership success return page format"
 msgstr "Opmaak van de pagina als de betaling voor lidmaatschap gelukt is"
+
+#: includes/eme-options.php:2784
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr "Het format van de retourpagina wanneer de betaling is mislukt of is geannuleerd voor boekingen."
+
+#: includes/eme-options.php:2783
+msgid "The format of the return page when the payment is succesfull for bookings."
+msgstr "Het format van de retourpagina wanneer de betaling succesvol is voor boekingen."
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1718
@@ -11685,7 +11698,7 @@ msgstr "Aanpassen mislukt: "
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11827,18 +11840,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hi, <strong>%1$s</strong>, welkom bij <strong>Evenents Made Easy</strong>! We hopen dat je het hier naar je zin hebt.</p><p>Nu is het tijd om evenementenlijsten in te voegen via <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>sjabloontags</a> of <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>Trouwens, heb je al eens gekeken naar de <a href='%8$s' title='%9$s'>Instellingenpagina</a>? Daar kun je aanpassen hoe evenementen en locaties worden weergegeven.</p><p>Wat? Moe van dit advies? Ik snap het, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>klik hier</a> en je ziet dit niet meer!</p>"
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -12977,6 +12990,14 @@ msgstr "De lay-out van het  boekingsformulier.  #_NAME, #_EMAIL en #_SEATS zijn 
 #: includes/eme-events.php:6604
 msgid "RSVP form format"
 msgstr "RSVP formulier formaat"
+
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
+msgstr "Vink deze optie uit als je het boekingsformulier niet opnieuw wil weergeven na een succesvolle boeking."
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr "Boekingsformulier opnieuw weergeven na boeking?"
 
 #: includes/eme-events.php:7555
 #: includes/eme-options.php:2045
@@ -14352,7 +14373,7 @@ msgid "Date"
 msgstr "Datum"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
@@ -15476,24 +15497,3 @@ msgstr "Nee"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Ja"
-
-#: includes/eme-options.php:2046
-msgid "Show booking form again after booking?"
-msgstr "Toon boekingsformulier terug na boeking?"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
-msgstr "Vink deze optie af als je het boekingssformulier niet opnieuw wil tonen na een geslaagde boeking."
-
-#: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for bookings."
-msgstr "Opmaak van de pagina als betaling van een boeking gelukt is."
-
-#: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for bookings."
-msgstr "Opmaak van de pagina als betaling van een boeking niet gelukt of geannuleerd is."
-
-#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-#: includes/eme-formfields.php:306
-msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr "%1$d boekingen (%2$sIn afwachting%3$s | %4$sGoedgekeurd%5$s)"

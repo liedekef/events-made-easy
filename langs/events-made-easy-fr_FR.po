@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Fred17 <f14m07@netc.fr>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-16 11:59+0200\n"
+"POT-Creation-Date: 2026-09-26T07:59:36+00:00\n"
+"PO-Revision-Date: 2026-09-24 16:57:18+0000\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: GlotPress/4.1.0\n"
 
 #: includes/eme-import.php:203
 msgid "Imported locations without valid coordinates in the CSV are saved without them; use the button below to resolve them afterwards via the public nominatim.openstreetmap.org geocoding service (throttled to 1 request/second, so this can take a while for many locations. The resolving stops if you leave this page, when you come back and want to continue press the button again."
@@ -119,6 +119,11 @@ msgstr "%1$d emplacements (%2$sAfficher%3$s)"
 #: includes/eme-formfields.php:311
 msgid "%1$d events (%2$sView%3$s)"
 msgstr "%1$d évènements (%2$sAfficher%3$s)"
+
+#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
+#: includes/eme-formfields.php:306
+msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
+msgstr "%1$d réservations (%2$sEn attente%3$s | %4$sApprouvées%5$s)"
 
 #: includes/eme-formfields.php:184
 msgid "Error: there is already a field with that name."
@@ -2555,61 +2560,61 @@ msgstr "Entrée manuelle"
 msgid "Select a person"
 msgstr "Sélectionner une personne"
 
-#: includes/eme-actions.php:762
+#: includes/eme-actions.php:760
 msgid "List of next 10 events"
 msgstr "Liste des 10 prochains évènements"
 
-#: includes/eme-actions.php:627
+#: includes/eme-actions.php:625
 msgid "Dismiss"
 msgstr "Ignorer"
 
-#: includes/eme-actions.php:615
+#: includes/eme-actions.php:613
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy a été installé ou mis à jour"
 
-#: includes/eme-actions.php:604
+#: includes/eme-actions.php:602
 msgid "Don't show this advice again"
 msgstr "Ne plus afficher ce conseil"
 
-#: includes/eme-actions.php:603
+#: includes/eme-actions.php:601
 msgid "Change settings"
 msgstr "Modifier les paramètres"
 
-#: includes/eme-actions.php:601
+#: includes/eme-actions.php:599
 msgid "Shortcodes documentation"
 msgstr "Documentation sur les codes courts"
 
-#: includes/eme-actions.php:599
+#: includes/eme-actions.php:597
 msgid "Template tags documentation"
 msgstr "Documentation sur les balises de modèle"
 
-#: includes/eme-actions.php:597
+#: includes/eme-actions.php:595
 msgid "Widgets page"
 msgstr "Page Widgets"
 
-#: includes/eme-actions.php:517
+#: includes/eme-actions.php:515
 #: includes/eme-events.php:9710
 msgid "Insert non-breaking space"
 msgstr "Insérer une espace insécable"
 
-#: includes/eme-actions.php:515
+#: includes/eme-actions.php:513
 #: includes/eme-events.php:9708
 msgid "Visual"
 msgstr "Visuel"
 
-#: includes/eme-actions.php:514
+#: includes/eme-actions.php:512
 #: includes/eme-cleanup.php:474
 #: includes/eme-cleanup.php:490
 #: includes/eme-events.php:9707
 msgid "Preview"
 msgstr "Aperçu"
 
-#: includes/eme-actions.php:513
+#: includes/eme-actions.php:511
 #: includes/eme-events.php:9706
 msgid "Insert from Media Library"
 msgstr "Insérer depuis la médiathèque"
 
-#: includes/eme-actions.php:511
+#: includes/eme-actions.php:509
 #: includes/eme-events.php:9704
 msgid "Insert"
 msgstr "Insérer"
@@ -4443,7 +4448,7 @@ msgstr "Réglages de présence"
 
 #: includes/eme-options.php:2051
 msgid "RSVP forms format"
-msgstr "RSVP : format du formulaire"
+msgstr "Format des formulaires de réservation"
 
 #: includes/eme-events.php:6585
 msgid "Generic RSVP info"
@@ -5755,7 +5760,7 @@ msgstr "(%d sièges sur liste d’attente inclus)"
 
 #: includes/eme-formfields.php:381
 msgid "If you select 'RSVP field', 'People field' or 'Members field', this field will show up as an extra column in the overview table for bookings, people or members. Selecting 'Generic' will cause it to show up in the overview table for bookings or members."
-msgstr "Si vous sélectionnez « Champ RSVP », « Champ personnes » ou « Champ membres », ce champ s’affichera comme une colonne supplémentaire dans le tableau récapitulatif des réservations, des personnes ou des membres. Si vous sélectionnez « Générique », elle s’affichera dans le tableau récapitulatif des réservations ou des membres."
+msgstr "Si vous sélectionnez « Champ de réservation », « Champ de personne » ou « Champ de membre », ce champ s’affichera comme une colonne supplémentaire dans le tableau récapitulatif des réservations, des personnes ou des membres. Si vous sélectionnez « Générique », elle s’affichera dans le tableau récapitulatif des réservations ou des membres."
 
 #: includes/eme-options.php:3497
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
@@ -8233,7 +8238,7 @@ msgstr "Nom du modèle"
 
 #: includes/eme-locations.php:3333
 msgid "View location"
-msgstr "Voir le lieu"
+msgstr "Voir la localisation"
 
 #: includes/eme-events.php:6767
 #: includes/eme-events.php:9811
@@ -9123,7 +9128,7 @@ msgstr "Ceci n'est PAS utilisé pour les lieux d'événements, uniquement pour l
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
 #: includes/eme-countries.php:185
 msgid "For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here."
-msgstr "Pour les informations personnelles (personnes, membres, évènement rsvp), EME vous permet d’utiliser l’auto-complétion sur les états, en fonction du choix du pays. Cependant, comme il y a trop d’états et de langues, il est impossible de fournir cette liste dans EME lui-même. Donc, si vous souhaitez utiliser les informations de pays et d’état, vous devez saisir les pays et les états ici."
+msgstr "Pour les informations personnelles (personnes, membres, évènement et réservation), EME vous permet d’utiliser l’autocomplétion sur les états, en fonction du choix du pays. Cependant, comme il y a trop d’états et de langues, il est impossible de fournir cette liste dans EME lui-même. Donc, si vous souhaitez utiliser les informations de pays et d’état, vous devez saisir les pays et les états ici."
 
 #. translators: "state" refers to a geographical region (e.g., province, canton, department)
 #: includes/eme-countries.php:181
@@ -9235,7 +9240,7 @@ msgstr "Cochez cette option si vous souhaitez que les formulaires de réservatio
 
 #: includes/eme-options.php:2019
 msgid "RSVP check no accents (diacritics)?"
-msgstr "vérifier que la réservation n’a aucun accent (signes diacritiques) ?"
+msgstr "Vérifier qu’il n’y ait aucun accent (signes diacritiques) dans la réservation ?"
 
 #: includes/eme-events.php:9901
 msgid "Unique read count"
@@ -9410,7 +9415,7 @@ msgstr "Sélectionnez une ou plusieurs personnes"
 msgid "Permalinks"
 msgstr "Permaliens"
 
-#: includes/eme-actions.php:616
+#: includes/eme-actions.php:614
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Faire un don pour le développement d'Events Made Easy"
 
@@ -9483,7 +9488,7 @@ msgstr "Utilisé uniquement dans les codes courts"
 msgid "An error has occurred"
 msgstr "Une erreur est survenue"
 
-#: includes/eme-actions.php:510
+#: includes/eme-actions.php:508
 #: includes/eme-events.php:9703
 msgid "Insert image"
 msgstr "Image non définie"
@@ -9554,7 +9559,7 @@ msgstr "Envoyer un email"
 #. Description of the plugin
 #: events-manager.php
 msgid "Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, Stripe, Mollie and others."
-msgstr "Gérer et afficher les évènements et les adhésions. Comprend également des évènements récurrents ; Emplacements ; widgets ; Plans ; RSVP ; Flux ICAL et RSS ; Paypal, 2Checkout et autres."
+msgstr "Gérer et afficher les évènements et les adhésions. Inclus également les évènements récurrents ; emplacements ; widgets ; Plans ; réservations ; Flux ICAL et RSS ; Paypal, 2Checkout et autres."
 
 #: includes/eme-templates.php:297
 msgid "The heigth of the PDF document (in pt)"
@@ -9633,7 +9638,7 @@ msgstr "%1$d e-mails envoyés,%2$d e-mails ont échoué, %3$d e-mails laissés"
 msgid "Ongoing"
 msgstr "En cours"
 
-#: includes/eme-actions.php:512
+#: includes/eme-actions.php:510
 #: includes/eme-cleanup.php:427
 #: includes/eme-events.php:6784
 #: includes/eme-events.php:9705
@@ -9888,6 +9893,14 @@ msgstr "Le format de la page de retour lorsque le paiement de l’adhésion est 
 #: includes/eme-options.php:2785
 msgid "Payment membership success return page format"
 msgstr "Format de la page de retour de réussite du paiement de l’adhésion"
+
+#: includes/eme-options.php:2784
+msgid "The format of the return page when the payment failed or has been canceled for bookings."
+msgstr "Le format de la page de redirection lorsque le paiement a échoué ou a été annulé pour les réservations."
+
+#: includes/eme-options.php:2783
+msgid "The format of the return page when the payment is succesfull for bookings."
+msgstr "Le format de la page de redirection lorsque le paiement d'une réservation a été effectué avec succès."
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1718
@@ -11693,7 +11706,7 @@ msgstr "Mise à jour a échoué : "
 msgid "Access denied!"
 msgstr "Accès refusé !"
 
-#: includes/eme-actions.php:516
+#: includes/eme-actions.php:514
 #: includes/eme-countries.php:311
 #: includes/eme-discounts.php:1483
 #: includes/eme-events.php:9709
@@ -11795,7 +11808,7 @@ msgstr "Cochez cette option si vous souhaitez envoyer des courriers pour les ré
 
 #: includes/eme-options.php:2095
 msgid "Enable pending RSVP emails?"
-msgstr "Activer les e-mails des RSVP en attente ?"
+msgstr "Activer les e-mails de réservation en attente ?"
 
 #: includes/eme-cleanup.php:459
 msgid "Remove unconfirmed bookings older than"
@@ -11835,18 +11848,18 @@ msgstr "https://www.e-dynamics.be/wordpress"
 #. Plugin Name of the plugin
 #: events-manager.php
 #: events-manager.php:359
-#: includes/eme-actions.php:757
+#: includes/eme-actions.php:755
 #: includes/eme-gdpr.php:553
 #: includes/eme-gdpr.php:559
 #: includes/eme-gdpr.php:760
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
-#: includes/eme-actions.php:594
+#: includes/eme-actions.php:592
 msgid "<p>Hey, <strong>%1$s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%2$s' title='%3$s'>widgets</a>, <a href='%4$s' title='%5$s'>template tags</a> or <a href='%6$s' title='%7$s'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%8$s' title='%9$s'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title='%10$s'>click here</a> and you won't see this again!</p>"
 msgstr "<p>Hey, <strong>%1$s</strong>, Bienvenue à <strong>Events Made Easy</strong>! Nous espérons que vous l'aimerez ici.</p><p>Maintenant il est temps d’insérer des listes d’évènements à travers<a href='%2$s' title=' Page des widgets'>widgets</a>, <a href='%3$s' title='Documentation sur les marqueurs de modèles'>marqueurs de modèle</a> ou <a href='%4$s' title='Documentation des codes courts'>codes courts</a>.</p><p>Au fait, avez-vous jeté un coup d’œil aux <a href='%5$s' title='Changer les paramètres'> Pages des paramètres</a> ? C'est là que vous personnalisez la manière dont les évènements et les emplacements sont affichés.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous entends, <a href=\"%6$s\" title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"
 
-#: includes/eme-actions.php:618
+#: includes/eme-actions.php:616
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Si vous trouvez qu’<strong>Events Made Easy</strong> vous est utile, envisagez de faire un petit don pour contribuer au temps investi et aux développements ultérieurs. Merci de votre soutien !"
 
@@ -12986,6 +12999,14 @@ msgstr "La mise en page du formulaire pour les réservations. #_NAME, #_EMAIL et
 msgid "RSVP form format"
 msgstr "Format du formulaire de réservation"
 
+#: includes/eme-options.php:2046
+msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
+msgstr "Désélectionnez cette option si vous ne souhaitez pas que le formulaire de réservation s'affiche à nouveau après une réservation réussie."
+
+#: includes/eme-options.php:2046
+msgid "Show booking form again after booking?"
+msgstr "Afficher à nouveau le formulaire de réservation après la réservation ?"
+
 #: includes/eme-events.php:7555
 #: includes/eme-options.php:2045
 msgid "Booking recorded message"
@@ -13768,7 +13789,7 @@ msgstr "Sélectionnez « Oui » pour activer la fonctionnalité de réservatio
 
 #: includes/eme-options.php:1536
 msgid "Use RSVP?"
-msgstr "Utiliser RSVP ?"
+msgstr "Utiliser le système de réservation ?"
 
 #: includes/eme-options.php:1535
 msgid "When the qtranslate plugin is installed and activated, this setting will be ignored and always considered 'Yes'."
@@ -13980,7 +14001,7 @@ msgstr "Adresse du lieu"
 #: includes/eme-locations.php:592
 #: includes/eme-locations.php:902
 msgid "Location name"
-msgstr "Nom du lieu"
+msgstr "Nom de la localisation"
 
 #: includes/eme-events.php:10272
 #: includes/eme-locations.php:583
@@ -14360,7 +14381,7 @@ msgid "Date"
 msgstr "Date"
 
 #. translators: %s is the URL to the settings page
-#: includes/eme-actions.php:566
+#: includes/eme-actions.php:564
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Cette page correspond à la page des évènements <strong>Events Made Easy</strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à <strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
 
@@ -15484,24 +15505,3 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
-
-#. translators: 1: number of bookings, 2: link to pending bookings, 3: link to approved bookings
-#: includes/eme-formfields.php:306
-msgid "%1$d bookings (%2$sPending%3$s | %4$sApproved%5$s)"
-msgstr "%1$d réservations (%2$sEn attente%3$s | %4$sApprouvées%5$s)"
-
-#: includes/eme-options.php:2783
-msgid "The format of the return page when the payment is succesfull for bookings."
-msgstr "Le format de la page de retour lorsque le paiement est réussi pour la réservation."
-
-#: includes/eme-options.php:2784
-msgid "The format of the return page when the payment failed or has been canceled for bookings."
-msgstr "Le format de la page de redirection lorsque le paiement a échoué ou a été annulé pour les réservations."
-
-#: includes/eme-options.php:2046
-msgid "Show booking form again after booking?"
-msgstr "Afficher à nouveau le formulaire de réservation après la réservation ?"
-
-#: includes/eme-options.php:2046
-msgid "Uncheck this option if you don't want to show the booking form again after a successful booking."
-msgstr "Décochez cette option si vous ne souhaitez plus afficher le formulaire de réservation après une réservation réussie."

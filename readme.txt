@@ -99,6 +99,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.21  (2026//) =
+* Mollie API update
+* FS form suppports generic placeholders inside the form format too
+
 = 3.2.20  (2026/09/26) =
 * use setHTML in some cases, improvement in security over innerHTML
 * fix csv/print reports from within the booking screen

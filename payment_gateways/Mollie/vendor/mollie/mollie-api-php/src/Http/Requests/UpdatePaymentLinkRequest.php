@@ -1,15 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Http\Requests;
 
 use Mollie\Api\Contracts\HasPayload;
 use Mollie\Api\Contracts\SupportsTestmodeInPayload;
+use Mollie\Api\Http\Data\Address;
+use Mollie\Api\Http\Data\DataCollection;
+use Mollie\Api\Http\Data\Money;
 use Mollie\Api\Resources\PaymentLink;
 use Mollie\Api\Traits\HasJsonPayload;
 use Mollie\Api\Types\Method;
 
 /**
  * @see https://docs.mollie.com/reference/v2/payment-links-api/update-payment-link
+ *
+ * @extends ResourceHydratableRequest<\Mollie\Api\Resources\PaymentLink>
  */
 class UpdatePaymentLinkRequest extends ResourceHydratableRequest implements HasPayload, SupportsTestmodeInPayload
 {
@@ -20,22 +27,18 @@ class UpdatePaymentLinkRequest extends ResourceHydratableRequest implements HasP
     /**
      * The resource class the request should be casted to.
      */
-    protected $hydratableResource = PaymentLink::class;
+    protected ?string $hydratableResource = PaymentLink::class;
 
-    private string $id;
-
-    private string $description;
-
-    private bool $archived;
-
-    private ?array $allowedMethods;
-
-    public function __construct(string $id, string $description, bool $archived = false, ?array $allowedMethods = null)
-    {
-        $this->id = $id;
-        $this->description = $description;
-        $this->archived = $archived;
-        $this->allowedMethods = $allowedMethods;
+    public function __construct(
+        private string $id,
+        private string $description,
+        private bool $archived = false,
+        private ?array $allowedMethods = null,
+        private ?DataCollection $lines = null,
+        private ?Address $billingAddress = null,
+        private ?Address $shippingAddress = null,
+        private ?Money $minimumAmount = null,
+    ) {
     }
 
     protected function defaultPayload(): array
@@ -44,6 +47,10 @@ class UpdatePaymentLinkRequest extends ResourceHydratableRequest implements HasP
             'description' => $this->description,
             'archived' => $this->archived,
             'allowedMethods' => $this->allowedMethods,
+            'minimumAmount' => $this->minimumAmount,
+            'lines' => $this->lines,
+            'billingAddress' => $this->billingAddress,
+            'shippingAddress' => $this->shippingAddress,
         ];
     }
 

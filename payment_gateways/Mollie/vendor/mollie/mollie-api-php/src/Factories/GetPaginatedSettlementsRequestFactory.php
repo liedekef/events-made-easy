@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Factories;
 
 use Mollie\Api\Http\Requests\GetPaginatedSettlementsRequest;
@@ -12,6 +14,9 @@ class GetPaginatedSettlementsRequestFactory extends RequestFactory
             $this->query('from'),
             $this->query('limit'),
             $this->query('balanceId'),
+            $this->query('year'),
+            $this->query('month'),
+            $this->query('currencies'),
         );
     }
 }

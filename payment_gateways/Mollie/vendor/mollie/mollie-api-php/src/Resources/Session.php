@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
+use Mollie\Api\Http\Data\Address;
+use Mollie\Api\Http\Data\Money;
 use Mollie\Api\Traits\HasMode;
 use Mollie\Api\Types\SessionStatus;
+use Mollie\Api\Utils\Utility;
 
 /**
  * @property \Mollie\Api\MollieApiClient $connector
@@ -12,168 +17,64 @@ class Session extends BaseResource
 {
     use HasMode;
 
-    /**
-     * The session's unique identifier,
-     *
-     * @example sess_dfsklg13jO
-     *
-     * @var string
-     */
-    public $id;
+    public string $id;
+
+    public SessionStatus|string $status;
+
+    public string $clientAccessToken;
+
+    public string $redirectUrl;
+
+    public ?string $cancelUrl = null;
+
+    public Money $amount;
+
+    public string $description;
+
+    public ?Address $shippingAddress = null;
+
+    public ?Address $billingAddress = null;
+
+    public ?string $customerId = null;
+
+    public ?string $sequenceType = null;
 
     /**
-     * Status of the session.
-     *
-     * @var string
+     * @var object|array|null
      */
-    public $status;
+    public $metadata = null;
 
     /**
-     * UTC datetime indicating the time at which the Session failed in ISO-8601 format.
-     *
-     * @example "2013-12-25T10:30:54+00:00"
-     *
-     * @var string|null
+     * @var \stdClass|null
      */
-    public $failedAt;
+    public $payment = null;
 
     /**
-     * Unique identifier to record the Userʼs authentication with a method
-     *
-     * @var string
+     * @var array|object[]|null
      */
-    public $authenticationId;
+    public ?array $lines = null;
 
     /**
-     * Indicates the next action to take in the payment preparation flow.
-     *
-     * @var string
-     */
-    public $nextAction;
-
-    /**
-     * The URL the buyer will be redirected to in case the
-     * payment preparation process requires a 3rd party redirect.
-     *
-     * @var string
-     */
-    public $redirectUrl;
-
-    /**
-     * The URL the buyer will be redirected to if they
-     * cancel their payment during a 3rd party redirect..
-     *
-     * @var string
-     */
-    public $cancelUrl;
-
-    /**
-     * The amount you intend to charge containing the value and currency.
-     *
-     * Note - this is not necessarily the final amount of the
-     * payment.You will specify the final amount upon Order creation
-     *
-     * @var \stdClass
-     */
-    public $amount;
-
-    /**
-     * Description of the payment intent.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Payment method currently selected by the shopper.
-     *
-     * @var string
-     */
-    public $method;
-
-    /**
-     * All additional information relating to the selected method.
-     *
-     * @var \stdClass
-     */
-    public $methodDetails;
-
-    /**
-     * The person and the address the payment is shipped to.
-     *
-     * @deprecated
-     *
-     * @var \stdClass
-     */
-    public $shippingAddress;
-
-    /**
-     * The person and the address the payment is billed to.
-     *
-     * @deprecated
-     *
-     * @var \stdClass
-     */
-    public $billingAddress;
-
-    /**
-     * An object with several URL objects relevant to the customer. Every URL object will contain an href and a type field.
-     *
      * @var \stdClass
      */
     public $_links;
 
-    public function isCreated()
+    public function isOpen(): bool
     {
-        return $this->status === SessionStatus::STATUS_CREATED;
+        return Utility::equals($this->status, SessionStatus::Open);
     }
 
-    public function isReadyForProcessing()
+    public function isExpired(): bool
     {
-        return $this->status === SessionStatus::STATUS_READY_FOR_PROCESSING;
+        return Utility::equals($this->status, SessionStatus::Expired);
     }
 
-    public function isCompleted()
+    public function isCompleted(): bool
     {
-        return $this->status === SessionStatus::STATUS_COMPLETED;
+        return Utility::equals($this->status, SessionStatus::Completed);
     }
 
-    public function hasFailed()
-    {
-        return $this->status === SessionStatus::STATUS_FAILED;
-    }
-
-    /**
-     * Saves the session's updatable properties.
-     *
-     * @return \Mollie\Api\Resources\Session
-     *
-     * @throws \Mollie\Api\Exceptions\ApiException
-     */
-    public function update()
-    {
-        $body = [
-            'billingAddress' => $this->billingAddress,
-            'shippingAddress' => $this->shippingAddress,
-        ];
-
-        return $this->connector->sessions->update($this->id, $this->withMode($body));
-    }
-
-    /**
-     * Cancels this session.
-     *
-     * @throws \Mollie\Api\Exceptions\ApiException
-     */
-    public function cancel(): void
-    {
-        $this->connector->sessions->cancel($this->id);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getRedirectUrl()
+    public function getRedirectUrl(): ?string
     {
         if (empty($this->_links->redirect)) {
             return null;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Http\Requests;
 
 use Mollie\Api\Contracts\HasPayload;
@@ -12,6 +14,8 @@ use Mollie\Api\Types\Method;
 
 /**
  * @see https://docs.mollie.com/reference/v2/refunds-api/create-refund
+ *
+ * @extends ResourceHydratableRequest<\Mollie\Api\Resources\Refund>
  */
 class CreatePaymentRefundRequest extends ResourceHydratableRequest implements HasPayload, SupportsTestmodeInPayload
 {
@@ -25,47 +29,23 @@ class CreatePaymentRefundRequest extends ResourceHydratableRequest implements Ha
     /**
      * The resource class the request should be casted to.
      */
-    protected $hydratableResource = Refund::class;
-
-    private string $paymentId;
-
-    private string $description;
+    protected ?string $hydratableResource = Refund::class;
 
     private Money $amount;
 
-    private ?array $metadata;
-
-    private ?bool $reverseRouting;
-
-    private ?DataCollection $routingReversals;
-
-    /**
-     * @deprecated When using positional arguments, this triggers a PHP 8+ deprecation warning
-     *             because optional parameter $description comes before required parameter $amount.
-     *             Use named parameters instead: new CreatePaymentRefundRequest(paymentId: $id, amount: $amount, description: $desc)
-     *             Or use the factory method: CreatePaymentRefundRequest::for($id, $amount, $desc)
-     *
-     * @param string $paymentId The payment ID to refund
-     * @param string $description Optional description for the refund
-     * @param Money $amount The amount to refund (required)
-     * @param array|null $metadata Optional metadata
-     * @param bool|null $reverseRouting Optional reverse routing flag
-     * @param DataCollection|null $routingReversals Optional routing reversals
-     */
     public function __construct(
-        string $paymentId,
-        string $description = '',
-        Money $amount,
-        ?array $metadata = null,
-        ?bool $reverseRouting = null,
-        ?DataCollection $routingReversals = null
+        private string $paymentId,
+        private string $description = '',
+        ?Money $amount = null,
+        private ?array $metadata = null,
+        private ?bool $reverseRouting = null,
+        private ?DataCollection $routingReversals = null,
     ) {
-        $this->paymentId = $paymentId;
-        $this->description = $description;
+        if ($amount === null) {
+            throw new \InvalidArgumentException('The amount parameter is required.');
+        }
+
         $this->amount = $amount;
-        $this->metadata = $metadata;
-        $this->reverseRouting = $reverseRouting;
-        $this->routingReversals = $routingReversals;
     }
 
     /**

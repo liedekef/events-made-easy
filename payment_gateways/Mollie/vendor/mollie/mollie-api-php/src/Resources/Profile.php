@@ -1,72 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Http\Requests\DynamicGetRequest;
 use Mollie\Api\Types\ProfileStatus;
+use Mollie\Api\Utils\Utility;
 
 /**
  * @property \Mollie\Api\MollieApiClient $connector
  */
 class Profile extends BaseResource
 {
-    /**
-     * @var string
-     */
-    public $id;
+    public string $id;
 
     /**
-     * Test or live mode
-     *
-     * @var string
+     * Test or live mode.
      */
-    public $mode;
+    public string $mode;
+
+    public string $name;
+
+    public ?string $website = null;
+
+    public ?string $email = null;
+
+    public ?string $phone = null;
 
     /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $website;
-
-    /**
-     * @var string
-     */
-    public $email;
-
-    /**
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * See https://docs.mollie.com/reference/v2/profiles-api/get-profile
-     * This parameter is deprecated and will be removed in 2022. Please use the businessCategory parameter instead.
+     * Deprecated — use businessCategory instead.
      *
      * @deprecated
-     *
-     * @var int|null
      */
-    public $categoryCode;
+    public int|string|null $categoryCode = null;
+
+    public ?string $businessCategory = null;
+
+    public ProfileStatus|string|null $status = null;
 
     /**
-     * See https://docs.mollie.com/reference/v2/profiles-api/get-profile
-     *
-     * @var string|null
-     */
-    public $businessCategory;
-
-    /**
-     * @var string
-     */
-    public $status;
-
-    /**
-     * @var \stdClass
+     * @var \stdClass|null
      */
     public $review;
 
@@ -74,29 +49,27 @@ class Profile extends BaseResource
      * UTC datetime the profile was created in ISO-8601 format.
      *
      * @example "2013-12-25T10:30:54+00:00"
-     *
-     * @var string
      */
-    public $createdAt;
+    public ?string $createdAt = null;
 
     /**
-     * @var \stdClass
+     * @var \stdClass|null
      */
     public $_links;
 
     public function isUnverified(): bool
     {
-        return $this->status == ProfileStatus::UNVERIFIED;
+        return Utility::equals($this->status, ProfileStatus::Unverified);
     }
 
     public function isVerified(): bool
     {
-        return $this->status == ProfileStatus::VERIFIED;
+        return Utility::equals($this->status, ProfileStatus::Verified);
     }
 
     public function isBlocked(): bool
     {
-        return $this->status == ProfileStatus::BLOCKED;
+        return Utility::equals($this->status, ProfileStatus::Blocked);
     }
 
     /**
@@ -119,33 +92,37 @@ class Profile extends BaseResource
     /**
      * Retrieves all chargebacks associated with this profile
      *
+     * This method performs an API request. Avoid calling it once per profile in
+     * loops unless that extra request per item is intentional.
+     *
      * @throws ApiException
      */
     public function chargebacks(): ChargebackCollection
     {
-        if (! isset($this->_links->chargebacks->href)) {
-            return ChargebackCollection::withResponse($this->response, $this->connector);
-        }
+        $href = $this->_links->chargebacks->href ?? "profiles/{$this->id}/chargebacks";
+        $query = isset($this->_links->chargebacks->href) ? [] : ['testmode' => $this->mode === 'test'];
 
         return $this
             ->connector
-            ->send((new DynamicGetRequest($this->_links->chargebacks->href))->setHydratableResource(ChargebackCollection::class));
+            ->send((new DynamicGetRequest($href, $query))->setHydratableResource(ChargebackCollection::class));
     }
 
     /**
      * Retrieves all methods activated on this profile
      *
+     * This method performs an API request. Avoid calling it once per profile in
+     * loops unless that extra request per item is intentional.
+     *
      * @throws ApiException
      */
     public function methods(): MethodCollection
     {
-        if (! isset($this->_links->methods->href)) {
-            return MethodCollection::withResponse($this->response, $this->connector);
-        }
+        $href = $this->_links->methods->href ?? "profiles/{$this->id}/methods";
+        $query = isset($this->_links->methods->href) ? [] : ['testmode' => $this->mode === 'test'];
 
         return $this
             ->connector
-            ->send((new DynamicGetRequest($this->_links->methods->href))->setHydratableResource(MethodCollection::class));
+            ->send((new DynamicGetRequest($href, $query))->setHydratableResource(MethodCollection::class));
     }
 
     /**
@@ -173,32 +150,36 @@ class Profile extends BaseResource
     /**
      * Retrieves all payments associated with this profile
      *
+     * This method performs an API request. Avoid calling it once per profile in
+     * loops unless that extra request per item is intentional.
+     *
      * @throws ApiException
      */
     public function payments(): PaymentCollection
     {
-        if (! isset($this->_links->payments->href)) {
-            return PaymentCollection::withResponse($this->response, $this->connector);
-        }
+        $href = $this->_links->payments->href ?? "profiles/{$this->id}/payments";
+        $query = isset($this->_links->payments->href) ? [] : ['testmode' => $this->mode === 'test'];
 
         return $this
             ->connector
-            ->send((new DynamicGetRequest($this->_links->payments->href))->setHydratableResource(PaymentCollection::class));
+            ->send((new DynamicGetRequest($href, $query))->setHydratableResource(PaymentCollection::class));
     }
 
     /**
      * Retrieves all refunds associated with this profile
      *
+     * This method performs an API request. Avoid calling it once per profile in
+     * loops unless that extra request per item is intentional.
+     *
      * @throws ApiException
      */
     public function refunds(): RefundCollection
     {
-        if (! isset($this->_links->refunds->href)) {
-            return RefundCollection::withResponse($this->response, $this->connector);
-        }
+        $href = $this->_links->refunds->href ?? "profiles/{$this->id}/refunds";
+        $query = isset($this->_links->refunds->href) ? [] : ['testmode' => $this->mode === 'test'];
 
         return $this
             ->connector
-            ->send((new DynamicGetRequest($this->_links->refunds->href))->setHydratableResource(RefundCollection::class));
+            ->send((new DynamicGetRequest($href, $query))->setHydratableResource(RefundCollection::class));
     }
 }

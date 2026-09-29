@@ -2,15 +2,15 @@
 
 namespace Mollie\Api\Resources;
 
-class SessionCollection extends CursorCollection
+class PayoutCollection extends CursorCollection
 {
     /**
      * The name of the collection resource in Mollie's API.
      */
-    public static string $collectionName = 'sessions';
+    public static string $collectionName = 'payouts';
 
     /**
      * Resource class name.
      */
-    public static string $resource = Session::class;
+    public static string $resource = Payout::class;
 }

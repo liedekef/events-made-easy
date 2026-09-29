@@ -9,6 +9,7 @@ use Mollie\Api\Http\Data\Owner;
 use Mollie\Api\Resources\ClientLink;
 use Mollie\Api\Http\Data\OwnerAddress;
 use Mollie\Api\Http\Requests\CreateClientLinkRequest;
+use Mollie\Api\Types\ApprovalPrompt;
 
 try {
     // Create a client link for a new merchant
@@ -21,9 +22,9 @@ try {
                 familyName: 'Doe',
                 locale: 'en_US'
             ),
-            organizationName: 'Example Store',
+            name: 'Example Store',
             address: new OwnerAddress(
-                countryCode: 'NL',
+                country: 'NL',
                 streetAndNumber: 'Keizersgracht 313',
                 postalCode: '1016 EE',
                 city: 'Amsterdam'
@@ -35,13 +36,13 @@ try {
 
     // Generate the redirect URL for the merchant
     $redirectUrl = $clientLink->getRedirectUrl(
-        clientId: 'app_j9Pakf56Ajta6Y65AkdTtAv',
+        client_id: 'app_j9Pakf56Ajta6Y65AkdTtAv',
         state: bin2hex(random_bytes(8)),  // Random state to prevent CSRF
-        prompt: 'force',  // Always show login screen
         scopes: [
             'onboarding.read',
             'onboarding.write'
-        ]
+        ],
+        approval_prompt: ApprovalPrompt::Force->value  // Always show login screen
     );
 
     // Redirect the merchant to complete their onboarding
@@ -56,15 +57,19 @@ try {
 ```php
 $clientLink->id;          // "csr_wJPGBj7sFr"
 $clientLink->resource;    // "client-link"
-$clientLink->status;      // "pending"
-$clientLink->createdAt;   // "2024-02-24T12:13:14+00:00"
-$clientLink->expiresAt;   // "2024-02-25T12:13:14+00:00"
+$clientLink->_links;      // \stdClass with the clientLink href
 ```
+
+`ClientLink` declares only `id` and `_links` (plus `resource` from the base
+resource). There is no `status`, `createdAt` or `expiresAt` on this resource;
+build the onboarding URL with `getRedirectUrl()` and track onboarding state
+through the Onboarding API.
 
 ## Additional Notes
 
 - Client links are used to onboard new merchants to Mollie through your app
-- The link expires after 24 hours
+- The link expires after 24 hours, though the resource does not expose an expiry field
+- `getRedirectUrl()` takes `client_id`, `state`, `scopes` and `approval_prompt`; `approval_prompt` accepts only `auto` or `force` and throws otherwise
 - Required merchant information:
   - Owner details (name, email, locale)
   - Organization details (name, address)
@@ -74,9 +79,40 @@ $clientLink->expiresAt;   // "2024-02-25T12:13:14+00:00"
   - Random and unique
   - Stored in your session
   - Verified when the merchant returns to prevent CSRF attacks
-- Available scopes:
-  - `onboarding.read`: View onboarding status
-  - `onboarding.write`: Update onboarding information
+- Available scopes (see [Permissions](https://docs.mollie.com/docs/permissions)):
+  - `balances.read`: View the merchant's balances information
+  - `balance-transfers.read`: View the merchant's balance transfers
+  - `balance-transfers.write`: Create balance transfers for the merchant
+  - `customers.read`: View the merchant's customers
+  - `customers.write`: Manage the merchant's customers
+  - `external-accounts.read`: View the merchant's external accounts
+  - `external-accounts.write`: Manage the merchant's external accounts
+  - `invoices.read`: View the merchant's invoices
+  - `mandates.read`: View the merchant's mandates
+  - `mandates.write`: Manage the merchant's mandates
+  - `onboarding.read`: View the merchant's onboarding status
+  - `onboarding.write`: Submit onboarding data for the merchant
+  - `orders.read`: View the merchant's orders
+  - `orders.write`: Manage the merchant's orders
+  - `organizations.read`: View the merchant's organizational details
+  - `organizations.write`: Change the merchant's organizational details
+  - `payment-links.read`: View the merchant's payment links
+  - `payment-links.write`: Create payment links for the merchant
+  - `payments.read`: View the merchant's payments, chargebacks and payment methods
+  - `payments.write`: Create payments for the merchant (added to the merchant's balance)
+  - `persons.read`: View the merchant's persons and stakeholders
+  - `persons.write`: Manage the merchant's persons and stakeholders
+  - `profiles.read`: View the merchant's website profiles
+  - `profiles.write`: Manage the merchant's website profiles
+  - `refunds.read`: View the merchant's refunds
+  - `refunds.write`: Create or cancel refunds
+  - `settlements.read`: View the merchant's settlements
+  - `shipments.read`: View the merchant's order shipments
+  - `shipments.write`: Manage the merchant's order shipments
+  - `subscriptions.read`: View the merchant's subscriptions
+  - `subscriptions.write`: Manage the merchant's subscriptions
+  - `terminals.read`: View the merchant's point-of-sale terminals
+  - `terminals.write`: Manage the merchant's point-of-sale terminals
 - The merchant will need to:
   1. Create a Mollie account or log in
   2. Connect their account to your app

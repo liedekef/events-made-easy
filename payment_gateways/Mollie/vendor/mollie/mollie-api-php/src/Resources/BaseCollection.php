@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use ArrayObject;
@@ -9,6 +11,11 @@ use Mollie\Api\Contracts\IsResponseAware;
 use Mollie\Api\Traits\HasResponse;
 use Mollie\Api\Utils\Arr;
 
+/**
+ * @template TItem of object
+ *
+ * @extends ArrayObject<int, TItem>
+ */
 abstract class BaseCollection extends ArrayObject implements IsResponseAware
 {
     use HasResponse;
@@ -51,7 +58,7 @@ abstract class BaseCollection extends ArrayObject implements IsResponseAware
         $filteredItems = array_filter($this->getArrayCopy(), $callback);
 
         /** @phpstan-ignore-next-line */
-        return (new static($this->connector, $filteredItems,  $this->_links))->setResponse($this->response);
+        return (new static($this->connector, $filteredItems,  $this->_links))->setOrigin($this->getOrigin());
     }
 
     public function first()

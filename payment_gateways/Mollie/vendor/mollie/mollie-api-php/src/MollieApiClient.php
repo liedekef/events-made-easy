@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api;
 
 use Mollie\Api\Contracts\Connector;
@@ -30,6 +32,7 @@ use Mollie\Api\EndpointCollection\PaymentLinkEndpointCollection;
 use Mollie\Api\EndpointCollection\PaymentLinkPaymentEndpointCollection;
 use Mollie\Api\EndpointCollection\PaymentRefundEndpointCollection;
 use Mollie\Api\EndpointCollection\PaymentRouteEndpointCollection;
+use Mollie\Api\EndpointCollection\PayoutEndpointCollection;
 use Mollie\Api\EndpointCollection\PermissionEndpointCollection;
 use Mollie\Api\EndpointCollection\ProfileEndpointCollection;
 use Mollie\Api\EndpointCollection\ProfileMethodEndpointCollection;
@@ -44,6 +47,7 @@ use Mollie\Api\EndpointCollection\SettlementRefundEndpointCollection;
 use Mollie\Api\EndpointCollection\SubscriptionEndpointCollection;
 use Mollie\Api\EndpointCollection\SubscriptionPaymentEndpointCollection;
 use Mollie\Api\EndpointCollection\TerminalEndpointCollection;
+use Mollie\Api\EndpointCollection\TerminalPairingCodeEndpointCollection;
 use Mollie\Api\EndpointCollection\WalletEndpointCollection;
 use Mollie\Api\EndpointCollection\WebhookEndpointCollection;
 use Mollie\Api\EndpointCollection\WebhookEventEndpointCollection;
@@ -94,6 +98,7 @@ use Mollie\Api\Utils\Url;
  * @property PaymentRefundEndpointCollection $paymentRefunds
  * @property PaymentRouteEndpointCollection $paymentRoutes
  * @property PermissionEndpointCollection $permissions
+ * @property PayoutEndpointCollection $payouts
  * @property ProfileEndpointCollection $profiles
  * @property ProfileMethodEndpointCollection $profileMethods
  * @property RefundEndpointCollection $refunds
@@ -107,6 +112,7 @@ use Mollie\Api\Utils\Url;
  * @property SubscriptionEndpointCollection $subscriptions
  * @property SubscriptionPaymentEndpointCollection $subscriptionPayments
  * @property TerminalEndpointCollection $terminals
+ * @property TerminalPairingCodeEndpointCollection $terminalPairingCodes
  * @property WalletEndpointCollection $wallets
  * @property WebhookEndpointCollection $webhooks
  * @property WebhookEventEndpointCollection $webhookEvents
@@ -128,7 +134,7 @@ class MollieApiClient implements Connector
     /**
      * Version of our client.
      */
-    public const CLIENT_VERSION = '3.9.0';
+    public const CLIENT_VERSION = '4.0.0';
 
     /**
      * Endpoint of the remote API.

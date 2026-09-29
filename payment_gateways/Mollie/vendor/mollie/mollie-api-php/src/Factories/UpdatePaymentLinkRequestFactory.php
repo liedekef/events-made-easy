@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Factories;
 
+use Mollie\Api\Http\Data\Address;
 use Mollie\Api\Http\Requests\UpdatePaymentLinkRequest;
 
 class UpdatePaymentLinkRequestFactory extends RequestFactory
@@ -20,6 +23,10 @@ class UpdatePaymentLinkRequestFactory extends RequestFactory
             $this->payload('description'),
             $this->payload('archived', false),
             $this->payload('allowedMethods'),
+            $this->transformFromPayload('lines', fn ($items) => ! empty($items) ? OrderLineCollectionFactory::new($items)->create() : null),
+            $this->transformFromPayload('billingAddress', fn ($item) => Address::fromArray($item)),
+            $this->transformFromPayload('shippingAddress', fn ($item) => Address::fromArray($item)),
+            $this->transformFromPayload('minimumAmount', fn ($amount) => MoneyFactory::new($amount)->create()),
         );
     }
 }

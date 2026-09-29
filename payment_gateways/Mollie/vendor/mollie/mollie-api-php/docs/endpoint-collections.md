@@ -46,7 +46,7 @@ use Mollie\Api\Http\Data\CreatePaymentPayload;
 
 $payment = $mollie->payments->create([
     'description' => 'My first API payment',
-    'amount' => new Money('EUR', '10.00')
+    'amount' => new Money(currency: 'EUR', value: '10.00')
 ]);
 ```
 
@@ -67,7 +67,7 @@ $createPaymentRequest = CreatePaymentRequestFactory::new([
 
 // Partially untyped
 $createPaymentRequest = CreatePaymentRequestFactory::new([
-    'amount' => new Money('EUR', '10.00'),
+    'amount' => new Money(currency: 'EUR', value: '10.00'),
     'description' => 'My first API payment'
 ]);
 ```
@@ -213,7 +213,7 @@ $invoices = $mollie->invoices->page(
 ```php
 // Create a mandate for a customer
 $mandate = $mollie->mandates->createFor($customer, [
-    'method' => \Mollie\Api\Types\PaymentMethod::DIRECTDEBIT,
+    'method' => \Mollie\Api\Types\PaymentMethod::Directdebit,
     'consumerName' => 'John Doe',
     'consumerAccount' => 'NL55INGB0000000000',
     'consumerBic' => 'INGBNL2A',
@@ -239,7 +239,7 @@ $mandates = $mollie->mandates->pageFor($customer);
 
 ```php
 // Get a method
-$method = $mollie->methods->get(\Mollie\Api\Types\PaymentMethod::IDEAL);
+$method = $mollie->methods->get(\Mollie\Api\Types\PaymentMethod::Ideal);
 
 // List all methods
 $methods = $mollie->methods->all();
@@ -259,14 +259,14 @@ $methods = $mollie->methods->allEnabled([
 // Enable an issuer
 $issuer = $mollie->methodIssuers->enable(
     'pfl_v9hTwCvYqw',
-    \Mollie\Api\Types\PaymentMethod::IDEAL,
+    \Mollie\Api\Types\PaymentMethod::Ideal,
     'ideal_INGBNL2A'
 );
 
 // Disable an issuer
 $mollie->methodIssuers->disable(
     'pfl_v9hTwCvYqw',
-    \Mollie\Api\Types\PaymentMethod::IDEAL,
+    \Mollie\Api\Types\PaymentMethod::Ideal,
     'ideal_INGBNL2A'
 );
 ```
@@ -301,7 +301,7 @@ $partner = $mollie->organizations->partnerStatus();
 
 ## Permissions
 
-[Official Documentation](https://docs.mollie.com/reference/v2/permissions-api/get-permission)
+[API Reference](https://docs.mollie.com/reference/v2/permissions-api/get-permission) · [Full list of permission scopes](https://docs.mollie.com/docs/permissions)
 
 ### Permission Management
 
@@ -426,13 +426,13 @@ $profiles = $mollie->profiles->page();
 // Enable a method
 $method = $mollie->profileMethods->enable(
     'pfl_v9hTwCvYqw',
-    \Mollie\Api\Types\PaymentMethod::IDEAL
+    \Mollie\Api\Types\PaymentMethod::Ideal
 );
 
 // Disable a method
 $mollie->profileMethods->disable(
     'pfl_v9hTwCvYqw',
-    \Mollie\Api\Types\PaymentMethod::IDEAL
+    \Mollie\Api\Types\PaymentMethod::Ideal
 );
 ```
 
@@ -467,19 +467,18 @@ use Mollie\Api\Types\VatMode;
 use Mollie\Api\Types\VatScheme;
 use Mollie\Api\Types\PaymentTerm;
 use Mollie\Api\Types\RecipientType;
-use Mollie\Api\Types\RecipientType;
 use Mollie\Api\Types\SalesInvoiceStatus;
 
 // Create a sales invoice
 $salesInvoice = $mollie->salesInvoices->create([
     'currency' => 'EUR',
-    'status' => SalesInvoiceStatus::DRAFT,
-    'vatScheme' => VatScheme::STANDARD,
-    'vatMode' => VatMode::INCLUSIVE,
-    'paymentTerm' => PaymentTerm::DAYS_30,
+    'status' => SalesInvoiceStatus::Draft,
+    'vatScheme' => VatScheme::Standard,
+    'vatMode' => VatMode::Inclusive,
+    'paymentTerm' => PaymentTerm::Days30,
     'recipientIdentifier' => 'XXXXX',
     'recipient' => [
-        'type' => RecipientType::CONSUMER,
+        'type' => RecipientType::Consumer,
         'email' => 'darth@vader.deathstar',
         'streetAndNumber' => 'Sample Street 12b',
         'postalCode' => '2000 AA',
@@ -618,6 +617,42 @@ $terminal = $mollie->terminals->get('terminalId');
 
 // List terminals
 $terminals = $mollie->terminals->page();
+```
+
+## Terminal Pairing Codes
+
+Official Documentation:
+[Request pairing code](https://docs.mollie.com/reference/terminals-request-pairing-code),
+[Get pairing code](https://docs.mollie.com/reference/terminals-get-pairing-code),
+[List pairing codes](https://docs.mollie.com/reference/terminals-list-pairing-codes),
+[Revoke pairing code](https://docs.mollie.com/reference/terminals-revoke-pairing-code)
+
+### Terminal Pairing Code Management
+
+```php
+// Request a pairing code, including QR code details
+$pairingCode = $mollie->terminalPairingCodes->request('profileId', includeQrCode: true);
+
+// Get a pairing code, including QR code details
+$pairingCode = $mollie->terminalPairingCodes->get('pairingCodeId', includeQrCode: true);
+
+// List pairing codes
+$pairingCodes = $mollie->terminalPairingCodes->page(limit: 50, profileId: 'profileId');
+
+// Use iterator
+foreach ($mollie->terminalPairingCodes->iterator(profileId: 'profileId') as $pairingCode) {
+    echo $pairingCode->id;
+}
+
+// Revoke a pairing code
+$pairingCode = $mollie->terminalPairingCodes->revoke('pairingCodeId');
+
+// Check pairing code status using helper methods
+if ($pairingCode->isActive()) {
+    echo "Pairing code is active\n";
+} elseif ($pairingCode->isRevoked()) {
+    echo "Pairing code was revoked at: {$pairingCode->revokedAt}\n";
+}
 ```
 
 ## Wallets

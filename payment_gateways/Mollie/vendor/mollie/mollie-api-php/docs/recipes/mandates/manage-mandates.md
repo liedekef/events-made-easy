@@ -13,7 +13,7 @@ try {
     $mandate = $mollie->send(
         new CreateMandateRequest(
             customerId: 'cst_8wmqcHMN4U',
-            method: MandateMethod::DIRECTDEBIT,
+            method: MandateMethod::Directdebit->value,
             consumerName: 'B. A. Example',
             consumerAccount: 'NL34ABNA0243341423'
         )
@@ -29,21 +29,36 @@ try {
 
 ```php
 use Mollie\Api\Http\Requests\GetPaginatedMandateRequest;
+use Mollie\Api\Types\MandateQuery;
+use Mollie\Api\Types\MandateStatus;
 
 try {
     // List all mandates for a customer
     $response = $mollie->send(
         new GetPaginatedMandateRequest(
-            customerId: 'cst_8wmqcHMN4U'
+            customerId: 'cst_8wmqcHMN4U',
+            scopes: [MandateQuery::SCOPE_CUSTOMER_NOT_PRESENT]
         )
     );
 
     foreach ($response as $mandate) {
+        $status = $mandate->status instanceof MandateStatus
+            ? $mandate->status->value
+            : ($mandate->status ?? 'not available');
+
         echo "Mandate {$mandate->id}:\n";
-        echo "- Method: {$mandate->method}\n";
-        echo "- Status: {$mandate->status}\n";
-        echo "- Details: {$mandate->details->consumerName}\n";
-        echo "          {$mandate->details->consumerAccount}\n\n";
+        echo "- Method: " . ($mandate->method ?? 'not available') . "\n";
+        echo "- Status: {$status}\n";
+
+        if (isset($mandate->details->consumerName)) {
+            echo "- Consumer: {$mandate->details->consumerName}\n";
+        }
+
+        if (isset($mandate->details->consumerAccount)) {
+            echo "- Account: {$mandate->details->consumerAccount}\n";
+        }
+
+        echo "\n";
     }
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
     echo "API call failed: " . htmlspecialchars($e->getMessage());
@@ -74,9 +89,9 @@ try {
 
 ```php
 $mandate->id;                // "mdt_h3gAaD5zP"
-$mandate->status;           // "valid", "pending", "invalid"
-$mandate->method;           // "directdebit"
-$mandate->details;          // Object containing mandate details
+$mandate->status;           // MandateStatus case, unknown raw string, or null
+$mandate->method;           // Payment method string, or null
+$mandate->details;          // Mandate details object, or null
 $mandate->customerId;       // "cst_8wmqcHMN4U"
 $mandate->createdAt;        // "2024-02-24T12:13:14+00:00"
 $mandate->signatureDate;    // "2024-02-24" (optional)
@@ -95,3 +110,6 @@ $mandate->mandateReference; // "YOUR-COMPANY-MD13804" (optional)
   - `valid`: The mandate is valid and can be used for payments
   - `pending`: The mandate is pending and cannot be used yet
   - `invalid`: The mandate is invalid and cannot be used
+- Mandates can be filtered by scope when listing:
+  - `MandateQuery::SCOPE_CUSTOMER_PRESENT`
+  - `MandateQuery::SCOPE_CUSTOMER_NOT_PRESENT`

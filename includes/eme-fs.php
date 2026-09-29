@@ -272,15 +272,16 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
         #_ATT{} of #_ATT{}{}{} 
         #_PROP{} of #_PROP{}{}{}
         #_CUSTOMFIELD{}
-        if ( preg_match( '/#_FIELD\{(.+?)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
+        if ( preg_match( '/#_FIELD\{(.+?)\}(\{.*?\})?(\{.+?\})?$/', $result, $matches ) ) {
             $field = eme_sanitize_request($matches[1]);
-            if ( isset( $matches[2] ) ) {
+            if ( !empty( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $type = substr( $matches[2], 1, -1 );
             }
-            if ( isset( $matches[3] ) ) {
+            if ( !empty( $matches[3] ) ) {
                 // remove { and } (first and last char of second match)
                 $more = substr( $matches[3], 1, -1 );
+                $more = eme_replace_generic_placeholders( $more );
             }
             // for now date/time
             if ( $field == 'event_start_date' ) {
@@ -299,7 +300,7 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
             if ($field!="location_latitude" && $field!="location_longitude") {
                 // try to be intelligent: if a property exists, we use the property
                 if (!isset($empty_event[$field]) && isset($empty_event['event_properties'][$field])) {
-                    $replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
+                    $replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $field);
                 } else {
                     $replacement = eme_get_fs_field_html($field, $type , $more , $required);
                 }
@@ -320,26 +321,28 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
                     $longitude_added = 1;
                 }
             }
-        } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
+        } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.*?\})?(\{.+?\})?/', $result, $matches ) ) {
             $att = eme_sanitize_request($matches[1]);
-            if ( isset( $matches[2] ) ) {
+            if ( !empty( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $type = substr( $matches[2], 1, -1 );
             }
-            if ( isset( $matches[3] ) ) {
+            if ( !empty( $matches[3] ) ) {
                 // remove { and } (first and last char of second match)
                 $more = substr( $matches[3], 1, -1 );
+                $more = eme_replace_generic_placeholders( $more );
             }
             $replacement = eme_get_fs_field_html('event-attributes', 'att-'.$type , $more , $required, $att);
-        } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
+        } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.*?\})?(\{.+?\})?/', $result, $matches ) ) {
             $prop = eme_sanitize_request($matches[1]);
-            if ( isset( $matches[2] ) ) {
+            if ( !empty( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
                 $type = substr( $matches[2], 1, -1 );
             }
-            if ( isset( $matches[3] ) ) {
+            if ( !empty( $matches[3] ) ) {
                 // remove { and } (first and last char of second match)
                 $more = substr( $matches[3], 1, -1 );
+                $more = eme_replace_generic_placeholders( $more );
             }
             $replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
         } elseif ( preg_match( '/#_CUSTOMFIELD\{(.+?)\}$/', $result, $matches ) ) {

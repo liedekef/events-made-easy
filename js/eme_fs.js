@@ -140,4 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // if an initial value is present, act on it
+    if (locationNameInput.value.length >= 2) {
+        locationNameInput.dispatchEvent(new Event('input'));
+    }
+
 });

@@ -1,5 +1,5 @@
 {
     "require": {
-        "mollie/mollie-api-php": "^3.0"
+        "mollie/mollie-api-php": "^4.0"
     }
 }

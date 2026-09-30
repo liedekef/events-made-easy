@@ -441,6 +441,9 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
             case 'location_name':
                 $required = 1;
                 $type     = 'search';
+                // picking a location from the suggestions locks the fields, so the name
+                // needs a way to be emptied again
+                $more    .= " data-clearable='icon'";
                 break;
             case 'event_name':
                 $required = 1;

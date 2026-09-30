@@ -657,7 +657,7 @@ function eme_add_options( $reset = 0 ) {
             </fieldset>
             </fieldset>
             <div class="input">
-            <label for="event_description">Description</label><br>
+            <label for="event_notes">Description</label><br>
             #REQ_FIELD{event_notes}
             </div>
 

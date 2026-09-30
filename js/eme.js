@@ -46,6 +46,286 @@ function eme_toggle(el, show) {
     //if (el) el.style.display = show ? '' : 'none';
 }
 
+// --- generic, type aware form field helpers ---
+// setting field.value is wrong for checkboxes/radios (they use checked) and for
+// multi selects, so all EME code that fills or empties fields goes through here
+const EME_CHECKABLE_TYPES = ['checkbox', 'radio'];
+
+function eme_isCheckable(field) {
+    return !!field && EME_CHECKABLE_TYPES.includes(field.type);
+}
+
+function eme_setFieldValue(field, value) {
+    if (!field) return;
+    if (eme_isCheckable(field)) {
+        field.checked = (value === true || value === 1 || value === '1' || value === 'true');
+    } else if (field.multiple && field.options) {
+        const values = (Array.isArray(value) ? value : [value])
+            .map(v => (v === undefined || v === null) ? '' : String(v));
+        Array.from(field.options).forEach(option => {
+            option.selected = values.includes(option.value);
+        });
+    } else {
+        field.value = (value === undefined || value === null) ? '' : eme_htmlDecode(String(value));
+    }
+    eme_updateClearableIcon(field);
+}
+
+function eme_clearFieldValue(field) {
+    eme_setFieldValue(field, '');
+}
+
+// --- clearable inputs, showing an x to empty them ---
+// data-clearable marks the field. Its value picks the look: 'icon' only adds the x, the
+// default also gets the border and padding of .clearable
+function eme_clearableClassFor(field) {
+    if (!field || !field.classList) return null;
+    if (field.classList.contains('clearable')) return 'clearable';
+    if (field.classList.contains('eme-clearable')) return 'eme-clearable';
+    if (!field.dataset || !field.dataset.clearable) return null;
+    return field.dataset.clearable === 'icon' ? 'eme-clearable' : 'clearable';
+}
+
+function eme_isClearableField(field) {
+    return !!eme_clearableClassFor(field);
+}
+
+// filling a field from code (an autocomplete result for instance) fires no input event,
+// so the x has to be updated there too, else a locked field has no way to be emptied
+function eme_updateClearableIcon(field) {
+    const clearableClass = eme_clearableClassFor(field);
+    if (!clearableClass) return;
+    field.classList.toggle('x', !!field.value);
+}
+
+function eme_initClearableInputs() {
+    EME.$$('[data-clearable]').forEach(field => {
+        const clearableClass = eme_clearableClassFor(field);
+        if (clearableClass) field.classList.add(clearableClass);
+        eme_updateClearableIcon(field);
+    });
+}
+
+// The x only reacts after a mousemove over it, but a locked field can not be focused and a
+// touch has no mousemove at all, so also accept a click that lands on the icon itself.
+function eme_clearableHit(field, clientX) {
+    if (!field || !eme_hasClass(field, 'x') || !field.value) return false;
+    if (eme_hasClass(field, 'onX')) return true;
+    if (typeof clientX !== 'number' || clientX === 0) return false;
+    const rect = field.getBoundingClientRect();
+    return field.offsetWidth - 18 < clientX - rect.left;
+}
+
+// emptying the field fires change, so whatever listens to that can clean up (all the other
+// location fields for the location name for instance)
+function eme_clearFieldByIcon(field) {
+    if (!field || !field.value) return;
+    field.value = '';
+    eme_updateClearableIcon(field);
+    eme_removeClass(field, 'onX');
+    field.dispatchEvent(new Event('change'));
+}
+
+// Lock a field so the user can't change it, while the value is still submitted.
+// readOnly does nothing on checkboxes and selects, and disabled would drop the
+// value on submit, so checkables stay enabled and we just block the interaction
+function eme_lockField(field, locked = true) {
+    if (!field) return;
+    field.classList.toggle('eme-readonly', !!locked);
+    if (eme_isCheckable(field)) {
+        field.classList.toggle('eme-locked', !!locked);
+        if (locked && !field._emeLockGuard) {
+            field._emeLockGuard = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            field.addEventListener('click', field._emeLockGuard);
+            field.addEventListener('keydown', field._emeLockGuard);
+        } else if (!locked && field._emeLockGuard) {
+            field.removeEventListener('click', field._emeLockGuard);
+            field.removeEventListener('keydown', field._emeLockGuard);
+            delete field._emeLockGuard;
+        }
+    } else {
+        field.readOnly = !!locked;
+    }
+}
+
+// the same, but for a list of element ids
+function eme_lockFields(ids, locked = true) {
+    ids.forEach(id => eme_lockField(EME.$('#' + id), locked));
+}
+
+function eme_clearFields(ids) {
+    ids.forEach(id => eme_clearFieldValue(EME.$('#' + id)));
+}
+
+function eme_fillFields(map) {
+    Object.entries(map).forEach(([id, value]) => eme_setFieldValue(EME.$('#' + id), value));
+}
+
+// --- location fields ---
+// map of the location field element id => the key as returned by the
+// eme_autocomplete_locations ajax call. Elements that are not present in the
+// current form (a frontend form has no location properties for instance) are skipped
+// these live on the EME object and not in a const, so every file can reach them
+EME.locationFields = {
+    location_id: 'location_id',
+    location_name: 'name',
+    location_address1: 'address1',
+    location_address2: 'address2',
+    location_city: 'city',
+    location_state: 'state',
+    location_zip: 'zip',
+    location_country: 'country',
+    location_latitude: 'latitude',
+    location_longitude: 'longitude',
+    location_url: 'location_url',
+    eme_loc_prop_map_icon: 'map_icon',
+    eme_loc_prop_max_capacity: 'max_capacity',
+    eme_loc_prop_online_only: 'online_only'
+};
+EME.locationFieldIds = Object.keys(EME.locationFields);
+// the plain address parts, changing one of them asks the map to geocode again
+EME.locationAddressFields = [
+    'location_address1', 'location_address2', 'location_city', 'location_state',
+    'location_zip', 'location_country'
+];
+EME.locationCoordinateFields = ['location_latitude', 'location_longitude'];
+// for an online-only location these make no sense and the map is not shown
+EME.locationNoGeoFields = [
+    ...EME.locationAddressFields,
+    ...EME.locationCoordinateFields,
+    'eme_loc_prop_map_icon'
+];
+// typing or a browser autofill burst should end in one geocode request, not one per keystroke
+EME.locationGeocodeDelay = 500;
+
+function eme_fillLocationFields(item) {
+    eme_fillFields(Object.fromEntries(
+        Object.entries(EME.locationFields).map(([id, key]) => [id, item[key]])
+    ));
+}
+
+function eme_clearLocationFields() {
+    eme_clearFields(EME.locationFieldIds);
+}
+
+function eme_lockLocationFields(locked) {
+    eme_lockFields(EME.locationFieldIds, locked);
+}
+
+// Single place that decides which location fields are locked, so every caller
+// agrees. lockExisting is for the event form, where the fields of an existing
+// location are locked once one is picked; the location form itself keeps them
+// editable, there only the online-only rule applies
+function eme_updateLocationFieldState(opts = {}) {
+    const lockExisting = !!opts.lockExisting;
+    const idField = EME.$('#location_id');
+    const onlineField = EME.$('#eme_loc_prop_online_only');
+    const overrideField = EME.$('#eme_loc_prop_override_loc');
+    const hasLocation = !!(idField && idField.value && idField.value !== '0');
+    const onlineOnly = !!(onlineField && onlineField.checked);
+    const overrideLoc = !!(overrideField && overrideField.checked);
+
+    EME.locationFieldIds.forEach(id => {
+        // an online-only location has no address and no coordinates
+        const onlineLocked = onlineOnly && EME.locationNoGeoFields.includes(id);
+        const pickedLocked = lockExisting && hasLocation;
+        // the override coordinates checkbox wins from the lock of a picked
+        // location, but not from the online-only one
+        const overrideWins = lockExisting && overrideLoc && !onlineLocked && EME.locationCoordinateFields.includes(id);
+        eme_lockField(EME.$('#' + id), (pickedLocked || onlineLocked) && !overrideWins);
+    });
+
+    return { hasLocation, onlineOnly, overrideLoc };
+}
+
+// Autocomplete on the location name field, used by the admin event form and the
+// frontend submission form. Only present if the form has a location name field,
+// the admin event form can have a location dropdown instead
+function eme_initLocationAutocomplete(opts = {}) {
+    const input = EME.$('input#location_name');
+    if (!input) return false;
+
+    const fetchFn = opts.fetchFn || ((formData, callback) => fetch(opts.url, { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(callback)
+        .catch(() => console.warn('Location autocomplete request failed')));
+
+    const removeSuggestions = () => EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
+
+    let timeout;
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.eme-autocomplete-suggestions') && !e.target.closest('input#location_name')) {
+            removeSuggestions();
+        }
+    });
+
+    input.addEventListener('input', () => {
+        clearTimeout(timeout);
+        removeSuggestions();
+
+        if (input.value.length < 2) return;
+        timeout = setTimeout(() => {
+            const formData = new FormData();
+            if (opts.nonceField) formData.append(opts.nonceField, opts.nonceValue);
+            formData.append('name', input.value);
+            formData.append('action', 'eme_autocomplete_locations');
+
+            fetchFn(formData, (data) => {
+                if (!data) return;
+                const suggestions = document.createElement('div');
+                suggestions.className = 'eme-autocomplete-suggestions';
+
+                if (!data.length) {
+                    const noMatch = document.createElement('div');
+                    noMatch.className = 'eme-autocomplete-suggestion';
+                    noMatch.setHTML(`<strong>${opts.nomatchText || ''}</strong>`);
+                    suggestions.appendChild(noMatch);
+                }
+
+                data.forEach(item => {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'eme-autocomplete-suggestion';
+                    suggestion.setHTML(`<strong>${item.name}</strong><br><small>${item.address1} - ${item.city}</small>`);
+
+                    suggestion.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        eme_fillLocationFields(item);
+                        eme_updateLocationFieldState({ lockExisting: true });
+                        removeSuggestions();
+                        if (typeof opts.afterSelect === 'function') opts.afterSelect(item);
+                    });
+
+                    suggestions.appendChild(suggestion);
+                });
+
+                removeSuggestions();
+                input.insertAdjacentElement('afterend', suggestions);
+            });
+        }, 500);
+    });
+
+    input.addEventListener('change', () => {
+        if (input.value === '') {
+            eme_clearLocationFields();
+            eme_updateLocationFieldState({ lockExisting: true });
+            removeSuggestions();
+            if (typeof opts.afterClear === 'function') opts.afterClear();
+        }
+    });
+
+    eme_updateLocationFieldState({ lockExisting: true });
+
+    // a prefilled name (a frontend form for an existing event) shows the suggestions
+    if (opts.prefillSuggestions && input.value.length >= 2) {
+        input.dispatchEvent(new Event('input'));
+    }
+    return true;
+}
+
 function initSnapSelect(selector, options = {}) {
     // Convert selector to elements array
     const elements = typeof selector === 'string'
@@ -739,13 +1019,11 @@ document.addEventListener('DOMContentLoaded', function() {
     attachCalendarHandlers();
 
     // Clearable input with 'x'
+    eme_initClearableInputs();
+
     document.addEventListener('input', function(e) {
-        if (eme_hasClass(e.target, 'clearable')) {
-            if (e.target.value) {
-                eme_addClass(e.target, 'x');
-            } else {
-                eme_removeClass(e.target, 'x');
-            }
+        if (eme_isClearableField(e.target)) {
+            eme_updateClearableIcon(e.target);
         }
     });
 
@@ -761,22 +1039,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('click', function(e) {
-        if (eme_hasClass(e.target, 'onX')) {
+        if (eme_clearableHit(e.target, e.clientX)) {
             e.preventDefault();
-            eme_removeClass(e.target, 'x');
-            eme_removeClass(e.target, 'onX');
-            e.target.value = '';
-            e.target.dispatchEvent(new Event('change'));
+            eme_clearFieldByIcon(e.target);
         }
     });
 
     document.addEventListener('touchstart', function(e) {
-        if (eme_hasClass(e.target, 'onX')) {
+        if (eme_clearableHit(e.target, e.clientX)) {
             e.preventDefault();
-            eme_removeClass(e.target, 'x');
-            eme_removeClass(e.target, 'onX');
-            e.target.value = '';
-            e.target.dispatchEvent(new Event('change'));
+            eme_clearFieldByIcon(e.target);
         }
     });
 

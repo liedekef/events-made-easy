@@ -6225,7 +6225,9 @@ function eme_ajax_bookings_list() {
         if ( $trash ) {
             $line['edit_link'] = '';
         } else {
-            $line['edit_link'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=editBooking&booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
+            // ftable's theme draws the edit command button as an emoji and hides the span,
+            // so this looks the same as the other command buttons in these tables
+            $line['edit_link'] = "<a href='" . esc_url( wp_nonce_url( admin_url( "admin.php?page=$page&eme_admin_action=editBooking&booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) ) . "' title='" . esc_attr__( 'Edit', 'events-made-easy' ) . "' class='ftable-command-button ftable-edit-command-button'><span>" . esc_html__( 'Edit', 'events-made-easy' ) . "</span></a>";
         }
         if ( ! isset( $event_name_info[ $event_id ] ) ) {
             $event_name_info[ $event_id ] = "<strong><a href='" . esc_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] ) ) . "' title='" . esc_attr__( 'Edit event', 'events-made-easy' ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a></strong>';

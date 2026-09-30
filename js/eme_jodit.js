@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Jodit.defaultOptions.controls.insertNbsp = {
         text: '⎵',
-        tooltip: emeadmin.translate_insertnbsp,
+        tooltip: emejodit.translate_insertnbsp,
         exec: (editor) => editor.selection.insertHTML('&nbsp;'),
     };
 
@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
             </select>
             </label>
             <div style="text-align: right; margin-top: 10px;">
-            <button type="button" class="jodit-button jodit-button_primary eme-dialog-insert">${emeadmin.translate_insert}</button>
-            <button type="button" class="jodit-button jodit-button_secondary eme-dialog-cancel" style="margin-left: 8px;">${emeadmin.translate_cancel}</button>
+            <button type="button" class="jodit-button jodit-button_primary eme-dialog-insert">${emejodit.translate_insert}</button>
+            <button type="button" class="jodit-button jodit-button_secondary eme-dialog-cancel" style="margin-left: 8px;">${emejodit.translate_cancel}</button>
             </div>
         `;
 
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         resizable: false,
                         draggable: true,
                     });
-                    dialog.setHeader(emeadmin.translate_insertimage);
+                    dialog.setHeader(emejodit.translate_insertimage);
                     dialog.setContent(dialogContent);
                     dialog.setSize('300px','');
                     dialog.open();
@@ -135,12 +135,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             frame.open();
         },
-        tooltip: emeadmin.translate_insertfrommedia,
+        tooltip: emejodit.translate_insertfrommedia,
     };
 
     Jodit.defaultOptions.controls.preview = {
         icon: 'eye',
-        tooltip: emeadmin.translate_preview,
+        tooltip: emejodit.translate_preview,
         exec: async (editor) => {
             try {
                 const formData = new FormData();
@@ -150,15 +150,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('editor_id', editor.id);
                 formData.append('screen_id', pagenow);
                 if ($_GET['tab']) formData.append('eme_tab', $_GET['tab']);
-                formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-                formData.append('lang', emeadmin.translate_adminlocale)
+                formData.append('eme_admin_nonce', emejodit.translate_adminnonce);
+                formData.append('lang', emejodit.translate_adminlocale)
 
                 const response = await fetch(ajaxurl, { method: 'POST', body: formData });
                 const result = await response.json();
                 const rendered = result.success ? result.data.html : `<pre>Error: ${result.data}</pre>`;
 
                 const dialog = editor.dlg();
-                dialog.setHeader(emeadmin.translate_preview);
+                dialog.setHeader(emejodit.translate_preview);
                 dialog.setContent(rendered);
                 dialog.open();
             } catch (err) {
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showWordsCounter: false,
             link: { deriveUrlFromText: true },
             hidePoweredByJodit: true,
-            language: emeadmin.translate_flanguage,
+            language: emejodit.translate_flanguage,
             enter: 'br',
             askBeforePasteFromWord: false,
             processPasteFromWord: true,
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
             height: 'auto',
             toolbarSticky: false,
             toolbarAdaptive: false,
-            language: emeadmin.translate_flanguage,
+            language: emejodit.translate_flanguage,
             showCharsCounter: false,
             showWordsCounter: false,
             hidePoweredByJodit: true,

@@ -9699,20 +9699,6 @@ function eme_admin_enqueue_js() {
             'translate_fdateformat'                => EME_WP_DATE_FORMAT,
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
-            // jodit
-            'translate_insertimage'                => __('Insert image', 'events-made-easy' ),
-            'translate_insert'                     => __('Insert', 'events-made-easy' ),
-            'translate_cancel'                     => __('Cancel', 'events-made-easy' ),
-            'translate_insertfrommedia'            => __('Insert from Media Library', 'events-made-easy' ),
-            'translate_preview'                    => __('Preview', 'events-made-easy' ),
-            'translate_visual'                     => __('Visual', 'events-made-easy' ),
-            'translate_code'                       => __('Code', 'events-made-easy' ),
-            'translate_insertnbsp'                 => __('Insert non-breaking space', 'events-made-easy' ),
-            // edit-maps
-            'translate_map_zooming'                => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
-            'translate_default_map_icon'           => get_option( 'eme_location_map_icon' ),
-            'translate_osm_url'                    => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
-            'translate_osm_attribution'            => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
             // events
             'translate_nomatchlocation'            => __( 'No matching location found', 'events-made-easy' ),
             'translate_events'                     => __( 'Events', 'events-made-easy' ),
@@ -9929,6 +9915,19 @@ function eme_admin_enqueue_js() {
         }
 
         if (get_option( 'eme_htmleditor' ) == 'jodit') {
+            $translation_array = [
+                'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+                'translate_flanguage'       => $language,
+                'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
+                'translate_insert'          => __('Insert', 'events-made-easy' ),
+                'translate_cancel'          => __('Cancel', 'events-made-easy' ),
+                'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
+                'translate_preview'         => __('Preview', 'events-made-easy' ),
+                'translate_visual'          => __('Visual', 'events-made-easy' ),
+                'translate_code'            => __('Code', 'events-made-easy' ),
+                'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' )
+            ];
+            wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
             wp_enqueue_script('eme-jodit');
             wp_enqueue_style('jodit-css');
         }
@@ -9939,6 +9938,13 @@ function eme_admin_enqueue_js() {
     if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {
         if ( get_option( 'eme_map_is_active' ) ) {
             wp_enqueue_style( 'eme-leaflet-css' );
+            $translation_array = [
+                'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
+                'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
+                'translate_osm_url'          => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
+                'translate_osm_attribution'  => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
+            ];
+            wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
             wp_enqueue_script( 'eme-edit-maps' );
         }
     }

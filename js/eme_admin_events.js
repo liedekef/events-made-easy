@@ -395,189 +395,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function eme_event_location_autocomplete() {
-        const locationNameInput = EME.$('#location_name');
-        if (locationNameInput) {
-            let timeout;
-            
-            document.addEventListener('click', () => {
-                EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-            });
-
-            locationNameInput.addEventListener('input', function() {
-                clearTimeout(timeout);
-                EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-
-                const inputValue = this.value;
-                if (inputValue.length >= 2) {
-                    timeout = setTimeout(() => {
-                        const formData = new FormData();
-                        formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-                        formData.append('name', inputValue);
-                        formData.append('action', 'eme_autocomplete_locations');
-
-                        eme_postJSON(ajaxurl, formData, (data) => {
-                            const suggestions = document.createElement('div');
-                            suggestions.className = 'eme-autocomplete-suggestions';
-                            data.forEach(item => {
-                                const suggestion = document.createElement('div');
-                                suggestion.className = 'eme-autocomplete-suggestion';
-                                suggestion.setHTML(`<strong>${item.name}</strong><br><small>${item.address1} - ${item.city}</small>`);
-                                
-                                suggestion.addEventListener('click', (e) => {
-                                    e.preventDefault();
-                                    EME.$('#location_id').value = eme_htmlDecode(item.location_id);
-                                    EME.$('#location_name').value = eme_htmlDecode(item.name);
-                                    EME.$('#location_address1').value = eme_htmlDecode(item.address1);
-                                    EME.$('#location_address2').value = eme_htmlDecode(item.address2);
-                                    EME.$('#location_city').value = eme_htmlDecode(item.city);
-                                    EME.$('#location_state').value = eme_htmlDecode(item.state);
-                                    EME.$('#location_zip').value = eme_htmlDecode(item.zip);
-                                    EME.$('#location_country').value = eme_htmlDecode(item.country);
-                                    EME.$('#location_latitude').value = eme_htmlDecode(item.latitude);
-                                    EME.$('#location_longitude').value = eme_htmlDecode(item.longitude);
-                                    EME.$('#location_url').value = eme_htmlDecode(item.location_url);
-                                    EME.$('#eme_loc_prop_map_icon').value = eme_htmlDecode(item.map_icon);
-                                    EME.$('#eme_loc_prop_max_capacity').value = eme_htmlDecode(item.max_capacity);
-                                    EME.$('#eme_loc_prop_online_only').value = eme_htmlDecode(item.online_only);
-                                    
-                                    // Set all fields to readonly
-                                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
-                                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
-                                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                                        const field = EME.$(`#${fieldName}`);
-                                        if (field) field.readOnly = true;
-                                    });
-                                    
-                                    const onlineField = EME.$('#eme_loc_prop_online_only');
-                                    if (onlineField) onlineField.disabled = true;
-                                    
-                                    const editImg = EME.$('#img_edit_location');
-                                    if (editImg) eme_toggle(editImg, true);
-                                    
-                                    if (typeof L !== 'undefined' && emeadmin.translate_map_is_active === "true") {
-                                        eme_displayAddress(0);
-                                    }
-                                });
-                                
-                                suggestions.appendChild(suggestion);
-                            });
-
-                            if (!data.length) {
-                                const noMatch = document.createElement('div');
-                                noMatch.className = 'eme-autocomplete-suggestion';
-                                noMatch.setHTML(`<strong>${emeadmin.translate_nomatchlocation || 'No matches found'}</strong>`);
-                                suggestions.appendChild(noMatch);
-                            }
-
-                            EME.$$('.eme-autocomplete-suggestions').forEach(el => el.remove());
-                            locationNameInput.insertAdjacentElement('afterend', suggestions);
-                        });
-                    }, 500);
+        const initialized = eme_initLocationAutocomplete({
+            fetchFn: (formData, callback) => eme_postJSON(ajaxurl, formData, callback),
+            nonceField: 'eme_admin_nonce',
+            nonceValue: emeadmin.translate_adminnonce,
+            nomatchText: emeadmin.translate_nomatchlocation,
+            afterSelect: () => {
+                if (typeof L !== 'undefined' && emeadmin.translate_map_is_active === "true") {
+                    eme_displayAddress(0);
                 }
-            });
-
-            locationNameInput.addEventListener('change', function() {
-                if (this.value === '') {
-                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
-                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
-                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = EME.$(`#${fieldName}`);
-                        if (field) {
-                            field.value = '';
-                            field.readOnly = false;
-                        }
-                    });
-                    
-                    const onlineField = EME.$('#eme_loc_prop_online_only');
-                    if (onlineField) onlineField.disabled = false;
-                    
-                    const editImg = EME.$('#img_edit_location');
-                    if (editImg) eme_toggle(editImg, false);
-                }
-            });
-
-            const editImg = EME.$('#img_edit_location');
-            if (editImg) {
-                editImg.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    ['location_id', 'location_name', 'location_address1', 'location_address2', 'location_city', 
-                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
-                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = EME.$(`#${fieldName}`);
-                        if (field) field.readOnly = false;
-                    });
-                    
-                    const onlineField = EME.$('#eme_loc_prop_online_only');
-                    if (onlineField) onlineField.disabled = false;
-                    
-                    EME.$('#location_id').value = '';
-                    eme_toggle(editImg, false);
-                });
             }
+        });
 
-            // Set initial state
-            const locationIdInput = EME.$('#location_id');
-            if (locationIdInput) {
-                if (locationIdInput.value === '0' || locationIdInput.value === '') {
-                    ['location_name', 'location_address1', 'location_address2', 'location_city', 
-                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
-                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = EME.$(`#${fieldName}`);
-                        if (field) field.readOnly = false;
-                    });
-                    
-                    const onlineField = EME.$('#eme_loc_prop_online_only');
-                    if (onlineField) onlineField.disabled = false;
-                    
-                    if (editImg) eme_toggle(editImg, false);
-                } else {
-                    ['location_name', 'location_address1', 'location_address2', 'location_city', 
-                     'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude',
-                     'location_url', 'eme_loc_prop_map_icon', 'eme_loc_prop_max_capacity'].forEach(fieldName => {
-                        const field = EME.$(`#${fieldName}`);
-                        if (field) field.readOnly = true;
-                    });
-                    
-                    const onlineField = EME.$('#eme_loc_prop_online_only');
-                    if (onlineField) onlineField.disabled = true;
-                    
-                    if (editImg) eme_toggle(editImg, true);
-                }
+        if (initialized) return;
 
-                locationIdInput.addEventListener('change', function() {
-                    const editImg = EME.$('#img_edit_location');
-                    if (editImg) {
-                        eme_toggle(editImg, this.value);
+        // no location name field, so handle the location select dropdown
+        const locationSelect = EME.$('#location-select-id');
+        if (locationSelect) {
+            const selectFields = ['name', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'latitude', 'longitude'];
+            locationSelect.addEventListener('change', function() {
+                const formData = new FormData();
+                formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+                formData.append('id', this.value);
+                formData.append('action', 'eme_autocomplete_locations');
+
+                eme_postJSON(ajaxurl, formData, (item) => {
+                    selectFields.forEach(key => {
+                        eme_setFieldValue(EME.$(`input[name="location-select-${key}"]`), item[key]);
+                    });
+
+                    if (emeadmin.translate_map_is_active === 'true') {
+                        loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
                     }
                 });
-            }
-        } else {
-            // Handle location select dropdown
-            const locationSelect = EME.$('#location-select-id');
-            if (locationSelect) {
-                locationSelect.addEventListener('change', function() {
-                    const formData = new FormData();
-                    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-                    formData.append('id', this.value);
-                    formData.append('action', 'eme_autocomplete_locations');
-
-                    eme_postJSON(ajaxurl, formData, (item) => {
-                        EME.$('input[name="location-select-name"]').value = item.name;
-                        EME.$('input[name="location-select-address1"]').value = item.address1;
-                        EME.$('input[name="location-select-address2"]').value = item.address2;
-                        EME.$('input[name="location-select-city"]').value = item.city;
-                        EME.$('input[name="location-select-state"]').value = item.state;
-                        EME.$('input[name="location-select-zip"]').value = item.zip;
-                        EME.$('input[name="location-select-country"]').value = item.country;
-                        EME.$('input[name="location-select-latitude"]').value = item.latitude;
-                        EME.$('input[name="location-select-longitude"]').value = item.longitude;
-
-                        if (emeadmin.translate_map_is_active === 'true') {
-                            loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
-                        }
-                    });
-                });
-            }
+            });
         }
     }
 
@@ -635,11 +486,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             if (endDateField) endDateField.style.border = '1px solid #DFDFDF';
         }
-        
-        // Enable online_only checkbox before submit
-        const onlineField = EME.$('#eme_loc_prop_online_only');
-        if (onlineField) onlineField.disabled = false;
-        
+
         return true;
     }
 

@@ -576,20 +576,18 @@ function eme_meta_box_div_location_name( $location ) {
 }
 
 function eme_meta_box_div_location_name_for_event( $location ) {
-    if ( empty( $location['location_id'] ) ) {
-        $edit_link = "<img id='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Add location', 'events-made-easy' ) . "' title='" . __( 'Add location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
-        $location['location_id'] = 0;
+    if ( ! empty( $location['location_id'] ) ) {
+        echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
     } else {
-        $edit_link = "<img id='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
+        echo "<input type='hidden' id='location_id' name='location_id' value='0'>";
     }
-    echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 ?>
         <div id="loc_name" class="postbox">
             <h2>
                 <?php esc_html_e( 'Location name', 'events-made-easy' ); ?>
             </h2>
             <div class="inside">
-            <input name="location_name" id="location_name" type="text" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40"> <?php echo $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML built with esc_url() and esc_attr__() ?>
+            <input name="location_name" id="location_name" type="text" data-clearable="icon" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40">
             <br><span class="eme_smaller"><?php esc_html_e( 'This is an autocomplete field. If a name of an existing location matches, it will be suggested.', 'events-made-easy' ); ?></span>
             </div>
         </div>

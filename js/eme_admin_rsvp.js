@@ -188,14 +188,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 visibility: 'fixed',
                 columnResizable: false,
                 width: '1%',
-                listClass: 'ftable-command-column eme-ftable-center',
-                value: record => {
-                    const a = document.createElement('a');
-                    a.href = record.edit_link_url;
-                    a.textContent = emeadmin.translate_edit;
-                    a.className = 'button';
-                    return a;
-                }
+                // the anchor comes from php, it carries the ftable command button classes
+                listClass: 'ftable-command-column eme-ftable-center'
             };
         }
 

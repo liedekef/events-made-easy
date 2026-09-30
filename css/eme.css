@@ -94,6 +94,15 @@ div.eme-message-error {
     display: none !important; /* by default hidden, we'll show it via ajax when needed */
 }
 
+/* fields locked to the value of an existing location, they are still submitted */
+.eme-readonly:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+    background-color: #f0f0f1;
+}
+input.eme-locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* Printable stuff */
 body#printable {
     font-family: Geneva, Helvetica, Arial, sans-serif;
@@ -403,6 +412,15 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 .clearable.x  { background: url(../images/x.gif) no-repeat right 5px center !important; } /* (jQ) Show icon */
 .clearable.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
 .clearable::-ms-clear {display: none; width:0; height:0;} /* Remove IE default X */
+/* the same x, but for a field that keeps its own border and padding (the location name) */
+.eme-clearable{
+    background: url(../images/x.gif) no-repeat right -10px center;
+    padding-right: 18px;
+    transition: background 0.4s;
+}
+.eme-clearable.x  { background: url(../images/x.gif) no-repeat right 5px center !important; }
+.eme-clearable.onX{ cursor: pointer; }              /* hover cursor style */
+.eme-clearable::-ms-clear {display: none; width:0; height:0;}
 
 /* for the map marker on the global map */
 .eme-map-marker{

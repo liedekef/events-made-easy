@@ -396,8 +396,8 @@ function eme_admin_register_scripts() {
     if ( file_exists( $eme_css_name ) ) {
         wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
     }
-    wp_register_style( 'eme-ftable-css', EME_PLUGIN_URL . 'js/ftable/themes/lightcolor/gray/ftable.min.css' );
-    wp_register_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.css' );
+    wp_register_style( 'eme-ftable-css', EME_PLUGIN_URL . 'js/ftable/themes/lightcolor/gray/ftable.min.css', [], EME_VERSION );
+    wp_register_style( 'eme-select-css', EME_PLUGIN_URL . 'js/snapselect/snapselect.min.css', [], EME_VERSION );
     wp_register_style( 'eme-ftables-css', EME_PLUGIN_URL . 'css/ftables.css', [], EME_VERSION );
     eme_admin_enqueue_js();
 }

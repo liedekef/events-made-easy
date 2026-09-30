@@ -101,16 +101,18 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.21  (2026//) =
 * Mollie API update
-* FS form suppports generic placeholders inside the form format too
+* Frontend submit form suppports generic placeholders inside the form format too
+* Make the map work also in frontend submit (again)
+* Allow location autocomplete field to be cleared
 
 = 3.2.20  (2026/09/26) =
-* use setHTML in some cases, improvement in security over innerHTML
-* fix csv/print reports from within the booking screen
+* Use setHTML in some cases, improvement in security over innerHTML
+* Fix csv/print reports from within the booking screen
 
 = 3.2.19  (2026/09/22) =
-* fdatepicker update
-* make old #_EVENTPRINTBOOKINGSURL/LINK and CSV placeholders work again
-* small escape fixes
+* Fdatepicker update
+* Make old #_EVENTPRINTBOOKINGSURL/LINK and CSV placeholders work again
+* Small escape fixes
 
 = 3.2.18  (2026/09/12) =
 * Don't escape custom field answers for fields of type events/locations/memberships

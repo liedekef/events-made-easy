@@ -757,6 +757,7 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
                 });
         }
     });
+    // this is a just-in-case scenario ... should never be reached
     if (!found) {
         form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
     }
@@ -946,6 +947,7 @@ function eme_attach_dynamic_handlers(selector, isBooking) {
                 return;
             }
             if (debounced_family && event.target.id === 'familycount') {
+                disableSubmits('div#eme_dyndata_family'); // this disables the submit only when the dynamic family selector is present
                 debounced_family();
             }
             if (eme_hasClass(event.target, 'nodynamicupdates') || event.target.closest('fieldset.nodynamicupdates')) {

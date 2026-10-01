@@ -216,16 +216,9 @@ rsync -a --delete --exclude='.svn' "${RELEASE_DIR}/" "${SVN_TRUNK}/"
 
 # Handle SVN adds/deletes
 cd "$SVN_TRUNK"
-svn add --force . 2>/dev/null
-if svn status | grep -q '^!'; then
-    svn status | grep '^!' | awk '{print $NF}' | xargs svn delete
-fi
+svn add --force --quiet .
+svn status | sed -n 's/^! *//p' | xargs -r -d '\n' svn delete --quiet
 info "Trunk synced with release build"
-
-# Create the tag
-cd "$SVN_WC"
-svn cp "trunk" "tags/${VERSION}"
-info "Created SVN tag ${VERSION}"
 
 # Show what will be committed
 echo ""
@@ -246,9 +239,19 @@ if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
     exit 1
 fi
 
-# Commit
-svn commit -m "Release ${VERSION}" "$SVN_WC"
-info "Committed to WP.org SVN"
+# 1. Commit trunk (long timeout, WP.org is slow)
+if ! svn --config-option servers:global:http-timeout=900 \
+        commit -m "Release ${VERSION}" "$SVN_TRUNK"; then
+    fail "Trunk commit failed or timed out. Do NOT rerun blindly."
+    fail "Check: svn log -l 3 ${SVN_URL}/trunk"
+    fail "If it landed: svn revert -R ${SVN_TRUNK} && svn cleanup --remove-unversioned ${SVN_TRUNK} && svn up ${SVN_TRUNK}"
+    exit 1
+fi
+info "Trunk committed"
+
+# 2. Tag server-side (no upload)
+svn cp -m "Tag ${VERSION}" "${SVN_URL}/trunk" "${SVN_URL}/tags/${VERSION}"
+info "Created SVN tag ${VERSION}"
 
 echo ""
 echo -e "${GREEN}${BOLD}Release ${VERSION} deployed to WP.org!${NC}"

@@ -726,7 +726,6 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
     const form = document.getElementById(form_id);
     if (!form) return;
 
-    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
     let alldata = new FormData(form);
 
     const priceSpans = isBooking
@@ -738,6 +737,7 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
         const span = form.querySelector(sel);
         if (span) {
             found = true;
+            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
             span.setHTML('<span class="spinner">⟳</span>');
             alldata.set('action', action);
             alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
@@ -757,7 +757,6 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
                 });
         }
     });
-
     if (!found) {
         form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
     }
@@ -767,7 +766,6 @@ function eme_dynamic_data_json(form_id, isBooking = true) {
     const form = document.getElementById(form_id);
     if (!form) return;
 
-    form.querySelectorAll('input[type="submit"], button[type="submit"]').forEach(btn => eme_toggle(btn, false));
     let alldata = new FormData(form);
 
     const dataDivSel = 'div#eme_dyndata';
@@ -775,6 +773,7 @@ function eme_dynamic_data_json(form_id, isBooking = true) {
     const dataDiv = form.querySelector(dataDivSel);
 
     if (dataDiv) {
+        form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
         dataDiv.setHTML('<span class="spinner">⟳</span>');
         alldata.set('action', action);
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
@@ -802,11 +801,11 @@ function eme_dynamic_familymemberdata_json(form_id) {
     const form = document.getElementById(form_id);
     if (!form) return;
 
-    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
     let alldata = new FormData(form);
     const dataDiv = form.querySelector('div#eme_dyndata_family');
 
     if (dataDiv) {
+        form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
         dataDiv.setHTML('<span class="spinner">⟳</span>');
         alldata.set('action', 'eme_dyndata_familymember');
         alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
@@ -824,8 +823,6 @@ function eme_dynamic_familymemberdata_json(form_id) {
             .catch(() => {
                 form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
             });
-    } else {
-        form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, true));
     }
 }
 
@@ -930,6 +927,14 @@ function eme_handle_massmail(form_id, callback) {
 function eme_attach_dynamic_handlers(selector, isBooking) {
     EME.$$(selector).forEach(form => {
         const form_id = form.id;
+        const priceSel = isBooking
+            ? 'span#eme_calc_bookingprice, span#eme_calc_bookingprice_detail'
+            : 'span#eme_calc_memberprice, span#eme_calc_memberprice_detail';
+        const disableSubmits = (sel) => {
+            if (form.querySelector(sel)) {
+                form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+            }
+        };
         const debounced_data = eme_debounce(() => eme_dynamic_data_json(form_id, isBooking), 500);
         const debounced_price = eme_debounce(() => eme_dynamic_price_json(form_id, isBooking), 500);
         const debounced_family = !isBooking ? eme_debounce(() => eme_dynamic_familymemberdata_json(form_id), 500) : null;
@@ -945,12 +950,12 @@ function eme_attach_dynamic_handlers(selector, isBooking) {
             }
             if (eme_hasClass(event.target, 'nodynamicupdates') || event.target.closest('fieldset.nodynamicupdates')) {
                 if (eme_hasClass(event.target, 'dynamicprice')) {
-                    form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+                    disableSubmits(priceSel); // this disables the submit only when the dynamic price selector is present
                     debounced_price();
                 }
                 return;
             }
-            form.querySelectorAll('[type="submit"]').forEach(btn => eme_toggle(btn, false));
+            disableSubmits(priceSel + ', div#eme_dyndata'); // this disables the submit only when the dynamic price or data selector is present
             debounced_data();
         });
 

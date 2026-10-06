@@ -531,15 +531,13 @@ function eme_get_membership( $id ) {
     }
 }
 
-function eme_get_membership_stats( $ids ) {
-    global $wpdb;
-    $table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    if ( ! eme_is_list_of_int( $ids ) ) {
-        return false;
-    }
-    $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
-    $in_placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
+function eme_member_stats_current_period() {
+    $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
+    return $eme_date_obj->format( 'Y-m' );
+}
 
+// the months (YYYY-MM) we can still calculate from the members table, current month included
+function eme_member_stats_periods() {
     $eme_date_obj_now = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
     $remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
@@ -550,38 +548,115 @@ function eme_get_membership_stats( $ids ) {
         $eme_date_obj->startOfMonth()->modifyMonths(-12);
         $difference = 12;
     }
+    $periods = [];
+    for ( $counter = 0; $counter <= $difference; $counter++ ) {
+        $periods[] = $eme_date_obj->format( 'Y-m' );
+        $eme_date_obj->startOfMonth()->modifyMonths(+1);
+    }
+    return $periods;
+}
+
+// the figures of one month, per membership
+function eme_member_stats_calc_period( $period ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+    $limit_start = "$period-01";
+    $limit_end   = date( 'Y-m-t', strtotime( $limit_start ) );
+    $queries = [
+        // sql for new members
+        'new_nbr'     => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
+        // sql for expired members
+        'expired_nbr' => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
+        // sql for renewed members
+        'renewed_nbr' => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
+    ];
+    if ( $period == eme_member_stats_current_period() ) {
+        // for current month: just count active members
+        $queries['total_nbr'] = [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE status=1 GROUP BY membership_id", [] ];
+    } else {
+        // for previous months: take members that started before the end of the month and were still a member after the end of the month
+        // Always ignore pending (a member could've signed up months ago and still not paid)
+        $queries['total_nbr'] = [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 GROUP BY membership_id", [ $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end ] ];
+    }
+    $stats = [];
+    foreach ( $queries as $key => $query ) {
+        $sql = $query[1] ? $wpdb->prepare( $query[0], $query[1] ) : $query[0]; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $wpdb->get_results( $sql, ARRAY_A ) as $row ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $id = intval( $row['membership_id'] );
+            $stats[ $id ] ??= [ 'new_nbr' => 0, 'expired_nbr' => 0, 'renewed_nbr' => 0, 'total_nbr' => 0 ];
+            $stats[ $id ][ $key ] = intval( $row['nbr'] );
+        }
+    }
+    return $stats;
+}
+
+function eme_member_stats_store_period( $period ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_MEMBER_STATS_TBNAME;
+    foreach ( eme_member_stats_calc_period( $period ) as $membership_id => $val ) {
+        $wpdb->replace( $table, [ 'membership_id' => $membership_id, 'period' => $period ] + $val );
+    }
+}
+
+// for CRON: refresh the current month, and write the final figures of a month once it is over
+// (done after the status recalculation, so members that expired on the last days are included)
+function eme_member_stats_update() {
+    if ( ! get_option( 'eme_members_enabled' ) ) {
+        return;
+    }
+    $current = eme_member_stats_current_period();
+    $last    = get_option( 'eme_member_stats_period' );
+    if ( $last && $last != $current ) {
+        eme_member_stats_store_period( $last );
+    }
+    update_option( 'eme_member_stats_period', $current );
+    eme_member_stats_store_period( $current );
+}
+
+// on upgrade: store what we can still calculate now
+function eme_member_stats_baseline() {
+    if ( ! get_option( 'eme_members_enabled' ) ) {
+        return;
+    }
+    foreach ( eme_member_stats_periods() as $period ) {
+        eme_member_stats_store_period( $period );
+    }
+    update_option( 'eme_member_stats_period', eme_member_stats_current_period() );
+}
+
+function eme_get_membership_stats( $ids = '' ) {
+    global $wpdb;
+    $table   = EME_DB_PREFIX . EME_MEMBER_STATS_TBNAME;
+    $current = eme_member_stats_current_period();
+
+    // no ids means all memberships (the stats of a removed membership are removed with it)
+    $ids_arr = [];
+    $where   = $wpdb->prepare( 'period<>%s', $current );
+    if ( $ids !== '' ) {
+        if ( ! eme_is_list_of_int( $ids ) ) {
+            return false;
+        }
+        $ids_arr = array_map( 'intval', explode( ',', $ids ) );
+        $where  .= ' AND membership_id IN (' . implode( ',', $ids_arr ) . ')';
+    }
+
+    // the stored months, the current month is always calculated live
+    $rows = $wpdb->get_results( "SELECT period,SUM(new_nbr) AS new_nbr,SUM(expired_nbr) AS expired_nbr,SUM(renewed_nbr) AS renewed_nbr,SUM(total_nbr) AS total_nbr FROM $table WHERE $where GROUP BY period ORDER BY period", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- $where is prepared, the ids are integers
+    $now  = [ 'period' => $current, 'new_nbr' => 0, 'expired_nbr' => 0, 'renewed_nbr' => 0, 'total_nbr' => 0 ];
+    foreach ( eme_member_stats_calc_period( $current ) as $membership_id => $val ) {
+        if ( ! $ids_arr || in_array( $membership_id, $ids_arr, true ) ) {
+            foreach ( $val as $key => $nbr ) {
+                $now[ $key ] += $nbr;
+            }
+        }
+    }
+    $rows[] = $now;
 
     $res = '<table class="eme_admin_table">';
     $res .= "<tr><td>".__('Period','events-made-easy')."</td><td>".__('New','events-made-easy')."</td><td>".__('Expired','events-made-easy')."</td><td>".__('Renewed','events-made-easy')."</td><td>".__('Total','events-made-easy')."</td></tr>";
-    $counter = 0;
-    while ( $counter <= $difference ) {
-        $limit_start   = $eme_date_obj->format( 'Y-m-d' );
-        $days_in_month = $eme_date_obj->getDaysInMonth();
-        $limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
-        if ( $counter == $difference ) {
-            // for current month: just count active members
-            $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=1 AND membership_id IN ($in_placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-            $member_nbr = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        } else {
-            // for previous months: take members that started before the end of the month and were still a member after the end of the month
-            // Always ignore pending (a member could've signed up months ago and still not paid)
-            $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-            $member_nbr = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        }
-        // sql for new members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $member_nbr_new = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        // sql for expired members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $member_nbr_expired = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        // sql for renewed members
-        $prepared_sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($in_placeholders)", array_merge( [ $limit_start, $limit_end ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $member_nbr_renewed = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr_expired</td><td>$member_nbr_renewed</td><td>$member_nbr</td></tr>";
-        $eme_date_obj->startOfMonth()->modifyMonths(+1);
-        $counter++;
+    foreach ( $rows as $row ) {
+        $res .= "<tr><td>{$row['period']}</td><td>{$row['new_nbr']}</td><td>{$row['expired_nbr']}</td><td>{$row['renewed_nbr']}</td><td>{$row['total_nbr']}</td></tr>";
     }
-    // now the cur month
     $res .= '</table>';
     return $res;
 }
@@ -810,6 +885,7 @@ function eme_delete_membership( $membership_id ) {
     $wpdb->delete( $members_table, [ 'membership_id' => $membership_id ], [ '%d' ]);
     $wpdb->delete( $answers_table, [ 'related_id' => $membership_id, 'type' => 'membership' ], [ '%d', '%s' ]);
     $wpdb->delete( $memberships_table, [ 'membership_id' => $membership_id ], [ '%d' ]);
+    $wpdb->delete( EME_DB_PREFIX . EME_MEMBER_STATS_TBNAME, [ 'membership_id' => $membership_id ], [ '%d' ]);
     eme_delete_membership_attendances( $membership_id );
     eme_delete_membership_answers( $membership_id );
     eme_delete_uploaded_files( $membership_id, 'memberships' );
@@ -3254,6 +3330,15 @@ function eme_manage_memberships_layout( $message ) {
 
     <?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- message already escaped ?>
 
+    <div class="eme-tabs">
+    <div class="eme-tab" data-tab="tab-memberships"><?php esc_html_e( 'Memberships', 'events-made-easy' ); ?></div>
+    <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
+    <div class="eme-tab" data-tab="tab-stats"><?php esc_html_e( 'Statistics', 'events-made-easy' ); ?></div>
+    <?php endif; ?>
+    </div>
+
+    <!-- ==================== MEMBERSHIPS TAB ==================== -->
+    <div class="eme-tab-content" id="tab-memberships">
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
         <h1><?php esc_html_e( 'Add a new membership definition', 'events-made-easy' ); ?></h1>
         <div class="wrap">
@@ -3278,7 +3363,6 @@ function eme_manage_memberships_layout( $message ) {
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
     <option value="deleteMemberships"><?php esc_html_e( 'Delete selected memberships', 'events-made-easy' ); ?></option>
-    <option value="showMembershipStats"><?php esc_html_e( 'Show membership statistics', 'events-made-easy' ); ?></option>
     <?php endif; ?>
     </select>
     <button id="MembershipsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
@@ -3306,6 +3390,26 @@ function eme_manage_memberships_layout( $message ) {
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
     <div id="MembershipsTableContainer" data-extrafields='<?php echo esc_attr( $extrafields ); ?>' data-extrafieldnames='<?php echo esc_attr( $extrafieldnames ); ?>' data-extrafieldsearchable='<?php echo esc_attr( $extrafieldsearchable ); ?>'></div>
+    </div>
+
+    <!-- ==================== STATISTICS TAB ==================== -->
+    <?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
+    <div class="eme-tab-content" id="tab-stats">
+    <h1><?php esc_html_e( 'Membership statistics', 'events-made-easy' ); ?></h1>
+    <?php $memberships = eme_get_memberships(); ?>
+    <?php if ( empty( $memberships ) ) : ?>
+        <p><?php esc_html_e( 'There are no memberships yet.', 'events-made-easy' ); ?></p>
+    <?php else : ?>
+        <select id="eme_membership_stats_ids" multiple class="eme_snapselect" data-select-all-option="true">
+        <?php foreach ( $memberships as $membership ) : ?>
+            <option value="<?php echo esc_attr( $membership['membership_id'] ); ?>" selected="selected"><?php echo esc_html( $membership['name'] ); ?></option>
+        <?php endforeach; ?>
+        </select>
+        <button type="button" id="MembershipStatsButton" class="button-primary"><?php esc_html_e( 'Show statistics', 'events-made-easy' ); ?></button>
+        <div id="MembershipStatsContainer" style="padding-top: 10px;"></div>
+    <?php endif; ?>
+    </div>
+    <?php endif; ?>
     </div>
     </div>
 <?php
@@ -6989,9 +7093,11 @@ function eme_ajax_manage_memberships() {
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
 
-        $ids     = eme_sanitize_request($_POST['membership_id']);
+        $ids     = eme_sanitize_request( $_POST['membership_id'] ?? '' );
         $ids_arr = explode( ',', $ids );
-        if ( ! eme_is_integer_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+        // no ids is only valid for the statistics: that means all memberships
+        $ids_ok  = ( $ids === '' ) ? ( $do_action == 'showMembershipStats' ) : eme_is_integer_array( $ids_arr );
+        if ( ! $ids_ok || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             $ajaxResult['Result']      = 'ERROR';
             $ajaxResult['htmlmessage'] = eme_message_error_div( __( 'Access denied!', 'events-made-easy' ) );
             print wp_json_encode( $ajaxResult );
@@ -6999,9 +7105,8 @@ function eme_ajax_manage_memberships() {
         }
         switch ( $do_action ) {
         case 'showMembershipStats':
-            $membershipstats = eme_get_membership_stats( $ids );
             $ajaxResult['Result']      = 'OK';
-            $ajaxResult['htmlmessage'] = eme_message_div( $membershipstats );
+            $ajaxResult['htmlmessage'] = eme_get_membership_stats( $ids );
             print wp_json_encode( $ajaxResult );
             break;
         case 'deleteMemberships':

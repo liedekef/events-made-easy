@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 440 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 441 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -27,6 +27,7 @@ define( 'EME_MQUEUE_TBNAME', 'eme_mqueue' );
 define( 'EME_MAILINGS_TBNAME', 'eme_mailings' );
 define( 'EME_MEMBERS_TBNAME', 'eme_members' );
 define( 'EME_MEMBERSHIPS_TBNAME', 'eme_memberships' );
+define( 'EME_MEMBER_STATS_TBNAME', 'eme_member_stats' );
 define( 'EME_COUNTRIES_TBNAME', 'eme_countries' );
 define( 'EME_STATES_TBNAME', 'eme_states' );
 define( 'EME_ATTENDANCES_TBNAME', 'eme_attendances' );
@@ -107,6 +108,10 @@ function _eme_install() {
 	// create/update the db tables needed
 	if ( $db_version != EME_DB_VERSION ) {
 		eme_create_tables( $db_version );
+		// store the statistics we can still calculate today
+		if ( $db_version < 441 ) {
+			eme_member_stats_baseline();
+		}
 	}
 
 	// some cron we want
@@ -231,7 +236,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_data || $force_drop ) {
 		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
 		$db_prefix = $wpdb->prefix;
-        $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
+        $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_MEMBER_STATS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
 
         foreach ( $tables as $table ) {
             eme_drop_table( $db_prefix . $table );
@@ -288,6 +293,7 @@ function eme_create_tables( $db_version ) {
 	eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_people_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_members_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_member_stats_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_categories_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_templates_table( $charset, $collate, $db_version, $db_prefix );
@@ -1697,6 +1703,25 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY membership_id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
+	}
+}
+
+// monthly membership statistics (period = YYYY-MM), kept apart from the members
+// so removing members (GDPR) doesn't change the figures of past months
+function eme_create_member_stats_table( $charset, $collate, $db_version, $db_prefix ) {
+	$table_name = $db_prefix . EME_MEMBER_STATS_TBNAME;
+
+	if ( ! eme_table_exists( $table_name ) ) {
+		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
+         membership_id int unsigned NOT NULL default 0,
+         period char(7) NOT NULL default '',
+         new_nbr int unsigned DEFAULT 0,
+         expired_nbr int unsigned DEFAULT 0,
+         renewed_nbr int unsigned DEFAULT 0,
+         total_nbr int unsigned DEFAULT 0,
+         PRIMARY KEY  (membership_id, period)
+         ) $charset $collate;";
+		maybe_create_table( $table_name, $sql );
 	}
 }
 

@@ -99,6 +99,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.22  (2026//) =
+* Membership statistics are now stored per month, so they no longer change when members are removed
+* New "Statistics" tab on the Memberships page with a summary per year and the monthly figures
+* The total number of active members now also counts the members in grace period
+
 = 3.2.21  (2026/10/01) =
 * Mollie API update
 * Frontend submit form suppports generic placeholders inside the form format too

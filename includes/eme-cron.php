@@ -173,6 +173,7 @@ function eme_cron_member_daily_actions() {
     eme_member_recalculate_status();
     eme_member_send_expiration_reminders();
     eme_member_remove_pending();
+    eme_member_stats_update();
     if ( has_action( 'eme_members_daily_action' ) ) {
         do_action( 'eme_members_daily_action' );
     }

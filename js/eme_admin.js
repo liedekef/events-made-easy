@@ -54,6 +54,22 @@ function eme_show_ftable_bulk_result(myftable, result) {
     }
 }
 
+// Loads the membership statistics table (memberships page, statistics tab)
+function eme_load_membership_stats() {
+    const select = EME.$('#eme_membership_stats_ids');
+    const container = EME.$('#MembershipStatsContainer');
+    if (!select || !container) return;
+    const formData = new FormData();
+    formData.append('action', 'eme_manage_memberships');
+    formData.append('do_action', 'showMembershipStats');
+    // no selection means all memberships, the server handles that
+    formData.append('membership_id', Array.from(select.selectedOptions).map(o => o.value).join(','));
+    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+    eme_postJSON(ajaxurl, formData, (response) => {
+        container.innerHTML = response.htmlmessage;
+    });
+}
+
 function eme_activateTab(target) {
     EME.$$('.eme-tab').forEach(tab => tab.classList.remove('active'));
     EME.$$('.eme-tab-content').forEach(content => content.classList.remove('active'));
@@ -74,6 +90,10 @@ function eme_activateTab(target) {
             eme_SelectdisplayAddress();
             eme_displayAddress(0);
         }, 100);
+    }
+
+    if (target === 'tab-stats') {
+        eme_load_membership_stats();
     }
 
     // Lazy-load: the ftable belonging to a tab only fetches its data once that tab becomes active.
@@ -267,6 +287,11 @@ document.addEventListener('DOMContentLoaded', function () {
             eme_activateTab(target);
         });
     });
+
+    const statsButton = EME.$('#MembershipStatsButton');
+    if (statsButton) {
+        statsButton.addEventListener('click', eme_load_membership_stats);
+    }
 
     const tabsContainer = EME.$('.eme-tabs');
     if (tabsContainer) {

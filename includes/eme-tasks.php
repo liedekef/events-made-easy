@@ -2448,8 +2448,10 @@ function eme_ajax_assign_task_signup() {
 		'signup_status' => 1,
 	];
 
-	$res = eme_db_insert_task_signup( $signup );
-	if ( $res ) {
+	$signup_id = eme_db_insert_task_signup( $signup );
+	if ( $signup_id ) {
+        // re-get the signup, since the random id is now in it too (and contains other fields)
+        $signup = eme_get_task_signup($signup_id);
         eme_email_tasksignup_action( $signup, 'new' );
 		print wp_json_encode( [ 'Result' => 'OK', 'htmlmessage' => eme_message_ok_div( __( 'Task assigned successfully.', 'events-made-easy' ) ) ] );
 	} else {

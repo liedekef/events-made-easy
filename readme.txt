@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.2.21
+Stable tag: 3.2.22
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,10 +99,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.2.22  (2026//) =
+= 3.2.22  (2026/10/07) =
 * Membership statistics are now stored per month, so they no longer change when members are removed
-* New "Statistics" tab on the Memberships page with a summary per year and the monthly figures
-* The total number of active members now also counts the members in grace period
+* New "Statistics" tab on the Memberships page
+* Solve a php warning for task submits done via the backend
+* Avoid a frontend button submit flicker in some cases
 
 = 3.2.21  (2026/10/01) =
 * Mollie API update

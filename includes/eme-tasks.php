@@ -1931,9 +1931,8 @@ function eme_tasks_ajax() {
     $nok       = 0;
     $ok        = 0;
     $t_person = eme_get_person_by_name_and_email( $bookerLastName, $bookerFirstName, $bookerEmail );
-    if (!empty($t_person)) {
-        $person_id = $t_person['person_id'];
-    }
+    $matched_personid = ! empty( $t_person ) ? $t_person['person_id'] : 0;
+    $matched_wp_id    = ! empty( $t_person ) ? intval( $t_person['wp_id'] ) : -1;
     foreach ( wp_unslash( $_POST['eme_task_signups'] ) as $event_id => $task_id_arr ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $event_id              = intval( $event_id );
         $event                 = eme_get_event( $event_id );
@@ -1941,6 +1940,15 @@ function eme_tasks_ajax() {
         $registered_users_only = $event['event_properties']['task_registered_users_only'];
         $only_one_signup_pp    = $event['event_properties']['task_only_one_signup_pp'];
         $signup_status         = ($event['event_properties']['task_requires_approval'])? 0 : 1;
+        // the person we matched may belong to another wp user: only use it when it's our own person
+        // or when we're allowed to sign up for somebody else, otherwise eme_add_update_person_from_form
+        // further down decides (it allows anonymous signups without touching that person record)
+        $allow_book_for_others = eme_book_for_others_event_allowed( $event );
+        if ( $matched_personid && ( $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
+            $person_id = $matched_personid;
+        } else {
+            $person_id = 0;
+        }
         if ( $registered_users_only && ! $booker_wp_id ) {
             $message .= get_option( 'eme_rsvp_login_required_string' );
             $nok      = 1;
@@ -1968,9 +1976,14 @@ function eme_tasks_ajax() {
             }
             $add_update_person_from_form_err = '';
             if ( ! $person_id && !empty($bookerLastName) && !empty($bookerEmail) ) {
-                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail );
+                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $booker_wp_id, 0, 0, $allow_book_for_others );
                 $person_id   = $res[0];
                 $add_update_person_from_form_err = $res[1];
+                if ( $person_id ) {
+                    // remember the resolution for the remaining events of this submit
+                    $matched_personid = $person_id;
+                    $matched_wp_id     = intval( eme_get_wpid_by_personid( $person_id ) );
+                }
             }
             if ( ! empty( $person_id ) ) {
                 // no doubles

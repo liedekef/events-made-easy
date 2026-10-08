@@ -1268,24 +1268,36 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
         }
         $err       = '';
         $person_id = 0;
+        // who is allowed to register somebody else as a member (author members may only manage their
+        // own member info, that's covered by the ownership check on the submitted person id below)
+        $allow_book_for_others = $eme_is_admin_request || current_user_can( get_option( 'eme_cap_edit_members' ) );
+        $submitted_person      = false;
         if ( ! empty( $_POST['person_id'] ) ) {
-            $person_id = intval( $_POST['person_id'] );
-            $person    = eme_get_person( $person_id );
-            if ( ! $person ) {
-                $err       = __( 'No such person found', 'events-made-easy' );
-                $person_id = 0;
+            $submitted_person = eme_get_person( intval( $_POST['person_id'] ) );
+        }
+        // the frontend form doesn't know better than the logged in user, so only trust the submitted
+        // person id in the backend, for our own person or when we may register somebody else
+        if ( $submitted_person && ( $allow_book_for_others ||
+            ( is_user_logged_in() && intval( $submitted_person['wp_id'] ) === get_current_user_id() ) ) ) {
+            $person_id = $submitted_person['person_id'];
+        } elseif ( ! isset( $_POST['lastname'] ) || eme_is_empty_string( $_POST['lastname'] ) ) {
+            if ( ! empty( $_POST['person_id'] ) && ! $submitted_person ) {
+                $err = __( 'No such person found', 'events-made-easy' );
+            } elseif ( ! empty( $_POST['person_id'] ) ) {
+                $err = __( 'The person details do not match your own person record, so you cannot register for somebody else.', 'events-made-easy' );
+            } else {
+                // we need at least lastname
+                $err = __( 'Please enter at least the last name for a new member', 'events-made-easy' );
             }
-        } elseif ( eme_is_empty_string( $_POST['lastname'] ) ) {
-            // we need at least lastname
-            $err = __( 'Please enter at least the last name for a new member', 'events-made-easy' );
-        } elseif ( ! $eme_is_admin_request && ! eme_is_email_frontend( eme_sanitize_email( $_POST['email'] ) ) ) {
+        } elseif ( ! isset( $_POST['email'] ) || ( ! $eme_is_admin_request && ! eme_is_email_frontend( eme_sanitize_email( $_POST['email'] ) ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } elseif ( $membership['properties']['create_wp_user'] && ! eme_is_email( eme_sanitize_email( $_POST['email'] ) ) ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } else {
-            $wp_id          = eme_get_wpid_by_post();
+            // the frontend form doesn't submit a wp id: deduce it from the logged in user
+            $wp_id          = $eme_is_admin_request ? eme_get_wpid_by_post() : ( is_user_logged_in() ? get_current_user_id() : 0 );
             $bookerLastName = eme_sanitize_request( $_POST['lastname'] );
             if ( isset( $_POST['firstname'] ) ) {
                 $bookerFirstName = eme_sanitize_request( $_POST['firstname'] );
@@ -1294,7 +1306,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             }
             $bookerEmail = eme_sanitize_email( $_POST['email'] );
 
-            $res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $wp_id, $membership['properties']['create_wp_user'] );
+            $res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $wp_id, $membership['properties']['create_wp_user'], 0, $allow_book_for_others );
             $person_id = $res[0];
             $err       = $res[1];
         }
@@ -1930,7 +1942,10 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
         $form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
     }
     $form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
-    $form_html .= "<input type='hidden' name='wp_id' value='$wp_id'>";
+    if ( $from_backend ) {
+        // only the backend form may submit a wp id, the frontend deduces it from the logged in user
+        $form_html .= "<input type='hidden' name='wp_id' value='$wp_id'>";
+    }
 
     // in the backend start/end/status is already mentioned, so no need to that again
     if ( ! $from_backend && ! empty( $member['member_id'] ) ) {
@@ -3665,7 +3680,8 @@ function eme_dyndata_member_ajax() {
                     $grouping = intval( $condition['grouping'] );
                 }
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    $wp_id 	     = eme_get_wpid_by_post();
+                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user
+                    $wp_id 	     = eme_is_admin_request() ? eme_get_wpid_by_post() : get_current_user_id();
                     $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member

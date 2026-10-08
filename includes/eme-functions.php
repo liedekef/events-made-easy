@@ -1129,6 +1129,41 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
     return $the_link;
 }
 
+// A valid invite link is a capability to book for the invited person, even if that person
+// belongs to another wp user. The hash already binds the email/lastname/firstname to the event,
+// so the submitted booking details must be exactly the invited ones.
+function eme_invite_allows_booking_for( $event_id, $lastname, $firstname, $email ) {
+    if ( ! eme_check_invite_url( $event_id ) ) {
+        return false;
+    }
+    if ( isset( $_REQUEST['eme_email'] ) && strcasecmp( eme_sanitize_email( $_REQUEST['eme_email'] ), (string) $email ) !== 0 ) {
+        return false;
+    }
+    if ( ! empty( $_REQUEST['eme_ln'] ) && strcasecmp( eme_sanitize_request( $_REQUEST['eme_ln'] ), (string) $lastname ) !== 0 ) {
+        return false;
+    }
+    if ( ! empty( $_REQUEST['eme_fn'] ) && strcasecmp( eme_sanitize_request( $_REQUEST['eme_fn'] ), (string) $firstname ) !== 0 ) {
+        return false;
+    }
+    return true;
+}
+
+// Who is allowed to make a booking for somebody else on the frontend
+function eme_book_for_others_event_allowed( $event ) {
+    if ( eme_is_admin_request() ) {
+        return true;
+    }
+    if ( empty( $event ) || ! is_array( $event ) || ! is_user_logged_in() ) {
+        return false;
+    }
+    if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+        return true;
+    }
+    $current_userid = get_current_user_id();
+    return current_user_can( get_option( 'eme_cap_author_event' ) ) &&
+        ( (int) $event['event_author'] === $current_userid || (int) $event['event_contactperson_id'] === $current_userid );
+}
+
 function eme_rsvp_checkurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
     // no language: it is checked by someone else in the browser
@@ -2362,7 +2397,8 @@ function eme_dyndata_rsvp_ajax() {
                 }
 
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    $wp_id       = eme_get_wpid_by_post();
+                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user
+                    $wp_id       = eme_is_admin_request() ? eme_get_wpid_by_post() : get_current_user_id();
                     $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member

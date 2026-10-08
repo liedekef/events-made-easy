@@ -4423,15 +4423,22 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     $person['email']             = $email;
 
     $t_person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-    if ( ! $person ) {
-        $person = eme_get_person_by_email_only( $email );
+    if ( ! $t_person ) {
+        $t_person = eme_get_person_by_email_only( $email );
     }
     // if we have a matching person, update that one. But make sure we"re not updating the main one (can happen if someone entered the main account details also as member)
     if ( $t_person && $t_person['person_id'] != $main_person_id ) {
-        $person_id = $t_person['person_id'];
-        $res       = eme_db_update_person( $person_id, $person );
-        if ( $res ) {
-            eme_store_family_answers( $person_id, $familymember );
+        $person_id    = $t_person['person_id'];
+        $found_wp_id  = intval( $t_person['wp_id'] );
+        $caller_wp_id = is_user_logged_in() ? get_current_user_id() : 0;
+        $may_update   = eme_is_admin_request() || $found_wp_id === 0 || $found_wp_id === $caller_wp_id;
+        // a person that belongs to another wp user is used for the family membership as-is,
+        // their record is not ours to overwrite
+        if ( $may_update ) {
+            $res = eme_db_update_person( $person_id, $person );
+            if ( $res ) {
+                eme_store_family_answers( $person_id, $familymember );
+            }
         }
     } else {
         $person_id = eme_db_insert_person( $person );
@@ -4442,7 +4449,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     return $person_id;
 }
 
-function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0 ) {
+function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0, $allow_book_for_others = 0 ) {
     $person = [];
 
     if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email_frontend( $email ) ) {
@@ -4585,9 +4592,34 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             }
         }
         if ( $t_person ) {
+            // the person we matched on name+email may belong to another wp user: only people with
+            // the appropriate rights are allowed to book or register for somebody else.
+            // anonymous visitors have no identity to violate, so they may still book for an existing
+            // person, but then we leave that person record alone (no updates, no wp-id adoption)
+            $found_wp_id = intval( $t_person['wp_id'] );
+            $freeze_person = 0;
+            if ( ! eme_is_admin_request() && $found_wp_id !== intval( $wp_id ) && ! $allow_book_for_others ) {
+                if ( intval( $wp_id ) > 0 ) {
+                    // exception: you may still claim an unlinked person record if you have none yourself
+                    if ( ! ( $wp_count == 0 && $found_wp_id === 0 ) ) {
+                        return [
+                            0 => 0,
+                            1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
+                        ];
+                    }
+                } else {
+                    $freeze_person = 1;
+                }
+            }
             $person_id = $t_person['person_id'];
             if ( $wp_id > 0 && $wp_count == 0 && $t_person['wp_id'] == 0 ) {
                 $person['wp_id'] = intval( $wp_id );
+            }
+            if ( $freeze_person ) {
+                return [
+                    0 => $person_id,
+                    1 => '',
+                ];
             }
 
             $updated_personid = eme_db_update_person( $person_id, $person );
@@ -4617,7 +4649,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             if ( $person_id ) {
                 eme_store_person_answers( $person_id );
                 if ( ! empty( $_POST['subscribe_groups'] ) ) {
-                    eme_add_persongroups( $updated_personid, eme_sanitize_request( $_POST['subscribe_groups'] ) );
+                    eme_add_persongroups( $person_id, eme_sanitize_request( $_POST['subscribe_groups'] ) );
                 }
                 return [
                     0 => $person_id,

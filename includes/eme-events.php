@@ -9916,7 +9916,7 @@ function eme_admin_enqueue_js() {
 
         if (get_option( 'eme_htmleditor' ) == 'jodit') {
             $translation_array = [
-                'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+                'translate_joditnonce'      => wp_create_nonce( 'eme_jodit' ),
                 'translate_flanguage'       => $language,
                 'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
                 'translate_insert'          => __('Insert', 'events-made-easy' ),

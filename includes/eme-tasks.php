@@ -1864,6 +1864,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
 add_action( 'wp_ajax_eme_tasks', 'eme_tasks_ajax' );
 add_action( 'wp_ajax_nopriv_eme_tasks', 'eme_tasks_ajax' );
 function eme_tasks_ajax() {
+    eme_mark_frontend_request();
     // check for spammers as early as possible
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
@@ -1976,7 +1977,8 @@ function eme_tasks_ajax() {
             }
             $add_update_person_from_form_err = '';
             if ( ! $person_id && !empty($bookerLastName) && !empty($bookerEmail) ) {
-                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $booker_wp_id, 0, 0, $allow_book_for_others );
+                // when we may sign up somebody else, don't pass our own wp id: the person would get linked to our account
+                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $allow_book_for_others ? 0 : $booker_wp_id, 0, 0, $allow_book_for_others );
                 $person_id   = $res[0];
                 $add_update_person_from_form_err = $res[1];
                 if ( $person_id ) {

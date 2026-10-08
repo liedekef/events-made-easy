@@ -179,7 +179,11 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     if ( $only_if_not_registered ) {
         $form_html .= "<input type='hidden' name='only_if_not_registered' value='$only_if_not_registered'>";
     }
-    // no wp_id hidden field in the frontend: the booker wp id is deduced from the logged in user
+    // the hidden wp_id field is only for people who may book for others (the autocomplete can overwrite it with the
+    // selected person's wp_id), for all others the server uses the logged in user and ignores any posted wp_id
+    if ( ! eme_is_admin_request() && eme_book_for_others_event_allowed( $event ) && ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) ) {
+        $form_html .= "<input type='hidden' name='wp_id' value='$current_userid'>";
+    }
     $form_html .= "<input type='hidden' name='person_id' value=''>";
 
     if ( $is_multibooking ) {
@@ -852,6 +856,7 @@ function eme_cancel_bookings_form_shortcode( $atts ) {
 add_action( 'wp_ajax_eme_add_bookings', 'eme_add_bookings_ajax' );
 add_action( 'wp_ajax_nopriv_eme_add_bookings', 'eme_add_bookings_ajax' );
 function eme_add_bookings_ajax() {
+    eme_mark_frontend_request();
     // check for spammers as early as possible
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
@@ -1363,14 +1368,14 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $bookerFirstName = '';
         $bookerEmail     = '';
         $booker_wp_id    = 0;
+        // who is allowed to make this booking for somebody else? (backend, event editors, author/contact person)
+        $allow_book_for_others = eme_book_for_others_event_allowed( $event );
         if ( is_user_logged_in() ) {
             $current_userid = get_current_user_id();
-            // the frontend form never submits a booker wp id: we deduce it from the logged in user.
-            // Only a booking made from the backend may specify another user
-            $booker_wp_id = $eme_is_admin_request ? eme_get_wpid_by_post() : $current_userid;
+            // only people who may book for others can submit a booker wp id (the autocomplete selection),
+            // for everybody else we deduce it from the logged in user and ignore any posted value
+            $booker_wp_id = $allow_book_for_others ? eme_get_wpid_by_post() : $current_userid;
         }
-        // who is allowed to make this booking for somebody else?
-        $allow_book_for_others = eme_book_for_others_event_allowed( $event );
 
         if ( $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
             $form_html .= __('Not allowed','events-made-easy');

@@ -4594,26 +4594,23 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             }
         }
         if ( $t_person ) {
-            // the person we matched on name+email may belong to another wp user: only people with
-            // the appropriate rights are allowed to book or register for somebody else.
-            // anonymous visitors have no identity to violate, so they may still book for an existing
-            // person, but then we don't allow that if that person is linked to a wp account
+            // the person we matched on name+email may belong to another wp user: only people who are allowed
+            // to book or register for somebody else (the callers decide that, see $allow_book_for_others) may use it.
+            // An anonymous visitor (wp_id 0) can still use a person that isn't linked to a wp account.
+            // A logged in user can only use the person linked to their own wp account (that link is made
+            // by eme_get_person_by_wp_id when the form is shown), never someone else's or an unlinked one.
             $found_wp_id = intval( $t_person['wp_id'] );
-            if ( ! eme_is_admin_request() && $found_wp_id !== intval( $wp_id ) && ! $allow_book_for_others ) {
+            if ( $found_wp_id !== intval( $wp_id ) && ! $allow_book_for_others ) {
                 if ( intval( $wp_id ) > 0 ) {
-                    // exception: you may still claim an unlinked person record if you have none yourself
-                    if ( ! ( $wp_count == 0 && $found_wp_id === 0 ) ) {
-                        return [
-                            0 => 0,
-                            1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
-                        ];
-                    }
-                } elseif ($found_wp_id>0) { 
                     return [
                         0 => 0,
-                        1 => esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
+                        1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
                     ];
                 }
+                return [
+                    0 => 0,
+                    1 => esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
+                ];
             }
             $person_id = $t_person['person_id'];
             if ( $wp_id > 0 && $wp_count == 0 && $t_person['wp_id'] == 0 ) {

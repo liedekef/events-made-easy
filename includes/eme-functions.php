@@ -3351,6 +3351,14 @@ function eme_replaceiframe( $text ) {
 }
 
 function eme_is_admin_request() {
+    // The referer used below is sent by the client, so it can be forged: a logged-in user can post to
+    // admin-ajax.php with a referer pointing to the admin area. The handlers of the frontend form submits
+    // therefore mark themselves as frontend (see eme_mark_frontend_request), after which nothing
+    // the client sends can make the request count as a backend request.
+    if ( defined( 'EME_FRONTEND_REQUEST' ) ) {
+        return false;
+    }
+
     // Get admin URL and referrer.
     $admin_url = strtolower( admin_url() );
     $referrer  = strtolower( wp_get_referer() );
@@ -3367,6 +3375,13 @@ function eme_is_admin_request() {
         }
     } else {
         return false;
+    }
+}
+
+// to be called first thing in the handlers of the frontend form submits (bookings, members, tasks)
+function eme_mark_frontend_request() {
+    if ( ! defined( 'EME_FRONTEND_REQUEST' ) ) {
+        define( 'EME_FRONTEND_REQUEST', true );
     }
 }
 

@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('editor_id', editor.id);
                 formData.append('screen_id', pagenow);
                 if ($_GET['tab']) formData.append('eme_tab', $_GET['tab']);
-                formData.append('eme_admin_nonce', emejodit.translate_adminnonce);
+                formData.append('eme_jodit_nonce', emejodit.translate_joditnonce);
                 formData.append('lang', emejodit.translate_adminlocale)
 
                 const response = await fetch(ajaxurl, { method: 'POST', body: formData });

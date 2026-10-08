@@ -1297,8 +1297,16 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } else {
-            // the frontend form doesn't submit a wp id: deduce it from the logged in user
-            $wp_id          = $eme_is_admin_request ? eme_get_wpid_by_post() : ( is_user_logged_in() ? get_current_user_id() : 0 );
+            // the frontend form doesn't submit a wp id: deduce it from the logged in user.
+            // When registering somebody else (frontend editors) we don't pass our own wp id, otherwise
+            // that other person would get linked to our account
+            if ( $eme_is_admin_request ) {
+                $wp_id = eme_get_wpid_by_post();
+            } elseif ( is_user_logged_in() && ! $allow_book_for_others ) {
+                $wp_id = get_current_user_id();
+            } else {
+                $wp_id = 0;
+            }
             $bookerLastName = eme_sanitize_request( $_POST['lastname'] );
             if ( isset( $_POST['firstname'] ) ) {
                 $bookerFirstName = eme_sanitize_request( $_POST['firstname'] );
@@ -5226,6 +5234,7 @@ function eme_access_meta_box_save( $post_id ) {
 add_action( 'wp_ajax_eme_add_member', 'eme_add_member_ajax' );
 add_action( 'wp_ajax_nopriv_eme_add_member', 'eme_add_member_ajax' );
 function eme_add_member_ajax() {
+    eme_mark_frontend_request();
     if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
         $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
         echo wp_json_encode(

@@ -105,7 +105,6 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * The order param of eme_people now also works when asc/desc is not written in uppercase
 * Security: the booking, membership and task signup forms no longer submit a wp id, it is now derived from the logged in user on the server
 * Security: a person id coming from the frontend is only used when it belongs to the logged in user or when the visitor is allowed to book/register for somebody else (admins, event/membership editors)
-* Security: anonymous visitors can still book for an existing person, but that person record is then left untouched
 * Security: only people who may book for somebody else can clear the pre-filled name fields of a registration form
 * Security: invite-only events are now also verified when the booking is submitted, and only for the invited person
 * Security: invite-only discounts are now also bound to the invited person when the booking is submitted

@@ -108,6 +108,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Security: anonymous visitors can still book for an existing person, but that person record is then left untouched
 * Security: only people who may book for somebody else can clear the pre-filled name fields of a registration form
 * Security: invite-only events are now also verified when the booking is submitted, and only for the invited person
+* Security: invite-only discounts are now also bound to the invited person when the booking is submitted
 * Bugfix: a family member no longer overwrites an existing person that belongs to another wp user
 * Bugfix: the subscribe groups are now stored when a new person is created
 

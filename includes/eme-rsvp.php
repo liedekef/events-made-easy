@@ -1573,6 +1573,23 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                     continue;
                 }
             }
+
+            // an invite-only discount may only be used by the person the invitation was sent to,
+            // so check the invite against the submitted booking details (a valid invite link on its
+            // own is not enough here: it could belong to somebody else)
+            if ( ! $invite_allows_booking && ! empty( $tmp_booking['discountids'] ) ) {
+                $applied_discountids = eme_is_serialized( $tmp_booking['discountids'] )
+                    ? array_keys( eme_json_decode_safe( $tmp_booking['discountids'] ) )
+                    : explode( ',', $tmp_booking['discountids'] );
+                foreach ( $applied_discountids as $applied_discount_id ) {
+                    $applied_discount = eme_get_discount( $applied_discount_id );
+                    if ( $applied_discount && ! empty( $applied_discount['properties']['invite_only'] ) ) {
+                        $form_html .= __( 'An invitation is required to use the discount you entered', 'events-made-easy' );
+                        // 2: leave the event loop, we're inside the discount foreach
+                        continue 2;
+                    }
+                }
+            }
         }
 
         if ( has_filter( 'eme_eval_booking_filter' ) ) {

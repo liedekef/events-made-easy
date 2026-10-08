@@ -3685,6 +3685,22 @@ function eme_delete_groups( $group_ids ) {
     }
 }
 
+// returns the ORDER BY clause to sort people on their name, honoring the configured name format
+// $order must be 'ASC' or 'DESC', $tiebreaker is the column used to keep the result order stable
+function eme_get_name_orderby( $order, $tiebreaker ) {
+    if ( $order !== 'DESC' ) {
+        $order = 'ASC';
+    }
+    if ( ! preg_match( '/^\w+$/', $tiebreaker ) ) {
+        $tiebreaker = 'person_id';
+    }
+    $name_format = get_option( 'eme_full_name_format' );
+    if ( strpos( $name_format, '#_LASTNAME' ) > strpos( $name_format, '#_FIRSTNAME' ) ) {
+        return "ORDER BY firstname $order,lastname $order,$tiebreaker $order";
+    }
+    return "ORDER BY lastname $order,firstname $order,$tiebreaker $order";
+}
+
 function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $order = 'ASC' ) {
     global $wpdb;
     $people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -3705,30 +3721,32 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
         $where = 'WHERE ' . implode( ' AND ', $where_arr );
     }
 
+    // remove trailing ',' and initial "ORDER BY " if present (it will be re-added)
+    $order = preg_replace( '/,$|ORDER BY /i', '', (string) $order );
+    // allow ASC/DESC to be given in any case
+    if ( strcasecmp( $order, 'ASC' ) === 0 || strcasecmp( $order, 'DESC' ) === 0 ) {
+        $order = strtoupper( $order );
+    }
+
     $orderby                = '';
     $order_on_custom_fields = 0;
     if ( $order == 'ASC' || $order == 'DESC' ) {
         // let's try to order as the full name dictates
-        $name_format = get_option( 'eme_full_name_format' );
-        if ( strpos( $name_format, '#_LASTNAME' ) > strpos( $name_format, '#_FIRSTNAME' ) ) {
-            $orderby = "ORDER BY firstname $order,lastname $order,person_id $order";
-        } else {
-            $orderby = "ORDER BY lastname $order,firstname $order,person_id $order";
-        }
+        $orderby = eme_get_name_orderby( $order, 'person_id' );
     } elseif ( ! eme_is_empty_string( $order ) && preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
         $order_arr = [];
         if ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
             $order_tmp_arr = explode( ',', $order );
             foreach ( $order_tmp_arr as $order_ell ) {
                 $asc_desc = 'ASC';
-                if ( preg_match( '/DESC$/', $order_ell ) ) {
+                if ( preg_match( '/DESC$/i', $order_ell ) ) {
                     $asc_desc = 'DESC';
                 }
                 // if ordering on a custom field is requested, set a var indicating that
                 if ( preg_match( '/FIELD_\d+/', $order_ell ) ) {
                     $order_on_custom_fields = 1;
                 }
-                $order_ell   = trim( preg_replace( '/ASC$|DESC$|\s/', '', $order_ell ) );
+                $order_ell   = trim( preg_replace( '/ASC$|DESC$|\s/i', '', $order_ell ) );
                 $order_arr[] = "$order_ell $asc_desc";
             }
         }

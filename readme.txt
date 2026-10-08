@@ -99,6 +99,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.23  (2026/10/) =
+* The eme_members shortcode now has an order param, so the members can be sorted (name, columns or custom fields like FIELD_4)
+* eme_get_members can now order the results too, and keeps the requested id order if no ordering is requested
+* The order param of eme_people now also works when asc/desc is not written in uppercase
+
 = 3.2.22  (2026/10/07) =
 * Membership statistics are now stored per month, so they no longer change when members are removed
 * New "Statistics" tab on the Memberships page

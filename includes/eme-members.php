@@ -451,18 +451,61 @@ function eme_update_member_usage_count( $member ) {
     }
 }
 
-function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesize = 0 ) {
+function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesize = 0, $order = '' ) {
     global $wpdb;
     $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-    if ( ! empty( $member_ids ) && eme_is_integer_array( $member_ids ) ) {
+    $answers_table     = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+
+    // we can provide our own order statements
+    $order                  = preg_replace( '/,$|ORDER BY /i', '', (string) $order );
+    // allow ASC/DESC to be given in any case
+    if ( strcasecmp( $order, 'ASC' ) === 0 || strcasecmp( $order, 'DESC' ) === 0 ) {
+        $order = strtoupper( $order );
+    }
+    $orderby                = '';
+    $order_on_custom_fields = 0;
+    if ( $order == 'ASC' || $order == 'DESC' ) {
+        // order as the full name dictates, like eme_get_persons() does
+        $orderby = eme_get_name_orderby( $order, 'member_id' );
+    } elseif ( ! eme_is_empty_string( $order ) ) {
+        if ( eme_sanitize_sql_orderby( $order ) ) {
+            $orderby                = 'ORDER BY ' . $order;
+            $order_on_custom_fields = (bool) preg_match( '/FIELD_\d+/', $order );
+        } else {
+            $orderby = eme_get_name_orderby( 'ASC', 'member_id' );
+        }
+    }
+
+    // if ordering on a custom field is requested, load in that custom field too
+    $sql_join = '';
+    if ( $order_on_custom_fields ) {
+        $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
+        $group_concat_sql      = '';
+        foreach ( $formfields_searchable as $formfield ) {
+            $field_id          = intval( $formfield['field_id'] );
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $field_id is intval-sanitized database value
+        }
+        if ( ! empty( $group_concat_sql ) ) {
+            $sql_join = "
+               LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
+                 WHERE related_id>0 AND type='member'
+                 GROUP BY related_id
+                ) ans
+               ON members.member_id=ans.related_id";
+        }
+    }
+
+    $have_ids = ! empty( $member_ids ) && eme_is_integer_array( $member_ids );
+    if ( $have_ids ) {
         $member_ids_int = array_map( 'intval', $member_ids );
         $placeholders   = implode( ',', array_fill( 0, count( $member_ids_int ), '%d' ) );
         $sql     = $wpdb->prepare( "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
             FROM $members_table AS members
             LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
             LEFT JOIN $people_table AS people ON members.person_id=people.person_id
+            $sql_join
             WHERE members.member_id IN ($placeholders)", ...$member_ids_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if ( ! empty( $extra_search ) ) {
             $sql .= " AND $extra_search";
@@ -472,17 +515,25 @@ function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesiz
             FROM $members_table AS members
             LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
             LEFT JOIN $people_table AS people ON members.person_id=people.person_id
+            $sql_join
 ";
         if ( ! empty( $extra_search ) ) {
             $sql .= " WHERE $extra_search";
         }
+    }
+    // no ordering requested: keep the order of the ids we received
+    if ( empty( $orderby ) && $have_ids ) {
+        $orderby = 'ORDER BY FIELD(members.member_id,' . implode( ',', $member_ids_int ) . ')';
+    }
+    if ( ! empty( $orderby ) ) {
+        $sql .= " $orderby";
     }
     if ( $pagesize > 0 ) {
         $limit  = intval( $pagesize );
         $offset = max( 0, intval( $offset ) );
         $sql   .= $wpdb->prepare( ' LIMIT %d OFFSET %d', $limit, $offset );
     }
-    $members = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+    $members = $wpdb->get_results( $sql, ARRAY_A ) ?? []; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $members as $key => $member ) {
         $members[ $key ] = eme_get_extra_member_data( $member );
     }
@@ -4867,6 +4918,7 @@ function eme_members_shortcode( $atts ) {
         [
             'group_id'           => 0,
             'membership_id'      => 0,
+            'order'              => '',
             'template_id'        => 0,
             'template_id_header' => 0,
             'template_id_footer' => 0,
@@ -4876,6 +4928,7 @@ function eme_members_shortcode( $atts ) {
 
     $group_id           = eme_sanitize_request($atts['group_id']);
     $membership_id      = eme_sanitize_request($atts['membership_id']);
+    $order              = eme_sanitize_request($atts['order']);
     $template_id        = intval($atts['template_id']);
     $template_id_header = intval($atts['template_id_header']);
     $template_id_footer = intval($atts['template_id_footer']);
@@ -4885,6 +4938,11 @@ function eme_members_shortcode( $atts ) {
     } elseif ( ! empty( $membership_id ) ) {
         $member_ids = eme_get_memberships_member_ids( $membership_id );
     } else {
+        return '';
+    }
+
+    // no members found (or an invalid group/membership id), don't fall back to listing all members
+    if ( empty( $member_ids ) || ! eme_is_integer_array( $member_ids ) ) {
         return '';
     }
 
@@ -4904,8 +4962,8 @@ function eme_members_shortcode( $atts ) {
     }
     $output = '';
     $lang   = eme_detect_lang();
-    foreach ( $member_ids as $member_id ) {
-        $member     = eme_get_member( $member_id );
+    $members = eme_get_members( $member_ids, '', 0, 0, $order );
+    foreach ( $members as $member ) {
         $membership = eme_get_membership( $member['membership_id'] );
         $output    .= eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
     }

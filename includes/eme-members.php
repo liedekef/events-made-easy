@@ -497,6 +497,7 @@ function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesiz
         }
     }
 
+    $member_ids_int = [];
     $have_ids = ! empty( $member_ids ) && eme_is_integer_array( $member_ids );
     if ( $have_ids ) {
         $member_ids_int = array_map( 'intval', $member_ids );

@@ -1931,8 +1931,8 @@ function eme_tasks_ajax() {
     $nok       = 0;
     $ok        = 0;
     $t_person = eme_get_person_by_name_and_email( $bookerLastName, $bookerFirstName, $bookerEmail );
-    $matched_personid = ! empty( $t_person ) ? $t_person['person_id'] : 0;
-    $matched_wp_id    = ! empty( $t_person ) ? intval( $t_person['wp_id'] ) : -1;
+    $matched_personid = ! empty( $t_person ) ? intval( $t_person['person_id'] ) : 0;
+    $matched_wp_id    = ! empty( $t_person ) ? intval( $t_person['wp_id'] ) : 0;
     foreach ( wp_unslash( $_POST['eme_task_signups'] ) as $event_id => $task_id_arr ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $event_id              = intval( $event_id );
         $event                 = eme_get_event( $event_id );

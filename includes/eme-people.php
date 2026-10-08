@@ -3695,7 +3695,9 @@ function eme_get_name_orderby( $order, $tiebreaker ) {
         $tiebreaker = 'person_id';
     }
     $name_format = get_option( 'eme_full_name_format' );
-    if ( strpos( $name_format, '#_LASTNAME' ) > strpos( $name_format, '#_FIRSTNAME' ) ) {
+    $last_pos  = strpos( $name_format, '#_LASTNAME' );
+    $first_pos = strpos( $name_format, '#_FIRSTNAME' );
+    if ( $last_pos === false || ( $last_pos !== false && $first_pos !== false && $last_pos > $first_pos ) ) {
         return "ORDER BY firstname $order,lastname $order,$tiebreaker $order";
     }
     return "ORDER BY lastname $order,firstname $order,$tiebreaker $order";
@@ -4595,9 +4597,8 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             // the person we matched on name+email may belong to another wp user: only people with
             // the appropriate rights are allowed to book or register for somebody else.
             // anonymous visitors have no identity to violate, so they may still book for an existing
-            // person, but then we leave that person record alone (no updates, no wp-id adoption)
+            // person, but then we don't allow that if that person is linked to a wp account
             $found_wp_id = intval( $t_person['wp_id'] );
-            $freeze_person = 0;
             if ( ! eme_is_admin_request() && $found_wp_id !== intval( $wp_id ) && ! $allow_book_for_others ) {
                 if ( intval( $wp_id ) > 0 ) {
                     // exception: you may still claim an unlinked person record if you have none yourself
@@ -4607,19 +4608,16 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                             1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
                         ];
                     }
-                } else {
-                    $freeze_person = 1;
+                } elseif ($found_wp_id>0) { 
+                    return [
+                        0 => 0,
+                        1 => esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
+                    ];
                 }
             }
             $person_id = $t_person['person_id'];
             if ( $wp_id > 0 && $wp_count == 0 && $t_person['wp_id'] == 0 ) {
                 $person['wp_id'] = intval( $wp_id );
-            }
-            if ( $freeze_person ) {
-                return [
-                    0 => $person_id,
-                    1 => '',
-                ];
             }
 
             $updated_personid = eme_db_update_person( $person_id, $person );

@@ -111,6 +111,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Behavior change: booking for others, and clearing the pre-filled name fields, now require the registrations rights (eme_cap_registrations, or eme_cap_author_registrations as author/contact) instead of event-edit rights. Task signups use eme_cap_manage_task_signups. Logged-in users also can’t clear the fields on guest-allowed forms any more, so booking for someone with a different email means logging out.
 * Bugfix: a family member no longer overwrites an existing person that belongs to another wp user
 * Bugfix: the subscribe groups are now stored when a new person is created
+* Jodit update
 
 = 3.2.22  (2026/10/07) =
 * Membership statistics are now stored per month, so they no longer change when members are removed

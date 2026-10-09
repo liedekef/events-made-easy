@@ -2069,8 +2069,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     if ( is_user_logged_in() ) {
         $current_user = wp_get_current_user();
         // only people who are allowed to book for somebody else may clear the name fields
-        if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
-            ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_user->ID || $event['event_contactperson_id'] == $current_user->ID ) ) ) {
+        if ( eme_user_can_book_for_others( $event ) ) {
             $allow_clear = true;
         }
     } else {
@@ -3020,8 +3019,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
         $fetched      = eme_get_person_by_wp_id( $current_user->ID );
         $person       = $fetched ?: eme_fake_person_by_wp_id( $current_user->ID );
         // only people who are allowed to book for somebody else may clear the name fields
-        if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
-            ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_user->ID || $event['event_contactperson_id'] == $current_user->ID ) ) ) {
+        if ( eme_user_can_book_for_others( $event ) ) {
             $allow_clear = true;
         }
     }

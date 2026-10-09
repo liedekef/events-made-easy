@@ -1944,7 +1944,8 @@ function eme_tasks_ajax() {
         // the person we matched may belong to another wp user: only use it when it's our own person
         // or when we're allowed to sign up for somebody else, otherwise eme_add_update_person_from_form
         // further down decides (it allows anonymous signups without touching that person record)
-        $allow_book_for_others = eme_book_for_others_event_allowed( $event );
+        // the backend uses this right to manage task signups
+        $allow_book_for_others = current_user_can( get_option( 'eme_cap_manage_task_signups' ) );
         if ( $matched_personid && ( $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
             $person_id = $matched_personid;
         } else {

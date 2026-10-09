@@ -181,7 +181,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
     }
     // the hidden wp_id field is only for people who may book for others (the autocomplete can overwrite it with the
     // selected person's wp_id), for all others the server uses the logged in user and ignores any posted wp_id
-    if ( ! eme_is_admin_request() && eme_book_for_others_event_allowed( $event ) && ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) ) {
+    if ( ! eme_is_admin_request() && eme_user_can_book_for_others( $event ) && ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) ) {
         $form_html .= "<input type='hidden' name='wp_id' value='$current_userid'>";
     }
     $form_html .= "<input type='hidden' name='person_id' value=''>";
@@ -1369,7 +1369,13 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $bookerEmail     = '';
         $booker_wp_id    = 0;
         // who is allowed to make this booking for somebody else? (backend, event editors, author/contact person)
-        $allow_book_for_others = eme_book_for_others_event_allowed( $event );
+        $allow_book_for_others = eme_user_can_book_for_others( $event );
+        // just an extra safety check that a user in admin has the needed rights
+        if ( $eme_is_admin_request && ! $allow_book_for_others ) {
+            // same right the backend booking pages require
+            $form_html .= __( 'Access denied!', 'events-made-easy' );
+            continue;
+        }
         if ( is_user_logged_in() ) {
             $current_userid = get_current_user_id();
             // only people who may book for others can submit a booker wp id (the autocomplete selection),

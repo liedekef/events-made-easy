@@ -1148,20 +1148,25 @@ function eme_invite_allows_booking_for( $event_id, $lastname, $firstname, $email
     return true;
 }
 
-// Who is allowed to make a booking for somebody else on the frontend
-function eme_book_for_others_event_allowed( $event ) {
-    if ( eme_is_admin_request() ) {
-        return true;
-    }
+// Capability part: may the current user make a booking for somebody else for this event?
+// These are the same rights the backend booking pages require: registrations managers, or the
+// author/contact person of the event when they have the "author" registrations right.
+// Doesn't depend on the (forgeable) referer, so use this where a decision must not be spoofable.
+function eme_user_can_book_for_others( $event ) {
     if ( empty( $event ) || ! is_array( $event ) || ! is_user_logged_in() ) {
         return false;
     }
-    if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+    if ( current_user_can( get_option( 'eme_cap_registrations' ) ) ) {
         return true;
     }
     $current_userid = get_current_user_id();
-    return current_user_can( get_option( 'eme_cap_author_event' ) ) &&
+    return current_user_can( get_option( 'eme_cap_author_registrations' ) ) &&
         ( (int) $event['event_author'] === $current_userid || (int) $event['event_contactperson_id'] === $current_userid );
+}
+
+// Who is allowed to make a booking for somebody else: the backend, or the people with the right to do so
+function eme_book_for_others_event_allowed( $event ) {
+    return eme_is_admin_request() || eme_user_can_book_for_others( $event );
 }
 
 function eme_rsvp_checkurl( $booking_id ) {
@@ -2347,19 +2352,32 @@ function eme_dyndata_rsvp_ajax() {
     check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 
     header( 'Content-type: application/json; charset=utf-8' );
+
+    $backend_request = false;
+    // the backend forms post an admin nonce, the frontend forms don't: without it this is a frontend
+    // request, whatever the (forgeable) referer says
+    if ( ! isset( $_POST['eme_admin_nonce'] ) ) {
+        eme_mark_frontend_request();
+    } else {
+        // nonce present: we already check it
+        check_admin_referer( "eme_admin", 'eme_admin_nonce' );
+        if (eme_is_admin_request()) {
+            $backend_request = true;
+        }
+    }
+
     // first detect multibooking
     $event_ids = [];
     if ( ! empty( $_POST['eme_event_ids'] ) ) {
         $event_ids = array_map( 'intval', $_POST['eme_event_ids'] );
-    } elseif ( eme_is_admin_request() && ! empty( $_POST['event_id'] ) ) {
+    } elseif ( $backend_request && ! empty( $_POST['event_id'] ) ) {
         // the case when adding a booking in the backend
         $event_ids = [ 0 => intval( $_POST['event_id'] ) ];
     }
 
-    if ( ! empty( $_POST['booking_id'] ) ) {
+    if ( $backend_request && ! empty( $_POST['booking_id'] ) ) {
         // the case when editing a booking in the backend
         $booking_id = intval( $_POST['booking_id'] );
-        check_admin_referer( "eme_admin", 'eme_admin_nonce' );
         $booking   = eme_get_booking( $booking_id );
         $event_ids = [ 0 => $booking['event_id'] ];
     } else {
@@ -2372,6 +2390,13 @@ function eme_dyndata_rsvp_ajax() {
         if ( empty( $event ) ) {
             continue;
         }
+ 
+        // the backend cases need the right to manage the bookings of this event (checked on capabilities, not on the referer)
+        $can_book_for_others = eme_user_can_book_for_others( $event );
+        if ( $backend_request && ! $can_book_for_others ) {
+            continue;
+        }
+
         // we use a fake booking to get an initial price based on current entered data
         $fake_booking = eme_fake_booking( $event );
         if ( ! empty( $booking ) ) {

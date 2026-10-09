@@ -3648,6 +3648,12 @@ function eme_dyndata_member_ajax() {
     // has an extra frontend nonce set (even if executed in the backend)
     check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 
+    // the backend forms post an admin nonce, the frontend forms don't: without it this is a frontend
+    // request, whatever the (forgeable) referer says
+    if ( ! isset( $_POST['eme_admin_nonce'] ) ) {
+        eme_mark_frontend_request();
+    }
+
     header( 'Content-type: application/json; charset=utf-8' );
     $membership_id = 0;
     if ( ! empty( $_POST['membership_id'] ) ) {
@@ -3657,8 +3663,6 @@ function eme_dyndata_member_ajax() {
     if ( ! empty( $_POST['member_id'] ) ) {
         if (eme_is_admin_request()) {
             check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-        } else {
-            check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
         }
         if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             wp_die();
@@ -3689,8 +3693,9 @@ function eme_dyndata_member_ajax() {
                     $grouping = intval( $condition['grouping'] );
                 }
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user
-                    $wp_id 	     = eme_is_admin_request() ? eme_get_wpid_by_post() : get_current_user_id();
+                    // only people who may register somebody else can ask about another wp user (the posted wp id),
+                    // for everybody else it is the logged in user
+                    $wp_id 	     = current_user_can( get_option( 'eme_cap_edit_members' ) ) ? eme_get_wpid_by_post() : get_current_user_id();
                     $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member

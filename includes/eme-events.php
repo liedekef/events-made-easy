@@ -4379,6 +4379,15 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     } else {
         $events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_customformfields: $include_customformfields, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
     }
+    if ( eme_get_orderby_error() ) {
+        eme_clear_orderby_error();
+        $output = eme_message_error_div( __( 'The shortcode parameters are not correct', 'events-made-easy' ) );
+        if ( $echo ) {
+            echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode HTML output
+            return;
+        }
+        return $output;
+    }
     $events_count = count( $events );
 
     // get the paging output ready
@@ -4928,6 +4937,7 @@ function eme_get_events_scope_condition( $limit_start, $limit_end, $show_ongoing
 // main function querying the database event table
 function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = [], $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0, $search_customfieldrows = [] ) {
     global $wpdb;
+    eme_clear_orderby_error();
 
     $events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
     $bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
@@ -4954,14 +4964,16 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     }
 
     // we can provide our own order statements
-    $orderby = '';
+    $orderby           = '';
+    $used_custom_order = false;
     // remove trailing ',' and initial "ORDER BY " if present (it will be re-added)
     $order = preg_replace( '/,$|ORDER BY /i', '', $order );
     if ( ! eme_is_empty_string( $order )) {
         if ( $order == 'ASC' || $order == 'DESC' ) {
             $orderby = "ORDER BY event_start $order, event_name $order";
         } elseif ( eme_sanitize_sql_orderby( $order ) ) {
-            $orderby = 'ORDER BY ' . $order;
+            $used_custom_order = true;
+            $orderby           = 'ORDER BY ' . $order;
         } else {
             $orderby = 'ORDER BY event_start ASC, event_name ASC';
         }
@@ -5708,10 +5720,18 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     if ( $res === false ) {
         if ( $count ) {
             $count = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+            if ( $used_custom_order && ! empty( $wpdb->last_error ) ) {
+                error_log( 'EME: SQL error in ' . __FUNCTION__ . ' with custom order parameters' );
+                eme_mark_orderby_error();
+            }
             wp_cache_set( "eme_events $sql_md5", $count, '', 10 );
             return $count;
         } else {
             $events          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
+            if ( $used_custom_order && ! empty( $wpdb->last_error ) ) {
+                error_log( 'EME: SQL error in ' . __FUNCTION__ . ' with custom order parameters' );
+                eme_mark_orderby_error();
+            }
             $inflated_events = [];
             if ( ! empty( $events ) ) {
                 // if in the frontend we might want to hide rsvp ended events

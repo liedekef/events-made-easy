@@ -453,6 +453,7 @@ function eme_update_member_usage_count( $member ) {
 
 function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesize = 0, $order = '' ) {
     global $wpdb;
+    eme_clear_orderby_error();
     $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
@@ -466,11 +467,13 @@ function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesiz
     }
     $orderby                = '';
     $order_on_custom_fields = 0;
+    $used_custom_order      = false;
     if ( $order == 'ASC' || $order == 'DESC' ) {
         // order as the full name dictates, like eme_get_persons() does
         $orderby = eme_get_name_orderby( $order, 'member_id' );
     } elseif ( ! eme_is_empty_string( $order ) ) {
         if ( eme_sanitize_sql_orderby( $order ) ) {
+            $used_custom_order      = true;
             $orderby                = 'ORDER BY ' . $order;
             $order_on_custom_fields = (bool) preg_match( '/FIELD_\d+/', $order );
         } else {
@@ -535,6 +538,10 @@ function eme_get_members( $member_ids, $extra_search = '', $offset = 0, $pagesiz
         $sql   .= $wpdb->prepare( ' LIMIT %d OFFSET %d', $limit, $offset );
     }
     $members = $wpdb->get_results( $sql, ARRAY_A ) ?? []; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+    if ( $used_custom_order && ! empty( $wpdb->last_error ) ) {
+        error_log( 'EME: SQL error in ' . __FUNCTION__ . ' with custom order parameters' );
+        eme_mark_orderby_error();
+    }
     foreach ( $members as $key => $member ) {
         $members[ $key ] = eme_get_extra_member_data( $member );
     }
@@ -4993,6 +5000,10 @@ function eme_members_shortcode( $atts ) {
     $output = '';
     $lang   = eme_detect_lang();
     $members = eme_get_members( $member_ids, '', 0, 0, $order );
+    if ( eme_get_orderby_error() ) {
+        eme_clear_orderby_error();
+        return eme_message_error_div( __( 'The shortcode parameters are not correct', 'events-made-easy' ) );
+    }
     foreach ( $members as $member ) {
         $membership = eme_get_membership( $member['membership_id'] );
         $output    .= eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );

@@ -2961,6 +2961,21 @@ function eme_sanitize_sql_orderby( $orderby ) {
     return false;
 }
 
+// a simple flag to signal that a query with custom (user supplied) ordering parameters resulted in an
+// SQL error: the frontend shows a generic error message to the visitor, the details only reach the server error log
+function eme_clear_orderby_error() {
+    global $eme_orderby_error;
+    $eme_orderby_error = false;
+}
+function eme_mark_orderby_error() {
+    global $eme_orderby_error;
+    $eme_orderby_error = true;
+}
+function eme_get_orderby_error() {
+    global $eme_orderby_error;
+    return ! empty( $eme_orderby_error );
+}
+
 function eme_sort_stringlenth( $a, $b ) {
     return strlen( $b ) - strlen( $a );
 }

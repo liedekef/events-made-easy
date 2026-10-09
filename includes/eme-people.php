@@ -266,6 +266,10 @@ function eme_people_shortcode( $atts ) {
     } else {
         $persons = eme_get_persons( '', '', '', $atts['order']);
     }
+    if ( eme_get_orderby_error() ) {
+        eme_clear_orderby_error();
+        return eme_message_error_div( __( 'The shortcode parameters are not correct', 'events-made-easy' ) );
+    }
 
     $format            = '';
     $eme_format_header = '';
@@ -3705,6 +3709,7 @@ function eme_get_name_orderby( $order, $tiebreaker ) {
 
 function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $order = 'ASC' ) {
     global $wpdb;
+    eme_clear_orderby_error();
     $people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
@@ -3732,10 +3737,12 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
 
     $orderby                = '';
     $order_on_custom_fields = 0;
+    $used_custom_order      = false;
     if ( $order == 'ASC' || $order == 'DESC' ) {
         // let's try to order as the full name dictates
         $orderby = eme_get_name_orderby( $order, 'person_id' );
     } elseif ( ! eme_is_empty_string( $order ) && preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
+        $used_custom_order = true;
         $order_arr = [];
         if ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
             $order_tmp_arr = explode( ',', $order );
@@ -3782,7 +3789,11 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
 
     $sql = "SELECT * FROM $people_table $sql_join $where $orderby $limit"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-    $persons = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    $persons = $wpdb->get_results( $sql, ARRAY_A ) ?? []; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    if ( $used_custom_order && ! empty( $wpdb->last_error ) ) {
+        error_log( 'EME: SQL error in ' . __FUNCTION__ . ' with custom order parameters' );
+        eme_mark_orderby_error();
+    }
     foreach ( $persons as $key => $person ) {
         $person['properties'] = eme_init_person_props( eme_json_decode_safe( $person['properties'] ) );
         $persons[ $key ]      = $person;

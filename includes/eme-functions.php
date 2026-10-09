@@ -2417,10 +2417,11 @@ function eme_dyndata_rsvp_ajax() {
                 }
 
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user;
-                    // the posted wp id is only used for genuine backend cases where the operator also has the right to book for others
-                    $wp_id       = ( $backend_request && $can_book_for_others ) ? eme_get_wpid_by_post() : get_current_user_id();
-                    $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
+                    // the groups of the person these details match (if we may use that person), no wp id involved.
+                    // No match means a new person, and a new person has no groups.
+                    $group_person = eme_get_usable_person_by_post( $can_book_for_others );
+                    $group_names  = $group_person ? eme_get_persongroup_names( $group_person['person_id'] ) : [];
+                    $entered_val  = join( ',', array_map( 'esc_html', $group_names ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member
                     $entered_val = eme_replace_booking_placeholders( $condition['field'], $event, $fake_booking, 0, 'html', '', 1 );

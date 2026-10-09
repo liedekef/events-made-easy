@@ -935,10 +935,7 @@ function eme_import_csv_people() {
                 }
             }
             // if the person already exists: update him
-            $person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
-            if ( ! $person ) {
-                $person = eme_get_person_by_email_only( $line['email'] );
-            }
+            $person = eme_get_person_by_name_or_email( $line['lastname'], $line['firstname'], $line['email'] );
             $person_id = 0;
             if ( $person ) {
                 $person_id = eme_db_update_person( $person['person_id'], $line );
@@ -2955,6 +2952,47 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
 }
 
 // API function for people wanting to check if somebody is already registered
+// The lookup used for frontend forms: an exact lastname/firstname/email match first, then a person that
+// only has that email (empty name). Use this everywhere a form needs to know "who is this person",
+// so all checks agree with what eme_add_update_person_from_form will actually use.
+function eme_get_person_by_name_or_email( $lastname, $firstname, $email ) {
+    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
+    if ( ! $person ) {
+        $person = eme_get_person_by_email_only( $email );
+    }
+    return $person;
+}
+
+// The person matching the posted lastname/firstname/email, but only if the current user may use it:
+// a person that isn't linked to a wp user, the person linked to our own wp user, or any person if we're
+// allowed to book/register for somebody else. This is not an authorization on its own for bookings
+// (eme_add_update_person_from_form does that), it is meant for lookups like the dynamic form data.
+function eme_get_usable_person_by_post( $allow_for_others = false ) {
+    $person = eme_get_person_by_post();
+    if ( ! $person ) {
+        return false;
+    }
+    $found_wp_id = intval( $person['wp_id'] );
+    if ( $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id() ) {
+        return $person;
+    }
+    return false;
+}
+
+// For registrations restricted to wp users: people who may not book/register for somebody else can only use
+// their own person or, when they don't have one yet, a new one (which will be linked to their wp user)
+function eme_person_is_own_or_new_for_user( $lastname, $firstname, $email ) {
+    if ( ! is_user_logged_in() ) {
+        return false;
+    }
+    $own_wp_id = get_current_user_id();
+    $person    = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+    if ( $person ) {
+        return intval( $person['wp_id'] ) === $own_wp_id;
+    }
+    return eme_count_persons_with_wp_id( $own_wp_id ) == 0;
+}
+
 function eme_get_person_by_post() {
     if ( isset( $_POST['lastname'] ) && isset( $_POST['email'] ) ) {
         $lastname = eme_sanitize_request( $_POST['lastname'] );
@@ -2967,8 +3005,7 @@ function eme_get_person_by_post() {
         if ( ! eme_is_email_frontend( $email ) ) {
             return false;
         }
-        $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-        return $person;
+        return eme_get_person_by_name_or_email( $lastname, $firstname, $email );
     } else {
         return false;
     }
@@ -3147,15 +3184,17 @@ function eme_get_person_by_wp_id( $wp_id ) {
         $person['properties'] = eme_init_person_props( eme_json_decode_safe( $person['properties'] ) );
     } else {
         // imagine there is no user yet, but someone matching with this info (lastname, firstname, email), then we add the wp id to that existing user
-        $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-        if ( ! $person ) {
-            $person = eme_get_person_by_email_only( $email );
-        }
+        $person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
         if ( ! empty( $person ) ) {
-            $res = eme_update_person_wp_id( $person['person_id'], $wp_id );
-            wp_cache_delete( "eme_person_wpid $wp_id" );
-            if ( $res !== false ) {
-                $person['wp_id'] = $wp_id;
+            if ( ! empty( $person['wp_id'] ) ) {
+                // that person already belongs to another wp user: never take it over
+                $person = false;
+            } else {
+                $res = eme_update_person_wp_id( $person['person_id'], $wp_id );
+                wp_cache_delete( "eme_person_wpid $wp_id" );
+                if ( $res !== false ) {
+                    $person['wp_id'] = $wp_id;
+                }
             }
         }
     }
@@ -4237,10 +4276,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
         $res_id = $updated_personid;
     } else {
         // check existing
-        $t_person = eme_get_person_by_name_and_email( $person['lastname'], $person['firstname'], $person['email'] );
-        if ( ! $t_person ) {
-            $t_person = eme_get_person_by_email_only( $person['email'] );
-        }
+        $t_person = eme_get_person_by_name_or_email( $person['lastname'], $person['firstname'], $person['email'] );
         if ( $t_person ) {
             $person_id        = $t_person['person_id'];
             $updated_personid = eme_db_update_person( $person_id, $person );
@@ -4435,10 +4471,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     $person['firstname']         = eme_sanitize_request( $firstname );
     $person['email']             = $email;
 
-    $t_person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-    if ( ! $t_person ) {
-        $t_person = eme_get_person_by_email_only( $email );
-    }
+    $t_person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
     // if we have a matching person, update that one. But make sure we"re not updating the main one (can happen if someone entered the main account details also as member)
     if ( $t_person && $t_person['person_id'] != $main_person_id ) {
         $person_id    = $t_person['person_id'];
@@ -4462,6 +4495,9 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     return $person_id;
 }
 
+// $wp_id is only honoured when $allow_book_for_others is set (the backend selecting a wp user for a NEW person),
+// it is never taken from a frontend request. Without it a new person gets the wp id of the logged in user (if that
+// wp id isn't linked to a person yet), and an existing person never gets its wp id changed here.
 function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0, $allow_book_for_others = 0 ) {
     $person = [];
 
@@ -4580,7 +4616,16 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 
     if ( $return_fake_person ) {
         $person['person_id']    = -1;
-        $person['wp_id']        = eme_get_wpid_by_post();
+        // no wp id from the request: use the wp id of the person these details match (if we may use it),
+        // or our own wp id if that isn't linked to a person yet
+        $fake_wp_id   = 0;
+        $found_person = eme_get_usable_person_by_post( $allow_book_for_others );
+        if ( $found_person ) {
+            $fake_wp_id = intval( $found_person['wp_id'] );
+        } elseif ( is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) == 0 ) {
+            $fake_wp_id = get_current_user_id();
+        }
+        $person['wp_id']        = $fake_wp_id;
         $person['lastname'] = eme_sanitize_request( $_POST['lastname'] );
         if ( isset( $_POST['firstname'] ) ) {
             $person['firstname'] = eme_sanitize_request( $_POST['firstname'] );
@@ -4590,29 +4635,32 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
         $person['email'] = eme_sanitize_email( $_POST['email'] );
         return $person;
     } elseif ( ! $person_id ) {
-        $wp_count = 0;
-        if ( $wp_id > 0 ) {
-            $wp_count = eme_count_persons_with_wp_id( $wp_id );
+        // the wp id a NEW person gets linked to: the explicit one (only for those who may book for others, e.g. the
+        // backend selecting a wp user), otherwise our own wp id. Never if that wp id already belongs to a person.
+        $new_wp_id = 0;
+        if ( $allow_book_for_others ) {
+            $new_wp_id = intval( $wp_id );
+        } elseif ( is_user_logged_in() ) {
+            $new_wp_id = get_current_user_id();
         }
-        $t_person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-        if ( ! $t_person ) {
-            $t_person = eme_get_person_by_email_only( $email );
+        if ( $new_wp_id > 0 && eme_count_persons_with_wp_id( $new_wp_id ) > 0 ) {
+            $new_wp_id = 0;
+        }
+        $t_person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+        if ( $t_person && eme_is_empty_string( $t_person['lastname'] ) && eme_is_empty_string( $t_person['firstname'] ) ) {
             // we found a person matching with email only, meaning empty lastname/firstname, so we update it
             // this prevents people from updating their name/email with only a case-difference from the frontend
-            if ( $t_person ) {
-                $person['lastname']  = eme_sanitize_request( $lastname );
-                $person['firstname'] = eme_sanitize_request( $firstname );
-            }
+            $person['lastname']  = eme_sanitize_request( $lastname );
+            $person['firstname'] = eme_sanitize_request( $firstname );
         }
         if ( $t_person ) {
-            // the person we matched on name+email may belong to another wp user: only people who are allowed
-            // to book or register for somebody else (the callers decide that, see $allow_book_for_others) may use it.
-            // An anonymous visitor (wp_id 0) can still use a person that isn't linked to a wp account.
-            // A logged in user can only use the person linked to their own wp account (that link is made
-            // by eme_get_person_by_wp_id when the form is shown), never someone else's or an unlinked one.
+            // the person we matched may belong to another wp user: only people who are allowed to book or
+            // register for somebody else (the callers decide that, see $allow_book_for_others) may use it.
+            // A person that isn't linked to a wp user can be used by anyone (like an anonymous booking).
+            // The wp id of an existing person is never changed here.
             $found_wp_id = intval( $t_person['wp_id'] );
-            if ( $found_wp_id !== intval( $wp_id ) && ! $allow_book_for_others ) {
-                if ( intval( $wp_id ) > 0 ) {
+            if ( $found_wp_id > 0 && $found_wp_id !== get_current_user_id() && ! $allow_book_for_others ) {
+                if ( is_user_logged_in() ) {
                     return [
                         0 => 0,
                         1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
@@ -4624,9 +4672,6 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                 ];
             }
             $person_id = $t_person['person_id'];
-            if ( $wp_id > 0 && $wp_count == 0 && $t_person['wp_id'] == 0 ) {
-                $person['wp_id'] = intval( $wp_id );
-            }
 
             $updated_personid = eme_db_update_person( $person_id, $person );
             if ( $updated_personid ) {
@@ -4648,8 +4693,8 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             $person['lastname']  = eme_sanitize_request( $lastname );
             $person['firstname'] = eme_sanitize_request( $firstname );
             $person['email']     = $email;
-            if ( $wp_id > 0 && $wp_count == 0 ) {
-                $person['wp_id'] = intval( $wp_id );
+            if ( $new_wp_id > 0 ) {
+                $person['wp_id'] = $new_wp_id;
             }
             $person_id = eme_db_insert_person( $person );
             if ( $person_id ) {

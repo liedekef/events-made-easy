@@ -1930,7 +1930,7 @@ function eme_tasks_ajax() {
     $message   = '';
     $nok       = 0;
     $ok        = 0;
-    $t_person = eme_get_person_by_name_and_email( $bookerLastName, $bookerFirstName, $bookerEmail );
+    $t_person = eme_get_person_by_name_or_email( $bookerLastName, $bookerFirstName, $bookerEmail );
     $matched_personid = ! empty( $t_person ) ? intval( $t_person['person_id'] ) : 0;
     $matched_wp_id    = ! empty( $t_person ) ? intval( $t_person['wp_id'] ) : 0;
     foreach ( wp_unslash( $_POST['eme_task_signups'] ) as $event_id => $task_id_arr ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -1940,18 +1940,24 @@ function eme_tasks_ajax() {
         $registered_users_only = $event['event_properties']['task_registered_users_only'];
         $only_one_signup_pp    = $event['event_properties']['task_only_one_signup_pp'];
         $signup_status         = ($event['event_properties']['task_requires_approval'])? 0 : 1;
-        // the person we matched may belong to another wp user: only use it when it's our own person
-        // or when we're allowed to sign up for somebody else, otherwise eme_add_update_person_from_form
-        // further down decides (it allows anonymous signups without touching that person record)
         // the backend uses this right to manage task signups
         $allow_book_for_others = current_user_can( get_option( 'eme_cap_manage_task_signups' ) );
-        if ( $matched_personid && ( $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
+        // the person we matched may belong to another wp user: only use it when it isn't linked to a wp user,
+        // when it's our own person or when we're allowed to sign up for somebody else, otherwise
+        // eme_add_update_person_from_form further down decides
+        if ( $matched_personid && ( $matched_wp_id === 0 || $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
             $person_id = $matched_personid;
         } else {
             $person_id = 0;
         }
         if ( $registered_users_only && ! $booker_wp_id ) {
             $message .= get_option( 'eme_rsvp_login_required_string' );
+            $nok      = 1;
+            continue;
+        }
+        if ( $registered_users_only && ! $allow_book_for_others && ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
+            // registered users only: those who may not sign up somebody else can only use their own person
+            $message .= esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
             $nok      = 1;
             continue;
         }
@@ -1977,8 +1983,7 @@ function eme_tasks_ajax() {
             }
             $add_update_person_from_form_err = '';
             if ( ! $person_id && !empty($bookerLastName) && !empty($bookerEmail) ) {
-                // when we may sign up somebody else, don't pass our own wp id: the person would get linked to our account
-                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $allow_book_for_others ? 0 : $booker_wp_id, 0, 0, $allow_book_for_others );
+                $res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, 0, 0, 0, $allow_book_for_others );
                 $person_id   = $res[0];
                 $add_update_person_from_form_err = $res[1];
                 if ( $person_id ) {

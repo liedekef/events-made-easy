@@ -1304,16 +1304,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             // we need an email
             $err = __( 'Please enter a valid email address', 'events-made-easy' );
         } else {
-            // the frontend form doesn't submit a wp id: deduce it from the logged in user.
-            // When registering somebody else (frontend editors) we don't pass our own wp id, otherwise
-            // that other person would get linked to our account
-            if ( $eme_is_admin_request ) {
-                $wp_id = eme_get_wpid_by_post();
-            } elseif ( is_user_logged_in() && ! $allow_book_for_others ) {
-                $wp_id = get_current_user_id();
-            } else {
-                $wp_id = 0;
-            }
+            // only the backend can pass a wp id (to link a NEW person to the selected wp user): for the frontend
+            // eme_add_update_person_from_form decides (our own wp id for a new person, never for an existing one)
+            $wp_id = $eme_is_admin_request ? eme_get_wpid_by_post() : 0;
             $bookerLastName = eme_sanitize_request( $_POST['lastname'] );
             if ( isset( $_POST['firstname'] ) ) {
                 $bookerFirstName = eme_sanitize_request( $_POST['firstname'] );
@@ -1322,9 +1315,15 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             }
             $bookerEmail = eme_sanitize_email( $_POST['email'] );
 
-            $res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $wp_id, $membership['properties']['create_wp_user'], 0, $allow_book_for_others );
-            $person_id = $res[0];
-            $err       = $res[1];
+            if ( ! $eme_is_admin_request && ! $allow_book_for_others && $membership['properties']['registration_wp_users_only'] &&
+                ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
+                // for wp users only memberships, those who may not register somebody else can only use their own person
+                $err = esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
+            } else {
+                $res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $wp_id, $membership['properties']['create_wp_user'], 0, $allow_book_for_others );
+                $person_id = $res[0];
+                $err       = $res[1];
+            }
         }
         if ( ! $person_id ) {
             $result = $err;
@@ -3700,10 +3699,11 @@ function eme_dyndata_member_ajax() {
                     $grouping = intval( $condition['grouping'] );
                 }
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    // only people who may register somebody else can ask about another wp user (the posted wp id),
-                    // for everybody else it is the logged in user
-                    $wp_id 	     = current_user_can( get_option( 'eme_cap_edit_members' ) ) ? eme_get_wpid_by_post() : get_current_user_id();
-                    $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
+                    // the groups of the person these details match (if we may use that person), no wp id involved.
+                    // No match means a new person, and a new person has no groups.
+                    $group_person = eme_get_usable_person_by_post( current_user_can( get_option( 'eme_cap_edit_members' ) ) );
+                    $group_names  = $group_person ? eme_get_persongroup_names( $group_person['person_id'] ) : [];
+                    $entered_val  = join( ',', array_map( 'esc_html', $group_names ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member
                     $entered_val = eme_replace_member_placeholders( $condition['field'], $membership, $member, 'html', '', 1 );
@@ -6375,10 +6375,7 @@ function eme_import_csv_members() {
             $membership = eme_get_membership( $line['membership'] );
             if ( $membership ) {
                 // if the person already exists: update him
-                $person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
-                if ( ! $person ) {
-                    $person = eme_get_person_by_email_only( $line['email'] );
-                }
+                $person = eme_get_person_by_name_or_email( $line['lastname'], $line['firstname'], $line['email'] );
                 if ( $person ) {
                     $person_id = $person['person_id'];
                 } else {

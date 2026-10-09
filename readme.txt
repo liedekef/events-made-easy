@@ -108,6 +108,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Security: only people who may book for somebody else can clear the pre-filled name fields of a registration form
 * Security: invite-only events are now also verified when the booking is submitted, and only for the invited person
 * Security: invite-only discounts are now also bound to the invited person when the booking is submitted
+* Behavior change: booking for others, and clearing the pre-filled name fields, now require the registrations rights (eme_cap_registrations, or eme_cap_author_registrations as author/contact) instead of event-edit rights. Task signups use eme_cap_manage_task_signups. Logged-in users also can’t clear the fields on guest-allowed forms any more, so booking for someone with a different email means logging out.
 * Bugfix: a family member no longer overwrites an existing person that belongs to another wp user
 * Bugfix: the subscribe groups are now stored when a new person is created
 

@@ -1164,11 +1164,6 @@ function eme_user_can_book_for_others( $event ) {
         ( (int) $event['event_author'] === $current_userid || (int) $event['event_contactperson_id'] === $current_userid );
 }
 
-// Who is allowed to make a booking for somebody else: the backend, or the people with the right to do so
-function eme_book_for_others_event_allowed( $event ) {
-    return eme_is_admin_request() || eme_user_can_book_for_others( $event );
-}
-
 function eme_rsvp_checkurl( $booking_id ) {
     $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
     // no language: it is checked by someone else in the browser
@@ -2422,8 +2417,9 @@ function eme_dyndata_rsvp_ajax() {
                 }
 
                 if ( $condition['field'] == '#_GROUPS' ) {
-                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user
-                    $wp_id       = eme_is_admin_request() ? eme_get_wpid_by_post() : get_current_user_id();
+                    // the frontend form doesn't submit a wp id anymore, so deduce it from the logged in user;
+                    // the posted wp id is only used for genuine backend cases where the operator also has the right to book for others
+                    $wp_id       = ( $backend_request && $can_book_for_others ) ? eme_get_wpid_by_post() : get_current_user_id();
                     $entered_val = join( ',', array_map( 'esc_html', eme_get_persongroup_names( 0, $wp_id ) ) );
                 } else {
                     // indicate "1" to make sure the answers are taken from the POST, and not from the existing member

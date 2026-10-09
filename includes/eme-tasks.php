@@ -1567,8 +1567,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
     }
 
     $current_userid = get_current_user_id();
-    if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
-        ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
+    if ( current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
         $search_tables = get_option( 'eme_autocomplete_sources' );
         if ( $search_tables != 'none' ) {
             wp_enqueue_script( 'eme-autocomplete-form' );

@@ -2951,18 +2951,6 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
     return $output;
 }
 
-// API function for people wanting to check if somebody is already registered
-// The lookup used for frontend forms: an exact lastname/firstname/email match first, then a person that
-// only has that email (empty name). Use this everywhere a form needs to know "who is this person",
-// so all checks agree with what eme_add_update_person_from_form will actually use.
-function eme_get_person_by_name_or_email( $lastname, $firstname, $email ) {
-    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-    if ( ! $person ) {
-        $person = eme_get_person_by_email_only( $email );
-    }
-    return $person;
-}
-
 // The person matching the posted lastname/firstname/email, but only if the current user may use it:
 // a person that isn't linked to a wp user, the person linked to our own wp user, or any person if we're
 // allowed to book/register for somebody else. This is not an authorization on its own for bookings
@@ -3051,6 +3039,17 @@ function eme_get_person_by_email_only( $email ) {
         $res['properties'] = eme_init_person_props( eme_json_decode_safe( $res['properties'] ) );
     }
     return $res;
+}
+
+// The lookup used for frontend forms: an exact lastname/firstname/email match first, then a person that
+// only has that email (empty name). Use this everywhere a form needs to know "who is this person",
+// so all checks agree with what eme_add_update_person_from_form will actually use.
+function eme_get_person_by_name_or_email( $lastname, $firstname, $email ) {
+    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
+    if ( ! $person ) {
+        $person = eme_get_person_by_email_only( $email );
+    }
+    return $person;
 }
 
 function eme_get_person_by_name_and_email( $lastname, $firstname, $email, $skip_personid=0 ) {

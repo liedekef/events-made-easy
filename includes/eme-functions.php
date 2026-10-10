@@ -2374,7 +2374,9 @@ function eme_dyndata_rsvp_ajax() {
         // the case when editing a booking in the backend
         $booking_id = intval( $_POST['booking_id'] );
         $booking   = eme_get_booking( $booking_id );
-        $event_ids = [ 0 => $booking['event_id'] ];
+        if ($booking) {
+            $event_ids = [ 0 => $booking['event_id'] ];
+        }
     } else {
         $booking = [];
     }

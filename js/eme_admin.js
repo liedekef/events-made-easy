@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const offset = parseInt(EME.$('#task_offset').value);
             EME.$$('#eme_tasks_tbody tr').forEach(tr => {
                 ['task_start', 'task_end'].forEach(f => {
-                    const field = tr.querySelector(`[name*="[${f}]"]`);
+                    const field = tr.querySelector(`[id*="_${f}"]`);
                     if (field?._fdatepicker && field._fdatepicker.selectedDate) {
                         const dateObj = field._fdatepicker.selectedDate;
                         dateObj.setDate(dateObj.getDate() + offset);

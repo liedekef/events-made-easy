@@ -6375,7 +6375,7 @@ function eme_import_csv_members() {
             $membership = eme_get_membership( $line['membership'] );
             if ( $membership ) {
                 // if the person already exists: update him
-                $person = eme_get_person_by_name_or_email( $line['lastname'], $line['firstname'], $line['email'] );
+                $person = eme_get_matching_person( $line['lastname'], $line['firstname'], $line['email'] );
                 if ( $person ) {
                     $person_id = $person['person_id'];
                 } else {
@@ -6566,7 +6566,7 @@ function eme_import_csv_member_dynamic_answers() {
             $person_id  = 0;
             $membership = eme_get_membership( $line['membership'] );
             if ( $membership ) {
-                $person = eme_get_person_by_name_or_email( $line['lastname'], $line['firstname'], $line['email'] );
+                $person = eme_get_matching_person( $line['lastname'], $line['firstname'], $line['email'] );
                 if ( $person ) {
                     $person_id = $person['person_id'];
                 } else {

@@ -935,7 +935,7 @@ function eme_import_csv_people() {
                 }
             }
             // if the person already exists: update him
-            $person = eme_get_person_by_name_or_email( $line['lastname'], $line['firstname'], $line['email'] );
+            $person = eme_get_matching_person( $line['lastname'], $line['firstname'], $line['email'] );
             $person_id = 0;
             if ( $person ) {
                 $person_id = eme_db_update_person( $person['person_id'], $line );
@@ -2974,7 +2974,7 @@ function eme_person_is_own_or_new_for_user( $lastname, $firstname, $email ) {
         return false;
     }
     $own_wp_id = get_current_user_id();
-    $person    = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+    $person    = eme_get_matching_person( $lastname, $firstname, $email );
     if ( $person ) {
         return intval( $person['wp_id'] ) === $own_wp_id;
     }
@@ -2993,7 +2993,7 @@ function eme_get_person_by_post() {
         if ( ! eme_is_email_frontend( $email ) ) {
             return false;
         }
-        return eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+        return eme_get_matching_person( $lastname, $firstname, $email );
     } else {
         return false;
     }
@@ -3044,7 +3044,7 @@ function eme_get_person_by_email_only( $email ) {
 // The lookup used for frontend forms: an exact lastname/firstname/email match first, then a person that
 // only has that email (empty name). Use this everywhere a form needs to know "who is this person",
 // so all checks agree with what eme_add_update_person_from_form will actually use.
-function eme_get_person_by_name_or_email( $lastname, $firstname, $email ) {
+function eme_get_matching_person( $lastname, $firstname, $email ) {
     $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
     if ( ! $person ) {
         $person = eme_get_person_by_email_only( $email );
@@ -3183,7 +3183,7 @@ function eme_get_person_by_wp_id( $wp_id ) {
         $person['properties'] = eme_init_person_props( eme_json_decode_safe( $person['properties'] ) );
     } else {
         // imagine there is no user yet, but someone matching with this info (lastname, firstname, email), then we add the wp id to that existing user
-        $person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+        $person = eme_get_matching_person( $lastname, $firstname, $email );
         if ( ! empty( $person ) ) {
             if ( ! empty( $person['wp_id'] ) ) {
                 // that person already belongs to another wp user: never take it over
@@ -4275,7 +4275,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
         $res_id = $updated_personid;
     } else {
         // check existing
-        $t_person = eme_get_person_by_name_or_email( $person['lastname'], $person['firstname'], $person['email'] );
+        $t_person = eme_get_matching_person( $person['lastname'], $person['firstname'], $person['email'] );
         if ( $t_person ) {
             $person_id        = $t_person['person_id'];
             $updated_personid = eme_db_update_person( $person_id, $person );
@@ -4470,7 +4470,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     $person['firstname']         = eme_sanitize_request( $firstname );
     $person['email']             = $email;
 
-    $t_person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+    $t_person = eme_get_matching_person( $lastname, $firstname, $email );
     // if we have a matching person, update that one. But make sure we"re not updating the main one (can happen if someone entered the main account details also as member)
     if ( $t_person && $t_person['person_id'] != $main_person_id ) {
         $person_id    = $t_person['person_id'];
@@ -4645,7 +4645,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
         if ( $new_wp_id > 0 && eme_count_persons_with_wp_id( $new_wp_id ) > 0 ) {
             $new_wp_id = 0;
         }
-        $t_person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+        $t_person = eme_get_matching_person( $lastname, $firstname, $email );
         if ( $t_person && eme_is_empty_string( $t_person['lastname'] ) && eme_is_empty_string( $t_person['firstname'] ) ) {
             // we found a person matching with email only, meaning empty lastname/firstname, so we update it
             // this prevents people from updating their name/email with only a case-difference from the frontend

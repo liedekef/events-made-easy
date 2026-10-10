@@ -4160,7 +4160,7 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
         $group_ids = array_intersect( $group_ids, $subscribable_groupids );
     }
 
-    $person = eme_get_person_by_name_or_email( $lastname, $firstname, $email );
+    $person = eme_get_matching_person( $lastname, $firstname, $email );
     if ( ! empty( $person ) ) {
         $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
     } else {

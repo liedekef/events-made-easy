@@ -1930,7 +1930,9 @@ function eme_tasks_ajax() {
     $message   = '';
     $nok       = 0;
     $ok        = 0;
-    $t_person = eme_get_person_by_name_or_email( $bookerLastName, $bookerFirstName, $bookerEmail );
+    // exact match only: a nameless person (matched on email only) must go through
+    // eme_add_update_person_from_form below, which fills in the submitted name
+    $t_person = eme_get_person_by_name_and_email( $bookerLastName, $bookerFirstName, $bookerEmail );
     $matched_personid = ! empty( $t_person ) ? intval( $t_person['person_id'] ) : 0;
     $matched_wp_id    = ! empty( $t_person ) ? intval( $t_person['wp_id'] ) : 0;
     foreach ( wp_unslash( $_POST['eme_task_signups'] ) as $event_id => $task_id_arr ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

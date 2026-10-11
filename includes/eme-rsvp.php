@@ -1440,7 +1440,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                     }
                 }
                 if ( empty( $booker ) ) {
-                    $booker = eme_get_matching_person( $bookerLastName, $bookerFirstName, $bookerEmail );
+                    $booker = eme_get_usable_person( $bookerLastName, $bookerFirstName, $bookerEmail, $allow_book_for_others );
                 }
                 if ( ! empty( $booker ) ) {
                     $tmp_booking_ids = eme_get_booking_ids_by_person_event_id( $booker['person_id'], $event_id );

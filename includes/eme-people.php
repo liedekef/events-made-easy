@@ -2955,6 +2955,22 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
 // a person that isn't linked to a wp user, the person linked to our own wp user, or any person if we're
 // allowed to book/register for somebody else. This is not an authorization on its own for bookings
 // (eme_add_update_person_from_form does that), it is meant for lookups like the dynamic form data.
+function eme_get_usable_person( $lastname, $firstname, $email, $allow_for_others = false ) {
+    if ( ! eme_is_email_frontend( $email ) ) {
+        return false;
+    }
+    $person = eme_get_matching_person( $lastname, $firstname, $email );
+    if ( ! $person ) {
+        return false;
+    }
+    $found_wp_id = intval( $person['wp_id'] );
+    if ( $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id() ) {
+        return $person;
+    }
+    return false;
+}
+
+// same logic as above, but for POST
 function eme_get_usable_person_by_post( $allow_for_others = false ) {
     $person = eme_get_person_by_post();
     if ( ! $person ) {
@@ -4615,16 +4631,6 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 
     if ( $return_fake_person ) {
         $person['person_id']    = -1;
-        // no wp id from the request: use the wp id of the person these details match (if we may use it),
-        // or our own wp id if that isn't linked to a person yet
-        $fake_wp_id   = 0;
-        $found_person = eme_get_usable_person_by_post( $allow_book_for_others );
-        if ( $found_person ) {
-            $fake_wp_id = intval( $found_person['wp_id'] );
-        } elseif ( is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) == 0 ) {
-            $fake_wp_id = get_current_user_id();
-        }
-        $person['wp_id']        = $fake_wp_id;
         $person['lastname'] = eme_sanitize_request( $_POST['lastname'] );
         if ( isset( $_POST['firstname'] ) ) {
             $person['firstname'] = eme_sanitize_request( $_POST['firstname'] );
@@ -4632,6 +4638,16 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             $person['firstname'] = '';
         }
         $person['email'] = eme_sanitize_email( $_POST['email'] );
+        // no wp id from the request: use the wp id of the person these details match (if we may use it),
+        // or our own wp id if that isn't linked to a person yet
+        $fake_wp_id   = 0;
+        $found_person = eme_get_usable_person( $person['lastname'], $person['firstname'], $person['email'], $allow_book_for_others );
+        if ( $found_person ) {
+            $fake_wp_id = intval( $found_person['wp_id'] );
+        } elseif ( is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) == 0 ) {
+            $fake_wp_id = get_current_user_id();
+        }
+        $person['wp_id'] = $fake_wp_id;
         return $person;
     } elseif ( ! $person_id ) {
         // the wp id a NEW person gets linked to: the explicit one (only for those who may book for others, e.g. the

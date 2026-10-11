@@ -2951,52 +2951,32 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
     return $output;
 }
 
-// The person matching the posted lastname/firstname/email, but only if the current user may use it:
-// a person that isn't linked to a wp user, the person linked to our own wp user, or any person if we're
-// allowed to book/register for somebody else. This is not an authorization on its own for bookings
-// (eme_add_update_person_from_form does that), it is meant for lookups like the dynamic form data.
+// may the current user use this person for a booking/registration/signup?
+function eme_person_is_usable( $person, $allow_for_others = false ) {
+    if ( ! $person ) {
+        return false;
+    }
+    $found_wp_id = intval( $person['wp_id'] );
+    return $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id();
+}
+
+// for callers that already hold the details (bookings, the fake-person branch)
 function eme_get_usable_person( $lastname, $firstname, $email, $allow_for_others = false ) {
+    // only called from frontend, so be a little more strict here
     if ( ! eme_is_email_frontend( $email ) ) {
         return false;
     }
     $person = eme_get_matching_person( $lastname, $firstname, $email );
-    if ( ! $person ) {
-        return false;
-    }
-    $found_wp_id = intval( $person['wp_id'] );
-    if ( $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id() ) {
-        return $person;
-    }
-    return false;
+    return eme_person_is_usable( $person, $allow_for_others ) ? $person : false;
 }
 
-// same logic as above, but for POST
+// for the two dyndata handlers, which only have POST
 function eme_get_usable_person_by_post( $allow_for_others = false ) {
     $person = eme_get_person_by_post();
-    if ( ! $person ) {
-        return false;
-    }
-    $found_wp_id = intval( $person['wp_id'] );
-    if ( $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id() ) {
-        return $person;
-    }
-    return false;
+    return eme_person_is_usable( $person, $allow_for_others ) ? $person : false;
 }
 
-// For registrations restricted to wp users: people who may not book/register for somebody else can only use
-// their own person or, when they don't have one yet, a new one (which will be linked to their wp user)
-function eme_person_is_own_or_new_for_user( $lastname, $firstname, $email ) {
-    if ( ! is_user_logged_in() ) {
-        return false;
-    }
-    $own_wp_id = get_current_user_id();
-    $person    = eme_get_matching_person( $lastname, $firstname, $email );
-    if ( $person ) {
-        return intval( $person['wp_id'] ) === $own_wp_id;
-    }
-    return eme_count_persons_with_wp_id( $own_wp_id ) == 0;
-}
-
+// API function simply getting the person from POST info
 function eme_get_person_by_post() {
     if ( isset( $_POST['lastname'] ) && isset( $_POST['email'] ) ) {
         $lastname = eme_sanitize_request( $_POST['lastname'] );
@@ -3013,6 +2993,20 @@ function eme_get_person_by_post() {
     } else {
         return false;
     }
+}
+
+// For registrations restricted to wp users: people who may not book/register for somebody else can only use
+// their own person or, when they don't have one yet, a new one (which will be linked to their wp user)
+function eme_person_is_own_or_new_for_user( $lastname, $firstname, $email ) {
+    if ( ! is_user_logged_in() ) {
+        return false;
+    }
+    $own_wp_id = get_current_user_id();
+    $person    = eme_get_matching_person( $lastname, $firstname, $email );
+    if ( $person ) {
+        return intval( $person['wp_id'] ) === $own_wp_id;
+    }
+    return eme_count_persons_with_wp_id( $own_wp_id ) == 0;
 }
 
 function eme_count_persons_by_email( $email ) {

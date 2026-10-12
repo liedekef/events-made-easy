@@ -1404,9 +1404,10 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $invite_allows_booking  = eme_invite_allows_booking_for( $event['event_id'], $bookerLastName, $bookerFirstName, $bookerEmail );
         $allow_book_for_others  = $allow_book_for_others || $invite_allows_booking;
 
-        // events for wp users only: those who may not book for somebody else can only book for their own person
+        // those who may not book for somebody else can only book for their own person
         // (or, when they don't have one yet, for a new one that will be linked to their wp user)
-        if ( $registration_wp_users_only && ! $eme_is_admin_request && ! $allow_book_for_others &&
+        // check this up front so a multibooking is refused before any booking gets created
+        if ( is_user_logged_in() && ! $eme_is_admin_request && ! $allow_book_for_others &&
             ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
             $form_html .= __( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
             continue;
@@ -1431,7 +1432,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 
             if ( $event['event_properties']['person_only_once'] ) {
                 $booker = false;
-                if ( isset( $_POST['person_id'] ) ) {
+                if ( !empty( $_POST['person_id'] ) ) {
                     // only trust the submitted person id for our own person or when booking for others is allowed
                     $submitted_person = eme_get_person( intval( $_POST['person_id'] ) );
                     if ( $submitted_person && ( $allow_book_for_others ||

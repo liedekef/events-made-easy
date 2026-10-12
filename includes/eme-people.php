@@ -24,7 +24,7 @@ function eme_new_person() {
         'state_code'        => '',
         'country_code'      => '',
         'lang'              => eme_detect_lang(),
-        'wp_id'             => null,
+        'wp_id'             => 0,
         'massmail'          => get_option( 'eme_people_massmail' ),
         'newsletter'        => get_option( 'eme_people_newsletter' ),
         'gdpr'              => 0,
@@ -2956,8 +2956,8 @@ function eme_person_is_usable( $person, $allow_for_others = false ) {
     if ( ! $person ) {
         return false;
     }
-    $found_wp_id = intval( $person['wp_id'] );
-    return $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id();
+    // logged in: only our own person; anonymous visitors (user id 0): only persons not linked to a wp user
+    return $allow_for_others || intval( $person['wp_id'] ) === get_current_user_id();
 }
 
 // for callers that already hold the details (bookings, the fake-person branch)
@@ -3096,7 +3096,7 @@ function eme_get_person_by_name_and_email( $lastname, $firstname, $email, $skip_
 function eme_get_personid_by_wpid( $wp_id ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE wp_id = %d LIMIT 1", $wp_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE wp_id = %d AND status=%d LIMIT 1", $wp_id, EME_PEOPLE_STATUS_ACTIVE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return intval( $wpdb->get_var( $prepared_sql ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_wpid_by_personid( $person_id ) {
@@ -3116,9 +3116,9 @@ function eme_get_used_wpids( $exclude_id = 0 ) {
     }
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( ! empty( $exclude_id ) ) {
-        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d", $exclude_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d AND status = %d", $exclude_id, EME_PEOPLE_STATUS_ACTIVE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     } else {
-        $prepared_sql = "SELECT DISTINCT wp_id FROM $people_table"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE status = %d", EME_PEOPLE_STATUS_ACTIVE ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     $result = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     wp_cache_set( $cache_key, $result, 'eme', 60 );
@@ -4663,21 +4663,20 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             $person['firstname'] = eme_sanitize_request( $firstname );
         }
         if ( $t_person ) {
-            // the person we matched may belong to another wp user: only people who are allowed to book or
-            // register for somebody else (the callers decide that, see $allow_book_for_others) may use it.
-            // A person that isn't linked to a wp user can be used by anyone (like an anonymous booking).
-            // The wp id of an existing person is never changed here.
+            // the person we matched may belong to another wp user or be an anonymous person that isn't ours:
+            // only people who are allowed to book or register for somebody else ($allow_book_for_others) may use it.
+            // A logged-in user who may not book for others can only use their own person; anonymous visitors
+            // can still use an anonymous person (one not linked to a wp user). The wp id of an existing person
+            // is never changed here.
             $found_wp_id = intval( $t_person['wp_id'] );
-            if ( $found_wp_id > 0 && $found_wp_id !== get_current_user_id() && ! $allow_book_for_others ) {
-                if ( is_user_logged_in() ) {
-                    return [
-                        0 => 0,
-                        1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
-                    ];
-                }
+            // compare against get_current_user_id(): 0 for anonymous visitors, so this one comparison
+            // lets anonymous visitors use unlinked persons and logged-in users only their own person
+            if ( ! $allow_book_for_others && $found_wp_id !== get_current_user_id() ) {
                 return [
                     0 => 0,
-                    1 => esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
+                    1 => is_user_logged_in()
+                        ? esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' )
+                        : esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
                 ];
             }
             $person_id = $t_person['person_id'];
@@ -4699,12 +4698,18 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                 ];
             }
         } else {
+            // a logged-in user who may not book for others can only get a new person linked to their own
+            // wp user; if they already have an own person, the submitted details must have matched it above
+            if ( ! $allow_book_for_others && is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) > 0 ) {
+                return [
+                    0 => 0,
+                    1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
+                ];
+            }
             $person['lastname']  = eme_sanitize_request( $lastname );
             $person['firstname'] = eme_sanitize_request( $firstname );
-            $person['email']     = $email;
-            if ( $new_wp_id > 0 ) {
-                $person['wp_id'] = $new_wp_id;
-            }
+            $person['email'] = $email;
+            $person['wp_id'] = $new_wp_id;
             $person_id = eme_db_insert_person( $person );
             if ( $person_id ) {
                 eme_store_person_answers( $person_id );

@@ -1959,7 +1959,7 @@ function eme_tasks_ajax() {
         }
         if ( $registered_users_only && ! $allow_book_for_others && ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
             // registered users only: those who may not sign up somebody else can only use their own person
-            $message .= esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
+            $message .= __( 'The name and email address you entered do not match your account.', 'events-made-easy' );
             $nok      = 1;
             continue;
         }

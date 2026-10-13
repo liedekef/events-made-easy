@@ -4675,7 +4675,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                 return [
                     0 => 0,
                     1 => is_user_logged_in()
-                        ? esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' )
+                        ? esc_html__( 'The name and email address you entered do not match your account.', 'events-made-easy' )
                         : esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
                 ];
             }
@@ -4703,7 +4703,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             if ( ! $allow_book_for_others && is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) > 0 ) {
                 return [
                     0 => 0,
-                    1 => esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' ),
+                    1 => esc_html__( 'The name and email address you entered do not match your account.', 'events-made-easy' ),
                 ];
             }
             $person['lastname']  = eme_sanitize_request( $lastname );

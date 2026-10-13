@@ -1292,7 +1292,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             if ( ! empty( $_POST['person_id'] ) && ! $submitted_person ) {
                 $err = __( 'No such person found', 'events-made-easy' );
             } elseif ( ! empty( $_POST['person_id'] ) ) {
-                $err = __( 'The person details do not match your own person record, so you cannot register for somebody else.', 'events-made-easy' );
+                $err = __( 'The name and email address you entered do not match your account.', 'events-made-easy' );
             } else {
                 // we need at least lastname
                 $err = __( 'Please enter at least the last name for a new member', 'events-made-easy' );
@@ -1318,7 +1318,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             if ( ! $eme_is_admin_request && ! $allow_book_for_others && $membership['properties']['registration_wp_users_only'] &&
                 ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
                 // for wp users only memberships, those who may not register somebody else can only use their own person
-                $err = esc_html__( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
+                $err = __( 'The name and email address you entered do not match your account.', 'events-made-easy' );
             } else {
                 $res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $wp_id, $membership['properties']['create_wp_user'], 0, $allow_book_for_others );
                 $person_id = $res[0];

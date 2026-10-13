@@ -1409,7 +1409,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         // check this up front so a multibooking is refused before any booking gets created
         if ( is_user_logged_in() && ! $eme_is_admin_request && ! $allow_book_for_others &&
             ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
-            $form_html .= __( 'The person details do not match your own person record, so you cannot book or register for somebody else.', 'events-made-easy' );
+            $form_html .= __( 'The name and email address you entered do not match your account.', 'events-made-easy' );
             continue;
         }
 

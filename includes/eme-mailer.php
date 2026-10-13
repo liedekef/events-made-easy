@@ -4174,14 +4174,16 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
                 $lastname = $user_info->display_name;
             }
             $firstname = $user_info->user_firstname;
+            $person = eme_get_matching_person( $lastname, $firstname, $email );
         }
-        // subscribing an address isn't booking for somebody else: matched persons never reach this call,
-        // so pass the "allowed" flag to let a logged-in user create a standalone person for a new address
-        // (linked to the user only if they don't have a person yet)
-        $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id, 0, 0, 1 );
-        $person_id = $res2[0];
-        if ( $person_id ) {
-            $res = eme_add_persongroups( $person_id, $group_ids, 1 );
+        if ( ! empty( $person ) ) {
+            $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
+        } else {
+            $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id, 0, 0, 1 );
+            $person_id = $res2[0];
+            if ( $person_id ) {
+                $res = eme_add_persongroups( $person_id, $group_ids, 1 );
+            }
         }
     }
     if ( $res ) {

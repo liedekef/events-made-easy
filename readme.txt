@@ -101,7 +101,6 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.23  (2026/10/) =
 * The eme_members shortcode now has an order param, so the members can be sorted (name, columns or custom fields like FIELD_4)
-* eme_get_members can now order the results too, and keeps the requested id order if no ordering is requested
 * The order param of eme_people now also works when asc/desc is not written in uppercase
 * Security: the booking, membership and task signup forms no longer submit a wp id, it is now derived from the logged in user on the server
 * Security: a person id coming from the frontend is only used when it belongs to the logged in user or when the visitor is allowed to book/register for somebody else (admins, event/membership editors)
@@ -109,8 +108,6 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Security: invite-only events are now also verified when the booking is submitted, and only for the invited person
 * Security: invite-only discounts are now also bound to the invited person when the booking is submitted
 * Behavior change: booking for others, and clearing the pre-filled name fields, now require the registrations rights (eme_cap_registrations, or eme_cap_author_registrations as author/contact) instead of event-edit rights. Task signups use eme_cap_manage_task_signups. Logged-in users also can’t clear the fields on guest-allowed forms any more, so booking for someone with a different email means logging out.
-* Bugfix: a family member no longer overwrites an existing person that belongs to another wp user
-* Bugfix: the subscribe groups are now stored when a new person is created
 * Jodit update
 
 = 3.2.22  (2026/10/07) =

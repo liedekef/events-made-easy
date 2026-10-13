@@ -4166,6 +4166,7 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
     } else {
         $wp_id = 0;
         // if the user is logged in, we overwrite the lastname/firstname with that info
+        // this should already be the case (the form fixes it, but we don't always trust users)
         if ( is_user_logged_in() ) {
             $wp_id     = get_current_user_id();
             $user_info = get_userdata( $wp_id );

@@ -4381,7 +4381,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     }
     if ( eme_get_orderby_error() ) {
         eme_clear_orderby_error();
-        $output = eme_message_error_div( __( 'The shortcode parameters are not correct', 'events-made-easy' ) );
+        $output = eme_message_error_div( __( 'The shortcode parameters are not correct.', 'events-made-easy' ) );
         if ( $echo ) {
             echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode HTML output
             return;

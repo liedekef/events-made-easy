@@ -5002,7 +5002,7 @@ function eme_members_shortcode( $atts ) {
     $members = eme_get_members( $member_ids, '', 0, 0, $order );
     if ( eme_get_orderby_error() ) {
         eme_clear_orderby_error();
-        return eme_message_error_div( __( 'The shortcode parameters are not correct', 'events-made-easy' ) );
+        return eme_message_error_div( __( 'The shortcode parameters are not correct.', 'events-made-easy' ) );
     }
     foreach ( $members as $member ) {
         $membership = eme_get_membership( $member['membership_id'] );

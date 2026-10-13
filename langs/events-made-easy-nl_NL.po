@@ -15505,25 +15505,22 @@ msgstr "Toon statistieken"
 #: includes/eme-events.php:4384
 #: includes/eme-members.php:5005
 #: includes/eme-people.php:271
-msgid "The shortcode parameters are not correct"
-msgstr ""
+msgid "The shortcode parameters are not correct."
+msgstr "De shortcode-parameters zijn niet correct."
+
+#: includes/eme-people.php:4679
+msgid "Please log in before booking or registering with these person details."
+msgstr "Log eerst in voordat u boekt of zich registreert met deze persoonsgegevens."
+
+#: includes/eme-rsvp.php:1585
+msgid "An invitation is required to use the discount you entered"
+msgstr "Er is een uitnodiging nodig om de ingevoerde korting te gebruiken"
 
 #: includes/eme-members.php:1295
-msgid "The person details do not match your own person record, so you cannot register for somebody else."
-msgstr ""
-
 #: includes/eme-members.php:1321
 #: includes/eme-people.php:4678
 #: includes/eme-people.php:4706
 #: includes/eme-rsvp.php:1412
 #: includes/eme-tasks.php:1962
-msgid "The person details do not match your own person record, so you cannot book or register for somebody else."
-msgstr ""
-
-#: includes/eme-people.php:4679
-msgid "Please log in before booking or registering with these person details."
-msgstr ""
-
-#: includes/eme-rsvp.php:1585
-msgid "An invitation is required to use the discount you entered"
-msgstr ""
+msgid "The name and email address you entered do not match your account."
+msgstr "De naam en het e-mailadres die u hebt ingevoerd, komen niet overeen met uw account."

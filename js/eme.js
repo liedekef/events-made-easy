@@ -1129,7 +1129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const parent_form_id = this.form.id;
             
             // Check required text inputs and date fields
-            EME.$$('input[type="text"]:not(:disabled)[required], input:not([type]):not(:disabled)[required], .eme_formfield_fdatetime:not(:disabled)[required], .eme_formfield_fdate:not(:disabled)[required]').forEach(input => {
+            EME.$$('input[type="text"]:not(:disabled):not([readonly])[required], input:not([type]):not(:disabled):not([readonly])[required], .eme_formfield_fdatetime:not(:disabled)[required], .eme_formfield_fdate:not(:disabled)[required]').forEach(input => {
                 if (valid && input.closest("form").id === parent_form_id) {
                     const val = input.value;
                     if (val.match(/^\s*$/)) {

@@ -26,7 +26,7 @@ function eme_cleanup_people() {
     return $count;
 }
 
-function eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = '' ) {
+function eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = [] ) {
     global $wpdb;
 
     $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -49,10 +49,8 @@ function eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_gro
     }
     $datetime = $eme_date_obj->getDateTime();
     $sql      = "SELECT $people_table.person_id, $people_table.firstname, $people_table.lastname, $people_table.email, $people_table.creation_date, $people_table.modif_date, $people_table.last_seen FROM $people_table WHERE last_seen IS NOT NULL AND last_seen < %s AND status != %d AND $people_table.wp_id=0";
-    if ( ! empty( $exclude_group_ids ) ) {
-        $group_ids = explode( ',', $exclude_group_ids );
-        $group_ids = array_map( 'intval', $group_ids );
-        $group_ids = join( ',', $group_ids );
+    if ( ! empty( $exclude_group_ids ) && eme_is_integer_array( $exclude_group_ids ) ) {
+        $group_ids = join( ',', $exclude_group_ids );
         $sql      .= " AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id AND $usergroups_table.group_id IN ($group_ids) )";
     }
     $sql         .= ' ORDER BY ' . $people_table . '.last_seen';
@@ -60,7 +58,7 @@ function eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_gro
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = '' ) {
+function eme_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids = [] ) {
     $people = eme_get_cleanup_people_lastseen( $eme_number, $eme_period, $exclude_group_ids );
     $count  = count( $people );
     if ( $count > 0 ) {

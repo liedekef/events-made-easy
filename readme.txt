@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.2.22
+Stable tag: 3.2.23
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,7 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.2.23  (2026/10/) =
+= 3.2.23  (2026/10/15) =
 * The eme_members shortcode now has an order param, so the members can be sorted (name, columns or custom fields like FIELD_4)
 * The order param of eme_people now also works when asc/desc is not written in uppercase
 * Security: the booking, membership and task signup forms no longer submit a wp id, it is now derived from the logged in user on the server
@@ -109,7 +109,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 * Security: invite-only discounts are now also bound to the invited person when the booking is submitted
 * Behavior change: the GDPR approval checkbox on the frontend forms is now only informational; any rsvp, membership, task signup or mail subscription stores GDPR consent (gdpr=1) in the backend
 * Behavior change: booking for others now requires the registrations rights (eme_cap_registrations, or eme_cap_author_registrations as author/contact) instead of event-edit rights. Task signups use eme_cap_manage_task_signups.
-* Fix for CVE-2026-107649 (reported by Wordfence)
+* Seurity: fix for CVE-2026-107649 (reported by Wordfence)
 * Jodit update
 
 = 3.2.22  (2026/10/07) =

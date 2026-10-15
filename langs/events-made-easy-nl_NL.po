@@ -15521,8 +15521,8 @@ msgstr "De naam en het e-mailadres die u hebt ingevoerd, komen niet overeen met 
 
 #: includes/eme-people.php:4685
 msgid "These details belong to another registered user."
-msgstr ""
+msgstr "Deze gegevens behoren toe aan een andere geregistreerde gebruiker."
 
 #: includes/eme-people.php:4686
 msgid "These details belong to a registered user. Please log in first."
-msgstr ""
+msgstr "Deze gegevens behoren toe aan een geregistreerde gebruiker. Log eerst in."

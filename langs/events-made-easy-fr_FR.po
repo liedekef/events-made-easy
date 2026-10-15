@@ -7,11 +7,36 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-13T22:02:39+00:00\n"
-"PO-Revision-Date: 2026-10-07 20:53:03+0000\n"
+"POT-Creation-Date: 2026-10-15T17:43:50+00:00\n"
+"PO-Revision-Date: 2026-10-15 15:49:11+0000\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: GlotPress/4.1.0\n"
+
+#: includes/eme-rsvp.php:1584
+msgid "An invitation is required to use the discount you entered"
+msgstr "Une invitation est nécessaire pour bénéficier de la remise que vous avez saisie"
+
+#: includes/eme-people.php:4686
+msgid "These details belong to a registered user. Please log in first."
+msgstr "Ces informations concernent un utilisateur inscrit. Veuillez d'abord vous connecter."
+
+#: includes/eme-people.php:4685
+msgid "These details belong to another registered user."
+msgstr "Ces informations concernent un autre utilisateur inscrit."
+
+#: includes/eme-members.php:1295
+#: includes/eme-members.php:1321
+#: includes/eme-rsvp.php:1411
+#: includes/eme-tasks.php:1962
+msgid "The name and email address you entered do not match your account."
+msgstr "Le nom et l’adresse e-mail que vous avez saisis ne correspondent pas à votre compte."
+
+#: includes/eme-events.php:4384
+#: includes/eme-members.php:5005
+#: includes/eme-people.php:271
+msgid "The shortcode parameters are not correct."
+msgstr "Les paramètres du code court ne sont pas corrects."
 
 #: includes/eme-members.php:3489
 msgid "Show statistics"
@@ -15509,28 +15534,3 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
-
-#: includes/eme-rsvp.php:1584
-msgid "An invitation is required to use the discount you entered"
-msgstr ""
-
-#: includes/eme-members.php:1295
-#: includes/eme-members.php:1321
-#: includes/eme-rsvp.php:1411
-#: includes/eme-tasks.php:1962
-msgid "The name and email address you entered do not match your account."
-msgstr ""
-
-#: includes/eme-events.php:4384
-#: includes/eme-members.php:5005
-#: includes/eme-people.php:271
-msgid "The shortcode parameters are not correct."
-msgstr ""
-
-#: includes/eme-people.php:4685
-msgid "These details belong to another registered user."
-msgstr ""
-
-#: includes/eme-people.php:4686
-msgid "These details belong to a registered user. Please log in first."
-msgstr ""

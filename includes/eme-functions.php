@@ -2534,6 +2534,10 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
         return $value;
     }
     $value = eme_strip_weird( $value );
+    // decode entities BEFORE stripping tags, so an attacker can't hide a tag as
+    // &lt;img onerror=...&gt; to sneak past wp_kses and reappear as live markup
+    // once the browser decodes it again on render
+    $value = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
     // To filter out JS, we should use domdocument, but the problem is that sometimes the
     // html is intentional incomplete, which would cause issues with domdocument
     // See https://codereview.stackexchange.com/questions/30045/regex-to-remove-inline-javascript-from-string

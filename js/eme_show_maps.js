@@ -121,9 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 let point = L.latLng(parseFloat(item.location_latitude), parseFloat(item.location_longitude));
-                let balloon_content = "<div class='eme-location-balloon'>" + eme_htmlDecode(item.location_balloon) + "</div>";
+                let popupContainer = document.createElement('div');
+                popupContainer.className = 'eme-location-balloon';
+                popupContainer.setHTML(item.location_balloon);
                 let marker = L.marker(point, {icon: myIcon});
-                marker.bindPopup(balloon_content, { maxWidth: 1600 });
+                marker.bindPopup(popupContainer, { maxWidth: 1600 });
                 if (marker_clustering == 'true' ) {
                     markers.addLayer(marker);
                 } else {
@@ -205,12 +207,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             // define the popup and marker
-            let s_popcontent = "<div class='eme-location-balloon'>" + currentDiv.dataset.map_text + "</div>";
+            let popupContainer = document.createElement('div');
+            popupContainer.className = 'eme-location-balloon';
+            popupContainer.setHTML(currentDiv.dataset.map_text); // default Sanitizer strips <script>, on*, javascript: URLs
             let s_marker = L.marker(L.latLng(lat_id, lon_id), {icon: myIcon}).addTo(div_arr_map[i]);
             // now show the markter and popup
-            s_marker.bindPopup(s_popcontent, { maxWidth: 1600 }).openPopup();
+            s_marker.bindPopup(popupContainer, { maxWidth: 1600 }).openPopup();
         }
-
     }
 
     // directions form handling (separate event listener for the forms)

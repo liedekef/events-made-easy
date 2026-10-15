@@ -1404,10 +1404,9 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $invite_allows_booking  = eme_invite_allows_booking_for( $event['event_id'], $bookerLastName, $bookerFirstName, $bookerEmail );
         $allow_book_for_others  = $allow_book_for_others || $invite_allows_booking;
 
-        // those who may not book for somebody else can only book for their own person
+        // events for wp users only: those who may not book for somebody else can only book for their own person
         // (or, when they don't have one yet, for a new one that will be linked to their wp user)
-        // check this up front so a multibooking is refused before any booking gets created
-        if ( is_user_logged_in() && ! $eme_is_admin_request && ! $allow_book_for_others &&
+        if ( $registration_wp_users_only && ! $eme_is_admin_request && ! $allow_book_for_others &&
             ! eme_person_is_own_or_new_for_user( $bookerLastName, $bookerFirstName, $bookerEmail ) ) {
             $form_html .= __( 'The name and email address you entered do not match your account.', 'events-made-easy' );
             continue;

@@ -2956,8 +2956,10 @@ function eme_person_is_usable( $person, $allow_for_others = false ) {
     if ( ! $person ) {
         return false;
     }
-    // logged in: only our own person; anonymous visitors (user id 0): only persons not linked to a wp user
-    return $allow_for_others || intval( $person['wp_id'] ) === get_current_user_id();
+    // an unlinked person (wp_id 0) can be used like an anonymous booking; a linked person only by its own
+    // wp user, unless we're allowed to book/register for somebody else
+    $found_wp_id = intval( $person['wp_id'] );
+    return $allow_for_others || $found_wp_id === 0 || $found_wp_id === get_current_user_id();
 }
 
 // for callers that already hold the details (bookings, the fake-person branch)
@@ -3006,7 +3008,10 @@ function eme_person_is_own_or_new_for_user( $lastname, $firstname, $email ) {
     if ( $person ) {
         return intval( $person['wp_id'] ) === $own_wp_id;
     }
-    return eme_count_persons_with_wp_id( $own_wp_id ) == 0;
+    // a new person only gets linked to our wp user when it has our own email (see eme_add_update_person_from_form),
+    // otherwise it would be an unlinked person, which isn't allowed on wp-users-only registrations
+    $user_info = get_userdata( $own_wp_id );
+    return eme_count_persons_with_wp_id( $own_wp_id ) == 0 && ! empty( $user_info ) && strcasecmp( $user_info->user_email, (string) $email ) === 0;
 }
 
 function eme_count_persons_by_email( $email ) {
@@ -4468,10 +4473,10 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
     } elseif ( isset( $_POST['bd_email'] ) ) {
         $person['bd_email'] = intval( $_POST['bd_email'] );
     }
-    if ( isset( $_POST['gdpr'] ) ) {
-        $person['gdpr']      = intval( $_POST['gdpr'] );
-        $person['gdpr_date'] = current_time( 'mysql', false );
-    }
+    // family members entered in a membership form also give GDPR consent: the checkbox only blocks the
+    // frontend form, the backend always stores consent
+    $person['gdpr']      = 1;
+    $person['gdpr_date'] = current_time( 'mysql', false );
     $person['lang']              = $lang;
     $person['state_code']        = $state_code;
     $person['country_code']      = $country_code;
@@ -4609,10 +4614,10 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
     if ( isset( $_POST['bd_email'] ) ) {
         $person['bd_email'] = intval( $_POST['bd_email'] );
     }
-    if ( isset( $_POST['gdpr'] ) ) {
-        $person['gdpr']      = intval( $_POST['gdpr'] );
-        $person['gdpr_date'] = current_time( 'mysql', false );
-    }
+    // submitting any booking/membership/task/subscribe form means the person gives GDPR consent: the
+    // checkbox only blocks the form on the frontend, the backend always stores consent
+    $person['gdpr']      = 1;
+    $person['gdpr_date'] = current_time( 'mysql', false );
     if ( ! empty( $_POST['phone'] ) ) {
         $person['phone'] = eme_sanitize_request( $_POST['phone'] );
     }
@@ -4645,12 +4650,17 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
         return $person;
     } elseif ( ! $person_id ) {
         // the wp id a NEW person gets linked to: the explicit one (only for those who may book for others, e.g. the
-        // backend selecting a wp user), otherwise our own wp id. Never if that wp id already belongs to a person.
+        // backend selecting a wp user), otherwise our own wp id but only when the submitted email is our own WP
+        // email (so clearing the fields and registering somebody else does not link their identity to us).
+        // Never if that wp id already belongs to a person (so we can't create two persons with the same wp id).
         $new_wp_id = 0;
         if ( $allow_book_for_others ) {
             $new_wp_id = intval( $wp_id );
         } elseif ( is_user_logged_in() ) {
-            $new_wp_id = get_current_user_id();
+            $current_user = get_userdata( get_current_user_id() );
+            if ( $current_user && strcasecmp( $current_user->user_email, $email ) === 0 ) {
+                $new_wp_id = get_current_user_id();
+            }
         }
         if ( $new_wp_id > 0 && eme_count_persons_with_wp_id( $new_wp_id ) > 0 ) {
             $new_wp_id = 0;
@@ -4663,20 +4673,17 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
             $person['firstname'] = eme_sanitize_request( $firstname );
         }
         if ( $t_person ) {
-            // the person we matched may belong to another wp user or be an anonymous person that isn't ours:
-            // only people who are allowed to book or register for somebody else ($allow_book_for_others) may use it.
-            // A logged-in user who may not book for others can only use their own person; anonymous visitors
-            // can still use an anonymous person (one not linked to a wp user). The wp id of an existing person
-            // is never changed here.
+            // the person we matched may belong to another wp user: only people who are allowed to book or
+            // register for somebody else (the callers decide that, see $allow_book_for_others) may use it.
+            // A person that isn't linked to a wp user can be used by anyone (like an anonymous booking).
+            // The wp id of an existing person is never changed here.
             $found_wp_id = intval( $t_person['wp_id'] );
-            // compare against get_current_user_id(): 0 for anonymous visitors, so this one comparison
-            // lets anonymous visitors use unlinked persons and logged-in users only their own person
-            if ( ! $allow_book_for_others && $found_wp_id !== get_current_user_id() ) {
+            if ( ! $allow_book_for_others && $found_wp_id > 0 && $found_wp_id !== get_current_user_id() ) {
                 return [
                     0 => 0,
                     1 => is_user_logged_in()
-                        ? esc_html__( 'The name and email address you entered do not match your account.', 'events-made-easy' )
-                        : esc_html__( 'Please log in before booking or registering with these person details.', 'events-made-easy' ),
+                        ? esc_html__( 'These details belong to another registered user.', 'events-made-easy' )
+                        : esc_html__( 'These details belong to a registered user. Please log in first.', 'events-made-easy' ),
                 ];
             }
             $person_id = $t_person['person_id'];
@@ -4698,14 +4705,6 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                 ];
             }
         } else {
-            // a logged-in user who may not book for others can only get a new person linked to their own
-            // wp user; if they already have an own person, the submitted details must have matched it above
-            if ( ! $allow_book_for_others && is_user_logged_in() && eme_count_persons_with_wp_id( get_current_user_id() ) > 0 ) {
-                return [
-                    0 => 0,
-                    1 => esc_html__( 'The name and email address you entered do not match your account.', 'events-made-easy' ),
-                ];
-            }
             $person['lastname']  = eme_sanitize_request( $lastname );
             $person['firstname'] = eme_sanitize_request( $firstname );
             $person['email'] = $email;

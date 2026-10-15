@@ -4180,7 +4180,7 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
         if ( ! empty( $person ) ) {
             $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
         } else {
-            $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id, 0, 0, 1 );
+            $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id );
             $person_id = $res2[0];
             if ( $person_id ) {
                 $res = eme_add_persongroups( $person_id, $group_ids, 1 );
@@ -4189,6 +4189,8 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
     }
     if ( $res ) {
         eme_update_email_massmail( $email, 1 );
+        // subscribing means the person gives GDPR consent too
+        eme_update_email_gdpr( $email );
     }
     return $res;
 }

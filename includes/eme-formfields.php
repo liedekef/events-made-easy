@@ -2068,8 +2068,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     $allow_clear = false;
     if ( is_user_logged_in() ) {
         $current_user = wp_get_current_user();
-        // only people who are allowed to book for somebody else may clear the name fields
-        if ( eme_user_can_book_for_others( $event ) ) {
+        // those who may book for somebody else may always clear the name fields; on guest-allowed events
+        // a logged-in user may clear them too (to register somebody unlinked), but not on WP-users-only events
+        if ( eme_user_can_book_for_others( $event ) || ! $registration_wp_users_only ) {
             $allow_clear = true;
         }
     } else {
@@ -2673,9 +2674,10 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) && ! empty( $member['member_id'] ) && ! empty( $member['person_id'] ) ) {
             $editing_member = true;
         }
-        // only people who may register somebody else as a member may clear the name fields:
+        // those who may register somebody else as a member may always clear the name fields; on guest-allowed
+        // memberships a logged-in user may clear them too, but not on WP-users-only memberships:
         // member editors can, member authors only for their own member info
-        if ( ! $editing_member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ||
+        if ( ! $editing_member && ( ! $registration_wp_users_only || current_user_can( get_option( 'eme_cap_edit_members' ) ) ||
             ( current_user_can( get_option( 'eme_cap_author_member' ) ) && ! empty( $member['person_id'] ) && eme_get_wpid_by_personid( $member['person_id'] ) == $current_userid ) ) ) {
             $allow_clear = true;
         }

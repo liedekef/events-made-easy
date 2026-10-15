@@ -1944,10 +1944,10 @@ function eme_tasks_ajax() {
         $signup_status         = ($event['event_properties']['task_requires_approval'])? 0 : 1;
         // the backend uses this right to manage task signups
         $allow_book_for_others = current_user_can( get_option( 'eme_cap_manage_task_signups' ) );
-        // the person we matched may belong to another wp user or be an unlinked (anonymous) person: only
-        // use it when it's our own person (i.e. its wp id matches ours; 0 for anonymous visitors) or when
-        // we're allowed to sign up for somebody else, otherwise eme_add_update_person_from_form decides
-        if ( $matched_personid && ( $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
+        // the person we matched may belong to another wp user: only use it when it isn't linked to a wp user,
+        // when it's our own person or when we're allowed to sign up for somebody else, otherwise
+        // eme_add_update_person_from_form further down decides
+        if ( $matched_personid && ( $matched_wp_id === 0 || $matched_wp_id === intval( $booker_wp_id ) || $allow_book_for_others ) ) {
             $person_id = $matched_personid;
         } else {
             $person_id = 0;

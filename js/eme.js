@@ -16,9 +16,21 @@ function eme_debounce(func, wait = 300) {
 }
 
 function eme_htmlDecode(inputStr) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = inputStr;
-    return textarea.value;
+//    const textarea = document.createElement('textarea');
+//    textarea.innerHTML = inputStr;
+//    return textarea.value;
+// Decodes exactly the entity set WordPress's esc_html()/_wp_specialchars()
+// produces (& < > " '). No HTML parsing involved, so there's no RCDATA
+// break-out risk the way there is with textarea.innerHTML, and no risk of
+// real elements being constructed (and e.g. <img onerror> firing) the way
+// there is with innerHTML/DOMParser-based decoders.
+    if (inputStr === undefined || inputStr === null) return inputStr;
+    return String(inputStr)
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#0?39;/g, "'")
+        .replace(/&amp;/g, '&'); // last, so "&amp;lt;" -> "&lt;" not "<"
 }
 
 function eme_getValue(element) {

@@ -5,6 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return div.innerHTML;
     }
 
+    // the default Sanitizer, plus the elements/attributes EME balloon content needs.
+    // For 'a' we list the full default attribute set so href survives regardless
+    // of whether the browser merges or replaces element attributes.
+    const emeBalloonSanitizer = new Sanitizer();
+    emeBalloonSanitizer.allowElement({
+        name: 'img',
+        attributes: ['src', 'alt', 'width', 'height']
+    });
+    emeBalloonSanitizer.allowElement({
+        name: 'a',
+        attributes: ['href', 'hreflang', 'type', 'target', 'rel']
+    });
+
     // create the tile layer with correct attribution
     let osmUrl=emeshowmaps.translate_osm_url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     let osmAttrib=emeshowmaps.translate_osm_attribution || 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -123,7 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 let point = L.latLng(parseFloat(item.location_latitude), parseFloat(item.location_longitude));
                 let popupContainer = document.createElement('div');
                 popupContainer.className = 'eme-location-balloon';
-                popupContainer.setHTML(item.location_balloon);
+                // location_balloon comes HTML-escaped from the server (it is embedded in an
+                // inline <script>), so decode it first; setHTML() re-sanitizes, so this is safe
+                popupContainer.setHTML(eme_htmlDecode(item.location_balloon), { sanitizer: emeBalloonSanitizer });
                 let marker = L.marker(point, {icon: myIcon});
                 marker.bindPopup(popupContainer, { maxWidth: 1600 });
                 if (marker_clustering == 'true' ) {
@@ -209,7 +224,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // define the popup and marker
             let popupContainer = document.createElement('div');
             popupContainer.className = 'eme-location-balloon';
-            popupContainer.setHTML(currentDiv.dataset.map_text); // default Sanitizer strips <script>, on*, javascript: URLs
+            // dataset values are already entity-decoded by the DOM, so no decode needed here
+            popupContainer.setHTML(currentDiv.dataset.map_text, { sanitizer: emeBalloonSanitizer });
             let s_marker = L.marker(L.latLng(lat_id, lon_id), {icon: myIcon}).addTo(div_arr_map[i]);
             // now show the markter and popup
             s_marker.bindPopup(popupContainer, { maxWidth: 1600 }).openPopup();
@@ -233,15 +249,34 @@ document.addEventListener('DOMContentLoaded', function() {
             timeStr = Math.round(totalTime / 60) + ' min';
         }
 
-        let html = '<div class="eme-itinerary-summary">' + distStr + ' &mdash; ' + timeStr + '</div>';
-        html += '<ol class="eme-itinerary-steps">';
+        // build the DOM directly: class names set via className survive (setHTML's
+        // sanitizer strips class), and textContent makes escaping automatic
+        let summaryDiv = document.createElement('div');
+        summaryDiv.className = 'eme-itinerary-summary';
+        summaryDiv.textContent = distStr + ' \u2014 ' + timeStr;
+
+        let stepsOl = document.createElement('ol');
+        stepsOl.className = 'eme-itinerary-steps';
         route.instructions.forEach(function(instr) {
             let instrDist = instr.distance >= 1000 ? (instr.distance / 1000).toFixed(1) + ' km' : Math.round(instr.distance) + ' m';
-            html += '<li>' + eme_escapeHtml(instr.text) + ' <span class="eme-itinerary-distance">(' + instrDist + ')</span></li>';
+            let li = document.createElement('li');
+            li.textContent = instr.text + ' ';
+            let span = document.createElement('span');
+            span.className = 'eme-itinerary-distance';
+            span.textContent = '(' + instrDist + ')';
+            li.appendChild(span);
+            stepsOl.appendChild(li);
         });
-        html += '</ol>';
 
-        instructionsDiv.setHTML(html);
+        instructionsDiv.replaceChildren(summaryDiv, stepsOl);
+        instructionsDiv.style.display = '';
+    }
+
+    function eme_show_itinerary_error(instructionsDiv, message) {
+        let errDiv = document.createElement('div');
+        errDiv.className = 'eme-itinerary-error';
+        errDiv.textContent = message;
+        instructionsDiv.replaceChildren(errDiv);
         instructionsDiv.style.display = '';
     }
 
@@ -268,8 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (!data || data.length === 0) {
-                        instructionsDiv.setHTML('<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>');
-                        instructionsDiv.style.display = '';
+                        eme_show_itinerary_error(instructionsDiv, emeshowmaps.translate_addressnotfound);
                         mapDiv.style.display = 'none';
                         return;
                     }
@@ -353,8 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
 
                         routingControl.on('routingerror', function() {
-                            instructionsDiv.setHTML('<div class="eme-itinerary-error">' + 'Could not calculate route' + '</div>');
-                            instructionsDiv.style.display = '';
+                            eme_show_itinerary_error(instructionsDiv, 'Could not calculate route');
                         });
 
                         map.fitBounds(L.latLngBounds([originLatLng, destLatLng]), { padding: [40, 40] });
@@ -367,8 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 100);
                 })
                 .catch(function() {
-                    instructionsDiv.setHTML('<div class="eme-itinerary-error">' + emeshowmaps.translate_addressnotfound + '</div>');
-                    instructionsDiv.style.display = '';
+                    eme_show_itinerary_error(instructionsDiv, emeshowmaps.translate_addressnotfound);
                     mapDiv.style.display = 'none';
                 });
         });

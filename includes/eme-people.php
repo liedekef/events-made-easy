@@ -5383,21 +5383,21 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
         $persons = eme_get_persons( '', $search );
         foreach ( $persons as $item ) {
             $record              = [];
-            $record['lastname']  = esc_html( $item['lastname'] );
-            $record['firstname'] = esc_html( $item['firstname'] );
-            $record['address1']  = esc_html( $item['address1'] );
-            $record['address2']  = esc_html( $item['address2'] );
-            $record['city']      = esc_html( $item['city'] );
-            $record['zip']       = esc_html( $item['zip'] );
-            $record['state']     = esc_html( eme_get_state_name( $item['state_code'], $item['country_code'] ) );
-            $record['country']   = esc_html( eme_get_country_name( $item['country_code'] ) );
-            $record['email']     = esc_html( $item['email'] );
-            $record['phone']     = esc_html( $item['phone'] );
+            $record['lastname']  = $item['lastname'];
+            $record['firstname'] = $item['firstname'];
+            $record['address1']  = $item['address1'];
+            $record['address2']  = $item['address2'];
+            $record['city']      = $item['city'];
+            $record['zip']       = $item['zip'];
+            $record['state']     = eme_get_state_name( $item['state_code'], $item['country_code'] );
+            $record['country']   = eme_get_country_name( $item['country_code'] );
+            $record['email']     = $item['email'];
+            $record['phone']     = $item['phone'];
             $record['person_id'] = intval( $item['person_id'] );
             $record['wp_id']     = intval( $item['wp_id'] );
             $record['massmail']  = intval( $item['massmail'] );
             $record['gdpr']      = intval( $item['gdpr'] );
-            $record['birthdate'] = esc_html( $item['birthdate']);
+            $record['birthdate'] = $item['birthdate'];
             $return[]            = $record;
             if (!empty($record['wp_id'] )) {
                 $wp_ids_seen[]=$record['wp_id'];
@@ -5409,20 +5409,20 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
         $wp_users = eme_get_wp_users( search: $lastname, wp_ids_to_exclude: $wp_ids_seen );
         foreach ( $wp_users as $wp_user ) {
             $record             = [];
-            $phone              = esc_html( eme_get_user_phone( $wp_user->ID ) );
-            $record['lastname'] = esc_html( $wp_user->user_lastname );
+            $phone              = eme_get_user_phone( $wp_user->ID );
+            $record['lastname'] = $wp_user->user_lastname;
             if ( empty( $record['lastname'] ) ) {
-                $record['lastname'] = esc_html( $wp_user->display_name );
+                $record['lastname'] = $wp_user->display_name;
             }
-            $record['firstname'] = esc_html( $wp_user->user_firstname );
-            $record['email']     = esc_html( $wp_user->user_email );
+            $record['firstname'] = $wp_user->user_firstname;
+            $record['email']     = $wp_user->user_email;
             $record['address1']  = '';
             $record['address2']  = '';
             $record['city']      = '';
             $record['zip']       = '';
             $record['state']     = '';
             $record['country']   = '';
-            $record['phone']     = esc_html( $phone );
+            $record['phone']     = $phone;
             $record['wp_id']     = intval( $wp_user->ID );
             $record['massmail']  = 1;
             $record['gdpr']      = 1;
@@ -5437,7 +5437,6 @@ function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required =
     }
 }
 
-add_action( 'wp_ajax_eme_autocomplete_people', 'eme_ajax_people_autocomplete' );
 add_action( 'wp_ajax_eme_people_list', 'eme_ajax_people_list' );
 add_action( 'wp_ajax_eme_groups_list', 'eme_ajax_groups_list' );
 add_action( 'wp_ajax_eme_manage_people', 'eme_ajax_manage_people' );

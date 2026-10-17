@@ -1898,7 +1898,7 @@ function eme_global_map_shortcode( $atts ) {
     $result = '';
     if ( ! empty( $locations ) ) {
         $locations_val = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
-        $result  = "<script>window.global_map_info_{$id_base} = {$locations_val};</script>";
+        $result .= '<script type="application/json" id="eme_global_map_data_' . $id_base . '">' . $locations_val . '</script>';
         $result .= "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
     }
 
@@ -2985,7 +2985,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
                 //    $tmp_loc = eme_nl2br( $tmp_loc );
         # no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
         $tmp_loc                           = preg_replace( '/\s+/', ' ', $tmp_loc );
-        $json_location['location_balloon'] = esc_html( eme_translate( $tmp_loc ) );
+        $json_location['location_balloon'] = eme_translate( $tmp_loc );
 
         # second, we fill in the rest of the info
         foreach ( $location as $key => $value ) {
@@ -2993,9 +2993,9 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
             if ( preg_match( '/location_balloon|location_id|location_latitude|location_longitude/', $key ) ) {
                 # no newlines allowed, otherwise no map is shown
                 $value                 = eme_nl2br( $value );
-                $json_location[ $key ] = esc_html( eme_translate( $value ) );
+                $json_location[ $key ] = eme_translate( $value );
             }
-            $json_location['map_icon'] = esc_html( $location['location_properties']['map_icon'] );
+            $json_location['map_icon'] = $location['location_properties']['map_icon'];
         }
         $json_locations[] = $json_location;
     }
@@ -3010,7 +3010,9 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         'marker_clustering' => $marker_clustering_val,
         'gestures'          => get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false',
     ];
-    return wp_json_encode( $json );
+    // using these options to json_encode avoids the esc_html need, so also no decode needed and no possible issues
+    // and since we include it with application+json, no script execution injection either
+    return wp_json_encode( $json, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); // using these options avoids the esc_html need
 }
 
 function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_factor = 0 ) {
@@ -3129,18 +3131,20 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
         } else {
             $record = [];
             $record['id']           = $item['location_id'];
-            $record['name']         = esc_html( eme_translate( $item['location_name'] ) );
-            $record['address1']     = esc_html( eme_translate( $item['location_address1'] ) );
-            $record['address2']     = esc_html( eme_translate( $item['location_address2'] ) );
-            $record['city']         = esc_html( eme_translate( $item['location_city'] ) );
-            $record['state']        = esc_html( eme_translate( $item['location_state'] ) );
-            $record['zip']          = esc_html( eme_translate( $item['location_zip'] ) );
-            $record['country']      = esc_html( eme_translate( $item['location_country'] ) );
-            $record['latitude']     = esc_html( eme_translate( $item['location_latitude'] ) );
-            $record['longitude']    = esc_html( eme_translate( $item['location_longitude'] ) );
-            $record['map_icon']     = esc_html( eme_translate( $item['location_properties']['map_icon'] ) );
-            $record['online_only']  = esc_html( eme_translate( $item['location_properties']['online_only'] ) );
-            $record['location_url'] = esc_html( eme_translate( $item['location_url'] ) );
+            $record['name']         = eme_translate( $item['location_name'] );
+            $record['address1']     = eme_translate( $item['location_address1'] );
+            $record['address2']     = eme_translate( $item['location_address2'] );
+            $record['city']         = eme_translate( $item['location_city'] );
+            $record['state']        = eme_translate( $item['location_state'] );
+            $record['zip']          = eme_translate( $item['location_zip'] );
+            $record['country']      = eme_translate( $item['location_country'] );
+            $record['latitude']     = eme_translate( $item['location_latitude'] );
+            $record['longitude']    = eme_translate( $item['location_longitude'] );
+            $record['map_icon']     = eme_translate( $item['location_properties']['map_icon'] );
+            $record['online_only']  = eme_translate( $item['location_properties']['online_only'] );
+            $record['location_url'] = eme_translate( $item['location_url'] );
+            // change null to empty
+            $record = array_map( fn( $v ) => $v ?? '', $record );
             echo wp_json_encode( $record );
         }
         if ( ! $no_wp_die ) {
@@ -3156,32 +3160,25 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
     }
 
     $locations = eme_search_locations( eme_sanitize_request($_REQUEST['name']) );
-    // change null to empty
-    $locations = array_map(
-        function( $v ) {
-            return ( is_null( $v ) ) ? '' : $v;
-        },
-        $locations
-    );
-
     foreach ( $locations as $item ) {
         $properties = eme_init_location_props(eme_json_decode_safe($item['location_properties']));
         $record                = [];
         $record['location_id'] = $item['location_id'];
-        $record['name']        = esc_html( eme_translate( $item['location_name'] ) );
-        $record['address1']    = esc_html( eme_translate( $item['location_address1'] ) );
-        $record['address2']    = esc_html( eme_translate( $item['location_address2'] ) );
-        $record['city']        = esc_html( eme_translate( $item['location_city'] ) );
-        $record['state']       = esc_html( eme_translate( $item['location_state'] ) );
-        $record['zip']         = esc_html( eme_translate( $item['location_zip'] ) );
-        $record['country']     = esc_html( eme_translate( $item['location_country'] ) );
-        $record['latitude']    = esc_html( eme_translate( $item['location_latitude'] ) );
-        $record['longitude']   = esc_html( eme_translate( $item['location_longitude'] ) );
-        $record['location_url']= esc_html( eme_translate( $item['location_url'] ) );
+        $record['name']        = eme_translate( $item['location_name'] );
+        $record['address1']    = eme_translate( $item['location_address1'] );
+        $record['address2']    = eme_translate( $item['location_address2'] );
+        $record['city']        = eme_translate( $item['location_city'] );
+        $record['state']       = eme_translate( $item['location_state'] );
+        $record['zip']         = eme_translate( $item['location_zip'] );
+        $record['country']     = eme_translate( $item['location_country'] );
+        $record['latitude']    = eme_translate( $item['location_latitude'] );
+        $record['longitude']   = eme_translate( $item['location_longitude'] );
+        $record['location_url']= eme_translate( $item['location_url'] );
         foreach ($properties as $key=>$val) {
-            $record[$key]    = esc_html( eme_translate( $val ) );
+            $record[$key]    = eme_translate( $val );
         }
-        $res[]                 = $record;
+        // change null to empty
+        $res[] = array_map( fn( $v ) => $v ?? '', $record );
     }
     echo wp_json_encode( $res );
     if ( ! $no_wp_die ) {

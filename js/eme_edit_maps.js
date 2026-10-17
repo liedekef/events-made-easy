@@ -129,6 +129,37 @@ function eme_SelectdisplayAddress(){
     }
 }
 
+function eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country) {
+    // giving this back to bindPopup avoids any possible XSS in the variables being executed
+    const div = document.createElement('div');
+    div.className = 'eme-location-balloon';
+    const strong = document.createElement('strong');
+    strong.textContent = loc_name;
+    const p = document.createElement('p');
+    p.append(`${address1} ${address2}`, document.createElement('br'), `${city} ${state} ${zip} ${country}`);
+    div.append(strong, p);
+    return div;
+}
+
+// map icons end up as an img src, so only pass through http(s) or data:image
+// urls. Control chars are stripped first because browsers ignore them when
+// parsing a url scheme (so "java" + tab + "script:" would still be seen as
+// javascript:)
+function eme_safeIconUrl(url) {
+    if (typeof url !== 'string') return '';
+    const value = url.split('').filter(ch => {
+        const code = ch.charCodeAt(0);
+        return code >= 32 && code !== 127;
+    }).join('').trim();
+    if (!value) return '';
+    const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(value);
+    if (!scheme) return value; // relative url
+    const name = scheme[1].toLowerCase();
+    if (name === 'http' || name === 'https') return value;
+    if (value.slice(0, 14).toLowerCase() === 'data:image/') return value;
+    return '';
+}
+
 function loadMap(loc_name, address1, address2, city, state, zip, country, map_icon) {
     if (map_icon === undefined) {
         map_icon = '';
@@ -190,17 +221,15 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                     return;
                 }
                 map.panTo([data[0].lat, data[0].lon]);
+                const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(emeeditmaps.translate_default_map_icon);
                 let myIcon;
-                if (map_icon !== '') {
-                    myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-                } else if (emeeditmaps.translate_default_map_icon !== '') {
-                    myIcon = L.icon({iconUrl: emeeditmaps.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+                if (icon_url) {
+                    myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                 } else {
                     myIcon = new L.Icon.Default();
                 }
                 let marker = L.marker([data[0].lat, data[0].lon], {icon: myIcon}).addTo(map);
-                let pop_content = '<div class="eme-location-balloon"><strong>' + loc_name + '</strong><p>' + address1 + ' ' + address2 + '<br>' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
-                marker.bindPopup(pop_content).openPopup();
+                marker.bindPopup(eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country)).openPopup();
 
                 const latInput = EME.$('input#location_latitude');
                 const lonInput = EME.$('input#location_longitude');
@@ -258,17 +287,15 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         // go to the coordinates
         map.panTo(latlng);
 
+        const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(emeeditmaps.translate_default_map_icon);
         let myIcon;
-        if (map_icon !== '') {
-            myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-        } else if (emeeditmaps.translate_default_map_icon !== '') {
-            myIcon = L.icon({iconUrl: emeeditmaps.translate_default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+        if (icon_url) {
+            myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
         } else {
             myIcon = new L.Icon.Default();
         }
         let marker = L.marker(latlng, {icon: myIcon}).addTo(map);
-        let pop_content = '<div class="eme-location-balloon"><strong>' + loc_name + '</strong><p>' + address1 + ' ' + address2 + '<br>' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
-        marker.bindPopup(pop_content).openPopup();
+        marker.bindPopup(eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country)).openPopup();
     } else {
         loadMap(loc_name, address1, address2, city, state, zip, country, map_icon);
     }

@@ -70,22 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     suggestions.className = 'eme-autocomplete-suggestions';
 
                     results.forEach(item => {
-                        const suggestion = document.createElement('div');
-                        suggestion.className = 'eme-autocomplete-suggestion';
-
-                        // Different HTML for RSVP vs Task forms
-                        if (autocompleteAction === 'rsvp_autocomplete_people') {
-                            suggestion.setHTML(`
-                                <strong>${item.lastname} ${item.firstname}</strong>
-                                <br><small>${item.email} - ${item.phone}</small>
-                            `);
-                        } else {
-                            suggestion.setHTML(`
-                                <strong>${item.lastname} ${item.firstname}</strong>
-                                <br><small>${item.email}</small>
-                            `);
-                        }
-
+                        const suggestion = eme_createSuggestion(
+                            `${item.lastname} ${item.firstname}`,
+                            autocompleteAction === 'rsvp_autocomplete_people' ? `${item.email} - ${item.phone}` : item.email
+                        );
                         suggestion.addEventListener('click', e => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -96,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 if (target) {
                                     const value = item[fieldMap[formKey]];
                                     if (value !== undefined) {
-                                        target.value = eme_htmlDecode(value);
+                                        target.value = value;
                                         target.readOnly = true;
                                         
                                         // Handle required property for RSVP form fields
@@ -107,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                         }
                                         if (formKey == 'birthdate') {
                                             const target2 = EME.$('input#birthdate');
-                                            if (target2._fdatepicker) {
+                                            if (target2 && target2._fdatepicker) {
                                                 const startObj = new Date(value);
                                                 target2._fdatepicker.setDate(startObj);
                                             }

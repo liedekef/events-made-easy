@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     // ===== Reusable Functions (Outside Loop) =====
     function simplifyHtml(html) {
-        return eme_htmlDecode(html.replace(/"/g, "'").replace(/ \/>/g, '>'));
+        const t = document.createElement('template'); // inert: no scripts run, no images load
+        t.innerHTML = html;
+        return t.innerHTML;
     }
 
     // ===== Jodit Default Configs (Outside Loop) =====

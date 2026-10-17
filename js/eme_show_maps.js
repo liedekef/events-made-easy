@@ -18,6 +18,25 @@ document.addEventListener('DOMContentLoaded', function() {
         attributes: ['href', 'hreflang', 'type', 'target', 'rel']
     });
 
+    // map icons end up as an img src, so only pass through http(s) or
+    // data:image urls. Control chars are stripped first because browsers
+    // ignore them when parsing a url scheme (so "java" + tab + "script:"
+    // would still be seen as javascript:)
+    function eme_safeIconUrl(url) {
+        if (typeof url !== 'string') return '';
+        const value = url.split('').filter(ch => {
+            const code = ch.charCodeAt(0);
+            return code >= 32 && code !== 127;
+        }).join('').trim();
+        if (!value) return '';
+        const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(value);
+        if (!scheme) return value; // relative url
+        const name = scheme[1].toLowerCase();
+        if (name === 'http' || name === 'https') return value;
+        if (value.slice(0, 14).toLowerCase() === 'data:image/') return value;
+        return '';
+    }
+
     // create the tile layer with correct attribution
     let osmUrl=emeshowmaps.translate_osm_url || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     let osmAttrib=emeshowmaps.translate_osm_attribution || 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -31,7 +50,14 @@ document.addEventListener('DOMContentLoaded', function() {
         let div_id = divs[i].id; 
         if (div_id.indexOf("eme_global_map_") === 0) { 
             let map_id = div_id.replace("eme_global_map_","");
-            let data = window['global_map_info_'+map_id];
+            const mapDataEl = document.getElementById('eme_global_map_data_' + map_id);
+            if (!mapDataEl) continue;
+            let data;
+            try {
+                data = JSON.parse(mapDataEl.textContent);
+            } catch (e) {
+                continue;
+            }
             let marker_clustering = data.marker_clustering;
             let locations = data.locations;
             let markersList = new Array();
@@ -124,10 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (letter_icons) {
                     myIcon = L.divIcon({className: 'eme-map-marker', iconSize: [28,28], html: letter});
                 } else {
-                    if (item.map_icon != '') {
-                        myIcon = L.icon({iconUrl: item.map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-                    } else if (default_map_icon != '') {
-                        myIcon = L.icon({iconUrl: default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+                    const icon_url = eme_safeIconUrl(item.map_icon) || eme_safeIconUrl(default_map_icon);
+                    if (icon_url) {
+                        myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                     } else {
                         myIcon = new L.Icon.Default();
                     }
@@ -136,9 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let point = L.latLng(parseFloat(item.location_latitude), parseFloat(item.location_longitude));
                 let popupContainer = document.createElement('div');
                 popupContainer.className = 'eme-location-balloon';
-                // location_balloon comes HTML-escaped from the server (it is embedded in an
-                // inline <script>), so decode it first; setHTML() re-sanitizes, so this is safe
-                popupContainer.setHTML(eme_htmlDecode(item.location_balloon), { sanitizer: emeBalloonSanitizer });
+                popupContainer.setHTML(item.location_balloon, { sanitizer: emeBalloonSanitizer });
                 let marker = L.marker(point, {icon: myIcon});
                 marker.bindPopup(popupContainer, { maxWidth: 1600 });
                 if (marker_clustering == 'true' ) {
@@ -196,10 +219,9 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             let myIcon;
-            if (map_icon != '') {
-                myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
-            } else if (default_map_icon != '') {
-                myIcon = L.icon({iconUrl: default_map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
+            const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(default_map_icon);
+            if (icon_url) {
+                myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
             } else {
                 myIcon = new L.Icon.Default();
             }

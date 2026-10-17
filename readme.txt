@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.25  (2026/10/) =
+* The old api function eme_locations_search_ajax no longer html-escapes it's json output (was never the intention). If you use it, make sure to correct your code accordingly
+
 = 3.2.24  (2026/10/16) =
 * Small fixes for browsers not supporting the Sanitizer API yet (notably Safari)
 * Fix for balloons in global map, and allow a little more tags/attributes in the balloon 

@@ -347,7 +347,7 @@ function eme_admin_register_scripts() {
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
     wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ ], EME_VERSION );
     wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'eme-basic', 'eme-leaflet-maps' ], EME_VERSION );
-    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-basic', 'eme-sethtml' ], EME_VERSION );
+    wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-basic' ], EME_VERSION );
     wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ ], EME_VERSION );
     wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'eme-sethtml' ], EME_VERSION );
 
@@ -450,7 +450,7 @@ function eme_register_scripts() {
     // the frontend also needs the autocomplete (rsvp form)
     $search_tables = get_option( 'eme_autocomplete_sources' );
     if ( $search_tables != 'none' && is_user_logged_in() ) {
-        wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-basic', 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
+        wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'eme-basic' ], EME_VERSION, [ 'in_footer' => $load_js_in_footer ] );
     }
     $eme_map_is_active = get_option( 'eme_map_is_active' );
     if ( $eme_map_is_active) {

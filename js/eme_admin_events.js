@@ -491,17 +491,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function changeEventAdminPageTitle() {
-        let title;
         const eventNameInput = EME.$('input[name=event_name]');
-        if (eventNameInput) {
-            const eventName = eventNameInput.value;
-            if (!eventName) {
-                title = emeadmin.translate_insertnewevent;
-            } else {
-                title = emeadmin.translate_editeventstring + ' ' + eventName;
-            }
-            document.title = eme_htmlDecode(title);
-        }
+        if (!eventNameInput) return;
+        const eventName = eventNameInput.value;
+        document.title = eventName
+            ? emeadmin.translate_editeventstring + ' ' + eventName
+            : emeadmin.translate_insertnewevent;
     }
 
     // Initialize date pickers

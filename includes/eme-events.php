@@ -9258,16 +9258,21 @@ function eme_general_head() {
         $canon_url = eme_event_url( $event );
         echo '<link rel="canonical" href="' . esc_url( $canon_url ) . '">' . "\n";
         $extra_headers_format = trim( get_option( 'eme_event_html_headers_format' ) );
-        $extra_headers        = eme_extra_event_headers( $event );
-        if ( eme_is_empty_string( $extra_headers_format ) ) {
-            $extra_headers_format = $extra_headers;
-        } else {
-            $extra_headers_format .= "\n" . $extra_headers;
-        }
         if ( ! eme_is_empty_string( $extra_headers_format ) ) {
             # we allow js in the header, so not too much escaping here
             # but it needs to be text, otherwise html from the event might show in the headers ...
             $extra_header = eme_replace_event_placeholders( $extra_headers_format, $event, 'text' );
+        } else {
+            $extra_header = '';
+        }
+        # the meta and JSON-LD headers from eme_extra_event_headers() are already
+        # fully resolved (meta is #ESC-escaped, JSON-LD uses the json target), so
+        # they must not be run through eme_replace_event_placeholders() again
+        $extra_headers = eme_extra_event_headers( $event );
+        if ( ! eme_is_empty_string( $extra_headers ) ) {
+            $extra_header .= ( eme_is_empty_string( $extra_header ) ? '' : "\n" ) . $extra_headers;
+        }
+        if ( ! eme_is_empty_string( $extra_header ) ) {
             # remove empty lines
             $extra_header = preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $extra_header );
             if ( $extra_header != '' ) {

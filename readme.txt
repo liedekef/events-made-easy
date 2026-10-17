@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.26  (2026/10/17) =
+* Extra headers were not shown due to strict type checking of event status, fixed
+
 = 3.2.25  (2026/10/17) =
 * The old api function eme_locations_search_ajax no longer html-escapes it's json output (was never the intention). If you use it, make sure to correct your code accordingly
 * Fix possible header exploits if the admin allowed free text from user input in the settings

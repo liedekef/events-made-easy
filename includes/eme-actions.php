@@ -335,6 +335,9 @@ add_action( 'wp_footer', 'eme_general_footer' );
 //} else {
 //   add_action('wp_footer', 'eme_ajaxize_calendar');
 //}
+add_filter( 'oembed_discovery_links', function ( $output ) {
+    return ( eme_is_single_event_page() || eme_is_single_location_page() ) ? '' : $output;
+} );
 
 function eme_admin_register_scripts() {
     wp_register_script( 'eme-sethtml', EME_PLUGIN_URL . 'js/eme_sethtml.js', [], EME_VERSION );

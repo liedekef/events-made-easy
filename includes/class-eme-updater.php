@@ -181,14 +181,6 @@ class EME_GitHub_Updater {
             $update->package = $this->github_data['zipball_url'];
         }
         
-        // Add access token if needed (for private repos)
-        if ($this->access_token) {
-            $update->package = add_query_arg(
-                ['access_token' => $this->access_token],
-                $update->package
-            );
-        }
-
         // Get readme data for version requirements
         // All these are optional, but better to set them to avoid php/wp version issues on upgrade if we ever decide to stop supporting older php/wp
         $this->get_readme_data($current_version, $latest_version);
@@ -244,13 +236,6 @@ class EME_GitHub_Updater {
             $plugin_info->download_link = $this->github_data['assets'][0]['browser_download_url'];
         } else {
             $plugin_info->download_link = $this->github_data['zipball_url'];
-        }
-        
-        if ($this->access_token) {
-            $plugin_info->download_link = add_query_arg(
-                ['access_token' => $this->access_token],
-                $plugin_info->download_link
-            );
         }
         
         // Build sections from readme

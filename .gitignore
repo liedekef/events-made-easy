@@ -1,2 +1,4 @@
 dist
 langs/pot_gen
+composer.lock
+.php-cs-fixer.dist.php

@@ -1661,11 +1661,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         $limited = 1;
     }
     // if limited, then a number of fields are read-only
-    if ( $limited ) {
-        $disabled = "disabled='true'";
-    } else {
-        $disabled = '';
-    }
+    $disabled = $limited ? 'disabled="disabled"' : '';
 
     if ( ! isset( $member['member_id'] ) ) {
         $action               = 'add';

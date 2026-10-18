@@ -284,10 +284,11 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
 // BEGIN NOT FOR WP
-require_once("includes/class-eme-updater.php");
-$github_username = 'liedekef';
-$github_repository = 'events-made-easy';
-new EME_GitHub_Updater(__FILE__, $github_username, $github_repository);
+// guard against redeclaring the class when eme-accounting/eme-vzw-helper are also active
+if ( ! class_exists( 'EME_GitHub_Updater' ) ) {
+	require_once("includes/class-eme-updater.php");
+	new EME_GitHub_Updater(__FILE__, 'liedekef', 'events-made-easy');
+}
 // END NOT FOR WP
 
 // Create the Manage Events and the Options submenus

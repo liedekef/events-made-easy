@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 plugin="events-made-easy"
 old_release=$1

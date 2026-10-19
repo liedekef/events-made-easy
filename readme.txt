@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.2.27  (2026/10/) =
+* Jodit update
+
 = 3.2.26  (2026/10/17) =
 * Extra headers were not shown due to strict type checking of event status, fixed
 

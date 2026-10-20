@@ -1,4 +1,6 @@
 <?php
+namespace EventsMadeEasy;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -168,7 +170,7 @@ class EME_GitHub_Updater {
 
         // Create update object
         // id and plugin are being set fixed in wp-includes/update.php after the filter update_plugins_{$hostname}
-        $update = new stdClass();
+        $update = new \stdClass();
         $update->slug = $this->slug;
         $update->version = $current_version; // version just needs to be present, but the value is ignored if new_version is also present
         $update->new_version = $latest_version; // if this is not present, then WP will copy version into new_version
@@ -217,7 +219,7 @@ class EME_GitHub_Updater {
         $latest_version = ltrim($this->github_data['tag_name'], 'v');
         $this->get_readme_data($current_version, $latest_version);
         
-        $plugin_info = new stdClass();
+        $plugin_info = new \stdClass();
         $plugin_info->name = !empty($this->readme_data['name']) ? $this->readme_data['name'] : $plugin_data['Name'];
         $plugin_info->slug = $this->slug;
         //$plugin_info->plugin = $this->plugin_file;

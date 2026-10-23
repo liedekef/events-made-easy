@@ -45,9 +45,23 @@ function eme_holidays_page() {
 			$holidays['name'] = eme_sanitize_request( $_POST['name'] );
 			$holidays['list'] = eme_sanitize_request( $_POST['list'] );
 			if ( ! empty( $_POST['id'] ) ) {
-				$validation_result = $wpdb->update( $holidays_table, $holidays, [ 'id' => intval( $_POST['id'] ) ] );
+				$holidays_id = intval( $_POST['id'] );
+				// events with bookings/task signups that would end up on a holiday: ask what to do with the bookings first
+				$booked = eme_get_holiday_booked_events( $holidays_id, eme_parse_holiday_list( $holidays['list'] ) );
+				if ( ! empty( $booked ) && ! isset( $_POST['send_trashmails'] ) ) {
+					eme_holidays_confirm_layout( $holidays, $holidays_id, $booked );
+					return;
+				}
+				$validation_result = $wpdb->update( $holidays_table, $holidays, [ 'id' => $holidays_id ] );
 				if ( $validation_result !== false ) {
-						$message = __( 'Successfully edited the list of holidays', 'events-made-easy' );
+					$message = __( 'Successfully edited the list of holidays', 'events-made-easy' );
+					$changes = eme_holidays_update_recurrences( $holidays_id, intval( $_POST['send_trashmails'] ?? 0 ) );
+					if ( $changes['removed'] ) {
+						$message .= '<br>' . sprintf( __( '%d event(s) removed from recurrences', 'events-made-easy' ), $changes['removed'] );
+					}
+					if ( $changes['added'] ) {
+						$message .= '<br>' . sprintf( __( '%d event(s) added to recurrences', 'events-made-easy' ), $changes['added'] );
+					}
 				} else {
 					$message = __( 'There was a problem editing the list of holidays, please try again.', 'events-made-easy' );
 				}
@@ -120,6 +134,11 @@ function eme_holidays_edit_layout() {
 	}
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+    // we show the list ordered by date, array_filter already removes the empty lines
+    $list_lines = array_filter( array_map( 'trim', explode( "\n", str_replace( "\r", "\n", $holidays['list'] ) ) ) );
+    sort( $list_lines, SORT_STRING );
+    $holidays['list'] = implode( "\n", $list_lines );
+
 	$layout      = "
    <div class='wrap'>
       <h1>" . $h1_string . '</h1>';
@@ -143,9 +162,131 @@ function eme_holidays_edit_layout() {
          </table>
       <p class='submit'><input type='submit' class='button-primary' name='submit' value='" . $action_string . "'></p>
       </form>
+      " . eme_holidays_recurrences_html( $holidays_id ) . "
    </div>
    ";
 	echo $layout; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+// list of recurrences using this holidays list, shown in the edit screen
+function eme_holidays_recurrences_html( $holidays_id ) {
+	if ( empty( $holidays_id ) ) {
+		return '';
+	}
+	$html = '';
+	foreach ( eme_get_recurrences_for_holidays_id( $holidays_id ) as $recurrence ) {
+		$event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence['recurrence_id'] ) );
+		if ( empty( $event ) ) {
+			continue;
+		}
+		$url   = wp_nonce_url( admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_recurrence&recurrence_id=' . $recurrence['recurrence_id'] ), 'eme_admin', 'eme_admin_nonce' );
+		$html .= "<li><a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $event['event_name'] ) ) . '</a> (' . eme_get_recurrence_desc_from_array( $recurrence ) . ')</li>';
+	}
+	$title = '<h2>' . esc_html__( 'Recurrences using this list of holidays', 'events-made-easy' ) . '</h2>';
+	if ( empty( $html ) ) {
+		return $title . '<p>' . esc_html__( 'None', 'events-made-easy' ) . '</p>';
+	}
+	return $title . '<ul>' . $html . '</ul>';
+}
+
+// future events (of recurrences using this list) that fall on one of $holiday_days and have bookings or task signups
+// those are the ones eme_db_update_recurrence would otherwise keep
+function eme_get_holiday_booked_events( $holidays_id, $holiday_days ) {
+	global $wpdb;
+	$booked      = [];
+	$recurrences = eme_get_recurrences_for_holidays_id( $holidays_id );
+	if ( empty( $recurrences ) || empty( $holiday_days ) ) {
+		return $booked;
+	}
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$rec_ids      = array_map( 'intval', array_column( $recurrences, 'recurrence_id' ) );
+	$placeholders = implode( ',', array_fill( 0, count( $rec_ids ), '%d' ) );
+	$now          = ( new emeExpressiveDate( 'now', EME_TIMEZONE ) )->format( 'Y-m-d H:i:s' );
+	$sql          = $wpdb->prepare( "SELECT event_id,event_start,event_rsvp,event_tasks FROM $events_table WHERE recurrence_id IN ($placeholders) AND event_status <> %d AND event_start >= %s ORDER BY event_start", array_merge( $rec_ids, [ EME_EVENT_STATUS_TRASH, $now ] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$events       = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	foreach ( $events as $event ) {
+		if ( ! isset( $holiday_days[ eme_get_date_from_dt( $event['event_start'] ) ] ) ) {
+			continue;
+		}
+		$bookings = $event['event_rsvp'] ? eme_count_bookings_for( $event['event_id'] ) : 0;
+		$signups  = $event['event_tasks'] ? eme_count_tasksignups_for( $event['event_id'] ) : 0;
+		if ( $bookings > 0 || $signups > 0 ) {
+			$booked[] = [
+				'event_id'    => $event['event_id'],
+				'event_start' => $event['event_start'],
+				'bookings'    => $bookings,
+				'signups'     => $signups,
+			];
+		}
+	}
+	return $booked;
+}
+
+// the question: what to do with the bookings of events that are about to be removed
+function eme_holidays_confirm_layout( $holidays, $holidays_id, $booked ) {
+?>
+	<div class="wrap">
+	<h1><?php esc_html_e( 'Confirm update of holidays list', 'events-made-easy' ); ?></h1>
+	<p><?php esc_html_e( 'The events below are part of a recurrence using this list, fall on a holiday of the new list and have bookings or task signups. If you continue they will be moved to the trash bin, together with their bookings.', 'events-made-easy' ); ?></p>
+	<ul>
+	<?php
+	foreach ( $booked as $b ) {
+		$event = eme_get_event( $b['event_id'] );
+		echo '<li>' . esc_html( eme_localized_date( $b['event_start'], EME_TIMEZONE ) . ' - ' . eme_translate( $event['event_name'] ) ) . ' (' . intval( $b['bookings'] ) . ' ' . esc_html__( 'bookings', 'events-made-easy' ) . ', ' . intval( $b['signups'] ) . ' ' . esc_html__( 'task signups', 'events-made-easy' ) . ')</li>';
+	}
+	?>
+	</ul>
+	<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=eme-holidays' ) ); ?>">
+		<?php wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false ); ?>
+		<input type="hidden" name="eme_admin_action" value="do_editholidays">
+		<input type="hidden" name="id" value="<?php echo intval( $holidays_id ); ?>">
+		<input type="hidden" name="name" value="<?php echo esc_attr( $holidays['name'] ); ?>">
+		<textarea name="list" style="display:none"><?php echo esc_textarea( $holidays['list'] ); ?></textarea>
+		<p>
+		<?php
+		esc_html_e( 'Send emails for cancelled bookings too?', 'events-made-easy' );
+		echo eme_ui_select_binary( 0, 'send_trashmails' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
+		?>
+		</p>
+		<input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Update list of holidays', 'events-made-easy' ); ?>">
+		<a class="button-secondary" href="<?php echo esc_url( admin_url( 'admin.php?page=eme-holidays' ) ); ?>"><?php esc_html_e( 'Cancel', 'events-made-easy' ); ?></a>
+	</form>
+	</div>
+<?php
+}
+
+// called after the list has been saved: trash the booked events on holidays (same as the trashEvents bulk action),
+// then let the normal recurrence update remove/add the remaining events (only_change_recdates=1, like extendRecurrences)
+function eme_holidays_update_recurrences( $holidays_id, $send_trashmails ) {
+	$changes     = [ 'removed' => 0, 'added' => 0 ];
+	$recurrences = eme_get_recurrences_for_holidays_id( $holidays_id );
+	if ( empty( $recurrences ) ) {
+		return $changes;
+	}
+	// fetch the template events first, the first event might get trashed below
+	// and remember the current events, so we can report what really changed
+	$templates  = [];
+	$before_ids = [];
+	foreach ( $recurrences as $recurrence ) {
+		$templates[ $recurrence['recurrence_id'] ] = eme_get_event( eme_get_recurrence_first_eventid( $recurrence['recurrence_id'] ) );
+		$before_ids = array_merge( $before_ids, eme_get_recurrence_eventids( $recurrence['recurrence_id'] ) );
+	}
+	$booked = eme_get_holiday_booked_events( $holidays_id, eme_get_holiday_listinfo( $holidays_id ) );
+	if ( ! empty( $booked ) ) {
+		eme_trash_events( implode( ',', array_column( $booked, 'event_id' ) ), $send_trashmails );
+	}
+	$after_ids = [];
+	foreach ( $recurrences as $recurrence ) {
+		$event = $templates[ $recurrence['recurrence_id'] ];
+		if ( ! empty( $event ) ) {
+			eme_db_update_recurrence( $recurrence, $event, 1 );
+			wp_cache_delete( 'eme_event ' . $event['event_id'] );
+		}
+		$after_ids = array_merge( $after_ids, eme_get_recurrence_eventids( $recurrence['recurrence_id'] ) );
+	}
+	$changes['removed'] = count( array_diff( $before_ids, $after_ids ) );
+	$changes['added']   = count( array_diff( $after_ids, $before_ids ) );
+	return $changes;
 }
 
 function eme_get_holiday_lists() {
@@ -164,11 +305,15 @@ function eme_get_holiday_list( $id ) {
 
 function eme_get_holiday_listinfo( $id ) {
 	$holiday_list = eme_get_holiday_list( $id );
+	return eme_parse_holiday_list( $holiday_list['list'] );
+}
+
+function eme_parse_holiday_list( $list ) {
 	$res_days     = [];
-	$days         = explode( "\n", str_replace( "\r", "\n", $holiday_list['list'] ) );
-	foreach ( $days as $day_info ) {
+    $list_lines = array_filter( array_map( 'trim', explode( "\n", str_replace( "\r", "\n", $list ) ) ) );
+	foreach ( $list_lines as $day_info ) {
 		//$info=explode(',',$day_info);
-		[$date_info, $name, $class, $link] = array_pad( explode( ',', $day_info ), 4, '' );
+		[$date_info, $name, $class, $link] = array_pad( array_map( 'trim', explode( ',', $day_info ) ), 4, '' );
 		if ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $date_info, $matches ) ) {
 			$start   = $matches[1];
 			$end     = $matches[2];

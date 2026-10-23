@@ -738,6 +738,8 @@ function eme_ajax_recurrences_list() {
         // if no event info, set empty event (otherwise the count of events no longer matches)
         if ( empty( $event ) ) {
             $event=eme_new_event();
+            $event['event_rsvp'] = 0;
+            $event['price'] = '';
             $duration_string = '';
         } else {
             if ( ! $recurrence['event_duration'] ) {
@@ -817,7 +819,7 @@ function eme_ajax_recurrences_list() {
         if ( isset( $event_status_array[ $event['event_status'] ] ) ) {
             $record['event_status'] = $event_status_array[ $event['event_status'] ];
         }
-        $record['recinfo']       = eme_get_recurrence_desc( $event['recurrence_id'] );
+        $record['recinfo']       = eme_get_recurrence_desc( $recurrence['recurrence_id'] );
         $record['rec_singledur'] = $duration_string;
         $rows[]                  = $record;
     }

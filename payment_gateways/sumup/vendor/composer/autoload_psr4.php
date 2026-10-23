@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'SumUp\\' => array($vendorDir . '/sumup/sumup-ecom-php-sdk/src/SumUp'),
+    'SumUp\\' => array($vendorDir . '/sumup/sumup-php/src'),
 );

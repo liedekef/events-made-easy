@@ -1,0 +1,44 @@
+name: Question
+description: Ask a question about the SumUp PHP SDK.
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for usage questions or clarification requests.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Describe what you are trying to do and what is unclear.
+      placeholder: Ask your question here.
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Relevant code or context
+      description: Share any code, configuration, or API usage that would help explain the question.
+      render: php
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+      placeholder: e.g. 0.9.0
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      placeholder: e.g. 8.3.8
+  - type: input
+    id: framework
+    attributes:
+      label: Framework or runtime
+      placeholder: e.g. Laravel 11, Symfony 7, plain PHP
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any extra details that would help us answer.

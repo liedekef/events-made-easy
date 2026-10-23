@@ -1,0 +1,88 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Schema annotations", "version": "1.0.0" },
+  "servers": [{ "url": "https://api.sumup.com" }],
+  "tags": [{ "name": "Merchants", "description": "Merchant API." }],
+  "paths": {
+    "/merchants": {
+      "post": {
+        "tags": ["Merchants"],
+        "operationId": "CreateMerchant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Merchant" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created merchant",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Merchant" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CountryCode": { "type": "string" },
+      "PhoneNumber": { "type": "string" },
+      "Address": {
+        "type": "object",
+        "required": ["country"],
+        "properties": {
+          "country": {
+            "allOf": [
+              { "description": "Address country.", "example": "DE" },
+              { "$ref": "#/components/schemas/CountryCode" }
+            ]
+          }
+        }
+      },
+      "ExtendedAddress": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Address",
+            "description": "Inherited address."
+          },
+          {
+            "type": "object",
+            "properties": { "label": { "type": "string" } }
+          }
+        ]
+      },
+      "Merchant": {
+        "type": "object",
+        "required": ["address", "phone_number"],
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "description": "Merchant address."
+          },
+          "phone_number": {
+            "$ref": "#/components/schemas/PhoneNumber",
+            "description": "Merchant phone number."
+          },
+          "extended_address": {
+            "$ref": "#/components/schemas/ExtendedAddress"
+          },
+          "country_codes": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                { "description": "Country item." },
+                { "$ref": "#/components/schemas/CountryCode" }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

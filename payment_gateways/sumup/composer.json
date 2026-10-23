@@ -1,5 +1,5 @@
 {
     "require": {
-        "sumup/sumup-ecom-php-sdk": "^1.4"
+        "sumup/sumup-php": "^0.1.7"
     }
 }

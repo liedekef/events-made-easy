@@ -1,0 +1,124 @@
+name: Release Code Samples
+
+on:
+  release:
+    types:
+      - published
+
+concurrency:
+  group: release-code-samples-${{ github.event.release.tag_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  sync-php-code-samples:
+    name: Sync PHP code samples
+    runs-on: ubuntu-latest
+    env:
+      TARGET_REPOSITORY: sumup/sumup-developer
+      TARGET_BRANCH: automation/php-code-samples
+      TARGET_FILE: src/codesamples/php.json
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Install Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: codegen/go.mod
+
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.SUMUP_BOT_APP_ID }}
+          private-key: ${{ secrets.SUMUP_BOT_PRIVATE_KEY }}
+          owner: sumup
+          repositories: sumup-developer
+
+      - name: Checkout target repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.TARGET_REPOSITORY }}
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+          path: sumup-developer
+          persist-credentials: true
+
+      - name: Get GitHub App User ID
+        id: get-user-id
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git
+        run: |
+          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+
+      - name: Prepare target branch
+        working-directory: sumup-developer
+        run: |
+          git fetch origin "${{ env.TARGET_BRANCH }}:refs/remotes/origin/${{ env.TARGET_BRANCH }}" || true
+          git checkout -B "${{ env.TARGET_BRANCH }}" origin/main
+
+      - name: Generate PHP code samples
+        working-directory: codegen
+        run: |
+          mkdir -p "../sumup-developer/$(dirname "${{ env.TARGET_FILE }}")"
+          go run . samples \
+            --sdk-version-file ../composer.json \
+            --out "../sumup-developer/${{ env.TARGET_FILE }}" \
+            ../openapi.json
+
+      - name: Commit generated samples
+        id: commit
+        working-directory: sumup-developer
+        run: |
+          git add "${{ env.TARGET_FILE }}"
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git commit -m "chore: update PHP code samples for ${{ github.event.release.tag_name }}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push branch
+        if: steps.commit.outputs.changed == 'true'
+        working-directory: sumup-developer
+        run: git push --force-with-lease origin "${{ env.TARGET_BRANCH }}"
+
+      - name: Create or update pull request
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          head_ref="sumup:${{ env.TARGET_BRANCH }}"
+          pr_url="$(gh pr list \
+            --repo "${{ env.TARGET_REPOSITORY }}" \
+            --head "$head_ref" \
+            --base main \
+            --state open \
+            --json url \
+            --jq '.[0].url')"
+
+          if [ -n "$pr_url" ]; then
+            gh pr edit "$pr_url" \
+              --repo "${{ env.TARGET_REPOSITORY }}" \
+              --title "chore: update PHP code samples" \
+              --body "Updates \`${{ env.TARGET_FILE }}\` from \`${{ github.repository }}\` release \`${{ github.event.release.tag_name }}\`."
+            exit 0
+          fi
+
+          gh pr create \
+            --repo "${{ env.TARGET_REPOSITORY }}" \
+            --base main \
+            --head "${{ env.TARGET_BRANCH }}" \
+            --title "chore: update PHP code samples" \
+            --body "Updates \`${{ env.TARGET_FILE }}\` from \`${{ github.repository }}\` release \`${{ github.event.release.tag_name }}\`."

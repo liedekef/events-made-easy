@@ -1,37 +1,53 @@
 {
     "packages": [
         {
-            "name": "sumup/sumup-ecom-php-sdk",
-            "version": "1.4.0",
-            "version_normalized": "1.4.0.0",
+            "name": "sumup/sumup-php",
+            "version": "0.1.7",
+            "version_normalized": "0.1.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
-                "reference": "8d51db9cb202b2889a48612b4fe3dce8cb7d9c87"
+                "url": "https://github.com/sumup/sumup-php.git",
+                "reference": "585f6d329c9275e3dfac0999ba74094709d6f0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/8d51db9cb202b2889a48612b4fe3dce8cb7d9c87",
-                "reference": "8d51db9cb202b2889a48612b4fe3dce8cb7d9c87",
+                "url": "https://api.github.com/repos/sumup/sumup-php/zipball/585f6d329c9275e3dfac0999ba74094709d6f0f7",
+                "reference": "585f6d329c9275e3dfac0999ba74094709d6f0f7",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6|^7.0|^8.0"
+                "ext-curl": "*",
+                "php": "^8.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.5.0",
+                "friendsofphp/php-cs-fixer": "3.95.27",
+                "league/oauth2-client": "^2.9",
+                "phpstan/phpstan": "^2.1",
                 "phpunit/phpunit": "^9.6"
             },
             "suggest": {
-                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
+                "guzzlehttp/guzzle": "Use SumUp\\\\HttpClient\\\\GuzzleClient for a Guzzle-based HTTP client."
             },
-            "time": "2025-11-12T21:19:44+00:00",
+            "time": "2026-10-15T08:34:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "SumUp\\": "src/SumUp/"
-                }
+                    "SumUp\\": "src/"
+                },
+                "classmap": [
+                    "src/Checkouts/Checkouts.php",
+                    "src/Customers/Customers.php",
+                    "src/Members/Members.php",
+                    "src/Memberships/Memberships.php",
+                    "src/Merchants/Merchants.php",
+                    "src/Payouts/Payouts.php",
+                    "src/Readers/Readers.php",
+                    "src/Receipts/Receipts.php",
+                    "src/Roles/Roles.php",
+                    "src/Shared/Shared.php",
+                    "src/Transactions/Transactions.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -48,17 +64,15 @@
             "homepage": "https://developer.sumup.com",
             "keywords": [
                 "checkout",
-                "ecommerce",
-                "payment",
-                "payment processing",
+                "payments",
                 "sdk",
                 "sumup"
             ],
             "support": {
-                "issues": "https://github.com/sumup/sumup-ecom-php-sdk/issues",
-                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/v1.4.0"
+                "issues": "https://github.com/sumup/sumup-php/issues",
+                "source": "https://github.com/sumup/sumup-php/tree/v0.1.7"
             },
-            "install-path": "../sumup/sumup-ecom-php-sdk"
+            "install-path": "../sumup/sumup-php"
         }
     ],
     "dev": true,

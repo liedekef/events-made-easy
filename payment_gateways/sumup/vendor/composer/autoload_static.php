@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1
+class ComposerStaticInit6a4eba97e444c3d7ff936dcc0b2903a8
 {
     public static $prefixLengthsPsr4 = array (
         'S' =>
@@ -16,20 +16,69 @@ class ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1
     public static $prefixDirsPsr4 = array (
         'SumUp\\' =>
         array (
-            0 => __DIR__ . '/..' . '/sumup/sumup-ecom-php-sdk/src/SumUp',
+            0 => __DIR__ . '/..' . '/sumup/sumup-php/src',
         ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'SumUp\\Services\\Checkouts' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\CheckoutsCreateApplePaySessionRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\CheckoutsListAvailablePaymentMethodsParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\CheckoutsListAvailablePaymentMethodsResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\CheckoutsListAvailablePaymentMethodsResponseItem' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\CheckoutsListParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Checkouts/Checkouts.php',
+        'SumUp\\Services\\Customers' => __DIR__ . '/..' . '/sumup/sumup-php/src/Customers/Customers.php',
+        'SumUp\\Services\\CustomersUpdateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Customers/Customers.php',
+        'SumUp\\Services\\Members' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\MembersCreateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\MembersListParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\MembersListResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\MembersUpdateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\MembersUpdateRequestUser' => __DIR__ . '/..' . '/sumup/sumup-php/src/Members/Members.php',
+        'SumUp\\Services\\Memberships' => __DIR__ . '/..' . '/sumup/sumup-php/src/Memberships/Memberships.php',
+        'SumUp\\Services\\MembershipsListParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Memberships/Memberships.php',
+        'SumUp\\Services\\MembershipsListResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Memberships/Memberships.php',
+        'SumUp\\Services\\Merchants' => __DIR__ . '/..' . '/sumup/sumup-php/src/Merchants/Merchants.php',
+        'SumUp\\Services\\Payouts' => __DIR__ . '/..' . '/sumup/sumup-php/src/Payouts/Payouts.php',
+        'SumUp\\Services\\PayoutsListParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Payouts/Payouts.php',
+        'SumUp\\Services\\Readers' => __DIR__ . '/..' . '/sumup/sumup-php/src/Readers/Readers.php',
+        'SumUp\\Services\\ReadersCreateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Readers/Readers.php',
+        'SumUp\\Services\\ReadersListResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Readers/Readers.php',
+        'SumUp\\Services\\ReadersTerminateCheckoutRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Readers/Readers.php',
+        'SumUp\\Services\\ReadersUpdateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Readers/Readers.php',
+        'SumUp\\Services\\Receipts' => __DIR__ . '/..' . '/sumup/sumup-php/src/Receipts/Receipts.php',
+        'SumUp\\Services\\ReceiptsGetParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Receipts/Receipts.php',
+        'SumUp\\Services\\Roles' => __DIR__ . '/..' . '/sumup/sumup-php/src/Roles/Roles.php',
+        'SumUp\\Services\\RolesCreateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Roles/Roles.php',
+        'SumUp\\Services\\RolesListResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Roles/Roles.php',
+        'SumUp\\Services\\RolesUpdateRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Roles/Roles.php',
+        'SumUp\\Services\\Transactions' => __DIR__ . '/..' . '/sumup/sumup-php/src/Transactions/Transactions.php',
+        'SumUp\\Services\\TransactionsGetParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Transactions/Transactions.php',
+        'SumUp\\Services\\TransactionsListParams' => __DIR__ . '/..' . '/sumup/sumup-php/src/Transactions/Transactions.php',
+        'SumUp\\Services\\TransactionsListResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Transactions/Transactions.php',
+        'SumUp\\Services\\TransactionsRefundRequest' => __DIR__ . '/..' . '/sumup/sumup-php/src/Transactions/Transactions.php',
+        'SumUp\\Shared\\AddressLegacy' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\Error' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\ErrorForbidden' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\Invite' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\MandateResponse' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\PersonalDetails' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\Problem' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionBase' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionBaseCurrency' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionBasePaymentType' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionBaseStatus' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionCheckoutInfo' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
+        'SumUp\\Shared\\TransactionCheckoutInfoEntryMode' => __DIR__ . '/..' . '/sumup/sumup-php/src/Shared/Shared.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit48086a2cf8a400ef69bca89c593b6ff1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6a4eba97e444c3d7ff936dcc0b2903a8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6a4eba97e444c3d7ff936dcc0b2903a8::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6a4eba97e444c3d7ff936dcc0b2903a8::$classMap;
 
         }, null, ClassLoader::class);
     }

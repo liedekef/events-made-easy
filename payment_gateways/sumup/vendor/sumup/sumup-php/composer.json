@@ -1,0 +1,67 @@
+{
+	"name": "sumup/sumup-php",
+	"description": "SumUp PHP SDK",
+	"type": "library",
+	"license": "Apache-2.0",
+	"version": "0.1.7",
+	"keywords": [
+		"sumup",
+		"sdk",
+		"payments",
+		"checkout"
+	],
+	"homepage": "https://developer.sumup.com",
+	"authors": [
+		{
+			"name": "SumUp",
+			"email": "integration@sumup.com",
+			"homepage": "https://github.com/sumup"
+		}
+	],
+	"config": {
+		"platform": {
+			"php": "8.2.0"
+		}
+	},
+	"scripts": {
+		"cs": "php-cs-fixer fix --dry-run --diff",
+		"analyse": "phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G",
+		"test": "phpunit"
+	},
+	"require": {
+		"php": "^8.2",
+		"ext-curl": "*"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "3.95.27",
+		"phpstan/phpstan": "^2.1",
+		"phpunit/phpunit": "^9.6",
+		"league/oauth2-client": "^2.9"
+	},
+	"suggest": {
+		"guzzlehttp/guzzle": "Use SumUp\\\\HttpClient\\\\GuzzleClient for a Guzzle-based HTTP client."
+	},
+	"autoload": {
+		"psr-4": {
+			"SumUp\\": "src/"
+		},
+		"classmap": [
+			"src/Checkouts/Checkouts.php",
+			"src/Customers/Customers.php",
+			"src/Members/Members.php",
+			"src/Memberships/Memberships.php",
+			"src/Merchants/Merchants.php",
+			"src/Payouts/Payouts.php",
+			"src/Readers/Readers.php",
+			"src/Receipts/Receipts.php",
+			"src/Roles/Roles.php",
+			"src/Shared/Shared.php",
+			"src/Transactions/Transactions.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SumUp\\Tests\\": "tests/"
+		}
+	}
+}

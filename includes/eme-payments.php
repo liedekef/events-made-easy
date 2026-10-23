@@ -960,12 +960,19 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
     return $form_html;
 }
 
+function eme_sumup_client() {
+    if ( PHP_VERSION_ID < 80200 ) {
+        throw new \RuntimeException( 'The SumUp SDK requires PHP 8.2 or higher' );
+    }
+    require_once EME_PLUGIN_DIR . 'payment_gateways/sumup/vendor/autoload.php';
+    return new \SumUp\SumUp( get_option( 'eme_sumup_api_key' ) );
+}
+
 function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
     $gateway                 = 'sumup';
-    $eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
-    $eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
+    $eme_sumup_api_key       = get_option( 'eme_sumup_api_key' );
     $eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
-    if ( empty( $eme_sumup_app_id ) ) {
+    if ( empty( $eme_sumup_api_key ) || empty( $eme_sumup_merchant_code ) ) {
         return;
     }
 
@@ -989,43 +996,36 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
     $button_below   = get_option( 'eme_' . $gateway . '_button_below' );
     $button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/sumup/vendor/autoload.php';
     try {
-        $sumup       = new \SumUp\SumUp(
-            [
-                'app_id'     => $eme_sumup_app_id,
-                'app_secret' => $eme_sumup_app_secret,
-                'grant_type' => 'client_credentials',
-                'scopes'     => [ 'payments' ],
-            ]
-        );
-        $accessToken = $sumup->getAccessToken();
-        $value       = $accessToken->getValue();
-
-        $checkoutService = $sumup->getCheckoutService();
+        $checkoutService = eme_sumup_client()->checkouts();
         // first check if checkout doesn't exist already
-        $checkoutResponse = $checkoutService->findByReferenceId( $payment['id'] );
-        $checkoutbody     = $checkoutResponse->getBody();
-        if ( ! empty( $checkoutbody ) && is_array( $checkoutbody ) && isset( $checkoutbody[0] ) ) {
-            $checkoutbody = $checkoutbody[0];
-        }
-        if ( empty( $checkoutbody ) ) {
-            $checkoutResponse = $checkoutService->create( $price, $cur, $payment['id'], $eme_sumup_merchant_code, $description, $notification_link, $return_link );
-            $checkoutbody     = $checkoutResponse->getBody();
-            if ( is_array( $checkoutbody ) ) {
-                $checkoutbody = $checkoutbody[0];
-            }
-        } elseif ( $checkoutbody->status == 'PAID' ) {
+        $params                    = new \SumUp\Services\CheckoutsListParams();
+        $params->checkoutReference = (string) $payment['id'];
+        $existing                  = $checkoutService->list( $params );
+        if ( ! empty( $existing ) ) {
+            $checkout = $existing[0];
+            if ( $checkout->status == 'PAID' ) {
                 return 'already paid';
+            }
+        } else {
+            $checkout = $checkoutService->create(
+                [
+                    'checkout_reference' => (string) $payment['id'],
+                    'amount'             => (float) $price,
+                    'currency'           => $cur,
+                    'merchant_code'      => $eme_sumup_merchant_code,
+                    'description'        => $description,
+                    'return_url'         => $notification_link,
+                    'redirect_url'       => $return_link,
+                ]
+            );
         }
-        $checkoutId = $checkoutbody->id;
-        //  pass the $chekoutId to the front-end to be processed
-    } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-        return 'SumUp Authentication error: ' . $e->getMessage();
-    } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-        return 'SumUp Response error: ' . $e->getMessage();
-    } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-        return 'SumUp SDK error: ' . $e->getMessage();
+        $checkoutId = $checkout->id;
+        //  pass the $checkoutId to the front-end to be processed
+    } catch ( \SumUp\Exception\ApiException $e ) {
+        return 'SumUp API error: ' . $e->getMessage();
+    } catch ( \Throwable $e ) {
+        return 'SumUp error: ' . $e->getMessage();
     }
 
     eme_update_payment_pg_pid( $payment['id'], $checkoutId );
@@ -1604,45 +1604,21 @@ function eme_complete_transaction_instamojo( $payment ) {
 }
 
 function eme_complete_transaction_sumup( $payment ) {
-    $gateway                 = 'sumup';
-    $eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
-    $eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
-    $eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
-    if ( empty( $eme_sumup_app_id ) ) {
+    $gateway = 'sumup';
+    if ( empty( get_option( 'eme_sumup_api_key' ) ) ) {
         return false;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/sumup/vendor/autoload.php';
+    $checkout_id = $payment['pg_pid'];
     try {
-        $sumup = new \SumUp\SumUp(
-            [
-                'app_id'     => $eme_sumup_app_id,
-                'app_secret' => $eme_sumup_app_secret,
-                'grant_type' => 'client_credentials',
-                'scopes'     => [ 'payments', 'transactions.history' ],
-                //'scopes'      => ['transactions.history']
-            ]
-        );
-        $accessToken = $sumup->getAccessToken();
-        $value       = $accessToken->getValue();
-    } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-        error_log( 'EME SumUp completion auth error: ' . $e->getMessage() );
-    } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-        error_log( 'EME SumUp completion response error: ' . $e->getMessage() );
-    } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-        error_log( 'EME SumUp completion SDK error: ' . $e->getMessage() );
+        $checkout = eme_sumup_client()->checkouts()->get( $checkout_id );
+    } catch ( \Throwable $e ) {
+        error_log( 'EME SumUp completion error: ' . $e->getMessage() );
+        return false;
     }
-
-    $checkout_id      = $payment['pg_pid'];
-    $checkoutService  = $sumup->getCheckoutService();
-    $checkoutResponse = $checkoutService->findById( $checkout_id );
-    $checkoutbody     = $checkoutResponse->getBody();
-    if ( ! empty( $checkoutbody ) && is_array( $checkoutbody ) && isset( $checkoutbody[0] ) ) {
-        $checkoutbody = $checkoutbody[0];
-    }
-    if ( $checkoutbody->status == 'PAID' ) {
+    if ( $checkout->status == 'PAID' ) {
             $expected_price = eme_get_payment_price( $payment['id'] );
-            $amount_paid = floatval( $checkoutbody->amount );
+            $amount_paid = floatval( $checkout->amount );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME sumup completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
             }
@@ -2075,49 +2051,39 @@ function eme_notification_fdgg() {
 
 function eme_notification_sumup() {
     $gateway  = 'sumup'; 
-    $eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
-    $eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
-    $eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
-    if ( empty( $eme_sumup_app_id ) ) {
+    if ( empty( get_option( 'eme_sumup_api_key' ) ) ) {
         return;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/sumup/vendor/autoload.php';
-    try {
-            $sumup       = new \SumUp\SumUp(
-                [
-                    'app_id'     => $eme_sumup_app_id,
-                    'app_secret' => $eme_sumup_app_secret,
-                    'grant_type' => 'client_credentials',
-                    'scopes'     => [ 'payments', 'transactions.history' ],
-                ]
-            );
-            $accessToken = $sumup->getAccessToken();
-            $value       = $accessToken->getValue();
-    } catch ( \SumUp\Exceptions\SumUpAuthenticationException $e ) {
-            error_log( 'EME SumUp notification auth error: ' . $e->getMessage() );
-    } catch ( \SumUp\Exceptions\SumUpResponseException $e ) {
-            error_log( 'EME SumUp notification response error: ' . $e->getMessage() );
-    } catch ( \SumUp\Exceptions\SumUpSDKException $e ) {
-            error_log( 'EME SumUp notification SDK error: ' . $e->getMessage() );
+    // SumUp posts {"event_type":"CHECKOUT_STATUS_CHANGED","id":"<checkout id>"} as JSON
+    $checkout_id = '';
+    if ( isset( $_POST['id'] ) ) {
+        $checkout_id = eme_sanitize_request( $_POST['id'] );
+    } else {
+        $body = json_decode( file_get_contents( 'php://input' ), true );
+        if ( is_array( $body ) && ! empty( $body['id'] ) && is_string( $body['id'] ) ) {
+            $checkout_id = eme_sanitize_request( $body['id'] );
+        }
     }
-
-    if ( ! isset( $_POST['id'] ) ) {
+    if ( empty( $checkout_id ) ) {
         status_header( 400 );
         exit;
     }
-    $checkout_id      = eme_sanitize_request( $_POST['id'] );
-    $checkoutService  = $sumup->getCheckoutService();
-    $checkoutResponse = $checkoutService->findById( $checkout_id );
-    $checkoutbody     = $checkoutResponse->getBody();
-    if ( ! empty( $checkoutbody ) && is_array( $checkoutbody ) && isset( $checkoutbody[0] ) ) {
-        $checkoutbody = $checkoutbody[0];
+
+    // we never trust the notification itself, we ask SumUp for the real status
+    try {
+        $checkout = eme_sumup_client()->checkouts()->get( $checkout_id );
+    } catch ( \Throwable $e ) {
+        error_log( 'EME SumUp notification error: ' . $e->getMessage() );
+        // non-2xx, so SumUp retries the notification
+        status_header( 500 );
+        exit;
     }
-    if ( $checkoutbody->status == 'PAID' ) {
+    if ( $checkout->status == 'PAID' ) {
         $payment = eme_get_payment_by_pg_pid( $checkout_id );
         if ( ! empty( $payment ) ) {
             $expected_price = eme_get_payment_price( $payment['id'] );
-            $amount_paid = floatval( $checkoutbody->amount );
+            $amount_paid = floatval( $checkout->amount );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME sumup notification price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
             }
@@ -3385,7 +3351,7 @@ function eme_get_configured_pgs() {
         if ( ! empty( get_option( 'eme_opayo_vendor_name' ) ) ) {
             $pgs[] = 'opayo';
         }
-        if ( ! empty( get_option( 'eme_sumup_app_id' ) ) ) {
+        if ( ! empty( get_option( 'eme_sumup_api_key' ) ) ) {
             $pgs[] = 'sumup';
         }
         if ( ! empty( get_option( 'eme_stripe_private_key' ) ) ) {

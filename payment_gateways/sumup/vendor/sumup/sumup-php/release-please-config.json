@@ -1,0 +1,72 @@
+{
+	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+	"release-type": "php",
+	"extra-files": [
+		"src/Version.php",
+		{
+			"type": "json",
+			"path": "composer.json",
+			"jsonpath": "$.version"
+		}
+	],
+	"include-v-in-tag": true,
+	"include-component-in-tag": false,
+	"versioning": "prerelease",
+	"draft": true,
+	"bump-minor-pre-major": true,
+	"bump-patch-for-minor-pre-major": true,
+	"pull-request-header": "Automated sumup-php SDK release",
+	"pull-request-title-pattern": "release: ${version}",
+	"extra-label": "release",
+	"changelog-sections": [
+		{
+			"type": "feat",
+			"section": "Features"
+		},
+		{
+			"type": "fix",
+			"section": "Bug Fixes"
+		},
+		{
+			"type": "perf",
+			"section": "Performance Improvements"
+		},
+		{
+			"type": "revert",
+			"section": "Reverts"
+		},
+		{
+			"type": "chore",
+			"section": "Chores"
+		},
+		{
+			"type": "docs",
+			"section": "Documentation"
+		},
+		{
+			"type": "style",
+			"section": "Styles"
+		},
+		{
+			"type": "refactor",
+			"section": "Refactors"
+		},
+		{
+			"type": "test",
+			"section": "Tests",
+			"hidden": true
+		},
+		{
+			"type": "build",
+			"section": "Build System & Dependencies"
+		},
+		{
+			"type": "ci",
+			"section": "Continuous Integration",
+			"hidden": true
+		}
+	],
+	"packages": {
+		".": {}
+	}
+}

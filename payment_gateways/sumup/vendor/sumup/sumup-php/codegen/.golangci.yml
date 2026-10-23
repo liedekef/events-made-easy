@@ -1,0 +1,25 @@
+version: "2"
+linters:
+  default: standard
+issues:
+  max-same-issues: 0
+  max-issues-per-linter: 0
+  uniq-by-line: true
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/sumup/sumup-py/codegen)
+        - dot
+    gofmt:
+      simplify: true
+    goimports:
+      local-prefixes:
+        - github.com/sumup/sumup-py/codegen
+  exclusions:
+    generated: lax

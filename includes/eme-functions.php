@@ -2514,17 +2514,23 @@ function eme_dyndata_rsvp_ajax() {
     wp_die();
 }
 
+# next is needed so WP doesn't strip rgb()-calls in style colors
+function eme_safe_css_allow_color_functions( $allow, $css_string ) {
+    if ( $allow ) {
+        return $allow;
+    }
+    // strip plain color functions, then re-apply core's forbidden-character check
+    $stripped = preg_replace( '/\b(?:rgba?|hsla?)\(\s*[0-9.,%\s\/-]+\)/i', '', $css_string );
+    return 0 === preg_match( '%[\\\\(&=}]|/\*%', $stripped );
+}
+
 function eme_safe_css_attributes( $array ) {
     $eme_allowed = get_option( 'eme_allowed_style_attr' );
     foreach ( preg_split( "/((\r?\n)|(\r\n?))/", $eme_allowed ) as $line ) {
-        $array[] = $line;
-    }
-    return $array;
-}
-function eme_safe_css_remove_attributes( $array ) {
-    $eme_allowed = get_option( 'eme_allowed_style_attr' );
-    foreach ( preg_split( "/((\r?\n)|(\r\n?))/", $eme_allowed ) as $line ) {
-        unset( $array[ $line ] );
+        $line = trim( $line );
+        if ( $line !== '' ) {
+            $array[] = $line;
+        }
     }
     return $array;
 }
@@ -2564,17 +2570,23 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
             $allowed_html[ $tag ][ $attr ] = true;
         }
     }
-    // always allow span, style and meta
-    $allowed_html[ 'span' ] = [];
-    $allowed_html[ 'meta' ] = [];
-    $allowed_html[ 'style' ] = [];
+    // always allow span+style, and meta
+    if ( ! isset( $allowed_html['span'] ) ) {
+        $allowed_html['span'] = [];
+    }
+    $allowed_html['span']['style'] = true;
+    if ( ! isset( $allowed_html['meta'] ) ) {
+        $allowed_html['meta'] = [];
+    }
 
     add_filter( 'safe_style_css', 'eme_safe_css_attributes' );
+    add_filter( 'safecss_filter_attr_allow_css', 'eme_safe_css_allow_color_functions', 10, 2 );
     // brute-force remove script tags, even if wp_kses wouldn't do it
     $res = preg_replace( '#<\s*script(.*?)>(.*?)<\s*/\s*script\s*>#is', '', wp_kses( wp_unslash( $value ), $allowed_html ) );
     # also strip out inline javascript (onalert etc)
     $res = preg_replace( '#\bon\w+\s*=\s*\S+(?=.*>)#', '', $res );
-    add_filter( 'safe_style_css', 'eme_safe_css_remove_attributes' );
+    remove_filter( 'safecss_filter_attr_allow_css', 'eme_safe_css_allow_color_functions', 10, 2 );
+    remove_filter( 'safe_style_css', 'eme_safe_css_attributes' );
     return $res;
 }
 

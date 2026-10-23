@@ -1,0 +1,5 @@
+{
+    "require": {
+        "cloudipsp/php-sdk-v2": "^1.0"
+    }
+}

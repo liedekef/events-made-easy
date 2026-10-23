@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.2.27  (2026/10/) =
 * Jodit update
+* Switched SumUp to the new PHP library. This requires PHP 8.2+ and also a reconfiguration of your SumUp payment settings in EME
 
 = 3.2.26  (2026/10/17) =
 * Extra headers were not shown due to strict type checking of event status, fixed

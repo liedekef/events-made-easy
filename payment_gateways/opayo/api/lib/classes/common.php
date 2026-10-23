@@ -128,8 +128,6 @@ class SagepayCommon
             return $output;
         }
 
-        curl_close($curlSession);
-      
         $requestForLog= SagepayUtil::arrayToQueryStringRemovingSensitiveData($data,self::$nonSensitiveRequestDataArray ) ; 
         $response = SagepayUtil::queryStringToArray($rawresponse, "\r\n");
         $responseForLog= SagepayUtil::queryStringToArrayRemovingSensitiveData($rawresponse, "\r\n", self::$nonSensitiveResponseDataArray );         

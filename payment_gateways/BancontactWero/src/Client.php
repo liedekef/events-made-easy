@@ -416,8 +416,6 @@ class Client {
         $http_code     = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
         $curl_error    = curl_error( $curl );
 
-        curl_close( $curl );
-
         // Start with a default response structure
         $default_response = (object) [
             'message' => '',
@@ -686,11 +684,8 @@ class Client {
 
         if ($response === false) {
             $error = curl_error($ch);
-            curl_close($ch);
             throw new \Exception("Failed to fetch URL: {$error}");
         }
-
-        curl_close($ch);
 
         // Check for HTTP errors (4xx, 5xx)
         if ($httpCode >= 400) {

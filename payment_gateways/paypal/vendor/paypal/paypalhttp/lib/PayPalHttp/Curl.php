@@ -31,7 +31,6 @@ class Curl
 
     public function close()
     {
-        curl_close($this->curl);
         return $this;
     }
 

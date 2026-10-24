@@ -284,9 +284,7 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
 // BEGIN NOT FOR WP
-if ( ! class_exists( '\EventsMadeEasy\EME_GitHub_Updater' ) ) {
-	require_once("includes/class-eme-updater.php");
-}
+require_once("includes/class-eme-updater.php");
 new \EventsMadeEasy\EME_GitHub_Updater(__FILE__, 'liedekef', 'events-made-easy');
 // END NOT FOR WP
 

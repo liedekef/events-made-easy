@@ -3910,7 +3910,7 @@ function eme_extra_event_headers( $event ) {
     if ( ! isset( $content['performer'] ) ) {
         $performer            = [];
         $performer['@type']   = 'Person';
-        $performer['name']    = '#_EVENTNAME';
+        $performer['name']    = '#_CONTACTNAME';
         $content['performer'] = $performer;
     }
     $organizer          = [];

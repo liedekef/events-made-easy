@@ -3783,7 +3783,7 @@ function eme_extra_event_headers( $event ) {
     $header = eme_replace_event_placeholders( $header, $event, 'text' );
     $header .= "\n";
     $content             = [];
-    $content['@context'] = 'http://www.schema.org';
+    $content['@context'] = 'https://schema.org';
     $content['@type']    = 'Event';
     $content['name']     = '#_EVENTNAME';
     $content['url']      = '#_EVENTPAGEURL';

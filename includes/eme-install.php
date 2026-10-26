@@ -412,47 +412,49 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		eme_db_insert_event( $event, 0, 0, 1 );
 
 	} else {
-		// eventual maybe_add_column() for later versions
-		maybe_add_column( $table_name, 'event_status', "ALTER TABLE $table_name ADD event_status mediumint(9) DEFAULT 1;" );
-		maybe_add_column( $table_name, 'event_start', "ALTER TABLE $table_name ADD event_start datetime;" );
-		maybe_add_column( $table_name, 'event_end', "ALTER TABLE $table_name ADD event_end datetime;" );
-		maybe_add_column( $table_name, 'event_rsvp', "ALTER TABLE $table_name ADD event_rsvp bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_tasks', "ALTER TABLE $table_name ADD event_tasks bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_todos', "ALTER TABLE $table_name ADD event_todos bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'price', "ALTER TABLE $table_name ADD price text;" );
-		maybe_add_column( $table_name, 'currency', "ALTER TABLE $table_name ADD currency text;" );
-		maybe_add_column( $table_name, 'event_seats', "ALTER TABLE $table_name ADD event_seats text;" );
-		maybe_add_column( $table_name, 'location_id', "ALTER TABLE $table_name ADD location_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'recurrence_id', "ALTER TABLE $table_name ADD recurrence_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_contactperson_id', "ALTER TABLE $table_name ADD event_contactperson_id bigint(20) unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_attributes', "ALTER TABLE $table_name ADD event_attributes text;" );
-		maybe_add_column( $table_name, 'event_properties', "ALTER TABLE $table_name ADD event_properties text;" );
-		maybe_add_column( $table_name, 'event_url', "ALTER TABLE $table_name ADD event_url text;" );
-		maybe_add_column( $table_name, 'event_prefix', "ALTER TABLE $table_name ADD event_prefix text;" );
-		maybe_add_column( $table_name, 'event_slug', "ALTER TABLE $table_name ADD event_slug text;" );
-		maybe_add_column( $table_name, 'event_category_ids', "ALTER TABLE $table_name ADD event_category_ids text;" );
-		maybe_add_column( $table_name, 'event_page_title_format', "ALTER TABLE $table_name ADD event_page_title_format text;" );
-		maybe_add_column( $table_name, 'event_single_event_format', "ALTER TABLE $table_name ADD event_single_event_format text;" );
-		maybe_add_column( $table_name, 'event_contactperson_email_body', "ALTER TABLE $table_name ADD event_contactperson_email_body text;" );
-		maybe_add_column( $table_name, 'event_respondent_email_body', "ALTER TABLE $table_name ADD event_respondent_email_body text;" );
-		maybe_add_column( $table_name, 'event_registration_pending_email_body', "ALTER TABLE $table_name ADD event_registration_pending_email_body text;" );
-		maybe_add_column( $table_name, 'event_registration_updated_email_body', "ALTER TABLE $table_name ADD event_registration_updated_email_body text;" );
-		maybe_add_column( $table_name, 'event_registration_cancelled_email_body', "ALTER TABLE $table_name ADD event_registration_cancelled_email_body text;" );
-		maybe_add_column( $table_name, 'event_registration_paid_email_body', "ALTER TABLE $table_name ADD event_registration_paid_email_body text;" );
-		maybe_add_column( $table_name, 'event_registration_recorded_ok_html', "ALTER TABLE $table_name ADD event_registration_recorded_ok_html text;" );
-		maybe_add_column( $table_name, 'registration_requires_approval', "ALTER TABLE $table_name ADD registration_requires_approval bool DEFAULT 0;" );
-		$registration_wp_users_only = get_option( 'eme_rsvp_registered_users_only' );
-		maybe_add_column( $table_name, 'registration_wp_users_only', "ALTER TABLE $table_name ADD registration_wp_users_only bool DEFAULT $registration_wp_users_only;" );
-		maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author bigint(20) unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime" );
-		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
-		eme_maybe_drop_column( $table_name, 'modif_date_gmt' );
-		maybe_add_column( $table_name, 'event_registration_form_format', "ALTER TABLE $table_name ADD event_registration_form_format text;" );
-		maybe_add_column( $table_name, 'event_cancel_form_format', "ALTER TABLE $table_name ADD event_cancel_form_format text;" );
-		maybe_add_column( $table_name, 'event_image_url', "ALTER TABLE $table_name ADD event_image_url text;" );
-		maybe_add_column( $table_name, 'event_image_id', "ALTER TABLE $table_name ADD event_image_id bigint(20) unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'event_external_ref', "ALTER TABLE $table_name ADD event_external_ref text;" );
+		if ( $db_version < 442 ) {
+            // eventual maybe_add_column() for later versions
+            maybe_add_column( $table_name, 'event_status', "ALTER TABLE $table_name ADD event_status mediumint(9) DEFAULT 1;" );
+            maybe_add_column( $table_name, 'event_start', "ALTER TABLE $table_name ADD event_start datetime;" );
+            maybe_add_column( $table_name, 'event_end', "ALTER TABLE $table_name ADD event_end datetime;" );
+            maybe_add_column( $table_name, 'event_rsvp', "ALTER TABLE $table_name ADD event_rsvp bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'event_tasks', "ALTER TABLE $table_name ADD event_tasks bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'event_todos', "ALTER TABLE $table_name ADD event_todos bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'price', "ALTER TABLE $table_name ADD price text;" );
+            maybe_add_column( $table_name, 'currency', "ALTER TABLE $table_name ADD currency text;" );
+            maybe_add_column( $table_name, 'event_seats', "ALTER TABLE $table_name ADD event_seats text;" );
+            maybe_add_column( $table_name, 'location_id', "ALTER TABLE $table_name ADD location_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'recurrence_id', "ALTER TABLE $table_name ADD recurrence_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'event_contactperson_id', "ALTER TABLE $table_name ADD event_contactperson_id bigint(20) unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'event_attributes', "ALTER TABLE $table_name ADD event_attributes text;" );
+            maybe_add_column( $table_name, 'event_properties', "ALTER TABLE $table_name ADD event_properties text;" );
+            maybe_add_column( $table_name, 'event_url', "ALTER TABLE $table_name ADD event_url text;" );
+            maybe_add_column( $table_name, 'event_prefix', "ALTER TABLE $table_name ADD event_prefix text;" );
+            maybe_add_column( $table_name, 'event_slug', "ALTER TABLE $table_name ADD event_slug text;" );
+            maybe_add_column( $table_name, 'event_category_ids', "ALTER TABLE $table_name ADD event_category_ids text;" );
+            maybe_add_column( $table_name, 'event_page_title_format', "ALTER TABLE $table_name ADD event_page_title_format text;" );
+            maybe_add_column( $table_name, 'event_single_event_format', "ALTER TABLE $table_name ADD event_single_event_format text;" );
+            maybe_add_column( $table_name, 'event_contactperson_email_body', "ALTER TABLE $table_name ADD event_contactperson_email_body text;" );
+            maybe_add_column( $table_name, 'event_respondent_email_body', "ALTER TABLE $table_name ADD event_respondent_email_body text;" );
+            maybe_add_column( $table_name, 'event_registration_pending_email_body', "ALTER TABLE $table_name ADD event_registration_pending_email_body text;" );
+            maybe_add_column( $table_name, 'event_registration_updated_email_body', "ALTER TABLE $table_name ADD event_registration_updated_email_body text;" );
+            maybe_add_column( $table_name, 'event_registration_cancelled_email_body', "ALTER TABLE $table_name ADD event_registration_cancelled_email_body text;" );
+            maybe_add_column( $table_name, 'event_registration_paid_email_body', "ALTER TABLE $table_name ADD event_registration_paid_email_body text;" );
+            maybe_add_column( $table_name, 'event_registration_recorded_ok_html', "ALTER TABLE $table_name ADD event_registration_recorded_ok_html text;" );
+            maybe_add_column( $table_name, 'registration_requires_approval', "ALTER TABLE $table_name ADD registration_requires_approval bool DEFAULT 0;" );
+            $registration_wp_users_only = get_option( 'eme_rsvp_registered_users_only' );
+            maybe_add_column( $table_name, 'registration_wp_users_only', "ALTER TABLE $table_name ADD registration_wp_users_only bool DEFAULT $registration_wp_users_only;" );
+            maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author bigint(20) unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime" );
+            eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
+            eme_maybe_drop_column( $table_name, 'modif_date_gmt' );
+            maybe_add_column( $table_name, 'event_registration_form_format', "ALTER TABLE $table_name ADD event_registration_form_format text;" );
+            maybe_add_column( $table_name, 'event_cancel_form_format', "ALTER TABLE $table_name ADD event_cancel_form_format text;" );
+            maybe_add_column( $table_name, 'event_image_url', "ALTER TABLE $table_name ADD event_image_url text;" );
+            maybe_add_column( $table_name, 'event_image_id', "ALTER TABLE $table_name ADD event_image_id bigint(20) unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'event_external_ref', "ALTER TABLE $table_name ADD event_external_ref text;" );
+		}
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_name text;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_notes longtext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -567,13 +569,15 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 	 	) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'event_duration', "ALTER TABLE $table_name ADD event_duration mediumint(9) DEFAULT 0;" );
-		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		maybe_add_column( $table_name, 'specific_months', "ALTER TABLE $table_name ADD specific_months varchar(256);" );
-		maybe_add_column( $table_name, 'exclude_days', "ALTER TABLE $table_name ADD exclude_days text;" );
-		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id int unsigned DEFAULT 0;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'event_duration', "ALTER TABLE $table_name ADD event_duration mediumint(9) DEFAULT 0;" );
+            eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            maybe_add_column( $table_name, 'specific_months', "ALTER TABLE $table_name ADD specific_months varchar(256);" );
+            maybe_add_column( $table_name, 'exclude_days', "ALTER TABLE $table_name ADD exclude_days text;" );
+            maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id int unsigned DEFAULT 0;" );
+        }
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -669,19 +673,21 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
              $wpdb->insert( $table_name, $location );
          }
 	} else {
-		maybe_add_column( $table_name, 'location_author', "ALTER TABLE $table_name ADD location_author bigint(20) unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'location_category_ids', "ALTER TABLE $table_name ADD location_category_ids text;" );
-		eme_maybe_drop_column( $table_name, 'location_creation_date_gmt' );
-		eme_maybe_drop_column( $table_name, 'location_creation_date' );
-		eme_maybe_drop_column( $table_name, 'location_modif_date' );
-		maybe_add_column( $table_name, 'location_url', "ALTER TABLE $table_name ADD location_url text;" );
-		maybe_add_column( $table_name, 'location_prefix', "ALTER TABLE $table_name ADD location_prefix text;" );
-		maybe_add_column( $table_name, 'location_slug', "ALTER TABLE $table_name ADD location_slug text;" );
-		maybe_add_column( $table_name, 'location_image_url', "ALTER TABLE $table_name ADD location_image_url text;" );
-		maybe_add_column( $table_name, 'location_image_id', "ALTER TABLE $table_name ADD location_image_id bigint(20) unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'location_attributes', "ALTER TABLE $table_name ADD location_attributes text;" );
-		maybe_add_column( $table_name, 'location_properties', "ALTER TABLE $table_name ADD location_properties text;" );
-		maybe_add_column( $table_name, 'location_external_ref', "ALTER TABLE $table_name ADD location_external_ref text;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'location_author', "ALTER TABLE $table_name ADD location_author bigint(20) unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'location_category_ids', "ALTER TABLE $table_name ADD location_category_ids text;" );
+            eme_maybe_drop_column( $table_name, 'location_creation_date_gmt' );
+            eme_maybe_drop_column( $table_name, 'location_creation_date' );
+            eme_maybe_drop_column( $table_name, 'location_modif_date' );
+            maybe_add_column( $table_name, 'location_url', "ALTER TABLE $table_name ADD location_url text;" );
+            maybe_add_column( $table_name, 'location_prefix', "ALTER TABLE $table_name ADD location_prefix text;" );
+            maybe_add_column( $table_name, 'location_slug', "ALTER TABLE $table_name ADD location_slug text;" );
+            maybe_add_column( $table_name, 'location_image_url', "ALTER TABLE $table_name ADD location_image_url text;" );
+            maybe_add_column( $table_name, 'location_image_id', "ALTER TABLE $table_name ADD location_image_id bigint(20) unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'location_attributes', "ALTER TABLE $table_name ADD location_attributes text;" );
+            maybe_add_column( $table_name, 'location_properties', "ALTER TABLE $table_name ADD location_properties text;" );
+            maybe_add_column( $table_name, 'location_external_ref', "ALTER TABLE $table_name ADD location_external_ref text;" );
+        }
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY location_name text NOT NULL ;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -750,41 +756,43 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'attend_count', "ALTER TABLE $table_name ADD attend_count INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'delayed_mailids', "ALTER TABLE $table_name ADD delayed_mailids varchar(50);" );
-		eme_maybe_drop_column( $table_name, 'pending_mailid' );
-		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'booking_comment', "ALTER TABLE $table_name ADD booking_comment text;" );
-		maybe_add_column( $table_name, 'waitinglist', "ALTER TABLE $table_name ADD waitinglist bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
-		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
-		eme_maybe_drop_column( $table_name, 'modif_date_gmt' );
-		maybe_add_column( $table_name, 'booking_seats_mp', "ALTER TABLE $table_name ADD booking_seats_mp varchar(250);" );
-		eme_maybe_drop_column( $table_name, 'ip' );
-		eme_maybe_drop_column( $table_name, 'wp_id' );
-		eme_maybe_drop_column( $table_name, 'lang' );
-		maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge tinytext;" );
-		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
-		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
-		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
-		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received tinytext;" );
-		maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining tinytext;" );
-		if ( eme_column_exists( $table_name, 'discountid' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		} else {
-			maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
-		}
-		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		} else {
-			maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
-		}
-		maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg tinytext;" );
-		maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'attend_count', "ALTER TABLE $table_name ADD attend_count INT(11) DEFAULT 0;" );
+            maybe_add_column( $table_name, 'delayed_mailids', "ALTER TABLE $table_name ADD delayed_mailids varchar(50);" );
+            eme_maybe_drop_column( $table_name, 'pending_mailid' );
+            maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
+            maybe_add_column( $table_name, 'booking_comment', "ALTER TABLE $table_name ADD booking_comment text;" );
+            maybe_add_column( $table_name, 'waitinglist', "ALTER TABLE $table_name ADD waitinglist bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
+            maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
+            eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
+            eme_maybe_drop_column( $table_name, 'modif_date_gmt' );
+            maybe_add_column( $table_name, 'booking_seats_mp', "ALTER TABLE $table_name ADD booking_seats_mp varchar(250);" );
+            eme_maybe_drop_column( $table_name, 'ip' );
+            eme_maybe_drop_column( $table_name, 'wp_id' );
+            eme_maybe_drop_column( $table_name, 'lang' );
+            maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge tinytext;" );
+            maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
+            maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
+            maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
+            maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
+            maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received tinytext;" );
+            maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining tinytext;" );
+            if ( eme_column_exists( $table_name, 'discountid' ) ) {
+                $wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            } else {
+                maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
+            }
+            if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
+                $wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            } else {
+                maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
+            }
+            maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg tinytext;" );
+            maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
+        }
 
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id mediumint(9) NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -900,32 +908,34 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
-		maybe_add_column( $table_name, 'gdpr', "ALTER TABLE $table_name ADD gdpr bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'gdpr_date', "ALTER TABLE $table_name ADD gdpr_date date;" );
-		maybe_add_column( $table_name, 'birthdate', "ALTER TABLE $table_name ADD birthdate date;" );
-		maybe_add_column( $table_name, 'birthplace', "ALTER TABLE $table_name ADD birthplace varchar(50) DEFAULT '';" );
-		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'state_code', "ALTER TABLE $table_name ADD state_code tinytext;" );
-		maybe_add_column( $table_name, 'country_code', "ALTER TABLE $table_name ADD country_code tinytext;" );
-		maybe_add_column( $table_name, 'wp_id', "ALTER TABLE $table_name ADD wp_id bigint(20) unsigned DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'firstname', "ALTER TABLE $table_name ADD firstname tinytext;" );
-		maybe_add_column( $table_name, 'address1', "ALTER TABLE $table_name ADD address1 tinytext;" );
-		maybe_add_column( $table_name, 'address2', "ALTER TABLE $table_name ADD address2 tinytext;" );
-		maybe_add_column( $table_name, 'city', "ALTER TABLE $table_name ADD city tinytext;" );
-		maybe_add_column( $table_name, 'state', "ALTER TABLE $table_name ADD state tinytext;" );
-		maybe_add_column( $table_name, 'zip', "ALTER TABLE $table_name ADD zip tinytext;" );
-		maybe_add_column( $table_name, 'country', "ALTER TABLE $table_name ADD country tinytext;" );
-		maybe_add_column( $table_name, 'lang', "ALTER TABLE $table_name ADD lang varchar(10) DEFAULT '';" );
-		// for existing installations, we set massmail and newsletter=1 if the col was missing, to reflect old behaviour
-		maybe_add_column( $table_name, 'massmail', "ALTER TABLE $table_name ADD massmail bool DEFAULT 1;" );
-		maybe_add_column( $table_name, 'newsletter', "ALTER TABLE $table_name ADD newsletter bool DEFAULT 1;" );
-		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
-		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'bd_email', "ALTER TABLE $table_name ADD bd_email bool DEFAULT 0;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
+            maybe_add_column( $table_name, 'gdpr', "ALTER TABLE $table_name ADD gdpr bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'gdpr_date', "ALTER TABLE $table_name ADD gdpr_date date;" );
+            maybe_add_column( $table_name, 'birthdate', "ALTER TABLE $table_name ADD birthdate date;" );
+            maybe_add_column( $table_name, 'birthplace', "ALTER TABLE $table_name ADD birthplace varchar(50) DEFAULT '';" );
+            maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
+            maybe_add_column( $table_name, 'state_code', "ALTER TABLE $table_name ADD state_code tinytext;" );
+            maybe_add_column( $table_name, 'country_code', "ALTER TABLE $table_name ADD country_code tinytext;" );
+            maybe_add_column( $table_name, 'wp_id', "ALTER TABLE $table_name ADD wp_id bigint(20) unsigned DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'firstname', "ALTER TABLE $table_name ADD firstname tinytext;" );
+            maybe_add_column( $table_name, 'address1', "ALTER TABLE $table_name ADD address1 tinytext;" );
+            maybe_add_column( $table_name, 'address2', "ALTER TABLE $table_name ADD address2 tinytext;" );
+            maybe_add_column( $table_name, 'city', "ALTER TABLE $table_name ADD city tinytext;" );
+            maybe_add_column( $table_name, 'state', "ALTER TABLE $table_name ADD state tinytext;" );
+            maybe_add_column( $table_name, 'zip', "ALTER TABLE $table_name ADD zip tinytext;" );
+            maybe_add_column( $table_name, 'country', "ALTER TABLE $table_name ADD country tinytext;" );
+            maybe_add_column( $table_name, 'lang', "ALTER TABLE $table_name ADD lang varchar(10) DEFAULT '';" );
+            // for existing installations, we set massmail and newsletter=1 if the col was missing, to reflect old behaviour
+            maybe_add_column( $table_name, 'massmail', "ALTER TABLE $table_name ADD massmail bool DEFAULT 1;" );
+            maybe_add_column( $table_name, 'newsletter', "ALTER TABLE $table_name ADD newsletter bool DEFAULT 1;" );
+            maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
+            maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
+            maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'bd_email', "ALTER TABLE $table_name ADD bd_email bool DEFAULT 0;" );
+        }
 		if ( $db_version < 10 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone tinytext;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -970,10 +980,12 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $grouptable_name, $sql );
 	} else {
-		maybe_add_column( $grouptable_name, 'type', "ALTER TABLE $grouptable_name ADD type tinytext;" );
-		maybe_add_column( $grouptable_name, 'email', "ALTER TABLE $grouptable_name ADD email tinytext;" );
-		maybe_add_column( $grouptable_name, 'stored_sql', "ALTER TABLE $grouptable_name ADD stored_sql text;" );
-		maybe_add_column( $grouptable_name, 'search_terms', "ALTER TABLE $grouptable_name ADD search_terms text;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $grouptable_name, 'type', "ALTER TABLE $grouptable_name ADD type tinytext;" );
+            maybe_add_column( $grouptable_name, 'email', "ALTER TABLE $grouptable_name ADD email tinytext;" );
+            maybe_add_column( $grouptable_name, 'stored_sql', "ALTER TABLE $grouptable_name ADD stored_sql text;" );
+            maybe_add_column( $grouptable_name, 'search_terms', "ALTER TABLE $grouptable_name ADD search_terms text;" );
+		}
 		if ( $db_version < 175 ) {
             $wpdb->update( $grouptable_name, [ 'type' => 'static' ]); // no WHERE on purpose, bulk update wanted
 		}
@@ -1014,11 +1026,13 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'category_prefix', "ALTER TABLE $table_name ADD category_prefix text;" );
-		maybe_add_column( $table_name, 'category_slug', "ALTER TABLE $table_name ADD category_slug text;" );
-		maybe_add_column( $table_name, 'description', "ALTER TABLE $table_name ADD description text;" );
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'category_prefix', "ALTER TABLE $table_name ADD category_prefix text;" );
+            maybe_add_column( $table_name, 'category_slug', "ALTER TABLE $table_name ADD category_slug text;" );
+            maybe_add_column( $table_name, 'description', "ALTER TABLE $table_name ADD description text;" );
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version < 66 ) {
 			$categories = $wpdb->get_results( "SELECT * FROM $table_name", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			foreach ( $categories as $this_category ) {
@@ -1048,8 +1062,10 @@ function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+        if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1073,10 +1089,12 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type tinytext;" );
-		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		eme_maybe_drop_column( $table_name, 'creation_date' );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type tinytext;" );
+            maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+        }
 		if ( $db_version < 41 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY format text NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1125,19 +1143,21 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
-		maybe_add_column( $table_name, 'field_tags', "ALTER TABLE $table_name ADD field_tags text;" );
-		maybe_add_column( $table_name, 'admin_values', "ALTER TABLE $table_name ADD admin_values text;" );
-		maybe_add_column( $table_name, 'admin_tags', "ALTER TABLE $table_name ADD admin_tags text;" );
-		maybe_add_column( $table_name, 'field_attributes', "ALTER TABLE $table_name ADD field_attributes tinytext;" );
-		maybe_add_column( $table_name, 'admin_attributes', "ALTER TABLE $table_name ADD admin_attributes tinytext;" );
-		maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'field_condition', "ALTER TABLE $table_name ADD field_condition tinytext;" );
-		maybe_add_column( $table_name, 'field_required', "ALTER TABLE $table_name ADD field_required bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'export', "ALTER TABLE $table_name ADD export bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'searchable', "ALTER TABLE $table_name ADD searchable bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'field_purpose', "ALTER TABLE $table_name ADD field_purpose tinytext;" );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+            maybe_add_column( $table_name, 'field_tags', "ALTER TABLE $table_name ADD field_tags text;" );
+            maybe_add_column( $table_name, 'admin_values', "ALTER TABLE $table_name ADD admin_values text;" );
+            maybe_add_column( $table_name, 'admin_tags', "ALTER TABLE $table_name ADD admin_tags text;" );
+            maybe_add_column( $table_name, 'field_attributes', "ALTER TABLE $table_name ADD field_attributes tinytext;" );
+            maybe_add_column( $table_name, 'admin_attributes', "ALTER TABLE $table_name ADD admin_attributes tinytext;" );
+            maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'field_condition', "ALTER TABLE $table_name ADD field_condition tinytext;" );
+            maybe_add_column( $table_name, 'field_required', "ALTER TABLE $table_name ADD field_required bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'export', "ALTER TABLE $table_name ADD export bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'searchable', "ALTER TABLE $table_name ADD searchable bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'field_purpose', "ALTER TABLE $table_name ADD field_purpose tinytext;" );
+        }
 		if ( $db_version < 104 ) {
 			eme_maybe_drop_column( $table_name, 'field_pattern' );
 		}
@@ -1199,8 +1219,10 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version == 23 ) {
 			$wpdb->query( 'ALTER TABLE ' . $table_name . ' DROP PRIMARY KEY' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name is a safe variable
 		}
@@ -1293,14 +1315,16 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'modif_date' );
-		maybe_add_column( $table_name, 'pg_handled', "ALTER TABLE $table_name ADD pg_handled BOOL DEFAULT 0;" );
-		maybe_add_column( $table_name, 'target', "ALTER TABLE $table_name ADD target varchar(50);" );
-		maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
-		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
-		maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
-		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
-		eme_maybe_drop_column( $table_name, 'attend_count' );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+            maybe_add_column( $table_name, 'pg_handled', "ALTER TABLE $table_name ADD pg_handled BOOL DEFAULT 0;" );
+            maybe_add_column( $table_name, 'target', "ALTER TABLE $table_name ADD target varchar(50);" );
+            maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
+            maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+            maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id MEDIUMINT(9) DEFAULT 0;" );
+            eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
+            eme_maybe_drop_column( $table_name, 'attend_count' );
+        }
 		if ( $db_version < 80 ) {
 			$payment_ids = $wpdb->get_col( "SELECT id FROM $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			foreach ( $payment_ids as $payment_id ) {
@@ -1364,13 +1388,15 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'valid_from', "ALTER TABLE $table_name ADD valid_from datetime DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'valid_to', "ALTER TABLE $table_name ADD valid_to datetime DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'strcase', "ALTER TABLE $table_name ADD strcase bool DEFAULT 1;" );
-		maybe_add_column( $table_name, 'use_per_seat', "ALTER TABLE $table_name ADD use_per_seat bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'valid_from', "ALTER TABLE $table_name ADD valid_from datetime DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'valid_to', "ALTER TABLE $table_name ADD valid_to datetime DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'strcase', "ALTER TABLE $table_name ADD strcase bool DEFAULT 1;" );
+            maybe_add_column( $table_name, 'use_per_seat', "ALTER TABLE $table_name ADD use_per_seat bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version < 254 ) {
 			if ( eme_column_exists( $table_name, 'expire' ) ) {
 				$wpdb->query( "UPDATE $table_name SET valid_to=CONCAT(expire,' 23:59:00') WHERE expire IS NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -1401,9 +1427,11 @@ function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_p
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
-		maybe_add_column( $table_name, 'description', "ALTER TABLE $table_name ADD description tinytext;" );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+            maybe_add_column( $table_name, 'description', "ALTER TABLE $table_name ADD description tinytext;" );
+        }
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1445,18 +1473,20 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'mailing_id', "ALTER TABLE $table_name ADD mailing_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'person_id', "ALTER TABLE $table_name ADD person_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'member_id', "ALTER TABLE $table_name ADD member_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
-		maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
-		maybe_add_column( $table_name, 'error_msg', "ALTER TABLE $table_name ADD error_msg tinytext;" );
-		maybe_add_column( $table_name, 'attachments', "ALTER TABLE $table_name ADD attachments text;" );
-		maybe_add_column( $table_name, 'add_listhdrs', "ALTER TABLE $table_name ADD add_listhdrs bool DEFAULT 0;" );
-		eme_maybe_drop_column( $table_name, 'unsub_headers' );
-		maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
-		maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
-		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'mailing_id', "ALTER TABLE $table_name ADD mailing_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'person_id', "ALTER TABLE $table_name ADD person_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'member_id', "ALTER TABLE $table_name ADD member_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'random_id', "ALTER TABLE $table_name ADD random_id varchar(50);" );
+            maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
+            maybe_add_column( $table_name, 'error_msg', "ALTER TABLE $table_name ADD error_msg tinytext;" );
+            maybe_add_column( $table_name, 'attachments', "ALTER TABLE $table_name ADD attachments text;" );
+            maybe_add_column( $table_name, 'add_listhdrs', "ALTER TABLE $table_name ADD add_listhdrs bool DEFAULT 0;" );
+            eme_maybe_drop_column( $table_name, 'unsub_headers' );
+            maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
+            maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
+            maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
+        }
 		if ( $db_version < 140 ) {
 			$wpdb->query( "ALTER TABLE $table_name DROP KEY is_sent;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 			$wpdb->query( "ALTER TABLE $table_name CHANGE is_sent state tinyint DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -1517,27 +1547,29 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinytext;" );
-		maybe_add_column( $table_name, 'stats', "ALTER TABLE $table_name ADD stats varchar(255) DEFAULT '';" );
-		maybe_add_column( $table_name, 'replytoname', "ALTER TABLE $table_name ADD replytoname tinytext;" );
-		maybe_add_column( $table_name, 'replytoemail', "ALTER TABLE $table_name ADD replytoemail tinytext;" );
-		maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
-		maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
-		maybe_add_column( $table_name, 'mail_text_html', "ALTER TABLE $table_name ADD mail_text_html tinytext;" );
-		maybe_add_column( $table_name, 'subject', "ALTER TABLE $table_name ADD subject tinytext;" );
-		maybe_add_column( $table_name, 'body', "ALTER TABLE $table_name ADD body text;" );
-		maybe_add_column( $table_name, 'conditions', "ALTER TABLE $table_name ADD conditions text ;" );
-		maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
-		maybe_add_column( $table_name, 'total_read_count', "ALTER TABLE $table_name ADD total_read_count int DEFAULT 0;" );
-		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'recurrence_freq', "ALTER TABLE $table_name ADD recurrence_freq varchar(20) DEFAULT '';" );
-		maybe_add_column( $table_name, 'recurrence_interval', "ALTER TABLE $table_name ADD recurrence_interval tinyint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'recurrence_byday', "ALTER TABLE $table_name ADD recurrence_byday tinytext;" );
-		maybe_add_column( $table_name, 'recurrence_byweekno', "ALTER TABLE $table_name ADD recurrence_byweekno tinyint DEFAULT 0;" );
-		maybe_add_column( $table_name, 'recurrence_months', "ALTER TABLE $table_name ADD recurrence_months varchar(50) DEFAULT '';" );
-		maybe_add_column( $table_name, 'recurrence_start_date', "ALTER TABLE $table_name ADD recurrence_start_date date DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'recurrence_end_date', "ALTER TABLE $table_name ADD recurrence_end_date date DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'recurrence_specific_days', "ALTER TABLE $table_name ADD recurrence_specific_days text;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinytext;" );
+            maybe_add_column( $table_name, 'stats', "ALTER TABLE $table_name ADD stats varchar(255) DEFAULT '';" );
+            maybe_add_column( $table_name, 'replytoname', "ALTER TABLE $table_name ADD replytoname tinytext;" );
+            maybe_add_column( $table_name, 'replytoemail', "ALTER TABLE $table_name ADD replytoemail tinytext;" );
+            maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
+            maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
+            maybe_add_column( $table_name, 'mail_text_html', "ALTER TABLE $table_name ADD mail_text_html tinytext;" );
+            maybe_add_column( $table_name, 'subject', "ALTER TABLE $table_name ADD subject tinytext;" );
+            maybe_add_column( $table_name, 'body', "ALTER TABLE $table_name ADD body text;" );
+            maybe_add_column( $table_name, 'conditions', "ALTER TABLE $table_name ADD conditions text ;" );
+            maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
+            maybe_add_column( $table_name, 'total_read_count', "ALTER TABLE $table_name ADD total_read_count int DEFAULT 0;" );
+            maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'recurrence_freq', "ALTER TABLE $table_name ADD recurrence_freq varchar(20) DEFAULT '';" );
+            maybe_add_column( $table_name, 'recurrence_interval', "ALTER TABLE $table_name ADD recurrence_interval tinyint DEFAULT 1;" );
+            maybe_add_column( $table_name, 'recurrence_byday', "ALTER TABLE $table_name ADD recurrence_byday tinytext;" );
+            maybe_add_column( $table_name, 'recurrence_byweekno', "ALTER TABLE $table_name ADD recurrence_byweekno tinyint DEFAULT 0;" );
+            maybe_add_column( $table_name, 'recurrence_months', "ALTER TABLE $table_name ADD recurrence_months varchar(50) DEFAULT '';" );
+            maybe_add_column( $table_name, 'recurrence_start_date', "ALTER TABLE $table_name ADD recurrence_start_date date DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'recurrence_end_date', "ALTER TABLE $table_name ADD recurrence_end_date date DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'recurrence_specific_days', "ALTER TABLE $table_name ADD recurrence_specific_days text;" );
+        }
 		if ( $db_version < 176 ) {
             $wpdb->update( $table_name, [ 'status' => 'cancelled' ], [ 'cancelled' => 1 ], [ '%s' ], [ '%d' ]);
 			eme_maybe_drop_column( $table_name, 'cancelled' );
@@ -1617,32 +1649,34 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'related_member_id', "ALTER TABLE $table_name ADD related_member_id int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'renewal_count', "ALTER TABLE $table_name ADD renewal_count INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id int unsigned DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
-		maybe_add_column( $table_name, 'reminder_date', "ALTER TABLE $table_name ADD reminder_date datetime DEFAULT '0000-00-00 00:00:00';" );
-		maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT '0000-00-00 00:00:00';" );
-		maybe_add_column( $table_name, 'previous_start', "ALTER TABLE $table_name ADD previous_start date DEFAULT '0000-00-00';" );
-		maybe_add_column( $table_name, 'previous_end', "ALTER TABLE $table_name ADD previous_end date DEFAULT '0000-00-00';" );
-		maybe_add_column( $table_name, 'paid', "ALTER TABLE $table_name ADD paid bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg tinytext;" );
-		maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
-		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
-		eme_maybe_drop_column( $table_name, 'discountid' );
-		maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
-		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
-		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
-		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
-		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
-		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
-		} else {
-			maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
-		}
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
+            maybe_add_column( $table_name, 'related_member_id', "ALTER TABLE $table_name ADD related_member_id int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'renewal_count', "ALTER TABLE $table_name ADD renewal_count INT(11) DEFAULT 0;" );
+            maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id int unsigned DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
+            maybe_add_column( $table_name, 'reminder_date', "ALTER TABLE $table_name ADD reminder_date datetime DEFAULT '0000-00-00 00:00:00';" );
+            maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT '0000-00-00 00:00:00';" );
+            maybe_add_column( $table_name, 'previous_start', "ALTER TABLE $table_name ADD previous_start date DEFAULT '0000-00-00';" );
+            maybe_add_column( $table_name, 'previous_end', "ALTER TABLE $table_name ADD previous_end date DEFAULT '0000-00-00';" );
+            maybe_add_column( $table_name, 'paid', "ALTER TABLE $table_name ADD paid bool DEFAULT 0;" );
+            maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
+            maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg tinytext;" );
+            maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
+            maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
+            eme_maybe_drop_column( $table_name, 'discountid' );
+            maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
+            maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid int unsigned DEFAULT 0;" );
+            maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
+            maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
+            maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
+            if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
+                $wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+            } else {
+                maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
+            }
+        }
 
 		if ( $db_version < 153 ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE state status tinyint DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
@@ -1690,9 +1724,11 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
-		eme_maybe_drop_column( $table_name, 'creation_date' );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
+            maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+        }
 		if ( $db_version < 386 ) {
 			$modif_date = current_time( 'mysql', false );
             $wpdb->query( $wpdb->prepare("UPDATE $table_name SET modif_date = %s", $modif_date ) );
@@ -1741,8 +1777,10 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version < 246 ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE num_3 num_3 char(3) DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1769,8 +1807,10 @@ function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		if ( $db_version < 442 ) {
+            eme_maybe_drop_column( $table_name, 'creation_date' );
+            eme_maybe_drop_column( $table_name, 'modif_date' );
+        }
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY id int unsigned NOT NULL AUTO_INCREMENT, MODIFY country_id int unsigned DEFAULT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1799,9 +1839,11 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          ) $charset $collate;";
          maybe_create_table( $table_name, $sql );
 	} else {
-        maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id int unsigned NOT NULL;" );
-        maybe_add_column( $table_name, 'task_seq', "ALTER TABLE $table_name ADD task_seq smallint DEFAULT 1;" );
-        maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'event_id', "ALTER TABLE $table_name ADD event_id int unsigned NOT NULL;" );
+            maybe_add_column( $table_name, 'task_seq', "ALTER TABLE $table_name ADD task_seq smallint DEFAULT 1;" );
+            maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
+        }
 		if ( $db_version < 439 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY task_id int unsigned NOT NULL AUTO_INCREMENT, MODIFY event_id int unsigned NOT NULL;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
@@ -1824,8 +1866,10 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		maybe_add_column( $table_name, 'comment', "ALTER TABLE $table_name ADD comment text;" );
-		maybe_add_column( $table_name, 'signup_date', "ALTER TABLE $table_name ADD signup_date datetime;" );
+		if ( $db_version < 442 ) {
+            maybe_add_column( $table_name, 'comment', "ALTER TABLE $table_name ADD comment text;" );
+            maybe_add_column( $table_name, 'signup_date', "ALTER TABLE $table_name ADD signup_date datetime;" );
+        }
 		if ( $db_version < 367 ) {
 			$wpdb->query( "ALTER TABLE $table_name ADD signup_status BOOL DEFAULT 1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}

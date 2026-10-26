@@ -185,7 +185,9 @@ function eme_holidays_recurrences_html( $holidays_id ) {
 	$title = '<h2>' . esc_html__( 'Recurrences using this list of holidays', 'events-made-easy' ) . '</h2>';
 	if ( empty( $html ) ) {
 		return $title . '<p>' . esc_html__( 'None', 'events-made-easy' ) . '</p>';
-	}
+    } else {
+		$title .= '<p>' . esc_html__( 'These recurrences might get changed: events happening on a day matching the holidays will get cancelled together with their bookings (with an optional cancel mail to the booker).', 'events-made-easy' ) . '</p>';
+    }
 	return $title . '<ul>' . $html . '</ul>';
 }
 

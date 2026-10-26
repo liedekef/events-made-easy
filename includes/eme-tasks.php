@@ -458,14 +458,17 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
     $table        = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $tasks_table  = EME_DB_PREFIX . EME_TASKS_TBNAME;
 
-    $events_join = "LEFT JOIN $events_table ON $table.event_id=$events_table.event_id";
+    $join  = "LEFT JOIN $people_table ON $table.person_id=$people_table.person_id";
+    $join .= " LEFT JOIN $events_table ON $table.event_id=$events_table.event_id";
+    $join .= " LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id";
     $order_arr   = [];
     if ( empty( $event_id ) ) {
         $order_arr[] = "$events_table.event_start ASC, $events_table.event_name ASC";
     }
     if ( empty( $task_id ) ) {
-        $order_arr[] = "$table.task_start ASC, $table.task_end ASC, $table.task_seq ASC";
+        $order_arr[] = "$tasks_table.task_start ASC, $tasks_table.task_end ASC, $tasks_table.task_seq ASC";
     }
     if ( ! empty( $order_arr ) ) {
         $order_by = 'ORDER BY ' . join( ', ', $order_arr );
@@ -493,7 +496,7 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
     }
     $where = 'WHERE ' . implode( ' AND ', $where_arr );
 
-    $sql = "SELECT $table.* FROM $table LEFT JOIN $people_table ON $table.person_id=$people_table.person_id $events_join $where $order_by"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $sql = "SELECT $table.* FROM $table $join $where $order_by"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

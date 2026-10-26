@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.1  (2026//) =
+* Fix a sql-bug preventing eme_mytasks to work
+
 = 3.3.0  (2026/10/25) =
 * Jodit update
 * Switched SumUp to the new PHP library. This requires PHP 8.2+ and also a reconfiguration of your SumUp payment settings in EME

@@ -193,7 +193,7 @@ msgstr "Převést rezervaci na akci"
 msgid "The following settings are only used if wordpress has permalinks set to anything but \"Plain\"."
 msgstr "Následující nastavení se použije pouze v případě, že je v systému WordPress nastaveno jiné nastavení trvalých odkazů než „Plain“."
 
-#: includes/eme-locations.php:3380
+#: includes/eme-locations.php:3356
 msgid "Locations deleted"
 msgstr "Odstraněná místa"
 
@@ -632,7 +632,7 @@ msgstr "Volitelné: vyberte libovolnou akci (akce), jejíž účastníky je tře
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Vyloučte také e-maily osob, které se již na tyto další akce zaregistrovaly."
 
-#: includes/eme-locations.php:2951
+#: includes/eme-locations.php:2947
 msgid "e.g. 123 Main St, City"
 msgstr "např. Hlavní ulice 123, Město"
 
@@ -759,7 +759,7 @@ msgstr "Výskyt byl smazán a zbývající výskyty přečíslovány."
 msgid "Invalid parameters"
 msgstr "Neplatné parametry"
 
-#: includes/eme-locations.php:3584
+#: includes/eme-locations.php:3560
 #: includes/eme-members.php:7341
 msgid "No permission"
 msgstr "Bez oprávnění"
@@ -1903,8 +1903,8 @@ msgid "If setting the max capacity to something else than 0, then - for all even
 msgstr "Pokud nastavíte maximální kapacitu na jinou hodnotu než 0, bude pro všechny události probíhající ve stejném čase v tomto umístění provedena kontrola, zda umístění stále umožňuje přítomnost dalších lidí."
 
 #: includes/eme-locations.php:700
-#: includes/eme-locations.php:3312
-#: includes/eme-locations.php:3313
+#: includes/eme-locations.php:3288
+#: includes/eme-locations.php:3289
 msgid "Max capacity"
 msgstr "Maximální kapacita"
 
@@ -5002,7 +5002,7 @@ msgstr "Bez příjmení"
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
 #: includes/eme-holidays.php:426
-#: includes/eme-locations.php:3290
+#: includes/eme-locations.php:3266
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
 #: includes/eme-templates.php:464
@@ -8224,7 +8224,7 @@ msgstr "Výchozí ikona mapy umístění"
 msgid "Template name"
 msgstr "Název šablony"
 
-#: includes/eme-locations.php:3328
+#: includes/eme-locations.php:3304
 msgid "View location"
 msgstr "Zobrazit umístění"
 
@@ -10964,7 +10964,7 @@ msgid "Localize price"
 msgstr "Lokalizovat cenu"
 
 #: includes/eme-events.php:10305
-#: includes/eme-locations.php:3296
+#: includes/eme-locations.php:3272
 #: includes/eme-recurrence.php:805
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Souřadnice mapy umístění jsou prázdné! Upravte prosím umístění a opravte to, jinak se na vašem webu nezobrazí správně."
@@ -11631,7 +11631,7 @@ msgstr "Aktualizace se nezdařila: "
 #: includes/eme-functions.php:3599
 #: includes/eme-holidays.php:408
 #: includes/eme-holidays.php:447
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:3177
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -13904,17 +13904,17 @@ msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) se zúčastní #_EVENTNAME dne #_STARTD
 msgid "New booking for '#_EVENTNAME'"
 msgstr "Nová rezervace pro „#_EVENTNAME“"
 
-#: includes/eme-locations.php:2955
+#: includes/eme-locations.php:2951
 msgid "Get Directions"
 msgstr "Ukázat cestu"
 
-#: includes/eme-locations.php:2950
+#: includes/eme-locations.php:2946
 msgid "Your Street Address"
 msgstr "Ulice"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9780
-#: includes/eme-locations.php:2542
+#: includes/eme-locations.php:2538
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6251
 msgid "Edit"
@@ -13928,7 +13928,7 @@ msgstr "Adresa umístění"
 msgid "The location name"
 msgstr "Jméno umístění"
 
-#: includes/eme-locations.php:3330
+#: includes/eme-locations.php:3306
 msgid "Duplicate this location"
 msgstr "Duplikovat toto umístění"
 
@@ -13989,7 +13989,7 @@ msgid "Location name"
 msgstr "Název umístění"
 
 #: includes/eme-events.php:10303
-#: includes/eme-locations.php:3294
+#: includes/eme-locations.php:3270
 #: includes/eme-recurrence.php:803
 msgid "Edit location"
 msgstr "Upravit umístění"
@@ -14962,7 +14962,7 @@ msgstr "Info přihlášky: "
 #: includes/eme-events.php:9893
 #: includes/eme-events.php:10184
 #: includes/eme-locations.php:506
-#: includes/eme-locations.php:3300
+#: includes/eme-locations.php:3276
 #: includes/eme-recurrence.php:785
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -15097,45 +15097,45 @@ msgstr "Předchozí stránka"
 
 #: includes/eme-events.php:4357
 #: includes/eme-events.php:4366
-#: includes/eme-locations.php:1841
-#: includes/eme-locations.php:1850
+#: includes/eme-locations.php:1854
+#: includes/eme-locations.php:1863
 msgid "Next day"
 msgstr "Další den"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1840
-#: includes/eme-locations.php:1849
+#: includes/eme-locations.php:1853
+#: includes/eme-locations.php:1862
 msgid "Previous day"
 msgstr "Předchozí den"
 
 #: includes/eme-events.php:4349
-#: includes/eme-locations.php:1833
+#: includes/eme-locations.php:1846
 msgid "Next year"
 msgstr "Další rok"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1832
+#: includes/eme-locations.php:1845
 msgid "Previous year"
 msgstr "Předchozí rok"
 
 #: includes/eme-events.php:4339
-#: includes/eme-locations.php:1859
+#: includes/eme-locations.php:1872
 msgid "Next month"
 msgstr "Další měsíc"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1858
+#: includes/eme-locations.php:1871
 msgid "Previous month"
 msgstr "Předchozí měsíc"
 
 #: includes/eme-events.php:4328
-#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1836
 msgid "Next week"
 msgstr "Další týden"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1822
+#: includes/eme-locations.php:1835
 msgid "Previous week"
 msgstr "Předchozí týden"
 
@@ -15422,7 +15422,7 @@ msgstr "Přidat atribut"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15463,7 +15463,7 @@ msgstr "Ne"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452

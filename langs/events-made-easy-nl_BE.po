@@ -209,7 +209,7 @@ msgstr "Boeking overzetten naar evenement"
 msgid "The following settings are only used if wordpress has permalinks set to anything but \"Plain\"."
 msgstr "De volgende instellingen worden alleen gebruikt als WordPress permalinks heeft ingesteld op iets anders dan \"Standaard\"."
 
-#: includes/eme-locations.php:3380
+#: includes/eme-locations.php:3356
 msgid "Locations deleted"
 msgstr "Locaties verwijderd"
 
@@ -648,7 +648,7 @@ msgstr "Optioneel: kies elk evenement waarvan de geregistreerden overgeslagen mo
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Sluit ook e-mails uit van personen die al geregistreerd zijn voor deze andere evenement(en)"
 
-#: includes/eme-locations.php:2951
+#: includes/eme-locations.php:2947
 msgid "e.g. 123 Main St, City"
 msgstr "bijv. Hoofdstraat 123, Stad"
 
@@ -775,7 +775,7 @@ msgstr "Occurrence verwijderd en resterende occurrences opnieuw genummerd."
 msgid "Invalid parameters"
 msgstr "Ongeldige parameters"
 
-#: includes/eme-locations.php:3584
+#: includes/eme-locations.php:3560
 #: includes/eme-members.php:7341
 msgid "No permission"
 msgstr "Geen toestemming"
@@ -1918,8 +1918,8 @@ msgid "If setting the max capacity to something else than 0, then - for all even
 msgstr "Als je de max capaciteit op iets anders dan 0 zet, dan wordt - voor alle evenementen die tegelijkertijd op deze locatie plaatsvinden - gekeken of de locatie nog extra mensen toelaat."
 
 #: includes/eme-locations.php:700
-#: includes/eme-locations.php:3312
-#: includes/eme-locations.php:3313
+#: includes/eme-locations.php:3288
+#: includes/eme-locations.php:3289
 msgid "Max capacity"
 msgstr "Max capaciteit"
 
@@ -5008,7 +5008,7 @@ msgstr "Geen familienaam"
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
 #: includes/eme-holidays.php:426
-#: includes/eme-locations.php:3290
+#: includes/eme-locations.php:3266
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
 #: includes/eme-templates.php:464
@@ -8228,7 +8228,7 @@ msgstr "Standaard locatie kaart pictogram"
 msgid "Template name"
 msgstr "Template naam"
 
-#: includes/eme-locations.php:3328
+#: includes/eme-locations.php:3304
 msgid "View location"
 msgstr "Bekijk locatie"
 
@@ -10968,7 +10968,7 @@ msgid "Localize price"
 msgstr "Localize price"
 
 #: includes/eme-events.php:10305
-#: includes/eme-locations.php:3296
+#: includes/eme-locations.php:3272
 #: includes/eme-recurrence.php:805
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Geen geo-coördinaten aanwezig! Corrigeer dit voor deze locatie, anders is de data op je site incorrect."
@@ -11635,7 +11635,7 @@ msgstr "Aanpassen mislukt: "
 #: includes/eme-functions.php:3599
 #: includes/eme-holidays.php:408
 #: includes/eme-holidays.php:447
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:3177
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -13908,17 +13908,17 @@ msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) komt naar #_EVENTNAME op #_STARTDATE. H
 msgid "New booking for '#_EVENTNAME'"
 msgstr "Nieuwe reservering voor '#_EVENTNAME'"
 
-#: includes/eme-locations.php:2955
+#: includes/eme-locations.php:2951
 msgid "Get Directions"
 msgstr "Geef route-aanwijzingen"
 
-#: includes/eme-locations.php:2950
+#: includes/eme-locations.php:2946
 msgid "Your Street Address"
 msgstr "Je adres (straat)"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9780
-#: includes/eme-locations.php:2542
+#: includes/eme-locations.php:2538
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6251
 msgid "Edit"
@@ -13932,7 +13932,7 @@ msgstr "Locatie adres"
 msgid "The location name"
 msgstr "Locatie naam"
 
-#: includes/eme-locations.php:3330
+#: includes/eme-locations.php:3306
 msgid "Duplicate this location"
 msgstr "Dupliceer deze locatie"
 
@@ -13993,7 +13993,7 @@ msgid "Location name"
 msgstr "Locatie naam"
 
 #: includes/eme-events.php:10303
-#: includes/eme-locations.php:3294
+#: includes/eme-locations.php:3270
 #: includes/eme-recurrence.php:803
 msgid "Edit location"
 msgstr "Locatie bewerken"
@@ -14965,7 +14965,7 @@ msgstr "RSVP info: "
 #: includes/eme-events.php:9893
 #: includes/eme-events.php:10184
 #: includes/eme-locations.php:506
-#: includes/eme-locations.php:3300
+#: includes/eme-locations.php:3276
 #: includes/eme-recurrence.php:785
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -15100,45 +15100,45 @@ msgstr "Vorige pagina"
 
 #: includes/eme-events.php:4357
 #: includes/eme-events.php:4366
-#: includes/eme-locations.php:1841
-#: includes/eme-locations.php:1850
+#: includes/eme-locations.php:1854
+#: includes/eme-locations.php:1863
 msgid "Next day"
 msgstr "Volgende dag"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1840
-#: includes/eme-locations.php:1849
+#: includes/eme-locations.php:1853
+#: includes/eme-locations.php:1862
 msgid "Previous day"
 msgstr "Vorige dag"
 
 #: includes/eme-events.php:4349
-#: includes/eme-locations.php:1833
+#: includes/eme-locations.php:1846
 msgid "Next year"
 msgstr "Volgend jaar"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1832
+#: includes/eme-locations.php:1845
 msgid "Previous year"
 msgstr "Vorig jaar"
 
 #: includes/eme-events.php:4339
-#: includes/eme-locations.php:1859
+#: includes/eme-locations.php:1872
 msgid "Next month"
 msgstr "Volgende maand"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1858
+#: includes/eme-locations.php:1871
 msgid "Previous month"
 msgstr "Vorige maand"
 
 #: includes/eme-events.php:4328
-#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1836
 msgid "Next week"
 msgstr "Volgende week"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1822
+#: includes/eme-locations.php:1835
 msgid "Previous week"
 msgstr "Vorige week"
 
@@ -15425,7 +15425,7 @@ msgstr "Voeg hier attributen toe"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15466,7 +15466,7 @@ msgstr "Nee"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15557,4 +15557,4 @@ msgstr "Zorg ervoor dat de API-sleutel de rechten heeft die nodig zijn om checko
 
 #: includes/eme-holidays.php:189
 msgid "These recurrences might get changed: events happening on a day matching the holidays will get cancelled together with their bookings (with an optional cancel mail to the booker)."
-msgstr ""
+msgstr "Deze herhalingen kunnen worden gewijzigd: evenementen die plaatsvinden op een dag die overeenkomt met de feestdagen worden geannuleerd, samen met hun reserveringen (met een optionele annuleringsmail naar de boeker)."

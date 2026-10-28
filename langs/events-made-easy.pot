@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.3.0\n"
+"Project-Id-Version: Events Made Easy 3.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T12:39:43+00:00\n"
+"POT-Creation-Date: 2026-10-28T23:17:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -248,7 +248,7 @@ msgstr ""
 #: includes/eme-functions.php:3599
 #: includes/eme-holidays.php:408
 #: includes/eme-holidays.php:447
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:3177
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -764,7 +764,7 @@ msgstr ""
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
 #: includes/eme-holidays.php:426
-#: includes/eme-locations.php:3290
+#: includes/eme-locations.php:3266
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
 #: includes/eme-templates.php:464
@@ -1874,7 +1874,7 @@ msgstr ""
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -1915,7 +1915,7 @@ msgstr ""
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -2325,7 +2325,7 @@ msgstr ""
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9780
-#: includes/eme-locations.php:2542
+#: includes/eme-locations.php:2538
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6251
 msgid "Edit"
@@ -2390,46 +2390,46 @@ msgid "Next page"
 msgstr ""
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1822
+#: includes/eme-locations.php:1835
 msgid "Previous week"
 msgstr ""
 
 #: includes/eme-events.php:4328
-#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1836
 msgid "Next week"
 msgstr ""
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1858
+#: includes/eme-locations.php:1871
 msgid "Previous month"
 msgstr ""
 
 #: includes/eme-events.php:4339
-#: includes/eme-locations.php:1859
+#: includes/eme-locations.php:1872
 msgid "Next month"
 msgstr ""
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1832
+#: includes/eme-locations.php:1845
 msgid "Previous year"
 msgstr ""
 
 #: includes/eme-events.php:4349
-#: includes/eme-locations.php:1833
+#: includes/eme-locations.php:1846
 msgid "Next year"
 msgstr ""
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1840
-#: includes/eme-locations.php:1849
+#: includes/eme-locations.php:1853
+#: includes/eme-locations.php:1862
 msgid "Previous day"
 msgstr ""
 
 #: includes/eme-events.php:4357
 #: includes/eme-events.php:4366
-#: includes/eme-locations.php:1841
-#: includes/eme-locations.php:1850
+#: includes/eme-locations.php:1854
+#: includes/eme-locations.php:1863
 msgid "Next day"
 msgstr ""
 
@@ -3093,7 +3093,7 @@ msgstr ""
 #: includes/eme-events.php:9893
 #: includes/eme-events.php:10184
 #: includes/eme-locations.php:506
-#: includes/eme-locations.php:3300
+#: includes/eme-locations.php:3276
 #: includes/eme-recurrence.php:785
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -5269,13 +5269,13 @@ msgid "Edit event"
 msgstr ""
 
 #: includes/eme-events.php:10303
-#: includes/eme-locations.php:3294
+#: includes/eme-locations.php:3270
 #: includes/eme-recurrence.php:803
 msgid "Edit location"
 msgstr ""
 
 #: includes/eme-events.php:10305
-#: includes/eme-locations.php:3296
+#: includes/eme-locations.php:3272
 #: includes/eme-recurrence.php:805
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr ""
@@ -7325,8 +7325,8 @@ msgid "Location maximum capacity"
 msgstr ""
 
 #: includes/eme-locations.php:700
-#: includes/eme-locations.php:3312
-#: includes/eme-locations.php:3313
+#: includes/eme-locations.php:3288
+#: includes/eme-locations.php:3289
 msgid "Max capacity"
 msgstr ""
 
@@ -7409,31 +7409,31 @@ msgstr ""
 msgid "The location city"
 msgstr ""
 
-#: includes/eme-locations.php:2950
+#: includes/eme-locations.php:2946
 msgid "Your Street Address"
 msgstr ""
 
-#: includes/eme-locations.php:2951
+#: includes/eme-locations.php:2947
 msgid "e.g. 123 Main St, City"
 msgstr ""
 
-#: includes/eme-locations.php:2955
+#: includes/eme-locations.php:2951
 msgid "Get Directions"
 msgstr ""
 
-#: includes/eme-locations.php:3328
+#: includes/eme-locations.php:3304
 msgid "View location"
 msgstr ""
 
-#: includes/eme-locations.php:3330
+#: includes/eme-locations.php:3306
 msgid "Duplicate this location"
 msgstr ""
 
-#: includes/eme-locations.php:3380
+#: includes/eme-locations.php:3356
 msgid "Locations deleted"
 msgstr ""
 
-#: includes/eme-locations.php:3584
+#: includes/eme-locations.php:3560
 #: includes/eme-members.php:7341
 msgid "No permission"
 msgstr ""

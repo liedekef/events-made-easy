@@ -7,11 +7,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T12:39:48+00:00\n"
-"PO-Revision-Date: 2026-10-25 20:49:28+0000\n"
+"POT-Creation-Date: 2026-10-28T23:17:43+00:00\n"
+"PO-Revision-Date: 2026-10-28 16:56:58+0000\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: GlotPress/4.1.0\n"
+
+#: includes/eme-holidays.php:189
+msgid "These recurrences might get changed: events happening on a day matching the holidays will get cancelled together with their bookings (with an optional cancel mail to the booker)."
+msgstr "Ces évènements récurrents pourraient faire l’objet de modifications : les évènements prévus un jour correspondant à un jour férié seront annulés, ainsi que les réservations associées (avec, en option, l’envoi d'un e-mail d’annulation à la personne ayant effectué la réservation)."
 
 #: includes/eme-options.php:3132
 msgid "Make sure the API key has the rights needed to create and read checkouts."
@@ -270,7 +274,7 @@ msgstr "Transférer une réservation vers un évènement"
 msgid "The following settings are only used if wordpress has permalinks set to anything but \"Plain\"."
 msgstr "Les réglages suivants sont utilisés uniquement si les permaliens de WordPress sont définis sur une option autre que « Simple »."
 
-#: includes/eme-locations.php:3380
+#: includes/eme-locations.php:3356
 msgid "Locations deleted"
 msgstr "Emplacements supprimés"
 
@@ -709,7 +713,7 @@ msgstr "Facultatif : sélectionnez chaque évènement dont les inscrits doivent 
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Exclure également les adresses e-mail des personnes déjà inscrites à ces autres évènements."
 
-#: includes/eme-locations.php:2951
+#: includes/eme-locations.php:2947
 msgid "e.g. 123 Main St, City"
 msgstr "par exemple : 123, rue Main, Ville"
 
@@ -836,7 +840,7 @@ msgstr "L’occurrence a été supprimée et les occurrences restantes ont été
 msgid "Invalid parameters"
 msgstr "Paramètres invalides"
 
-#: includes/eme-locations.php:3584
+#: includes/eme-locations.php:3560
 #: includes/eme-members.php:7341
 msgid "No permission"
 msgstr "Aucun droit"
@@ -1979,8 +1983,8 @@ msgid "If setting the max capacity to something else than 0, then - for all even
 msgstr "Si le paramètre de capacité maximum est différent de 0, alors - pour tous les évènements qui ont lieu en même temps à cet emplacement - un contrôle sera effectué pour voir si l’emplacement autorise d’autres personnes."
 
 #: includes/eme-locations.php:700
-#: includes/eme-locations.php:3312
-#: includes/eme-locations.php:3313
+#: includes/eme-locations.php:3288
+#: includes/eme-locations.php:3289
 msgid "Max capacity"
 msgstr "Capacité maximale"
 
@@ -5069,7 +5073,7 @@ msgstr "Aucun nom de famille"
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
 #: includes/eme-holidays.php:426
-#: includes/eme-locations.php:3290
+#: includes/eme-locations.php:3266
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
 #: includes/eme-templates.php:464
@@ -8297,7 +8301,7 @@ msgstr "Icône de carte d’emplacement par défaut"
 msgid "Template name"
 msgstr "Nom du modèle"
 
-#: includes/eme-locations.php:3328
+#: includes/eme-locations.php:3304
 msgid "View location"
 msgstr "Voir la localisation"
 
@@ -11037,7 +11041,7 @@ msgid "Localize price"
 msgstr "Prix localisé"
 
 #: includes/eme-events.php:10305
-#: includes/eme-locations.php:3296
+#: includes/eme-locations.php:3272
 #: includes/eme-recurrence.php:805
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Les coordonnées de la carte de localisation sont vides ! Veuillez modifier l’emplacement pour corriger ceci, sinon il ne s’affichera pas correctement sur votre site Web."
@@ -11704,7 +11708,7 @@ msgstr "Mise à jour a échoué : "
 #: includes/eme-functions.php:3599
 #: includes/eme-holidays.php:408
 #: includes/eme-holidays.php:447
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:3177
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -13977,17 +13981,17 @@ msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) participera à #_EVENTNAME le #_STARTDA
 msgid "New booking for '#_EVENTNAME'"
 msgstr "Nouvelle réservation pour '#_EVENTNAME'"
 
-#: includes/eme-locations.php:2955
+#: includes/eme-locations.php:2951
 msgid "Get Directions"
 msgstr "Calculer l’itinéraire"
 
-#: includes/eme-locations.php:2950
+#: includes/eme-locations.php:2946
 msgid "Your Street Address"
 msgstr "Votre rue/avenue"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9780
-#: includes/eme-locations.php:2542
+#: includes/eme-locations.php:2538
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6251
 msgid "Edit"
@@ -14001,7 +14005,7 @@ msgstr "Adresse de l’emplacement"
 msgid "The location name"
 msgstr "Nom de l’emplacement"
 
-#: includes/eme-locations.php:3330
+#: includes/eme-locations.php:3306
 msgid "Duplicate this location"
 msgstr "Dupliquer cet emplacement"
 
@@ -14062,7 +14066,7 @@ msgid "Location name"
 msgstr "Nom de la localisation"
 
 #: includes/eme-events.php:10303
-#: includes/eme-locations.php:3294
+#: includes/eme-locations.php:3270
 #: includes/eme-recurrence.php:803
 msgid "Edit location"
 msgstr "Modifier l’emplacement"
@@ -15034,7 +15038,7 @@ msgstr "Info de réservation : "
 #: includes/eme-events.php:9893
 #: includes/eme-events.php:10184
 #: includes/eme-locations.php:506
-#: includes/eme-locations.php:3300
+#: includes/eme-locations.php:3276
 #: includes/eme-recurrence.php:785
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -15169,45 +15173,45 @@ msgstr "Page précédente"
 
 #: includes/eme-events.php:4357
 #: includes/eme-events.php:4366
-#: includes/eme-locations.php:1841
-#: includes/eme-locations.php:1850
+#: includes/eme-locations.php:1854
+#: includes/eme-locations.php:1863
 msgid "Next day"
 msgstr "Jour suivant"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1840
-#: includes/eme-locations.php:1849
+#: includes/eme-locations.php:1853
+#: includes/eme-locations.php:1862
 msgid "Previous day"
 msgstr "Jour précédent"
 
 #: includes/eme-events.php:4349
-#: includes/eme-locations.php:1833
+#: includes/eme-locations.php:1846
 msgid "Next year"
 msgstr "Année suivante"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1832
+#: includes/eme-locations.php:1845
 msgid "Previous year"
 msgstr "Année précédente"
 
 #: includes/eme-events.php:4339
-#: includes/eme-locations.php:1859
+#: includes/eme-locations.php:1872
 msgid "Next month"
 msgstr "Mois suivant"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1858
+#: includes/eme-locations.php:1871
 msgid "Previous month"
 msgstr "Mois précédent"
 
 #: includes/eme-events.php:4328
-#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1836
 msgid "Next week"
 msgstr "Semaine suivante"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1822
+#: includes/eme-locations.php:1835
 msgid "Previous week"
 msgstr "Semaine précédente"
 
@@ -15494,7 +15498,7 @@ msgstr "Ajouter des attributs ici"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15535,7 +15539,7 @@ msgstr "Non"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15562,7 +15566,3 @@ msgstr "Non"
 #: includes/eme-ui-helpers.php:264
 msgid "Yes"
 msgstr "Oui"
-
-#: includes/eme-holidays.php:189
-msgid "These recurrences might get changed: events happening on a day matching the holidays will get cancelled together with their bookings (with an optional cancel mail to the booker)."
-msgstr ""

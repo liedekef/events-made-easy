@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -99,7 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.2  (2026/10/28) =
+= 3.3.2  (2026/10/29) =
 * Security: fix for CVE-2026-118634 (reported by Wordfence)
 
 = 3.3.1  (2026/10/28) =

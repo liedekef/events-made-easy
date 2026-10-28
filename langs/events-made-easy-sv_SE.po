@@ -188,7 +188,7 @@ msgstr ""
 msgid "The following settings are only used if wordpress has permalinks set to anything but \"Plain\"."
 msgstr ""
 
-#: includes/eme-locations.php:3380
+#: includes/eme-locations.php:3356
 msgid "Locations deleted"
 msgstr ""
 
@@ -627,7 +627,7 @@ msgstr "Valfritt: välj evenemang vars registrerade ska hoppas över, oberoende 
 msgid "Also exclude emails of people already registered for these other event(s)"
 msgstr "Exkludera också e-post från personer som redan är registrerade för dessa andra evenemang"
 
-#: includes/eme-locations.php:2951
+#: includes/eme-locations.php:2947
 msgid "e.g. 123 Main St, City"
 msgstr "t.ex. Storgatan 123, Stockholm"
 
@@ -754,7 +754,7 @@ msgstr "Förekomst borttagen och återstående förekomster omnumrerade."
 msgid "Invalid parameters"
 msgstr "Ogiltiga parametrar"
 
-#: includes/eme-locations.php:3584
+#: includes/eme-locations.php:3560
 #: includes/eme-members.php:7341
 msgid "No permission"
 msgstr "Ingen behörighet"
@@ -1897,8 +1897,8 @@ msgid "If setting the max capacity to something else than 0, then - for all even
 msgstr "Om maxkapaciteten ställs in till något annat än 0, kommer ett kontroll att göras för alla evenemang som sker samtidigt på denna plats för att se om platsen fortfarande tillåter fler personer."
 
 #: includes/eme-locations.php:700
-#: includes/eme-locations.php:3312
-#: includes/eme-locations.php:3313
+#: includes/eme-locations.php:3288
+#: includes/eme-locations.php:3289
 msgid "Max capacity"
 msgstr "Maxkapacitet"
 
@@ -4987,7 +4987,7 @@ msgstr "Inget efternamn"
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
 #: includes/eme-holidays.php:426
-#: includes/eme-locations.php:3290
+#: includes/eme-locations.php:3266
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
 #: includes/eme-templates.php:464
@@ -8207,7 +8207,7 @@ msgstr "Standard kartikon"
 msgid "Template name"
 msgstr "Namn på mall"
 
-#: includes/eme-locations.php:3328
+#: includes/eme-locations.php:3304
 msgid "View location"
 msgstr "Visa plats"
 
@@ -10939,7 +10939,7 @@ msgid "Localize price"
 msgstr "Lokalisera pris"
 
 #: includes/eme-events.php:10305
-#: includes/eme-locations.php:3296
+#: includes/eme-locations.php:3272
 #: includes/eme-recurrence.php:805
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Platsens kartkoordinater är tomma! Vänligen redigera platsen och korrigera detta, annars kommer den inte att visas korrekt på din webbplats."
@@ -11606,7 +11606,7 @@ msgstr "Uppdatering misslyckades:"
 #: includes/eme-functions.php:3599
 #: includes/eme-holidays.php:408
 #: includes/eme-holidays.php:447
-#: includes/eme-locations.php:3201
+#: includes/eme-locations.php:3177
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
 #: includes/eme-mailer.php:2076
@@ -13871,17 +13871,17 @@ msgstr "#_PERSONFULLNAME (#_PERSONEMAIL) kommer att delta i #_EVENTNAME den #_ST
 msgid "New booking for '#_EVENTNAME'"
 msgstr "Ny bokning till ”#_EVENTNAME”"
 
-#: includes/eme-locations.php:2955
+#: includes/eme-locations.php:2951
 msgid "Get Directions"
 msgstr "Få vägbeskrivning"
 
-#: includes/eme-locations.php:2950
+#: includes/eme-locations.php:2946
 msgid "Your Street Address"
 msgstr "Din gatuadress"
 
 #: includes/eme-events.php:2359
 #: includes/eme-events.php:9780
-#: includes/eme-locations.php:2542
+#: includes/eme-locations.php:2538
 #: includes/eme-mailer.php:2031
 #: includes/eme-rsvp.php:6251
 msgid "Edit"
@@ -13895,7 +13895,7 @@ msgstr "Platsens adress"
 msgid "The location name"
 msgstr "Platsens namn"
 
-#: includes/eme-locations.php:3330
+#: includes/eme-locations.php:3306
 msgid "Duplicate this location"
 msgstr "Skapa kopia av denna plats"
 
@@ -13956,7 +13956,7 @@ msgid "Location name"
 msgstr "Platsnamn"
 
 #: includes/eme-events.php:10303
-#: includes/eme-locations.php:3294
+#: includes/eme-locations.php:3270
 #: includes/eme-recurrence.php:803
 msgid "Edit location"
 msgstr "Redigera plats"
@@ -14928,7 +14928,7 @@ msgstr "OSA info:"
 #: includes/eme-events.php:9893
 #: includes/eme-events.php:10184
 #: includes/eme-locations.php:506
-#: includes/eme-locations.php:3300
+#: includes/eme-locations.php:3276
 #: includes/eme-recurrence.php:785
 #: includes/eme-widgets.php:174
 #: includes/eme-widgets.php:338
@@ -15063,45 +15063,45 @@ msgstr "Föregående sida"
 
 #: includes/eme-events.php:4357
 #: includes/eme-events.php:4366
-#: includes/eme-locations.php:1841
-#: includes/eme-locations.php:1850
+#: includes/eme-locations.php:1854
+#: includes/eme-locations.php:1863
 msgid "Next day"
 msgstr "Nästa dag"
 
 #: includes/eme-events.php:4356
 #: includes/eme-events.php:4365
-#: includes/eme-locations.php:1840
-#: includes/eme-locations.php:1849
+#: includes/eme-locations.php:1853
+#: includes/eme-locations.php:1862
 msgid "Previous day"
 msgstr "Föregående dag"
 
 #: includes/eme-events.php:4349
-#: includes/eme-locations.php:1833
+#: includes/eme-locations.php:1846
 msgid "Next year"
 msgstr "Nästa år"
 
 #: includes/eme-events.php:4348
-#: includes/eme-locations.php:1832
+#: includes/eme-locations.php:1845
 msgid "Previous year"
 msgstr "Föregående år"
 
 #: includes/eme-events.php:4339
-#: includes/eme-locations.php:1859
+#: includes/eme-locations.php:1872
 msgid "Next month"
 msgstr "Nästa månad"
 
 #: includes/eme-events.php:4338
-#: includes/eme-locations.php:1858
+#: includes/eme-locations.php:1871
 msgid "Previous month"
 msgstr "Föregående månad"
 
 #: includes/eme-events.php:4328
-#: includes/eme-locations.php:1823
+#: includes/eme-locations.php:1836
 msgid "Next week"
 msgstr "Nästa vecka"
 
 #: includes/eme-events.php:4327
-#: includes/eme-locations.php:1822
+#: includes/eme-locations.php:1835
 msgid "Previous week"
 msgstr "Föregående vecka"
 
@@ -15388,7 +15388,7 @@ msgstr "Lägg till attribut här"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452
@@ -15429,7 +15429,7 @@ msgstr "Nej"
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
 #: includes/eme-gdpr.php:576
-#: includes/eme-locations.php:3326
+#: includes/eme-locations.php:3302
 #: includes/eme-members.php:6969
 #: includes/eme-people.php:448
 #: includes/eme-people.php:452

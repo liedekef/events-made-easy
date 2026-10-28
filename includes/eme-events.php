@@ -4438,18 +4438,18 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
         $count_older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, order: $order, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, count: 1 );
         $count_newer_events = eme_get_events( limit: 1, scope: '++' . $limit_end, order: $order, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, count: 1 );
         if ( $count_older_events > 0 ) {
-            $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
+            $pagination_top .= "<a class='eme_nav_left' href='" . esc_url(add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url )) . "'>&lt;&lt; $prev_text</a>";
         } else {
             $pagination_top .= "<a class='eme_nav_left' $nav_hidden_class href='#'>&lt;&lt; $prev_text</a>";
         }
 
         if ( $count_newer_events > 0 ) {
-            $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+            $pagination_top .= "<a class='eme_nav_right' href='" . esc_url(add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url )) . "'>$next_text &gt;&gt;</a>";
         } else {
             $pagination_top .= "<a class='eme_nav_right' $nav_hidden_class href='#'>$next_text &gt;&gt;</a>";
         }
 
-        $pagination_top .= "<span class='eme_nav_center'>$scope_text</span>";
+        $pagination_top .= "<span class='eme_nav_center'>".esc_html($scope_text)."</span>";
     }
     $pagination_top   .= '</div>';
     $pagination_bottom = str_replace( 'events-pagination-top', 'events-pagination-bottom', $pagination_top );

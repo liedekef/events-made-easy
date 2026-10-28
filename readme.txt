@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.2  (2026/10/28) =
+* Security: fix for CVE-2026-118634 (reported by Wordfence)
+
 = 3.3.1  (2026/10/28) =
 * Fix a sql-bug preventing eme_mytasks to work
 

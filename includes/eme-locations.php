@@ -1744,6 +1744,19 @@ function eme_location_has_events( $location_id ) {
     return ( $affected_events > 0 );
 }
 
+function eme_css_size_style( $width, $height ) {
+    $parts = [];
+    foreach ( [ 'width' => $width, 'height' => $height ] as $prop => $val ) {
+        if ( empty( $val ) ) {
+            continue; // keeps the old behaviour for '', 0, '0'
+        }
+        if ( preg_match( '/^(\d*\.?\d+)(%|px|fr|em)?$/D', trim( (string) $val ), $m ) ) {
+            $parts[] = $prop . ': ' . $m[1] . ( $m[2] ?? 'px' ) . ';';
+        }
+    }
+    return $parts ? "style='" . esc_attr( implode( ' ', $parts ) ) . "'" : '';
+}
+
 function eme_global_map_shortcode( $atts ) {
     global $post;
     eme_enqueue_frontend();
@@ -1876,24 +1889,7 @@ function eme_global_map_shortcode( $atts ) {
     $locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $atts['category'], notcategory: $atts['notcategory'], limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
     $id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
     $id_base       = wp_rand() . '_' . $id_base;
-    $style = '';
-    if ( ! empty( $width ) || ! empty( $height ) ) {
-        $width_style = '';
-        if (! empty( $width ) ) {
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
-                $width = $width . 'px';
-            }
-            $width_style = "width: $width;";
-        }
-        $height_style = '';
-        if (! empty( $height ) ) {
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
-                $height = $height . 'px';
-            }
-            $height_style = "height: $height;";
-        }
-        $style = "style='$width_style $height_style'";
-    }
+    $style         = eme_css_size_style( $width, $height );
 
     $result = '';
     if ( ! empty( $locations ) ) {
@@ -1906,12 +1902,12 @@ function eme_global_map_shortcode( $atts ) {
         $pagination_top = "<div id='div_locations-pagination-top_$id_base' class='locations-pagination-top'> ";
         $this_page_url = get_permalink($post->ID);
         if ( $prev_text != '' ) {
-            $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
+            $pagination_top .= "<a class='eme_nav_left' href='" . esc_url(add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url )) . "'>&lt;&lt; $prev_text</a>";
         }
         if ( $next_text != '' ) {
-            $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+            $pagination_top .= "<a class='eme_nav_right' href='" . esc_url(add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url )) . "'>$next_text &gt;&gt;</a>";
         }
-        $pagination_top   .= "<span class='eme_nav_center'>$scope_text</span>";
+        $pagination_top   .= "<span class='eme_nav_center'>".esc_html($scope_text)."</span>";
         $pagination_top   .= '</div>';
         $pagination_bottom = str_replace( 'locations-pagination-top', 'locations-pagination-bottom', $pagination_top );
         $result            = $pagination_top . $result . $pagination_bottom;
@@ -1982,7 +1978,7 @@ function eme_single_location_map_shortcode( $atts ) {
     $id = eme_sanitize_request($atts['id']);
     $width = eme_sanitize_request($atts['width']);
     $height = eme_sanitize_request($atts['height']);
-    $zoom = eme_sanitize_request($atts['zoom']);
+    $zoom = intval($atts['zoom']);
 
     $location = eme_get_location( $id );
     if ( ! empty( $location ) ) {
@@ -3017,9 +3013,9 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
 
 function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_factor = 0 ) {
     $map_is_active = get_option( 'eme_map_is_active' );
-    if ( $zoom_factor == 0 ) {
-        $zoom_factor = get_option( 'eme_indiv_zoom_factor' );
-    }
+    $zoom_factor = (int) $zoom_factor;
+    if ( $zoom_factor <= 0 ) { $zoom_factor = (int) get_option( 'eme_indiv_zoom_factor' ); }
+    $zoom_factor = min( 14, max( 1, $zoom_factor ) );
 
     if (!eme_is_empty_string($location['location_properties']['balloon_format'] )) {
         $balloon_format = $location['location_properties']['balloon_format'];
@@ -3056,37 +3052,17 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $enable_zooming = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
         $gestures       = get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false';
         $map_icon       = get_option( 'eme_location_map_icon' );
-        if ( $zoom_factor > 14 ) {
-            $zoom_factor = 14;
-        }
         //$map_div = "<div id='$id' style=' background: green; width: 400px; height: 300px'></div>" ;
-        $style = '';
-        if ( ! empty( $width ) || ! empty( $height ) ) {
-            $width_style = '';
-            if (! empty( $width ) ) {
-                if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
-                    $width = $width . 'px';
-                }
-                $width_style = "width: $width;";
-            }
-            $height_style = '';
-            if (! empty( $height ) ) {
-                if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
-                    $height = $height . 'px';
-                }
-                $height_style = "height: $height;";
-            }
-            $style = "style='$width_style $height_style'";
-        }
+        $style = eme_css_size_style( $width, $height );
         $data    = "data-lat='" . esc_attr( $location['location_latitude'] ) . "'";
         $data   .= " data-lon='" . esc_attr( $location['location_longitude'] ) . "'";
         $data   .= " data-map_icon='" . esc_attr( $location['location_properties']['map_icon'] ) . "'";
-        $data   .= " data-map_text='" . esc_html( $map_text ) . "'";
+        $data   .= " data-map_text='" . esc_attr( $map_text ) . "'";
         $data   .= " data-enable_zooming='$enable_zooming'";
         $data   .= " data-gestures='$gestures'";
-        $data   .= " data-default_map_icon='$map_icon'";
+        $data   .= " data-default_map_icon='". esc_attr( $map_icon ) . "'";
         $data   .= " data-zoom_factor='$zoom_factor'";
-        $map_div = "<div id='$id' class='eme-location-map' $style $data></div>";
+        $map_div = "<div id='". esc_attr($id)."' class='eme-location-map' $style $data></div>";
     } else {
         $map_div = '';
     }

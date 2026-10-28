@@ -45,8 +45,8 @@ msgstr "代表 %s"
 #: includes/eme-functions.php:3517
 #: includes/eme-functions.php:3556
 #: includes/eme-functions.php:3599
-#: includes/eme-holidays.php:406
-#: includes/eme-holidays.php:445
+#: includes/eme-holidays.php:408
+#: includes/eme-holidays.php:447
 #: includes/eme-locations.php:3201
 #: includes/eme-mailer.php:1882
 #: includes/eme-mailer.php:1971
@@ -98,11 +98,11 @@ msgstr "代表 %s"
 #: includes/eme-rsvp.php:5170
 #: includes/eme-rsvp.php:5973
 #: includes/eme-rsvp.php:5997
-#: includes/eme-tasks.php:2108
-#: includes/eme-tasks.php:2261
-#: includes/eme-tasks.php:2272
-#: includes/eme-tasks.php:2380
-#: includes/eme-tasks.php:2421
+#: includes/eme-tasks.php:2111
+#: includes/eme-tasks.php:2264
+#: includes/eme-tasks.php:2275
+#: includes/eme-tasks.php:2383
+#: includes/eme-tasks.php:2424
 #: includes/eme-templates.php:482
 msgid "Access denied!"
 msgstr "拒绝访问!"
@@ -185,7 +185,7 @@ msgstr "任何"
 #: includes/eme-events.php:6257
 #: includes/eme-events.php:9729
 #: includes/eme-import.php:94
-#: includes/eme-install.php:1895
+#: includes/eme-install.php:1939
 #: includes/eme-options.php:132
 #: includes/eme-options.php:155
 #: includes/eme-options.php:156
@@ -243,7 +243,7 @@ msgstr "如果 RSVP 或会员 QRCODE 被有足够权限的人扫描，出席记�
 #: includes/eme-events.php:6378
 #: includes/eme-events.php:6419
 #: includes/eme-rsvp.php:5577
-#: includes/eme-tasks.php:673
+#: includes/eme-tasks.php:676
 msgid "Filter on start date"
 msgstr "过滤开始日期"
 
@@ -252,7 +252,7 @@ msgstr "过滤开始日期"
 #: includes/eme-events.php:6379
 #: includes/eme-events.php:6420
 #: includes/eme-rsvp.php:5578
-#: includes/eme-tasks.php:674
+#: includes/eme-tasks.php:677
 msgid "Filter on end date"
 msgstr "按结束日期过滤"
 
@@ -282,7 +282,7 @@ msgstr "提示：右键单击列标题以显示或隐藏列"
 #: includes/eme-people.php:5491
 #: includes/eme-people.php:5492
 #: includes/eme-people.php:5493
-#: includes/eme-tasks.php:2237
+#: includes/eme-tasks.php:2240
 msgid "Edit person"
 msgstr "编辑人员"
 
@@ -322,7 +322,7 @@ msgstr "模板中没有定义"
 #: includes/eme-attributes.php:123
 #: includes/eme-attributes.php:143
 #: includes/eme-formfields.php:3664
-#: includes/eme-tasks.php:992
+#: includes/eme-tasks.php:995
 #: includes/eme-todos.php:220
 msgid "Remove"
 msgstr "移除"
@@ -381,7 +381,7 @@ msgstr "ID"
 #: includes/eme-events.php:9919
 #: includes/eme-members.php:2079
 #: includes/eme-people.php:2826
-#: includes/eme-tasks.php:1020
+#: includes/eme-tasks.php:1023
 #: includes/eme-templates.php:243
 #: includes/eme-todos.php:242
 msgid "Name"
@@ -390,7 +390,7 @@ msgstr "名字"
 #: includes/eme-categories.php:695
 #: includes/eme-events.php:10173
 #: includes/eme-formfields.php:3860
-#: includes/eme-holidays.php:424
+#: includes/eme-holidays.php:426
 #: includes/eme-locations.php:3290
 #: includes/eme-members.php:6809
 #: includes/eme-people.php:5582
@@ -561,7 +561,7 @@ msgstr "月"
 #: includes/eme-people.php:2393
 #: includes/eme-people.php:2427
 #: includes/eme-rsvp.php:5699
-#: includes/eme-tasks.php:701
+#: includes/eme-tasks.php:704
 #: includes/eme-templates.php:185
 msgid "Apply"
 msgstr "应用"
@@ -827,7 +827,7 @@ msgstr "语言应对应您要支持的WordPress语言之一，或留空作为默
 #: includes/eme-people.php:2389
 #: includes/eme-people.php:2422
 #: includes/eme-rsvp.php:5607
-#: includes/eme-tasks.php:689
+#: includes/eme-tasks.php:692
 #: includes/eme-templates.php:182
 msgid "Bulk Actions"
 msgstr "批量行动"
@@ -1262,7 +1262,7 @@ msgstr "折扣的名称"
 #: includes/eme-events.php:9779
 #: includes/eme-members.php:2083
 #: includes/eme-people.php:2830
-#: includes/eme-tasks.php:1024
+#: includes/eme-tasks.php:1027
 #: includes/eme-templates.php:247
 #: includes/eme-todos.php:244
 msgid "Description"
@@ -1855,7 +1855,7 @@ msgstr "取消预订"
 
 #: includes/eme-events.php:1559
 #: includes/eme-events.php:1662
-#: includes/eme-tasks.php:1830
+#: includes/eme-tasks.php:1833
 msgid "Cancel task signup"
 msgstr "取消任务报名"
 
@@ -2040,20 +2040,20 @@ msgstr "导入完成：%1$d 条插入，%2$d 条更新，%3$d 个错误"
 
 #: includes/eme-events.php:6207
 #: includes/eme-rsvp.php:5471
-#: includes/eme-tasks.php:647
+#: includes/eme-tasks.php:650
 msgid "Past events"
 msgstr "过去的活动"
 
 #: events-manager.php:360
 #: includes/eme-events.php:6208
 #: includes/eme-rsvp.php:5472
-#: includes/eme-tasks.php:648
+#: includes/eme-tasks.php:651
 msgid "All events"
 msgstr "所有活动"
 
 #: includes/eme-events.php:6209
 #: includes/eme-rsvp.php:5473
-#: includes/eme-tasks.php:649
+#: includes/eme-tasks.php:652
 msgid "Future events"
 msgstr "未来的活动"
 
@@ -2089,7 +2089,7 @@ msgstr "无分类的活动"
 #: includes/eme-events.php:6377
 #: includes/eme-events.php:6418
 #: includes/eme-events.php:7175
-#: includes/eme-tasks.php:642
+#: includes/eme-tasks.php:645
 msgid "Event name"
 msgstr "活动名称"
 
@@ -2139,7 +2139,7 @@ msgid "Add selected events to category"
 msgstr "将选定的活动添加到分类中"
 
 #: includes/eme-events.php:6338
-#: includes/eme-holidays.php:247
+#: includes/eme-holidays.php:249
 msgid "Send emails for cancelled bookings too?"
 msgstr "对取消的预订也发送邮件？"
 
@@ -3612,13 +3612,13 @@ msgstr "需要登录的用户必须是选定的 EME 会籍之一，才能使用�
 
 #: includes/eme-events.php:8968
 #: includes/eme-members.php:2349
-#: includes/eme-tasks.php:1072
+#: includes/eme-tasks.php:1075
 msgid "Group to add people to"
 msgstr "添加人员到此群组"
 
 #: includes/eme-events.php:8969
 #: includes/eme-members.php:2350
-#: includes/eme-tasks.php:1074
+#: includes/eme-tasks.php:1077
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "您希望人们在订阅时自动成为该群组的会员。"
 
@@ -3775,7 +3775,7 @@ msgstr "选择一个或多个会员"
 #: includes/eme-mailer.php:3736
 #: includes/eme-mailer.php:3753
 #: includes/eme-people.php:2680
-#: includes/eme-tasks.php:1064
+#: includes/eme-tasks.php:1067
 msgid "Select one or more groups"
 msgstr "选择一个或多个群组"
 
@@ -3920,7 +3920,7 @@ msgstr "任务报名"
 
 #: includes/eme-events.php:9766
 #: includes/eme-people.php:1045
-#: includes/eme-tasks.php:641
+#: includes/eme-tasks.php:644
 msgid "Task name"
 msgstr "任务名称"
 
@@ -4322,7 +4322,7 @@ msgstr "开始"
 #: includes/eme-events.php:9868
 #: includes/eme-gdpr.php:499
 #: includes/eme-gdpr.php:691
-#: includes/eme-tasks.php:1022
+#: includes/eme-tasks.php:1025
 msgid "End"
 msgstr "结束"
 
@@ -4494,7 +4494,7 @@ msgstr "选择一个或多个活动"
 
 #: includes/eme-events.php:10180
 #: includes/eme-rsvp.php:6254
-#: includes/eme-tasks.php:2224
+#: includes/eme-tasks.php:2227
 msgid "Edit event"
 msgstr "编辑活动"
 
@@ -4552,7 +4552,7 @@ msgstr "可打印的视图"
 #: includes/eme-events.php:6902
 #: includes/eme-events.php:10265
 #: includes/eme-rsvp.php:6316
-#: includes/eme-tasks.php:2226
+#: includes/eme-tasks.php:2229
 msgid "CSV export"
 msgstr "CSV 导出"
 
@@ -5290,7 +5290,7 @@ msgid "Not all required fields are present in the form. We need at least #_LASTN
 msgstr "不是所有的必填字段都出现在表格中。我们至少需要 #_LASTNAME、#_FIRSTNAME、#_EMAIL 和 #_SUBMIT（或类似的）占位符。"
 
 #: includes/eme-formfields.php:3214
-#: includes/eme-tasks.php:663
+#: includes/eme-tasks.php:666
 #: includes/eme-templates.php:43
 msgid "All"
 msgstr "全部"
@@ -5352,7 +5352,7 @@ msgid "Repeat"
 msgstr "重复"
 
 #: includes/eme-formfields.php:3635
-#: includes/eme-tasks.php:957
+#: includes/eme-tasks.php:960
 #: includes/eme-todos.php:202
 msgid "Reorder"
 msgstr "重新排序"
@@ -5445,8 +5445,8 @@ msgstr "草稿"
 #: includes/eme-people.php:1297
 #: includes/eme-people.php:1648
 #: includes/eme-people.php:1795
-#: includes/eme-tasks.php:664
-#: includes/eme-tasks.php:2235
+#: includes/eme-tasks.php:667
+#: includes/eme-tasks.php:2238
 msgid "Pending"
 msgstr "待订"
 
@@ -5719,7 +5719,7 @@ msgstr "没有这样的记录"
 #: includes/eme-people.php:5084
 #: includes/eme-rsvp.php:857
 #: includes/eme-rsvp.php:1169
-#: includes/eme-tasks.php:1869
+#: includes/eme-tasks.php:1872
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -5740,7 +5740,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: includes/eme-people.php:5095
 #: includes/eme-rsvp.php:869
 #: includes/eme-rsvp.php:1181
-#: includes/eme-tasks.php:1881
+#: includes/eme-tasks.php:1884
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到表格被篡改。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -5760,7 +5760,7 @@ msgstr "谢谢您的请求，我们将发送电子邮件提供进一步信息。
 #: includes/eme-people.php:5156
 #: includes/eme-rsvp.php:160
 #: includes/eme-rsvp.php:823
-#: includes/eme-tasks.php:1579
+#: includes/eme-tasks.php:1582
 msgid "Javascript is required for this form to work properly"
 msgstr "为使本表正常工作，需要使用 Javascript"
 
@@ -5882,7 +5882,7 @@ msgid "Edit holidays list"
 msgstr "编辑假期列表"
 
 #: includes/eme-holidays.php:128
-#: includes/eme-holidays.php:251
+#: includes/eme-holidays.php:253
 msgid "Update list of holidays"
 msgstr "更新假期列表"
 
@@ -5910,7 +5910,7 @@ msgstr "基本格式：YYYY-MM-DD，每行一个"
 msgid "For more information about holidays, see "
 msgstr "关于假期的更多信息，请参见"
 
-#: includes/eme-install.php:1896
+#: includes/eme-install.php:1940
 msgid "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly."
 msgstr "本页由 Events Made Easy 使用。不要改变它，不要在您的菜单中使用它，不要删除它。只要确保 EME 的设置称为 \"活动页面\"，指向这个页面。EME 使用这个页面来呈现任何和所有的事件、地点、预订、地图、......任何东西。如果您确实想删除这个页面，创建一个 EME 可以使用的新页面，并相应地更新 EME 设置中的 \"活动页面\"。"
 
@@ -6201,7 +6201,7 @@ msgstr "排列的时间是"
 #: includes/eme-cleanup.php:425
 #: includes/eme-events.php:6804
 #: includes/eme-events.php:9948
-#: includes/eme-holidays.php:252
+#: includes/eme-holidays.php:254
 #: includes/eme-mailer.php:2007
 #: includes/eme-mailer.php:2018
 #: includes/eme-mailer.php:2023
@@ -6283,7 +6283,7 @@ msgid "Only emails for events you have the right to send emails for have been se
 msgstr "只有您有权发送邮件的活动邮件才会被发送。"
 
 #: includes/eme-mailer.php:3905
-#: includes/eme-tasks.php:643
+#: includes/eme-tasks.php:646
 msgid "Person name"
 msgstr "人名"
 
@@ -7632,7 +7632,7 @@ msgstr "重新发送过期提醒邮件"
 #: includes/eme-rsvp.php:5613
 #: includes/eme-rsvp.php:5626
 #: includes/eme-rsvp.php:5644
-#: includes/eme-tasks.php:690
+#: includes/eme-tasks.php:693
 msgid "Send generic email to selected persons"
 msgstr "向选定的人们发送通用的电子邮件"
 
@@ -7921,9 +7921,9 @@ msgstr "已删除会员。"
 #: includes/eme-rsvp.php:6996
 #: includes/eme-rsvp.php:7058
 #: includes/eme-rsvp.php:7109
-#: includes/eme-tasks.php:2306
-#: includes/eme-tasks.php:2332
-#: includes/eme-tasks.php:2356
+#: includes/eme-tasks.php:2309
+#: includes/eme-tasks.php:2335
+#: includes/eme-tasks.php:2359
 msgid "The action has been executed successfully."
 msgstr "该行动已成功执行。"
 
@@ -7953,9 +7953,9 @@ msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。
 #: includes/eme-rsvp.php:6953
 #: includes/eme-rsvp.php:6989
 #: includes/eme-rsvp.php:7106
-#: includes/eme-tasks.php:2309
-#: includes/eme-tasks.php:2335
-#: includes/eme-tasks.php:2359
+#: includes/eme-tasks.php:2312
+#: includes/eme-tasks.php:2338
+#: includes/eme-tasks.php:2362
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "在执行所需的操作时出现了问题，请检查您的日志。"
 
@@ -8638,7 +8638,7 @@ msgstr "编辑所有活动需要的权限。默认值：%s"
 
 #. translators: %s is the default capability name
 #: includes/eme-options.php:1626
-#: includes/eme-tasks.php:628
+#: includes/eme-tasks.php:631
 msgid "Manage task signups"
 msgstr "管理任务报名"
 
@@ -9778,7 +9778,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "如果您想在默认情况下，新的注册需要批准，请选中该选项。"
 
 #: includes/eme-options.php:2075
-#: includes/eme-tasks.php:1089
+#: includes/eme-tasks.php:1092
 msgid "Allow overlap for task signups?"
 msgstr "允许任务报名时有重叠？"
 
@@ -9823,12 +9823,12 @@ msgid "This setting is used in the shortcode eme_tasks_signups if the option \"t
 msgstr "如果 \"template_id\" 选项没有被用于该简码，该设置将被用于简码 eme_tasks_signups。"
 
 #: includes/eme-options.php:2079
-#: includes/eme-tasks.php:942
+#: includes/eme-tasks.php:945
 msgid "Signup recorded message"
 msgstr "报名的记录信息"
 
 #: includes/eme-options.php:2079
-#: includes/eme-tasks.php:943
+#: includes/eme-tasks.php:946
 msgid "The text (html allowed) shown to the user when the task signup has been made successfully."
 msgstr "当任务报名成功后显示给用户的文本（允许使用 html）。"
 
@@ -9837,7 +9837,7 @@ msgid "Send out reminder emails"
 msgstr "发出提醒的电子邮件"
 
 #: includes/eme-options.php:2081
-#: includes/eme-tasks.php:1093
+#: includes/eme-tasks.php:1096
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "设置任务报名提醒邮件发送前的天数（从任务的开始日期算起）。如果您想发送多封提醒邮件，请用逗号将这些天数隔开。留空表示不发送提醒邮件。"
 
@@ -10231,170 +10231,170 @@ msgid "Can contain all people placeholders and one additional required placehold
 msgstr "可以包含所有人们的占位符和一个额外的必要占位符，即 #_UNSUB_CONFIRM_URL（它将被替换成取消订阅的确认网址）。"
 
 #: includes/eme-options.php:2624
-#: includes/eme-tasks.php:770
+#: includes/eme-tasks.php:773
 #, fuzzy
 msgid "Task Signup Pending Email Subject"
 msgstr "任务报名提醒的电子邮件主题"
 
 #: includes/eme-options.php:2624
-#: includes/eme-tasks.php:771
+#: includes/eme-tasks.php:774
 #, fuzzy
 msgid "The subject of the email sent to the respondent when that person signs up for a task that requires approval."
 msgstr "当应答者报名参加任务时，发送给他的电子邮件的主题。"
 
 #: includes/eme-options.php:2625
-#: includes/eme-tasks.php:779
+#: includes/eme-tasks.php:782
 #, fuzzy
 msgid "Task Signup Pending Email Body"
 msgstr "任务报名提醒的电子邮件正文"
 
 #: includes/eme-options.php:2625
-#: includes/eme-tasks.php:780
+#: includes/eme-tasks.php:783
 #, fuzzy
 msgid "The body of the email sent to the respondent when that person signs up for a task that requires approval."
 msgstr "当应答者报名参加任务时，发送给他的电子邮件的正文。"
 
 #: includes/eme-options.php:2626
-#: includes/eme-tasks.php:789
+#: includes/eme-tasks.php:792
 #, fuzzy
 msgid "Contact Person Task Signup Pending Email Subject"
 msgstr "联络人 任务报名后的电子邮件主题"
 
 #: includes/eme-options.php:2626
-#: includes/eme-tasks.php:790
+#: includes/eme-tasks.php:793
 #, fuzzy
 msgid "The subject of the email that will be sent to the contact person when someone signs up for a task that requires approval."
 msgstr "当有人报名参加任务时，向联系人发送的电子邮件的主题。"
 
 #: includes/eme-options.php:2627
-#: includes/eme-tasks.php:798
+#: includes/eme-tasks.php:801
 #, fuzzy
 msgid "Contact Person Task Signup Pending Email Body"
 msgstr "联络人 任务报名后的电子邮件正文"
 
 #: includes/eme-options.php:2627
-#: includes/eme-tasks.php:799
+#: includes/eme-tasks.php:802
 #, fuzzy
 msgid "The body of the email that will be sent to the contact person when someone signs up for a task that requires approval."
 msgstr "当有人报名参加任务时，向联系人发送的电子邮件的正文。"
 
 #: includes/eme-options.php:2639
-#: includes/eme-tasks.php:728
+#: includes/eme-tasks.php:731
 msgid "Task Signup Made Email Subject"
 msgstr "任务报名后的电子邮件主题"
 
 #: includes/eme-options.php:2639
-#: includes/eme-tasks.php:729
+#: includes/eme-tasks.php:732
 msgid "The subject of the email sent to the respondent when that person signs up for a task."
 msgstr "当应答者报名参加任务时，发送给他的电子邮件的主题。"
 
 #: includes/eme-options.php:2640
-#: includes/eme-tasks.php:737
+#: includes/eme-tasks.php:740
 msgid "Task Signup Made Email Body"
 msgstr "任务报名后的电子邮件正文"
 
 #: includes/eme-options.php:2640
-#: includes/eme-tasks.php:738
+#: includes/eme-tasks.php:741
 msgid "The body of the email sent to the respondent when that person signs up for a task."
 msgstr "当应答者报名参加任务时，发送给他的电子邮件的正文。"
 
 #: includes/eme-options.php:2641
-#: includes/eme-tasks.php:747
+#: includes/eme-tasks.php:750
 msgid "Contact Person Task Signup Made Email Subject"
 msgstr "联络人 任务报名后的电子邮件主题"
 
 #: includes/eme-options.php:2641
-#: includes/eme-tasks.php:748
+#: includes/eme-tasks.php:751
 msgid "The subject of the email that will be sent to the contact person when someone signs up for a task."
 msgstr "当有人报名参加任务时，向联系人发送的电子邮件的主题。"
 
 #: includes/eme-options.php:2642
-#: includes/eme-tasks.php:756
+#: includes/eme-tasks.php:759
 msgid "Contact Person Task Signup Made Email Body"
 msgstr "联络人 任务报名后的电子邮件正文"
 
 #: includes/eme-options.php:2642
-#: includes/eme-tasks.php:757
+#: includes/eme-tasks.php:760
 msgid "The body of the email that will be sent to the contact person when someone signs up for a task."
 msgstr "当有人报名参加任务时，向联系人发送的电子邮件的正文。"
 
 #: includes/eme-options.php:2654
-#: includes/eme-tasks.php:900
+#: includes/eme-tasks.php:903
 msgid "Task Signup Reminder Email Subject"
 msgstr "任务报名提醒的电子邮件主题"
 
 #: includes/eme-options.php:2654
-#: includes/eme-tasks.php:901
+#: includes/eme-tasks.php:904
 msgid "The subject of the reminder email that will be sent to the respondent."
 msgstr "向回答者发送的提醒邮件的主题。"
 
 #: includes/eme-options.php:2655
-#: includes/eme-tasks.php:909
+#: includes/eme-tasks.php:912
 msgid "Task Signup Reminder Email Body"
 msgstr "任务报名提醒的电子邮件正文"
 
 #: includes/eme-options.php:2655
-#: includes/eme-tasks.php:910
+#: includes/eme-tasks.php:913
 msgid "The body of the reminder email that will be sent to the respondent."
 msgstr "发送给回答者的提醒邮件的正文。"
 
 #: includes/eme-options.php:2666
-#: includes/eme-tasks.php:835
+#: includes/eme-tasks.php:838
 msgid "Task Signup Cancelled Email Subject"
 msgstr "任务报名被取消的电子邮件主题"
 
 #: includes/eme-options.php:2666
-#: includes/eme-tasks.php:836
+#: includes/eme-tasks.php:839
 msgid "The subject of the email that will be sent to the respondent when he himself cancels a task signup."
 msgstr "当应答者本人取消任务报名时，向该人发送的电子邮件的主题。"
 
 #: includes/eme-options.php:2667
-#: includes/eme-tasks.php:844
+#: includes/eme-tasks.php:847
 msgid "Task Signup Cancelled Email Body"
 msgstr "任务报名被取消的电子邮件正文"
 
 #: includes/eme-options.php:2667
-#: includes/eme-tasks.php:845
+#: includes/eme-tasks.php:848
 msgid "The body of the email that will be sent to the respondent when he himself cancels a task signup."
 msgstr "当应答者本人取消任务报名时，向该人发送的电子邮件的正文。"
 
 #: includes/eme-options.php:2668
-#: includes/eme-tasks.php:854
+#: includes/eme-tasks.php:857
 msgid "Contact Person Task Signup Cancelled Email Subject"
 msgstr "联系人 任务报名被取消 电子邮件主题"
 
 #: includes/eme-options.php:2668
-#: includes/eme-tasks.php:855
+#: includes/eme-tasks.php:858
 msgid "The subject of the email that will be sent to the contact person when a respondent cancels a task signup."
 msgstr "当应答者取消任务报名时，向联系人发送的电子邮件的主题。"
 
 #: includes/eme-options.php:2669
-#: includes/eme-tasks.php:863
+#: includes/eme-tasks.php:866
 msgid "Contact Person Task Signup Cancelled Email Body"
 msgstr "联系人 任务报名被取消 电子邮件正文"
 
 #: includes/eme-options.php:2669
-#: includes/eme-tasks.php:864
+#: includes/eme-tasks.php:867
 msgid "The body of the email that will be sent to the contact person when a respondent cancels a task signup."
 msgstr "当应答者取消任务报名时，向联系人发送的电子邮件的正文。"
 
 #: includes/eme-options.php:2680
-#: includes/eme-tasks.php:877
+#: includes/eme-tasks.php:880
 msgid "Task Signup Deleted Email Subject"
 msgstr "任务报名被删除的电子邮件主题"
 
 #: includes/eme-options.php:2680
-#: includes/eme-tasks.php:878
+#: includes/eme-tasks.php:881
 msgid "The subject of the email that will be sent to the respondent if the task signup is deleted by an admin."
 msgstr "如果任务报名被管理员删除，向应答者发送的电子邮件的主题。"
 
 #: includes/eme-options.php:2681
-#: includes/eme-tasks.php:886
+#: includes/eme-tasks.php:889
 msgid "Task Signup Deleted Email Body"
 msgstr "任务报名被删除的电子邮件正文"
 
 #: includes/eme-options.php:2681
-#: includes/eme-tasks.php:887
+#: includes/eme-tasks.php:890
 msgid "The body of the email that will be sent to the respondent if the task signup is deleted by an admin."
 msgstr "如果任务报名被管理员删除，向应答者发送的电子邮件的正文。"
 
@@ -11793,8 +11793,8 @@ msgstr "等待用户的确认中"
 #: includes/eme-people.php:1301
 #: includes/eme-people.php:1652
 #: includes/eme-people.php:1780
-#: includes/eme-tasks.php:665
-#: includes/eme-tasks.php:2233
+#: includes/eme-tasks.php:668
+#: includes/eme-tasks.php:2236
 msgid "Approved"
 msgstr "已批准"
 
@@ -12649,125 +12649,125 @@ msgstr "该行动已成功执行，但在发送邮件和退还款项方面出现
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "退款时出现了问题，请检查您的日志。"
 
-#: includes/eme-tasks.php:681
+#: includes/eme-tasks.php:684
 msgid "Filter task signups"
 msgstr "筛选任务的报名"
 
-#: includes/eme-tasks.php:692
+#: includes/eme-tasks.php:695
 #, fuzzy
 msgid "Approve selected task signups"
 msgstr "删除选定的任务报名"
 
-#: includes/eme-tasks.php:693
+#: includes/eme-tasks.php:696
 msgid "Delete selected task signups"
 msgstr "删除选定的任务报名"
 
-#: includes/eme-tasks.php:697
+#: includes/eme-tasks.php:700
 #, fuzzy
 msgid "Send emails to people upon changes being made?"
 msgstr "做出改变后向会员发送邮件？"
 
-#: includes/eme-tasks.php:732
-#: includes/eme-tasks.php:741
-#: includes/eme-tasks.php:751
-#: includes/eme-tasks.php:760
-#: includes/eme-tasks.php:774
-#: includes/eme-tasks.php:783
-#: includes/eme-tasks.php:793
-#: includes/eme-tasks.php:802
-#: includes/eme-tasks.php:816
-#: includes/eme-tasks.php:825
-#: includes/eme-tasks.php:839
-#: includes/eme-tasks.php:848
-#: includes/eme-tasks.php:858
-#: includes/eme-tasks.php:867
-#: includes/eme-tasks.php:881
-#: includes/eme-tasks.php:890
-#: includes/eme-tasks.php:904
-#: includes/eme-tasks.php:913
-#: includes/eme-tasks.php:926
-#: includes/eme-tasks.php:932
-#: includes/eme-tasks.php:945
+#: includes/eme-tasks.php:735
+#: includes/eme-tasks.php:744
+#: includes/eme-tasks.php:754
+#: includes/eme-tasks.php:763
+#: includes/eme-tasks.php:777
+#: includes/eme-tasks.php:786
+#: includes/eme-tasks.php:796
+#: includes/eme-tasks.php:805
+#: includes/eme-tasks.php:819
+#: includes/eme-tasks.php:828
+#: includes/eme-tasks.php:842
+#: includes/eme-tasks.php:851
+#: includes/eme-tasks.php:861
+#: includes/eme-tasks.php:870
+#: includes/eme-tasks.php:884
+#: includes/eme-tasks.php:893
+#: includes/eme-tasks.php:907
+#: includes/eme-tasks.php:916
+#: includes/eme-tasks.php:929
+#: includes/eme-tasks.php:935
+#: includes/eme-tasks.php:948
 msgid "Only choose a template if you want to override the default settings:"
 msgstr "只有当您想覆盖默认设置时，才选择一个模板。"
 
-#: includes/eme-tasks.php:812
+#: includes/eme-tasks.php:815
 msgid "Task Signup Updated Email Subject"
 msgstr "任务报名更新的电子邮件主题"
 
-#: includes/eme-tasks.php:821
+#: includes/eme-tasks.php:824
 msgid "Task Signup Updated Email Body"
 msgstr "任务报名更新的电子邮件正文"
 
-#: includes/eme-tasks.php:930
+#: includes/eme-tasks.php:933
 msgid "The layout of the task signup form."
 msgstr "任务报名表的布局。"
 
-#: includes/eme-tasks.php:927
-#: includes/eme-tasks.php:933
+#: includes/eme-tasks.php:930
+#: includes/eme-tasks.php:936
 msgid "Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!"
 msgstr "警告：此覆盖仅在单个活动内使用，否则将始终使用通用设置！"
 
-#: includes/eme-tasks.php:1010
+#: includes/eme-tasks.php:1013
 msgid "Change the date of the listed tasks by this many days"
 msgstr "将列出的任务的日期更改此天数"
 
-#: includes/eme-tasks.php:1011
+#: includes/eme-tasks.php:1014
 msgid "Change"
 msgstr "更改"
 
-#: includes/eme-tasks.php:1021
+#: includes/eme-tasks.php:1024
 msgid "Begin"
 msgstr "开始"
 
-#: includes/eme-tasks.php:1023
+#: includes/eme-tasks.php:1026
 msgid "Spaces"
 msgstr "空位"
 
-#: includes/eme-tasks.php:992
+#: includes/eme-tasks.php:995
 msgid "Add new task"
 msgstr "添加新任务"
 
-#: includes/eme-tasks.php:1050
+#: includes/eme-tasks.php:1053
 msgid "For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly."
 msgstr "对于循环性的活动，输入任务的开始和结束日期，就像您为系列中的第一个活动做的那样。其他活动的任务将被相应地调整。"
 
 #. translators: %s is the start date of the first event
-#: includes/eme-tasks.php:1054
+#: includes/eme-tasks.php:1057
 msgid "The start date of the first event in the series was initially %s"
 msgstr "系列中第一个活动的开始日期最初为 %s"
 
-#: includes/eme-tasks.php:1069
+#: includes/eme-tasks.php:1072
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "要求是 WP 会员才可以报名参加任务？"
 
-#: includes/eme-tasks.php:1078
+#: includes/eme-tasks.php:1081
 #, fuzzy
 msgid "Require approval for task signups?"
 msgstr "允许任务报名时有重叠？"
 
-#: includes/eme-tasks.php:1530
-#: includes/eme-tasks.php:1657
+#: includes/eme-tasks.php:1533
+#: includes/eme-tasks.php:1660
 msgid "There are no tasks to sign up for right now"
 msgstr "现在没有任何任务可以报名参加"
 
-#: includes/eme-tasks.php:1892
+#: includes/eme-tasks.php:1895
 msgid "Please select at least one task."
 msgstr "请至少选择一项任务。"
 
-#: includes/eme-tasks.php:1981
+#: includes/eme-tasks.php:1984
 msgid "No more open spaces for this task"
 msgstr "这项任务没有更多的空隙"
 
-#: includes/eme-tasks.php:2001
+#: includes/eme-tasks.php:2004
 msgid "Duplicate signup detected"
 msgstr "检测到重复的报名"
 
-#: includes/eme-tasks.php:2008
+#: includes/eme-tasks.php:2011
 msgid "Signup overlap with another task detected"
 msgstr "检测到与另一项任务重叠的报名"
 
-#: includes/eme-tasks.php:2047
+#: includes/eme-tasks.php:2050
 #, fuzzy
 msgid "Signup failed"
 msgstr "报名完成"
@@ -13218,7 +13218,7 @@ msgstr "重复的开始和结束日期（将其视为系列中第一个活动的
 msgid "From %s onwards (automatically extended)"
 msgstr "从 %s 起（自动延长）"
 
-#: includes/eme-tasks.php:1046
+#: includes/eme-tasks.php:1049
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "如果任务的空位数为0，任务描述将被视为下一组任务的章节标题。"
 
@@ -13561,11 +13561,11 @@ msgstr "CSV分隔符"
 msgid "Set the delimiter used in CSV exports."
 msgstr "设置CSV导出中使用的分隔符。"
 
-#: includes/eme-tasks.php:1085
+#: includes/eme-tasks.php:1088
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr "允许每人每个活动只报名一个任务？"
 
-#: includes/eme-tasks.php:1969
+#: includes/eme-tasks.php:1972
 msgid "Only one signup allowed"
 msgstr "只允许一次报名"
 
@@ -13605,7 +13605,7 @@ msgstr "私有活动仅对登录用户可见。草稿活动从前端不可见。
 msgid "Unlisted (hidden)"
 msgstr "未列出（隐藏）"
 
-#: includes/eme-tasks.php:691
+#: includes/eme-tasks.php:694
 msgid "Send reminders for task signups"
 msgstr "发送任务报名提醒"
 
@@ -13812,7 +13812,7 @@ msgstr "管理假日列表"
 msgid "Delete selected lists of holidays"
 msgstr "删除选定的假日列表"
 
-#: includes/eme-holidays.php:461
+#: includes/eme-holidays.php:463
 msgid "Holiday lists deleted"
 msgstr "假日列表已删除"
 
@@ -13971,7 +13971,7 @@ msgid "A location maximum capacity is set. If your event maximum surpasses this 
 msgstr "已设置地点最大容量。如果您的活动最大人数超过此容量，地点容量将优先。"
 
 #. translators: %d is the number of persons signed up
-#: includes/eme-tasks.php:973
+#: includes/eme-tasks.php:976
 msgid "%d person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
@@ -14079,11 +14079,11 @@ msgstr "退订确认电子邮件正文"
 msgid "The body of the email that will be sent to the person as confirmation after they unsubscribe."
 msgstr "用户退订后发送给该人员的确认电子邮件的正文。"
 
-#: includes/eme-tasks.php:813
+#: includes/eme-tasks.php:816
 msgid "The subject of the email that will be sent to the respondent if the task signup has been updated by an admin."
 msgstr "如果任务报名已被管理员更新，将发送给报名者的电子邮件主题。"
 
-#: includes/eme-tasks.php:822
+#: includes/eme-tasks.php:825
 msgid "The body of the email that will be sent to the respondent if the task signup has been updated by an admin."
 msgstr "如果任务报名已被管理员更新，将发送给报名者的电子邮件正文。"
 
@@ -14365,19 +14365,19 @@ msgid "%d pending task signup"
 msgid_plural "%d pending task signups"
 msgstr[0] "%d 个待处理的任务报名"
 
-#: includes/eme-tasks.php:1080
+#: includes/eme-tasks.php:1083
 msgid "Consider pending (unapproved) task signups as available for new signups"
 msgstr "将待处理（未批准）的任务报名视为可用于新报名"
 
-#: includes/eme-tasks.php:923
+#: includes/eme-tasks.php:926
 msgid "Task Signup Form (task entry section)"
 msgstr "任务报名表单（任务输入部分）"
 
-#: includes/eme-tasks.php:924
+#: includes/eme-tasks.php:927
 msgid "The layout of the task entry section in the signup form."
 msgstr "报名表单中任务输入部分的布局。"
 
-#: includes/eme-tasks.php:929
+#: includes/eme-tasks.php:932
 msgid "Task Signup Form (personal info section)"
 msgstr "任务报名表单（个人信息部分）"
 
@@ -15284,39 +15284,39 @@ msgstr ""
 msgid "Tip: After this action, people will still be in the trash bin and can be restored. Use the permanent delete action below to remove them forever."
 msgstr ""
 
-#: includes/eme-tasks.php:617
+#: includes/eme-tasks.php:620
 msgid "Add task signup"
 msgstr ""
 
-#: includes/eme-tasks.php:623
+#: includes/eme-tasks.php:626
 msgid "Assign"
 msgstr ""
 
-#: includes/eme-tasks.php:624
+#: includes/eme-tasks.php:627
 msgid "No overlap or capacity checks happen here, to allow more freedom in task assignments."
 msgstr ""
 
-#: includes/eme-tasks.php:2429
+#: includes/eme-tasks.php:2432
 msgid "Please select a task and a person."
 msgstr ""
 
-#: includes/eme-tasks.php:2435
+#: includes/eme-tasks.php:2438
 msgid "Invalid task."
 msgstr ""
 
-#: includes/eme-tasks.php:2440
+#: includes/eme-tasks.php:2443
 msgid "Invalid person."
 msgstr ""
 
-#: includes/eme-tasks.php:2446
+#: includes/eme-tasks.php:2449
 msgid "This person is already signed up for this task."
 msgstr ""
 
-#: includes/eme-tasks.php:2478
+#: includes/eme-tasks.php:2481
 msgid "Task assigned successfully."
 msgstr ""
 
-#: includes/eme-tasks.php:2480
+#: includes/eme-tasks.php:2483
 msgid "There was a problem assigning the task."
 msgstr ""
 
@@ -15567,7 +15567,7 @@ msgstr ""
 #: includes/eme-members.php:1295
 #: includes/eme-members.php:1321
 #: includes/eme-rsvp.php:1411
-#: includes/eme-tasks.php:1962
+#: includes/eme-tasks.php:1965
 msgid "The name and email address you entered do not match your account."
 msgstr ""
 
@@ -15597,19 +15597,19 @@ msgstr ""
 msgid "Recurrences using this list of holidays"
 msgstr ""
 
-#: includes/eme-holidays.php:229
+#: includes/eme-holidays.php:231
 msgid "Confirm update of holidays list"
 msgstr ""
 
-#: includes/eme-holidays.php:230
+#: includes/eme-holidays.php:232
 msgid "The events below are part of a recurrence using this list, fall on a holiday of the new list and have bookings or task signups. If you continue they will be moved to the trash bin, together with their bookings."
 msgstr ""
 
-#: includes/eme-holidays.php:235
+#: includes/eme-holidays.php:237
 msgid "bookings"
 msgstr ""
 
-#: includes/eme-holidays.php:235
+#: includes/eme-holidays.php:237
 msgid "task signups"
 msgstr ""
 
@@ -15619,4 +15619,8 @@ msgstr ""
 
 #: includes/eme-options.php:3132
 msgid "Make sure the API key has the rights needed to create and read checkouts."
+msgstr ""
+
+#: includes/eme-holidays.php:189
+msgid "These recurrences might get changed: events happening on a day matching the holidays will get cancelled together with their bookings (with an optional cancel mail to the booker)."
 msgstr ""

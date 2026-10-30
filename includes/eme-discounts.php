@@ -1523,7 +1523,9 @@ function eme_ajax_discounts_list() {
                     );
                 }
             }
-            $where = ' WHERE ' . implode( ' AND ', $where_array );
+            if ( ! empty( $where_array ) ) {
+                $where = ' WHERE ' . implode( ' AND ', $where_array );
+            }
         }
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
@@ -1589,7 +1591,9 @@ function eme_ajax_discountgroups_list() {
                     );
                 }
             }
-            $where = ' WHERE ' . implode( ' AND ', $where_array );
+            if ( ! empty( $where_array ) ) {
+                $where = ' WHERE ' . implode( ' AND ', $where_array );
+            }
         }
 	}
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {

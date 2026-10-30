@@ -721,7 +721,9 @@ function eme_ajax_countries_list() {
                     );
                 }
             }
-            $where = ' WHERE ' . implode( ' AND ', $where_array );
+            if ( ! empty( $where_array ) ) {
+                $where = ' WHERE ' . implode( ' AND ', $where_array );
+            }
         }
 	}
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {

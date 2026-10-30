@@ -5961,8 +5961,8 @@ function eme_ajax_bookings_list() {
     }
 
     // The toolbar search input
-    $q         = eme_sanitize_request( $_POST['q'] ?? '' );
-    $opt       = eme_sanitize_request( $_POST['opt'] ?? '' );
+    $q         = eme_sanitize_request( $_POST['q'] ?? [] );
+    $opt       = eme_sanitize_request( $_POST['opt'] ?? [] );
     $where     = '';
     $where_arr = [];
 
@@ -6050,21 +6050,24 @@ function eme_ajax_bookings_list() {
         $where_arr[] = $wpdb->prepare( "bookings.booking_id IN (SELECT related_id FROM $answers_table WHERE type='booking' AND field_id=%d)", $used_field_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 
-    if ( $q ) {
+    if ( ! empty( $q ) && is_array( $q ) && is_array( $opt ) ) {
+        $count_q   = count( $q );
+        $count_opt = count( $opt );
         $allowed_columns = eme_get_table_columns( $bookings_table );
+        if ( $count_q === $count_opt ) {
+            for ( $i = 0; $i < $count_opt; $i++ ) {
+                $fld = $opt[ $i ];
 
-        for ( $i = 0; $i < count( $opt ); $i++ ) {
-            $fld = $opt[ $i ];
+                if ( ! in_array( $fld, $allowed_columns, true ) ) {
+                    continue;
+                }
 
-            if ( ! in_array( $fld, $allowed_columns, true ) ) {
-                continue;
-            }
-
-            if ( $fld === 'booker' ) {
-                $like = '%' . $wpdb->esc_like( $q[ $i ] ) . '%';
-                $where_arr[] = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s)', $like, $like);
-            } else {
-                $where_arr[] = $wpdb->prepare( "`$fld` LIKE %s", '%' . $wpdb->esc_like( $q[ $i ] ) . '%');
+                if ( $fld === 'booker' ) {
+                    $like = '%' . $wpdb->esc_like( $q[ $i ] ) . '%';
+                    $where_arr[] = $wpdb->prepare( '(lastname LIKE %s OR firstname LIKE %s)', $like, $like);
+                } else {
+                    $where_arr[] = $wpdb->prepare( "`$fld` LIKE %s", '%' . $wpdb->esc_like( $q[ $i ] ) . '%');
+                }
             }
         }
     }
@@ -7060,10 +7063,10 @@ function eme_ajax_action_mark_userconfirm( $ids, $action ) {
     print wp_json_encode( $ajaxResult );
 }
 
-function eme_ajax_action_mark_attendance( $ids, $action ) {
+function eme_ajax_action_mark_attendance( $ids_arr, $action ) {
     foreach ( $ids_arr as $booking_id ) {
         eme_update_attendance_count( $booking_id );
-        $booking = eme_get_booking( $booking );
+        $booking = eme_get_booking( $booking_id );
         $event = eme_get_event( $booking['event_id'] );
         if ( $event['event_properties']['attendancerecord'] ) {
             eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );

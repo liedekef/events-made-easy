@@ -3422,27 +3422,26 @@ function eme_remove_email_from_newsletter( $email ) {
 
 function eme_delete_people( $person_ids ) {
     global $wpdb;
-    // we call all delete functions here, even if not needed (delete only happens after thrash and when trashing we already delte the relevant memberships and groups for that person)
-    // this way this function can be called from everywhere without needing to know what to clean up
-    if ( has_action( 'eme_delete_person_action' ) ) {
-        foreach ( $ids_arr as $person_id ) {
-            $person = eme_get_person( $person_id );
-            do_action( 'eme_delete_person_action', $person );
-        }
-    }
-    eme_delete_person_bookings( $person_ids );
-    eme_delete_person_answers( $person_ids );
-    eme_delete_person_memberships( $person_ids );
-    eme_delete_person_groups( $person_ids );
-    eme_delete_person_attendances( $person_ids );
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     if ( eme_is_list_of_int( $person_ids ) ) {
         $ids_arr_int = array_map('intval', explode(',', $person_ids));
+        // we call all delete functions here, even if not needed (delete only happens after thrash and when trashing we already delte the relevant memberships and groups for that person)
+        // this way this function can be called from everywhere without needing to know what to clean up
+        if ( has_action( 'eme_delete_person_action' ) ) {
+            foreach ( $ids_arr_int as $person_id ) {
+                $person = eme_get_person( $person_id );
+                do_action( 'eme_delete_person_action', $person );
+            }
+        }
+        eme_delete_person_bookings( $person_ids );
+        eme_delete_person_answers( $person_ids );
+        eme_delete_person_memberships( $person_ids );
+        eme_delete_person_groups( $person_ids );
+        eme_delete_person_attendances( $person_ids );
         $placeholders = implode(',', array_fill(0, count($ids_arr_int), '%d'));
         $prepared_sql = $wpdb->prepare("DELETE FROM $people_table WHERE person_id IN ($placeholders)", ...$ids_arr_int); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $ids_arr   = explode( ',', $person_ids );
-        foreach ( $ids_arr as $person_id ) {
+        foreach ( $ids_arr_int as $person_id ) {
             eme_delete_uploaded_files( $person_id, 'people' );
         }
     }

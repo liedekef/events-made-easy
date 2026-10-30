@@ -177,6 +177,7 @@ function eme_ajax_attendances_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table             = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
 	$fTableResult      = [];
+	$time_format       = 1;
 	$search_type       = eme_sanitize_request( $_POST['search_type'] ?? '' );
 	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? $_POST['search_start_date'] : '';
 	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? $_POST['search_end_date'] : '';

@@ -3857,7 +3857,7 @@ function eme_ajax_formfields_list() {
         $res         = [];
         foreach ( $rows as $key => $formfield ) {
             if ( empty( $formfield['field_name'] ) ) {
-                $row['field_name'] = __( 'No name', 'events-made-easy' );
+                $rows[ $key ]['field_name'] = __( 'No name', 'events-made-easy' );
             }
             $rows[ $key ]['field_type']     = eme_get_fieldtype( $formfield['field_type'] );
             $rows[ $key ]['field_required'] = ( $formfield['field_required'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );

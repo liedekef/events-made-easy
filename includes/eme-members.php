@@ -6293,6 +6293,7 @@ function eme_import_csv_members() {
     if ( ! ( in_array( 'lastname', $headers ) || in_array( 'email', $headers ) ) || ! in_array( 'membership', $headers ) || ! in_array( 'start_date', $headers ) ) {
         return __( 'Not all required fields present.', 'events-made-easy' );
     } else {
+        $empty_props = eme_init_person_props();
         // now loop over the rest
         while ( ( $row = fgetcsv( stream: $handle, separator: $delimiter, enclosure: $enclosure, escape: '') ) !== false ) {
             $line = array_combine( $headers, $row );

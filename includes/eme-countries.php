@@ -703,23 +703,26 @@ function eme_ajax_countries_list() {
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$fTableResult = [];
 	// The toolbar search input
-	$q           = eme_sanitize_request( $_POST['q'] ?? '' );
+	$q           = eme_sanitize_request( $_POST['q'] ?? [] );
 	$opt         = eme_sanitize_request( $_POST['opt'] ?? [] );
 	$where       = '';
 	$where_array = [];
-	if ( $q ) {
+	if ( ! empty( $q ) && is_array( $q ) && is_array( $opt ) ) {
+        $count_q   = count( $q );
+        $count_opt = count( $opt );
         $allowed_columns = eme_get_table_columns( $table );
-
-        for ( $i = 0; $i < count( $opt ); $i++ ) {
-            $fld = $opt[ $i ];
-            if ( in_array( $fld, $allowed_columns, true ) ) {
-                $where_array[] = $wpdb->prepare(
-                    "`$fld` LIKE %s",
-                    '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
-                );
+        if ( $count_q === $count_opt ) {
+            for ( $i = 0; $i < $count_opt; $i++ ) {
+                $fld = $opt[ $i ];
+                if ( in_array( $fld, $allowed_columns, true ) ) {
+                    $where_array[] = $wpdb->prepare(
+                        "`$fld` LIKE %s",
+                        '%' . $wpdb->esc_like( $q[ $i ] ) . '%'
+                    );
+                }
             }
+            $where = ' WHERE ' . implode( ' AND ', $where_array );
         }
-		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";

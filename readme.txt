@@ -99,6 +99,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.3  (2026/10/30) =
+* Be more strict in urls for paging events and filtering
+* Small bugfixes for undefined variables
+
 = 3.3.2  (2026/10/29) =
 * Security: fix for CVE-2026-118634 (reported by Wordfence)
 

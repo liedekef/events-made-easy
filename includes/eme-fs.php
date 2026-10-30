@@ -98,10 +98,10 @@ function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
         $pdf_mtime      = filemtime( $pdf_path );
         $pdf_mtime_obj      = new emeExpressiveDate( 'now', EME_TIMEZONE );
         $pdf_mtime_obj->setTimestamp($pdf_mtime);
-        $booking_mtime_obj  = new emeExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+        $person_mtime_obj   = empty( $person['modif_date'] ) ? $pdf_mtime_obj : new emeExpressiveDate( $person['modif_date'], EME_TIMEZONE );
         $event_mtime_obj    = new emeExpressiveDate( $event['modif_date'], EME_TIMEZONE );
         $template_mtime_obj = new emeExpressiveDate( $template['modif_date'], EME_TIMEZONE );
-        if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
+        if ($person_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
             return $pdf_path;
         }
     }

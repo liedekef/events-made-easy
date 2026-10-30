@@ -6794,7 +6794,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                             __( '(opens in a new tab)', 'events-made-easy' )
                         );
                         ?>
-                        <a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted sprintf() with __() ?></a>
+                        <a class="button-primary" href="<?php echo esc_url( eme_event_url( $event ) ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted sprintf() with __() ?></a>
                         <br><?php esc_html_e( 'If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
                     <?php } ?> 
                     <?php if ( $edit_recurrence && $recurrence_id > 0 ) { ?>

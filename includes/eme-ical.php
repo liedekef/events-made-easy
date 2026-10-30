@@ -115,26 +115,30 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 	if ( $text == '' ) {
 		$text = 'ICAL';
 	}
-	$url = site_url( '/?eme_ical=public' );
+	$args = [ 'eme_ical' => 'public' ];
 	if ( ! empty( $location_id ) ) {
-		$url = add_query_arg( [ 'location_id' => $location_id ], $url );
+		$args['location_id'] = $location_id;
 	}
 	if ( ! empty( $category ) ) {
-		$url = add_query_arg( [ 'category' => $category ], $url );
+		$args['category'] = $category;
 	}
 	if ( ! empty( $notcategory ) ) {
-		$url = add_query_arg( [ 'notcategory' => $notcategory ], $url );
+		$args['notcategory'] = $notcategory;
 	}
 	if ( ! empty( $scope ) ) {
-		$url = add_query_arg( [ 'scope' => $scope ], $url );
+		$args['scope'] = $scope;
 	}
 	if ( ! empty( $author ) ) {
-		$url = add_query_arg( [ 'author' => $author ], $url );
+		$args['author'] = $author;
 	}
 	if ( ! empty( $contact_person ) ) {
-		$url = add_query_arg( [ 'contact_person' => $contact_person ], $url );
+		$args['contact_person'] = $contact_person;
 	}
-	$url = eme_add_lang_query_arg( $url, $language );
+	if ( ! empty( $language ) ) {
+		$args['lang'] = $language;
+	}
+	// add_query_arg does not encode the values, so we do it ourselves in a single call
+	$url = add_query_arg( urlencode_deep( $args ), site_url( '/' ) );
 
 	$link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 

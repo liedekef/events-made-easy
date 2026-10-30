@@ -9055,10 +9055,13 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
         'location_id'    => $location_id,
         'title'          => $title,
     ];
-    // add_query_arg does not encode the values, so we do it ourselves
-    $url  = add_query_arg( urlencode_deep( $rss_args ), site_url( '/' ) );
     // bake the language in explicitly here: this url is meant to be saved into a feed reader, so language must be set
-    $url  = eme_add_lang_query_arg( $url, $language );
+    if ( ! empty( $language ) ) {
+        $rss_args['lang'] = $language;
+    }
+    // add_query_arg does not encode the values, so we do it ourselves; do it in a single call
+    // since any additional add_query_arg() call would decode the already-encoded values again
+    $url  = add_query_arg( urlencode_deep( $rss_args ), site_url( '/' ) );
     $link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';
 
     if ( $justurl ) {

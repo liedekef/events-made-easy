@@ -1151,9 +1151,11 @@ function eme_mytasks_signups_shortcode( $atts ) {
     $signups = eme_get_task_signups_by( $wp_id, $task_id, $event_id, $scope );
     $result  = $header;
     foreach ( $signups as $signup ) {
-        $event   = eme_get_event( $signup['event_id'] );
         $task    = eme_get_task( $signup['task_id'] );
-        $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+        if (!empty($task)) {
+            $event   = eme_get_event( $task['event_id'] );
+            $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+        }
     }
     $result .= $footer;
     return $result;
@@ -1221,9 +1223,11 @@ function eme_tasks_signups_shortcode( $atts ) {
         $signups = eme_get_task_signups( $task_id );
         foreach ( $signups as $signup ) {
             $person  = eme_get_person( $signup['person_id'] );
-            $event   = eme_get_event( $signup['event_id'] );
             $task    = eme_get_task( $signup['task_id'] );
-            $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+            if (!empty($task)) {
+                $event   = eme_get_event( $task['event_id'] );
+                $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+            }
         }
         return $result;
     }
@@ -2019,7 +2023,7 @@ function eme_tasks_ajax() {
                 $signup = [
                     'task_id'       => $task_id,
                     'person_id'     => $person_id,
-                    'event_id'      => $event_id,
+                    'event_id'      => $task['event_id'],
                     'signup_status' => $signup_status,
                     'comment'       => $bookerComment,
                 ];

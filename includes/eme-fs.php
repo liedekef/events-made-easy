@@ -87,24 +87,6 @@ function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
     }
 
     $targetPath  = EME_UPLOAD_DIR . '/fsevents/' . $person['wp_id'];
-    $pdf_path    = '';
-    if ( is_dir( $targetPath ) ) {
-        foreach ( glob( "$targetPath/fsevent-$template_id-*.pdf" ) as $filename ) {
-            $pdf_path = $filename;
-        }
-    }
-    // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
-    if ( !empty( $pdf_path ) ) {
-        $pdf_mtime      = filemtime( $pdf_path );
-        $pdf_mtime_obj      = new emeExpressiveDate( 'now', EME_TIMEZONE );
-        $pdf_mtime_obj->setTimestamp($pdf_mtime);
-        $person_mtime_obj   = empty( $person['modif_date'] ) ? $pdf_mtime_obj : new emeExpressiveDate( $person['modif_date'], EME_TIMEZONE );
-        $event_mtime_obj    = new emeExpressiveDate( $event['modif_date'], EME_TIMEZONE );
-        $template_mtime_obj = new emeExpressiveDate( $template['modif_date'], EME_TIMEZONE );
-        if ($person_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-            return $pdf_path;
-        }
-    }
 
     // the template format needs br-handling, so lets use a handy function
     $format = eme_get_template_format( $template_id );
@@ -146,8 +128,6 @@ page-break-before: always;
     </head>
     <body>
 ";
-    // avoid a loop between eme_replace_booking_placeholders and eme_generate_booking_pdf
-    $format = str_replace( '#_BOOKINGPDF_URL', '', $format );
 
     $format = eme_replace_people_placeholders( $format, $person );
     $html .= eme_replace_event_placeholders( $format, $event );

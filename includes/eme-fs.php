@@ -68,7 +68,10 @@ function eme_email_fs_event_action( $event, $action ) {
         // create and add the needed pdf attachments too
         if ( !empty( $attachment_tmpl_ids_arr ) ) {
             foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
-                $attachment_ids_arr[] = eme_generate_fs_event_pdf( $person, $event, $attachment_tmpl_id );
+                $pdf_path = eme_generate_fs_event_pdf( $person, $event, $attachment_tmpl_id );
+                if ($pdf_path) {
+                    $attachment_ids_arr[] = $pdf_path
+                }
             }
         }
 
@@ -129,7 +132,9 @@ page-break-before: always;
     <body>
 ";
 
-    $format = eme_replace_people_placeholders( $format, $person );
+    if (!empty($person['wp_id'])) {
+        $format = eme_replace_people_placeholders( $format, $person );
+    }
     $html .= eme_replace_event_placeholders( $format, $event );
     $html .= "</body></html>";
     $dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
@@ -137,10 +142,10 @@ page-break-before: always;
     // now we know where to store it, so create the dir
     eme_mkdir_with_index( $targetPath );
     // unlink old pdf
-    array_map( 'wp_delete_file', glob( "$targetPath/fsevent-$template_id-*.pdf" ) );
+    array_map( 'wp_delete_file', glob( "$targetPath/fsevent-{$event['event_id']}-$template_id-*.pdf" ) );
     // now put new one
     $rand_id     = eme_random_id();
-    $target_file = $targetPath . "/fsevent-$template_id-$rand_id.pdf";
+    $target_file = $targetPath . "/fsevent-{$event['event_id']}-$template_id-$rand_id.pdf";
     file_put_contents( $target_file, $dompdf->output() );
     return $target_file;
 }

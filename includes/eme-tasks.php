@@ -1221,11 +1221,11 @@ function eme_tasks_signups_shortcode( $atts ) {
 
     if ( $task_id > 0 ) {
         $signups = eme_get_task_signups( $task_id );
-        foreach ( $signups as $signup ) {
-            $person  = eme_get_person( $signup['person_id'] );
-            $task    = eme_get_task( $signup['task_id'] );
-            if (!empty($task)) {
-                $event   = eme_get_event( $task['event_id'] );
+        $task    = eme_get_task( $task_id );
+        if (!empty($task)) {
+            $event   = eme_get_event( $task['event_id'] );
+            foreach ( $signups as $signup ) {
+                $person  = eme_get_person( $signup['person_id'] );
                 $result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
             }
         }
@@ -1985,6 +1985,11 @@ function eme_tasks_ajax() {
         foreach ( $task_id_arr as $task_id ) {
             $task_id = intval( $task_id );
             $task    = eme_get_task( $task_id );
+            // make sure the task exists and is linked to the expected event
+            if ( empty( $task ) || intval( $task['event_id'] ) !== $event_id ) {
+                $nok = 1;
+                continue;
+            }
             // if full, continue
             if ( isset( $event_count_signups_per_task[ $task_id ] ) && $event_count_signups_per_task[ $task_id ] >= $task['spaces'] ) {
                 $message .= __( 'No more open spaces for this task', 'events-made-easy' );

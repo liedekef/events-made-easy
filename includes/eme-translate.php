@@ -34,11 +34,14 @@ function eme_detect_lang() {
 	if ( $language === false ) {
         if ( ! empty( $_REQUEST['lang'] ) ) {
             $language = eme_sanitize_request( $_REQUEST['lang'] );
+            $lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+            if ( ! preg_match( "/^(?:{$lang_regex})\z/i", $language ) ) {
+                $language = substr( determine_locale(), 0, 2 );
+            }
         } else {
             $language = substr( determine_locale(), 0, 2 );
         }
-        // no spaces allowed, so remove everything after the first space
-        $language = preg_replace( '/\s+.*/', '', $language );
+        $language = strtolower( $language );
         wp_cache_set( 'eme_language', $language, '', 10 );
     }
 	return $language;

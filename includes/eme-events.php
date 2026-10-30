@@ -4413,9 +4413,9 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
             if ( $backward < 0 ) {
                 $pagination_top .= "<a class='eme_nav_left' $nav_hidden_class href='#'>&lt;&lt; $prev_text</a>";
             } else {
-                $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
+                $pagination_top .= "<a class='eme_nav_left' href='" . esc_url( add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) ) . "'>&lt;&lt; $prev_text</a>";
             }
-            $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $forward ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+            $pagination_top .= "<a class='eme_nav_right' href='" . esc_url( add_query_arg( [ 'eme_offset' => $forward ], $this_page_url ) ) . "'>$next_text &gt;&gt;</a>";
             // translators: %d is the page number
             $pagination_top .= "<span class='eme_nav_center'>" . sprintf( __( 'Page %d', 'events-made-easy' ), $page_number ) . '</span>';
         }
@@ -4425,7 +4425,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
             if ( $backward < 0 ) {
                 $pagination_top .= "<a class='eme_nav_left' $nav_hidden_class href='#'>&lt;&lt; $prev_text</a>";
             } else {
-                $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
+                $pagination_top .= "<a class='eme_nav_left' href='" . esc_url( add_query_arg( [ 'eme_offset' => $backward ], $this_page_url ) ) . "'>&lt;&lt; $prev_text</a>";
             }
             $pagination_top .= "<a class='eme_nav_right' $nav_hidden_class href='#'>$next_text &gt;&gt;</a>";
             // translators: %d is the page number
@@ -4574,6 +4574,8 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
             $no_events_message = do_shortcode( get_option( 'eme_no_events_message' ) );
             // this is also used in eme_widgets, so if you change something here, check the code there too
             $output = "<span class='events-no-events'>" . $no_events_message . '</span>';
+        } elseif ( ! eme_is_empty_string( $no_events_message ) ) {
+            $output = "<span class='events-no-events'>" . do_shortcode( eme_kses( $no_events_message ) ) . '</span>';
         }
     }
 
@@ -9041,7 +9043,20 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
     if ( empty( $language ) ) {
         $language = eme_detect_lang();
     }
-    $url  = site_url( "/?eme_rss=main&scope=$scope&show_ongoing=$show_ongoing&order=$order&category=$category&author=$author&contact_person=$contact_person&limit=$limit&location_id=$location_id&title=" . urlencode( $title ) );
+    $rss_args = [
+        'eme_rss'        => 'main',
+        'scope'          => $scope,
+        'show_ongoing'   => $show_ongoing,
+        'order'          => $order,
+        'category'       => $category,
+        'author'         => $author,
+        'contact_person' => $contact_person,
+        'limit'          => $limit,
+        'location_id'    => $location_id,
+        'title'          => $title,
+    ];
+    // add_query_arg does not encode the values, so we do it ourselves
+    $url  = add_query_arg( urlencode_deep( $rss_args ), site_url( '/' ) );
     // bake the language in explicitly here: this url is meant to be saved into a feed reader, so language must be set
     $url  = eme_add_lang_query_arg( $url, $language );
     $link = "<a href='" . esc_url( $url ) . "'>" . esc_html( eme_translate( $text ) ) . '</a>';

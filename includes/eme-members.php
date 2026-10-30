@@ -4819,7 +4819,7 @@ function eme_add_member_form_shortcode( $atts ) {
     $name = eme_sanitize_request($atts['name']);
     if ( ! empty( $name ) ) {
         $membership = eme_get_membership( $name );
-        $id         = $membership['membership_id'];
+        $id         = empty( $membership ) ? 0 : intval( $membership['membership_id'] );
     }
     $member = eme_new_member();
     if ( $id ) {
@@ -4927,6 +4927,7 @@ function eme_members_report_link_shortcode( $atts ) {
         return;
     }
 
+    $template_id = intval( $atts['template_id'] );
     if ( empty( $template_id ) ) {
         return '';
     }
@@ -5030,12 +5031,13 @@ function eme_person_memberinfo_shortcode( $atts ) {
         return '';
     }
 
+    $output = '';
     $member = eme_get_member_by_personid_membershipid( $person_id, $membership_id );
     if ( ! empty( $member ) ) {
         $format     = eme_get_template_format( $template_id );
         $membership = eme_get_membership( $membership_id );
         $output     = eme_replace_member_placeholders( $format, $membership, $member );
-    } 
+    }
 
     return $output;
 }

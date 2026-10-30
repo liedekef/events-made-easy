@@ -69,8 +69,8 @@ function eme_email_fs_event_action( $event, $action ) {
         if ( !empty( $attachment_tmpl_ids_arr ) ) {
             foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
                 $pdf_path = eme_generate_fs_event_pdf( $person, $event, $attachment_tmpl_id );
-                if ($pdf_path) {
-                    $attachment_ids_arr[] = $pdf_path
+                if ( $pdf_path ) {
+                    $attachment_ids_arr[] = $pdf_path;
                 }
             }
         }

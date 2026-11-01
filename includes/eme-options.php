@@ -1262,6 +1262,30 @@ function eme_options_register() {
         // put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
     };
 
+    // Options that are not rendered on non-datamaster sites must not be registered:
+    // wp-admin/options.php would otherwise update them to null when the form is saved.
+    if ( ! eme_is_datamaster() ) {
+        $options = array_values(
+            array_diff(
+                $options,
+                [
+                    'eme_queue_mails',
+                    'eme_cron_send_queued',
+                    'eme_cron_queue_count',
+                    'eme_mail_sleep',
+                    'eme_imap_bounce_active',
+                    'eme_imap_bounce_server',
+                    'eme_imap_bounce_port',
+                    'eme_imap_bounce_username',
+                    'eme_imap_bounce_password',
+                    'eme_imap_bounce_mailbox',
+                    'eme_imap_bounce_encryption',
+                    'eme_cron_process_bounces',
+                ]
+            )
+        );
+    }
+
     foreach ( $options as $opt ) {
         // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing -- sanitization is handled via add_filter below
         register_setting( 'eme-options', $opt );
@@ -2120,8 +2144,22 @@ function eme_options_page() {
         <select name="eme_cron_send_queued">
         <option value=""><?php esc_html_e( 'Not scheduled', 'events-made-easy' ); ?></option>
 <?php
-                $schedules = wp_get_schedules();
-                $scheduled = wp_get_schedule( 'eme_cron_send_queued' );
+                $schedules       = wp_get_schedules();
+                $stored_schedule = get_option( 'eme_cron_send_queued' );
+                $live_schedule   = wp_get_schedule( 'eme_cron_send_queued' );
+                // The stored option is the source of truth. Only use the live cron
+                // event as a fallback for older installs where the option is missing.
+                $scheduled = $stored_schedule;
+                if ( $scheduled === false ) {
+                    $scheduled = $live_schedule;
+                }
+                if ( ! empty( $scheduled ) && ! isset( $schedules[ $scheduled ] ) ) {
+                    $schedules[ $scheduled ] = [
+                        'interval' => 0,
+                        // translators: %s is the name of the unknown schedule
+                        'display'  => sprintf( __( 'Unknown schedule (%s)', 'events-made-easy' ), $scheduled ),
+                    ];
+                }
                 foreach ( $schedules as $key => $schedule ) {
                     printf(
                         "<option value='%s'%s>%s</option>\n",
@@ -2133,6 +2171,14 @@ function eme_options_page() {
 ?>
         </select><br>
 <?php
+                if ( get_option( 'eme_queue_mails' ) && $stored_schedule != $live_schedule ) {
+                    $stored_label = ( empty( $stored_schedule ) ) ? __( 'not scheduled', 'events-made-easy' ) : $stored_schedule;
+                    $live_label = ( empty( $live_schedule ) ) ? __( 'not scheduled', 'events-made-easy' ) : $live_schedule;
+                    echo '<br><span style="color:red">';
+                    // translators: %1$s is the saved mail queue schedule, %2$s is the active WP-Cron schedule
+                    printf( esc_html__( 'WARNING: the saved mail queue schedule (%1$s) does not match the active WP-Cron schedule (%2$s). Save these settings or repair the schedule on the Scheduled actions page.', 'events-made-easy' ), esc_html( $stored_label ), esc_html( $live_label ) );
+                    echo '</span>';
+                }
                 esc_html_e( 'If you plan to use the registered REST API call to send your queued emails, set the schedule to "Not scheduled".', 'events-made-easy' );
                 echo '<br>';
                 esc_html_e( 'Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended).', 'events-made-easy' );

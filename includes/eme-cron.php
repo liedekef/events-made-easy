@@ -67,6 +67,26 @@ function eme_plan_queue_mails() {
     }
 }
 
+// WP-Cron can lose a recurring event (e.g. due to concurrent option writes).
+// Periodically reconcile the live event with the stored schedule so the queue
+// starts running again without requiring a plugin reactivation or settings save.
+function eme_maybe_plan_queue_mails() {
+    if ( ! get_option( 'eme_queue_mails' ) || ! eme_is_datamaster() ) {
+        return;
+    }
+    $stored_schedule = get_option( 'eme_cron_send_queued' );
+    $live_schedule   = wp_get_schedule( 'eme_cron_send_queued' );
+    if ( $stored_schedule == $live_schedule ) {
+        return;
+    }
+    // Choosing "Not scheduled" always unschedules the event, so an empty stored
+    // schedule with a live event is a legacy/lost option: keep the live schedule.
+    if ( empty( $stored_schedule ) && $live_schedule ) {
+        update_option( 'eme_cron_send_queued', $live_schedule );
+    }
+    eme_plan_queue_mails();
+}
+
 add_action( 'eme_cron_send_new_events', 'eme_cron_send_new_events_function' );
 function eme_cron_send_new_events_function() {
     // if not data master, then don't do this
@@ -152,7 +172,18 @@ function eme_cron_cleanup_function() {
             }
         }
     }
+
+    // also make sure the queue is managed (if the cron was accidentally removed)
+    eme_maybe_plan_queue_mails();
 }
+
+// make sure the cleanup cron is always present (since that also checks for queue management)
+function eme_ensure_cleanup_cron() {
+    if ( ! wp_next_scheduled( 'eme_cron_cleanup_actions' ) ) {
+        wp_schedule_event( time(), 'eme_5min', 'eme_cron_cleanup_actions' );
+    }
+}
+add_action( 'init', 'eme_ensure_cleanup_cron', 20 );
 
 add_action( 'eme_cron_send_queued', 'eme_cron_send_queued' );
 function eme_cron_send_queued() {
@@ -291,6 +322,24 @@ function eme_cron_page() {
                 } else {
                     $message = __( 'New events will not be mailed to EME registered people.', 'events-made-easy' );
                 }
+            } elseif ( $_POST['eme_admin_action'] == 'eme_cron_repair_queue' && eme_is_datamaster() ) {
+                $stored_schedule = get_option( 'eme_cron_send_queued' );
+                if ( empty( $stored_schedule ) ) {
+                    $live_schedule = wp_get_schedule( 'eme_cron_send_queued' );
+                    if ( $live_schedule ) {
+                        update_option( 'eme_cron_send_queued', $live_schedule );
+                        $message = __( 'The live WP-Cron schedule has been stored as the mail queue schedule.', 'events-made-easy' );
+                    } else {
+                        $message = __( 'No mail queue schedule is stored. Set one in the Email settings; an empty value means the queue is intentionally not scheduled (for example when using the REST API).', 'events-made-easy' );
+                    }
+                } else {
+                    eme_plan_queue_mails();
+                    if ( wp_next_scheduled( 'eme_cron_send_queued' ) ) {
+                        $message = __( 'The mail queue schedule has been repaired.', 'events-made-easy' );
+                    } else {
+                        $message = __( 'The mail queue schedule could not be repaired. Check the schedule in the Email settings.', 'events-made-easy' );
+                    }
+                }
             }
         }
     }
@@ -323,7 +372,7 @@ function eme_cron_form( $message = '' ) {
             echo '</p></div>';
         }
 
-        if (get_option( 'eme_queue_mails' ) && ! wp_next_scheduled( 'eme_cron_send_queued' )) {
+        if ( get_option( 'eme_queue_mails' ) && ! get_option( 'eme_cron_send_queued' ) && ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
             echo "<div id='message' class='updated eme-message-admin'><p>";
             esc_html_e("Mail queueing is active but the mail queue is not scheduled to be processed. Make sure to either configure a schedule or run the registered REST API call from system cron with the appropriate options in order to process the queue.", 'events-made-easy' );
             echo '<br>';
@@ -378,6 +427,10 @@ function eme_cron_form( $message = '' ) {
     <h2><?php esc_html_e( 'Email queue info', 'events-made-easy' ); ?></h2>
 <?php
     $eme_queued_count = eme_get_queued_count();
+    $eme_queue_mails  = get_option( 'eme_queue_mails' );
+    $stored_schedule  = get_option( 'eme_cron_send_queued' );
+    $live_schedule    = wp_get_schedule( 'eme_cron_send_queued' );
+
     if ( $eme_queued_count > 1 ) {
         // translators: %d is the number of messages in the queue
         printf( esc_html__( 'There are %d messages in the mail queue.', 'events-made-easy' ), intval( $eme_queued_count ) );
@@ -387,26 +440,53 @@ function eme_cron_form( $message = '' ) {
         esc_html_e( 'There are no messages in the mail queue.', 'events-made-easy' );
     }
 
-    if ( $eme_queued_count && ( ! get_option( 'eme_queue_mails' ) || ! wp_next_scheduled( 'eme_cron_send_queued' ) ) ) {
+    if ( $eme_queued_count && ( ! $eme_queue_mails || ! $live_schedule ) ) {
         echo '<br>';
-        if ( ! get_option( 'eme_queue_mails' ) ) {
+        if ( ! $eme_queue_mails ) {
             esc_html_e( 'WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue.', 'events-made-easy' );
+        } elseif ( ! empty( $stored_schedule ) ) {
+            // a schedule is configured, but the WP-Cron event is missing
+            esc_html_e( 'WARNING: messages found in the queue and a mail queue schedule is configured, but it is not planned in WP-Cron, so they will not be sent out. Press the repair button below to fix this.', 'events-made-easy' );
         } else {
             esc_html_e( 'WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue.', 'events-made-easy' );
         }
-    } else {
-        $eme_cron_send_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
-        if ( $eme_cron_send_queued_schedule && isset( $schedules[ $eme_cron_send_queued_schedule ] ) ) {
-            $eme_cron_queue_count = intval(get_option( 'eme_cron_queue_count' ) );
-            $schedule = $schedules[ $eme_cron_send_queued_schedule ];
+    } elseif ( $live_schedule && isset( $schedules[ $live_schedule ] ) ) {
+        $eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
+        $schedule             = $schedules[ $live_schedule ];
+        echo '<br>';
+        if ( $eme_cron_queue_count > 0 ) {
+            // translators: %1$d is the batch size, %2$s is the schedule frequency
+            printf( esc_html__( 'Queued emails will be send out in batches of %1$d %2$s', 'events-made-easy' ), $eme_cron_queue_count, esc_html( $schedule['display'] ) );
+        } else {
+            // translators: %s is the schedule frequency
+            printf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), esc_html( $schedule['display'] ) );
+        }
+    }
+
+    if ( $eme_queue_mails ) {
+        $show_repair = false;
+        if ( empty( $stored_schedule ) && empty( $live_schedule ) ) {
             echo '<br>';
-            if ($eme_cron_queue_count > 0 ) {
-                // translators: %1$d is the batch size, %2$s is the schedule frequency
-                printf( esc_html__( 'Queued emails will be send out in batches of %1$d %2$s', 'events-made-easy' ), $eme_cron_queue_count, esc_html( $schedule['display'] ) );
-            } else {
-                // translators: %s is the schedule frequency
-                printf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), esc_html( $schedule['display'] ) );
-            }
+            esc_html_e( 'The mail queue is intentionally not scheduled in WordPress. Use the REST API from system cron to process it, or choose a schedule in the Email settings.', 'events-made-easy' );
+        } elseif ( $live_schedule != $stored_schedule ) { // not strict matching so false and empty are treated equal
+            // option missing/empty and no live event both mean "not scheduled"
+            $stored_label = empty( $stored_schedule ) ? __( 'not scheduled', 'events-made-easy' ) : $stored_schedule;
+            $live_label   = empty( $live_schedule )   ? __( 'not scheduled', 'events-made-easy' ) : $live_schedule;
+            echo '<br>' . esc_html__( 'Stored mail queue schedule:', 'events-made-easy' ) . ' <code>' . esc_html( $stored_label ) . '</code>';
+            echo '<br>' . esc_html__( 'Live WP-Cron schedule:', 'events-made-easy' ) . ' <code>' . esc_html( $live_label ) . '</code>';
+            echo '<br>';
+            esc_html_e( 'WARNING: the desired mail queue schedule does not match the currently planned schedule. Press the repair button to fix this.', 'events-made-easy' );
+            $show_repair = true;
+        }
+
+        if ( $show_repair && eme_is_datamaster() ) {
+?>
+            <form action="" method="post" style="margin-top:0.5em">
+            <?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field() returns safe HTML ?>
+            <input type='hidden' name='eme_admin_action' value='eme_cron_repair_queue'>
+            <input type="submit" value="<?php esc_html_e( 'Repair mail queue schedule', 'events-made-easy' ); ?>" class="button-primary action">
+            </form>
+<?php
         }
     }
 

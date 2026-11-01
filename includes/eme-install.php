@@ -162,20 +162,30 @@ function _eme_install() {
             update_option( $cron_action, $wanted_schedule );
             wp_unschedule_hook( $cron_action );
         }
+        $schedules         = wp_get_schedules();
         $is_action_planned = wp_next_scheduled( $cron_action );
-		if ( ! empty( $wanted_schedule ) && ! $is_action_planned ) {
-            $schedules = wp_get_schedules();
-            if ( ! isset( $schedules[ $wanted_schedule ] ) ) {
-                $wanted_schedule = 'hourly';
-                update_option( $cron_action, $wanted_schedule );
+        if ( ! empty( $wanted_schedule ) ) {
+            if ( ! $is_action_planned ) {
+                if ( ! isset( $schedules[ $wanted_schedule ] ) ) {
+                    $wanted_schedule = 'hourly';
+                    update_option( $cron_action, $wanted_schedule );
+                }
+                wp_schedule_event( time(), $wanted_schedule, $cron_action );
+            } elseif ( $is_action_planned && isset( $schedules[ $wanted_schedule ] ) ) {
+                // The stored option is the source of truth. If an old event
+                // still uses another schedule, replan it instead of overwriting
+                // the user's choice with the live cron schedule.
+                // (An unknown wanted schedule, e.g. from a not-yet-loaded plugin, is left alone.)
+                $planned_schedule = wp_get_schedule( $cron_action );
+                if ( $planned_schedule && $planned_schedule != $wanted_schedule ) {
+                    wp_unschedule_hook( $cron_action );
+                    wp_schedule_event( time(), $wanted_schedule, $cron_action );
+                }
             }
-			wp_schedule_event( time(), $wanted_schedule, $cron_action );
-		}
-
-        // make sure queue sending is configured properly
-        if ( $is_action_planned ) {
+        } elseif ( $is_action_planned ) {
+            // Backwards compatibility: an event exists but no schedule was stored.
             $planned_schedule = wp_get_schedule( $cron_action );
-            if ( $planned_schedule && $planned_schedule != $wanted_schedule ) {
+            if ( $planned_schedule ) {
                 update_option( $cron_action, $planned_schedule );
             }
         }

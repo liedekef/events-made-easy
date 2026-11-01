@@ -1262,30 +1262,6 @@ function eme_options_register() {
         // put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
     };
 
-    // Options that are not rendered on non-datamaster sites must not be registered:
-    // wp-admin/options.php would otherwise update them to null when the form is saved.
-    if ( ! eme_is_datamaster() ) {
-        $options = array_values(
-            array_diff(
-                $options,
-                [
-                    'eme_queue_mails',
-                    'eme_cron_send_queued',
-                    'eme_cron_queue_count',
-                    'eme_mail_sleep',
-                    'eme_imap_bounce_active',
-                    'eme_imap_bounce_server',
-                    'eme_imap_bounce_port',
-                    'eme_imap_bounce_username',
-                    'eme_imap_bounce_password',
-                    'eme_imap_bounce_mailbox',
-                    'eme_imap_bounce_encryption',
-                    'eme_cron_process_bounces',
-                ]
-            )
-        );
-    }
-
     foreach ( $options as $opt ) {
         // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing -- sanitization is handled via add_filter below
         register_setting( 'eme-options', $opt );

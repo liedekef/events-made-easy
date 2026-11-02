@@ -549,6 +549,9 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 function eme_payment_allowed_to_pay( $payment_id ) {
     // avoid that people pay again after pressing "back" and arriving on the payment form again
     $payment = eme_get_payment ( $payment_id );
+    if ( empty( $payment ) ) {
+        return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
+    }
     if ( $payment['target'] == 'member' ) {
         $member      = eme_get_member_by_paymentid( $payment_id );
         $membership  = eme_get_membership( $member['membership_id'] );
@@ -563,6 +566,19 @@ function eme_payment_allowed_to_pay( $payment_id ) {
             return "<div class='eme-already-paid'>" . $message . '</div>';
         }
     } else {
+        // A booking can be linked to an event that got cancelled/deleted in the meantime.
+        // Also check trashed bookings, since cancelling an event trashes its bookings too.
+        $bookings = eme_get_bookings_by_paymentid( $payment_id, 1 );
+        if (empty($bookings)) {
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing found or booking already cancelled', 'events-made-easy' ) . '</div>';
+        }
+        foreach ( $bookings as $booking ) {
+            $event = eme_get_event( $booking['event_id'] );
+            if ( empty( $event ) || $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'The event linked to this payment has been cancelled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
+            }
+        }
+
         $payment_paid = eme_get_payment_paid( $payment );
         if ( $payment_paid ) {
             $message = get_option( 'eme_payment_booking_already_paid_format' );
@@ -1630,7 +1646,7 @@ function eme_complete_transaction_sumup( $payment ) {
 
 function eme_complete_transaction_stripe( $payment ) {
     $gateway = 'stripe';
-    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/init.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/vendor/autoload.php';
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
@@ -2097,7 +2113,7 @@ function eme_notification_stripe() {
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
     $webhook_secret         = get_option( 'eme_stripe_webhook_secret' );
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/init.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/vendor/autoload.php';
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
     $payload    = @file_get_contents( 'php://input' );
@@ -2216,7 +2232,7 @@ function eme_stripe_webhook() {
         return;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/init.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/vendor/autoload.php';
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
     // first check all webhooks, delete the one matching our url and recreate it, otherwise we can't get the secret
@@ -2341,7 +2357,7 @@ function eme_charge_stripe() {
         $item_name = $description;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/init.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/vendor/autoload.php';
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
     \Stripe\Stripe::setAppInfo( 'WordPress Events Made Easy Stripe plugin' );
 
@@ -2821,7 +2837,7 @@ function eme_refund_booking_stripe( $booking ) {
         return;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/init.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/stripe/vendor/autoload.php';
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
     $stripe_pi_id = $booking['pg_pid'];

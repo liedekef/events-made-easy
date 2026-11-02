@@ -3292,14 +3292,18 @@ function eme_get_booking_personids( $booking_ids ) {
     }
 }
 
-function eme_get_bookings_by_paymentid( $payment_id ) {
+function eme_get_bookings_by_paymentid( $payment_id, $include_trash = 0 ) {
     global $wpdb;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $bookings       = [];
     if ( ! $payment_id ) {
         return $bookings;
     }
-    $prepared_sql = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE status IN (%d,%d,%d) AND payment_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    if ( $include_trash ) {
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE payment_id = %d", $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    } else {
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE status IN (%d,%d,%d) AND payment_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $payment_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    }
     $bookings = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     foreach ( $bookings as $key => $booking ) {
         if ( eme_is_serialized( $booking['dcodes_used'] ) ) {

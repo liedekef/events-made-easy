@@ -561,11 +561,23 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
             return "<div class='eme-already-paid'>" . $message . '</div>';
         }
     } else {
-        $bookings = eme_get_bookings_by_paymentid( $payment_id );
-        if (empty($bookings)) {
-                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No bookings found', 'events-made-easy' ) . '</div>';
+        // Include trashed bookings so we can distinguish "payment exists but its
+        // bookings were trashed" from "no bookings at all", and so the event-status
+        // check below can actually fire for trashed events.
+        $bookings = eme_get_bookings_by_paymentid( $payment_id, 1 );
+        if ( empty( $bookings ) ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No bookings found', 'events-made-easy' ) . '</div>';
         }
+
+        $active_bookings = 0;
         foreach ( $bookings as $booking ) {
+            // A trashed booking means the user cancelled it; it should not block
+            // payment for the remaining active bookings of the same payment.
+            if ( $booking['status'] == EME_RSVP_STATUS_TRASH ) {
+                continue;
+            }
+            $active_bookings++;
+
             $event = eme_get_event( $booking['event_id'] );
             if ( empty( $event ) || $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'The event linked to this payment has been cancelled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
@@ -573,6 +585,11 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
             if ( ! eme_is_event_rsvp( $event ) ) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Bookings for this event are disabled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
             }
+        }
+
+        // All bookings for this payment are trashed: treat as cancelled.
+        if ( $active_bookings === 0 ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'The bookings linked to this payment have been cancelled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
         }
 
         $payment_paid = eme_get_payment_paid( $payment );

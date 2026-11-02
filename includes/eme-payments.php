@@ -561,9 +561,7 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
             return "<div class='eme-already-paid'>" . $message . '</div>';
         }
     } else {
-        // A booking can be linked to an event that got cancelled/deleted in the meantime.
-        // Also check trashed bookings, since cancelling an event trashes its bookings too.
-        $bookings = eme_get_bookings_by_paymentid( $payment_id, 1 );
+        $bookings = eme_get_bookings_by_paymentid( $payment_id );
         if (empty($bookings)) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No bookings found', 'events-made-easy' ) . '</div>';
         }
@@ -571,6 +569,9 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
             $event = eme_get_event( $booking['event_id'] );
             if ( empty( $event ) || $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'The event linked to this payment has been cancelled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
+            }
+            if ( ! eme_is_event_rsvp( $event ) ) {
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Bookings for this event are disabled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
             }
         }
 

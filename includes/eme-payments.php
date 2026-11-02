@@ -75,21 +75,25 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
     $ret_string = '';
     $payment    = eme_get_payment( $payment_id );
     if ( empty( $payment ) ) {
-        return;
+        return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
+    }
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
+    if ( ! empty( $check_allowed_to_pay )) {
+        return $check_allowed_to_pay;
     }
     if ( $payment['target'] == 'member' ) {
-        return eme_member_payment_form( $payment_id, $resultcode, $standalone );
+        return eme_member_payment_form( $payment, $resultcode, $standalone );
     }
     if ( $payment['target'] == 'fs_event' ) {
-        return eme_fs_event_payment_form( $payment_id, $resultcode, $standalone );
+        return eme_fs_event_payment_form( $payment, $resultcode, $standalone );
     }
-    return eme_event_payment_form( $payment_id, $resultcode, $standalone );
+    return eme_event_payment_form( $payment, $resultcode, $standalone );
 }
 
-function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_event_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     $ret_string = '';
-    $payment    = eme_get_payment( $payment_id );
 
+    $payment_id = $payment['id'];
     $bookings = eme_get_bookings_by_paymentid( $payment_id );
     if ( empty( $bookings ) ) {
         return;
@@ -108,12 +112,6 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
     $event   = eme_get_event( $booking['event_id'] );
 
     $cur = $event['currency'];
-
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
-    if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
-    }
 
     // if on the waiting list, it can't be paid for yet
     if ( $booking['waitinglist'] ) {
@@ -282,15 +280,15 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
     return $ret_string;
 }
 
-function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_member_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     if ( $resultcode > 0 ) {
         $ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
     } else {
         $ret_string = '';
     }
 
-    $payment     = eme_get_payment( $payment_id );
-    $member      = eme_get_member_by_paymentid( $payment_id );
+    $payment_id = $payment['id'];
+    $member     = eme_get_member_by_paymentid( $payment_id );
     if (empty($member)) {
         // member has been deleted, but the payment id is still present
         $ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No member found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
@@ -300,25 +298,19 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
     $total_price = eme_get_payment_price( $payment_id );
     $membership  = eme_get_membership( $member['membership_id'] );
 
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
-    if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
-    } else {
-        if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE || $member['status'] == EME_MEMBER_STATUS_GRACE ) {
-            $end_date      = eme_localized_date( $member['end_date'], EME_TIMEZONE );
-            $next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
-            $next_end_date = eme_localized_date( $next_end_date, EME_TIMEZONE );
-            // translators: %1$s is the current membership end date, %2$s is the extended membership end date
-            $ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
-        } elseif ( $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
-            // set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
-            $new_start_date = eme_get_start_date( $membership, $member, 1 );
-            $next_end_date  = eme_get_next_end_date( $membership, $new_start_date );
-            $next_end_date  = eme_localized_date( $next_end_date, EME_TIMEZONE );
-            // translators: %s is the membership reactivation end date
-            $ret_string    .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s', 'events-made-easy' ), $next_end_date ) . '</div>';
-        }
+    if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE || $member['status'] == EME_MEMBER_STATUS_GRACE ) {
+        $end_date      = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+        $next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
+        $next_end_date = eme_localized_date( $next_end_date, EME_TIMEZONE );
+        // translators: %1$s is the current membership end date, %2$s is the extended membership end date
+        $ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
+    } elseif ( $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
+        // set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
+        $new_start_date = eme_get_start_date( $membership, $member, 1 );
+        $next_end_date  = eme_get_next_end_date( $membership, $new_start_date );
+        $next_end_date  = eme_localized_date( $next_end_date, EME_TIMEZONE );
+        // translators: %s is the membership reactivation end date
+        $ret_string    .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s', 'events-made-easy' ), $next_end_date ) . '</div>';
     }
 
     $cur = $membership['properties']['currency'];
@@ -432,27 +424,17 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
     return $ret_string;
 }
 
-function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_fs_event_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     if ( $resultcode > 0 ) {
         $ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
     } else {
         $ret_string = '';
     }
 
-    $payment = eme_get_payment( $payment_id );
-    if (empty($payment)) {
-        return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
-    }
     $event   = eme_get_event( $payment['related_id'] );
     if (empty($event)) {
         // event has been deleted, but the payment id is still present
         return "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No event found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
-    }
-
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
-    if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
     }
 
     $eme_fs_options = get_option('eme_fs');
@@ -546,19 +528,32 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
     return $ret_string;
 }
 
-function eme_payment_allowed_to_pay( $payment_id ) {
+function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $payment = eme_get_payment ( $payment_id );
+    if ( empty( $payment ) ) {
+        $payment = eme_get_payment( $payment_id );
+    } else {
+        $payment_id = $payment['id'];
+    }
     if ( empty( $payment ) ) {
         return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
     }
     if ( $payment['target'] == 'member' ) {
-        $member      = eme_get_member_by_paymentid( $payment_id );
-        $membership  = eme_get_membership( $member['membership_id'] );
+        $member = eme_get_member_by_paymentid( $payment_id );
+        if ( empty( $member ) ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No member found', 'events-made-easy' ) . '</div>';
+        }
+        $membership = eme_get_membership( $member['membership_id'] );
+        if ( empty( $membership ) ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No membership found', 'events-made-easy' ) . '</div>';
+        }
         return eme_check_member_allowed_to_pay( $member, $membership );
     } elseif ( $payment['target'] == 'fs_event' ) {
         // events are simple :-)
         $event = eme_get_event( $payment['related_id'] );
+        if ( empty( $event ) ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No event found', 'events-made-easy' ) . '</div>';
+        }
         if (empty($payment['pg_handled']) && $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
             return 0;
         } else { 
@@ -570,7 +565,7 @@ function eme_payment_allowed_to_pay( $payment_id ) {
         // Also check trashed bookings, since cancelling an event trashes its bookings too.
         $bookings = eme_get_bookings_by_paymentid( $payment_id, 1 );
         if (empty($bookings)) {
-                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing found or booking already cancelled', 'events-made-easy' ) . '</div>';
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No bookings found', 'events-made-easy' ) . '</div>';
         }
         foreach ( $bookings as $booking ) {
             $event = eme_get_event( $booking['event_id'] );
@@ -585,7 +580,7 @@ function eme_payment_allowed_to_pay( $payment_id ) {
             return "<div class='eme-already-paid'>" . $message . '</div>';
         }
     }
-    return 0;
+    return '';
 }
 
 function eme_payment_gateway_total( $price, $cur, $gateway ) {
@@ -2344,7 +2339,7 @@ function eme_charge_stripe() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;
@@ -2460,7 +2455,7 @@ function eme_charge_braintree() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;
@@ -2533,7 +2528,7 @@ function eme_charge_instamojo() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;
@@ -2650,7 +2645,7 @@ function eme_charge_fondy() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;
@@ -2915,7 +2910,7 @@ function eme_charge_mollie() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;
@@ -3067,7 +3062,7 @@ function eme_charge_bancontactwero() {
     }
 
     // avoid that people pay again after pressing "back" and arriving on the payment form again
-    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
         // not allowed: return the reason and stop
         return $check_allowed_to_pay;

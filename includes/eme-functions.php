@@ -909,6 +909,9 @@ function eme_permalink_convert( $val, $trailing_slash = 1 ) {
 function eme_event_url( $event, $language = '' ) {
     global $wp_rewrite;
 
+    if (empty($event)) {
+        return '';
+    }
     if ( $event['event_url'] != '' && get_option( 'eme_use_external_url' ) && eme_is_url( $event['event_url'] ) ) {
         $the_link = $event['event_url'];
         $parsed   = wp_parse_url( $the_link );
@@ -947,6 +950,9 @@ function eme_event_url( $event, $language = '' ) {
 function eme_location_url( $location, $language = '' ) {
     global $wp_rewrite;
 
+    if (empty($location)) {
+        return '';
+    }
     $the_link = '';
     if ( $location['location_url'] != '' && ( get_option( 'eme_use_external_url' ) || $location['location_properties']['online_only'] ) && eme_is_url( $location['location_url'] ) ) {
         $the_link = $location['location_url'];
@@ -985,6 +991,9 @@ function eme_location_url( $location, $language = '' ) {
 function eme_calendar_day_url( $day ) {
     global $wp_rewrite;
 
+    if (empty($day)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
@@ -1008,6 +1017,9 @@ function eme_booking_confirm_url( $payment ) {
     // the user confirm url is actually going to the payment page as well, but we use another permalink to be nicer to people
     global $wp_rewrite;
 
+    if (empty($payment)) {
+        return '';
+    }
     $language = eme_detect_lang();
     if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
@@ -1030,6 +1042,9 @@ function eme_booking_confirm_url( $payment ) {
 function eme_payment_url( $payment, $resultcode = 0 ) {
     global $wp_rewrite;
 
+    if (empty($payment)) {
+        return '';
+    }
     $language = eme_detect_lang();
     if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $payments_prefix_option = get_option( 'eme_permalink_payments_prefix', '' );
@@ -1055,6 +1070,9 @@ function eme_payment_url( $payment, $resultcode = 0 ) {
 function eme_category_url( $category ) {
     global $wp_rewrite;
 
+    if (empty($category)) {
+        return '';
+    }
     $language = eme_detect_lang();
     if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $categories_prefixes = explode( ',', get_option( 'eme_permalink_categories_prefix', '' ) );
@@ -1110,6 +1128,9 @@ function eme_check_invite_url( $event_id ) {
 }
 
 function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
+    if (empty($event)) {
+        return '';
+    }
     $the_link    = eme_event_url( $event, $lang );
     $hashstring  = $email . $lastname . $firstname;
     $invite_hash = wp_hash( $hashstring . '|' . $event['event_id'], 'nonce' );
@@ -1162,6 +1183,9 @@ function eme_user_can_book_for_others( $event ) {
 }
 
 function eme_rsvp_checkurl( $booking_id ) {
+    if (empty($booking_id)) {
+        return '';
+    }
     $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
     // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
@@ -1177,6 +1201,9 @@ function eme_rsvp_checkurl( $booking_id ) {
 }
 
 function eme_rsvp_proofurl( $booking_id ) {
+    if (empty($booking_id)) {
+        return '';
+    }
     $hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
     // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
@@ -1192,6 +1219,9 @@ function eme_rsvp_proofurl( $booking_id ) {
 }
 
 function eme_cpi_url( $person_id, $orig_email ) {
+    if (empty($person_id)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1229,6 +1259,9 @@ function eme_verify_member_checkurl() {
 }
 
 function eme_member_checkurl( $member ) {
+    if (empty($member)) {
+        return '';
+    }
     $hash     = wp_hash( $member['member_id'], 'nonce' );
     // no language: it is checked by someone else in the browser
     $the_link = eme_get_events_page();
@@ -1248,6 +1281,9 @@ function eme_admin_report_hash( $event_id, $action ) {
 }
 
 function eme_payment_return_url( $payment, $resultcode ) {
+    if (empty($payment)) {
+        return '';
+    }
     $language = eme_detect_lang();
     $the_link = eme_get_events_page( language: $language );
 
@@ -1268,6 +1304,9 @@ function eme_payment_return_url( $payment, $resultcode ) {
 }
 
 function eme_tasksignup_cancel_url( $signup ) {
+    if (empty($signup)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1276,6 +1315,9 @@ function eme_tasksignup_cancel_url( $signup ) {
 }
 
 function eme_cancel_url( $payment ) {
+    if (empty($payment)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1292,6 +1334,9 @@ function eme_unsub_url() {
 }
 
 function eme_unsub_rid_url($rid) {
+    if (empty($rid)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1300,6 +1345,9 @@ function eme_unsub_rid_url($rid) {
 }
 
 function eme_unsub_confirm_url( $email, $groups ) {
+    if (empty($email)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1315,6 +1363,9 @@ function eme_unsub_confirm_url( $email, $groups ) {
 }
 
 function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
+    if (empty($email)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = eme_get_events_page( language: $language );
@@ -1332,6 +1383,9 @@ function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
 }
 
 function eme_single_event_ical_url( $id ) {
+    if (empty($id)) {
+        return '';
+    }
     $language = eme_detect_lang();
 
     $the_link = site_url( '/?eme_ical=public_single&event_id=' . $id );
@@ -1340,6 +1394,9 @@ function eme_single_event_ical_url( $id ) {
 }
 
 function eme_captcha_url( $file ) {
+    if (empty($file)) {
+        return '';
+    }
     $the_link = '';
     // if there's an issue with the tmp dir, return false so we can show a message in the form
     $tmp_dir = get_temp_dir();
@@ -1361,6 +1418,9 @@ function eme_captcha_url( $file ) {
 }
 
 function eme_tracker_url( $random_id ) {
+    if (empty($random_id)) {
+        return '';
+    }
     // no language: this is a mail-open tracking pixel, no content is ever rendered
     $the_link = eme_get_events_page();
     $the_link = add_query_arg( [ 'eme_tracker_id' => $random_id ], $the_link );

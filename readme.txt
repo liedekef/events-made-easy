@@ -101,6 +101,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.3.4  (unreleased) =
 * Keep the mail queue schedule when the WP-Cron event is lost, self-heal it, and allow repairing it from the Scheduled actions page
+* Better checking wether payment is still allowed, avoiding people to pay for a cancelled event
+* Switched Stripe to composer, easier upgrade management
 
 = 3.3.3  (2026/10/30) =
 * Be more strict in urls for paging events and filtering

@@ -2285,6 +2285,9 @@ function eme_charge_paypal() {
         exit;
     }
 
+    $success_link = eme_payment_return_url($payment, $gateway);
+    $cancel_link = eme_payment_url($payment);
+
     // Log mismatches between POST and DB values
     $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
     $expected_cur = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
@@ -2295,8 +2298,12 @@ function eme_charge_paypal() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    $success_link = eme_payment_return_url($payment, $gateway);
-    $cancel_link = eme_payment_url($payment);
+    $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
+    if ( ! empty( $check_allowed_to_pay )) {
+        wp_safe_redirect( $cancel_link );
+        exit;
+    }
+
     try {
         $order = $client->create_order( $price, $cur, $description, $payment_id, $success_link, $cancel_link );
         eme_update_payment_pg_pid( $payment_id, $order['id'] );
@@ -2339,11 +2346,10 @@ function eme_charge_stripe() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
@@ -2438,6 +2444,7 @@ function eme_charge_braintree() {
 
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
+    $cancel_link  = eme_payment_url( $payment ) ;
 
     // no cheating (price+cur locked)
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}_{$price}_{$cur}" ) ) {
@@ -2455,11 +2462,10 @@ function eme_charge_braintree() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     require_once EME_PLUGIN_DIR . 'payment_gateways/braintree/vendor/autoload.php';
@@ -2510,6 +2516,7 @@ function eme_charge_instamojo() {
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, 1 );
+    $cancel_link       = eme_payment_url( $payment ) ;
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     // no cheating (price+cur locked)
@@ -2528,11 +2535,10 @@ function eme_charge_instamojo() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     require_once EME_PLUGIN_DIR . 'payment_gateways/instamojo/vendor/autoload.php';
@@ -2628,6 +2634,7 @@ function eme_charge_fondy() {
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     $success_link      = eme_payment_return_url( $payment, 0 );
     $fail_link         = eme_payment_return_url( $payment, 1 );
+    $cancel_link       = eme_payment_url( $payment ) ;
 
     // no cheating (price+cur locked)
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}_{$price}_{$cur}" ) ) {
@@ -2645,11 +2652,10 @@ function eme_charge_fondy() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/autoload.php';
@@ -2910,11 +2916,10 @@ function eme_charge_mollie() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     // Avoid loading the Mollie API if it is already loaded by another plugin
@@ -3044,6 +3049,7 @@ function eme_charge_bancontactwero() {
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, $gateway );
+    $cancel_link       = eme_payment_url( $payment );
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     // no cheating (price+cur locked)
@@ -3062,11 +3068,10 @@ function eme_charge_bancontactwero() {
         error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
     }
 
-    // avoid that people pay again after pressing "back" and arriving on the payment form again
     $check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id, $payment );
     if ( ! empty( $check_allowed_to_pay )) {
-        // not allowed: return the reason and stop
-        return $check_allowed_to_pay;
+        wp_safe_redirect( $cancel_link );
+        exit;
     }
 
     if ( ! class_exists( 'BancontactWero\Client' ) ) {

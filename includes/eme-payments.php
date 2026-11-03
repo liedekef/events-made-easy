@@ -1080,7 +1080,8 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
         if ( ! empty( $existing ) ) {
             $checkout = $existing[0];
             if ( $checkout->status == 'PAID' ) {
-                return "<div class='eme-message-error eme-rsvp-message-error'>" . esc_html__( 'This payment has already been paid.', 'events-made-easy' ) . '</div>';
+                $message = get_option( 'eme_payment_booking_already_paid_format' );
+                return "<div class='eme-already-paid'>" . $message . '</div>';
             }
         } else {
             $checkout = $checkoutService->create(

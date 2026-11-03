@@ -1042,10 +1042,12 @@ function eme_booking_confirm_url( $payment ) {
 function eme_payment_url( $payment, $resultcode = 0 ) {
     global $wp_rewrite;
 
-    if (empty($payment)) {
-        return '';
-    }
     $language = eme_detect_lang();
+    if (empty($payment)) {
+        // we return a useful url, so payment redirects always have somewhere to redirect to
+        return eme_get_events_page( language: $language );
+    }
+
     if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
         $payments_prefix_option = get_option( 'eme_permalink_payments_prefix', '' );
         if ( empty( $payments_prefix_option ) ) {

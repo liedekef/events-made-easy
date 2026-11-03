@@ -11,7 +11,6 @@ function eme_payment_gateways() {
         'webmoney'     => __( 'Webmoney', 'events-made-easy' ),
         'fdgg'         => __( 'First Data', 'events-made-easy' ),
         'mollie'       => __( 'Mollie', 'events-made-easy' ),
-        'payconiq'     => __( 'Bancontact Pay - Wero', 'events-made-easy' ),
         'bancontactwero' => __( 'Bancontact Pay - Wero', 'events-made-easy' ),
         'worldpay'     => __( 'Worldpay', 'events-made-easy' ),
         'opayo'        => __( 'Opayo', 'events-made-easy' ),
@@ -578,7 +577,7 @@ function eme_payment_allowed_to_pay( $payment_info, $gateway = null ) {
             return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment method not allowed', 'events-made-easy' ) . '</div>';
         }
         if (empty($payment['pg_handled']) && $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
-            return 0;
+            return '';
         } else { 
             $message = get_option( 'eme_payment_booking_already_paid_format' );
             return "<div class='eme-already-paid'>" . $message . '</div>';
@@ -639,7 +638,7 @@ function eme_payment_gateway_total( $price, $cur, $gateway ) {
         if ( $gateway == 'stripe' ) {
             $price *= 100;
         }
-        if ( $gateway == 'payconiq' || $gateway == 'bancontactwero' ) {
+        if ( $gateway == 'bancontactwero' ) {
             $price *= 100;
         }
         if ( $gateway == 'fondy' ) {
@@ -692,6 +691,7 @@ function eme_payment_charge_guard( $payment, $gateway ) {
     // We'll redirect back to the payment form and add an indication to the url
     //    but we'll only add the indication about the removed gatateway 
     //    if another payment method is still present (to keep the url as clean as possible)
+    //    Removing this is not bad, but leave the call for UX reasons
     if ( empty( eme_payment_allowed_to_pay( $payment ) ) ) {
         $url = add_query_arg( 'eme_pg_na', 1, $url );
     }
@@ -1080,7 +1080,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
         if ( ! empty( $existing ) ) {
             $checkout = $existing[0];
             if ( $checkout->status == 'PAID' ) {
-                return 'already paid';
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . esc_html__( 'This payment has already been paid.', 'events-made-easy' ) . '</div>';
             }
         } else {
             $checkout = $checkoutService->create(
@@ -1098,9 +1098,11 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
         $checkoutId = $checkout->id;
         //  pass the $checkoutId to the front-end to be processed
     } catch ( \SumUp\Exception\ApiException $e ) {
-        return 'SumUp API error: ' . $e->getMessage();
+        error_log( 'EME SumUp API error: ' . $e->getMessage() );
+        return "<div class='eme-message-error eme-rsvp-message-error'>" . esc_html__( 'The SumUp payment could not be initialized.', 'events-made-easy' ) . '</div>';
     } catch ( \Throwable $e ) {
-        return 'SumUp error: ' . $e->getMessage();
+        error_log( 'EME SumUp API error: ' . $e->getMessage() );
+        return "<div class='eme-message-error eme-rsvp-message-error'>" . esc_html__( 'The SumUp payment could not be initialized.', 'events-made-easy' ) . '</div>';
     }
 
     eme_update_payment_pg_pid( $payment['id'], $checkoutId );
@@ -1330,9 +1332,6 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
     return $form_html;
 }
 
-function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
-    return eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur, $multi_booking);
-}
 function eme_payment_form_bancontactwero( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
     $gateway = 'bancontactwero';
     $api_key = get_option( 'eme_bancontactwero_api_key' );
@@ -1835,7 +1834,7 @@ function eme_complete_transaction_fondy( $payment ) {
         if ( $amount_paid < $expected_price - 0.01 ) {
             error_log( "EME fondy completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
         }
-        eme_mark_payment_paid( $payment['id'], $gateway, $order_id );
+        eme_mark_payment_paid( $payment['id'], 1, $gateway, $order_id );
         return true;
     } else {
         return false;
@@ -2073,6 +2072,10 @@ function eme_notification_fdgg() {
 
     // First Data only allows USD
     $payment = eme_get_payment( $payment_id );
+    if (empty($payment)) {
+        esc_html_e( 'Incorrect payment id.', 'events-made-easy' );
+        return;
+    }
     if ( $payment['target'] == 'member' ) {
         $member = eme_get_member_by_paymentid( $payment_id );
         if ( $member ) {
@@ -2490,7 +2493,6 @@ function eme_charge_braintree() {
 
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
-    $cancel_link  = eme_payment_url( $payment ) ;
 
     // no cheating (price+cur locked)
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}_{$price}_{$cur}" ) ) {
@@ -2559,7 +2561,6 @@ function eme_charge_instamojo() {
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, 1 );
-    $cancel_link       = eme_payment_url( $payment ) ;
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     // no cheating (price+cur locked)
@@ -2629,6 +2630,15 @@ function eme_charge_mercadopago() {
     $success_link = eme_payment_return_url( $payment, 0 );
     $fail_link    = eme_payment_return_url( $payment, 1 );
 
+    // MercadoPago's checkout JS submits this POST itself (we can't inject a
+    // nonce into its request), so CSRF protection relies on:
+    //   1. eme_payment_charge_guard() refusing disallowed payments/gateways, and
+    //   2. re-querying the MercadoPago API below and only marking paid when the
+    //      API confirms an approved payment for this external_reference.
+    // Re-marking an already-paid payment is a no-op (pg_handled guard in
+    // eme_mark_payment_paid()).
+    eme_payment_charge_guard( $payment, $gateway );
+
     require_once EME_PLUGIN_DIR . 'payment_gateways/mercadopago/vendor/autoload.php';
     MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
     $filter = [
@@ -2674,7 +2684,6 @@ function eme_charge_fondy() {
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     $success_link      = eme_payment_return_url( $payment, 0 );
     $fail_link         = eme_payment_return_url( $payment, 1 );
-    $cancel_link       = eme_payment_url( $payment ) ;
 
     // no cheating (price+cur locked)
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}_{$price}_{$cur}" ) ) {
@@ -2700,6 +2709,7 @@ function eme_charge_fondy() {
     \Cloudipsp\Configuration::setSecretKey( $secret_key );
 
     $data = [
+        'order_id'            => "ep-{$payment_id}",
         'order_desc'          => $description,
         'amount'              => $price,
         'currency'            => $cur,
@@ -2712,9 +2722,7 @@ function eme_charge_fondy() {
 
     try {
         $response = \Cloudipsp\Checkout::url( $data );
-        $order_id = $response->getOrderID();
-        eme_update_payment_pg_pid( $payment_id, $order_id );
-
+        eme_update_payment_pg_pid( $payment_id, "ep-{$payment_id}" );
         $response->toCheckout();
     } catch ( \Exception $e ) {
         error_log("Fondy API error: {$e->getMessage()}");
@@ -2743,13 +2751,10 @@ function eme_refund_booking_paypal($booking) {
     }
 }
 
-function eme_refund_booking_payconiq( $booking ) {
-    return eme_refund_booking_bancontactwero( $booking );
-}
 function eme_refund_booking_bancontactwero( $booking ) {
     $api_key = get_option( "eme_bancontactwero_api_key" );
     if ( ! $api_key ) {
-        return;
+        return false;
     }
     if ( ! class_exists( 'BancontactWero\Client' ) ) {
         require_once EME_PLUGIN_DIR . 'payment_gateways/BancontactWero/src/Client.php';
@@ -2767,7 +2772,14 @@ function eme_refund_booking_bancontactwero( $booking ) {
         $price            = eme_payment_gateway_total( $price, $cur, $booking['pg'] );
         // translators: %1$s is the event name, %2$d is the payment ID
         $description      = sprintf(__( 'Booking refunded for %1$s, payment id %2$d', 'events-made-easy' ),$event['event_name'],$booking['payment_id']);
-        $bancontactwero_payment = $bancontactwero->refundPayment( $booking['pg_pid'], $price, $cur, $description );
+        $result = $bancontactwero->refundPayment( $booking['pg_pid'], $price, $cur, $description );
+        // Client::refundPayment() throws on failure (missing paymentId in response),
+        // but makeRequest() can also swallow HTTP/cURL errors into ->message, so
+        // double-check we got a real refund object back.
+        if ( empty( $result->paymentId ) ) {
+            error_log( "BancontactWero refund returned no paymentId for booking {$booking['booking_id']}: " . ( $result->message ?? 'unknown error' ) );
+            return false;
+        }
         return true;
     } catch ( Exception $e ) {
         error_log("BancontactWero refund API error: {$e->getMessage()}");
@@ -2881,16 +2893,12 @@ function eme_refund_booking_stripe( $booking ) {
 
     $stripe_pi_id = $booking['pg_pid'];
     try {
-        $stripe_pi = \Stripe\PaymentIntent::retrieve( $stripe_pi_id );
+        $re = \Stripe\Refund::create( [ 'payment_intent' => $stripe_pi_id ] );
     } catch ( Exception $e ) {
-        return;
+        return false;
     }
-    $re = \Stripe\Refund::create(
-        [
-            'payment_intent' => $stripe_pi_id,
-        ]
-    );
-    return true;
+    return isset( $re->status ) && $re->status !== 'failed';
+
 }
 
 function eme_refund_booking_braintree( $booking ) {
@@ -2914,8 +2922,12 @@ function eme_refund_booking_braintree( $booking ) {
         ]
     );
     $transaction_id    = $booking['pg_pid'];
-    $result            = $braintree_gateway->transaction()->refund( $transaction_id );
-    return true;
+    try {
+        $result = $braintree_gateway->transaction()->refund( $transaction_id );
+    } catch ( Exception $e ) {
+        return false;
+    }
+    return $result->success;
 }
 
 function eme_charge_mollie() {
@@ -3058,9 +3070,6 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     return false;
 }
 
-function eme_charge_payconiq() {
-    return eme_charge_bancontactwero();
-}
 function eme_charge_bancontactwero() {
     $gateway          = 'bancontactwero';
     $events_page_link = eme_get_events_page();
@@ -3083,7 +3092,6 @@ function eme_charge_bancontactwero() {
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, $gateway );
-    $cancel_link       = eme_payment_url( $payment );
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     // no cheating (price+cur locked)
@@ -3137,9 +3145,6 @@ function eme_charge_bancontactwero() {
     }
 }
 
-function eme_complete_transaction_payconiq( $payment ) {
-    return eme_complete_transaction_bancontactwero( $payment );
-}
 function eme_complete_transaction_bancontactwero( $payment ) {
     $gateway     = 'bancontactwero';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
@@ -3180,9 +3185,6 @@ function eme_complete_transaction_bancontactwero( $payment ) {
     return false;
 }
 
-function eme_notification_payconiq() {
-    return eme_notification_bancontactwero();
-}
 function eme_notification_bancontactwero() {
     $gateway     = 'bancontactwero';
     $api_key     = get_option( "eme_{$gateway}_api_key" );
@@ -3500,7 +3502,7 @@ function eme_fs_event_has_pg_configured( $gateway ) {
     if ( !eme_fs_event_count_pgs() )
         return false;
     $eme_fs_options = get_option('eme_fs');
-    if ( isset($eme_fs_options['payment_gateways']) && in_array( $gateway, $eme_fs_options['payment_gateways'] ) )
+    if ( isset($eme_fs_options['payment_gateways']) && is_array($eme_fs_options['payment_gateways']) && in_array( $gateway, $eme_fs_options['payment_gateways'] ) )
         return true;
     return false;
 }
@@ -3918,7 +3920,7 @@ function eme_update_payment_pg_handled( $payment_id ) {
     $wpdb->update(
         $table,
         [ 'pg_handled' => 1 ],
-        [ 'id' => $payment_id ],
+        [ 'id' => $payment_id, 'pg_handled' => 0 ],
         [ '%d' ],
         [ '%d' ]
     );

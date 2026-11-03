@@ -2785,6 +2785,7 @@ case 'gdpr':
     break;
 case 'payments':
     $events_page_link = eme_get_events_page();
+    echo esc_html__( 'Want to create your own payment gateway? Then create an extension, see ', 'events-made-easy' ) . "<a target='_blank' rel='noopener noreferrer' href='https://www.e-dynamics.be/wordpress/eme-docs/adding-eme-extensions/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>';
 ?>
 
 <details name='eme_details_options' class="eme_accordion">
@@ -3451,7 +3452,10 @@ case 'extensions':
     }
     ?>
     <h2><?php esc_html_e( 'Extensions', 'events-made-easy' ); ?></h2>
-    <p><?php esc_html_e( 'Manage Events Made Easy extension files located in the uploads includes directory.', 'events-made-easy' ); ?></p>
+    <p><?php esc_html_e( 'Manage Events Made Easy extension files located in the uploads includes directory.', 'events-made-easy' ); 
+             echo "<br>";
+              echo esc_html__( 'For more info on extensions, see ', 'events-made-easy') . "<a target='_blank' rel='noopener noreferrer' href='https://www.e-dynamics.be/wordpress/eme-docs/adding-eme-extensions/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>';
+    ?></p>
     <?php if ( ! empty( $files ) ) : ?>
         <table class="widefat striped" style="max-width:800px">
             <thead>

@@ -45,6 +45,10 @@ function eme_is_offline_pg( $pg ) {
     }
 }
 
+function eme_pg_is_inline( $pg ) {
+    return $pg === 'braintree';
+}
+
 function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking, $remove_accents=false ) {
     if ( $payment['target'] == 'member' ) {
         // translators: %s is the membership name
@@ -186,7 +190,7 @@ function eme_event_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
         $eme_pg_submit_immediately = 1;
         $pg_in_use                 = eme_event_get_first_pg( $event );
-        if ($pg_in_use != "braintree") { //braintree replaces our form, no need for submit/hidden
+        if ( ! eme_pg_is_inline( $pg_in_use ) ) { //inline payment forms replace our form, no need for submit/hidden
             $hidden_class              = 'eme-hidden';
         }
     }
@@ -216,7 +220,7 @@ function eme_event_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     }
 
     // if "submit immediately": we show the button text, since the rest of the div is hidden
-    if ( $eme_pg_submit_immediately ) {
+    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg_in_use ) ) {
         if ($pg_in_use == "braintree") {
             $above_text = "";
         } else {
@@ -245,7 +249,7 @@ function eme_event_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
                 if ( function_exists( $func ) ) {
                     $pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
-                    if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
+                    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg ) ) { //inline payment forms replace our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         // wp_add_inline_script is not working for ajax executed code
                         $ret_string .= '<script type="text/javascript">
@@ -324,7 +328,7 @@ function eme_member_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
         $eme_pg_submit_immediately = 1;
         $pg_in_use                 = eme_membership_get_first_pg( $membership );
-        if ($pg_in_use != "braintree") { //braintree replaces our form, no need for submit/hidden
+        if ( ! eme_pg_is_inline( $pg_in_use ) ) { //inline payment forms replace our form, no need for submit/hidden
             $hidden_class              = 'eme-hidden';
         }
     }
@@ -354,7 +358,7 @@ function eme_member_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
     }
 
     // if "submit immediately": we show the button text, since the rest of the div is hidden
-    if ( $eme_pg_submit_immediately ) {
+    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg_in_use ) ) {
         // braintree shows anyway, so hide the button_above
         if ($pg_in_use == "braintree") {
             $above_text = "";
@@ -388,7 +392,7 @@ function eme_member_payment_form( $payment, $resultcode = 0, $standalone = 0 ) {
                 if ( function_exists( $func ) ) {
                     $pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
-                    if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
+                    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg ) ) { //inline payment forms replace our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         // wp_add_inline_script is not working for ajax executed code
                         $ret_string .= '<script type="text/javascript">
@@ -446,8 +450,8 @@ function eme_fs_event_payment_form( $payment, $resultcode = 0, $standalone = 0 )
     $pg_count = eme_fs_event_count_pgs( );
     if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
         $eme_pg_submit_immediately = 1;
-        $hidden_class              = 'eme-hidden';
         $pg_in_use                 = eme_fs_event_get_first_pg( );
+        $hidden_class              = eme_pg_is_inline( $pg_in_use ) ? '' : 'eme-hidden';
     } else {
         $eme_pg_submit_immediately = 0;
         $hidden_class              = '';
@@ -473,7 +477,7 @@ function eme_fs_event_payment_form( $payment, $resultcode = 0, $standalone = 0 )
     }
 
     // if "submit immediately": we show the button text, since the rest of the div is hidden
-    if ( $eme_pg_submit_immediately ) {
+    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg_in_use ) ) {
         $button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
         $above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $vat_pct );
         if ( !eme_is_empty_string( $above_text ) ) {
@@ -498,7 +502,7 @@ function eme_fs_event_payment_form( $payment, $resultcode = 0, $standalone = 0 )
                 if ( function_exists( $func ) ) {
                     $pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $vat_pct );
-                    if ( $eme_pg_submit_immediately ) {
+                    if ( $eme_pg_submit_immediately && ! eme_pg_is_inline( $pg ) ) {
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         // wp_add_inline_script is not working for ajax executed code
                         $ret_string .= '<script type="text/javascript">
@@ -2436,7 +2440,6 @@ function eme_charge_stripe() {
     $stripe_session_id = $stripe_session->id;
     eme_update_payment_pg_pid( $payment_id, $stripe_session_id );
 
-    // stripe.redirectToCheckout is removed in Stripe.js, redirect to the session url instead
     wp_redirect( $stripe_session->url, 303 );
     exit;
 }

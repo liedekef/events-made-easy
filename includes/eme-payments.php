@@ -1090,8 +1090,8 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 
 function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
     $gateway               = 'stripe';
-    $eme_stripe_public_key = get_option( 'eme_stripe_public_key' );
-    if ( ! $eme_stripe_public_key ) {
+    $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
+    if ( empty( $eme_stripe_private_key ) ) {
         return;
     }
 
@@ -2379,7 +2379,6 @@ function eme_charge_stripe() {
     }
 
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
-    $eme_stripe_public_key  = get_option( 'eme_stripe_public_key' );
     $item_name              = esc_attr( get_option( 'blog_name' ) );
     if ( empty( $item_name ) ) {
         $item_name = $description;
@@ -2437,18 +2436,9 @@ function eme_charge_stripe() {
     $stripe_session_id = $stripe_session->id;
     eme_update_payment_pg_pid( $payment_id, $stripe_session_id );
 
-    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Stripe payment integration HTML block with escaped variables, SDK must be loaded inline
-    print "<html><body>
-        <script src='https://js.stripe.com/v3/'></script>
-        <script>
-            var stripe = Stripe('" . esc_js( $eme_stripe_public_key ) . "');
-            stripe.redirectToCheckout({
-                sessionId: '" . esc_js( $stripe_session_id ) . "'
-            });
-        </script>
-        </body></html>
-   ";
-    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.EnqueuedResources.NonEnqueuedScript
+    // stripe.redirectToCheckout is removed in Stripe.js, redirect to the session url instead
+    wp_redirect( $stripe_session->url, 303 );
+    exit;
 }
 
 function eme_charge_braintree() {

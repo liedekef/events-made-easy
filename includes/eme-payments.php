@@ -547,12 +547,18 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
         if ( empty( $membership ) ) {
             return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No membership found', 'events-made-easy' ) . '</div>';
         }
+        if ( ! eme_membership_has_pgs_configured( $membership ) ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No payment method allowed', 'events-made-easy' ) . '</div>';
+        }
         return eme_check_member_allowed_to_pay( $member, $membership );
     } elseif ( $payment['target'] == 'fs_event' ) {
         // events are simple :-)
         $event = eme_get_event( $payment['related_id'] );
         if ( empty( $event ) ) {
             return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No event found', 'events-made-easy' ) . '</div>';
+        }
+        if ( eme_fs_event_count_pgs() == 0 ) {
+            return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No payment method allowed', 'events-made-easy' ) . '</div>';
         }
         if (empty($payment['pg_handled']) && $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
             return 0;
@@ -581,6 +587,9 @@ function eme_payment_allowed_to_pay( $payment_id, $payment = null ) {
             $event = eme_get_event( $booking['event_id'] );
             if ( empty( $event ) || $event['event_status'] == EME_EVENT_STATUS_TRASH ) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'The event linked to this payment has been cancelled, payment is no longer possible.', 'events-made-easy' ) . '</div>';
+            }
+            if ( ! eme_event_has_pgs_configured( $event ) ) {
+                return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'No payment method allowed', 'events-made-easy' ) . '</div>';
             }
             if ( ! eme_is_event_rsvp( $event ) ) {
                 return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Bookings for this event are disabled, payment is no longer possible.', 'events-made-easy' ) . '</div>';

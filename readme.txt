@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.5  (2026/11/04) =
+* Stripe payment methods are now only set via the Stripe dashboard, not in EME anymore
+
 = 3.3.4  (2026/11/04) =
 * Keep the mail queue schedule when the WP-Cron event is lost, self-heal it, and allow repairing it from the Scheduled actions page
 * Better checking wether payment is still allowed, avoiding people to pay for a cancelled event

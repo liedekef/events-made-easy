@@ -2423,19 +2423,7 @@ function eme_charge_stripe() {
     \Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
     \Stripe\Stripe::setAppInfo( 'WordPress Events Made Easy Stripe plugin' );
 
-    $payment_methods = get_option( 'eme_stripe_payment_methods' );
-    if ( empty( $payment_methods ) ) {
-        $payment_methods = 'card';
-    }
-    // make sure it is an array with numeric keys
-    if ( ! is_array( $payment_methods ) ) {
-        $payment_methods_arr = explode( ',', $payment_methods );
-    } else {
-        $payment_methods_arr = $payment_methods;
-    }
-
     $stripe_session_params = [
-        'payment_method_types' => $payment_methods_arr,
         'payment_intent_data'  => [ 'description' => $description ],
         'line_items'           => [
             [

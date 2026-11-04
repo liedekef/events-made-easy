@@ -239,12 +239,56 @@ if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
     exit 1
 fi
 
-# 1. Commit trunk (long timeout, WP.org is slow)
-if ! svn --config-option servers:global:http-timeout=900 \
-        commit -m "Release ${VERSION}" "$SVN_TRUNK"; then
-    fail "Trunk commit failed or timed out. Do NOT rerun blindly."
-    fail "Check: svn log -l 3 ${SVN_URL}/trunk"
-    fail "If it landed: svn revert -R ${SVN_TRUNK} && svn cleanup --remove-unversioned ${SVN_TRUNK} && svn up ${SVN_TRUNK}"
+# 1. Commit trunk in chunks. Each chunk is its own revision. Trunk is temporarily
+#    inconsistent in between, which is harmless while Stable tag points at a tag.
+#    readme.txt and the main file go last; the tag is created after everything landed.
+CHUNK=150
+SVN_OPTS=(--config-option servers:global:http-timeout=900)
+WORK=$(mktemp -d)
+
+recover_hint() {
+    fail "Commit failed or timed out. It may still have landed server-side, so do NOT continue blindly."
+    fail "Check:   svn log -l 5 ${SVN_URL}/trunk"
+    fail "Recover: svn revert -R ${SVN_TRUNK} && svn cleanup --remove-unversioned ${SVN_TRUNK} && svn up ${SVN_TRUNK}"
+    fail "Then rerun this script: chunks that already landed produce no diff, so it resumes."
+    exit 1
+}
+
+commit_list() {   # $1=message  $2=file with one path per line  $3...=extra svn commit args
+    local msg="$1" list="$2"; shift 2
+    [ -s "$list" ] || return 0
+    echo "  Committing $(wc -l < "$list") path(s): ${msg}"
+    svn "${SVN_OPTS[@]}" commit "$@" --targets "$list" -m "$msg" || recover_hint
+    info "${msg}"
+}
+
+cd "$SVN_TRUNK"
+svn status | grep -E '^[ADMR]' > "$WORK/status.txt" || true
+
+# a) deletions (a deleted directory is committed as a whole, one cheap operation)
+grep '^D' "$WORK/status.txt" | cut -c9- > "$WORK/del.txt" || true
+# b) new directories only, no recursion (sorted, so parents come before children)
+grep '^A' "$WORK/status.txt" | cut -c9- | while IFS= read -r p; do [ -d "$p" ] && echo "$p"; done | sort > "$WORK/dirs.txt" || true
+# c) added/modified files, except the two that must go last
+grep -E '^[AMR]' "$WORK/status.txt" | cut -c9- \
+    | while IFS= read -r p; do [ -f "$p" ] && echo "$p"; done \
+    | grep -vxE 'readme\.txt|events-manager\.php' > "$WORK/files.txt" || true
+# d) last: readme.txt (Stable tag) and the main plugin file
+grep -E '^[AMR]' "$WORK/status.txt" | cut -c9- | grep -xE 'readme\.txt|events-manager\.php' > "$WORK/last.txt" || true
+
+commit_list "Release ${VERSION}: removals"     "$WORK/del.txt"
+commit_list "Release ${VERSION}: directories"  "$WORK/dirs.txt" --depth empty
+split -l "$CHUNK" -d "$WORK/files.txt" "$WORK/chunk."
+for c in "$WORK"/chunk.*; do
+    [ -e "$c" ] || continue
+    commit_list "Release ${VERSION}: files (part ${c##*.})" "$c"
+done
+commit_list "Release ${VERSION}" "$WORK/last.txt"
+
+# Everything must be in before tagging
+if [ -n "$(svn status -q)" ]; then
+    fail "Uncommitted changes remain in trunk. Not tagging."
+    svn status -q | head -20
     exit 1
 fi
 info "Trunk committed"

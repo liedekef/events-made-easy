@@ -398,13 +398,12 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 	echo $layout; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted plugin HTML
 }
 
-function eme_get_localized_states( $country_code = '' ) {
+function eme_get_localized_states( $country_code = '', $q = '' ) {
     global $wpdb;
     $table           = EME_DB_PREFIX . EME_STATES_TBNAME;
     $countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
     $lang            = eme_detect_lang();
 
-    // per alpha_2: states of the matching language if any, others these of the default
     $sql  = "SELECT state.*, country.name AS country, country.lang
              FROM $table AS state
              LEFT JOIN $countries_table AS country ON state.country_id = country.id
@@ -422,6 +421,11 @@ function eme_get_localized_states( $country_code = '' ) {
         $sql   .= ' AND country.alpha_2 = %s';
         $args[] = $country_code;
     }
+    if ( $q !== '' ) {
+        $sql   .= ' AND state.name LIKE %s';
+        $args[] = '%' . $wpdb->esc_like( $q ) . '%';
+    }
+    $sql .= ' ORDER BY state.name';
     $prepared_sql = $wpdb->prepare( $sql, $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names are safe variables
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
@@ -928,18 +932,13 @@ function eme_select_state_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 	$q            = eme_sanitize_request( $_REQUEST['q'] ?? '' );
 	$country_code = eme_sanitize_request( $_REQUEST['country_code'] ?? '' );
-	// the country code can be empty, in which case eme_get_localized_states will return states if only 1 country exists
-	$records = [];
-	$states  = eme_get_localized_states( $country_code );
-	foreach ( $states as $state ) {
-		if ( ! empty( $q ) && ! stristr( $state['name'], $q ) ) {
-			continue;
-		}
-		$record         = [];
-		$record['id']   = $state['code'];
-		$record['text'] = $state['name'];
-		$records[]      = $record;
-	}
+    $records = [];
+    foreach ( eme_get_localized_states( $country_code, $q ) as $state ) {
+        $records[] = [
+            'id'   => $state['code'],
+            'text' => $state['name'],
+        ];
+    }
 	$fTableResult['TotalRecordCount'] = count( $records );
 	$fTableResult['Records']          = $records;
 	print wp_json_encode( $fTableResult );

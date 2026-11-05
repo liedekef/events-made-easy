@@ -99,6 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.6  (2026//) =
+* More consitent language filtering for states/countries
+
 = 3.3.5  (2026/11/04) =
 * Stripe payment methods are now only set via the Stripe dashboard, not in EME anymore
 

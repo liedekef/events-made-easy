@@ -26,7 +26,7 @@ function eme_new_state() {
 
 function eme_countries_page() {
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
-		$message = __( 'You have no right to manage discounts!', 'events-made-easy' );
+		$message = __( 'You have no right to manage countries!', 'events-made-easy' );
 		eme_countries_table( $message );
 		return;
 	}

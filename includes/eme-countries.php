@@ -425,7 +425,7 @@ function eme_get_localized_states( $country_code = '', $q = '' ) {
         $sql   .= ' AND state.name LIKE %s';
         $args[] = '%' . $wpdb->esc_like( $q ) . '%';
     }
-    $sql .= ' ORDER BY state.name';
+    $sql .= ' ORDER BY country.name, state.name';
     $prepared_sql = $wpdb->prepare( $sql, $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table names are safe variables
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }

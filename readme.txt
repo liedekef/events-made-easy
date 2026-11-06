@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/e
 == Changelog ==
 = 3.3.6  (2026//) =
 * More consitent language filtering for states/countries
+* Remove tests/examples from Fondy (security fix reported by Pham Cong Lap (Clapboiz) of HPT Vietnam Corporation, via Patchstack
 
 = 3.3.5  (2026/11/04) =
 * Stripe payment methods are now only set via the Stripe dashboard, not in EME anymore

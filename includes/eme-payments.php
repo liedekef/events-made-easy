@@ -1817,7 +1817,7 @@ function eme_complete_transaction_fondy( $payment ) {
         return false;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/autoload.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/vendor/autoload.php';
     \Cloudipsp\Configuration::setMerchantId( $eme_fondy_merchant_id );
     \Cloudipsp\Configuration::setSecretKey( $eme_fondy_secret_key );
 
@@ -2230,7 +2230,7 @@ function eme_notification_fondy() {
         exit;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/autoload.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/vendor/autoload.php';
     \Cloudipsp\Configuration::setMerchantId( $merchant_id );
     \Cloudipsp\Configuration::setSecretKey( $secret_key );
 
@@ -2693,7 +2693,7 @@ function eme_charge_fondy() {
     // check if payment is still possible via this gateway
     eme_payment_charge_guard( $payment, $gateway );
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/autoload.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/vendor/autoload.php';
     \Cloudipsp\Configuration::setMerchantId( $merchant_id );
     \Cloudipsp\Configuration::setSecretKey( $secret_key );
 
@@ -2845,7 +2845,7 @@ function eme_refund_booking_fondy( $booking ) {
         return;
     }
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/autoload.php';
+    require_once EME_PLUGIN_DIR . 'payment_gateways/fondy/vendor/autoload.php';
     \Cloudipsp\Configuration::setMerchantId( $merchant_id );
     \Cloudipsp\Configuration::setSecretKey( $secret_key );
 

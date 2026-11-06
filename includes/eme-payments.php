@@ -4094,7 +4094,7 @@ function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $
         }
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = eme_esc_html_preserve_neutralized( $replacement );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );

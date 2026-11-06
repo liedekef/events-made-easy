@@ -2195,7 +2195,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = $location[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_NAME$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2205,7 +2205,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                 $replacement = $location[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_ID/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
@@ -2361,7 +2361,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) && ! is_array( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return null;
         },
@@ -2371,7 +2371,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
                 $replacement = $location[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return null;
         },
@@ -2381,7 +2381,7 @@ function eme_get_locations_placeholder_handler_definitions() {
             if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $location['location_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return '';
         },
@@ -2605,7 +2605,7 @@ function eme_get_locations_placeholder_handler_definitions() {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
                     }
-                    $field_replace = eme_sanitize_placeholder_output( $field_replace, $target );
+                    $field_replace = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
                 }
                 foreach ( $ctx['files'] as $file ) {
                     if ( $file['field_id'] == $field_id ) {
@@ -2685,7 +2685,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
             $replacement = eme_sanitize_placeholder_output( $replacement, $target );
 
             if ( $need_escape ) {
-                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = eme_esc_html_preserve_neutralized( $replacement );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -2756,7 +2756,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
                 }
                 if ( $need_urlencode ) {
                     $replacement = rawurlencode( $replacement );
@@ -2884,7 +2884,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
                 }
                 $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
                 $needle_offset += $orig_result_length - strlen( $replacement );

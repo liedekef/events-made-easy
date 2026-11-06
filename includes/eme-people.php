@@ -340,7 +340,7 @@ function eme_get_people_placeholder_handler_definitions() {
         '/#_FULLNAME/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $replacement = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_(NAME|LASTNAME|FIRSTNAME|ZIP|POSTAL|CITY|ADDRESS1|ADDRESS2|PHONE|BIRTHPLACE)$/' => function( $result, $matches, $ctx ) {
             $field = str_replace( '#_', '', $result );
@@ -352,7 +352,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 $field = 'zip';
             }
             $replacement = $ctx['person'][ $field ];
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_BIRTHDATE$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_date( $ctx['person']['birthdate'], EME_TIMEZONE, 1 );
@@ -363,28 +363,28 @@ function eme_get_people_placeholder_handler_definitions() {
             if ( $ctx['target'] == 'html' ) {
                 $replacement = eme_email_obfuscate( $replacement, $ctx['orig_target'] );
             }
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'] );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], false, true );
         },
         '/#_FIRSTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['firstname'], 0, $length );
             $replacement .= ( substr( $replacement, -1 ) == '.' ? '' : '.' );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_LASTNAME\{(.+)\}/' => function( $result, $matches, $ctx ) {
             $length = intval( $matches[1] );
             $replacement = substr( $ctx['person']['lastname'], 0, $length );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_INITIALS/' => function( $result, $matches, $ctx ) {
             $person = $ctx['person'];
             $fullname = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $replacement = eme_get_initials( $fullname );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_LASTNAME_INITIALS/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_initials( $ctx['person']['lastname'] );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_COUNTRY/' => function( $result, $matches, $ctx ) {
             $replacement = eme_get_country_name( $ctx['person']['country_code'], $ctx['lang'] );
@@ -590,7 +590,7 @@ function eme_get_people_placeholder_handler_definitions() {
             if ( isset( $person[ $tmp_attkey ] ) && ! is_array( $person[ $tmp_attkey ] ) ) {
                 $replacement = $person[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return '';
         },
@@ -600,7 +600,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if ( $ctx['target'] == 'html' ) {
                     $res_files[] = eme_get_uploaded_file_html( $file );
                 } else {
-                    $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
+                    $res_files[] = eme_neutralize_template_syntax( $file['name'], $ctx['target'] ) . ' [' . $file['url'] . ']';
                 }
             }
             if ( $ctx['target'] == 'html' ) {
@@ -636,7 +636,7 @@ function eme_get_people_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         }
-                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
                         break;
                     }
                 }
@@ -652,7 +652,7 @@ function eme_get_people_placeholder_handler_definitions() {
                             if ( $target == 'html' ) {
                                 $field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
                             } else {
-                                $field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
+                                $field_replace .= eme_neutralize_template_syntax( $file['name'], $target ) . ' [' . $file['url'] . ']' . "\n";
                             }
                         }
                     }
@@ -669,7 +669,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if ( $user ) {
                     $replacement = $user->user_nicename;
                 }
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return '';
         },
@@ -681,7 +681,7 @@ function eme_get_people_placeholder_handler_definitions() {
                 if ( $user ) {
                     $replacement = $user->display_name;
                 }
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
             }
             return '';
         },
@@ -722,7 +722,7 @@ function eme_get_people_placeholder_handler_definitions() {
                     $replacement .= '</table>';
                 }
             }
-            return $replacement;
+            return eme_neutralize_template_syntax( $replacement, $ctx['target'] );
         },
     ];
 
@@ -803,7 +803,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                 $replacement = "";
             }
             if ( $need_escape ) {
-                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+                $replacement = eme_esc_html_preserve_neutralized( $replacement );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -4049,6 +4049,8 @@ function eme_db_insert_person( $line ) {
     // we need to do this since this function is also called for csv import
     $keys     = array_intersect_key( $line, $person );
     $new_line = array_merge( $person, $keys );
+    $new_line['lastname']  = eme_sanitize_person_name( $new_line['lastname'] );
+    $new_line['firstname'] = eme_sanitize_person_name( $new_line['firstname'] );
 
     if ( has_filter( 'eme_insert_person_filter' ) ) {
         $new_line = apply_filters( 'eme_insert_person_filter', $new_line );
@@ -4121,6 +4123,12 @@ function eme_db_update_person( $person_id, $line ) {
     // we need to do this since this function is also called for csv import
     $keys                   = array_intersect_key( $line, $person );
     $new_line               = array_merge( $person, $keys );
+    if ( array_key_exists( 'lastname', $keys ) && $keys['lastname'] !== $person['lastname'] ) {
+        $new_line['lastname'] = eme_sanitize_person_name( $new_line['lastname'] );
+    }
+    if ( array_key_exists( 'firstname', $keys ) && $keys['firstname'] !== $person['firstname'] ) {
+        $new_line['firstname'] = eme_sanitize_person_name( $new_line['firstname'] );
+    }
     $new_line['properties'] = eme_json_encode_safe( $new_line['properties'] );
 
     // some properties validation: only image_id or wp_delete_user as int is allowed
@@ -4513,6 +4521,8 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 // wp id isn't linked to a person yet), and an existing person never gets its wp id changed here.
 function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0, $allow_book_for_others = 0 ) {
     $person = [];
+    $lastname  = eme_sanitize_person_name( $lastname );
+    $firstname = eme_sanitize_person_name( $firstname );
 
     if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email_frontend( $email ) ) {
         return [
@@ -4629,9 +4639,9 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 
     if ( $return_fake_person ) {
         $person['person_id']    = -1;
-        $person['lastname'] = eme_sanitize_request( $_POST['lastname'] );
+        $person['lastname'] = eme_sanitize_person_name( $_POST['lastname'] );
         if ( isset( $_POST['firstname'] ) ) {
-            $person['firstname'] = eme_sanitize_request( $_POST['firstname'] );
+            $person['firstname'] = eme_sanitize_person_name( $_POST['firstname'] );
         } else {
             $person['firstname'] = '';
         }
@@ -4727,12 +4737,12 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
         }
     } else {
         if ( ! eme_is_empty_string( $_POST['lastname'] ) ) {
-            $person['lastname'] = eme_sanitize_request( $_POST['lastname'] );
+        $person['lastname'] = eme_sanitize_person_name( $_POST['lastname'] ?? '' );
         } else {
             $person['lastname'] = $person_being_updated['lastname'];
         }
         if ( ! eme_is_empty_string( $_POST['firstname'] ) ) {
-            $person['firstname'] = eme_sanitize_request( $_POST['firstname'] );
+            $person['firstname'] = eme_sanitize_person_name( $_POST['firstname'] );
         } else {
             $person['firstname'] = $person_being_updated['firstname'];
         }

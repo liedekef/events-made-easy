@@ -3017,6 +3017,19 @@ function eme_sanitize_request( $value ) {
     }
 }
 
+function eme_sanitize_person_name( $value ) {
+    if ( is_array( $value ) ) {
+        return array_map( 'eme_sanitize_person_name', $value );
+    }
+    if ( ! is_string( $value ) ) {
+        return $value;
+    }
+    $value = eme_sanitize_request( $value );
+    $value = str_replace( [ '[', ']' ], '', $value );
+    $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '', $value );
+    return $value;
+}
+
 function eme_sanitize_email( $email ) {
     // first replace " " by PLUSSIGN
     // then sanitize_email
@@ -3409,7 +3422,7 @@ function eme_get_uploaded_file_linkdelete( $file ) {
 
 function eme_get_uploaded_file_html( $file, $new_tab = 1 ) {
     // the name of the file given by the person
-    $name = esc_html($file['name']);
+    $name = eme_neutralize_template_syntax( esc_html( $file['name'] ), 'html' );
     $url  = esc_url($file['url']);
     if ( $new_tab ) {
         return "<a href='$url' target='_blank' rel='noopener noreferrer'>$name</a><br>";
@@ -4732,15 +4745,47 @@ function eme_message_error_div($message, $is_dismissible = 0) {
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
     return eme_sanitize_placeholder_output( $replacement, $target, $esc_html);
 }
-function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false ) {
-    if ( $target == 'html' ) {
+function eme_neutralize_template_syntax( $value, $target = 'html' ) {
+    if ( is_array( $value ) ) {
+        return array_map(
+            function ( $item ) use ( $target ) {
+                return eme_neutralize_template_syntax( $item, $target );
+            },
+            $value
+        );
+    }
+    if ( ! is_string( $value ) ) {
+        return $value;
+    }
+    if ( $target == 'html' || $target == 'htmlmail' || $target == 'rss' ) {
+        $value = str_replace( [ '[', ']' ], [ '&#91;', '&#93;' ], $value );
+        $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '&#35;', $value );
+    } else {
+        $value = str_replace( [ '[', ']' ], [ '(', ')' ], $value );
+        $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '# ', $value );
+    }
+    return $value;
+}
+
+function eme_esc_html_preserve_neutralized( $value ) {
+    $value = esc_html( preg_replace( '/\n|\r/', '', $value ) );
+    return str_replace( [ '&amp;#91;', '&amp;#93;', '&amp;#35;' ], [ '&#91;', '&#93;', '&#35;' ], $value );
+}
+
+function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false, $neutralize = false ) {
+    if ( $target == 'html' || $target == 'htmlmail' ) {
         $replacement = eme_kses($replacement);
         if ( $esc_html ) {
             $replacement = esc_html( $replacement );
         }
-        return apply_filters( 'eme_general', $replacement );
+        $replacement = apply_filters( 'eme_general', $replacement );
     } elseif ( $target == 'rss' ) {
-        return apply_filters( 'the_content_rss', $replacement );
+        $replacement = apply_filters( 'the_content_rss', $replacement );
+    } else {
+        $replacement = apply_filters( 'eme_text', $replacement );
     }
-    return apply_filters( 'eme_text', $replacement );
+    if ( $neutralize ) {
+        $replacement = eme_neutralize_template_syntax( $replacement, $target );
+    }
+    return $replacement;
 }

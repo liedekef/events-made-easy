@@ -621,11 +621,13 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 			$need_urlencode = 1;
 		}
 		$replacement = '';
+		$neutralize  = false;
 
 		if ( preg_match( '/#_CATEGORYFIELD\{(.+)\}/', $result, $matches ) ) {
 			$tmp_attkey = $matches[1];
 			if ( isset( $cat[ $tmp_attkey ] ) && ! is_array( $cat[ $tmp_attkey ] ) ) {
 				$replacement = $cat[ $tmp_attkey ];
+				$neutralize  = ( $tmp_attkey == 'category_name' );
 			}
 		} elseif ( preg_match( '/#_CATEGORYURL/', $result ) ) {
 			$replacement = eme_category_url( $cat );
@@ -635,9 +637,9 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 
 		if ( $found ) {
             $replacement = eme_translate( $replacement, $lang );
-            $replacement = eme_sanitize_placeholder_output( $replacement, $target, true );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target, true, $neutralize );
 			if ( $need_escape ) {
-				$replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+				$replacement = eme_esc_html_preserve_neutralized( $replacement );
 			}
 			if ( $need_urlencode ) {
 				$replacement = rawurlencode( $replacement );

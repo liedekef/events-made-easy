@@ -5446,11 +5446,11 @@ function eme_get_member_placeholder_handler_definitions() {
         },
         '/#_DISCOUNTCODES_ENTERED$/' => function( $result, $matches, $ctx ) {
             $dcodes_entered = $ctx['member']['dcodes_entered'];
-            return join( ', ', $dcodes_entered );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_entered ), $ctx['target'], true, true );
         },
         '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/' => function( $result, $matches, $ctx ) {
             $dcodes_used = $ctx['member']['dcodes_used'];
-            return join( ', ', $dcodes_used );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_used ), $ctx['target'], true, true );
         },
         '/#_PRICE$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_price( $ctx['total_member_price'], $ctx['membership']['properties']['currency'], $ctx['target'] );
@@ -5668,7 +5668,7 @@ function eme_get_member_placeholder_handler_definitions() {
                 }
                 $replacement .= '</table>';
             }
-            return $replacement;
+            return eme_neutralize_template_syntax( $replacement, $ctx['target'] );
         },
         '/#_PDF_URL\{(\d+)\}/' => function( $result, $matches, $ctx ) {
             $member = $ctx['member'];
@@ -5729,7 +5729,7 @@ function eme_get_member_placeholder_handler_definitions() {
                     }
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $target );
+                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
             }
             return '';
         },
@@ -5764,7 +5764,7 @@ function eme_get_member_placeholder_handler_definitions() {
                     $replacement .= '</table>';
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $target );
+                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
             }
             return '';
         },
@@ -5774,7 +5774,7 @@ function eme_get_member_placeholder_handler_definitions() {
                 if ( $ctx['target'] == 'html' ) {
                     $res_files[] = eme_get_uploaded_file_html( $file );
                 } else {
-                    $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
+                    $res_files[] = eme_neutralize_template_syntax( $file['name'], $ctx['target'] ) . ' [' . $file['url'] . ']';
                 }
             }
             if ( $ctx['target'] == 'html' ) {
@@ -5789,7 +5789,7 @@ function eme_get_member_placeholder_handler_definitions() {
                 if ( $ctx['target'] == 'html' ) {
                     $res_files[] = eme_get_uploaded_file_html( $file );
                 } else {
-                    $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
+                    $res_files[] = eme_neutralize_template_syntax( $file['name'], $ctx['target'] ) . ' [' . $file['url'] . ']';
                 }
             }
             if ( $ctx['target'] == 'html' ) {
@@ -5831,7 +5831,7 @@ function eme_get_member_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
                         break;
                     }
                 }
@@ -5847,7 +5847,7 @@ function eme_get_member_placeholder_handler_definitions() {
                             if ( $target == 'html' ) {
                                 $matched_answers[] = eme_get_uploaded_file_html( $file );
                             } else {
-                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
+                                $matched_answers[] = eme_neutralize_template_syntax( $file['name'], $target ) . ' [' . $file['url'] . ']';
                             }
                         }
                     }
@@ -5862,7 +5862,7 @@ function eme_get_member_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answer[] = eme_sanitize_placeholder_output( $field_replace, $target );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
                     }
                 }
                 $replacement = join($eol_sep, $matched_answers);
@@ -5998,7 +5998,7 @@ function eme_get_membership_placeholder_handler_definitions() {
     $handlers = [
         '/#_NAME/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['membership']['name'];
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
         },
         '/#_DESCRIPTION/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['membership']['description'];
@@ -6096,7 +6096,7 @@ function eme_get_membership_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $ctx['target'] );
                         }
-                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $ctx['target'] );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $ctx['target'], false, true );
                     }
                 }
                 foreach ( $ctx['files'] as $file ) {
@@ -6111,7 +6111,7 @@ function eme_get_membership_placeholder_handler_definitions() {
                             if ( $ctx['target'] == 'html' ) {
                                 $field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
                             } else {
-                                $field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
+                                $field_replace .= eme_neutralize_template_syntax( $file['name'], $ctx['target'] ) . ' [' . $file['url'] . ']' . "\n";
                             }
                         }
                     }

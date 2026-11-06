@@ -2342,7 +2342,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
                 $replacement = "";
             }
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -3920,7 +3920,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
         $replacement = eme_sanitize_placeholder_output( $replacement, $target );
 
         if ( $need_escape ) {
-            $replacement = eme_esc_html_preserve_neutralized( $replacement );
+            $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
         }
         if ( $need_urlencode ) {
             $replacement = rawurlencode( $replacement );
@@ -4026,7 +4026,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 if ( $need_urlencode ) {
                     $replacement = rawurlencode( $replacement );
@@ -4071,7 +4071,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             $replacement = eme_localized_date( $event[ $my_dt ], EME_TIMEZONE, substr( $result, $offset, ( strlen( $result ) - ( $offset + 1 ) ) ) );
 
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -4201,7 +4201,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
                 $needle_offset += $orig_result_length - strlen( $replacement );

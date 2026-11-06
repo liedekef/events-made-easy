@@ -104,12 +104,12 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 
 == Changelog ==
 = 3.3.6  (2026//) =
-* More consitent language filtering for states/countries
+* More consistent language filtering for states/countries
 * Remove tests/examples from Fondy. Security issue reported by Pham Cong Lap (Clapboiz) of HPT Vietnam Corporation, via Patchstack
 * Security: restrict #_WPUSERDATA and #_WPUSERMETA to allowlists, so sensitive fields like user_login and roles are no longer exposed. Use the filters eme_wpuserdata_allowed_fields and eme_wpuser_meta_allowed_fields to extend them
-* Security: neutralize user-controlled placeholder output to prevent shortcode injection from booking, member and task data, and from event/location/category/membership names. Ssecurity issue reported by Pham Cong Lap (Clapboiz) of HPT Vietnam Corporation, via Patchstack
+* Security: neutralize user-controlled placeholder output to prevent shortcode injection from booking, member and task data, and from event/location/category/membership names. Security issue reported by Pham Cong Lap (Clapboiz) of HPT Vietnam Corporation, via Patchstack
 * Keep #ESC output readable for neutralized values, avoiding double-escaped bracket and placeholder entities
-* Strip shortcode/placeholder syntax from person first/last names on save, so for example "Smith [Jr]" is stored as "Smith Jr"
+* Neutralize shortcode/placeholder syntax from person first/last names on save, so for example "Smith [Jr]" is stored as "Smith Jr"
 
 = 3.3.5  (2026/11/04) =
 * Stripe payment methods are now only set via the Stripe dashboard, not in EME anymore

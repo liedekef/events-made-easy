@@ -2685,7 +2685,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
             $replacement = eme_sanitize_placeholder_output( $replacement, $target );
 
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -2756,7 +2756,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 if ( $need_urlencode ) {
                     $replacement = rawurlencode( $replacement );
@@ -2884,7 +2884,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
                     $replacement = "";
                 }
                 if ( $need_escape ) {
-                    $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                    $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
                 }
                 $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
                 $needle_offset += $orig_result_length - strlen( $replacement );

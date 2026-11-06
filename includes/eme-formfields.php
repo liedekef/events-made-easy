@@ -2174,7 +2174,7 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
             $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
         }
         if ( $need_escape ) {
-            $replacement = eme_esc_html_preserve_neutralized( $replacement );
+            $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
         }
         if ( $need_urlencode ) {
             $replacement = rawurlencode( $replacement );

@@ -4330,7 +4330,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );
@@ -4396,7 +4396,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
         }
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );

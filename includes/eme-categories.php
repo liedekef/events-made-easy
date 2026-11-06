@@ -639,7 +639,7 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
             $replacement = eme_translate( $replacement, $lang );
             $replacement = eme_sanitize_placeholder_output( $replacement, $target, true, $neutralize );
 			if ( $need_escape ) {
-				$replacement = eme_esc_html_preserve_neutralized( $replacement );
+				$replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 			}
 			if ( $need_urlencode ) {
 				$replacement = rawurlencode( $replacement );

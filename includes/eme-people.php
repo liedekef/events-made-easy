@@ -803,7 +803,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                 $replacement = "";
             }
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             if ( $need_urlencode ) {
                 $replacement = rawurlencode( $replacement );
@@ -4737,7 +4737,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
         }
     } else {
         if ( ! eme_is_empty_string( $_POST['lastname'] ) ) {
-        $person['lastname'] = eme_sanitize_person_name( $_POST['lastname'] ?? '' );
+            $person['lastname'] = eme_sanitize_person_name( $_POST['lastname'] );
         } else {
             $person['lastname'] = $person_being_updated['lastname'];
         }

@@ -1791,7 +1791,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 
         if ( $found ) {
             if ( $need_escape ) {
-                $replacement = eme_esc_html_preserve_neutralized( $replacement );
+                $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
             }
             $format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
             $needle_offset += $orig_result_length - strlen( $replacement );

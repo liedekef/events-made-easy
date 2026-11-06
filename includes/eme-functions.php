@@ -3026,7 +3026,8 @@ function eme_sanitize_person_name( $value ) {
     }
     $value = eme_sanitize_request( $value );
     $value = str_replace( [ '[', ']' ], '', $value );
-    $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '', $value );
+    // match a '#' only when followed by _, @, ESC or URL (i.e. the start of a placeholder); the lookahead leaves those characters untouched
+    $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '# ', $value );
     return $value;
 }
 
@@ -4762,14 +4763,10 @@ function eme_neutralize_template_syntax( $value, $target = 'html' ) {
         $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '&#35;', $value );
     } else {
         $value = str_replace( [ '[', ']' ], [ '(', ')' ], $value );
+        // match a '#' only when followed by _, @, ESC or URL (i.e. the start of a placeholder); the lookahead leaves those characters untouched
         $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '# ', $value );
     }
     return $value;
-}
-
-function eme_esc_html_preserve_neutralized( $value ) {
-    $value = esc_html( preg_replace( '/\n|\r/', '', $value ) );
-    return str_replace( [ '&amp;#91;', '&amp;#93;', '&amp;#35;' ], [ '&#91;', '&#93;', '&#35;' ], $value );
 }
 
 function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false, $neutralize = false ) {

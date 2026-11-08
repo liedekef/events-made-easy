@@ -1436,7 +1436,7 @@ function eme_csv_booking_report( $event_id ) {
         if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
             $answers = eme_get_dyndata_booking_answers( $booking['booking_id'] );
             foreach ( $answers as $answer ) {
-                $grouping      = $answer['eme_grouping'];
+                $grouping      = $answer['grouping_id'];
                 $occurence     = $answer['occurence'];
                 $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                 if ( ! empty( $tmp_formfield ) ) {
@@ -1746,7 +1746,7 @@ function eme_printable_booking_report( $event_id ) {
         if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
             $answers = eme_get_dyndata_booking_answers( $booking['booking_id'] );
             foreach ( $answers as $answer ) {
-                $grouping      = $answer['eme_grouping'];
+                $grouping      = $answer['grouping_id'];
                 $occurence     = $answer['occurence'];
                 $class         = 'eme_print_formfield' . $answer['field_id'];
                 $tmp_formfield = eme_get_formfield( $answer['field_id'] );
@@ -5177,7 +5177,7 @@ function eme_get_person_answers( $person_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $answers       = wp_cache_get( "eme_person_answers $person_id" );
     if ( $answers === false ) {
-        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='person'", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='person'", $person_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $answers = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_person_answers $person_id", $answers, '', 10 );
     }

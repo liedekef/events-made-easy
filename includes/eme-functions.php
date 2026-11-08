@@ -4374,7 +4374,7 @@ function eme_get_answerid( $answers, $related_id, $type, $field_id, $grouping = 
         if ( $answer['related_id'] == $related_id &&
             $answer['type'] == $type &&
             $answer['field_id'] == $field_id &&
-            $answer['eme_grouping'] == $grouping &&
+            $answer['grouping_id'] == $grouping &&
             $answer['occurence'] == $occurence ) {
             return $answer['answer_id'];
         }
@@ -4391,7 +4391,7 @@ function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id
             'related_id'   => $related_id,
             'field_id'     => $field_id,
             'answer'       => $answer,
-            'eme_grouping' => $grouping_id,
+            'grouping_id'  => $grouping_id,
             'occurence'    => $occurence
         ),
         array(
@@ -4399,7 +4399,7 @@ function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id
             '%d', // related_id
             '%d', // field_id
             '%s', // answer
-            '%d', // eme_grouping
+            '%d', // grouping_id
             '%d'  // occurence
         )
     );

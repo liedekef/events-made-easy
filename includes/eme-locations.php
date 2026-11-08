@@ -3443,7 +3443,7 @@ function eme_get_location_answers( $location_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $cf            = wp_cache_get( "eme_location_cf $location_id" );
     if ( $cf === false ) {
-        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='location'", $location_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $cf           = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_location_cf $location_id", $cf, '', 60 );
     }

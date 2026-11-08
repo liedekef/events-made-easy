@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 444 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 445 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -1221,7 +1221,7 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
          related_id int unsigned DEFAULT 0,
          field_id int unsigned DEFAULT 0,
          answer text NOT NULL,
-         eme_grouping int(11) DEFAULT 0,
+         grouping_id int(11) DEFAULT 0,
          occurence int(11) DEFAULT 0,
          UNIQUE KEY  (answer_id),
          KEY  (type),
@@ -1261,11 +1261,15 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 		if ( $db_version < 161 ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE answer_id answer_id INT(11) PRIMARY KEY AUTO_INCREMENT;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
 		}
-		if ( $db_version < 279 ) {
-			if ( eme_column_exists( $table_name, 'grouping' ) ) {
-				$wpdb->query( "ALTER TABLE $table_name CHANGE grouping eme_grouping INT(11) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+		if ( $db_version < 445 ) {
+			if ( ! eme_column_exists( $table_name, 'grouping_id' ) ) {
+				if ( eme_column_exists( $table_name, 'eme_grouping' ) ) {
+					$wpdb->query( "ALTER TABLE $table_name CHANGE eme_grouping grouping_id INT(11) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+				} elseif ( eme_column_exists( $table_name, 'grouping' ) ) {
+					$wpdb->query( "ALTER TABLE $table_name CHANGE grouping grouping_id INT(11) DEFAULT 0;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+				}
 			}
-			maybe_add_column( $table_name, 'eme_grouping', "ALTER TABLE $table_name ADD eme_grouping INT(11) DEFAULT 0;" );
+			maybe_add_column( $table_name, 'grouping_id', "ALTER TABLE $table_name ADD grouping_id INT(11) DEFAULT 0;" );
 		}
 		if ( $db_version < 304 ) {
 			maybe_add_column( $table_name, 'related_id', "ALTER TABLE $table_name ADD related_id int unsigned DEFAULT 0;" );

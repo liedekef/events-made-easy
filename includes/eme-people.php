@@ -966,7 +966,7 @@ function eme_import_csv_people() {
                         $grouping   = 0;
                         $field_name = $matches[1];
                         $formfield  = eme_get_formfield( $field_name );
-                        if ( ! empty( $formfield ) ) {
+                        if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people') {
                             $field_id = $formfield['field_id'];
                             $wpdb->delete(
                                 $answers_table,

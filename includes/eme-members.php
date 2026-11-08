@@ -5822,7 +5822,7 @@ function eme_get_member_placeholder_handler_definitions() {
                 }
             }
             $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members' ] ) ) {
+            if ( ! empty( $formfield ) ) {
                 $matched_answers = [];
                 foreach ( $ctx['answers'] as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id'] ) {
@@ -6430,21 +6430,35 @@ function eme_import_csv_members() {
                     // now handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
                     foreach ( $line as $key => $value ) {
                         if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
-                            $grouping   = 0;
                             $field_name = $matches[1];
                             $formfield  = eme_get_formfield( $field_name );
-                            if ( ! empty( $formfield ) ) {
+                            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ]) ) {
                                 $field_id = $formfield['field_id'];
-                                $wpdb->delete(
-                                    $answers_table,
-                                    [
-                                        'related_id' => $member_id,
-                                        'field_id'   => $field_id,
-                                        'type'       => 'member'
-                                    ],
-                                    [ '%d', '%d', '%s' ]
-                                );
-                                eme_insert_answer( 'member', $member_id, $field_id, eme_sanitize_request( $value ) );
+                                if ($formfield['field_purpose'] == 'people') {
+                                    $type = 'person';
+                                    $wpdb->delete(
+                                        $answers_table,
+                                        [
+                                            'related_id' => $person_id,
+                                            'field_id'   => $field_id,
+                                            'type'       => $type
+                                        ],
+                                        [ '%d', '%d', '%s' ]
+                                    );
+                                    eme_insert_answer( $type, $person_id, $field_id, eme_sanitize_request( $value ) );
+                                } else {
+                                    $type = 'member';
+                                    $wpdb->delete(
+                                        $answers_table,
+                                        [
+                                            'related_id' => $member_id,
+                                            'field_id'   => $field_id,
+                                            'type'       => $type
+                                        ],
+                                        [ '%d', '%d', '%s' ]
+                                    );
+                                    eme_insert_answer( $type, $member_id, $field_id, eme_sanitize_request( $value ) );
+                                }
                             }
                         }
                     }
@@ -6586,35 +6600,47 @@ function eme_import_csv_member_dynamic_answers() {
                     if ( ! isset( $occurences[ $member_id ] ) ) {
                         $occurences[ $member_id ] = [];
                     }
-                    // make sure grouping contains a sensible value (we call it "index now, but keep "grouping" for backwards compat)
+                    // make sure grouping_id contains a sensible value (we call it "index" now, but keep "grouping" for backwards compat)
                     if ( isset( $line['index'] ) ) {
-                        $grouping = intval( $line['index'] );
-                        if ( $grouping < 1 ) {
-                            $grouping = 1;
+                        $grouping_id = intval( $line['index'] );
+                        if ( $grouping_id < 1 ) {
+                            $grouping_id = 1;
                         }
                     } elseif ( isset( $line['grouping'] ) ) {
-                        $grouping = intval( $line['grouping'] );
-                        if ( $grouping < 1 ) {
-                            $grouping = 1;
+                        $grouping_id = intval( $line['grouping'] );
+                        if ( $grouping_id < 1 ) {
+                            $grouping_id = 1;
                         }
                     } else {
-                        $grouping = 1;
+                        $grouping_id = 1;
                     }
-                    if ( ! isset( $occurences[ $member_id ][ $grouping ] ) ) {
+                    if ( ! isset( $occurences[ $member_id ][ $grouping_id ] ) ) {
                         $occurence = 0;
                     } else {
-                        $occurence = $occurences[ $member_id ][ $grouping ];
+                        $occurence = $occurences[ $member_id ][ $grouping_id ];
                         ++$occurence;
                     }
-                    $occurences[ $member_id ][ $grouping ] = $occurence;
+                    $occurences[ $member_id ][ $grouping_id ] = $occurence;
                     // handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
                     foreach ( $line as $key => $value ) {
                         if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
                             $field_name = $matches[1];
                             $formfield  = eme_get_formfield( $field_name );
-                            if ( ! empty( $formfield ) ) {
+                            if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'members' ) {
                                 $field_id = $formfield['field_id'];
-                                eme_insert_answer( 'member', $member_id, $field_id, eme_sanitize_request( $value ), $grouping, $occurence );
+                                $type = 'member';
+                                $wpdb->delete(
+                                    $answers_table,
+                                    [
+                                        'related_id' => $member_id,
+                                        'field_id'   => $field_id,
+                                        'type'       => $type,
+                                        'eme_grouping' => $grouping_id,
+                                        'occurence'    => $occurence
+                                    ],
+                                    [ '%d', '%d', '%d', '%d', '%s' ]
+                                );
+                                eme_insert_answer( $type, $member_id, $field_id, eme_sanitize_request( $value ), $grouping_id, $occurence );
                                 ++$inserted;
                             }
                         }

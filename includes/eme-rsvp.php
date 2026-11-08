@@ -4119,7 +4119,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                 }
             }
             $formfield = eme_get_formfield( $field_key );
-            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp' ] ) ) {
+            if ( ! empty( $formfield ) ) {
                 $matched_answers = [];
                 foreach ( $ctx['answers'] as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id'] ) {

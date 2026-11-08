@@ -1999,9 +1999,9 @@ function eme_get_generic_placeholder_handler_definitions() {
             }
             if ( $wp_user && isset( $wp_user->$fieldname ) ) {
                 if ( is_array( $wp_user->$fieldname ) ) {
-                    return eme_sanitize_placeholder_output( join( ', ', $wp_user->$fieldname ), $ctx['target'], false, true );
+                    return eme_sanitize_placeholder_output( join( ', ', $wp_user->$fieldname ), $ctx['target'], false );
                 }
-                return eme_sanitize_placeholder_output( $wp_user->$fieldname, $ctx['target'], false, true );
+                return eme_sanitize_placeholder_output( $wp_user->$fieldname, $ctx['target'], false );
             }
             return '';
         },
@@ -2012,7 +2012,7 @@ function eme_get_generic_placeholder_handler_definitions() {
                 return '';
             }
             if ( $ctx['wp_id'] ) {
-                return eme_sanitize_placeholder_output( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ), $ctx['target'], false, true );
+                return eme_sanitize_placeholder_output( join( ', ', get_user_meta( $ctx['wp_id'], $fieldname ) ), $ctx['target'], false );
             }
             return '';
         },
@@ -2826,9 +2826,9 @@ function eme_get_event_placeholder_handler_definitions() {
             }
             if ( $target == 'html' ) {
                 $event_link  = esc_url( $event_link );
-                return eme_sanitize_placeholder_output( "<a href='$event_link' $linktarget title='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>" . esc_html( eme_translate( $event['event_name'], $lang ) ) . '</a>', $target, false, true );
+                return eme_sanitize_placeholder_output( "<a href='$event_link' $linktarget title='" . esc_attr( eme_translate( $event['event_name'], $lang ) ) . "'>" . esc_html( eme_translate( $event['event_name'], $lang ) ) . '</a>', $target, false );
             }
-            return eme_sanitize_placeholder_output( eme_translate( $event['event_name'], $lang ), $target, false, true );
+            return eme_sanitize_placeholder_output( eme_translate( $event['event_name'], $lang ), $target, false );
         },
         '/#_EXTERNALURL/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
@@ -2896,7 +2896,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 $replacement = $event[ $field ];
             }
             $replacement = eme_translate( $replacement, $ctx['lang'] );
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_ID/' => function( $result, $matches, $ctx ) {
             return intval( $ctx['event']['event_id'] );
@@ -3005,7 +3005,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( isset( $event['event_attributes'][ $tmp_attkey ] ) && ! is_array( $event['event_attributes'][ $tmp_attkey ] ) ) {
                 $replacement = $event['event_attributes'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, false );
             }
             return null;
         },
@@ -3015,7 +3015,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
                 $replacement = $event[ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
             }
             return null;
         },
@@ -3026,7 +3026,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( ! empty( $tmp_event ) && isset( $tmp_event['event_attributes'][ $tmp_event_attkey ] ) ) {
                 $replacement = $tmp_event['event_attributes'][ $tmp_event_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+                return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, false );
             }
             return null;
         },
@@ -3058,7 +3058,7 @@ function eme_get_event_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $target, false );
                     }
                 }
                 foreach ( $ctx['files'] as $file ) {
@@ -3432,7 +3432,7 @@ function eme_get_event_placeholder_handler_definitions() {
                 if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                     $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
                 }
-                return eme_sanitize_placeholder_output( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'] );
+                return eme_sanitize_placeholder_output( eme_translate( join( $sep, $cat_descs ), $ctx['lang'] ), $ctx['target'], false, false );
             }
             return '';
         },
@@ -3537,7 +3537,7 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
                 $sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
             }
-            return eme_sanitize_placeholder_output( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_translate( join( $sep, $t_categories ), $ctx['lang'] ), $ctx['target'], false, false );
         },
         '/#_LINKED(EVENT)?CATEGORIES\{(.*?)\}\{(.*?)\}$/' => function( $result, $matches, $ctx ) {
             global $wpdb;
@@ -3601,7 +3601,7 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_PASSWORD$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             if ( eme_is_event_rsvp( $event ) && ! empty( $event['event_properties']['rsvp_password'] ) ) {
-                return eme_sanitize_placeholder_output( $event['event_properties']['rsvp_password'], $ctx['target'] );
+                return eme_sanitize_placeholder_output( $event['event_properties']['rsvp_password'], $ctx['target'], false, false );
             }
             return '';
         },
@@ -3917,7 +3917,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             //Check to see if we have a second set of braces;
             $replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
         }
-        $replacement = eme_sanitize_placeholder_output( $replacement, $target );
+        $replacement = eme_sanitize_placeholder_output( $replacement, $target, false, false );
 
         if ( $need_escape ) {
             $replacement = esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -4177,7 +4177,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
                 }
             }
             if ( $target == 'html' ) {
-                $replacement = eme_sanitize_placeholder_output( $replacement, $target );
+                $replacement = eme_sanitize_placeholder_output( $replacement, $target, false, false );
                 if ( $show_excerpt ) {
                     $replacement = apply_filters( 'the_excerpt', $replacement );
                 } else {

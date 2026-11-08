@@ -1750,10 +1750,10 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 
         if ( preg_match( '/#_TASKNAME$/', $result ) ) {
             $replacement = eme_translate( $task['name'], $lang );
-            $replacement = eme_sanitize_placeholder_output( $replacement, $target, true, true );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target, true );
         } elseif ( preg_match( '/#_TASKDESCRIPTION$/', $result ) ) {
             $replacement = eme_translate( $task['description'], $lang );
-            $replacement = eme_sanitize_placeholder_output( $replacement, $target );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target, false, false );
         } elseif ( preg_match( '/#_(TASKBEGIN|TASKSTARTDATE)(\{(.+?)\})?$/', $result, $matches ) ) {
             if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
@@ -1847,7 +1847,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
             }
         } elseif ( preg_match( '/#_(TASK|TASKSIGNUP)?COMMENT/', $result ) ) {
             $replacement = $signup['comment'];
-            $replacement = eme_sanitize_placeholder_output( $replacement, $target, false, true );
+            $replacement = eme_sanitize_placeholder_output( $replacement, $target, false );
         } else {
             $found = 0;
         }

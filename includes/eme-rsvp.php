@@ -3599,14 +3599,14 @@ function eme_get_booking_placeholder_handler_definitions() {
 
     $handlers = [
         '/#_(RESP)?COMMENT/' => function( $result, $matches, $ctx ) {
-            return eme_sanitize_placeholder_output( $ctx['booking']['booking_comment'], $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( $ctx['booking']['booking_comment'], $ctx['target'], true );
         },
         '/#_(RESP)?CANCELCOMMENT/' => function( $result, $matches, $ctx ) {
             $replacement = '';
             if ( isset( $_POST['eme_cancelcomment'] ) ) {
                 $replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
             }
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/(#_RESPSPACES|#_SPACES|#_RESPSEATS|#_SEATS)\{(\d+)\}/' => function( $result, $matches, $ctx ) {
             $booking = $ctx['booking'];
@@ -3637,7 +3637,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                     }
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
+                return eme_sanitize_placeholder_output( $replacement, $target, false );
             }
             return '';
         },
@@ -3671,7 +3671,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                 if ( $target == 'html' ) {
                     $replacement .= '</table>';
                 }
-                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
+                return eme_sanitize_placeholder_output( $replacement, $target, false );
             }
             return '';
         },
@@ -3772,11 +3772,11 @@ function eme_get_booking_placeholder_handler_definitions() {
         },
         '/#_DISCOUNTCODES_ENTERED$/' => function( $result, $matches, $ctx ) {
             $dcodes_entered = $ctx['booking']['dcodes_entered'];
-            return eme_sanitize_placeholder_output( join( ', ', $dcodes_entered ), $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_entered ), $ctx['target'], true );
         },
         '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/' => function( $result, $matches, $ctx ) {
             $dcodes_used = $ctx['booking']['dcodes_used'];
-            return eme_sanitize_placeholder_output( join( ', ', $dcodes_used ), $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_used ), $ctx['target'], true );
         },
         '/#_PRICEPERSEAT$/' => function( $result, $matches, $ctx ) {
             $price = eme_get_seat_booking_price( $ctx['booking'] );
@@ -3899,7 +3899,7 @@ function eme_get_booking_placeholder_handler_definitions() {
             $booking = $ctx['booking'];
             $tmp_attkey = $matches[1];
             if ( isset( $booking[ $tmp_attkey ] ) && ! is_array( $booking[ $tmp_attkey ] ) ) {
-                return eme_sanitize_placeholder_output( eme_translate( $booking[ $tmp_attkey ], $ctx['lang'] ), $ctx['target'], true, true );
+                return eme_sanitize_placeholder_output( eme_translate( $booking[ $tmp_attkey ], $ctx['lang'] ), $ctx['target'], true );
             }
             return null;
         },
@@ -4062,7 +4062,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                     $field_replace .= $tmp_formfield['field_name'] . ": $tmp_answer" . $eol_sep;
                 }
             }
-            return eme_sanitize_placeholder_output( eme_translate( $field_replace, $ctx['lang'] ), $target, false, true );
+            return eme_sanitize_placeholder_output( eme_translate( $field_replace, $ctx['lang'] ), $target, false );
         },
         '/#_PAID|#_PAYED/' => function( $result, $matches, $ctx ) {
             return ( $ctx['booking']['booking_paid'] ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
@@ -4128,7 +4128,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false );
                         break;
                     }
                 }
@@ -4159,7 +4159,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false );
                     }
                 }
                 $replacement = join( $eol_sep, $matched_answers );

@@ -5446,11 +5446,11 @@ function eme_get_member_placeholder_handler_definitions() {
         },
         '/#_DISCOUNTCODES_ENTERED$/' => function( $result, $matches, $ctx ) {
             $dcodes_entered = $ctx['member']['dcodes_entered'];
-            return eme_sanitize_placeholder_output( join( ', ', $dcodes_entered ), $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_entered ), $ctx['target'], true );
         },
         '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/' => function( $result, $matches, $ctx ) {
             $dcodes_used = $ctx['member']['dcodes_used'];
-            return eme_sanitize_placeholder_output( join( ', ', $dcodes_used ), $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( join( ', ', $dcodes_used ), $ctx['target'], true );
         },
         '/#_PRICE$/' => function( $result, $matches, $ctx ) {
             $replacement = eme_localized_price( $ctx['total_member_price'], $ctx['membership']['properties']['currency'], $ctx['target'] );
@@ -5729,7 +5729,7 @@ function eme_get_member_placeholder_handler_definitions() {
                     }
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
+                return eme_sanitize_placeholder_output( $replacement, $target, false );
             }
             return '';
         },
@@ -5764,7 +5764,7 @@ function eme_get_member_placeholder_handler_definitions() {
                     $replacement .= '</table>';
                 }
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
-                return eme_sanitize_placeholder_output( $replacement, $target, false, true );
+                return eme_sanitize_placeholder_output( $replacement, $target, false );
             }
             return '';
         },
@@ -5831,7 +5831,7 @@ function eme_get_member_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false );
                         break;
                     }
                 }
@@ -5862,7 +5862,7 @@ function eme_get_member_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
-                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false, true );
+                        $matched_answers[] = eme_sanitize_placeholder_output( $field_replace, $target, false );
                     }
                 }
                 $replacement = join($eol_sep, $matched_answers);
@@ -5998,11 +5998,11 @@ function eme_get_membership_placeholder_handler_definitions() {
     $handlers = [
         '/#_NAME/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['membership']['name'];
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
         },
         '/#_DESCRIPTION/' => function( $result, $matches, $ctx ) {
             $replacement = $ctx['membership']['description'];
-            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true );
+            return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, false );
         },
         '/#_PRICE$/' => function( $result, $matches, $ctx ) {
             $membership = $ctx['membership'];
@@ -6096,7 +6096,7 @@ function eme_get_membership_placeholder_handler_definitions() {
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $ctx['target'] );
                         }
-                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $ctx['target'], false, true );
+                        $field_replace = eme_sanitize_placeholder_output( $field_replace, $ctx['target'], false );
                     }
                 }
                 foreach ( $ctx['files'] as $file ) {

@@ -4767,7 +4767,7 @@ function eme_message_error_div($message, $is_dismissible = 0) {
 
 // backwars compatible
 function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
-    return eme_sanitize_placeholder_output( $replacement, $target, $esc_html);
+    return eme_sanitize_placeholder_output( $replacement, $target, $esc_html, false );
 }
 function eme_neutralize_template_syntax( $value, $target = 'html' ) {
     if ( is_array( $value ) ) {
@@ -4792,7 +4792,7 @@ function eme_neutralize_template_syntax( $value, $target = 'html' ) {
     return $value;
 }
 
-function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false, $neutralize = false ) {
+function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false, $neutralize = true ) {
     if ( $target == 'html' || $target == 'htmlmail' ) {
         $replacement = eme_kses($replacement);
         if ( $esc_html ) {

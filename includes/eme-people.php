@@ -965,7 +965,7 @@ function eme_import_csv_people() {
                         $formfield  = eme_get_formfield( $field_name );
                         if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people') {
                             $field_id = $formfield['field_id'];
-                            eme_delete_answer( null, 'person', $person_id, $field_id );
+                            eme_delete_answer_by_field( 'person', $person_id, $field_id );
                             eme_insert_answer( 'person', $person_id, $field_id, eme_sanitize_request( $value ) );
                         }
                     }

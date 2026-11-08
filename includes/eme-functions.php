@@ -4411,13 +4411,19 @@ function eme_update_answer( $answer_id, $value ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     return $wpdb->update( $answers_table, ['answer'=>$value], ['answer_id'=>$answer_id] );
 }
-function eme_delete_answer( $answer_id, $type = '', $related_id = 0, $field_id = 0, $grouping_id = 0, $occurence = 0 ) {
+
+function eme_delete_answer( $answer_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     if ( null !== $answer_id ) {
         return $wpdb->delete( $answers_table, [ 'answer_id' => $answer_id ], [ '%d' ] );
     }
+    return false;
+}
 
+function eme_delete_answer_by_field( $type = '', $related_id = 0, $field_id = 0, $grouping_id = 0, $occurence = 0 ) {
+    global $wpdb;
+    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     if ( '' === $type || $related_id <= 0 || $field_id <= 0 ) {
         return false;
     }

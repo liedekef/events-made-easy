@@ -373,7 +373,7 @@ function eme_import_csv_locations() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                eme_delete_answer( null, 'location', $location_id, $field_id );
+                                eme_delete_answer_by_field( 'location', $location_id, $field_id );
                                 eme_insert_answer( 'location', $location_id, $field_id, eme_kses_maybe_unfiltered( $value ) );
                             }
                         }

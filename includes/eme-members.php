@@ -6438,7 +6438,7 @@ function eme_import_csv_members() {
                                     $type = 'member';
                                     $related_id = $member_id;
                                 }
-                                eme_delete_answer( null, $type, $related_id, $field_id );
+                                eme_delete_answer_by_field( $type, $related_id, $field_id );
                                 eme_insert_answer( $type, $related_id, $field_id, eme_sanitize_request( $value ) );
                             }
                         }
@@ -6607,7 +6607,7 @@ function eme_import_csv_member_dynamic_answers() {
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'members' ) {
                                 $field_id = $formfield['field_id'];
                                 $type = 'member';
-                                eme_delete_answer( null, $type, $member_id, $field_id, $grouping_id, $occurence );
+                                eme_delete_answer_by_field( $type, $member_id, $field_id, $grouping_id, $occurence );
                                 eme_insert_answer( $type, $member_id, $field_id, eme_sanitize_request( $value ), $grouping_id, $occurence );
                                 ++$inserted;
                             }
@@ -7738,7 +7738,7 @@ function eme_membership_store_answers( $membership_id ) {
     // delete old answer_ids
     foreach ( $all_answers as $answer ) {
         if ( ! in_array( $answer['answer_id'], $answer_ids_seen ) && $answer['type'] == 'membership' && $answer['related_id'] == $membership_id ) {
-            eme_delete_answer( $answer_id );
+            eme_delete_answer( $answer['answer_id'] );
         }
     }
     wp_cache_delete( "eme_membership_cf $membership_id" );

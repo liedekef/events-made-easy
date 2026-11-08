@@ -10704,7 +10704,7 @@ function eme_prefetch_event_answers( $event_ids ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $placeholders  = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
     $ids_arr       = array_map( 'intval', $event_ids );
-    $sql           = $wpdb->prepare("SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id IN ($placeholders) AND type='event'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $sql           = $wpdb->prepare("SELECT * FROM $answers_table WHERE related_id IN ($placeholders) AND type='event'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $result        = array_fill_keys( array_map( 'intval', $event_ids ), [] );
     foreach ( $rows as $row ) {
@@ -10718,7 +10718,7 @@ function eme_get_event_answers( $event_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $cf            = wp_cache_get( "eme_event_cf $event_id" );
     if ( $cf === false ) {
-        $prepared_sql = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='event'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $cf  = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_event_cf $event_id", $cf, '', 60 );
     }
@@ -10891,7 +10891,7 @@ function eme_get_event_cf_answers_groupingids( $event_id ) {
     global $wpdb;
     $answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $prepared_sql   = $wpdb->prepare( "SELECT DISTINCT a.grouping_id FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql   = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

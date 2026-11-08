@@ -4012,7 +4012,7 @@ function eme_store_member_answers( $member, $do_update = 1, $original_post_membe
             $extra_charge += $answer['answer'];
         }
         if ( $do_update ) {
-            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['grouping_id'], $answer['occurence'] );
+            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['eme_grouping'], $answer['occurence'] );
             if ( $answer_id ) {
                 eme_update_answer( $answer_id, $answer['answer'] );
                 $answer_ids_seen[] = $answer_id;
@@ -4049,27 +4049,27 @@ function eme_get_person_ids_from_member_ids( $member_ids ) {
 function eme_get_member_answers( $member_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='member'", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='member'", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_nodyndata_member_answers( $member_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND grouping_id=0 AND type='member'", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='member'", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_dyndata_member_answers( $member_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND grouping_id>0 AND type='member' ORDER BY grouping_id,occurence,field_id", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping>0 AND type='member' ORDER BY eme_grouping,occurence,field_id", $member_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_dyndata_member_answer( $member_id, $grouping = 0, $occurence = 0 ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND grouping_id=%d AND occurence=%d AND type='member'", $member_id, $grouping, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=%d AND occurence=%d AND type='member'", $member_id, $grouping, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -5744,7 +5744,7 @@ function eme_get_member_placeholder_handler_definitions() {
                 $old_grouping = 1;
                 $old_occurence = 0;
                 foreach ( $dyn_answers as $answer ) {
-                    $grouping      = $answer['grouping_id'];
+                    $grouping      = $answer['eme_grouping'];
                     $occurence     = $answer['occurence'];
                     $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                     if ( ! empty( $tmp_formfield ) ) {
@@ -6635,7 +6635,7 @@ function eme_import_csv_member_dynamic_answers() {
                                         'related_id' => $member_id,
                                         'field_id'   => $field_id,
                                         'type'       => $type,
-                                        'grouping_id' => $grouping_id,
+                                        'eme_grouping' => $grouping_id,
                                         'occurence'    => $occurence
                                     ],
                                     [ '%d', '%d', '%d', '%d', '%s' ]
@@ -7384,14 +7384,14 @@ function eme_delete_dyndata_occurence_ajax() {
     // 1. Delete all answers for this (member, grouping, occurence)
     $wpdb->delete(
         $answers_table,
-        [ 'related_id' => $member_id, 'type' => 'member', 'grouping_id' => $grouping, 'occurence' => $occurence ],
+        [ 'related_id' => $member_id, 'type' => 'member', 'eme_grouping' => $grouping, 'occurence' => $occurence ],
         [ '%d', '%s', '%d', '%d' ]
     );
 
     // 2. Shift higher occurrences down by 1 so there are no gaps
     $wpdb->query(
         $wpdb->prepare(
-            "UPDATE $answers_table SET occurence = occurence - 1 WHERE related_id = %d AND type = 'member' AND grouping_id = %d AND occurence > %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "UPDATE $answers_table SET occurence = occurence - 1 WHERE related_id = %d AND type = 'member' AND eme_grouping = %d AND occurence > %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $member_id, $grouping, $occurence
         )
     );
@@ -7742,7 +7742,7 @@ function eme_get_membership_answers( $membership_id ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $cf            = wp_cache_get( "eme_membership_cf $membership_id" );
     if ( $cf === false ) {
-        $prepared_sql = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $cf  = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         wp_cache_set( "eme_membership_cf $membership_id", $cf, '', 60 );
     }
@@ -7851,7 +7851,7 @@ function eme_get_membership_cf_answers_groupingids( $membership_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT a.grouping_id FROM $answers_table a LEFT JOIN $members_table m ON m.member_id=a.related_id WHERE m.membership_id=%d AND a.type='member'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $members_table m ON m.member_id=a.related_id WHERE m.membership_id=%d AND a.type='member'", $membership_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

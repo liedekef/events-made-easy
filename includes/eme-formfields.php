@@ -3598,7 +3598,7 @@ function eme_get_booking_answers_fieldids( $ids_arr ) {
     if (!empty($ids_arr) &&  eme_is_integer_array( $ids_arr ) ) {
         $ids_arr_int  = array_map( 'intval', $ids_arr );
         $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
-        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND grouping_id=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return [];
@@ -3612,7 +3612,7 @@ function eme_get_tasksignups_answers_fieldids( $ids_arr ) {
     if (!empty($ids_arr) &&  eme_is_integer_array( $ids_arr ) ) {
         $ids_arr_int  = array_map( 'intval', $ids_arr );
         $placeholders = implode( ',', array_fill( 0, count( $ids_arr_int ), '%d' ) );
-        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='tasksignup' AND grouping_id=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare( "SELECT DISTINCT field_id FROM $answers_table WHERE type='tasksignup' AND eme_grouping=0 AND related_id IN ($placeholders) ORDER BY field_id", ...$ids_arr_int ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     } else {
         return [];

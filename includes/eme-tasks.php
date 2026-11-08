@@ -248,7 +248,7 @@ function eme_get_tasksignup_post_answers( $task_signup ) {
                     'field_purpose' => $formfield['field_purpose'],
                     'extra_charge'  => $formfield['extra_charge'],
                     'answer'        => $value,
-                    'grouping_id'   => 0,
+                    'grouping_id '  => 0,
                     'occurence_id'  => 0,
                     'eme_grouping'  => 0,
                     'occurence'     => 0,
@@ -287,12 +287,12 @@ function eme_store_tasksignup_answers( $task_signup, $do_update = 1 ) {
     $found_answers   = eme_get_tasksignup_post_answers( $task_signup );
     foreach ( $found_answers as $answer ) {
         if ( $do_update ) {
-            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['grouping_id'], $answer['occurence'] );
+            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['eme_grouping'], $answer['occurence'] );
             if ( $answer_id ) {
                 eme_update_answer( $answer_id, $answer['answer'] );
                 $answer_ids_seen[] = $answer_id;
             } else {
-                $answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence'] );
+                $answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['eme_grouping'], $answer['occurence'] );
             }
         }
     }
@@ -310,7 +310,7 @@ function eme_store_tasksignup_answers( $task_signup, $do_update = 1 ) {
 function eme_get_tasksignup_answers( $id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='tasksignup'", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='tasksignup'", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 

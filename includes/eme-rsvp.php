@@ -2179,7 +2179,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
                         'field_purpose' => $formfield['field_purpose'],
                         'extra_charge'  => $formfield['extra_charge'],
                         'answer'        => $value,
-                        'grouping_id'   => 0,
+                        'grouping_id '  => 0,
                         'occurence_id'  => 0,
                         'eme_grouping'  => 0,
                         'occurence'     => 0,
@@ -2307,7 +2307,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
                     'field_purpose' => $formfield['field_purpose'],
                     'extra_charge'  => $formfield['extra_charge'],
                     'answer'        => $value,
-                    'grouping_id'   => 0,
+                    'grouping_id '  => 0,
                     'occurence_id'  => 0,
                     'eme_grouping'  => 0,
                     'occurence'     => 0,
@@ -2354,12 +2354,12 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
             $extra_charge += $answer['answer'];
         }
         if ( $do_update ) {
-            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['grouping_id'], $answer['occurence'] );
+            $answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['eme_grouping'], $answer['occurence'] );
             if ( $answer_id ) {
                 eme_update_answer( $answer_id, $answer['answer'] );
                 $answer_ids_seen[] = $answer_id;
             } else {
-                $answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence'] );
+                $answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['eme_grouping'], $answer['occurence'] );
             }
         }
     }
@@ -2388,7 +2388,7 @@ function eme_prefetch_booking_answers( $booking_ids ) {
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $placeholders  = implode( ',', array_fill( 0, count( $booking_ids ), '%d' ) );
     $ids_arr       = array_map( 'intval', $booking_ids );
-    $sql           = $wpdb->prepare("SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id IN ($placeholders) AND type='booking'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $sql           = $wpdb->prepare("SELECT * FROM $answers_table WHERE related_id IN ($placeholders) AND type='booking'", $ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $rows          = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $result        = array_fill_keys( array_map( 'intval', $booking_ids ), [] );
     foreach ( $rows as $row ) {
@@ -2400,27 +2400,27 @@ function eme_prefetch_booking_answers( $booking_ids ) {
 function eme_get_booking_answers( $booking_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='booking'", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='booking'", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_nodyndata_booking_answers( $booking_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND grouping_id=0 AND type='booking'", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='booking'", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_dyndata_booking_answers( $booking_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND grouping_id>0 AND type='booking' ORDER BY grouping_id,occurence,field_id", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping>0 AND type='booking' ORDER BY eme_grouping,occurence,field_id", $booking_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_dyndata_booking_answer( $booking_id, $grouping = 0, $occurence = 0 ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $prepared_sql  = $wpdb->prepare( "SELECT *, grouping_id AS eme_grouping FROM $answers_table WHERE related_id=%d AND type='booking' AND grouping_id=%d AND occurence=%d", $booking_id, $grouping, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='booking' AND eme_grouping=%d AND occurence=%d", $booking_id, $grouping, $occurence ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     return $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -3652,7 +3652,7 @@ function eme_get_booking_placeholder_handler_definitions() {
                 $old_grouping  = 1;
                 $old_occurence = 0;
                 foreach ( $dyn_answers as $answer ) {
-                    $grouping      = $answer['grouping_id'];
+                    $grouping      = $answer['eme_grouping'];
                     $occurence     = $answer['occurence'];
                     $tmp_formfield = eme_get_formfield( $answer['field_id'] );
                     if ( ! empty( $tmp_formfield ) ) {

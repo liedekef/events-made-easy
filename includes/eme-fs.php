@@ -689,14 +689,15 @@ function eme_fs_process_newevent() {
             'event_registration_pending_email_body', 'event_registration_updated_email_body',
             'event_registration_cancelled_email_body', 'event_registration_trashed_email_body',
             'event_registration_paid_email_body', 'event_registration_form_format',
-            'event_cancel_form_format', 'event_registration_recorded_ok_html', 'rsvp_addpersontogroup'
+            'event_cancel_form_format', 'event_registration_recorded_ok_html'
         ] as $col ) {
             unset( $event_data[ $col ] );
         }
+        unset( $event_data['event_properties']['rsvp_addpersontogroup'] );
         $event_data = eme_neutralize_template_syntax( $event_data, 'text' ); // recursive: attributes, properties, notes, ...
     }
     // things nobody should touch in FS submit
-    foreach ( [ 'recurrence_id', '' ] as $col ) {
+    foreach ( [ 'recurrence_id' ] as $col ) {
         unset( $event_data[ $col ] );
     }
 

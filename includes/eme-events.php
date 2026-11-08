@@ -3002,8 +3002,8 @@ function eme_get_event_placeholder_handler_definitions() {
         '/#_PROP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];
             $tmp_attkey = $matches[1];
-            if ( isset( $event['event_attributes'][ $tmp_attkey ] ) && ! is_array( $event['event_attributes'][ $tmp_attkey ] ) ) {
-                $replacement = $event['event_attributes'][ $tmp_attkey ];
+            if ( isset( $event['event_properties'][ $tmp_attkey ] ) && ! is_array( $event['event_properties'][ $tmp_attkey ] ) ) {
+                $replacement = $event['event_properties'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, false );
             }
@@ -3306,14 +3306,14 @@ function eme_get_event_placeholder_handler_definitions() {
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_sanitize_placeholder_output( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_get_attendees_list( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'], false, false );
         },
         '/#_BOOKINGS/' => function( $result, $matches, $ctx ) {
             $rsvp_status = 0;
             if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
                 $rsvp_status = EME_RSVP_STATUS_APPROVED;
             }
-            return eme_sanitize_placeholder_output( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'] );
+            return eme_sanitize_placeholder_output( eme_get_bookings_list_for_event( event: $ctx['event'], rsvp_status: $rsvp_status ), $ctx['target'], false, false );
         },
         '/#_(CONTACT|AUTHOR)/' => function( $result, $matches, $ctx ) {
             $event = $ctx['event'];

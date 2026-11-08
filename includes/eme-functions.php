@@ -3024,11 +3024,7 @@ function eme_sanitize_person_name( $value ) {
     if ( ! is_string( $value ) ) {
         return $value;
     }
-    $value = eme_sanitize_request( $value );
-    $value = str_replace( [ '[', ']' ], '', $value );
-    // match a '#' only when followed by _, @, ESC or URL (i.e. the start of a placeholder); the lookahead leaves those characters untouched
-    $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '# ', $value );
-    return $value;
+    return eme_neutralize_template_syntax( eme_sanitize_request( $value ), 'text' );
 }
 
 function eme_sanitize_email( $email ) {

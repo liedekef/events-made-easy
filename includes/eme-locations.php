@@ -2347,8 +2347,8 @@ function eme_get_locations_placeholder_handler_definitions() {
         '/#_PROP\{(.+?)\}$/' => function( $result, $matches, $ctx ) {
             $location = $ctx['location'];
             $tmp_attkey = $matches[1];
-            if ( isset( $location['location_attributes'][ $tmp_attkey ] ) && ! is_array( $location['location_attributes'][ $tmp_attkey ] ) ) {
-                $replacement = $location['location_attributes'][ $tmp_attkey ];
+            if ( isset( $location['location_properties'][ $tmp_attkey ] ) && ! is_array( $location['location_properties'][ $tmp_attkey ] ) ) {
+                $replacement = $location['location_properties'][ $tmp_attkey ];
                 $replacement = eme_translate( $replacement, $ctx['lang'] );
                 return eme_sanitize_placeholder_output( $replacement, $ctx['target'], true, false );
             }

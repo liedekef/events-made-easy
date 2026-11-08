@@ -680,6 +680,26 @@ function eme_fs_process_newevent() {
             }
         }
     }
+
+    if ( ! is_user_logged_in() ) {
+        // guests: some limitations
+        foreach ( [ 'event_author', 'event_contactperson_id', 'event_status',
+            'event_page_title_format', 'event_single_event_format',
+            'event_contactperson_email_body', 'event_respondent_email_body',
+            'event_registration_pending_email_body', 'event_registration_updated_email_body',
+            'event_registration_cancelled_email_body', 'event_registration_trashed_email_body',
+            'event_registration_paid_email_body', 'event_registration_form_format',
+            'event_cancel_form_format', 'event_registration_recorded_ok_html', 'rsvp_addpersontogroup'
+        ] as $col ) {
+            unset( $event_data[ $col ] );
+        }
+        $event_data = eme_neutralize_template_syntax( $event_data, 'text' ); // recursive: attributes, properties, notes, ...
+    }
+    // things nobody should touch in FS submit
+    foreach ( [ 'recurrence_id', '' ] as $col ) {
+        unset( $event_data[ $col ] );
+    }
+
     if (isset($event_data['event_properties']['all_day']) && $event_data['event_properties']['all_day']==1)
         $all_day=1;
     else
@@ -733,7 +753,6 @@ function eme_fs_process_newevent() {
             $force=1;
         if (empty($event_data['location_id']))
             $event_data['location_id'] = eme_fs_processlocation($event_data, $force);
-
         if (empty($event_data['event_status']))
             $event_data['event_status']=$eme_fs_options['auto_publish'];
         if (!isset($event_data['event_category_ids']) && !empty($eme_fs_options['default_cat']))

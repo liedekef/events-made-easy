@@ -91,9 +91,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/eme-docs/).
 
-= Why are square brackets in plain-text output shown as parentheses? =
+= Why are square brackets in plain-text output shown with extra spaces? =
 
-To prevent user-provided text from being executed as a shortcode or EME placeholder, EME neutralizes `[` and `]` as `(` and `)` and `#_` as `# ` when rendering plain-text templates. HTML and HTML email output use character entities, so the original brackets remain visible there.
+To prevent user-provided text from being executed as a shortcode or EME placeholder, EME neutralizes `[` and `]` by inserting a space after `[` and before `]`, and `#_` as `# `, when rendering plain-text templates. HTML and HTML email output use character entities, so the original brackets remain visible there without extra spaces.
 
 == Screenshots ==
 
@@ -104,7 +104,9 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 
 == Changelog ==
 = 3.3.7  (2026/11/) =
-  Strip shortcode/placeholder syntax from person first/last names on save, so for example "Smith [Jr]" is stored as "Smith (Jr)"
+* Keep square brackets visible when neutralizing shortcode syntax in plain-text output by inserting spaces instead of replacing them with parentheses
+* Strip shortcode/placeholder syntax from person first/last names on save, so for example "Smith [Jr]" is stored as "Smith [ Jr ]"
+* Document #_PROP
 
 = 3.3.6  (2026/11/07) =
 * More consistent language filtering for states/countries

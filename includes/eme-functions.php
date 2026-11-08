@@ -4781,7 +4781,8 @@ function eme_neutralize_template_syntax( $value, $target = 'html' ) {
         $value = str_replace( [ '[', ']' ], [ '&#91;', '&#93;' ], $value );
         $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '&#35;', $value );
     } else {
-        $value = str_replace( [ '[', ']' ], [ '(', ')' ], $value );
+        $value = preg_replace( '/\[(?=[A-Za-z0-9_\/-])/', '[ ', $value );
+        $value = preg_replace( '/(?<=[A-Za-z0-9_\/-])\]/', ' ]', $value );
         // match a '#' only when followed by _, @, ESC or URL (i.e. the start of a placeholder); the lookahead leaves those characters untouched
         $value = preg_replace( '/#(?=(?:_|@|ESC|URL))/', '# ', $value );
     }

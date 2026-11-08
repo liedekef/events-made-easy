@@ -656,6 +656,14 @@ function eme_fs_process_newevent() {
         $preserved_single_event_format = $_POST['event']['event_single_event_format'] ?? null;
         $preserved_location_description = $_POST['event']['location_description'] ?? null;
         $event_data = eme_kses($_POST['event']);
+        if ( ! is_array( $event_data ) ) {
+            $event_data = [];
+        }
+        foreach ( [ 'event_attributes', 'event_properties' ] as $key ) {
+            if ( isset( $event_data[ $key ] ) && ! is_array( $event_data[ $key ] ) ) {
+                unset( $event_data[ $key ] );
+            }
+        }
         if ( $preserved_notes !== null ) {
             $event_data['event_notes'] = eme_kses_maybe_unfiltered( $preserved_notes );
         }
@@ -667,10 +675,10 @@ function eme_fs_process_newevent() {
         }
     }
     // add in the event_attributes and properties
-    if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes'])) {
+    if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes']) && is_array($_POST['event_attributes'])) {
         $event_data['event_attributes'] = eme_kses($_POST['event_attributes']);
     }
-    if (isset($_POST['event_properties']) && !empty($_POST['event_properties'])) {
+    if (isset($_POST['event_properties']) && !empty($_POST['event_properties']) && is_array($_POST['event_properties'])) {
         $event_data['event_properties'] = eme_kses($_POST['event_properties']);
         // validate wp_page_template against the theme's allow-list
         if ( ! empty( $event_data['event_properties']['wp_page_template'] ) ) {
@@ -693,13 +701,13 @@ function eme_fs_process_newevent() {
         ] as $col ) {
             unset( $event_data[ $col ] );
         }
-        unset( $event_data['event_properties']['rsvp_addpersontogroup'] );
+        if ( is_array( $event_data['event_properties'] ?? null ) ) {
+            unset( $event_data['event_properties']['rsvp_addpersontogroup'] );
+        }
         $event_data = eme_neutralize_template_syntax( $event_data, 'text' ); // recursive: attributes, properties, notes, ...
     }
     // things nobody should touch in FS submit
-    foreach ( [ 'recurrence_id' ] as $col ) {
-        unset( $event_data[ $col ] );
-    }
+    unset( $event_data[ 'recurrence_id' ] );
 
     if (isset($event_data['event_properties']['all_day']) && $event_data['event_properties']['all_day']==1)
         $all_day=1;

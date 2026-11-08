@@ -206,9 +206,6 @@ function eme_locations_page() {
 }
 
 function eme_import_csv_locations() {
-    global $wpdb;
-    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
@@ -376,15 +373,7 @@ function eme_import_csv_locations() {
                             $formfield  = eme_get_formfield( $field_name );
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
                                 $field_id = $formfield['field_id'];
-                                $wpdb->delete(
-                                    $answers_table,
-                                    [
-                                        'related_id' => $location_id,
-                                        'field_id'   => $field_id,
-                                        'type'       => 'location'
-                                    ],
-                                    [ '%d', '%d', '%s' ]
-                                );
+                                eme_delete_answer( null, 'location', $location_id, $field_id );
                                 eme_insert_answer( 'location', $location_id, $field_id, eme_kses_maybe_unfiltered( $value ) );
                             }
                         }

@@ -828,9 +828,6 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 }
 
 function eme_import_csv_people() {
-    global $wpdb;
-    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-
     //validate whether uploaded file is a csv file
     $csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
     if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
@@ -968,15 +965,7 @@ function eme_import_csv_people() {
                         $formfield  = eme_get_formfield( $field_name );
                         if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people') {
                             $field_id = $formfield['field_id'];
-                            $wpdb->delete(
-                                $answers_table,
-                                    [
-                                        'related_id' => $person_id,
-                                        'field_id'   => $field_id,
-                                        'type'       => 'person'
-                                    ],
-                                    [ '%d', '%d', '%s' ]
-                            );
+                            eme_delete_answer( null, 'person', $person_id, $field_id );
                             eme_insert_answer( 'person', $person_id, $field_id, eme_sanitize_request( $value ) );
                         }
                     }

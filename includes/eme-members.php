@@ -6240,9 +6240,6 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 }
 
 function eme_import_csv_members() {
-    global $wpdb;
-    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-
     if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
         return __( 'Access denied', 'events-made-easy' );
     }
@@ -6436,29 +6433,13 @@ function eme_import_csv_members() {
                                 $field_id = $formfield['field_id'];
                                 if ($formfield['field_purpose'] == 'people') {
                                     $type = 'person';
-                                    $wpdb->delete(
-                                        $answers_table,
-                                        [
-                                            'related_id' => $person_id,
-                                            'field_id'   => $field_id,
-                                            'type'       => $type
-                                        ],
-                                        [ '%d', '%d', '%s' ]
-                                    );
-                                    eme_insert_answer( $type, $person_id, $field_id, eme_sanitize_request( $value ) );
+                                    $related_id = $person_id;
                                 } else {
                                     $type = 'member';
-                                    $wpdb->delete(
-                                        $answers_table,
-                                        [
-                                            'related_id' => $member_id,
-                                            'field_id'   => $field_id,
-                                            'type'       => $type
-                                        ],
-                                        [ '%d', '%d', '%s' ]
-                                    );
-                                    eme_insert_answer( $type, $member_id, $field_id, eme_sanitize_request( $value ) );
+                                    $related_id = $member_id;
                                 }
+                                eme_delete_answer( null, $type, $related_id, $field_id );
+                                eme_insert_answer( $type, $related_id, $field_id, eme_sanitize_request( $value ) );
                             }
                         }
                     }
@@ -6482,9 +6463,6 @@ function eme_import_csv_members() {
 }
 
 function eme_import_csv_member_dynamic_answers() {
-    global $wpdb;
-    $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-
     if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
         return __( 'Access denied', 'events-made-easy' );
     }
@@ -6629,17 +6607,7 @@ function eme_import_csv_member_dynamic_answers() {
                             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'members' ) {
                                 $field_id = $formfield['field_id'];
                                 $type = 'member';
-                                $wpdb->delete(
-                                    $answers_table,
-                                    [
-                                        'related_id' => $member_id,
-                                        'field_id'   => $field_id,
-                                        'type'       => $type,
-                                        'eme_grouping' => $grouping_id,
-                                        'occurence'    => $occurence
-                                    ],
-                                    [ '%d', '%d', '%d', '%d', '%s' ]
-                                );
+                                eme_delete_answer( null, $type, $member_id, $field_id, $grouping_id, $occurence );
                                 eme_insert_answer( $type, $member_id, $field_id, eme_sanitize_request( $value ), $grouping_id, $occurence );
                                 ++$inserted;
                             }

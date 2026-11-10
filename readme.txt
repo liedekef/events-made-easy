@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.3.6
+Stable tag: 3.3.7
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -103,9 +103,9 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.7  (2026/11/) =
+= 3.3.7  (2026/11/12) =
 * Keep square brackets visible when neutralizing shortcode syntax in plain-text output by inserting spaces instead of replacing them with parentheses
-* Strip shortcode/placeholder syntax from person first/last names on save, so for example "Smith [Jr]" is stored as "Smith [ Jr ]"
+* Neutralize shortcode syntax from person first/last names on save (and others when saving events from frontend submut), so for example "Smith [Jr]" is stored as "Smith [ Jr ]", this avoids shortcode injection.
 * Document #_PROP
 
 = 3.3.6  (2026/11/07) =

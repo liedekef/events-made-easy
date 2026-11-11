@@ -1432,13 +1432,8 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
         return;
     }
 
-    $quantity          = 1;
-    $price             = eme_payment_gateway_total( $baseprice, $cur, $gateway );
-    $events_page_link  = eme_get_events_page();
-    $payment_id        = $payment['id'];
-    $success_link      = eme_payment_return_url( $payment, 0 );
-    $cancel_link       = eme_payment_url( $payment );
-    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
+    $price      = eme_payment_gateway_total( $baseprice, $cur, $gateway );
+    $payment_id = $payment['id'];
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
@@ -1453,54 +1448,21 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
     $button_below   = get_option( 'eme_' . $gateway . '_button_below' );
     $button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
-    require_once EME_PLUGIN_DIR . 'payment_gateways/paypal_legacy/Paypal.php';
-    $p = new Paypal();
-
-    // the paypal or paypal sandbox url
-    $mode = get_option( 'eme_legacypaypal_url' );
-    if ( preg_match( '/sandbox/', $mode ) ) {
-            $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-    } else {
-            $p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
-    }
-
-    // the timeout in seconds before the button form is submitted to paypal
-    // this needs the included addevent javascript function
-    // 0 = no delay
-    // false = disable auto submission
-    $p->timeout = false;
-
-    // the button label
-    // false to disable button (if you want to rely only on the javascript auto-submission) not recommended
-    $p->form_id = 'eme_legacypaypal_form';
-    $p->button  = $button_label;
-    if ( ! empty( $button_img_url ) ) {
-        $p->button_img_url = $button_img_url;
-    }
-
-    // no encryption, use the new paypal for that
-    $p->encrypt = false;
-
-    // the actual button parameters
-    // https://www.paypal.com/IntegrationCenter/ic_std-variable-reference.html
-    $p->add_field( 'charset', 'utf-8' );
-    $p->add_field( 'business', $eme_paypal_business );
-    $p->add_field( 'return', $success_link );
-    $p->add_field( 'cancel_return', $cancel_link );
-    $p->add_field( 'notify_url', $notification_link );
-    $p->add_field( 'item_name', $description );
-    $p->add_field( 'item_number', $payment_id );
-    $p->add_field( 'custom', $payment_id );
-    $p->add_field( 'currency_code', $cur );
-    $p->add_field( 'amount', $price );
-    $p->add_field( 'quantity', $quantity );
-    $p->add_field( 'no_shipping', 1 );
-    if ( get_option( 'eme_legacypaypal_no_tax' ) ) {
-        $p->add_field( 'tax', 0 );
-    }
-
     $form_html  = $button_above;
-    $form_html .= $p->get_button();
+    $form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
+   <input type='hidden' name='payment_id' value='$payment_id'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
+   <input type='hidden' name='description' value='$description'>
+   <input type='hidden' name='price' value='$price'>
+   <input type='hidden' name='cur' value='$cur'>
+   ";
+    if ( ! empty( $button_img_url ) ) {
+        $form_html .= "<input type='image' src='$button_img_url' alt='$button_label' title='$button_label' class='button-primary eme_submit_button'><br>";
+    } else {
+        $form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
+    }
+    $form_html .= wp_nonce_field( "eme_{$gateway}_{$payment_id}_{$price}_{$cur}", "eme_{$gateway}_nonce", false, false );
+    $form_html .= '</form>';
     $form_html .= $button_below;
     return $form_html;
 }
@@ -2390,6 +2352,86 @@ function eme_charge_paypal() {
     } catch ( Exception $e ) {
         error_log( 'PayPal create_order error: ' . $e->getMessage() );
     }
+}
+
+function eme_charge_legacypaypal() {
+    $gateway             = 'legacypaypal';
+    $eme_paypal_business = get_option( 'eme_legacypaypal_business' );
+    if ( ! $eme_paypal_business ) {
+        return;
+    }
+
+    $payment_id  = intval( $_POST['payment_id'] ?? 0 );
+    $price       = floatval( $_POST['price'] ?? 0 );
+    $cur         = eme_sanitize_request( $_POST['cur'] ?? '' );
+    $description = eme_sanitize_request( $_POST['description'] ?? '' );
+    $payment     = eme_get_payment( $payment_id );
+
+    $success_link      = eme_payment_return_url( $payment, 0 );
+    $cancel_link       = eme_payment_url( $payment );
+    $events_page_link  = eme_get_events_page();
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
+
+    // no cheating (price+cur locked)
+    if ( empty( $_POST["eme_{$gateway}_nonce"] ) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "eme_{$gateway}_{$payment_id}_{$price}_{$cur}" ) ) {
+        wp_safe_redirect( eme_payment_return_url( $payment, 1 ) );
+        exit;
+    }
+
+    // Log mismatches between POST and DB values
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
+    $expected_cur   = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
+    if ( abs( $expected_price - $price ) > 0.01 ) {
+        error_log( "EME $gateway price mismatch for payment $payment_id: POST price $price, DB price $expected_price" );
+    }
+    if ( $expected_cur !== $cur ) {
+        error_log( "EME $gateway currency mismatch for payment $payment_id: POST cur $cur, DB cur $expected_cur" );
+    }
+
+    // check if payment is still possible via this gateway
+    eme_payment_charge_guard( $payment, $gateway );
+
+    require_once EME_PLUGIN_DIR . 'payment_gateways/paypal_legacy/Paypal.php';
+    $p = new Paypal();
+
+    // the paypal or paypal sandbox url
+    $mode = get_option( 'eme_legacypaypal_url' );
+    if ( preg_match( '/sandbox/', $mode ) ) {
+        $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    } else {
+        $p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
+    }
+
+    // the form is auto-submitted below, so no timeout and no button are needed
+    $p->timeout = false;
+    $p->button  = false;
+    $p->form_id = 'eme_legacypaypal_paypal_form';
+
+    // no encryption, use the new paypal for that
+    $p->encrypt = false;
+
+    // the actual button parameters
+    // https://www.paypal.com/IntegrationCenter/ic_std-variable-reference.html
+    $p->add_field( 'charset', 'utf-8' );
+    $p->add_field( 'business', $eme_paypal_business );
+    $p->add_field( 'return', $success_link );
+    $p->add_field( 'cancel_return', $cancel_link );
+    $p->add_field( 'notify_url', $notification_link );
+    $p->add_field( 'item_name', $description );
+    $p->add_field( 'item_number', $payment_id );
+    $p->add_field( 'custom', $payment_id );
+    $p->add_field( 'currency_code', $cur );
+    $p->add_field( 'amount', $price );
+    $p->add_field( 'quantity', 1 );
+    $p->add_field( 'no_shipping', 1 );
+    if ( get_option( 'eme_legacypaypal_no_tax' ) ) {
+        $p->add_field( 'tax', 0 );
+    }
+
+    header( 'Content-Type: text/html; charset=utf-8' );
+    echo $p->get_button(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- form is built by the Paypal class
+    echo '<script type="text/javascript">document.getElementById("eme_legacypaypal_paypal_form").submit();</script>';
+    exit;
 }
 
 function eme_charge_stripe() {

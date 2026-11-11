@@ -1664,7 +1664,7 @@ function eme_complete_transaction_instamojo( $payment ) {
     try {
         $response = $api->paymentRequestPaymentStatus( $instamojo_requestid, $instamojo_paymentid );
         if ( $response['payment']['status'] == 'Credit' ) {
-            $expected_price = eme_get_payment_price( $payment['id'] );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
             $amount_paid = floatval( $response['payment']['amount'] );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME instamojo completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
@@ -1692,7 +1692,7 @@ function eme_complete_transaction_sumup( $payment ) {
         return false;
     }
     if ( $checkout->status == 'PAID' ) {
-            $expected_price = eme_get_payment_price( $payment['id'] );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
             $amount_paid = floatval( $checkout->amount );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME sumup completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
@@ -1721,9 +1721,9 @@ function eme_complete_transaction_stripe( $payment ) {
             return false;
         }
         if ( $stripe_pi->status == 'succeeded' ) {
-            $expected_price = eme_get_payment_price( $payment_id );
-            $amount_paid = $stripe_session->amount_total / 100;
-            if ( $amount_paid < $expected_price - 0.01 ) {
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+            $amount_paid = $stripe_session->amount_total;
+            if ( $amount_paid < $expected_price - 1 ) {
                 error_log( "EME stripe completion price mismatch for payment $payment_id: paid $amount_paid, expected $expected_price" );
             }
             // we store the payment intent id, so we can refund later
@@ -1745,7 +1745,7 @@ function eme_complete_transaction_paypal($payment) {
         $response = $client->capture_order( $paypal_orderid );
         if ( $response['status'] === 'COMPLETED' ) {
             $capture_id = $response['purchase_units'][0]['payments']['captures'][0]['id'] ?? $paypal_orderid;
-            $expected_price = eme_get_payment_price( $payment['id'] );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), 'paypal' );
             $amount_paid = floatval( $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'] );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME paypal completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
@@ -1830,9 +1830,9 @@ function eme_complete_transaction_fondy( $payment ) {
     $order       = $orderStatus->getData();
 
     if ( $order['order_status'] == 'approved' ) {
-        $expected_price = eme_get_payment_price( $payment['id'] );
-        $amount_paid = $order['amount'] / 100;
-        if ( $amount_paid < $expected_price - 0.01 ) {
+        $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+        $amount_paid = $order['amount'];
+        if ( $amount_paid < $expected_price - 1 ) {
             error_log( "EME fondy completion price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
         }
         eme_mark_payment_paid( $payment['id'], 1, $gateway, $order_id );
@@ -1869,7 +1869,7 @@ function eme_notification_instamojo() {
     $mac_calculated = hash_hmac( 'sha1', implode( '|', $data ), $instamojo_salt );
     if ( $mac_provided == $mac_calculated ) {
         if ( $data['status'] == 'Credit' ) {
-            $expected_price = eme_get_payment_price( $payment['id'] );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
             $instamojo_amount = floatval( $data['amount'] );
             if ( $instamojo_amount < $expected_price - 0.01 ) {
                 error_log( "EME instamojo notification price mismatch for payment {$payment['id']}: paid $instamojo_amount, expected $expected_price" );
@@ -1927,8 +1927,8 @@ function eme_notification_mercadopago() {
             }
 
             // If the payment's transaction amount is equal (or bigger) than the merchant_order's amount you can release your items
-            $eme_price = eme_get_payment_price( $payment_id );
-            if ( $paid_amount >= $merchant_order->total_amount && $paid_amount >= $eme_price ) {
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+            if ( $paid_amount >= $merchant_order->total_amount && $paid_amount >= $expected_price ) {
                 eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
                 http_response_code( 200 );
             } else {
@@ -1952,8 +1952,8 @@ function eme_notification_mercadopago() {
                 http_response_code( 400 );
                 return;
             }
-            $eme_price = eme_get_payment_price( $payment_id );
-            if ( $paid_amount >= $eme_price ) {
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+            if ( $paid_amount >= $expected_price ) {
                 eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
                 http_response_code( 200 );
             } else {
@@ -2026,7 +2026,7 @@ function eme_notification_legacypaypal() {
             return;
         }
         // Verify amount meets expectation
-        $expected_price  = eme_get_payment_price( $payment_id );
+        $expected_price  = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
         $received_amount = floatval( $ipn->ipn['mc_gross'] );
         if ( $received_amount < $expected_price - 0.01 ) {
             error_log( "EME paypal notification price mismatch for payment $payment_id: paid $received_amount, expected $expected_price" );
@@ -2049,7 +2049,9 @@ function eme_notification_webmoney() {
             die( 'Not the webmoney purse it should be ...' );
         }
         $payment_id = intval( $wm_notif->payment_no );
-        $expected_price = eme_get_payment_price( $payment_id );
+        $payment = eme_get_payment( $payment_id );
+        $cur = ( is_array( $payment ) && ! empty( $payment['currency'] ) ) ? $payment['currency'] : get_option( 'eme_default_currency' );
+        $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, $gateway );
         if ( $amount < $expected_price - 0.01 ) {
             error_log( "EME webmoney notification price mismatch for payment $payment_id: paid $amount, expected $expected_price" );
         }
@@ -2118,9 +2120,9 @@ function eme_notification_fdgg() {
         wp_die( esc_html__( 'Hash Incorrect', 'events-made-easy' ) );
     }
 
-    $expected_price = eme_get_payment_price( $payment_id );
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
     if ( $charge_total < $expected_price - 0.01 ) {
-        error_log( "EME mercadopago notification price mismatch for payment $payment_id: paid $charge_total, expected $expected_price" );
+        error_log( "EME fdgg notification price mismatch for payment $payment_id: paid $charge_total, expected $expected_price" );
     }
 
     if ( strtolower( $response_status ) == 'approved' ) {
@@ -2161,7 +2163,7 @@ function eme_notification_sumup() {
     if ( $checkout->status == 'PAID' ) {
         $payment = eme_get_payment_by_pg_pid( $checkout_id );
         if ( ! empty( $payment ) ) {
-            $expected_price = eme_get_payment_price( $payment['id'] );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
             $amount_paid = floatval( $checkout->amount );
             if ( $amount_paid < $expected_price - 0.01 ) {
                 error_log( "EME sumup notification price mismatch for payment {$payment['id']}: paid $amount_paid, expected $expected_price" );
@@ -2200,23 +2202,31 @@ function eme_notification_stripe() {
         return;
     }
 
-    // Handle the checkout.session.completed event
-    if ( $event->type == 'checkout.session.completed' ) {
-        $stripe_session = $event->data->object;
-        $payment_id     = $stripe_session->client_reference_id;
-        $stripe_pi_id   = $stripe_session->payment_intent;
-        $payment = eme_get_payment( $payment_id );
-        if ( ! $payment ) {
-            http_response_code( 400 );
-            return;
-        }
-        $expected_price = eme_get_payment_price( $payment_id );
-        $amount_paid = $stripe_session->amount_total / 100;
-        if ( $amount_paid < $expected_price - 0.01 ) {
-            error_log( "EME stripe notification price mismatch for payment $payment_id: paid $amount_paid, expected $expected_price" );
-        }
-        eme_mark_payment_paid( $payment_id, 1, $gateway, $stripe_pi_id );
+    // Handle the checkout.session.completed and checkout.session.async_payment_succeeded events
+    if ( $event->type != 'checkout.session.completed' && $event->type != 'checkout.session.async_payment_succeeded' ) {
+        http_response_code( 200 );
+        return;
     }
+    $stripe_session = $event->data->object;
+    // for asynchronous payment methods, checkout.session.completed arrives with payment_status "unpaid"
+    // the payment is only settled once checkout.session.async_payment_succeeded is received
+    if ( $event->type == 'checkout.session.completed' && $stripe_session->payment_status != 'paid' ) {
+        http_response_code( 200 );
+        return;
+    }
+    $payment_id   = $stripe_session->client_reference_id;
+    $stripe_pi_id = $stripe_session->payment_intent ?? '';
+    $payment      = ! empty( $payment_id ) ? eme_get_payment( $payment_id ) : false;
+    if ( ! $payment || empty( $stripe_pi_id ) ) {
+        http_response_code( 200 );
+        return;
+    }
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+    $amount_paid    = $stripe_session->amount_total;
+    if ( $amount_paid < $expected_price - 1 ) {
+        error_log( "EME stripe notification price mismatch for payment $payment_id: paid $amount_paid, expected $expected_price" );
+    }
+    eme_mark_payment_paid( $payment_id, 1, $gateway, $stripe_pi_id );
     http_response_code( 200 );
 }
 
@@ -2241,9 +2251,9 @@ function eme_notification_fondy() {
             $order_id = $result->getData()['order_id'];
             $payment  = eme_get_payment_by_pg_pid( $order_id );
             if ( $payment ) {
-                $fondy_amount = $result->getData()['amount'] / 100;
-                $expected_price = eme_get_payment_price( $payment['id'] );
-                if ( $fondy_amount < $expected_price - 0.01 ) {
+                $fondy_amount = $result->getData()['amount'];
+                $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment['id'] ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+                if ( $fondy_amount < $expected_price - 1 ) {
                     error_log( "EME fondy notification price mismatch for payment {$payment['id']}: paid $fondy_amount, expected $expected_price" );
                 }
                 eme_mark_payment_paid( $payment['id'], 1, $gateway, $order_id );
@@ -2321,7 +2331,7 @@ function eme_stripe_webhook() {
         $endpoint = \Stripe\WebhookEndpoint::create(
             [
                 'url'            => $notification_link,
-                'enabled_events' => [ 'checkout.session.completed' ],
+                'enabled_events' => [ 'checkout.session.completed', 'checkout.session.async_payment_succeeded' ],
             ]
         );
     } catch ( \Stripe\Exception\InvalidRequestException $e ) {
@@ -2642,8 +2652,8 @@ function eme_charge_mercadopago() {
         }
     }
 
-    $eme_price = eme_get_payment_price( $payment_id );
-    if ( $paid_amount >= $eme_price ) {
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+    if ( $paid_amount >= $expected_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
         wp_safe_redirect($success_link);
         exit;
@@ -3048,7 +3058,7 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     }
     // The payment is paid and isn't refunded or charged back
     if ( $mollie_payment->isPaid() && ! $mollie_payment->hasRefunds() && ! $mollie_payment->hasChargebacks() ) {
-        $expected_price = eme_get_payment_price( $payment_id );
+        $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
         $amount_paid = floatval( $mollie_payment->amount->value );
         if ( $amount_paid < $expected_price - 0.01 ) {
             error_log( "EME mollie completion price mismatch for payment $payment_id: paid $amount_paid, expected $expected_price" );
@@ -3165,9 +3175,9 @@ function eme_complete_transaction_bancontactwero( $payment ) {
         return false;
     }
 
-    $eme_price  = eme_get_payment_price( $payment_id );
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
     // The payment is paid and to be sure we also check the paid amount
-    if ( $bancontactwero_payment->status == 'SUCCEEDED' && $bancontactwero_payment->amount / 100 >= $eme_price ) {
+    if ( $bancontactwero_payment->status == 'SUCCEEDED' && $bancontactwero_payment->amount >= $expected_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $bancontactwero_paymentid );
         return true;
     }
@@ -3216,8 +3226,8 @@ function eme_notification_bancontactwero() {
         http_response_code( 403 );
         exit;
     }
-    $eme_price = eme_get_payment_price( $payment_id );
-    if ( $bancontactwero_payment->amount / 100 >= $eme_price ) {
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), $gateway );
+    if ( $bancontactwero_payment->amount >= $expected_price ) {
         eme_mark_payment_paid( $payment_id, 1, $gateway, $bancontactwero_paymentid );
     }
     http_response_code( 200 );
@@ -3318,7 +3328,7 @@ function eme_notification_worldpay() {
     if ( ! $payment ) {
         return;
     }
-    $expected_price = eme_get_payment_price( $payment_id );
+    $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' ), 'worldpay' );
     if ( $amount < $expected_price - 0.01 ) {
         error_log( "EME worldpay notification price mismatch for payment $payment_id: paid $amount, expected $expected_price" );
     }
@@ -3352,7 +3362,7 @@ function eme_notification_opayo() {
                 return;
             }
             $cur = ! empty( $payment['currency'] ) ? $payment['currency'] : get_option( 'eme_default_currency' );
-            $expected_price = eme_get_payment_price( $payment_id );
+            $expected_price = eme_payment_gateway_total( eme_get_payment_price( $payment_id ), $cur, 'opayo' );
             if ( $amount < $expected_price - 0.01 ) {
                 error_log( "EME opayo notification price mismatch for payment $payment_id: paid $amount, expected $expected_price" );
             }
